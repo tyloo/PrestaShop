@@ -17,6 +17,7 @@ services:
       MYSQL_ROOT_PASSWORD: prestashop
       MYSQL_DATABASE: prestashop
     restart: always
+    command: --require_secure_transport=OFF
   keycloak:
     image: quay.io/keycloak/keycloak:19.0.3
     environment:
