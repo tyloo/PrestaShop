@@ -97,7 +97,10 @@ class CountryChoiceType extends AbstractType
             ->setAllowedTypes('with_logo_attr', 'boolean');
     }
 
-    public function getChoiceAttr($value, $key)
+    /**
+     * @return mixed[]
+     */
+    public function getChoiceAttr($value, $key): array
     {
         $attr = [];
         if ($this->needDni && isset($this->countriesAttr[$key], $this->countriesAttr[$key]['need_dni'])) {

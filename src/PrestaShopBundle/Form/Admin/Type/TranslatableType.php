@@ -365,7 +365,7 @@ class TranslatableType extends TranslatorAwareType
      *
      * @return array
      */
-    private function filterEnableLocales(array $availableLocales)
+    private function filterEnableLocales(array $availableLocales): array
     {
         $enabledLocales = [];
 

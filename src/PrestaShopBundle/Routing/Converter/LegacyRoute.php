@@ -136,7 +136,7 @@ class LegacyRoute
      *
      * @return array
      */
-    private function buildLegacyLinks(array $legacyLinks)
+    private function buildLegacyLinks(array $legacyLinks): array
     {
         $brokenLegacyLinks = [];
         foreach ($legacyLinks as $legacyLink) {
@@ -158,7 +158,7 @@ class LegacyRoute
      *
      * @return array
      */
-    private function buildControllerActions(array $legacyLinks, $routeName)
+    private function buildControllerActions(array $legacyLinks, $routeName): array
     {
         $controllersActions = [];
         foreach ($legacyLinks as $legacyLink) {

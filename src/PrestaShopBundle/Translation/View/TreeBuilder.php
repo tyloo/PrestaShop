@@ -57,7 +57,7 @@ class TreeBuilder
      *
      * @return array|mixed
      */
-    public function makeTranslationArray(AbstractProvider $provider, $search = null)
+    public function makeTranslationArray(AbstractProvider $provider, $search = null): array
     {
         $provider->setLocale($this->locale);
 
@@ -141,7 +141,7 @@ class TreeBuilder
     /**
      * @return array
      */
-    public function makeTranslationsTree($catalogue)
+    public function makeTranslationsTree($catalogue): array
     {
         $translationsTree = [];
 
@@ -186,7 +186,7 @@ class TreeBuilder
      *
      * @return array
      */
-    public function cleanTreeToApi($tree, Router $router, $theme = null, $search = null, $module = null)
+    public function cleanTreeToApi($tree, Router $router, $theme = null, $search = null, $module = null): array
     {
         $rootTree = [
             'tree' => [

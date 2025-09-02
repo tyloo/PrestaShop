@@ -67,8 +67,9 @@ final class ImportFormDataProvider implements ImportFormDataProviderInterface
 
     /**
      * {@inheritdoc}
+     * @return list<array{key: 'To proceed, please upload a file first.', domain: 'Admin.Advparameters.Notification', parameters: array{}}>
      */
-    public function setData(array $data)
+    public function setData(array $data): array
     {
         $errors = [];
         if (empty($data['csv'])) {

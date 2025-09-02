@@ -50,7 +50,7 @@ final class AdminRouteProvider
     /**
      * @return Route[] As routeName => route
      */
-    public function getRoutes()
+    public function getRoutes(): array
     {
         $adminRoutes = [];
 

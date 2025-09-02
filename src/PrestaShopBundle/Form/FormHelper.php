@@ -40,7 +40,7 @@ class FormHelper
      *
      * @return array
      */
-    public static function formatDataChoicesList($list, $mapping_value = 'id', $mapping_name = 'name')
+    public static function formatDataChoicesList($list, $mapping_value = 'id', $mapping_name = 'name'): array
     {
         $new_list = [];
         foreach ($list as $item) {
@@ -63,7 +63,7 @@ class FormHelper
      *
      * @return array
      */
-    private static function formatDataDuplicateChoicesList($list, $mapping_value = 'id', $mapping_name = 'name')
+    private static function formatDataDuplicateChoicesList($list, $mapping_value = 'id', $mapping_name = 'name'): array
     {
         $new_list = [];
         foreach ($list as $item) {

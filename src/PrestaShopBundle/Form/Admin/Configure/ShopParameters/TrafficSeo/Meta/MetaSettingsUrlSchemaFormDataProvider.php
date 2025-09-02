@@ -102,7 +102,7 @@ final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInt
      *
      * @throws PrestaShopException
      */
-    private function validateData(array $data)
+    private function validateData(array $data): array
     {
         $patternErrors = [];
         $fieldErrors = [];

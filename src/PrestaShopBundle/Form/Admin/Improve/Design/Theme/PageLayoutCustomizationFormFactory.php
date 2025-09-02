@@ -86,7 +86,7 @@ final class PageLayoutCustomizationFormFactory implements PageLayoutCustomizatio
      *
      * @return array
      */
-    private function getCustomizablePageLayouts(Theme $theme, array $customizationPages)
+    private function getCustomizablePageLayouts(Theme $theme, array $customizationPages): array
     {
         $defaultLayout = $theme->getDefaultLayout();
         $pageLayouts = $theme->getPageLayouts();

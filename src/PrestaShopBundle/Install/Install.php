@@ -601,7 +601,7 @@ class Install extends AbstractInstall
      *
      * @return array Association between ID and iso array(id_lang => iso, ...)
      */
-    public function installLanguages($languages_list = null)
+    public function installLanguages($languages_list = null): array
     {
         if ($languages_list === null || (is_array($languages_list) && !count($languages_list))) {
             $languages_list = $this->language->getIsoList();

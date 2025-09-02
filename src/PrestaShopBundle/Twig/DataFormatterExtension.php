@@ -116,7 +116,7 @@ class DataFormatterExtension extends AbstractExtension
      *
      * @return array
      */
-    public function arrayPluck(array $array, array $extractedKeys)
+    public function arrayPluck(array $array, array $extractedKeys): array
     {
         $extractedArray = [];
         foreach ($extractedKeys as $key => $value) {

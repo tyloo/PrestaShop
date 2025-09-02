@@ -173,7 +173,7 @@ class AppendConfigurationFileHooksListCommand extends Command
      *
      * @throws Exception
      */
-    private function appendHooksInConfigurationFile(array $hooks)
+    private function appendHooksInConfigurationFile(array $hooks): array
     {
         if (!file_exists($this->hookFile)) {
             throw new Exception(sprintf('File %s has not been found', $this->hookFile));
@@ -228,7 +228,7 @@ class AppendConfigurationFileHooksListCommand extends Command
      *
      * @return array
      */
-    private function filterExistingHookNames(SimpleXMLElement $hooksFromXmlFile)
+    private function filterExistingHookNames(SimpleXMLElement $hooksFromXmlFile): array
     {
         $hookNames = [];
         foreach ($hooksFromXmlFile as $hook) {
@@ -249,7 +249,7 @@ class AppendConfigurationFileHooksListCommand extends Command
      *
      * @return HookDescription[]
      */
-    private function getHookDescriptions(array $hookNames)
+    private function getHookDescriptions(array $hookNames): array
     {
         $descriptions = [];
         foreach ($hookNames as $hookName) {

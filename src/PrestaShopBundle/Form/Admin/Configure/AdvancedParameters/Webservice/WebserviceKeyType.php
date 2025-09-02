@@ -185,7 +185,7 @@ class WebserviceKeyType extends TranslatorAwareType
     /**
      * @return array
      */
-    private function getPermissionChoicesForResources()
+    private function getPermissionChoicesForResources(): array
     {
         $choices = [];
 

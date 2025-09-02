@@ -227,7 +227,7 @@ class LegacyLinkLinterCommand extends Command
      *
      * @return array
      */
-    private function getUnconfiguredRoutes()
+    private function getUnconfiguredRoutes(): array
     {
         $routes = $this->adminRouteProvider->getRoutes();
         $unconfiguredRoutes = [];

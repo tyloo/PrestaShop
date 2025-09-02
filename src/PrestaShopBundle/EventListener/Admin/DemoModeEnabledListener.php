@@ -119,7 +119,7 @@ class DemoModeEnabledListener
      *
      * @return array
      */
-    private function getQueryParamsFromRequestQuery(array $queryParametersToKeep, Request $request)
+    private function getQueryParamsFromRequestQuery(array $queryParametersToKeep, Request $request): array
     {
         $result = [];
 

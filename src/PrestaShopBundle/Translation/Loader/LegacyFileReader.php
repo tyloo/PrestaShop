@@ -52,7 +52,7 @@ class LegacyFileReader
      *
      * @return array Translation tokens
      */
-    public function load($path, $locale)
+    public function load($path, $locale): array
     {
         // Each legacy file declare this variable to store the translations
         $_MODULE = [];

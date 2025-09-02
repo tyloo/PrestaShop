@@ -51,7 +51,7 @@ class Database extends AbstractInstall
      *
      * @return array List of errors
      */
-    public function testDatabaseSettings($server, $database, $login, $password, $prefix, $clear = false)
+    public function testDatabaseSettings($server, $database, $login, $password, $prefix, $clear = false): array
     {
         $this->getLogger()->log('Testing database settings');
         $errors = [];

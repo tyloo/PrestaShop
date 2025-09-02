@@ -199,7 +199,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @throws \Symfony\Component\Translation\Exception\InvalidArgumentException
      */
-    public function getFormErrorsForJS(FormInterface $form)
+    public function getFormErrorsForJS(FormInterface $form): array
     {
         $errors = [];
 

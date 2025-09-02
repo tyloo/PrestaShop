@@ -391,7 +391,7 @@ class ThemeExporter
      *
      * @return array
      */
-    protected function parseMetadataNotes(?array $metadata = null)
+    protected function parseMetadataNotes(?array $metadata = null): array
     {
         $defaultMetadata = ['file' => '', 'line' => ''];
 

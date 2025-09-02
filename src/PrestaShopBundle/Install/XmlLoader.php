@@ -995,7 +995,10 @@ class XmlLoader
         return file_exists($this->data_path . $entity . '.xml');
     }
 
-    public function getEntitiesList()
+    /**
+     * @return list<non-empty-string>
+     */
+    public function getEntitiesList(): array
     {
         $entities = [];
         foreach (scandir($this->data_path, SCANDIR_SORT_NONE) as $file) {
@@ -1007,7 +1010,10 @@ class XmlLoader
         return $entities;
     }
 
-    public function getEntityInfo($entity)
+    /**
+     * @return array<mixed, array<string, array{}|array{relation: string}|string>>
+     */
+    public function getEntityInfo($entity): array
     {
         $info = [
             'config' => [
@@ -1070,7 +1076,10 @@ class XmlLoader
         return $info;
     }
 
-    public function getDependencies()
+    /**
+     * @return \non-empty-list<(int | string)>[]
+     */
+    public function getDependencies(): array
     {
         $entities = [];
         foreach ($this->getEntitiesList() as $entity) {

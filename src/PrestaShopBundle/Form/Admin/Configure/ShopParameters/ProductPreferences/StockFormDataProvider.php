@@ -82,7 +82,7 @@ class StockFormDataProvider implements FormDataProviderInterface
      *
      * @return array Returns array of errors
      */
-    protected function validate(array $data)
+    protected function validate(array $data): array
     {
         $errors = [];
         $displayLastQuantities = $data['display_last_quantities'];

@@ -271,7 +271,7 @@ class ShopLogosType extends AbstractType
      *
      * @return array
      */
-    private function getShopRestrictionSourceFormFields($form, $suffix)
+    private function getShopRestrictionSourceFormFields($form, $suffix): array
     {
         $formFields = [];
 

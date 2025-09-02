@@ -87,7 +87,7 @@ final class ImportDataConfigurationFormDataProvider implements ImportFormDataPro
     /**
      * {@inheritdoc}
      */
-    public function getData(ImportConfigInterface $importConfig)
+    public function getData(ImportConfigInterface $importConfig): array
     {
         $importFile = new SplFileInfo($this->importDirectory . $importConfig->getFileName());
         $dataRowCollection = $this->dataRowCollectionFactory->buildFromFile($importFile, 1);
@@ -127,8 +127,9 @@ final class ImportDataConfigurationFormDataProvider implements ImportFormDataPro
 
     /**
      * {@inheritdoc}
+     * @return list<(array{key: 'Please name your data matching configuration in order to save it.', domain: 'Admin.Advparameters.Feature', parameters: array{}} | array{key: 'This name already exists.', domain: 'Admin.Design.Notification', parameters: array{}})>
      */
-    public function setData(array $data)
+    public function setData(array $data): array
     {
         $errors = [];
 

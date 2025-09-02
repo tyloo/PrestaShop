@@ -37,7 +37,10 @@ use Doctrine\ORM\Query\Parameter;
  */
 class AttributeRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findByLangAndShop($idLang, $idShop)
+    /**
+     * @return array{id: mixed, name: mixed, publicName: mixed, position: mixed, attributes: non-empty-array}[]
+     */
+    public function findByLangAndShop($idLang, $idShop): array
     {
         $attributeGroups = [];
 
@@ -85,7 +88,7 @@ class AttributeRepository extends \Doctrine\ORM\EntityRepository
         return $attributeGroups;
     }
 
-    private function getAttributeRow($attribute)
+    private function getAttributeRow($attribute): array
     {
         $attributes = [
             'id' => $attribute['id'],

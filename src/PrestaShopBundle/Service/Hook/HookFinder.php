@@ -98,7 +98,7 @@ class HookFinder
      *
      * @return array
      */
-    public function present()
+    public function present(): array
     {
         $hookContent = $this->find();
         $presentedContents = [];

@@ -134,7 +134,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getCurrencyChoicesForPaymentModules()
+    private function getCurrencyChoicesForPaymentModules(): array
     {
         $choices = [];
 
@@ -165,7 +165,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getCountryChoicesForPaymentModules()
+    private function getCountryChoicesForPaymentModules(): array
     {
         $multipleChoices = [];
 
@@ -194,7 +194,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getGroupChoicesForPaymentModules()
+    private function getGroupChoicesForPaymentModules(): array
     {
         $groupChoices = [];
 
@@ -215,7 +215,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getCarrierChoicesForPaymentModules()
+    private function getCarrierChoicesForPaymentModules(): array
     {
         $carrierChoices = [];
 
@@ -264,7 +264,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getLimitedCountryChoices(array $limitedCountryIsoCodes)
+    private function getLimitedCountryChoices(array $limitedCountryIsoCodes): array
     {
         $countryChoices = [];
 

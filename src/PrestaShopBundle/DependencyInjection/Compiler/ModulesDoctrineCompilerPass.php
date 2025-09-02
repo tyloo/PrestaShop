@@ -67,7 +67,7 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
      *
      * @return array
      */
-    private function getCompilerPassList(array $activeModules)
+    private function getCompilerPassList(array $activeModules): array
     {
         $mappingsPassList = [];
         /** @var SplFileInfo $moduleFolder */

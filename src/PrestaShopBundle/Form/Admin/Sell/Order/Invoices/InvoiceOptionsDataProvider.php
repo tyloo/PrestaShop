@@ -84,7 +84,7 @@ final class InvoiceOptionsDataProvider implements FormDataProviderInterface
      *
      * @return array Array of errors if any
      */
-    private function validate(array $data)
+    private function validate(array $data): array
     {
         $errors = [];
         $invoiceNumber = $data['invoice_number'];

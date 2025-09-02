@@ -74,7 +74,7 @@ class RoutingCacheKeyGenerator implements CacheKeyGeneratorInterface
     /**
      * @return array
      */
-    public function getLastModifications()
+    public function getLastModifications(): array
     {
         $routingFiles = [];
 

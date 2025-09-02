@@ -95,7 +95,7 @@ class OrderPreferencesGeneralFormDataProvider implements FormDataProviderInterfa
      *
      * @return array Returns array of errors
      */
-    protected function validate(array $data)
+    protected function validate(array $data): array
     {
         $errors = [];
         $purchaseMinimumValue = $data['purchase_minimum_value'] ?? null;

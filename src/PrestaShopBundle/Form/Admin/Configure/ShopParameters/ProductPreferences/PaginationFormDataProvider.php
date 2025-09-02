@@ -82,7 +82,7 @@ class PaginationFormDataProvider implements FormDataProviderInterface
      *
      * @return array Returns array of errors
      */
-    protected function validate(array $data)
+    protected function validate(array $data): array
     {
         $errors = [];
         $productsPerPage = $data['products_per_page'];

@@ -77,7 +77,7 @@ final class EmailConfigurationFormDataProvider implements FormDataProviderInterf
      *
      * @return array
      */
-    private function checkSmtpConfiguration(array $config)
+    private function checkSmtpConfiguration(array $config): array
     {
         $errors = [];
         $isSmtpNotConfigured = empty($config['smtp_config']['server']) || empty($config['smtp_config']['port']);

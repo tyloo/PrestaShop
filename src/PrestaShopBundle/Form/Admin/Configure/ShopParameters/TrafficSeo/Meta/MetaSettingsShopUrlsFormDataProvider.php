@@ -102,7 +102,7 @@ final class MetaSettingsShopUrlsFormDataProvider implements FormDataProviderInte
      *
      * @throws PrestaShopException
      */
-    private function validateData(array $data)
+    private function validateData(array $data): array
     {
         $errors = [];
         if (!$this->validate->isCleanHtml($data['domain'])) {

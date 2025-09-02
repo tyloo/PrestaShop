@@ -92,7 +92,7 @@ class CacheProvider extends AbstractLegacyRouteProvider implements CacheCleanerI
      *
      * @return LegacyRoute[]
      */
-    private function unserializeLegacyRoutes($serializedLegacyRoutes)
+    private function unserializeLegacyRoutes($serializedLegacyRoutes): array
     {
         $flattenRoutes = json_decode($serializedLegacyRoutes, true);
 

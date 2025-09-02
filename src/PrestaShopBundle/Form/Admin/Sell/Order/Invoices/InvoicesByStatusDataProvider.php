@@ -58,7 +58,7 @@ final class InvoicesByStatusDataProvider implements FormDataProviderInterface
      *
      * @return array Array of errors if any
      */
-    private function validate(array $data)
+    private function validate(array $data): array
     {
         $errors = [];
         $orderStates = $data['order_states'];
