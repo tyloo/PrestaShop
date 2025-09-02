@@ -903,7 +903,7 @@ class XmlLoader
         return $tables;
     }
 
-    public function hasElements($table)
+    public function hasElements($table): bool
     {
         $table = Db::getInstance()->escape($table, false, true);
 
@@ -983,14 +983,14 @@ class XmlLoader
         return false;
     }
 
-    public function isMultilang($entity)
+    public function isMultilang($entity): bool
     {
         $tables = $this->getTables();
 
         return isset($tables[$entity]) && $tables[$entity];
     }
 
-    public function entityExists($entity)
+    public function entityExists($entity): bool
     {
         return file_exists($this->data_path . $entity . '.xml');
     }

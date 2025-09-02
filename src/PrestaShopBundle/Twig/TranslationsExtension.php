@@ -317,7 +317,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return bool
      */
-    protected function hasMessages($tree)
+    protected function hasMessages($tree): bool
     {
         return array_key_exists('__messages', $tree);
     }

@@ -121,7 +121,7 @@ class MaterialChoiceTreeType extends AbstractType
         $choiceValueName,
         $choiceChildrenName,
         array $selectedValues
-    ) {
+    ): bool {
         $isSelected = false;
         $isChildrenSelected = false;
 

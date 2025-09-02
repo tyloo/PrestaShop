@@ -84,7 +84,7 @@ final class DefaultLanguageToFilledArrayDataTransformer implements DataTransform
      *
      * @return bool
      */
-    private function assertIsValidForDataTransforming($values)
+    private function assertIsValidForDataTransforming($values): bool
     {
         return is_array($values) && isset($values[$this->defaultLanguageId]) && $values[$this->defaultLanguageId];
     }

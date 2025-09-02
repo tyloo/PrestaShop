@@ -353,7 +353,7 @@ class ThemeExporter
      *
      * @return bool
      */
-    protected function metadataContainNotes(?array $metadata = null)
+    protected function metadataContainNotes(?array $metadata = null): bool
     {
         return null !== $metadata && array_key_exists('notes', $metadata) && is_array($metadata['notes'])
             && array_key_exists(0, $metadata['notes']) && is_array($metadata['notes'][0])
@@ -365,7 +365,7 @@ class ThemeExporter
      *
      * @return bool
      */
-    protected function shouldAddFileMetadata(?array $metadata = null)
+    protected function shouldAddFileMetadata(?array $metadata = null): bool
     {
         return null === $metadata || !array_key_exists('file', $metadata);
     }

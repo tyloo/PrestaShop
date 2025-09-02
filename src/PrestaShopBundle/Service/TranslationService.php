@@ -172,7 +172,7 @@ class TranslationService
      *
      * @return bool
      */
-    private function requiresThemeTranslationsFactory($theme, $type)
+    private function requiresThemeTranslationsFactory($theme, $type): bool
     {
         return $type === 'themes' && null !== $theme;
     }

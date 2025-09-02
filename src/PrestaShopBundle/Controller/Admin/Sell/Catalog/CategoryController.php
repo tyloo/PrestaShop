@@ -895,7 +895,7 @@ class CategoryController extends PrestaShopAdminController
      *
      * @return bool
      */
-    private function requestHasSearchParameters(Request $request)
+    private function requestHasSearchParameters(Request $request): bool
     {
         return !empty($request->query->all()[CategoryGridDefinitionFactory::GRID_ID]['filters']);
     }

@@ -167,7 +167,7 @@ final class ImportDataConfigurationFormDataProvider implements ImportFormDataPro
      *
      * @return bool
      */
-    private function configurationNameExists($matchName)
+    private function configurationNameExists($matchName): bool
     {
         return (bool) $this->importMatchRepository->findOneByName($matchName);
     }

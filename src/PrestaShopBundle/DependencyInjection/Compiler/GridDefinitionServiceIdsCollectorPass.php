@@ -73,7 +73,7 @@ final class GridDefinitionServiceIdsCollectorPass implements CompilerPassInterfa
      *
      * @return bool
      */
-    private function isGridDefinitionService($serviceId, $serviceClass)
+    private function isGridDefinitionService($serviceId, $serviceClass): bool
     {
         $doesServiceStartsWithGridDefinition = str_starts_with($serviceId, self::GRID_DEFINITION_SERVICE_PREFIX);
 

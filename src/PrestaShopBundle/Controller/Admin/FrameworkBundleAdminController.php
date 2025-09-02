@@ -446,7 +446,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @throws LogicException
      */
-    protected function actionIsAllowed($action, $object = '', $suffix = '')
+    protected function actionIsAllowed($action, $object = '', $suffix = ''): bool
     {
         return (
             $action === 'delete' . $suffix && $this->isGranted(Permission::DELETE, $object)

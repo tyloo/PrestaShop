@@ -108,7 +108,7 @@ final class OptionsFormHookNameCollectorPass implements CompilerPassInterface
      *
      * @return bool
      */
-    private function isOptionsFormService($serviceId, $serviceClass)
+    private function isOptionsFormService($serviceId, $serviceClass): bool
     {
         return $this->stringEndsWith($serviceId, self::OPTIONS_FORM_SERVICE_SUFFIX)
             && is_subclass_of($serviceClass, FormHandlerInterface::class)
@@ -123,7 +123,7 @@ final class OptionsFormHookNameCollectorPass implements CompilerPassInterface
      *
      * @return bool
      */
-    private function stringEndsWith($haystack, $needle)
+    private function stringEndsWith($haystack, $needle): bool
     {
         $diff = strlen($haystack) - strlen($needle);
 

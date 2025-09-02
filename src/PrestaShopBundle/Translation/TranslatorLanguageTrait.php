@@ -36,7 +36,7 @@ trait TranslatorLanguageTrait
      *
      * @return bool
      */
-    public function isLanguageLoaded($locale)
+    public function isLanguageLoaded($locale): bool
     {
         return !empty($this->catalogues[$locale]);
     }

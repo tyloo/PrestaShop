@@ -106,7 +106,7 @@ class CheckTranslationDuplicatesCommand extends Command
      *
      * @return bool
      */
-    protected function check($message1, $message2)
+    protected function check($message1, $message2): bool
     {
         return $this->removeParams($message1) == $this->removeParams($message2);
     }

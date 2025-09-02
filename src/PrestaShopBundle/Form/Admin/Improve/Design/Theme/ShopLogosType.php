@@ -292,7 +292,7 @@ class ShopLogosType extends AbstractType
      *
      * @return bool
      */
-    private function stringEndsWith($haystack, $needle)
+    private function stringEndsWith($haystack, $needle): bool
     {
         $diff = \strlen($haystack) - \strlen($needle);
 

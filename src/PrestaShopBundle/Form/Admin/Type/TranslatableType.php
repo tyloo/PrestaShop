@@ -325,7 +325,7 @@ class TranslatableType extends TranslatorAwareType
      *
      * @return bool
      */
-    private function doesErrorFormAndCurrentFormMatches(FormInterface $errorForm, FormInterface $currentForm)
+    private function doesErrorFormAndCurrentFormMatches(FormInterface $errorForm, FormInterface $currentForm): bool
     {
         return $errorForm === $currentForm;
     }

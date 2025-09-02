@@ -71,7 +71,7 @@ class LegacyRoute
      *
      * @return bool
      */
-    public static function isIndexAction($action)
+    public static function isIndexAction($action): bool
     {
         $indexAliases = ['list', 'index'];
 

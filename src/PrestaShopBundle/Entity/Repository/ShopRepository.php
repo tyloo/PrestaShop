@@ -37,7 +37,7 @@ class ShopRepository extends \Doctrine\ORM\EntityRepository
     /**
      * @return bool true if multiple shops exists
      */
-    public function haveMultipleShops()
+    public function haveMultipleShops(): bool
     {
         return count($this->findAll()) > 1;
     }
