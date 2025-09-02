@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "WHO AM I: $(whoami)"
+exit 0
+
 if [ $PS_ENABLE_SSL = 1 ]; then
   if [ -f ./.docker/ssl.key ]; then
     echo "\n* Remove default-ssl.conf file ...";
