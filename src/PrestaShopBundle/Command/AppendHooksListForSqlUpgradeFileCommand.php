@@ -178,7 +178,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
      *
      * @return string
      */
-    private function getSqlUpgradeFileByPrestaShopVersion($version, $autoUpgradeModulePath)
+    private function getSqlUpgradeFileByPrestaShopVersion($version, $autoUpgradeModulePath): string
     {
         $sqlUpgradeFile = "$autoUpgradeModulePath/upgrade/sql/$version.sql";
 

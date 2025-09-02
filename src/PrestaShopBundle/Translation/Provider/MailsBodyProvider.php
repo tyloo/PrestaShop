@@ -58,7 +58,7 @@ class MailsBodyProvider extends AbstractProvider implements UseDefaultCatalogueI
     /**
      * {@inheritdoc}
      */
-    public function getDefaultResourceDirectory()
+    public function getDefaultResourceDirectory(): string
     {
         return $this->resourceDirectory . DIRECTORY_SEPARATOR . 'default';
     }

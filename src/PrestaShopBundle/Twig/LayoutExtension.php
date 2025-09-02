@@ -148,7 +148,7 @@ class LayoutExtension extends AbstractExtension implements GlobalsInterface
     /**
      * KISS function to get an embedded iframe from Youtube.
      */
-    public function getYoutubeLink($watchUrl)
+    public function getYoutubeLink($watchUrl): string
     {
         $embedUrl = str_replace(['watch?v=', 'youtu.be/'], ['embed/', 'youtube.com/embed/'], $watchUrl);
 

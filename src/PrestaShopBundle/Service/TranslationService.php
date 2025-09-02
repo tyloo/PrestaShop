@@ -98,7 +98,7 @@ class TranslationService
     /**
      * @return string
      */
-    private function getResourcesDirectory()
+    private function getResourcesDirectory(): string
     {
         return $this->container->getParameter('kernel.project_dir') . '/app/Resources';
     }

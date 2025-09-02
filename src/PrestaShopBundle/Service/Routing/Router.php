@@ -65,7 +65,7 @@ class Router extends BaseRouter
         $this->anonymousRouteProvider = $anonymousRouteProvider;
     }
 
-    public static function generateTokenizedUrl($url, $token)
+    public static function generateTokenizedUrl($url, $token): string
     {
         $components = parse_url($url);
         $baseUrl = (isset($components['path']) ? $components['path'] : '');

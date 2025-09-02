@@ -117,7 +117,7 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
      *
      * @return string
      */
-    private function getModuleNamespace(SplFileInfo $moduleFolder)
+    private function getModuleNamespace(SplFileInfo $moduleFolder): string
     {
         $finder = new Finder();
         $finder->files()->in($moduleFolder->getRealPath() . '/src/Entity')->name('*.php');

@@ -118,7 +118,7 @@ class ThemeProvider extends AbstractProvider
      *
      * @return string Path to app/themes/{themeName}/translations/{locale}
      */
-    public function getResourceDirectory($baseDir = null)
+    public function getResourceDirectory($baseDir = null): string
     {
         if (null === $baseDir) {
             $baseDir = $this->resourceDirectory;
@@ -144,7 +144,7 @@ class ThemeProvider extends AbstractProvider
     /**
      * @return string the path to the Theme translations folder
      */
-    public function getThemeResourcesDirectory()
+    public function getThemeResourcesDirectory(): string
     {
         return $this->getResourceDirectory($this->themeResourcesDirectory);
     }
@@ -218,7 +218,7 @@ class ThemeProvider extends AbstractProvider
     /**
      * {@inheritdoc}
      */
-    public function getDefaultResourceDirectory()
+    public function getDefaultResourceDirectory(): string
     {
         return $this->defaultTranslationDir . DIRECTORY_SEPARATOR . $this->locale;
     }

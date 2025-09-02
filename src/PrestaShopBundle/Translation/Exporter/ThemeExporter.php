@@ -105,7 +105,7 @@ class ThemeExporter
      *
      * @return string
      */
-    public function createZipArchive($themeName, $locale, $rootDir = false)
+    public function createZipArchive($themeName, $locale, $rootDir = false): string
     {
         $archiveParentDirectory = $this->exportCatalogues($themeName, $locale, $rootDir);
         $zipFilename = $this->makeZipFilename($themeName, $locale);
@@ -121,7 +121,7 @@ class ThemeExporter
      *
      * @return string
      */
-    public function exportCatalogues($themeName, $locale, $rootDir = false)
+    public function exportCatalogues($themeName, $locale, $rootDir = false): string
     {
         $this->themeProvider->setLocale($locale);
         $this->themeProvider->setThemeName($themeName);
@@ -258,7 +258,7 @@ class ThemeExporter
      *
      * @return string
      */
-    protected function getTemporaryExtractionFolder($themeName)
+    protected function getTemporaryExtractionFolder($themeName): string
     {
         return $this->cacheDir . DIRECTORY_SEPARATOR . $themeName . '-tmp';
     }
@@ -268,7 +268,7 @@ class ThemeExporter
      *
      * @return string
      */
-    protected function getFlattenizationFolder($themeName)
+    protected function getFlattenizationFolder($themeName): string
     {
         return $this->cacheDir . DIRECTORY_SEPARATOR . $themeName;
     }
@@ -278,7 +278,7 @@ class ThemeExporter
      *
      * @return string
      */
-    protected function getExportDir($themeName)
+    protected function getExportDir($themeName): string
     {
         return $this->exportDir . DIRECTORY_SEPARATOR . $themeName;
     }
@@ -289,7 +289,7 @@ class ThemeExporter
      *
      * @return string
      */
-    protected function makeZipFilename($themeName, $locale)
+    protected function makeZipFilename($themeName, $locale): string
     {
         if (!file_exists($this->exportDir)) {
             mkdir($this->exportDir);
@@ -313,7 +313,7 @@ class ThemeExporter
      *
      * @throws Exception
      */
-    protected function makeArchiveParentDirectory($themeName, $locale)
+    protected function makeArchiveParentDirectory($themeName, $locale): string
     {
         $zipFilename = $this->makeZipFilename($themeName, $locale);
 

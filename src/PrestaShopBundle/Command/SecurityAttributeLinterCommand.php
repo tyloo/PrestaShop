@@ -107,7 +107,7 @@ final class SecurityAttributeLinterCommand extends Command
      *
      * @return string
      */
-    public static function parseExpression($expression)
+    public static function parseExpression($expression): string
     {
         $pattern1 = '#\[(.*)\]#';
         $pattern2 = '#is_granted\((.*),#';

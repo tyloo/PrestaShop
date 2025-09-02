@@ -308,7 +308,7 @@ class ShopLogosType extends AbstractType
      *
      * @return string
      */
-    private function getOriginalFieldNameFromSuffix($shopRestrictionFieldName, $suffix)
+    private function getOriginalFieldNameFromSuffix($shopRestrictionFieldName, $suffix): string
     {
         return str_replace($suffix, '', $shopRestrictionFieldName);
     }

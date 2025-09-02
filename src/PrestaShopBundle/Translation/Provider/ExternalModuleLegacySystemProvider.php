@@ -167,7 +167,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
     /**
      * {@inheritdoc}
      */
-    public function getDefaultResourceDirectory()
+    public function getDefaultResourceDirectory(): string
     {
         return $this->resourceDirectory . DIRECTORY_SEPARATOR . $this->moduleName . DIRECTORY_SEPARATOR . 'translations' . DIRECTORY_SEPARATOR;
     }
@@ -175,7 +175,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
     /**
      * {@inheritdoc}
      */
-    public function getResourceDirectory()
+    public function getResourceDirectory(): string
     {
         return $this->getDefaultResourceDirectory();
     }

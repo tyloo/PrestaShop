@@ -84,7 +84,7 @@ class StockMovementRepository extends StockManagementRepository
         $andWhereClause = '',
         $having = '',
         $orderByClause = null
-    ) {
+    ): string {
         if (null === $orderByClause) {
             $orderByClause = $this->orderByMovementsIds();
         }

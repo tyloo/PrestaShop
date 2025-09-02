@@ -163,7 +163,7 @@ final class OptionsFormHookNameCollectorPass implements CompilerPassInterface
      *
      * @return string
      */
-    private function formatHookName($hookStartsWith, $hookId, $hookEndsWidth)
+    private function formatHookName($hookStartsWith, $hookId, $hookEndsWidth): string
     {
         return $hookStartsWith . $hookId . $hookEndsWidth;
     }

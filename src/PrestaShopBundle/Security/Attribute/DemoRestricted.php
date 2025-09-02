@@ -57,7 +57,7 @@ class DemoRestricted
     /**
      * @return string
      */
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->domain;
     }
@@ -73,7 +73,7 @@ class DemoRestricted
     /**
      * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }

@@ -85,7 +85,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getTranslationsForms(array $translationsTree, $themeName = null)
+    public function getTranslationsForms(array $translationsTree, $themeName = null): string
     {
         $output = '';
         $viewProperties = $this->getSharedEditFormViewProperties();
@@ -99,7 +99,7 @@ class TranslationsExtension extends AbstractExtension
         return $output;
     }
 
-    public function concatenateEditTranslationForm($subtree, $viewProperties)
+    public function concatenateEditTranslationForm($subtree, $viewProperties): string
     {
         $output = '';
         $hasMessages = $this->hasMessages($subtree);
@@ -138,7 +138,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return string
      */
-    public function getTranslationsTree(array $translationsTree, $themeName = null)
+    public function getTranslationsTree(array $translationsTree, $themeName = null): string
     {
         $this->theme = $themeName;
 
@@ -157,7 +157,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return string
      */
-    public function makeSubtree($tree, $level = 3)
+    public function makeSubtree($tree, $level = 3): string
     {
         $output = '';
         $messagesSubtree = $this->hasMessages($tree);
@@ -236,7 +236,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return mixed|string
      */
-    protected function renderEditTranslationForm($properties)
+    protected function renderEditTranslationForm($properties): string
     {
         [$domain, $locale] = explode('.', $properties['camelized_domain']);
         $translationValue = $this->getTranslationValue($properties['translation']);
@@ -277,7 +277,7 @@ class TranslationsExtension extends AbstractExtension
         );
     }
 
-    protected function getTranslationHash($domain, $translationKey)
+    protected function getTranslationHash($domain, $translationKey): string
     {
         return md5($domain . $translationKey);
     }
@@ -339,7 +339,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return string
      */
-    protected function concatenateSubtreeHeader($subdomain, $subtree, $level = 2)
+    protected function concatenateSubtreeHeader($subdomain, $subtree, $level = 2): string
     {
         $hasMessagesSubtree = $this->hasMessages($subtree);
         $subject = $subdomain;
@@ -402,7 +402,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return string
      */
-    protected function getTranslationsFormStart(&$subtree, $output)
+    protected function getTranslationsFormStart(&$subtree, $output): string
     {
         $id = '';
         $parentAttribute = ' class="subdomains hide"';
@@ -455,7 +455,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return string
      */
-    protected function replaceWarningPlaceholder($output, $subtree)
+    protected function replaceWarningPlaceholder($output, $subtree): string
     {
         $missingTranslationsMessage = '';
         $missingTranslationsLongMessage = '';
@@ -516,7 +516,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return string
      */
-    protected function parseDomain($subtree)
+    protected function parseDomain($subtree): string
     {
         [$camelizedDomain] = $subtree['__messages'];
         [$domain] = explode('.', $camelizedDomain);
@@ -529,7 +529,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return string
      */
-    protected function getNavigation($id)
+    protected function getNavigation($id): string
     {
         return $this->twig->render(
             '@PrestaShop/Admin/Translations/include/pagination-bar.html.twig',
@@ -544,7 +544,7 @@ class TranslationsExtension extends AbstractExtension
      *
      * @return string
      */
-    protected function tagSubject($subject, $isLastChild, $id = null)
+    protected function tagSubject($subject, $isLastChild, $id = null): string
     {
         if ($isLastChild) {
             $openingTag = '<h2 class="domain-part">' .

@@ -277,7 +277,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @return string
      */
-    protected function generateSidebarLink($section, $title = false)
+    protected function generateSidebarLink($section, $title = false): string
     {
         $legacyContext = $this->get('prestashop.adapter.legacy.context');
 
@@ -358,7 +358,7 @@ class FrameworkBundleAdminController extends AbstractController
     /**
      * @return string
      */
-    protected function getDemoModeErrorMessage()
+    protected function getDemoModeErrorMessage(): string
     {
         return $this->trans('This functionality has been disabled.', 'Admin.Notifications.Error');
     }
@@ -402,7 +402,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @return string
      */
-    protected function trans($key, $domain, array $parameters = [])
+    protected function trans($key, $domain, array $parameters = []): string
     {
         return $this->getTranslator()->trans($key, $parameters, $domain);
     }
@@ -469,7 +469,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @throws Exception
      */
-    protected function getForbiddenActionMessage($action, $suffix = '')
+    protected function getForbiddenActionMessage($action, $suffix = ''): string
     {
         if ($action === 'delete' . $suffix) {
             return $this->trans('You do not have permission to delete this.', 'Admin.Notifications.Error');
@@ -495,7 +495,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @return string
      */
-    protected function getFallbackErrorMessage($type, $code, $message = '')
+    protected function getFallbackErrorMessage($type, $code, $message = ''): string
     {
         $isDebug = $this->get('kernel')->isDebug();
         if ($isDebug && !empty($message)) {

@@ -177,7 +177,7 @@ class HookExtension extends AbstractExtension
      *
      * @return string
      */
-    public function hooksArrayContent($hooksArray)
+    public function hooksArrayContent($hooksArray): string
     {
         if (!is_array($hooksArray)) {
             return '';
