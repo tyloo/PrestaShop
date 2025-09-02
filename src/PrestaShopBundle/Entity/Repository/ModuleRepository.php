@@ -33,10 +33,7 @@ use Doctrine\DBAL\Connection;
  */
 class ModuleRepository
 {
-    /**
-     * @var string
-     */
-    private $table;
+    private readonly string $table;
 
     /**
      * @param Connection $connection

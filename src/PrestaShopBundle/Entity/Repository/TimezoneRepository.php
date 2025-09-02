@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Repository\RepositoryInterface;
  */
 class TimezoneRepository implements RepositoryInterface
 {
-    /**
-     * @var string
-     */
-    private $timezoneTable;
+    private readonly string $timezoneTable;
 
     /**
      * @param Connection $connection

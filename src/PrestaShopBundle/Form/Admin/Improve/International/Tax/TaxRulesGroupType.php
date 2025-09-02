@@ -45,11 +45,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TaxRulesGroupType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    protected $isShopFeatureEnabled;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param bool $isShopFeatureEnabled
@@ -57,10 +52,9 @@ class TaxRulesGroupType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        bool $isShopFeatureEnabled
+        protected bool $isShopFeatureEnabled
     ) {
         parent::__construct($translator, $locales);
-        $this->isShopFeatureEnabled = $isShopFeatureEnabled;
     }
 
     /**

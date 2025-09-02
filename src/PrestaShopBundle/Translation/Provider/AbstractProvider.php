@@ -40,7 +40,7 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
     /**
      * @var string the Catalogue locale
      */
-    protected $locale;
+    protected string $locale;
 
     /**
      * @var string the Catalogue domain

@@ -31,10 +31,7 @@ use PrestashopInstallerException;
 
 class SqlLoader
 {
-    /**
-     * @var Db
-     */
-    protected $db;
+    protected ?\Db $db;
 
     /**
      * @var array List of keywords which will be replaced in queries

@@ -52,70 +52,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RetailPriceType extends TranslatorAwareType
 {
     /**
-     * @var Locale
-     */
-    protected $contextLocale;
-
-    /**
-     * @var Currency
-     */
-    protected $defaultCurrency;
-
-    /**
-     * @var RouterInterface
-     */
-    protected $router;
-
-    /**
-     * @var bool
-     */
-    protected $isTaxEnabled;
-
-    /**
-     * @var bool
-     */
-    protected $isEcotaxEnabled;
-
-    /**
-     * @var int
-     */
-    protected $ecoTaxGroupId;
-
-    /**
-     * @var TaxComputer
-     */
-    protected $taxComputer;
-
-    /**
-     * @var int
-     */
-    protected $contextCountryId;
-
-    /**
      * @param FormChoiceProviderInterface|FormChoiceAttributeProviderInterface $taxRuleGroupChoicesProvider
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        Locale $contextLocale,
-        Currency $defaultCurrency,
+        protected Locale $contextLocale,
+        protected \Currency $defaultCurrency,
         protected $taxRuleGroupChoicesProvider,
-        RouterInterface $router,
-        bool $isTaxEnabled,
-        bool $isEcotaxEnabled,
-        int $ecoTaxGroupId,
-        TaxComputer $taxComputer,
-        int $contextCountryId
+        protected RouterInterface $router,
+        protected bool $isTaxEnabled,
+        protected bool $isEcotaxEnabled,
+        protected int $ecoTaxGroupId,
+        protected TaxComputer $taxComputer,
+        protected int $contextCountryId
     ) {
         parent::__construct($translator, $locales);
-        $this->contextLocale = $contextLocale;
-        $this->defaultCurrency = $defaultCurrency;
-        $this->router = $router;
-        $this->isTaxEnabled = $isTaxEnabled;
-        $this->isEcotaxEnabled = $isEcotaxEnabled;
-        $this->ecoTaxGroupId = $ecoTaxGroupId;
-        $this->taxComputer = $taxComputer;
-        $this->contextCountryId = $contextCountryId;
     }
 
     /**

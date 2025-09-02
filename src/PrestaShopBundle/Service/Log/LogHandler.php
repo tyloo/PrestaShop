@@ -40,11 +40,8 @@ use Symfony\Component\DependencyInjection\Container;
  */
 class LogHandler extends AbstractProcessingHandler
 {
-    protected $container;
-
-    public function __construct(Container $container, $level = Logger::DEBUG, $bubble = true)
+    public function __construct(protected Container $container, $level = Logger::DEBUG, $bubble = true)
     {
-        $this->container = $container;
         parent::__construct($level, $bubble);
     }
 

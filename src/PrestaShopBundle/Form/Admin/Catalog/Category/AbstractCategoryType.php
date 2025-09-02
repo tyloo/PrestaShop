@@ -56,11 +56,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 abstract class AbstractCategoryType extends TranslatorAwareType
 {
     /**
-     * @var ConfigurationInterface
-     */
-    protected $configuration;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $customerGroupChoices
@@ -72,10 +67,9 @@ abstract class AbstractCategoryType extends TranslatorAwareType
         array $locales,
         private readonly array $customerGroupChoices,
         private readonly FeatureInterface $multiStoreFeature,
-        ConfigurationInterface $configuration
+        protected ConfigurationInterface $configuration
     ) {
         parent::__construct($translator, $locales);
-        $this->configuration = $configuration;
     }
 
     /**

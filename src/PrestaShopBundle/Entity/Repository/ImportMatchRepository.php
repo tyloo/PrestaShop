@@ -37,7 +37,7 @@ class ImportMatchRepository implements RepositoryInterface
     /**
      * @var string database table name with prefix
      */
-    private $importMatchTable;
+    private readonly string $importMatchTable;
 
     /**
      * @param Connection $connection

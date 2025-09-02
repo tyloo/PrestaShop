@@ -35,8 +35,8 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 abstract class AbstractCommand
 {
-    protected $kernel;
-    protected $application;
+    protected ?AppKernel $kernel;
+    protected Application $application;
     protected $commands = [];
 
     /**

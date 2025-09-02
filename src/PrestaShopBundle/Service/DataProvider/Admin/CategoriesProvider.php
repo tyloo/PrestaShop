@@ -42,10 +42,7 @@ class CategoriesProvider
     public const CATEGORY_THEME = 'theme_modules';
     public const CATEGORY_THEME_NAME = 'Theme modules';
 
-    /**
-     * @var array
-     */
-    private $categories;
+    private readonly array $categories;
 
     /**
      * @var array
@@ -55,7 +52,7 @@ class CategoriesProvider
     /**
      * @var object
      */
-    private $categoriesFromSource;
+    private readonly stdClass $categoriesFromSource;
 
     public function __construct(array $addonsCategories, private readonly array $modulesTheme)
     {

@@ -62,11 +62,6 @@ use Validate;
 class CustomerType extends TranslatorAwareType
 {
     /**
-     * @var FormCloner
-     */
-    protected $formCloner;
-
-    /**
      * @param TranslatorInterface $translator
      * @param GroupByIdChoiceProvider $groupByIdChoiceProvider
      * @param array $locales
@@ -84,10 +79,9 @@ class CustomerType extends TranslatorAwareType
         private $isB2bFeatureEnabled,
         private $isPartnerOffersEnabled,
         private readonly ConfigurationInterface $configuration,
-        FormCloner $formCloner
+        protected FormCloner $formCloner
     ) {
         parent::__construct($translator, $locales);
-        $this->formCloner = $formCloner;
     }
 
     /**

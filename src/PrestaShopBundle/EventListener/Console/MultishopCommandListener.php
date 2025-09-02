@@ -38,6 +38,9 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class MultishopCommandListener
 {
+    /**
+     * @var Context
+     */
     public $context;
 
     /**

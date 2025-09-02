@@ -40,11 +40,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class DetailsType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    protected $isFeatureEnabled;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param FormChoiceProviderInterface $productConditionChoiceProvider
@@ -54,10 +49,9 @@ class DetailsType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         private readonly FormChoiceProviderInterface $productConditionChoiceProvider,
-        bool $isFeatureEnabled
+        protected bool $isFeatureEnabled
     ) {
         parent::__construct($translator, $locales);
-        $this->isFeatureEnabled = $isFeatureEnabled;
     }
 
     /**

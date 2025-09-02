@@ -33,15 +33,9 @@ namespace PrestaShopBundle\Routing\Converter;
  */
 class LegacyRoute
 {
-    /**
-     * @var array
-     */
-    private $legacyLinks;
+    private readonly array $legacyLinks;
 
-    /**
-     * @var array
-     */
-    private $controllersActions;
+    private readonly array $controllersActions;
 
     /**
      * @param string $routeName
@@ -98,7 +92,7 @@ class LegacyRoute
     /**
      * @return array
      */
-    public function getLegacyLinks()
+    public function getLegacyLinks(): array
     {
         return $this->legacyLinks;
     }
@@ -114,7 +108,7 @@ class LegacyRoute
     /**
      * @return array
      */
-    public function getControllersActions()
+    public function getControllersActions(): array
     {
         return $this->controllersActions;
     }

@@ -34,8 +34,14 @@ class Language
     public $id;
     public $name;
     public $locale;
+    /**
+     * @var lowercase-string
+     */
     public $iso_code;
     public $language_code;
+    /**
+     * @var bool
+     */
     public $is_rtl;
     public $date_format_lite;
     public $date_format_full;

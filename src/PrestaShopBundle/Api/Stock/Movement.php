@@ -30,10 +30,7 @@ use PrestaShopBundle\Entity\ProductIdentity;
 
 class Movement
 {
-    /**
-     * @var int
-     */
-    private $delta;
+    private readonly int $delta;
 
     public function __construct(private readonly ProductIdentity $productIdentity, $delta)
     {
@@ -51,7 +48,7 @@ class Movement
     /**
      * @return int
      */
-    public function getDelta()
+    public function getDelta(): int
     {
         return $this->delta;
     }

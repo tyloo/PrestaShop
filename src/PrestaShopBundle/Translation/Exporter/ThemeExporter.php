@@ -42,7 +42,7 @@ class ThemeExporter
     /**
      * @var ThemeProvider the theme provider
      */
-    private $themeProvider;
+    private readonly ThemeProvider $themeProvider;
 
     /**
      * @var string the cache directory path

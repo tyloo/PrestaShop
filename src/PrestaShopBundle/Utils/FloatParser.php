@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Util\ArabicToLatinDigitConverter;
  */
 class FloatParser
 {
-    /**
-     * @var ArabicToLatinDigitConverter
-     */
-    private $arabicToLatinNumberConverter;
+    private readonly ArabicToLatinDigitConverter $arabicToLatinNumberConverter;
 
     public function __construct(?ArabicToLatinDigitConverter $arabicToLatinDigitConverter = null)
     {

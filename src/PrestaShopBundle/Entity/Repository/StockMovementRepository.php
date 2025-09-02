@@ -37,11 +37,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class StockMovementRepository extends StockManagementRepository
 {
     /**
-     * @var string
-     */
-    protected $dateFormatFull;
-
-    /**
      * StockMovementRepository constructor.
      *
      * @param ContainerInterface $container
@@ -59,7 +54,7 @@ class StockMovementRepository extends StockManagementRepository
         ContextAdapter $contextAdapter,
         ImageManager $imageManager,
         $tablePrefix,
-        string $dateFormatFull
+        protected string $dateFormatFull
     ) {
         parent::__construct(
             $container,
@@ -69,8 +64,6 @@ class StockMovementRepository extends StockManagementRepository
             $imageManager,
             $tablePrefix
         );
-
-        $this->dateFormatFull = $dateFormatFull;
     }
 
     /**

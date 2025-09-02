@@ -39,39 +39,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ApplicableGroupsType extends TranslatorAwareType
 {
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    protected $groupByIdChoiceProvider;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    protected $shopByIdChoiceProvider;
-
-    /**
-     * @var bool
-     */
-    protected $isMultiShopEnabled;
-
-    /**
-     * @var int
-     */
-    protected $contextShopId;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormChoiceProviderInterface $groupByIdChoiceProvider,
-        FormChoiceProviderInterface $shopByIdChoiceProvider,
-        bool $isMultiShopEnabled,
-        int $contextShopId
+        protected FormChoiceProviderInterface $groupByIdChoiceProvider,
+        protected FormChoiceProviderInterface $shopByIdChoiceProvider,
+        protected bool $isMultiShopEnabled,
+        protected int $contextShopId
     ) {
         parent::__construct($translator, $locales);
-        $this->groupByIdChoiceProvider = $groupByIdChoiceProvider;
-        $this->shopByIdChoiceProvider = $shopByIdChoiceProvider;
-        $this->isMultiShopEnabled = $isMultiShopEnabled;
-        $this->contextShopId = $contextShopId;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

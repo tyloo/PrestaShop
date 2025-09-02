@@ -46,12 +46,12 @@ class TranslatableType extends TranslatorAwareType
     /**
      * @var array List of enabled locales
      */
-    private $enabledLocales;
+    private readonly array $enabledLocales;
 
     /**
      * @var array List of all available locales
      */
-    private $availableLocales;
+    private readonly array $availableLocales;
 
     /**
      * @param TranslatorInterface $translator
@@ -149,7 +149,7 @@ class TranslatableType extends TranslatorAwareType
             'options' => [],
             'error_bubbling' => false,
             'only_enabled_locales' => false,
-            'locales' => fn(Options $options) => $options['only_enabled_locales'] ?
+            'locales' => fn(Options $options): array => $options['only_enabled_locales'] ?
                 $this->enabledLocales :
                 $this->availableLocales,
             // These two options allow to override the default choice of the component between tab and dropdown (by

@@ -42,16 +42,10 @@ class MultistoreUrlExtension extends AbstractExtension
     public const SHOP_CONTEXT_PARAMETER = 'setShopContext';
 
     /**
-     * @var RequestStack
-     */
-    protected $requestStack;
-
-    /**
      * @param RequestStack $requestStack
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(protected RequestStack $requestStack)
     {
-        $this->requestStack = $requestStack;
     }
 
     /**

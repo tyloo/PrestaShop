@@ -40,16 +40,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class StockType extends TranslatorAwareType
 {
     /**
-     * @var RouterInterface
-     */
-    protected $router;
-
-    /**
-     * @var string
-     */
-    protected $employeeIsoCode;
-
-    /**
      * @param TranslatorInterface $translator
      * @param RouterInterface $router,
      * @param array $locales
@@ -60,12 +50,10 @@ class StockType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         private readonly FormChoiceProviderInterface $packStockTypeChoiceProvider,
-        RouterInterface $router,
-        string $employeeIsoCode
+        protected RouterInterface $router,
+        protected string $employeeIsoCode
     ) {
         parent::__construct($translator, $locales);
-        $this->router = $router;
-        $this->employeeIsoCode = $employeeIsoCode;
     }
 
     /**

@@ -86,16 +86,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FormThemeExtension extends AbstractTypeExtension
 {
     /**
-     * @var FormRendererInterface
-     */
-    protected $formRenderer;
-
-    /**
      * @param FormRendererInterface $formRenderer
      */
-    public function __construct(FormRendererInterface $formRenderer)
+    public function __construct(protected FormRendererInterface $formRenderer)
     {
-        $this->formRenderer = $formRenderer;
     }
 
     /**

@@ -39,18 +39,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FeatureFlagType extends TranslatorAwareType
 {
-    /**
-     * @var FormCloner
-     */
-    protected $formCloner;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormCloner $formCloner
+        protected FormCloner $formCloner
     ) {
         parent::__construct($translator, $locales);
-        $this->formCloner = $formCloner;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

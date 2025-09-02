@@ -39,10 +39,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class LoadServicesFromModulesPass implements CompilerPassInterface
 {
-    /**
-     * @var string
-     */
-    private $configPath;
+    private readonly string $configPath;
 
     /**
      * Used to identify which scope of services need to be loaded (front services, admin

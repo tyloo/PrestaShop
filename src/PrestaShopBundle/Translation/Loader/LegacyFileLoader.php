@@ -37,10 +37,7 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 final class LegacyFileLoader implements LoaderInterface
 {
-    /**
-     * @var DomainNormalizer
-     */
-    private $domainNormalizer;
+    private readonly DomainNormalizer $domainNormalizer;
 
     /**
      * @param LegacyFileReader $fileReader

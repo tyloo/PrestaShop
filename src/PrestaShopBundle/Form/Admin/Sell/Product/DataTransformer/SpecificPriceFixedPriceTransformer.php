@@ -40,10 +40,7 @@ use Symfony\Component\Form\Extension\Core\DataTransformer\NumberToLocalizedStrin
  */
 class SpecificPriceFixedPriceTransformer implements DataTransformerInterface
 {
-    /**
-     * @var NumberToLocalizedStringTransformer
-     */
-    private $numberTransformer;
+    private readonly NumberToLocalizedStringTransformer $numberTransformer;
 
     public function __construct(?int $scale = null, ?bool $grouping = false, ?int $roundingMode = NumberFormatter::ROUND_HALFUP)
     {

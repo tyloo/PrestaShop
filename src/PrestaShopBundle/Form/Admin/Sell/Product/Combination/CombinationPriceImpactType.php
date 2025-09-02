@@ -49,67 +49,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CombinationPriceImpactType extends TranslatorAwareType
 {
-    /**
-     * @var Currency
-     */
-    protected $defaultCurrency;
-
-    /**
-     * @var string
-     */
-    protected $weightUnit;
-
-    /**
-     * @var bool
-     */
-    protected $isTaxEnabled;
-
-    /**
-     * @var bool
-     */
-    protected $isEcotaxEnabled;
-
-    /**
-     * @var int
-     */
-    protected $ecoTaxGroupId;
-
-    /**
-     * @var TaxComputer
-     */
-    protected $taxComputer;
-
-    /**
-     * @var int
-     */
-    protected $contextCountryId;
-
-    /**
-     * @var Locale
-     */
-    protected $contextLocale;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        Currency $defaultCurrency,
-        string $weightUnit,
-        bool $isTaxEnabled,
-        bool $isEcotaxEnabled,
-        int $ecoTaxGroupId,
-        TaxComputer $taxComputer,
-        int $contextCountryId,
-        Locale $contextLocale
+        protected \Currency $defaultCurrency,
+        protected string $weightUnit,
+        protected bool $isTaxEnabled,
+        protected bool $isEcotaxEnabled,
+        protected int $ecoTaxGroupId,
+        protected TaxComputer $taxComputer,
+        protected int $contextCountryId,
+        protected Locale $contextLocale
     ) {
         parent::__construct($translator, $locales);
-        $this->defaultCurrency = $defaultCurrency;
-        $this->weightUnit = $weightUnit;
-        $this->isTaxEnabled = $isTaxEnabled;
-        $this->isEcotaxEnabled = $isEcotaxEnabled;
-        $this->ecoTaxGroupId = $ecoTaxGroupId;
-        $this->taxComputer = $taxComputer;
-        $this->contextCountryId = $contextCountryId;
-        $this->contextLocale = $contextLocale;
     }
 
     /**

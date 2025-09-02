@@ -47,31 +47,6 @@ abstract class StockManagementRepository
     use NormalizeFieldTrait;
 
     /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @var Connection
-     */
-    protected $connection;
-
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * @var ContextAdapter
-     */
-    protected $contextAdapter;
-
-    /**
-     * @var ImageManager
-     */
-    protected $imageManager;
-
-    /**
      * @var int
      */
     protected $foundRows = 0;
@@ -90,19 +65,8 @@ abstract class StockManagementRepository
      *
      * @throws NotImplementedException
      */
-    public function __construct(
-        ContainerInterface $container,
-        Connection $connection,
-        EntityManager $entityManager,
-        ContextAdapter $contextAdapter,
-        ImageManager $imageManager,
-        protected $tablePrefix
-    ) {
-        $this->container = $container;
-        $this->connection = $connection;
-        $this->em = $entityManager;
-        $this->contextAdapter = $contextAdapter;
-        $this->imageManager = $imageManager;
+    public function __construct(protected ContainerInterface $container, protected Connection $connection, protected EntityManager $em, protected ContextAdapter $contextAdapter, protected ImageManager $imageManager, protected $tablePrefix)
+    {
     }
 
     /**

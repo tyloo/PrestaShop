@@ -46,7 +46,7 @@ final class HookRegistry
     /**
      * @var array<string, array<string, array{args: array, name:string, location: string, modules: array}>> the list of hooks data
      */
-    private $hooks;
+    private array $hooks;
 
     public function __construct()
     {

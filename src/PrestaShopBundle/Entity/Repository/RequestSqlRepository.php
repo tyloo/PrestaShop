@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Repository\RepositoryInterface;
  */
 class RequestSqlRepository implements RepositoryInterface
 {
-    /**
-     * @var string
-     */
-    private $requestSqlTable;
+    private readonly string $requestSqlTable;
 
     /**
      * @param Connection $connection

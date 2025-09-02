@@ -55,20 +55,14 @@ class CombinationItemType extends TranslatorAwareType
      */
     private const INLINE_ACTIONS_LIMIT = 1;
 
-    /**
-     * @var Currency
-     */
-    protected $defaultCurrency;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        Currency $defaultCurrency,
+        protected \Currency $defaultCurrency,
         private readonly FeatureInterface $multiStoreFeature,
         private readonly int $contextShopId
     ) {
         parent::__construct($translator, $locales);
-        $this->defaultCurrency = $defaultCurrency;
     }
 
     /**

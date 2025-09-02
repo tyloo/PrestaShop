@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Repository\RepositoryInterface;
  */
 class LogRepository implements RepositoryInterface
 {
-    /**
-     * @var string
-     */
-    private $logTable;
+    private readonly string $logTable;
 
     /**
      * @param string $databasePrefix

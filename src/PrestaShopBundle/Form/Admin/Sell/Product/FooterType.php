@@ -43,11 +43,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FooterType extends TranslatorAwareType
 {
     /**
-     * @var ProductPreviewProvider
-     */
-    protected $productPreviewUrlProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param ProductProvider $productUrlProvider
@@ -60,13 +55,12 @@ class FooterType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         private readonly ProductProvider $productUrlProvider,
-        ProductPreviewProvider $productPreviewUrlProvider,
+        protected ProductPreviewProvider $productPreviewUrlProvider,
         private readonly RouterInterface $router,
         private readonly FeatureInterface $multiStoreFeature,
         private readonly ?int $contextShopId
     ) {
         parent::__construct($translator, $locales);
-        $this->productPreviewUrlProvider = $productPreviewUrlProvider;
     }
 
     /**

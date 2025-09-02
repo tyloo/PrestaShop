@@ -37,10 +37,7 @@ class FeatureAttributeRepository
 {
     use NormalizeFieldTrait;
 
-    /**
-     * @var int
-     */
-    private $languageId;
+    private int $languageId;
 
     /**
      * @var int
