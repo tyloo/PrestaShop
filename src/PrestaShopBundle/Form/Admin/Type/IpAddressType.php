@@ -40,7 +40,7 @@ class IpAddressType extends TextType
     /**
      * {@inheritdoc}
      */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return TextType::class;
     }
