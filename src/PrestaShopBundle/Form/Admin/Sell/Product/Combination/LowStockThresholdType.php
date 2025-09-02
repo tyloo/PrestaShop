@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class LowStockThresholdType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly RouterInterface $router
+        private readonly RouterInterface $router,
     ) {
         parent::__construct($translator, $locales);
     }
@@ -59,7 +60,7 @@ class LowStockThresholdType extends TranslatorAwareType
                     'The email will be sent to all users who have access to the Stock page. To modify permissions, go to [1]Advanced Parameters > Team[/1].',
                     'Admin.Catalog.Help',
                     [
-                        '[1]' => sprintf(
+                        '[1]' => \sprintf(
                             '<a target="_blank" href="%s">',
                             $this->router->generate('admin_employees_index')
                         ),

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,21 +38,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PaginationFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private readonly PaginationConfiguration $configuration, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly PaginationConfiguration $configuration,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->configuration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         if ($errors = $this->validate($data)) {
@@ -64,15 +61,13 @@ class PaginationFormDataProvider implements FormDataProviderInterface
     /**
      * Perform validation on form data before saving it.
      *
-     * @param array $data
-     *
      * @return array Returns array of errors
      */
     protected function validate(array $data): array
     {
         $errors = [];
         $productsPerPage = $data['products_per_page'];
-        if (!is_numeric($productsPerPage) || 0 >= $productsPerPage) {
+        if (! is_numeric($productsPerPage) || $productsPerPage <= 0) {
             $errors[] = [
                 'key' => 'The %s field is invalid. Please enter a positive integer.',
                 'domain' => 'Admin.Notifications.Error',

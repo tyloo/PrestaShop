@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,21 +36,16 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class LogsFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private readonly LogsConfiguration $logsConfiguration)
-    {
+    public function __construct(
+        private readonly LogsConfiguration $logsConfiguration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->logsConfiguration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         return $this->logsConfiguration->updateConfiguration($data);

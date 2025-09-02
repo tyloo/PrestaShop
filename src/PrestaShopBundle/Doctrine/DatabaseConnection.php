@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,7 +60,7 @@ class DatabaseConnection extends Connection
         try {
             $detectedVersion = parent::getDatabasePlatform();
         } catch (Exception $e) {
-            if (!file_exists(self::PARAMETERS_FILE)) {
+            if (! file_exists(self::PARAMETERS_FILE)) {
                 return new MySQL57Platform();
             }
 

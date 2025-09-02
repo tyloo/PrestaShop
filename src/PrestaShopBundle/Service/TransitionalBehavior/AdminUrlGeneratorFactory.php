@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,9 @@ use Symfony\Component\Routing\Router;
  */
 class AdminUrlGeneratorFactory
 {
-    /**
-     * Constructor.
-     *
-     * @param Router $router
-     */
-    public function __construct(private readonly Router $router)
-    {
+    public function __construct(
+        private readonly Router $router,
+    ) {
     }
 
     /**
@@ -64,7 +61,7 @@ class AdminUrlGeneratorFactory
      *
      * @return UrlGeneratorInterface the UrlGenerator instance for Admin Symfony routes
      */
-    public function forSymfony(): \Symfony\Component\Routing\Router
+    public function forSymfony(): Router
     {
         return $this->router;
     }

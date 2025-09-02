@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,26 +44,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DescriptionType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param RouterInterface $router
-     * @param string $employeeIsoCode
-     * @param int $shortDescriptionMaxLength
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly RouterInterface $router,
         private readonly string $employeeIsoCode,
-        private readonly int $shortDescriptionMaxLength
+        private readonly int $shortDescriptionMaxLength,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $productId = $options['product_id'];
@@ -127,9 +118,6 @@ class DescriptionType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

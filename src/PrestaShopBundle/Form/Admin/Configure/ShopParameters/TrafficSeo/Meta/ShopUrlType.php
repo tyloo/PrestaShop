@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,29 +39,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ShopUrlType extends TranslatorAwareType
 {
-    /**
-     * ShopUrlType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param bool $isShopFeatureActive
-     * @param bool $doesMainShopUrlExist
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly bool $isShopFeatureActive,
-        private readonly bool $doesMainShopUrlExist
+        private readonly bool $doesMainShopUrlExist,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (!$this->isShopFeatureActive && $this->doesMainShopUrlExist) {
+        if (! $this->isShopFeatureActive && $this->doesMainShopUrlExist) {
             $builder
                 ->add('domain', TextType::class, [
                     'label' => $this->trans(
@@ -83,9 +73,6 @@ class ShopUrlType extends TranslatorAwareType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

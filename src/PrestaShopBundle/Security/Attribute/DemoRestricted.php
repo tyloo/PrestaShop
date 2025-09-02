@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,13 +51,10 @@ class DemoRestricted
         /**
          * The route params which are used together to generate the redirect route.
          */
-        private array $redirectQueryParamsToKeep = []
+        private array $redirectQueryParamsToKeep = [],
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getDomain(): string
     {
         return $this->domain;
@@ -70,9 +68,6 @@ class DemoRestricted
         $this->domain = $domain;
     }
 
-    /**
-     * @return string
-     */
     public function getMessage(): string
     {
         return $this->message;
@@ -86,9 +81,6 @@ class DemoRestricted
         $this->message = $message;
     }
 
-    /**
-     * @return string
-     */
     public function getRedirectRoute(): ?string
     {
         return $this->redirectRoute;
@@ -104,8 +96,6 @@ class DemoRestricted
 
     /**
      * Returns the alias name for an annotated configuration.
-     *
-     * @return string
      */
     public function getAliasName(): string
     {
@@ -114,17 +104,12 @@ class DemoRestricted
 
     /**
      * Returns whether multiple annotations of this type are allowed.
-     *
-     * @return bool
      */
     public function allowArray(): bool
     {
         return true;
     }
 
-    /**
-     * @return array
-     */
     public function getRedirectQueryParamsToKeep(): array
     {
         return $this->redirectQueryParamsToKeep;

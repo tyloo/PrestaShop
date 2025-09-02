@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,15 @@ use PrestaShop\PrestaShop\Core\Module\Legacy\ModuleInterface;
 final class HookRegistry
 {
     public const HOOK_NOT_CALLED = 'notCalled';
+
     public const HOOK_NOT_REGISTERED = 'notRegistered';
+
     public const HOOK_CALLED = 'called';
 
     /**
      * @var array the current selected hook during the request
      */
-    private $currentHook = null;
+    private $currentHook;
 
     /**
      * @var array<string, array<string, array{args: array, name:string, location: string, modules: array}>> the list of hooks data
@@ -59,9 +62,9 @@ final class HookRegistry
 
     /**
      * @param string $hookName
-     * @param array $hookArguments
-     * @param string $file filepath where the "Hook::exec" call have been done
-     * @param int $line position in file where the "Hook::exec" call have been done
+     * @param array  $hookArguments
+     * @param string $file          filepath where the "Hook::exec" call have been done
+     * @param int    $line          position in file where the "Hook::exec" call have been done
      */
     public function selectHook($hookName, $hookArguments, $file, $line): void
     {
@@ -105,7 +108,7 @@ final class HookRegistry
      * A callback have been executed by the module during the Hook dispatch.
      *
      * @param ModuleCore $module
-     * @param array $args All arguments passed to the Module callback
+     * @param array      $args   All arguments passed to the Module callback
      */
     public function hookedByCallback(ModuleInterface $module, $args): void
     {
@@ -118,7 +121,7 @@ final class HookRegistry
      * A widget have been rendered by the module during the Hook dispatch.
      *
      * @param ModuleCore $module
-     * @param array $args All arguments passed to the Module callback
+     * @param array      $args   All arguments passed to the Module callback
      */
     public function hookedByWidget(ModuleInterface $module, $args): void
     {

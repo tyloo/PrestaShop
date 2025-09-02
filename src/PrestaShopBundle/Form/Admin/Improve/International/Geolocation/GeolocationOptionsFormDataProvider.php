@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,21 +36,16 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class GeolocationOptionsFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @param DataConfigurationInterface $dataConfiguration
-     */
-    public function __construct(private readonly DataConfigurationInterface $dataConfiguration)
-    {
+    public function __construct(
+        private readonly DataConfigurationInterface $dataConfiguration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         $configuration = $this->dataConfiguration->getConfiguration();
 
-        if (!empty($configuration['geolocation_countries'])) {
+        if (! empty($configuration['geolocation_countries'])) {
             $configuration['geolocation_countries'] = explode(';', (string) $configuration['geolocation_countries']);
         } else {
             $configuration['geolocation_countries'] = [];
@@ -58,9 +54,6 @@ final class GeolocationOptionsFormDataProvider implements FormDataProviderInterf
         return $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         $errors = [];
@@ -73,7 +66,7 @@ final class GeolocationOptionsFormDataProvider implements FormDataProviderInterf
             ];
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             return $errors;
         }
 

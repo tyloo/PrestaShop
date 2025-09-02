@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -172,14 +173,13 @@ class LegacyLinkLinterCommand extends Command
         'AdminAdminAPI',
     ];
 
-    public function __construct(private readonly LegacyLinkLinter $legacyLinkLinter, private readonly AdminRouteProvider $adminRouteProvider)
-    {
+    public function __construct(
+        private readonly LegacyLinkLinter $legacyLinkLinter,
+        private readonly AdminRouteProvider $adminRouteProvider,
+    ) {
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -187,18 +187,15 @@ class LegacyLinkLinterCommand extends Command
             ->setDescription('Checks if _legacy_link is configured in BackOffice routes');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $unconfiguredRoutes = $this->getUnconfiguredRoutes();
         $io = new SymfonyStyle($input, $output);
 
-        if (!empty($unconfiguredRoutes)) {
-            $io->warning(sprintf(
+        if (! empty($unconfiguredRoutes)) {
+            $io->warning(\sprintf(
                 '%s routes are not configured with _legacy_link:',
-                count($unconfiguredRoutes)
+                \count($unconfiguredRoutes)
             ));
             $io->listing($unconfiguredRoutes);
 
@@ -212,8 +209,6 @@ class LegacyLinkLinterCommand extends Command
 
     /**
      * Returns routes that are missing _legacy_link configuration
-     *
-     * @return array
      */
     private function getUnconfiguredRoutes(): array
     {
@@ -221,10 +216,10 @@ class LegacyLinkLinterCommand extends Command
         $unconfiguredRoutes = [];
 
         foreach ($routes as $routeName => $route) {
-            if (in_array($routeName, self::ROUTE_WHITE_LIST) || true === $this->legacyLinkLinter->lint($routeName, $route)) {
+            if (\in_array($routeName, self::ROUTE_WHITE_LIST, true) || $this->legacyLinkLinter->lint($routeName, $route) === true) {
                 continue;
             }
-            if ($route->getDefault('_legacy_controller') && in_array($route->getDefault('_legacy_controller'), self::CONTROLLER_WHITE_LIST)) {
+            if ($route->getDefault('_legacy_controller') && \in_array($route->getDefault('_legacy_controller'), self::CONTROLLER_WHITE_LIST, true)) {
                 continue;
             }
             $unconfiguredRoutes[] = $routeName;

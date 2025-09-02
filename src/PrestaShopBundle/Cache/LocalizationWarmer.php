@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,15 +33,17 @@ use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class LocalizationWarmer implements CacheWarmerInterface
 {
-    public function __construct(private $version, private $country)
-    {
+    public function __construct(
+        private $version,
+        private $country,
+    ) {
     }
 
     public function warmUp($cacheDir)
     {
         $fs = new Filesystem();
 
-        if (!is_dir($cacheDir)) {
+        if (! is_dir($cacheDir)) {
             try {
                 $fs->mkdir($cacheDir);
             } catch (IOExceptionInterface) {

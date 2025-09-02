@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,12 +45,9 @@ use Symfony\Component\Validator\Constraints\Type;
  */
 class TaxType extends TranslatorAwareType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $invalidCharsText = sprintf(
+        $invalidCharsText = \sprintf(
             '%s ' . TypedRegexValidator::GENERIC_NAME_CHARS,
             $this->trans('Invalid characters:', 'Admin.Notifications.Info')
         );
@@ -59,7 +57,7 @@ class TaxType extends TranslatorAwareType
                 'Tax name to display in carts and on invoices (e.g. "VAT").',
                 'Admin.International.Help'
             )
-            . PHP_EOL
+            . \PHP_EOL
             . $invalidCharsText;
 
         $builder
@@ -97,8 +95,9 @@ class TaxType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans(
-                                    'Rate', 'Admin.International.Feature'
+                                \sprintf('"%s"', $this->trans(
+                                    'Rate',
+                                    'Admin.International.Feature'
                                 )),
                             ]
                         ),

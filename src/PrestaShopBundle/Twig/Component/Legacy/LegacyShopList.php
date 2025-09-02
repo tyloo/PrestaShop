@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,17 @@ class LegacyShopList
     protected ?string $renderedShops = null;
 
     public function __construct(
-        protected readonly MultistoreFeature $multistoreFeature
+        protected readonly MultistoreFeature $multistoreFeature,
     ) {
     }
 
     public function getShopList(): ?string
     {
-        if (!$this->multistoreFeature->isUsed()) {
+        if (! $this->multistoreFeature->isUsed()) {
             return null;
         }
 
-        if (!$this->renderedShops) {
+        if (! $this->renderedShops) {
             $helperShop = new HelperShop();
 
             $this->renderedShops = $helperShop->getRenderedShopList();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,19 +35,16 @@ use Doctrine\DBAL\Connection;
 class OrderInvoiceRepository
 {
     /**
-     * @param Connection $connection
      * @param string $tablePrefix
      */
-    public function __construct(private readonly Connection $connection, private $tablePrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private $tablePrefix,
+    ) {
     }
 
     /**
      * Count number of orders grouped by order state.
-     *
-     * @param array $shopIds
-     *
-     * @return array
      */
     public function countByOrderState(array $shopIds): array
     {

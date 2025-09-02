@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,27 +36,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class ImportThemeType
- */
 class ImportThemeType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $themeZipsChoices
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly array $themeZipsChoices
+        private readonly array $themeZipsChoices,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -93,9 +83,6 @@ class ImportThemeType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

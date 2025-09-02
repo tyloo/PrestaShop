@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ interface TranslationsFactoryInterface
      * Generates extract of global Catalogue, using domain's identifiers.
      *
      * @param string $identifier Domain identifier
-     * @param string $locale Locale identifier
+     * @param string $locale     Locale identifier
      *
      * @return MessageCatalogueInterface
      *
@@ -48,9 +49,9 @@ interface TranslationsFactoryInterface
      * Generates Translation tree in Back Office.
      *
      * @param string $domainIdentifier Domain identifier
-     * @param string $locale Locale identifier
-     * @param null $theme
-     * @param null $search
+     * @param string $locale           Locale identifier
+     * @param null   $theme
+     * @param null   $search
      *
      * @return array Translation tree structure
      *

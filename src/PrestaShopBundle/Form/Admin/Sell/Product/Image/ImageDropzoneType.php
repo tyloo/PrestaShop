@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,14 +51,11 @@ class ImageDropzoneType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly FeatureInterface $multiStoreFeature
+        private readonly FeatureInterface $multiStoreFeature,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -86,9 +84,6 @@ class ImageDropzoneType extends TranslatorAwareType
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -104,7 +99,10 @@ class ImageDropzoneType extends TranslatorAwareType
                 'window.selectedFiles' => $this->trans(
                     '[1]{filesNb}[/1] selected file(s)',
                     'Admin.Catalog.Feature',
-                    ['[1]' => '<span>', '[/1]' => '</span>']
+                    [
+                        '[1]' => '<span>',
+                        '[/1]' => '</span>',
+                    ]
                 ),
                 'window.notAssociatedToShop' => $this->trans('Image is not associated to this store', 'Admin.Catalog.Feature'),
                 'window.useAsCover' => $this->trans('Use as cover image', 'Admin.Catalog.Feature'),
@@ -127,7 +125,10 @@ class ImageDropzoneType extends TranslatorAwareType
                 'window.fileisTooLarge' => $this->trans(
                     'The file is too large. The maximum size allowed is [1] MB. The file you are trying to upload is [2] MB.',
                     'Admin.Notifications.Error',
-                    ['[1]' => '{{maxFilesize}}', '[2]' => '{{filesize}}']
+                    [
+                        '[1]' => '{{maxFilesize}}',
+                        '[2]' => '{{filesize}}',
+                    ]
                 ),
                 'window.dropImages' => $this->trans('Drop images here', 'Admin.Catalog.Feature'),
                 'window.selectFiles' => $this->trans('or select files', 'Admin.Catalog.Feature'),
@@ -158,9 +159,6 @@ class ImageDropzoneType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);

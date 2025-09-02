@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,12 +52,6 @@ class QueryProvider implements ProviderInterface
     }
 
     /**
-     * @param Operation $operation
-     * @param array $uriVariables
-     * @param array $context
-     *
-     * @return array|object|null
-     *
      * @throws ExceptionInterface
      * @throws CQRSQueryNotFoundException
      * @throws ReflectionException
@@ -64,8 +59,8 @@ class QueryProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): array|object|null
     {
         $CQRSQueryClass = $this->getCQRSQueryClass($operation);
-        if (null === $CQRSQueryClass) {
-            throw new CQRSQueryNotFoundException(sprintf('Resource %s has no CQRS query defined.', $operation->getClass()));
+        if ($CQRSQueryClass === null) {
+            throw new CQRSQueryNotFoundException(\sprintf('Resource %s has no CQRS query defined.', $operation->getClass()));
         }
 
         $filters = $context['filters'] ?? [];
@@ -74,7 +69,7 @@ class QueryProvider implements ProviderInterface
         $CQRSQuery = $this->domainSerializer->denormalize($queryParameters, $CQRSQueryClass, null, [NormalizationMapper::NORMALIZATION_MAPPING => $this->getCQRSQueryMapping($operation)]);
         $CQRSQueryResult = $this->queryBus->handle($CQRSQuery);
         // The result may be null (for DELETE action for example)
-        if (null === $CQRSQueryResult) {
+        if ($CQRSQueryResult === null) {
             return new ($operation->getClass())();
         }
 

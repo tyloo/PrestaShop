@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,20 +42,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OrderPaymentType extends AbstractType
 {
-    /**
-     * @param ConfigurableFormChoiceProviderInterface $currencySymbolByIdChoiceProvider
-     * @param ConfigurableFormChoiceProviderInterface $orderInvoiceChoiceProvider
-     * @param FormChoiceProviderInterface $installedPaymentModulesChoiceProvider
-     * @param int $contextLanguageId
-     * @param int $contextShopId
-     */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurableFormChoiceProviderInterface $currencySymbolByIdChoiceProvider, private readonly ConfigurableFormChoiceProviderInterface $orderInvoiceChoiceProvider, private readonly FormChoiceProviderInterface $installedPaymentModulesChoiceProvider, private readonly int $contextLanguageId, private readonly int $contextShopId)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurableFormChoiceProviderInterface $currencySymbolByIdChoiceProvider,
+        private readonly ConfigurableFormChoiceProviderInterface $orderInvoiceChoiceProvider,
+        private readonly FormChoiceProviderInterface $installedPaymentModulesChoiceProvider,
+        private readonly int $contextLanguageId,
+        private readonly int $contextShopId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -74,7 +71,9 @@ class OrderPaymentType extends AbstractType
                     new GreaterThan([
                         'value' => 0,
                         'message' => $this->translator->trans(
-                            'Invalid value: the payment must be a positive amount.', [], 'Admin.Notifications.Error'
+                            'Invalid value: the payment must be a positive amount.',
+                            [],
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                 ],
@@ -91,9 +90,6 @@ class OrderPaymentType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

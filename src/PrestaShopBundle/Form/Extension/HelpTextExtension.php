@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class HelpTextExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -50,17 +48,11 @@ class HelpTextExtension extends AbstractTypeExtension
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['help'] = $options['help'] ?? null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

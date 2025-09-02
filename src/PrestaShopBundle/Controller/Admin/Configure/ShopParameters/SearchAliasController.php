@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -89,7 +90,7 @@ class SearchAliasController extends PrestaShopAdminController
         try {
             $formHandlerResult = $formHandler->handle($form);
 
-            if (null !== $formHandlerResult->getIdentifiableObjectId()) {
+            if ($formHandlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation.', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_search_alias_index');
@@ -116,9 +117,7 @@ class SearchAliasController extends PrestaShopAdminController
         FormHandlerInterface $formHandler,
     ): Response {
         try {
-            /**
-             * @var AliasForEditing $editableAlias
-             */
+            /** @var AliasForEditing $editableAlias */
             $editableAlias = $this->dispatchQuery(new GetAliasesBySearchTermForEditing($searchTerm));
 
             $form = $formBuilder->getFormFor($searchTerm);

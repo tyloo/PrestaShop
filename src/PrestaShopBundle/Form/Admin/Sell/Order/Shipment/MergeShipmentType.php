@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,7 +65,7 @@ class MergeShipmentType extends AbstractType
         $builder->add('merge_to_shipment', ChoiceType::class, [
             'label' => $this->translator->trans('Select shipment to merge to', [], 'Admin.Orderscustomers.Feature'),
             'choices' => $options['shipments'],
-            'choice_label' => fn($shipment): string => $this->translator->trans(
+            'choice_label' => fn ($shipment): string => $this->translator->trans(
                 'Shipment %shipment_id% - carrier %carrier_name%',
                 [
                     '%shipment_id%' => $shipment->getId(),

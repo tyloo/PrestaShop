@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,8 +65,6 @@ class CommonController extends PrestaShopAdminController
      * - Created orders
      * - Registered customers
      * - New messages.
-     *
-     * @return JsonResponse
      */
     public function notificationsAction(): JsonResponse
     {
@@ -77,10 +76,6 @@ class CommonController extends PrestaShopAdminController
 
     /**
      * Update the last time a notification type has been seen.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     public function notificationsAckAction(Request $request): JsonResponse
     {
@@ -105,19 +100,13 @@ class CommonController extends PrestaShopAdminController
      * {% render controller('PrestaShopBundle\\Controller\\Admin\\CommonController::paginationAction',
      *   {'limit': limit, 'offset': offset, 'total': product_count, 'caller_parameters': pagination_parameters}) %}
      *
-     * @param Request $request
-     * @param int $limit
-     * @param int $offset
-     * @param int $total
-     * @param string $view full|quicknav To change default template used to render the content
+     * @param string $view   full|quicknav To change default template used to render the content
      * @param string $prefix Indicates the params prefix (eg: ?limit=10&offset=20 -> ?scope[limit]=10&scope[offset]=20)
-     *
-     * @return Response
      */
     public function paginationAction(Request $request, ?int $limit = 10, ?int $offset = 0, ?int $total = 0, string $view = 'full', string $prefix = ''): Response
     {
-        $offsetParam = empty($prefix) ? 'offset' : sprintf('%s[offset]', $prefix);
-        $limitParam = empty($prefix) ? 'limit' : sprintf('%s[limit]', $prefix);
+        $offsetParam = empty($prefix) ? 'offset' : \sprintf('%s[offset]', $prefix);
+        $limitParam = empty($prefix) ? 'limit' : \sprintf('%s[limit]', $prefix);
 
         $limit = max($limit, 10);
 
@@ -135,7 +124,7 @@ class CommonController extends PrestaShopAdminController
         }
         $callerParameters += ['_route' => false];
         $routeName = $request->attributes->get('caller_route', $callerParameters['_route']);
-        $nextPageUrl = (!$routeName || ($offset + $limit >= $total)) ? false : $this->generateUrl($routeName, array_merge(
+        $nextPageUrl = (! $routeName || ($offset + $limit >= $total)) ? false : $this->generateUrl($routeName, array_merge(
             $callerParameters,
             [
                 $offsetParam => min($total - 1, $offset + $limit),
@@ -143,35 +132,35 @@ class CommonController extends PrestaShopAdminController
             ]
         ));
 
-        $previousPageUrl = (!$routeName || ($offset == 0)) ? false : $this->generateUrl($routeName, array_merge(
+        $previousPageUrl = (! $routeName || ($offset === 0)) ? false : $this->generateUrl($routeName, array_merge(
             $callerParameters,
             [
                 $offsetParam => max(0, $offset - $limit),
                 $limitParam => $limit,
             ]
         ));
-        $firstPageUrl = (!$routeName || ($offset == 0)) ? false : $this->generateUrl($routeName, array_merge(
+        $firstPageUrl = (! $routeName || ($offset === 0)) ? false : $this->generateUrl($routeName, array_merge(
             $callerParameters,
             [
                 $offsetParam => 0,
                 $limitParam => $limit,
             ]
         ));
-        $lastPageUrl = (!$routeName || ($offset + $limit >= $total)) ? false : $this->generateUrl($routeName, array_merge(
+        $lastPageUrl = (! $routeName || ($offset + $limit >= $total)) ? false : $this->generateUrl($routeName, array_merge(
             $callerParameters,
             [
                 $offsetParam => ($pageCount - 1) * $limit,
                 $limitParam => $limit,
             ]
         ));
-        $changeLimitUrl = (!$routeName) ? false : $this->generateUrl($routeName, array_merge(
+        $changeLimitUrl = (! $routeName) ? false : $this->generateUrl($routeName, array_merge(
             $callerParameters,
             [
                 $offsetParam => 0,
                 $limitParam => '_limit',
             ]
         ));
-        $jumpPageUrl = (!$routeName) ? false : $this->generateUrl($routeName, array_merge(
+        $jumpPageUrl = (! $routeName) ? false : $this->generateUrl($routeName, array_merge(
             $callerParameters,
             [
                 $offsetParam => 999999,
@@ -196,7 +185,7 @@ class CommonController extends PrestaShopAdminController
             'jump_page_url' => $jumpPageUrl,
             'limit_choices' => $limitChoices,
         ];
-        if ($view != 'full') {
+        if ($view !== 'full') {
             return $this->render('@PrestaShop/Admin/Common/pagination_' . $view . '.html.twig', $vars);
         }
 
@@ -205,12 +194,6 @@ class CommonController extends PrestaShopAdminController
 
     /**
      * Render a right sidebar with content from an URL.
-     *
-     * @param string $url
-     * @param string $title
-     * @param string $footer
-     *
-     * @return Response
      */
     public function renderSidebarAction(
         Tools $tools,
@@ -227,10 +210,6 @@ class CommonController extends PrestaShopAdminController
 
     /**
      * Renders a KPI row.
-     *
-     * @param KpiRowInterface $kpiRow
-     *
-     * @return Response
      */
     public function renderKpiRowAction(
         KpiRowInterface $kpiRow,
@@ -242,12 +221,6 @@ class CommonController extends PrestaShopAdminController
     }
 
     /**
-     * @param string $controller
-     * @param string $action
-     * @param string $filterId
-     *
-     * @return JsonResponse
-     *
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function resetSearchAction(
@@ -260,13 +233,16 @@ class CommonController extends PrestaShopAdminController
         $shopId = $this->getShopContext()->getId();
 
         // for compatibility when $controller and $action are used
-        if (!empty($controller) && !empty($action)) {
+        if (! empty($controller) && ! empty($action)) {
             $adminFilter = $adminFiltersRepository->findByEmployeeAndRouteParams(
-                $employeeId, $shopId, $controller, $action
+                $employeeId,
+                $shopId,
+                $controller,
+                $action
             );
         }
 
-        if (!empty($filterId)) {
+        if (! empty($filterId)) {
             $adminFilter = $adminFiltersRepository->findByEmployeeAndFilterId($employeeId, $shopId, $filterId);
         }
 
@@ -280,11 +256,6 @@ class CommonController extends PrestaShopAdminController
     /**
      * Process Grid search.
      *
-     * @param Request $request
-     * @param string $gridDefinitionFactoryServiceId
-     * @param string $redirectRoute
-     * @param array $redirectQueryParamsToKeep
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
@@ -293,7 +264,7 @@ class CommonController extends PrestaShopAdminController
         Request $request,
         string $gridDefinitionFactoryServiceId,
         string $redirectRoute,
-        array $redirectQueryParamsToKeep = []
+        array $redirectQueryParamsToKeep = [],
     ) {
         $definitionFactory = $gridDefinitionFactoryCollection->getFactory($gridDefinitionFactoryServiceId);
 
@@ -304,13 +275,13 @@ class CommonController extends PrestaShopAdminController
             // for backward compatibility for AbstractGridDefinitionFactory
             // using ::GRID_ID (that has been replaced by AbstractFilterableGridDefinitionFactory)
             $reflect = new ReflectionClass($definitionFactory);
-            if (array_key_exists('GRID_ID', $reflect->getConstants())) {
+            if (\array_key_exists('GRID_ID', $reflect->getConstants())) {
                 /* @phpstan-ignore-next-line Check of constant is done with ReflectionClass */
                 $filterId = $definitionFactory::GRID_ID;
             }
         }
 
-        if (null !== $filterId) {
+        if ($filterId !== null) {
             return $this->buildSearchResponse(
                 $definitionFactory,
                 $request,
@@ -332,11 +303,6 @@ class CommonController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function updatePositionAction(
         Request $request,

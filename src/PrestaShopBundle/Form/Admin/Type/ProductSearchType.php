@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,14 +43,11 @@ class ProductSearchType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         private readonly RouterInterface $router,
-        private readonly string $languageIsoCode
+        private readonly string $languageIsoCode,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -72,8 +70,8 @@ class ProductSearchType extends TranslatorAwareType
                 'min_length' => 3,
                 'limit' => 1,
                 'filters' => [],
-                'identifier_field' => static fn(Options $options): string => $options->offsetGet('include_combinations') === true ? 'unique_identifier' : 'id',
-                'entry_type' => static fn(Options $options): string => $options->offsetGet('include_combinations') === true ? SearchedProductItemType::class : EntityItemType::class,
+                'identifier_field' => static fn (Options $options): string => $options->offsetGet('include_combinations') === true ? 'unique_identifier' : 'id',
+                'entry_type' => static fn (Options $options): string => $options->offsetGet('include_combinations') === true ? SearchedProductItemType::class : EntityItemType::class,
                 'remote_url' => static function (Options $options) use ($router, $languageIsoCode): string {
                     if ($options->offsetGet('include_combinations') === true) {
                         return $router->generate('admin_products_search_combinations_for_association', [
@@ -81,20 +79,20 @@ class ProductSearchType extends TranslatorAwareType
                             'query' => '__QUERY__',
                             'filters' => $options['filters'],
                         ]);
-                    } else {
-                        return $router->generate('admin_products_search_products_for_association', [
-                            'languageCode' => $languageIsoCode,
-                            'query' => '__QUERY__',
-                        ]);
                     }
+
+                    return $router->generate('admin_products_search_products_for_association', [
+                        'languageCode' => $languageIsoCode,
+                        'query' => '__QUERY__',
+                    ]);
                 },
             ])
             ->setNormalizer('attr', static function (Options $options, ?array $value) use ($refLabel): array {
                 if ($options->offsetGet('include_combinations') === true) {
                     return array_merge(['data-reference-label' => $refLabel], (array) $value);
-                } else {
-                    return $value;
                 }
+
+                return $value;
             })
         ;
     }

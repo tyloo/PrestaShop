@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,21 +37,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CombinationImagesChoiceType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
      * @param array<int, array<string, mixed>> $locales
-     * @param ConfigurableFormChoiceProviderInterface $imagesChoiceProvider
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly ConfigurableFormChoiceProviderInterface $imagesChoiceProvider
+        private readonly ConfigurableFormChoiceProviderInterface $imagesChoiceProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -59,13 +55,14 @@ class CombinationImagesChoiceType extends TranslatorAwareType
                 'product_id',
             ])
             ->setAllowedTypes('product_id', 'int')
-            ->setDefaults([
-                'label' => $this->trans('Images', 'Admin.Global'),
-                'label_subtitle' => $this->trans('You can specify which images should be displayed when customer selects this combination. If you don\'t select any image, all will be displayed. The default image of the combination will be the first one selected from the list.', 'Admin.Catalog.Feature'),
-                'choice_attr' => fn(string $choice, string $key): array => ['data-image-url' => $key],
-                'multiple' => true,
-                'expanded' => true,
-            ]
+            ->setDefaults(
+                [
+                    'label' => $this->trans('Images', 'Admin.Global'),
+                    'label_subtitle' => $this->trans('You can specify which images should be displayed when customer selects this combination. If you don\'t select any image, all will be displayed. The default image of the combination will be the first one selected from the list.', 'Admin.Catalog.Feature'),
+                    'choice_attr' => fn (string $choice, string $key): array => ['data-image-url' => $key],
+                    'multiple' => true,
+                    'expanded' => true,
+                ]
             );
 
         $choiceProvider = $this->imagesChoiceProvider;
@@ -76,9 +73,6 @@ class CombinationImagesChoiceType extends TranslatorAwareType
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): string
     {
         return ChoiceType::class;

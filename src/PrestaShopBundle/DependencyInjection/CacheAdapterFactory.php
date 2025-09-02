@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,7 +44,8 @@ class CacheAdapterFactory
     {
         if ($driver === 'apcu') {
             return new ApcuAdapter();
-        } elseif ($driver === 'memcached') {
+        }
+        if ($driver === 'memcached') {
             return new MemcachedAdapter(
                 AbstractAdapter::createConnection('memcached://localhost', ['lazy' => true])
             );

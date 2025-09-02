@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,19 +62,17 @@ class SSLMiddlewareListener
      * Registered as `kernel.request` event listener.
      *
      * If the condition needs a redirection to HTTPS, then the current process is interrupted, the headers are sent directly.
-     *
-     * @param RequestEvent $event
      */
     public function onKernelRequest(RequestEvent $event): void
     {
         // Only main request are protected, this way sub requests like partial fragments work correctly
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
         // Some routes don't need to be protected by HTTPs (Swagger doc, profiler and debugging routes, ...)
         $route = $event->getRequest()->attributes->get('_route');
-        if (!empty($route)) {
+        if (! empty($route)) {
             foreach (self::NOT_PROTECTED_ROUTES as $routePattern) {
                 if (preg_match($routePattern, (string) $route)) {
                     return;
@@ -87,9 +86,9 @@ class SSLMiddlewareListener
         }
 
         // If protocol is not even HTTPs specify it should be used
-        if (!$event->getRequest()->isSecure()) {
+        if (! $event->getRequest()->isSecure()) {
             $this->useSecureProtocol($event);
-        } elseif (!$this->isTLSVersionAccepted($event->getRequest())) {
+        } elseif (! $this->isTLSVersionAccepted($event->getRequest())) {
             // HTTPs is not enough the proper TLS should also be used, if not it should be upgraded
             $this->upgradeProtocol($event);
         }
@@ -105,7 +104,7 @@ class SSLMiddlewareListener
 
         $protocol = explode('v', $request->server->get('SSL_PROTOCOL'));
 
-        return count($protocol) === 2
+        return \count($protocol) === 2
             && $protocol[0] === 'TLS'
             && preg_match('/^(1(\.0)?(\.1)?$).*$/', $protocol[1]) === 0
         ;

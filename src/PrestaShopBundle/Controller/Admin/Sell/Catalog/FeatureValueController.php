@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -96,18 +97,13 @@ class FeatureValueController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.feature_value_form_builder')]
         FormBuilderInterface $featureValueFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.feature_value_form_handler')]
-        FormHandlerInterface $featureValueFormHandler
+        FormHandlerInterface $featureValueFormHandler,
     ): Response {
         $featureId = $request->query->getInt('featureId');
 
@@ -116,17 +112,19 @@ class FeatureValueController extends PrestaShopAdminController
             $featureValueForm->handleRequest($request);
             $handlerResult = $featureValueFormHandler->handle($featureValueForm);
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 // Case 1 - save and stay, user entered the form from feature value list
                 if ($request->request->has(self::SAVE_AND_ADD_BUTTON_NAME) && $featureId) {
                     return $this->redirectToRoute('admin_feature_values_add', ['featureId' => $featureId]);
-                // Case 2 - save and stay, user entered the form from feature list
-                } elseif ($request->request->has(self::SAVE_AND_ADD_BUTTON_NAME)) {
+                    // Case 2 - save and stay, user entered the form from feature list
+                }
+                if ($request->request->has(self::SAVE_AND_ADD_BUTTON_NAME)) {
                     return $this->redirectToRoute('admin_feature_values_add');
-                // Case 3 - save and exit, user entered the form from feature value list
-                } elseif ($featureId) {
+                    // Case 3 - save and exit, user entered the form from feature value list
+                }
+                if ($featureId) {
                     return $this->redirectToRoute('admin_feature_values_index', ['featureId' => $featureId]);
                 }
 
@@ -154,13 +152,6 @@ class FeatureValueController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $featureId
-     * @param int $featureValueId
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function editAction(
         int $featureId,
@@ -169,7 +160,7 @@ class FeatureValueController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.feature_value_form_builder')]
         FormBuilderInterface $featureValueFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.feature_value_form_handler')]
-        FormHandlerInterface $featureValueFormHandler
+        FormHandlerInterface $featureValueFormHandler,
     ): Response {
         try {
             $featureValueForm = $featureValueFormBuilder->getFormFor($featureValueId);
@@ -207,16 +198,11 @@ class FeatureValueController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param FeatureValueFilters $filters
-     *
-     * @return CsvResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function exportAction(
         FeatureValueFilters $filters,
         #[Autowire(service: FeatureValueGridFactory::class)]
-        GridFactoryInterface $gridFactory
+        GridFactoryInterface $gridFactory,
     ): CsvResponse {
         $filtersParameters = $filters->all();
         $filtersParameters['filters']['feature_id'] = $filters->getFeatureId();
@@ -244,12 +230,6 @@ class FeatureValueController extends PrestaShopAdminController
             ->setFileName('feature_' . $filters->getFeatureId() . '_values_' . date('Y-m-d_His') . '.csv');
     }
 
-    /**
-     * @param int $featureId
-     * @param int $featureValueId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function deleteAction(int $featureId, int $featureValueId): Response
     {
@@ -266,12 +246,6 @@ class FeatureValueController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $featureId
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function bulkDeleteAction(int $featureId, Request $request): Response
     {
@@ -298,16 +272,16 @@ class FeatureValueController extends PrestaShopAdminController
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('read', 'AdminProducts')")]
     public function getFeatureValuesAction(
         int $featureId,
-        FeatureValuesChoiceProvider $featureValuesChoiceProvider
+        FeatureValuesChoiceProvider $featureValuesChoiceProvider,
     ): JsonResponse {
-        if ($featureId == 0) {
+        if ($featureId === 0) {
             return new JsonResponse();
         }
 
         $featuresChoices = $featureValuesChoiceProvider->getChoices(['feature_id' => $featureId, 'custom' => false]);
 
         $data = [];
-        if (count($featuresChoices) !== 0) {
+        if (\count($featuresChoices) !== 0) {
             $data[] = [
                 'id' => 0,
                 'value' => $this->trans('Choose a value', [], 'Admin.Catalog.Feature'),
@@ -326,10 +300,6 @@ class FeatureValueController extends PrestaShopAdminController
 
     /**
      * Changes feature value position
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function updatePositionAction(

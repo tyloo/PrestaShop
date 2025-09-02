@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,11 +58,6 @@ class TaxController extends PrestaShopAdminController
 {
     /**
      * Show taxes page.
-     *
-     * @param Request $request
-     * @param TaxFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -70,7 +66,7 @@ class TaxController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.grid.factory.tax')]
         GridFactoryInterface $taxGridFactory,
         #[Autowire(service: 'prestashop.admin.tax_options.form_handler')]
-        ConfigurationFormHandlerInterface $taxOptionsFormHandler
+        ConfigurationFormHandlerInterface $taxOptionsFormHandler,
     ): Response {
         $legacyController = $request->attributes->get('_legacy_controller');
 
@@ -87,17 +83,13 @@ class TaxController extends PrestaShopAdminController
 
     /**
      * Process tax options configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_taxes_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_taxes_index')]
     public function saveOptionsAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.tax_options.form_handler')]
-        ConfigurationFormHandlerInterface $taxOptionsFormHandler
+        ConfigurationFormHandlerInterface $taxOptionsFormHandler,
     ): RedirectResponse {
         $taxOptionsForm = $taxOptionsFormHandler->getForm();
         $taxOptionsForm->handleRequest($request);
@@ -117,18 +109,13 @@ class TaxController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_taxes_index');
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_taxes_index')]
     public function createAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.tax_form_builder')]
         FormBuilderInterface $taxFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.tax_form_handler')]
-        FormHandlerInterface $taxFormHandler
+        FormHandlerInterface $taxFormHandler,
     ): Response {
         try {
             $taxForm = $taxFormBuilder->getForm();
@@ -144,7 +131,7 @@ class TaxController extends PrestaShopAdminController
         try {
             $taxForm->handleRequest($request);
             $result = $taxFormHandler->handle($taxForm);
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash(
                     'success',
                     $this->trans('Successful creation', [], 'Admin.Notifications.Success')
@@ -172,11 +159,6 @@ class TaxController extends PrestaShopAdminController
 
     /**
      * Handles tax edit
-     *
-     * @param Request $request
-     * @param int $taxId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_taxes_index')]
     public function editAction(
@@ -185,7 +167,7 @@ class TaxController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.tax_form_builder')]
         FormBuilderInterface $taxFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.tax_form_handler')]
-        FormHandlerInterface $taxFormHandler
+        FormHandlerInterface $taxFormHandler,
     ): Response {
         try {
             $taxForm = $taxFormBuilder->getFormFor((int) $taxId);
@@ -235,10 +217,6 @@ class TaxController extends PrestaShopAdminController
 
     /**
      * Deletes tax.
-     *
-     * @param int $taxId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_taxes_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_taxes_index')]
@@ -258,10 +236,6 @@ class TaxController extends PrestaShopAdminController
 
     /**
      * Toggles status.
-     *
-     * @param int $taxId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_taxes_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_taxes_index')]
@@ -270,7 +244,7 @@ class TaxController extends PrestaShopAdminController
         try {
             /** @var EditableTax $editableTax */
             $editableTax = $this->dispatchQuery(new GetTaxForEditing((int) $taxId));
-            $this->dispatchCommand(new ToggleTaxStatusCommand((int) $taxId, !$editableTax->isActive()));
+            $this->dispatchCommand(new ToggleTaxStatusCommand((int) $taxId, ! $editableTax->isActive()));
             $this->addFlash(
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')
@@ -284,10 +258,6 @@ class TaxController extends PrestaShopAdminController
 
     /**
      * Enables taxes status on bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_taxes_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_taxes_index')]
@@ -309,10 +279,6 @@ class TaxController extends PrestaShopAdminController
 
     /**
      * Disables taxes status on bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_taxes_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_taxes_index')]
@@ -334,10 +300,6 @@ class TaxController extends PrestaShopAdminController
 
     /**
      * Delete taxes on bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_taxes_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_taxes_index')]
@@ -359,8 +321,6 @@ class TaxController extends PrestaShopAdminController
 
     /**
      * Gets error messages for exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {

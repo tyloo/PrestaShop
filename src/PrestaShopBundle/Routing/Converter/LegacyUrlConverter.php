@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,21 +42,13 @@ use Symfony\Component\Routing\RouterInterface;
  */
 final class LegacyUrlConverter
 {
-    /**
-     * LegacyUrlConverter constructor.
-     *
-     * @param RouterInterface $router
-     * @param LegacyRouteProviderInterface $legacyRouteProvider
-     */
-    public function __construct(private readonly RouterInterface $router, private readonly LegacyRouteProviderInterface $legacyRouteProvider)
-    {
+    public function __construct(
+        private readonly RouterInterface $router,
+        private readonly LegacyRouteProviderInterface $legacyRouteProvider,
+    ) {
     }
 
     /**
-     * @param array $parameters
-     *
-     * @return string
-     *
      * @throws ArgumentException
      * @throws RouteNotFoundException
      */
@@ -74,8 +67,6 @@ final class LegacyUrlConverter
 
     /**
      * @param string $url
-     *
-     * @return string
      *
      * @throws ArgumentException
      * @throws RouteNotFoundException
@@ -99,10 +90,6 @@ final class LegacyUrlConverter
      * router context because it is executed before the RouterListener. Thus the router
      * does not have the appropriate information to generate an admin url and would redirect
      * to the front office.
-     *
-     * @param Request $request
-     *
-     * @return string
      *
      * @throws ArgumentException
      * @throws RouteNotFoundException
@@ -132,9 +119,6 @@ final class LegacyUrlConverter
     }
 
     /**
-     * @param array $parameters
-     * @param LegacyRoute $legacyRoute
-     *
      * @return array
      */
     private function convertLegacyParameters(array $parameters, LegacyRoute $legacyRoute)
@@ -142,7 +126,7 @@ final class LegacyUrlConverter
         $legacyAction = $this->getActionFromParameters($parameters);
 
         foreach ($legacyRoute->getRouteParameters() as $legacyParameter => $parameter) {
-            if (isset($parameters[$legacyParameter]) && !isset($parameters[$parameter])) {
+            if (isset($parameters[$legacyParameter]) && ! isset($parameters[$parameter])) {
                 $parameters[$parameter] = $parameters[$legacyParameter];
                 unset($parameters[$legacyParameter]);
             }
@@ -158,8 +142,6 @@ final class LegacyUrlConverter
     }
 
     /**
-     * @param array $parameters
-     *
      * @return LegacyRoute
      *
      * @throws RouteNotFoundException
@@ -173,24 +155,22 @@ final class LegacyUrlConverter
     }
 
     /**
-     * @param array $parameters
-     *
      * @return string|null
      */
     private function getActionFromParameters(array $parameters)
     {
         $legacyAction = null;
 
-        if (!empty($parameters['action'])) {
+        if (! empty($parameters['action'])) {
             $legacyAction = $parameters['action'];
         }
 
         // Actions can be defined as simple query parameter (e.g: ?controller=AdminProducts&save)
-        if (null === $legacyAction) {
+        if ($legacyAction === null) {
             // We prioritize the actions defined in the migrated routes
             $controllerActions = $this->legacyRouteProvider->getActionsByController($parameters['controller']);
             foreach ($parameters as $parameter => $value) {
-                if (in_array($parameter, $controllerActions)) {
+                if (\in_array($parameter, $controllerActions, true)) {
                     $legacyAction = $parameter;
 
                     break;
@@ -200,15 +180,15 @@ final class LegacyUrlConverter
 
         // Last chance if a non migrated action is present (note: a bit risky since any empty parameter can be
         // interpreted as an action.. but some old link need this feature, ?controller=AdminModulesPositions&addToHook)
-        if (null === $legacyAction) {
+        if ($legacyAction === null) {
             foreach ($parameters as $parameter => $value) {
                 if ($value === '' || $value === '1' || $value === 1) {
                     // Avoid confusing an entity/row id with an action
                     // e.g.
                     //  create=1 is an action
                     //  id_product=1 is NOT an action
-                    if (!str_contains($parameter, 'id_')
-                        && !str_contains($parameter, '_id')) {
+                    if (! str_contains($parameter, 'id_')
+                        && ! str_contains($parameter, '_id')) {
                         $legacyAction = $parameter;
 
                         break;
@@ -231,10 +211,10 @@ final class LegacyUrlConverter
     private function checkAlreadyMatchingRoute($url): void
     {
         try {
-            $urlPath = parse_url($url, PHP_URL_PATH);
-            if (!empty($urlPath)) {
+            $urlPath = parse_url($url, \PHP_URL_PATH);
+            if (! empty($urlPath)) {
                 $this->router->match($urlPath);
-                throw new AlreadyConvertedException(sprintf('%s is already a converted url', $url));
+                throw new AlreadyConvertedException(\sprintf('%s is already a converted url', $url));
             }
         } catch (ExceptionInterface) {
         }

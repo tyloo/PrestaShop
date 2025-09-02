@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,35 +33,23 @@ namespace PrestaShopBundle\Translation\Provider;
  */
 class ModulesProvider extends AbstractProvider implements UseDefaultCatalogueInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getTranslationDomains(): array
     {
         return ['^Modules[A-Z]'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return ['#^Modules[A-Z]#'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return 'modules';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultResourceDirectory(): string
     {
-        return $this->resourceDirectory . DIRECTORY_SEPARATOR . 'default';
+        return $this->resourceDirectory . \DIRECTORY_SEPARATOR . 'default';
     }
 }

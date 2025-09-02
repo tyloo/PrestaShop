@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,18 +75,13 @@ class AddressController extends PrestaShopAdminController
 {
     /**
      * Show addresses listing page
-     *
-     * @param Request $request
-     * @param AddressFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.address')]
         GridFactoryInterface $addressGridFactory,
-        AddressFilters $filters
+        AddressFilters $filters,
     ): Response {
         $addressGrid = $addressGridFactory->getGrid($filters);
         $requiredFieldsForm = $this->getRequiredFieldsForm();
@@ -101,10 +97,6 @@ class AddressController extends PrestaShopAdminController
 
     /**
      * Process addresses required fields configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      *
      * @throws Exception
      */
@@ -130,10 +122,6 @@ class AddressController extends PrestaShopAdminController
 
     /**
      * Deletes address
-     *
-     * @param int $addressId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_addresses_index')]
     public function deleteAction(Request $request, int $addressId): RedirectResponse
@@ -155,10 +143,6 @@ class AddressController extends PrestaShopAdminController
 
     /**
      * Delete addresses in bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_addresses_index', message: 'You do not have permission to delete this.')]
     public function deleteBulkAction(Request $request): RedirectResponse
@@ -179,53 +163,7 @@ class AddressController extends PrestaShopAdminController
     }
 
     /**
-     * @return array
-     */
-    private function getAddressToolbarButtons(): array
-    {
-        $toolbarButtons = [];
-
-        $toolbarButtons['add'] = [
-            'href' => $this->generateUrl('admin_addresses_create'),
-            'desc' => $this->trans('Add new address', [], 'Admin.Orderscustomers.Feature'),
-            'icon' => 'add_circle_outline',
-        ];
-
-        return $toolbarButtons;
-    }
-
-    /**
-     * @return FormInterface
-     */
-    private function getRequiredFieldsForm(): FormInterface
-    {
-        $requiredFields = $this->dispatchQuery(new GetRequiredFieldsForAddress());
-
-        return $this->createForm(RequiredFieldsAddressType::class, ['required_fields' => $requiredFields]);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    private function getBulkAddressesFromRequest(Request $request): array
-    {
-        $addressIds = $request->request->all('address_addresses_bulk');
-
-        foreach ($addressIds as $i => $addressId) {
-            $addressIds[$i] = (int) $addressId;
-        }
-
-        return $addressIds;
-    }
-
-    /**
      * Show "Add new" form and handle form submit.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_addresses_index', message: 'You do not have permission to create this.')]
     public function createAction(
@@ -235,7 +173,7 @@ class AddressController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.address_form_handler')]
         FormHandlerInterface $addressFormHandler,
         #[Autowire(service: 'prestashop.adapter.data_provider.customer')]
-        CustomerDataProvider $customerDataProvider
+        CustomerDataProvider $customerDataProvider,
     ): Response {
         $formData = [];
         $customerInfo = null;
@@ -255,7 +193,7 @@ class AddressController extends PrestaShopAdminController
             $formData['id_customer'] = (int) $request->query->get('id_customer');
         }
 
-        if (!empty($formData['id_customer'])) {
+        if (! empty($formData['id_customer'])) {
             /** @todo To Remove when PHPStan is fixed https://github.com/phpstan/phpstan/issues/3700 */
             /** @phpstan-ignore-next-line */
             $customerId = $formData['id_customer'];
@@ -305,11 +243,6 @@ class AddressController extends PrestaShopAdminController
 
     /**
      * Handles edit form rendering and submission
-     *
-     * @param int $addressId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_addresses_index')]
     public function editAction(
@@ -318,7 +251,7 @@ class AddressController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.address_form_builder')]
         FormBuilderInterface $addressFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.address_form_handler')]
-        FormHandlerInterface $addressFormHandler
+        FormHandlerInterface $addressFormHandler,
     ): Response {
         try {
             /** @var EditableCustomerAddress $editableAddress */
@@ -376,12 +309,6 @@ class AddressController extends PrestaShopAdminController
 
     /**
      * Handles edit form rendering and submission for order address
-     *
-     * @param int $orderId
-     * @param string $addressType
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function editOrderAddressAction(
@@ -391,7 +318,7 @@ class AddressController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.address_form_builder')]
         FormBuilderInterface $addressFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.order_address_form_handler')]
-        FormHandlerInterface $addressFormHandler
+        FormHandlerInterface $addressFormHandler,
     ): Response {
         // @todo: don't rely on Order ObjectModel, use a Adapter DataProvider
         $order = new Order($orderId);
@@ -472,12 +399,6 @@ class AddressController extends PrestaShopAdminController
 
     /**
      * Handles edit form rendering and submission for cart address
-     *
-     * @param int $cartId
-     * @param string $addressType
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function editCartAddressAction(
@@ -487,7 +408,7 @@ class AddressController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.address_form_builder')]
         FormBuilderInterface $addressFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.cart_address_form_handler')]
-        FormHandlerInterface $addressFormHandler
+        FormHandlerInterface $addressFormHandler,
     ): Response {
         // @todo: don't rely on Cart ObjectModel, use a Adapter DataProvider
         $cart = new Cart($cartId);
@@ -566,11 +487,37 @@ class AddressController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Exception $e
-     *
-     * @return array
-     */
+    private function getAddressToolbarButtons(): array
+    {
+        $toolbarButtons = [];
+
+        $toolbarButtons['add'] = [
+            'href' => $this->generateUrl('admin_addresses_create'),
+            'desc' => $this->trans('Add new address', [], 'Admin.Orderscustomers.Feature'),
+            'icon' => 'add_circle_outline',
+        ];
+
+        return $toolbarButtons;
+    }
+
+    private function getRequiredFieldsForm(): FormInterface
+    {
+        $requiredFields = $this->dispatchQuery(new GetRequiredFieldsForAddress());
+
+        return $this->createForm(RequiredFieldsAddressType::class, ['required_fields' => $requiredFields]);
+    }
+
+    private function getBulkAddressesFromRequest(Request $request): array
+    {
+        $addressIds = $request->request->all('address_addresses_bulk');
+
+        foreach ($addressIds as $i => $addressId) {
+            $addressIds[$i] = (int) $addressId;
+        }
+
+        return $addressIds;
+    }
+
     private function getErrorMessages(Exception $e): array
     {
         return [
@@ -581,7 +528,7 @@ class AddressController extends PrestaShopAdminController
                     'Admin.Notifications.Error'
                 ),
             ],
-            BulkDeleteAddressException::class => sprintf(
+            BulkDeleteAddressException::class => \sprintf(
                 '%s: %s',
                 $this->trans(
                     'An error occurred while deleting this selection.',
@@ -600,7 +547,7 @@ class AddressController extends PrestaShopAdminController
                 [],
                 'Admin.Notifications.Error'
             ),
-            AddressException::class => sprintf(
+            AddressException::class => \sprintf(
                 $this->trans(
                     'Internal error #%s',
                     [],

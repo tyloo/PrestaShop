@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,10 @@ class ConfigDataCollector extends SymfonyDataCollector
 {
     public function __construct(
         private readonly string $name,
-        private readonly Version $version
+        private readonly Version $version,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         parent::collect($request, $response, $exception);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class NumberTypeExtension extends AbstractTypeExtension
 {
-    public function __construct(private readonly LocaleNumberTransformer $localeNumberTransformer)
-    {
+    public function __construct(
+        private readonly LocaleNumberTransformer $localeNumberTransformer,
+    ) {
     }
 
     public static function getExtendedTypes(): iterable
@@ -45,9 +47,6 @@ class NumberTypeExtension extends AbstractTypeExtension
         return [NumberType::class];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // We only want to replace/adapt the NumberToLocalizedStringTransformer, so we save the current transformers

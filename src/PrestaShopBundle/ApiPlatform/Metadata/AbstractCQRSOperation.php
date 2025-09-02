@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,7 +69,6 @@ abstract class AbstractCQRSOperation extends HttpOperation
         ?array $exceptionToStatus = null,
         ?array $links = null,
         ?array $errors = null,
-
         ?string $shortName = null,
         ?string $class = null,
         ?bool $paginationEnabled = null,
@@ -122,39 +122,35 @@ abstract class AbstractCQRSOperation extends HttpOperation
         ?array $ApiResourceMapping = null,
         ?bool $experimentalOperation = null,
     ) {
-        $passedArguments = \get_defined_vars();
+        $passedArguments = get_defined_vars();
 
-        if (!empty($scopes)) {
+        if (! empty($scopes)) {
             $extraScopes = $passedArguments['extraProperties']['scopes'] ?? [];
             $passedArguments['extraProperties']['scopes'] = array_values(array_unique(array_merge($extraScopes, $scopes)));
         }
 
-        if (!empty($CQRSQuery)) {
+        if (! empty($CQRSQuery)) {
             $this->checkArgumentAndExtraParameterValidity('CQRSQuery', $CQRSQuery, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['CQRSQuery'] = $CQRSQuery;
         }
 
-        if (!empty($CQRSQueryMapping)) {
+        if (! empty($CQRSQueryMapping)) {
             $this->checkArgumentAndExtraParameterValidity('CQRSQueryMapping', $CQRSQueryMapping, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['CQRSQueryMapping'] = $CQRSQueryMapping;
         }
 
-        if (!empty($ApiResourceMapping)) {
+        if (! empty($ApiResourceMapping)) {
             $this->checkArgumentAndExtraParameterValidity('ApiResourceMapping', $ApiResourceMapping, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['ApiResourceMapping'] = $ApiResourceMapping;
         }
 
-        if (null !== $experimentalOperation) {
+        if ($experimentalOperation !== null) {
             $this->checkArgumentAndExtraParameterValidity('experimentalOperation', $experimentalOperation, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['experimentalOperation'] = $experimentalOperation;
         }
 
         // Remove custom arguments
-        unset($passedArguments['scopes']);
-        unset($passedArguments['CQRSQuery']);
-        unset($passedArguments['CQRSQueryMapping']);
-        unset($passedArguments['ApiResourceMapping']);
-        unset($passedArguments['experimentalOperation']);
+        unset($passedArguments['scopes'], $passedArguments['CQRSQuery'], $passedArguments['CQRSQueryMapping'], $passedArguments['ApiResourceMapping'], $passedArguments['experimentalOperation']);
 
         // Unless especially specified we only handle JSON format by default
         $passedArguments['formats'] = $formats ?? ['json'];
@@ -229,12 +225,8 @@ abstract class AbstractCQRSOperation extends HttpOperation
 
     protected function checkArgumentAndExtraParameterValidity(string $extraParameterName, $constructorParameterValue, array $extraProperties): void
     {
-        if (!empty($extraProperties[$extraParameterName]) && $extraProperties[$extraParameterName] !== $constructorParameterValue) {
-            throw new InvalidArgumentException(sprintf(
-                'Specifying an extra property %s and a %s argument that are different is invalid',
-                $extraParameterName,
-                $extraParameterName
-            ));
+        if (! empty($extraProperties[$extraParameterName]) && $extraProperties[$extraParameterName] !== $constructorParameterValue) {
+            throw new InvalidArgumentException(\sprintf('Specifying an extra property %s and a %s argument that are different is invalid', $extraParameterName, $extraParameterName));
         }
     }
 }

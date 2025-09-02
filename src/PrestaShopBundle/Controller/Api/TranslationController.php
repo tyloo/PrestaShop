@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,10 +60,6 @@ class TranslationController extends ApiController
 
     /**
      * Show translations for 1 domain & 1 locale given & 1 theme given (optional).
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function listDomainTranslationAction(Request $request): JsonResponse
@@ -91,12 +88,12 @@ class TranslationController extends ApiController
                 $domain = OthersProviderDefinition::OTHERS_DOMAIN_NAME;
             }
 
-            if (!empty($module)) {
+            if (! empty($module)) {
                 $providerDefinition = new ModuleProviderDefinition($module);
             } elseif (
-                !empty($theme)
+                ! empty($theme)
                 // Default theme is not considered like other themes because its translations belong to the Core
-                && ThemeProviderDefinition::DEFAULT_THEME_NAME !== $theme
+                && $theme !== ThemeProviderDefinition::DEFAULT_THEME_NAME
             ) {
                 $providerDefinition = new ThemeProviderDefinition($theme);
             } else {
@@ -105,10 +102,10 @@ class TranslationController extends ApiController
 
             $catalog = $translationService->listDomainTranslation($providerDefinition, $locale, $domain, $this->searchExpressionToArray($search));
             $info = [
-                'Total-Pages' => ceil(count($catalog['data']) / $queryParams['page_size']),
+                'Total-Pages' => ceil(\count($catalog['data']) / $queryParams['page_size']),
             ];
 
-            $catalog['data'] = array_slice(
+            $catalog['data'] = \array_slice(
                 $catalog['data'],
                 ($queryParams['page_index'] - 1) * $queryParams['page_size'],
                 $queryParams['page_size']
@@ -122,8 +119,6 @@ class TranslationController extends ApiController
 
     /**
      * Show tree for translation page with some params.
-     *
-     * @param Request $request
      *
      * @return JsonResponse
      */
@@ -142,19 +137,19 @@ class TranslationController extends ApiController
 
             $search = $request->query->all('search');
 
-            if (!in_array($type, ProviderDefinitionInterface::ALLOWED_TYPES)) {
-                throw new Exception(sprintf("The 'type' parameter '%s' is not valid", $type));
+            if (! \in_array($type, ProviderDefinitionInterface::ALLOWED_TYPES, true)) {
+                throw new Exception(\sprintf("The 'type' parameter '%s' is not valid", $type));
             }
 
             if (
-                ProviderDefinitionInterface::TYPE_THEMES === $type
-                && ModifyTranslationsType::CORE_TRANSLATIONS_CHOICE_INDEX === $selected
+                $type === ProviderDefinitionInterface::TYPE_THEMES
+                && $selected === ModifyTranslationsType::CORE_TRANSLATIONS_CHOICE_INDEX
             ) {
                 $type = ProviderDefinitionInterface::TYPE_FRONT;
             }
 
             if (
-                in_array($type, [ProviderDefinitionInterface::TYPE_MODULES, ProviderDefinitionInterface::TYPE_THEMES])
+                \in_array($type, [ProviderDefinitionInterface::TYPE_MODULES, ProviderDefinitionInterface::TYPE_THEMES], true)
                 && empty($selected)
             ) {
                 throw new Exception("The 'selected' parameter is empty.");
@@ -171,8 +166,6 @@ class TranslationController extends ApiController
     /**
      * Route to edit translation.
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) or is_granted('update', request.get('_legacy_controller'))")]
@@ -187,7 +180,7 @@ class TranslationController extends ApiController
             $translationService = $this->container->get('prestashop.service.translation');
             $response = [];
             $modifiedDomains = [];
-            if (!empty($translations)) {
+            if (! empty($translations)) {
                 $lang = null;
                 foreach ($translations as $translation) {
                     if (empty($translation['theme'])) {
@@ -228,8 +221,6 @@ class TranslationController extends ApiController
     /**
      * Route to reset translation.
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) or is_granted('update', request.get('_legacy_controller'))")]
@@ -245,7 +236,7 @@ class TranslationController extends ApiController
             $response = [];
 
             foreach ($translations as $translation) {
-                if (!array_key_exists('theme', $translation)) {
+                if (! \array_key_exists('theme', $translation)) {
                     $translation['theme'] = null;
                 }
 
@@ -272,10 +263,24 @@ class TranslationController extends ApiController
     }
 
     /**
-     * @param Request $request
-     *
-     * @return mixed
+     * @param array $content
      */
+    protected function guardAgainstInvalidTranslationResetRequest($content)
+    {
+        $message = 'Each item of JSON-encoded array in the request body should contain ' .
+            'a "locale", a "domain" and a "default" values. ' .
+            'The item of index #%d is invalid.';
+
+        array_walk($content, function ($item, $index) use ($message): void {
+            if (! \array_key_exists('locale', $item)
+                || ! \array_key_exists('domain', $item)
+                || ! \array_key_exists('default', $item)
+            ) {
+                throw new BadRequestHttpException(\sprintf($message, $index));
+            }
+        });
+    }
+
     private function guardAgainstInvalidTranslationBulkRequest(Request $request)
     {
         $content = $request->getContent();
@@ -283,12 +288,12 @@ class TranslationController extends ApiController
         $decodedContent = $this->guardAgainstInvalidJsonBody($content);
 
         if (empty($decodedContent)
-            || !array_key_exists('translations', $decodedContent)
-            || !is_array($decodedContent['translations'])
+            || ! \array_key_exists('translations', $decodedContent)
+            || ! \is_array($decodedContent['translations'])
         ) {
             $message = 'The request body should contain a JSON-encoded array of translations';
 
-            throw new BadRequestHttpException(sprintf('Invalid JSON content (%s)', $message));
+            throw new BadRequestHttpException(\sprintf('Invalid JSON content (%s)', $message));
         }
 
         return $decodedContent;
@@ -304,31 +309,12 @@ class TranslationController extends ApiController
             'The item of index #%d is invalid.';
 
         array_walk($content, function ($item, $index) use ($message): void {
-            if (!array_key_exists('locale', $item)
-                || !array_key_exists('domain', $item)
-                || !array_key_exists('default', $item)
-                || !array_key_exists('edited', $item)
+            if (! \array_key_exists('locale', $item)
+                || ! \array_key_exists('domain', $item)
+                || ! \array_key_exists('default', $item)
+                || ! \array_key_exists('edited', $item)
             ) {
-                throw new BadRequestHttpException(sprintf($message, $index));
-            }
-        });
-    }
-
-    /**
-     * @param array $content
-     */
-    protected function guardAgainstInvalidTranslationResetRequest($content)
-    {
-        $message = 'Each item of JSON-encoded array in the request body should contain ' .
-            'a "locale", a "domain" and a "default" values. ' .
-            'The item of index #%d is invalid.';
-
-        array_walk($content, function ($item, $index) use ($message): void {
-            if (!array_key_exists('locale', $item)
-                || !array_key_exists('domain', $item)
-                || !array_key_exists('default', $item)
-            ) {
-                throw new BadRequestHttpException(sprintf($message, $index));
+                throw new BadRequestHttpException(\sprintf($message, $index));
             }
         });
     }
@@ -337,14 +323,13 @@ class TranslationController extends ApiController
      * Trigger translation of multilingual content in database according to which domains have been modified
      *
      * @param string[] $modifiedDomains List of modified domains
-     * @param Lang $lang
      *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
     private function translateMultilingualContent(array $modifiedDomains, Lang $lang): void
     {
-        if (in_array('AdminNavigationMenu', $modifiedDomains)) {
+        if (\in_array('AdminNavigationMenu', $modifiedDomains, true)) {
             // reset translator
             $this->translator->clearLanguage($lang->getLocale());
 
@@ -358,12 +343,9 @@ class TranslationController extends ApiController
     /**
      * Returns a translation domain tree
      *
-     * @param string $lang
-     * @param string $type "themes", "modules", "mails", "mails_body", "back", "front" or "others"
-     * @param array $search Search strings
+     * @param string      $type          "themes", "modules", "mails", "mails_body", "back", "front" or "others"
+     * @param array       $search        Search strings
      * @param string|null $selectedValue Depends on the type. It's a theme name if type = "themes" or a module name if type = "modules"
-     *
-     * @return array
      *
      * @throws Exception
      */
@@ -381,12 +363,10 @@ class TranslationController extends ApiController
 
     /**
      * @param string|array $search
-     *
-     * @return array
      */
     private function searchExpressionToArray($search): array
     {
-        if (is_array($search)) {
+        if (\is_array($search)) {
             return $search;
         }
 

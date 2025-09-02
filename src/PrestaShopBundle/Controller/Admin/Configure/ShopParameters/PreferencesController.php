@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,7 +71,7 @@ class PreferencesController extends PrestaShopAdminController
             $data = $form->getData();
             $saveErrors = $preferencesFormHandler->save($data);
 
-            if (0 === count($saveErrors)) {
+            if (\count($saveErrors) === 0) {
                 $this->dispatchCommand(
                     new UpdateTabStatusByClassNameCommand(
                         'AdminShopGroup',

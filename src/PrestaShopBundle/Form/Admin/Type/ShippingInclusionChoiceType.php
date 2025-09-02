@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,8 +35,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ShippingInclusionChoiceType extends AbstractType
 {
-    public function __construct(private readonly ShippingInclusionChoiceProvider $shippingInclusionChoiceProvider)
-    {
+    public function __construct(
+        private readonly ShippingInclusionChoiceProvider $shippingInclusionChoiceProvider,
+    ) {
     }
 
     public function getParent(): string
@@ -43,9 +45,6 @@ class ShippingInclusionChoiceType extends AbstractType
         return ChoiceType::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

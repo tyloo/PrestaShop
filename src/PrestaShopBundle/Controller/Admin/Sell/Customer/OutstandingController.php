@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,9 +47,6 @@ class OutstandingController extends PrestaShopAdminController
 {
     /**
      * Show list of outstandings.
-     *
-     * @param Request $request
-     * @param OutstandingFilters $filters
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -72,8 +70,6 @@ class OutstandingController extends PrestaShopAdminController
     }
 
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_outstanding_index')]
@@ -82,7 +78,7 @@ class OutstandingController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.grid.definition.factory.outstanding')]
         GridDefinitionFactoryInterface $definitionFactory,
         #[Autowire(service: 'prestashop.bundle.grid.response_builder')]
-        ResponseBuilder $responseBuilder
+        ResponseBuilder $responseBuilder,
     ) {
         return $responseBuilder->buildSearchResponse(
             $definitionFactory,

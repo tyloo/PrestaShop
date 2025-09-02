@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -83,11 +84,6 @@ class CategoryController extends PrestaShopAdminController
 {
     /**
      * Show categories listing.
-     *
-     * @param Request $request
-     * @param CategoryFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('update', request.get('_legacy_controller')) || is_granted('create', request.get('_legacy_controller')) || is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to list this.')]
     public function indexAction(
@@ -117,7 +113,7 @@ class CategoryController extends PrestaShopAdminController
         );
 
         $layoutTitle = $this->trans('Categories', [], 'Admin.Navigation.Menu');
-        if (!$categoryViewData['is_home_category']) {
+        if (! $categoryViewData['is_home_category']) {
             $layoutTitle = $this->trans('Category %name%', ['%name%' => $categoryViewData['name']], 'Admin.Navigation.Menu');
         }
 
@@ -138,10 +134,6 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Show "Add new" form and handle form submit.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'You do not have permission to create this.', redirectRoute: 'admin_categories_index')]
     public function createAction(
@@ -151,7 +143,7 @@ class CategoryController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.category_form_handler')]
         FormHandlerInterface $categoryFormHandler,
         #[Autowire(service: 'prestashop.adapter.group.provider.default_groups_provider')]
-        DefaultGroupsProviderInterface $defaultGroupsProvider
+        DefaultGroupsProviderInterface $defaultGroupsProvider,
     ): Response {
         $configuration = $this->getConfiguration();
         $parentId = (int) $request->query->get('id_parent', (int) $configuration->get('PS_HOME_CATEGORY'));
@@ -171,7 +163,7 @@ class CategoryController extends PrestaShopAdminController
         try {
             $handlerResult = $categoryFormHandler->handle($categoryForm);
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_categories_index', [
@@ -199,10 +191,6 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Show "Add new root category" page & process adding.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'You do not have permission to create this.', redirectRoute: 'admin_categories_index')]
     public function createRootAction(
@@ -212,7 +200,7 @@ class CategoryController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.root_category_form_handler')]
         FormHandlerInterface $rootCategoryFormHandler,
         #[Autowire(service: 'prestashop.adapter.group.provider.default_groups_provider')]
-        DefaultGroupsProviderInterface $defaultGroupsProvider
+        DefaultGroupsProviderInterface $defaultGroupsProvider,
     ): Response {
         $rootCategoryForm = $rootCategoryFormBuilder->getForm();
         $rootCategoryForm->handleRequest($request);
@@ -220,7 +208,7 @@ class CategoryController extends PrestaShopAdminController
         try {
             $handlerResult = $rootCategoryFormHandler->handle($rootCategoryForm);
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_categories_index', [
@@ -247,11 +235,6 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Show & process category editing.
-     *
-     * @param int $categoryId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_categories_index')]
     public function editAction(
@@ -335,11 +318,6 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Show and process category editing.
-     *
-     * @param int $categoryId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_categories_index')]
     public function editRootAction(
@@ -350,13 +328,13 @@ class CategoryController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.root_category_form_handler')]
         FormHandlerInterface $rootCategoryFormHandler,
         #[Autowire(service: 'prestashop.adapter.group.provider.default_groups_provider')]
-        DefaultGroupsProviderInterface $defaultGroupsProvider
+        DefaultGroupsProviderInterface $defaultGroupsProvider,
     ): Response {
         try {
             /** @var EditableCategory $editableCategory */
             $editableCategory = $this->dispatchQuery(new GetCategoryForEditing((int) $categoryId));
 
-            if (!$editableCategory->isRootCategory()) {
+            if (! $editableCategory->isRootCategory()) {
                 return $this->redirectToRoute('admin_categories_edit', ['categoryId' => $categoryId]);
             }
         } catch (CannotEditRootCategoryException|CategoryNotFoundException $e) {
@@ -414,7 +392,6 @@ class CategoryController extends PrestaShopAdminController
     /**
      * Deletes category cover image.
      *
-     * @param Request $request
      * @param int $categoryId
      *
      * @return RedirectResponse
@@ -441,7 +418,6 @@ class CategoryController extends PrestaShopAdminController
     /**
      * Deletes category thumbnail image.
      *
-     * @param Request $request
      * @param int $categoryId
      *
      * @return RedirectResponse
@@ -486,7 +462,7 @@ class CategoryController extends PrestaShopAdminController
             $isEnabled = $this->dispatchQuery(new GetCategoryIsEnabled((int) $categoryId));
 
             $this->dispatchCommand(
-                new SetCategoryIsEnabledCommand((int) $categoryId, !$isEnabled)
+                new SetCategoryIsEnabledCommand((int) $categoryId, ! $isEnabled)
             );
 
             $response = [
@@ -505,8 +481,6 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Process bulk action for categories status enabling.
-     *
-     * @param Request $request
      *
      * @return RedirectResponse
      */
@@ -535,8 +509,6 @@ class CategoryController extends PrestaShopAdminController
     /**
      * Process bulk action for categories status disabling.
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_categories_index')]
@@ -564,8 +536,6 @@ class CategoryController extends PrestaShopAdminController
     /**
      * Processes bulk categories deleting.
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_categories_index')]
@@ -580,7 +550,7 @@ class CategoryController extends PrestaShopAdminController
             try {
                 $categoriesDeleteData = $deleteCategoriesForm->getData();
                 $idParent = (int) $categoriesDeleteData['categories_to_delete_parent'];
-                $categoryIds = array_map(fn($categoryId): int => (int) $categoryId, $categoriesDeleteData['categories_to_delete']);
+                $categoryIds = array_map(fn ($categoryId): int => (int) $categoryId, $categoriesDeleteData['categories_to_delete']);
 
                 $command = new BulkDeleteCategoriesCommand(
                     $categoryIds,
@@ -603,8 +573,6 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Process single category deleting.
-     *
-     * @param Request $request
      *
      * @return RedirectResponse
      */
@@ -639,17 +607,13 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Export filtered categories.
-     *
-     * @param CategoryFilters $filters
-     *
-     * @return Response
      */
     #[DemoRestricted(redirectRoute: 'admin_categories_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_categories_index', message: 'You do not have permission to view this.')]
     public function exportAction(
         CategoryFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.factory.category')]
-        GridFactoryInterface $categoriesGridFactory
+        GridFactoryInterface $categoriesGridFactory,
     ): Response {
         $filters = new CategoryFilters(['limit' => null] + $filters->all());
         $categoriesGrid = $categoriesGridFactory->getGrid($filters);
@@ -683,8 +647,6 @@ class CategoryController extends PrestaShopAdminController
     /**
      * Updates category position
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_categories_index')]
@@ -713,20 +675,15 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Get Categories formatted like ajax_product_file.php.
-     *
-     * @param int $limit
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', 'AdminProducts')")]
     public function getAjaxCategoriesAction(
         int $limit,
         Request $request,
         #[Autowire(service: 'prestashop.adapter.data_provider.category')]
-        CategoryDataProvider $categoryDataProvider
+        CategoryDataProvider $categoryDataProvider,
     ): JsonResponse {
-        if (!$request->isXmlHttpRequest()) {
+        if (! $request->isXmlHttpRequest()) {
             throw new NotFoundHttpException('Should be ajax request.');
         }
 
@@ -735,11 +692,6 @@ class CategoryController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', 'AdminProducts')")]
     public function getCategoriesTreeAction(Request $request): JsonResponse
     {
@@ -751,9 +703,6 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * @param CategoryForTree[] $categoriesTree
-     * @param int $langId
-     *
-     * @return array
      */
     private function formatCategoriesTreeForPresentation(array $categoriesTree, int $langId): array
     {
@@ -778,12 +727,6 @@ class CategoryController extends PrestaShopAdminController
         return $formattedCategories;
     }
 
-    /**
-     * @param Request $request
-     * @param int $categoryId
-     *
-     * @return array
-     */
     private function getCategoryIndexToolbarButtons(Request $request, int $categoryId): array
     {
         $toolbarButtons = [];
@@ -811,7 +754,7 @@ class CategoryController extends PrestaShopAdminController
 
         // Display the button "Add new category" if the current category is not a root category
         $category = new Category($categoryId);
-        if (!$category->isRootCategory()) {
+        if (! $category->isRootCategory()) {
             $toolbarButtons['add'] = [
                 'href' => $this->generateUrl('admin_categories_create', ['id_parent' => $categoryId]),
                 'desc' => $this->trans('Add new category', [], 'Admin.Catalog.Feature'),
@@ -824,8 +767,6 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Get translated error messages for category exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -860,7 +801,7 @@ class CategoryController extends PrestaShopAdminController
                 [],
                 'Admin.Notifications.Error'
             ),
-            UploadedImageConstraintException::class => sprintf(
+            UploadedImageConstraintException::class => \sprintf(
                 '%s %s',
                 $this->trans('An error occurred while uploading the image:', [], 'Admin.Catalog.Notification'),
                 $this->trans(
@@ -873,8 +814,6 @@ class CategoryController extends PrestaShopAdminController
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     private function getBulkCategoriesFromRequest(Request $request)
@@ -888,13 +827,8 @@ class CategoryController extends PrestaShopAdminController
         return $categoryIds;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
     private function requestHasSearchParameters(Request $request): bool
     {
-        return !empty($request->query->all()[CategoryGridDefinitionFactory::GRID_ID]['filters']);
+        return ! empty($request->query->all()[CategoryGridDefinitionFactory::GRID_ID]['filters']);
     }
 }

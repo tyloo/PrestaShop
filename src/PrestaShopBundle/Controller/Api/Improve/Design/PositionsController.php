@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ class PositionsController extends ApiController
     /**
      * Update positions.
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
@@ -47,7 +46,7 @@ class PositionsController extends ApiController
         $hookId = $request->request->getInt('hookId');
         $way = $request->request->getInt('way');
         $positions = $request->request->all('positions');
-        $position = (int) array_search($hookId . '_' . $moduleId, $positions) + 1;
+        $position = (int) array_search($hookId . '_' . $moduleId, $positions, true) + 1;
 
         $module = $this->container->get('prestashop.adapter.legacy.module')->getInstanceById($moduleId);
         if (empty($module)) {
@@ -60,7 +59,7 @@ class PositionsController extends ApiController
             );
         }
 
-        if (!$module->updatePosition($hookId, $way, $position)) {
+        if (! $module->updatePosition($hookId, $way, $position)) {
             return $this->jsonResponse(
                 [
                     'hasError' => true,

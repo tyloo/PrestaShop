@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,17 +47,13 @@ class ChangePasswordType extends AbstractType
 {
     use TranslatorAwareTrait;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct(private ConfigurationInterface $configuration, TranslatorInterface $translator)
-    {
+    public function __construct(
+        private ConfigurationInterface $configuration,
+        TranslatorInterface $translator,
+    ) {
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $maxLength = $this->configuration->get(PasswordPolicyConfiguration::CONFIGURATION_MAXIMUM_LENGTH);
@@ -129,12 +126,6 @@ class ChangePasswordType extends AbstractType
         ;
     }
 
-    /**
-     * @param int $maxLength
-     * @param int|null $minLength
-     *
-     * @return Length
-     */
     private function getLengthConstraint(int $maxLength, ?int $minLength = null): Length
     {
         $options = [
@@ -142,7 +133,7 @@ class ChangePasswordType extends AbstractType
             'maxMessage' => $this->getMaxLengthValidationMessage($maxLength),
         ];
 
-        if (null !== $minLength) {
+        if ($minLength !== null) {
             $options['min'] = $minLength;
             $options['minMessage'] = $this->getMinLengthValidationMessage($minLength);
         }
@@ -150,11 +141,6 @@ class ChangePasswordType extends AbstractType
         return new Length($options);
     }
 
-    /**
-     * @param int $minLength
-     *
-     * @return string
-     */
     private function getMinLengthValidationMessage(int $minLength): string
     {
         return $this->trans(
@@ -164,11 +150,6 @@ class ChangePasswordType extends AbstractType
         );
     }
 
-    /**
-     * @param int $maxLength
-     *
-     * @return string
-     */
     private function getMaxLengthValidationMessage(int $maxLength): string
     {
         return $this->trans(

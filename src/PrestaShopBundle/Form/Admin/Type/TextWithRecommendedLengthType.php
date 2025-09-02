@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,18 +39,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TextWithRecommendedLengthType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['recommended_length'] = $options['recommended_length'];
         $view->vars['input_type'] = $options['input_type'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

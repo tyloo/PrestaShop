@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,17 +46,13 @@ class YamlModuleLoader extends Loader
         /**
          * @var array the list of activated modules
          */
-        private readonly array $installedModulesPaths
-    )
-    {
+        private readonly array $installedModulesPaths,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($resource, $type = null)
     {
-        if (true === $this->isLoaded) {
+        if ($this->isLoaded === true) {
             throw new RuntimeException('Do not add the "module" loader twice.');
         }
 
@@ -74,17 +71,11 @@ class YamlModuleLoader extends Loader
         return $routes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($resource, $type = null)
     {
-        return 'module' === $type;
+        return $type === 'module';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function import($resource, $type = null)
     {
         $loadedRoutes = parent::import($resource, $type);
@@ -93,8 +84,6 @@ class YamlModuleLoader extends Loader
     }
 
     /**
-     * @param RouteCollection $routes
-     *
      * @return RouteCollection
      */
     private function modifyRoutes(RouteCollection $routes)

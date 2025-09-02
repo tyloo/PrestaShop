@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -89,8 +90,6 @@ class StockMvt
     private int $physicalQuantity;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(name="date_add", type="datetime", nullable=false)
      */
     private DateTime $dateAdd;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,12 +38,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ManufacturerType extends AbstractType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param FormChoiceProviderInterface $manufacturerChoiceProvider
-     */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly FormChoiceProviderInterface $manufacturerChoiceProvider)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly FormChoiceProviderInterface $manufacturerChoiceProvider,
+    ) {
     }
 
     public function getParent(): string
@@ -50,9 +49,6 @@ class ManufacturerType extends AbstractType
         return ChoiceType::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $manufacturers = $this->manufacturerChoiceProvider->getChoices();
@@ -71,13 +67,6 @@ class ManufacturerType extends AbstractType
         ]);
     }
 
-    /**
-     * @param string $key
-     * @param string $domain
-     * @param array $parameters
-     *
-     * @return string
-     */
     protected function trans(string $key, string $domain, array $parameters = []): string
     {
         return $this->translator->trans($key, $parameters, $domain);

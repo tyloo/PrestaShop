@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,23 +38,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProductAttachmentsType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly UrlGeneratorInterface $urlGenerator
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -87,9 +79,6 @@ class ProductAttachmentsType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

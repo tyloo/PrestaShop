@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class ModulesDoctrineCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $installedModules = $container->getParameter('prestashop.installed_modules');
@@ -62,17 +60,13 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
 
     /**
      * Returns a list of CompilerPassInterface indexed with their associated resource.
-     *
-     * @param array $activeModules
-     *
-     * @return array
      */
     private function getCompilerPassList(array $activeModules): array
     {
         $mappingsPassList = [];
         /** @var SplFileInfo $moduleFolder */
         foreach ($this->getModulesFolders() as $moduleFolder) {
-            if (in_array($moduleFolder->getFilename(), $activeModules)
+            if (\in_array($moduleFolder->getFilename(), $activeModules, true)
                 && is_dir($moduleFolder . '/src/Entity')
             ) {
                 $moduleNamespace = $this->getModuleNamespace($moduleFolder);
@@ -97,8 +91,6 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
      *
      * @param string $moduleNamespace
      * @param string $moduleEntityDirectory
-     *
-     * @return DoctrineOrmMappingsPass
      */
     private function createAnnotationMappingDriver($moduleNamespace, $moduleEntityDirectory): DoctrineOrmMappingsPass
     {
@@ -112,11 +104,6 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
         return new DoctrineOrmMappingsPass($driverDefinition, [$moduleNamespace], [], false, []);
     }
 
-    /**
-     * @param SplFileInfo $moduleFolder
-     *
-     * @return string
-     */
     private function getModuleNamespace(SplFileInfo $moduleFolder): string
     {
         $finder = new Finder();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,24 +42,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class GenerateByStatusType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param FormChoiceProviderInterface $orderStateChoiceProvider
-     * @param array $orderCountsByState
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly FormChoiceProviderInterface $orderStateChoiceProvider,
-        private array $orderCountsByState
+        private array $orderCountsByState,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -71,24 +63,18 @@ class GenerateByStatusType extends TranslatorAwareType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         /** @var FormView $child */
         foreach ($view->children['order_states'] as $child) {
             $child->vars['orders_count'] = 0;
 
-            if (array_key_exists($child->vars['value'], $this->orderCountsByState)) {
+            if (\array_key_exists($child->vars['value'], $this->orderCountsByState)) {
                 $child->vars['orders_count'] = $this->orderCountsByState[$child->vars['value']];
             }
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -96,9 +82,6 @@ class GenerateByStatusType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'orders_invoices_by_status_block';

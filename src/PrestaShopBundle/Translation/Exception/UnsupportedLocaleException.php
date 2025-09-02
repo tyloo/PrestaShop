@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,11 @@ final class UnsupportedLocaleException extends NotFoundResourceException
 {
     /**
      * @param string $filePath the expected file path of the translations
-     * @param string $locale the translation locale
-     *
-     * @return self
+     * @param string $locale   the translation locale
      */
     public static function fileNotFound($filePath, $locale): self
     {
-        $exceptionMessage = sprintf(
+        $exceptionMessage = \sprintf(
             'The locale "%s" is not supported, because we can\'t find the related file in the module:
             have you created the file "%s"?',
             $locale,
@@ -53,12 +52,10 @@ final class UnsupportedLocaleException extends NotFoundResourceException
 
     /**
      * @param string $locale the translation locale
-     *
-     * @return self
      */
     public static function invalidLocale($locale): self
     {
-        $exceptionMessage = sprintf(
+        $exceptionMessage = \sprintf(
             'The provided locale `%s` is invalid.',
             $locale
         );

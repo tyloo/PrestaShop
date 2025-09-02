@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,11 @@ interface ImportFormHandlerInterface
 {
     /**
      * Get the import form.
-     *
-     * @param ImportConfigInterface $importConfig
-     *
-     * @return mixed
      */
     public function getForm(ImportConfigInterface $importConfig);
 
     /**
      * Save the form's data.
-     *
-     * @param array $data
      *
      * @return array of errors
      */

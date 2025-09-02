@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,9 +66,6 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -94,7 +92,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        if (!in_array($this->env, ['dev', 'test'])) {
+        if (! \in_array($this->env, ['dev', 'test'], true)) {
             $io->warning('Dev or test environment is required to fully list all the hooks');
 
             return 1;
@@ -128,28 +126,28 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
         }
 
         // First add new hooks to SQL file
-        if (!empty($newHooks)) {
+        if (! empty($newHooks)) {
             $hookDescriptions = $this->extractHookDescriptions($newHooks);
 
             $sqlInsertStatement = $this->getSqlInsertStatement($hookDescriptions, Version::VERSION);
             $this->appendSqlToFile($sqlUpgradeFile, $sqlInsertStatement);
             $io->success(
-                sprintf(
+                \sprintf(
                     'All new %s hooks have been listed to file %s',
-                    count($newHooks),
+                    \count($newHooks),
                     $sqlUpgradeFile
                 )
             );
         }
 
         // Now delete removed hooks
-        if (!empty($removedHooks)) {
+        if (! empty($removedHooks)) {
             $sqlDeleteStatement = $this->getSqlDeleteStatement($removedHooks, Version::VERSION);
             $this->appendSqlToFile($sqlUpgradeFile, $sqlDeleteStatement);
             $io->success(
-                sprintf(
+                \sprintf(
                     'All obsolete %s hooks have been removed in file %s',
-                    count($removedHooks),
+                    \count($removedHooks),
                     $sqlUpgradeFile
                 )
             );
@@ -165,7 +163,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
     {
         // We need to have an employee or the listing hooks don't work
         // see LegacyHookSubscriber
-        if (!$this->legacyContext->getContext()->employee) {
+        if (! $this->legacyContext->getContext()->employee) {
             // Even a non existing employee is fine
             $this->legacyContext->getContext()->employee = new Employee();
         }
@@ -175,15 +173,13 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
      * Gets sql upgrade file by PrestaShop version.
      *
      * @param string $version
-     *
-     * @return string
      */
     private function getSqlUpgradeFileByPrestaShopVersion($version, $autoUpgradeModulePath): string
     {
         $sqlUpgradeFile = "$autoUpgradeModulePath/upgrade/sql/$version.sql";
 
-        if (!file_exists($sqlUpgradeFile)) {
-            throw new FileNotFoundException(sprintf('File %s has not been found', $sqlUpgradeFile));
+        if (! file_exists($sqlUpgradeFile)) {
+            throw new FileNotFoundException(\sprintf('File %s has not been found', $sqlUpgradeFile));
         }
 
         return $sqlUpgradeFile;
@@ -193,15 +189,12 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
      * Gets sql insert statement.
      *
      * @param HookDescription[] $hookDescriptions
-     * @param string $prestashopVersion
-     *
-     * @return string
      */
     private function getSqlInsertStatement(array $hookDescriptions, string $prestashopVersion): string
     {
         $valuesToInsert = [];
         foreach ($hookDescriptions as $hookDescription) {
-            $valuesToInsert[] = sprintf(
+            $valuesToInsert[] = \sprintf(
                 "  (NULL, '%s', '%s', '%s', '1')",
                 pSQL($hookDescription->getName()),
                 pSQL($hookDescription->getTitle()),
@@ -213,10 +206,10 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
             return '';
         }
 
-        $insertSQL = PHP_EOL . "/* Auto generated hooks added for version $prestashopVersion */" . PHP_EOL;
-        $insertSQL .= 'INSERT INTO `PREFIX_hook` (`id_hook`, `name`, `title`, `description`, `position`) VALUES' . PHP_EOL;
-        $insertSQL .= implode(',' . PHP_EOL, $valuesToInsert);
-        $insertSQL .= PHP_EOL . 'ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `description` = VALUES(`description`);' . PHP_EOL;
+        $insertSQL = \PHP_EOL . "/* Auto generated hooks added for version $prestashopVersion */" . \PHP_EOL;
+        $insertSQL .= 'INSERT INTO `PREFIX_hook` (`id_hook`, `name`, `title`, `description`, `position`) VALUES' . \PHP_EOL;
+        $insertSQL .= implode(',' . \PHP_EOL, $valuesToInsert);
+        $insertSQL .= \PHP_EOL . 'ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `description` = VALUES(`description`);' . \PHP_EOL;
 
         return $insertSQL;
     }
@@ -227,13 +220,13 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
             return '';
         }
 
-        $deleteSQL = PHP_EOL . "/* Auto generated hooks removed for version $prestashopVersion */" . PHP_EOL;
-        $deleteSQL .= 'DELETE FROM `PREFIX_hook` WHERE `name` IN (' . PHP_EOL;
-        $deleteSQL .= implode(',' . PHP_EOL, array_map(fn (string $hookName): string => "  '$hookName'", $removedHooks));
-        $deleteSQL .= PHP_EOL . ');' . PHP_EOL;
-        $deleteSQL .= '/* Clean hook registrations related to removed hooks */' . PHP_EOL;
-        $deleteSQL .= 'DELETE FROM `PREFIX_hook_module` WHERE `id_hook` NOT IN (SELECT id_hook FROM `PREFIX_hook`);' . PHP_EOL;
-        $deleteSQL .= 'DELETE FROM `PREFIX_hook_module_exceptions` WHERE `id_hook` NOT IN (SELECT id_hook FROM `PREFIX_hook`);' . PHP_EOL;
+        $deleteSQL = \PHP_EOL . "/* Auto generated hooks removed for version $prestashopVersion */" . \PHP_EOL;
+        $deleteSQL .= 'DELETE FROM `PREFIX_hook` WHERE `name` IN (' . \PHP_EOL;
+        $deleteSQL .= implode(',' . \PHP_EOL, array_map(fn (string $hookName): string => "  '$hookName'", $removedHooks));
+        $deleteSQL .= \PHP_EOL . ');' . \PHP_EOL;
+        $deleteSQL .= '/* Clean hook registrations related to removed hooks */' . \PHP_EOL;
+        $deleteSQL .= 'DELETE FROM `PREFIX_hook_module` WHERE `id_hook` NOT IN (SELECT id_hook FROM `PREFIX_hook`);' . \PHP_EOL;
+        $deleteSQL .= 'DELETE FROM `PREFIX_hook_module_exceptions` WHERE `id_hook` NOT IN (SELECT id_hook FROM `PREFIX_hook`);' . \PHP_EOL;
 
         return $deleteSQL;
     }
@@ -260,7 +253,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
 
     private function getPreviousHooks(string $previousVersion): array
     {
-        $previousHookFile = sprintf('https://raw.githubusercontent.com/PrestaShop/PrestaShop/refs/tags/%s/install-dev/data/xml/hook.xml', $previousVersion);
+        $previousHookFile = \sprintf('https://raw.githubusercontent.com/PrestaShop/PrestaShop/refs/tags/%s/install-dev/data/xml/hook.xml', $previousVersion);
         $response = $this->httpClient->request('GET', $previousHookFile);
         if ($response->getStatusCode() !== Response::HTTP_OK) {
             throw new RuntimeException('Could not get previous hook information ' . $previousHookFile);
@@ -273,13 +266,13 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
     {
         $xmlFileContent = new SimpleXMLElement($xmlContent);
 
-        if (!isset($xmlFileContent->entities, $xmlFileContent->entities->hook)) {
+        if (! isset($xmlFileContent->entities, $xmlFileContent->entities->hook)) {
             throw new RuntimeException('Invalid hook fixtures files could not find hooks node');
         }
 
         $hookNames = [];
         foreach ($xmlFileContent->entities->hook as $hook) {
-            if (!isset($hook->name)) {
+            if (! isset($hook->name)) {
                 continue;
             }
 
@@ -294,17 +287,17 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
         $currentHookXml = file_get_contents($this->projectDir . '/install-dev/data/xml/hook.xml');
         $xmlFileContent = new SimpleXMLElement($currentHookXml);
 
-        if (!isset($xmlFileContent->entities, $xmlFileContent->entities->hook)) {
+        if (! isset($xmlFileContent->entities, $xmlFileContent->entities->hook)) {
             throw new RuntimeException('Invalid hook fixtures files could not find hooks node');
         }
 
         $hookNames = [];
         foreach ($xmlFileContent->entities->hook as $hook) {
-            if (!isset($hook->name)) {
+            if (! isset($hook->name)) {
                 continue;
             }
             $hookName = $hook->name->__toString();
-            if (!in_array($hookName, $extractedHooks)) {
+            if (! \in_array($hookName, $extractedHooks, true)) {
                 continue;
             }
 

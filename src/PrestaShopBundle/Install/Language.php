@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,25 +33,34 @@ use Symfony\Component\Intl\Countries;
 class Language
 {
     public $id;
+
     public $name;
+
     public $locale;
+
     /**
      * @var lowercase-string
      */
     public $iso_code;
+
     public $language_code;
+
     /**
      * @var bool
      */
     public $is_rtl;
+
     public $date_format_lite;
+
     public $date_format_full;
+
     public $countries;
+
     public $allow_accented_chars_url;
 
     public function __construct($iso)
     {
-        $this->iso_code = strtolower((string) $iso);
+        $this->iso_code = mb_strtolower((string) $iso);
         $xmlPath = _PS_INSTALL_LANGS_PATH_ . $iso . '/';
         $this->setPropertiesFromXml($xmlPath);
         $this->is_rtl = ($this->is_rtl === 'true') ? true : false;
@@ -68,8 +78,6 @@ class Language
 
     /**
      * Get name.
-     *
-     * @return mixed
      */
     public function getName()
     {
@@ -78,8 +86,6 @@ class Language
 
     /**
      * Get locale.
-     *
-     * @return mixed
      */
     public function getLocale()
     {
@@ -88,8 +94,6 @@ class Language
 
     /**
      * Get language_code.
-     *
-     * @return mixed
      */
     public function getLanguageCode()
     {
@@ -98,8 +102,6 @@ class Language
 
     /**
      * Get is_rtl.
-     *
-     * @return mixed
      */
     public function isRtl()
     {
@@ -108,8 +110,6 @@ class Language
 
     /**
      * Get date_format_lite.
-     *
-     * @return mixed
      */
     public function getDateFormatLite()
     {
@@ -118,8 +118,6 @@ class Language
 
     /**
      * Get date_format_full.
-     *
-     * @return mixed
      */
     public function getDateFormatFull()
     {
@@ -128,10 +126,10 @@ class Language
 
     public function getCountries()
     {
-        if (!is_array($this->countries)) {
+        if (! \is_array($this->countries)) {
             Locale::setDefault($this->getLocale());
             $this->countries = Countries::getNames();
-            $this->countries = array_change_key_case($this->countries, CASE_LOWER);
+            $this->countries = array_change_key_case($this->countries, \CASE_LOWER);
         }
 
         return $this->countries;

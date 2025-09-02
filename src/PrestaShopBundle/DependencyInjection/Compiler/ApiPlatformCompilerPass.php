@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,13 +72,13 @@ class ApiPlatformCompilerPass implements CompilerPassInterface
     {
         $matches = [];
         if (preg_match('/(.*)_read/', $scope, $matches)) {
-            if (!empty($matches[1])) {
+            if (! empty($matches[1])) {
                 return 'Read ' . $this->inflector->capitalize($this->inflector->camelize($matches[1]));
             }
         }
 
         if (preg_match('/(.*)_write/', $scope, $matches)) {
-            if (!empty($matches[1])) {
+            if (! empty($matches[1])) {
                 return 'Write ' . $this->inflector->capitalize($this->inflector->camelize($matches[1]));
             }
         }

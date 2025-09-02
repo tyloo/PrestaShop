@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,18 +63,13 @@ class ZoneController extends PrestaShopAdminController
 {
     /**
      * Show all zones.
-     *
-     * @param Request $request
-     * @param ZoneFilters $zoneFilters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         ZoneFilters $zoneFilters,
         #[Autowire(service: 'prestashop.core.grid.factory.zone')]
-        GridFactoryInterface $zoneGridFactory
+        GridFactoryInterface $zoneGridFactory,
     ): Response {
         $zoneGrid = $zoneGridFactory->getGrid($zoneFilters);
 
@@ -87,16 +83,12 @@ class ZoneController extends PrestaShopAdminController
 
     /**
      * Provides filters functionality.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.definition.factory.zone')]
-        GridDefinitionFactoryInterface $zoneGridDefinitionFactory
+        GridDefinitionFactoryInterface $zoneGridDefinitionFactory,
     ): RedirectResponse {
         return $this->buildSearchResponse(
             $zoneGridDefinitionFactory,
@@ -108,10 +100,6 @@ class ZoneController extends PrestaShopAdminController
 
     /**
      * Show "Add new" zone form and handles its submit.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_zones_index', message: 'You need permission to create new zone.')]
     public function createAction(
@@ -119,7 +107,7 @@ class ZoneController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.zone_form_builder')]
         FormBuilderInterface $zoneFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.zone_form_handler')]
-        FormHandlerInterface $zoneFormHandler
+        FormHandlerInterface $zoneFormHandler,
     ): Response {
         $zoneForm = $zoneFormBuilder->getForm();
         $zoneForm->handleRequest($request);
@@ -127,7 +115,7 @@ class ZoneController extends PrestaShopAdminController
         try {
             $handleResult = $zoneFormHandler->handle($zoneForm);
 
-            if (null !== $handleResult->getIdentifiableObjectId()) {
+            if ($handleResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_zones_index');
@@ -146,11 +134,6 @@ class ZoneController extends PrestaShopAdminController
 
     /**
      * Displays zone edit for and handles its submit.
-     *
-     * @param int $zoneId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_zones_index', message: 'You need permission to edit this.')]
     public function editAction(
@@ -159,7 +142,7 @@ class ZoneController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.zone_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.zone_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         try {
             /** @var EditableZone $editableZone */
@@ -200,10 +183,6 @@ class ZoneController extends PrestaShopAdminController
 
     /**
      * Deletes zone.
-     *
-     * @param int $zoneId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_zones_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_zones_index', message: 'You need permission to delete this.')]
@@ -223,10 +202,6 @@ class ZoneController extends PrestaShopAdminController
 
     /**
      * Toggles zone active status.
-     *
-     * @param int $zoneId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_zones_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_zones_index', message: 'You do not have permission to edit this.')]
@@ -247,10 +222,6 @@ class ZoneController extends PrestaShopAdminController
 
     /**
      * Deletes zones in bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_zones_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_zones_index')]
@@ -274,11 +245,6 @@ class ZoneController extends PrestaShopAdminController
 
     /**
      * Bulk toggles zones status.
-     *
-     * @param string $status
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_zones_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_zones_index')]
@@ -302,10 +268,6 @@ class ZoneController extends PrestaShopAdminController
 
     /**
      * Returns zone error messages mapping.
-     *
-     * @param Exception $e
-     *
-     * @return array
      */
     private function getErrorMessages(Exception $e): array
     {
@@ -352,10 +314,6 @@ class ZoneController extends PrestaShopAdminController
 
     /**
      * Collects zone IDs from request.
-     *
-     * @param Request $request
-     *
-     * @return array
      */
     private function getBulkZonesFromRequest(Request $request): array
     {
@@ -364,9 +322,6 @@ class ZoneController extends PrestaShopAdminController
         return array_map('intval', $zoneIds);
     }
 
-    /**
-     * @return array
-     */
     private function getZoneToolbarButtons(): array
     {
         return [

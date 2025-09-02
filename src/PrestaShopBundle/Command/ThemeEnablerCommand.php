@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,14 +46,12 @@ final class ThemeEnablerCommand extends Command
      */
     public const RETURN_CODE_FAILED = 1;
 
-    public function __construct(private readonly ThemeManager $themeManager)
-    {
+    public function __construct(
+        private readonly ThemeManager $themeManager,
+    ) {
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -62,9 +61,6 @@ final class ThemeEnablerCommand extends Command
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -77,13 +73,13 @@ final class ThemeEnablerCommand extends Command
             )
         ;
 
-        if (false === $activationSuccess) {
-            $io->error(sprintf('The selected theme "%s" is invalid', $theme));
+        if ($activationSuccess === false) {
+            $io->error(\sprintf('The selected theme "%s" is invalid', $theme));
 
             return self::RETURN_CODE_FAILED;
         }
 
-        $io->success(sprintf('Theme "%s" enabled with success.', $theme));
+        $io->success(\sprintf('Theme "%s" enabled with success.', $theme));
 
         return 0;
     }

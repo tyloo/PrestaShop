@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,7 +29,6 @@ namespace PrestaShopBundle\Command;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Exception;
 use PDO;
@@ -45,24 +45,14 @@ class UpdateSchemaCommand extends Command
 
     private $dumpSql = false;
 
-    public function __construct(private readonly string $dbName, private readonly string $dbPrefix, private readonly EntityManager $em)
-    {
+    public function __construct(
+        private readonly string $dbName,
+        private readonly string $dbPrefix,
+        private readonly EntityManager $em,
+    ) {
         parent::__construct();
     }
 
-    protected function configure()
-    {
-        $this
-            ->setName('prestashop:schema:update-without-foreign')
-            ->addOption('dump-sql', null, InputOption::VALUE_NONE, 'Dumps the generated SQL statements to the screen (does not execute them).')
-            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Causes the generated SQL statements to be physically executed against your database.')
-            ->setDescription('Update the database');
-    }
-
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->dumpSql = $input->getOption('dump-sql') === true;
@@ -90,7 +80,7 @@ class UpdateSchemaCommand extends Command
 
         $this->clearQueries($connection, $updateSchemaSql);
 
-        $affectedRows += count($updateSchemaSql);
+        $affectedRows += \count($updateSchemaSql);
         // Now execute the queries!
         foreach ($updateSchemaSql as $sql) {
             try {
@@ -102,7 +92,7 @@ class UpdateSchemaCommand extends Command
             }
         }
 
-        if (!$connection->getNativeConnection() instanceof PDO || $connection->getNativeConnection()->inTransaction()) {
+        if (! $connection->getNativeConnection() instanceof PDO || $connection->getNativeConnection()->inTransaction()) {
             if ($this->forceSql) {
                 $connection->commit();
             } else {
@@ -113,8 +103,8 @@ class UpdateSchemaCommand extends Command
         $connection->close();
 
         if ($this->forceSql) {
-            $pluralization = (1 > $affectedRows) ? 'query was' : 'queries were';
-            $output->writeln(sprintf('Database schema updated successfully! "<info>%s</info>" %s executed', $affectedRows, $pluralization));
+            $pluralization = ($affectedRows < 1) ? 'query was' : 'queries were';
+            $output->writeln(\sprintf('Database schema updated successfully! "<info>%s</info>" %s executed', $affectedRows, $pluralization));
         }
 
         if ($this->dumpSql) {
@@ -132,8 +122,8 @@ class UpdateSchemaCommand extends Command
     /**
      * Drop foreign keys from the database
      *
-     * @param Connection $connection Database connection to use to clear foreign keys
-     * @param OutputInterface $output The output renderer
+     * @param Connection      $connection Database connection to use to clear foreign keys
+     * @param OutputInterface $output     The output renderer
      *
      * @return int The number of affected rows
      */
@@ -184,10 +174,8 @@ class UpdateSchemaCommand extends Command
     /**
      * Remove ALTER TABLE queries
      *
-     * @param array $queries List of SQL queries to parse
+     * @param array $queries       List of SQL queries to parse
      * @param array $removedTables Tables removed by previous methods
-     *
-     * @return void
      */
     public function removeAlterTables(array &$queries, array $removedTables): void
     {
@@ -195,7 +183,7 @@ class UpdateSchemaCommand extends Command
             $matches = [];
             if (preg_match('/ALTER TABLE (.+?) /', (string) $sql, $matches)) {
                 $alteredTables = $matches[1];
-                if (in_array($alteredTables, $removedTables)) {
+                if (\in_array($alteredTables, $removedTables, true)) {
                     unset($queries[$key]);
                 }
             }
@@ -206,15 +194,13 @@ class UpdateSchemaCommand extends Command
      * Remove duplicated DROP FOREIGN KEY queries
      *
      * @param array $queries List of SQL queries to parse
-     *
-     * @return void
      */
     public function removeDuplicateDropForeignKeys(array &$queries): void
     {
         $dropForeignKeyQueries = [];
         foreach ($queries as $key => $sql) {
             if (preg_match('/ DROP FOREIGN KEY /', (string) $sql)) {
-                if (in_array($sql, $dropForeignKeyQueries)) {
+                if (\in_array($sql, $dropForeignKeyQueries, true)) {
                     unset($queries[$key]);
                 } else {
                     $dropForeignKeyQueries[] = $sql;
@@ -227,8 +213,6 @@ class UpdateSchemaCommand extends Command
      * Remove ADD CONSTRAINT queries
      *
      * @param array $queries List of SQL queries to parse
-     *
-     * @return void
      */
     public function removeAddConstraints(array &$queries): void
     {
@@ -268,7 +252,7 @@ class UpdateSchemaCommand extends Command
      * Put back DEFAULT fields, since it cannot be described in the ORM model
      *
      * @param Connection $connection Database connection to use
-     * @param array $queries List of SQL queries to parse
+     * @param array      $queries    List of SQL queries to parse
      *
      * return void
      */
@@ -276,24 +260,24 @@ class UpdateSchemaCommand extends Command
     {
         foreach ($queries as $key => $sql) {
             $matches = [];
-            if (!preg_match('/ALTER TABLE (.+?) /', (string) $sql, $matches)) {
+            if (! preg_match('/ALTER TABLE (.+?) /', (string) $sql, $matches)) {
                 continue;
             }
 
             $tableName = $matches[1];
             $matches = [];
             preg_match_all('/([^\s,]*?) CHANGE (.+?) (.+?)(, CHANGE |$)/', (string) $sql, $matches);
-            if (empty($matches[2]) || !is_array($matches[2])) {
+            if (empty($matches[2]) || ! \is_array($matches[2])) {
                 continue;
             }
 
             foreach ($matches[2] as $matchKey => $fieldName) {
-                $findChange = strpos((string) $matches[0][$matchKey], ', CHANGE ');
+                $findChange = mb_strpos((string) $matches[0][$matchKey], ', CHANGE ');
                 // remove table name
                 $matches[0][$matchKey] = preg_replace(
                     '/(.+?) CHANGE/',
                     ' CHANGE',
-                    rtrim((string) $matches[0][$matchKey], ', CHANGE ')
+                    mb_rtrim((string) $matches[0][$matchKey], ', CHANGE ')
                 );
                 $matches[0][$matchKey] .= $findChange !== false ? ', CHANGE ' : '';
                 // remove quote
@@ -310,7 +294,7 @@ class UpdateSchemaCommand extends Command
                 $extra = $results[0]['Extra'];
 
                 if ($oldDefaultValue !== null
-                    && !str_contains($oldDefaultValue, 'CURRENT_TIMESTAMP')) {
+                    && ! str_contains($oldDefaultValue, 'CURRENT_TIMESTAMP')) {
                     $oldDefaultValue = "'" . $oldDefaultValue . "'";
                 }
 
@@ -319,11 +303,11 @@ class UpdateSchemaCommand extends Command
                 }
 
                 // set the old default value
-                if (!($results[0]['Null'] == 'NO' && $results[0]['Default'] === null)
-                    && !($oldDefaultValue === 'NULL'
+                if (! ($results[0]['Null'] === 'NO' && $results[0]['Default'] === null)
+                    && ! ($oldDefaultValue === 'NULL'
                          && str_contains($matches[0][$matchKey], 'NOT NULL'))
-                    && (!str_contains($matches[0][$matchKey], 'BLOB'))
-                    && (!str_contains($matches[0][$matchKey], 'TEXT'))
+                    && (! str_contains($matches[0][$matchKey], 'BLOB'))
+                    && (! str_contains($matches[0][$matchKey], 'TEXT'))
                 ) {
                     if (preg_match('/DEFAULT/', $matches[0][$matchKey])) {
                         $matches[0][$matchKey] = preg_replace(
@@ -347,6 +331,15 @@ class UpdateSchemaCommand extends Command
                 );
             }
         }
+    }
+
+    protected function configure()
+    {
+        $this
+            ->setName('prestashop:schema:update-without-foreign')
+            ->addOption('dump-sql', null, InputOption::VALUE_NONE, 'Dumps the generated SQL statements to the screen (does not execute them).')
+            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Causes the generated SQL statements to be physically executed against your database.')
+            ->setDescription('Update the database');
     }
 
     private function executeUpdateQuery(Connection $connection, string $query): int

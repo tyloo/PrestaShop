@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CommaTransformerExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [
@@ -47,9 +45,6 @@ class CommaTransformerExtension extends AbstractTypeExtension
         ];
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -57,7 +52,7 @@ class CommaTransformerExtension extends AbstractTypeExtension
         $resolver->setNormalizer('attr', function (Options $options, $value) {
             $classAttribute = $value['class'] ?? '';
             $classes = explode(' ', $classAttribute);
-            if (!in_array('js-comma-transformer', $classes)) {
+            if (! \in_array('js-comma-transformer', $classes, true)) {
                 $classes[] = 'js-comma-transformer';
             }
 

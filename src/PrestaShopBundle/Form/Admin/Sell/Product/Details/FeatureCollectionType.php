@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,8 +49,6 @@ class FeatureCollectionType extends CollectionType
 
     /**
      * Change block prefix for theme override.
-     *
-     * @return string
      */
     public function getBlockPrefix(): string
     {

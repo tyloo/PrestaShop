@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,12 +46,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class GiftOptionsType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param ConfigurationInterface $configuration
      * @param string $defaultCurrencyIsoCode
-     * @param array $taxChoices
-     * @param RouterInterface $router
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -58,14 +54,11 @@ class GiftOptionsType extends TranslatorAwareType
         private readonly ConfigurationInterface $configuration,
         private $defaultCurrencyIsoCode,
         private readonly array $taxChoices,
-        private readonly RouterInterface $router
+        private readonly RouterInterface $router,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $atcpShipWrap = (bool) $this->configuration->get('PS_ATCP_SHIPWRAP');
@@ -75,7 +68,8 @@ class GiftOptionsType extends TranslatorAwareType
             ->add('enable_gift_wrapping', SwitchType::class, [
                 'required' => false,
                 'label' => $this->trans('Offer gift wrapping', 'Admin.Shopparameters.Feature'),
-                'help' => $this->trans('Remember to regenerate email templates in [1]Design > Email theme[/1] after enabling or disabling this feature.',
+                'help' => $this->trans(
+                    'Remember to regenerate email templates in [1]Design > Email theme[/1] after enabling or disabling this feature.',
                     'Admin.Shopparameters.Help',
                     [
                         '[1]' => '<a href="' . $this->router->generate('admin_mail_theme_index') . '" target="_blank">',
@@ -93,7 +87,7 @@ class GiftOptionsType extends TranslatorAwareType
                 'multistore_configuration_key' => 'PS_GIFT_WRAPPING_PRICE',
             ]);
 
-        if (!$atcpShipWrap) {
+        if (! $atcpShipWrap) {
             $builder->add('gift_wrapping_tax_rules_group', ChoiceType::class, [
                 'required' => false,
                 'label' => $this->trans('Gift-wrapping tax', 'Admin.Shopparameters.Feature'),
@@ -112,9 +106,6 @@ class GiftOptionsType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -122,17 +113,12 @@ class GiftOptionsType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'order_preferences_gift_options_block';
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see MultistoreConfigurationTypeExtension
      */
     public function getParent(): string

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,7 +40,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RequestPasswordResetType extends AbstractType
 {
     public function __construct(
-        protected readonly TranslatorInterface $translator
+        protected readonly TranslatorInterface $translator,
     ) {
     }
 

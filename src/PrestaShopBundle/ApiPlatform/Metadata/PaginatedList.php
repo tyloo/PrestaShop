@@ -77,7 +77,6 @@ class PaginatedList extends AbstractCQRSOperation implements CollectionOperation
         ?array $exceptionToStatus = null,
         ?array $links = null,
         ?array $errors = null,
-
         ?string $shortName = null,
         ?string $class = null,
         ?bool $paginationEnabled = null,
@@ -132,29 +131,27 @@ class PaginatedList extends AbstractCQRSOperation implements CollectionOperation
         ?array $filtersMapping = null,
         ?bool $experimentalOperation = null,
     ) {
-        $passedArguments = \get_defined_vars();
+        $passedArguments = get_defined_vars();
         $passedArguments['method'] = self::METHOD_GET;
         $passedArguments['provider'] = $provider ?? QueryListProvider::class;
         $passedArguments['filtersClass'] = $filtersClass ?? Filters::class;
 
-        if (!empty($gridDataFactory)) {
+        if (! empty($gridDataFactory)) {
             $this->checkArgumentAndExtraParameterValidity('gridDataFactory', $gridDataFactory, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['gridDataFactory'] = $gridDataFactory;
         }
 
-        if (!empty($filtersClass)) {
+        if (! empty($filtersClass)) {
             $this->checkArgumentAndExtraParameterValidity('filtersClass', $filtersClass, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['filtersClass'] = $filtersClass;
         }
 
-        if (!empty($filtersMapping)) {
+        if (! empty($filtersMapping)) {
             $this->checkArgumentAndExtraParameterValidity('filtersMapping', $filtersMapping, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['filtersMapping'] = $filtersMapping;
         }
 
-        unset($passedArguments['gridDataFactory']);
-        unset($passedArguments['filtersClass']);
-        unset($passedArguments['filtersMapping']);
+        unset($passedArguments['gridDataFactory'], $passedArguments['filtersClass'], $passedArguments['filtersMapping']);
 
         parent::__construct(...$passedArguments);
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,8 +49,11 @@ class FormattedTextareaType extends TranslatorAwareType
      * LONGTEST 4294967295
      */
     public const LIMIT_TINYTEXT_UTF8 = 84;
+
     public const LIMIT_TEXT_UTF8 = 21844;
+
     public const LIMIT_MEDIUMTEXT_UTF8 = 5592404;
+
     public const LIMIT_LONGTEXT_UTF8 = 1431655764;
 
     /**
@@ -62,13 +66,13 @@ class FormattedTextareaType extends TranslatorAwareType
      * LONGTEST 4294967295
      */
     public const LIMIT_TINYTEXT_UTF8_MB4 = 63;
+
     public const LIMIT_TEXT_UTF8_MB4 = 16383;
+
     public const LIMIT_MEDIUMTEXT_UTF8_MB4 = 4194303;
+
     public const LIMIT_LONGTEXT_UTF8_MB4 = 1073741823;
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -107,25 +111,19 @@ class FormattedTextareaType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
-        if (!isset($view->vars['attr']['class'])) {
+        if (! isset($view->vars['attr']['class'])) {
             $view->vars['attr']['class'] = '';
         }
 
-        if (true === $options['autoload']) {
+        if ($options['autoload'] === true) {
             $view->vars['attr']['class'] .= ' autoload_rte';
         }
         $view->vars['attr']['counter'] = $options['limit'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return TextareaType::class;

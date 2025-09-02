@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,26 +40,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StockType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param RouterInterface $router,
-     * @param array $locales
-     * @param FormChoiceProviderInterface $packStockTypeChoiceProvider
-     * @param string $employeeIsoCode
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly FormChoiceProviderInterface $packStockTypeChoiceProvider,
         protected RouterInterface $router,
-        protected string $employeeIsoCode
+        protected string $employeeIsoCode,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -104,9 +95,6 @@ class StockType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -128,11 +116,12 @@ class StockType extends TranslatorAwareType
                 $productType = $resolver->offsetGet('product_type');
                 if ($productType === ProductType::TYPE_VIRTUAL) {
                     return $this->trans('Virtual product', 'Admin.Catalog.Feature');
-                } elseif ($productType === ProductType::TYPE_PACK) {
-                    return $this->trans('Pack', 'Admin.Catalog.Feature');
-                } else {
-                    return $this->trans('Stocks', 'Admin.Catalog.Feature');
                 }
+                if ($productType === ProductType::TYPE_PACK) {
+                    return $this->trans('Pack', 'Admin.Catalog.Feature');
+                }
+
+                return $this->trans('Stocks', 'Admin.Catalog.Feature');
             })
         ;
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,15 +43,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RedirectOptionType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param RouterInterface $router
-     * @param DataTransformerInterface $targetTransformer
-     * @param EventSubscriberInterface $eventSubscriber
-     * @param string $employeeIsoCode
-     * @param int $homeCategoryId
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
@@ -58,14 +50,11 @@ class RedirectOptionType extends TranslatorAwareType
         private readonly DataTransformerInterface $targetTransformer,
         private readonly EventSubscriberInterface $eventSubscriber,
         private readonly string $employeeIsoCode,
-        private readonly int $homeCategoryId
+        private readonly int $homeCategoryId,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $entityAttributes = [
@@ -145,9 +134,6 @@ class RedirectOptionType extends TranslatorAwareType
         $builder->addEventSubscriber($this->eventSubscriber);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -171,9 +157,6 @@ class RedirectOptionType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * @return array
-     */
     private function getRedirectionAlertMessages(): array
     {
         $formatParameters = [

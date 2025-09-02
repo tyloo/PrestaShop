@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,19 +39,18 @@ abstract class TranslatorAwareType extends CommonAbstractType
     public function __construct(
         private readonly TranslatorInterface $translator,
         /**
-         * @param array<int, array<string, mixed>> $locales All languages available on shop. Used for translations.
+         * @param array<int, array<string, mixed>> $key All languages available on shop. Used for translations.
          */
-        protected array $locales
-    )
-    {
+        protected array $locales,
+    ) {
     }
 
     /**
      * Get the translated chain from key.
      *
-     * @param string $key the key to be translated
-     * @param string $domain the domain to be selected
-     * @param array $parameters Optional, pass parameters if needed (uncommon)
+     * @param string $key        the key to be translated
+     * @param string $domain     the domain to be selected
+     * @param array  $parameters Optional, pass parameters if needed (uncommon)
      *
      * @returns string
      */
@@ -59,9 +59,6 @@ abstract class TranslatorAwareType extends CommonAbstractType
         return $this->translator->trans($key, $parameters, $domain);
     }
 
-    /**
-     * @return TranslatorInterface
-     */
     protected function getTranslator(): TranslatorInterface
     {
         return $this->translator;

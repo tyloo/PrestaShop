@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,19 +36,14 @@ use PrestaShopBundle\Event\FilterSearchCriteriaEvent;
  */
 class FilterCategorySearchCriteriaListener
 {
-    /**
-     * @param DecoratedSearchCriteriaFactory $categorySearchCriteriaFactory
-     */
-    public function __construct(private readonly DecoratedSearchCriteriaFactory $categorySearchCriteriaFactory)
-    {
+    public function __construct(
+        private readonly DecoratedSearchCriteriaFactory $categorySearchCriteriaFactory,
+    ) {
     }
 
-    /**
-     * @param FilterSearchCriteriaEvent $event
-     */
     public function onFilterSearchCriteria(FilterSearchCriteriaEvent $event): void
     {
-        if (!$event->getSearchCriteria() instanceof CategoryFilters) {
+        if (! $event->getSearchCriteria() instanceof CategoryFilters) {
             return;
         }
 

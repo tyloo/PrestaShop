@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class CombinationManagerType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly FeatureInterface $multiStoreFeature
+        private readonly FeatureInterface $multiStoreFeature,
     ) {
         parent::__construct($translator, $locales);
     }

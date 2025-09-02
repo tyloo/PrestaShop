@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -103,7 +104,7 @@ class OrderPreferencesController extends PrestaShopAdminController
             $data = $form->getData();
             $saveErrors = $formHandler->save($data);
 
-            if (0 === count($saveErrors)) {
+            if (\count($saveErrors) === 0) {
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
             } else {
                 $this->addFlashErrors($saveErrors);

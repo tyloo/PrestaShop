@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -109,12 +110,6 @@ class ResetPasswordType extends AbstractType
         ]);
     }
 
-    /**
-     * @param int $maxLength
-     * @param int|null $minLength
-     *
-     * @return Length
-     */
     private function getLengthConstraint(int $maxLength, ?int $minLength = null): Length
     {
         $options = [
@@ -122,7 +117,7 @@ class ResetPasswordType extends AbstractType
             'maxMessage' => $this->getMaxLengthValidationMessage($maxLength),
         ];
 
-        if (null !== $minLength) {
+        if ($minLength !== null) {
             $options['min'] = $minLength;
             $options['minMessage'] = $this->getMinLengthValidationMessage($minLength);
         }
@@ -130,11 +125,6 @@ class ResetPasswordType extends AbstractType
         return new Length($options);
     }
 
-    /**
-     * @param int $minLength
-     *
-     * @return string
-     */
     private function getMinLengthValidationMessage(int $minLength): string
     {
         return $this->translator->trans(
@@ -144,11 +134,6 @@ class ResetPasswordType extends AbstractType
         );
     }
 
-    /**
-     * @param int $maxLength
-     *
-     * @return string
-     */
     private function getMaxLengthValidationMessage(int $maxLength): string
     {
         return $this->translator->trans(

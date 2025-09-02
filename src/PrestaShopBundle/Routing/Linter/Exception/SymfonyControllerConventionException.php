@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,17 +31,13 @@ namespace PrestaShopBundle\Routing\Linter\Exception;
 
 class SymfonyControllerConventionException extends LinterException
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function __construct($message, private readonly string $invalidController)
-    {
+    public function __construct(
+        $message,
+        private readonly string $invalidController,
+    ) {
         parent::__construct($message, 0, null);
     }
 
-    /**
-     * @return string
-     */
     public function getInvalidController(): string
     {
         return $this->invalidController;

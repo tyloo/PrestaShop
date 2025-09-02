@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,11 +37,12 @@ class ModuleRepository
     private readonly string $table;
 
     /**
-     * @param Connection $connection
      * @param string $databasePrefix
      */
-    public function __construct(private readonly Connection $connection, private $databasePrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private $databasePrefix,
+    ) {
         $this->table = $this->databasePrefix . 'module';
     }
 

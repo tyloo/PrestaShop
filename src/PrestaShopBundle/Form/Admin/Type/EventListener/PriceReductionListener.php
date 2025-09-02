@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,11 @@ use Symfony\Component\Form\FormEvents;
 
 class PriceReductionListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly CurrencyDataProviderInterface $currencyDataProvider)
-    {
+    public function __construct(
+        private readonly CurrencyDataProviderInterface $currencyDataProvider,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -53,13 +52,10 @@ class PriceReductionListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     */
     public function adaptReductionField(FormEvent $event): void
     {
         $data = $event->getData();
-        if (!isset($data['type'])) {
+        if (! isset($data['type'])) {
             return;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,13 +75,13 @@ class CQRSNotFoundMetadataCollectionFactoryDecorator implements ResourceMetadata
             foreach ($operations as $key => $operation) {
                 $extraProperties = $operation->getExtraProperties();
 
-                if ($operations->has($key) && !empty($extraProperties['CQRSQuery']) && !class_exists($extraProperties['CQRSQuery'])) {
+                if ($operations->has($key) && ! empty($extraProperties['CQRSQuery']) && ! class_exists($extraProperties['CQRSQuery'])) {
                     $operations->remove($key);
                 }
-                if ($operations->has($key) && !empty($extraProperties['CQRSCommand']) && !class_exists($extraProperties['CQRSCommand'])) {
+                if ($operations->has($key) && ! empty($extraProperties['CQRSCommand']) && ! class_exists($extraProperties['CQRSCommand'])) {
                     $operations->remove($key);
                 }
-                if ($operations->has($key) && !empty($extraProperties['gridDataFactory']) && !$this->container->has($extraProperties['gridDataFactory'])) {
+                if ($operations->has($key) && ! empty($extraProperties['gridDataFactory']) && ! $this->container->has($extraProperties['gridDataFactory'])) {
                     $operations->remove($key);
                 }
             }
@@ -93,8 +94,6 @@ class CQRSNotFoundMetadataCollectionFactoryDecorator implements ResourceMetadata
      * This decorator is implied during cache clearing which would fail when the shop is not installed
      * because the DB config is not set up yet. So we protected the feature flag fetching in a try/catch
      * and return false (default value) in case of an error.
-     *
-     * @return bool
      */
     private function areInvalidEndpointsEnabled(): bool
     {

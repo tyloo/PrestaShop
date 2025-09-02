@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,6 +42,15 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class PrestaShopApplication extends Application
 {
+    public function getLongVersion(): string
+    {
+        return \sprintf(
+            'PrestaShop %s with %s',
+            _PS_VERSION_,
+            parent::getLongVersion()
+        );
+    }
+
     protected function getDefaultInputDefinition(): InputDefinition
     {
         $definition = parent::getDefaultInputDefinition();
@@ -54,14 +64,5 @@ class PrestaShopApplication extends Application
         ));
 
         return $definition;
-    }
-
-    public function getLongVersion(): string
-    {
-        return sprintf(
-            'PrestaShop %s with %s',
-            _PS_VERSION_,
-            parent::getLongVersion()
-        );
     }
 }

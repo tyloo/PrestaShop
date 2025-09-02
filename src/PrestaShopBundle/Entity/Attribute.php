@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -82,9 +83,6 @@ class Attribute
      */
     private Collection $attributeLangs;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->shops = new ArrayCollection();

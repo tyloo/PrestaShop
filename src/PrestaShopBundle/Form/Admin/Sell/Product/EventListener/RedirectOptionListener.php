@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use Symfony\Component\Form\FormEvents;
  */
 class RedirectOptionListener implements EventSubscriberInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -51,9 +49,6 @@ class RedirectOptionListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     */
     public function updateRedirectionOptions(FormEvent $event): void
     {
         $data = $event->getData();
@@ -73,9 +68,9 @@ class RedirectOptionListener implements EventSubscriberInterface
         $targetOptions['help'] = $this->getEntityAttribute($targetOptions, $entityType, 'help');
         $targetOptions['remote_url'] = $this->getEntityAttribute($targetOptions, $entityType, 'search-url');
         $targetOptions['filtered_identities'] = json_decode($this->getEntityAttribute($targetOptions, $entityType, 'filtered'));
-        if (RedirectType::TYPE_NOT_FOUND === $dataType || RedirectType::TYPE_GONE === $dataType
-            || RedirectType::TYPE_DEFAULT === $dataType || RedirectType::TYPE_GONE_DISPLAYED === $dataType
-            || RedirectType::TYPE_SUCCESS_DISPLAYED === $dataType || RedirectType::TYPE_NOT_FOUND_DISPLAYED === $dataType) {
+        if ($dataType === RedirectType::TYPE_NOT_FOUND || $dataType === RedirectType::TYPE_GONE
+            || $dataType === RedirectType::TYPE_DEFAULT || $dataType === RedirectType::TYPE_GONE_DISPLAYED
+            || $dataType === RedirectType::TYPE_SUCCESS_DISPLAYED || $dataType === RedirectType::TYPE_NOT_FOUND_DISPLAYED) {
             $targetOptions['row_attr']['class'] = 'd-none';
         }
 
@@ -85,16 +80,9 @@ class RedirectOptionListener implements EventSubscriberInterface
         $form->add($clonedForm);
     }
 
-    /**
-     * @param array $targetOptions
-     * @param string $entityType
-     * @param string $attributeName
-     *
-     * @return string
-     */
     private function getEntityAttribute(array $targetOptions, string $entityType, string $attributeName): string
     {
-        $dataAttribute = sprintf('data-%s-%s', $entityType, $attributeName);
+        $dataAttribute = \sprintf('data-%s-%s', $entityType, $attributeName);
 
         return $targetOptions['attr'][$dataAttribute] ?? '';
     }

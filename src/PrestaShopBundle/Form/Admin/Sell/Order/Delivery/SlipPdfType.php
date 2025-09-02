@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class SlipPdfType extends TranslatorAwareType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $now = (new DateTime())->format('Y-m-d');
@@ -48,7 +46,9 @@ class SlipPdfType extends TranslatorAwareType
                 DatePickerType::class,
                 [
                     'required' => false,
-                    'attr' => ['placeholder' => 'YYYY-MM-DD'],
+                    'attr' => [
+                        'placeholder' => 'YYYY-MM-DD',
+                    ],
                     'data' => $now,
                     'empty_data' => $now,
                     'label' => $this->trans('From', 'Admin.Global'),
@@ -77,9 +77,6 @@ class SlipPdfType extends TranslatorAwareType
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'order_delivery_slip_options';

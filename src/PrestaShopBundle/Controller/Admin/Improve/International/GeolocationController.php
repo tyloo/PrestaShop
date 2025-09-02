@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,10 +44,6 @@ class GeolocationController extends PrestaShopAdminController
 {
     /**
      * Show geolocation page.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
@@ -58,7 +55,7 @@ class GeolocationController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.admin.geolocation.options.form_handler')]
         FormHandlerInterface $geolocationOptionsFormHandler,
         #[Autowire(service: 'prestashop.core.geolocation.geo_lite_city.checker')]
-        GeoLiteCityCheckerInterface $geoLiteCityChecker
+        GeoLiteCityCheckerInterface $geoLiteCityChecker,
     ): Response {
         $legacyController = $request->attributes->get('_legacy_controller');
 
@@ -79,10 +76,6 @@ class GeolocationController extends PrestaShopAdminController
 
     /**
      * Process the Geolocation ByIpAddress configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_geolocation_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_geolocation_index')]
@@ -100,10 +93,6 @@ class GeolocationController extends PrestaShopAdminController
 
     /**
      * Process the Geolocation Whitelist configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_geolocation_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_geolocation_index')]
@@ -121,17 +110,13 @@ class GeolocationController extends PrestaShopAdminController
 
     /**
      * Process the Geolocation Options configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_geolocation_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_geolocation_index')]
     public function processOptionsFormAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.geolocation.options.form_handler')]
-        FormHandlerInterface $geolocationOptionsFormHandler
+        FormHandlerInterface $geolocationOptionsFormHandler,
     ): RedirectResponse {
         return $this->processForm(
             $request,
@@ -142,12 +127,6 @@ class GeolocationController extends PrestaShopAdminController
 
     /**
      * Process the Performance configuration form.
-     *
-     * @param Request $request
-     * @param FormHandlerInterface $formHandler
-     * @param string $hookName
-     *
-     * @return RedirectResponse
      */
     protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): RedirectResponse
     {
@@ -165,7 +144,7 @@ class GeolocationController extends PrestaShopAdminController
             $data = $form->getData();
             $saveErrors = $formHandler->save($data);
 
-            if (0 === count($saveErrors)) {
+            if (\count($saveErrors) === 0) {
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
             } else {
                 $this->addFlashErrors($saveErrors);

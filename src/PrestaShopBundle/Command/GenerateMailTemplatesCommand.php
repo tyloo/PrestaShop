@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,8 +39,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateMailTemplatesCommand extends Command
 {
-    public function __construct(private readonly CommandBusInterface $commandBus, private readonly LegacyContext $legacyContext)
-    {
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+        private readonly LegacyContext $legacyContext,
+    ) {
         parent::__construct();
     }
 
@@ -56,32 +59,26 @@ class GenerateMailTemplatesCommand extends Command
         ;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $themeName = $input->getArgument('theme');
         $coreOutputFolder = $input->getArgument('coreOutputFolder');
-        if (!empty($coreOutputFolder) && file_exists($coreOutputFolder)) {
+        if (! empty($coreOutputFolder) && file_exists($coreOutputFolder)) {
             $coreOutputFolder = realpath($coreOutputFolder);
         }
         $modulesOutputFolder = $input->getArgument('modulesOutputFolder');
-        if (!empty($modulesOutputFolder) && file_exists($modulesOutputFolder)) {
+        if (! empty($modulesOutputFolder) && file_exists($modulesOutputFolder)) {
             $modulesOutputFolder = realpath($modulesOutputFolder);
         } else {
             $modulesOutputFolder = $coreOutputFolder;
         }
-        $overwrite = false !== $input->getOption('overwrite');
+        $overwrite = $input->getOption('overwrite') !== false;
 
         $this->initContext();
 
         $locale = $input->getArgument('locale');
 
-        $output->writeln(sprintf('Exporting mail with theme %s for language %s', $themeName, $locale));
+        $output->writeln(\sprintf('Exporting mail with theme %s for language %s', $themeName, $locale));
 
         /** @var GenerateThemeMailTemplatesCommand $generateCommand */
         $generateCommand = new GenerateThemeMailTemplatesCommand(
@@ -103,7 +100,7 @@ class GenerateMailTemplatesCommand extends Command
     {
         // We need to have an employee or the module hooks don't work
         // see LegacyHookSubscriber
-        if (!$this->legacyContext->getContext()->employee) {
+        if (! $this->legacyContext->getContext()->employee) {
             // Even a non existing employee is fine
             $this->legacyContext->getContext()->employee = new Employee(42);
         }

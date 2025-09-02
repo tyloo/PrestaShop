@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class SqlRequestType extends TranslatorAwareType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -51,7 +49,7 @@ class SqlRequestType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans('SQL query name', 'Admin.Advparameters.Feature')),
+                                \sprintf('"%s"', $this->trans('SQL query name', 'Admin.Advparameters.Feature')),
                             ]
                         ),
                     ]),
@@ -68,7 +66,7 @@ class SqlRequestType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans('SQL query', 'Admin.Advparameters.Feature')),
+                                \sprintf('"%s"', $this->trans('SQL query', 'Admin.Advparameters.Feature')),
                             ]
                         ),
                     ]),

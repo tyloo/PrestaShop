@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,9 +63,6 @@ class WebserviceController extends PrestaShopAdminController
      * Displays the Webservice main page.
      *
      * @param WebserviceKeyFilters $filters - filters for webservice list
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -82,10 +80,6 @@ class WebserviceController extends PrestaShopAdminController
 
     /**
      * Shows Webservice Key form and handles its submit
-     *
-     * @param Request $request
-     *
-     * @return Response|RedirectResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
@@ -101,7 +95,7 @@ class WebserviceController extends PrestaShopAdminController
         try {
             $result = $formHandler->handle($form);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_webservice_keys_index');
@@ -123,11 +117,6 @@ class WebserviceController extends PrestaShopAdminController
 
     /**
      * Redirects to webservice account form where existing webservice account record can be edited.
-     *
-     * @param int $webserviceKeyId
-     * @param Request $request
-     *
-     * @return Response|RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_webservice_keys_index')]
     public function editAction(
@@ -170,10 +159,6 @@ class WebserviceController extends PrestaShopAdminController
 
     /**
      * Deletes single record.
-     *
-     * @param int $webserviceKeyId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.')]
@@ -183,7 +168,7 @@ class WebserviceController extends PrestaShopAdminController
     ): RedirectResponse {
         $errors = $webserviceEraser->erase([$webserviceKeyId]);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -197,10 +182,6 @@ class WebserviceController extends PrestaShopAdminController
 
     /**
      * Deletes selected records.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.')]
@@ -211,7 +192,7 @@ class WebserviceController extends PrestaShopAdminController
         $webserviceToDelete = $request->request->all('webservice_key_bulk_action');
         $errors = $webserviceEraser->erase($webserviceToDelete);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -225,10 +206,6 @@ class WebserviceController extends PrestaShopAdminController
 
     /**
      * Enables status for selected rows.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
@@ -250,10 +227,6 @@ class WebserviceController extends PrestaShopAdminController
 
     /**
      * Disables status for selected rows.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
@@ -275,10 +248,6 @@ class WebserviceController extends PrestaShopAdminController
 
     /**
      * Toggles webservice account status.
-     *
-     * @param int $webserviceKeyId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
@@ -288,7 +257,7 @@ class WebserviceController extends PrestaShopAdminController
     ): RedirectResponse {
         $errors = $statusModifier->toggleStatus($webserviceKeyId);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -302,11 +271,6 @@ class WebserviceController extends PrestaShopAdminController
 
     /**
      * Process the Webservice configuration form.
-     *
-     * @param Request $request
-     * @param WebserviceKeyFilters $filters
-     *
-     * @return Response|RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_webservice_keys_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
@@ -328,13 +292,12 @@ class WebserviceController extends PrestaShopAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $saveErrors = $formHandler->save($form->getData());
 
-            if (0 === count($saveErrors)) {
+            if (\count($saveErrors) === 0) {
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_webservice_keys_index');
-            } else {
-                $this->addFlashErrors($saveErrors);
             }
+            $this->addFlashErrors($saveErrors);
         }
 
         return $this->renderPage($request, $filters, $form, $gridFactory, $serverRequirementsChecker, $webserviceFormDataProvider);
@@ -363,9 +326,6 @@ class WebserviceController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @return array
-     */
     private function getErrorMessages(): array
     {
         return [
@@ -383,8 +343,6 @@ class WebserviceController extends PrestaShopAdminController
     }
 
     /**
-     * @param Request $request
-     *
      * @return array<string, bool|string|null>
      */
     private function getWebServiceStatus(
@@ -399,8 +357,8 @@ class WebserviceController extends PrestaShopAdminController
         ];
 
         if ($webserviceStatus['isEnabled']) {
-            $webserviceStatus['endpoint'] = rtrim($request->getSchemeAndHttpHost(), '/');
-            $webserviceStatus['endpoint'] .= rtrim($this->getShopContext()->getBaseURI(), '/');
+            $webserviceStatus['endpoint'] = mb_rtrim($request->getSchemeAndHttpHost(), '/');
+            $webserviceStatus['endpoint'] .= mb_rtrim($this->getShopContext()->getBaseURI(), '/');
             $webserviceStatus['endpoint'] .= self::WEBSERVICE_ENTRY_ENDPOINT;
             $webserviceStatus['isFunctional'] = $this->checkWebserviceEndpoint($webserviceStatus['endpoint']);
         }
@@ -408,11 +366,6 @@ class WebserviceController extends PrestaShopAdminController
         return $webserviceStatus;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
     private function checkWebserviceEndpoint(string $url): bool
     {
         $client = HttpClient::create();
@@ -430,7 +383,8 @@ class WebserviceController extends PrestaShopAdminController
 
         if ($statusCode >= Response::HTTP_OK && $statusCode < Response::HTTP_MULTIPLE_CHOICES) {
             return true;
-        } elseif ($statusCode == Response::HTTP_UNAUTHORIZED) {
+        }
+        if ($statusCode === Response::HTTP_UNAUTHORIZED) {
             return true;
         }
 

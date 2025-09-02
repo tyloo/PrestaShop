@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -186,10 +187,11 @@ class HeadTag
     {
         if (Shop::getContext() === Shop::CONTEXT_SHOP) {
             return $this->translator->trans('This field will be modified for this shop:', [], 'Admin.Notifications.Info')
-                . sprintf('<b>%s</b>', $this->getShopName());
-        } elseif (Shop::getContext() === Shop::CONTEXT_GROUP) {
+                . \sprintf('<b>%s</b>', $this->getShopName());
+        }
+        if (Shop::getContext() === Shop::CONTEXT_GROUP) {
             return $this->translator->trans('This field will be modified for all shops in this shop group:', [], 'Admin.Notifications.Info')
-                . sprintf('<b>%s</b>', $this->getShopName());
+                . \sprintf('<b>%s</b>', $this->getShopName());
         }
 
         return $this->translator->trans('This field will be modified for all your shops.', [], 'Admin.Notifications.Info');
@@ -215,7 +217,7 @@ class HeadTag
      */
     protected function preparePriceSpecifications(): array
     {
-        /* @var PriceSpecification */
+        /** @var PriceSpecification $priceSpecification */
         $priceSpecification = $this->languageContext->getPriceSpecification($this->currencyContext->getIsoCode());
 
         return array_merge(
@@ -229,7 +231,7 @@ class HeadTag
      */
     protected function prepareNumberSpecifications(): array
     {
-        /* @var NumberSpecification */
+        /** @var NumberSpecification $numberSpecification */
         $numberSpecification = $this->languageContext->getNumberSpecification();
 
         return array_merge(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -101,7 +102,7 @@ class ExportModuleTranslationsCommand extends Command
 
             return $this->exportSingleLocale($moduleName, $localeOrIso, $autoInstall, $output, $formatter);
         } catch (Exception $e) {
-            $errorMsg = sprintf('An error occurred during export: %s', $e->getMessage());
+            $errorMsg = \sprintf('An error occurred during export: %s', $e->getMessage());
             $formattedBlock = $formatter->formatBlock($errorMsg, 'error', true);
             $output->writeln($formattedBlock);
 
@@ -113,10 +114,10 @@ class ExportModuleTranslationsCommand extends Command
     {
         $availableLocales = $this->getAvailableLocales();
 
-        $output->writeln(sprintf(
+        $output->writeln(\sprintf(
             '<info>Exporting translations for module "%s" in %d locales: %s</info>',
             $moduleName,
-            count($availableLocales),
+            \count($availableLocales),
             implode(', ', $availableLocales)
         ));
 
@@ -127,28 +128,28 @@ class ExportModuleTranslationsCommand extends Command
             try {
                 $result = $this->performExport($moduleName, $locale, $autoInstall);
                 $exportedFiles[] = $result;
-                $output->writeln(sprintf('<comment>✓ Exported: %s</comment>', basename($result)));
+                $output->writeln(\sprintf('<comment>✓ Exported: %s</comment>', basename($result)));
             } catch (Exception $e) {
-                $failedLocales[] = sprintf('%s (%s)', $locale, $e->getMessage());
-                $output->writeln(sprintf('<error>✗ Failed %s: %s</error>', $locale, $e->getMessage()));
+                $failedLocales[] = \sprintf('%s (%s)', $locale, $e->getMessage());
+                $output->writeln(\sprintf('<error>✗ Failed %s: %s</error>', $locale, $e->getMessage()));
             }
         }
 
         // Summary
-        if (!empty($exportedFiles)) {
-            $successMsg = sprintf(
+        if (! empty($exportedFiles)) {
+            $successMsg = \sprintf(
                 'Successfully exported %d out of %d locales for module "%s"',
-                count($exportedFiles),
-                count($availableLocales),
+                \count($exportedFiles),
+                \count($availableLocales),
                 $moduleName
             );
             $formattedBlock = $formatter->formatBlock($successMsg, 'info', true);
             $output->writeln($formattedBlock);
 
-            if (!empty($failedLocales)) {
+            if (! empty($failedLocales)) {
                 $output->writeln('<comment>Failed locales:</comment>');
                 foreach ($failedLocales as $failed) {
-                    $output->writeln(sprintf('  - %s', $failed));
+                    $output->writeln(\sprintf('  - %s', $failed));
                 }
             }
         }
@@ -161,7 +162,7 @@ class ExportModuleTranslationsCommand extends Command
         $locale = $this->resolveLocale($localeOrIso);
         $this->validateLocale($locale);
 
-        $output->writeln(sprintf(
+        $output->writeln(\sprintf(
             '<info>Exporting translations for module "%s" in locale "%s"...</info>',
             $moduleName,
             $locale
@@ -170,7 +171,7 @@ class ExportModuleTranslationsCommand extends Command
         try {
             $customZipFilePath = $this->performExport($moduleName, $locale, $autoInstall);
 
-            $successMsg = sprintf(
+            $successMsg = \sprintf(
                 'Module translations have been exported successfully: %s',
                 $customZipFilePath
             );
@@ -189,10 +190,6 @@ class ExportModuleTranslationsCommand extends Command
 
     /**
      * Performs the core export logic for a single locale
-     *
-     * @param string $moduleName
-     * @param string $locale
-     * @param bool $autoInstall
      *
      * @return string The path to the final exported file
      *
@@ -232,7 +229,7 @@ class ExportModuleTranslationsCommand extends Command
         $locales = [];
 
         foreach ($languages as $language) {
-            if (!empty($language['locale'])) {
+            if (! empty($language['locale'])) {
                 $locales[] = $language['locale'];
             }
         }
@@ -243,22 +240,18 @@ class ExportModuleTranslationsCommand extends Command
     /**
      * Renames the exported zip file to include the module name for better identification
      *
-     * @param string $originalPath
-     * @param string $moduleName
-     * @param string $locale
-     *
      * @return string The new file path
      *
      * @throws Exception
      */
     private function renameExportedFile(string $originalPath, string $moduleName, string $locale): string
     {
-        $directory = dirname($originalPath);
-        $newFilename = sprintf('translations_export_%s_%s.zip', $moduleName, $locale);
-        $newPath = $directory . DIRECTORY_SEPARATOR . $newFilename;
+        $directory = \dirname($originalPath);
+        $newFilename = \sprintf('translations_export_%s_%s.zip', $moduleName, $locale);
+        $newPath = $directory . \DIRECTORY_SEPARATOR . $newFilename;
 
-        if (!$this->filesystem->exists($originalPath)) {
-            throw new Exception(sprintf('Original export file not found: %s', $originalPath));
+        if (! $this->filesystem->exists($originalPath)) {
+            throw new Exception(\sprintf('Original export file not found: %s', $originalPath));
         }
 
         $this->filesystem->rename($originalPath, $newPath, true);
@@ -269,43 +262,29 @@ class ExportModuleTranslationsCommand extends Command
     /**
      * Validates that the specified module exists and uses the new translation system
      *
-     * @param string $moduleName
-     *
      * @throws Exception
      */
     private function validateModule(string $moduleName): void
     {
         $modulePath = $this->moduleDir . $moduleName;
 
-        if (!$this->filesystem->exists($modulePath)) {
-            throw new Exception(sprintf('Module "%s" does not exist in %s', $moduleName, $this->moduleDir));
+        if (! $this->filesystem->exists($modulePath)) {
+            throw new Exception(\sprintf('Module "%s" does not exist in %s', $moduleName, $this->moduleDir));
         }
 
         // Check if module uses the new translation system (XLF files)
         try {
             $module = Module::getInstanceByName($moduleName);
-            if (!$module || !$module->isUsingNewTranslationSystem()) {
-                throw new Exception(sprintf(
-                    'Module "%s" does not use the new translation system (XLF files). ' .
-                    'Only modules using the new translation system can be exported with this command.',
-                    $moduleName
-                ));
+            if (! $module || ! $module->isUsingNewTranslationSystem()) {
+                throw new Exception(\sprintf('Module "%s" does not use the new translation system (XLF files). Only modules using the new translation system can be exported with this command.', $moduleName));
             }
         } catch (Throwable $e) {
-            throw new Exception(sprintf(
-                'Could not validate module "%s": %s',
-                $moduleName,
-                $e->getMessage()
-            ));
+            throw new Exception(\sprintf('Could not validate module "%s": %s', $moduleName, $e->getMessage()));
         }
     }
 
     /**
      * Resolves locale from ISO code or returns the locale as-is if it's already a full locale
-     *
-     * @param string $localeOrIso
-     *
-     * @return string
      *
      * @throws Exception
      */
@@ -319,11 +298,8 @@ class ExportModuleTranslationsCommand extends Command
         // Try to get locale by ISO code
         $locale = Language::getLocaleByIso($localeOrIso);
 
-        if (!$locale) {
-            throw new Exception(sprintf(
-                'ISO code "%s" is not available in this PrestaShop installation. Please check that the language is available in your store.',
-                $localeOrIso
-            ));
+        if (! $locale) {
+            throw new Exception(\sprintf('ISO code "%s" is not available in this PrestaShop installation. Please check that the language is available in your store.', $localeOrIso));
         }
 
         return $locale;
@@ -332,8 +308,6 @@ class ExportModuleTranslationsCommand extends Command
     /**
      * Validates that the specified locale exists in the system
      *
-     * @param string $locale
-     *
      * @throws Exception
      */
     private function validateLocale(string $locale): void
@@ -341,30 +315,23 @@ class ExportModuleTranslationsCommand extends Command
         // Check if the locale exists in the PrestaShop language system
         $languageId = Language::getIdByLocale($locale, true);
 
-        if (!$languageId) {
-            throw new Exception(sprintf(
-                'Locale "%s" is not available in this PrestaShop installation. Please check that the language is available in your store.',
-                $locale
-            ));
+        if (! $languageId) {
+            throw new Exception(\sprintf('Locale "%s" is not available in this PrestaShop installation. Please check that the language is available in your store.', $locale));
         }
     }
 
     /**
      * Automatically installs the exported translations to the module's directory
      *
-     * @param string $zipFilePath
-     * @param string $moduleName
-     * @param string $locale
-     *
      * @throws Exception
      */
     private function autoInstallTranslations(
         string $zipFilePath,
         string $moduleName,
-        string $locale
+        string $locale,
     ): void {
         // Create a temporary directory for extraction
-        $tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'prestashop_translation_export_' . uniqid();
+        $tempDir = sys_get_temp_dir() . \DIRECTORY_SEPARATOR . 'prestashop_translation_export_' . uniqid();
         $this->filesystem->mkdir($tempDir);
 
         try {
@@ -376,14 +343,14 @@ class ExportModuleTranslationsCommand extends Command
             $zip->extractTo($tempDir);
             $zip->close();
 
-            $moduleTranslationsDir = $this->moduleDir . $moduleName . DIRECTORY_SEPARATOR . 'translations' . DIRECTORY_SEPARATOR . $locale;
+            $moduleTranslationsDir = $this->moduleDir . $moduleName . \DIRECTORY_SEPARATOR . 'translations' . \DIRECTORY_SEPARATOR . $locale;
             $this->filesystem->mkdir($moduleTranslationsDir);
 
             $finder = new Finder();
             $finder->files()->name('*.xlf')->in($tempDir);
 
             foreach ($finder as $file) {
-                $targetFile = $moduleTranslationsDir . DIRECTORY_SEPARATOR . $file->getFilename();
+                $targetFile = $moduleTranslationsDir . \DIRECTORY_SEPARATOR . $file->getFilename();
                 $this->filesystem->copy($file->getPathname(), $targetFile, true);
             }
         } finally {

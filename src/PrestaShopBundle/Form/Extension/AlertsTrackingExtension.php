@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,17 +44,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class AlertsTrackingExtension extends AbstractTypeExtension
 {
-    /**
-     * @param RequestStack $requestStack
-     */
     public function __construct(
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         // We dont want to add alerts on every single child form, just the parent one.
@@ -70,9 +65,6 @@ class AlertsTrackingExtension extends AbstractTypeExtension
         $view->vars['alerts'] = $session->getFlashBag()->peekAll();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

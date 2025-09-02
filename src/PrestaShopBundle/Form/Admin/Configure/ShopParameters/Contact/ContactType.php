@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,31 +43,22 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class ContactType
- */
 class ContactType extends TranslatorAwareType
 {
     public const MAX_TITLE_LENGTH = 255;
 
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param DataTransformerInterface $singleDefaultLanguageArrayToFilledArrayDataTransformer
      * @param bool $isShopFeatureEnabled
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly DataTransformerInterface $singleDefaultLanguageArrayToFilledArrayDataTransformer,
-        private $isShopFeatureEnabled
+        private $isShopFeatureEnabled,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -78,13 +70,14 @@ class ContactType extends TranslatorAwareType
                 ],
                 'options' => [
                     'constraints' => [
-                        new Regex([
-                            'pattern' => '/^[^<>{}]*$/u',
-                            'message' => $this->trans(
-                                '%s is invalid.',
-                                'Admin.Notifications.Error'
-                            ),
-                        ]
+                        new Regex(
+                            [
+                                'pattern' => '/^[^<>{}]*$/u',
+                                'message' => $this->trans(
+                                    '%s is invalid.',
+                                    'Admin.Notifications.Error'
+                                ),
+                            ]
                         ),
                         new Length([
                             'max' => static::MAX_TITLE_LENGTH,
@@ -142,7 +135,7 @@ class ContactType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
+                                \sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
                             ]
                         ),
                     ]),

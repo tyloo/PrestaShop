@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,19 +53,19 @@ class EmployeeHomepageProvider
         $loggedUser = $this->security->getUser();
         if ($loggedUser instanceof Employee) {
             $homeUrl = null;
-            if (!empty($loggedUser->getDefaultTabId())) {
+            if (! empty($loggedUser->getDefaultTabId())) {
                 /** @var Tab|null $defaultTab */
                 $defaultTab = $this->tabRepository->findOneBy(['id' => $loggedUser->getDefaultTabId()]);
-                if (!empty($defaultTab)) {
-                    if (!empty($defaultTab->getRouteName())) {
+                if (! empty($defaultTab)) {
+                    if (! empty($defaultTab->getRouteName())) {
                         $homeUrl = $this->router->generate($defaultTab->getRouteName());
-                    } elseif (!empty($defaultTab->getClassName())) {
+                    } elseif (! empty($defaultTab->getClassName())) {
                         $homeUrl = $this->legacyContext->getAdminLink($defaultTab->getClassName());
                     }
                 }
             }
 
-            if (null === $homeUrl) {
+            if ($homeUrl === null) {
                 $homeUrl = $this->legacyContext->getAdminLink('AdminDashboard');
             }
 

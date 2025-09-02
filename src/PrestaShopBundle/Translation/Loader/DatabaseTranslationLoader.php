@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,20 +42,15 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class DatabaseTranslationLoader implements LoaderInterface
 {
-    /**
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(protected EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        protected EntityManagerInterface $entityManager,
+    ) {
     }
 
     /**
-     * @param mixed $resource
-     * @param string $locale
-     * @param string $domain
+     * @param string      $locale
+     * @param string      $domain
      * @param string|null $theme
-     *
-     * @return MessageCatalogue
      *
      * @todo: this method doesn't match the interface
      */
@@ -68,7 +64,7 @@ class DatabaseTranslationLoader implements LoaderInterface
             return $catalogue;
         }
 
-        if (!array_key_exists($locale, $langs)) {
+        if (! \array_key_exists($locale, $langs)) {
             $langs[$locale] = $this->entityManager->getRepository(Lang::class)->findOneBy(['locale' => $locale]);
         }
 
@@ -99,10 +95,6 @@ class DatabaseTranslationLoader implements LoaderInterface
         return $catalogue;
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     * @param Lang $currentLang
-     */
     private function addLangConstraint(QueryBuilder $queryBuilder, Lang $currentLang): void
     {
         $queryBuilder->andWhere('t.lang =:lang')
@@ -110,12 +102,11 @@ class DatabaseTranslationLoader implements LoaderInterface
     }
 
     /**
-     * @param QueryBuilder $queryBuilder
      * @param string|null $theme
      */
     private function addThemeConstraint(QueryBuilder $queryBuilder, $theme): void
     {
-        if (null === $theme) {
+        if ($theme === null) {
             $queryBuilder->andWhere('t.theme IS NULL');
         } else {
             $queryBuilder
@@ -125,7 +116,6 @@ class DatabaseTranslationLoader implements LoaderInterface
     }
 
     /**
-     * @param QueryBuilder $queryBuilder
      * @param string $domain
      */
     private function addDomainConstraint(QueryBuilder $queryBuilder, $domain): void

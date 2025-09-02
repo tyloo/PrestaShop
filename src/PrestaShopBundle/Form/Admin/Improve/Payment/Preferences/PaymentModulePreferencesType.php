@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,16 +44,6 @@ class PaymentModulePreferencesType extends TranslatorAwareType
      */
     private $paymentModules;
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $paymentModules
-     * @param array $countryChoices
-     * @param array $groupChoices
-     * @param array $carrierChoices
-     * @param CurrencyByIdChoiceProvider $currencyChoicesProvider
-     * @param CountryDataProvider $countryDataProvider
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
@@ -61,15 +52,12 @@ class PaymentModulePreferencesType extends TranslatorAwareType
         private readonly array $groupChoices,
         private readonly array $carrierChoices,
         private readonly CurrencyByIdChoiceProvider $currencyChoicesProvider,
-        private readonly CountryDataProvider $countryDataProvider
+        private readonly CountryDataProvider $countryDataProvider,
     ) {
         parent::__construct($translator, $locales);
         $this->paymentModules = $this->sortPaymentModules($paymentModules);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -101,8 +89,6 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
     /**
      * Get multiple currency choices for payment modules.
-     *
-     * @return array
      */
     private function getCurrencyChoicesForPaymentModules(): array
     {
@@ -111,7 +97,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
         foreach ($this->paymentModules as $paymentModule) {
             $moduleInstance = $paymentModule->getInstance();
 
-            if ('radio' === $moduleInstance->currencies_mode) {
+            if ($moduleInstance->currencies_mode === 'radio') {
                 $allowMultipleCurrencies = false;
                 $currencyChoices = $this->getCurrencyChoices();
             } else {
@@ -132,8 +118,6 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
     /**
      * Get multiple country choices for payment modules.
-     *
-     * @return array
      */
     private function getCountryChoicesForPaymentModules(): array
     {
@@ -142,7 +126,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
         foreach ($this->paymentModules as $paymentModule) {
             $limitedCountries = $paymentModule->get('limited_countries');
 
-            if (is_array($limitedCountries) && !empty($limitedCountries)) {
+            if (\is_array($limitedCountries) && ! empty($limitedCountries)) {
                 $countryChoices = $this->getLimitedCountryChoices($limitedCountries);
             } else {
                 $countryChoices = $this->countryChoices;
@@ -161,8 +145,6 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
     /**
      * Get multiple group choices for payment modules.
-     *
-     * @return array
      */
     private function getGroupChoicesForPaymentModules(): array
     {
@@ -182,8 +164,6 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
     /**
      * Get multiple carrier choices for payment modules.
-     *
-     * @return array
      */
     private function getCarrierChoicesForPaymentModules(): array
     {
@@ -216,8 +196,6 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
     /**
      * Get payment preferences specific currency choices.
-     *
-     * @return array
      */
     private function getAdditionalCurrencyChoices(): array
     {
@@ -229,10 +207,6 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
     /**
      * Get country choices by country ISO codes.
-     *
-     * @param array $limitedCountryIsoCodes
-     *
-     * @return array
      */
     private function getLimitedCountryChoices(array $limitedCountryIsoCodes): array
     {
@@ -240,8 +214,8 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
         foreach ($limitedCountryIsoCodes as $isoCode) {
             $countryId = $this->countryDataProvider->getIdByIsoCode($isoCode);
-            $countryValueIndex = array_search($countryId, $this->countryChoices);
-            if (false !== $countryId && false !== $countryValueIndex) {
+            $countryValueIndex = array_search($countryId, $this->countryChoices, true);
+            if ($countryId !== false && $countryValueIndex !== false) {
                 $countryChoices[] = $this->countryChoices[$countryValueIndex];
             }
         }
@@ -251,8 +225,6 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
     /**
      * Sort payment modules by display name.
-     *
-     * @param array $paymentModules
      *
      * @return array
      */
@@ -264,7 +236,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
             $sortingBy[$key] = $paymentModule->get('displayName');
         }
 
-        array_multisort($sortingBy, SORT_ASC, $paymentModules);
+        array_multisort($sortingBy, \SORT_ASC, $paymentModules);
 
         return $paymentModules;
     }

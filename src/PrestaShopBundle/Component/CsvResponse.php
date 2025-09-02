@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,7 +63,7 @@ class CsvResponse extends StreamedResponse
     /**
      * @var int|null
      */
-    private $start = null;
+    private $start;
 
     /**
      * @var int Default limit
@@ -75,17 +76,15 @@ class CsvResponse extends StreamedResponse
     private $includeHeaderRow = true;
 
     /**
-     * Constructor.
-     *
      * @param callable|null $callback A valid PHP callback or null to set it later
-     * @param int $status The response status code
-     * @param array $headers An array of response headers
+     * @param int           $status   The response status code
+     * @param array         $headers  An array of response headers
      */
     public function __construct($callback = null, $status = 200, $headers = [])
     {
         parent::__construct($callback, $status, $headers);
 
-        if (null === $callback) {
+        if ($callback === null) {
             $this->setCallback($this->processData(...));
         }
 
@@ -95,8 +94,6 @@ class CsvResponse extends StreamedResponse
 
     /**
      * Returns true, if the header line should be exported.
-     *
-     * @return bool
      */
     public function isHeaderRowIncluded(): bool
     {
@@ -116,8 +113,6 @@ class CsvResponse extends StreamedResponse
     }
 
     /**
-     * @param array $headersData
-     *
      * @return $this
      */
     public function setHeadersData(array $headersData)
@@ -184,8 +179,6 @@ class CsvResponse extends StreamedResponse
     }
 
     /**
-     * @param bool $includeHeaderRow
-     *
      * @return $this
      */
     public function setIncludeHeaderRow(bool $includeHeaderRow): self
@@ -204,13 +197,13 @@ class CsvResponse extends StreamedResponse
     {
         $this->initStart();
 
-        if (is_array($this->data)) {
+        if (\is_array($this->data)) {
             $this->processDataArray();
 
             return;
         }
 
-        if (is_callable($this->data)) {
+        if (\is_callable($this->data)) {
             $this->processDataCallback();
 
             return;
@@ -249,9 +242,9 @@ class CsvResponse extends StreamedResponse
         }
 
         do {
-            $data = call_user_func_array($this->data, [$this->start, $this->limit]);
+            $data = \call_user_func_array($this->data, [$this->start, $this->limit]);
 
-            $count = count($data);
+            $count = \count($data);
             if ($count === 0) {
                 break;
             }
@@ -260,7 +253,7 @@ class CsvResponse extends StreamedResponse
                 $lineData = [];
 
                 foreach (array_keys($this->headersData) as $column) {
-                    if (array_key_exists($column, $line)) {
+                    if (\array_key_exists($column, $line)) {
                         $lineData[] = $line[$column];
                     }
                 }
@@ -279,15 +272,15 @@ class CsvResponse extends StreamedResponse
      */
     private function initStart(): void
     {
-        if (null !== $this->start) {
+        if ($this->start !== null) {
             return;
         }
 
-        if (self::MODE_PAGINATION === $this->modeType) {
+        if ($this->modeType === self::MODE_PAGINATION) {
             $this->setStart(1);
         }
 
-        if (self::MODE_OFFSET === $this->modeType) {
+        if ($this->modeType === self::MODE_OFFSET) {
             $this->setStart(0);
         }
     }
@@ -299,13 +292,13 @@ class CsvResponse extends StreamedResponse
      */
     private function incrementData(): void
     {
-        if (self::MODE_PAGINATION === $this->modeType) {
+        if ($this->modeType === self::MODE_PAGINATION) {
             $this->setStart($this->start + 1);
 
             return;
         }
 
-        if (self::MODE_OFFSET === $this->modeType) {
+        if ($this->modeType === self::MODE_OFFSET) {
             $this->setStart($this->start + $this->limit);
 
             return;
@@ -321,7 +314,7 @@ class CsvResponse extends StreamedResponse
     {
         fseek($handle, 0);
 
-        while (!feof($handle)) {
+        while (! feof($handle)) {
             $buffer = fread($handle, 1024);
             echo $buffer;
             flush();

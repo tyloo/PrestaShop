@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use Symfony\Component\Routing\Route;
  */
 final class NamingConventionLinter implements RouteLinterInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function lint($routeName, Route $route): void
     {
         $controllerAndMethodName = $this->getControllerAndMethodName($route);
@@ -54,36 +52,20 @@ final class NamingConventionLinter implements RouteLinterInterface
         ]);
 
         if ($routeName !== $expectedRouteName) {
-            throw new NamingConventionException(
-                sprintf('Route "%s" does not follow naming convention.', $routeName),
-                0,
-                null,
-                $expectedRouteName
-            );
+            throw new NamingConventionException(\sprintf('Route "%s" does not follow naming convention.', $routeName), 0, null, $expectedRouteName);
         }
     }
 
-    /**
-     * @param Route $route
-     *
-     * @return array
-     */
     private function getControllerAndMethodName(Route $route): array
     {
         $defaultController = $route->getDefault('_controller');
-        if (!str_contains((string) $defaultController, '::')) {
-            throw new SymfonyControllerConventionException(
-                sprintf('Controller "%s" does not follow symfony convention.', $defaultController),
-                $defaultController
-            );
+        if (! str_contains((string) $defaultController, '::')) {
+            throw new SymfonyControllerConventionException(\sprintf('Controller "%s" does not follow symfony convention.', $defaultController), $defaultController);
         }
 
         [$controller, $method] = explode('::', (string) $defaultController, 2);
-        if (!method_exists($controller, $method)) {
-            throw new ControllerNotFoundException(
-                sprintf('Controller "%s" does not exist.', $defaultController),
-                $defaultController
-            );
+        if (! method_exists($controller, $method)) {
+            throw new ControllerNotFoundException(\sprintf('Controller "%s" does not exist.', $defaultController), $defaultController);
         }
 
         $controllerParts = explode('\\', $controller);

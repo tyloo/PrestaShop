@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,12 +66,6 @@ class OrderStateType extends TranslatorAwareType
     private $templateAttributes;
 
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param ThemeCatalogInterface $themeCatalog
-     * @param UrlGeneratorInterface $routing
-     * @param ShopConfigurationInterface $configuration
-     *
      * @throws InvalidArgumentException
      */
     public function __construct(
@@ -78,7 +73,7 @@ class OrderStateType extends TranslatorAwareType
         array $locales,
         ThemeCatalogInterface $themeCatalog,
         UrlGeneratorInterface $routing,
-        ShopConfigurationInterface $configuration
+        ShopConfigurationInterface $configuration,
     ) {
         parent::__construct($translator, $locales);
         $mailTheme = $configuration->get('PS_MAIL_THEME', 'modern');
@@ -110,15 +105,12 @@ class OrderStateType extends TranslatorAwareType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TranslatableType::class, [
                 'label' => $this->trans('Status name', 'Admin.Shopparameters.Feature'),
-                'help' => sprintf(
+                'help' => \sprintf(
                     '%s %s %s',
                     $this->trans('Order status (e.g. \'Pending\').', 'Admin.Shopparameters.Help'),
                     $this->trans('Invalid characters: numbers and', 'Admin.Shopparameters.Help'),
@@ -225,7 +217,7 @@ class OrderStateType extends TranslatorAwareType
             ])
             ->add('template', TranslatableChoiceType::class, [
                 'label' => $this->trans('Template', 'Admin.Shopparameters.Feature'),
-                'hint' => sprintf(
+                'hint' => \sprintf(
                     '%s<br>%s',
                     $this->trans('Only letters, numbers and underscores ("_") are allowed.', 'Admin.Shopparameters.Help'),
                     $this->trans('Email template for both .html and .txt.', 'Admin.Shopparameters.Help')
@@ -245,9 +237,6 @@ class OrderStateType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

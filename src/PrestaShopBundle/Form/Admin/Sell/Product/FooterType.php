@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,15 +43,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FooterType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param ProductProvider $productUrlProvider
-     * @param ProductPreviewProvider $productPreviewUrlProvider
-     * @param RouterInterface $router
-     * @param FeatureInterface $multiStoreFeature
-     * @param int|null $contextShopId
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
@@ -58,14 +50,11 @@ class FooterType extends TranslatorAwareType
         protected ProductPreviewProvider $productPreviewUrlProvider,
         private readonly RouterInterface $router,
         private readonly FeatureInterface $multiStoreFeature,
-        private readonly ?int $contextShopId
+        private readonly ?int $contextShopId,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $productId = $options['product_id'];
@@ -187,9 +176,6 @@ class FooterType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

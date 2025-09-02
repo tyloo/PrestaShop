@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,18 +46,15 @@ class DateRangeType extends AbstractType
      * These date format constants are used for front-end part and have different format compared to php DateTime class.
      */
     public const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD';
+
     public const DEFAULT_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(protected TranslatorInterface $translator, protected FormCloner $formCloner)
-    {
+    public function __construct(
+        protected TranslatorInterface $translator,
+        protected FormCloner $formCloner,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -136,9 +134,6 @@ class DateRangeType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'date_range';

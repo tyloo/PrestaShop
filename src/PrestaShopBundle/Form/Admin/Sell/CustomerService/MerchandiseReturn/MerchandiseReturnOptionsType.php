@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,12 +42,11 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 class MerchandiseReturnOptionsType extends TranslatorAwareType
 {
     public const FIELD_ENABLE_ORDER_RETURN = 'enable_order_return';
+
     public const FIELD_ORDER_RETURN_PERIOD_IN_DAYS = 'order_return_period_in_days';
+
     public const FIELD_ORDER_RETURN_PREFIX = 'order_return_prefix';
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -89,8 +89,6 @@ class MerchandiseReturnOptionsType extends TranslatorAwareType
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see MultistoreConfigurationTypeExtension
      */
     public function getParent(): string

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,13 +70,11 @@ class ModuleController extends ModuleAbstractController
 
     /**
      * Controller responsible for displaying "Catalog Module Grid" section of Module management pages with ajax.
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', 'ADMINMODULESSF_')")]
     public function manageAction(
         AdminModuleDataProvider $modulesProvider,
-        CategoriesProvider $categoriesProvider
+        CategoriesProvider $categoriesProvider,
     ): Response {
         $installedProducts = $this->getModuleRepository()->getList();
 
@@ -113,11 +112,6 @@ class ModuleController extends ModuleAbstractController
         );
     }
 
-    /**
-     * @param string $module_name
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('read', 'ADMINMODULESSF_') || is_granted('create', 'ADMINMODULESSF_') || is_granted('update', 'ADMINMODULESSF_') || is_granted('delete', 'ADMINMODULESSF_')")]
     public function configureModuleAction(
         string $module_name,
@@ -126,7 +120,7 @@ class ModuleController extends ModuleAbstractController
         // Get accessed module object
         /** @var ModuleAdapter $module */
         $module = $this->getModuleRepository()->getModule($module_name);
-        if (!$module->getInstance()) {
+        if (! $module->getInstance()) {
             $this->addFlash('error', $this->trans(
                 'The module "%modulename%" cannot be found',
                 ['%modulename%' => $module_name],
@@ -194,9 +188,9 @@ class ModuleController extends ModuleAbstractController
         $action = $request->get('action');
 
         $deniedAccess = match ($action) {
-            ModuleAdapter::ACTION_UPGRADE, ModuleAdapter::ACTION_RESET, ModuleAdapter::ACTION_ENABLE, ModuleAdapter::ACTION_DISABLE => !$this->isGranted(Permission::UPDATE, self::CONTROLLER_NAME),
-            ModuleAdapter::ACTION_INSTALL => !$this->isGranted(Permission::CREATE, self::CONTROLLER_NAME),
-            ModuleAdapter::ACTION_DELETE, ModuleAdapter::ACTION_UNINSTALL => !$this->isGranted(Permission::DELETE, self::CONTROLLER_NAME),
+            ModuleAdapter::ACTION_UPGRADE, ModuleAdapter::ACTION_RESET, ModuleAdapter::ACTION_ENABLE, ModuleAdapter::ACTION_DISABLE => ! $this->isGranted(Permission::UPDATE, self::CONTROLLER_NAME),
+            ModuleAdapter::ACTION_INSTALL => ! $this->isGranted(Permission::CREATE, self::CONTROLLER_NAME),
+            ModuleAdapter::ACTION_DELETE, ModuleAdapter::ACTION_UNINSTALL => ! $this->isGranted(Permission::DELETE, self::CONTROLLER_NAME),
             default => false,
         };
 
@@ -217,7 +211,7 @@ class ModuleController extends ModuleAbstractController
         $source = $request->query->get('source');
         $response = [$moduleName => []];
 
-        if (!method_exists($moduleManager, $action)) {
+        if (! method_exists($moduleManager, $action)) {
             $response[$moduleName]['status'] = false;
             $response[$moduleName]['msg'] = $this->trans('Invalid action', [], 'Admin.Notifications.Error');
 
@@ -243,7 +237,7 @@ class ModuleController extends ModuleAbstractController
                 $response[$moduleName]['has_download_url'] = $moduleInstance->attributes->has('download_url');
             }
 
-            $response[$moduleName]['status'] = call_user_func([$moduleManager, $action], ...$args);
+            $response[$moduleName]['status'] = \call_user_func([$moduleManager, $action], ...$args);
         } catch (Exception $e) {
             $response[$moduleName]['status'] = false;
             $response[$moduleName]['msg'] = $this->trans(
@@ -262,7 +256,7 @@ class ModuleController extends ModuleAbstractController
         /** @var ModuleAdapter $moduleInstance */
         $moduleInstance = $this->getModuleRepository()->getModule($moduleName);
         if ($response[$moduleName]['status'] === true) {
-            if (!isset($response[$moduleName]['refresh_needed'])) {
+            if (! isset($response[$moduleName]['refresh_needed'])) {
                 $response[$moduleName]['refresh_needed'] = $this->moduleNeedsReload($moduleInstance);
             }
             $response[$moduleName]['msg'] = $this->trans(
@@ -306,10 +300,6 @@ class ModuleController extends ModuleAbstractController
 
     /**
      * Controller responsible for importing new module from DropFile zone in BO.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     public function importModuleAction(
         Request $request,
@@ -325,7 +315,7 @@ class ModuleController extends ModuleAbstractController
             );
         }
 
-        if (!$this->isGranted(Permission::CREATE, self::CONTROLLER_NAME) && !$this->isGranted(Permission::DELETE, self::CONTROLLER_NAME)) {
+        if (! $this->isGranted(Permission::CREATE, self::CONTROLLER_NAME) && ! $this->isGranted(Permission::DELETE, self::CONTROLLER_NAME)) {
             return new JsonResponse(
                 [
                     'status' => false,
@@ -339,14 +329,7 @@ class ModuleController extends ModuleAbstractController
 
         try {
             if ($serverParams->hasPostMaxSizeBeenExceeded()) {
-                throw new Exception($this->trans(
-                    'Your uploaded file might exceed the [1]upload_max_filesize[/1] and the [1]post_max_size[/1] directives in [1]php.ini[/1], please check your server configuration.',
-                    [
-                        '[1]' => '<i>',
-                        '[/1]' => '</i>',
-                    ],
-                    'Admin.Notifications.Error',
-                ));
+                throw new Exception($this->trans('Your uploaded file might exceed the [1]upload_max_filesize[/1] and the [1]post_max_size[/1] directives in [1]php.ini[/1], please check your server configuration.', ['[1]' => '<i>', '[/1]' => '</i>'], 'Admin.Notifications.Error'));
             }
 
             $fileUploaded = $request->files->get('file_uploaded');
@@ -362,7 +345,7 @@ class ModuleController extends ModuleAbstractController
                 ),
                 new Assert\File(
                     [
-                        'maxSize' => ini_get('upload_max_filesize'),
+                        'maxSize' => \ini_get('upload_max_filesize'),
                         'mimeTypes' => [
                             'application/zip',
                             'application/x-gzip',
@@ -375,13 +358,13 @@ class ModuleController extends ModuleAbstractController
             ];
 
             $violations = $this->validator->validate($fileUploaded, $constraints);
-            if (0 !== count($violations)) {
+            if (\count($violations) !== 0) {
                 $violationsMessages = [];
                 foreach ($violations as $violation) {
                     $violationsMessages[] = $violation->getMessage();
                 }
 
-                throw new Exception(implode(PHP_EOL, $violationsMessages));
+                throw new Exception(implode(\PHP_EOL, $violationsMessages));
             }
 
             $moduleName = $zipSource->getModuleName($fileUploaded->getPathname());
@@ -451,85 +434,6 @@ class ModuleController extends ModuleAbstractController
         return new JsonResponse($installationResponse);
     }
 
-    private function saveModuleHistory(ModuleAdapter $module): void
-    {
-        // Get current employee Id
-        $currentEmployeeId = $this->getEmployeeContext()->getEmployee()->getId();
-        // Get accessed module DB ID
-        $moduleAccessedId = (int) $module->database->get('id');
-
-        // Save history for this module
-        $moduleHistory = $this->entityManager
-            ->getRepository(ModuleHistory::class)
-            ->findOneBy(
-                [
-                    'idEmployee' => $currentEmployeeId,
-                    'idModule' => $moduleAccessedId,
-                ]
-            );
-
-        if (null === $moduleHistory) {
-            $moduleHistory = new ModuleHistory();
-        }
-
-        $moduleHistory->setIdEmployee($currentEmployeeId);
-        $moduleHistory->setIdModule($moduleAccessedId);
-        $moduleHistory->setDateUpd(new DateTime());
-
-        $this->entityManager->persist($moduleHistory);
-        $this->entityManager->flush();
-    }
-
-    private function moduleNeedsReload(ModuleAdapter $module): bool
-    {
-        $instance = $module->getInstance();
-        if (!empty($instance->getTabs())) {
-            return true;
-        }
-
-        return !empty(Db::getInstance()->executeS(
-            'SELECT 1 FROM `' . _DB_PREFIX_ . 'hook_module` hm
-            INNER JOIN `' . _DB_PREFIX_ . 'hook` h ON h.id_hook = hm.id_hook
-            WHERE hm.id_module = ' . (int) $instance->id . ' AND h.name = \'actionListModules\' LIMIT 1'
-        ));
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    private function getDisabledFunctionalityResponse(Request $request): JsonResponse
-    {
-        $content = [
-            $request->get('module_name') => [
-                'status' => false,
-                'msg' => $this->getDemoModeErrorMessage(),
-            ],
-        ];
-
-        return new JsonResponse($content);
-    }
-
-    /**
-     * Get categories and its modules.
-     *
-     * @return array
-     */
-    private function getCategories(CategoriesProvider $categoriesProvider, AdminModuleDataProvider $modulesProvider, ModuleCollection $modules): array
-    {
-        $categories = $categoriesProvider->getCategoriesMenu($modules);
-
-        foreach ($categories['categories']->subMenu as $category) {
-            $collection = ModuleCollection::createFrom($category->modules);
-            $modulesProvider->setActionUrls($collection);
-            $category->modules = $this->getModulePresenter()
-                ->presentCollection($category->modules);
-        }
-
-        return $categories;
-    }
-
     protected function getTranslationLinks(ModuleAdapter $module, LegacyContext $legacyContext): array
     {
         $translationLinks = [];
@@ -556,8 +460,6 @@ class ModuleController extends ModuleAbstractController
 
     /**
      * Common method for all module related controller for getting the header buttons.
-     *
-     * @return array
      */
     protected function getConfigureToolbarButtons(?ModuleAdapter $module): array
     {
@@ -590,5 +492,77 @@ class ModuleController extends ModuleAbstractController
         }
 
         return $toolbarButtons;
+    }
+
+    private function saveModuleHistory(ModuleAdapter $module): void
+    {
+        // Get current employee Id
+        $currentEmployeeId = $this->getEmployeeContext()->getEmployee()->getId();
+        // Get accessed module DB ID
+        $moduleAccessedId = (int) $module->database->get('id');
+
+        // Save history for this module
+        $moduleHistory = $this->entityManager
+            ->getRepository(ModuleHistory::class)
+            ->findOneBy(
+                [
+                    'idEmployee' => $currentEmployeeId,
+                    'idModule' => $moduleAccessedId,
+                ]
+            );
+
+        if ($moduleHistory === null) {
+            $moduleHistory = new ModuleHistory();
+        }
+
+        $moduleHistory->setIdEmployee($currentEmployeeId);
+        $moduleHistory->setIdModule($moduleAccessedId);
+        $moduleHistory->setDateUpd(new DateTime());
+
+        $this->entityManager->persist($moduleHistory);
+        $this->entityManager->flush();
+    }
+
+    private function moduleNeedsReload(ModuleAdapter $module): bool
+    {
+        $instance = $module->getInstance();
+        if (! empty($instance->getTabs())) {
+            return true;
+        }
+
+        return ! empty(Db::getInstance()->executeS(
+            'SELECT 1 FROM `' . _DB_PREFIX_ . 'hook_module` hm
+            INNER JOIN `' . _DB_PREFIX_ . 'hook` h ON h.id_hook = hm.id_hook
+            WHERE hm.id_module = ' . (int) $instance->id . ' AND h.name = \'actionListModules\' LIMIT 1'
+        ));
+    }
+
+    private function getDisabledFunctionalityResponse(Request $request): JsonResponse
+    {
+        $content = [
+            $request->get('module_name') => [
+                'status' => false,
+                'msg' => $this->getDemoModeErrorMessage(),
+            ],
+        ];
+
+        return new JsonResponse($content);
+    }
+
+    /**
+     * Get categories and its modules.
+     */
+    private function getCategories(CategoriesProvider $categoriesProvider, AdminModuleDataProvider $modulesProvider, ModuleCollection $modules): array
+    {
+        $categories = $categoriesProvider->getCategoriesMenu($modules);
+
+        foreach ($categories['categories']->subMenu as $category) {
+            $collection = ModuleCollection::createFrom($category->modules);
+            $modulesProvider->setActionUrls($collection);
+            $category->modules = $this->getModulePresenter()
+                ->presentCollection($category->modules);
+        }
+
+        return $categories;
     }
 }

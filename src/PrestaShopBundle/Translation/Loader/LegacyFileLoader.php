@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,11 +40,9 @@ final class LegacyFileLoader implements LoaderInterface
 {
     private readonly DomainNormalizer $domainNormalizer;
 
-    /**
-     * @param LegacyFileReader $fileReader
-     */
-    public function __construct(private readonly LegacyFileReader $fileReader)
-    {
+    public function __construct(
+        private readonly LegacyFileReader $fileReader,
+    ) {
         $this->domainNormalizer = new DomainNormalizer();
     }
 
@@ -71,8 +70,6 @@ final class LegacyFileLoader implements LoaderInterface
 
     /**
      * Builds the domain using information in the translation key
-     *
-     * @param LegacyTranslationKey $translationKey
      *
      * @return string
      */

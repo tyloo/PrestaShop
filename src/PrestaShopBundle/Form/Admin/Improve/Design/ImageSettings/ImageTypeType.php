@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,10 +40,14 @@ use Symfony\Component\Validator\Constraints\Range;
 
 class ImageTypeType extends TranslatorAwareType
 {
-    /** Minimum size for width and height in pixels of the image type */
+    /**
+     * Minimum size for width and height in pixels of the image type
+     */
     private const MIN_PX_SIZE = 1;
 
-    /** Maximum size for width and height in pixels for the image type */
+    /**
+     * Maximum size for width and height in pixels for the image type
+     */
     private const MAX_PX_SIZE = 9999;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

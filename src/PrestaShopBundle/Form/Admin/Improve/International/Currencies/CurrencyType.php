@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,32 +48,23 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class CurrencyType
- */
 class CurrencyType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $allCurrencies
      * @param bool $isShopFeatureEnabled
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly array $allCurrencies,
-        private $isShopFeatureEnabled
+        private $isShopFeatureEnabled,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $newCurrency = !isset($options['data']['id']);
+        $newCurrency = ! isset($options['data']['id']);
         $unofficialCurrency = isset($options['data']['unofficial']) ? (bool) $options['data']['unofficial'] : false;
         if ($newCurrency) {
             $builder
@@ -105,7 +97,7 @@ class CurrencyType extends TranslatorAwareType
             ;
         }
         $isoCodeAttrs = [];
-        if (!$newCurrency && !$unofficialCurrency) {
+        if (! $newCurrency && ! $unofficialCurrency) {
             $isoCodeAttrs['readonly'] = 1;
         }
 
@@ -165,7 +157,7 @@ class CurrencyType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans('ISO code', 'Admin.International.Feature')),
+                                \sprintf('"%s"', $this->trans('ISO code', 'Admin.International.Feature')),
                             ]
                         ),
                     ]),
@@ -190,7 +182,7 @@ class CurrencyType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans('Exchange rate', 'Admin.International.Feature')),
+                                \sprintf('"%s"', $this->trans('Exchange rate', 'Admin.International.Feature')),
                             ]
                         ),
                     ]),
@@ -278,7 +270,7 @@ class CurrencyType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
+                                \sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
                             ]
                         ),
                     ]),

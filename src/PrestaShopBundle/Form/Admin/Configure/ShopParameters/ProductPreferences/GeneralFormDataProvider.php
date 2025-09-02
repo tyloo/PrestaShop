@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,21 +38,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class GeneralFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private readonly GeneralConfiguration $configuration, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly GeneralConfiguration $configuration,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->configuration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         if ($errors = $this->validate($data)) {
@@ -64,8 +61,6 @@ class GeneralFormDataProvider implements FormDataProviderInterface
     /**
      * Perform validation on form data before saving it.
      *
-     * @param array $data
-     *
      * @return array Returns array of errors
      */
     protected function validate(array $data): array
@@ -73,7 +68,7 @@ class GeneralFormDataProvider implements FormDataProviderInterface
         $invalidFields = [];
 
         $newDaysNumber = $data['new_days_number'];
-        if (!is_numeric($newDaysNumber) || 0 > $newDaysNumber) {
+        if (! is_numeric($newDaysNumber) || $newDaysNumber < 0) {
             $invalidFields[] = $this->translator->trans(
                 'Number of days for which the product is considered \'new\'',
                 [],
@@ -82,7 +77,7 @@ class GeneralFormDataProvider implements FormDataProviderInterface
         }
 
         $shortDescriptionLimit = $data['short_description_limit'];
-        if (!is_numeric($shortDescriptionLimit) || 0 >= $shortDescriptionLimit) {
+        if (! is_numeric($shortDescriptionLimit) || $shortDescriptionLimit <= 0) {
             $invalidFields[] = $this->translator->trans(
                 'Max size of product summary',
                 [],

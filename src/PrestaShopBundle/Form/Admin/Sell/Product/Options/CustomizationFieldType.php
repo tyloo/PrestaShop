@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,14 +46,11 @@ class CustomizationFieldType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly FormChoiceProviderInterface $customizationFieldTypeChoiceProvider
+        private readonly FormChoiceProviderInterface $customizationFieldTypeChoiceProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

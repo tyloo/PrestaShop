@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -88,10 +89,6 @@ class EmailController extends PrestaShopAdminController
 
     /**
      * Process email configuration saving.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_emails_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.', redirectRoute: 'admin_emails_index')]
@@ -106,7 +103,7 @@ class EmailController extends PrestaShopAdminController
         if ($emailConfigurationForm->isSubmitted()) {
             $errors = $emailConfigurationFormHandler->save($emailConfigurationForm->getData());
 
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 $this->addFlashErrors($errors);
             } else {
                 $this->addFlash(
@@ -129,7 +126,7 @@ class EmailController extends PrestaShopAdminController
 
         $errors = $emailLogEraser->erase($mailLogsToDelete);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -161,7 +158,7 @@ class EmailController extends PrestaShopAdminController
     ): RedirectResponse {
         $errors = $emailLogEraser->erase([$mailId]);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -175,10 +172,6 @@ class EmailController extends PrestaShopAdminController
 
     /**
      * Processes test email sending.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     public function sendTestAction(
         Request $request,
@@ -192,14 +185,15 @@ class EmailController extends PrestaShopAdminController
             ]);
         }
 
-        if (!in_array(
+        if (! \in_array(
             $this->getAuthorizationLevel($request->attributes->get('_legacy_controller')),
             [
                 Permission::LEVEL_READ,
                 Permission::LEVEL_UPDATE,
                 Permission::LEVEL_CREATE,
                 Permission::LEVEL_DELETE,
-            ]
+            ],
+            true
         )) {
             return $this->json([
                 'errors' => [

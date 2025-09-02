@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,21 +36,16 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class PreferencesFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private readonly PreferencesConfiguration $preferencesConfiguration)
-    {
+    public function __construct(
+        private readonly PreferencesConfiguration $preferencesConfiguration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->preferencesConfiguration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         return $this->preferencesConfiguration->updateConfiguration($data);

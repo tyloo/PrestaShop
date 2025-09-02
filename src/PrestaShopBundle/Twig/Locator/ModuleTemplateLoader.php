@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,21 +35,18 @@ use Twig\Loader\FilesystemLoader;
 class ModuleTemplateLoader extends FilesystemLoader
 {
     /**
-     * @param array $namespaces a collection of path namespaces with namespace names
+     * @param array $namespaces  a collection of path namespaces with namespace names
      * @param array $modulePaths A path or an array of paths where to look for module templates
      */
     public function __construct(array $namespaces, array $modulePaths = [])
     {
-        if (!empty($modulePaths)) {
+        if (! empty($modulePaths)) {
             $this->registerNamespacesFromConfig($modulePaths, $namespaces);
         }
     }
 
     /**
      * Register namespaces in module and link them to the right paths.
-     *
-     * @param array $modulePaths
-     * @param array $namespaces
      */
     private function registerNamespacesFromConfig(array $modulePaths, array $namespaces): void
     {

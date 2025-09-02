@@ -58,8 +58,8 @@ class ApiClientProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $apiClient): ApiClient
     {
-        if (!$apiClient instanceof ApiClient) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $apiClient::class));
+        if (! $apiClient instanceof ApiClient) {
+            throw new UnsupportedUserException(\sprintf('Instances of "%s" are not supported.', $apiClient::class));
         }
 
         return $this->loadUserByIdentifier($apiClient->getUserIdentifier());

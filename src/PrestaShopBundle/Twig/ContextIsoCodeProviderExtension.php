@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,13 +38,11 @@ class ContextIsoCodeProviderExtension extends AbstractExtension
     /**
      * @param string $isoCode
      */
-    public function __construct(private $isoCode)
-    {
+    public function __construct(
+        private $isoCode,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions()
     {
         return [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,42 +40,40 @@ class LegacyRoute
 
     /**
      * @param string $routeName
-     * @param array $legacyLinks
-     * @param array $routeParameters
      */
-    public function __construct(private $routeName, array $legacyLinks, private readonly array $routeParameters)
-    {
+    public function __construct(
+        private $routeName,
+        array $legacyLinks,
+        private readonly array $routeParameters,
+    ) {
         $this->legacyLinks = $this->buildLegacyLinks($legacyLinks);
         $this->controllersActions = $this->buildControllerActions($this->legacyLinks, $this->routeName);
     }
 
     /**
      * @param string|null $action
-     *
-     * @return bool
      */
     public static function isIndexAction($action): bool
     {
         $indexAliases = ['list', 'index'];
 
-        return empty($action) || in_array(strtolower($action), $indexAliases);
+        return empty($action) || \in_array(mb_strtolower($action), $indexAliases, true);
     }
 
     /**
      * @param string $routeName
-     * @param array $routeDefaults
      *
      * @return LegacyRoute
      */
     public static function buildLegacyRoute($routeName, array $routeDefaults): static
     {
         $legacyLinks = $routeDefaults['_legacy_link'];
-        if (!is_array($legacyLinks)) {
+        if (! \is_array($legacyLinks)) {
             $legacyLinks = [$legacyLinks];
         }
 
         $legacyParameters = [];
-        if (!empty($routeDefaults['_legacy_parameters']) && is_array($routeDefaults['_legacy_parameters'])) {
+        if (! empty($routeDefaults['_legacy_parameters']) && \is_array($routeDefaults['_legacy_parameters'])) {
             $legacyParameters = $routeDefaults['_legacy_parameters'];
         }
 
@@ -89,35 +88,21 @@ class LegacyRoute
         return $this->routeName;
     }
 
-    /**
-     * @return array
-     */
     public function getLegacyLinks(): array
     {
         return $this->legacyLinks;
     }
 
-    /**
-     * @return array
-     */
     public function getRouteParameters(): array
     {
         return $this->routeParameters;
     }
 
-    /**
-     * @return array
-     */
     public function getControllersActions(): array
     {
         return $this->controllersActions;
     }
 
-    /**
-     * @param array $legacyLinks
-     *
-     * @return array
-     */
     private function buildLegacyLinks(array $legacyLinks): array
     {
         $brokenLegacyLinks = [];
@@ -135,17 +120,14 @@ class LegacyRoute
     }
 
     /**
-     * @param array $legacyLinks
      * @param string $routeName
-     *
-     * @return array
      */
     private function buildControllerActions(array $legacyLinks, $routeName): array
     {
         $controllersActions = [];
         foreach ($legacyLinks as $legacyLink) {
             $controller = $legacyLink['controller'];
-            if (!isset($controllersActions[$controller])) {
+            if (! isset($controllersActions[$controller])) {
                 $controllersActions[$controller] = [];
             }
 

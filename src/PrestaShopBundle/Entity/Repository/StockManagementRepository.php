@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,16 +58,61 @@ abstract class StockManagementRepository
     protected $productFeatures = [];
 
     /**
-     * @param ContainerInterface $container
-     * @param Connection $connection
-     * @param ContextAdapter $contextAdapter
-     * @param ImageManager $imageManager
      * @param string $tablePrefix
      *
      * @throws NotImplementedException
      */
-    public function __construct(protected ContainerInterface $container, protected Connection $connection, protected EntityManager $em, protected ContextAdapter $contextAdapter, protected ImageManager $imageManager, protected $tablePrefix)
+    public function __construct(
+        protected ContainerInterface $container,
+        protected Connection $connection,
+        protected EntityManager $em,
+        protected ContextAdapter $contextAdapter,
+        protected ImageManager $imageManager,
+        protected $tablePrefix,
+    ) {
+    }
+
+    public function getData(QueryParamsCollection $queryParams)
     {
+        $query = $this->selectSql(
+            $this->andWhere($queryParams),
+            $this->having($queryParams),
+            $this->orderBy($queryParams)
+        ) . $this->paginate();
+
+        $statement = $this->connection->prepare($query);
+        $this->bindStockManagementValues($statement, $queryParams);
+
+        $result = $statement->executeQuery();
+        $rows = $result->fetchAllAssociative();
+        $result->free();
+        $this->foundRows = $this->getFoundRows();
+
+        $rows = $this->addAdditionalData($rows);
+
+        return $this->castNumericToInt($rows);
+    }
+
+    /**
+     * @return int
+     */
+    public function countPages(QueryParamsCollection $queryParams)
+    {
+        $query = \sprintf(
+            'SELECT CEIL(%d / :%s) as total_pages',
+            $this->foundRows,
+            QueryParamsCollection::SQL_PARAM_MAX_RESULTS
+        );
+
+        $statement = $this->connection->prepare($query);
+        $this->bindMaxResultsValue($statement, $queryParams);
+
+        $result = $statement->executeQuery();
+
+        $count = (int) $result->fetchOne();
+        $result->free();
+
+        return $count;
     }
 
     /**
@@ -84,7 +130,7 @@ abstract class StockManagementRepository
     {
         $employee = $this->getCurrentContext()->employee;
 
-        if (!$employee instanceof Employee) {
+        if (! $employee instanceof Employee) {
             throw new RuntimeException('Determining the active language requires a contextual employee instance.');
         }
 
@@ -108,7 +154,7 @@ abstract class StockManagementRepository
     {
         $shop = $this->getCurrentContext()->shop;
 
-        if (!$shop instanceof Shop) {
+        if (! $shop instanceof Shop) {
             throw new RuntimeException('Determining the active shop requires a contextual shop instance.');
         }
         if ($shop->getContextType() !== Shop::CONTEXT_SHOP) {
@@ -129,8 +175,6 @@ abstract class StockManagementRepository
     }
 
     /**
-     * @param array $rows
-     *
      * @return array
      */
     protected function addAdditionalData(array $rows)
@@ -142,8 +186,6 @@ abstract class StockManagementRepository
     }
 
     /**
-     * @param array $rows
-     *
      * @return array
      */
     protected function addImageThumbnailPaths(array $rows)
@@ -169,73 +211,19 @@ abstract class StockManagementRepository
     }
 
     /**
-     * @param QueryParamsCollection $queryParams
-     *
-     * @return mixed
-     */
-    public function getData(QueryParamsCollection $queryParams)
-    {
-        $query = $this->selectSql(
-            $this->andWhere($queryParams),
-            $this->having($queryParams),
-            $this->orderBy($queryParams)
-        ) . $this->paginate();
-
-        $statement = $this->connection->prepare($query);
-        $this->bindStockManagementValues($statement, $queryParams);
-
-        $result = $statement->executeQuery();
-        $rows = $result->fetchAllAssociative();
-        $result->free();
-        $this->foundRows = $this->getFoundRows();
-
-        $rows = $this->addAdditionalData($rows);
-
-        return $this->castNumericToInt($rows);
-    }
-
-    /**
-     * @param string $andWhereClause
-     * @param string $having
+     * @param string      $andWhereClause
+     * @param string      $having
      * @param string|null $orderByClause
-     *
-     * @return mixed
      */
     protected function selectSql(
         $andWhereClause = '',
         $having = '',
-        $orderByClause = null
+        $orderByClause = null,
     ) {
         throw new RuntimeException('You need to implement your own `selectSql` function.');
     }
 
     /**
-     * @param QueryParamsCollection $queryParams
-     *
-     * @return int
-     */
-    public function countPages(QueryParamsCollection $queryParams)
-    {
-        $query = sprintf(
-            'SELECT CEIL(%d / :%s) as total_pages',
-            $this->foundRows,
-            QueryParamsCollection::SQL_PARAM_MAX_RESULTS
-        );
-
-        $statement = $this->connection->prepare($query);
-        $this->bindMaxResultsValue($statement, $queryParams);
-
-        $result = $statement->executeQuery();
-
-        $count = (int) $result->fetchOne();
-        $result->free();
-
-        return $count;
-    }
-
-    /**
-     * @param QueryParamsCollection $queryParams
-     *
      * @return string
      */
     protected function andWhere(QueryParamsCollection $queryParams)
@@ -254,15 +242,13 @@ abstract class StockManagementRepository
     }
 
     /**
-     * @param QueryParamsCollection $queryParams
-     *
      * @return string
      */
     protected function having(QueryParamsCollection $queryParams)
     {
         $filters = $queryParams->getSqlFilters();
 
-        if (!array_key_exists($queryParams::SQL_CLAUSE_HAVING, $filters)) {
+        if (! \array_key_exists($queryParams::SQL_CLAUSE_HAVING, $filters)) {
             return '';
         }
 
@@ -283,8 +269,6 @@ abstract class StockManagementRepository
     }
 
     /**
-     * @param QueryParamsCollection $queryParams
-     *
      * @return string
      */
     protected function orderBy(QueryParamsCollection $queryParams)
@@ -319,22 +303,17 @@ abstract class StockManagementRepository
      */
     protected function paginate()
     {
-        return sprintf(
+        return \sprintf(
             'LIMIT :%s,:%s',
             QueryParamsCollection::SQL_PARAM_FIRST_RESULT,
             QueryParamsCollection::SQL_PARAM_MAX_RESULTS
         );
     }
 
-    /**
-     * @param Statement $statement
-     * @param QueryParamsCollection|null $queryParams
-     * @param ProductIdentity|null $productIdentity
-     */
     protected function bindStockManagementValues(
         Statement $statement,
         ?QueryParamsCollection $queryParams = null,
-        ?ProductIdentity $productIdentity = null
+        ?ProductIdentity $productIdentity = null,
     ) {
         $shop = $this->getCurrentShop();
         $shopId = $shop->getContextualShopId();
@@ -367,16 +346,12 @@ abstract class StockManagementRepository
         }
     }
 
-    /**
-     * @param Statement $statement
-     * @param QueryParamsCollection $queryParams
-     */
     protected function bindValuesInStatement(Statement $statement, QueryParamsCollection $queryParams)
     {
         $sqlParams = $queryParams->getSqlParams();
 
         foreach ($sqlParams as $name => $value) {
-            if (is_int($value)) {
+            if (\is_int($value)) {
                 $statement->bindValue($name, $value, PDO::PARAM_INT);
             } else {
                 $statement->bindValue($name, $value, PDO::PARAM_STR);
@@ -384,10 +359,6 @@ abstract class StockManagementRepository
         }
     }
 
-    /**
-     * @param Statement $statement
-     * @param QueryParamsCollection $queryParams
-     */
     protected function bindMaxResultsValue(Statement $statement, QueryParamsCollection $queryParams)
     {
         $paginationParams = $queryParams->getSqlPaginationParams();
@@ -474,13 +445,11 @@ abstract class StockManagementRepository
     }
 
     /**
-     * @param array $row
-     *
      * @return string
      */
     protected function getProductFeatures(array $row)
     {
-        if (!isset($this->productFeatures[$row['product_id']])) {
+        if (! isset($this->productFeatures[$row['product_id']])) {
             $query = 'SELECT GROUP_CONCAT(
                       CONCAT(fp.id_feature, ":", fp.id_feature_value)
                       ORDER BY fp.id_feature_value
@@ -510,8 +479,6 @@ abstract class StockManagementRepository
     }
 
     /**
-     * @param array $row
-     *
      * @return int
      */
     protected function getCombinationCoverId(array $row)
@@ -530,8 +497,6 @@ abstract class StockManagementRepository
     }
 
     /**
-     * @param array $row
-     *
      * @return string
      */
     protected function getProductAttributes(array $row)
@@ -558,15 +523,13 @@ abstract class StockManagementRepository
     }
 
     /**
-     * @param array $rows
-     *
      * @return array
      */
     protected function addCombinationsAndFeatures(array $rows)
     {
         foreach ($rows as &$row) {
             $row['product_features'] = $this->getProductFeatures($row);
-            if ($row['combination_id'] != 0) {
+            if ($row['combination_id'] !== 0) {
                 $row['combination_cover_id'] = $this->getCombinationCoverId($row);
                 $row['product_attributes'] = $this->getProductAttributes($row);
             } else {

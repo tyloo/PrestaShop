@@ -63,20 +63,17 @@ class AttributeType extends TranslatorAwareType
         protected AttributeGroupRepository $attributeGroupRepository,
         protected ShopContext $shopContext,
         protected LanguageContext $languageContext,
-        protected FeatureInterface $multistoreFeature
+        protected FeatureInterface $multistoreFeature,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $attributeGroupId = $options['attribute_group'];
 
         $hasAttributeGroupId = false;
-        if (0 < $attributeGroupId) {
+        if ($attributeGroupId > 0) {
             $attributeGroup = $this->attributeGroupRepository->get(
                 new AttributeGroupId($attributeGroupId)
             );
@@ -161,7 +158,7 @@ class AttributeType extends TranslatorAwareType
         $return = [];
 
         foreach ($groups as $group) {
-            $return[sprintf('%s (#%d)', $group->name[$languageId->getValue()], $group->id)] = $group->id;
+            $return[\sprintf('%s (#%d)', $group->name[$languageId->getValue()], $group->id)] = $group->id;
         }
 
         return $return;

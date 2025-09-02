@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,31 +47,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class WebserviceKeyType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
      * @param bool $isMultistoreFeatureUsed
-     * @param array $resourceChoices
-     * @param array $permissionChoices
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private $isMultistoreFeatureUsed,
         private readonly array $resourceChoices,
-        private readonly array $permissionChoices
+        private readonly array $permissionChoices,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('key', GeneratableTextType::class, [
                 'label' => $this->trans('Key', 'Admin.Advparameters.Feature'),
-                'help' => sprintf(
+                'help' => \sprintf(
                     '%s<br>%s',
                     $this->trans('Webservice account key.', 'Admin.Advparameters.Feature'),
                     $this->trans(
@@ -136,7 +130,7 @@ class WebserviceKeyType extends TranslatorAwareType
 
         // remove "all" configuration since it's not an actual permission
         $builder->get('permissions')->addModelTransformer(new CallbackTransformer(
-            fn($value) => $value,
+            fn ($value) => $value,
             function ($value) {
                 if (isset($value['all'])) {
                     unset($value['all']);
@@ -152,15 +146,12 @@ class WebserviceKeyType extends TranslatorAwareType
             ]);
 
             $builder->get('shop_association')->addModelTransformer(new CallbackTransformer(
-                fn($value) => $value ?? [],
-                fn($value) => $value ?? []
+                fn ($value) => $value ?? [],
+                fn ($value) => $value ?? []
             ));
         }
     }
 
-    /**
-     * @return array
-     */
     private function getPermissionChoicesForResources(): array
     {
         $choices = [];

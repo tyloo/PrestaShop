@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,8 +77,6 @@ class TranslationsController extends PrestaShopAdminController
     /**
      * Extract theme using locale and theme name.
      *
-     * @param Request $request
-     *
      * @return BinaryFileResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
@@ -85,7 +84,7 @@ class TranslationsController extends PrestaShopAdminController
         Request $request,
         LanguageRepositoryInterface $langRepository,
         #[Autowire(service: 'prestashop.translation.theme.exporter')]
-        ThemeExporter $themeExporter
+        ThemeExporter $themeExporter,
     ): Response {
         $themeName = $request->request->get('theme-name');
         $isoCode = $request->request->get('iso_code');
@@ -104,10 +103,6 @@ class TranslationsController extends PrestaShopAdminController
 
     /**
      * Show translations settings page.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function showSettingsAction(
@@ -122,7 +117,7 @@ class TranslationsController extends PrestaShopAdminController
         FormHandlerInterface $copyLanguageFormHandler,
         LegacyContext $legacyContext,
         #[Autowire(service: 'prestashop.core.kpi_row.factory.translations_page')]
-        HookableKpiRowFactory $kpiRowFactory
+        HookableKpiRowFactory $kpiRowFactory,
     ): Response {
         $legacyController = $request->attributes->get('_legacy_controller');
         $modifyTranslationsForm = $modifyTranslationsFormHandler->getForm();
@@ -145,16 +140,12 @@ class TranslationsController extends PrestaShopAdminController
 
     /**
      * Modify translations action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function modifyTranslationsAction(
         Request $request,
         #[Autowire(service: 'prestashop.adapter.translation_route_finder')]
-        TranslationRouteFinder $routeFinder
+        TranslationRouteFinder $routeFinder,
     ): RedirectResponse {
         try {
             $route = $routeFinder->findRoute($request);
@@ -171,10 +162,6 @@ class TranslationsController extends PrestaShopAdminController
 
     /**
      * Add language pack for new languages and updates for the existing ones action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function addUpdateLanguageAction(
@@ -182,7 +169,7 @@ class TranslationsController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.admin.translations_settings.add_update_language.form_handler')]
         FormHandlerInterface $formHandler,
         #[Autowire(service: 'prestashop.adapter.language.pack.importer')]
-        LanguagePackImporterInterface $languagePackImporter
+        LanguagePackImporterInterface $languagePackImporter,
     ): RedirectResponse {
         $addUpdateLanguageForm = $formHandler->getForm();
         $addUpdateLanguageForm->handleRequest($request);
@@ -212,10 +199,6 @@ class TranslationsController extends PrestaShopAdminController
 
     /**
      * Extract catalogues using locale.
-     *
-     * @param Request $request
-     *
-     * @return BinaryFileResponse|RedirectResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function exportCataloguesAction(
@@ -224,7 +207,7 @@ class TranslationsController extends PrestaShopAdminController
         FormHandlerInterface $formHandler,
         LanguageRepositoryInterface $langRepository,
         #[Autowire(service: 'prestashop.translation.export.translation_catalogue')]
-        TranslationCatalogueExporter $translationCatalogueExporter
+        TranslationCatalogueExporter $translationCatalogueExporter,
     ): BinaryFileResponse|RedirectResponse {
         $exportTranslationCataloguesForm = $formHandler->getForm();
         $exportTranslationCataloguesForm->handleRequest($request);
@@ -255,7 +238,7 @@ class TranslationsController extends PrestaShopAdminController
                     /*
                      * Exporting mails will also export Mails_Body
                      */
-                    if (ProviderDefinitionInterface::TYPE_MAILS === $type) {
+                    if ($type === ProviderDefinitionInterface::TYPE_MAILS) {
                         $selections[] = [
                             'type' => ProviderDefinitionInterface::TYPE_MAILS_BODY,
                             'selected' => null,
@@ -312,10 +295,6 @@ class TranslationsController extends PrestaShopAdminController
 
     /**
      * Copy language action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function copyLanguageAction(
@@ -323,7 +302,7 @@ class TranslationsController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.admin.translations_settings.copy_language.form_handler')]
         FormHandlerInterface $formHandler,
         #[Autowire(service: 'prestashop.adapter.language.copier')]
-        LanguageCopierInterface $languageCopier
+        LanguageCopierInterface $languageCopier,
     ): RedirectResponse {
         $form = $formHandler->getForm();
         $form->handleRequest($request);

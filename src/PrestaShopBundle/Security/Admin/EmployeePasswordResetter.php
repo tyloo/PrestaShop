@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,10 +59,6 @@ class EmployeePasswordResetter
     }
 
     /**
-     * @param string $email
-     *
-     * @return string
-     *
      * @throws PasswordResetTemporarilyBlockedException
      * @throws UserNotFoundException
      * @throws RuntimeException
@@ -72,11 +69,11 @@ class EmployeePasswordResetter
             /** @var Employee|null $employee */
             $employee = $this->employeeRepository->loadEmployeeByIdentifier($email);
         } catch (UnexpectedResultException) {
-            throw new UserNotFoundException(sprintf('Employee with email "%s" does not exist.', $email));
+            throw new UserNotFoundException(\sprintf('Employee with email "%s" does not exist.', $email));
         }
 
         if (empty($employee)) {
-            throw new UserNotFoundException(sprintf('Employee with email "%s" does not exist.', $email));
+            throw new UserNotFoundException(\sprintf('Employee with email "%s" does not exist.', $email));
         }
 
         $this->checkLastPasswordGeneration($employee);
@@ -94,7 +91,7 @@ class EmployeePasswordResetter
             return null;
         }
 
-        if (!empty($employee)
+        if (! empty($employee)
             && $employee->hasValidResetPasswordToken()
             && $employee->getResetPasswordToken() === $resetPasswordToken) {
             return $employee;
@@ -146,7 +143,7 @@ class EmployeePasswordResetter
     {
         $resetUrl = $this->router->generate('admin_reset_password', ['resetToken' => $employee->getResetPasswordToken()]);
         // We remove thr CSRF token that is automatically added by the router and is useless for this url, and we need an absolute url
-        $resetUrl = rtrim($this->shopContext->getBaseURL(), '/') . '/' . trim(UrlCleaner::cleanUrl($resetUrl, ['_token', 'token']), '/');
+        $resetUrl = mb_rtrim($this->shopContext->getBaseURL(), '/') . '/' . mb_trim(UrlCleaner::cleanUrl($resetUrl, ['_token', 'token']), '/');
 
         $params = [
             '{email}' => $employee->getEmail(),
@@ -168,7 +165,7 @@ class EmployeePasswordResetter
             $employeeName,
         );
 
-        if (!$mailSent) {
+        if (! $mailSent) {
             throw new RuntimeException('Unable to send reset email.');
         }
 

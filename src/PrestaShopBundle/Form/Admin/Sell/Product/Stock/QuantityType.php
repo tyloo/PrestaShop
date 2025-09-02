@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,24 +42,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class QuantityType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param RouterInterface $router
-     * @param bool $stockManagementEnabled
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly RouterInterface $router,
-        private readonly bool $stockManagementEnabled
+        private readonly bool $stockManagementEnabled,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($this->stockManagementEnabled) {
@@ -119,9 +111,6 @@ class QuantityType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

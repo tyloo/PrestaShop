@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ImportType extends TranslatorAwareType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -131,19 +129,16 @@ class ImportType extends TranslatorAwareType
         $builder->get('entity')
             ->addModelTransformer(new CallbackTransformer(
                 function ($entity) {
-                    if (null === $entity) {
+                    if ($entity === null) {
                         return $entity;
                     }
 
                     return is_numeric($entity) ? $entity : Entity::getFromName($entity);
                 },
-                fn($entity) => $entity
+                fn ($entity) => $entity
             ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,41 +42,29 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
     public function __construct(
         LoaderInterface $databaseLoader,
         private readonly ExternalModuleLegacySystemProvider $externalModuleLegacySystemProvider,
-        $resourceDirectory
+        $resourceDirectory,
     ) {
         parent::__construct($databaseLoader, $resourceDirectory);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTranslationDomains(): array
     {
         return ['^' . preg_quote($this->domain) . '([A-Z]|$)'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return ['#^' . preg_quote($this->domain, '#') . '([A-Z]|\.|$)#'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return 'search';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultResourceDirectory(): string
     {
-        return $this->resourceDirectory . DIRECTORY_SEPARATOR . 'default';
+        return $this->resourceDirectory . \DIRECTORY_SEPARATOR . 'default';
     }
 
     public function getDefaultCatalogue($empty = true)
@@ -107,9 +96,6 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
         return $xliffCatalogue;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setLocale($locale)
     {
         $this->externalModuleLegacySystemProvider->setLocale($locale);
@@ -117,9 +103,6 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
         return parent::setLocale($locale);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setModuleName($moduleName): void
     {
         $this->externalModuleLegacySystemProvider->setModuleName($moduleName);
@@ -127,8 +110,6 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
 
     /**
      * Filters the catalogue so that only domains matching the filters are kept
-     *
-     * @param MessageCatalogueInterface $defaultCatalogue
      *
      * @return MessageCatalogueInterface
      */

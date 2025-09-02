@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,7 +30,6 @@ namespace PrestaShopBundle\Entity\Repository;
 use Doctrine\DBAL\Connection;
 use Employee;
 use PrestaShop\PrestaShop\Adapter\Category\CategoryDataProvider;
-use PrestaShop\PrestaShop\Adapter\LegacyContext;
 use PrestaShop\PrestaShop\Adapter\LegacyContext as ContextAdapter;
 use PrestaShopBundle\Exception\NotImplementedException;
 use RuntimeException;
@@ -47,8 +47,6 @@ class CategoryRepository
     private $shopId;
 
     /**
-     * @param Connection $connection
-     * @param ContextAdapter $contextAdapter
      * @param string $tablePrefix
      *
      * @throws NotImplementedException
@@ -56,18 +54,18 @@ class CategoryRepository
     public function __construct(
         private Connection $connection,
         private ContextAdapter $contextAdapter,
-        private $tablePrefix
+        private $tablePrefix,
     ) {
         $context = $this->contextAdapter->getContext();
 
-        if (!$context->employee instanceof Employee) {
+        if (! $context->employee instanceof Employee) {
             throw new RuntimeException('Determining the active language requires a contextual employee instance.');
         }
 
         $languageId = $context->employee->id_lang;
         $this->languageId = (int) $languageId;
 
-        if (!$context->shop instanceof Shop) {
+        if (! $context->shop instanceof Shop) {
             throw new RuntimeException('Determining the active shop requires a contextual shop instance.');
         }
 
@@ -81,8 +79,6 @@ class CategoryRepository
 
     /**
      * @param bool $tree if tree needed for categories
-     *
-     * @return mixed
      */
     public function getCategories($tree = false)
     {
@@ -108,7 +104,7 @@ class CategoryRepository
         $rows = $result->fetchAllAssociative();
         $rows = $this->castNumericToInt($rows);
 
-        if (true === $tree && !empty($rows)) {
+        if ($tree === true && ! empty($rows)) {
             $rows = $this->buildTreeCategories($rows);
         }
 
@@ -117,8 +113,6 @@ class CategoryRepository
 
     /**
      * @param array $rows categories rows
-     *
-     * @return array
      */
     private function buildTreeCategories($rows): array
     {
@@ -131,7 +125,7 @@ class CategoryRepository
             $current = &$buff[$row['id_category']];
             $current = $row;
 
-            if ($row['id_category'] == $idRootCategory) {
+            if ($row['id_category'] === $idRootCategory) {
                 $categories[] = &$current;
             } else {
                 $buff[$row['id_parent']]['children'][] = &$current;

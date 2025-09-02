@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class HandlingType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         private readonly ConfigurationInterface $configuration,
-        private readonly CurrencyDataProviderInterface $currencyDataProvider
+        private readonly CurrencyDataProviderInterface $currencyDataProvider,
     ) {
         parent::__construct($translator, $locales);
     }
@@ -106,9 +107,6 @@ class HandlingType extends TranslatorAwareType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -116,17 +114,12 @@ class HandlingType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'shipping_preferences_handling_block';
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see MultistoreConfigurationTypeExtension
      */
     public function getParent(): string

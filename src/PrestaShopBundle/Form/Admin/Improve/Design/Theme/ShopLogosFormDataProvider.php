@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,51 +33,38 @@ use PrestaShop\PrestaShop\Core\Form\DTO\ShopRestriction;
 use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 use PrestaShop\PrestaShop\Core\Form\MultiStoreSettingsFormDataProviderInterface;
 
-/**
- * {@inheritdoc}
- */
 final class ShopLogosFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @param CommandBusInterface $commandBus
-     * @param MultiStoreSettingsFormDataProviderInterface $themeMultiStoreSettingsFormDataProvider
-     */
-    public function __construct(private readonly CommandBusInterface $commandBus, private readonly MultiStoreSettingsFormDataProviderInterface $themeMultiStoreSettingsFormDataProvider)
-    {
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+        private readonly MultiStoreSettingsFormDataProviderInterface $themeMultiStoreSettingsFormDataProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->themeMultiStoreSettingsFormDataProvider->getData();
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
     public function setData(array $data): array
     {
         $data = $this->geFilteredFieldsByShopRestriction($data);
 
         $command = new UploadLogosCommand();
 
-        if (!empty($data['header_logo'])) {
+        if (! empty($data['header_logo'])) {
             $command->setUploadedHeaderLogo($data['header_logo']);
         }
 
-        if (!empty($data['mail_logo'])) {
+        if (! empty($data['mail_logo'])) {
             $command->setUploadedMailLogo($data['mail_logo']);
         }
 
-        if (!empty($data['invoice_logo'])) {
+        if (! empty($data['invoice_logo'])) {
             $command->setUploadedInvoiceLogo($data['invoice_logo']);
         }
 
-        if (!empty($data['favicon'])) {
+        if (! empty($data['favicon'])) {
             $command->setUploadedFavicon($data['favicon']);
         }
 
@@ -95,7 +83,7 @@ final class ShopLogosFormDataProvider implements FormDataProviderInterface
      */
     private function geFilteredFieldsByShopRestriction(array $data)
     {
-        if (!isset($data['shop_restriction'])) {
+        if (! isset($data['shop_restriction'])) {
             return $data;
         }
 
@@ -106,7 +94,7 @@ final class ShopLogosFormDataProvider implements FormDataProviderInterface
 
         foreach ($shopRestrictionFields as $shopRestrictionField) {
             $doesValueExistsAndNotRestrictedToShop = isset($data[$shopRestrictionField->getFieldName()])
-                && !$shopRestrictionField->isRestrictedToContextShop();
+                && ! $shopRestrictionField->isRestrictedToContextShop();
 
             if ($doesValueExistsAndNotRestrictedToShop) {
                 unset($data[$shopRestrictionField->getFieldName()]);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -90,7 +91,7 @@ class ContactsController extends PrestaShopAdminController
         try {
             $result = $contactFormHandler->handle($contactForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash(
                     'success',
                     $this->trans('Successful creation', [], 'Admin.Notifications.Success')
@@ -205,7 +206,7 @@ class ContactsController extends PrestaShopAdminController
                 ContactConstraintException::INVALID_SHOP_ASSOCIATION => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf(
+                        \sprintf(
                             '"%s"',
                             $this->trans('Store association', [], 'Admin.Global')
                         ),
@@ -215,7 +216,7 @@ class ContactsController extends PrestaShopAdminController
                 ContactConstraintException::INVALID_TITLE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf(
+                        \sprintf(
                             '"%s"',
                             $this->trans('Title', [], 'Admin.Global')
                         ),
@@ -232,7 +233,7 @@ class ContactsController extends PrestaShopAdminController
                 ContactConstraintException::INVALID_DESCRIPTION => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf(
+                        \sprintf(
                             '"%s"',
                             $this->trans('Description', [], 'Admin.Global')
                         ),
@@ -244,7 +245,7 @@ class ContactsController extends PrestaShopAdminController
                 DomainConstraintException::INVALID_EMAIL => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf(
+                        \sprintf(
                             '"%s"',
                             $this->trans('Email address', [], 'Admin.Global')
                         ),

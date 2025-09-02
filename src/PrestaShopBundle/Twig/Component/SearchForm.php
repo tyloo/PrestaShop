@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,14 +36,18 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 class SearchForm
 {
     protected const BO_QUERY_PARAM = 'bo_query';
+
     protected const BO_SEARCH_TYPE_PARAM = 'bo_search_type';
 
     public string $boQuery;
+
     public bool $showClearBtn;
+
     public int $searchType;
 
-    public function __construct(protected readonly RequestStack $requestStack)
-    {
+    public function __construct(
+        protected readonly RequestStack $requestStack,
+    ) {
     }
 
     public function mount(): void
@@ -50,6 +55,6 @@ class SearchForm
         $request = $this->requestStack->getCurrentRequest();
         $this->boQuery = $request->query->get(self::BO_QUERY_PARAM, '');
         $this->searchType = (int) $request->query->get(self::BO_SEARCH_TYPE_PARAM, 0);
-        $this->showClearBtn = !empty($this->boQuery);
+        $this->showClearBtn = ! empty($this->boQuery);
     }
 }

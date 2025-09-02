@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,14 +41,14 @@ class InvalidLegacyTranslationKeyException extends Exception
 
     /**
      * @param string $missingElement The missing element
-     * @param string $key The offending key
+     * @param string $key            The offending key
      *
      * @return InvalidLegacyTranslationKeyException
      */
     public static function missingElementFromKey($missingElement, $key)
     {
         $instance = new self(
-            sprintf('Invalid key in legacy translation file: "%s" (missing %s)', $key, $missingElement)
+            \sprintf('Invalid key in legacy translation file: "%s" (missing %s)', $key, $missingElement)
         );
         $instance->setKey($key);
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,14 +43,13 @@ use Symfony\Component\Routing\Route;
  */
 final class NamingConventionLinterCommand extends Command
 {
-    public function __construct(private readonly AdminRouteProvider $adminRouteProvider, private readonly NamingConventionLinter $namingConventionLinter)
-    {
+    public function __construct(
+        private readonly AdminRouteProvider $adminRouteProvider,
+        private readonly NamingConventionLinter $namingConventionLinter,
+    ) {
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         $this
@@ -58,9 +58,6 @@ final class NamingConventionLinterCommand extends Command
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $invalidRouteNameRows = [];
@@ -81,7 +78,7 @@ final class NamingConventionLinterCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        if (!empty($invalidRouteNameRows) || !empty($invalidControllerRows)) {
+        if (! empty($invalidRouteNameRows) || ! empty($invalidControllerRows)) {
             $this->displayInvalidRoutes($invalidRouteNameRows, $io);
             $this->displayInvalidControllers($invalidControllerRows, $io);
             $this->displayNotFoundControllers($controllerNotFoundRows, $io);
@@ -134,9 +131,9 @@ final class NamingConventionLinterCommand extends Command
         }
 
         $io->title($title);
-        $io->warning(sprintf(
+        $io->warning(\sprintf(
             $warning,
-            count($invalidRows)
+            \count($invalidRows)
         ));
         $io->table($header, $invalidRows);
     }

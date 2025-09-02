@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,15 +34,16 @@ use Symfony\Component\Translation\Exception\InvalidArgumentException;
 trait PrestaShopTranslatorTrait
 {
     public static $regexSprintfParams = '#(?:%%|%(?:[0-9]+\$)?[+-]?(?:[ 0]|\'.)?-?[0-9]*(?:\.[0-9]+)?[bcdeufFosxX])#';
+
     public static $regexClassicParams = '/%\w+%/';
 
     /**
      * Translates the given message.
      *
-     * @param string $id The message id (may also be an object that can be cast to string)
-     * @param array $parameters An array of parameters for the message
-     * @param string|null $domain The domain for the message or null to use the default
-     * @param string|null $locale The locale or null to use the default
+     * @param string      $id         The message id (may also be an object that can be cast to string)
+     * @param array       $parameters An array of parameters for the message
+     * @param string|null $domain     The domain for the message or null to use the default
+     * @param string|null $locale     The locale or null to use the default
      *
      * @return string The translated string
      *
@@ -49,7 +51,7 @@ trait PrestaShopTranslatorTrait
      */
     public function trans($id, array $parameters = [], $domain = null, $locale = null): string
     {
-        $isSprintf = !empty($parameters) && $this->isSprintfString($id);
+        $isSprintf = ! empty($parameters) && $this->isSprintfString($id);
 
         if (empty($locale)) {
             $locale = null;
@@ -72,9 +74,9 @@ trait PrestaShopTranslatorTrait
      * Performs a reverse search in the catalogue and returns the translation key if found.
      * AVOID USING THIS, IT PROVIDES APPROXIMATE RESULTS.
      *
-     * @param string $translated Translated string
-     * @param string $domain Translation domain
-     * @param string|null $locale Unused
+     * @param string      $translated Translated string
+     * @param string      $domain     Translation domain
+     * @param string|null $locale     Unused
      *
      * @return string The translation
      *
@@ -89,7 +91,7 @@ trait PrestaShopTranslatorTrait
         $domain = str_replace('.', '', $domain);
         $contextCatalog = $this->getCatalogue()->all($domain);
 
-        if ($untranslated = array_search($translated, $contextCatalog)) {
+        if ($untranslated = array_search($translated, $contextCatalog, true)) {
             return $untranslated;
         }
 
@@ -99,11 +101,11 @@ trait PrestaShopTranslatorTrait
     /**
      * Translates the given choice message by choosing a translation according to a number.
      *
-     * @param string $id The message id (may also be an object that can be cast to string)
-     * @param int $number The number to use to find the index of the message
-     * @param array $parameters An array of parameters for the message
-     * @param string|null $domain The domain for the message or null to use the default
-     * @param string|null $locale The locale or null to use the default
+     * @param string      $id         The message id (may also be an object that can be cast to string)
+     * @param int         $number     The number to use to find the index of the message
+     * @param array       $parameters An array of parameters for the message
+     * @param string|null $domain     The domain for the message or null to use the default
+     * @param string|null $locale     The locale or null to use the default
      *
      * @return string The translated string
      *
@@ -111,11 +113,11 @@ trait PrestaShopTranslatorTrait
      */
     public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
     {
-        if (null !== $domain) {
+        if ($domain !== null) {
             $domain = str_replace('.', '', $domain);
         }
 
-        if (!$this->isSprintfString($id)) {
+        if (! $this->isSprintfString($id)) {
             return parent::trans($id, array_merge($parameters, ['%count%' => $number]), $domain, $locale);
         }
 
@@ -124,21 +126,18 @@ trait PrestaShopTranslatorTrait
 
     /**
      * @param string $string
-     *
-     * @return bool
      */
     private function isSprintfString($string): bool
     {
         return (bool) preg_match_all(static::$regexSprintfParams, $string)
-            && !(bool) preg_match_all(static::$regexClassicParams, $string);
+            && ! (bool) preg_match_all(static::$regexClassicParams, $string);
     }
 
     /**
      * Tries to translate the provided message using the legacy system
      *
-     * @param string $message
-     * @param array $parameters
-     * @param string $domain
+     * @param string      $message
+     * @param string      $domain
      * @param string|null $locale
      *
      * @return mixed|string
@@ -149,12 +148,12 @@ trait PrestaShopTranslatorTrait
     private function translateUsingLegacySystem($message, array $parameters, $domain, $locale = null)
     {
         $domainParts = explode('.', $domain);
-        if (count($domainParts) < 2) {
-            throw new InvalidArgumentException(sprintf('Invalid domain: "%s"', $domain));
+        if (\count($domainParts) < 2) {
+            throw new InvalidArgumentException(\sprintf('Invalid domain: "%s"', $domain));
         }
 
-        $moduleName = strtolower($domainParts[1]);
-        $sourceFile = (!empty($domainParts[2])) ? strtolower($domainParts[2]) : $moduleName;
+        $moduleName = mb_strtolower($domainParts[1]);
+        $sourceFile = (! empty($domainParts[2])) ? mb_strtolower($domainParts[2]) : $moduleName;
 
         // translate using the legacy system WITHOUT fallback and escape to the new system (to avoid infinite loop)
         return (new LegacyTranslator())->translate($moduleName, $message, $sourceFile, $parameters, false, $locale, false, false);
@@ -163,19 +162,16 @@ trait PrestaShopTranslatorTrait
     /**
      * Indicates if we should try and translate the provided wording using the legacy system.
      *
-     * @param string $message Message to translate
-     * @param ?string $domain Translation domain
-     * @param ?string $locale Translation locale
-     *
-     * @return bool
+     * @param string  $message Message to translate
+     * @param ?string $domain  Translation domain
+     * @param ?string $locale  Translation locale
      */
     private function shouldFallbackToLegacyModuleTranslation(string $message, ?string $domain, ?string $locale): bool
     {
-        return
-            str_starts_with($domain ?? '', 'Modules.')
+        return str_starts_with($domain ?? '', 'Modules.')
             && (
-                !method_exists($this, 'getCatalogue')
-                || !$this->getCatalogue($locale)->has($message, $this->normalizeDomain($domain))
+                ! method_exists($this, 'getCatalogue')
+                || ! $this->getCatalogue($locale)->has($message, $this->normalizeDomain($domain))
             )
         ;
     }
@@ -191,7 +187,7 @@ trait PrestaShopTranslatorTrait
     {
         // remove up to two dots from the domain name
         // (because legacy domain translations CAN have dots in the third part)
-        $normalizedDomain = (!empty($domain)) ?
+        $normalizedDomain = (! empty($domain)) ?
             (new DomainNormalizer())->normalize($domain)
             : null;
 

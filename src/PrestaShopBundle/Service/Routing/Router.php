@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ class Router extends BaseRouter
 
     private AnonymousRouteProvider $anonymousRouteProvider;
 
-    /**
-     * {@inheritdoc}
-     */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
     {
         $url = parent::generate($name, $parameters, $referenceType);
@@ -85,9 +83,9 @@ class Router extends BaseRouter
         }
 
         // Keep absolute urls absolute
-        if (!empty($components['scheme']) && !empty($components['host'])) {
+        if (! empty($components['scheme']) && ! empty($components['host'])) {
             $baseHost = $components['scheme'] . '://' . $components['host'];
-            if (!empty($components['port'])) {
+            if (! empty($components['port'])) {
                 $baseHost .= ':' . $components['port'];
             }
             $url = $baseHost . $url;

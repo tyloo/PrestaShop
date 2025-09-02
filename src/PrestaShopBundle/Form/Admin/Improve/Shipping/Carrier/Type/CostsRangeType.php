@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CostsRangeType extends TranslatorAwareType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -67,9 +65,6 @@ class CostsRangeType extends TranslatorAwareType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -78,9 +73,6 @@ class CostsRangeType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'carrier_ranges_costs_zone_range';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,18 +34,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateOrderStatusType extends AbstractType
 {
-    /**
-     * @param ConfigurableFormChoiceProviderInterface $statusChoiceProvider
-     * @param array $statusChoiceAttributes
-     */
-    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $statusChoiceProvider, private readonly array $statusChoiceAttributes)
-    {
+    public function __construct(
+        private readonly ConfigurableFormChoiceProviderInterface $statusChoiceProvider,
+        private readonly array $statusChoiceAttributes,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $choiceProviderParams = [];
-        if (!empty($options['data']['new_order_status_id'])) {
+        if (! empty($options['data']['new_order_status_id'])) {
             $choiceProviderParams = ['current_state' => $options['data']['new_order_status_id']];
         }
         $builder

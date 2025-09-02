@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -85,8 +86,6 @@ class ExperimentalOperationsMetadataCollectionFactoryDecorator implements Resour
      * This decorator is implied during cache clearing which would fail when the shop is not installed
      * because the DB config is not set up yet. So we protected the feature flag fetching in a try/catch
      * and return false (default value) in case of an error.
-     *
-     * @return bool
      */
     private function areExperimentalEndpointsEnabled(): bool
     {

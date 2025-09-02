@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,10 +42,6 @@ class ErrorController extends PrestaShopAdminController
 {
     /**
      * Enables debug mode from error page (500 for example)
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', 'AdminPerformance') && is_granted('create', 'AdminPerformance') && is_granted('delete', 'AdminPerformance')")]
     public function enableDebugModeAction(Request $request): RedirectResponse

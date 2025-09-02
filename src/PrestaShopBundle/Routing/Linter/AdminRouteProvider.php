@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,11 +35,9 @@ use Symfony\Component\Routing\RouterInterface;
  */
 final class AdminRouteProvider
 {
-    /**
-     * @param RouterInterface $router
-     */
-    public function __construct(private readonly RouterInterface $router)
-    {
+    public function __construct(
+        private readonly RouterInterface $router,
+    ) {
     }
 
     /**
@@ -49,7 +48,7 @@ final class AdminRouteProvider
         $adminRoutes = [];
 
         foreach ($this->router->getRouteCollection() as $routeName => $route) {
-            if (!str_starts_with($routeName, 'admin_')) {
+            if (! str_starts_with($routeName, 'admin_')) {
                 continue;
             }
 

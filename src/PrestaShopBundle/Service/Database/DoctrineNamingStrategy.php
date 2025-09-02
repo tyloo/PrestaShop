@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,13 @@ use ReflectionClass;
 class DoctrineNamingStrategy extends UnderscoreNamingStrategy
 {
     /**
-     * Constructor.
-     *
      * Prefix is given by injection, set in app/config/parameters.yml.
-     *
-     * @param string $prefix
      */
     public function __construct(
         private readonly Reader $reader,
         private readonly string $prefix,
     ) {
-        parent::__construct(CASE_LOWER, true);
+        parent::__construct(\CASE_LOWER, true);
     }
 
     /**
@@ -70,7 +67,7 @@ class DoctrineNamingStrategy extends UnderscoreNamingStrategy
     public function joinTableName($sourceEntity, $targetEntity, $propertyName = null)
     {
         $prestashopTable = $this->getPrestashopTable($sourceEntity, $propertyName);
-        if (!empty($prestashopTable)) {
+        if (! empty($prestashopTable)) {
             return $prestashopTable;
         }
 
@@ -82,21 +79,19 @@ class DoctrineNamingStrategy extends UnderscoreNamingStrategy
      * but we still need to prepend the prefix so we rely on a custom options ps_table on the JoinTable annotation
      * and we correctly prepend the prestashop prefix.
      *
-     * @param string $sourceEntity
+     * @param string      $sourceEntity
      * @param string|null $propertyName
-     *
-     * @return string|null
      */
     private function getPrestashopTable($sourceEntity, $propertyName = null): ?string
     {
         $reflectionClass = new ReflectionClass($sourceEntity);
-        if (!$reflectionClass->hasProperty($propertyName)) {
+        if (! $reflectionClass->hasProperty($propertyName)) {
             return null;
         }
 
         $propertyAnnotations = $this->reader->getPropertyAnnotations($reflectionClass->getProperty($propertyName));
         foreach ($propertyAnnotations as $propertyAnnotation) {
-            if ($propertyAnnotation instanceof JoinTable && !empty($propertyAnnotation->options['ps_table'])) {
+            if ($propertyAnnotation instanceof JoinTable && ! empty($propertyAnnotation->options['ps_table'])) {
                 return $this->prefix . $propertyAnnotation->options['ps_table'];
             }
         }

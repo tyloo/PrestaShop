@@ -33,8 +33,9 @@ use League\OAuth2\Server\Entities\ScopeEntityInterface;
 
 class ScopeEntity implements ScopeEntityInterface
 {
-    public function __construct(public readonly string $identifier)
-    {
+    public function __construct(
+        public readonly string $identifier,
+    ) {
     }
 
     public function getIdentifier(): string

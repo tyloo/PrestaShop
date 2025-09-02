@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,24 +40,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CategoriesType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param ConfigurableFormChoiceProviderInterface $defaultCategoryChoiceProvider
-     * @param EventSubscriberInterface $eventSubscriber
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly ConfigurableFormChoiceProviderInterface $defaultCategoryChoiceProvider,
-        private readonly EventSubscriberInterface $eventSubscriber
+        private readonly EventSubscriberInterface $eventSubscriber,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -78,9 +70,6 @@ class CategoriesType extends TranslatorAwareType
         $builder->addEventSubscriber($this->eventSubscriber);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

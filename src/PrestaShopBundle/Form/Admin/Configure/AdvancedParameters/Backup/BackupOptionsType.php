@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,24 +38,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class BackupOptionsType extends TranslatorAwareType
 {
-    /**
-     * BackupOptionsType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param Configuration $configuration
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly Configuration $configuration
+        private readonly Configuration $configuration,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $backupAllHelp = $this->trans(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ class FrontOfficeProvider extends AbstractProvider implements UseDefaultCatalogu
 {
     public const DEFAULT_THEME_NAME = 'classic';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTranslationDomains(): array
     {
         return [
@@ -46,9 +44,6 @@ class FrontOfficeProvider extends AbstractProvider implements UseDefaultCatalogu
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return [
@@ -57,9 +52,6 @@ class FrontOfficeProvider extends AbstractProvider implements UseDefaultCatalogu
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return 'front';
@@ -72,7 +64,7 @@ class FrontOfficeProvider extends AbstractProvider implements UseDefaultCatalogu
      */
     public function getDatabaseCatalogue($themeName = null)
     {
-        if (null === $themeName) {
+        if ($themeName === null) {
             $themeName = self::DEFAULT_THEME_NAME;
         }
 
@@ -83,6 +75,6 @@ class FrontOfficeProvider extends AbstractProvider implements UseDefaultCatalogu
      */
     public function getDefaultResourceDirectory(): string
     {
-        return $this->resourceDirectory . DIRECTORY_SEPARATOR . 'default';
+        return $this->resourceDirectory . \DIRECTORY_SEPARATOR . 'default';
     }
 }

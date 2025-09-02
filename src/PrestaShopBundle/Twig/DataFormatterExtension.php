@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -70,7 +71,7 @@ class DataFormatterExtension extends AbstractExtension
      *
      * @param mixed $toCast Mixed value to be casted into an array
      *
-     * @return array $toCast casted in array
+     * @return array casted in array
      */
     public function arrayCast($toCast): array
     {
@@ -82,7 +83,7 @@ class DataFormatterExtension extends AbstractExtension
      *
      * @param mixed $toCast Mixed value to be casted into an int
      *
-     * @return int $toCast casted in int
+     * @return int casted in int
      */
     public function intCast($toCast): int
     {
@@ -92,8 +93,8 @@ class DataFormatterExtension extends AbstractExtension
     /**
      * PHP 'unset()' exposed through twig template engine.
      *
-     * @param array $array Array containing Element to unset
-     * @param string $key Element to be unset
+     * @param array  $array Array containing Element to unset
+     * @param string $key   Element to be unset
      */
     public function unsetElement($array, $key)
     {
@@ -110,17 +111,12 @@ class DataFormatterExtension extends AbstractExtension
      * ex:
      *  arrayPluck(['first_name' => 'John', 'last_name' => 'Doe'], ['first_name']) => ['first_name' => 'John']
      *  arrayPluck(['first_name' => 'John', 'last_name' => 'Doe'], ['first_name' => 'name']) => ['name' => 'John']
-     *
-     * @param array $array
-     * @param array $extractedKeys
-     *
-     * @return array
      */
     public function arrayPluck(array $array, array $extractedKeys): array
     {
         $extractedArray = [];
         foreach ($extractedKeys as $key => $value) {
-            if (is_int($key)) {
+            if (\is_int($key)) {
                 $oldKey = $value;
                 $newKey = $value;
             } else {

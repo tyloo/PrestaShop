@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,8 +52,10 @@ class TranslationsExtension extends AbstractExtension
      */
     private $theme;
 
-    public function __construct(private readonly RouterInterface $router, private readonly Environment $twig)
-    {
+    public function __construct(
+        private readonly RouterInterface $router,
+        private readonly Environment $twig,
+    ) {
     }
 
     /**
@@ -71,10 +74,7 @@ class TranslationsExtension extends AbstractExtension
     /**
      * Returns concatenated edit translation forms.
      *
-     * @param array $translationsTree
      * @param string|null $themeName
-     *
-     * @return string
      */
     public function getTranslationsForms(array $translationsTree, $themeName = null): string
     {
@@ -113,7 +113,7 @@ class TranslationsExtension extends AbstractExtension
             }
         }
 
-        if ($hasMessages && count($subtree) > 1) {
+        if ($hasMessages && \count($subtree) > 1) {
             unset($subtree['__messages']);
             $output .= $this->concatenateEditTranslationForm($subtree, $viewProperties);
         }
@@ -124,10 +124,7 @@ class TranslationsExtension extends AbstractExtension
     /**
      * Returns a tree of translations key values.
      *
-     * @param array $translationsTree
      * @param string|null $themeName
-     *
-     * @return string
      */
     public function getTranslationsTree(array $translationsTree, $themeName = null): string
     {
@@ -144,9 +141,7 @@ class TranslationsExtension extends AbstractExtension
 
     /**
      * @param array $tree
-     * @param int $level
-     *
-     * @return string
+     * @param int   $level
      */
     public function makeSubtree($tree, $level = 3): string
     {
@@ -172,11 +167,11 @@ class TranslationsExtension extends AbstractExtension
 
                 $output .= $this->renderEditTranslationForm($viewProperties);
 
-                $isLastPage = $formIndex + 1 === count($messagesTree);
+                $isLastPage = $formIndex + 1 === \count($messagesTree);
 
                 if ($isLastPage) {
                     $output .= '</div>';
-                } elseif ((0 === $formIndex % $itemsPerPage) && ($formIndex > 0)) {
+                } elseif (($formIndex % $itemsPerPage === 0) && ($formIndex > 0)) {
                     ++$pageIndex;
 
                     // Close div with page class
@@ -188,7 +183,7 @@ class TranslationsExtension extends AbstractExtension
             }
 
             // Close div with page class when no message is available
-            if (count($messagesTree) === 0) {
+            if (\count($messagesTree) === 0) {
                 $output .= '</div>';
             }
         } else {
@@ -201,8 +196,15 @@ class TranslationsExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * Returns the name of the extension.
+     *
+     * @return string The extension name
      */
+    public function getName(): string
+    {
+        return 'twig_translations_extension';
+    }
+
     protected function getSharedEditFormViewProperties(): array
     {
         return [
@@ -240,7 +242,7 @@ class TranslationsExtension extends AbstractExtension
 
         $isSearchResults = false;
 
-        if (array_key_exists('is_search_results', $properties)) {
+        if (\array_key_exists('is_search_results', $properties)) {
             $isSearchResults = $properties['is_search_results'];
         }
 
@@ -252,7 +254,7 @@ class TranslationsExtension extends AbstractExtension
                 'default_translation_value' => $defaultTranslationValue,
                 'domain' => $domain,
                 'edited_translation_value' => $translationValue,
-                'is_translated' => '' !== $translationValue,
+                'is_translated' => $translationValue !== '',
                 'action' => $properties['action'],
                 'label_edit' => $properties['label_edit'],
                 'label_reset' => $properties['label_reset'],
@@ -277,7 +279,7 @@ class TranslationsExtension extends AbstractExtension
      * @param string $translationKey
      * @param string $domain
      * @param string $locale
-     * @param array $translationValue
+     * @param array  $translationValue
      *
      * @return array
      */
@@ -286,7 +288,7 @@ class TranslationsExtension extends AbstractExtension
         $defaultTranslationValue = $this->translator->trans($translationKey, [], $domain, $locale);
 
         // Extract default translation value from xliff files for reset
-        if (is_array($translationValue)) {
+        if (\is_array($translationValue)) {
             $defaultTranslationValue = $translationValue['xlf'];
         }
 
@@ -295,40 +297,24 @@ class TranslationsExtension extends AbstractExtension
 
     /**
      * @param array $translation
-     *
-     * @return mixed
      */
     protected function getTranslationValue($translation)
     {
-        return !empty($translation['db']) ? $translation['db'] : $translation['xlf'];
+        return ! empty($translation['db']) ? $translation['db'] : $translation['xlf'];
     }
 
     /**
      * @param array $tree
-     *
-     * @return bool
      */
     protected function hasMessages($tree): bool
     {
-        return array_key_exists('__messages', $tree);
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName(): string
-    {
-        return 'twig_translations_extension';
+        return \array_key_exists('__messages', $tree);
     }
 
     /**
      * @param string $subdomain
-     * @param array $subtree
-     * @param int $level
-     *
-     * @return string
+     * @param array  $subtree
+     * @param int    $level
      */
     protected function concatenateSubtreeHeader($subdomain, $subtree, $level = 2): string
     {
@@ -342,7 +328,7 @@ class TranslationsExtension extends AbstractExtension
 
         $output = $this->tagSubject($subject, $hasMessagesSubtree, $id);
 
-        if (!$hasMessagesSubtree) {
+        if (! $hasMessagesSubtree) {
             $output = str_replace(
                 '{{ missing translations warning }}',
                 $this->translator->trans('%d missing', [], 'Admin.International.Feature'),
@@ -378,7 +364,7 @@ class TranslationsExtension extends AbstractExtension
             $output .= '</div>';
 
             // A subtree with messages contains at least a subdomain
-            if (count($subtree) > 1) {
+            if (\count($subtree) > 1) {
                 unset($subtree['__messages']);
                 $output .= $this->concatenateSubtreeHeader($subdomain, $subtree, $level);
             }
@@ -388,16 +374,14 @@ class TranslationsExtension extends AbstractExtension
     }
 
     /**
-     * @param array $subtree
+     * @param array  $subtree
      * @param string $output
-     *
-     * @return string
      */
     protected function getTranslationsFormStart(&$subtree, $output): string
     {
         $id = '';
         $parentAttribute = ' class="subdomains hide"';
-        if (array_key_exists('__fixed_length_id', $subtree)) {
+        if (\array_key_exists('__fixed_length_id', $subtree)) {
             $fixedLengthId = $subtree['__fixed_length_id'];
             unset($subtree['__fixed_length_id']);
             $id = ' id="' . $fixedLengthId . '" ';
@@ -405,14 +389,14 @@ class TranslationsExtension extends AbstractExtension
         }
 
         $domainAttribute = '';
-        if (array_key_exists('__domain', $subtree)) {
+        if (\array_key_exists('__domain', $subtree)) {
             $domainAttribute = ' data-domain="' . $subtree['__domain'] . '" ';
             unset($subtree['__domain']);
         }
 
         $totalTranslationsAttribute = '';
-        if (array_key_exists('__messages', $subtree)) {
-            $totalTranslations = count(array_values($subtree['__messages'])[0]);
+        if (\array_key_exists('__messages', $subtree)) {
+            $totalTranslations = \count(array_values($subtree['__messages'])[0]);
             $totalTranslationsAttribute = ' data-total-translations="' . $this->translator->trans(
                 '%nb_translations% expressions',
                 ['%nb_translations%' => $totalTranslations],
@@ -421,7 +405,7 @@ class TranslationsExtension extends AbstractExtension
         }
 
         $missingTranslationsAttribute = '';
-        if (array_key_exists('__metadata', $subtree)) {
+        if (\array_key_exists('__metadata', $subtree)) {
             $missingTranslations = $subtree['__metadata']['missing_translations'];
             $missingTranslationsAttribute = ' data-missing-translations="' . $missingTranslations . '"';
             unset($subtree['__metadata']);
@@ -442,16 +426,14 @@ class TranslationsExtension extends AbstractExtension
 
     /**
      * @param string $output
-     * @param array $subtree
-     *
-     * @return string
+     * @param array  $subtree
      */
     protected function replaceWarningPlaceholder($output, $subtree): string
     {
         $missingTranslationsMessage = '';
         $missingTranslationsLongMessage = '';
         $missingTranslationsClass = '';
-        if (array_key_exists('__metadata', $subtree) && $subtree['__metadata']['missing_translations'] > 0) {
+        if (\array_key_exists('__metadata', $subtree) && $subtree['__metadata']['missing_translations'] > 0) {
             $missingTranslationsCount = $subtree['__metadata']['missing_translations'];
             $domain = $subtree['__metadata']['domain'];
 
@@ -504,8 +486,6 @@ class TranslationsExtension extends AbstractExtension
 
     /**
      * @param array $subtree
-     *
-     * @return string
      */
     protected function parseDomain($subtree): string
     {
@@ -515,11 +495,6 @@ class TranslationsExtension extends AbstractExtension
         return $domain;
     }
 
-    /**
-     * @param mixed $id
-     *
-     * @return string
-     */
     protected function getNavigation($id): string
     {
         return $this->twig->render(
@@ -529,11 +504,9 @@ class TranslationsExtension extends AbstractExtension
     }
 
     /**
-     * @param string $subject
-     * @param bool $isLastChild
+     * @param string      $subject
+     * @param bool        $isLastChild
      * @param string|null $id
-     *
-     * @return string
      */
     protected function tagSubject($subject, $isLastChild, $id = null): string
     {
@@ -556,7 +529,7 @@ class TranslationsExtension extends AbstractExtension
             $openingTag = '<span id="_' . $id . '">';
             $closingTag = '</span>';
 
-            if (!$isLastChild) {
+            if (! $isLastChild) {
                 $openingTag = '<h2>' . $openingTag;
                 $closingTag = $closingTag . '</h2>';
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,18 +32,19 @@ use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class CacheWarmer implements CacheWarmerInterface
 {
-    public function __construct(private readonly Filesystem $fileSystem)
-    {
+    public function __construct(
+        private readonly Filesystem $fileSystem,
+    ) {
     }
 
     public function warmUp($cacheDir)
     {
         $legacyDirs = [
-            $cacheDir . DIRECTORY_SEPARATOR . 'cachefs',
-            $cacheDir . DIRECTORY_SEPARATOR . 'purifier',
-            $cacheDir . DIRECTORY_SEPARATOR . 'push',
-            $cacheDir . DIRECTORY_SEPARATOR . 'sandbox',
-            $cacheDir . DIRECTORY_SEPARATOR . 'tcpdf',
+            $cacheDir . \DIRECTORY_SEPARATOR . 'cachefs',
+            $cacheDir . \DIRECTORY_SEPARATOR . 'purifier',
+            $cacheDir . \DIRECTORY_SEPARATOR . 'push',
+            $cacheDir . \DIRECTORY_SEPARATOR . 'sandbox',
+            $cacheDir . \DIRECTORY_SEPARATOR . 'tcpdf',
         ];
 
         $this->fileSystem->mkdir($legacyDirs);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,6 +69,19 @@ class ToggleChildrenChoiceType extends AbstractType
         });
     }
 
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'form_theme' => '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit_base.html.twig',
+            // You can override the choice element type
+            'choice_type' => ChoiceType::class,
+            // You can override the choice element options
+            'choice_options' => [],
+            'placeholder' => null,
+        ]);
+    }
+
     private function addChildrenSelector(FormInterface $form, array $options): void
     {
         $childrenChoices = [];
@@ -88,18 +102,5 @@ class ToggleChildrenChoiceType extends AbstractType
             'compound' => true,
         ];
         $form->add('children_selector', $options['choice_type'], $options['choice_options'] + $defaultChoiceOptions);
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        parent::configureOptions($resolver);
-        $resolver->setDefaults([
-            'form_theme' => '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit_base.html.twig',
-            // You can override the choice element type
-            'choice_type' => ChoiceType::class,
-            // You can override the choice element options
-            'choice_options' => [],
-            'placeholder' => null,
-        ]);
     }
 }

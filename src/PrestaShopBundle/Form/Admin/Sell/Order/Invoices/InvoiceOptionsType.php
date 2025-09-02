@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,23 +51,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class InvoiceOptionsType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param FormChoiceProviderInterface $invoiceModelChoiceProvider
      * @param int $nextInvoiceNumber the next available invoice number
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly FormChoiceProviderInterface $invoiceModelChoiceProvider,
-        private $nextInvoiceNumber
+        private $nextInvoiceNumber,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -226,17 +221,11 @@ class InvoiceOptionsType extends TranslatorAwareType
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['next_invoice_number'] = $this->nextInvoiceNumber;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -245,8 +234,6 @@ class InvoiceOptionsType extends TranslatorAwareType
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see MultistoreConfigurationTypeExtension
      */
     public function getParent(): string

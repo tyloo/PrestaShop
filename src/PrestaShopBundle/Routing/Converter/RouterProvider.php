@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,6 +35,7 @@ use Symfony\Component\Routing\RouterInterface;
 class RouterProvider extends AbstractLegacyRouteProvider
 {
     public const LEGACY_LINK_ROUTE_ATTRIBUTE = '_legacy_link';
+
     public const FEATURE_FLAG_NAME = '_legacy_feature_flag';
 
     /**
@@ -41,16 +43,15 @@ class RouterProvider extends AbstractLegacyRouteProvider
      */
     private $legacyRoutes;
 
-    public function __construct(private readonly RouterInterface $router, private readonly LegacyRouteFactory $factory)
-    {
+    public function __construct(
+        private readonly RouterInterface $router,
+        private readonly LegacyRouteFactory $factory,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLegacyRoutes()
     {
-        if (null !== $this->legacyRoutes) {
+        if ($this->legacyRoutes !== null) {
             return $this->legacyRoutes;
         }
 

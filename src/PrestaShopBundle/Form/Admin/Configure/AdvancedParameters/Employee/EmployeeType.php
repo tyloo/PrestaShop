@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,14 +59,6 @@ final class EmployeeType extends AbstractType
 {
     use TranslatorAwareTrait;
 
-    /**
-     * @param array $languagesChoices
-     * @param array $profilesChoices
-     * @param bool $isMultistoreFeatureActive
-     * @param ConfigurationInterface $configuration
-     * @param int $superAdminProfileId
-     * @param Router $router
-     */
     public function __construct(
         private array $languagesChoices,
         private array $profilesChoices,
@@ -80,9 +73,6 @@ final class EmployeeType extends AbstractType
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $minScore = $this->configuration->get(PasswordPolicyConfiguration::CONFIGURATION_MINIMUM_SCORE);
@@ -143,7 +133,7 @@ final class EmployeeType extends AbstractType
                     ],
                     'Admin.Advparameters.Help'
                 ),
-                'required' => !$options['is_for_editing'],
+                'required' => ! $options['is_for_editing'],
                 'attr' => [
                     'data-minscore' => $minScore,
                     'data-minlength' => $minLength,
@@ -214,7 +204,7 @@ final class EmployeeType extends AbstractType
             $builder
                 ->remove('change_password')
             ;
-            if (!$this->isMultistoreFeatureActive) {
+            if (! $this->isMultistoreFeatureActive) {
                 $builder
                     ->remove('shop_association')
                 ;
@@ -222,9 +212,6 @@ final class EmployeeType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -244,12 +231,6 @@ final class EmployeeType extends AbstractType
         ;
     }
 
-    /**
-     * @param int $maxLength
-     * @param int|null $minLength
-     *
-     * @return Length
-     */
     private function getLengthConstraint(int $maxLength, ?int $minLength = null): Length
     {
         $options = [
@@ -261,7 +242,7 @@ final class EmployeeType extends AbstractType
             ),
         ];
 
-        if (null !== $minLength) {
+        if ($minLength !== null) {
             $options['min'] = $minLength;
             $options['minMessage'] = $this->trans(
                 'This field cannot be shorter than %limit% characters',
@@ -273,11 +254,6 @@ final class EmployeeType extends AbstractType
         return new Length($options);
     }
 
-    /**
-     * @param int $minLength
-     *
-     * @return string
-     */
     private function getMinLengthValidationMessage(int $minLength): string
     {
         return $this->trans(
@@ -287,11 +263,6 @@ final class EmployeeType extends AbstractType
         );
     }
 
-    /**
-     * @param int $maxLength
-     *
-     * @return string
-     */
     private function getMaxLengthValidationMessage(int $maxLength): string
     {
         return $this->trans(
@@ -301,9 +272,6 @@ final class EmployeeType extends AbstractType
         );
     }
 
-    /**
-     * @return NotBlank
-     */
     private function getNotBlankConstraint(): NotBlank
     {
         return new NotBlank([

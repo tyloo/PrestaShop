@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,21 +40,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UploadQuotaType extends TranslatorAwareType
 {
     public const FIELD_MAX_SIZE_ATTACHED_FILES = 'max_size_attached_files';
+
     public const FIELD_MAX_SIZE_DOWNLOADABLE_FILE = 'max_size_downloadable_product';
+
     public const FIELD_MAX_SIZE_PRODUCT_IMAGE = 'max_size_product_image';
 
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly ConfigurationInterface $configuration,
-        private readonly UploadSizeConfigurationInterface $uploadSizeConfiguration
+        private readonly UploadSizeConfigurationInterface $uploadSizeConfiguration,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $configuration = $this->configuration;
@@ -156,9 +156,6 @@ class UploadQuotaType extends TranslatorAwareType
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -166,9 +163,6 @@ class UploadQuotaType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'administration_upload_quota_block';

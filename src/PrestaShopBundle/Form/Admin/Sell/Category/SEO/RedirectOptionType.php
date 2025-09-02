@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,14 +49,11 @@ class RedirectOptionType extends TranslatorAwareType
         private readonly RouterInterface $router,
         private readonly DataTransformerInterface $targetTransformer,
         private readonly EventSubscriberInterface $eventSubscriber,
-        private readonly int $homeCategoryId
+        private readonly int $homeCategoryId,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $choices = [
@@ -63,7 +61,7 @@ class RedirectOptionType extends TranslatorAwareType
             $this->trans('No redirection (410), display error page', 'Admin.Catalog.Feature') => RedirectType::TYPE_GONE,
         ];
 
-        if (true !== $options['isRootCategory']) {
+        if ($options['isRootCategory'] !== true) {
             $choices = array_merge(
                 [
                     $this->trans('Temporary redirection to a category (302)', 'Admin.Catalog.Feature') => RedirectType::TYPE_TEMPORARY,
@@ -82,7 +80,7 @@ class RedirectOptionType extends TranslatorAwareType
                 'default_empty_data' => $options['isRootCategory'] ? RedirectType::TYPE_GONE : RedirectType::TYPE_PERMANENT,
             ]);
 
-        if (true !== $options['isRootCategory']) {
+        if ($options['isRootCategory'] !== true) {
             $builder
                 ->add('target', EntitySearchInputType::class, [
                     'required' => false,
@@ -105,9 +103,6 @@ class RedirectOptionType extends TranslatorAwareType
         $builder->addEventSubscriber(new TransformationFailureListener($this->getTranslator()));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

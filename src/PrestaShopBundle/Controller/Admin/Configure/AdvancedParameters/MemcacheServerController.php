@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -80,14 +81,15 @@ class MemcacheServerController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.adapter.memcache_server.manager')]
         MemcacheServerManager $memcacheServerManager,
     ): JsonResponse {
-        if (!in_array(
+        if (! \in_array(
             $this->getAuthorizationLevel($this::CONTROLLER_NAME),
             [
                 Permission::LEVEL_READ,
                 Permission::LEVEL_UPDATE,
                 Permission::LEVEL_CREATE,
                 Permission::LEVEL_DELETE,
-            ]
+            ],
+            true
         )) {
             return new JsonResponse(
                 [
@@ -136,14 +138,15 @@ class MemcacheServerController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.adapter.memcache_server.manager')]
         MemcacheServerManager $memcacheServerManager,
     ): JsonResponse {
-        if (!in_array(
+        if (! \in_array(
             $this->getAuthorizationLevel($this::CONTROLLER_NAME),
             [
                 Permission::LEVEL_READ,
                 Permission::LEVEL_UPDATE,
                 Permission::LEVEL_CREATE,
                 Permission::LEVEL_DELETE,
-            ]
+            ],
+            true
         )) {
             return new JsonResponse(
                 [

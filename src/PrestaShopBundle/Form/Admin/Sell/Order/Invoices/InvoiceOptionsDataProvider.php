@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,24 +37,19 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class InvoiceOptionsDataProvider implements FormDataProviderInterface
 {
     /**
-     * @param DataConfigurationInterface $invoiceOptionsConfiguration
      * @param int $nextInvoiceNumber next available invoice number
      */
-    public function __construct(private readonly DataConfigurationInterface $invoiceOptionsConfiguration, private $nextInvoiceNumber)
-    {
+    public function __construct(
+        private readonly DataConfigurationInterface $invoiceOptionsConfiguration,
+        private $nextInvoiceNumber,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->invoiceOptionsConfiguration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         if ($errors = $this->validate($data)) {
@@ -65,8 +61,6 @@ final class InvoiceOptionsDataProvider implements FormDataProviderInterface
 
     /**
      * Perform validations on form data.
-     *
-     * @param array $data
      *
      * @return array Array of errors if any
      */

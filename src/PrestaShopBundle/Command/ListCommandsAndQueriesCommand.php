@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,15 +55,12 @@ class ListCommandsAndQueriesCommand extends Command
         private readonly CommandDefinitionParser $commandDefinitionParser,
         private array $commandAndQueries,
         private readonly ResourceNameCollectionFactoryInterface $resourceNameCollectionFactory,
-        private readonly ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory
+        private readonly ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory,
     ) {
         parent::__construct();
         $this->isFormatSimple = false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         $this
@@ -90,9 +88,6 @@ class ListCommandsAndQueriesCommand extends Command
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->apiResourcesList = $this->getResourceList();
@@ -108,13 +103,13 @@ class ListCommandsAndQueriesCommand extends Command
             $cqrsEndpointURI = $this->getCQRSEndpointURI($commandDefinition);
 
             if ($optionHasApiEndpoint !== null) {
-                if (($optionHasApiEndpoint && empty($cqrsEndpointURI)) || (!$optionHasApiEndpoint && !empty($cqrsEndpointURI))) {
+                if (($optionHasApiEndpoint && empty($cqrsEndpointURI)) || (! $optionHasApiEndpoint && ! empty($cqrsEndpointURI))) {
                     continue;
                 }
             }
 
             if ($this->isFormatSimple) {
-                $output->writeln('<info>' . $commandDefinition->getClassName() . (!empty($cqrsEndpointURI) ? ' OK' : ' NOT OK') . '</info>');
+                $output->writeln('<info>' . $commandDefinition->getClassName() . (! empty($cqrsEndpointURI) ? ' OK' : ' NOT OK') . '</info>');
             } else {
                 $output->writeln(++$key . '.');
                 $output->writeln('<blue>Class: </blue><info>' . $commandDefinition->getClassName() . '</info>');
@@ -178,7 +173,7 @@ class ListCommandsAndQueriesCommand extends Command
     private function getCQRSEndpointURI(CommandDefinition $commandDefinition): string
     {
         $domainArray = explode('\\', $commandDefinition->getClassName());
-        if (count($domainArray) >= 5) {
+        if (\count($domainArray) >= 5) {
             $domain = $domainArray[4];
         } else {
             throw new DomainClassNameMalformedException();

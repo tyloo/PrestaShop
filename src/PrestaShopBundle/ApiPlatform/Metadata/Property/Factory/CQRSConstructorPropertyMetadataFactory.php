@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,12 +65,12 @@ class CQRSConstructorPropertyMetadataFactory implements PropertyMetadataFactoryI
         $parentApiProperty = $this->decorated->create($resourceClass, $property, $options);
 
         // We only handle parameters in the constructor
-        if (!$parentApiProperty->isInitializable()) {
+        if (! $parentApiProperty->isInitializable()) {
             return $parentApiProperty;
         }
 
         // This service only targets CQRS commands schemas, we don't want it to impact other classes
-        if (!in_array($resourceClass, $this->commandsAndQueries, true)) {
+        if (! \in_array($resourceClass, $this->commandsAndQueries, true)) {
             return $parentApiProperty;
         }
 
@@ -88,7 +89,7 @@ class CQRSConstructorPropertyMetadataFactory implements PropertyMetadataFactoryI
 
         foreach ($types as $i => $type) {
             // Temp fix for https://github.com/symfony/symfony/pull/52699
-            if (ArrayCollection::class === $type->getClassName()) {
+            if ($type->getClassName() === ArrayCollection::class) {
                 $types[$i] = new Type($type->getBuiltinType(), $type->isNullable(), $type->getClassName(), true, $type->getCollectionKeyTypes(), $type->getCollectionValueTypes());
             }
         }

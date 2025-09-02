@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DisablingSwitchType extends SwitchType
 {
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -65,9 +63,6 @@ class DisablingSwitchType extends SwitchType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
@@ -76,7 +71,7 @@ class DisablingSwitchType extends SwitchType
         $view->vars['attr']['data-disable-on-match'] = (int) $options['disable_on_match'];
 
         // Optional event to trigger on switch
-        if (!empty($options['switch_event'])) {
+        if (! empty($options['switch_event'])) {
             $view->vars['attr']['data-switch-event'] = $options['switch_event'];
         }
     }

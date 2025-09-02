@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,6 +44,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class FeatureFlagCommand extends Command
 {
     private const SUCCESS_RETURN_CODE = 0;
+
     private const INVALID_ARGUMENTS_RETURN_CODE = 1;
 
     protected static $defaultName = 'prestashop:feature-flag';
@@ -58,7 +60,7 @@ class FeatureFlagCommand extends Command
 
     public function __construct(
         private readonly FeatureFlagRepository $featureFlagRepository,
-        private readonly FeatureFlagManager $featureFlagManager
+        private readonly FeatureFlagManager $featureFlagManager,
     ) {
         parent::__construct();
     }
@@ -67,7 +69,7 @@ class FeatureFlagCommand extends Command
     {
         $this
             ->setDescription('Manage feature flags via command line')
-            ->addArgument('action', InputArgument::REQUIRED, sprintf('Action to execute (Allowed actions: %s).', implode(' / ', $this->allowedActions)))
+            ->addArgument('action', InputArgument::REQUIRED, \sprintf('Action to execute (Allowed actions: %s).', implode(' / ', $this->allowedActions)))
             ->addArgument('feature_flag', InputArgument::OPTIONAL, 'Feature flag you want to enable/disable')
         ;
     }
@@ -75,8 +77,8 @@ class FeatureFlagCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $action = $input->getArgument('action');
-        if (!in_array($action, $this->allowedActions)) {
-            $output->writeln(sprintf(
+        if (! \in_array($action, $this->allowedActions, true)) {
+            $output->writeln(\sprintf(
                 '<error>Unknown action, it must be one of the following values: %s</error>',
                 implode('/', $this->allowedActions)
             ));
@@ -86,9 +88,9 @@ class FeatureFlagCommand extends Command
 
         if ($action === 'list') {
             return $this->listFeatureFlags($output);
-        } else {
-            return $this->toggleFeatureFlag('enable' === $action, $input, $output);
         }
+
+        return $this->toggleFeatureFlag($action === 'enable', $input, $output);
     }
 
     private function listFeatureFlags(OutputInterface $output): int
@@ -135,7 +137,7 @@ class FeatureFlagCommand extends Command
 
         $featureFlag = $this->featureFlagRepository->getByName($featureFlagArgument);
         if ($featureFlag === null) {
-            $output->writeln(sprintf(
+            $output->writeln(\sprintf(
                 '<error>Feature flag %s does not exist</error>',
                 $featureFlagArgument
             ));
@@ -145,13 +147,13 @@ class FeatureFlagCommand extends Command
 
         if ($expectedState) {
             $this->featureFlagManager->enable($featureFlagArgument);
-            $output->writeln(sprintf(
+            $output->writeln(\sprintf(
                 '<info>Feature flag %s was enabled</info>',
                 $featureFlagArgument
             ));
         } else {
             $this->featureFlagManager->disable($featureFlagArgument);
-            $output->writeln(sprintf(
+            $output->writeln(\sprintf(
                 '<info>Feature flag %s was disabled</info>',
                 $featureFlagArgument
             ));

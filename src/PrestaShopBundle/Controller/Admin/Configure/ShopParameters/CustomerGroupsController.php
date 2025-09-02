@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,11 +45,6 @@ class CustomerGroupsController extends PrestaShopAdminController
 {
     /**
      * Show Groups tab.
-     *
-     * @param Request $request
-     * @param CustomerGroupsFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
@@ -69,8 +65,6 @@ class CustomerGroupsController extends PrestaShopAdminController
 
     /**
      * Displays and handles customer group form.
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_customer_groups_index', message: 'You need permission to create this.')]
     public function createAction(LegacyContext $legacyContext): Response
@@ -88,10 +82,6 @@ class CustomerGroupsController extends PrestaShopAdminController
 
     /**
      * Displays title form.
-     *
-     * @param int $groupId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customer_groups_index', message: 'You need permission to edit this.')]
     public function editAction(

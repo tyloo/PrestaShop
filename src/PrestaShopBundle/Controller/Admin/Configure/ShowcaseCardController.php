@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,15 +48,13 @@ class ShowcaseCardController extends PrestaShopAdminController
      * - string $name Name of the showcase card to close
      *
      * @see ShowcaseCard
-     *
-     * @return JsonResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_metas_index')]
     #[AdminSecurity("is_granted('create', 'CONFIGURE') && is_granted('update', 'CONFIGURE')")]
     public function closeShowcaseCardAction(Request $request): JsonResponse
     {
         // check prerequisites
-        if (!$request->isMethod('post') || !$request->request->get('close')) {
+        if (! $request->isMethod('post') || ! $request->request->get('close')) {
             return $this->json(
                 [
                     'success' => false,

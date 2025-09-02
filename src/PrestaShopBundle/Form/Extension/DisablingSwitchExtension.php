@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,17 +53,18 @@ class DisablingSwitchExtension extends AbstractTypeExtension
     public const FIELD_PREFIX = 'disabling_switch_';
 
     public const SWITCH_OPTION = 'disabling_switch';
+
     public const SWITCH_EVENT_OPTION = 'disabling_switch_event';
+
     public const DISABLED_VALUE_OPTION = 'disabled_value';
+
     public const SWITCH_STATE_ON_DISABLE_OPTION = 'switch_state_on_disable';
 
-    public function __construct(private AddDisablingSwitchListener $addDisablingSwitchListener)
-    {
+    public function __construct(
+        private AddDisablingSwitchListener $addDisablingSwitchListener,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [
@@ -71,9 +73,6 @@ class DisablingSwitchExtension extends AbstractTypeExtension
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // This particular field has the expected option enabled, so we assign the add listener to dynamically add the
@@ -84,11 +83,6 @@ class DisablingSwitchExtension extends AbstractTypeExtension
         }
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $switchableParent = $this->getSwitchableParent($form);
@@ -113,9 +107,6 @@ class DisablingSwitchExtension extends AbstractTypeExtension
         }
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -156,10 +147,6 @@ class DisablingSwitchExtension extends AbstractTypeExtension
     /**
      * Go up in the form parents until a collection is detected, if the rendered form name matches the prototype_name
      * config from the parent, it means the prototype is being rendered not an actual form field.
-     *
-     * @param FormInterface $form
-     *
-     * @return bool
      */
     private function isRenderingPrototype(FormInterface $form): bool
     {
@@ -180,14 +167,10 @@ class DisablingSwitchExtension extends AbstractTypeExtension
      * The switch option may be defined on a compound input, so we need to get back the parent with the option to get
      * back the appropriate options and be able to check the disabled status even for children. For non-compound forms
      * the switchable parent is actually itself.
-     *
-     * @param FormInterface $form
-     *
-     * @return FormInterface|null
      */
     private function getSwitchableParent(FormInterface $form): ?FormInterface
     {
-        if (!$form->getParent()) {
+        if (! $form->getParent()) {
             return null;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,26 +45,27 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class TinyMceMaxLengthValidator extends ConstraintValidator
 {
-    public function __construct(private readonly Validate $validateAdapter, protected TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly Validate $validateAdapter,
+        protected TranslatorInterface $translator,
+    ) {
     }
 
     /**
-     * @param mixed $value
      * @param TinyMceMaxLength $constraint
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof TinyMceMaxLength) {
+        if (! $constraint instanceof TinyMceMaxLength) {
             throw new UnexpectedTypeException($constraint, TinyMceMaxLength::class);
         }
 
-        if (!$this->validateAdapter->isUnsignedInt($constraint->max)) {
+        if (! $this->validateAdapter->isUnsignedInt($constraint->max)) {
             throw new InvalidArgumentException('Max must be int. Input was: ' . \gettype($constraint->max));
         }
 
         // If the provided value is not a string, nothing to validate here
-        if (!is_string($value)) {
+        if (! \is_string($value)) {
             return;
         }
 

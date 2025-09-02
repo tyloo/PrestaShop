@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,7 +34,9 @@ use PrestaShopBundle\Entity\Tab;
 
 class TabRepository extends EntityRepository
 {
-    /** @var array<string, int> */
+    /**
+     * @var array<string, int>
+     */
     private $cachedTabIds = [];
 
     /**
@@ -90,20 +93,20 @@ class TabRepository extends EntityRepository
      * Changes tab status.
      *
      * @param string $className tab's class name
-     * @param bool $status wanted status for the tab
+     * @param bool   $status    wanted status for the tab
      *
      * @throws InvalidArgumentException
      */
     public function changeStatusByClassName($className, $status): void
     {
-        if (!is_bool($status)) {
-            throw new InvalidArgumentException(sprintf('Invalid type: bool expected, got %s', gettype($status)));
+        if (! \is_bool($status)) {
+            throw new InvalidArgumentException(\sprintf('Invalid type: bool expected, got %s', \gettype($status)));
         }
 
         /** @var Tab $tab */
         $tab = $this->findOneByClassName($className);
 
-        if (null !== $tab) {
+        if ($tab !== null) {
             $tab->setActive($status);
             $this->getEntityManager()->persist($tab);
             $this->getEntityManager()->flush();
@@ -112,7 +115,7 @@ class TabRepository extends EntityRepository
 
     /**
      * @param string $moduleName
-     * @param bool $enabled
+     * @param bool   $enabled
      */
     public function changeEnabledByModuleName($moduleName, $enabled): void
     {
@@ -125,16 +128,12 @@ class TabRepository extends EntityRepository
     }
 
     /**
-     * @param string $className
-     *
-     * @return int
-     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getIdByClassName(string $className): int
     {
-        if (!isset($this->cachedTabIds[$className])) {
+        if (! isset($this->cachedTabIds[$className])) {
             $result = $this->createQueryBuilder('t')
                 ->select('t.id, t.className')
                 // Use binary to force a case-sensitive comparison (HOME and Home are different)
@@ -152,8 +151,6 @@ class TabRepository extends EntityRepository
     }
 
     /**
-     * @param int $tabId
-     *
      * @return Tab[] breadcrumb to access the Tab, ordered from closest to oldest ancestor
      *
      * @throws \Doctrine\ORM\NoResultException
@@ -166,8 +163,6 @@ class TabRepository extends EntityRepository
 
     /**
      * Recursive method is kept as private.
-     *
-     * @param int $tabId
      *
      * @return Tab[]
      *
@@ -184,7 +179,7 @@ class TabRepository extends EntityRepository
         }
 
         $parent = $this->findOneBy(['id' => $tab->getIdParent()]);
-        if (null === $parent) {
+        if ($parent === null) {
             return [];
         }
 

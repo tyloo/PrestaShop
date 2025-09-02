@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,11 @@ use stdClass;
 class CategoriesProvider
 {
     public const CATEGORY_OTHER = 'other';
+
     public const CATEGORY_OTHER_NAME = 'Other';
 
     public const CATEGORY_THEME = 'theme_modules';
+
     public const CATEGORY_THEME_NAME = 'Theme modules';
 
     private readonly array $categories;
@@ -54,8 +57,10 @@ class CategoriesProvider
      */
     private readonly stdClass $categoriesFromSource;
 
-    public function __construct(array $addonsCategories, private readonly array $modulesTheme)
-    {
+    public function __construct(
+        array $addonsCategories,
+        private readonly array $modulesTheme,
+    ) {
         // A list of categories and subcategories we got from local YML file
         // In the past, this was fetched from addons marketplace
         $this->categoriesFromSource = $this->sortCategories($addonsCategories);
@@ -76,7 +81,7 @@ class CategoriesProvider
      */
     public function getCategoriesMenu($modules): array
     {
-        if (null === $this->categoriesMenu) {
+        if ($this->categoriesMenu === null) {
             // The Root category is "Categories"
             // Copy the original array
             $categories = $this->categories;
@@ -91,6 +96,22 @@ class CategoriesProvider
         }
 
         return $this->categoriesMenu;
+    }
+
+    /**
+     * Considering a category name, return his category parent name.
+     */
+    public function getParentCategory(string $categoryName): string
+    {
+        foreach ($this->categoriesFromSource as $parentCategory) {
+            foreach ($parentCategory->categories as $childCategory) {
+                if ($childCategory->name === $categoryName) {
+                    return $parentCategory->name;
+                }
+            }
+        }
+
+        return $categoryName;
     }
 
     /**
@@ -138,34 +159,7 @@ class CategoriesProvider
     }
 
     /**
-     * Considering a category name, return his category parent name.
-     *
-     * @param string $categoryName
-     *
-     * @return string
-     */
-    public function getParentCategory(string $categoryName): string
-    {
-        foreach ($this->categoriesFromSource as $parentCategory) {
-            foreach ($parentCategory->categories as $childCategory) {
-                if ($childCategory->name === $categoryName) {
-                    return $parentCategory->name;
-                }
-            }
-        }
-
-        return $categoryName;
-    }
-
-    /**
      * Re-organize category data into a Menu item.
-     *
-     * @param string $menu
-     * @param string $name
-     * @param array $moduleIds
-     * @param string $tab
-     *
-     * @return stdClass
      */
     private function createMenuObject(string $menu, string $name, array $moduleIds = [], ?string $tab = null): stdClass
     {
@@ -182,19 +176,19 @@ class CategoriesProvider
      * Find module category.
      *
      * @param ModuleInterface $installedProduct Installed product
-     * @param array $categories Available categories
+     * @param array           $categories       Available categories
      */
     private function findModuleCategory(ModuleInterface $installedProduct, array $categories): string
     {
         // If the module is on a list of "modules to enable" in current theme's YML file, they get
         // a hardcoded special category "Theme modules"
-        if (in_array($installedProduct->attributes->get('name'), $this->modulesTheme)) {
+        if (\in_array($installedProduct->attributes->get('name'), $this->modulesTheme, true)) {
             return self::CATEGORY_THEME;
         }
 
         // Look it up by module tab attribute, as declared in the categories file
         $moduleCategory = $this->getParentCategoryFromTabAttribute($installedProduct);
-        if (array_key_exists($moduleCategory, $categories['categories']->subMenu)) {
+        if (\array_key_exists($moduleCategory, $categories['categories']->subMenu)) {
             return $moduleCategory;
         }
 
@@ -203,16 +197,12 @@ class CategoriesProvider
 
     /**
      * Sort addons categories by order field.
-     *
-     * @param array $categories
-     *
-     * @return stdClass
      */
     private function sortCategories(array $categories): stdClass
     {
         uasort(
             $categories,
-            fn($a, $b): int => ($a['order'] ?? 0) <=> ($b['order'] ?? 0)
+            fn ($a, $b): int => ($a['order'] ?? 0) <=> ($b['order'] ?? 0)
         );
 
         // Convert array to object to be consistent with current API call
@@ -223,10 +213,6 @@ class CategoriesProvider
      * Try to find the parent category depending on the module's tab attribute.
      * Note that it always return the parent category, even if the tab is deeper in the tree.
      * For example, a module with analytics_stats will end up in administration category.
-     *
-     * @param ModuleInterface $module
-     *
-     * @return ?string
      */
     private function getParentCategoryFromTabAttribute(ModuleInterface $module): ?string
     {

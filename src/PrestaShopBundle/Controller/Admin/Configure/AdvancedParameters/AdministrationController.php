@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,8 +50,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AdministrationController extends PrestaShopAdminController
 {
-    public function __construct(private readonly UploadSizeConfigurationInterface $uploadSizeConfiguration)
-    {
+    public function __construct(
+        private readonly UploadSizeConfigurationInterface $uploadSizeConfiguration,
+    ) {
     }
 
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
@@ -83,10 +85,6 @@ class AdministrationController extends PrestaShopAdminController
 
     /**
      * Process the Administration general configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_administration')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_administration')]
@@ -132,12 +130,6 @@ class AdministrationController extends PrestaShopAdminController
 
     /**
      * Process the Administration configuration form.
-     *
-     * @param Request $request
-     * @param FormHandlerInterface $formHandler
-     * @param string $hookName
-     *
-     * @return RedirectResponse
      */
     protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): RedirectResponse
     {
@@ -168,8 +160,6 @@ class AdministrationController extends PrestaShopAdminController
     }
 
     /**
-     * @param InvalidConfigurationDataErrorCollection $errors
-     *
      * @return array<int, string>
      */
     private function getErrorMessages(InvalidConfigurationDataErrorCollection $errors): array
@@ -184,10 +174,6 @@ class AdministrationController extends PrestaShopAdminController
     }
 
     /**
-     * @param InvalidConfigurationDataError $error
-     *
-     * @return string
-     *
      * @throws FieldNotFoundException
      */
     private function getErrorMessage(InvalidConfigurationDataError $error): string
@@ -231,11 +217,6 @@ class AdministrationController extends PrestaShopAdminController
         };
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return string
-     */
     private function getFieldLabel(string $fieldName): string
     {
         /*
@@ -270,12 +251,7 @@ class AdministrationController extends PrestaShopAdminController
                 [],
                 'Admin.Advparameters.Feature'
             ),
-            default => throw new FieldNotFoundException(
-                sprintf(
-                    'Field name for field %s not found',
-                    $fieldName
-                )
-            ),
+            default => throw new FieldNotFoundException(\sprintf('Field name for field %s not found', $fieldName)),
         };
     }
 }

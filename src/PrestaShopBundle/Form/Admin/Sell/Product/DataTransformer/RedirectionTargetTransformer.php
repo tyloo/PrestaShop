@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 class RedirectionTargetTransformer implements DataTransformerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function transform($redirectionData)
     {
         if (isset($redirectionData['target'])) {
@@ -51,14 +49,11 @@ class RedirectionTargetTransformer implements DataTransformerInterface
         return $redirectionData;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function reverseTransform($redirectionData)
     {
         // EntitySearchInputType contains a collection of hidden inputs, for redirection only one target is selected
         // and we just want to retrieve the first (and only) selected ID
-        if (!empty($redirectionData['target'])) {
+        if (! empty($redirectionData['target'])) {
             $redirectionData['target'] = reset($redirectionData['target']);
         }
 

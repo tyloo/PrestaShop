@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,13 +38,11 @@ final class DefaultLanguageToFilledArrayDataTransformer implements DataTransform
     /**
      * @param int $defaultLanguageId
      */
-    public function __construct(private $defaultLanguageId)
-    {
+    public function __construct(
+        private $defaultLanguageId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transform($value)
     {
         // No transformation is required here due to this data is being sent to template
@@ -51,19 +50,17 @@ final class DefaultLanguageToFilledArrayDataTransformer implements DataTransform
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param array $values
      */
     public function reverseTransform($values)
     {
-        if (!$this->assertIsValidForDataTransforming($values)) {
+        if (! $this->assertIsValidForDataTransforming($values)) {
             return $values;
         }
 
         $defaultValue = $values[$this->defaultLanguageId];
         foreach ($values as $languageId => $item) {
-            if (!$item) {
+            if (! $item) {
                 $values[$languageId] = $defaultValue;
             }
         }
@@ -75,11 +72,9 @@ final class DefaultLanguageToFilledArrayDataTransformer implements DataTransform
      * Checks if the value is array and default language key exists in array.
      *
      * @param array $values
-     *
-     * @return bool
      */
     private function assertIsValidForDataTransforming($values): bool
     {
-        return is_array($values) && isset($values[$this->defaultLanguageId]) && $values[$this->defaultLanguageId];
+        return \is_array($values) && isset($values[$this->defaultLanguageId]) && $values[$this->defaultLanguageId];
     }
 }

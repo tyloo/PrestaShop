@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TextWithLengthCounterType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['max_length'] = $options['max_length'];
@@ -47,9 +45,6 @@ class TextWithLengthCounterType extends AbstractType
         $view->vars['input_attr'] = $options['input_attr'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -69,9 +64,6 @@ class TextWithLengthCounterType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'text_with_length_counter';

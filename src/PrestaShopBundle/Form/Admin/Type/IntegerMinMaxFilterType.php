@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,6 @@ final class IntegerMinMaxFilterType extends AbstractType
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -58,7 +56,7 @@ final class IntegerMinMaxFilterType extends AbstractType
             'constraints' => [
                 new Callback([
                     'callback' => function (?array $impactData, ExecutionContextInterface $context): void {
-                        if (!isset($impactData['min_field']) || !isset($impactData['max_field'])) {
+                        if (! isset($impactData['min_field']) || ! isset($impactData['max_field'])) {
                             return;
                         }
 
@@ -77,24 +75,21 @@ final class IntegerMinMaxFilterType extends AbstractType
         $resolver->setAllowedTypes('max_field_options', 'array');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (!isset($options['min_field_options']['attr']['placeholder'])) {
+        if (! isset($options['min_field_options']['attr']['placeholder'])) {
             $options['min_field_options']['attr']['placeholder'] = $this->trans('Min', [], 'Admin.Global');
         }
 
-        if (!isset($options['max_field_options']['attr']['placeholder'])) {
+        if (! isset($options['max_field_options']['attr']['placeholder'])) {
             $options['max_field_options']['attr']['placeholder'] = $this->trans('Max', [], 'Admin.Global');
         }
 
-        if (!isset($options['min_field_options']['attr']['min'])) {
+        if (! isset($options['min_field_options']['attr']['min'])) {
             $options['min_field_options']['attr']['min'] = 0;
         }
 
-        if (!isset($options['max_field_options']['attr']['min'])) {
+        if (! isset($options['max_field_options']['attr']['min'])) {
             $options['max_field_options']['attr']['min'] = 0;
         }
 

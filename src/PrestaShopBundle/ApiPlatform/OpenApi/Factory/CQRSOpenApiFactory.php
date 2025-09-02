@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -106,19 +107,19 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                 /** @var Operation $operation */
                 foreach ($resourceMetadata->getOperations() as $operation) {
                     // For each URI define the expected domain (we want to avoid splitting domains because they are based on multiple API resource classes)
-                    if ($operation instanceof HttpOperation && !empty($operation->getUriTemplate())) {
+                    if ($operation instanceof HttpOperation && ! empty($operation->getUriTemplate())) {
                         $operationDomain = $this->getOperationDomain($operation);
-                        if (!empty($operationDomain) && empty($domainsByUri[$operation->getUriTemplate()])) {
+                        if (! empty($operationDomain) && empty($domainsByUri[$operation->getUriTemplate()])) {
                             $domainsByUri[$operation->getUriTemplate()] = $this->getOperationDomain($operation);
                         }
                     }
 
-                    if ($operation instanceof HttpOperation && !empty($operation->getExtraProperties()['scopes'])) {
-                        $scopesByUri[$operation->getUriTemplate()][strtolower($operation->getMethod())] = $operation->getExtraProperties()['scopes'];
+                    if ($operation instanceof HttpOperation && ! empty($operation->getExtraProperties()['scopes'])) {
+                        $scopesByUri[$operation->getUriTemplate()][mb_strtolower($operation->getMethod())] = $operation->getExtraProperties()['scopes'];
                     }
 
                     $definition = $this->getSchemaDefinition($parentOpenApi, $operation);
-                    if (!$definition) {
+                    if (! $definition) {
                         continue;
                     }
 
@@ -144,26 +145,26 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                 'put' => $pathItem->getPut(),
                 'patch' => $pathItem->getPatch(),
                 'delete' => $pathItem->getDelete(),
-            ], fn ($operation): bool => null !== $operation);
+            ], fn ($operation): bool => $operation !== null);
 
             $updatedPathItem = $pathItem;
-            if (!empty($operations)) {
+            if (! empty($operations)) {
                 /** @var OpenApiOperation $operation */
                 foreach ($operations as $httpMethod => $operation) {
                     $updatedOperation = $operation;
 
                     // Update tag to group by domain
-                    if (!empty($domainsByUri[$path])) {
+                    if (! empty($domainsByUri[$path])) {
                         $updatedOperation = $operation->withTags([$domainsByUri[$path]]);
                     }
 
                     // Add security scopes
-                    if (!empty($scopesByUri[$path][$httpMethod])) {
+                    if (! empty($scopesByUri[$path][$httpMethod])) {
                         $updatedOperation = $updatedOperation->withSecurity([['oauth' => $scopesByUri[$path][$httpMethod]]]);
                     }
 
                     $setterMethod = 'with' . ucfirst($httpMethod);
-                    $updatedPathItem = $updatedPathItem->$setterMethod($updatedOperation);
+                    $updatedPathItem = $updatedPathItem->{$setterMethod}($updatedOperation);
                 }
             }
             $updatedPaths->addPath($path, $updatedPathItem);
@@ -189,13 +190,13 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
     protected function getSchemaDefinition(OpenApi $openApi, Operation $operation): ?ArrayObject
     {
         $inputClass = $this->findOutputClass($operation->getClass(), Schema::TYPE_INPUT, $operation, []);
-        if (null === $inputClass) {
+        if ($inputClass === null) {
             return null;
         }
 
         // Build the operation name like SchemaFactory does so that we have the proper definition in the schema matching this operation
         $operationSchemaDefinitionName = $this->definitionNameFactory->create($operation->getClass(), 'json', $inputClass, $operation, []);
-        if (!$openApi->getComponents()->getSchemas()->offsetExists($operationSchemaDefinitionName)) {
+        if (! $openApi->getComponents()->getSchemas()->offsetExists($operationSchemaDefinitionName)) {
             return null;
         }
 
@@ -218,43 +219,34 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
      *      PrestaShop\Module\APIResources\ApiPlatform\Resources\ApiClient\ApiClientList => ApiClient
      *      PrestaShop\Module\APIResources\ApiPlatform\Resources\Product\Product => Product
      *      PrestaShop\Module\APIResources\ApiPlatform\Resources\Product\ProductList => Product
-     *
-     * @param HttpOperation $operation
-     *
-     * @return string|null
      */
     protected function getOperationDomain(HttpOperation $operation): ?string
     {
         // All our domain API resources (in the core and in the module) are in a sub namespace ending with ApiPlatform\Resources
-        if (!str_contains((string) $operation->getClass(), 'ApiPlatform\Resources\\')) {
+        if (! str_contains((string) $operation->getClass(), 'ApiPlatform\Resources\\')) {
             return null;
         }
 
         // Get the last part of the FQCN after ApiPlatform\Resources
-        $domainEnd = substr((string) $operation->getClass(), strrpos((string) $operation->getClass(), 'ApiPlatform\Resources\\') + strlen('ApiPlatform\Resources\\'));
+        $domainEnd = mb_substr((string) $operation->getClass(), mb_strrpos((string) $operation->getClass(), 'ApiPlatform\Resources\\') + mb_strlen('ApiPlatform\Resources\\'));
         if (empty($domainEnd)) {
             return null;
         }
 
         // If the remaining part is only the class name we can use it for the domain
-        if (!str_contains($domainEnd, '\\')) {
+        if (! str_contains($domainEnd, '\\')) {
             return $domainEnd;
         }
 
         // If not we use the last namespace
         $splitDomain = explode('\\', $domainEnd);
 
-        return $splitDomain[count($splitDomain) - 2];
+        return $splitDomain[\count($splitDomain) - 2];
     }
 
     /**
      * Localized values are arrays indexed by locales (or objects with properties matching the locale in JSON), this
      * method adapts the expected format along with an example to indicate the user that the key to use is the locale.
-     *
-     * @param string $class
-     * @param ArrayObject $definition
-     *
-     * @return void
      */
     protected function adaptLocalizedValues(string $class, ArrayObject $definition): void
     {
@@ -266,7 +258,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
         $resourceReflectionClass = $resourceClassMetadata->getReflectionClass();
 
         foreach ($definition['properties'] as $propertyName => $propertySchema) {
-            if (!$resourceReflectionClass->hasProperty($propertyName)) {
+            if (! $resourceReflectionClass->hasProperty($propertyName)) {
                 continue;
             }
 
@@ -288,11 +280,6 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
     /**
      * Internally we rely on DecimalNumber for float values because they are more accurate, but in the JSON format
      * they should be considered as float, so we update the schema for these types.
-     *
-     * @param string $class
-     * @param ArrayObject $definition
-     *
-     * @return void
      */
     protected function adaptDecimalNumbers(string $class, ArrayObject $definition): void
     {
@@ -304,7 +291,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
         $resourceReflectionClass = $resourceClassMetadata->getReflectionClass();
 
         foreach ($definition['properties'] as $propertyName => $propertySchema) {
-            if (!$resourceReflectionClass->hasProperty($propertyName)) {
+            if (! $resourceReflectionClass->hasProperty($propertyName)) {
                 continue;
             }
 
@@ -314,8 +301,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                 if ($propertyType === DecimalNumber::class || is_subclass_of($propertyType, DecimalNumber::class)) {
                     $definition['properties'][$propertyName]['type'] = 'number';
                     $definition['properties'][$propertyName]['example'] = 42.99;
-                    unset($definition['properties'][$propertyName]['$ref']);
-                    unset($definition['properties'][$propertyName]['allOf']);
+                    unset($definition['properties'][$propertyName]['$ref'], $definition['properties'][$propertyName]['allOf']);
                 }
             }
         }
@@ -329,17 +315,12 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
      * Example:
      *   UpdateProductCommand::setRedirectOption(string $redirectType, int $redirectTarget)
      *      => expected input ['redirectOption' => ['redirectType' => '301-category', 'redirectTarget' => 42]]
-     *
-     * @param Operation $operation
-     * @param ArrayObject $definition
-     *
-     * @return void
      */
     protected function adaptMultiParametersSetters(Operation $operation, ArrayObject $definition): void
     {
         $operationClass = ($operation->getInput()['class'] ?? null) ?: $operation->getClass();
         // We only handle the special case of multi-parameters setters for classes that belong in our Domain
-        if (!class_exists($operationClass) || !$this->classMetadataFactory->hasMetadataFor($operationClass) || !$this->domainObjectDetector->isDomainObject($operationClass)) {
+        if (! class_exists($operationClass) || ! $this->classMetadataFactory->hasMetadataFor($operationClass) || ! $this->domainObjectDetector->isDomainObject($operationClass)) {
             return;
         }
 
@@ -358,7 +339,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
             ]);
             foreach ($setterMethod->getParameters() as $methodParameter) {
                 // If one of the parameters cannot be handled we skip the whole method
-                if (!$methodParameter->getType() instanceof ReflectionNamedType) {
+                if (! $methodParameter->getType() instanceof ReflectionNamedType) {
                     continue 2;
                 }
 
@@ -400,7 +381,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
 
     protected function isDateTime(ReflectionNamedType $methodParameter): bool
     {
-        if (!class_exists($methodParameter->getName()) && !interface_exists($methodParameter->getName())) {
+        if (! class_exists($methodParameter->getName()) && ! interface_exists($methodParameter->getName())) {
             return false;
         }
 
@@ -409,12 +390,10 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
             return false;
         }
 
-        return in_array(DateTimeInterface::class, $implements);
+        return \in_array(DateTimeInterface::class, $implements, true);
     }
 
     /**
-     * @param ReflectionClass $reflectionClass
-     *
      * @return array<string, ReflectionMethod>
      */
     protected function findMethodsWithMultipleArguments(ReflectionClass $reflectionClass): array
@@ -433,9 +412,9 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
 
             // Remove set/with to get the potential matching property in data (use full method name by default)
             if (str_starts_with($reflectionMethod->getName(), 'set')) {
-                $methodPropertyName = lcfirst(substr($reflectionMethod->getName(), 3));
+                $methodPropertyName = lcfirst(mb_substr($reflectionMethod->getName(), 3));
             } elseif (str_starts_with($reflectionMethod->getName(), 'with')) {
-                $methodPropertyName = lcfirst(substr($reflectionMethod->getName(), 4));
+                $methodPropertyName = lcfirst(mb_substr($reflectionMethod->getName(), 4));
             } else {
                 $methodPropertyName = $reflectionMethod->getName();
             }
@@ -449,11 +428,6 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
      * Updates the schema property names based on the mapping specified, if for example the CQRS commands has a localizedNames
      * property that was renamed via the mapping into names then the schema won't use localizedNames but names for the final
      * schema output so that it matches the actual expected format.
-     *
-     * @param Operation $operation
-     * @param ArrayObject $definition
-     *
-     * @return void
      */
     protected function applyCommandMapping(Operation $operation, ArrayObject $definition): void
     {
@@ -465,7 +439,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
             // Replace properties that are scanned from CQRS command to their expected API path
             if ($this->propertyAccessor->isReadable($definition['properties'], $cqrsPath)) {
                 // Automatic value from context are simply removed from the schema, the others are "moved" to match the expected property path
-                if (!str_starts_with((string) $apiPath, '[_context]') && $this->propertyAccessor->isWritable($definition['properties'], $apiPath)) {
+                if (! str_starts_with((string) $apiPath, '[_context]') && $this->propertyAccessor->isWritable($definition['properties'], $apiPath)) {
                     $this->propertyAccessor->setValue($definition['properties'], $apiPath, $this->propertyAccessor->getValue($definition['properties'], $cqrsPath));
                 }
 
@@ -478,7 +452,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
 
         // Now clean the values that were set to null by the previous loop
         foreach ($definition['properties'] as $propertyName => $propertyValue) {
-            if (null === $propertyValue) {
+            if ($propertyValue === null) {
                 unset($definition['properties'][$propertyName]);
             }
         }

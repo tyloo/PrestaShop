@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ class I18nController extends ApiController
      * Show translation for page-app build with vue-js.
      *
      * No access restrictions because it is required for VueJs translations
-     *
-     * @param Request $request
      *
      * @return JsonResponse
      */

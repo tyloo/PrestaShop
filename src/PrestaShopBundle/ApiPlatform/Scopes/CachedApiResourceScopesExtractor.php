@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,7 @@ class CachedApiResourceScopesExtractor implements ApiResourceScopesExtractorInte
 
     public function __construct(
         private readonly CacheItemPoolInterface $cacheItemPool,
-        private readonly ApiResourceScopesExtractorInterface $decorated
+        private readonly ApiResourceScopesExtractorInterface $decorated,
     ) {
     }
 
@@ -57,7 +58,7 @@ class CachedApiResourceScopesExtractor implements ApiResourceScopesExtractorInte
     {
         return $this->getCachedResourceOrUseFallback(
             md5(self::class) . 'all_resources',
-            fn(): array => $this->decorated->getAllApiResourceScopes()
+            fn (): array => $this->decorated->getAllApiResourceScopes()
         );
     }
 
@@ -65,7 +66,7 @@ class CachedApiResourceScopesExtractor implements ApiResourceScopesExtractorInte
     {
         return $this->getCachedResourceOrUseFallback(
             md5(self::class) . 'enabled_resources',
-            fn(): array => $this->decorated->getEnabledApiResourceScopes()
+            fn (): array => $this->decorated->getEnabledApiResourceScopes()
         );
     }
 

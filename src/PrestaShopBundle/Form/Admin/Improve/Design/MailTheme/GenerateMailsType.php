@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,26 +40,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class GenerateMailsType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param ConfigurationInterface $configuration
-     * @param array $mailThemes
-     * @param array $themes
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly ConfigurationInterface $configuration,
         private readonly array $mailThemes,
-        private readonly array $themes
+        private readonly array $themes,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $noTheme = $this->trans('Core (no theme selected)', 'Admin.International.Feature');
@@ -75,7 +66,7 @@ class GenerateMailsType extends TranslatorAwareType
                 'required' => false,
                 'empty_data' => '',
                 'data' => '',
-                'disabled' => count($this->themes) <= 0,
+                'disabled' => \count($this->themes) <= 0,
             ])
             ->add('overwrite', SwitchType::class, ['data' => false])
         ;

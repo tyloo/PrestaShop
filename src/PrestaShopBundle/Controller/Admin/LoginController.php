@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,10 +63,6 @@ class LoginController extends PrestaShopAdminController
      * internally by the FormLoginAuthenticator
      *
      * See https://symfony.com/doc/current/security.html#form-login
-     *
-     * @param Security $security
-     *
-     * @return Response
      */
     public function loginAction(
         Request $request,
@@ -102,10 +99,6 @@ class LoginController extends PrestaShopAdminController
      * doesn't hurt to have a consistent controller here anyway.
      *
      * See https://symfony.com/doc/current/security.html#logging-out
-     *
-     * @param Security $security
-     *
-     * @return RedirectResponse
      */
     public function logoutAction(Security $security): RedirectResponse
     {
@@ -162,9 +155,9 @@ class LoginController extends PrestaShopAdminController
                     $errorMessage = $this->trans('An error occurred while attempting to reset your password.', [], 'Admin.Login.Notification');
                 }
 
-                if (!empty($infoMessage)) {
+                if (! empty($infoMessage)) {
                     $this->addFlash('info', $infoMessage);
-                } elseif (!empty($errorMessage)) {
+                } elseif (! empty($errorMessage)) {
                     $this->addFlash('error', $errorMessage);
                 }
 
@@ -181,7 +174,7 @@ class LoginController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.admin.reset_password.form_handler')]
         FormHandlerInterface $resetPasswordFormHandler,
         Request $request,
-        string $resetToken
+        string $resetToken,
     ): Response {
         $resetPasswordForm = $resetPasswordFormHandler->getForm();
         $resetPasswordForm->handleRequest($request);
@@ -234,7 +227,7 @@ class LoginController extends PrestaShopAdminController
 
         // If admin folder is still named admin
         if ($this->adminFolderName === 'admin') {
-            $randomName = sprintf(
+            $randomName = \sprintf(
                 'admin%03d%s/',
                 mt_rand(0, 999),
                 mb_strtolower((new PasswordGenerator(new OpenSSL()))->generatePassword(16)),
@@ -243,7 +236,7 @@ class LoginController extends PrestaShopAdminController
         }
 
         $sslEnabled = (bool) $this->getConfiguration()->get('PS_SSL_ENABLED');
-        if ($sslEnabled && !$request->isSecure()) {
+        if ($sslEnabled && ! $request->isSecure()) {
             $maintenanceIpConfiguration = $this->getConfiguration()->get('PS_MAINTENANCE_IP');
             if (empty($maintenanceIpConfiguration)) {
                 $maintenanceIps = [];
@@ -254,14 +247,14 @@ class LoginController extends PrestaShopAdminController
             $maintenanceIps = array_merge(['127.0.0.1', '::1'], $maintenanceIps);
             $isMaintainer = false;
             foreach ($request->getClientIps() as $clientIp) {
-                if (in_array($clientIp, $maintenanceIps)) {
+                if (\in_array($clientIp, $maintenanceIps, true)) {
                     $isMaintainer = true;
                     break;
                 }
             }
 
-            if (!$isMaintainer) {
-                $securedUrl = rtrim(str_replace('http://', 'https://', $this->shopContext->getBaseURL()), '/') . '/' . trim($this->generateUrl('admin_login'), '/');
+            if (! $isMaintainer) {
+                $securedUrl = mb_rtrim(str_replace('http://', 'https://', $this->shopContext->getBaseURL()), '/') . '/' . mb_trim($this->generateUrl('admin_login'), '/');
                 $requiredActions[] = $this->trans(
                     'SSL is activated. Please connect using the following link to [1]log in to secure mode (https://)[/1]',
                     ['[1]' => '<a href="' . $securedUrl . '">', '[/1]' => '</a>'],
@@ -272,7 +265,7 @@ class LoginController extends PrestaShopAdminController
             }
         }
 
-        if (!empty($requiredActions)) {
+        if (! empty($requiredActions)) {
             return $this->render('@PrestaShop/Admin/Login/required_actions.html.twig', [
                 'requiredActions' => $requiredActions,
                 'imgDir' => $this->shopContext->getBaseURI() . 'img/',

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,21 +48,14 @@ class LanguageType extends TranslatorAwareType
 {
     private const MAX_NAME_LENGTH = 32;
 
-    /**
-     * LanguageType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param bool $isMultistoreFeatureActive
-     */
-    public function __construct(TranslatorInterface $translator, array $locales, private readonly bool $isMultistoreFeatureActive)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        array $locales,
+        private readonly bool $isMultistoreFeatureActive,
+    ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -148,7 +142,7 @@ class LanguageType extends TranslatorAwareType
                 ],
                 'label' => $this->trans('Flag', 'Admin.International.Feature'),
                 'help' => $this->trans('Upload the country flag from your computer.', 'Admin.International.Help'),
-                'required' => !$options['is_for_editing'],
+                'required' => ! $options['is_for_editing'],
                 'constraints' => [
                     new Image([
                         'mimeTypesMessage' => $this->trans('This field is invalid.', 'Admin.Notifications.Error'),
@@ -158,7 +152,7 @@ class LanguageType extends TranslatorAwareType
             ->add('no_picture_image', FileType::class, [
                 'label' => $this->trans('"No-picture" image', 'Admin.International.Feature'),
                 'help' => $this->trans('Image is displayed when no picture is found.', 'Admin.International.Help'),
-                'required' => !$options['is_for_editing'],
+                'required' => ! $options['is_for_editing'],
                 'constraints' => [
                     new Image([
                         'mimeTypesMessage' => $this->trans('This field is invalid.', 'Admin.Notifications.Error'),
@@ -196,9 +190,6 @@ class LanguageType extends TranslatorAwareType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

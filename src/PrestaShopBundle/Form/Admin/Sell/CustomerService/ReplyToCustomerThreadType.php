@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ReplyToCustomerThreadType extends AbstractType
 {
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

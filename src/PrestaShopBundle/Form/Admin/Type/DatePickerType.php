@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DatePickerType extends AbstractType
 {
-    public function __construct(private readonly DataTransformerInterface $arabicToLatinDigitDataTransformer)
-    {
+    public function __construct(
+        private readonly DataTransformerInterface $arabicToLatinDigitDataTransformer,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return TextType::class;
@@ -56,17 +55,11 @@ class DatePickerType extends AbstractType
         $builder->addViewTransformer($this->arabicToLatinDigitDataTransformer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['date_format'] = $options['date_format'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

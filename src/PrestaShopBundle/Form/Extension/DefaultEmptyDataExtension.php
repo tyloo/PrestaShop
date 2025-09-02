@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,9 +46,6 @@ class DefaultEmptyDataExtension extends AbstractTypeExtension
      */
     private $privateEmptyValue;
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         // We cannot use null as empty value so we create a private object that will allow us to detect that the
@@ -64,13 +62,10 @@ class DefaultEmptyDataExtension extends AbstractTypeExtension
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
-        if (!isset($options['default_empty_data'])) {
+        if (! isset($options['default_empty_data'])) {
             return;
         }
 
@@ -86,9 +81,6 @@ class DefaultEmptyDataExtension extends AbstractTypeExtension
         $builder->addViewTransformer($transformer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

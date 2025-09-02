@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,11 @@ use Symfony\Component\Validator\Constraints\When;
 class CartConditionsType extends TranslatorAwareType
 {
     public const MINIMUM_AMOUNT = 'minimum_amount';
+
     public const MINIMUM_PRODUCT_QUANTITY = 'minimum_product_quantity';
+
     public const SPECIFIC_PRODUCTS = 'specific_products';
+
     public const PRODUCT_SEGMENT = 'product_segment';
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -54,7 +58,7 @@ class CartConditionsType extends TranslatorAwareType
                 'required' => false,
                 'constraints' => [
                     new When(
-                        expression: sprintf(
+                        expression: \sprintf(
                             'this.getParent().getParent().get("children_selector").getData() === "%s" && this.getParent().get("children_selector").getData() === "%s"',
                             DiscountConditionsType::CART_CONDITIONS,
                             self::MINIMUM_AMOUNT
@@ -74,7 +78,7 @@ class CartConditionsType extends TranslatorAwareType
                 'default_empty_data' => 0,
                 'constraints' => [
                     new When(
-                        expression: sprintf(
+                        expression: \sprintf(
                             'this.getParent().getParent().get("children_selector").getData() === "%s" && this.getParent().get("children_selector").getData() === "%s"',
                             DiscountConditionsType::CART_CONDITIONS,
                             self::MINIMUM_PRODUCT_QUANTITY
@@ -94,7 +98,7 @@ class CartConditionsType extends TranslatorAwareType
                 'required' => false,
                 'constraints' => [
                     new When(
-                        expression: sprintf(
+                        expression: \sprintf(
                             'this.getParent().getParent().get("children_selector").getData() === "%s" && this.getParent().get("children_selector").getData() === "%s"',
                             DiscountConditionsType::CART_CONDITIONS,
                             self::SPECIFIC_PRODUCTS
@@ -112,7 +116,7 @@ class CartConditionsType extends TranslatorAwareType
                 'label' => $this->trans('Product segment', 'Admin.Catalog.Feature'),
                 'constraints' => [
                     new When(
-                        expression: sprintf(
+                        expression: \sprintf(
                             'this.getParent().getParent().get("children_selector").getData() === "%s" && this.getParent().get("children_selector").getData() === "%s"',
                             DiscountConditionsType::CART_CONDITIONS,
                             self::PRODUCT_SEGMENT

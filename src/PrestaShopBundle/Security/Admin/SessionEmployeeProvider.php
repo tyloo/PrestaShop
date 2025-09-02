@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,13 +61,13 @@ class SessionEmployeeProvider
     public function getEmployeeFromSession(?Request $request = null): ?SessionEmployeeInterface
     {
         $request ??= $this->requestStack->getCurrentRequest();
-        if (null === $request) {
+        if ($request === null) {
             return null;
         }
         $session = $request->hasPreviousSession() ? $request->getSession() : null;
-        if (null !== $session) {
+        if ($session !== null) {
             $token = $session->get($this->sessionKey);
-            if (null !== $token) {
+            if ($token !== null) {
                 $token = $this->safelyUnserialize($token);
                 if ($token instanceof TokenInterface && $token->getUser() instanceof SessionEmployeeInterface) {
                     return $token->getUser();

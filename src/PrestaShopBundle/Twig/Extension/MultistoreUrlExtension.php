@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,16 +42,11 @@ class MultistoreUrlExtension extends AbstractExtension
 {
     public const SHOP_CONTEXT_PARAMETER = 'setShopContext';
 
-    /**
-     * @param RequestStack $requestStack
-     */
-    public function __construct(protected RequestStack $requestStack)
-    {
+    public function __construct(
+        protected RequestStack $requestStack,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [
@@ -62,11 +58,6 @@ class MultistoreUrlExtension extends AbstractExtension
 
     /**
      * Generate URL from current request for a specific shop group.
-     *
-     * @param int|null $id
-     * @param string|null $prefix
-     *
-     * @return string
      */
     public function generateUrl(?int $id = null, ?string $prefix = null): string
     {
@@ -84,10 +75,6 @@ class MultistoreUrlExtension extends AbstractExtension
 
     /**
      * Generate URL from current request for a specific shop group.
-     *
-     * @param ShopGroup $group
-     *
-     * @return string
      */
     public function generateGroupUrl(ShopGroup $group): string
     {
@@ -96,10 +83,6 @@ class MultistoreUrlExtension extends AbstractExtension
 
     /**
      * Generate URL from current request for a specific shop.
-     *
-     * @param Shop $shop
-     *
-     * @return string
      */
     public function generateShopUrl(?Shop $shop = null): string
     {

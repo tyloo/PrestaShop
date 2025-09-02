@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class CommandAndQueryCollectorPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $commandsAndQueries = $this->findCommandsAndQueries($container);
@@ -57,7 +55,7 @@ class CommandAndQueryCollectorPass implements CompilerPassInterface
         $handlers = $container->findTaggedServiceIds('messenger.message_handler');
         $commands = [];
         foreach ($handlers as $key => $value) {
-            if (count(current($value)) == 0) {
+            if (\count(current($value)) === 0) {
                 continue;
             }
 
@@ -85,10 +83,7 @@ class CommandAndQueryCollectorPass implements CompilerPassInterface
      * Process the handler attributes and add commands and queries to the result.
      *
      * @param ReflectionAttribute[] $handlerAttributes
-     * @param array $value
-     * @param string[] $commands
-     *
-     * @return void
+     * @param string[]              $commands
      */
     private function processHandlerAttributes(array $handlerAttributes, array $value, array &$commands): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,23 +39,18 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class FilterCmsPageCategorySearchCriteriaListener
 {
-    /**
-     * @param RequestStack $requestStack
-     */
-    public function __construct(private readonly RequestStack $requestStack)
-    {
+    public function __construct(
+        private readonly RequestStack $requestStack,
+    ) {
     }
 
-    /**
-     * @param FilterSearchCriteriaEvent $event
-     */
     public function onFilterSearchCriteria(FilterSearchCriteriaEvent $event): void
     {
         $isAvailableFilter = $event->getSearchCriteria() instanceof CmsPageCategoryFilters
             || $event->getSearchCriteria() instanceof CmsPageFilters
         ;
 
-        if (!$isAvailableFilter) {
+        if (! $isAvailableFilter) {
             return;
         }
 
@@ -66,10 +62,10 @@ class FilterCmsPageCategorySearchCriteriaListener
 
         $request = $this->requestStack->getCurrentRequest();
 
-        if (null !== $request) {
+        if ($request !== null) {
             $cmsCategoryId = $this->requestStack->getCurrentRequest()->query->getInt('id_cms_category');
 
-            if (!$cmsCategoryId) {
+            if (! $cmsCategoryId) {
                 $cmsCategoryId = CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID;
             }
 

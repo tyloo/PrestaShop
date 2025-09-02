@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,10 @@ class PathExtension extends AbstractExtension
     public function __construct(
         private readonly LegacyContext $context,
         private readonly Hashing $hashing,
-        private readonly string $cookieKey
+        private readonly string $cookieKey,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [
@@ -64,11 +62,6 @@ class PathExtension extends AbstractExtension
 
     /**
      * Get path for legacy link.
-     *
-     * @param string $controllerName
-     * @param array $parameters
-     *
-     * @return string
      */
     public function getLegacyPath(string $controllerName, array $parameters = []): string
     {
@@ -77,10 +70,6 @@ class PathExtension extends AbstractExtension
 
     /**
      * Get token for legacy controller, this method mimics the same behaviour as Tools::getAdminToken.
-     *
-     * @param string $controllerName
-     *
-     * @return string
      */
     public function getLegacyAdminToken(string $controllerName): string
     {

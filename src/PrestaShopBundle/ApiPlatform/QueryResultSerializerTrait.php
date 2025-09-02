@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,6 @@ trait QueryResultSerializerTrait
 
     /**
      * @param mixed $CQRSQueryResult this is the QueryResult DTO returned by a CQRS query
-     * @param Operation $operation
      *
      * @return mixed It returns the ApiResource DTO object
      */
@@ -60,10 +60,6 @@ trait QueryResultSerializerTrait
 
     /**
      * Return the mapping used for normalizing AND denormalizing the ApiResource DTO, if specified.
-     *
-     * @param Operation $operation
-     *
-     * @return array|null
      */
     protected function getApiResourceMapping(Operation $operation): ?array
     {
@@ -72,10 +68,6 @@ trait QueryResultSerializerTrait
 
     /**
      * Return the mapping used for normalizing AND denormalizing the CQRS query, if specified.
-     *
-     * @param Operation $operation
-     *
-     * @return array|null
      */
     protected function getCQRSQueryMapping(Operation $operation): ?array
     {

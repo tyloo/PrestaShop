@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -90,10 +91,10 @@ class AdminSecurity
         ?int $statusCode = null,
         ?int $exceptionCode = null,
         ?string $redirectRoute = null,
-        ?bool $jsonResponse = false
+        ?bool $jsonResponse = false,
     ) {
         $values = [];
-        if (is_string($data)) {
+        if (\is_string($data)) {
             $values['attribute'] = $data;
         } else {
             $values = $data;
@@ -110,11 +111,11 @@ class AdminSecurity
         $values['jsonResponse'] ??= $jsonResponse ?? false;
 
         foreach ($values as $k => $v) {
-            if (!method_exists($this, $name = 'set' . $k)) {
-                throw new RuntimeException(sprintf('Unknown key "%s" for annotation "@%s".', $k, static::class));
+            if (! method_exists($this, $name = 'set' . $k)) {
+                throw new RuntimeException(\sprintf('Unknown key "%s" for annotation "@%s".', $k, static::class));
             }
 
-            $this->$name($v);
+            $this->{$name}($v);
         }
     }
 

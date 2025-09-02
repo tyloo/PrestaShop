@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,20 +47,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StateType extends AbstractType
 {
-    /**
-     * StateType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param ConfigurableFormChoiceProviderInterface $countriesChoiceProvider
-     * @param ConfigurableFormChoiceProviderInterface $zonesChoiceProvider
-     */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurableFormChoiceProviderInterface $countriesChoiceProvider, private readonly ConfigurableFormChoiceProviderInterface $zonesChoiceProvider)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurableFormChoiceProviderInterface $countriesChoiceProvider,
+        private readonly ConfigurableFormChoiceProviderInterface $zonesChoiceProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $stateIdValue = isset($builder->getData()['id_state']) && $builder->getData()['id_state'] instanceof StateId ?
@@ -78,7 +72,9 @@ class StateType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->translator->trans(
-                            'This field cannot be empty.', [], 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            [],
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new Length([

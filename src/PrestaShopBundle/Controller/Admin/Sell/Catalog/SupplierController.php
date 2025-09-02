@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,18 +69,13 @@ class SupplierController extends PrestaShopAdminController
 {
     /**
      * Show suppliers listing.
-     *
-     * @param Request $request
-     * @param SupplierFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.factory.supplier')]
         GridFactoryInterface $supplierGridFactory,
-        SupplierFilters $filters
+        SupplierFilters $filters,
     ): Response {
         $supplierGrid = $supplierGridFactory->getGrid($filters);
 
@@ -97,10 +93,6 @@ class SupplierController extends PrestaShopAdminController
 
     /**
      * Displays supplier creation form and handles form submit which creates new supplier.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_suppliers_index', message: 'You do not have permission to add this.')]
     public function createAction(
@@ -108,7 +100,7 @@ class SupplierController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.supplier_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.supplier_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         $formData = [];
         if ($request->request->has('supplier') && isset($request->request->all('supplier')['id_country'])) {
@@ -122,7 +114,7 @@ class SupplierController extends PrestaShopAdminController
         try {
             $result = $formHandler->handle($supplierForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_suppliers_index');
@@ -142,8 +134,6 @@ class SupplierController extends PrestaShopAdminController
      * Deletes supplier.
      *
      * @param int $supplierId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_suppliers_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_suppliers_index', message: 'You do not have permission to delete this.')]
@@ -165,10 +155,6 @@ class SupplierController extends PrestaShopAdminController
 
     /**
      * Bulk deletion of suppliers.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_suppliers_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_suppliers_index', message: 'You do not have permission to delete this.')]
@@ -178,7 +164,7 @@ class SupplierController extends PrestaShopAdminController
 
         try {
             $suppliersToDelete = array_map(
-                fn($item): int => (int) $item,
+                fn ($item): int => (int) $item,
                 $suppliersToDelete
             );
             $this->dispatchCommand(new BulkDeleteSupplierCommand($suppliersToDelete));
@@ -196,10 +182,6 @@ class SupplierController extends PrestaShopAdminController
 
     /**
      * Bulk disables supplier statuses.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_suppliers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_suppliers_index', message: 'You do not have permission to edit this.')]
@@ -209,7 +191,7 @@ class SupplierController extends PrestaShopAdminController
 
         try {
             $suppliersToDisable = array_map(
-                fn($item): int => (int) $item,
+                fn ($item): int => (int) $item,
                 $suppliersToDisable
             );
             $this->dispatchCommand(new BulkDisableSupplierCommand($suppliersToDisable));
@@ -226,10 +208,6 @@ class SupplierController extends PrestaShopAdminController
 
     /**
      * Bulk enables supplier statuses.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_suppliers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_suppliers_index', message: 'You do not have permission to edit this.')]
@@ -239,7 +217,7 @@ class SupplierController extends PrestaShopAdminController
 
         try {
             $suppliersToEnable = array_map(
-                fn($item): int => (int) $item,
+                fn ($item): int => (int) $item,
                 $suppliersToEnable
             );
             $this->dispatchCommand(new BulkEnableSupplierCommand($suppliersToEnable));
@@ -256,11 +234,6 @@ class SupplierController extends PrestaShopAdminController
 
     /**
      * Displays edit supplier form and submits form.
-     *
-     * @param Request $request
-     * @param int $supplierId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_suppliers_index', message: 'You do not have permission to edit this.')]
     public function editAction(
@@ -269,7 +242,7 @@ class SupplierController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.supplier_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.supplier_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         $formData = [];
         if ($request->request->has('supplier') && isset($request->request->all('supplier')['id_country'])) {
@@ -295,7 +268,7 @@ class SupplierController extends PrestaShopAdminController
             $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
         }
 
-        if (!isset($supplierForm) || !isset($editableSupplier)) {
+        if (! isset($supplierForm) || ! isset($editableSupplier)) {
             return $this->redirectToRoute('admin_suppliers_index');
         }
 
@@ -317,10 +290,6 @@ class SupplierController extends PrestaShopAdminController
 
     /**
      * Toggles supplier active status.
-     *
-     * @param int $supplierId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_suppliers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_suppliers_index', message: 'You do not have permission to edit this.')]
@@ -342,11 +311,6 @@ class SupplierController extends PrestaShopAdminController
 
     /**
      * Views supplier products information.
-     *
-     * @param Request $request
-     * @param int $supplierId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function viewAction(
@@ -384,16 +348,12 @@ class SupplierController extends PrestaShopAdminController
 
     /**
      * Exports to csv visible suppliers list data.
-     *
-     * @param SupplierFilters $filters
-     *
-     * @return CsvResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function exportAction(
         #[Autowire(service: 'prestashop.core.grid.factory.supplier')]
         GridFactoryInterface $supplierGridFactory,
-        SupplierFilters $filters
+        SupplierFilters $filters,
     ): CsvResponse {
         $filters = new SupplierFilters(['limit' => null] + $filters->all());
         $supplierGrid = $supplierGridFactory->getGrid($filters);
@@ -425,11 +385,6 @@ class SupplierController extends PrestaShopAdminController
 
     /**
      * Deletes supplier logo image.
-     *
-     * @param Request $request
-     * @param int $supplierId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_suppliers_edit', redirectQueryParamsToKeep: ['supplierId'])]
     public function deleteLogoImageAction(Request $request, int $supplierId): RedirectResponse
@@ -449,10 +404,24 @@ class SupplierController extends PrestaShopAdminController
         ]);
     }
 
+    protected function getSettingsTipMessage(): ?string
+    {
+        if ($this->getConfiguration()->get('PS_DISPLAY_SUPPLIERS')) {
+            return null;
+        }
+
+        $urlOpening = \sprintf('<a href="%s">', $this->generateUrl('admin_preferences'));
+        $urlEnding = '</a>';
+
+        return $this->trans(
+            'The display of your suppliers is disabled on your store. Go to %sShop Parameters > General%s to edit settings.',
+            [$urlOpening, $urlEnding],
+            'Admin.Catalog.Notification'
+        );
+    }
+
     /**
      * Provides error messages for exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -531,28 +500,6 @@ class SupplierController extends PrestaShopAdminController
         ];
     }
 
-    /**
-     * @return string|null
-     */
-    protected function getSettingsTipMessage(): ?string
-    {
-        if ($this->getConfiguration()->get('PS_DISPLAY_SUPPLIERS')) {
-            return null;
-        }
-
-        $urlOpening = sprintf('<a href="%s">', $this->generateUrl('admin_preferences'));
-        $urlEnding = '</a>';
-
-        return $this->trans(
-            'The display of your suppliers is disabled on your store. Go to %sShop Parameters > General%s to edit settings.',
-            [$urlOpening, $urlEnding],
-            'Admin.Catalog.Notification'
-        );
-    }
-
-    /**
-     * @return array
-     */
     private function getSupplierIndexToolbarButtons(): array
     {
         $toolbarButtons = [];
@@ -566,11 +513,6 @@ class SupplierController extends PrestaShopAdminController
         return $toolbarButtons;
     }
 
-    /**
-     * @param int $supplierId
-     *
-     * @return array
-     */
     private function getSupplierViewToolbarButtons(int $supplierId): array
     {
         $toolbarButtons = [];

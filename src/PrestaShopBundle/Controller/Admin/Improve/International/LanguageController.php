@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,11 +65,6 @@ class LanguageController extends PrestaShopAdminController
 {
     /**
      * Show languages listing page.
-     *
-     * @param Request $request
-     * @param LanguageFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -76,7 +72,7 @@ class LanguageController extends PrestaShopAdminController
         LanguageFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.factory.language')]
         GridFactoryInterface $languageGridFactory,
-        UrlFileCheckerInterface $urlFileChecker
+        UrlFileCheckerInterface $urlFileChecker,
     ): Response {
         $languageGrid = $languageGridFactory->getGrid($filters);
 
@@ -96,10 +92,6 @@ class LanguageController extends PrestaShopAdminController
 
     /**
      * Show language creation form page and handle its submit.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
@@ -107,7 +99,7 @@ class LanguageController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.language_form_builder')]
         FormBuilderInterface $languageFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.language_form_handler')]
-        FormHandlerInterface $languageFormHandler
+        FormHandlerInterface $languageFormHandler,
     ): Response {
         $languageForm = $languageFormBuilder->getForm();
         $languageForm->handleRequest($request);
@@ -115,7 +107,7 @@ class LanguageController extends PrestaShopAdminController
         try {
             $result = $languageFormHandler->handle($languageForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_languages_index');
@@ -134,11 +126,6 @@ class LanguageController extends PrestaShopAdminController
 
     /**
      * Show language edit form page and handle its submit.
-     *
-     * @param int $languageId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_languages_index')]
     public function editAction(
@@ -147,7 +134,7 @@ class LanguageController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.language_form_builder')]
         FormBuilderInterface $languageFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.language_form_handler')]
-        FormHandlerInterface $languageFormHandler
+        FormHandlerInterface $languageFormHandler,
     ): Response {
         try {
             $languageForm = $languageFormBuilder->getFormFor((int) $languageId, [], [
@@ -198,10 +185,6 @@ class LanguageController extends PrestaShopAdminController
 
     /**
      * Deletes language
-     *
-     * @param int $languageId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_languages_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_languages_index')]
@@ -220,10 +203,6 @@ class LanguageController extends PrestaShopAdminController
 
     /**
      * Deletes languages in bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_languages_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_languages_index')]
@@ -247,10 +226,6 @@ class LanguageController extends PrestaShopAdminController
 
     /**
      * Toggles language status
-     *
-     * @param int $languageId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_languages_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_languages_index')]
@@ -262,7 +237,7 @@ class LanguageController extends PrestaShopAdminController
 
             $this->dispatchCommand(new ToggleLanguageStatusCommand(
                 (int) $languageId,
-                !$editableLanguage->isActive()
+                ! $editableLanguage->isActive()
             ));
 
             $this->addFlash(
@@ -278,18 +253,13 @@ class LanguageController extends PrestaShopAdminController
 
     /**
      * Toggles languages status in bulk action
-     *
-     * @param Request $request
-     * @param string $status
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_languages_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_languages_index')]
     public function bulkToggleStatusAction(Request $request, string $status): RedirectResponse
     {
         $languageIds = $this->getBulkLanguagesFromRequest($request);
-        $expectedStatus = 'enable' === $status;
+        $expectedStatus = $status === 'enable';
 
         try {
             $this->dispatchCommand(new BulkToggleLanguagesStatusCommand(
@@ -308,9 +278,6 @@ class LanguageController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_languages_index');
     }
 
-    /**
-     * @return array
-     */
     private function getErrorMessages(): array
     {
         $iniConfig = $this->container->get(IniConfiguration::class);
@@ -372,12 +339,12 @@ class LanguageController extends PrestaShopAdminController
             LanguageConstraintException::class => [
                 LanguageConstraintException::INVALID_ISO_CODE => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('ISO code', [], 'Admin.International.Feature'))],
+                    [\sprintf('"%s"', $this->trans('ISO code', [], 'Admin.International.Feature'))],
                     'Admin.Notifications.Error'
                 ),
                 LanguageConstraintException::INVALID_IETF_TAG => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Language code', [], 'Admin.International.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Language code', [], 'Admin.International.Feature'))],
                     'Admin.Notifications.Error'
                 ),
                 LanguageConstraintException::DUPLICATE_ISO_CODE => $this->trans(
@@ -418,8 +385,6 @@ class LanguageController extends PrestaShopAdminController
 
     /**
      * Get language ids from request for bulk action
-     *
-     * @param Request $request
      *
      * @return int[]
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ForwardCustomerThreadType extends AbstractType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param FormChoiceProviderInterface $employeeChoiceProvider
-     */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly FormChoiceProviderInterface $employeeChoiceProvider)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly FormChoiceProviderInterface $employeeChoiceProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $employeeChoices = $this->employeeChoiceProvider->getChoices();

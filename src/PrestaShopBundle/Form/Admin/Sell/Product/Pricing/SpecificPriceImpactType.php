@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,12 +51,13 @@ class SpecificPriceImpactType extends TranslatorAwareType
 {
     // We need specific groups because the constraints are different when fields are disabled
     private const FIXED_PRICE_GROUP = 'fixed_price_group';
+
     private const REDUCTION_GROUP = 'reduction_group';
 
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly string $defaultCurrencyIsoCode
+        private readonly string $defaultCurrencyIsoCode,
     ) {
         parent::__construct($translator, $locales);
     }
@@ -82,7 +84,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
                     ]),
                 ],
                 'disabling_switch' => true,
-                'disabled_value' => fn($data, FormInterface $form): bool => $this->shouldReductionBeDisabled($form),
+                'disabled_value' => fn ($data, FormInterface $form): bool => $this->shouldReductionBeDisabled($form),
             ])
             ->add('fixed_price_tax_excluded', MoneyType::class, [
                 'required' => false,
@@ -99,7 +101,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
                     new Positive(['groups' => [self::FIXED_PRICE_GROUP]]),
                 ],
                 'disabling_switch' => true,
-                'disabled_value' => fn($data, FormInterface $form): bool => $this->shouldFixedPriceBeDisabled($form),
+                'disabled_value' => fn ($data, FormInterface $form): bool => $this->shouldFixedPriceBeDisabled($form),
             ])
         ;
 
@@ -139,7 +141,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
     {
         $isUsingFixedPrice = $this->isUsingFixedPrice($impactData);
         $isUsingReduction = $this->isUsingReduction($impactData);
-        if (!$isUsingFixedPrice && !$isUsingReduction) {
+        if (! $isUsingFixedPrice && ! $isUsingReduction) {
             $context
                 ->buildViolation($this->trans('Apply a discount to the initial price or set a specific price.', 'Admin.Catalog.Feature'))
                 ->addViolation()
@@ -152,7 +154,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
         $impactForm = $form->getParent();
         $impactData = $impactForm->getData();
 
-        return !$this->isUsingFixedPrice($impactData);
+        return ! $this->isUsingFixedPrice($impactData);
     }
 
     /**
@@ -160,20 +162,16 @@ class SpecificPriceImpactType extends TranslatorAwareType
      * or if its value equals -1 no fixed price is defined.
      *
      * However, the most trustable value is the one from the checkbox, so it is used as priority when present.
-     *
-     * @param array|null $impactData
-     *
-     * @return bool
      */
     private function isUsingFixedPrice(?array $impactData): bool
     {
-        if (array_key_exists('disabling_switch_fixed_price_tax_excluded', $impactData)) {
+        if (\array_key_exists('disabling_switch_fixed_price_tax_excluded', $impactData)) {
             return $impactData['disabling_switch_fixed_price_tax_excluded'] === true;
         }
 
         // Use array_key_exists because fixed_price_tax_excluded can be present but null, it doesn't mean it is not
         // used it is just empty
-        if (!array_key_exists('fixed_price_tax_excluded', $impactData)) {
+        if (! \array_key_exists('fixed_price_tax_excluded', $impactData)) {
             return false;
         }
 
@@ -181,7 +179,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
         // in InitialPrice::isInitialPriceValue
         $fixedPrice = $impactData['fixed_price_tax_excluded'] ?? 0;
 
-        return !InitialPrice::isInitialPriceValue((string) $fixedPrice);
+        return ! InitialPrice::isInitialPriceValue((string) $fixedPrice);
     }
 
     private function shouldReductionBeDisabled(FormInterface $form): bool
@@ -190,7 +188,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
         $impactData = $impactForm->getData();
         $isUsingReduction = $this->isUsingReduction($impactData);
 
-        return !$isUsingReduction;
+        return ! $isUsingReduction;
     }
 
     /**
@@ -198,17 +196,13 @@ class SpecificPriceImpactType extends TranslatorAwareType
      * or if its value equals 0 no reduction is defined.
      *
      * However, the most trustable value is the one from the checkbox, so it is used as priority when present.
-     *
-     * @param array|null $impactData
-     *
-     * @return bool
      */
     private function isUsingReduction(?array $impactData): bool
     {
-        if (array_key_exists('disabling_switch_reduction', $impactData)) {
+        if (\array_key_exists('disabling_switch_reduction', $impactData)) {
             return $impactData['disabling_switch_reduction'] === true;
         }
 
-        return !empty($impactData['reduction']['value']);
+        return ! empty($impactData['reduction']['value']);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,24 +40,16 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
  */
 class FiltersBuilderResolver implements ArgumentValueResolverInterface
 {
-    /**
-     * @param FiltersBuilderInterface $builder
-     */
-    public function __construct(private readonly FiltersBuilderInterface $builder)
-    {
+    public function __construct(
+        private readonly FiltersBuilderInterface $builder,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         return is_subclass_of($argument->getType(), Filters::class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         // The shop constraint should be added in the request attributes by another listener (@see ShopConstraintListener)

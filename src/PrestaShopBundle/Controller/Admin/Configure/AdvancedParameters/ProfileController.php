@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -93,10 +94,6 @@ class ProfileController extends PrestaShopAdminController
 
     /**
      * Used for applying filtering actions.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchAction(
@@ -120,10 +117,6 @@ class ProfileController extends PrestaShopAdminController
 
     /**
      * Show profile's create page
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[DemoRestricted(redirectRoute: 'admin_profiles_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
@@ -140,7 +133,7 @@ class ProfileController extends PrestaShopAdminController
         try {
             $handlerResult = $formHandler->handle($form);
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_profiles_index');
@@ -165,11 +158,6 @@ class ProfileController extends PrestaShopAdminController
 
     /**
      * Shows profile edit form.
-     *
-     * @param int $profileId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[DemoRestricted(redirectRoute: 'admin_profiles_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
@@ -228,10 +216,6 @@ class ProfileController extends PrestaShopAdminController
 
     /**
      * Delete a profile.
-     *
-     * @param int $profileId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_profiles_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
@@ -252,10 +236,6 @@ class ProfileController extends PrestaShopAdminController
 
     /**
      * Bulk delete profiles.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_profiles_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
@@ -276,8 +256,6 @@ class ProfileController extends PrestaShopAdminController
 
     /**
      * Get human-readable error for exception.
-     *
-     * @return array
      */
     protected function getErrorMessages(): array
     {

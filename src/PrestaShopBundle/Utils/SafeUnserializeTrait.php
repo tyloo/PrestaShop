@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,12 +32,20 @@ use Throwable;
 
 trait SafeUnserializeTrait
 {
+    /**
+     * @internal
+     */
+    public static function handleSafeUnserializeCallback(string $class): never
+    {
+        throw new ErrorException('Class not found: ' . $class, 0x37313BC);
+    }
+
     protected function safelyUnserialize(string $serializedToken): mixed
     {
         $token = null;
         $prevUnserializeHandler = ini_set('unserialize_callback_func', self::class . '::handleSafeUnserializeCallback');
         $prevErrorHandler = set_error_handler(function ($type, $msg, $file, $line, $context = []) use (&$prevErrorHandler) {
-            if (__FILE__ === $file) {
+            if ($file === __FILE__) {
                 throw new ErrorException($msg, 0x37313BC, $type, $file, $line);
             }
 
@@ -46,7 +55,7 @@ trait SafeUnserializeTrait
         try {
             $token = unserialize($serializedToken);
         } catch (ErrorException $e) {
-            if (0x37313BC !== $e->getCode()) {
+            if ($e->getCode() !== 0x37313BC) {
                 return null;
             }
         } catch (Throwable) {
@@ -57,13 +66,5 @@ trait SafeUnserializeTrait
         }
 
         return $token;
-    }
-
-    /**
-     * @internal
-     */
-    public static function handleSafeUnserializeCallback(string $class): never
-    {
-        throw new ErrorException('Class not found: ' . $class, 0x37313BC);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MinimumAmountType extends TranslatorAwareType
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -57,9 +55,6 @@ class MinimumAmountType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -69,7 +64,7 @@ class MinimumAmountType extends TranslatorAwareType
             'label' => $this->trans('Minimum amount', 'Admin.Catalog.Feature'),
             'required' => false,
             'disabling_switch' => true,
-            'disabled_value' => static fn(?array $data): bool => empty($data['amount']),
+            'disabled_value' => static fn (?array $data): bool => empty($data['amount']),
         ]);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class IntegerTypeExtension extends AbstractTypeExtension
 {
-    public function __construct(private readonly LocaleNumberTransformer $localeNumberTransformer)
-    {
+    public function __construct(
+        private readonly LocaleNumberTransformer $localeNumberTransformer,
+    ) {
     }
 
     public static function getExtendedTypes(): iterable
@@ -45,9 +47,6 @@ class IntegerTypeExtension extends AbstractTypeExtension
         return [IntegerType::class];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // We only want to replace/adapt the IntegerToLocalizedStringTransformer, so we save the current transformers
@@ -61,7 +60,7 @@ class IntegerTypeExtension extends AbstractTypeExtension
                     ->addViewTransformer(new IntegerToLocalizedStringTransformer(
                         $options['grouping'],
                         $options['rounding_mode'],
-                        !$options['grouping'] ? 'en' : $this->localeNumberTransformer->getLocaleForNumberInputs()
+                        ! $options['grouping'] ? 'en' : $this->localeNumberTransformer->getLocaleForNumberInputs()
                     ))
                 ;
             } else {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,14 +50,14 @@ class GeneralSettings extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly GroupByIdChoiceProvider $groupByIdChoiceProvider
+        private readonly GroupByIdChoiceProvider $groupByIdChoiceProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $maximumFileSize = (int) str_replace('M', '', strval(self::MAX_IMAGE_SIZE_IN_BYTES));
+        $maximumFileSize = (int) str_replace('M', '', \strval(self::MAX_IMAGE_SIZE_IN_BYTES));
 
         parent::buildForm($builder, $options);
         $builder

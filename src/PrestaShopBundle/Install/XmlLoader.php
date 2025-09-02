@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,6 +45,8 @@ use SimpleXMLElement;
 
 class XmlLoader
 {
+    public $path_type;
+
     /**
      * @var LanguageList
      */
@@ -65,9 +68,10 @@ class XmlLoader
     protected $errors = [];
 
     protected $data_path;
+
     protected $lang_path;
+
     protected $img_path;
-    public $path_type;
 
     protected $ids = [];
 
@@ -150,7 +154,7 @@ class XmlLoader
      *
      * @param string $entity
      * @param string $identifier
-     * @param int $id
+     * @param int    $id
      */
     public function storeId($entity, $identifier, $id): void
     {
@@ -196,8 +200,8 @@ class XmlLoader
                 // Store entities dependencies (with field type="relation")
                 if ($xml instanceof SimpleXMLElement && isset($xml->fields, $xml->fields->field)) {
                     foreach ($xml->fields->field as $field) {
-                        if ($field['relation'] && $field['relation'] != $entity) {
-                            if (!isset($dependencies[(string) $field['relation']])) {
+                        if ($field['relation'] && $field['relation'] !== $entity) {
+                            if (! isset($dependencies[(string) $field['relation']])) {
                                 $dependencies[(string) $field['relation']] = [];
                             }
                             $dependencies[(string) $field['relation']][] = $entity;
@@ -214,13 +218,13 @@ class XmlLoader
             $sort_entities = [];
             foreach ($entities as $key => $entity) {
                 if (isset($dependencies[$entity])) {
-                    $min = count($entities) - 1;
+                    $min = \count($entities) - 1;
                     foreach ($dependencies[$entity] as $item) {
-                        if (($key = array_search($item, $sort_entities)) !== false) {
+                        if (($key = array_search($item, $sort_entities, true)) !== false) {
                             $min = min($min, $key);
                         }
                     }
-                    if ($min == 0) {
+                    if ($min === 0) {
                         array_unshift($sort_entities, $entity);
                     } else {
                         array_splice($sort_entities, $min, 0, [$entity]);
@@ -230,7 +234,7 @@ class XmlLoader
                 }
             }
             $entities = $sort_entities;
-        } while ($current != $sort_entities);
+        } while ($current !== $sort_entities);
 
         return $sort_entities;
     }
@@ -261,7 +265,7 @@ class XmlLoader
     {
         $populateEntityMethod = 'populateEntity' . Tools::toCamelCase($entity);
         if (method_exists($this, $populateEntityMethod)) {
-            $this->$populateEntityMethod();
+            $this->{$populateEntityMethod}();
 
             return;
         }
@@ -273,7 +277,7 @@ class XmlLoader
         $xml = $this->fileLoader->load($entity);
 
         // Read list of fields
-        if (!$xml instanceof SimpleXMLElement) {
+        if (! $xml instanceof SimpleXMLElement) {
             throw new PrestashopInstallerException('List of fields not found for entity ' . $entity);
         }
 
@@ -284,7 +288,7 @@ class XmlLoader
         if ($is_multi_lang_entity) {
             $multilang_columns = $this->getColumns($entity, true);
             foreach ($this->languages as $id_lang => $iso) {
-                if ($iso == $this->language->getLanguageIso()) {
+                if ($iso === $this->language->getLanguageIso()) {
                     $default_lang = $id_lang;
                 }
 
@@ -298,13 +302,13 @@ class XmlLoader
 
         // Load all row for current entity and prepare data to be populated
         $i = 0;
-        foreach ($xml->entities->$entity as $node) {
+        foreach ($xml->entities->{$entity} as $node) {
             $data = [];
             $identifier = (string) $node['id'];
 
             // Read attributes
             foreach ($node->attributes() as $k => $v) {
-                if ($k != 'id') {
+                if ($k !== 'id') {
                     $data[$k] = (string) $v;
                 }
             }
@@ -319,7 +323,7 @@ class XmlLoader
             if ($is_multi_lang_entity) {
                 $xpath_query = $entity . '[@id="' . $identifier . '"]';
                 foreach ($xml_langs as $id_lang => $xml_lang) {
-                    if (!$xml_lang) {
+                    if (! $xml_lang) {
                         continue;
                     }
 
@@ -331,8 +335,8 @@ class XmlLoader
                                 $value = (string) $node_lang[$column];
                             }
 
-                            if ($node_lang->$column) {
-                                $value = (string) $node_lang->$column;
+                            if ($node_lang->{$column}) {
+                                $value = (string) $node_lang->{$column};
                             }
                             $data_lang[$column][$id_lang] = $value;
                         }
@@ -344,7 +348,7 @@ class XmlLoader
             $createEntityMethod = 'createEntity' . Tools::toCamelCase($entity);
             if (method_exists($this, $createEntityMethod)) {
                 // Create entity with custom method in current class
-                $this->$createEntityMethod($identifier, $data, $data_lang);
+                $this->{$createEntityMethod}($identifier, $data, $data_lang);
             } else {
                 $this->createEntity($entity, $identifier, (string) $xml->fields['class'], $data, $data_lang);
             }
@@ -367,20 +371,6 @@ class XmlLoader
 
         $this->flushDelayedInserts();
         $this->fileLoader->flushCache($entity);
-    }
-
-    protected function getFallBackToDefaultLanguage($iso)
-    {
-        return file_exists($this->lang_path . $iso . '/data/') ? $iso : 'en';
-    }
-
-    protected function getFallBackToDefaultEntityLanguage($iso, $entity)
-    {
-        if ($this->getFallBackToDefaultLanguage($iso) === 'en') {
-            return 'en';
-        }
-
-        return file_exists($this->lang_path . $this->getFallBackToDefaultLanguage($iso) . '/data/' . $entity . '.xml') ? $iso : 'en';
     }
 
     /**
@@ -409,7 +399,7 @@ class XmlLoader
                 // Read attributes
                 $identifier = '';
                 foreach ($node->attributes() as $k => $v) {
-                    if ($k == 'id') {
+                    if ($k === 'id') {
                         $identifier = (string) $v;
                         continue;
                     }
@@ -419,7 +409,7 @@ class XmlLoader
                 // Load multilang data
                 $data_lang = [];
                 foreach ($langs as $id_lang => $countries) {
-                    $data_lang['name'][$id_lang] = $countries[strtolower($identifier)] ?? '';
+                    $data_lang['name'][$id_lang] = $countries[mb_strtolower($identifier)] ?? '';
                 }
 
                 $data = $this->rewriteRelationedData('country', $data);
@@ -442,25 +432,25 @@ class XmlLoader
     public function populateEntityTag(): void
     {
         foreach ($this->languages as $id_lang => $iso) {
-            if (!file_exists($this->lang_path . $this->getFallBackToDefaultLanguage($iso) . '/data/tag.xml')) {
+            if (! file_exists($this->lang_path . $this->getFallBackToDefaultLanguage($iso) . '/data/tag.xml')) {
                 continue;
             }
 
             $xml = $this->fileLoader->load('tag', $this->getFallBackToDefaultLanguage($iso));
             $tags = [];
             foreach ($xml->tag as $tag_node) {
-                $products = trim((string) $tag_node['products']);
-                if (!$products) {
+                $products = mb_trim((string) $tag_node['products']);
+                if (! $products) {
                     continue;
                 }
 
                 foreach (explode(',', $products) as $product) {
-                    $product = trim($product);
+                    $product = mb_trim($product);
                     $product_id = $this->retrieveId('product', $product);
-                    if (!isset($tags[$product_id])) {
+                    if (! isset($tags[$product_id])) {
                         $tags[$product_id] = [];
                     }
-                    $tags[$product_id][] = trim((string) $tag_node['name']);
+                    $tags[$product_id][] = mb_trim((string) $tag_node['name']);
                 }
             }
 
@@ -470,37 +460,15 @@ class XmlLoader
         }
     }
 
-    /**
-     * Check fields related to an other entity, and replace their values by the ID created by the other entity.
-     *
-     * @param string $entity
-     * @param array $data
-     */
-    protected function rewriteRelationedData($entity, array $data)
-    {
-        $xml = $this->fileLoader->load($entity);
-        foreach ($xml->fields->field as $field) {
-            if ($field['relation']) {
-                $id = $this->retrieveId((string) $field['relation'], $data[(string) $field['name']]);
-                if (!$id && $data[(string) $field['name']] && is_numeric($data[(string) $field['name']])) {
-                    $id = $data[(string) $field['name']];
-                }
-                $data[(string) $field['name']] = $id;
-            }
-        }
-
-        return $data;
-    }
-
     public function flushDelayedInserts(): void
     {
         foreach ($this->delayed_inserts as $entity => $queries) {
             $type = Db::INSERT_IGNORE;
-            if ($entity == 'access') {
+            if ($entity === 'access') {
                 $type = Db::REPLACE;
             }
 
-            if (!Db::getInstance()->insert($entity, $queries, false, true, $type)) {
+            if (! Db::getInstance()->insert($entity, $queries, false, true, $type)) {
                 $this->setError($this->translator->trans('An SQL error occurred for entity <i>%entity%</i>: <i>%message%</i>', ['%entity%' => $entity, '%message%' => Db::getInstance()->getMsgError()], 'Install'));
             }
             unset($this->delayed_inserts[$entity]);
@@ -514,8 +482,6 @@ class XmlLoader
      * @param string $entity
      * @param string $identifier
      * @param string $classname
-     * @param array $data
-     * @param array $data_lang
      */
     public function createEntity($entity, $identifier, $classname, array $data, array $data_lang = []): void
     {
@@ -535,9 +501,9 @@ class XmlLoader
             // Generate primary key manually
             $primary = '';
             $entity_id = 0;
-            if (!$xml->fields['primary']) {
+            if (! $xml->fields['primary']) {
                 $primary = 'id_' . $entity;
-            } elseif (!str_contains((string) $xml->fields['primary'], ',')) {
+            } elseif (! str_contains((string) $xml->fields['primary'], ',')) {
                 $primary = (string) $xml->fields['primary'];
             }
             unset($xml);
@@ -565,7 +531,7 @@ class XmlLoader
 
                 // Store INSERT queries for _shop associations
                 $entity_asso = Shop::getAssoTable($entity);
-                if ($entity_asso !== false && $entity_asso['type'] == 'shop') {
+                if ($entity_asso !== false && $entity_asso['type'] === 'shop') {
                     $this->delayed_inserts[$entity . '_shop'][] = [
                         'id_shop' => 1,
                         'id_' . $entity => $entity_id,
@@ -614,8 +580,6 @@ class XmlLoader
 
     /**
      * @param string $identifier
-     * @param array $data
-     * @param array $data_lang
      *
      * @return $this
      *
@@ -638,8 +602,8 @@ class XmlLoader
      * Called from self::populateEntity
      *
      * @param string $identifier Tab id
-     * @param array $data Attributes + children of tab element
-     * @param array $data_lang Translated attributes
+     * @param array  $data       Attributes + children of tab element
+     * @param array  $data_lang  Translated attributes
      *
      * @throws PrestashopInstallerException
      */
@@ -650,7 +614,7 @@ class XmlLoader
         $entity = 'tab';
         $xml = $this->fileLoader->load($entity);
 
-        if (!isset($position[$data['id_parent']])) {
+        if (! isset($position[$data['id_parent']])) {
             $position[$data['id_parent']] = 0;
         }
         $data['position'] = $position[$data['id_parent']]++;
@@ -660,9 +624,9 @@ class XmlLoader
         $data['route_name'] ??= '';
 
         // Generate primary key manually
-        if (!$xml->fields['primary']) {
+        if (! $xml->fields['primary']) {
             $primary = 'id_' . $entity;
-        } elseif (!str_contains((string) $xml->fields['primary'], ',')) {
+        } elseif (! str_contains((string) $xml->fields['primary'], ',')) {
             $primary = (string) $xml->fields['primary'];
         } else {
             $primary = '';
@@ -701,7 +665,7 @@ class XmlLoader
 
     public function generatePrimary($entity, $primary)
     {
-        if (!isset($this->primaries[$entity])) {
+        if (! isset($this->primaries[$entity])) {
             $entity = Db::getInstance()->escape($entity, false, true);
             $primary = Db::getInstance()->escape($primary, false, true);
             $this->primaries[$entity] = (int) Db::getInstance()->getValue(
@@ -735,7 +699,7 @@ class XmlLoader
             $dst_path = _PS_IMG_DIR_ . $p . '/';
             $entity_id = $this->retrieveId($entity, $identifier);
 
-            if (!@copy($from_path . $identifier . '.' . $extension, $dst_path . $entity_id . '.' . $extension)) {
+            if (! @copy($from_path . $identifier . '.' . $extension, $dst_path . $entity_id . '.' . $extension)) {
                 $this->setError(
                     $this->translator->trans(
                         'Cannot create image "%identifier%" for entity "%entity%"',
@@ -752,18 +716,18 @@ class XmlLoader
                 $target_file = $dst_path . $entity_id . '-' . $type['name'] . '.' . $extension;
 
                 // Test if dest folder is writable
-                if (!is_writable(dirname($target_file))) {
+                if (! is_writable(\dirname($target_file))) {
                     $this->setError(
                         $this->translator->trans(
                             'Cannot create image "%identifier%" (bad permissions on folder "%folder%")',
-                            ['%identifier%' => $identifier . '-' . $type['name'], '%folder%' => dirname($target_file)],
+                            ['%identifier%' => $identifier . '-' . $type['name'], '%folder%' => \dirname($target_file)],
                             'Install'
                         )
                     );
                 } elseif (file_exists($origin_file)) {
                     // If a file named folder/entity-type.extension exists just copy it
                     // this is an optimisation in order to prevent to much resize
-                    if (!@copy($origin_file, $target_file)) {
+                    if (! @copy($origin_file, $target_file)) {
                         $this->setError(
                             $this->translator->trans(
                                 'Cannot create image "%identifier%"',
@@ -773,7 +737,7 @@ class XmlLoader
                         );
                     }
                     @chmod($target_file, FileSystem::DEFAULT_MODE_FILE);
-                } elseif (!ImageManager::resize(
+                } elseif (! ImageManager::resize(
                     $from_path . $identifier . '.' . $extension,
                     $target_file,
                     $type['width'],
@@ -795,7 +759,7 @@ class XmlLoader
             if ($entity === 'category') {
                 $sourceCategoryImage = $from_path . $identifier . '.' . $extension;
                 if (file_exists($sourceCategoryImage)) {
-                    $categoryThumbnailPath = _PS_IMG_DIR_ . $p . DIRECTORY_SEPARATOR . $entity_id . '_thumb.jpg';
+                    $categoryThumbnailPath = _PS_IMG_DIR_ . $p . \DIRECTORY_SEPARATOR . $entity_id . '_thumb.jpg';
                     // Same way to generate as in CategoryThumbnailImageUploader
                     ImageManager::resize(
                         $sourceCategoryImage,
@@ -818,9 +782,9 @@ class XmlLoader
     {
         $from_path = $this->img_path . 't/';
         $dst_path = _PS_IMG_DIR_ . 't/';
-        if (file_exists($from_path . $data['class_name'] . '.gif') && !file_exists($dst_path . $data['class_name'] . '.gif')) {
+        if (file_exists($from_path . $data['class_name'] . '.gif') && ! file_exists($dst_path . $data['class_name'] . '.gif')) {
             // test if file exist in install dir and if do not exist in dest folder.
-            if (!@copy($from_path . $data['class_name'] . '.gif', $dst_path . $data['class_name'] . '.gif')) {
+            if (! @copy($from_path . $data['class_name'] . '.gif', $dst_path . $data['class_name'] . '.gif')) {
                 $this->setError($this->translator->trans('Cannot create image "%identifier%" for entity "%entity%"', ['%identifier%' => $identifier, '%tab%' => 'tab'], 'Install'));
 
                 return;
@@ -833,7 +797,7 @@ class XmlLoader
         $path = $this->img_path . 'p/';
         $image = new Image($this->retrieveId('image', $identifier));
         $dst_path = $image->getPathForCreation();
-        if (!@copy($path . $identifier . '.jpg', $dst_path . '.' . $image->image_format)) {
+        if (! @copy($path . $identifier . '.jpg', $dst_path . '.' . $image->image_format)) {
             $this->setError(
                 $this->translator->trans(
                     'Cannot create image "%identifier%" for entity "%entity%"',
@@ -852,18 +816,18 @@ class XmlLoader
             $target_file = $dst_path . '-' . $type['name'] . '.' . $image->image_format;
 
             // Test if dest folder is writable
-            if (!is_writable(dirname($target_file))) {
+            if (! is_writable(\dirname($target_file))) {
                 $this->setError(
                     $this->translator->trans(
                         'Cannot create image "%identifier%" (bad permissions on folder "%folder%")',
-                        ['%identifier%' => $identifier . '-' . $type['name'], '%folder%' => dirname($target_file)],
+                        ['%identifier%' => $identifier . '-' . $type['name'], '%folder%' => \dirname($target_file)],
                         'Install'
                     )
                 );
             } elseif (file_exists($origin_file)) {
                 // If a file named folder/entity-type.jpg exists just copy it
                 // this is an optimisation in order to prevent to much resize
-                if (!@copy($origin_file, $target_file)) {
+                if (! @copy($origin_file, $target_file)) {
                     $this->setError(
                         $this->translator->trans(
                             'Cannot create image "%1$s" for entity "%2$s"',
@@ -873,7 +837,7 @@ class XmlLoader
                     );
                 }
                 @chmod($target_file, FileSystem::DEFAULT_MODE_FILE);
-            } elseif (!ImageManager::resize($path . $identifier . '.jpg', $target_file, $type['width'], $type['height'])) {
+            } elseif (! ImageManager::resize($path . $identifier . '.jpg', $target_file, $type['width'], $type['height'])) {
                 // Resize the image if no cache was prepared in fixtures
                 $this->setError(
                     $this->translator->trans(
@@ -890,7 +854,7 @@ class XmlLoader
     {
         static $tables = null;
 
-        if (null === $tables) {
+        if ($tables === null) {
             $tables = [];
             foreach (Db::getInstance()->executeS('SHOW TABLES') as $row) {
                 $table = current($row);
@@ -918,7 +882,7 @@ class XmlLoader
             return ($this->isMultilang($table)) ? $this->getColumns($table . '_lang', false, ['id_' . $table]) : [];
         }
 
-        if (!isset($columns[$table])) {
+        if (! isset($columns[$table])) {
             $columns[$table] = [];
             $sql = 'SHOW COLUMNS FROM `' . _DB_PREFIX_ . bqSQL($table) . '`';
             foreach (Db::getInstance()->executeS($sql) as $row) {
@@ -930,7 +894,7 @@ class XmlLoader
 
         $list = [];
         foreach ($columns[$table] as $k => $v) {
-            if (!in_array($k, $exclude)) {
+            if (! \in_array($k, $exclude, true)) {
                 $list[$k] = $v;
             }
         }
@@ -942,18 +906,18 @@ class XmlLoader
     {
         static $cache = null;
 
-        if (null !== $cache) {
+        if ($cache !== null) {
             return $cache;
         }
 
         $dir = $path;
-        if (null === $dir) {
+        if ($dir === null) {
             $dir = _PS_CLASS_DIR_;
         }
 
         $classes = [];
-        foreach (scandir($dir, SCANDIR_SORT_NONE) as $file) {
-            if ($file[0] != '.' && $file != 'index.php') {
+        foreach (scandir($dir, \SCANDIR_SORT_NONE) as $file) {
+            if ($file[0] !== '.' && $file !== 'index.php') {
                 if (is_dir($dir . $file)) {
                     $classes = array_merge($classes, $this->getClasses($dir . $file . '/'));
                 } elseif (preg_match('#^(.+)\.php$#', $file, $m)) {
@@ -963,7 +927,7 @@ class XmlLoader
         }
 
         sort($classes);
-        if (null === $path) {
+        if ($path === null) {
             $cache = $classes;
         }
 
@@ -1001,8 +965,8 @@ class XmlLoader
     public function getEntitiesList(): array
     {
         $entities = [];
-        foreach (scandir($this->data_path, SCANDIR_SORT_NONE) as $file) {
-            if ($file[0] != '.' && preg_match('#^(.+)\.xml$#', $file, $m)) {
+        foreach (scandir($this->data_path, \SCANDIR_SORT_NONE) as $file) {
+            if ($file[0] !== '.' && preg_match('#^(.+)\.xml$#', $file, $m)) {
                 $entities[] = $m[1];
             }
         }
@@ -1028,12 +992,12 @@ class XmlLoader
             'fields' => [],
         ];
 
-        if (!$this->entityExists($entity)) {
+        if (! $this->entityExists($entity)) {
             return $info;
         }
 
         $xml = @simplexml_load_file($this->data_path . $entity . '.xml', 'SimplexmlElement');
-        if (!$xml) {
+        if (! $xml) {
             return $info;
         }
 
@@ -1089,8 +1053,8 @@ class XmlLoader
         $dependencies = [];
         foreach ($entities as $entity => $info) {
             foreach ($info['fields'] as $info_field) {
-                if (isset($info_field['relation']) && $info_field['relation'] != $entity) {
-                    if (!isset($dependencies[$info_field['relation']])) {
+                if (isset($info_field['relation']) && $info_field['relation'] !== $entity) {
+                    if (! isset($dependencies[$info_field['relation']])) {
                         $dependencies[$info_field['relation']] = [];
                     }
                     $dependencies[$info_field['relation']][] = $entity;
@@ -1160,13 +1124,13 @@ class XmlLoader
             $sort_entities = [];
             foreach ($entities as $entity) {
                 if (isset($dependencies[$entity])) {
-                    $min = count($entities) - 1;
+                    $min = \count($entities) - 1;
                     foreach ($dependencies[$entity] as $item) {
-                        if (($key = array_search($item, $sort_entities)) !== false) {
+                        if (($key = array_search($item, $sort_entities, true)) !== false) {
                             $min = min($min, $key);
                         }
                     }
-                    if ($min == 0) {
+                    if ($min === 0) {
                         array_unshift($sort_entities, $entity);
                     } else {
                         array_splice($sort_entities, $min, 0, [$entity]);
@@ -1176,7 +1140,7 @@ class XmlLoader
                 }
             }
             $entities = $sort_entities;
-        } while ($current != $sort_entities);
+        } while ($current !== $sort_entities);
 
         foreach ($sort_entities as $entity) {
             $this->generateEntityContent($entity);
@@ -1200,12 +1164,12 @@ class XmlLoader
         // Generate multilang XML files
         if ($content['nodes_lang']) {
             foreach ($content['nodes_lang'] as $id_lang => $nodes) {
-                if (!isset($this->languages[$id_lang])) {
+                if (! isset($this->languages[$id_lang])) {
                     continue;
                 }
 
                 $iso = $this->languages[$id_lang];
-                if (!is_dir($this->lang_path . $this->getFallBackToDefaultLanguage($iso) . '/data')) {
+                if (! is_dir($this->lang_path . $this->getFallBackToDefaultLanguage($iso) . '/data')) {
                     mkdir($this->lang_path . $this->getFallBackToDefaultLanguage($iso) . '/data');
                 }
 
@@ -1230,7 +1194,7 @@ class XmlLoader
     public function getEntityContents($entity): array
     {
         $xml = $this->fileLoader->load($entity);
-        $primary = !empty($xml->fields['primary']) ? (string) $xml->fields['primary'] : 'id_' . $entity;
+        $primary = ! empty($xml->fields['primary']) ? (string) $xml->fields['primary'] : 'id_' . $entity;
         $is_multilang = $this->isMultilang($entity);
 
         // Check if current table is an association table (if multiple primary keys)
@@ -1249,11 +1213,11 @@ class XmlLoader
             $sql->leftJoin($entity . '_lang', 'b', 'a.' . $primary . ' = b.' . $primary);
         }
 
-        if (!empty($xml->fields['sql'])) {
+        if (! empty($xml->fields['sql'])) {
             $sql->where((string) $xml->fields['sql']);
         }
 
-        if (!$is_association) {
+        if (! $is_association) {
             $sql->select('a.' . $primary);
             if (empty($xml->fields['ordersql'])) {
                 $sql->orderBy('a.' . $primary);
@@ -1264,7 +1228,7 @@ class XmlLoader
             $sql->orderBy('b.id_lang');
         }
 
-        if (!empty($xml->fields['ordersql'])) {
+        if (! empty($xml->fields['ordersql'])) {
             $sql->orderBy((string) $xml->fields['ordersql']);
         }
 
@@ -1298,10 +1262,10 @@ class XmlLoader
                         $id .= '_' . $row[$key];
                     }
                 } else {
-                    $id = $this->generateId($entity, $row[$primary], $row, (!empty($xml->fields['id'])) ? (string) $xml->fields['id'] : null);
+                    $id = $this->generateId($entity, $row[$primary], $row, (! empty($xml->fields['id'])) ? (string) $xml->fields['id'] : null);
                 }
 
-                if (!isset($nodes[$id])) {
+                if (! isset($nodes[$id])) {
                     $node = [];
                     foreach ($xml->fields->field as $field) {
                         $column = (string) $field['name'];
@@ -1312,7 +1276,7 @@ class XmlLoader
                             $node[$column] = $this->generateId((string) $field['relation'], Db::getInstance()->getValue($sql));
 
                             // A little trick to allow storage of some hard values, like '-1' for tab.id_parent
-                            if (!$node[$column] && $row[$column]) {
+                            if (! $node[$column] && $row[$column]) {
                                 $node[$column] = $row[$column];
                             }
                         } else {
@@ -1349,11 +1313,11 @@ class XmlLoader
 				ORDER BY id_lang';
         foreach (Db::getInstance()->executeS($sql) as $row) {
             $identifier = $this->generateId('tag', $row['id_tag']);
-            if (!isset($nodes_lang[$row['id_lang']])) {
+            if (! isset($nodes_lang[$row['id_lang']])) {
                 $nodes_lang[$row['id_lang']] = [];
             }
 
-            if (!isset($nodes_lang[$row['id_lang']][$identifier])) {
+            if (! isset($nodes_lang[$row['id_lang']][$identifier])) {
                 $nodes_lang[$row['id_lang']][$identifier] = [
                     'name' => $row['name'],
                     'products' => '',
@@ -1380,15 +1344,15 @@ class XmlLoader
             return $ids[$entity][$primary];
         }
 
-        if (!isset($ids[$entity])) {
+        if (! isset($ids[$entity])) {
             $ids[$entity] = [];
         }
 
-        if (!$primary) {
+        if (! $primary) {
             return '';
         }
 
-        if (!$id_format || !$row || !$row[$id_format]) {
+        if (! $id_format || ! $row || ! $row[$id_format]) {
             $ids[$entity][$primary] = $entity . '_' . $primary;
         } else {
             $value = $row[$id_format];
@@ -1399,7 +1363,7 @@ class XmlLoader
 
             $store_identifier = $value;
             $i = 1;
-            while (in_array($store_identifier, $ids[$entity])) {
+            while (\in_array($store_identifier, $ids[$entity], true)) {
                 $store_identifier = $value . '_' . $i++;
             }
             $ids[$entity][$primary] = $store_identifier;
@@ -1418,7 +1382,7 @@ class XmlLoader
             $entity_node = $entities->addChild($entity);
             $entity_node->id = $id;
             foreach ($node as $k => $v) {
-                if (!empty($types[$k])) {
+                if (! empty($types[$k])) {
                     $entity_node->addChild($k, $v);
                 } else {
                     $entity_node->{$k} = $v;
@@ -1453,12 +1417,12 @@ class XmlLoader
             $backup_path = $this->img_path . $p . '/';
             $from_path = _PS_IMG_DIR_ . $p . '/';
 
-            if (!is_dir($backup_path) && !mkdir($backup_path)) {
-                $this->setError(sprintf('Cannot create directory <i>%s</i>', $backup_path));
+            if (! is_dir($backup_path) && ! mkdir($backup_path)) {
+                $this->setError(\sprintf('Cannot create directory <i>%s</i>', $backup_path));
             }
 
-            foreach (scandir($from_path, SCANDIR_SORT_NONE) as $file) {
-                if ($file[0] != '.' && preg_match('#^(([0-9]+)(-(' . implode('|', $types) . '))?)\.(gif|jpg|jpeg|png)$#i', $file, $m)) {
+            foreach (scandir($from_path, \SCANDIR_SORT_NONE) as $file) {
+                if ($file[0] !== '.' && preg_match('#^(([0-9]+)(-(' . implode('|', $types) . '))?)\.(gif|jpg|jpeg|png)$#i', $file, $m)) {
                     $file_id = $m[2];
                     $file_type = $m[3];
                     $file_extension = $m[5];
@@ -1480,8 +1444,8 @@ class XmlLoader
 
         $backup_path = $this->img_path . 'p/';
         $from_path = _PS_PRODUCT_IMG_DIR_;
-        if (!is_dir($backup_path) && !mkdir($backup_path)) {
-            $this->setError(sprintf('Cannot create directory <i>%s</i>', $backup_path));
+        if (! is_dir($backup_path) && ! mkdir($backup_path)) {
+            $this->setError(\sprintf('Cannot create directory <i>%s</i>', $backup_path));
         }
 
         foreach (Image::getAllImages() as $image) {
@@ -1506,8 +1470,8 @@ class XmlLoader
     {
         $backup_path = $this->img_path . 't/';
         $from_path = _PS_IMG_DIR_ . 't/';
-        if (!is_dir($backup_path) && !mkdir($backup_path)) {
-            $this->setError(sprintf('Cannot create directory <i>%s</i>', $backup_path));
+        if (! is_dir($backup_path) && ! mkdir($backup_path)) {
+            $this->setError(\sprintf('Cannot create directory <i>%s</i>', $backup_path));
         }
 
         $xml = $this->fileLoader->load('tab');
@@ -1516,5 +1480,40 @@ class XmlLoader
                 copy($from_path . $tab->class_name . '.gif', $backup_path . $tab->class_name . '.gif');
             }
         }
+    }
+
+    protected function getFallBackToDefaultLanguage($iso)
+    {
+        return file_exists($this->lang_path . $iso . '/data/') ? $iso : 'en';
+    }
+
+    protected function getFallBackToDefaultEntityLanguage($iso, $entity)
+    {
+        if ($this->getFallBackToDefaultLanguage($iso) === 'en') {
+            return 'en';
+        }
+
+        return file_exists($this->lang_path . $this->getFallBackToDefaultLanguage($iso) . '/data/' . $entity . '.xml') ? $iso : 'en';
+    }
+
+    /**
+     * Check fields related to an other entity, and replace their values by the ID created by the other entity.
+     *
+     * @param string $entity
+     */
+    protected function rewriteRelationedData($entity, array $data)
+    {
+        $xml = $this->fileLoader->load($entity);
+        foreach ($xml->fields->field as $field) {
+            if ($field['relation']) {
+                $id = $this->retrieveId((string) $field['relation'], $data[(string) $field['name']]);
+                if (! $id && $data[(string) $field['name']] && is_numeric($data[(string) $field['name']])) {
+                    $id = $data[(string) $field['name']];
+                }
+                $data[(string) $field['name']] = $id;
+            }
+        }
+
+        return $data;
     }
 }

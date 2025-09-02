@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -101,7 +102,7 @@ class OrderStateController extends PrestaShopAdminController
 
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchGridAction(
-        Request $request
+        Request $request,
     ): RedirectResponse {
         if ($request->request->has(OrderReturnStatesGridDefinitionFactory::GRID_ID)) {
             $gridDefinitionFactory = $this->container->get(OrderReturnStatesGridDefinitionFactory::GRID_ID);
@@ -150,9 +151,11 @@ class OrderStateController extends PrestaShopAdminController
             'templatesPreviewUrl' => _MAIL_DIR_,
             'enableSidebar' => true,
             'languages' => array_map(
-                fn(array $language): array => [
+                fn (array $language): array => [
                     'id' => $language['iso_code'],
-                    'value' => sprintf('%s - %s', $language['iso_code'], $language['name']), ], $context->getLanguages()),
+                    'value' => \sprintf('%s - %s', $language['iso_code'], $language['name']), ],
+                $context->getLanguages()
+            ),
             'multistoreInfoTip' => $this->trans(
                 'Note that this feature is only available in the "all stores" context. It will be added to all your stores.',
                 [],
@@ -202,9 +205,11 @@ class OrderStateController extends PrestaShopAdminController
             'templatesPreviewUrl' => _MAIL_DIR_,
             'enableSidebar' => true,
             'languages' => array_map(
-                fn(array $language): array => [
+                fn (array $language): array => [
                     'id' => $language['iso_code'],
-                    'value' => sprintf('%s - %s', $language['iso_code'], $language['name']), ], $context->getLanguages()),
+                    'value' => \sprintf('%s - %s', $language['iso_code'], $language['name']), ],
+                $context->getLanguages()
+            ),
             'layoutTitle' => $this->trans(
                 'Editing order status %name%',
                 [
@@ -342,7 +347,7 @@ class OrderStateController extends PrestaShopAdminController
             $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing((int) $orderStateId));
 
             $editOrderStateCommand = new EditOrderStateCommand((int) $orderStateId);
-            $editOrderStateCommand->setDelivery(!$editableOrderState->isDelivery());
+            $editOrderStateCommand->setDelivery(! $editableOrderState->isDelivery());
 
             $this->dispatchCommand($editOrderStateCommand);
 
@@ -365,7 +370,7 @@ class OrderStateController extends PrestaShopAdminController
             $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing((int) $orderStateId));
 
             $editOrderStateCommand = new EditOrderStateCommand((int) $orderStateId);
-            $editOrderStateCommand->setInvoice(!$editableOrderState->isInvoice());
+            $editOrderStateCommand->setInvoice(! $editableOrderState->isInvoice());
 
             $this->dispatchCommand($editOrderStateCommand);
 
@@ -388,7 +393,7 @@ class OrderStateController extends PrestaShopAdminController
             $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing((int) $orderStateId));
 
             $editOrderStateCommand = new EditOrderStateCommand((int) $orderStateId);
-            $editOrderStateCommand->setSendEmail(!$editableOrderState->isSendEmailEnabled());
+            $editOrderStateCommand->setSendEmail(! $editableOrderState->isSendEmailEnabled());
 
             $this->dispatchCommand($editOrderStateCommand);
 
@@ -446,20 +451,18 @@ class OrderStateController extends PrestaShopAdminController
             return [];
         }
 
-        return array_map(fn(string $orderStateId): int => (int) $orderStateId, $orderStateIds);
+        return array_map(fn (string $orderStateId): int => (int) $orderStateId, $orderStateIds);
     }
 
     private function getBulkOrderReturnStatesFromRequest(Request $request): array
     {
         $orderReturnStateIds = $request->request->all('order_return_states_order_return_states_bulk');
 
-        return array_map(static fn(string $orderReturnStateId): int => (int) $orderReturnStateId, $orderReturnStateIds);
+        return array_map(static fn (string $orderReturnStateId): int => (int) $orderReturnStateId, $orderReturnStateIds);
     }
 
     /**
      * Get errors that can be used to translate exceptions into user-friendly messages
-     *
-     * @return array
      */
     private function getErrorMessages(Exception $e): array
     {
@@ -477,7 +480,7 @@ class OrderStateController extends PrestaShopAdminController
             OrderStateConstraintException::class => [
                 OrderStateConstraintException::INVALID_NAME => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Name', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('Name', [], 'Admin.Global'))],
                     'Admin.Notifications.Error',
                 ),
             ],

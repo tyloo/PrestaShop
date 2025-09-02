@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,11 +66,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
 
     /**
      * Displays catalog price rule listing page.
-     *
-     * @param Request $request
-     * @param CatalogPriceRuleFilters $catalogPriceRuleFilters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -89,10 +85,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
 
     /**
      * Retrieves catalog prices rules for product.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', 'AdminProducts') || is_granted('read', 'AdminSpecificPriceRule')")]
     public function listForProductAction(Request $request, int $productId): JsonResponse
@@ -116,8 +108,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
 
     /**
      * Provides filters functionality.
-     *
-     * @param Request $request
      *
      * @return RedirectResponse
      */
@@ -162,8 +152,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
     /**
      * Deletes catalogPriceRules on bulk action
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_catalog_price_rules_index')]
@@ -187,10 +175,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
 
     /**
      * Show & process catalog price rule creation.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
@@ -198,14 +182,14 @@ class CatalogPriceRuleController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.catalog_price_rule_form_builder')]
         FormBuilderInterface $catalogPriceRuleBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.catalog_price_rule_form_handler')]
-        FormHandlerInterface $catalogPriceRuleHandler
+        FormHandlerInterface $catalogPriceRuleHandler,
     ): Response {
         $catalogPriceRuleForm = $catalogPriceRuleBuilder->getForm();
         $catalogPriceRuleForm->handleRequest($request);
         $result = $catalogPriceRuleHandler->handle($catalogPriceRuleForm);
 
         try {
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_catalog_price_rules_index');
@@ -224,11 +208,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
 
     /**
      * Show & process catalog price rule editing.
-     *
-     * @param int $catalogPriceRuleId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function editAction(
@@ -237,7 +216,7 @@ class CatalogPriceRuleController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.catalog_price_rule_form_builder')]
         FormBuilderInterface $catalogPriceRuleBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.catalog_price_rule_form_handler')]
-        FormHandlerInterface $catalogPriceRuleHandler
+        FormHandlerInterface $catalogPriceRuleHandler,
     ): Response {
         $catalogPriceRuleId = (int) $catalogPriceRuleId;
 
@@ -278,8 +257,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
 
     /**
      * Provides translated error messages for exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -312,8 +289,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
     /**
      * Provides catalog price rule ids from request of bulk action
      *
-     * @param Request $request
-     *
      * @return array
      */
     private function getBulkCatalogPriceRulesFromRequest(Request $request)
@@ -328,8 +303,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
     }
 
     /**
-     * @param CatalogPriceRuleList $catalogPriceRuleList
-     *
      * @return array<int, array<string, mixed>>
      */
     private function formatCatalogPriceRule(CatalogPriceRuleList $catalogPriceRuleList): array
@@ -358,18 +331,11 @@ class CatalogPriceRuleController extends PrestaShopAdminController
         return $list;
     }
 
-    /**
-     * @param string $reductionType
-     * @param DecimalNumber $reductionValue
-     * @param string $currencyIsoCode
-     *
-     * @return string
-     */
     private function formatImpact(
         string $reductionType,
         DecimalNumber $reductionValue,
         string $currencyIsoCode,
-        bool $taxIncl
+        bool $taxIncl,
     ): string {
         if ($reductionValue->equalsZero()) {
             return self::UNSPECIFIED_VALUE_FORMAT;
@@ -386,6 +352,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
             return $this->trans('%price% (tax excl.)', ['%price%' => $price], 'Admin.Catalog.Feature');
         }
 
-        return sprintf('%s %%', (string) $reductionValue);
+        return \sprintf('%s %%', (string) $reductionValue);
     }
 }

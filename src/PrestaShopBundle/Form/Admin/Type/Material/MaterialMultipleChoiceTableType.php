@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MaterialMultipleChoiceTableType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         foreach ($options['multiple_choices'] as $choices) {
@@ -53,20 +51,17 @@ class MaterialMultipleChoiceTableType extends AbstractType
 
             $builder->get($choices['name'])->addModelTransformer(new CallbackTransformer(
                 function ($value) use ($choices) {
-                    if (is_array($value) && false === $choices['multiple']) {
+                    if (\is_array($value) && $choices['multiple'] === false) {
                         return reset($value);
                     }
 
                     return $value;
                 },
-                fn($value) => $value
+                fn ($value) => $value
             ));
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['choices'] = $options['choices'];
@@ -76,9 +71,6 @@ class MaterialMultipleChoiceTableType extends AbstractType
         $view->vars['table_label'] = $options['table_label'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         $entryIndexMapping = [];
@@ -92,9 +84,6 @@ class MaterialMultipleChoiceTableType extends AbstractType
         $view->vars['child_choice_entry_index_mapping'] = $entryIndexMapping;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -121,9 +110,6 @@ class MaterialMultipleChoiceTableType extends AbstractType
         $resolver->setAllowedTypes('table_label', ['bool', 'string']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'material_multiple_choice_table';

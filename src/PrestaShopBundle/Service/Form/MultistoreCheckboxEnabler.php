@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Class MultistoreCheckboxEnabler
- *
  * This class is responsible for enabling multistore checkboxes on BO configuration forms,
  * it is usually called from the MultistoreConfigurationTypeExtension.
  *
@@ -64,12 +63,9 @@ class MultistoreCheckboxEnabler
     ) {
     }
 
-    /**
-     * @return bool
-     */
     public function shouldAddMultistoreElements(): bool
     {
-        if (!$this->shopContext->isMultiShopUsed()) {
+        if (! $this->shopContext->isMultiShopUsed()) {
             return false;
         }
 
@@ -85,7 +81,7 @@ class MultistoreCheckboxEnabler
     {
         foreach ($form->all() as $child) {
             $options = $child->getConfig()->getOptions();
-            if (!isset($options['multistore_configuration_key'])) {
+            if (! isset($options['multistore_configuration_key'])) {
                 continue;
             }
 
@@ -95,7 +91,7 @@ class MultistoreCheckboxEnabler
             $this->updateCurrentField($form, $child, $options, $isOverriddenInCurrentContext);
 
             // For each field in the configuration form, we add a multistore checkbox (except in all shop context)
-            if (!$this->shopContext->isAllShopContext()) {
+            if (! $this->shopContext->isAllShopContext()) {
                 $this->addCheckbox($form, $child->getName(), $isOverriddenInCurrentContext, $options['multistore_configuration_key']);
             }
         }
@@ -103,10 +99,6 @@ class MultistoreCheckboxEnabler
 
     /**
      * Check if given configuration value is overridden by current shop / group shop context
-     *
-     * @param string $configurationKey
-     *
-     * @return bool
      */
     private function isOverriddenInCurrentContext(string $configurationKey): bool
     {
@@ -117,15 +109,10 @@ class MultistoreCheckboxEnabler
 
     /**
      * Update current field with `disabled` attribute value and multistore dropdown
-     *
-     * @param FormInterface $form
-     * @param FormInterface $childElement
-     * @param array $options
-     * @param bool $isOverriddenInCurrentContext
      */
     private function updateCurrentField(FormInterface $form, FormInterface $childElement, array &$options, bool $isOverriddenInCurrentContext): void
     {
-        $options['attr']['disabled'] = !$this->shopContext->isAllShopContext() && !$isOverriddenInCurrentContext;
+        $options['attr']['disabled'] = ! $this->shopContext->isAllShopContext() && ! $isOverriddenInCurrentContext;
 
         // add multistore dropdown in field option
         if ($this->shopContext->isAllShopContext() || $this->shopContext->isShopGroupContext()) {
@@ -140,11 +127,6 @@ class MultistoreCheckboxEnabler
 
     /**
      * Add multistore checkbox to given related field
-     *
-     * @param FormInterface $form
-     * @param string $relatedFieldName
-     * @param bool $isOverriddenInCurrentContext
-     * @param string $configurationKey
      */
     private function addCheckbox(FormInterface $form, string $relatedFieldName, bool $isOverriddenInCurrentContext, string $configurationKey): void
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,11 +51,6 @@ class DiscountController extends PrestaShopAdminController
 {
     /**
      * Displays discount listing page.
-     *
-     * @param Request $request
-     * @param DiscountFilters $discountFilters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -96,7 +92,7 @@ class DiscountController extends PrestaShopAdminController
         // So we can redirect to the proper page, accessed via a GET method and a proper CSRF token
         if (empty($discountType) && $request->request->has('discount_type_selector')) {
             $submittedData = $request->request->all('discount_type_selector');
-            if (!empty($submittedData['discount_type_selector'])) {
+            if (! empty($submittedData['discount_type_selector'])) {
                 return $this->redirectToRoute('admin_discounts_create', ['discountType' => $submittedData['discount_type_selector']]);
             }
         }
@@ -154,15 +150,14 @@ class DiscountController extends PrestaShopAdminController
                     $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
 
                     return $this->redirectToRoute('admin_discount_edit', ['discountId' => $discountId]);
-                } else {
-                    // Display root level errors with flash messages
-                    foreach ($form->getErrors() as $error) {
-                        $this->addFlash('error', sprintf(
-                            '%s: %s',
-                            $error->getOrigin()->getName(),
-                            $error->getMessage()
-                        ));
-                    }
+                }
+                // Display root level errors with flash messages
+                foreach ($form->getErrors() as $error) {
+                    $this->addFlash('error', \sprintf(
+                        '%s: %s',
+                        $error->getOrigin()->getName(),
+                        $error->getMessage()
+                    ));
                 }
             }
         } catch (Exception $e) {
@@ -180,10 +175,6 @@ class DiscountController extends PrestaShopAdminController
 
     /**
      * Toggles discount status
-     *
-     * @param int $discountId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_discounts_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_discounts_index')]
@@ -195,7 +186,7 @@ class DiscountController extends PrestaShopAdminController
 
             // @todo: this should be replaced with dedicated discount command when available
             $this->dispatchCommand(
-                new ToggleCartRuleStatusCommand((int) $discountId, !$editableDiscount->isActive())
+                new ToggleCartRuleStatusCommand((int) $discountId, ! $editableDiscount->isActive())
             );
             $this->addFlash(
                 'success',
@@ -210,10 +201,6 @@ class DiscountController extends PrestaShopAdminController
 
     /**
      * Deletes discount
-     *
-     * @param int $discountId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_discounts_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_discounts_index')]

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,15 @@ class RequestSqlRepository implements RepositoryInterface
     private readonly string $requestSqlTable;
 
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
      */
-    public function __construct(private readonly Connection $connection, $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        $dbPrefix,
+    ) {
         $this->requestSqlTable = $dbPrefix . 'request_sql';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findAll()
     {
         $statement = $this->connection->query("SELECT rs.* FROM $this->requestSqlTable rs");

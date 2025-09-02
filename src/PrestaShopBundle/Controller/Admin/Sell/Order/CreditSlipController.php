@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,17 +53,16 @@ class CreditSlipController extends PrestaShopAdminController
     /**
      * Show credit slips listing page.
      *
-     * @param Request $request
-     * @param CreditSlipFilters $creditSlipFilters
-     *
      * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         CreditSlipFilters $creditSlipFilters,
-        #[Autowire(service: 'prestashop.core.grid.factory.credit_slip')] GridFactory $creditSlipGridFactory,
-        #[Autowire(service: 'prestashop.admin.credit_slip_options.form_handler')] FormHandlerInterface $creditSlipOptionsFormHandler,
+        #[Autowire(service: 'prestashop.core.grid.factory.credit_slip')]
+        GridFactory $creditSlipGridFactory,
+        #[Autowire(service: 'prestashop.admin.credit_slip_options.form_handler')]
+        FormHandlerInterface $creditSlipOptionsFormHandler,
     ) {
         $creditSlipGrid = $creditSlipGridFactory->getGrid($creditSlipFilters);
 
@@ -99,14 +99,13 @@ class CreditSlipController extends PrestaShopAdminController
     /**
      * Generates PDF of requested credit slip by provided id
      *
-     * @param int $creditSlipId
-     *
      * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function generatePdfAction(
         int $creditSlipId,
-        #[Autowire(service: 'prestashop.adapter.pdf.credit_slip_pdf_generator')] CreditSlipPdfGenerator $creditSlipPdfGenerator,
+        #[Autowire(service: 'prestashop.adapter.pdf.credit_slip_pdf_generator')]
+        CreditSlipPdfGenerator $creditSlipPdfGenerator,
     ) {
         try {
             $creditSlipId = new CreditSlipId($creditSlipId);
@@ -122,14 +121,13 @@ class CreditSlipController extends PrestaShopAdminController
     /**
      * Generates PDF of credit slips found by requested date range
      *
-     * @param Request $request
-     *
      * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function generatePdfByDateAction(
         Request $request,
-        #[Autowire(service: 'prestashop.adapter.pdf.credit_slip_pdf_generator')] CreditSlipPdfGenerator $creditSlipPdfGenerator,
+        #[Autowire(service: 'prestashop.adapter.pdf.credit_slip_pdf_generator')]
+        CreditSlipPdfGenerator $creditSlipPdfGenerator,
     ) {
         $pdfByDateForm = $this->createForm(GeneratePdfByDateType::class, [], ['method' => Request::METHOD_GET]);
         $pdfByDateForm->handleRequest($request);
@@ -153,8 +151,6 @@ class CreditSlipController extends PrestaShopAdminController
 
     /**
      * Provides translated error messages for exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {

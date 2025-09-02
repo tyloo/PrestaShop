@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,37 +59,28 @@ class LocalizationExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'format_date',
-                fn($date): string => (new DateTime($date))->format($this->languageContext->getDateFormat())
+                fn ($date): string => (new DateTime($date))->format($this->languageContext->getDateFormat())
             ),
         ];
     }
 
-    /**
-     * @param float $price
-     * @param string|null $currencyCode
-     * @param string|null $locale
-     *
-     * @return string
-     */
     public function priceFormat(float $price, ?string $currencyCode = null, ?string $locale = null): string
     {
-        if (null !== $locale) {
+        if ($locale !== null) {
             $cldrLocale = $this->localeRepository->getLocale($locale);
 
             return $cldrLocale->formatPrice($price, $currencyCode ?? $this->currencyContext->getIsoCode());
-        } else {
-            return $this->languageContext->formatPrice($price, $currencyCode ?? $this->currencyContext->getIsoCode());
         }
+
+        return $this->languageContext->formatPrice($price, $currencyCode ?? $this->currencyContext->getIsoCode());
     }
 
     /**
      * @param DateTimeInterface|string $date
-     *
-     * @return string
      */
     public function dateFormatFull($date): string
     {
-        if (!$date instanceof DateTimeInterface) {
+        if (! $date instanceof DateTimeInterface) {
             $date = new DateTime($date);
         }
 
@@ -97,12 +89,10 @@ class LocalizationExtension extends AbstractExtension
 
     /**
      * @param DateTimeInterface|string $date
-     *
-     * @return string
      */
     public function dateFormatLite($date): string
     {
-        if (!$date instanceof DateTimeInterface) {
+        if (! $date instanceof DateTimeInterface) {
             $date = new DateTime($date);
         }
 

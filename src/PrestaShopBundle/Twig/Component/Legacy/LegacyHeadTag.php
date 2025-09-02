@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -132,13 +133,11 @@ class LegacyHeadTag extends HeadTag
     /**
      * Legacy controller builds the meta title differently, so we match this for backward compatibility and so that the UI
      * tests can run with their expected values.
-     *
-     * @return string
      */
     protected function getLegacyMetaTitle(): string
     {
         $legacyMetaTitle = $this->getLegacyController()->getMetaTitle();
-        if (empty($legacyMetaTitle) && !empty($this->getLegacyController()->getToolbarTitle())) {
+        if (empty($legacyMetaTitle) && ! empty($this->getLegacyController()->getToolbarTitle())) {
             $legacyMetaTitle = $this->getLegacyController()->getToolbarTitle();
         }
 
@@ -146,12 +145,12 @@ class LegacyHeadTag extends HeadTag
             $breadcrumbs = $this->menuBuilder->getBreadcrumbLinks();
             if (empty($breadcrumbs)) {
                 return '';
-            } else {
-                return $breadcrumbs['tab']->name;
             }
+
+            return $breadcrumbs['tab']->name;
         }
 
-        if (is_array($legacyMetaTitle)) {
+        if (\is_array($legacyMetaTitle)) {
             $legacyMetaTitle = strip_tags(implode(' ' . $this->configuration->get('PS_NAVIGATION_PIPE') . ' ', $legacyMetaTitle));
         }
 

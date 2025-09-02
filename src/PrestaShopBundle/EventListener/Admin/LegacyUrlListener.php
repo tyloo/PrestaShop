@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,19 +38,14 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class LegacyUrlListener
 {
-    /**
-     * @param LegacyUrlConverter $converter
-     */
-    public function __construct(private readonly LegacyUrlConverter $converter)
-    {
+    public function __construct(
+        private readonly LegacyUrlConverter $converter,
+    ) {
     }
 
-    /**
-     * @param RequestEvent $event
-     */
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 

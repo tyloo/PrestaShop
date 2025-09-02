@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,36 +31,23 @@ namespace PrestaShopBundle\Form\Exception;
 
 class InvalidConfigurationDataError
 {
-    /**
-     * InvalidConfigurationDataError constructor.
-     *
-     * @param int $errorCode
-     * @param string $fieldName
-     * @param int|null $languageId
-     */
-    public function __construct(private readonly int $errorCode, private readonly string $fieldName, private readonly ?int $languageId = null)
-    {
+    public function __construct(
+        private readonly int $errorCode,
+        private readonly string $fieldName,
+        private readonly ?int $languageId = null,
+    ) {
     }
 
-    /**
-     * @return int
-     */
     public function getErrorCode(): int
     {
         return $this->errorCode;
     }
 
-    /**
-     * @return string
-     */
     public function getFieldName(): string
     {
         return $this->fieldName;
     }
 
-    /**
-     * @return int|null
-     */
     public function getLanguageId(): ?int
     {
         return $this->languageId;

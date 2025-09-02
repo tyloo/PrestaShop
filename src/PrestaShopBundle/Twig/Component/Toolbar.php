@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,11 @@ class Toolbar
     protected string $title = '';
 
     protected string $subTitle = '';
+
     protected string $helpLink = '';
+
     protected bool $sidebarEnabled = true;
+
     protected int $currentTabLevel = 0;
 
     /**
@@ -70,12 +74,12 @@ class Toolbar
         $currentTab = $this->menuBuilder->getCurrentTab();
         $tabs = [];
         $ancestorsTab = [];
-        if (null !== $currentTab) {
+        if ($currentTab !== null) {
             $tabs[] = $currentTab;
             $ancestorsTab = $this->menuBuilder->getAncestorsTab($currentTab->getId());
-            if (!empty($ancestorsTab)) {
+            if (! empty($ancestorsTab)) {
                 $tabs[] = $ancestorsTab;
-                $this->currentTabLevel = count($ancestorsTab);
+                $this->currentTabLevel = \count($ancestorsTab);
 
                 if ($this->currentTabLevel >= 3) {
                     $this->navigationTabs = $this->menuBuilder->buildNavigationTabs($currentTab);
@@ -83,7 +87,7 @@ class Toolbar
             }
         }
 
-        if (!empty($breadcrumbLinks)) {
+        if (! empty($breadcrumbLinks)) {
             $this->setBreadcrumbs($breadcrumbLinks, $tabs);
         } elseif ($currentTab !== null) {
             $this->setBreadcrumbs($this->menuBuilder->convertTabsToBreadcrumbLinks($currentTab, $ancestorsTab), $tabs);
@@ -144,9 +148,7 @@ class Toolbar
 
     /**
      * @param MenuLink[] $breadcrumbs
-     * @param Tab[] $tabs
-     *
-     * @return void
+     * @param Tab[]      $tabs
      */
     protected function setBreadcrumbs(array $breadcrumbs, array $tabs): void
     {

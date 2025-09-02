@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,13 +45,13 @@ class ShopConstraintNormalizer implements DenormalizerInterface, NormalizerInter
 {
     public function denormalize($data, string $type, ?string $format = null, array $context = [])
     {
-        if (!empty($data['shopId'])) {
+        if (! empty($data['shopId'])) {
             return ShopConstraint::shop($data['shopId'], $data['isStrict'] ?? false);
         }
-        if (!empty($data['shopGroupId'])) {
+        if (! empty($data['shopGroupId'])) {
             return ShopConstraint::shopGroup($data['shopGroupId'], $data['isStrict'] ?? false);
         }
-        if (!empty($data['shopIds'])) {
+        if (! empty($data['shopIds'])) {
             return ShopCollection::shops($data['shopIds']);
         }
 
@@ -59,12 +60,12 @@ class ShopConstraintNormalizer implements DenormalizerInterface, NormalizerInter
 
     public function supportsDenormalization($data, string $type, ?string $format = null)
     {
-        return ShopConstraint::class === $type || is_subclass_of($type, ShopConstraint::class);
+        return $type === ShopConstraint::class || is_subclass_of($type, ShopConstraint::class);
     }
 
     public function normalize($object, ?string $format = null, array $context = [])
     {
-        if (!($object instanceof ShopConstraint)) {
+        if (! ($object instanceof ShopConstraint)) {
             throw new InvalidArgumentException('Expected object to be a ' . ShopConstraint::class);
         }
 

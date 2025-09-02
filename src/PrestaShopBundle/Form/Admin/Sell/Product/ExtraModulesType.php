@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,14 +51,11 @@ class ExtraModulesType extends TranslatorAwareType
         array $locales,
         private readonly HookDispatcherInterface $hookDispatcher,
         private readonly ModuleDataProvider $moduleDataProvider,
-        private readonly ModuleRepository $moduleRepository
+        private readonly ModuleRepository $moduleRepository,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
@@ -66,9 +64,6 @@ class ExtraModulesType extends TranslatorAwareType
         $view->vars['extraModules'] = $extraModules;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,9 @@ use Symfony\Component\Translation\TranslatorBagInterface;
 
 class CheckTranslationDuplicatesCommand extends Command
 {
-    public function __construct(private readonly TranslatorBagInterface $translator)
-    {
+    public function __construct(
+        private readonly TranslatorBagInterface $translator,
+    ) {
         parent::__construct();
     }
 
@@ -53,14 +55,14 @@ class CheckTranslationDuplicatesCommand extends Command
         $catalogue = $this->translator->getCatalogue()->all();
 
         // Init progress bar
-        $progress = new ProgressBar($output, count($catalogue, COUNT_RECURSIVE));
+        $progress = new ProgressBar($output, \count($catalogue, \COUNT_RECURSIVE));
         $progress->start();
         $progress->setRedrawFrequency(20);
 
         $duplicates = [];
 
         foreach ($catalogue as $domain => $messages) {
-            $nbOfMessages = count($messages);
+            $nbOfMessages = \count($messages);
             // In order to use a for() loop, we need integers as keys
             $messages = array_keys($messages);
 
@@ -80,11 +82,11 @@ class CheckTranslationDuplicatesCommand extends Command
 
         // If we have duplicates to fix, let's display them and return their count.
         // This will allow us to add the command in the tests.
-        if (count($duplicates)) {
+        if (\count($duplicates)) {
             $output->writeln('Duplicates found:');
             dump($duplicates);
 
-            return count($duplicates, COUNT_RECURSIVE);
+            return \count($duplicates, \COUNT_RECURSIVE);
         }
 
         $output->writeln('Awww yisss! There is no duplicate in your translator catalog.');
@@ -97,12 +99,10 @@ class CheckTranslationDuplicatesCommand extends Command
      *
      * @param string $message1
      * @param string $message2
-     *
-     * @return bool
      */
     protected function check($message1, $message2): bool
     {
-        return $this->removeParams($message1) == $this->removeParams($message2);
+        return $this->removeParams($message1) === $this->removeParams($message2);
     }
 
     /**

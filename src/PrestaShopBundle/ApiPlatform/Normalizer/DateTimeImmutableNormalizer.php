@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,12 +49,12 @@ class DateTimeImmutableNormalizer implements DenormalizerInterface, NormalizerIn
 
     public function supportsDenormalization($data, string $type, ?string $format = null)
     {
-        return DateTimeImmutable::class === $type;
+        return $type === DateTimeImmutable::class;
     }
 
     public function normalize(mixed $object, ?string $format = null, array $context = [])
     {
-        if (!($object instanceof DateTimeImmutable)) {
+        if (! ($object instanceof DateTimeImmutable)) {
             throw new InvalidArgumentException('Expected object to be a ' . DateTimeImmutable::class);
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,9 +52,6 @@ class MerchandiseReturnController extends PrestaShopAdminController
     /**
      * Render merchandise returns grid and options.
      *
-     * @param Request $request
-     * @param MerchandiseReturnFilters $filters
-     *
      * @return Response|RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_merchandise_returns_index')]
@@ -63,7 +61,7 @@ class MerchandiseReturnController extends PrestaShopAdminController
         GridFactoryInterface $gridFactory,
         MerchandiseReturnFilters $filters,
         #[Autowire(service: 'prestashop.admin.merchandise_return_options.form_handler')]
-        OptionFormHandlerInterface $optionFormHandler
+        OptionFormHandlerInterface $optionFormHandler,
     ): Response {
         $optionsForm = $optionFormHandler->getForm();
         $optionsForm->handleRequest($request);
@@ -75,9 +73,8 @@ class MerchandiseReturnController extends PrestaShopAdminController
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_merchandise_returns_index');
-            } else {
-                $this->addFlashErrors($errors);
             }
+            $this->addFlashErrors($errors);
         }
 
         return $this->render('@PrestaShop/Admin/Sell/CustomerService/MerchandiseReturn/index.html.twig', [
@@ -90,11 +87,6 @@ class MerchandiseReturnController extends PrestaShopAdminController
 
     /**
      * Edit existing order return
-     *
-     * @param int $orderReturnId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_merchandise_returns_index')]
     public function editAction(
@@ -103,7 +95,7 @@ class MerchandiseReturnController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.order_return_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.order_return_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         try {
             $form = $formBuilder->getFormFor($orderReturnId);
@@ -132,8 +124,6 @@ class MerchandiseReturnController extends PrestaShopAdminController
 
     /**
      * Provides error messages for exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {

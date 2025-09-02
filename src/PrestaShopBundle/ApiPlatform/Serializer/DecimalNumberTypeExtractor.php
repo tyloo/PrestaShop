@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,6 +47,7 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
 {
     private array $reflectionClasses = [];
+
     private readonly Inflector $inflector;
 
     public function __construct(
@@ -57,7 +59,7 @@ class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
     public function getTypes(string $class, string $property, array $context = []): ?array
     {
         $reflectionClass = $this->getReflectionClass($class);
-        if (!$reflectionClass) {
+        if (! $reflectionClass) {
             return null;
         }
 
@@ -67,7 +69,7 @@ class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
         if ($reflectionClass->hasMethod($setterMethodName) && $reflectionClass->hasMethod($getterMethodName)) {
             $setterMethod = $reflectionClass->getMethod($setterMethodName);
             // We only check setters for single field, not multi-parameters setters
-            if (!$setterMethod->isPublic() || count($setterMethod->getParameters()) !== 1) {
+            if (! $setterMethod->isPublic() || \count($setterMethod->getParameters()) !== 1) {
                 return null;
             }
 
@@ -93,7 +95,7 @@ class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
 
     private function methodReturnBasedOnDecimalNumber(ReflectionMethod $reflectionMethod): bool
     {
-        if (!$reflectionMethod->hasReturnType() || !$reflectionMethod->getReturnType() instanceof ReflectionNamedType || $reflectionMethod->getReturnType()->isBuiltin()) {
+        if (! $reflectionMethod->hasReturnType() || ! $reflectionMethod->getReturnType() instanceof ReflectionNamedType || $reflectionMethod->getReturnType()->isBuiltin()) {
             return false;
         }
 
@@ -106,7 +108,7 @@ class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
         $returnReflectionClass = $this->getReflectionClass($reflectionType->getName());
         if ($returnReflectionClass) {
             foreach ($returnReflectionClass->getMethods() as $returnReflectionMethod) {
-                if (!$returnReflectionMethod->hasReturnType() || !$returnReflectionMethod->getReturnType() instanceof ReflectionNamedType || $returnReflectionMethod->getReturnType()->isBuiltin()) {
+                if (! $returnReflectionMethod->hasReturnType() || ! $returnReflectionMethod->getReturnType() instanceof ReflectionNamedType || $returnReflectionMethod->getReturnType()->isBuiltin()) {
                     continue;
                 }
 
@@ -143,7 +145,7 @@ class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
 
     private function getReflectionClass(string $className): ?ReflectionClass
     {
-        if (array_key_exists($className, $this->reflectionClasses)) {
+        if (\array_key_exists($className, $this->reflectionClasses)) {
             return $this->reflectionClasses[$className];
         }
 

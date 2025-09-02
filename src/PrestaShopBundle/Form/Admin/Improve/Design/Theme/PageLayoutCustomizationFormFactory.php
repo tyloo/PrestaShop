@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,15 @@ use Symfony\Component\Form\FormFactoryInterface;
 final class PageLayoutCustomizationFormFactory implements PageLayoutCustomizationFormFactoryInterface
 {
     /**
-     * @param FormFactoryInterface $formFactory
-     * @param ThemeRepository $themeRepository
      * @param string $shopThemeName
      */
-    public function __construct(private readonly FormFactoryInterface $formFactory, private readonly ThemeRepository $themeRepository, private $shopThemeName)
-    {
+    public function __construct(
+        private readonly FormFactoryInterface $formFactory,
+        private readonly ThemeRepository $themeRepository,
+        private $shopThemeName,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $customizablePages)
     {
         $theme = $this->themeRepository->getInstanceByName($this->shopThemeName);
@@ -60,10 +59,7 @@ final class PageLayoutCustomizationFormFactory implements PageLayoutCustomizatio
     }
 
     /**
-     * @param Theme $theme
      * @param LayoutCustomizationPage[] $customizationPages
-     *
-     * @return array
      */
     private function getCustomizablePageLayouts(Theme $theme, array $customizationPages): array
     {

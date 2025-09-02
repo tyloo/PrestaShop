@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,8 +34,22 @@ namespace PrestaShopBundle\Twig\Layout;
  */
 class TemplateVariables
 {
-    public function __construct(private readonly string $isoUser, private readonly bool $isRtlLanguage, private readonly string $controllerName, private readonly bool $isMultiShop, private readonly bool $isMenuCollapsed, private readonly array $jsRouterMetadata, private readonly bool $isDebugMode, private readonly bool $installDirExists, private readonly string $version, private readonly ?string $defaultTabLink, private readonly bool $isMaintenanceEnabled, private readonly bool $isFrontOfficeAccessibleForAdmins, private readonly bool $isDisplayedWithTabs, private readonly string $baseUrl)
-    {
+    public function __construct(
+        private readonly string $isoUser,
+        private readonly bool $isRtlLanguage,
+        private readonly string $controllerName,
+        private readonly bool $isMultiShop,
+        private readonly bool $isMenuCollapsed,
+        private readonly array $jsRouterMetadata,
+        private readonly bool $isDebugMode,
+        private readonly bool $installDirExists,
+        private readonly string $version,
+        private readonly ?string $defaultTabLink,
+        private readonly bool $isMaintenanceEnabled,
+        private readonly bool $isFrontOfficeAccessibleForAdmins,
+        private readonly bool $isDisplayedWithTabs,
+        private readonly string $baseUrl,
+    ) {
     }
 
     public function getIsoUser(): string

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,16 +37,11 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MailThemeConfigurationType extends AbstractType
 {
-    /**
-     * @param array $mailThemes
-     */
-    public function __construct(private readonly array $mailThemes)
-    {
+    public function __construct(
+        private readonly array $mailThemes,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

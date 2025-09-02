@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class JsRouterMetadataExtension extends AbstractExtension
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [
@@ -56,8 +54,6 @@ class JsRouterMetadataExtension extends AbstractExtension
 
     /**
      * Get base url and security token used for javascript router component.
-     *
-     * @return array
      */
     public function getJsRouterMetadata(): array
     {

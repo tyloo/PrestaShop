@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,12 +43,19 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 class NotificationsCenter
 {
     protected ?bool $showNewOrders = null;
+
     protected ?bool $showNewCustomers = null;
+
     protected ?bool $showNewMessages = null;
+
     protected ?string $noOrderTip = null;
+
     protected ?string $noCustomerTip = null;
+
     protected ?string $noCustomerMessageTip = null;
+
     protected readonly Link $link;
+
     protected array|false|null $accesses = null;
 
     public function __construct(
@@ -58,9 +66,6 @@ class NotificationsCenter
         $this->link = $legacyContext->getContext()->link;
     }
 
-    /**
-     * @return bool
-     */
     public function isShowNewOrders(): bool
     {
         if ($this->showNewOrders === null) {
@@ -70,9 +75,6 @@ class NotificationsCenter
         return $this->showNewOrders;
     }
 
-    /**
-     * @return bool
-     */
     public function isShowNewCustomers(): bool
     {
         if ($this->showNewCustomers === null) {
@@ -82,9 +84,6 @@ class NotificationsCenter
         return $this->showNewCustomers;
     }
 
-    /**
-     * @return bool
-     */
     public function isShowNewMessages(): bool
     {
         if ($this->showNewMessages === null) {
@@ -94,9 +93,6 @@ class NotificationsCenter
         return $this->showNewMessages;
     }
 
-    /**
-     * @return string
-     */
     public function getNoOrderTip(): string
     {
         if ($this->noOrderTip === null) {
@@ -106,9 +102,6 @@ class NotificationsCenter
         return $this->noOrderTip;
     }
 
-    /**
-     * @return string
-     */
     public function getNoCustomerTip(): string
     {
         if ($this->noCustomerTip === null) {
@@ -118,9 +111,6 @@ class NotificationsCenter
         return $this->noCustomerTip;
     }
 
-    /**
-     * @return string
-     */
     public function getNoCustomerMessageTip(): string
     {
         if ($this->noCustomerMessageTip === null) {
@@ -154,7 +144,7 @@ class NotificationsCenter
             ],
         ];
 
-        if (!isset($tips[$type])) {
+        if (! isset($tips[$type])) {
             return '';
         }
 

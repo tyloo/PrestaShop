@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ use PrestaShopBundle\Entity\ShipmentProduct;
 class ShipmentRepository extends EntityRepository
 {
     /**
-     * @param int $orderId
-     *
      * @return Shipment[]
      */
     public function findByOrderId(int $orderId)
@@ -70,8 +69,6 @@ class ShipmentRepository extends EntityRepository
     }
 
     /**
-     * @param Shipment $source
-     * @param Shipment $target
      * @param ShipmentProduct[] $shipmentProducts
      */
     public function mergeProductsToShipment(Shipment $source, Shipment $target, array $shipmentProducts): void
@@ -81,7 +78,7 @@ class ShipmentRepository extends EntityRepository
 
         foreach ($shipmentProducts as $shipmentProduct) {
             if (empty($sourceProductsByOrderDetailId[$shipmentProduct->getOrderDetailId()])) {
-                throw new ShipmentException(sprintf('Order detail with id %d does not exist in source shipment', $shipmentProduct->getOrderDetailId()));
+                throw new ShipmentException(\sprintf('Order detail with id %d does not exist in source shipment', $shipmentProduct->getOrderDetailId()));
             }
             if (empty($targetProductsByOrderDetailId[$shipmentProduct->getOrderDetailId()])) {
                 $target->addShipmentProduct($shipmentProduct);
@@ -105,18 +102,7 @@ class ShipmentRepository extends EntityRepository
         }
     }
 
-    private function getShipmentProductByOrderDetailId(Shipment $shipment): array
-    {
-        return array_reduce($shipment->getProducts()->toArray(), function ($carry, ShipmentProduct $product) {
-            $carry[$product->getOrderDetailId()] = $product;
-
-            return $carry;
-        }, []);
-    }
-
     /**
-     * @param int $carrierId
-     * @param Shipment $shipmentToRemoveProduct
      * @param ShipmentProduct[] $shipmentProductsToMove
      */
     public function splitShipment(int $carrierId, Shipment $shipmentToRemoveProduct, array $shipmentProductsToMove): void
@@ -149,7 +135,7 @@ class ShipmentRepository extends EntityRepository
                     $existingProduct->setQuantity($remainingQty);
                 }
             } else {
-                throw new ShipmentException(sprintf('Cannot find product with order detail id %s', $orderDetailId));
+                throw new ShipmentException(\sprintf('Cannot find product with order detail id %s', $orderDetailId));
             }
             $shipmentProducts[] = (new ShipmentProduct())
                 ->setOrderDetailId($orderDetailId)
@@ -165,5 +151,14 @@ class ShipmentRepository extends EntityRepository
         if ($shipmentToRemoveProduct->getProducts()->isEmpty()) {
             $this->delete($shipmentToRemoveProduct);
         }
+    }
+
+    private function getShipmentProductByOrderDetailId(Shipment $shipment): array
+    {
+        return array_reduce($shipment->getProducts()->toArray(), function ($carry, ShipmentProduct $product) {
+            $carry[$product->getOrderDetailId()] = $product;
+
+            return $carry;
+        }, []);
     }
 }

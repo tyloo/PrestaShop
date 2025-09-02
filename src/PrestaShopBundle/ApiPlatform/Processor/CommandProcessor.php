@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,13 +52,6 @@ class CommandProcessor implements ProcessorInterface
     }
 
     /**
-     * @param $data
-     * @param Operation $operation
-     * @param array $uriVariables
-     * @param array $context
-     *
-     * @return mixed
-     *
      * @throws CQRSCommandNotFoundException
      * @throws ExceptionInterface|ReflectionException
      */
@@ -65,8 +59,8 @@ class CommandProcessor implements ProcessorInterface
     {
         $extraProperties = $operation->getExtraProperties();
         $CQRSCommandClass = $this->getCQRSCommandClass($operation);
-        if (null === $CQRSCommandClass || !class_exists($CQRSCommandClass)) {
-            throw new CQRSCommandNotFoundException(sprintf('Resource %s has no CQRS command defined.', $operation->getClass()));
+        if ($CQRSCommandClass === null || ! class_exists($CQRSCommandClass)) {
+            throw new CQRSCommandNotFoundException(\sprintf('Resource %s has no CQRS command defined.', $operation->getClass()));
         }
 
         if ($data instanceof $CQRSCommandClass) {
@@ -92,16 +86,10 @@ class CommandProcessor implements ProcessorInterface
 
     /**
      * Transform CQRS result into an ApiPlatform DTO object.
-     *
-     * @param mixed $commandResult
-     * @param Operation $operation
-     * @param array $uriVariables
-     *
-     * @return mixed
      */
     protected function denormalizeCommandResult(mixed $commandResult, Operation $operation, array $uriVariables): mixed
     {
-        if (!empty($commandResult)) {
+        if (! empty($commandResult)) {
             $normalizedCommandResult = $this->domainSerializer->normalize($commandResult, null, [NormalizationMapper::NORMALIZATION_MAPPING => $this->getCQRSCommandMapping($operation)]);
         } else {
             // Use URI variables as fallback when the command returned no result as it probably contains the ID that will be needed to create the CQRS query
@@ -110,7 +98,7 @@ class CommandProcessor implements ProcessorInterface
         $normalizedCommandResult = array_merge($normalizedCommandResult, $this->contextParametersProvider->getContextParameters());
 
         $queryClass = $this->getCQRSQueryClass($operation);
-        if (!$queryClass) {
+        if (! $queryClass) {
             return $this->denormalizeApiPlatformDTO($normalizedCommandResult, $operation);
         }
 
@@ -120,11 +108,6 @@ class CommandProcessor implements ProcessorInterface
     /**
      * If no query class as specified the normalized data is simply what the command returned (an array, an object, ...) that is
      * denormalized to match the operation class
-     *
-     * @param array $normalizedCommandResult
-     * @param Operation $operation
-     *
-     * @return mixed
      */
     protected function denormalizeApiPlatformDTO(array $normalizedCommandResult, Operation $operation): mixed
     {
@@ -134,12 +117,6 @@ class CommandProcessor implements ProcessorInterface
     /**
      * If a query was specified it means the expected return should use it, usually it allows returning the full object like in GET
      * operation, but it could also be a different query that returns different data from the GET to return a small piece of the object for example.
-     *
-     * @param string $CQRSQueryClass
-     * @param array $normalizedCommandResult
-     * @param Operation $operation
-     *
-     * @return mixed
      */
     protected function handleCQRSQueryAndReturnResult(string $CQRSQueryClass, array $normalizedCommandResult, Operation $operation): mixed
     {
@@ -151,10 +128,6 @@ class CommandProcessor implements ProcessorInterface
 
     /**
      * Return the mapping used for normalizing AND denormalizing the CQRS command, if specified.
-     *
-     * @param Operation $operation
-     *
-     * @return array|null
      */
     protected function getCQRSCommandMapping(Operation $operation): ?array
     {

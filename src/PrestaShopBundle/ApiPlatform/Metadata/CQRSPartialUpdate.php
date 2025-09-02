@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,7 +73,6 @@ class CQRSPartialUpdate extends CQRSCommand
         ?array $exceptionToStatus = null,
         ?array $links = null,
         ?array $errors = null,
-
         ?string $shortName = null,
         ?string $class = null,
         ?bool $paginationEnabled = null,
@@ -129,7 +129,7 @@ class CQRSPartialUpdate extends CQRSCommand
         ?bool $experimentalOperation = null,
         ?bool $allowEmptyBody = null,
     ) {
-        $passedArguments = \get_defined_vars();
+        $passedArguments = get_defined_vars();
         $passedArguments['method'] = self::METHOD_PATCH;
         // Disable read listener because it is forced when using PATCH method, but we don't need it since we rely on CQRS commands/queries
         $passedArguments['read'] = $read ?? false;

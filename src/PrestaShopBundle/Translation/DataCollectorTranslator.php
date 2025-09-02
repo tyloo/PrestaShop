@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,17 +51,11 @@ class DataCollectorTranslator extends BaseTranslator implements TranslatorInterf
         return $this->__call('addResource', [$format, $resource, $locale, $domain]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isLanguageLoaded($locale)
     {
         return $this->__call('isLanguageLoaded', [$locale]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function clearLanguage($locale)
     {
         return $this->__call('clearLanguage', [$locale]);

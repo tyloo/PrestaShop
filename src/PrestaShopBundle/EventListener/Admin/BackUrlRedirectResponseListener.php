@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,15 +44,12 @@ final class BackUrlRedirectResponseListener
      */
     private $employeeId;
 
-    /**
-     * @param BackUrlProvider $backUrlProvider
-     */
     public function __construct(
         private readonly BackUrlProvider $backUrlProvider,
-        LegacyContext $legacyContext
+        LegacyContext $legacyContext,
     ) {
         $context = $legacyContext->getContext();
-        if (null !== $context && $context->employee instanceof Employee) {
+        if ($context !== null && $context->employee instanceof Employee) {
             $this->employeeId = $context->employee->id;
         }
     }
@@ -59,14 +57,14 @@ final class BackUrlRedirectResponseListener
     public function onKernelResponse(ResponseEvent $event): void
     {
         // No need to continue because the employee is not connected
-        if (!$this->employeeId) {
+        if (! $this->employeeId) {
             return;
         }
 
         $currentRequest = $event->getRequest();
         $originalResponse = $event->getResponse();
 
-        if (!$originalResponse instanceof RedirectResponse) {
+        if (! $originalResponse instanceof RedirectResponse) {
             return;
         }
 
@@ -89,13 +87,11 @@ final class BackUrlRedirectResponseListener
     /**
      * Compares if request url is equal to response url - in such case the back url should not work since the action
      * is supposed to be kept on the same url . E.g "save and stay" button click.
-     *
-     * @return bool
      */
     private function areUrlsEquals(
         string $urlA,
         string $urlB,
-        Request $request
+        Request $request,
     ): bool {
         $parsedUrlA = parse_url($urlA);
         $parsedUrlB = parse_url($urlB);
@@ -138,10 +134,10 @@ final class BackUrlRedirectResponseListener
             $ignoredParameters = ['conf'];
             foreach ($allParameters as $parameterName) {
                 // Some parameters can be modified and it's ok
-                if (in_array($parameterName, $ignoredParameters)) {
+                if (\in_array($parameterName, $ignoredParameters, true)) {
                     continue;
                 }
-                if (!isset($parametersA[$parameterName]) || !isset($parametersB[$parameterName])) {
+                if (! isset($parametersA[$parameterName]) || ! isset($parametersB[$parameterName])) {
                     continue;
                 }
                 if ($parametersA[$parameterName] !== $parametersB[$parameterName]) {

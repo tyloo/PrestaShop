@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class OrderMessageType extends AbstractType
     public function __construct(
         private FormChoiceProviderInterface $orderMessageNameChoiceProvider,
         private ConfigurableFormChoiceProviderInterface $orderMessageChoiceProvider,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->translator = $translator;
     }
@@ -75,18 +76,21 @@ class OrderMessageType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', [], 'Admin.Notifications.Error'
-                        ),
-                    ]),
-                    new CleanHtml([
-                        'message' => $this->trans(
-                            'The %s field is not valid',
-                            [
-                                sprintf('"%s"', $this->trans('Message', [], 'Admin.Global')),
-                            ],
+                            'This field cannot be empty.',
+                            [],
                             'Admin.Notifications.Error'
                         ),
-                    ]
+                    ]),
+                    new CleanHtml(
+                        [
+                            'message' => $this->trans(
+                                'The %s field is not valid',
+                                [
+                                    \sprintf('"%s"', $this->trans('Message', [], 'Admin.Global')),
+                                ],
+                                'Admin.Notifications.Error'
+                            ),
+                        ]
                     ),
                     new Length([
                         'max' => OrderMessageConstraint::MAX_MESSAGE_LENGTH,

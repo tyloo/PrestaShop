@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,14 +63,8 @@ use Validate;
 class CustomerType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param GroupByIdChoiceProvider $groupByIdChoiceProvider
-     * @param array $locales
-     * @param array $riskChoices
      * @param bool $isB2bFeatureEnabled
      * @param bool $isPartnerOffersEnabled
-     * @param ConfigurationInterface $configuration
-     * @param FormCloner $formCloner
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -79,14 +74,11 @@ class CustomerType extends TranslatorAwareType
         private $isB2bFeatureEnabled,
         private $isPartnerOffersEnabled,
         private readonly ConfigurationInterface $configuration,
-        protected FormCloner $formCloner
+        protected FormCloner $formCloner,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // Initialize password strength configuration set in Security section of backoffice
@@ -159,9 +151,10 @@ class CustomerType extends TranslatorAwareType
                         ),
                     ]),
                     new CustomerName([
-                        'message' => $this->trans('The %s field is invalid.',
+                        'message' => $this->trans(
+                            'The %s field is invalid.',
                             'Admin.Notifications.Error',
-                            [sprintf('"%s"', $this->trans('First name', 'Admin.Global'))]
+                            [\sprintf('"%s"', $this->trans('First name', 'Admin.Global'))]
                         ),
                     ]),
                 ],
@@ -188,7 +181,7 @@ class CustomerType extends TranslatorAwareType
                         'message' => $this->trans(
                             'The %s field is invalid.',
                             'Admin.Notifications.Error',
-                            [sprintf('"%s"', $this->trans('Last name', 'Admin.Global'))]
+                            [\sprintf('"%s"', $this->trans('Last name', 'Admin.Global'))]
                         ),
                     ]),
                 ],
@@ -252,7 +245,7 @@ class CustomerType extends TranslatorAwareType
                     'Admin.Orderscustomers.Help'
                 ),
                 'required' => false,
-                'disabled' => !$this->isPartnerOffersEnabled,
+                'disabled' => ! $this->isPartnerOffersEnabled,
             ])
             ->add('group_ids', MaterialChoiceTableType::class, [
                 'label' => $this->trans('Group access', 'Admin.Orderscustomers.Feature'),
@@ -266,7 +259,7 @@ class CustomerType extends TranslatorAwareType
             ])
             ->add('default_group_id', GroupType::class, [
                 'label' => $this->trans('Default customer group', 'Admin.Orderscustomers.Feature'),
-                'help' => sprintf(
+                'help' => \sprintf(
                     '%s %s',
                     $this->trans(
                         'This group will be the user\'s default group.',
@@ -303,7 +296,7 @@ class CustomerType extends TranslatorAwareType
                 ])
                 ->add('allowed_outstanding_amount', NumberType::class, [
                     'label' => $this->trans('Allowed outstanding amount', 'Admin.Orderscustomers.Feature'),
-                    'help' => sprintf(
+                    'help' => \sprintf(
                         '%s 0-9',
                         $this->trans(
                             'Valid characters:',
@@ -316,7 +309,7 @@ class CustomerType extends TranslatorAwareType
                 ])
                 ->add('max_payment_days', IntegerType::class, [
                     'label' => $this->trans('Maximum number of payment days', 'Admin.Orderscustomers.Feature'),
-                    'help' => sprintf(
+                    'help' => \sprintf(
                         '%s 0-9',
                         $this->trans(
                             'Valid characters:',
@@ -355,7 +348,7 @@ class CustomerType extends TranslatorAwareType
             $formData = $event->getData();
 
             // If is_guest was provided and it's yes, we make the field optional (removing the constraints)
-            if (isset($formData['is_guest']) && $formData['is_guest'] == 1) {
+            if (isset($formData['is_guest']) && $formData['is_guest'] === 1) {
                 $form->add($this->formCloner->cloneForm($form->get('password'), [
                     'required' => false,
                     'constraints' => [],
@@ -364,9 +357,6 @@ class CustomerType extends TranslatorAwareType
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,7 +40,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 abstract class AbstractMultistoreHeader
 {
     protected string $contextColor = '';
+
     protected string $contextName = '';
+
     protected array $groupList = [];
 
     protected Link $link;
@@ -52,22 +55,6 @@ abstract class AbstractMultistoreHeader
         protected readonly LegacyContext $legacyContext,
         protected readonly EmployeeContext $employeeContext,
     ) {
-    }
-
-    protected function doMount(): void
-    {
-        if ($this->shopContext->getShopConstraint()->getShopId()) {
-            $shop = $this->entityManager->getRepository(Shop::class)->findOneBy(['id' => $this->shopContext->getShopConstraint()->getShopId()->getValue()]);
-            $this->contextColor = $shop->getColor();
-            $this->contextName = $shop->getName();
-        } elseif ($this->shopContext->getShopConstraint()->getShopGroupId()) {
-            $shopGroup = $this->entityManager->getRepository(ShopGroup::class)->findOneBy(['id' => $this->shopContext->getShopConstraint()->getShopGroupId()->getValue()]);
-            $this->contextColor = $shopGroup->getColor();
-            $this->contextName = $shopGroup->getName();
-        } else {
-            $this->contextName = $this->translator->trans('All stores', domain: 'Admin.Global');
-        }
-        $this->link = $this->legacyContext->getContext()->link;
     }
 
     public function isMultistoreUsed(): bool
@@ -129,5 +116,21 @@ abstract class AbstractMultistoreHeader
     public function isAllShopsAllowed(): bool
     {
         return $this->employeeContext->hasAuthorizationForAllShops();
+    }
+
+    protected function doMount(): void
+    {
+        if ($this->shopContext->getShopConstraint()->getShopId()) {
+            $shop = $this->entityManager->getRepository(Shop::class)->findOneBy(['id' => $this->shopContext->getShopConstraint()->getShopId()->getValue()]);
+            $this->contextColor = $shop->getColor();
+            $this->contextName = $shop->getName();
+        } elseif ($this->shopContext->getShopConstraint()->getShopGroupId()) {
+            $shopGroup = $this->entityManager->getRepository(ShopGroup::class)->findOneBy(['id' => $this->shopContext->getShopConstraint()->getShopGroupId()->getValue()]);
+            $this->contextColor = $shopGroup->getColor();
+            $this->contextName = $shopGroup->getName();
+        } else {
+            $this->contextName = $this->translator->trans('All stores', domain: 'Admin.Global');
+        }
+        $this->link = $this->legacyContext->getContext()->link;
     }
 }

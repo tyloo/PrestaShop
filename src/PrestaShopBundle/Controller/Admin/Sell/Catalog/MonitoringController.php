@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,17 +75,6 @@ class MonitoringController extends PrestaShopAdminController
 
     /**
      * Shows Monitoring listing page
-     *
-     * @param Request $request
-     * @param EmptyCategoryFilters $emptyCategoryFilters
-     * @param NoQtyProductWithCombinationFilters $noQtyProductWithCombinationFilters
-     * @param NoQtyProductWithoutCombinationFilters $noQtyProductWithoutCombinationFilters
-     * @param DisabledProductFilters $disabledProductFilters
-     * @param ProductWithoutImageFilters $productWithoutImageFilters
-     * @param ProductWithoutDescriptionFilters $productWithoutDescriptionFilters
-     * @param ProductWithoutPriceFilters $productWithoutPriceFilters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -109,7 +99,7 @@ class MonitoringController extends PrestaShopAdminController
         ProductWithoutDescriptionFilters $productWithoutDescriptionFilters,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.product_without_price')]
         GridFactoryInterface $productWithoutPriceGrid,
-        ProductWithoutPriceFilters $productWithoutPriceFilters
+        ProductWithoutPriceFilters $productWithoutPriceFilters,
     ): Response {
         $deleteCategoryForm = $this->createForm(DeleteCategoriesType::class);
 
@@ -144,10 +134,6 @@ class MonitoringController extends PrestaShopAdminController
 
     /**
      * Provides filters functionality
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchAction(Request $request): RedirectResponse
@@ -164,10 +150,6 @@ class MonitoringController extends PrestaShopAdminController
 
     /**
      * Delete monitoring items in bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_monitorings_index', message: 'You do not have permission to delete this.')]
     public function deleteBulkAction(Request $request): RedirectResponse
@@ -191,15 +173,9 @@ class MonitoringController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_monitorings_index');
     }
 
-    /**
-     * @param Request $request
-     * @param array $gridIdentifiers
-     *
-     * @return array
-     */
     private function getBulkProductsFromRequest(Request $request, array $gridIdentifiers): array
     {
-        $productIds = $request->request->all(sprintf('%s_%s', $gridIdentifiers['grid_id'], 'monitoring_products_bulk'));
+        $productIds = $request->request->all(\sprintf('%s_%s', $gridIdentifiers['grid_id'], 'monitoring_products_bulk'));
 
         foreach ($productIds as $i => $productId) {
             $productIds[$i] = (int) $productId;
@@ -210,10 +186,6 @@ class MonitoringController extends PrestaShopAdminController
 
     /**
      * Parses grid identifying parts from request in order to recognize which grid is being filtered
-     *
-     * @param Request $request
-     *
-     * @return array
      */
     private function identifySearchableGrid(Request $request): array
     {

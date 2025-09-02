@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,18 +44,12 @@ use Twig\TwigFunction;
 class LayoutExtension extends AbstractExtension implements GlobalsInterface
 {
     /**
-     * Constructor.
-     *
      * Keeps the Context to look inside language settings.
-     *
-     * @param LegacyContext $context
-     * @param ShopConfigurationInterface $configuration
-     * @param CurrencyDataProvider $currencyDataProvider
      */
     public function __construct(
         private readonly LegacyContext $context,
         private readonly ShopConfigurationInterface $configuration,
-        private readonly CurrencyDataProvider $currencyDataProvider
+        private readonly CurrencyDataProvider $currencyDataProvider,
     ) {
     }
 
@@ -120,11 +115,9 @@ class LayoutExtension extends AbstractExtension implements GlobalsInterface
     /**
      * Returns a legacy configuration key.
      *
-     * @param string $key
-     * @param mixed $default Default value is null
+     * @param string         $key
+     * @param mixed          $default        Default value is null
      * @param ShopConstraint $shopConstraint Default value is null
-     *
-     * @return mixed
      */
     public function getConfiguration($key, $default = null, ?ShopConstraint $shopConstraint = null)
     {
@@ -134,8 +127,8 @@ class LayoutExtension extends AbstractExtension implements GlobalsInterface
     /**
      * This is a Twig port of the Smarty {$link->getAdminLink()} function.
      *
-     * @param string $controllerName
-     * @param bool $withToken
+     * @param string        $controllerName
+     * @param bool          $withToken
      * @param array<string> $extraParams
      *
      * @return string

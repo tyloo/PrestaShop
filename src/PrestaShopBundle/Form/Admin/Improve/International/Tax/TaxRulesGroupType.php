@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,28 +45,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class TaxRulesGroupType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param bool $isShopFeatureEnabled
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        protected bool $isShopFeatureEnabled
+        protected bool $isShopFeatureEnabled,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class, [
                 'label' => $this->trans('Name', 'Admin.Global'),
-                'help' => sprintf(
+                'help' => \sprintf(
                     '%s %s',
                     $this->trans('Invalid characters:', 'Admin.Notifications.Info'),
                     TypedRegexValidator::CATALOG_CHARS
@@ -98,7 +91,7 @@ class TaxRulesGroupType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
+                                \sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
                             ]
                         ),
                     ]),

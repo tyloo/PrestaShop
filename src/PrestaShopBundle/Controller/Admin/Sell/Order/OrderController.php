@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -150,15 +151,13 @@ class OrderController extends PrestaShopAdminController
      */
     public const PRODUCTS_PAGINATION_OPTIONS = [8, 20, 50, 100];
 
-    public function __construct(private readonly FormFactoryInterface $formFactory)
-    {
+    public function __construct(
+        private readonly FormFactoryInterface $formFactory,
+    ) {
     }
 
     /**
      * Shows list of orders
-     *
-     * @param Request $request
-     * @param OrderFilters $filters
      *
      * @return Response
      */
@@ -166,8 +165,10 @@ class OrderController extends PrestaShopAdminController
     public function indexAction(
         Request $request,
         OrderFilters $filters,
-        #[Autowire(service: 'prestashop.core.kpi_row.factory.orders')] KpiRowFactoryInterface $orderKpiFactory,
-        #[Autowire(service: 'prestashop.core.grid.factory.order')] GridFactory $orderGridFactory,
+        #[Autowire(service: 'prestashop.core.kpi_row.factory.orders')]
+        KpiRowFactoryInterface $orderKpiFactory,
+        #[Autowire(service: 'prestashop.core.grid.factory.order')]
+        GridFactory $orderGridFactory,
     ) {
         $orderGrid = $orderGridFactory->getGrid($filters);
 
@@ -187,44 +188,15 @@ class OrderController extends PrestaShopAdminController
     }
 
     /**
-     * @return array
-     */
-    private function getOrderToolbarButtons(): array
-    {
-        $toolbarButtons = [];
-
-        $isSingleShopContext = $this->getShopContext()->getShopConstraint()->isSingleShopContext();
-
-        $toolbarButtons['add'] = [
-            'href' => $this->generateUrl('admin_orders_create'),
-            'desc' => $this->trans('Add new order', [], 'Admin.Orderscustomers.Feature'),
-            'icon' => 'add_circle_outline',
-            'disabled' => !$isSingleShopContext,
-        ];
-
-        if (!$isSingleShopContext) {
-            $toolbarButtons['add']['help'] = $this->trans(
-                'You can use this feature in a single-store context only. Switch contexts to enable it.',
-                [],
-                'Admin.Orderscustomers.Feature'
-            );
-            $toolbarButtons['add']['href'] = '#';
-        }
-
-        return $toolbarButtons;
-    }
-
-    /**
      * Places an order from BO
-     *
-     * @param Request $request
      *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function placeAction(
         Request $request,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.cart_summary_form_handler')] FormHandlerInterface $formHandler
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.cart_summary_form_handler')]
+        FormHandlerInterface $formHandler,
     ) {
         $summaryForm = $this->createForm(CartSummaryType::class);
         $summaryForm->handleRequest($request);
@@ -251,18 +223,17 @@ class OrderController extends PrestaShopAdminController
      * Whole page dynamics are on javascript side.
      * To load specific cart pass cartId to url query params (handled by javascript)
      *
-     * @param Request $request
-     *
      * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
         Request $request,
         LanguageByIdChoiceProvider $languageChoiceProvider,
-        #[Autowire(service: 'prestashop.core.form.choice_provider.currency_by_id')] FormChoiceProviderInterface $currencyChoiceProvider,
+        #[Autowire(service: 'prestashop.core.form.choice_provider.currency_by_id')]
+        FormChoiceProviderInterface $currencyChoiceProvider,
     ) {
         $isSingleShopContext = $this->getShopContext()->getShopConstraint()->isSingleShopContext();
-        if (!$isSingleShopContext) {
+        if (! $isSingleShopContext) {
             $this->addFlash('error', $this->trans(
                 'You have to select a shop before creating new orders.',
                 [],
@@ -296,14 +267,13 @@ class OrderController extends PrestaShopAdminController
     }
 
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function searchAction(
         Request $request,
-        #[Autowire(service: 'prestashop.core.grid.definition.factory.order')] OrderGridDefinitionFactory $orderGridDefinitionFactory,
+        #[Autowire(service: 'prestashop.core.grid.definition.factory.order')]
+        OrderGridDefinitionFactory $orderGridDefinitionFactory,
     ) {
         return $this->buildSearchResponse(
             $orderGridDefinitionFactory,
@@ -315,33 +285,29 @@ class OrderController extends PrestaShopAdminController
 
     /**
      * Generates invoice PDF for given order
-     *
-     * @param int $orderId
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function generateInvoicePdfAction(
         int $orderId,
-        #[Autowire(service: 'prestashop.adapter.pdf.order_invoice_pdf_generator')] OrderInvoicePdfGenerator $invoicePdfGenerator,
+        #[Autowire(service: 'prestashop.adapter.pdf.order_invoice_pdf_generator')]
+        OrderInvoicePdfGenerator $invoicePdfGenerator,
     ): BinaryFileResponse {
         return new BinaryFileResponse($invoicePdfGenerator->generatePDF([$orderId]));
     }
 
     /**
      * Generates delivery slip PDF for given order
-     *
-     * @param int $orderId
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function generateDeliverySlipPdfAction(
         int $orderId,
-        #[Autowire(service: 'prestashop.adapter.pdf.delivery_slip_pdf_generator')] PDFGeneratorInterface $deliverySlipPdfGenerator,
+        #[Autowire(service: 'prestashop.adapter.pdf.delivery_slip_pdf_generator')]
+        PDFGeneratorInterface $deliverySlipPdfGenerator,
     ): BinaryFileResponse {
         return new BinaryFileResponse($deliverySlipPdfGenerator->generatePDF([$orderId]));
     }
 
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
@@ -368,14 +334,13 @@ class OrderController extends PrestaShopAdminController
     }
 
     /**
-     * @param OrderFilters $filters
-     *
      * @return CsvResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function exportAction(
         OrderFilters $filters,
-        #[Autowire(service: 'prestashop.core.grid.factory.order')] GridFactory $orderGridFactory,
+        #[Autowire(service: 'prestashop.core.grid.factory.order')]
+        GridFactory $orderGridFactory,
     ) {
         $isB2bEnabled = $this->getConfiguration()->get('PS_B2B_ENABLE');
 
@@ -426,21 +391,18 @@ class OrderController extends PrestaShopAdminController
             ->setFileName('order_' . date('Y-m-d_His') . '.csv');
     }
 
-    /**
-     * @param int $orderId
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function viewAction(
         int $orderId,
         Request $request,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')] FormBuilderInterface $formBuilder,
-        #[Autowire(service: 'prestashop.adapter.order.order_sibling_provider')] OrderSiblingProviderInterface $orderSiblingProvider,
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')]
+        FormBuilderInterface $formBuilder,
+        #[Autowire(service: 'prestashop.adapter.order.order_sibling_provider')]
+        OrderSiblingProviderInterface $orderSiblingProvider,
         CurrencyDataProvider $currencyDataProvider,
         FeatureFlagStateCheckerInterface $featureFlagStateChecker,
-        #[Autowire(service: 'PrestaShop\PrestaShop\Core\Grid\Factory\ShipmentFactory')] GridFactoryInterface $shipmentGridFactory,
+        #[Autowire(service: 'PrestaShop\PrestaShop\Core\Grid\Factory\ShipmentFactory')]
+        GridFactoryInterface $shipmentGridFactory,
         ShipmentFilters $filters,
         Tools $tools,
     ): Response {
@@ -458,13 +420,15 @@ class OrderController extends PrestaShopAdminController
 
         $updateOrderStatusForm = $this->formFactory->createNamed(
             'update_order_status',
-            UpdateOrderStatusType::class, [
+            UpdateOrderStatusType::class,
+            [
                 'new_order_status_id' => $orderForViewing->getHistory()->getCurrentOrderStatusId(),
             ]
         );
         $updateOrderStatusActionBarForm = $this->formFactory->createNamed(
             'update_order_status_action_bar',
-            UpdateOrderStatusType::class, [
+            UpdateOrderStatusType::class,
+            [
                 'new_order_status_id' => $orderForViewing->getHistory()->getCurrentOrderStatusId(),
             ]
         );
@@ -492,7 +456,7 @@ class OrderController extends PrestaShopAdminController
         $changeOrderAddressForm = null;
         $privateNoteForm = null;
 
-        if (null !== $orderForViewing->getCustomer() && $orderForViewing->getCustomer()->getId() !== 0) {
+        if ($orderForViewing->getCustomer() !== null && $orderForViewing->getCustomer()->getId() !== 0) {
             $changeOrderAddressForm = $this->createForm(ChangeOrderAddressType::class, [], [
                 'customer_id' => $orderForViewing->getCustomer()->getId(),
             ]);
@@ -550,12 +514,12 @@ class OrderController extends PrestaShopAdminController
 
         $paginationNum = ($this->getConfiguration()->get('PS_ORDER_PRODUCTS_NB_PER_PAGE') ?? self::DEFAULT_PRODUCTS_NUMBER);
         $paginationNumOptions = self::PRODUCTS_PAGINATION_OPTIONS;
-        if (!in_array($paginationNum, $paginationNumOptions)) {
+        if (! \in_array($paginationNum, $paginationNumOptions, true)) {
             $paginationNumOptions[] = $paginationNum;
         }
         sort($paginationNumOptions);
 
-        $metatitle = sprintf(
+        $metatitle = \sprintf(
             '%s %s %s',
             $this->trans('Orders', [], 'Admin.Orderscustomers.Feature'),
             $this->getConfiguration()->get('PS_NAVIGATION_PIPE') ?? '>',
@@ -583,7 +547,7 @@ class OrderController extends PrestaShopAdminController
         $carriersLabel = $this->trans(
             'Carriers ([1]%carriers_count%[/1])',
             [
-                '%carriers_count%' => count($orderForViewing->getShipping()->getCarriers()),
+                '%carriers_count%' => \count($orderForViewing->getShipping()->getCarriers()),
                 '[1]' => '<span class="count">',
                 '[/1]' => '</span>',
             ],
@@ -642,12 +606,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', 'AdminOrders')", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function mergeShipmentAction(int $orderId, Request $request): RedirectResponse
     {
@@ -657,7 +615,7 @@ class OrderController extends PrestaShopAdminController
         $form = $this->createForm(MergeShipmentType::class, null, $formData);
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted() || !$form->isValid()) {
+        if (! $form->isSubmitted() || ! $form->isValid()) {
             $this->addFlash('error', 'Invalid merge shipment form.');
 
             return $this->redirectToRoute('admin_orders_view', ['orderId' => $orderId]);
@@ -694,38 +652,17 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    private function getMergeFormData(int $orderId, int $shipmentId): array
-    {
-        /** @var OrderShipmentProduct[] $products */
-        $products = $this->dispatchQuery(new GetShipmentProducts($shipmentId));
-
-        /** @var OrderShipment[] $shipments */
-        $shipments = $this->dispatchQuery(new GetOrderShipments($orderId));
-
-        $shipments = array_filter($shipments, fn (OrderShipment $s): bool => $s->getId() !== $shipmentId);
-
-        foreach ($products as &$p) {
-            $p = $p->toArray();
-        }
-
-        return [
-            'products' => $products,
-            'shipments' => $shipments,
-        ];
-    }
-
     /**
-     * @param int $orderId
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function partialRefundAction(
         int $orderId,
         Request $request,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')] FormBuilderInterface $formBuilder,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.partial_refund_form_handler')] FormHandlerInterface $formHandler,
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')]
+        FormBuilderInterface $formBuilder,
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.partial_refund_form_handler')]
+        FormHandlerInterface $formHandler,
     ) {
         $form = $formBuilder->getFormFor($orderId);
 
@@ -749,17 +686,16 @@ class OrderController extends PrestaShopAdminController
     }
 
     /**
-     * @param int $orderId
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))")]
     public function standardRefundAction(
         int $orderId,
         Request $request,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')] FormBuilderInterface $formBuilder,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.standard_refund_form_handler')] FormHandlerInterface $formHandler,
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')]
+        FormBuilderInterface $formBuilder,
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.standard_refund_form_handler')]
+        FormHandlerInterface $formHandler,
     ) {
         $form = $formBuilder->getFormFor($orderId);
 
@@ -783,17 +719,16 @@ class OrderController extends PrestaShopAdminController
     }
 
     /**
-     * @param int $orderId
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))")]
     public function returnProductAction(
         int $orderId,
         Request $request,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')] FormBuilderInterface $formBuilder,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.return_product_form_handler')] FormHandlerInterface $formHandler,
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')]
+        FormBuilderInterface $formBuilder,
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.return_product_form_handler')]
+        FormHandlerInterface $formHandler,
     ) {
         $form = $formBuilder->getFormFor($orderId);
 
@@ -816,38 +751,13 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param OrderForViewing $orderForViewing
-     */
-    private function handleOutOfStockProduct(OrderForViewing $orderForViewing): void
-    {
-        $isStockManagementEnabled = (bool) $this->getConfiguration()->get('PS_STOCK_MANAGEMENT');
-        if (!$isStockManagementEnabled || $orderForViewing->isDelivered() || $orderForViewing->isShipped()) {
-            return;
-        }
-
-        foreach ($orderForViewing->getProducts()->getProducts() as $product) {
-            if ($product->getAvailableQuantity() <= 0) {
-                $this->addFlash(
-                    'warning',
-                    $this->trans('This product is out of stock:', [], 'Admin.Orderscustomers.Notification') . ' ' . $product->getName()
-                );
-            }
-        }
-    }
-
-    /**
-     * @param int $orderId
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function addProductAction(
         int $orderId,
         Request $request,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')] FormBuilderInterface $formBuilder,
-        CurrencyDataProvider $currencyDataProvider
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')]
+        FormBuilderInterface $formBuilder,
+        CurrencyDataProvider $currencyDataProvider,
     ): Response {
         /** @var OrderForViewing $orderForViewing */
         $orderForViewing = $this->dispatchQuery(new GetOrderForViewing($orderId, QuerySorting::DESC));
@@ -872,7 +782,7 @@ class OrderController extends PrestaShopAdminController
             } else {
                 $hasFreeShipping = null;
                 if ($request->request->has('free_shipping')) {
-                    $hasFreeShipping = (bool) filter_var($request->get('free_shipping'), FILTER_VALIDATE_BOOLEAN);
+                    $hasFreeShipping = (bool) filter_var($request->get('free_shipping'), \FILTER_VALIDATE_BOOLEAN);
                 }
                 $addProductCommand = AddProductToOrderCommand::withNewInvoice(
                     $orderId,
@@ -926,11 +836,6 @@ class OrderController extends PrestaShopAdminController
         return new Response($addedGridRows);
     }
 
-    /**
-     * @param int $orderId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function getProductPricesAction(int $orderId): Response
     {
@@ -961,13 +866,11 @@ class OrderController extends PrestaShopAdminController
         return $this->json($result);
     }
 
-    /**
-     * @param int $orderId
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function getInvoicesAction(
         int $orderId,
-        #[Autowire(service: 'prestashop.adapter.form.choice_provider.order_invoice_by_id')] ConfigurableFormChoiceProviderInterface $choiceProvider,
+        #[Autowire(service: 'prestashop.adapter.form.choice_provider.order_invoice_by_id')]
+        ConfigurableFormChoiceProviderInterface $choiceProvider,
     ) {
         $choices = $choiceProvider->getChoices([
             'id_order' => $orderId,
@@ -980,9 +883,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function getDocumentsAction(int $orderId)
     {
@@ -990,16 +890,13 @@ class OrderController extends PrestaShopAdminController
         $orderForViewing = $this->dispatchQuery(new GetOrderForViewing($orderId));
 
         return $this->json([
-            'total' => count($orderForViewing->getDocuments()->getDocuments()),
+            'total' => \count($orderForViewing->getDocuments()->getDocuments()),
             'html' => $this->render('@PrestaShop/Admin/Sell/Order/Order/Blocks/View/documents.html.twig', [
                 'orderForViewing' => $orderForViewing,
             ])->getContent(),
         ]);
     }
 
-    /**
-     * @param int $orderId
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function getShippingAction(int $orderId)
     {
@@ -1007,19 +904,13 @@ class OrderController extends PrestaShopAdminController
         $orderForViewing = $this->dispatchQuery(new GetOrderForViewing($orderId));
 
         return $this->json([
-            'total' => count($orderForViewing->getShipping()->getCarriers()),
+            'total' => \count($orderForViewing->getShipping()->getCarriers()),
             'html' => $this->render('@PrestaShop/Admin/Sell/Order/Order/Blocks/View/shipping.html.twig', [
                 'orderForViewing' => $orderForViewing,
             ])->getContent(),
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function updateShippingAction(int $orderId, Request $request): RedirectResponse
     {
@@ -1061,12 +952,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param int $orderCartRuleId
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', 'AdminOrders')", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function removeCartRuleAction(int $orderId, int $orderCartRuleId): RedirectResponse
     {
@@ -1081,13 +966,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param int $orderInvoiceId
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', 'AdminOrders')", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function updateInvoiceNoteAction(int $orderId, int $orderInvoiceId, Request $request): RedirectResponse
     {
@@ -1109,20 +987,14 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param int $orderDetailId
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function updateProductAction(
         int $orderId,
         int $orderDetailId,
         Request $request,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')] FormBuilderInterface $formBuilder,
-        CurrencyDataProvider $currencyDataProvider
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')]
+        FormBuilderInterface $formBuilder,
+        CurrencyDataProvider $currencyDataProvider,
     ): Response {
         try {
             $this->dispatchCommand(
@@ -1146,10 +1018,10 @@ class OrderController extends PrestaShopAdminController
         $orderForViewing = $this->dispatchQuery(new GetOrderForViewing($orderId, QuerySorting::DESC));
 
         $products = $orderForViewing->getProducts()->getProducts();
-        $product = array_reduce($products, fn($result, OrderProductForViewing $item) => $item->getOrderDetailId() == $orderDetailId ? $item : $result);
+        $product = array_reduce($products, fn ($result, OrderProductForViewing $item) => $item->getOrderDetailId() === $orderDetailId ? $item : $result);
 
         // The whole product row has been removed so we return an empty response
-        if (null === $product) {
+        if ($product === null) {
             return new Response('');
         }
 
@@ -1168,12 +1040,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', 'AdminOrders')", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function addCartRuleAction(int $orderId, Request $request): RedirectResponse
     {
@@ -1213,12 +1079,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function updateStatusAction(int $orderId, Request $request): RedirectResponse
     {
@@ -1228,7 +1088,7 @@ class OrderController extends PrestaShopAdminController
         );
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted() || !$form->isValid()) {
+        if (! $form->isSubmitted() || ! $form->isValid()) {
             // Check if the form is submit from the action bar
             $form = $this->formFactory->createNamed(
                 'update_order_status_action_bar',
@@ -1248,11 +1108,6 @@ class OrderController extends PrestaShopAdminController
 
     /**
      * Updates order status directly from list page.
-     *
-     * @param int $orderId
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function updateStatusFromListAction(int $orderId, Request $request): RedirectResponse
@@ -1262,12 +1117,6 @@ class OrderController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_orders_index');
     }
 
-    /**
-     * @param int $orderId
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', 'AdminOrders')", message: 'You do not have permission to edit this.', redirectQueryParamsToKeep: ['orderId'], redirectRoute: 'admin_orders_view')]
     public function addPaymentAction(
         int $orderId,
@@ -1312,11 +1161,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function previewAction(int $orderId): JsonResponse
     {
@@ -1342,8 +1186,6 @@ class OrderController extends PrestaShopAdminController
     /**
      * Duplicates cart from specified order
      *
-     * @param int $orderId
-     *
      * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
@@ -1359,18 +1201,12 @@ class OrderController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @param Request $request
-     * @param int $orderId
-     *
-     * @return Response
-     */
     #[DemoRestricted(redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'])]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function sendMessageAction(
         Request $request,
         int $orderId,
-        RouterInterface $router
+        RouterInterface $router,
     ): Response {
         $orderMessageForm = $this->createForm(OrderMessageType::class);
 
@@ -1383,7 +1219,7 @@ class OrderController extends PrestaShopAdminController
                 $this->dispatchCommand(new AddOrderCustomerMessageCommand(
                     $orderId,
                     $data['message'],
-                    !$data['is_displayed_to_customer']
+                    ! $data['is_displayed_to_customer']
                 ));
 
                 $this->addFlash(
@@ -1414,7 +1250,7 @@ class OrderController extends PrestaShopAdminController
 
         $routesCollection = $router->getRouteCollection();
 
-        if (!$orderMessageForm->isValid()
+        if (! $orderMessageForm->isValid()
             && $viewRoute = $routesCollection->get('admin_orders_view')
         ) {
             $attributes = $viewRoute->getDefaults();
@@ -1431,21 +1267,16 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', 'AdminOrders')", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function changeCustomerAddressAction(Request $request): RedirectResponse
     {
         $orderId = $request->query->get('orderId');
-        if (!$orderId) {
+        if (! $orderId) {
             return $this->redirectToRoute('admin_orders_index');
         }
 
         $customerId = $request->query->get('customerId');
-        if (!$customerId) {
+        if (! $customerId) {
             return $this->redirectToRoute('admin_orders_index');
         }
 
@@ -1454,7 +1285,7 @@ class OrderController extends PrestaShopAdminController
         ]);
         $changeOrderAddressForm->handleRequest($request);
 
-        if (!$changeOrderAddressForm->isSubmitted() || !$changeOrderAddressForm->isValid()) {
+        if (! $changeOrderAddressForm->isSubmitted() || ! $changeOrderAddressForm->isValid()) {
             return $this->redirectToRoute('admin_orders_view', [
                 'orderId' => $orderId,
             ]);
@@ -1481,19 +1312,13 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function changeCurrencyAction(int $orderId, Request $request): RedirectResponse
     {
         $changeOrderCurrencyForm = $this->createForm(ChangeOrderCurrencyType::class);
         $changeOrderCurrencyForm->handleRequest($request);
 
-        if (!$changeOrderCurrencyForm->isSubmitted() || !$changeOrderCurrencyForm->isValid()) {
+        if (! $changeOrderCurrencyForm->isSubmitted() || ! $changeOrderCurrencyForm->isValid()) {
             return $this->redirectToRoute('admin_orders_view', [
                 'orderId' => $orderId,
             ]);
@@ -1516,13 +1341,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param int $orderStatusId
-     * @param int $orderHistoryId
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', 'AdminOrders')", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function resendEmailAction(int $orderId, int $orderStatusId, int $orderHistoryId): RedirectResponse
     {
@@ -1544,12 +1362,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @param int $orderDetailId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function deleteProductAction(int $orderId, int $orderDetailId): JsonResponse
     {
@@ -1567,11 +1379,6 @@ class OrderController extends PrestaShopAdminController
         }
     }
 
-    /**
-     * @param int $orderId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function getDiscountsAction(int $orderId): Response
     {
@@ -1584,11 +1391,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function getPricesAction(int $orderId): JsonResponse
     {
@@ -1607,11 +1409,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $orderId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function getPaymentsAction(int $orderId): Response
     {
@@ -1631,16 +1428,12 @@ class OrderController extends PrestaShopAdminController
         }
     }
 
-    /**
-     * @param int $orderId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function getProductsListAction(
         int $orderId,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')] FormBuilderInterface $formBuilder,
-        CurrencyDataProvider $currencyDataProvider
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')]
+        FormBuilderInterface $formBuilder,
+        CurrencyDataProvider $currencyDataProvider,
     ): Response {
         /** @var OrderForViewing $orderForViewing */
         $orderForViewing = $this->dispatchQuery(new GetOrderForViewing($orderId, QuerySorting::DESC));
@@ -1651,7 +1444,7 @@ class OrderController extends PrestaShopAdminController
 
         $paginationNum = ($this->getConfiguration()->get('PS_ORDER_PRODUCTS_NB_PER_PAGE') ?? self::DEFAULT_PRODUCTS_NUMBER);
         $paginationNumOptions = self::PRODUCTS_PAGINATION_OPTIONS;
-        if (!in_array($paginationNum, $paginationNumOptions)) {
+        if (! \in_array($paginationNum, $paginationNumOptions, true)) {
             $paginationNumOptions[] = $paginationNum;
         }
         sort($paginationNumOptions);
@@ -1659,8 +1452,8 @@ class OrderController extends PrestaShopAdminController
         $isColumnLocationDisplayed = false;
         $isColumnRefundedDisplayed = false;
 
-        foreach (array_slice($orderForViewing->getProducts()->getProducts(), $paginationNum) as $product) {
-            if (!empty($product->getLocation())) {
+        foreach (\array_slice($orderForViewing->getProducts()->getProducts(), $paginationNum) as $product) {
+            if (! empty($product->getLocation())) {
                 $isColumnLocationDisplayed = true;
             }
             if ($product->getQuantityRefunded() > 0) {
@@ -1681,10 +1474,6 @@ class OrderController extends PrestaShopAdminController
 
     /**
      * Generates invoice for given order
-     *
-     * @param int $orderId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to generate this.')]
     public function generateInvoiceAction(int $orderId): RedirectResponse
@@ -1704,10 +1493,6 @@ class OrderController extends PrestaShopAdminController
 
     /**
      * Sends email with process order link to customer
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function sendProcessOrderEmailAction(Request $request): JsonResponse
@@ -1727,17 +1512,16 @@ class OrderController extends PrestaShopAdminController
     }
 
     /**
-     * @param int $orderId
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_view', redirectQueryParamsToKeep: ['orderId'], message: 'You do not have permission to edit this.')]
     public function cancellationAction(
         int $orderId,
         Request $request,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')] FormBuilderInterface $formBuilder,
-        #[Autowire(service: 'prestashop.core.form.identifiable_object.cancellation_form_handler')] FormHandlerInterface $formHandler,
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.cancel_product_form_builder')]
+        FormBuilderInterface $formBuilder,
+        #[Autowire(service: 'prestashop.core.form.identifiable_object.cancellation_form_handler')]
+        FormHandlerInterface $formHandler,
     ) {
         $form = $formBuilder->getFormFor($orderId);
         try {
@@ -1759,11 +1543,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function configureProductPaginationAction(Request $request): JsonResponse
     {
@@ -1787,23 +1566,20 @@ class OrderController extends PrestaShopAdminController
     /**
      * Method for downloading customization picture
      *
-     * @param int $orderId
-     * @param string $value
-     *
      * @return BinaryFileResponse|RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function displayCustomizationImageAction(
         int $orderId,
         string $value,
-        LegacyContext $context
+        LegacyContext $context,
     ) {
         $uploadDir = $context->getUploadDirectory();
         $filePath = $uploadDir . $value;
         $filesystem = new Filesystem();
 
         try {
-            if (!$filesystem->exists($filePath)) {
+            if (! $filesystem->exists($filePath)) {
                 $this->addFlash('error', $this->trans('The product customization picture could not be found.', [], 'Admin.Notifications.Error'));
 
                 return $this->redirectToRoute('admin_orders_view', [
@@ -1812,7 +1588,7 @@ class OrderController extends PrestaShopAdminController
             }
 
             $imageFile = new File($filePath);
-            $fileName = sprintf('%s-customization-%s.%s', $orderId, $value, $imageFile->guessExtension() ?? 'jpg');
+            $fileName = \sprintf('%s-customization-%s.%s', $orderId, $value, $imageFile->guessExtension() ?? 'jpg');
 
             return $this->file($filePath, $fileName);
         } catch (Exception $e) {
@@ -1826,9 +1602,6 @@ class OrderController extends PrestaShopAdminController
 
     /**
      * Set order internal note.
-     *
-     * @param mixed $orderId
-     * @param Request $request
      *
      * @return Response
      */
@@ -1868,11 +1641,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to perform this search.')]
     public function searchProductsAction(Request $request): JsonResponse
     {
@@ -1908,11 +1676,70 @@ class OrderController extends PrestaShopAdminController
         }
     }
 
+    private function getOrderToolbarButtons(): array
+    {
+        $toolbarButtons = [];
+
+        $isSingleShopContext = $this->getShopContext()->getShopConstraint()->isSingleShopContext();
+
+        $toolbarButtons['add'] = [
+            'href' => $this->generateUrl('admin_orders_create'),
+            'desc' => $this->trans('Add new order', [], 'Admin.Orderscustomers.Feature'),
+            'icon' => 'add_circle_outline',
+            'disabled' => ! $isSingleShopContext,
+        ];
+
+        if (! $isSingleShopContext) {
+            $toolbarButtons['add']['help'] = $this->trans(
+                'You can use this feature in a single-store context only. Switch contexts to enable it.',
+                [],
+                'Admin.Orderscustomers.Feature'
+            );
+            $toolbarButtons['add']['href'] = '#';
+        }
+
+        return $toolbarButtons;
+    }
+
+    private function getMergeFormData(int $orderId, int $shipmentId): array
+    {
+        /** @var OrderShipmentProduct[] $products */
+        $products = $this->dispatchQuery(new GetShipmentProducts($shipmentId));
+
+        /** @var OrderShipment[] $shipments */
+        $shipments = $this->dispatchQuery(new GetOrderShipments($orderId));
+
+        $shipments = array_filter($shipments, fn (OrderShipment $s): bool => $s->getId() !== $shipmentId);
+
+        foreach ($products as &$p) {
+            $p = $p->toArray();
+        }
+
+        return [
+            'products' => $products,
+            'shipments' => $shipments,
+        ];
+    }
+
+    private function handleOutOfStockProduct(OrderForViewing $orderForViewing): void
+    {
+        $isStockManagementEnabled = (bool) $this->getConfiguration()->get('PS_STOCK_MANAGEMENT');
+        if (! $isStockManagementEnabled || $orderForViewing->isDelivered() || $orderForViewing->isShipped()) {
+            return;
+        }
+
+        foreach ($orderForViewing->getProducts()->getProducts() as $product) {
+            if ($product->getAvailableQuantity() <= 0) {
+                $this->addFlash(
+                    'warning',
+                    $this->trans('This product is out of stock:', [], 'Admin.Orderscustomers.Notification') . ' ' . $product->getName()
+                );
+            }
+        }
+    }
+
     /**
      * Initializes order status update
-     *
-     * @param int $orderId
-     * @param int $orderStatusId
      */
     private function handleOrderStatusUpdate(int $orderId, int $orderStatusId): void
     {
@@ -1931,11 +1758,6 @@ class OrderController extends PrestaShopAdminController
         }
     }
 
-    /**
-     * @param Exception $e
-     *
-     * @return array
-     */
     private function getErrorMessages(Exception $e): array
     {
         $refundableQuantity = 0;
@@ -2120,7 +1942,7 @@ class OrderController extends PrestaShopAdminController
                 'Admin.Orderscustomers.Notification'
             ),
             OrderConstraintException::class => [
-                OrderConstraintException::INVALID_PAYMENT_METHOD => sprintf(
+                OrderConstraintException::INVALID_PAYMENT_METHOD => \sprintf(
                     '%s %s %s',
                     $this->trans(
                         'The selected payment method is invalid.',
@@ -2138,9 +1960,6 @@ class OrderController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param ChangeOrderStatusException $e
-     */
     private function handleChangeOrderStatusException(ChangeOrderStatusException $e): void
     {
         $orderIds = array_merge(
@@ -2185,14 +2004,14 @@ class OrderController extends PrestaShopAdminController
                 CustomerMessageConstraintException::MISSING_MESSAGE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Message', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Message', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CustomerMessageConstraintException::INVALID_MESSAGE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Message', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Message', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),

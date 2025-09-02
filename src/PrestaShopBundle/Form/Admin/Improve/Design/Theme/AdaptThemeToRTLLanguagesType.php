@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,11 @@ class AdaptThemeToRTLLanguagesType extends AbstractType
     /**
      * @param string[] $themeChoices
      */
-    public function __construct(private readonly array $themeChoices)
-    {
+    public function __construct(
+        private readonly array $themeChoices,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

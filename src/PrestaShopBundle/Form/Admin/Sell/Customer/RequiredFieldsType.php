@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,11 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class RequiredFieldsType extends AbstractType
 {
-    /**
-     * @param array $customerRequiredFieldsChoices
-     */
-    public function __construct(private readonly array $customerRequiredFieldsChoices)
-    {
+    public function __construct(
+        private readonly array $customerRequiredFieldsChoices,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

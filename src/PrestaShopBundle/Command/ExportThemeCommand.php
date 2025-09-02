@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,7 +44,7 @@ class ExportThemeCommand extends Command
     public function __construct(
         private readonly ThemeRepository $themeRepository,
         private readonly ThemeExporter $themeExporter,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
         parent::__construct();
     }

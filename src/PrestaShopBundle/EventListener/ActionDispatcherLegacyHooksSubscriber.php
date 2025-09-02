@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,18 +41,23 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class ActionDispatcherLegacyHooksSubscriber implements EventSubscriberInterface
 {
     public const DISPATCHER_BEFORE_ACTION = 'actionDispatcherBefore';
+
     public const DISPATCHER_AFTER_ACTION = 'actionDispatcherAfter';
 
     /**
      * List of available front controllers types.
      */
     public const FRONT_OFFICE_CONTROLLER = 1;
+
     public const BACK_OFFICE_CONTROLLER = 2;
+
     public const MODULE_CONTROLLER = 3;
+
     public const NA_CONTROLLER = 0;
 
-    public function __construct(private readonly HookDispatcherInterface $hookDispatcher)
-    {
+    public function __construct(
+        private readonly HookDispatcherInterface $hookDispatcher,
+    ) {
     }
 
     public static function getSubscribedEvents()
@@ -68,13 +74,13 @@ class ActionDispatcherLegacyHooksSubscriber implements EventSubscriberInterface
 
     public function callActionDispatcherBeforeHook(ControllerEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
         $requestAttributes = $event->getRequest()->attributes;
         $controllerType = self::NA_CONTROLLER;
-        $controller = is_array($event->getController())
+        $controller = \is_array($event->getController())
             ? $event->getController()[0]
             : $event->getController()
         ;
@@ -93,7 +99,7 @@ class ActionDispatcherLegacyHooksSubscriber implements EventSubscriberInterface
 
     public function callActionDispatcherAfterHook(ResponseEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 

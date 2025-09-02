@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -93,7 +94,7 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
     {
         // Add context parameters and URI variables into the data
         $data = array_merge($data, $this->contextParametersProvider->getContextParameters());
-        if (!empty($context['uri_variables'])) {
+        if (! empty($context['uri_variables'])) {
             $data = array_merge($data, $context['uri_variables']);
         }
 
@@ -105,7 +106,7 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
         $this->addBooleanCastCallbacks($type, $context);
 
         // Update localized value to be adapted for denormalization
-        if (is_array($data)) {
+        if (\is_array($data)) {
             $data = $this->updateLocalizedValues($data, $type, true, $context);
         }
 
@@ -123,7 +124,7 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
         $normalizedData = $this->decorated->normalize($object, $format, $context);
 
         // Then update the localized values to use the appropriate indexes
-        if (is_object($object) && class_exists($object::class)) {
+        if (\is_object($object) && class_exists($object::class)) {
             $normalizedData = $this->updateLocalizedValues($normalizedData, $object::class, false, $context);
         }
 
@@ -140,8 +141,8 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
 
     public function deserialize(mixed $data, string $type, string $format, array $context = []): mixed
     {
-        if (!$this->supportsDecoding($format, $context)) {
-            throw new UnsupportedFormatException(sprintf('Deserialization for the format "%s" is not supported.', $format));
+        if (! $this->supportsDecoding($format, $context)) {
+            throw new UnsupportedFormatException(\sprintf('Deserialization for the format "%s" is not supported.', $format));
         }
 
         $data = $this->decode($data, $format, $context);
@@ -155,9 +156,9 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
     protected function updateLocalizedValues(array $data, string $type, bool $denormalize, array $context = []): array
     {
         $localizedAttributesContext = $this->localizedValueUpdater->getLocalizedAttributesContext($type);
-        if (!empty($localizedAttributesContext)) {
+        if (! empty($localizedAttributesContext)) {
             foreach ($localizedAttributesContext as $parameterName => $attributeContext) {
-                if (!empty($data[$parameterName])) {
+                if (! empty($data[$parameterName])) {
                     if ($denormalize) {
                         $data[$parameterName] = $this->localizedValueUpdater->denormalizeLocalizedValue(
                             $data[$parameterName],
@@ -194,19 +195,19 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
             return;
         }
 
-        if (!$this->classMetadataFactory->hasMetadataFor($type)) {
+        if (! $this->classMetadataFactory->hasMetadataFor($type)) {
             return;
         }
 
         $metadata = $this->classMetadataFactory->getMetadataFor($type);
         foreach ($metadata->getAttributesMetadata() as $attributeMetadata) {
-            if (!$metadata->getReflectionClass()->hasProperty($attributeMetadata->getName())) {
+            if (! $metadata->getReflectionClass()->hasProperty($attributeMetadata->getName())) {
                 continue;
             }
 
             $reflectionProperty = $metadata->getReflectionClass()->getProperty($attributeMetadata->getName());
             if ($reflectionProperty->getType() instanceof ReflectionNamedType && $reflectionProperty->getType()->getName() === 'bool') {
-                $context[AbstractNormalizer::CALLBACKS][$attributeMetadata->getName()] = fn (mixed $value): bool => filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                $context[AbstractNormalizer::CALLBACKS][$attributeMetadata->getName()] = fn (mixed $value): bool => filter_var($value, \FILTER_VALIDATE_BOOLEAN);
             }
         }
     }
@@ -218,7 +219,7 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
      */
     protected function isEmptyBodyAllowed(string $data, array $context): bool
     {
-        if (!empty($data)) {
+        if (! empty($data)) {
             return false;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,7 +48,7 @@ class DomainNormalizer
         $normalizedDomain = preg_replace('/\./', '', $domain, 2);
 
         if ($normalizedDomain === null) {
-            throw new RuntimeException(sprintf('An error occurred while normalizing domain "%s"', $domain));
+            throw new RuntimeException(\sprintf('An error occurred while normalizing domain "%s"', $domain));
         }
 
         return $normalizedDomain;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,8 +39,6 @@ use Symfony\Component\Routing\Route;
 final class SecurityAttributeLinter implements RouteLinterInterface
 {
     /**
-     * @param Route $route
-     *
      * @return AdminSecurity[]
      *
      * @throws ReflectionException
@@ -50,7 +49,7 @@ final class SecurityAttributeLinter implements RouteLinterInterface
         $controllerAndMethod = $this->extractControllerAndMethodNamesFromRoute($route);
 
         if ($controllerAndMethod === null) {
-            throw new LinterException(sprintf('"%s" cannot be parsed', $route->getDefault('_controller')));
+            throw new LinterException(\sprintf('"%s" cannot be parsed', $route->getDefault('_controller')));
         }
 
         $reflection = new ReflectionMethod(
@@ -60,31 +59,23 @@ final class SecurityAttributeLinter implements RouteLinterInterface
 
         $attributes = $reflection->getAttributes(AdminSecurity::class);
 
-        if (count($attributes) == 0) {
-            throw new LinterException(sprintf('"%s:%s" does not have AdminSecurity attribute configured', $controllerAndMethod['controller'], $controllerAndMethod['method']));
+        if (\count($attributes) === 0) {
+            throw new LinterException(\sprintf('"%s:%s" does not have AdminSecurity attribute configured', $controllerAndMethod['controller'], $controllerAndMethod['method']));
         }
 
         return array_map(fn ($value): AdminSecurity => $value->newInstance(), $attributes);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function lint($routeName, Route $route): void
     {
         $this->getRouteSecurityAttributes($route);
     }
 
-    /**
-     * @param Route $route
-     *
-     * @return array|null
-     */
     private function extractControllerAndMethodNamesFromRoute(Route $route): ?array
     {
         $controller = $route->getDefault('_controller');
 
-        if (!str_contains((string) $controller, '::')) {
+        if (! str_contains((string) $controller, '::')) {
             return null;
         }
 

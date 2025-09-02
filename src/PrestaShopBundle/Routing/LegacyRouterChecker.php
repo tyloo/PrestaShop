@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,7 +59,7 @@ class LegacyRouterChecker
 
     public function check(Request $request): bool
     {
-        if (!$request->query->has('controller') && !$request->request->has('controller')) {
+        if (! $request->query->has('controller') && ! $request->request->has('controller')) {
             return false;
         }
 
@@ -71,33 +72,28 @@ class LegacyRouterChecker
         $queryController = $request->get('controller');
         $this->hookDispatcher->dispatchWithParameters('actionDispatcherBefore', ['controller_type' => Dispatcher::FC_ADMIN]);
         $tab = $this->tabRepository->findOneByClassName($queryController);
-        $isModule = $tab && !empty($tab->getModule());
+        $isModule = $tab && ! empty($tab->getModule());
 
         if ($isModule) {
             $moduleName = $tab->getModule();
             $controllers = Dispatcher::getControllers(_PS_MODULE_DIR_ . $moduleName . '/controllers/admin/');
-            if (!isset($controllers[strtolower((string) $queryController)])) {
-                throw new NotFoundHttpException(sprintf(
-                    'Controller %s was not found. It belonged to module %s, make sure it is still installed.',
-                    $queryController,
-                    $moduleName
-                ));
+            if (! isset($controllers[mb_strtolower((string) $queryController)])) {
+                throw new NotFoundHttpException(\sprintf('Controller %s was not found. It belonged to module %s, make sure it is still installed.', $queryController, $moduleName));
+            }
+            $controllerName = $controllers[mb_strtolower((string) $queryController)];
+            // Controllers in modules can be named AdminXXX.php or AdminXXXController.php
+            include_once _PS_MODULE_DIR_ . "{$moduleName}/controllers/admin/$controllerName.php";
+            if (file_exists(
+                _PS_OVERRIDE_DIR_ . "modules/{$moduleName}/controllers/admin/$controllerName.php"
+            )) {
+                include_once _PS_OVERRIDE_DIR_ . "modules/{$moduleName}/controllers/admin/$controllerName.php";
+                $controllerClass = $controllerName . (
+                    mb_strpos($controllerName, 'Controller') ? 'Override' : 'ControllerOverride'
+                );
             } else {
-                $controllerName = $controllers[strtolower((string) $queryController)];
-                // Controllers in modules can be named AdminXXX.php or AdminXXXController.php
-                include_once _PS_MODULE_DIR_ . "{$moduleName}/controllers/admin/$controllerName.php";
-                if (file_exists(
-                    _PS_OVERRIDE_DIR_ . "modules/{$moduleName}/controllers/admin/$controllerName.php"
-                )) {
-                    include_once _PS_OVERRIDE_DIR_ . "modules/{$moduleName}/controllers/admin/$controllerName.php";
-                    $controllerClass = $controllerName . (
-                        strpos($controllerName, 'Controller') ? 'Override' : 'ControllerOverride'
-                    );
-                } else {
-                    $controllerClass = $controllerName . (
-                        strpos($controllerName, 'Controller') ? '' : 'Controller'
-                    );
-                }
+                $controllerClass = $controllerName . (
+                    mb_strpos($controllerName, 'Controller') ? '' : 'Controller'
+                );
             }
         } else {
             $controllers = Dispatcher::getControllers(
@@ -110,10 +106,10 @@ class LegacyRouterChecker
             // Controller not found, previously the legacy Dispatcher rendered the first child if present which doesn't make sense.
             // It's clearer to actually return a not found exception, for now the dispatcher is still used as fallback in index.php
             // but when it's cleared and only Symfony handles the whole routing then we can display a proper not found Symfony page
-            if (!isset($controllers[strtolower((string) $queryController)])) {
+            if (! isset($controllers[mb_strtolower((string) $queryController)])) {
                 $controllerClass = 'AdminNotFoundController';
             } else {
-                $controllerClass = $controllers[strtolower((string) $queryController)];
+                $controllerClass = $controllers[mb_strtolower((string) $queryController)];
             }
             $controllerName = $queryController;
         }
@@ -141,7 +137,7 @@ class LegacyRouterChecker
 
         // Strip the ending Controller part
         if (str_ends_with((string) $controllerName, 'Controller')) {
-            $controllerName = substr((string) $controllerName, 0, -strlen('Controller'));
+            $controllerName = mb_substr((string) $controllerName, 0, -mb_strlen('Controller'));
         }
         $request->attributes->set(LegacyControllerConstants::CONTROLLER_NAME_ATTRIBUTE, $controllerName);
         $request->attributes->set(LegacyControllerConstants::CONTROLLER_ACTION_ATTRIBUTE, $this->getPermission($request, $controller->table ?? ''));
@@ -185,7 +181,7 @@ class LegacyRouterChecker
             $request->query->has('update' . $controllerTable) || $request->query->has('edit' . $controllerTable) => 'edit',
             $request->query->has('view' . $controllerTable) || $request->query->has('list' . $controllerTable) => 'view',
             $request->query->has('details' . $controllerTable) || $request->query->has('export' . $controllerTable) => 'view',
-            $request->query->has('action') && !empty($request->query->get('action')) => $request->query->get('action'),
+            $request->query->has('action') && ! empty($request->query->get('action')) => $request->query->get('action'),
             default => 'view',
         };
     }
@@ -196,8 +192,8 @@ class LegacyRouterChecker
         $cookie = $context->cookie;
         if ($cookie->shopContext && $context->employee->isLoggedBack()) {
             $split = explode('-', (string) $cookie->shopContext);
-            if (count($split) == 2) {
-                if ($split[0] == 'g') {
+            if (\count($split) === 2) {
+                if ($split[0] === 'g') {
                     if ($context->employee->hasAuthOnShopGroup((int) $split[1])) {
                         LegacyShop::setContext(LegacyShop::CONTEXT_GROUP, (int) $split[1]);
                     } else {

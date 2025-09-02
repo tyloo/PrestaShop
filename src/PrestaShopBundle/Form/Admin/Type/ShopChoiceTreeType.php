@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,19 +41,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ShopChoiceTreeType extends AbstractType
 {
-    /**
-     * @param FormChoiceProviderInterface $shopTreeChoiceProvider
-     * @param DataTransformerInterface $stringArrayToIntegerArrayDataTransformer
-     * @param ShopContextInterface $shopContext
-     * @param FeatureInterface $multiStoreFeature
-     */
-    public function __construct(private readonly FormChoiceProviderInterface $shopTreeChoiceProvider, private readonly DataTransformerInterface $stringArrayToIntegerArrayDataTransformer, private readonly ShopContextInterface $shopContext, private readonly FeatureInterface $multiStoreFeature)
-    {
+    public function __construct(
+        private readonly FormChoiceProviderInterface $shopTreeChoiceProvider,
+        private readonly DataTransformerInterface $stringArrayToIntegerArrayDataTransformer,
+        private readonly ShopContextInterface $shopContext,
+        private readonly FeatureInterface $multiStoreFeature,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->stringArrayToIntegerArrayDataTransformer);
@@ -60,9 +56,6 @@ class ShopChoiceTreeType extends AbstractType
         parent::buildForm($builder, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -80,9 +73,6 @@ class ShopChoiceTreeType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return MaterialChoiceTreeType::class;

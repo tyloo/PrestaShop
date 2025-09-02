@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,12 +48,12 @@ class DecimalNumberNormalizer implements DenormalizerInterface, NormalizerInterf
 
     public function supportsDenormalization($data, string $type, ?string $format = null)
     {
-        return DecimalNumber::class === $type;
+        return $type === DecimalNumber::class;
     }
 
     public function normalize($object, ?string $format = null, array $context = [])
     {
-        if (!($object instanceof DecimalNumber)) {
+        if (! ($object instanceof DecimalNumber)) {
             throw new InvalidArgumentException('Expected object to be a ' . DecimalNumber::class);
         }
 

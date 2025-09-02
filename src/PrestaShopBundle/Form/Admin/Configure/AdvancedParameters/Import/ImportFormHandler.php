@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ImportFormHandler implements ImportFormHandlerInterface
 {
     /**
-     * @param FormBuilderInterface $formBuilder
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param ImportFormDataProviderInterface $formDataProvider
      * @param string $hookName
      */
     public function __construct(
@@ -51,14 +49,10 @@ class ImportFormHandler implements ImportFormHandlerInterface
          */
         private readonly HookDispatcherInterface $hookDispatcher,
         private readonly ImportFormDataProviderInterface $formDataProvider,
-        private $hookName
-    )
-    {
+        private $hookName,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getForm(ImportConfigInterface $importConfig)
     {
         $this->formBuilder->setData($this->formDataProvider->getData($importConfig));
@@ -72,9 +66,6 @@ class ImportFormHandler implements ImportFormHandlerInterface
         return $this->formBuilder->getForm();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function save(array $data)
     {
         $errors = $this->formDataProvider->setData($data);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -86,14 +87,14 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
     protected array $constructorParameter = [];
 
     public function __construct(
-        protected readonly ClassMetadataFactoryInterface $classMetadataFactory
+        protected readonly ClassMetadataFactoryInterface $classMetadataFactory,
     ) {
         $this->inflector = InflectorFactory::create()->build();
     }
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = [])
     {
-        if (!$this->supportsDenormalization($data, $type)) {
+        if (! $this->supportsDenormalization($data, $type)) {
             throw new InvalidArgumentException('Cannot denormalize to ' . $type);
         }
 
@@ -115,7 +116,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
             }
         }
 
-        if (!empty($context[self::VALUE_OBJECT_RETURNED_AS_SCALAR])) {
+        if (! empty($context[self::VALUE_OBJECT_RETURNED_AS_SCALAR])) {
             return $parameterValue;
         }
 
@@ -124,7 +125,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
 
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null)
     {
-        if (!$this->isValueObjectType($type)) {
+        if (! $this->isValueObjectType($type)) {
             return false;
         }
 
@@ -132,7 +133,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
             return true;
         }
 
-        if (!is_array($data)) {
+        if (! \is_array($data)) {
             return false;
         }
 
@@ -148,11 +149,11 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
 
     public function normalize(mixed $object, ?string $format = null, array $context = [])
     {
-        if (!$this->isValueObject($object)) {
+        if (! $this->isValueObject($object)) {
             throw new InvalidArgumentException('Expected object to be a ValueObject');
         }
 
-        if (!empty($context[self::VALUE_OBJECT_RETURNED_AS_SCALAR])) {
+        if (! empty($context[self::VALUE_OBJECT_RETURNED_AS_SCALAR])) {
             return $object->getValue();
         }
 
@@ -177,8 +178,8 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
 
     protected function isValueObject(mixed $data): bool
     {
-        return is_object($data)
-            && !is_iterable($data)
+        return \is_object($data)
+            && ! is_iterable($data)
             && method_exists($data, 'getValue')
             // Check that ValueObject is part of the namespace
             && str_contains($data::class, 'ValueObject')
@@ -199,7 +200,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
         $constructorParameter = $this->getConstructorParameter($type);
 
         // If the type is not strict we assume it MAY match
-        if (!$constructorParameter || !$constructorParameter->hasType()) {
+        if (! $constructorParameter || ! $constructorParameter->hasType()) {
             return true;
         }
 
@@ -215,8 +216,8 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
 
     protected function getAllowedValueNames(string $type): array
     {
-        if (!isset($this->allowedNamesByType[$type])) {
-            $shortPropertyName = lcfirst(substr($type, strrpos($type, '\\') + 1));
+        if (! isset($this->allowedNamesByType[$type])) {
+            $shortPropertyName = lcfirst(mb_substr($type, mb_strrpos($type, '\\') + 1));
 
             $this->allowedNamesByType[$type] = [
                 $this->inflector->camelize($shortPropertyName),
@@ -224,10 +225,10 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
             ];
 
             $constructorParameter = $this->getConstructorParameter($type);
-            if ($constructorParameter && !in_array($constructorParameter->getName(), $this->allowedNamesByType[$type])) {
+            if ($constructorParameter && ! \in_array($constructorParameter->getName(), $this->allowedNamesByType[$type], true)) {
                 $this->allowedNamesByType[$type][] = $constructorParameter->getName();
             }
-            if (!in_array('value', $this->allowedNamesByType[$type])) {
+            if (! \in_array('value', $this->allowedNamesByType[$type], true)) {
                 $this->allowedNamesByType[$type][] = 'value';
             }
         }
@@ -237,19 +238,19 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
 
     protected function getConstructorParameter(object|string $type): ?ReflectionParameter
     {
-        $objectType = is_object($type) ? $type::class : $type;
-        if (!array_key_exists($objectType, $this->constructorParameter)) {
+        $objectType = \is_object($type) ? $type::class : $type;
+        if (! \array_key_exists($objectType, $this->constructorParameter)) {
             $metadata = $this->classMetadataFactory->getMetadataFor($type);
-            if (!$metadata->getReflectionClass()->getConstructor()) {
+            if (! $metadata->getReflectionClass()->getConstructor()) {
                 $this->constructorParameter[$objectType] = null;
             } elseif ($metadata->getReflectionClass()->getConstructor()->getNumberOfRequiredParameters() !== 1) {
                 // ValueObject are supposed to have only one required parameter (if the convention evolves, this normalizer should evolve too)
                 $this->constructorParameter[$objectType] = null;
             } else {
                 $parameter = $metadata->getReflectionClass()->getConstructor()->getParameters()[0];
-                if (!$parameter->hasType()) {
+                if (! $parameter->hasType()) {
                     $this->constructorParameter[$objectType] = $parameter;
-                } elseif (!($parameter->getType() instanceof ReflectionNamedType) || !$parameter->getType()->isBuiltin()) {
+                } elseif (! ($parameter->getType() instanceof ReflectionNamedType) || ! $parameter->getType()->isBuiltin()) {
                     $this->constructorParameter[$objectType] = null;
                 } else {
                     $this->constructorParameter[$objectType] = $parameter;

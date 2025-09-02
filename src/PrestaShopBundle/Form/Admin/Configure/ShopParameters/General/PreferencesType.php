@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,14 +43,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PreferencesType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param ConfigurationInterface $configuration
-     * @param bool $isShopFeatureEnabled
-     * @param bool $isSingleShopContext
-     * @param bool $isAllShopContext
-     */
     public function __construct(
         private readonly RequestStack $requestStack,
         TranslatorInterface $translator,
@@ -57,14 +50,11 @@ class PreferencesType extends TranslatorAwareType
         private readonly ConfigurationInterface $configuration,
         private readonly bool $isShopFeatureEnabled,
         private readonly bool $isSingleShopContext,
-        private readonly bool $isAllShopContext
+        private readonly bool $isAllShopContext,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $configuration = $this->configuration;
@@ -81,7 +71,7 @@ class PreferencesType extends TranslatorAwareType
 
         $builder
             ->add('enable_token', SwitchType::class, [
-                'disabled' => !$this->isContextDependantOptionEnabled(),
+                'disabled' => ! $this->isContextDependantOptionEnabled(),
                 'label' => $this->trans(
                     'Increase front office security',
                     'Admin.Shopparameters.Feature'
@@ -112,7 +102,9 @@ class PreferencesType extends TranslatorAwareType
                 ),
             ])
             ->add(
-                'price_round_mode', ChoiceType::class, [
+                'price_round_mode',
+                ChoiceType::class,
+                [
                     'placeholder' => false,
                     'choices' => [
                         'Round up away from zero, when it is half way there (recommended)' => $configuration->get('PS_ROUND_HALF_UP'),
@@ -127,7 +119,8 @@ class PreferencesType extends TranslatorAwareType
                         'You can choose among 6 different ways of rounding prices. "Round up away from zero ..." is the recommended behavior.',
                         'Admin.Shopparameters.Help'
                     ),
-                ])
+                ]
+            )
             ->add('price_round_type', ChoiceType::class, [
                 'placeholder' => false,
                 'choices' => [
@@ -142,29 +135,38 @@ class PreferencesType extends TranslatorAwareType
                 ),
             ])
             ->add(
-                'display_suppliers', SwitchType::class, [
+                'display_suppliers',
+                SwitchType::class,
+                [
                     'label' => $this->trans('Display suppliers', 'Admin.Shopparameters.Feature'),
                     'help' => $this->trans(
                         'Enable suppliers page on your front office even when its module is disabled.',
                         'Admin.Shopparameters.Help'
                     ),
-                ])
+                ]
+            )
             ->add(
-                'display_manufacturers', SwitchType::class, [
+                'display_manufacturers',
+                SwitchType::class,
+                [
                     'label' => $this->trans('Display brands', 'Admin.Shopparameters.Feature'),
                     'help' => $this->trans(
                         'Enable brands page on your front office even when its module is disabled.',
                         'Admin.Shopparameters.Help'
                     ),
-                ])
+                ]
+            )
             ->add(
-                'display_best_sellers', SwitchType::class, [
+                'display_best_sellers',
+                SwitchType::class,
+                [
                     'label' => $this->trans('Display best sellers', 'Admin.Shopparameters.Feature'),
                     'help' => $this->trans(
                         'Enable best sellers page on your front office even when its respective module is disabled.',
                         'Admin.Shopparameters.Help'
                     ),
-                ])
+                ]
+            )
             ->add('multishop_feature_active', SwitchType::class, [
                 // Disable the checkbox if multistore feature is active and at least 2 shops exist (@see PrestaShop/PrestaShop/Adapter/Feature/MultistoreFeature)
                 'disabled' => $this->isShopFeatureEnabled,
@@ -176,9 +178,6 @@ class PreferencesType extends TranslatorAwareType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -186,9 +185,6 @@ class PreferencesType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'preferences';
@@ -201,7 +197,7 @@ class PreferencesType extends TranslatorAwareType
      */
     protected function isContextDependantOptionEnabled()
     {
-        if (!$this->isShopFeatureEnabled && $this->isSingleShopContext) {
+        if (! $this->isShopFeatureEnabled && $this->isSingleShopContext) {
             return true;
         }
 

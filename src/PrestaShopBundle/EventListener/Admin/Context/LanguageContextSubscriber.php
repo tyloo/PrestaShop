@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,7 +70,7 @@ class LanguageContextSubscriber implements EventSubscriberInterface
 
     public function initDefaultLanguageContext(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
@@ -80,7 +81,7 @@ class LanguageContextSubscriber implements EventSubscriberInterface
 
     public function initLanguageContext(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 

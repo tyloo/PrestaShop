@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,16 +59,13 @@ class CombinationItemType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        protected \Currency $defaultCurrency,
+        protected Currency $defaultCurrency,
         private readonly FeatureInterface $multiStoreFeature,
-        private readonly int $contextShopId
+        private readonly int $contextShopId,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($this->multiStoreFeature->isActive()) {
@@ -224,9 +222,6 @@ class CombinationItemType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
@@ -235,8 +230,6 @@ class CombinationItemType extends TranslatorAwareType
 
     /**
      * @param FormInterface[] $children
-     *
-     * @return array
      */
     protected function getPlaceholderData(array $children): array
     {

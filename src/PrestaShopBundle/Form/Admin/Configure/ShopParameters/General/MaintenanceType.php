@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,23 +45,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class MaintenanceType extends TranslatorAwareType
 {
     /**
-     * MaintenanceType constructor.
-     *
-     * @param TranslatorInterface $translator
      * @param array<int, string> $locales
-     * @param string $currentIp
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly string $currentIp
+        private readonly string $currentIp,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -129,9 +123,6 @@ class MaintenanceType extends TranslatorAwareType
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -139,17 +130,12 @@ class MaintenanceType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'maintenance_general_block';
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see MultistoreConfigurationTypeExtension
      */
     public function getParent(): string

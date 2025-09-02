@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,12 +40,6 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
  */
 class LocalizedValueUpdater
 {
-    public function __construct(
-        protected LangRepository $languageRepository,
-        protected ClassMetadataFactoryInterface $classMetadataFactory
-    ) {
-    }
-
     /**
      * @var array<int, string>
      */
@@ -54,6 +49,12 @@ class LocalizedValueUpdater
      * @var array<string, int>
      */
     protected array $idsByLocale;
+
+    public function __construct(
+        protected LangRepository $languageRepository,
+        protected ClassMetadataFactoryInterface $classMetadataFactory,
+    ) {
+    }
 
     /**
      * @throws LocaleNotFoundException
@@ -79,14 +80,12 @@ class LocalizedValueUpdater
      *
      * The returned array can be used for future updates by specifying it in the $context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS]
      *
-     * @param string $type Class FQCN
-     * @param array $context Serialization context
-     *
-     * @return array
+     * @param string $type    Class FQCN
+     * @param array  $context Serialization context
      */
     public function getLocalizedAttributesContext(string $type, array $context = []): array
     {
-        if (!$this->classMetadataFactory->hasMetadataFor($type)) {
+        if (! $this->classMetadataFactory->hasMetadataFor($type)) {
             return [];
         }
 
@@ -99,18 +98,18 @@ class LocalizedValueUpdater
             }
         }
 
-        if (!empty($localizedAttributesContext)) {
+        if (! empty($localizedAttributesContext)) {
             $normalizationMapping = [];
-            if (!empty($context[NormalizationMapper::NORMALIZATION_MAPPING])) {
+            if (! empty($context[NormalizationMapper::NORMALIZATION_MAPPING])) {
                 $normalizationMapping = $context[NormalizationMapper::NORMALIZATION_MAPPING];
-            } elseif (!empty($context['operation']) && !empty($context['operation']->getExtraProperties()['CQRSCommandMapping'])) {
+            } elseif (! empty($context['operation']) && ! empty($context['operation']->getExtraProperties()['CQRSCommandMapping'])) {
                 $normalizationMapping = $context['operation']->getExtraProperties()['CQRSCommandMapping'];
             }
 
-            if (!empty($normalizationMapping)) {
+            if (! empty($normalizationMapping)) {
                 foreach ($localizedAttributesContext as $propertyName => $localizedValueParameter) {
                     $parameterPath = '[' . $propertyName . ']';
-                    if (array_key_exists($parameterPath, $normalizationMapping)) {
+                    if (\array_key_exists($parameterPath, $normalizationMapping)) {
                         // Transform property path into property name, then replace the attribute context index to match the mapped one
                         $newParameterPath = str_replace(['[', ']'], '', $normalizationMapping[$parameterPath]);
                         $localizedAttributesContext[$newParameterPath] = $localizedValueParameter;
@@ -125,9 +124,8 @@ class LocalizedValueUpdater
 
     protected function isAttributeLocalized(array $context, string $attribute): bool
     {
-        return
-            ($context[LocalizedValue::IS_LOCALIZED_VALUE] ?? false)
-            || !empty($context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$attribute])
+        return ($context[LocalizedValue::IS_LOCALIZED_VALUE] ?? false)
+            || ! empty($context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$attribute])
         ;
     }
 
@@ -136,19 +134,19 @@ class LocalizedValueUpdater
      */
     protected function updateLocalizedValue(mixed $localizedValue, string $propertyName, array $context, bool $denormalize): mixed
     {
-        if (!is_array($localizedValue) || !$this->isAttributeLocalized($context, $propertyName)) {
+        if (! \is_array($localizedValue) || ! $this->isAttributeLocalized($context, $propertyName)) {
             return $localizedValue;
         }
 
         // Get appropriate key either for normalization or denormalization
         if ($denormalize) {
-            if (!empty($context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::DENORMALIZED_KEY])) {
+            if (! empty($context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::DENORMALIZED_KEY])) {
                 $localizedValueKey = $context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::DENORMALIZED_KEY];
             } else {
                 $localizedValueKey = ($context[LocalizedValue::DENORMALIZED_KEY] ?? LocalizedValue::LOCALE_KEY);
             }
         } else {
-            if (!empty($context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::NORMALIZED_KEY])) {
+            if (! empty($context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::NORMALIZED_KEY])) {
                 $localizedValueKey = $context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::NORMALIZED_KEY];
             } else {
                 $localizedValueKey = ($context[LocalizedValue::NORMALIZED_KEY] ?? LocalizedValue::LOCALE_KEY);
@@ -168,18 +166,14 @@ class LocalizedValueUpdater
     /**
      * Return the localized array with keys based on locale string value transformed into integer database IDs.
      *
-     * @param array $localizedValue
-     *
-     * @return array
-     *
      * @throws LocaleNotFoundException
      */
     protected function updateLanguageLocalesWithIDs(array $localizedValue): array
     {
         $this->fetchLanguagesMapping();
         foreach ($localizedValue as $localeKey => $localeValue) {
-            if (is_string($localeKey)) {
-                if (!isset($this->idsByLocale[$localeKey])) {
+            if (\is_string($localeKey)) {
+                if (! isset($this->idsByLocale[$localeKey])) {
                     throw new LocaleNotFoundException('Locale "' . $localeKey . '" not found.');
                 }
 
@@ -194,10 +188,6 @@ class LocalizedValueUpdater
     /**
      * Return the localized array with keys based on integer database IDs transformed into locale string values.
      *
-     * @param array $localizedValue
-     *
-     * @return array
-     *
      * @throws LocaleNotFoundException
      */
     protected function updateLanguageIndexesWithLocales(array $localizedValue): array
@@ -205,7 +195,7 @@ class LocalizedValueUpdater
         $this->fetchLanguagesMapping();
         foreach ($localizedValue as $localeId => $localeValue) {
             if (is_numeric($localeId)) {
-                if (!isset($this->localesByID[$localeId])) {
+                if (! isset($this->localesByID[$localeId])) {
                     throw new LocaleNotFoundException('Locale with ID "' . $localeId . '" not found.');
                 }
 
@@ -219,12 +209,10 @@ class LocalizedValueUpdater
 
     /**
      * Fetches the language mapping once and save them in local property for better performance.
-     *
-     * @return void
      */
     protected function fetchLanguagesMapping(): void
     {
-        if (!isset($this->localesByID) || !isset($this->idsByLocale)) {
+        if (! isset($this->localesByID) || ! isset($this->idsByLocale)) {
             $this->localesByID = [];
             $this->idsByLocale = [];
             foreach ($this->languageRepository->getMapping() as $langId => $language) {

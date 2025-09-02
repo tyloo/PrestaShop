@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,24 +35,16 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class TaxOptionsFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @param DataConfigurationInterface $taxOptionsDataConfiguration
-     */
-    public function __construct(private readonly DataConfigurationInterface $taxOptionsDataConfiguration)
-    {
+    public function __construct(
+        private readonly DataConfigurationInterface $taxOptionsDataConfiguration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->taxOptionsDataConfiguration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         return $this->taxOptionsDataConfiguration->updateConfiguration($data);

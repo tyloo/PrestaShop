@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,18 +53,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class EntitySearchInputType extends CollectionType
 {
     public const LIST_LAYOUT = 'list';
+
     public const TABLE_LAYOUT = 'table';
 
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -127,7 +124,7 @@ class EntitySearchInputType extends CollectionType
         $resolver->setAllowedTypes('filtered_identities', ['array']);
 
         $resolver->setAllowedTypes('remove_modal', ['array', 'null']);
-        $resolver->setNormalizer('remove_modal', fn(Options $options, $value): array => $this->getRemoveModalResolver()->resolve($value ?? []));
+        $resolver->setNormalizer('remove_modal', fn (Options $options, $value): array => $this->getRemoveModalResolver()->resolve($value ?? []));
 
         $resolver->setAllowedTypes('layout', ['string']);
         $resolver->setAllowedValues('layout', [static::LIST_LAYOUT, static::TABLE_LAYOUT]);
@@ -135,9 +132,6 @@ class EntitySearchInputType extends CollectionType
         $resolver->setAllowedTypes('suggestion_field', ['string', 'null']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         // If no mapping has been defined it is built based on the prototype field names
@@ -146,7 +140,7 @@ class EntitySearchInputType extends CollectionType
         if (empty($options['prototype_mapping'])) {
             $options['prototype_mapping'] = [];
             foreach ($prototype->all() as $prototypeChild) {
-                $options['prototype_mapping'][$prototypeChild->getName()] = sprintf(
+                $options['prototype_mapping'][$prototypeChild->getName()] = \sprintf(
                     '__%s__',
                     $prototypeChild->getName()
                 );
@@ -192,21 +186,11 @@ class EntitySearchInputType extends CollectionType
         return 'entity_search_input';
     }
 
-    /**
-     * @param string $key
-     * @param string $domain
-     * @param array $parameters
-     *
-     * @return string
-     */
     protected function trans(string $key, string $domain, array $parameters = []): string
     {
         return $this->translator->trans($key, $parameters, $domain);
     }
 
-    /**
-     * @return OptionsResolver
-     */
     private function getRemoveModalResolver(): OptionsResolver
     {
         $externalLinkResolver = new OptionsResolver();

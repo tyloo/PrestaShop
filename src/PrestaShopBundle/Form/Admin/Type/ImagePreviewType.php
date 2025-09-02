@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ImagePreviewType extends HiddenType
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
@@ -50,9 +48,6 @@ class ImagePreviewType extends HiddenType
         $view->vars['image_class'] = $options['image_class'];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -62,9 +57,6 @@ class ImagePreviewType extends HiddenType
         $resolver->setAllowedTypes('image_class', ['string']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'image_preview';

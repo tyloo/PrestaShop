@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -91,12 +92,9 @@ class FeatureFlag
      */
     private string $stability;
 
-    /**
-     * @param string $name
-     */
     public function __construct(string $name)
     {
-        if ('' === $name) {
+        if ($name === '') {
             throw new InvalidArgumentException('Feature flag name cannot be empty');
         }
         $this->name = $name;

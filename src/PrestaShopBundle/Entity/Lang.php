@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -106,9 +107,6 @@ class Lang implements LanguageInterface
      */
     private Collection $shops;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->shops = new ArrayCollection();
@@ -221,7 +219,7 @@ class Lang implements LanguageInterface
 
     public function getLocale(): string
     {
-        return !empty($this->locale) ? $this->locale : $this->getLanguageCode();
+        return ! empty($this->locale) ? $this->locale : $this->getLanguageCode();
     }
 
     public function setLocale($locale): static

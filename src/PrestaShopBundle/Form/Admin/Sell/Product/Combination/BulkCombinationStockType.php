@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,15 +47,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BulkCombinationStockType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param bool $stockManagementEnabled
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly bool $stockManagementEnabled
+        private readonly bool $stockManagementEnabled,
     ) {
         parent::__construct($translator, $locales);
     }
@@ -68,7 +64,7 @@ class BulkCombinationStockType extends TranslatorAwareType
                     'label' => $this->trans('Edit quantity', 'Admin.Catalog.Feature'),
                     'disabling_switch' => true,
                     'disabling_switch_event' => 'combinationSwitchDeltaQuantity',
-                    'disabled_value' => fn(?array $data): bool => empty($data['quantity']) && empty($data['delta']),
+                    'disabled_value' => fn (?array $data): bool => empty($data['quantity']) && empty($data['delta']),
                     'modify_all_shops' => true,
                 ])
                 ->add('fixed_quantity', IntegerType::class, [

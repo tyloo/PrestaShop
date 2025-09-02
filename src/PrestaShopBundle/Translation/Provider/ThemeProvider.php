@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,11 +39,6 @@ use Symfony\Component\Translation\MessageCatalogueInterface;
 class ThemeProvider extends AbstractProvider
 {
     /**
-     * @var string the theme name
-     */
-    private $themeName;
-
-    /**
      * @var string the theme resources directory
      */
     public $themeResourcesDirectory;
@@ -68,8 +64,10 @@ class ThemeProvider extends AbstractProvider
     public $defaultTranslationDir;
 
     /**
-     * {@inheritdoc}
+     * @var string the theme name
      */
+    private $themeName;
+
     public function getTranslationDomains(): array
     {
         if (empty($this->domain)) {
@@ -79,9 +77,6 @@ class ThemeProvider extends AbstractProvider
         return ['^' . $this->domain];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         if (empty($this->domain)) {
@@ -91,17 +86,11 @@ class ThemeProvider extends AbstractProvider
         return ['#^' . $this->domain . '#'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return 'theme';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMessageCatalogue()
     {
         $xlfCatalogue = $this->getXliffCatalogue();
@@ -120,7 +109,7 @@ class ThemeProvider extends AbstractProvider
      */
     public function getResourceDirectory($baseDir = null): string
     {
-        if (null === $baseDir) {
+        if ($baseDir === null) {
             $baseDir = $this->resourceDirectory;
         }
 
@@ -130,9 +119,6 @@ class ThemeProvider extends AbstractProvider
         return $resourceDirectory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDirectories(): array
     {
         return [
@@ -168,7 +154,7 @@ class ThemeProvider extends AbstractProvider
      */
     public function getDatabaseCatalogue($themeName = null)
     {
-        if (null === $themeName) {
+        if ($themeName === null) {
             $themeName = $this->themeName;
         }
 
@@ -184,7 +170,7 @@ class ThemeProvider extends AbstractProvider
     {
         $theme = $this->themeRepository->getInstanceByName($this->themeName);
 
-        $path = $this->resourceDirectory . DIRECTORY_SEPARATOR . $this->themeName . DIRECTORY_SEPARATOR . 'translations';
+        $path = $this->resourceDirectory . \DIRECTORY_SEPARATOR . $this->themeName . \DIRECTORY_SEPARATOR . 'translations';
 
         $this->filesystem->remove($path);
         $this->filesystem->mkdir($path);
@@ -194,7 +180,7 @@ class ThemeProvider extends AbstractProvider
             ->setThemeProvider($this)
             ->extract($theme, $this->locale);
 
-        $translationFilesPath = $path . DIRECTORY_SEPARATOR . $this->locale;
+        $translationFilesPath = $path . \DIRECTORY_SEPARATOR . $this->locale;
         Flattenizer::flatten($translationFilesPath, $translationFilesPath, $this->locale, false);
 
         $finder = Finder::create();
@@ -210,16 +196,13 @@ class ThemeProvider extends AbstractProvider
      */
     public function getThemeCatalogue()
     {
-        $path = $this->resourceDirectory . DIRECTORY_SEPARATOR . $this->themeName . DIRECTORY_SEPARATOR . 'translations';
+        $path = $this->resourceDirectory . \DIRECTORY_SEPARATOR . $this->themeName . \DIRECTORY_SEPARATOR . 'translations';
 
         return $this->getCatalogueFromPaths([$path], $this->locale, current($this->getFilters()));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultResourceDirectory(): string
     {
-        return $this->defaultTranslationDir . DIRECTORY_SEPARATOR . $this->locale;
+        return $this->defaultTranslationDir . \DIRECTORY_SEPARATOR . $this->locale;
     }
 }

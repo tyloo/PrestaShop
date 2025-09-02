@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -82,7 +83,7 @@ class SearchEnginesController extends PrestaShopAdminController
         try {
             $result = $searchEngineFormHandler->handle($searchEngineForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_search_engines_index');
@@ -191,8 +192,6 @@ class SearchEnginesController extends PrestaShopAdminController
 
     /**
      * Gets error messages for exceptions.
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -219,8 +218,6 @@ class SearchEnginesController extends PrestaShopAdminController
 
     /**
      * Get search engine IDs from request for bulk actions.
-     *
-     * @param Request $request
      *
      * @return int[]
      */

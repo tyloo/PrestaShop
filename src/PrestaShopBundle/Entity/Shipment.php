@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -214,7 +215,7 @@ class Shipment
     }
 
     public function setShippingCostTaxExcluded(
-        float $shippingCostTaxExcluded
+        float $shippingCostTaxExcluded,
     ): self {
         $this->shippingCostTaxExcluded = $shippingCostTaxExcluded;
 
@@ -222,7 +223,7 @@ class Shipment
     }
 
     public function setShippingCostTaxIncluded(
-        float $shippingCostTaxIncluded
+        float $shippingCostTaxIncluded,
     ): self {
         $this->shippingCostTaxIncluded = $shippingCostTaxIncluded;
 
@@ -294,7 +295,7 @@ class Shipment
     {
         $this->updatedAt = new DateTime();
 
-        if (!isset($this->createdAt)) {
+        if (! isset($this->createdAt)) {
             $this->createdAt = new DateTime();
         }
     }

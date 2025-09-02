@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,14 +56,6 @@ class StockRepository extends StockManagementRepository
     private $totalCombinations = [];
 
     /**
-     * StockRepository constructor.
-     *
-     * @param ContainerInterface $container
-     * @param Connection $connection
-     * @param EntityManager $entityManager
-     * @param ContextAdapter $contextAdapter
-     * @param ImageManager $imageManager
-     * @param StockManager $stockManager
      * @param string $tablePrefix
      */
     public function __construct(
@@ -72,7 +65,7 @@ class StockRepository extends StockManagementRepository
         ContextAdapter $contextAdapter,
         ImageManager $imageManager,
         private readonly StockManager $stockManager,
-        $tablePrefix
+        $tablePrefix,
     ) {
         parent::__construct(
             $container,
@@ -89,22 +82,17 @@ class StockRepository extends StockManagementRepository
     }
 
     /**
-     * @param MovementsCollection $movements
-     *
      * @return array
      */
     public function bulkUpdateStock(MovementsCollection $movements)
     {
-        $products = $movements->map(fn(Movement $movement) => $this->updateStock($movement));
+        $products = $movements->map(fn (Movement $movement) => $this->updateStock($movement));
 
         return $products;
     }
 
     /**
-     * @param Movement $movement
      * @param bool $syncStock
-     *
-     * @return mixed
      */
     public function updateStock(Movement $movement, $syncStock = true)
     {
@@ -129,7 +117,7 @@ class StockRepository extends StockManagementRepository
                 );
             }
 
-            if (true === $syncStock) {
+            if ($syncStock === true) {
                 $this->syncAllStock($productIdentity->getProductId());
             }
         }
@@ -137,53 +125,6 @@ class StockRepository extends StockManagementRepository
         return $this->selectStockBy($productIdentity);
     }
 
-    /**
-     * Sync all stock with Manager.
-     */
-    private function syncAllStock($idProduct): void
-    {
-        (new StockManager())->updatePhysicalProductQuantity(
-            $this->getCurrentShop()->id,
-            $this->orderStates['error'],
-            $this->orderStates['cancellation'],
-            (int) $idProduct
-        );
-    }
-
-    /**
-     * @param ProductIdentity $productIdentity
-     *
-     * @return mixed
-     */
-    private function selectStockBy(ProductIdentity $productIdentity)
-    {
-        $andWhereClause = '
-            AND p.id_product = :product_id
-            AND COALESCE(pa.id_product_attribute, 0) = :combination_id';
-        $query = $this->selectSql($andWhereClause);
-
-        $statement = $this->connection->prepare($query);
-        $this->bindStockManagementValues($statement, null, $productIdentity);
-
-        $result = $statement->executeQuery();
-        $rows = $result->fetchAllAssociative();
-        $result->free();
-        $this->foundRows = $this->getFoundRows();
-
-        if (count($rows) === 0) {
-            throw new ProductNotFoundException(sprintf('Product with id %d and combination id %d can not be found', $productIdentity->getProductId(), $productIdentity->getCombinationId()));
-        }
-
-        $rows = $this->addAdditionalData($rows);
-
-        return $this->castNumericToInt($rows)[0];
-    }
-
-    /**
-     * @param QueryParamsCollection $queryParams
-     *
-     * @return mixed
-     */
     public function getData(QueryParamsCollection $queryParams)
     {
         $this->stockManager->updatePhysicalProductQuantity(
@@ -198,7 +139,6 @@ class StockRepository extends StockManagementRepository
     /**
      * @param int $offset
      * @param int $limit
-     * @param QueryParamsCollection $queryParams
      *
      * @return array
      */
@@ -213,16 +153,16 @@ class StockRepository extends StockManagementRepository
     /**
      * @param string $andWhereClause
      * @param string $having
-     * @param null $orderByClause
+     * @param null   $orderByClause
      *
      * @return mixed
      */
     protected function selectSql(
         $andWhereClause = '',
         $having = '',
-        $orderByClause = null
+        $orderByClause = null,
     ): string {
-        if (null === $orderByClause) {
+        if ($orderByClause === null) {
             $orderByClause = $this->orderByProductIds();
         }
 
@@ -300,8 +240,6 @@ class StockRepository extends StockManagementRepository
     }
 
     /**
-     * @param QueryParamsCollection $queryParams
-     *
      * @return string
      */
     protected function andWhere(QueryParamsCollection $queryParams)
@@ -310,16 +248,6 @@ class StockRepository extends StockManagementRepository
     }
 
     /**
-     * @return string
-     */
-    private function orderByProductIds(): string
-    {
-        return 'ORDER BY p.id_product DESC, COALESCE(pa.id_product_attribute, 0) DESC';
-    }
-
-    /**
-     * @param array $rows
-     *
      * @return array
      */
     protected function addAdditionalData(array $rows)
@@ -335,7 +263,7 @@ class StockRepository extends StockManagementRepository
     {
         $rows = parent::addCombinationsAndFeatures($rows);
         foreach ($rows as &$row) {
-            if ($row['combination_id'] != 0) {
+            if ($row['combination_id'] !== 0) {
                 $row['total_combinations'] = $this->getTotalCombinations($row);
             } else {
                 $row['total_combinations'] = 'N/A';
@@ -346,15 +274,55 @@ class StockRepository extends StockManagementRepository
     }
 
     /**
+     * Sync all stock with Manager.
+     */
+    private function syncAllStock($idProduct): void
+    {
+        (new StockManager())->updatePhysicalProductQuantity(
+            $this->getCurrentShop()->id,
+            $this->orderStates['error'],
+            $this->orderStates['cancellation'],
+            (int) $idProduct
+        );
+    }
+
+    private function selectStockBy(ProductIdentity $productIdentity)
+    {
+        $andWhereClause = '
+            AND p.id_product = :product_id
+            AND COALESCE(pa.id_product_attribute, 0) = :combination_id';
+        $query = $this->selectSql($andWhereClause);
+
+        $statement = $this->connection->prepare($query);
+        $this->bindStockManagementValues($statement, null, $productIdentity);
+
+        $result = $statement->executeQuery();
+        $rows = $result->fetchAllAssociative();
+        $result->free();
+        $this->foundRows = $this->getFoundRows();
+
+        if (\count($rows) === 0) {
+            throw new ProductNotFoundException(\sprintf('Product with id %d and combination id %d can not be found', $productIdentity->getProductId(), $productIdentity->getCombinationId()));
+        }
+
+        $rows = $this->addAdditionalData($rows);
+
+        return $this->castNumericToInt($rows)[0];
+    }
+
+    private function orderByProductIds(): string
+    {
+        return 'ORDER BY p.id_product DESC, COALESCE(pa.id_product_attribute, 0) DESC';
+    }
+
+    /**
      * Compute the number of combinations associated with a product.
-     *
-     * @param array $row
      *
      * @return string
      */
     private function getTotalCombinations(array $row)
     {
-        if (!isset($this->totalCombinations[$row['product_id']])) {
+        if (! isset($this->totalCombinations[$row['product_id']])) {
             $query = 'SELECT COUNT(*) total_combinations
                         FROM ' . $this->tablePrefix . 'product_attribute pa
                         WHERE id_product=:id_product';
@@ -377,7 +345,7 @@ class StockRepository extends StockManagementRepository
                 'productId' => $row['product_id'],
             ]);
 
-            if (!empty($row['combination_id'])) {
+            if (! empty($row['combination_id'])) {
                 $row['edit_url'] = $router->generate('api_stock_edit_product_combination', [
                     'productId' => $row['product_id'],
                     'combinationId' => $row['combination_id'],

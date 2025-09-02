@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ class SwitchType extends AbstractType
 {
     public const TRANS_DOMAIN = 'Admin.Global';
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -60,12 +58,9 @@ class SwitchType extends AbstractType
         $resolver->setAllowedTypes('disabled', 'bool');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        if (true === $options['disabled']) {
+        if ($options['disabled'] === true) {
             $view->vars['disabled'] = true;
         }
         $view->vars['attr']['class'] = 'ps-switch';
@@ -77,7 +72,7 @@ class SwitchType extends AbstractType
         // Add a class when inline mode is enabled
         if ($options['inline_switch']) {
             $rowAttributes = $options['row_attr'] ?? [];
-            if (!empty($rowAttributes['class'])) {
+            if (! empty($rowAttributes['class'])) {
                 $rowAttributes['class'] .= ' inline-switch-widget';
             } else {
                 $rowAttributes['class'] = 'inline-switch-widget';
@@ -86,9 +81,6 @@ class SwitchType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

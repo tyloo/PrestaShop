@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use Twig\TwigFunction;
  */
 class NumberExtension extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions()
     {
         return [new TwigFunction('number', $this->createNumber(...))];

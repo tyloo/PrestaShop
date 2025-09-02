@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,7 +67,7 @@ class MultistoreProductHeader extends AbstractMultistoreHeader
     public function mount(int $productId): void
     {
         $this->productId = $productId;
-        if (!$this->isMultistoreUsed()) {
+        if (! $this->isMultistoreUsed()) {
             return;
         }
 
@@ -77,22 +78,22 @@ class MultistoreProductHeader extends AbstractMultistoreHeader
         // Filter shops that are not associated to product
         $productShops = $this->productRepository->getAssociatedShopIds(new ProductId($productId));
 
-        if (!empty($productShops)) {
-            $productShopIds = array_map(fn(ShopId $shopId): int => $shopId->getValue(), $productShops);
+        if (! empty($productShops)) {
+            $productShopIds = array_map(fn (ShopId $shopId): int => $shopId->getValue(), $productShops);
 
             /** @var ShopGroup $shopGroup */
             foreach ($groupList as $shopGroup) {
-                if (!$this->employeeContext->hasAuthorizationOnShopGroup($shopGroup->getId())) {
+                if (! $this->employeeContext->hasAuthorizationOnShopGroup($shopGroup->getId())) {
                     continue;
                 }
 
                 /** @var Shop $shop */
                 foreach ($shopGroup->getShops() as $shop) {
-                    if (!in_array($shop->getId(), $productShopIds)) {
+                    if (! \in_array($shop->getId(), $productShopIds, true)) {
                         $shopGroup->getShops()->removeElement($shop);
                     }
                 }
-                if (!$shopGroup->getShops()->isEmpty()) {
+                if (! $shopGroup->getShops()->isEmpty()) {
                     $this->groupList[] = $shopGroup;
                 }
             }
@@ -100,7 +101,7 @@ class MultistoreProductHeader extends AbstractMultistoreHeader
             // Filter not allowed shops
             foreach ($this->groupList as $group) {
                 foreach ($group->getShops() as $shop) {
-                    if (!$this->employeeContext->hasAuthorizationOnShop($shop->getId())) {
+                    if (! $this->employeeContext->hasAuthorizationOnShop($shop->getId())) {
                         $group->getshops()->removeElement($shop);
                     }
                 }

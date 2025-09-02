@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,9 +50,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ExternalLinkExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -60,7 +58,7 @@ class ExternalLinkExtension extends AbstractTypeExtension
             ])
             ->setAllowedTypes('external_link', ['null', 'array'])
             ->setNormalizer('external_link', function (Options $options, $value) {
-                if (null === $value) {
+                if ($value === null) {
                     return null;
                 }
 
@@ -71,27 +69,18 @@ class ExternalLinkExtension extends AbstractTypeExtension
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        if (!empty($options['external_link'])) {
+        if (! empty($options['external_link'])) {
             $view->vars['external_link'] = $options['external_link'];
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     private function getExternalLinkResolver(): OptionsResolver
     {
         $externalLinkResolver = new OptionsResolver();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,21 +63,16 @@ class PrestaShopBundle extends Bundle
      */
     public const LOAD_MODULE_SERVICES_PASS_PRIORITY = 200;
 
-    public function __construct(private readonly AppKernel $kernel)
-    {
+    public function __construct(
+        private readonly AppKernel $kernel,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContainerExtension(): ?ExtensionInterface
     {
         return new PrestaShopExtension();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new DynamicRolePass());

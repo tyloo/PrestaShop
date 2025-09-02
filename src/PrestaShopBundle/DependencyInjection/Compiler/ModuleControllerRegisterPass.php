@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ use Symfony\Component\DependencyInjection\Definition;
  */
 class ModuleControllerRegisterPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $installedModules = $container->getParameter('prestashop.installed_modules');
@@ -102,7 +100,7 @@ class ModuleControllerRegisterPass implements CompilerPassInterface
             $className = $matches[1];
         }
 
-        if (!empty($namespace) && !empty($className)) {
+        if (! empty($namespace) && ! empty($className)) {
             $className = $namespace . '\\' . $className;
 
             if (class_exists($className)) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateProductFormType extends TranslatorAwareType
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -57,7 +55,7 @@ class CreateProductFormType extends TranslatorAwareType
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $data = $event->getData();
-            if (!empty($data['shop_id'])) {
+            if (! empty($data['shop_id'])) {
                 return;
             }
 
@@ -67,9 +65,6 @@ class CreateProductFormType extends TranslatorAwareType
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -83,9 +78,6 @@ class CreateProductFormType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix()
     {
         return 'create_product';

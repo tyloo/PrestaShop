@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -75,10 +76,6 @@ class MailThemeController extends PrestaShopAdminController
 
     /**
      * Show mail theme settings and generation page.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -105,10 +102,6 @@ class MailThemeController extends PrestaShopAdminController
 
     /**
      * Manage generation form post and generate mails.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function generateMailsAction(Request $request): Response
@@ -117,7 +110,7 @@ class MailThemeController extends PrestaShopAdminController
         $generateThemeMailsForm->handleRequest($request);
 
         if ($generateThemeMailsForm->isSubmitted()) {
-            if (!$generateThemeMailsForm->isValid()) {
+            if (! $generateThemeMailsForm->isValid()) {
                 $this->addFlashFormErrors($generateThemeMailsForm);
 
                 return $this->redirectToRoute('admin_mail_theme_index');
@@ -128,7 +121,7 @@ class MailThemeController extends PrestaShopAdminController
                 $coreMailsFolder = '';
                 $modulesMailFolder = '';
                 // Overwrite theme folder if selected
-                if (!empty($data['theme'])) {
+                if (! empty($data['theme'])) {
                     if (is_dir($data['theme'] . '/mails')) {
                         $coreMailsFolder = $data['theme'] . '/mails';
                     }
@@ -175,7 +168,7 @@ class MailThemeController extends PrestaShopAdminController
             } catch (CoreException $e) {
                 $this->addFlashErrors([
                     $this->trans(
-                        sprintf(
+                        \sprintf(
                             'Cannot generate email templates for theme %s with locale %s',
                             $data['mailTheme'],
                             $data['language']
@@ -194,23 +187,19 @@ class MailThemeController extends PrestaShopAdminController
     /**
      * Save mail theme configuration
      *
-     * @param Request $request
-     *
-     * @return Response
-     *
      * @throws Exception
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_mail_theme_index')]
     public function saveConfigurationAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.mail_theme.form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         /** @var Form $form */
         $form = $formHandler->getForm()->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            if (!$form->isValid()) {
+            if (! $form->isValid()) {
                 $this->addFlashFormErrors($form);
 
                 return $this->redirectToRoute('admin_mail_theme_index');
@@ -236,11 +225,6 @@ class MailThemeController extends PrestaShopAdminController
 
     /**
      * Preview the list of layouts for a defined theme
-     *
-     * @param Request $request
-     * @param string $theme
-     *
-     * @return Response
      *
      * @throws InvalidArgumentException
      */
@@ -270,13 +254,6 @@ class MailThemeController extends PrestaShopAdminController
      * These modifications will be performed in a future release so for now we can only send test emails
      * with the current email theme using generated static files.
      *
-     * @param string $theme
-     * @param string $layout
-     * @param string $locale
-     * @param string $module
-     *
-     * @return Response
-     *
      * @throws InvalidArgumentException
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
@@ -300,8 +277,8 @@ class MailThemeController extends PrestaShopAdminController
         $employeeData = $this->getEmployeeContext()->getEmployee();
 
         $language = $this->container->get(LanguageRepositoryInterface::class)->getOneByLocaleOrIsoCode($locale);
-        if (null === $language) {
-            throw new InvalidArgumentException(sprintf('Cannot find Language with locale or isoCode %s', $locale));
+        if ($language === null) {
+            throw new InvalidArgumentException(\sprintf('Cannot find Language with locale or isoCode %s', $locale));
         }
 
         if (empty($module)) {
@@ -355,21 +332,16 @@ class MailThemeController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_mail_theme_preview', ['theme' => $theme]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.')]
     public function translateBodyAction(
         Request $request,
         #[Autowire(service: 'prestashop.service.translation')]
-        TranslationService $translationService
+        TranslationService $translationService,
     ): RedirectResponse {
         $translateMailsBodyForm = $this->createForm(TranslateMailsBodyType::class);
         $translateMailsBodyForm->handleRequest($request);
 
-        if (!$translateMailsBodyForm->isSubmitted() || !$translateMailsBodyForm->isValid()) {
+        if (! $translateMailsBodyForm->isSubmitted() || ! $translateMailsBodyForm->isValid()) {
             $this->addFlash(
                 'error',
                 $this->trans(
@@ -396,14 +368,6 @@ class MailThemeController extends PrestaShopAdminController
     /**
      * Preview a mail layout from a defined theme
      *
-     * @param string $theme
-     * @param string $layout
-     * @param string $type
-     * @param string $locale
-     * @param string $module
-     *
-     * @return Response
-     *
      * @throws FileNotFoundException
      * @throws InvalidArgumentException
      */
@@ -417,14 +381,6 @@ class MailThemeController extends PrestaShopAdminController
 
     /**
      * Display the raw source of a theme layout (mainly useful for developers/integrators)
-     *
-     * @param string $theme
-     * @param string $layout
-     * @param string $type
-     * @param string $locale
-     * @param string $module
-     *
-     * @return Response
      *
      * @throws FileNotFoundException
      * @throws InvalidArgumentException
@@ -445,14 +401,6 @@ class MailThemeController extends PrestaShopAdminController
      * Dynamically display an email template, this is usually used by the MailGenerator but this action
      * allows to display preview before generating the file (handy when you are developing an email theme)
      *
-     * @param string $themeName
-     * @param string $layoutName
-     * @param string $type
-     * @param string $locale
-     * @param string $module
-     *
-     * @return string
-     *
      * @throws FileNotFoundException
      * @throws InvalidArgumentException
      */
@@ -464,8 +412,8 @@ class MailThemeController extends PrestaShopAdminController
             $locale = $this->getLanguageContext()->getLocale();
         }
         $language = $this->container->get(LanguageRepositoryInterface::class)->getOneByLocaleOrIsoCode($locale);
-        if (null === $language) {
-            throw new InvalidArgumentException(sprintf('Cannot find Language with locale or isoCode %s', $locale));
+        if ($language === null) {
+            throw new InvalidArgumentException(\sprintf('Cannot find Language with locale or isoCode %s', $locale));
         }
 
         $mailLayoutVariables = $this->container->get(MailPreviewVariablesBuilder::class)->buildTemplateVariables($layout);
@@ -478,19 +426,13 @@ class MailThemeController extends PrestaShopAdminController
         $renderedLayout = match ($type) {
             MailTemplateInterface::HTML_TYPE => $renderer->renderHtml($layout, $language),
             MailTemplateInterface::TXT_TYPE => $renderer->renderTxt($layout, $language),
-            default => throw new NotFoundHttpException(sprintf('Requested type %s is not managed, please use one of these: %s', $type, implode(',', [MailTemplateInterface::HTML_TYPE, MailTemplateInterface::TXT_TYPE]))),
+            default => throw new NotFoundHttpException(\sprintf('Requested type %s is not managed, please use one of these: %s', $type, implode(',', [MailTemplateInterface::HTML_TYPE, MailTemplateInterface::TXT_TYPE]))),
         };
 
         return $renderedLayout;
     }
 
     /**
-     * @param string $themeName
-     * @param string $layoutName
-     * @param string $module
-     *
-     * @return LayoutInterface
-     *
      * @throws FileNotFoundException
      * @throws InvalidArgumentException
      */
@@ -502,18 +444,18 @@ class MailThemeController extends PrestaShopAdminController
 
         /** @var LayoutInterface $layout */
         $layout = null;
-        /* @var LayoutInterface $layoutInterface */
+        /** @var LayoutInterface $layoutInterface */
         foreach ($theme->getLayouts() as $layoutInterface) {
-            if ($layoutInterface->getName() == $layoutName
-                && $layoutInterface->getModuleName() == $module
+            if ($layoutInterface->getName() === $layoutName
+                && $layoutInterface->getModuleName() === $module
             ) {
                 $layout = $layoutInterface;
                 break;
             }
         }
 
-        if (null === $layout) {
-            throw new FileNotFoundException(sprintf('Cannot find layout %s%s in theme %s', empty($module) ? '' : $module . ':', $layoutName, $themeName));
+        if ($layout === null) {
+            throw new FileNotFoundException(\sprintf('Cannot find layout %s%s in theme %s', empty($module) ? '' : $module . ':', $layoutName, $themeName));
         }
 
         return $layout;

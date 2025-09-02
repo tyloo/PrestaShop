@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -73,17 +74,16 @@ class ThemeExtractor
      */
     private $overrideFromDatabase = false;
 
-    public function __construct(/**
-     * @var SmartyExtractor the Smarty Extractor
-     */
-    private readonly SmartyExtractor $smartyExtractor)
-    {
+    public function __construct(
+        /**
+         * @var SmartyExtractor the Smarty Extractor
+         */
+        private readonly SmartyExtractor $smartyExtractor,
+    ) {
         $this->dumpers[] = new XliffFileDumper();
     }
 
     /**
-     * @param ThemeProvider $themeProvider
-     *
      * @return $this
      */
     public function setThemeProvider(ThemeProvider $themeProvider)
@@ -94,11 +94,8 @@ class ThemeExtractor
     }
 
     /**
-     * @param Theme $theme
      * @param string $locale
-     * @param bool $rootDir
-     *
-     * @return MessageCatalogue|null
+     * @param bool   $rootDir
      *
      * @throws Exception
      */
@@ -106,7 +103,7 @@ class ThemeExtractor
     {
         $this->catalog = new MessageCatalogue($locale);
         // remove the last "/"
-        $themeDirectory = substr((string) $theme->getDirectory(), 0, -1);
+        $themeDirectory = mb_substr((string) $theme->getDirectory(), 0, -1);
 
         $options = [
             'path' => $themeDirectory,
@@ -123,7 +120,7 @@ class ThemeExtractor
 
         foreach ($this->dumpers as $dumper) {
             if ($this->format === $dumper->getExtension()) {
-                if (null !== $this->outputPath) {
+                if ($this->outputPath !== null) {
                     $options['path'] = $this->outputPath;
                 }
 
@@ -133,76 +130,10 @@ class ThemeExtractor
             }
         }
 
-        throw new LogicException(sprintf('The format %s is not supported.', $this->format));
+        throw new LogicException(\sprintf('The format %s is not supported.', $this->format));
     }
 
     /**
-     * Add default catalogue in this &$catalogue when the translation exists.
-     *
-     * @param string $locale
-     * @param MessageCatalogue $catalogue
-     */
-    private function overrideFromDefaultCatalog($locale, &$catalogue): void
-    {
-        $defaultCatalogue = $this->themeProvider
-            ->setLocale($locale)
-            ->getDefaultCatalogue();
-
-        if (empty($defaultCatalogue)) {
-            return;
-        }
-
-        $defaultCatalogue = $defaultCatalogue->all();
-
-        if (empty($defaultCatalogue)) {
-            return;
-        }
-
-        $defaultDomainsCatalogue = $catalogue->getDomains();
-
-        foreach ($defaultCatalogue as $domain => $translation) {
-            // AdminCatalogFeature.fr-FR to AdminCatalogFeature
-            $domain = str_replace('.' . $locale, '', $domain);
-
-            // AdminCatalogFeature to Admin.Catalog.Feature
-            $domain = implode('.', preg_split('/(?=[A-Z])/', $domain, -1, PREG_SPLIT_NO_EMPTY));
-
-            if (in_array($domain, $defaultDomainsCatalogue, true)) {
-                foreach ($translation as $key => $trans) {
-                    if ($catalogue->has($key, $domain)) {
-                        $catalogue->set($key, $trans, $domain);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Add database catalogue in this &$catalogue.
-     *
-     * @param string $themeName
-     * @param string $locale
-     * @param MessageCatalogue $catalogue
-     *
-     * @throws Exception
-     */
-    private function overrideFromDatabase($themeName, $locale, &$catalogue): void
-    {
-        if (null === $this->themeProvider) {
-            throw new Exception('Theme provider is required.');
-        }
-
-        $databaseCatalogue = $this->themeProvider
-            ->setLocale($locale)
-            ->setThemeName($themeName)
-            ->getDatabaseCatalogue();
-
-        $catalogue->addCatalogue($databaseCatalogue);
-    }
-
-    /**
-     * @param FileDumper $dumper
-     *
      * @return $this
      */
     public function addDumper(FileDumper $dumper)
@@ -286,5 +217,69 @@ class ThemeExtractor
         $this->overrideFromDatabase = true;
 
         return $this;
+    }
+
+    /**
+     * Add default catalogue in this &$catalogue when the translation exists.
+     *
+     * @param string           $locale
+     * @param MessageCatalogue $catalogue
+     */
+    private function overrideFromDefaultCatalog($locale, &$catalogue): void
+    {
+        $defaultCatalogue = $this->themeProvider
+            ->setLocale($locale)
+            ->getDefaultCatalogue();
+
+        if (empty($defaultCatalogue)) {
+            return;
+        }
+
+        $defaultCatalogue = $defaultCatalogue->all();
+
+        if (empty($defaultCatalogue)) {
+            return;
+        }
+
+        $defaultDomainsCatalogue = $catalogue->getDomains();
+
+        foreach ($defaultCatalogue as $domain => $translation) {
+            // AdminCatalogFeature.fr-FR to AdminCatalogFeature
+            $domain = str_replace('.' . $locale, '', $domain);
+
+            // AdminCatalogFeature to Admin.Catalog.Feature
+            $domain = implode('.', preg_split('/(?=[A-Z])/', $domain, -1, \PREG_SPLIT_NO_EMPTY));
+
+            if (\in_array($domain, $defaultDomainsCatalogue, true)) {
+                foreach ($translation as $key => $trans) {
+                    if ($catalogue->has($key, $domain)) {
+                        $catalogue->set($key, $trans, $domain);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Add database catalogue in this &$catalogue.
+     *
+     * @param string           $themeName
+     * @param string           $locale
+     * @param MessageCatalogue $catalogue
+     *
+     * @throws Exception
+     */
+    private function overrideFromDatabase($themeName, $locale, &$catalogue): void
+    {
+        if ($this->themeProvider === null) {
+            throw new Exception('Theme provider is required.');
+        }
+
+        $databaseCatalogue = $this->themeProvider
+            ->setLocale($locale)
+            ->setThemeName($themeName)
+            ->getDatabaseCatalogue();
+
+        $catalogue->addCatalogue($databaseCatalogue);
     }
 }

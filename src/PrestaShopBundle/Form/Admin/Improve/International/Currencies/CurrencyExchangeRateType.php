@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,14 +30,8 @@ namespace PrestaShopBundle\Form\Admin\Improve\International\Currencies;
 use PrestaShopBundle\Form\Admin\Type\CommonAbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class CurrencyExchangeRateType
- */
 class CurrencyExchangeRateType extends CommonAbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,11 +35,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SpecificPricePriorityType extends CollectionType
 {
-    /**
-     * @param FormChoiceProviderInterface $priorityChoiceProvider
-     */
-    public function __construct(private readonly FormChoiceProviderInterface $priorityChoiceProvider)
-    {
+    public function __construct(
+        private readonly FormChoiceProviderInterface $priorityChoiceProvider,
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void

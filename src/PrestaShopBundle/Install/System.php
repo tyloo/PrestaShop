@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,7 +77,7 @@ class System extends AbstractInstall
 
         $success = true;
         foreach ($tests as $result) {
-            $success &= ($result == 'ok') ? true : false;
+            $success &= ($result === 'ok') ? true : false;
         }
 
         return [

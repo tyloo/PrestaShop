@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,24 +41,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class CatalogPriceRulesType extends TranslatorAwareType
 {
-    /**
-     * PricingType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param LegacyContext $legacyContext
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly LegacyContext $legacyContext
+        private readonly LegacyContext $legacyContext,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -69,7 +60,10 @@ class CatalogPriceRulesType extends TranslatorAwareType
         $catalogPriceRuleEditLink = $this->legacyContext->getAdminLink(
             'AdminSpecificPriceRule',
             true,
-            ['updatespecific_price_rule' => '', 'id_specific_price_rule' => 'catalog_price_rule_id']
+            [
+                'updatespecific_price_rule' => '',
+                'id_specific_price_rule' => 'catalog_price_rule_id',
+            ]
         );
         $catalogPriceRuleIndexLink = $this->legacyContext->getAdminLink('AdminSpecificPriceRule');
         /** Adding % to make link more unique */

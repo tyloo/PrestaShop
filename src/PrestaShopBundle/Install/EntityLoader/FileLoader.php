@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,32 +48,32 @@ class FileLoader
      * @param string $dataPath Path for data files
      * @param string $langPath Path for translated data files
      */
-    public function __construct(private readonly string $dataPath, private readonly string $langPath)
-    {
+    public function __construct(
+        private readonly string $dataPath,
+        private readonly string $langPath,
+    ) {
     }
 
     /**
      * Load an entity XML file.
      *
-     * @param string $entity Name of the entity to load (eg. 'tab')
-     * @param string|null $iso Language in which to load said entity. If not found, will fall back to default language.
-     *
-     * @return SimpleXMLElement|null
+     * @param string      $entity Name of the entity to load (eg. 'tab')
+     * @param string|null $iso    Language in which to load said entity. If not found, will fall back to default language.
      *
      * @throws PrestashopInstallerException
      */
     public function load(string $entity, $iso = null): ?SimpleXMLElement
     {
-        if (!isset($this->cache[$entity][$iso])) {
+        if (! isset($this->cache[$entity][$iso])) {
             // skip hidden files on macos (see https://github.com/PrestaShop/PrestaShop/commit/dd2d7491b483c223b3fe8c010d093b8e6e82f0e6)
-            if (in_array($entity[0], ['.', '_'])) {
+            if (\in_array($entity[0], ['.', '_'], true)) {
                 return null;
             }
 
             $path = $this->getFilePath($entity, $iso);
 
             $this->cache[$entity][$iso] = @simplexml_load_file($path, 'SimplexmlElement');
-            if (!$this->cache[$entity][$iso]) {
+            if (! $this->cache[$entity][$iso]) {
                 throw new PrestashopInstallerException('XML data file ' . $entity . '.xml invalid');
             }
         }
@@ -83,12 +84,12 @@ class FileLoader
     /**
      * Removes an item from cache
      *
-     * @param string $entity Entity name
-     * @param string|null $iso [default=null] 2-letter language code. If not provided, it flushes all languages for this entity
+     * @param string      $entity Entity name
+     * @param string|null $iso    [default=null] 2-letter language code. If not provided, it flushes all languages for this entity
      */
     public function flushCache(string $entity, ?string $iso = null): void
     {
-        if (!empty($iso)) {
+        if (! empty($iso)) {
             unset($this->cache[$entity][$iso]);
         } else {
             unset($this->cache[$entity]);
@@ -98,8 +99,8 @@ class FileLoader
     /**
      * Looks up the file in a list of lookup paths and returns the first one found.
      *
-     * @param string $entity Entity name
-     * @param string|null $iso [default=null] 2-letter language code
+     * @param string      $entity Entity name
+     * @param string|null $iso    [default=null] 2-letter language code
      *
      * @return string Path to the file
      *
@@ -122,8 +123,8 @@ class FileLoader
     /**
      * Returns the lookup paths for the provided entity / iso.
      *
-     * @param string $entity Entity name
-     * @param string|null $iso [default=null] 2-letter language code
+     * @param string      $entity Entity name
+     * @param string|null $iso    [default=null] 2-letter language code
      *
      * @return string[] List of lookup paths
      */

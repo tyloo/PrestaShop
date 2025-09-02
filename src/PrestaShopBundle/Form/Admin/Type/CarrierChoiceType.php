@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class CarrierChoiceType extends AbstractType
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $carriers = $this->carrierChoiceProvider->getChoices();
@@ -50,6 +48,11 @@ class CarrierChoiceType extends AbstractType
             'choices' => $carriers,
             'choice_attr' => $this->formatChoicesAttr($carriers),
         ]);
+    }
+
+    public function getParent(): string
+    {
+        return ChoiceType::class;
     }
 
     private function formatChoicesAttr(array $carriers): array
@@ -62,13 +65,5 @@ class CarrierChoiceType extends AbstractType
         }
 
         return $choicesAttr;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent(): string
-    {
-        return ChoiceType::class;
     }
 }

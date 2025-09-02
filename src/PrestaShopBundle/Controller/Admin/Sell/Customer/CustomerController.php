@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -93,11 +94,6 @@ class CustomerController extends PrestaShopAdminController
 {
     /**
      * Show customers listing.
-     *
-     * @param Request $request
-     * @param CustomerFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index', message: 'You do not have permission to view this.')]
     public function indexAction(
@@ -132,10 +128,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Show customer create form & handle processing of it.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
@@ -148,7 +140,7 @@ class CustomerController extends PrestaShopAdminController
         DefaultGroupsProviderInterface $defaultGroupsProvider,
         B2bFeature $b2bFeature,
     ): Response {
-        if (!$this->getShopContext()->getShopConstraint()->isSingleShopContext()) {
+        if (! $this->getShopContext()->getShopConstraint()->isSingleShopContext()) {
             return $this->redirectToRoute('admin_customers_index');
         }
 
@@ -206,11 +198,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Show customer edit form & handle processing of it.
-     *
-     * @param int $customerId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index')]
     public function editAction(
@@ -275,17 +262,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * View customer information.
-     *
-     * @param int $customerId
-     * @param Request $request
-     * @param CustomerDiscountFilters $customerDiscountFilters
-     * @param CustomerAddressFilters $customerAddressFilters
-     * @param CustomerCartFilters $customerCartFilters
-     * @param CustomerOrderFilters $customerOrderFilters
-     * @param CustomerBoughtProductFilters $customerBoughtProductFilters
-     * @param CustomerViewedProductFilters $customerViewedProductFilters
-     *
-     * @return Response
      */
     #[DemoRestricted(redirectRoute: 'admin_customers_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index')]
@@ -388,11 +364,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Set private note about customer.
-     *
-     * @param int $customerId
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index')]
     public function setPrivateNoteAction(int $customerId, Request $request): RedirectResponse
@@ -424,11 +395,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Transforms guest to customer
-     *
-     * @param int $customerId
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index')]
     public function transformGuestToCustomerAction(
@@ -460,10 +426,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Sets required fields for customer
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index')]
     public function setRequiredFieldsAction(Request $request): RedirectResponse
@@ -484,19 +446,15 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Search for customers by query.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function searchAction(Request $request): JsonResponse
     {
         $query = $request->query->get('customer_search');
         $phrases = explode(' OR ', $query);
-        $isRequestFromLegacyPage = !$request->query->has('sf2');
+        $isRequestFromLegacyPage = ! $request->query->has('sf2');
 
-        if (!$request->query->has('shopId')) {
+        if (! $request->query->has('shopId')) {
             // this is important for keeping backwards compatibility, null acts different compared to AllShops constraint.
             $shopConstraint = null;
         } else {
@@ -520,7 +478,7 @@ class CustomerController extends PrestaShopAdminController
         // it will return response so legacy can understand it
         if ($isRequestFromLegacyPage) {
             return $this->json([
-                'found' => !empty($customers),
+                'found' => ! empty($customers),
                 'customers' => $customers,
             ]);
         }
@@ -530,10 +488,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Provides customer information for address creation in json format
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function getCustomerInformationAction(Request $request): JsonResponse
@@ -552,9 +506,10 @@ class CustomerController extends PrestaShopAdminController
                 $code = Response::HTTP_NOT_FOUND;
             }
 
-            return $this->json([
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e)),
-            ],
+            return $this->json(
+                [
+                    'message' => $this->getErrorMessageForException($e, $this->getErrorMessages($e)),
+                ],
                 $code
             );
         }
@@ -562,10 +517,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Toggle customer status.
-     *
-     * @param int $customerId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index', message: 'You do not have permission to edit this.')]
     public function toggleStatusAction(int $customerId): JsonResponse
@@ -575,7 +526,7 @@ class CustomerController extends PrestaShopAdminController
             $editableCustomer = $this->dispatchQuery(new GetCustomerForEditing($customerId));
 
             $editCustomerCommand = new EditCustomerCommand((int) $customerId);
-            $editCustomerCommand->setIsEnabled(!$editableCustomer->isEnabled());
+            $editCustomerCommand->setIsEnabled(! $editableCustomer->isEnabled());
 
             $this->dispatchCommand($editCustomerCommand);
 
@@ -595,10 +546,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Toggle customer newsletter subscription status.
-     *
-     * @param int $customerId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index', message: 'You do not have permission to edit this.')]
     public function toggleNewsletterSubscriptionAction(int $customerId): JsonResponse
@@ -610,7 +557,7 @@ class CustomerController extends PrestaShopAdminController
             $editCustomerCommand = new EditCustomerCommand($customerId);
 
             // toggle newsletter subscription
-            $editCustomerCommand->setNewsletterSubscribed(!$editableCustomer->isNewsletterSubscribed());
+            $editCustomerCommand->setNewsletterSubscribed(! $editableCustomer->isNewsletterSubscribed());
 
             $this->dispatchCommand($editCustomerCommand);
 
@@ -630,10 +577,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Toggle customer partner offer subscription status.
-     *
-     * @param int $customerId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index', message: 'You do not have permission to edit this.')]
     public function togglePartnerOfferSubscriptionAction(int $customerId): JsonResponse
@@ -643,7 +586,7 @@ class CustomerController extends PrestaShopAdminController
             $editableCustomer = $this->dispatchQuery(new GetCustomerForEditing($customerId));
 
             $editCustomerCommand = new EditCustomerCommand($customerId);
-            $editCustomerCommand->setIsPartnerOffersSubscribed(!$editableCustomer->isPartnerOffersSubscribed());
+            $editCustomerCommand->setIsPartnerOffersSubscribed(! $editableCustomer->isPartnerOffersSubscribed());
 
             $this->dispatchCommand($editCustomerCommand);
 
@@ -663,10 +606,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Delete customers in bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index', message: 'You do not have permission to delete this.')]
     public function deleteBulkAction(Request $request): RedirectResponse
@@ -677,7 +616,7 @@ class CustomerController extends PrestaShopAdminController
         if ($form->isSubmitted()) {
             $data = $form->getData();
 
-            $customerIds = array_map(fn($customerId): int => (int) $customerId, $data['customers_to_delete']);
+            $customerIds = array_map(fn ($customerId): int => (int) $customerId, $data['customers_to_delete']);
 
             try {
                 $command = new BulkDeleteCustomerCommand(
@@ -701,10 +640,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Delete customer.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index', message: 'You do not have permission to delete this.')]
     public function deleteAction(Request $request): RedirectResponse
@@ -736,15 +671,11 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Enable customers in bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index', message: 'You do not have permission to edit this.')]
     public function enableBulkAction(Request $request): RedirectResponse
     {
-        $customerIds = array_map(fn($customerId): int => (int) $customerId, $request->request->all('customer_customers_bulk'));
+        $customerIds = array_map(fn ($customerId): int => (int) $customerId, $request->request->all('customer_customers_bulk'));
 
         try {
             $command = new BulkEnableCustomerCommand($customerIds);
@@ -761,16 +692,12 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Disable customers in bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index', message: 'You do not have permission to edit this.')]
     public function disableBulkAction(Request $request): RedirectResponse
     {
         try {
-            $customerIds = array_map(fn($customerId): int => (int) $customerId, $request->request->all('customer_customers_bulk'));
+            $customerIds = array_map(fn ($customerId): int => (int) $customerId, $request->request->all('customer_customers_bulk'));
 
             $command = new BulkDisableCustomerCommand($customerIds);
 
@@ -786,10 +713,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Export filtered customers
-     *
-     * @param CustomerFilters $filters
-     *
-     * @return CsvResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function exportAction(
@@ -821,18 +744,18 @@ class CustomerController extends PrestaShopAdminController
         foreach ($grid->getData()->getRecords()->all() as $record) {
             $data[] = [
                 'id_customer' => $record['id_customer'],
-                'social_title' => '--' === $record['social_title'] ? '' : $record['social_title'],
+                'social_title' => $record['social_title'] === '--' ? '' : $record['social_title'],
                 'firstname' => $record['firstname'],
                 'lastname' => $record['lastname'],
                 'email' => $record['email'],
                 'default_group' => $record['default_group'],
-                'company' => '--' === $record['company'] ? '' : $record['company'],
-                'total_spent' => '--' === $record['total_spent'] ? '' : $record['total_spent'],
+                'company' => $record['company'] === '--' ? '' : $record['company'],
+                'total_spent' => $record['total_spent'] === '--' ? '' : $record['total_spent'],
                 'enabled' => $record['active'],
                 'newsletter' => $record['newsletter'],
                 'partner_offers' => $record['optin'],
                 'registration' => $record['date_add'],
-                'connect' => '--' === $record['connect'] ? '' : $record['connect'],
+                'connect' => $record['connect'] === '--' ? '' : $record['connect'],
             ];
         }
 
@@ -842,11 +765,6 @@ class CustomerController extends PrestaShopAdminController
             ->setFileName('customer_' . date('Y-m-d_His') . '.csv');
     }
 
-    /**
-     * @param int $customerId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function getCartsAction(int $customerId): JsonResponse
     {
@@ -864,11 +782,6 @@ class CustomerController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $customerId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function getOrdersAction(int $customerId): JsonResponse
     {
@@ -886,9 +799,6 @@ class CustomerController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @return FormInterface
-     */
     private function getRequiredFieldsForm(): FormInterface
     {
         $requiredFields = $this->dispatchQuery(new GetRequiredFieldsForCustomer());
@@ -899,16 +809,14 @@ class CustomerController extends PrestaShopAdminController
     /**
      * If customer form is submitted and groups are not selected
      * we add empty groups to request
-     *
-     * @param Request $request
      */
     private function addGroupSelectionToRequest(Request $request): void
     {
-        if (!$request->isMethod(Request::METHOD_POST)) {
+        if (! $request->isMethod(Request::METHOD_POST)) {
             return;
         }
 
-        if (!$request->request->has('customer')
+        if (! $request->request->has('customer')
             || isset($request->request->all('customer')['group_ids'])
         ) {
             return;
@@ -922,10 +830,6 @@ class CustomerController extends PrestaShopAdminController
 
     /**
      * Get errors that can be used to translate exceptions into user friendly messages
-     *
-     * @param Exception $e
-     *
-     * @return array
      */
     private function getErrorMessages(Exception $e): array
     {
@@ -965,27 +869,27 @@ class CustomerController extends PrestaShopAdminController
                 ),
                 CustomerConstraintException::INVALID_FIRST_NAME => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('First name', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('First name', [], 'Admin.Global'))],
                     'Admin.Notifications.Error',
                 ),
                 CustomerConstraintException::INVALID_LAST_NAME => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Last name', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('Last name', [], 'Admin.Global'))],
                     'Admin.Notifications.Error',
                 ),
                 CustomerConstraintException::INVALID_EMAIL => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Email', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('Email', [], 'Admin.Global'))],
                     'Admin.Notifications.Error',
                 ),
                 CustomerConstraintException::INVALID_BIRTHDAY => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Birthday', [], 'Admin.Orderscustomers.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Birthday', [], 'Admin.Orderscustomers.Feature'))],
                     'Admin.Notifications.Error',
                 ),
                 CustomerConstraintException::INVALID_APE_CODE => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('APE', [], 'Admin.Orderscustomers.Feature'))],
+                    [\sprintf('"%s"', $this->trans('APE', [], 'Admin.Orderscustomers.Feature'))],
                     'Admin.Notifications.Error',
                 ),
             ],
@@ -1015,8 +919,6 @@ class CustomerController extends PrestaShopAdminController
     }
 
     /**
-     * Manage legacy flashes
-     *
      * @todo Remove this code when legacy edit will be migrated.
      *
      * @param int $messageId The message id from legacy context
@@ -1036,9 +938,6 @@ class CustomerController extends PrestaShopAdminController
         }
     }
 
-    /**
-     * @return array
-     */
     private function getCustomerIndexToolbarButtons(): array
     {
         $toolbarButtons = [];
@@ -1049,10 +948,10 @@ class CustomerController extends PrestaShopAdminController
             'href' => $this->generateUrl('admin_customers_create'),
             'desc' => $this->trans('Add new customer', [], 'Admin.Orderscustomers.Feature'),
             'icon' => 'add_circle_outline',
-            'disabled' => !$isSingleShopContext,
+            'disabled' => ! $isSingleShopContext,
         ];
 
-        if (!$isSingleShopContext) {
+        if (! $isSingleShopContext) {
             $toolbarButtons['add']['help'] = $this->trans(
                 'You can use this feature in a single-store context only. Switch contexts to enable it.',
                 [],
@@ -1064,11 +963,6 @@ class CustomerController extends PrestaShopAdminController
         return $toolbarButtons;
     }
 
-    /**
-     * @param int $customerId
-     *
-     * @return array
-     */
     private function getCustomerViewToolbarButtons(int $customerId): array
     {
         $toolbarButtons = [];

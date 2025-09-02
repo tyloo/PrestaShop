@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,10 +46,6 @@ class LocalizationController extends PrestaShopAdminController
 {
     /**
      * Show localization settings page.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
@@ -58,11 +55,11 @@ class LocalizationController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.admin.localization.local_units.form_handler')]
         FormHandlerInterface $localUnitsFormHandler,
         #[Autowire(service: 'prestashop.admin.localization.advanced.form_handler')]
-        FormHandlerInterface $advancedFormHandler
+        FormHandlerInterface $advancedFormHandler,
     ): Response {
         $legacyController = $request->attributes->get('_legacy_controller');
 
-        if (!extension_loaded('openssl')) {
+        if (! \extension_loaded('openssl')) {
             $this->addFlash('warning', $this->trans('Importing a new language may fail without the OpenSSL module. Please enable "openssl.so" on your server configuration.', [], 'Admin.International.Notification'));
         }
 
@@ -85,10 +82,6 @@ class LocalizationController extends PrestaShopAdminController
 
     /**
      * Process the Localization Configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_localization_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_localization_index')]
@@ -106,10 +99,6 @@ class LocalizationController extends PrestaShopAdminController
 
     /**
      * Process the Localization Local Units form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_localization_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
@@ -127,17 +116,13 @@ class LocalizationController extends PrestaShopAdminController
 
     /**
      * Process the Localization Advanced form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_localization_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
     public function processAdvancedFormAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.localization.advanced.form_handler')]
-        FormHandlerInterface $advancedFormHandler
+        FormHandlerInterface $advancedFormHandler,
     ): RedirectResponse {
         return $this->processForm(
             $request,
@@ -147,52 +132,13 @@ class LocalizationController extends PrestaShopAdminController
     }
 
     /**
-     * Process the Localization configuration form.
-     *
-     * @param Request $request
-     * @param FormHandlerInterface $formHandler
-     * @param string $hookName
-     *
-     * @return RedirectResponse
-     */
-    protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): RedirectResponse
-    {
-        $this->dispatchHookWithParameters(
-            'actionAdminInternationalLocalizationControllerPostProcess' . $hookName . 'Before',
-            ['controller' => $this]
-        );
-
-        $this->dispatchHookWithParameters('actionAdminInternationalLocalizationControllerPostProcessBefore', ['controller' => $this]);
-
-        $form = $formHandler->getForm();
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $data = $form->getData();
-            $saveErrors = $formHandler->save($data);
-
-            if (0 === count($saveErrors)) {
-                $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
-            } else {
-                $this->addFlashErrors($saveErrors);
-            }
-        }
-
-        return $this->redirectToRoute('admin_localization_index');
-    }
-
-    /**
      * Handles localization pack import.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_localization_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_localization_index')]
     public function importPackAction(
         Request $request,
-        LocalizationPackImporter $localizationPackImporter
+        LocalizationPackImporter $localizationPackImporter,
     ): RedirectResponse {
         $localizationPackImportForm = $this->createForm(ImportLocalizationPackType::class);
         $localizationPackImportForm->handleRequest($request);
@@ -219,6 +165,35 @@ class LocalizationController extends PrestaShopAdminController
 
             foreach ($errors as $error) {
                 $this->addFlash('error', $error);
+            }
+        }
+
+        return $this->redirectToRoute('admin_localization_index');
+    }
+
+    /**
+     * Process the Localization configuration form.
+     */
+    protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): RedirectResponse
+    {
+        $this->dispatchHookWithParameters(
+            'actionAdminInternationalLocalizationControllerPostProcess' . $hookName . 'Before',
+            ['controller' => $this]
+        );
+
+        $this->dispatchHookWithParameters('actionAdminInternationalLocalizationControllerPostProcessBefore', ['controller' => $this]);
+
+        $form = $formHandler->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+            $saveErrors = $formHandler->save($data);
+
+            if (\count($saveErrors) === 0) {
+                $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
+            } else {
+                $this->addFlashErrors($saveErrors);
             }
         }
 

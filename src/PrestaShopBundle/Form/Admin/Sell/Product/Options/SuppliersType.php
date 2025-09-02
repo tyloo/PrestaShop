@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,22 +38,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SuppliersType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param FormChoiceProviderInterface $supplierNameByIdChoiceProvider
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly FormChoiceProviderInterface $supplierNameByIdChoiceProvider
+        private readonly FormChoiceProviderInterface $supplierNameByIdChoiceProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $suppliers = $this->supplierNameByIdChoiceProvider->getChoices();
@@ -65,7 +58,9 @@ class SuppliersType extends TranslatorAwareType
                 'required' => false,
                 // placeholder false is important to avoid empty option in select input despite required being false
                 'placeholder' => false,
-                'choice_attr' => fn($choice, $name): array => ['data-label' => $name],
+                'choice_attr' => fn ($choice, $name): array => [
+                    'data-label' => $name,
+                ],
                 'label' => $this->trans('Choose the suppliers associated with this product', 'Admin.Catalog.Feature'),
                 'label_tag_name' => 'h4',
             ])
@@ -81,9 +76,6 @@ class SuppliersType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

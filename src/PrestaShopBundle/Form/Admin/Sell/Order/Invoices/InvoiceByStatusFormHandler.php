@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,8 @@ use Symfony\Component\Form\FormFactoryInterface;
 final class InvoiceByStatusFormHandler extends Handler
 {
     /**
-     * @param FormFactoryInterface $formFactory
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param FormDataProviderInterface $formDataProvider
      * @param string $form
      * @param string $hookName
-     * @param OrderInvoiceDataProviderInterface $orderInvoiceDataProvider
-     * @param PDFGeneratorInterface $pdfGenerator
      */
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -55,14 +51,11 @@ final class InvoiceByStatusFormHandler extends Handler
         $form,
         $hookName,
         private readonly OrderInvoiceDataProviderInterface $orderInvoiceDataProvider,
-        private readonly PDFGeneratorInterface $pdfGenerator
+        private readonly PDFGeneratorInterface $pdfGenerator,
     ) {
         parent::__construct($formFactory, $hookDispatcher, $formDataProvider, $form, $hookName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function save(array $data)
     {
         if ($errors = parent::save($data)) {

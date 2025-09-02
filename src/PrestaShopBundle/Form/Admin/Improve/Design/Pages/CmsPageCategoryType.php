@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,23 +49,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CmsPageCategoryType extends TranslatorAwareType
 {
     public const NAME_MAX_LENGTH = 64;
+
     public const META_TITLE_MAX_LENGTH = 255;
+
     public const META_DESCRIPTION_MAX_LENGTH = 512;
 
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $allCmsCategories
      * @param bool $isShopFeatureEnabled
      */
-    public function __construct(TranslatorInterface $translator, array $locales, private readonly array $allCmsCategories, private $isShopFeatureEnabled)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        array $locales,
+        private readonly array $allCmsCategories,
+        private $isShopFeatureEnabled,
+    ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $invalidCharactersForCatalogLabel = $this->trans('Invalid characters:', 'Admin.Global') . TypedRegexValidator::CATALOG_CHARS;
@@ -183,7 +184,7 @@ class CmsPageCategoryType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
+                                \sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
                             ]
                         ),
                     ]),

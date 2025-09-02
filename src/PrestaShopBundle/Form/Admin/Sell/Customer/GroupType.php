@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupType extends AbstractType
 {
-    public function __construct(private readonly GroupByIdChoiceProvider $groupByIdChoiceProvider)
-    {
+    public function __construct(
+        private readonly GroupByIdChoiceProvider $groupByIdChoiceProvider,
+    ) {
     }
 
     public function getParent(): string

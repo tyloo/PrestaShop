@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,30 +37,22 @@ use PrestaShop\PrestaShop\Core\Geolocation\GeoLite\GeoLiteCityCheckerInterface;
  */
 final class GeolocationByIpAddressFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @param DataConfigurationInterface $dataConfiguration
-     * @param GeoLiteCityCheckerInterface $geoLiteCityChecker
-     */
-    public function __construct(private readonly DataConfigurationInterface $dataConfiguration, private readonly GeoLiteCityCheckerInterface $geoLiteCityChecker)
-    {
+    public function __construct(
+        private readonly DataConfigurationInterface $dataConfiguration,
+        private readonly GeoLiteCityCheckerInterface $geoLiteCityChecker,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->dataConfiguration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         $errors = [];
 
-        if ($data['geolocation_enabled'] && !$this->geoLiteCityChecker->isAvailable()) {
+        if ($data['geolocation_enabled'] && ! $this->geoLiteCityChecker->isAvailable()) {
             $errors[] = [
                 'key' => 'The geolocation database is unavailable.',
                 'parameters' => [],
@@ -67,7 +60,7 @@ final class GeolocationByIpAddressFormDataProvider implements FormDataProviderIn
             ];
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             return $errors;
         }
 

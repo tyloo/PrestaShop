@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,24 +42,16 @@ class FilterSearchCriteriaEvent extends Event
      */
     public const NAME = 'prestashop.search_criteria.filter';
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     */
-    public function __construct(private SearchCriteriaInterface $searchCriteria)
-    {
+    public function __construct(
+        private SearchCriteriaInterface $searchCriteria,
+    ) {
     }
 
-    /**
-     * @return SearchCriteriaInterface
-     */
-    public function getSearchCriteria(): \PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface
+    public function getSearchCriteria(): SearchCriteriaInterface
     {
         return $this->searchCriteria;
     }
 
-    /**
-     * @param SearchCriteriaInterface $searchCriteria
-     */
     public function setSearchCriteria(SearchCriteriaInterface $searchCriteria): void
     {
         $this->searchCriteria = $searchCriteria;

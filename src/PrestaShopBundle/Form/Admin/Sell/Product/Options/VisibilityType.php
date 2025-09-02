@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,21 +41,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class VisibilityType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
      * @param FormChoiceProviderInterface&FormChoiceAttributeProviderInterface $productVisibilityChoiceProvider
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private $productVisibilityChoiceProvider
+        private $productVisibilityChoiceProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -69,7 +65,9 @@ class VisibilityType extends TranslatorAwareType
                 'column_breaker' => true,
                 'modify_all_shops' => true,
                 'help' => '', // should be set to enable help block
-                'help_attr' => ['class' => 'js-visibility-description'],
+                'help_attr' => [
+                    'class' => 'js-visibility-description',
+                ],
             ])
             ->add('available_for_order', SwitchType::class, [
                 'label' => $this->trans('Available for order', 'Admin.Catalog.Feature'),
@@ -92,9 +90,6 @@ class VisibilityType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

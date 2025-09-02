@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,7 +52,9 @@ class FeatureFlagListType extends TranslatorAwareType
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $this->trans('Save', 'Admin.Actions'),
-                'attr' => ['disabled' => true],
+                'attr' => [
+                    'disabled' => true,
+                ],
             ])
         ;
     }

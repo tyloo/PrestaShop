@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,6 +66,11 @@ class FrameworkBundleAdminController extends AbstractController
     protected ?Container $globalContainer = null;
 
     /**
+     * @var string|null
+     */
+    protected $layoutTitle;
+
+    /**
      * This method is completely hacky, we count on the fact that it is going to be used to inject the controller's dedicated
      * minified controller (thanks to the @required annotation, autowiring and AbstractController parent class), this allows us
      * to store the controller container in a dedicated field.
@@ -79,8 +85,6 @@ class FrameworkBundleAdminController extends AbstractController
      * This is quite ugly, but it prevents refactoring all the controllers (from both core and modules controllers), it is only
      * done on controllers that extend this class which should not be used anymore and be replaced by PrestaShopAdminController
      * controller by controller along with a refacto to do proper dependency injection.
-     *
-     * @param ContainerInterface $container
      *
      * @return ContainerInterface|null
      *
@@ -102,98 +106,9 @@ class FrameworkBundleAdminController extends AbstractController
     }
 
     /**
-     * This method was removed in Symfony 6, for backward compatibility reasons this method is temporarily
-     * maintained so the modules can keep using it a little longer. It will be removed in the next major though
-     * along with this base controller class
-     *
-     * @deprecated since 9.0
-     */
-    protected function has(string $id): bool
-    {
-        trigger_deprecation('prestashop/prestashop', '9.0', 'Method "%s()" is deprecated, use method or constructor injection in your controller instead.', __METHOD__);
-
-        if ($this->controllerContainer && $this->controllerContainer->has($id)) {
-            return true;
-        }
-        if ($this->globalContainer && $this->globalContainer->has($id)) {
-            return true;
-        }
-
-        return $this->container->has($id);
-    }
-
-    /**
-     * This method was removed in Symfony 6, for backward compatibility reasons this method is temporarily
-     * maintained so the modules can keep using it a little longer. It will be removed in the next major though
-     * along with this base controller class
-     *
-     * @deprecated since 9.0
-     */
-    protected function get(string $id): object
-    {
-        trigger_deprecation('prestashop/prestashop', '9.0', 'Method "%s()" is deprecated, use method or constructor injection in your controller instead.', __METHOD__);
-
-        return $this->doGet($id);
-    }
-
-    /**
-     * This special get method tries to get a service either in the controller custom-made container (that contains
-     * the most regular aliases to private services like twig, security, ...) and if it doesn't find it it tries to
-     * get it from the global container (that contains all public services).
-     *
-     * This is completely going around the framework, we do this to allow this class to behave as it used to without
-     * having to refactor the controller completely with proper dependncy injection, but it's a temporary solution that
-     * will disappear with this fix.
-     *
-     * @param string $id
-     *
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     */
-    protected function doGet(string $id): object
-    {
-        if ($this->controllerContainer && $this->controllerContainer->has($id)) {
-            return $this->controllerContainer->get($id);
-        }
-
-        if ($this->globalContainer && $this->globalContainer->has($id)) {
-            return $this->globalContainer->get($id);
-        }
-
-        return $this->container->get($id);
-    }
-
-    /**
-     * This method was removed in Symfony 6, for backward compatibility reasons this method is temporarily
-     * maintained so the modules can keep using it a little longer. It will be removed in the next major though
-     * along with this base controller class
-     *
-     * @deprecated since 9.0
-     */
-    protected function getDoctrine(): ManagerRegistry
-    {
-        return $this->get('doctrine');
-    }
-
-    /**
-     * @var string|null
-     */
-    protected $layoutTitle;
-
-    /**
-     * @return ShopConfigurationInterface
-     */
-    protected function getConfiguration(): ShopConfigurationInterface
-    {
-        return $this->get('prestashop.adapter.legacy.configuration');
-    }
-
-    /**
      * Returns form errors for JS implementation.
      *
      * Parse all errors mapped by id html field
-     *
-     * @param FormInterface $form
      *
      * @return array<array<string>> Errors
      *
@@ -240,12 +155,89 @@ class FrameworkBundleAdminController extends AbstractController
     }
 
     /**
+     * This method was removed in Symfony 6, for backward compatibility reasons this method is temporarily
+     * maintained so the modules can keep using it a little longer. It will be removed in the next major though
+     * along with this base controller class
+     *
+     * @deprecated since 9.0
+     */
+    protected function has(string $id): bool
+    {
+        trigger_deprecation('prestashop/prestashop', '9.0', 'Method "%s()" is deprecated, use method or constructor injection in your controller instead.', __METHOD__);
+
+        if ($this->controllerContainer && $this->controllerContainer->has($id)) {
+            return true;
+        }
+        if ($this->globalContainer && $this->globalContainer->has($id)) {
+            return true;
+        }
+
+        return $this->container->has($id);
+    }
+
+    /**
+     * This method was removed in Symfony 6, for backward compatibility reasons this method is temporarily
+     * maintained so the modules can keep using it a little longer. It will be removed in the next major though
+     * along with this base controller class
+     *
+     * @deprecated since 9.0
+     */
+    protected function get(string $id): object
+    {
+        trigger_deprecation('prestashop/prestashop', '9.0', 'Method "%s()" is deprecated, use method or constructor injection in your controller instead.', __METHOD__);
+
+        return $this->doGet($id);
+    }
+
+    /**
+     * This special get method tries to get a service either in the controller custom-made container (that contains
+     * the most regular aliases to private services like twig, security, ...) and if it doesn't find it it tries to
+     * get it from the global container (that contains all public services).
+     *
+     * This is completely going around the framework, we do this to allow this class to behave as it used to without
+     * having to refactor the controller completely with proper dependncy injection, but it's a temporary solution that
+     * will disappear with this fix.
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
+    protected function doGet(string $id): object
+    {
+        if ($this->controllerContainer && $this->controllerContainer->has($id)) {
+            return $this->controllerContainer->get($id);
+        }
+
+        if ($this->globalContainer && $this->globalContainer->has($id)) {
+            return $this->globalContainer->get($id);
+        }
+
+        return $this->container->get($id);
+    }
+
+    /**
+     * This method was removed in Symfony 6, for backward compatibility reasons this method is temporarily
+     * maintained so the modules can keep using it a little longer. It will be removed in the next major though
+     * along with this base controller class
+     *
+     * @deprecated since 9.0
+     */
+    protected function getDoctrine(): ManagerRegistry
+    {
+        return $this->get('doctrine');
+    }
+
+    protected function getConfiguration(): ShopConfigurationInterface
+    {
+        return $this->get('prestashop.adapter.legacy.configuration');
+    }
+
+    /**
      * Creates a HookEvent, sets its parameters, and dispatches it.
      *
      * Wrapper to: @see HookDispatcher::dispatchWithParameters()
      *
-     * @param string $hookName The hook name
-     * @param array $parameters The hook parameters
+     * @param string $hookName   The hook name
+     * @param array  $parameters The hook parameters
      */
     protected function dispatchHook($hookName, array $parameters)
     {
@@ -257,8 +249,8 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * Wrapper to: @see HookDispatcher::renderForParameters()
      *
-     * @param string $hookName The hook name
-     * @param array $parameters The hook parameters
+     * @param string $hookName   The hook name
+     * @param array  $parameters The hook parameters
      *
      * @return array The responses of hooks
      *
@@ -272,10 +264,8 @@ class FrameworkBundleAdminController extends AbstractController
     /**
      * Generates a documentation link.
      *
-     * @param string $section Legacy controller name
-     * @param bool|string $title Help title
-     *
-     * @return string
+     * @param string      $section Legacy controller name
+     * @param bool|string $title   Help title
      */
     protected function generateSidebarLink($section, $title = false): string
     {
@@ -318,13 +308,11 @@ class FrameworkBundleAdminController extends AbstractController
 
     /**
      * Get the locale based on the context
-     *
-     * @return LocaleInterface
      */
     protected function getContextLocale(): LocaleInterface
     {
         $locale = $this->getContext()->getCurrentLocale();
-        if (null !== $locale) {
+        if ($locale !== null) {
             return $locale;
         }
 
@@ -339,8 +327,6 @@ class FrameworkBundleAdminController extends AbstractController
 
     /**
      * @param string $lang
-     *
-     * @return mixed
      */
     protected function langToLocale($lang)
     {
@@ -355,9 +341,6 @@ class FrameworkBundleAdminController extends AbstractController
         return $this->getConfiguration()->get('_PS_MODE_DEMO_');
     }
 
-    /**
-     * @return string
-     */
     protected function getDemoModeErrorMessage(): string
     {
         return $this->trans('This functionality has been disabled.', 'Admin.Notifications.Error');
@@ -367,8 +350,6 @@ class FrameworkBundleAdminController extends AbstractController
      * Checks if the attributes are granted against the current authentication token and optionally supplied object.
      *
      * @param string $controller name of the controller that token is tested against
-     *
-     * @return int
      *
      * @throws LogicException
      */
@@ -396,11 +377,9 @@ class FrameworkBundleAdminController extends AbstractController
     /**
      * Get the translated chain from key.
      *
-     * @param string $key the key to be translated
-     * @param string $domain the domain to be selected
-     * @param array $parameters Optional, pass parameters if needed (uncommon)
-     *
-     * @return string
+     * @param string $key        the key to be translated
+     * @param string $domain     the domain to be selected
+     * @param array  $parameters Optional, pass parameters if needed (uncommon)
      */
     protected function trans($key, $domain, array $parameters = []): string
     {
@@ -410,14 +389,12 @@ class FrameworkBundleAdminController extends AbstractController
     /**
      * Return errors as flash error messages.
      *
-     * @param array $errorMessages
-     *
      * @throws LogicException
      */
     protected function flashErrors(array $errorMessages)
     {
         foreach ($errorMessages as $error) {
-            $message = is_array($error) ? $this->trans($error['key'], $error['domain'], $error['parameters']) : $error;
+            $message = \is_array($error) ? $this->trans($error['key'], $error['domain'], $error['parameters']) : $error;
             $this->addFlash('error', $message);
         }
     }
@@ -442,8 +419,6 @@ class FrameworkBundleAdminController extends AbstractController
      * @param string $object
      * @param string $suffix
      *
-     * @return bool
-     *
      * @throws LogicException
      */
     protected function actionIsAllowed($action, $object = '', $suffix = ''): bool
@@ -465,8 +440,6 @@ class FrameworkBundleAdminController extends AbstractController
      * @param string $action
      * @param string $suffix
      *
-     * @return string
-     *
      * @throws Exception
      */
     protected function getForbiddenActionMessage($action, $suffix = ''): string
@@ -483,22 +456,20 @@ class FrameworkBundleAdminController extends AbstractController
             return $this->trans('You do not have permission to add this.', 'Admin.Notifications.Error');
         }
 
-        throw new Exception(sprintf('Invalid action (%s)', $action . $suffix));
+        throw new Exception(\sprintf('Invalid action (%s)', $action . $suffix));
     }
 
     /**
      * Get fallback error message when something unexpected happens.
      *
      * @param string $type
-     * @param int $code
+     * @param int    $code
      * @param string $message
-     *
-     * @return string
      */
     protected function getFallbackErrorMessage($type, $code, $message = ''): string
     {
         $isDebug = $this->get('kernel')->isDebug();
-        if ($isDebug && !empty($message)) {
+        if ($isDebug && ! empty($message)) {
             return $this->trans(
                 'An unexpected error occurred. [%type% code %code%]: %message%',
                 'Admin.Notifications.Error',
@@ -524,8 +495,8 @@ class FrameworkBundleAdminController extends AbstractController
      * Get Admin URI from PrestaShop 1.6 Back Office.
      *
      * @param string $controller the old Controller name
-     * @param bool $withToken whether we add token or not
-     * @param array $params url parameters
+     * @param bool   $withToken  whether we add token or not
+     * @param array  $params     url parameters
      *
      * @return string the page URI (with token)
      */
@@ -536,8 +507,6 @@ class FrameworkBundleAdminController extends AbstractController
 
     /**
      * Present provided grid.
-     *
-     * @param GridInterface $grid
      *
      * @return array
      */
@@ -567,10 +536,7 @@ class FrameworkBundleAdminController extends AbstractController
     }
 
     /**
-     * @param array $errors
      * @param int $httpStatusCode
-     *
-     * @return JsonResponse
      */
     protected function returnErrorJsonResponse(array $errors, $httpStatusCode): JsonResponse
     {
@@ -597,9 +563,6 @@ class FrameworkBundleAdminController extends AbstractController
         return $this->getContext()->shop->id;
     }
 
-    /**
-     * @param FormInterface $form
-     */
     protected function addFlashFormErrors(FormInterface $form)
     {
         /** @var FormError $formError */
@@ -610,9 +573,6 @@ class FrameworkBundleAdminController extends AbstractController
 
     /**
      * Get error by exception from given messages
-     *
-     * @param Exception $e
-     * @param array $messages
      *
      * @return string
      */
@@ -628,11 +588,11 @@ class FrameworkBundleAdminController extends AbstractController
         if (isset($messages[$exceptionType])) {
             $message = $messages[$exceptionType];
 
-            if (is_string($message)) {
+            if (\is_string($message)) {
                 return $message;
             }
 
-            if (is_array($message) && isset($message[$exceptionCode])) {
+            if (\is_array($message) && isset($message[$exceptionCode])) {
                 return $message[$exceptionCode];
             }
         }

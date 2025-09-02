@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,14 +46,11 @@ class DiscountType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         private readonly DiscountListener $discountListener,
-        private readonly DiscountApplicationChoiceProvider $discountApplicationChoiceProvider
+        private readonly DiscountApplicationChoiceProvider $discountApplicationChoiceProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -86,13 +84,6 @@ class DiscountType extends TranslatorAwareType
         $builder->addEventSubscriber($this->discountListener);
     }
 
-    private function getChoicesByType(string $reductionType): array
-    {
-        return $this->discountApplicationChoiceProvider->getChoices([
-            'reduction_type' => $reductionType,
-        ]);
-    }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -103,7 +94,14 @@ class DiscountType extends TranslatorAwareType
                 'class' => 'discount-container',
             ],
             'disabling_switch' => true,
-            'disabled_value' => static fn(?array $data): bool => empty($data['reduction']['value']),
+            'disabled_value' => static fn (?array $data): bool => empty($data['reduction']['value']),
+        ]);
+    }
+
+    private function getChoicesByType(string $reductionType): array
+    {
+        return $this->discountApplicationChoiceProvider->getChoices([
+            'reduction_type' => $reductionType,
         ]);
     }
 }

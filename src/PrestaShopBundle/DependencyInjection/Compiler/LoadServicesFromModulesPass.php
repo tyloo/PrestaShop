@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,12 +50,9 @@ class LoadServicesFromModulesPass implements CompilerPassInterface
      */
     public function __construct($containerName = '')
     {
-        $this->configPath = '/config/' . (empty($containerName) ? '' : trim($containerName, '/') . '/');
+        $this->configPath = '/config/' . (empty($containerName) ? '' : mb_trim($containerName, '/') . '/');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $installedModules = $container->getParameter('prestashop.installed_modules');

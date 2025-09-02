@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,28 +42,17 @@ class ModifyTranslationsType extends TranslatorAwareType
 {
     public const CORE_TRANSLATIONS_CHOICE_INDEX = '0';
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $translationTypeChoices
-     * @param array $emailContentTypeChoices
-     * @param array $themeChoices
-     * @param array $moduleChoices
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly array $translationTypeChoices,
         private readonly array $emailContentTypeChoices,
         private array $themeChoices,
-        private readonly array $moduleChoices
+        private readonly array $moduleChoices,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $noTheme = $this->trans('Core (no theme selected)', 'Admin.International.Feature');

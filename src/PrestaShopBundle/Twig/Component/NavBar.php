@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class NavBar
     {
         $className = Tab::getClassNameById((int) $this->context->getContext()->employee->default_tab);
 
-        if (!$className) {
+        if (! $className) {
             $className = 'AdminDashboard';
         }
 
@@ -66,7 +67,7 @@ class NavBar
 
     public function getTabs(): array
     {
-        if (null === $this->tabs) {
+        if ($this->tabs === null) {
             $this->tabs = $this->buildTabs();
         }
 
@@ -79,9 +80,9 @@ class NavBar
         $currentId = (int) Tab::getCurrentParentId();
         $controllerName = $this->menuBuilder->getLegacyControllerClassName();
 
-        $filteredTabs = array_filter($tabs, fn($tab): bool => $this->isValidTab($tab));
+        $filteredTabs = array_filter($tabs, fn ($tab): bool => $this->isValidTab($tab));
 
-        $processedTabs = array_map(fn($tab): array => $this->processTab($tab, $currentId, $level, $controllerName), $filteredTabs);
+        $processedTabs = array_map(fn ($tab): array => $this->processTab($tab, $currentId, $level, $controllerName), $filteredTabs);
 
         return array_values(array_filter($processedTabs));
     }
@@ -107,7 +108,7 @@ class NavBar
             $tab['href'] = $this->context->getContext()->link->getTabLink($tab);
         } catch (RouteNotFoundException $e) {
             $this->logger->warning(
-                sprintf('Route not found in one of the Tab %s', $tab['route_name'] ?? ''),
+                \sprintf('Route not found in one of the Tab %s', $tab['route_name'] ?? ''),
                 [
                     'message' => $e->getMessage(),
                     'file' => $e->getFile(),
@@ -121,7 +122,7 @@ class NavBar
 
         $subTabHref = $this->getTabLinkFromSubTabs($tab['sub_tabs']);
 
-        if (!empty($subTabHref)) {
+        if (! empty($subTabHref)) {
             $tab['href'] = $subTabHref;
         } elseif ($tab['id_parent'] === 0 && empty($tab['icon'])) {
             return [];

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MultistoreConfigurationTypeExtension extends AbstractTypeExtension
 {
-    public function __construct(private readonly MultistoreCheckboxEnabler $multistoreCheckboxEnabler)
-    {
+    public function __construct(
+        private readonly MultistoreCheckboxEnabler $multistoreCheckboxEnabler,
+    ) {
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (!$this->multistoreCheckboxEnabler->shouldAddMultistoreElements()) {
+        if (! $this->multistoreCheckboxEnabler->shouldAddMultistoreElements()) {
             return;
         }
 
@@ -63,9 +61,6 @@ class MultistoreConfigurationTypeExtension extends AbstractTypeExtension
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [MultistoreConfigurationType::class];

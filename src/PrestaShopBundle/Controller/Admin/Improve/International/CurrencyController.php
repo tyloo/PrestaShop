@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -87,11 +88,6 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Show currency page.
-     *
-     * @param CurrencyFilters $filters
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -100,7 +96,7 @@ class CurrencyController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.grid.factory.currency')]
         GridFactoryInterface $currencyGridFactory,
         #[Autowire(service: 'prestashop.admin.currency_settings.form_handler')]
-        ConfigurationFormHandlerInterface $settingsFormHandler
+        ConfigurationFormHandlerInterface $settingsFormHandler,
     ): Response {
         $currencyGrid = $currencyGridFactory->getGrid($filters);
 
@@ -116,10 +112,6 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Displays and handles currency form.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_currencies_index', message: 'You need permission to create this.')]
     public function createAction(
@@ -134,7 +126,7 @@ class CurrencyController extends PrestaShopAdminController
 
         try {
             $result = $currencyFormHandler->handle($currencyForm);
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_currencies_index');
@@ -152,11 +144,6 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Displays currency form.
-     *
-     * @param int $currencyId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_currencies_index', message: 'You need permission to edit this.')]
     public function editAction(
@@ -206,57 +193,7 @@ class CurrencyController extends PrestaShopAdminController
     }
 
     /**
-     * @param string $currencyIsoCode
-     *
-     * @return array
-     */
-    private function getLanguagesData(string $currencyIsoCode): array
-    {
-        /** @var LanguageRepositoryInterface $langRepository */
-        $langRepository = $this->container->get(LanguageRepositoryInterface::class);
-        $languages = $langRepository->findAll();
-        /** @var LocaleRepositoryInterface $localeRepository */
-        $localeRepository = $this->container->get(LocaleRepositoryInterface::class);
-        /** @var CldrLocaleRepository $cldrLocaleRepository */
-        $cldrLocaleRepository = $this->container->get(CldrLocaleRepository::class);
-        /** @var PatternTransformer $transformer */
-        $transformer = $this->container->get(PatternTransformer::class);
-
-        $languagesData = [];
-        /** @var LanguageInterface $language */
-        foreach ($languages as $language) {
-            $locale = $localeRepository->getLocale($language->getLocale());
-            $cldrLocale = $cldrLocaleRepository->getLocale($language->getLocale());
-            $cldrCurrency = $cldrLocale->getCurrency($currencyIsoCode);
-            $priceSpecification = $locale->getPriceSpecification($currencyIsoCode);
-
-            $transformations = [];
-            foreach (PatternTransformer::ALLOWED_TRANSFORMATIONS as $transformationType) {
-                $transformations[$transformationType] = $transformer->transform(
-                    $cldrLocale->getCurrencyPattern(),
-                    $transformationType
-                );
-            }
-
-            $languagesData[] = [
-                'id' => $language->getId(),
-                'name' => $language->getName(),
-                'currencyPattern' => $cldrLocale->getCurrencyPattern(),
-                'currencySymbol' => null !== $cldrCurrency ? $cldrCurrency->getSymbol() : $currencyIsoCode,
-                'priceSpecification' => $priceSpecification->toArray(),
-                'transformations' => $transformations,
-            ];
-        }
-
-        return $languagesData;
-    }
-
-    /**
      * Deletes currency.
-     *
-     * @param int $currencyId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_currencies_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_currencies_index', message: 'You need permission to delete this.')]
@@ -277,10 +214,6 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Get the data for a currency (from CLDR)
-     *
-     * @param string $currencyIsoCode
-     *
-     * @return JsonResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_currencies_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
@@ -323,10 +256,6 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Toggles status.
-     *
-     * @param int $currencyId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_currencies_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_currencies_index', message: 'You need permission to edit this.')]
@@ -350,8 +279,6 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Refresh exchange rates.
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_currencies_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_currencies_index', message: 'You need permission to edit this.')]
@@ -370,36 +297,34 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Handles ajax request which updates live exchange rates.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     public function updateLiveExchangeRatesAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.currency_settings.form_handler')]
-        ConfigurationFormHandlerInterface $settingsFormHandler
+        ConfigurationFormHandlerInterface $settingsFormHandler,
     ): JsonResponse {
         if ($this->isDemoModeEnabled()) {
-            return $this->json([
-                'status' => false,
-                'message' => $this->getDemoModeErrorMessage(),
-            ],
+            return $this->json(
+                [
+                    'status' => false,
+                    'message' => $this->getDemoModeErrorMessage(),
+                ],
                 Response::HTTP_UNAUTHORIZED
             );
         }
 
         $authLevel = $this->getAuthorizationLevel($request->attributes->get('_legacy_controller'));
 
-        if (!in_array($authLevel, [Permission::LEVEL_UPDATE, Permission::LEVEL_DELETE])) {
-            return $this->json([
-                'status' => false,
-                'message' => $this->trans(
-                    'You need permission to edit this.',
-                    [],
-                    'Admin.Notifications.Error'
-                ),
-            ],
+        if (! \in_array($authLevel, [Permission::LEVEL_UPDATE, Permission::LEVEL_DELETE], true)) {
+            return $this->json(
+                [
+                    'status' => false,
+                    'message' => $this->trans(
+                        'You need permission to edit this.',
+                        [],
+                        'Admin.Notifications.Error'
+                    ),
+                ],
                 Response::HTTP_UNAUTHORIZED
             );
         }
@@ -436,18 +361,13 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Toggles currencies status in bulk action
-     *
-     * @param Request $request
-     * @param string $status
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_currencies_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_currencies_index')]
     public function bulkToggleStatusAction(Request $request, string $status): RedirectResponse
     {
         $currenciesIds = $this->getBulkCurrenciesFromRequest($request);
-        $expectedStatus = 'enable' === $status;
+        $expectedStatus = $status === 'enable';
 
         try {
             $this->dispatchCommand(new BulkToggleCurrenciesStatusCommand(
@@ -468,10 +388,6 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Deletes currencies in bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_currencies_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_currencies_index')]
@@ -493,12 +409,49 @@ class CurrencyController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_currencies_index');
     }
 
+    private function getLanguagesData(string $currencyIsoCode): array
+    {
+        /** @var LanguageRepositoryInterface $langRepository */
+        $langRepository = $this->container->get(LanguageRepositoryInterface::class);
+        $languages = $langRepository->findAll();
+        /** @var LocaleRepositoryInterface $localeRepository */
+        $localeRepository = $this->container->get(LocaleRepositoryInterface::class);
+        /** @var CldrLocaleRepository $cldrLocaleRepository */
+        $cldrLocaleRepository = $this->container->get(CldrLocaleRepository::class);
+        /** @var PatternTransformer $transformer */
+        $transformer = $this->container->get(PatternTransformer::class);
+
+        $languagesData = [];
+        /** @var LanguageInterface $language */
+        foreach ($languages as $language) {
+            $locale = $localeRepository->getLocale($language->getLocale());
+            $cldrLocale = $cldrLocaleRepository->getLocale($language->getLocale());
+            $cldrCurrency = $cldrLocale->getCurrency($currencyIsoCode);
+            $priceSpecification = $locale->getPriceSpecification($currencyIsoCode);
+
+            $transformations = [];
+            foreach (PatternTransformer::ALLOWED_TRANSFORMATIONS as $transformationType) {
+                $transformations[$transformationType] = $transformer->transform(
+                    $cldrLocale->getCurrencyPattern(),
+                    $transformationType
+                );
+            }
+
+            $languagesData[] = [
+                'id' => $language->getId(),
+                'name' => $language->getName(),
+                'currencyPattern' => $cldrLocale->getCurrencyPattern(),
+                'currencySymbol' => $cldrCurrency !== null ? $cldrCurrency->getSymbol() : $currencyIsoCode,
+                'priceSpecification' => $priceSpecification->toArray(),
+                'transformations' => $transformations,
+            ];
+        }
+
+        return $languagesData;
+    }
+
     /**
      * Gets an error by exception class and its code.
-     *
-     * @param Exception $e
-     *
-     * @return array
      */
     private function getErrorMessages(Exception $e): array
     {
@@ -509,28 +462,28 @@ class CurrencyController extends PrestaShopAdminController
                 CurrencyConstraintException::INVALID_ISO_CODE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('ISO code', [], 'Admin.International.Feature')),
+                        \sprintf('"%s"', $this->trans('ISO code', [], 'Admin.International.Feature')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CurrencyConstraintException::INVALID_NUMERIC_ISO_CODE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Numeric ISO code', [], 'Admin.International.Feature')),
+                        \sprintf('"%s"', $this->trans('Numeric ISO code', [], 'Admin.International.Feature')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CurrencyConstraintException::INVALID_EXCHANGE_RATE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Exchange rate', [], 'Admin.International.Feature')),
+                        \sprintf('"%s"', $this->trans('Exchange rate', [], 'Admin.International.Feature')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CurrencyConstraintException::INVALID_NAME => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Currency name', [], 'Admin.International.Feature')),
+                        \sprintf('"%s"', $this->trans('Currency name', [], 'Admin.International.Feature')),
                     ],
                     'Admin.Notifications.Error'
                 ),
@@ -599,7 +552,7 @@ class CurrencyController extends PrestaShopAdminController
                 ],
                 'Admin.International.Notification'
             ),
-            BulkDeleteCurrenciesException::class => sprintf(
+            BulkDeleteCurrenciesException::class => \sprintf(
                 '%s: %s',
                 $this->trans(
                     'An error occurred while deleting this selection.',
@@ -608,7 +561,7 @@ class CurrencyController extends PrestaShopAdminController
                 ),
                 $e instanceof BulkDeleteCurrenciesException ? implode(', ', $e->getCurrenciesNames()) : ''
             ),
-            BulkToggleCurrenciesException::class => sprintf(
+            BulkToggleCurrenciesException::class => \sprintf(
                 '%s: %s',
                 $this->trans(
                     'An error occurred while updating the status.',
@@ -622,8 +575,6 @@ class CurrencyController extends PrestaShopAdminController
 
     /**
      * Get currencies ids from request for bulk action
-     *
-     * @param Request $request
      *
      * @return int[]
      */

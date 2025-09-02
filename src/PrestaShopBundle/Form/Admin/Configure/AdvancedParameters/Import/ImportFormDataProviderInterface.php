@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,16 +37,12 @@ interface ImportFormDataProviderInterface
     /**
      * Get form's data.
      *
-     * @param ImportConfigInterface $importConfig
-     *
      * @return array
      */
     public function getData(ImportConfigInterface $importConfig);
 
     /**
      * Save the form's data.
-     *
-     * @param array $data
      *
      * @return array of errors, if occurred
      */

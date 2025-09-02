@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,21 +55,16 @@ class EntitySearchExtension extends AbstractExtension
      * Besides when the value is not present (which happens when the prototype is rendered
      * it uses the prototype mapping defined so that appropriate placeholders are placed. If
      * it can't fond one then it is automatically generated based on the field name.
-     *
-     * @param FormView $form
-     * @param string $fieldName
-     *
-     * @return string
      */
     public function getEntityField(FormView $form, string $fieldName): string
     {
-        if (!empty($form->vars['value'][$fieldName])) {
+        if (! empty($form->vars['value'][$fieldName])) {
             return (string) $form->vars['value'][$fieldName];
         }
 
         $parentForm = $form->parent;
         $prototypeMapping = $parentForm->vars['prototype_mapping'] ?? [];
-        $fieldPlaceholder = $prototypeMapping[$fieldName] ?? sprintf('__%s__', $fieldName);
+        $fieldPlaceholder = $prototypeMapping[$fieldName] ?? \sprintf('__%s__', $fieldName);
 
         return $fieldPlaceholder;
     }

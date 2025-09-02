@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,21 +56,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class SupplierType extends TranslatorAwareType
 {
-    /**
-     * @param ConfigurableFormChoiceProviderInterface $statesChoiceProvider
-     * @param int $contextCountryId
-     * @param TranslatorInterface $translator
-     * @param bool $isMultistoreEnabled
-     * @param UrlGeneratorInterface $router
-     * @param array $locales
-     */
     public function __construct(
         private readonly ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
         private readonly int $contextCountryId,
         TranslatorInterface $translator,
         private readonly bool $isMultistoreEnabled,
         private readonly UrlGeneratorInterface $router,
-        array $locales = []
+        array $locales = [],
     ) {
         parent::__construct($translator, $locales);
     }
@@ -77,24 +70,25 @@ class SupplierType extends TranslatorAwareType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $data = $builder->getData();
-        $countryId = 0 !== $data['id_country'] ? $data['id_country'] : $this->contextCountryId;
+        $countryId = $data['id_country'] !== 0 ? $data['id_country'] : $this->contextCountryId;
 
-        $invalidCharsText = sprintf(
+        $invalidCharsText = \sprintf(
             '%s ' . TypedRegexValidator::CATALOG_CHARS,
             $this->trans('Invalid characters:', 'Admin.Global')
         );
 
-        $invalidGenericNameHint = sprintf(
+        $invalidGenericNameHint = \sprintf(
             '%s ' . TypedRegexValidator::GENERIC_NAME_CHARS,
             $this->trans('Invalid characters:', 'Admin.Global')
         );
 
-        $keywordHint = sprintf(
-            '%s ' . PHP_EOL . $invalidGenericNameHint,
+        $keywordHint = \sprintf(
+            '%s ' . \PHP_EOL . $invalidGenericNameHint,
             $this->trans(
                 'To add tags, click in the field, write something, and then press the "Enter" key.',
                 'Admin.Shopparameters.Help'
-            ));
+            )
+        );
 
         $builder
             ->add('name', TextType::class, [
@@ -104,7 +98,8 @@ class SupplierType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new Length([
@@ -178,7 +173,8 @@ class SupplierType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new TypedRegex([
@@ -201,7 +197,8 @@ class SupplierType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                 ],
@@ -304,7 +301,8 @@ class SupplierType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                 ],
@@ -314,8 +312,6 @@ class SupplierType extends TranslatorAwareType
 
     /**
      * Provides reusable address constraints
-     *
-     * @return array
      */
     private function getAddressCommonConstraints(): array
     {
@@ -336,8 +332,6 @@ class SupplierType extends TranslatorAwareType
 
     /**
      * Provides reusable phone constraints
-     *
-     * @return array
      */
     private function getPhoneCommonConstraints(): array
     {

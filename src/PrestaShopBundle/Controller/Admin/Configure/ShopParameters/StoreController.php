@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -139,9 +140,11 @@ class StoreController extends PrestaShopAdminController
     private function bulkUpdateStatus(Request $request, bool $newStatus): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new BulkUpdateStoreStatusCommand(
-                $newStatus,
-                $this->getBulkActionIds($request, 'store_bulk'))
+            $this->dispatchCommand(
+                new BulkUpdateStoreStatusCommand(
+                    $newStatus,
+                    $this->getBulkActionIds($request, 'store_bulk')
+                )
             );
 
             $this->addFlash(

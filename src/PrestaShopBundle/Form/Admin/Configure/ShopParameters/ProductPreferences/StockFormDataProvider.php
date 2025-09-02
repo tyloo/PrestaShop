@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,21 +38,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class StockFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private readonly StockConfiguration $configuration, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly StockConfiguration $configuration,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->configuration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         if ($errors = $this->validate($data)) {
@@ -64,15 +61,13 @@ class StockFormDataProvider implements FormDataProviderInterface
     /**
      * Perform validation on form data before saving it.
      *
-     * @param array $data
-     *
      * @return array Returns array of errors
      */
     protected function validate(array $data): array
     {
         $errors = [];
         $displayLastQuantities = $data['display_last_quantities'];
-        if (!is_numeric($displayLastQuantities) || 0 > $displayLastQuantities) {
+        if (! is_numeric($displayLastQuantities) || $displayLastQuantities < 0) {
             $errors[] = [
                 'key' => 'The %s field is invalid.',
                 'domain' => 'Admin.Notifications.Error',

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,12 +39,6 @@ use Symfony\Component\Validator\Constraints\Type;
 
 class SizeWeightSettings extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param string $dimensionUnit
-     * @param string $weightUnit
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
@@ -128,9 +123,6 @@ class SizeWeightSettings extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

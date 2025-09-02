@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ class LegacyToolbar extends Toolbar
         MenuBuilder $menuBuilder,
         protected readonly LegacyContext $context,
         protected readonly Documentation $helpDocumentation,
-        protected readonly LanguageContext $languageContext
+        protected readonly LanguageContext $languageContext,
     ) {
         parent::__construct($hookDispatcher, $menuBuilder);
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class CustomerSearchType extends EntitySearchInputType
 {
     public function __construct(
         TranslatorInterface $translator,
-        private readonly RouterInterface $router
+        private readonly RouterInterface $router,
     ) {
         parent::__construct($translator);
     }
@@ -54,7 +55,7 @@ class CustomerSearchType extends EntitySearchInputType
             'disabling_switch' => true,
             'switch_state_on_disable' => 'on',
             'disabling_switch_event' => null,
-            'disabled_value' => fn($data): bool => empty($data[0]['id_customer']),
+            'disabled_value' => fn ($data): bool => empty($data[0]['id_customer']),
             'remote_url' => $this->router->generate('admin_customers_search', ['customer_search' => '__QUERY__']),
             'placeholder' => $this->trans('Search customer', 'Admin.Actions'),
             'suggestion_field' => 'fullname_and_email',

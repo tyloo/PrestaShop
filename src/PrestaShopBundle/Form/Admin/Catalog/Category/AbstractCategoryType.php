@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,30 +56,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 abstract class AbstractCategoryType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $customerGroupChoices
-     * @param FeatureInterface $multiStoreFeature
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly array $customerGroupChoices,
         private readonly FeatureInterface $multiStoreFeature,
-        protected ConfigurationInterface $configuration
+        protected ConfigurationInterface $configuration,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $genericCharactersHint = $this->trans('Invalid characters: %s', 'Admin.Notifications.Info', [TypedRegexValidator::CATALOG_CHARS]);
-        /* @var EditableCategory $editableCategory */
+        /** @var EditableCategory $editableCategory */
         $builder
             ->add('name', TranslatableType::class, [
                 'label' => $this->trans('Name', 'Admin.Global'),
@@ -154,7 +145,9 @@ abstract class AbstractCategoryType extends TranslatorAwareType
                 'can_be_deleted' => true,
                 'show_size' => true,
             ])
-            ->add('seo_preview', CategorySeoPreviewType::class,
+            ->add(
+                'seo_preview',
+                CategorySeoPreviewType::class,
                 [
                     'label' => $this->trans('SEO preview', 'Admin.Global'),
                     'required' => false,
@@ -290,7 +283,7 @@ abstract class AbstractCategoryType extends TranslatorAwareType
             $this->trans('[1]No redirection (410), display error page[/1] [2] Do not redirect anywhere and display a 410 "Gone" page.', 'Admin.Catalog.Help', $formatParameters),
         ];
 
-        if (!$this instanceof RootCategoryType) {
+        if (! $this instanceof RootCategoryType) {
             $alertMessages = array_merge([
                 $this->trans('[1]Permanent redirection (301)[/1] [2] Permanently display another category instead.', 'Admin.Catalog.Help', $formatParameters),
                 $this->trans('[1]Temporary redirection (302)[/1] [2] Temporarily display another category instead.', 'Admin.Catalog.Help', $formatParameters),

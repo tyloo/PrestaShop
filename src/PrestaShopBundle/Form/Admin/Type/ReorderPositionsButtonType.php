@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,14 +35,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ReorderPositionsButtonType extends TranslatorAwareType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('position', ButtonType::class, [
             'label' => $this->trans('Rearrange', 'Admin.Actions'),
-            'row_attr' => ['class' => 'mb-0'],
+            'row_attr' => [
+                'class' => 'mb-0',
+            ],
             'attr' => [
                 'class' => 'btn-default js-btn-reorder-positions',
                 'data-label-reorder' => $this->trans('Rearrange', 'Admin.Actions'),

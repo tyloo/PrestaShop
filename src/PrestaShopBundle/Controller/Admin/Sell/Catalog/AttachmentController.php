@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,7 +70,7 @@ class AttachmentController extends PrestaShopAdminController
         Request $request,
         AttachmentFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.factory.attachment')]
-        GridFactoryInterface $attachmentGridFactory
+        GridFactoryInterface $attachmentGridFactory,
     ): Response {
         $attachmentGrid = $attachmentGridFactory->getGrid($filters);
 
@@ -83,8 +84,6 @@ class AttachmentController extends PrestaShopAdminController
 
     /**
      * Show "Add new" form and handle form submit.
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_attachments_index', message: 'You do not have permission to create this.')]
     public function createAction(
@@ -92,7 +91,7 @@ class AttachmentController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.attachment_form_builder')]
         FormBuilderInterface $attachmentFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.attachment_form_handler')]
-        FormHandlerInterface $attachmentFormHandler
+        FormHandlerInterface $attachmentFormHandler,
     ): Response {
         $attachmentForm = $attachmentFormBuilder->getForm();
         $attachmentForm->handleRequest($request);
@@ -130,10 +129,6 @@ class AttachmentController extends PrestaShopAdminController
 
     /**
      * Show & process attachment editing.
-     *
-     * @param int $attachmentId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_attachments_index', message: 'You do not have permission to edit this.')]
     public function editAction(
@@ -142,7 +137,7 @@ class AttachmentController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.attachment_form_builder')]
         FormBuilderInterface $attachmentFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.attachment_form_handler')]
-        FormHandlerInterface $attachmentFormHandler
+        FormHandlerInterface $attachmentFormHandler,
     ): Response {
         try {
             /** @var EditableAttachment $attachmentInformation */
@@ -170,7 +165,7 @@ class AttachmentController extends PrestaShopAdminController
             }
         }
 
-        if (!isset($attachmentInformation) || !isset($attachmentForm)) {
+        if (! isset($attachmentInformation) || ! isset($attachmentForm)) {
             return $this->redirectToRoute('admin_attachments_index');
         }
 
@@ -248,11 +243,6 @@ class AttachmentController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_attachments_index');
     }
 
-    /**
-     * @param int $attachmentId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', 'AdminProducts') || is_granted('read', 'AdminAttachments')")]
     public function getAttachmentInfoAction(int $attachmentId): JsonResponse
     {
@@ -261,11 +251,6 @@ class AttachmentController extends PrestaShopAdminController
         return $this->json(['attachmentInfo' => $this->presentAttachmentInfo($attachmentInfo)]);
     }
 
-    /**
-     * @param string $searchPhrase
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', 'AdminProducts') || is_granted('read', 'AdminAttachments')")]
     public function searchAction(string $searchPhrase): JsonResponse
     {
@@ -288,8 +273,6 @@ class AttachmentController extends PrestaShopAdminController
     }
 
     /**
-     * @param AttachmentInformation $productAttachmentInfo
-     *
      * @return array<string, mixed>
      */
     private function presentAttachmentInfo(AttachmentInformation $productAttachmentInfo): array
@@ -304,9 +287,6 @@ class AttachmentController extends PrestaShopAdminController
         ];
     }
 
-    /**
-     * @param Exception $e
-     */
     private function getErrorMessages(?Exception $e = null): array
     {
         return [
@@ -354,7 +334,7 @@ class AttachmentController extends PrestaShopAdminController
                 AttachmentConstraintException::MISSING_NAME_IN_DEFAULT_LANGUAGE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Name', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Name', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),
@@ -374,7 +354,7 @@ class AttachmentController extends PrestaShopAdminController
                 [],
                 'Admin.Catalog.Notification'
             ),
-            BulkDeleteAttachmentsException::class => sprintf(
+            BulkDeleteAttachmentsException::class => \sprintf(
                 '%s: %s',
                 $this->trans(
                     'An error occurred while deleting this selection.',
@@ -387,11 +367,6 @@ class AttachmentController extends PrestaShopAdminController
         ];
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
     private function getBulkAttachmentsFromRequest(Request $request): array
     {
         $attachmentIds = $request->request->all('attachment_files_bulk');
@@ -403,9 +378,6 @@ class AttachmentController extends PrestaShopAdminController
         return $attachmentIds;
     }
 
-    /**
-     * @return array
-     */
     private function getAttachmentToolbarButtons(): array
     {
         $toolbarButtons = [];

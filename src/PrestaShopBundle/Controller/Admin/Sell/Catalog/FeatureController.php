@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,7 +60,7 @@ class FeatureController extends PrestaShopAdminController
     use BulkActionsTrait;
 
     public function __construct(
-        private readonly FeatureFeature $featureFeature
+        private readonly FeatureFeature $featureFeature,
     ) {
     }
 
@@ -101,10 +102,6 @@ class FeatureController extends PrestaShopAdminController
 
     /**
      * Create feature action.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
@@ -112,9 +109,9 @@ class FeatureController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.feature_form_builder')]
         FormBuilderInterface $featureFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.feature_form_handler')]
-        FormHandlerInterface $featureFormHandler
+        FormHandlerInterface $featureFormHandler,
     ): Response {
-        if (!$this->isFeatureEnabled()) {
+        if (! $this->isFeatureEnabled()) {
             return $this->render('@PrestaShop/Admin/Sell/Catalog/Features/create.html.twig', [
                 'showDisabledFeatureWarning' => true,
                 'layoutTitle' => $this->trans('New feature', [], 'Admin.Navigation.Menu'),
@@ -127,7 +124,7 @@ class FeatureController extends PrestaShopAdminController
         try {
             $handlerResult = $featureFormHandler->handle($featureForm);
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_features_index');
@@ -144,11 +141,6 @@ class FeatureController extends PrestaShopAdminController
 
     /**
      * Edit feature action.
-     *
-     * @param int $featureId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function editAction(
@@ -157,7 +149,7 @@ class FeatureController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.feature_form_builder')]
         FormBuilderInterface $featureFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.feature_form_handler')]
-        FormHandlerInterface $featureFormHandler
+        FormHandlerInterface $featureFormHandler,
     ): Response {
         try {
             $editableFeature = $this->dispatchQuery(new GetFeatureForEditing($featureId));
@@ -167,7 +159,7 @@ class FeatureController extends PrestaShopAdminController
             return $this->redirectToRoute('admin_features_index');
         }
 
-        if (!$this->isFeatureEnabled()) {
+        if (! $this->isFeatureEnabled()) {
             return $this->renderEditForm([
                 'showDisabledFeatureWarning' => true,
                 'editableFeature' => $editableFeature,
@@ -195,16 +187,11 @@ class FeatureController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param FeatureFilters $filters
-     *
-     * @return CsvResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function exportAction(
         FeatureFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.feature')]
-        GridFactoryInterface $featuresGridFactory
+        GridFactoryInterface $featuresGridFactory,
     ): CsvResponse {
         $filters = new FeatureFilters($filters->getShopConstraint(), ['limit' => null] + $filters->all());
 
@@ -234,11 +221,6 @@ class FeatureController extends PrestaShopAdminController
             ->setFileName('features_' . date('Y-m-d_His') . '.csv');
     }
 
-    /**
-     * @param int $featureId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function deleteAction(int $featureId): Response
     {
@@ -253,11 +235,6 @@ class FeatureController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_features_index');
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function bulkDeleteAction(Request $request): Response
     {
@@ -272,11 +249,6 @@ class FeatureController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_features_index');
     }
 
-    /**
-     * @param array $parameters
-     *
-     * @return Response
-     */
     private function renderEditForm(array $parameters = []): Response
     {
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Features/edit.html.twig', $parameters + [
@@ -307,7 +279,7 @@ class FeatureController extends PrestaShopAdminController
             FeatureConstraintException::class => [
                 FeatureConstraintException::INVALID_NAME => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Name', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('Name', [], 'Admin.Global'))],
                     'Admin.Notifications.Error'
                 ),
             ],
@@ -328,24 +300,19 @@ class FeatureController extends PrestaShopAdminController
 
     /**
      * Check if Features functionality is enabled in the shop.
-     *
-     * @return bool
      */
     private function isFeatureEnabled(): bool
     {
         return $this->featureFeature->isActive();
     }
 
-    /**
-     * @return string|null
-     */
     private function getSettingsTipMessage(): ?string
     {
         if ($this->isFeatureEnabled()) {
             return null;
         }
 
-        $urlOpening = sprintf('<a href="%s">', $this->generateUrl('admin_performance'));
+        $urlOpening = \sprintf('<a href="%s">', $this->generateUrl('admin_performance'));
         $urlEnding = '</a>';
 
         return $this->trans(

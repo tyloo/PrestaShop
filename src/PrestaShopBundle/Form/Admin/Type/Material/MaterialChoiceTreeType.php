@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,14 +34,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MaterialChoiceTreeType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $selectedData = [];
-        if (null !== $form->getData()) {
-            $selectedData = is_array($form->getData()) ? $form->getData() : [$form->getData()];
+        if ($form->getData() !== null) {
+            $selectedData = \is_array($form->getData()) ? $form->getData() : [$form->getData()];
         }
 
         $view->vars['multiple'] = $options['multiple'];
@@ -52,9 +50,6 @@ class MaterialChoiceTreeType extends AbstractType
         $view->vars['selected_values'] = $selectedData;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -78,18 +73,12 @@ class MaterialChoiceTreeType extends AbstractType
             ->addAllowedValues('compound', false);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'material_choice_tree';
     }
 
     /**
-     * @param array $options
-     * @param array $selectedData
-     *
      * @return array
      */
     private function getFormattedChoicesTree(array $options, array $selectedData)
@@ -109,23 +98,19 @@ class MaterialChoiceTreeType extends AbstractType
     }
 
     /**
-     * @param array $choice
      * @param string $choiceValueName
      * @param string $choiceChildrenName
-     * @param array $selectedValues
-     *
-     * @return bool
      */
     private function fillChoiceWithChildrenSelection(
         array &$choice,
         $choiceValueName,
         $choiceChildrenName,
-        array $selectedValues
+        array $selectedValues,
     ): bool {
         $isSelected = false;
         $isChildrenSelected = false;
 
-        if (in_array($choice[$choiceValueName], $selectedValues)) {
+        if (\in_array($choice[$choiceValueName], $selectedValues, true)) {
             $isSelected = true;
         }
 

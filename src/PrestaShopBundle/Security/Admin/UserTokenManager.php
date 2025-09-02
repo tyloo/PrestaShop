@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,7 +70,7 @@ class UserTokenManager implements CacheClearerInterface
         }
 
         // Do not generate token each time we need one, one token per request is enough and can be used for all generated URLs
-        if (!isset($this->tokens[$userIdentifier])) {
+        if (! isset($this->tokens[$userIdentifier])) {
             $this->tokens[$userIdentifier] = $this->tokenManager->getToken($userIdentifier)->getValue();
         }
 
@@ -87,7 +88,7 @@ class UserTokenManager implements CacheClearerInterface
         // Legacy urls use token instead of _token as the URL parameter, so it's a valid alternative
         // Token can be posted via GET or POST parameters
         $legacyRequestToken = $request->get('token');
-        if (!empty($legacyRequestToken) && $this->isCsrfTokenValid($legacyRequestToken)) {
+        if (! empty($legacyRequestToken) && $this->isCsrfTokenValid($legacyRequestToken)) {
             return true;
         }
 
@@ -101,7 +102,7 @@ class UserTokenManager implements CacheClearerInterface
 
     private function isCsrfTokenValid(string $tokenValue): bool
     {
-        if (!$this->security->getUser()) {
+        if (! $this->security->getUser()) {
             return false;
         }
 

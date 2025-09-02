@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,9 +68,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class CommandAndQueryRegisterPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $this->registerMessengerTags($container);
@@ -81,17 +79,23 @@ class CommandAndQueryRegisterPass implements CompilerPassInterface
     private function registerMessengerTags(ContainerBuilder $container): void
     {
         $container->registerAttributeForAutoconfiguration(AsCommandHandler::class, static function (ChildDefinition $definition, AsCommandHandler $attribute, Reflector $reflector): void {
-            if (!$reflector instanceof ReflectionClass) {
-                throw new RuntimeException(sprintf('AsCommandHandler must be a class attribute, "%s" given.', $reflector::class));
+            if (! $reflector instanceof ReflectionClass) {
+                throw new RuntimeException(\sprintf('AsCommandHandler must be a class attribute, "%s" given.', $reflector::class));
             }
-            $definition->addTag('messenger.message_handler', ['method' => $attribute->method, 'handles' => self::guessHandledClasses($reflector, $attribute->method)]);
+            $definition->addTag('messenger.message_handler', [
+                'method' => $attribute->method,
+                'handles' => self::guessHandledClasses($reflector, $attribute->method),
+            ]);
         });
 
         $container->registerAttributeForAutoconfiguration(AsQueryHandler::class, static function (ChildDefinition $definition, AsQueryHandler $attribute, Reflector $reflector): void {
-            if (!$reflector instanceof ReflectionClass) {
-                throw new RuntimeException(sprintf('AsQueryHandler must be a class attribute, "%s" given.', $reflector::class));
+            if (! $reflector instanceof ReflectionClass) {
+                throw new RuntimeException(\sprintf('AsQueryHandler must be a class attribute, "%s" given.', $reflector::class));
             }
-            $definition->addTag('messenger.message_handler', ['method' => $attribute->method, 'handles' => self::guessHandledClasses($reflector, $attribute->method)]);
+            $definition->addTag('messenger.message_handler', [
+                'method' => $attribute->method,
+                'handles' => self::guessHandledClasses($reflector, $attribute->method),
+            ]);
         });
     }
 
@@ -100,13 +104,13 @@ class CommandAndQueryRegisterPass implements CompilerPassInterface
         $reflectionMethod = $class->getMethod($method);
         $parameters = $reflectionMethod->getParameters();
 
-        if (count($parameters) != 1) {
-            throw new RuntimeException(sprintf('Invalid handler service "%s": number of argument "$%s" in method "%s" must be 1 , "%s" given.', $class->getName(), $parameters[0]->getName(), $method, count($parameters)));
+        if (\count($parameters) !== 1) {
+            throw new RuntimeException(\sprintf('Invalid handler service "%s": number of argument "$%s" in method "%s" must be 1 , "%s" given.', $class->getName(), $parameters[0]->getName(), $method, \count($parameters)));
         }
 
         $firstParameter = $parameters[0]->getType();
-        if (!$firstParameter instanceof ReflectionNamedType) {
-            throw new RuntimeException(sprintf('Invalid parameter type: must be ReflectionNamedType , "%s" given.', $firstParameter::class));
+        if (! $firstParameter instanceof ReflectionNamedType) {
+            throw new RuntimeException(\sprintf('Invalid parameter type: must be ReflectionNamedType , "%s" given.', $firstParameter::class));
         }
 
         return $firstParameter->getName();

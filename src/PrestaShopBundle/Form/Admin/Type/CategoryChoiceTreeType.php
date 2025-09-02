@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CategoryChoiceTreeType extends AbstractType
 {
-    /**
-     * @param array $categoryTreeChoices
-     */
-    public function __construct(private readonly array $categoryTreeChoices)
-    {
+    public function __construct(
+        private readonly array $categoryTreeChoices,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -54,9 +50,6 @@ class CategoryChoiceTreeType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return MaterialChoiceTreeType::class;

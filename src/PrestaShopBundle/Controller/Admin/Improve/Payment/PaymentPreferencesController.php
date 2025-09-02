@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,6 @@ class PaymentPreferencesController extends PrestaShopAdminController
 {
     /**
      * Show payment preferences page.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
@@ -53,7 +50,7 @@ class PaymentPreferencesController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.admin.payment_preferences.form_handler')]
         FormHandlerInterface $paymentPreferencesFormHandler,
         #[Autowire(service: 'prestashop.adapter.module.payment_module_provider')]
-        PaymentModuleListProviderInterface $paymentModulesListProvider
+        PaymentModuleListProviderInterface $paymentModulesListProvider,
     ): Response {
         $legacyController = $request->attributes->get('_legacy_controller');
 
@@ -63,7 +60,7 @@ class PaymentPreferencesController extends PrestaShopAdminController
         $paymentModulesCount = 0;
 
         if ($isSingleShopContext) {
-            $paymentModulesCount = count($paymentModulesListProvider->getPaymentModuleList());
+            $paymentModulesCount = \count($paymentModulesListProvider->getPaymentModuleList());
             $paymentPreferencesForm = $paymentPreferencesFormHandler->getForm()->createView();
         }
 
@@ -79,16 +76,12 @@ class PaymentPreferencesController extends PrestaShopAdminController
 
     /**
      * Process payment modules preferences form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.', redirectRoute: 'admin_payment_preferences')]
     public function processFormAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.payment_preferences.form_handler')]
-        FormHandlerInterface $paymentPreferencesFormHandler
+        FormHandlerInterface $paymentPreferencesFormHandler,
     ): RedirectResponse {
         $paymentPreferencesForm = $paymentPreferencesFormHandler->getForm();
         $paymentPreferencesForm->handleRequest($request);

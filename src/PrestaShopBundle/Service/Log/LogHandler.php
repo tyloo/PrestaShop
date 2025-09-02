@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,11 @@ use Symfony\Component\DependencyInjection\Container;
  */
 class LogHandler extends AbstractProcessingHandler
 {
-    public function __construct(protected Container $container, $level = Logger::DEBUG, $bubble = true)
-    {
+    public function __construct(
+        protected Container $container,
+        $level = Logger::DEBUG,
+        $bubble = true,
+    ) {
         parent::__construct($level, $bubble);
     }
 

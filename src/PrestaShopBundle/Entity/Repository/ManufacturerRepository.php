@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ class ManufacturerRepository
     private $shopId;
 
     /**
-     * @param Connection $connection
-     * @param ContextAdapter $contextAdapter
      * @param string $tablePrefix
      *
      * @throws NotImplementedException
@@ -51,11 +50,11 @@ class ManufacturerRepository
     public function __construct(
         private Connection $connection,
         ContextAdapter $contextAdapter,
-        private $tablePrefix
+        private $tablePrefix,
     ) {
         $context = $contextAdapter->getContext();
 
-        if (!$context->shop instanceof Shop) {
+        if (! $context->shop instanceof Shop) {
             throw new RuntimeException('Determining the active shop requires a contextual shop instance.');
         }
 
@@ -67,9 +66,6 @@ class ManufacturerRepository
         $this->shopId = $shop->getContextualShopId();
     }
 
-    /**
-     * @return mixed
-     */
     public function getManufacturers()
     {
         $query = str_replace(

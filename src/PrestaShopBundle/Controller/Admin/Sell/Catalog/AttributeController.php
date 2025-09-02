@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,19 +63,16 @@ class AttributeController extends PrestaShopAdminController
     /**
      * Displays Attribute groups > attributes page
      *
-     * @param Request $request
      * @param int|string $attributeGroupId
-     * @param AttributeFilters $attributeFilters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_attributes_index', redirectQueryParamsToKeep: ['attributeGroupId'])]
     public function indexAction(
-        Request $request, $attributeGroupId,
+        Request $request,
+        $attributeGroupId,
         AttributeFilters $attributeFilters,
         #[Autowire(service: 'prestashop.core.grid.factory.attribute')]
         GridFactoryInterface $attributeGridFactory,
-        AttributeGroupViewDataProvider $attributeGroupViewDataProvider
+        AttributeGroupViewDataProvider $attributeGroupViewDataProvider,
     ): Response {
         try {
             $attributeGrid = $attributeGridFactory->getGrid($attributeFilters);
@@ -99,11 +97,6 @@ class AttributeController extends PrestaShopAdminController
 
     /**
      * Updates attributes positioning order
-     *
-     * @param Request $request
-     * @param int $attributeGroupId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_attributes_index', redirectQueryParamsToKeep: ['attributeGroupId'])]
     public function updatePositionAction(
@@ -138,7 +131,7 @@ class AttributeController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.attribute_form_builder')]
         FormBuilderInterface $attributeFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.attribute_form_handler')]
-        FormHandlerInterface $attributeFormHandler
+        FormHandlerInterface $attributeFormHandler,
     ): Response {
         $attributeGroupId = (int) $request->query->get('attributeGroupId');
 
@@ -149,7 +142,7 @@ class AttributeController extends PrestaShopAdminController
             $handlerResult = $attributeFormHandler->handle($attributeForm);
             $attributeFormData = $attributeForm->getData();
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 // Save and create a new attribute value for the same attribute group
@@ -192,7 +185,7 @@ class AttributeController extends PrestaShopAdminController
         try {
             $handlerResult = $attributeFormHandler->handleFor($attributeId, $attributeForm);
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
 
                 // Save and create a new attribute value for the same attribute group
@@ -222,11 +215,6 @@ class AttributeController extends PrestaShopAdminController
 
     /**
      * Deletes attribute
-     *
-     * @param int $attributeGroupId
-     * @param int $attributeId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_attributes_index', redirectQueryParamsToKeep: ['attributeGroupId'])]
     public function deleteAction(int $attributeGroupId, int $attributeId): RedirectResponse
@@ -249,17 +237,16 @@ class AttributeController extends PrestaShopAdminController
     /**
      * Deletes multiple attributes by provided ids from request
      *
-     * @param int $attributeGroupId
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_attributes_index', redirectQueryParamsToKeep: ['attributeGroupId'])]
     public function bulkDeleteAction(int $attributeGroupId, Request $request)
     {
         try {
-            $this->dispatchCommand(new BulkDeleteAttributeCommand(
-                $this->getAttributeIdsFromRequest($request))
+            $this->dispatchCommand(
+                new BulkDeleteAttributeCommand(
+                    $this->getAttributeIdsFromRequest($request)
+                )
             );
             $this->addFlash(
                 'success',
@@ -274,32 +261,11 @@ class AttributeController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    private function getAttributeIdsFromRequest(Request $request)
-    {
-        $attributeIds = $request->request->all('attribute_bulk');
-
-        foreach ($attributeIds as $i => $attributeId) {
-            $attributeIds[$i] = (int) $attributeId;
-        }
-
-        return $attributeIds;
-    }
-
-    /**
-     * @param AttributeFilters $filters
-     *
-     * @return CsvResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'You do not have permission to export this.')]
     public function exportAction(
         AttributeFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.factory.attribute')]
-        GridFactoryInterface $attributeGridFactory
+        GridFactoryInterface $attributeGridFactory,
     ): CsvResponse {
         $filters = new AttributeFilters(['limit' => null] + $filters->all());
         $attributeGrid = $attributeGridFactory->getGrid($filters);
@@ -313,7 +279,7 @@ class AttributeController extends PrestaShopAdminController
             $dataToPush['id_attribute'] = $record['id_attribute'];
             $dataToPush['id_attribute_group'] = $record['id_attribute_group'];
             $dataToPush['name'] = $record['name'];
-            if (!empty($record['color'])) {
+            if (! empty($record['color'])) {
                 $dataToPush['color'] = $record['color'];
                 $hasColor = true;
             }
@@ -338,9 +304,21 @@ class AttributeController extends PrestaShopAdminController
     }
 
     /**
-     * Provides translated error messages for exceptions
-     *
      * @return array
+     */
+    private function getAttributeIdsFromRequest(Request $request)
+    {
+        $attributeIds = $request->request->all('attribute_bulk');
+
+        foreach ($attributeIds as $i => $attributeId) {
+            $attributeIds[$i] = (int) $attributeId;
+        }
+
+        return $attributeIds;
+    }
+
+    /**
+     * Provides translated error messages for exceptions
      */
     private function getErrorMessages(): array
     {

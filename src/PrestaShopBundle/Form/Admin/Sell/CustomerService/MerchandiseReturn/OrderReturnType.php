@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,24 +41,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class OrderReturnType extends TranslatorAwareType
 {
-    /**
-     * OrderReturnType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $stateChoices
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly array $stateChoices
+        private readonly array $stateChoices,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,21 +34,13 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class DeleteCustomersType
- */
 class DeleteCustomersType extends AbstractType
 {
-    /**
-     * @param array $customerDeleteMethodChoices
-     */
-    public function __construct(private readonly array $customerDeleteMethodChoices)
-    {
+    public function __construct(
+        private readonly array $customerDeleteMethodChoices,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,7 +54,7 @@ class ImageSettingsType extends TranslatorAwareType
         $avifEnabled = $this->avifExtensionChecker->isAvailable();
         $helpFormats = $this->trans('Choose which image formats you want to be generated. Base image will always have .jpg extension, other formats will have .webp or .avif. Think twice before enabling all of them, because it can easily double the size of your shop.', 'Admin.Design.Help');
 
-        if (!$avifEnabled) {
+        if (! $avifEnabled) {
             $helpFormats .= '<br/><strong>' . $this->trans('AVIF is disabled because it\'s not supported on your server, check your configuration if you want to use it.', 'Admin.Design.Help') . '</strong>';
         }
 
@@ -69,7 +70,9 @@ class ImageSettingsType extends TranslatorAwareType
                     $this->trans('WebP', 'Admin.Design.Feature') => 'webp',
                     $this->trans('AVIF', 'Admin.Design.Feature') => 'avif',
                 ],
-                'choice_attr' => fn(string $choice, string $key): array => ['disabled' => $choice === 'jpg' || $choice === 'avif' && !$avifEnabled],
+                'choice_attr' => fn (string $choice, string $key): array => [
+                    'disabled' => $choice === 'jpg' || $choice === 'avif' && ! $avifEnabled,
+                ],
             ])
             ->add('base-format', ChoiceType::class, [
                 'label' => $this->trans('Base format', 'Admin.Design.Feature'),
@@ -87,7 +90,7 @@ class ImageSettingsType extends TranslatorAwareType
             ->add('avif-quality', IntegerType::class, [
                 'label' => $this->trans('AVIF compression', 'Admin.Design.Feature'),
                 'required' => $avifEnabled,
-                'disabled' => !$avifEnabled,
+                'disabled' => ! $avifEnabled,
                 'attr' => [
                     'min' => 0,
                     'max' => 100,

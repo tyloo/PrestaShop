@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,19 +49,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class CatalogPriceRuleType extends AbstractType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param bool $isMultiShopEnabled
-     * @param array $groupByIdChoices
-     * @param array $shopByIdChoices
-     */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly bool $isMultiShopEnabled, private readonly array $groupByIdChoices, private readonly array $shopByIdChoices)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly bool $isMultiShopEnabled,
+        private readonly array $groupByIdChoices,
+        private readonly array $shopByIdChoices,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -154,8 +150,6 @@ class CatalogPriceRuleType extends AbstractType
 
     /**
      * Prepends 'All groups' option with id of 0 to group choices
-     *
-     * @return array
      */
     private function getModifiedGroupChoices(): array
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,21 +36,16 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class SlipPdfFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private readonly SlipPdfConfiguration $configuration)
-    {
+    public function __construct(
+        private readonly SlipPdfConfiguration $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         return $this->configuration->updateConfiguration($data);

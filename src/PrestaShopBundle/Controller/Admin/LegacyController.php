@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -79,10 +80,6 @@ class LegacyController extends PrestaShopAdminController
     /**
      * This mimics/adapts the Dispatcher::dispatch method, detect the controller, initialize it and display it
      *
-     * @param Request $request
-     *
-     * @return Response
-     *
      * @throws CoreException
      */
     public function legacyPageAction(Request $request): Response
@@ -102,7 +99,7 @@ class LegacyController extends PrestaShopAdminController
         $postProcessResult = ob_get_clean();
 
         // Redirect if necessary after post process
-        if (!empty($adminController->getRedirectAfter())) {
+        if (! empty($adminController->getRedirectAfter())) {
             // After each request the cookie must be written to save its modified state during AdminController workflow
             // See Controller::smartyOutputContent
             $this->legacyContext->getContext()->cookie->write();
@@ -111,7 +108,7 @@ class LegacyController extends PrestaShopAdminController
             // In case redirect url is purely relative (starts with index.php) we transform it into an absolute one
             // this avoids unexpected redirection by the BackUrlRedirectResponseListener
             if (str_starts_with($redirectAfter, 'index.php')) {
-                $redirectAfter = rtrim($request->getSchemeAndHttpHost() . $request->getBasePath(), '/') . '/' . $redirectAfter;
+                $redirectAfter = mb_rtrim($request->getSchemeAndHttpHost() . $request->getBasePath(), '/') . '/' . $redirectAfter;
             }
 
             return $this->redirect($redirectAfter);
@@ -124,7 +121,7 @@ class LegacyController extends PrestaShopAdminController
         $smarty = $this->legacyContext->getSmarty();
         $smarty->setTemplateDir([
             _PS_BO_ALL_THEMES_DIR_ . 'default/template/',
-            _PS_OVERRIDE_DIR_ . 'controllers' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'templates',
+            _PS_OVERRIDE_DIR_ . 'controllers' . \DIRECTORY_SEPARATOR . 'admin' . \DIRECTORY_SEPARATOR . 'templates',
         ]);
 
         $isAjaxRequest = (bool) $request->get('ajax');
@@ -137,7 +134,7 @@ class LegacyController extends PrestaShopAdminController
         // Execute hook dispatcher after
         $this->dispatchHookWithParameters('actionDispatcherAfter', $dispatcherHookParameters);
 
-        if (!empty($postProcessResult)) {
+        if (! empty($postProcessResult)) {
             $response->setContent($postProcessResult . $response->getContent());
         }
 
@@ -147,10 +144,6 @@ class LegacyController extends PrestaShopAdminController
     /**
      * This mimics/adapts the AdminController:display method, stripped from the part that are already handled by the
      * symfony layout and without direct echoes from smarty
-     *
-     * @param AdminController $adminController
-     *
-     * @return Response
      *
      * @throws SmartyException
      */
@@ -162,12 +155,12 @@ class LegacyController extends PrestaShopAdminController
         $smarty = $this->legacyContext->getSmarty();
         $templateDirectories = $smarty->getTemplateDir() ?: [];
         $controllerDisplay = $adminController->getDisplay();
-        if (!empty($controllerDisplay)) {
+        if (! empty($controllerDisplay)) {
             $actionTemplate = $adminController->tpl_folder . $controllerDisplay . '.tpl';
 
             // Check if action template has been overridden
             foreach ($templateDirectories as $templateDirectory) {
-                if (file_exists($templateDirectory . DIRECTORY_SEPARATOR . $actionTemplate) && $controllerDisplay != 'view' && $controllerDisplay != 'options') {
+                if (file_exists($templateDirectory . \DIRECTORY_SEPARATOR . $actionTemplate) && $controllerDisplay !== 'view' && $controllerDisplay !== 'options') {
                     // Check if special method exists for this class and action (rg: viewProduct, deleteCategory, ...) and execute it if present
                     if (method_exists($adminController, $controllerDisplay . u($adminController->className)->camel())) {
                         $adminController->{$controllerDisplay . u($adminController->className)->camel()}();
@@ -199,18 +192,13 @@ class LegacyController extends PrestaShopAdminController
      *
      * Many ajax controllers directly echo their content so in this case we prefer catching the output of the legacy controller,
      * it is then returned as a proper Symfony response.
-     *
-     * @param AdminController $adminController
-     * @param string $action
-     *
-     * @return Response
      */
     protected function renderAjaxController(AdminController $adminController, string $action): Response
     {
         ob_start();
         // In this case, initContent must be executed after ob_start because it can already echo some output
         $adminController->initContent();
-        if (!empty($action) && method_exists($adminController, 'displayAjax' . $action)) {
+        if (! empty($action) && method_exists($adminController, 'displayAjax' . $action)) {
             $adminController->{'displayAjax' . $action}();
         } elseif (method_exists($adminController, 'displayAjax')) {
             $adminController->displayAjax();
@@ -224,11 +212,6 @@ class LegacyController extends PrestaShopAdminController
      * it was stripped from the part already handled by the Symfony layout
      *
      * Note: some legacy controllers may already use die at this point (to echo content and finish the process) when postProcess is called.
-     *
-     * @param Request $request
-     * @param array $dispatcherHookParameters
-     *
-     * @return AdminController
      */
     protected function initController(Request $request, array $dispatcherHookParameters): AdminController
     {
@@ -259,12 +242,12 @@ class LegacyController extends PrestaShopAdminController
 
         $action = $request->attributes->get(LegacyControllerConstants::CONTROLLER_ACTION_ATTRIBUTE);
         $controllerName = $request->attributes->get(LegacyControllerConstants::CONTROLLER_NAME_ATTRIBUTE);
-        $tabId = !empty($adminController->id) && $adminController->id > 0 ? $adminController->id : null;
+        $tabId = ! empty($adminController->id) && $adminController->id > 0 ? $adminController->id : null;
 
         // When the action is read/view and the controller has overridden the viewAccess method we should rely on the custom implementation
         if ($action === Permission::READ && $this->isMethodOverridden($adminController)) {
             $isAllowed = $adminController->viewAccess();
-        } elseif (!empty($tabId) && !empty($controllerName) && !empty($action)) { // Permission can only be checked when the controller is associated to a tab (therefore a permission)
+        } elseif (! empty($tabId) && ! empty($controllerName) && ! empty($action)) { // Permission can only be checked when the controller is associated to a tab (therefore a permission)
             // Some legacy controller override the getTabSlug method thus the subject does not follow the usual convention based on class name
             if ($this->isMethodOverridden($adminController)) {
                 $tabSlug = $adminController->getTabSlug();
@@ -280,12 +263,8 @@ class LegacyController extends PrestaShopAdminController
             $isAllowed = true;
         }
 
-        if (!$isAllowed) {
-            throw new AccessDeniedHttpException(sprintf(
-                'Employee is not granted %s on controller %s',
-                $action,
-                $controllerName,
-            ));
+        if (! $isAllowed) {
+            throw new AccessDeniedHttpException(\sprintf('Employee is not granted %s on controller %s', $action, $controllerName));
         }
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 class SSLMiddlewareListener
 {
     public function __construct(
-        private readonly ConfigurationInterface $configuration
+        private readonly ConfigurationInterface $configuration,
     ) {
     }
 
@@ -50,8 +51,6 @@ class SSLMiddlewareListener
      * Registered as `kernel.request` event listener.
      *
      * If the condition needs a redirection to HTTPS, then the current process is interrupted, the headers are sent directly.
-     *
-     * @param RequestEvent $event
      */
     public function onKernelRequest(RequestEvent $event): void
     {
@@ -61,7 +60,7 @@ class SSLMiddlewareListener
         }
 
         // If It's Sf route and SSL enabled and forced, redirect to https
-        $enabled = (1 === (int) $this->configuration->get('PS_SSL_ENABLED'));
+        $enabled = ((int) $this->configuration->get('PS_SSL_ENABLED') === 1);
         $serverParams = $event->getRequest()->server;
         $refererSsl = ($serverParams->has('HTTP_REFERER') && str_starts_with((string) $serverParams->get('HTTP_REFERER'), 'https'));
 

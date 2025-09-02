@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,50 +56,42 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CustomerAddressType extends TranslatorAwareType
 {
     /**
-     * CustomerAddressType constructor.
-     *
      * Backwards compatibility break introduced in 1.7.8.0 due to addition of Router as mandatory constructor argument
      * as well as extension of TranslationAwareType instead of using translator as dependency.
      *
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param ConfigurableFormChoiceProviderInterface $stateChoiceProvider
      * @param int $contextCountryId
-     * @param RouterInterface $router
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly ConfigurableFormChoiceProviderInterface $stateChoiceProvider,
         private $contextCountryId,
-        private readonly RouterInterface $router
+        private readonly RouterInterface $router,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $data = $builder->getData();
-        $countryId = 0 !== $data['id_country'] ? $data['id_country'] : $this->contextCountryId;
+        $countryId = $data['id_country'] !== 0 ? $data['id_country'] : $this->contextCountryId;
         $genericInvalidCharsMessage = $this->trans(
             'Invalid characters:',
             'Admin.Notifications.Info'
         ) . ' ' . TypedRegexValidator::GENERIC_NAME_CHARS;
         $stateChoices = $this->stateChoiceProvider->getChoices(['id_country' => $countryId]);
-        $showStates = !empty($stateChoices);
+        $showStates = ! empty($stateChoices);
         $requiredFields = $options['requiredFields'];
 
-        if (!isset($data['id_customer'])) {
+        if (! isset($data['id_customer'])) {
             $builder->add('customer_email', EmailType::class, [
                 'label' => $this->trans('Customer email', 'Admin.Orderscustomers.Feature'),
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new CleanHtml(),
@@ -121,7 +114,7 @@ class CustomerAddressType extends TranslatorAwareType
                 'The national ID card number of this person, or a unique tax identification number.',
                 'Admin.Orderscustomers.Feature'
             ),
-            'required' => in_array('dni', $requiredFields, true),
+            'required' => \in_array('dni', $requiredFields, true),
             'empty_data' => '',
             'constraints' => [
                 new CleanHtml(),
@@ -145,7 +138,8 @@ class CustomerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new CleanHtml(),
@@ -172,7 +166,8 @@ class CustomerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new CleanHtml(),
@@ -199,7 +194,8 @@ class CustomerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new CleanHtml(),
@@ -219,7 +215,7 @@ class CustomerAddressType extends TranslatorAwareType
             ->add('company', TextType::class, [
                 'label' => $this->trans('Company', 'Admin.Global'),
                 'help' => $genericInvalidCharsMessage,
-                'required' => in_array('company', $requiredFields, true),
+                'required' => \in_array('company', $requiredFields, true),
                 'empty_data' => '',
                 'constraints' => [
                     new CleanHtml(),
@@ -238,7 +234,7 @@ class CustomerAddressType extends TranslatorAwareType
             ])
             ->add('vat_number', TextType::class, [
                 'label' => $this->trans('VAT number', 'Admin.Orderscustomers.Feature'),
-                'required' => in_array('vat_number', $requiredFields, true),
+                'required' => \in_array('vat_number', $requiredFields, true),
                 'empty_data' => '',
                 'constraints' => [
                     new CleanHtml(),
@@ -261,7 +257,8 @@ class CustomerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new CleanHtml(),
@@ -280,7 +277,7 @@ class CustomerAddressType extends TranslatorAwareType
             ])
             ->add('address2', TextType::class, [
                 'label' => $this->trans('Address (2)', 'Admin.Global'),
-                'required' => in_array('address2', $requiredFields, true),
+                'required' => \in_array('address2', $requiredFields, true),
                 'empty_data' => '',
                 'constraints' => [
                     new CleanHtml(),
@@ -326,7 +323,8 @@ class CustomerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field is required', 'Admin.Notifications.Error'
+                            'This field is required',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new CleanHtml(),
@@ -351,7 +349,8 @@ class CustomerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                 ],
@@ -377,7 +376,7 @@ class CustomerAddressType extends TranslatorAwareType
                 ],
             ])->add('phone', TextType::class, [
                 'label' => $this->trans('Phone', 'Admin.Global'),
-                'required' => in_array('phone', $requiredFields, true),
+                'required' => \in_array('phone', $requiredFields, true),
                 'empty_data' => '',
                 'constraints' => [
                     new CleanHtml(),
@@ -396,7 +395,7 @@ class CustomerAddressType extends TranslatorAwareType
             ])
             ->add('phone_mobile', TextType::class, [
                 'label' => $this->trans('Mobile phone', 'Admin.Global'),
-                'required' => in_array('phone_mobile', $requiredFields, true),
+                'required' => \in_array('phone_mobile', $requiredFields, true),
                 'empty_data' => '',
                 'constraints' => [
                     new CleanHtml(),
@@ -414,7 +413,7 @@ class CustomerAddressType extends TranslatorAwareType
                 ],
             ])
             ->add('other', TextareaType::class, [
-                'required' => in_array('other', $requiredFields, true),
+                'required' => \in_array('other', $requiredFields, true),
                 'label' => $this->trans('Other', 'Admin.Global'),
                 'help' => $this->trans(
                     'Invalid characters:',

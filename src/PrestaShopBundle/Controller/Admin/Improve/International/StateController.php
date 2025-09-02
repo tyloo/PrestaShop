@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,16 +64,12 @@ class StateController extends PrestaShopAdminController
 {
     /**
      * Provides country states in json response
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', request.get('AdminCustomers')) || is_granted('update', request.get('AdminCustomers')) || is_granted('create', request.get('AdminManufacturers')) || is_granted('update', request.get('AdminManufacturers')) || is_granted('create', request.get('AdminSuppliers')) || is_granted('update', request.get('AdminSuppliers'))")]
     public function getStatesAction(
         Request $request,
         #[Autowire(service: 'prestashop.adapter.form.choice_provider.country_state_by_id')]
-        CountryStateByIdChoiceProvider $statesProvider
+        CountryStateByIdChoiceProvider $statesProvider,
     ): JsonResponse {
         try {
             $countryId = (int) $request->query->get('id_country');
@@ -84,9 +81,10 @@ class StateController extends PrestaShopAdminController
                 'states' => $states,
             ]);
         } catch (Exception $e) {
-            return $this->json([
-                'message' => $this->getErrorMessageForException($e, []),
-            ],
+            return $this->json(
+                [
+                    'message' => $this->getErrorMessageForException($e, []),
+                ],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -94,16 +92,12 @@ class StateController extends PrestaShopAdminController
 
     /**
      * Provides country states select input options for legacy pages
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', request.get('AdminTaxRulesGroup')) || is_granted('update', request.get('AdminTaxRulesGroup')) || is_granted('create', request.get('AdminStores')) || is_granted('update', request.get('AdminStores'))")]
     public function getLegacyStatesOptionsAction(
         Request $request,
         #[Autowire(service: 'prestashop.adapter.form.choice_provider.country_state_by_id')]
-        CountryStateByIdChoiceProvider $statesProvider
+        CountryStateByIdChoiceProvider $statesProvider,
     ): Response {
         try {
             $countryId = (int) $request->query->get('id_country');
@@ -111,24 +105,25 @@ class StateController extends PrestaShopAdminController
                 'id_country' => $countryId,
             ]);
 
-            if (!empty($states)) {
+            if (! empty($states)) {
                 $htmlResponse = '';
                 if ($request->query->get('no_empty')) {
                     $emptyValue = $request->get('empty_value') ?: '-';
-                    $htmlResponse = '<option value="0">' . htmlentities((string) $emptyValue, ENT_QUOTES, 'utf-8') . '</option>' . "\n";
+                    $htmlResponse = '<option value="0">' . htmlentities((string) $emptyValue, \ENT_QUOTES, 'utf-8') . '</option>' . "\n";
                 }
 
                 $queryStateId = (int) $request->query->get('id_state');
                 foreach ($states as $stateName => $stateId) {
-                    $htmlResponse .= '<option value="' . $stateId . '"' . ($queryStateId == $stateId ? ' selected="selected"' : '') . '>' . $stateName . '</option>' . "\n";
+                    $htmlResponse .= '<option value="' . $stateId . '"' . ($queryStateId === $stateId ? ' selected="selected"' : '') . '>' . $stateName . '</option>' . "\n";
                 }
 
                 return new Response($htmlResponse);
             }
         } catch (Exception $e) {
-            return $this->json([
-                'message' => $this->getErrorMessageForException($e, []),
-            ],
+            return $this->json(
+                [
+                    'message' => $this->getErrorMessageForException($e, []),
+                ],
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
@@ -138,18 +133,13 @@ class StateController extends PrestaShopAdminController
 
     /**
      * Show states listing page
-     *
-     * @param Request $request
-     * @param StateFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         StateFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.state')]
-        GridFactoryInterface $gridFactory
+        GridFactoryInterface $gridFactory,
     ): Response {
         $stateGrid = $gridFactory->getGrid($filters);
 
@@ -163,10 +153,6 @@ class StateController extends PrestaShopAdminController
 
     /**
      * Deletes state
-     *
-     * @param int $stateId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_states_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_states_index')]
@@ -187,11 +173,6 @@ class StateController extends PrestaShopAdminController
 
     /**
      * Handles edit form rendering and submission
-     *
-     * @param int $stateId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_states_index')]
     public function editAction(
@@ -200,7 +181,7 @@ class StateController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.state_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.state_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         try {
             /** @var EditableState $editableState */
@@ -240,10 +221,6 @@ class StateController extends PrestaShopAdminController
 
     /**
      * Show "Add new" form and handle form submit.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_states_index', message: 'You do not have permission to create this.')]
     public function createAction(
@@ -251,7 +228,7 @@ class StateController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.state_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.state_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         $stateForm = $formBuilder->getForm();
         $stateForm->handleRequest($request);
@@ -283,10 +260,6 @@ class StateController extends PrestaShopAdminController
 
     /**
      * Toggles state status
-     *
-     * @param int $stateId
-     *
-     * @return JsonResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_states_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_states_index')]
@@ -316,10 +289,6 @@ class StateController extends PrestaShopAdminController
 
     /**
      * Delete states in bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_states_index', message: 'You do not have permission to delete this.')]
     public function deleteBulkAction(Request $request): RedirectResponse
@@ -341,10 +310,6 @@ class StateController extends PrestaShopAdminController
 
     /**
      * Enables states on bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_states_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_states_index')]
@@ -368,10 +333,6 @@ class StateController extends PrestaShopAdminController
 
     /**
      * Disables states on bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_states_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_states_index')]
@@ -393,9 +354,6 @@ class StateController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_states_index');
     }
 
-    /**
-     * @return array
-     */
     private function getToolbarButtons(): array
     {
         $toolbarButtons = [];
@@ -409,11 +367,6 @@ class StateController extends PrestaShopAdminController
         return $toolbarButtons;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
     private function getBulkStatesFromRequest(Request $request): array
     {
         $stateIds = $request->request->all('state_states_bulk');
@@ -425,9 +378,6 @@ class StateController extends PrestaShopAdminController
         return $stateIds;
     }
 
-    /**
-     * @return array
-     */
     private function getErrorMessages(): array
     {
         return [

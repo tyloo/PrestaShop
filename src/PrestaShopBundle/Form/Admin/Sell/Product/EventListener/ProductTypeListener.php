@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,16 +43,11 @@ use Symfony\Component\Form\FormInterface;
  */
 class ProductTypeListener implements EventSubscriberInterface
 {
-    /**
-     * @param HookInformationProvider $hookInformationProvider
-     */
-    public function __construct(private readonly HookInformationProvider $hookInformationProvider)
-    {
+    public function __construct(
+        private readonly HookInformationProvider $hookInformationProvider,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -60,9 +56,6 @@ class ProductTypeListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     */
     public function adaptProductForm(FormEvent $event): void
     {
         $data = $event->getData();
@@ -76,7 +69,7 @@ class ProductTypeListener implements EventSubscriberInterface
             $form->remove('extra_modules');
         }
 
-        if (ProductType::TYPE_COMBINATIONS === $productType) {
+        if ($productType === ProductType::TYPE_COMBINATIONS) {
             $this->removeProductSuppliers($form);
             $this->removeStock($form);
         } elseif ($initialProductType !== ProductType::TYPE_COMBINATIONS) {
@@ -90,24 +83,24 @@ class ProductTypeListener implements EventSubscriberInterface
             $suppliers = $optionsField->get('suppliers')->get('supplier_ids')->getConfig()->getOptions()['choices'];
 
             // Don't display the suppliers part if there are no suppliers
-            if (count($suppliers) <= 0) {
+            if (\count($suppliers) <= 0) {
                 $this->removeSuppliers($form);
                 $this->removeProductSuppliers($form);
             }
         }
 
-        if (ProductType::TYPE_PACK !== $productType) {
+        if ($productType !== ProductType::TYPE_PACK) {
             $this->removePackStockType($form);
             $this->removePack($form);
         }
 
         $this->removeStockMovementsIfNecessary($form, $data);
 
-        if (ProductType::TYPE_VIRTUAL === $productType) {
+        if ($productType === ProductType::TYPE_VIRTUAL) {
             $this->removeShipping($form);
             // We don't remove the ecotax during the transition request because we could lose the ecotax data
             // and some part of the price with it
-            if (ProductType::TYPE_VIRTUAL === $initialProductType) {
+            if ($initialProductType === ProductType::TYPE_VIRTUAL) {
                 $this->removeEcotax($form);
             }
         } else {
@@ -153,7 +146,7 @@ class ProductTypeListener implements EventSubscriberInterface
 
     protected function removePackStockType(FormInterface $form): void
     {
-        if (!$form->has('stock')) {
+        if (! $form->has('stock')) {
             return;
         }
         $stock = $form->get('stock');
@@ -162,7 +155,7 @@ class ProductTypeListener implements EventSubscriberInterface
 
     protected function removePack(FormInterface $form): void
     {
-        if (!$form->has('stock')) {
+        if (! $form->has('stock')) {
             return;
         }
         $stock = $form->get('stock');
@@ -171,7 +164,7 @@ class ProductTypeListener implements EventSubscriberInterface
 
     protected function removeVirtualProduct(FormInterface $form): void
     {
-        if (!$form->has('stock')) {
+        if (! $form->has('stock')) {
             return;
         }
         $stock = $form->get('stock');
@@ -180,11 +173,11 @@ class ProductTypeListener implements EventSubscriberInterface
 
     protected function removeStockMovementsIfNecessary(FormInterface $form, array $data): void
     {
-        if (!$form->has('stock')) {
+        if (! $form->has('stock')) {
             return;
         }
         $stock = $form->get('stock');
-        if (!$stock->has('quantities')) {
+        if (! $stock->has('quantities')) {
             return;
         }
         $quantities = $stock->get('quantities');
@@ -200,11 +193,11 @@ class ProductTypeListener implements EventSubscriberInterface
 
     protected function removeEcotax(FormInterface $form): void
     {
-        if (!$form->has('pricing')) {
+        if (! $form->has('pricing')) {
             return;
         }
         $pricing = $form->get('pricing');
-        if (!$pricing->has('retail_price')) {
+        if (! $pricing->has('retail_price')) {
             return;
         }
         $retailPrice = $pricing->get('retail_price');

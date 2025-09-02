@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,12 +48,12 @@ class ApiClientType extends TranslatorAwareType
     {
         // If an external issuer is specified most of the form is not editable or relevant
         $formData = $builder->getData();
-        $isExternalApiClient = !empty($formData['external_issuer'] ?? null);
+        $isExternalApiClient = ! empty($formData['external_issuer'] ?? null);
 
         $builder
             ->add('client_name', TextType::class, [
                 'label' => $this->trans('Client Name', 'Admin.Advparameters.Feature'),
-                'required' => !$isExternalApiClient,
+                'required' => ! $isExternalApiClient,
                 'constraints' => [
                     new NotBlank(),
                     new Length([
@@ -70,7 +71,7 @@ class ApiClientType extends TranslatorAwareType
             ])
             ->add('client_id', TextType::class, [
                 'label' => $this->trans('Client ID', 'Admin.Advparameters.Feature'),
-                'required' => !$isExternalApiClient,
+                'required' => ! $isExternalApiClient,
                 'constraints' => [
                     new NotBlank(),
                     new Length([
@@ -105,7 +106,7 @@ class ApiClientType extends TranslatorAwareType
             ])
         ;
 
-        if (!$isExternalApiClient) {
+        if (! $isExternalApiClient) {
             $builder
                 ->add('lifetime', IntegerType::class, [
                     'label' => $this->trans('Lifetime', 'Admin.Global'),

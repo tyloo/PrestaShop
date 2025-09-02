@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,21 +48,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ManufacturerType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
      * @param bool $isMultistoreEnabled
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private $isMultistoreEnabled
+        private $isMultistoreEnabled,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $invalidCharactersForCatalogLabel = $this->trans('Invalid characters:', 'Admin.Global') . '<>{}';
@@ -74,7 +70,8 @@ class ManufacturerType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new Length([
@@ -181,7 +178,8 @@ class ManufacturerType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                 ],

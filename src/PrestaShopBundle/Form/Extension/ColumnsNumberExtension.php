@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,9 +47,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ColumnsNumberExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -61,20 +59,14 @@ class ColumnsNumberExtension extends AbstractTypeExtension
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        if (!empty($options['columns_number'])) {
+        if (! empty($options['columns_number'])) {
             $view->vars['columns_number'] = $options['columns_number'];
         }
         $view->vars['column_breaker'] = $options['column_breaker'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

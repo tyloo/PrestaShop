@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,7 +48,7 @@ class AdminAPIFeatureListener
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
@@ -55,7 +56,7 @@ class AdminAPIFeatureListener
         $isAdminAPIMultistoreEnabled = $this->featureFlagManager->isEnabled(FeatureFlagSettings::FEATURE_FLAG_ADMIN_API_MULTISTORE);
         $isMultistoreActive = $this->multiStoreFeature->isActive();
 
-        if (!$isAdminAPIEnabled || (!$isAdminAPIMultistoreEnabled && $isMultistoreActive)) {
+        if (! $isAdminAPIEnabled || (! $isAdminAPIMultistoreEnabled && $isMultistoreActive)) {
             throw new NotFoundHttpException();
         }
     }

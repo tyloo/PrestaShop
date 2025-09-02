@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -135,12 +136,12 @@ class EmployeeSessionSubscriber implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (!$this->security->getUser() instanceof Employee) {
+        if (! $this->security->getUser() instanceof Employee) {
             return;
         }
 
         $employeeSession = $this->getEmployeeSessionFromToken();
-        if (!$employeeSession instanceof EmployeeSession) {
+        if (! $employeeSession instanceof EmployeeSession) {
             $this->logger->debug('User is logout because no EmployeeSession was found in token');
             $this->logoutAndStopEvent($event);
 
@@ -150,8 +151,8 @@ class EmployeeSessionSubscriber implements EventSubscriberInterface
         /** @var Employee $employee */
         $employee = $this->security->getUser();
         // Check that session is still persisted and matches the initial saved token
-        if (!$employee->hasSession($employeeSession->getId(), $employeeSession->getToken())) {
-            $this->logger->debug(sprintf('Employee lo longer has this session token: %d:%s', $employeeSession->getId(), $employeeSession->getToken()));
+        if (! $employee->hasSession($employeeSession->getId(), $employeeSession->getToken())) {
+            $this->logger->debug(\sprintf('Employee lo longer has this session token: %d:%s', $employeeSession->getId(), $employeeSession->getToken()));
             $this->logoutAndStopEvent($event);
 
             return;
@@ -171,7 +172,7 @@ class EmployeeSessionSubscriber implements EventSubscriberInterface
 
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
@@ -230,7 +231,7 @@ class EmployeeSessionSubscriber implements EventSubscriberInterface
 
     protected function getEmployeeSessionFromToken(): ?EmployeeSession
     {
-        if (!$this->security->getToken()?->hasAttribute(TokenAttributes::EMPLOYEE_SESSION)) {
+        if (! $this->security->getToken()?->hasAttribute(TokenAttributes::EMPLOYEE_SESSION)) {
             return null;
         }
 
@@ -239,7 +240,7 @@ class EmployeeSessionSubscriber implements EventSubscriberInterface
 
     protected function getIpAddressFromToken(): ?string
     {
-        if (!$this->security->getToken()?->hasAttribute(TokenAttributes::IP_ADDRESS)) {
+        if (! $this->security->getToken()?->hasAttribute(TokenAttributes::IP_ADDRESS)) {
             return null;
         }
 

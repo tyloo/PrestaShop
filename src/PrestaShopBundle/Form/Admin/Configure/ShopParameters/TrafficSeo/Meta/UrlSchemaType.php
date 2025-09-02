@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,14 +46,11 @@ class UrlSchemaType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly DefaultRouteProvider $defaultRouteProvider
+        private readonly DefaultRouteProvider $defaultRouteProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -114,14 +112,19 @@ class UrlSchemaType extends TranslatorAwareType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => false,
         ]);
+    }
+
+    /**
+     * @see MultistoreConfigurationTypeExtension
+     */
+    public function getParent(): string
+    {
+        return MultistoreConfigurationType::class;
     }
 
     /**
@@ -152,15 +155,5 @@ class UrlSchemaType extends TranslatorAwareType
                 '%keywords%' => implode(', ', $formattedKeyWords),
             ]
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see MultistoreConfigurationTypeExtension
-     */
-    public function getParent(): string
-    {
-        return MultistoreConfigurationType::class;
     }
 }

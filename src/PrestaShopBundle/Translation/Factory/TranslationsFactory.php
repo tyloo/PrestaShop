@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ class TranslationsFactory implements TranslationsFactoryInterface
      */
     private $providers = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function createCatalogue($domainIdentifier, $locale = 'en_US')
     {
         foreach ($this->providers as $provider) {
@@ -56,8 +54,8 @@ class TranslationsFactory implements TranslationsFactoryInterface
     }
 
     /**
-     * @param string $domainIdentifier
-     * @param string $locale
+     * @param string      $domainIdentifier
+     * @param string      $locale
      * @param string|null $theme
      * @param string|null $search
      *
@@ -69,7 +67,7 @@ class TranslationsFactory implements TranslationsFactoryInterface
         $domainIdentifier,
         $locale = self::DEFAULT_LOCALE,
         $theme = null,
-        $search = null
+        $search = null,
     ) {
         foreach ($this->providers as $provider) {
             if ($domainIdentifier === $provider->getIdentifier()) {
@@ -82,9 +80,6 @@ class TranslationsFactory implements TranslationsFactoryInterface
         throw new ProviderNotFoundException($domainIdentifier);
     }
 
-    /**
-     * @param AbstractProvider $provider
-     */
     public function addProvider(AbstractProvider $provider): void
     {
         $this->providers[] = $provider;

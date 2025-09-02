@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,25 +38,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class OptionalFeaturesType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
      * @param bool $isCombinationsUsed
      */
-    public function __construct(TranslatorInterface $translator, array $locales, private $isCombinationsUsed)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        array $locales,
+        private $isCombinationsUsed,
+    ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('combinations', SwitchType::class, [
                 'disabled' => $this->isCombinationsUsed,
                 'label' => $this->trans('Combinations', 'Admin.Global'),
-                'help' => sprintf(
+                'help' => \sprintf(
                     '%s<br>%s',
                     $this->trans('Choose "No" to disable Product Combinations.', 'Admin.Advparameters.Help'),
                     $this->trans('You cannot set this parameter to No when combinations are already used by some of your products', 'Admin.Advparameters.Help')
@@ -71,9 +70,6 @@ class OptionalFeaturesType extends TranslatorAwareType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'performance_optional_features_block';

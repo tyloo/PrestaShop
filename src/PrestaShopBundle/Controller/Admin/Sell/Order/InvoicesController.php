@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,16 +44,17 @@ class InvoicesController extends PrestaShopAdminController
     /**
      * Show order preferences page.
      *
-     * @param Request $request
-     *
      * @return Response Template parameters
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         Request $request,
-        #[Autowire(service: 'prestashop.admin.order.invoices.by_date.form_handler')] FormHandlerInterface $byDateForm,
-        #[Autowire(service: 'prestashop.admin.order.invoices.by_status.form_handler')] FormHandlerInterface $byStatusForm,
-        #[Autowire(service: 'prestashop.admin.order.invoices.options.form_handler')] FormHandlerInterface $optionsForm,
+        #[Autowire(service: 'prestashop.admin.order.invoices.by_date.form_handler')]
+        FormHandlerInterface $byDateForm,
+        #[Autowire(service: 'prestashop.admin.order.invoices.by_status.form_handler')]
+        FormHandlerInterface $byStatusForm,
+        #[Autowire(service: 'prestashop.admin.order.invoices.options.form_handler')]
+        FormHandlerInterface $optionsForm,
     ): Response {
         $legacyController = $request->attributes->get('_legacy_controller');
 
@@ -69,14 +71,13 @@ class InvoicesController extends PrestaShopAdminController
     /**
      * Action that generates invoices PDF by date interval.
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function generatePdfByDateAction(
         Request $request,
-        #[Autowire(service: 'prestashop.admin.order.invoices.by_date.form_handler')] FormHandlerInterface $formHandler
+        #[Autowire(service: 'prestashop.admin.order.invoices.by_date.form_handler')]
+        FormHandlerInterface $formHandler,
     ) {
         $this->processForm($formHandler, $request);
 
@@ -86,14 +87,13 @@ class InvoicesController extends PrestaShopAdminController
     /**
      * Action that generates invoices PDF by order status.
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function generatePdfByStatusAction(
         Request $request,
-        #[Autowire(service: 'prestashop.admin.order.invoices.by_status.form_handler')] FormHandlerInterface $formHandler
+        #[Autowire(service: 'prestashop.admin.order.invoices.by_status.form_handler')]
+        FormHandlerInterface $formHandler,
     ) {
         $this->processForm($formHandler, $request);
 
@@ -103,14 +103,13 @@ class InvoicesController extends PrestaShopAdminController
     /**
      * Process the Invoice Options configuration form.
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'Access denied.', redirectRoute: 'admin_order_invoices')]
     public function processAction(
         Request $request,
-        #[Autowire(service: 'prestashop.admin.order.invoices.options.form_handler')] FormHandlerInterface $formHandler,
+        #[Autowire(service: 'prestashop.admin.order.invoices.options.form_handler')]
+        FormHandlerInterface $formHandler,
     ) {
         if ($this->processForm($formHandler, $request)) {
             $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
@@ -120,10 +119,23 @@ class InvoicesController extends PrestaShopAdminController
     }
 
     /**
+     * Generates PDF of given invoice ID.
+     */
+    #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
+    public function generatePdfByIdAction(
+        int $invoiceId,
+        #[Autowire(service: 'prestashop.adapter.pdf.generator.single_invoice')]
+        PDFGeneratorInterface $invoicePdfGenerator,
+    ): void {
+        $invoicePdfGenerator->generatePDF([$invoiceId]);
+
+        // When using legacy generator,
+        // we want to be sure that displaying PDF is the last thing this controller will do
+        exit;
+    }
+
+    /**
      * Processes the form in a generic way.
-     *
-     * @param FormHandlerInterface $formHandler
-     * @param Request $request
      *
      * @return bool false if an error occurred, true otherwise
      */
@@ -141,22 +153,5 @@ class InvoicesController extends PrestaShopAdminController
         }
 
         return true;
-    }
-
-    /**
-     * Generates PDF of given invoice ID.
-     *
-     * @param int $invoiceId
-     */
-    #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
-    public function generatePdfByIdAction(
-        int $invoiceId,
-        #[Autowire(service: 'prestashop.adapter.pdf.generator.single_invoice')] PDFGeneratorInterface $invoicePdfGenerator
-    ): void {
-        $invoicePdfGenerator->generatePDF([$invoiceId]);
-
-        // When using legacy generator,
-        // we want to be sure that displaying PDF is the last thing this controller will do
-        die;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -87,7 +88,7 @@ class TemplateVariablesBuilder
         $cookie = $this->context->getContext()->cookie;
 
         if (isset($cookie->collapse_menu)) {
-            return boolval($cookie->collapse_menu);
+            return \boolval($cookie->collapse_menu);
         }
 
         return false;
@@ -110,11 +111,11 @@ class TemplateVariablesBuilder
 
     private function getDefaultTabLink(): ?string
     {
-        if ($this->employeeContext->getEmployee() && !empty($this->employeeContext->getEmployee()->getDefaultTabId())) {
+        if ($this->employeeContext->getEmployee() && ! empty($this->employeeContext->getEmployee()->getDefaultTabId())) {
             /** @var Tab|null $tab */
             $tab = $this->tabRepository->findOneBy(['id' => $this->employeeContext->getEmployee()->getDefaultTabId()]);
 
-            if (!$tab) {
+            if (! $tab) {
                 $tab = $this->tabRepository->findOneByClassName('AdminDashboard');
             }
 
@@ -126,7 +127,7 @@ class TemplateVariablesBuilder
 
     private function isMaintenanceEnabled(): bool
     {
-        return !(bool) $this->configuration->get('PS_SHOP_ENABLE');
+        return ! (bool) $this->configuration->get('PS_SHOP_ENABLE');
     }
 
     private function isFrontOfficeAccessibleForAdmins(): bool

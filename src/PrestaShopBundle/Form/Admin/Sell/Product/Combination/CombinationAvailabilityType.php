@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CombinationAvailabilityType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param FormChoiceProviderInterface $outOfStockTypeChoiceProvider
-     * @param RouterInterface $router
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly FormChoiceProviderInterface $outOfStockTypeChoiceProvider,
-        private readonly RouterInterface $router
+        private readonly RouterInterface $router,
     ) {
         parent::__construct($translator, $locales);
     }
@@ -74,7 +69,8 @@ class CombinationAvailabilityType extends TranslatorAwareType
                 'label' => $this->trans('Label when in stock', 'Admin.Catalog.Feature'),
                 'required' => false,
                 'modify_all_shops' => true,
-                'help' => $this->trans('This will be the displayed availability of the product, if there is at least 1 in stock. If you don\'t enter anything, value from [1]Shop Parameters > Product Settings[/1] will be used.',
+                'help' => $this->trans(
+                    'This will be the displayed availability of the product, if there is at least 1 in stock. If you don\'t enter anything, value from [1]Shop Parameters > Product Settings[/1] will be used.',
                     'Admin.Catalog.Help',
                     [
                         '[1]' => '<a href="' . $this->router->generate('admin_product_preferences') . '#configuration_fieldset_stock">',
@@ -87,7 +83,8 @@ class CombinationAvailabilityType extends TranslatorAwareType
                 'label' => $this->trans('Label when out of stock', 'Admin.Catalog.Feature'),
                 'required' => false,
                 'modify_all_shops' => true,
-                'help' => $this->trans('This will be the displayed availability of the product, if it\'s not in stock. If you don\'t enter anything, value from [1]Shop Parameters > Product Settings[/1] will be used.',
+                'help' => $this->trans(
+                    'This will be the displayed availability of the product, if it\'s not in stock. If you don\'t enter anything, value from [1]Shop Parameters > Product Settings[/1] will be used.',
                     'Admin.Catalog.Help',
                     [
                         '[1]' => '<a href="' . $this->router->generate('admin_product_preferences') . '#configuration_fieldset_stock">',

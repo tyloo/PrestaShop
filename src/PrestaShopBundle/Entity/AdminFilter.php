@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -26,6 +27,7 @@
 
 namespace PrestaShopBundle\Entity;
 
+use Closure;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -212,7 +214,7 @@ class AdminFilter
      */
     public static function sanitizeFilterParameters(array $filter): mixed
     {
-        $filterMinMax = (fn($filter): \Closure => function ($subject) use ($filter) {
+        $filterMinMax = (fn ($filter): Closure => function ($subject) use ($filter) {
             $operator = null;
 
             if (str_contains($subject, '<=')) {
@@ -223,67 +225,66 @@ class AdminFilter
                 $operator = '>=';
             }
 
-            if (null === $operator) {
+            if ($operator === null) {
                 $pattern = '#BETWEEN (?P<min>\d+\.?\d*) AND (?P<max>\d+\.?\d*)#';
-                if (0 === preg_match($pattern, $subject, $matches)) {
+                if (preg_match($pattern, $subject, $matches) === 0) {
                     return '';
                 }
 
-                return sprintf('BETWEEN %f AND %f', $matches['min'], $matches['max']);
-            } else {
-                $subjectWithoutOperator = str_replace($operator, '', $subject);
-
-                $flag = FILTER_DEFAULT;
-                if ($filter === FILTER_SANITIZE_NUMBER_FLOAT) {
-                    $flag = FILTER_FLAG_ALLOW_FRACTION;
-                }
-
-                $filteredSubjectWithoutOperator = filter_var($subjectWithoutOperator, $filter, $flag);
-                if (!$filteredSubjectWithoutOperator) {
-                    $filteredSubjectWithoutOperator = 0;
-                }
-
-                return $operator . $filteredSubjectWithoutOperator;
+                return \sprintf('BETWEEN %f AND %f', $matches['min'], $matches['max']);
             }
+            $subjectWithoutOperator = str_replace($operator, '', $subject);
+
+            $flag = \FILTER_DEFAULT;
+            if ($filter === \FILTER_SANITIZE_NUMBER_FLOAT) {
+                $flag = \FILTER_FLAG_ALLOW_FRACTION;
+            }
+
+            $filteredSubjectWithoutOperator = filter_var($subjectWithoutOperator, $filter, $flag);
+            if (! $filteredSubjectWithoutOperator) {
+                $filteredSubjectWithoutOperator = 0;
+            }
+
+            return $operator . $filteredSubjectWithoutOperator;
         });
 
-        $entNoquotesHtmlspecialchars = (fn(string $subject): string => htmlspecialchars($subject, ENT_NOQUOTES));
+        $entNoquotesHtmlspecialchars = (fn (string $subject): string => htmlspecialchars($subject, \ENT_NOQUOTES));
 
         return filter_var_array($filter, [
-            'filter_category' => FILTER_SANITIZE_NUMBER_INT,
+            'filter_category' => \FILTER_SANITIZE_NUMBER_INT,
             'filter_column_id_product' => [
-                'filter' => FILTER_CALLBACK,
-                'options' => $filterMinMax(FILTER_SANITIZE_NUMBER_INT),
+                'filter' => \FILTER_CALLBACK,
+                'options' => $filterMinMax(\FILTER_SANITIZE_NUMBER_INT),
             ],
             'filter_column_name' => [
-                'filter' => FILTER_CALLBACK,
+                'filter' => \FILTER_CALLBACK,
                 'options' => $entNoquotesHtmlspecialchars,
             ],
             'filter_column_reference' => [
-                'filter' => FILTER_CALLBACK,
+                'filter' => \FILTER_CALLBACK,
                 'options' => 'htmlspecialchars',
             ],
             'filter_column_name_category' => [
-                'filter' => FILTER_CALLBACK,
+                'filter' => \FILTER_CALLBACK,
                 'options' => 'htmlspecialchars',
             ],
             'filter_column_price' => [
-                'filter' => FILTER_CALLBACK,
-                'options' => $filterMinMax(FILTER_SANITIZE_NUMBER_FLOAT),
+                'filter' => \FILTER_CALLBACK,
+                'options' => $filterMinMax(\FILTER_SANITIZE_NUMBER_FLOAT),
             ],
             'filter_column_sav_quantity' => [
-                'filter' => FILTER_CALLBACK,
-                'options' => $filterMinMax(FILTER_SANITIZE_NUMBER_INT),
+                'filter' => \FILTER_CALLBACK,
+                'options' => $filterMinMax(\FILTER_SANITIZE_NUMBER_INT),
             ],
-            'filter_column_active' => FILTER_SANITIZE_NUMBER_INT,
-            'last_offset' => FILTER_SANITIZE_NUMBER_INT,
-            'last_limit' => FILTER_SANITIZE_NUMBER_INT,
+            'filter_column_active' => \FILTER_SANITIZE_NUMBER_INT,
+            'last_offset' => \FILTER_SANITIZE_NUMBER_INT,
+            'last_limit' => \FILTER_SANITIZE_NUMBER_INT,
             'last_orderBy' => [
-                'filter' => FILTER_CALLBACK,
+                'filter' => \FILTER_CALLBACK,
                 'options' => 'htmlspecialchars',
             ],
             'last_sortOrder' => [
-                'filter' => FILTER_CALLBACK,
+                'filter' => \FILTER_CALLBACK,
                 'options' => 'htmlspecialchars',
             ],
         ]);

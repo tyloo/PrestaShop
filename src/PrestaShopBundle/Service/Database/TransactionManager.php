@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,32 +34,21 @@ use PrestaShop\PrestaShop\Core\Repository\TransactionManagerInterface;
 
 class TransactionManager implements TransactionManagerInterface
 {
-    /**
-     * @param EntityManager $entityManager
-     */
-    public function __construct(private readonly EntityManager $entityManager)
-    {
+    public function __construct(
+        private readonly EntityManager $entityManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rollback(): void
     {
         $this->entityManager->rollback();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function commit(): void
     {
         $this->entityManager->commit();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function beginTransaction(): void
     {
         $this->entityManager->beginTransaction();

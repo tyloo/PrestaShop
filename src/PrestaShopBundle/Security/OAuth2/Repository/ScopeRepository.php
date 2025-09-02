@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class ScopeRepository implements ScopeRepositoryInterface
 {
-    /** @var ApiResourceScopes[] */
+    /**
+     * @var ApiResourceScopes[]
+     */
     private readonly array $apiResourceScopes;
 
     public function __construct(
@@ -59,7 +62,7 @@ class ScopeRepository implements ScopeRepositoryInterface
     public function getScopeEntityByIdentifier($identifier): ?ScopeEntityInterface
     {
         foreach ($this->apiResourceScopes as $apiResourceScope) {
-            if (in_array($identifier, $apiResourceScope->getScopes())) {
+            if (\in_array($identifier, $apiResourceScope->getScopes(), true)) {
                 return new ScopeEntity($identifier);
             }
         }
@@ -75,7 +78,7 @@ class ScopeRepository implements ScopeRepositoryInterface
         $grantType,
         ClientEntityInterface $clientEntity,
         $userIdentifier = null,
-        $authCodeId = null
+        $authCodeId = null,
     ) {
         $finalizedScopes = [
             new ScopeEntity('is_authenticated'),
@@ -84,10 +87,10 @@ class ScopeRepository implements ScopeRepositoryInterface
         /** @var ApiClient $apiClient */
         $apiClient = $this->apiClientProvider->loadUserByIdentifier($clientEntity->getIdentifier());
         foreach ($scopes as $scope) {
-            if (!in_array($scope->getIdentifier(), $apiClient->getScopes())) {
+            if (! \in_array($scope->getIdentifier(), $apiClient->getScopes(), true)) {
                 $hint = \sprintf(
                     'Usage of scope `%s` is not allowed for this client',
-                    \htmlspecialchars($scope->getIdentifier(), ENT_QUOTES, 'UTF-8', false)
+                    htmlspecialchars($scope->getIdentifier(), \ENT_QUOTES, 'UTF-8', false)
                 );
                 throw OAuthServerException::accessDenied($hint);
             }

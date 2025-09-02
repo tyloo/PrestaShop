@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,13 +38,14 @@ use Symfony\Component\Translation\MessageCatalogue;
 final class LegacyModuleExtractor implements LegacyModuleExtractorInterface
 {
     /**
-     * @param ExtractorInterface $phpExtractor
-     * @param ExtractorInterface $smartyExtractor
-     * @param ExtractorInterface $twigExtractor
      * @param string $modulesDirectory
      */
-    public function __construct(private readonly ExtractorInterface $phpExtractor, private readonly ExtractorInterface $smartyExtractor, private readonly ExtractorInterface $twigExtractor, private $modulesDirectory)
-    {
+    public function __construct(
+        private readonly ExtractorInterface $phpExtractor,
+        private readonly ExtractorInterface $smartyExtractor,
+        private readonly ExtractorInterface $twigExtractor,
+        private $modulesDirectory,
+    ) {
     }
 
     /**
@@ -69,7 +71,6 @@ final class LegacyModuleExtractor implements LegacyModuleExtractorInterface
      * Therefore, the PHP extractor will stores those calls in the default domain named "messages".
      * This process moves all wordings in the "messages" domain to the inferred module domain.
      *
-     * @param MessageCatalogue $extractedCatalogue
      * @param string $moduleName
      *
      * @return MessageCatalogue
@@ -78,7 +79,7 @@ final class LegacyModuleExtractor implements LegacyModuleExtractorInterface
     {
         $defaultDomain = 'messages';
 
-        if (!in_array($defaultDomain, $extractedCatalogue->getDomains())) {
+        if (! \in_array($defaultDomain, $extractedCatalogue->getDomains(), true)) {
             return $extractedCatalogue;
         }
 

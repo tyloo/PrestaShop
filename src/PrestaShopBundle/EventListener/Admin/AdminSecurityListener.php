@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,13 +57,13 @@ class AdminSecurityListener
      */
     public function onKernelController(ControllerEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
         $controller = $event->getController();
 
-        if (!is_array($controller)) {
+        if (! \is_array($controller)) {
             return;
         }
 
@@ -84,7 +85,7 @@ class AdminSecurityListener
         // annotation management
         $annotation = $this->annotationReader->getMethodAnnotation($reflectionMethod, AdminSecurityAnnotation::class);
 
-        if ($annotation != null) {
+        if ($annotation !== null) {
             trigger_deprecation('prestashop/prestashop', '9.0', 'AdminSecurity annotation is deprecated, use attribute instead.');
 
             $this->isGranted($annotation, $event->getRequest());
@@ -95,11 +96,11 @@ class AdminSecurityListener
     {
         $attribute = $adminSecurity->getAttribute();
 
-        if (!$attribute instanceof Expression) {
+        if (! $attribute instanceof Expression) {
             $attribute = new Expression($attribute);
         }
 
-        if (!$this->authChecker->isGranted($attribute, $request)) {
+        if (! $this->authChecker->isGranted($attribute, $request)) {
             $message = $adminSecurity->getMessage();
 
             if ($statusCode = $adminSecurity->getStatusCode()) {

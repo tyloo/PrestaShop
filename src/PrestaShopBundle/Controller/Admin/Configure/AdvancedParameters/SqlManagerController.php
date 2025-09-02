@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,6 +61,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Throwable;
 
 /**
  * Responsible of "Configure > Advanced Parameters > Database -> SQL Manager" page.
@@ -68,11 +70,6 @@ class SqlManagerController extends PrestaShopAdminController
 {
     /**
      * Show list of saved SQL's.
-     *
-     * @param Request $request
-     * @param RequestSqlFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -109,10 +106,6 @@ class SqlManagerController extends PrestaShopAdminController
 
     /**
      * Process Request SQL settings save.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_sql_requests_index')]
@@ -125,7 +118,7 @@ class SqlManagerController extends PrestaShopAdminController
         $settingForm->handleRequest($request);
 
         if ($settingForm->isSubmitted()) {
-            if (!$errors = $settingsFormHandler->save($settingForm->getData())) {
+            if (! $errors = $settingsFormHandler->save($settingForm->getData())) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
             } else {
                 $this->addFlashErrors($errors);
@@ -137,10 +130,6 @@ class SqlManagerController extends PrestaShopAdminController
 
     /**
      * Show Request SQL create page.
-     *
-     * @param Request $request
-     *
-     * @return Response|RedirectResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'You do not have permission to create this.', redirectRoute: 'admin_sql_requests_index')]
     public function createAction(
@@ -158,7 +147,7 @@ class SqlManagerController extends PrestaShopAdminController
         try {
             $result = $formHandler->handle($sqlRequestForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_sql_requests_index');
@@ -184,11 +173,6 @@ class SqlManagerController extends PrestaShopAdminController
 
     /**
      * Show Request SQL edit page.
-     *
-     * @param int $sqlRequestId
-     * @param Request $request
-     *
-     * @return Response|RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_sql_requests_index')]
@@ -235,8 +219,6 @@ class SqlManagerController extends PrestaShopAdminController
      * Delete selected Request SQL.
      *
      * @param int $sqlRequestId ID of selected Request SQL
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.', redirectRoute: 'admin_sql_requests_index')]
@@ -259,10 +241,6 @@ class SqlManagerController extends PrestaShopAdminController
 
     /**
      * Process bulk action delete of RequestSql's.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to delete this.', redirectRoute: 'admin_sql_requests_index')]
@@ -287,11 +265,6 @@ class SqlManagerController extends PrestaShopAdminController
 
     /**
      * View Request SQL query data.
-     *
-     * @param Request $request
-     * @param int $sqlRequestId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'You do not have permission to view this.', redirectRoute: 'admin_sql_requests_index')]
     public function viewAction(Request $request, int $sqlRequestId): Response
@@ -319,8 +292,6 @@ class SqlManagerController extends PrestaShopAdminController
      * Export Request SQL data.
      *
      * @param int $sqlRequestId Request SQL id
-     *
-     * @return RedirectResponse|BinaryFileResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_sql_requests_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_sql_requests_index')]
@@ -358,8 +329,6 @@ class SqlManagerController extends PrestaShopAdminController
      * Get MySQL table columns data.
      *
      * @param string $mySqlTableName Database table name
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_sql_requests_index')]
     public function ajaxTableColumnsAction(string $mySqlTableName): JsonResponse
@@ -376,10 +345,6 @@ class SqlManagerController extends PrestaShopAdminController
      * it adds "name" and "sql" to request's POST data
      * which is used as default form data
      * when creating SqlRequest.
-     *
-     * @param Request $request
-     *
-     * @return array
      */
     protected function getSqlRequestDataFromRequest(Request $request): array
     {
@@ -395,8 +360,6 @@ class SqlManagerController extends PrestaShopAdminController
 
     /**
      * Get human readable error for exception.
-     *
-     * @param SqlRequestException $e
      *
      * @return string Error message
      */
@@ -416,7 +379,7 @@ class SqlManagerController extends PrestaShopAdminController
             CannotDeleteSqlRequestException::CANNOT_BULK_DELETE => $this->trans('An error occurred while deleting this selection.', [], 'Admin.Notifications.Error'),
         ];
 
-        if (CannotDeleteSqlRequestException::class === $type
+        if ($type === CannotDeleteSqlRequestException::class
             && isset($deleteExceptionMessages[$code])
         ) {
             return $deleteExceptionMessages[$code];
@@ -427,10 +390,6 @@ class SqlManagerController extends PrestaShopAdminController
 
     /**
      * Get error message when exception occurs on View action.
-     *
-     * @param SqlRequestException $e
-     *
-     * @return string
      */
     protected function handleViewException(SqlRequestException $e): string
     {
@@ -448,7 +407,7 @@ class SqlManagerController extends PrestaShopAdminController
      *
      * @return string Error message
      */
-    protected function handleExportException(\Throwable $e): string
+    protected function handleExportException(Throwable $e): string
     {
         $type = $e::class;
 
@@ -464,8 +423,6 @@ class SqlManagerController extends PrestaShopAdminController
     }
 
     /**
-     * @param FileWritingException $e
-     *
      * @return string Error message
      */
     protected function handleApplicationExportException(FileWritingException $e): string
@@ -479,11 +436,6 @@ class SqlManagerController extends PrestaShopAdminController
         return $applicationErrors[$code] ?? $this->getErrorMessageForException($e);
     }
 
-    /**
-     * @param SqlRequestException $e
-     *
-     * @return string
-     */
     protected function handleDomainExportException(SqlRequestException $e): string
     {
         $type = $e::class;
@@ -508,8 +460,6 @@ class SqlManagerController extends PrestaShopAdminController
 
     /**
      * Get SQL Request IDs from request for bulk actions.
-     *
-     * @param Request $request
      *
      * @return int[]
      */

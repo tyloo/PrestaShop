@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,16 +43,16 @@ class DomainObjectDetector
     public function isDomainObject(mixed $objectOrType): bool
     {
         // Check the type if a string is provided
-        if (is_string($objectOrType) && class_exists($objectOrType)) {
+        if (\is_string($objectOrType) && class_exists($objectOrType)) {
             $objectClass = $objectOrType;
-        } elseif (is_object($objectOrType) && class_exists($objectOrType::class)) {
+        } elseif (\is_object($objectOrType) && class_exists($objectOrType::class)) {
             $objectClass = $objectOrType::class;
         } else {
             return false;
         }
 
         // CQRS classes are handled by our domain serializer
-        if (in_array($objectClass, $this->commandsAndQueries)) {
+        if (\in_array($objectClass, $this->commandsAndQueries, true)) {
             return true;
         }
 

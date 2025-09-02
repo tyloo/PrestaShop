@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ class ImageTypeRepository extends EntityRepository
     /**
      * Get an image type by its name.
      *
-     * @param string $typeName
-     *
      * @return ImageType|null return null if feature flag cannot be found
      */
     public function getByName(string $typeName): ?ImageType
@@ -47,10 +46,6 @@ class ImageTypeRepository extends EntityRepository
 
     /**
      * Save an image type into database.
-     *
-     * @param ImageType $imageType
-     *
-     * @return ImageType
      */
     public function save(ImageType $imageType): ImageType
     {
@@ -62,10 +57,6 @@ class ImageTypeRepository extends EntityRepository
 
     /**
      * Delete an image type into database.
-     *
-     * @param ImageType $imageType
-     *
-     * @return void
      */
     public function delete(ImageType $imageType): void
     {

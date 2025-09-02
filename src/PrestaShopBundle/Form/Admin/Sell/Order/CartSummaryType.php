@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,18 +40,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class CartSummaryType extends AbstractType
 {
-    /**
-     * @param FormChoiceProviderInterface $orderStatesChoiceProvider
-     * @param FormChoiceProviderInterface $paymentModulesChoiceProvider
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(private readonly FormChoiceProviderInterface $orderStatesChoiceProvider, private readonly FormChoiceProviderInterface $paymentModulesChoiceProvider, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly FormChoiceProviderInterface $orderStatesChoiceProvider,
+        private readonly FormChoiceProviderInterface $paymentModulesChoiceProvider,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -84,8 +80,6 @@ class CartSummaryType extends AbstractType
 
     /**
      * Gets payment module choices
-     *
-     * @return array
      */
     private function getPaymentModuleChoices(): array
     {

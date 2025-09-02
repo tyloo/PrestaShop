@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,11 +63,9 @@ class SecuredFileReaderController extends AbstractController
         'webp' => 'image/webp',
     ];
 
-    /**
-     * @param string $uploadDir
-     */
-    public function __construct(private readonly string $uploadDir)
-    {
+    public function __construct(
+        private readonly string $uploadDir,
+    ) {
     }
 
     /**
@@ -75,19 +74,20 @@ class SecuredFileReaderController extends AbstractController
     public function readUploadDocument(Request $request): Response
     {
         $fileName = basename($request->query->get('fileName'));
-        if (!$fileName) {
+        if (! $fileName) {
             throw new PrestaShopException('No file name specified');
         }
 
         $fileExtensions = explode('.', $fileName);
-        if (count($fileExtensions) > 2) {
+        if (\count($fileExtensions) > 2) {
             throw new PrestaShopException('Too many extensions for ' . $fileName);
-        } elseif (!array_key_exists($fileExtensions[1], self::allowedExtensions)) {
+        }
+        if (! \array_key_exists($fileExtensions[1], self::allowedExtensions)) {
             throw new PrestaShopException('Invalid extension for ' . $fileName);
         }
 
         // If file is not an image, the browser directly open it as attachment
-        if (!array_key_exists($fileExtensions[1], self::allowedImageExtensions)) {
+        if (! \array_key_exists($fileExtensions[1], self::allowedImageExtensions)) {
             $file = file_get_contents($this->uploadDir . $fileName);
             $response = new Response($file);
             $disposition = HeaderUtils::makeDisposition(

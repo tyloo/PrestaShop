@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,15 +47,14 @@ class CQRSApiValidator
 
     public function hasConstraints(string $resourceClass): bool
     {
-        if (!$this->validatorMetadataFactory->hasMetadataFor($resourceClass)) {
+        if (! $this->validatorMetadataFactory->hasMetadataFor($resourceClass)) {
             return false;
         }
 
         $resourceMetadata = $this->validatorMetadataFactory->getMetadataFor($resourceClass);
 
-        return
-            !empty($resourceMetadata->getConstraints())
-            || ($resourceMetadata instanceof ClassMetadataInterface && !empty($resourceMetadata->getConstrainedProperties()))
+        return ! empty($resourceMetadata->getConstraints())
+            || ($resourceMetadata instanceof ClassMetadataInterface && ! empty($resourceMetadata->getConstrainedProperties()))
         ;
     }
 

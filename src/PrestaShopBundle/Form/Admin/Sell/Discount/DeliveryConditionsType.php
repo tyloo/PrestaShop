@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,6 +39,7 @@ use Symfony\Component\Validator\Constraints\When;
 class DeliveryConditionsType extends TranslatorAwareType
 {
     public const CARRIERS = 'carriers';
+
     public const COUNTRY = 'country';
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -51,7 +53,7 @@ class DeliveryConditionsType extends TranslatorAwareType
                 ],
                 'constraints' => [
                     new When(
-                        expression: sprintf(
+                        expression: \sprintf(
                             'this.getParent().getParent().get("children_selector").getData() === "%s" && this.getParent().get("children_selector").getData() === "%s"',
                             DiscountConditionsType::DELIVERY_CONDITIONS,
                             self::CARRIERS
@@ -70,7 +72,7 @@ class DeliveryConditionsType extends TranslatorAwareType
                 ],
                 'constraints' => [
                     new When(
-                        expression: sprintf(
+                        expression: \sprintf(
                             'this.getParent().getParent().get("children_selector").getData() === "%s" && this.getParent().get("children_selector").getData() === "%s"',
                             DiscountConditionsType::DELIVERY_CONDITIONS,
                             self::COUNTRY

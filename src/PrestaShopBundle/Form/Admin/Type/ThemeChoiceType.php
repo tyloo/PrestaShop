@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ThemeChoiceType extends TranslatorAwareType
 {
     /**
-     * @param FormChoiceProviderInterface $themesChoiceProvider
-     * @param TranslatorInterface $translator
      * @param array<int, array<string, mixed>> $locales
      */
     public function __construct(
@@ -49,9 +48,6 @@ class ThemeChoiceType extends TranslatorAwareType
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -62,9 +58,6 @@ class ThemeChoiceType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): string
     {
         return ChoiceType::class;

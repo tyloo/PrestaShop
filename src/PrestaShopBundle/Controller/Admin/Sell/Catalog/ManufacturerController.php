@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -91,7 +92,7 @@ class ManufacturerController extends PrestaShopAdminController
         ManufacturerFilters $manufacturerFilters,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.manufacturer_address')]
         GridFactoryInterface $manufacturerAddressFactory,
-        ManufacturerAddressFilters $manufacturerAddressFilters
+        ManufacturerAddressFilters $manufacturerAddressFilters,
     ) {
         $manufacturerGrid = $manufacturerGridFactory->getGrid($manufacturerFilters);
         $manufacturerAddressGrid = $manufacturerAddressFactory->getGrid($manufacturerAddressFilters);
@@ -118,7 +119,7 @@ class ManufacturerController extends PrestaShopAdminController
         GridDefinitionFactoryInterface $manufacturerGridDefinitionFactory,
         #[Autowire(service: 'prestashop.core.grid.definition.factory.manufacturer_address')]
         GridDefinitionFactoryInterface $manufacturerAddressGridDefinitionFactory,
-        ResponseBuilder $responseBuilder
+        ResponseBuilder $responseBuilder,
     ) {
         $gridDefinitionFactory = $manufacturerGridDefinitionFactory;
         $filterId = ManufacturerGridDefinitionFactory::GRID_ID;
@@ -137,8 +138,6 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Show & process manufacturer creation.
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
@@ -146,7 +145,7 @@ class ManufacturerController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.manufacturer_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.manufacturer_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         $manufacturerForm = $formBuilder->getForm();
         $manufacturerForm->handleRequest($request);
@@ -154,7 +153,7 @@ class ManufacturerController extends PrestaShopAdminController
         try {
             $result = $formHandler->handle($manufacturerForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_manufacturers_index');
@@ -173,10 +172,6 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * View single manufacturer details
-     *
-     * @param int $manufacturerId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function viewAction(
@@ -214,10 +209,6 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Show & process manufacturer editing.
-     *
-     * @param int $manufacturerId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
     public function editAction(
@@ -226,7 +217,7 @@ class ManufacturerController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.manufacturer_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.manufacturer_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         try {
             /** @var EditableManufacturer $editableManufacturer */
@@ -250,7 +241,7 @@ class ManufacturerController extends PrestaShopAdminController
             }
         }
 
-        if (!isset($editableManufacturer) || !isset($manufacturerForm)) {
+        if (! isset($editableManufacturer) || ! isset($manufacturerForm)) {
             return $this->redirectToRoute('admin_manufacturers_index');
         }
 
@@ -383,7 +374,7 @@ class ManufacturerController extends PrestaShopAdminController
             /** @var EditableManufacturer $editableManufacturer */
             $editableManufacturer = $this->dispatchQuery(new GetManufacturerForEditing((int) $manufacturerId));
             $this->dispatchCommand(
-                new ToggleManufacturerStatusCommand((int) $manufacturerId, !$editableManufacturer->isEnabled())
+                new ToggleManufacturerStatusCommand((int) $manufacturerId, ! $editableManufacturer->isEnabled())
             );
             $this->addFlash(
                 'success',
@@ -398,15 +389,13 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Export filtered manufacturers.
-     *
-     * @return Response
      */
     #[DemoRestricted(redirectRoute: 'admin_manufacturers_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
     public function exportAction(
         ManufacturerFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.manufacturer')]
-        GridFactoryInterface $manufacturersGridFactory
+        GridFactoryInterface $manufacturersGridFactory,
     ): Response {
         $filters = new ManufacturerFilters(['limit' => null] + $filters->all());
         $manufacturersGrid = $manufacturersGridFactory->getGrid($filters);
@@ -442,11 +431,6 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Deletes manufacturer logo image.
-     *
-     * @param Request $request
-     * @param int $manufacturerId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectQueryParamsToKeep: ['manufacturerId'], redirectRoute: 'admin_manufacturers_edit')]
     public function deleteLogoImageAction(Request $request, int $manufacturerId): RedirectResponse
@@ -468,8 +452,6 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Deletes address
-     *
-     * @param int $addressId
      *
      * @return RedirectResponse
      */
@@ -500,7 +482,7 @@ class ManufacturerController extends PrestaShopAdminController
     public function exportAddressAction(
         ManufacturerAddressFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.manufacturer_address')]
-        GridFactoryInterface $addressesGridFactory
+        GridFactoryInterface $addressesGridFactory,
     ) {
         $addressesGrid = $addressesGridFactory->getGrid($filters);
 
@@ -561,8 +543,6 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Show & process address creation.
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAddressAction(
@@ -570,7 +550,7 @@ class ManufacturerController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.manufacturer_address_form_builder')]
         FormBuilderInterface $addressFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.manufacturer_address_form_handler')]
-        FormHandlerInterface $addressFormHandler
+        FormHandlerInterface $addressFormHandler,
     ): Response {
         $formData = [];
         if ($request->request->has('manufacturer_address') && isset($request->request->all('manufacturer_address')['id_country'])) {
@@ -584,7 +564,7 @@ class ManufacturerController extends PrestaShopAdminController
         try {
             $result = $addressFormHandler->handle($addressForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_manufacturers_index');
@@ -606,10 +586,6 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Show & process address editing.
-     *
-     * @param int $addressId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
     public function editAddressAction(
@@ -618,7 +594,7 @@ class ManufacturerController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.manufacturer_address_form_builder')]
         FormBuilderInterface $addressFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.manufacturer_address_form_handler')]
-        FormHandlerInterface $addressFormHandler
+        FormHandlerInterface $addressFormHandler,
     ): Response {
         $formData = [];
         if ($request->request->has('manufacturer_address') && isset($request->request->all('manufacturer_address')['id_country'])) {
@@ -647,7 +623,7 @@ class ManufacturerController extends PrestaShopAdminController
             }
         }
 
-        if (!isset($editableAddress) || !isset($addressForm)) {
+        if (! isset($editableAddress) || ! isset($addressForm)) {
             return $this->redirectToRoute('admin_manufacturers_index');
         }
 
@@ -661,8 +637,6 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Provides error messages for exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -782,16 +756,13 @@ class ManufacturerController extends PrestaShopAdminController
         return $addressIds;
     }
 
-    /**
-     * @return string|null
-     */
     private function getSettingsTipMessage(): ?string
     {
         if ($this->getConfiguration()->get('PS_DISPLAY_MANUFACTURERS')) {
             return null;
         }
 
-        $urlOpening = sprintf('<a href="%s">', $this->generateUrl('admin_preferences'));
+        $urlOpening = \sprintf('<a href="%s">', $this->generateUrl('admin_preferences'));
         $urlEnding = '</a>';
 
         return $this->trans(
@@ -801,9 +772,6 @@ class ManufacturerController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @return array
-     */
     private function getManufacturerIndexToolbarButtons(): array
     {
         $toolbarButtons = [];
@@ -823,11 +791,6 @@ class ManufacturerController extends PrestaShopAdminController
         return $toolbarButtons;
     }
 
-    /**
-     * @param int $manufacturerId
-     *
-     * @return array
-     */
     private function getManufacturerViewToolbarButtons(int $manufacturerId): array
     {
         $toolbarButtons = [];

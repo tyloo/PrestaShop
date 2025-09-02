@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class GeolocationIpAddressWhitelistType extends TranslatorAwareType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -57,8 +55,8 @@ class GeolocationIpAddressWhitelistType extends TranslatorAwareType
 
         $builder->get('geolocation_whitelist')
             ->addModelTransformer(new CallbackTransformer(
-                fn($ipWhitelistTextWithSemiColons) => str_replace(';', "\n", $ipWhitelistTextWithSemiColons),
-                fn($ipWhitelistTextWithNewLines) => str_replace(["\r\n", "\r", "\n"], ';', $ipWhitelistTextWithNewLines)
+                fn ($ipWhitelistTextWithSemiColons) => str_replace(';', "\n", $ipWhitelistTextWithSemiColons),
+                fn ($ipWhitelistTextWithNewLines) => str_replace(["\r\n", "\r", "\n"], ';', $ipWhitelistTextWithNewLines)
             ));
     }
 }

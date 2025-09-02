@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CategoryType extends AbstractCategoryType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -50,7 +48,7 @@ class CategoryType extends AbstractCategoryType
             $options['subcategories']
         );
 
-        if (null !== $options['id_category']) {
+        if ($options['id_category'] !== null) {
             // when using CategoryType to edit category
             // user should not be able to select that category as parent
             $disabledCategories[] = $options['id_category'];
@@ -64,9 +62,6 @@ class CategoryType extends AbstractCategoryType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

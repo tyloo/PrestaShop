@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,41 +67,29 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
         /**
          * @var ModuleProvider Module provider
          */
-        private readonly ModuleProvider $moduleProvider
+        private readonly ModuleProvider $moduleProvider,
     ) {
         parent::__construct($databaseLoader, $resourceDirectory);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return ['#^' . preg_quote($this->domain) . '([A-Z]|$)#'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTranslationDomains(): array
     {
         return ['^' . preg_quote($this->domain) . '([A-Z]|$)'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return 'external_legacy_module';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setModuleName($moduleName)
     {
-        if (null === $this->moduleName || empty($this->moduleName)) {
+        if ($this->moduleName === null || empty($this->moduleName)) {
             UnsupportedModuleException::moduleNotProvided(self::getIdentifier());
         }
 
@@ -122,9 +111,6 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
         throw new InvalidArgumentException(self::class . ' does not allow calls to setDomain()');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultCatalogue($empty = true)
     {
         $defaultCatalogue = $this->getCachedDefaultCatalogue();
@@ -136,9 +122,6 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
         return $defaultCatalogue;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXliffCatalogue()
     {
         try {
@@ -154,20 +137,27 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
         return $translationCatalogue;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultResourceDirectory(): string
     {
-        return $this->resourceDirectory . DIRECTORY_SEPARATOR . $this->moduleName . DIRECTORY_SEPARATOR . 'translations' . DIRECTORY_SEPARATOR;
+        return $this->resourceDirectory . \DIRECTORY_SEPARATOR . $this->moduleName . \DIRECTORY_SEPARATOR . 'translations' . \DIRECTORY_SEPARATOR;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getResourceDirectory(): string
     {
         return $this->getDefaultResourceDirectory();
+    }
+
+    public function getMessageCatalogue()
+    {
+        $messageCatalogue = $this->getDefaultCatalogue();
+
+        $translatedCatalogue = $this->buildTranslationCatalogueFromLegacyFiles();
+        $messageCatalogue->addCatalogue($translatedCatalogue);
+
+        $databaseCatalogue = $this->getDatabaseCatalogue();
+        $messageCatalogue->addCatalogue($databaseCatalogue);
+
+        return $messageCatalogue;
     }
 
     /**
@@ -215,28 +205,8 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getMessageCatalogue()
-    {
-        $messageCatalogue = $this->getDefaultCatalogue();
-
-        $translatedCatalogue = $this->buildTranslationCatalogueFromLegacyFiles();
-        $messageCatalogue->addCatalogue($translatedCatalogue);
-
-        $databaseCatalogue = $this->getDatabaseCatalogue();
-        $messageCatalogue->addCatalogue($databaseCatalogue);
-
-        return $messageCatalogue;
-    }
-
-    /**
      * Replaces dots in the catalogue's domain names
      * and filters out domains not corresponding to the one from this module
-     *
-     * @param MessageCatalogueInterface $catalogue
-     *
-     * @return MessageCatalogue
      */
     private function filterDomains(MessageCatalogueInterface $catalogue): MessageCatalogue
     {
@@ -304,7 +274,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
     {
         $catalogueCacheKey = $this->moduleName . '|' . $this->locale;
 
-        if (!isset($this->defaultCatalogueCache[$catalogueCacheKey])) {
+        if (! isset($this->defaultCatalogueCache[$catalogueCacheKey])) {
             $this->defaultCatalogueCache[$catalogueCacheKey] = $this->buildFreshDefaultCatalogue();
         }
 

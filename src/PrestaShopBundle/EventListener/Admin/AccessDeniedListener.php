@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,8 +59,8 @@ class AccessDeniedListener
 
     public function onKernelException(ExceptionEvent $event): void
     {
-        if (!$event->isMainRequest()
-            || (!$event->getThrowable() instanceof AccessDeniedException && !$event->getThrowable() instanceof AccessDeniedHttpException)
+        if (! $event->isMainRequest()
+            || (! $event->getThrowable() instanceof AccessDeniedException && ! $event->getThrowable() instanceof AccessDeniedHttpException)
         ) {
             return;
         }
@@ -68,7 +69,7 @@ class AccessDeniedListener
 
         [$controller, $method] = explode('::', (string) $controllerName, 2);
 
-        if (empty($controller) || !class_exists($controller) || !method_exists($controller, $method)) {
+        if (empty($controller) || ! class_exists($controller) || ! method_exists($controller, $method)) {
             return;
         }
 
@@ -76,7 +77,7 @@ class AccessDeniedListener
 
         $attributes = $reflectionMethod->getAttributes(AdminSecurityAttribute::class);
 
-        if (!empty($attributes)) {
+        if (! empty($attributes)) {
             $this->handleAttributes($attributes, $event);
 
             return;
@@ -86,7 +87,7 @@ class AccessDeniedListener
 
         $attributes = $reflectionClass->getAttributes(AdminSecurityAttribute::class);
 
-        if (!empty($attributes)) {
+        if (! empty($attributes)) {
             $this->handleAttributes($attributes, $event);
 
             return;
@@ -95,12 +96,28 @@ class AccessDeniedListener
         // annotation management
         $annotation = $this->annotationReader->getMethodAnnotation($reflectionMethod, AdminSecurityAnnotation::class);
 
-        if ($annotation != null) {
+        if ($annotation !== null) {
             $event->allowCustomResponseCode();
 
             $event->setResponse(
                 $this->getAccessDeniedResponse($event->getRequest(), $annotation)
             );
+        }
+    }
+
+    public function handleAttributes(array $attributes, ExceptionEvent $event): void
+    {
+        foreach ($attributes as $attribute) {
+            /** @var AdminSecurityAttribute $adminSecurity */
+            $adminSecurity = $attribute->newInstance();
+            if ($adminSecurity->getRedirectRoute() !== null || $event->getRequest()->isXmlHttpRequest() || $adminSecurity->hasJSONResponse()) {
+                $event->allowCustomResponseCode();
+
+                $event->setResponse(
+                    $this->getAccessDeniedResponse($event->getRequest(), $adminSecurity)
+                );
+                break;
+            }
         }
     }
 
@@ -149,7 +166,7 @@ class AccessDeniedListener
 
         foreach ($queryParametersToKeep as $queryParameterName) {
             $value = $request->get($queryParameterName);
-            if (null !== $value) {
+            if ($value !== null) {
                 $result[$queryParameterName] = $value;
             }
         }
@@ -164,21 +181,5 @@ class AccessDeniedListener
             [],
             $adminSecurity->getDomain()
         );
-    }
-
-    public function handleAttributes(array $attributes, ExceptionEvent $event): void
-    {
-        foreach ($attributes as $attribute) {
-            /** @var AdminSecurityAttribute $adminSecurity */
-            $adminSecurity = $attribute->newInstance();
-            if (null != $adminSecurity->getRedirectRoute() || $event->getRequest()->isXmlHttpRequest() || $adminSecurity->hasJSONResponse()) {
-                $event->allowCustomResponseCode();
-
-                $event->setResponse(
-                    $this->getAccessDeniedResponse($event->getRequest(), $adminSecurity)
-                );
-                break;
-            }
-        }
     }
 }

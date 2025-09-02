@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -130,7 +131,7 @@ class BackupController extends PrestaShopAdminController
         if ($backupForm->isSubmitted()) {
             $errors = $backupFormHandler->save($backupForm->getData());
 
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 $this->addFlashErrors($errors);
             } else {
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
@@ -182,10 +183,10 @@ class BackupController extends PrestaShopAdminController
     ): RedirectResponse {
         $backup = new Backup($deleteFileName);
 
-        if (!$backupRemover->remove($backup)) {
+        if (! $backupRemover->remove($backup)) {
             $this->addFlash(
                 'error',
-                sprintf(
+                \sprintf(
                     '%s "%s"',
                     $this->trans('Error deleting', [], 'Admin.Advparameters.Notification'),
                     $backup->getFileName()
@@ -221,12 +222,12 @@ class BackupController extends PrestaShopAdminController
         foreach ($backupsToDelete as $backupFileName) {
             $backup = new Backup($backupFileName);
 
-            if (!$backupRemover->remove($backup)) {
+            if (! $backupRemover->remove($backup)) {
                 $failedBackups[] = $backup->getFileName();
             }
         }
 
-        if (!empty($failedBackups)) {
+        if (! empty($failedBackups)) {
             $this->addFlash(
                 'error',
                 $this->trans('An error occurred while deleting this selection.', [], 'Admin.Notifications.Error')

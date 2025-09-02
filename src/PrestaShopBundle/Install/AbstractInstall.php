@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,7 +59,7 @@ abstract class AbstractInstall
 
     public function setError($errors): void
     {
-        if (!is_array($errors)) {
+        if (! \is_array($errors)) {
             $errors = [$errors];
         }
 
@@ -87,16 +88,13 @@ abstract class AbstractInstall
      */
     public function getLogger(): PrestaShopLoggerInterface
     {
-        if (null === $this->logger) {
+        if ($this->logger === null) {
             $this->logger = new NullLogger();
         }
 
         return $this->logger;
     }
 
-    /**
-     * @param PrestaShopLoggerInterface $logger
-     */
     public function setLogger(PrestaShopLoggerInterface $logger): void
     {
         $this->logger = $logger;

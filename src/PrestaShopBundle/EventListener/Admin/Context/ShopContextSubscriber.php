@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -105,7 +106,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
     public function initDefaultShopContext(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
@@ -120,7 +121,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
      */
     public function initShopContext(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
@@ -139,12 +140,12 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
         // If not shop constraint was definable it means the employee may not be logged in In any case we have no info to setup the
         // shop context more accurately so we do nothing
-        if (!$shopConstraint) {
+        if (! $shopConstraint) {
             return;
         }
 
         // If the employee is currently on a shop context he is not allowed to, they are redirected to their default shop
-        if ($this->employeeContext->getDefaultShopId() && !$this->isAuthorizedByShopConstraint($shopConstraint)) {
+        if ($this->employeeContext->getDefaultShopId() && ! $this->isAuthorizedByShopConstraint($shopConstraint)) {
             $this->addFlashErrorMessage($shopConstraint, $event);
             if ($event->getRequest()->hasSession() && $event->getRequest()->getSession() instanceof FlashBagAwareSessionInterface) {
                 $event->getRequest()->getSession()->getFlashBag()->add('info', $this->translator->trans(
@@ -191,9 +192,6 @@ class ShopContextSubscriber implements EventSubscriberInterface
         return ShopConstraint::shop($this->getConfiguredDefaultShopId());
     }
 
-    /**
-     * @return ShopConstraint|null
-     */
     private function getLegacyMultiShopConstraint(Request $request): ?ShopConstraint
     {
         $multishopContext = $request->attributes->get(LegacyControllerConstants::MULTISHOP_CONTEXT_ATTRIBUTE);
@@ -221,12 +219,10 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
     /**
      * Get shop context from the token attribute.
-     *
-     * @return ShopConstraint|null
      */
     private function getShopConstraintFromTokenAttribute(): ?ShopConstraint
     {
-        if (!$this->security->getToken() || !$this->security->getToken()->hasAttribute(TokenAttributes::SHOP_CONSTRAINT)) {
+        if (! $this->security->getToken() || ! $this->security->getToken()->hasAttribute(TokenAttributes::SHOP_CONSTRAINT)) {
             return null;
         }
 
@@ -240,17 +236,15 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
     /**
      * Update token attribute value and redirect to current url to refresh the context.
-     *
-     * @param RequestEvent $requestEvent
      */
     private function redirectShopContext(RequestEvent $requestEvent): ?RedirectResponse
     {
-        if (!$this->multistoreFeature->isUsed()) {
+        if (! $this->multistoreFeature->isUsed()) {
             return null;
         }
 
         $shopContextUrlParameter = $requestEvent->getRequest()->get('setShopContext', null);
-        if (null === $shopContextUrlParameter) {
+        if ($shopContextUrlParameter === null) {
             return null;
         }
 
@@ -258,11 +252,11 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
         // If the requested shop constraint is the current one nothing to change
         $tokenShopConstraint = $this->getShopConstraintFromTokenAttribute();
-        if (null !== $tokenShopConstraint && $parameterShopConstraint->isEqual($tokenShopConstraint)) {
+        if ($tokenShopConstraint !== null && $parameterShopConstraint->isEqual($tokenShopConstraint)) {
             return null;
         }
 
-        if (!$this->isAuthorizedByShopConstraint($parameterShopConstraint)) {
+        if (! $this->isAuthorizedByShopConstraint($parameterShopConstraint)) {
             $this->addFlashErrorMessage($parameterShopConstraint, $requestEvent);
             $updatedShopConstraint = $tokenShopConstraint;
         } else {
@@ -344,13 +338,14 @@ class ShopContextSubscriber implements EventSubscriberInterface
         }
 
         $splitShopContext = explode('-', $parameter);
-        if (count($splitShopContext) == 2) {
+        if (\count($splitShopContext) === 2) {
             $splitShopType = $splitShopContext[0];
             $splitShopValue = (int) $splitShopContext[1];
-            if (!empty($splitShopValue) && !empty($splitShopType)) {
-                if ($splitShopType == 'g') {
+            if (! empty($splitShopValue) && ! empty($splitShopType)) {
+                if ($splitShopType === 'g') {
                     return ShopConstraint::shopGroup($splitShopValue);
-                } elseif ($splitShopType == 's') {
+                }
+                if ($splitShopType === 's') {
                     return ShopConstraint::shop($splitShopValue);
                 }
             }
@@ -371,11 +366,11 @@ class ShopContextSubscriber implements EventSubscriberInterface
             $methodAttributes = $reflectionClass->getMethod($methodName)->getAttributes(AllShopContext::class);
 
             $attributes = array_merge($classAttributes, $methodAttributes);
-            if (!empty($attributes)) {
+            if (! empty($attributes)) {
                 return ShopConstraint::allShops();
-            } else {
-                return null;
             }
+
+            return null;
         } catch (NoConfigurationException|ReflectionException) {
             return null;
         }

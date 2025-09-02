@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,11 +54,6 @@ class AttributeGroupController extends PrestaShopAdminController
 {
     /**
      * Displays Attribute groups page
-     *
-     * @param Request $request
-     * @param AttributeGroupFilters $attributeGroupFilters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -82,18 +78,13 @@ class AttributeGroupController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", message: 'You do not have permission to create this.')]
     public function createAction(
         Request $request,
         #[Autowire(service: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Builder\AttributeGroupFormBuilder')]
         FormBuilderInterface $attributeGroupFormBuilder,
         #[Autowire(service: 'PrestaShop\PrestaShop\Core\Form\IdentifiableObject\Handler\AttributeGroupFormHandler')]
-        FormHandlerInterface $attributeFormHandler
+        FormHandlerInterface $attributeFormHandler,
     ): Response {
         $attributeGroupForm = $attributeGroupFormBuilder->getForm();
         $attributeGroupForm->handleRequest($request);
@@ -101,7 +92,7 @@ class AttributeGroupController extends PrestaShopAdminController
         try {
             $handlerResult = $attributeFormHandler->handle($attributeGroupForm);
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_attribute_groups_index');
@@ -119,11 +110,6 @@ class AttributeGroupController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @param int $attributeGroupId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.')]
     public function editAction(
         Request $request,
@@ -140,7 +126,7 @@ class AttributeGroupController extends PrestaShopAdminController
         try {
             $handlerResult = $attributeFormHandler->handleFor($attributeGroupId, $attributeGroupForm);
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_attribute_groups_index');
@@ -166,16 +152,11 @@ class AttributeGroupController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @param AttributeGroupFilters $filters
-     *
-     * @return CsvResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'You do not have permission to export this.')]
     public function exportAction(
         AttributeGroupFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.factory.attribute_group')]
-        GridFactoryInterface $attributeGroupGridFactory
+        GridFactoryInterface $attributeGroupGridFactory,
     ): CsvResponse {
         $filters = new AttributeGroupFilters(['limit' => null] + $filters->all());
         $attributeGroupGrid = $attributeGroupGridFactory->getGrid($filters);
@@ -204,16 +185,12 @@ class AttributeGroupController extends PrestaShopAdminController
 
     /**
      * Updates attribute groups positioning order
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_attribute_groups_index')]
     public function updatePositionAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.attribute_group.position_definition')]
-        PositionDefinition $positionDefinition
+        PositionDefinition $positionDefinition,
     ): RedirectResponse {
         $positionsData = [
             'positions' => $request->request->all('positions'),
@@ -258,16 +235,16 @@ class AttributeGroupController extends PrestaShopAdminController
     /**
      * Deletes multiple attribute groups by provided ids from request
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_attribute_groups_index')]
     public function bulkDeleteAction(Request $request)
     {
         try {
-            $this->dispatchCommand(new BulkDeleteAttributeGroupCommand(
-                $this->getAttributeGroupIdsFromRequest($request))
+            $this->dispatchCommand(
+                new BulkDeleteAttributeGroupCommand(
+                    $this->getAttributeGroupIdsFromRequest($request)
+                )
             );
             $this->addFlash(
                 'success',
@@ -281,8 +258,6 @@ class AttributeGroupController extends PrestaShopAdminController
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     private function getAttributeGroupIdsFromRequest(Request $request)
@@ -298,8 +273,6 @@ class AttributeGroupController extends PrestaShopAdminController
 
     /**
      * Provides translated error messages for exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -317,7 +290,7 @@ class AttributeGroupController extends PrestaShopAdminController
                 ),
                 AttributeGroupConstraintException::INVALID_NAME => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Name', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('Name', [], 'Admin.Global'))],
                     'Admin.Notifications.Error'
                 ),
                 AttributeGroupConstraintException::EMPTY_PUBLIC_NAME => $this->trans(
@@ -327,7 +300,7 @@ class AttributeGroupController extends PrestaShopAdminController
                 ),
                 AttributeGroupConstraintException::INVALID_PUBLIC_NAME => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Public name', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('Public name', [], 'Admin.Global'))],
                     'Admin.Notifications.Error'
                 ),
             ],

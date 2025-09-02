@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,12 +38,9 @@ final class GridDefinitionServiceIdsCollectorPass implements CompilerPassInterfa
 {
     public const GRID_DEFINITION_SERVICE_PREFIX = 'prestashop.core.grid.definition';
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
-        if (!in_array($container->getParameter('kernel.environment'), ['dev', 'test'])) {
+        if (! \in_array($container->getParameter('kernel.environment'), ['dev', 'test'], true)) {
             return;
         }
 
@@ -70,8 +68,6 @@ final class GridDefinitionServiceIdsCollectorPass implements CompilerPassInterfa
      *
      * @param string $serviceId
      * @param string $serviceClass
-     *
-     * @return bool
      */
     private function isGridDefinitionService($serviceId, $serviceClass): bool
     {

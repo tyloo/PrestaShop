@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslatableChoiceType extends TranslatableType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
@@ -45,9 +43,6 @@ class TranslatableChoiceType extends TranslatableType
         $view->vars['button'] = $options['button'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -63,9 +58,6 @@ class TranslatableChoiceType extends TranslatableType
         parent::configureOptions($resolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'translatable_choice';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -83,8 +84,6 @@ class LegacyAdminTokenValidator
     /**
      * We manually build the CsrfTokenManager so that it matches the configuration of the on used in the back-office. This way
      * the token storage has the same info and is able to validate the token based on the admin saved token.
-     *
-     * @return CsrfTokenManager
      */
     private function buildCsrfTokenManager(): CsrfTokenManager
     {
@@ -99,7 +98,7 @@ class LegacyAdminTokenValidator
 
     private function getEmployeeId(?int $employeeId): ?int
     {
-        if (!empty($employeeId)) {
+        if (! empty($employeeId)) {
             return $employeeId;
         }
 
@@ -108,17 +107,17 @@ class LegacyAdminTokenValidator
 
     private function getAdminToken(?string $adminToken): ?string
     {
-        if (!empty($adminToken)) {
+        if (! empty($adminToken)) {
             return $adminToken;
         }
 
         // Legacy admin token is passed via token parameter
         $token = $this->requestStack->getMainRequest()->get('token', null);
-        if (null === $token) {
+        if ($token === null) {
             // Symfony CSRF token is passed via _token parameter
             $token = $this->requestStack->getMainRequest()->get('_token', null);
         }
-        if (null === $token) {
+        if ($token === null) {
             // Frontend token (used for preview mode mostly) is passed via adtoken parameter
             $token = $this->requestStack->getMainRequest()->get('adtoken', null);
         }

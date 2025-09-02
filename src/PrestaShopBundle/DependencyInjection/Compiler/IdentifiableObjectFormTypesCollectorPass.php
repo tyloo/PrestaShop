@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,16 +38,16 @@ use Symfony\Component\Form\FormTypeInterface;
 class IdentifiableObjectFormTypesCollectorPass implements CompilerPassInterface
 {
     public const IDENTIFIABLE_OBJECT_SERVICE_NAME_START_WITH = 'prestashop.core.form.identifiable_object.builder';
+
     public const ALTERNATIVE_IDENTIFIABLE_OBJECT_SERVICE_STARTS_WITH = 'prestashop.core.form.builder';
+
     public const GRID_DEFINITION_SERVICE_STARTS_WITH = 'prestashop.core.grid.definition';
+
     public const FORM_TYPE_POSITION_IN_CONSTRUCTOR_OF_FORM_BUILDER = 0;
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
-        if (!in_array($container->getParameter('kernel.environment'), ['dev', 'test'])) {
+        if (! \in_array($container->getParameter('kernel.environment'), ['dev', 'test'], true)) {
             return;
         }
 
@@ -58,13 +59,13 @@ class IdentifiableObjectFormTypesCollectorPass implements CompilerPassInterface
                 continue;
             }
 
-            if (!$this->isIdentifiableObjectFormBuilderService($serviceId, $serviceDefinition->getClass())) {
+            if (! $this->isIdentifiableObjectFormBuilderService($serviceId, $serviceDefinition->getClass())) {
                 continue;
             }
 
             $formType = $serviceDefinition->getArgument(self::FORM_TYPE_POSITION_IN_CONSTRUCTOR_OF_FORM_BUILDER);
 
-            if (!is_string($formType) || !is_subclass_of($formType, FormTypeInterface::class)) {
+            if (! \is_string($formType) || ! is_subclass_of($formType, FormTypeInterface::class)) {
                 continue;
             }
 
@@ -82,8 +83,6 @@ class IdentifiableObjectFormTypesCollectorPass implements CompilerPassInterface
      *
      * @param string $serviceId
      * @param string $serviceClass
-     *
-     * @return bool
      */
     private function isIdentifiableObjectFormBuilderService($serviceId, $serviceClass): bool
     {

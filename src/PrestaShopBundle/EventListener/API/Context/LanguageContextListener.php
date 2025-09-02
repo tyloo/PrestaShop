@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,13 +43,13 @@ class LanguageContextListener
     public function __construct(
         private readonly LanguageContextBuilder $languageContextBuilder,
         private readonly ShopConfigurationInterface $configuration,
-        private readonly ShopContext $shopContext
+        private readonly ShopContext $shopContext,
     ) {
     }
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 

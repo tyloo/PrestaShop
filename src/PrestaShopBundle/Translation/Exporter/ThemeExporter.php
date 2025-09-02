@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,11 +41,6 @@ use Symfony\Component\Translation\MessageCatalogue;
 class ThemeExporter
 {
     /**
-     * @var ThemeProvider the theme provider
-     */
-    private readonly ThemeProvider $themeProvider;
-
-    /**
      * @var string the cache directory path
      */
     public $cacheDir;
@@ -53,6 +49,11 @@ class ThemeExporter
      * @var string the export directory path
      */
     public $exportDir;
+
+    /**
+     * @var ThemeProvider the theme provider
+     */
+    private readonly ThemeProvider $themeProvider;
 
     public function __construct(
         /**
@@ -75,7 +76,7 @@ class ThemeExporter
         /**
          * @var Filesystem the Filesystem
          */
-        private readonly Filesystem $filesystem
+        private readonly Filesystem $filesystem,
     ) {
         $this->themeExtractor
             ->setThemeProvider($themeProvider);
@@ -86,9 +87,7 @@ class ThemeExporter
     /**
      * @param string $themeName
      * @param string $locale
-     * @param bool $rootDir
-     *
-     * @return string
+     * @param bool   $rootDir
      */
     public function createZipArchive($themeName, $locale, $rootDir = false): string
     {
@@ -102,9 +101,7 @@ class ThemeExporter
     /**
      * @param string $themeName
      * @param string $locale
-     * @param bool $rootDir
-     *
-     * @return string
+     * @param bool   $rootDir
      */
     public function exportCatalogues($themeName, $locale, $rootDir = false): string
     {
@@ -152,7 +149,16 @@ class ThemeExporter
      */
     public function setExportDir($exportDir): void
     {
-        $this->exportDir = str_replace('/export', DIRECTORY_SEPARATOR . 'export', $exportDir);
+        $this->exportDir = str_replace('/export', \DIRECTORY_SEPARATOR . 'export', $exportDir);
+    }
+
+    /**
+     * @param string $themeName
+     */
+    public function cleanArtifacts($themeName): void
+    {
+        $this->filesystem->remove($this->getFlattenizationFolder($themeName));
+        $this->filesystem->remove($this->getTemporaryExtractionFolder($themeName));
     }
 
     /**
@@ -164,13 +170,13 @@ class ThemeExporter
      */
     protected function ensureFileBelongsToExportDirectory($filePath)
     {
-        if (!$this->filesystem->exists($filePath)) {
+        if (! $this->filesystem->exists($filePath)) {
             return false;
         }
 
         $validFileLocation = str_starts_with(realpath($filePath), realpath($this->exportDir));
 
-        if (!$validFileLocation) {
+        if (! $validFileLocation) {
             throw new Exception('Invalid file location. This file should belong to the export directory');
         }
 
@@ -180,7 +186,7 @@ class ThemeExporter
     /**
      * @param string $themeName
      * @param string $locale
-     * @param bool $rootDir
+     * @param bool   $rootDir
      *
      * @return MessageCatalogue
      */
@@ -200,7 +206,7 @@ class ThemeExporter
             ->setOutputPath($tmpFolderPath)
             ->extract($theme, $locale, $rootDir);
 
-        Flattenizer::flatten($tmpFolderPath . DIRECTORY_SEPARATOR . $locale, $folderPath . DIRECTORY_SEPARATOR . $locale, $locale);
+        Flattenizer::flatten($tmpFolderPath . \DIRECTORY_SEPARATOR . $locale, $folderPath . \DIRECTORY_SEPARATOR . $locale, $locale);
 
         return $this->themeProvider->getCatalogueFromPaths([$folderPath], $locale, '*');
     }
@@ -213,70 +219,53 @@ class ThemeExporter
     {
         $finder = Finder::create();
 
-        foreach ($finder->in($archiveParentDirectory . DIRECTORY_SEPARATOR . $locale)->files() as $file) {
-            $parentDirectoryParts = explode(DIRECTORY_SEPARATOR, dirname($file));
+        foreach ($finder->in($archiveParentDirectory . \DIRECTORY_SEPARATOR . $locale)->files() as $file) {
+            $parentDirectoryParts = explode(\DIRECTORY_SEPARATOR, \dirname($file));
             $destinationFilenameParts = [
                 $archiveParentDirectory,
-                $parentDirectoryParts[count($parentDirectoryParts) - 1] . '.' . $locale . '.xlf',
+                $parentDirectoryParts[\count($parentDirectoryParts) - 1] . '.' . $locale . '.xlf',
             ];
-            $destinationFilename = implode(DIRECTORY_SEPARATOR, $destinationFilenameParts);
+            $destinationFilename = implode(\DIRECTORY_SEPARATOR, $destinationFilenameParts);
             if ($this->filesystem->exists($destinationFilename)) {
                 $this->filesystem->remove($destinationFilename);
             }
             $this->filesystem->rename($file->getPathname(), $destinationFilename);
         }
 
-        $this->filesystem->remove($archiveParentDirectory . DIRECTORY_SEPARATOR . $locale);
+        $this->filesystem->remove($archiveParentDirectory . \DIRECTORY_SEPARATOR . $locale);
     }
 
     /**
      * @param string $themeName
-     */
-    public function cleanArtifacts($themeName): void
-    {
-        $this->filesystem->remove($this->getFlattenizationFolder($themeName));
-        $this->filesystem->remove($this->getTemporaryExtractionFolder($themeName));
-    }
-
-    /**
-     * @param string $themeName
-     *
-     * @return string
      */
     protected function getTemporaryExtractionFolder($themeName): string
     {
-        return $this->cacheDir . DIRECTORY_SEPARATOR . $themeName . '-tmp';
+        return $this->cacheDir . \DIRECTORY_SEPARATOR . $themeName . '-tmp';
     }
 
     /**
      * @param string $themeName
-     *
-     * @return string
      */
     protected function getFlattenizationFolder($themeName): string
     {
-        return $this->cacheDir . DIRECTORY_SEPARATOR . $themeName;
+        return $this->cacheDir . \DIRECTORY_SEPARATOR . $themeName;
     }
 
     /**
      * @param string $themeName
-     *
-     * @return string
      */
     protected function getExportDir($themeName): string
     {
-        return $this->exportDir . DIRECTORY_SEPARATOR . $themeName;
+        return $this->exportDir . \DIRECTORY_SEPARATOR . $themeName;
     }
 
     /**
      * @param string $themeName
      * @param string $locale
-     *
-     * @return string
      */
     protected function makeZipFilename($themeName, $locale): string
     {
-        if (!file_exists($this->exportDir)) {
+        if (! file_exists($this->exportDir)) {
             mkdir($this->exportDir);
         }
 
@@ -287,14 +276,12 @@ class ThemeExporter
             $themeName . '.' . $locale . '.zip',
         ];
 
-        return implode(DIRECTORY_SEPARATOR, $zipFilenameParts);
+        return implode(\DIRECTORY_SEPARATOR, $zipFilenameParts);
     }
 
     /**
      * @param string $themeName
      * @param string $locale
-     *
-     * @return string
      *
      * @throws Exception
      */
@@ -302,12 +289,9 @@ class ThemeExporter
     {
         $zipFilename = $this->makeZipFilename($themeName, $locale);
 
-        return dirname($zipFilename);
+        return \dirname($zipFilename);
     }
 
-    /**
-     * @param MessageCatalogue $catalogue
-     */
     protected function updateCatalogueMetadata(MessageCatalogue $catalogue)
     {
         foreach ($catalogue->all() as $domain => $messages) {
@@ -316,14 +300,12 @@ class ThemeExporter
     }
 
     /**
-     * @param MessageCatalogue $catalogue
-     * @param array $messages
      * @param string $domain
      */
     protected function ensureCatalogueHasRequiredMetadata(
         MessageCatalogue $catalogue,
         array $messages,
-        $domain
+        $domain,
     ) {
         foreach (array_keys($messages) as $id) {
             $metadata = $catalogue->getMetadata($id, $domain);
@@ -333,33 +315,20 @@ class ThemeExporter
         }
     }
 
-    /**
-     * @param array|null $metadata
-     *
-     * @return bool
-     */
     protected function metadataContainNotes(?array $metadata = null): bool
     {
-        return null !== $metadata && array_key_exists('notes', $metadata) && is_array($metadata['notes'])
-            && array_key_exists(0, $metadata['notes']) && is_array($metadata['notes'][0])
-            && array_key_exists('content', $metadata['notes'][0]);
+        return $metadata !== null && \array_key_exists('notes', $metadata) && \is_array($metadata['notes'])
+            && \array_key_exists(0, $metadata['notes']) && \is_array($metadata['notes'][0])
+            && \array_key_exists('content', $metadata['notes'][0]);
     }
 
-    /**
-     * @param array|null $metadata
-     *
-     * @return bool
-     */
     protected function shouldAddFileMetadata(?array $metadata = null): bool
     {
-        return null === $metadata || !array_key_exists('file', $metadata);
+        return $metadata === null || ! \array_key_exists('file', $metadata);
     }
 
     /**
      * @param string $locale
-     * @param MessageCatalogue $sourceCatalogue
-     *
-     * @return MessageCatalogue
      */
     protected function addLocaleToDomain($locale, MessageCatalogue $sourceCatalogue): MessageCatalogue
     {
@@ -371,21 +340,16 @@ class ThemeExporter
         return $catalogue;
     }
 
-    /**
-     * @param array|null $metadata
-     *
-     * @return array
-     */
     protected function parseMetadataNotes(?array $metadata = null): array
     {
         $defaultMetadata = ['file' => '', 'line' => ''];
 
-        if (!$this->metadataContainNotes($metadata)) {
+        if (! $this->metadataContainNotes($metadata)) {
             return $defaultMetadata;
         }
 
         $notes = $metadata['notes'][0]['content'];
-        if (1 !== preg_match('/(?<file>\S+):(?<line>\S+)/m', (string) $notes, $matches)) {
+        if (preg_match('/(?<file>\S+):(?<line>\S+)/m', (string) $notes, $matches) !== 1) {
             return $defaultMetadata;
         }
 

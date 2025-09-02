@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,16 +45,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CountryType extends AbstractType
 {
-    /**
-     * ZoneType constructor.
-     */
-    public function __construct(protected TranslatorInterface $translator, protected bool $isMultistoreEnabled, protected ConfigurableFormChoiceProviderInterface $zoneChoiceProvider)
-    {
+    public function __construct(
+        protected TranslatorInterface $translator,
+        protected bool $isMultistoreEnabled,
+        protected ConfigurableFormChoiceProviderInterface $zoneChoiceProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

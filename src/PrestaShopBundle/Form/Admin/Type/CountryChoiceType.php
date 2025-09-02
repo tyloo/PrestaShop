@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CountryChoiceType extends AbstractType
 {
     private array $countriesAttr = [];
+
     private bool $needDni = false;
+
     private bool $needPostcode = false;
 
     private bool $needLogo = false;
@@ -63,9 +66,6 @@ class CountryChoiceType extends AbstractType
         parent::buildForm($builder, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -116,9 +116,6 @@ class CountryChoiceType extends AbstractType
         return $attr;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent(): string
     {
         return ChoiceType::class;

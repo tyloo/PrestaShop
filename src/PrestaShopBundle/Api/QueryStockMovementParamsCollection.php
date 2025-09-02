@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,9 +29,6 @@ namespace PrestaShopBundle\Api;
 
 class QueryStockMovementParamsCollection extends QueryStockParamsCollection
 {
-    /**
-     * @return array
-     */
     protected function getValidFilterParams(): array
     {
         return [
@@ -47,9 +45,6 @@ class QueryStockMovementParamsCollection extends QueryStockParamsCollection
         ];
     }
 
-    /**
-     * @return array
-     */
     protected function getValidOrderParams(): array
     {
         return [
@@ -63,8 +58,6 @@ class QueryStockMovementParamsCollection extends QueryStockParamsCollection
 
     /**
      * @param array $queryParams
-     *
-     * @return mixed
      */
     protected function setDefaultOrderParam($queryParams)
     {

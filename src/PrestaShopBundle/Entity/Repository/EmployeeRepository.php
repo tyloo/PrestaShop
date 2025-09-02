@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,7 @@ class EmployeeRepository extends EntityRepository
      * Doctrine fetch this part lazily itself (it's a few ms versus 500ms with the full
      * join and heady hydration).
      *
-     * @param string $userIdentifier
      * @param bool $refresh Force return a fresh entity
-     *
-     * @return Employee|null
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -81,7 +79,7 @@ class EmployeeRepository extends EntityRepository
         return $this->idnConverter;
     }
 
-    public function setIdnConverter(InternationalizedDomainNameConverter $idnConverter): EmployeeRepository
+    public function setIdnConverter(InternationalizedDomainNameConverter $idnConverter): self
     {
         $this->idnConverter = $idnConverter;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,26 +52,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProductSupplierType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param string $defaultCurrencyIsoCode
-     * @param CurrencyRepository $currencyRepository
-     * @param FormCloner $formCloner
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly string $defaultCurrencyIsoCode,
         private readonly CurrencyRepository $currencyRepository,
-        private readonly FormCloner $formCloner
+        private readonly FormCloner $formCloner,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

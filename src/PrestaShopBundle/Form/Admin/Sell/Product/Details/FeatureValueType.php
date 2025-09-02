@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FeatureValueType extends TranslatorAwareType
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -82,7 +80,7 @@ class FeatureValueType extends TranslatorAwareType
                             'The field %field_name% is required at least in your default language.',
                             'Admin.Notifications.Error',
                             [
-                                '%field_name%' => sprintf(
+                                '%field_name%' => \sprintf(
                                     '"%s"',
                                     $this->trans('Custom value', 'Admin.Catalog.Feature')
                                 ),
@@ -113,7 +111,7 @@ class FeatureValueType extends TranslatorAwareType
             'validation_groups' => function (FormInterface $form): array {
                 $formData = $form->getData();
 
-                return !empty($formData['is_custom']) ? ['Default', 'custom_value'] : ['Default'];
+                return ! empty($formData['is_custom']) ? ['Default', 'custom_value'] : ['Default'];
             },
         ]);
     }
@@ -124,6 +122,6 @@ class FeatureValueType extends TranslatorAwareType
         $formData = $form->getData();
 
         // When data is null the prototype is being rendered so the input is not custom and is not not custom either (schrodinger custom input)
-        $view->vars['is_custom'] = null === $formData ? null : !empty($formData['is_custom']);
+        $view->vars['is_custom'] = $formData === null ? null : ! empty($formData['is_custom']);
     }
 }

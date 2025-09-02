@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RadioWithChoiceChildrenType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add($options['radio_name'], RadioType::class, [
@@ -65,9 +63,6 @@ class RadioWithChoiceChildrenType extends AbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

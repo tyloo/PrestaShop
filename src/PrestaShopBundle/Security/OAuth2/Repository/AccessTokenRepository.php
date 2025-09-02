@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,11 +44,11 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     public function getNewToken(
         ClientEntityInterface $clientEntity,
         array $scopes,
-        $userIdentifier = null
+        $userIdentifier = null,
     ): AccessTokenEntityInterface {
         $token = new AccessToken();
         $token->setClient($clientEntity);
-        if (!empty($userIdentifier)) {
+        if (! empty($userIdentifier)) {
             $token->setUserIdentifier($userIdentifier);
         }
         foreach ($scopes as $scope) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,18 +61,16 @@ class ScopeCheckerListener
      * Check if some scopes were specified in the extraParameters, transform them into a security
      * expression understandable by the Security component and check if the operation is granted,
      * else throw an AccessDeniedException.
-     *
-     * @param RequestEvent $event
      */
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
         $request = $event->getRequest();
         $operation = $this->initializeOperation($request);
-        if (!$operation) {
+        if (! $operation) {
             return;
         }
 
@@ -81,15 +80,15 @@ class ScopeCheckerListener
         }
 
         $scopesSecurityRule = '';
-        $arrayLength = count($operationsScopes);
+        $arrayLength = \count($operationsScopes);
         foreach ($operationsScopes as $key => $scope) {
-            $scopesSecurityRule .= 'is_granted("ROLE_' . strtoupper((string) $scope) . '")';
+            $scopesSecurityRule .= 'is_granted("ROLE_' . mb_strtoupper((string) $scope) . '")';
             if ($key !== $arrayLength - 1) {
                 $scopesSecurityRule .= ' or ';
             }
         }
 
-        if (!$this->security->isGranted(new Expression($scopesSecurityRule))) {
+        if (! $this->security->isGranted(new Expression($scopesSecurityRule))) {
             throw new AccessDeniedException('Invalid scope.');
         }
     }

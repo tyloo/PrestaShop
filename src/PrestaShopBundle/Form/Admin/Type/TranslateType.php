@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class TranslateType extends CommonAbstractType
 {
     /**
-     * @param UrlGeneratorInterface $urlGenerator
      * @param bool $saveFormLocaleChoice
-     * @param int $defaultFormLanguageId
-     * @param int $defaultShopLanguageId
+     * @param int  $defaultFormLanguageId
+     * @param int  $defaultShopLanguageId
      */
-    public function __construct(private readonly UrlGeneratorInterface $urlGenerator, private $saveFormLocaleChoice, private $defaultFormLanguageId, private $defaultShopLanguageId)
-    {
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private $saveFormLocaleChoice,
+        private $defaultFormLanguageId,
+        private $defaultShopLanguageId,
+    ) {
     }
 
     /**
@@ -88,9 +92,6 @@ class TranslateType extends CommonAbstractType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -114,8 +115,6 @@ class TranslateType extends CommonAbstractType
     /**
      * Get default locale.
      *
-     * @param array $locales
-     *
      * @return array
      */
     private function getDefaultLocale(array $locales)
@@ -125,7 +124,7 @@ class TranslateType extends CommonAbstractType
 
         // Searching for a locale that matches the selected language
         foreach ($locales as $locale) {
-            if ($locale['id_lang'] == $languageId) {
+            if ($locale['id_lang'] === $languageId) {
                 return $locale;
             }
         }

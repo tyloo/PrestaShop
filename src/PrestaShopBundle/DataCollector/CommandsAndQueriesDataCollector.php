@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,16 +38,11 @@ use Throwable;
  */
 final class CommandsAndQueriesDataCollector extends DataCollector
 {
-    /**
-     * @param ExecutedCommandRegistry $executedCommandRegistry
-     */
-    public function __construct(private readonly ExecutedCommandRegistry $executedCommandRegistry)
-    {
+    public function __construct(
+        private readonly ExecutedCommandRegistry $executedCommandRegistry,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         $this->data = [
@@ -55,17 +51,11 @@ final class CommandsAndQueriesDataCollector extends DataCollector
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'ps.commands_and_queries_collector';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reset(): void
     {
         $this->data = [];

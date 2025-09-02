@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,8 +56,8 @@ class AlertsController extends ModuleAbstractController
     public function notificationsCountAction(): JsonResponse
     {
         $moduleRepository = $this->getModuleRepository();
-        $toConfigure = count($moduleRepository->getMustBeConfiguredModules());
-        $toUpdate = count($moduleRepository->getUpgradableModules());
+        $toConfigure = \count($moduleRepository->getMustBeConfiguredModules());
+        $toUpdate = \count($moduleRepository->getUpgradableModules());
 
         return new JsonResponse([
             self::UPDATABLE_MODULE_TYPE => $toUpdate,

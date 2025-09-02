@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,11 @@ use Twig\TwigFunction;
  */
 class ColorBrightnessCalculatorExtension extends AbstractExtension
 {
-    /**
-     * @param ColorBrightnessCalculator $brightnessCalculator
-     */
-    public function __construct(private readonly ColorBrightnessCalculator $brightnessCalculator)
-    {
+    public function __construct(
+        private readonly ColorBrightnessCalculator $brightnessCalculator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions()
     {
         return [

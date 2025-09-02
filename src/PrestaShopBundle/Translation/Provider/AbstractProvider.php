@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,44 +51,33 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
     /**
      * @param string $resourceDirectory
      */
-    public function __construct(/**
-     * @var LoaderInterface the loader interface
-     */
-    private readonly LoaderInterface $databaseLoader, /**
+    public function __construct(
+        /**
+         * @var LoaderInterface the loader interface
+         */
+        private readonly LoaderInterface $databaseLoader, /**
      * @var string the resource directory
      */
-    protected $resourceDirectory)
-    {
+        protected $resourceDirectory,
+    ) {
         $this->locale = self::DEFAULT_LOCALE;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDirectories()
     {
         return [$this->getResourceDirectory()];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters()
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTranslationDomains()
     {
         return [''];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLocale()
     {
         return $this->locale;
@@ -103,9 +93,6 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setDomain($domain)
     {
         $this->domain = $domain;
@@ -113,9 +100,6 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMessageCatalogue()
     {
         $messageCatalogue = $this->getDefaultCatalogue();
@@ -132,8 +116,6 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws TranslationFilesNotFoundException
      */
     public function getDefaultCatalogue($empty = true)
@@ -157,8 +139,6 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws TranslationFilesNotFoundException
      */
     public function getXliffCatalogue()
@@ -189,7 +169,7 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
         $databaseCatalogue = new MessageCatalogue($this->locale);
 
         foreach ($this->getTranslationDomains() as $translationDomain) {
-            if (!($this->getDatabaseLoader() instanceof DatabaseTranslationLoader)) {
+            if (! ($this->getDatabaseLoader() instanceof DatabaseTranslationLoader)) {
                 continue;
             }
             $domainCatalogue = $this->getDatabaseLoader()->load(null, $this->locale, $translationDomain, $theme);
@@ -207,7 +187,7 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
      */
     public function getResourceDirectory()
     {
-        return $this->resourceDirectory . DIRECTORY_SEPARATOR . $this->locale;
+        return $this->resourceDirectory . \DIRECTORY_SEPARATOR . $this->locale;
     }
 
     /**
@@ -220,8 +200,6 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
 
     /**
      * Empties out the catalogue by removing translations but leaving keys
-     *
-     * @param MessageCatalogueInterface $messageCatalogue
      *
      * @return MessageCatalogueInterface Empty the catalogue
      */
@@ -237,9 +215,9 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
     }
 
     /**
-     * @param string|array<string> $paths a list of paths when we can look for translations
-     * @param string $locale the Symfony (not the PrestaShop one) locale
-     * @param string|null $pattern a regular expression
+     * @param string|array<string> $paths   a list of paths when we can look for translations
+     * @param string               $locale  the Symfony (not the PrestaShop one) locale
+     * @param string|null          $pattern a regular expression
      *
      * @return MessageCatalogue
      *
@@ -250,8 +228,5 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
         return (new TranslationFinder())->getCatalogueFromPaths($paths, $locale, $pattern);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     abstract public function getDefaultResourceDirectory();
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,23 +34,23 @@ namespace PrestaShopBundle\ApiPlatform\Scopes;
  */
 class ApiResourceScopes
 {
+    private function __construct(
+        private readonly array $scopes,
+        private readonly ?string $moduleName,
+    ) {
+    }
+
     public static function createModuleScopes(
         array $scopes,
-        string $moduleName
+        string $moduleName,
     ): self {
         return new self($scopes, $moduleName);
     }
 
     public static function createCoreScopes(
-        array $scopes
+        array $scopes,
     ): self {
         return new self($scopes, null);
-    }
-
-    private function __construct(
-        private readonly array $scopes,
-        private readonly ?string $moduleName
-    ) {
     }
 
     /**

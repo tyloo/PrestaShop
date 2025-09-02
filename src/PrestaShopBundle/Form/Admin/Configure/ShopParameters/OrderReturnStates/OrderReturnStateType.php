@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,15 +46,12 @@ class OrderReturnStateType extends TranslatorAwareType
 {
     protected const NAME_CHARS = '!<>,;?=+()@#"{}_$%:';
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TranslatableType::class, [
                 'label' => $this->trans('Status name', 'Admin.Shopparameters.Feature'),
-                'help' => sprintf(
+                'help' => \sprintf(
                     '%s %s %s',
                     $this->trans('Status name', 'Admin.Shopparameters.Feature'),
                     $this->trans('Invalid characters: numbers and', 'Admin.Shopparameters.Feature'),
@@ -89,9 +87,6 @@ class OrderReturnStateType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

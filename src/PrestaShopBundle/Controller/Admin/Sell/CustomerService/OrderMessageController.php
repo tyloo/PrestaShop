@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,18 +56,13 @@ class OrderMessageController extends PrestaShopAdminController
 {
     /**
      * Show list of Order messages
-     *
-     * @param OrderMessageFilters $filters
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.order_message')]
         GridFactoryInterface $orderMessageGridFactory,
-        OrderMessageFilters $filters
+        OrderMessageFilters $filters,
     ): Response {
         $grid = $orderMessageGridFactory->getGrid($filters);
 
@@ -87,10 +83,6 @@ class OrderMessageController extends PrestaShopAdminController
 
     /**
      * Create new order message
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_order_messages_index')]
     public function createAction(
@@ -99,7 +91,7 @@ class OrderMessageController extends PrestaShopAdminController
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.order_message_form_handler')]
         FormHandlerInterface $formHandler,
-        MultistoreFeature $multiStoreFeature
+        MultistoreFeature $multiStoreFeature,
     ): Response {
         $form = $formBuilder->getForm();
         $form->handleRequest($request);
@@ -132,11 +124,6 @@ class OrderMessageController extends PrestaShopAdminController
 
     /**
      * Edit existing order message
-     *
-     * @param int $orderMessageId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_order_messages_index')]
     public function editAction(
@@ -146,7 +133,7 @@ class OrderMessageController extends PrestaShopAdminController
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.order_message_form_handler')]
         FormHandlerInterface $formHandler,
-        LanguageContext $languageContext
+        LanguageContext $languageContext,
     ): Response {
         try {
             /** @var EditableOrderMessage $editableOrderMessage */
@@ -180,10 +167,6 @@ class OrderMessageController extends PrestaShopAdminController
 
     /**
      * Delete single order message
-     *
-     * @param int $orderMessageId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_order_messages_index')]
     public function deleteAction(int $orderMessageId): RedirectResponse
@@ -201,16 +184,12 @@ class OrderMessageController extends PrestaShopAdminController
 
     /**
      * Delete order messages in bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_order_messages_index')]
     public function bulkDeleteAction(Request $request): RedirectResponse
     {
         try {
-            $orderMessageIds = array_map(static fn($orderMessageId): int => (int) $orderMessageId, $request->request->all('order_message_order_messages_bulk'));
+            $orderMessageIds = array_map(static fn ($orderMessageId): int => (int) $orderMessageId, $request->request->all('order_message_order_messages_bulk'));
 
             $this->dispatchCommand(new BulkDeleteOrderMessageCommand($orderMessageIds));
 
@@ -227,10 +206,6 @@ class OrderMessageController extends PrestaShopAdminController
 
     /**
      * Get user friendly errors for exception
-     *
-     * @param Exception|null $e
-     *
-     * @return array
      */
     private function getErrorMessages(?Exception $e = null): array
     {

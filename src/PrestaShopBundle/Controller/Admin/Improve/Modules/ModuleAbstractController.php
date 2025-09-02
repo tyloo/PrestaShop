@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,9 @@ abstract class ModuleAbstractController extends PrestaShopAdminController
     public const CONTROLLER_NAME = 'ADMINMODULESSF';
 
     public const CONFIGURABLE_MODULE_TYPE = 'to_configure';
+
     public const UPDATABLE_MODULE_TYPE = 'to_update';
+
     public const TOTAL_MODULE_TYPE = 'count';
 
     public static function getSubscribedServices(): array
@@ -78,8 +81,6 @@ abstract class ModuleAbstractController extends PrestaShopAdminController
 
     /**
      * Common method for all module related controller for getting the header buttons.
-     *
-     * @return array
      */
     protected function getToolbarButtons(): array
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,18 +65,13 @@ class CartRuleController extends PrestaShopAdminController
 
     /**
      * Displays cart rule listing page.
-     *
-     * @param Request $request
-     * @param CartRuleFilters $cartRuleFilters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         CartRuleFilters $cartRuleFilters,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.cart_rule')]
-        GridFactoryInterface $cartRuleGridFactory
+        GridFactoryInterface $cartRuleGridFactory,
     ): Response {
         $cartRuleGrid = $cartRuleGridFactory->getGrid($cartRuleFilters);
 
@@ -96,10 +92,6 @@ class CartRuleController extends PrestaShopAdminController
 
     /**
      * Searches for cart rules by provided search phrase
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function searchAction(Request $request): JsonResponse
@@ -125,10 +117,6 @@ class CartRuleController extends PrestaShopAdminController
 
     /**
      * Deletes cart rule
-     *
-     * @param int $cartRuleId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cart_rules_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_cart_rules_index')]
@@ -149,10 +137,6 @@ class CartRuleController extends PrestaShopAdminController
 
     /**
      * Deletes cartRules on bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cart_rules_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_cart_rules_index')]
@@ -175,10 +159,6 @@ class CartRuleController extends PrestaShopAdminController
 
     /**
      * Toggles cart rule status
-     *
-     * @param int $cartRuleId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cart_rules_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cart_rules_index')]
@@ -188,7 +168,7 @@ class CartRuleController extends PrestaShopAdminController
             /** @var CartRuleForEditing $editableCartRule */
             $editableCartRule = $this->dispatchQuery(new GetCartRuleForEditing((int) $cartRuleId));
             $this->dispatchCommand(
-                new ToggleCartRuleStatusCommand((int) $cartRuleId, !$editableCartRule->getInformation()->isEnabled())
+                new ToggleCartRuleStatusCommand((int) $cartRuleId, ! $editableCartRule->getInformation()->isEnabled())
             );
             $this->addFlash(
                 'success',
@@ -201,9 +181,6 @@ class CartRuleController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_cart_rules_index');
     }
 
-    /**
-     * @return Response
-     */
     #[DemoRestricted(redirectRoute: 'admin_cart_rules_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_cart_rules_index')]
     public function createAction(
@@ -212,7 +189,7 @@ class CartRuleController extends PrestaShopAdminController
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.cart_rule_form_handler')]
         FormHandlerInterface $formHandler,
-        CartRuleFormDataProvider $cartRuleFormDataProvider
+        CartRuleFormDataProvider $cartRuleFormDataProvider,
     ): Response {
         $form = $formBuilder->getForm($this->prefillFormDataForCreation($request, $cartRuleFormDataProvider));
         $form->handleRequest($request);
@@ -238,10 +215,6 @@ class CartRuleController extends PrestaShopAdminController
 
     /**
      * Enables cart rules on bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cart_rules_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cart_rules_index')]
@@ -265,10 +238,6 @@ class CartRuleController extends PrestaShopAdminController
 
     /**
      * Disables cart rules on bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cart_rules_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cart_rules_index')]
@@ -294,14 +263,10 @@ class CartRuleController extends PrestaShopAdminController
      * This just prefills form fields that depends on query parameter like customer search input (if id is provided),
      * all remaining data should be set in related form data provider.
      * (The parameter is in the URL, not the post data which is why it's out of the provider's responsibility)
-     *
-     * @param Request $request
-     *
-     * @return array
      */
     private function prefillFormDataForCreation(
         Request $request,
-        CartRuleFormDataProvider $cartRuleFormDataProvider
+        CartRuleFormDataProvider $cartRuleFormDataProvider,
     ): array {
         $formData = [];
 
@@ -315,7 +280,7 @@ class CartRuleController extends PrestaShopAdminController
             $customerInfo = $customer->getPersonalInformation();
             $formData['conditions']['customer'][] = [
                 'id_customer' => $customerId,
-                'fullname_and_email' => sprintf(
+                'fullname_and_email' => \sprintf(
                     '%s %s - %s',
                     $customerInfo->getFirstname(),
                     $customerInfo->getLastname(),
@@ -330,7 +295,7 @@ class CartRuleController extends PrestaShopAdminController
     private function getErrorMessages(Exception $e): array
     {
         return [
-            BulkDeleteCartRuleException::class => sprintf(
+            BulkDeleteCartRuleException::class => \sprintf(
                 '%s: %s',
                 $this->trans(
                     'An error occurred while deleting this selection.',
@@ -339,7 +304,7 @@ class CartRuleController extends PrestaShopAdminController
                 ),
                 $e instanceof BulkDeleteCartRuleException ? implode(', ', $e->getCartRuleIds()) : ''
             ),
-            BulkToggleCartRuleException::class => sprintf(
+            BulkToggleCartRuleException::class => \sprintf(
                 '%s: %s',
                 $this->trans(
                     'An error occurred while toggling this selection.',

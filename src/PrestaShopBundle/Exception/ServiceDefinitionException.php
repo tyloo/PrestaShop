@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,11 +37,14 @@ class ServiceDefinitionException extends Exception
     /**
      * @param string $message
      * @param string $serviceId
-     * @param int $code
-     * @param Exception $previous
+     * @param int    $code
      */
-    public function __construct($message, public $serviceId, $code = 0, ?Exception $previous = null)
-    {
+    public function __construct(
+        $message,
+        public $serviceId,
+        $code = 0,
+        ?Exception $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
     }
 }

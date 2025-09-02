@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,11 +41,12 @@ class ImportMatchRepository implements RepositoryInterface
     private readonly string $importMatchTable;
 
     /**
-     * @param Connection $connection
      * @param string $tablePrefix
      */
-    public function __construct(private readonly Connection $connection, $tablePrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        $tablePrefix,
+    ) {
         $this->importMatchTable = $tablePrefix . 'import_match';
     }
 
@@ -86,9 +88,6 @@ class ImportMatchRepository implements RepositoryInterface
         return $queryBuilder->executeQuery()->fetchAssociative();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findAll()
     {
         $queryBuilder = $this->connection

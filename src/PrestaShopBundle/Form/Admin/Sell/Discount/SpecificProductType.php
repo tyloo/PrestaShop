@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,9 +67,6 @@ class SpecificProductType extends TranslatorAwareType
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -153,7 +151,7 @@ class SpecificProductType extends TranslatorAwareType
         if ($data['product_type'] !== ProductType::TYPE_COMBINATIONS) {
             $oldCombinationChoicesForm = $form->get('combination_id');
             $combinationOptions = $oldCombinationChoicesForm->getConfig()->getOptions();
-            $combinationOptions['attr']['class'] = trim(($combinationOptions['attr']['class'] ?? '') . ' d-none');
+            $combinationOptions['attr']['class'] = mb_trim(($combinationOptions['attr']['class'] ?? '') . ' d-none');
             $newCombinationChoicesForm = $this->formCloner->cloneForm($oldCombinationChoicesForm, $combinationOptions);
         } else {
             // We need to update the choices list in the form, it must contain the default All combinations and the selected
@@ -178,8 +176,6 @@ class SpecificProductType extends TranslatorAwareType
 
     /**
      * This block prefix is important it allows inheriting the templates from the default EntitySearchInputType
-     *
-     * @return string
      */
     public function getBlockPrefix(): string
     {
@@ -200,7 +196,7 @@ class SpecificProductType extends TranslatorAwareType
 
     private function getCombinationName(int $combinationIdValue): string
     {
-        if (NoCombinationId::NO_COMBINATION_ID === $combinationIdValue) {
+        if ($combinationIdValue === NoCombinationId::NO_COMBINATION_ID) {
             return $this->getAllCombinationsChoiceLabel();
         }
 

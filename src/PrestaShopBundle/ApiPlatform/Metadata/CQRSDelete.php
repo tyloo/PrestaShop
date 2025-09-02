@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,7 +73,6 @@ class CQRSDelete extends CQRSCommand
         ?array $exceptionToStatus = null,
         ?array $links = null,
         ?array $errors = null,
-
         ?string $shortName = null,
         ?string $class = null,
         ?bool $paginationEnabled = null,
@@ -127,7 +127,7 @@ class CQRSDelete extends CQRSCommand
         ?bool $experimentalOperation = null,
         ?bool $allowEmptyBody = null,
     ) {
-        $passedArguments = \get_defined_vars();
+        $passedArguments = get_defined_vars();
         $passedArguments['method'] = self::METHOD_DELETE;
         // Usually DELETE operation has nothing to show so no output is needed
         $passedArguments['output'] = $output ?? false;

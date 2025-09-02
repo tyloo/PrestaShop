@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,26 +41,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ExportCataloguesType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $themeChoices
-     * @param array $exportTranslationCoreTypeChoices
-     * @param array $moduleChoices
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly array $exportTranslationCoreTypeChoices,
         private readonly array $themeChoices,
-        private readonly array $moduleChoices
+        private readonly array $moduleChoices,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('iso_code', LocaleChoiceType::class);
@@ -105,11 +96,6 @@ class ExportCataloguesType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * @param array $themeChoices
-     *
-     * @return array
-     */
     private function excludeDefaultThemeFromChoices(array $themeChoices): array
     {
         unset($themeChoices[ThemeProviderDefinition::DEFAULT_THEME_NAME]);

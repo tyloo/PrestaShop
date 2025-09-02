@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,19 +33,14 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 final class TranslationsSettingsFormHandler implements FormHandlerInterface
 {
-    /**
-     * @param FormFactoryInterface $formFactory
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param string $form
-     * @param string $hookName
-     */
-    public function __construct(protected FormFactoryInterface $formFactory, protected HookDispatcherInterface $hookDispatcher, protected string $form, protected string $hookName)
-    {
+    public function __construct(
+        private readonly FormFactoryInterface $formFactory,
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly string $form,
+        private readonly string $hookName,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getForm()
     {
         $formBuilder = $this->formFactory->createNamedBuilder('form', $this->form);
@@ -59,9 +55,6 @@ final class TranslationsSettingsFormHandler implements FormHandlerInterface
         return $formBuilder->getForm();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function save(array $data): array
     {
         // Translations forms do not save data

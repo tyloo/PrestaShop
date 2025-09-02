@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -89,21 +90,21 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
 
         // First extract scopes from the core
         $coreMappingPaths = [
-            rtrim($this->projectDir, '/') . '/src/PrestaShopBundle/ApiPlatform/Resources',
+            mb_rtrim($this->projectDir, '/') . '/src/PrestaShopBundle/ApiPlatform/Resources',
         ];
 
         // In test environment an additional mapping folder is added, but we can't inject api_platform configuration
         // in this service easily to make it fully dynamic so the extra path is hard-coded here but only in test environment
         // This could be refactored if we find a ay to properly inject the api_platform config (at least the mapping.paths part)
         if ($this->environment->getName() === 'test') {
-            $testResources = rtrim($this->projectDir, '/') . '/tests/Resources/ApiPlatform/Resources';
+            $testResources = mb_rtrim($this->projectDir, '/') . '/tests/Resources/ApiPlatform/Resources';
             if (is_dir($testResources)) {
                 $coreMappingPaths[] = $testResources;
             }
         }
 
         $coreScopes = $this->extractScopes(new AttributesResourceNameCollectionFactory($coreMappingPaths));
-        if (!empty($coreScopes)) {
+        if (! empty($coreScopes)) {
             $resourceScopes[] = ApiResourceScopes::createCoreScopes($coreScopes);
         }
 
@@ -111,7 +112,7 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
             $moduleScopes = $this->extractScopes(new AttributesResourceNameCollectionFactory(
                 $this->getModulePaths($moduleName)
             ));
-            if (!empty($moduleScopes)) {
+            if (! empty($moduleScopes)) {
                 $resourceScopes[] = ApiResourceScopes::createModuleScopes($moduleScopes, $moduleName);
             }
         }
@@ -122,15 +123,15 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
     private function getModulePaths(string $moduleName): array
     {
         $paths = [];
-        $modulePath = rtrim($this->moduleDir, '/') . '/' . $moduleName;
+        $modulePath = mb_rtrim($this->moduleDir, '/') . '/' . $moduleName;
         // Load YAML definition from the config/api_platform folder in the module
-        $moduleConfigPath = sprintf('%s/config/api_platform', $modulePath);
+        $moduleConfigPath = \sprintf('%s/config/api_platform', $modulePath);
         if (file_exists($moduleConfigPath)) {
             $paths[] = $moduleConfigPath;
         }
 
         // Folder containing ApiPlatform resources classes
-        $moduleRessourcesPath = sprintf('%s/src/ApiPlatform/Resources', $modulePath);
+        $moduleRessourcesPath = \sprintf('%s/src/ApiPlatform/Resources', $modulePath);
         if (file_exists($moduleRessourcesPath)) {
             $paths[] = $moduleRessourcesPath;
         }
@@ -168,10 +169,10 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
             }
 
             $extraProperties = $operation->getExtraProperties();
-            if (array_key_exists('scopes', $extraProperties)) {
+            if (\array_key_exists('scopes', $extraProperties)) {
                 $operationScopes = $extraProperties['scopes'];
                 foreach ($operationScopes as $operationScope) {
-                    if (!in_array($operationScope, $scopes)) {
+                    if (! \in_array($operationScope, $scopes, true)) {
                         $scopes[] = $operationScope;
                     }
                 }
@@ -184,10 +185,6 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
     /**
      * Similar filter as in CQRSNotFoundMetadataCollectionFactoryDecorator, when operations are based on CQRS
      * queries or commands that don't exist yet are skipped.
-     *
-     * @param Operation $operation
-     *
-     * @return bool
      */
     private function skipCQRSNotFound(Operation $operation): bool
     {
@@ -197,13 +194,13 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
         }
 
         $extraProperties = $operation->getExtraProperties();
-        if (!empty($extraProperties['CQRSQuery']) && !class_exists($extraProperties['CQRSQuery'])) {
+        if (! empty($extraProperties['CQRSQuery']) && ! class_exists($extraProperties['CQRSQuery'])) {
             return true;
         }
-        if (!empty($extraProperties['CQRSCommand']) && !class_exists($extraProperties['CQRSCommand'])) {
+        if (! empty($extraProperties['CQRSCommand']) && ! class_exists($extraProperties['CQRSCommand'])) {
             return true;
         }
-        if (!empty($extraProperties['gridDataFactory']) && !$this->container->has($extraProperties['gridDataFactory'])) {
+        if (! empty($extraProperties['gridDataFactory']) && ! $this->container->has($extraProperties['gridDataFactory'])) {
             return true;
         }
 
@@ -214,8 +211,6 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
      * This service is implied during cache clearing which would fail when the shop is not installed
      * because the DB config is not set up yet. So we protected the feature flag fetching in a try/catch
      * and return false (default value) in case of an error.
-     *
-     * @return bool
      */
     private function areInvalidEndpointsEnabled(): bool
     {

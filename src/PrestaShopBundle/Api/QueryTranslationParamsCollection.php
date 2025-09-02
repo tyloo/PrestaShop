@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,17 +33,11 @@ class QueryTranslationParamsCollection extends QueryParamsCollection
 
     protected $defaultPageSize = 20;
 
-    /**
-     * @return array
-     */
     protected function getValidFilterParams(): array
     {
         return [];
     }
 
-    /**
-     * @return array
-     */
     protected function getValidOrderParams(): array
     {
         return [];
@@ -50,8 +45,6 @@ class QueryTranslationParamsCollection extends QueryParamsCollection
 
     /**
      * @param array $queryParams
-     *
-     * @return mixed
      */
     protected function setDefaultOrderParam($queryParams)
     {

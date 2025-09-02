@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,9 @@ use Symfony\Component\Validator\Constraints\When;
 class DiscountUsabilityModeType extends TranslatorAwareType
 {
     public const AUTO_MODE = 'auto';
+
     public const CODE_MODE = 'code';
+
     protected const GENERATED_CODE_LENGTH = 8;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -55,7 +58,7 @@ class DiscountUsabilityModeType extends TranslatorAwareType
                 'generated_value_length' => self::GENERATED_CODE_LENGTH,
                 'constraints' => [
                     new When(
-                        expression: sprintf(
+                        expression: \sprintf(
                             'this.getParent().get("children_selector").getData() === "%s"',
                             self::CODE_MODE,
                         ),

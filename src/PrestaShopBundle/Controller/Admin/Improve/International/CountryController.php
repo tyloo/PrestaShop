@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,18 +57,13 @@ class CountryController extends PrestaShopAdminController
 {
     /**
      * Show countries listing page
-     *
-     * @param Request $request
-     * @param CountryFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         CountryFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.factory.country')]
-        GridFactoryInterface $countryGridFactory
+        GridFactoryInterface $countryGridFactory,
     ): Response {
         $countryGrid = $countryGridFactory->getGrid($filters);
 
@@ -81,10 +77,6 @@ class CountryController extends PrestaShopAdminController
 
     /**
      * Show "Add new" country form and handles its submit.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_countries_index', message: 'You need permission to create new country.')]
     public function createAction(
@@ -92,7 +84,7 @@ class CountryController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.country_form_builder')]
         FormBuilderInterface $countryFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.country_form_handler')]
-        FormHandlerInterface $countryFormHandler
+        FormHandlerInterface $countryFormHandler,
     ): Response {
         $countryForm = $countryFormBuilder->getForm();
         $countryForm->handleRequest($request);
@@ -100,7 +92,7 @@ class CountryController extends PrestaShopAdminController
         try {
             $handleResult = $countryFormHandler->handle($countryForm);
 
-            if (null !== $handleResult->getIdentifiableObjectId()) {
+            if ($handleResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_countries_index');
@@ -119,11 +111,6 @@ class CountryController extends PrestaShopAdminController
 
     /**
      * Displays country edit form and handles its submit.
-     *
-     * @param int $countryId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_countries_index', message: 'You need permission to edit this.')]
     public function editAction(
@@ -132,7 +119,7 @@ class CountryController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.country_form_builder')]
         FormBuilderInterface $countryFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.country_form_handler')]
-        FormHandlerInterface $countryFormHandler
+        FormHandlerInterface $countryFormHandler,
     ): Response {
         try {
             /** @var CountryForEditing $editableCountry */
@@ -163,10 +150,6 @@ class CountryController extends PrestaShopAdminController
 
     /**
      * Deletes country.
-     *
-     * @param int $countryId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_countries_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_countries_index', message: 'You need permission to delete this.')]
@@ -184,9 +167,6 @@ class CountryController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_countries_index');
     }
 
-    /**
-     * @return array
-     */
     protected function getCountryToolbarButtons(): array
     {
         return [
@@ -200,10 +180,6 @@ class CountryController extends PrestaShopAdminController
 
     /**
      * Returns country error messages mapping.
-     *
-     * @param Exception $e
-     *
-     * @return array
      */
     protected function getErrorMessages(Exception $e): array
     {

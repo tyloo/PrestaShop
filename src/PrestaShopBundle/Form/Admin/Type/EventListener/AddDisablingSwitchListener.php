@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,15 +64,14 @@ class AddDisablingSwitchListener implements EventSubscriberInterface
     public const TOGGLE_DATA_ATTRIBUTE = 'data-toggled-by';
 
     private const DISABLED_VALUE = '0';
+
     private const ENABLED_VALUE = '1';
 
-    public function __construct(private FormCloner $formCloner)
-    {
+    public function __construct(
+        private FormCloner $formCloner,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -82,15 +82,13 @@ class AddDisablingSwitchListener implements EventSubscriberInterface
     /**
      * On PRE_SET_DATA event we add the disabling switch, we make sure it is only added once, and pre-set its disabled state
      * based on the target initial value and the switch configuration.
-     *
-     * @param PreSetDataEvent $event
      */
     public function addDisablingSwitch(PreSetDataEvent $event): void
     {
         $form = $event->getForm();
         $parent = $form->getParent();
-        if (null === $parent) {
-            throw new InvalidConfigurationException(sprintf('You cannot set the option %s on a root form.', DisablingSwitchExtension::SWITCH_OPTION));
+        if ($parent === null) {
+            throw new InvalidConfigurationException(\sprintf('You cannot set the option %s on a root form.', DisablingSwitchExtension::SWITCH_OPTION));
         }
 
         $disablingFieldName = DisablingSwitchExtension::FIELD_PREFIX . $form->getName();
@@ -113,7 +111,7 @@ class AddDisablingSwitchListener implements EventSubscriberInterface
 
         $disablingSwitchOptions = [
             // All associated form fields have been added with a data attribute which allows to target them all
-            'target_selector' => sprintf('[%s="%s"]', self::TOGGLE_DATA_ATTRIBUTE, $disablingFieldName),
+            'target_selector' => \sprintf('[%s="%s"]', self::TOGGLE_DATA_ATTRIBUTE, $disablingFieldName),
             'switch_event' => $form->getConfig()->getOption(DisablingSwitchExtension::SWITCH_EVENT_OPTION),
             'data' => $disabledData,
             'disable_on_match' => $disableOnMatch,
@@ -128,10 +126,6 @@ class AddDisablingSwitchListener implements EventSubscriberInterface
         $this->addToggleAttribute($form, $disablingFieldName);
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $disablingFieldName
-     */
     private function addToggleAttribute(FormInterface $form, string $disablingFieldName): void
     {
         $formConfig = $form->getConfig();

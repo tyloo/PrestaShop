@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,28 +36,20 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class EmailConfigurationFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @param DataConfigurationInterface $emailDataConfigurator
-     */
-    public function __construct(private readonly DataConfigurationInterface $emailDataConfigurator)
-    {
+    public function __construct(
+        private readonly DataConfigurationInterface $emailDataConfigurator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->emailDataConfigurator->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         $errors = $this->checkSmtpConfiguration($data);
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             return $errors;
         }
 
@@ -65,17 +58,13 @@ final class EmailConfigurationFormDataProvider implements FormDataProviderInterf
 
     /**
      * Check if SMTP is configured if SMTP mail method is selected.
-     *
-     * @param array $config
-     *
-     * @return array
      */
     private function checkSmtpConfiguration(array $config): array
     {
         $errors = [];
         $isSmtpNotConfigured = empty($config['smtp_config']['server']) || empty($config['smtp_config']['port']);
 
-        if (MailOption::METHOD_SMTP === $config['mail_method'] && $isSmtpNotConfigured) {
+        if ($config['mail_method'] === MailOption::METHOD_SMTP && $isSmtpNotConfigured) {
             $errors[] = [
                 'key' => 'You must define an SMTP server and an SMTP port. If you do not know it, use the PHP mail() function instead.',
                 'parameters' => [],

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,14 +54,11 @@ class SqlTranslationLoader implements LoaderInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($resource, $locale, $domain = 'messages'): MessageCatalogue
     {
         static $localeResults = [];
 
-        if (!array_key_exists($locale, $localeResults)) {
+        if (! \array_key_exists($locale, $localeResults)) {
             try {
                 $locale = Db::getInstance()->escape($locale, false, true);
 
@@ -77,7 +75,7 @@ class SqlTranslationLoader implements LoaderInterface
         }
 
         if (empty($localeResults[$locale])) {
-            throw new NotFoundResourceException(sprintf('Language not found in database: %s', $locale));
+            throw new NotFoundResourceException(\sprintf('Language not found in database: %s', $locale));
         }
 
         // If we get translations for a theme, realistically we need to get translations
@@ -99,8 +97,8 @@ class SqlTranslationLoader implements LoaderInterface
     }
 
     /**
-     * @param array $translations the list of translations
-     * @param MessageCatalogueInterface $catalogue the Message Catalogue
+     * @param array                     $translations the list of translations
+     * @param MessageCatalogueInterface $catalogue    the Message Catalogue
      */
     protected function addTranslationsToCatalogue(array $translations, MessageCatalogueInterface $catalogue)
     {

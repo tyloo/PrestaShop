@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,10 +53,10 @@ class PrestashopAuthorisationServer implements AuthorisationServerInterface
         // Manually check that the authorization header is as expected (league resource server is a bit more lax about the
         // Bearer keyword absence)
         $authorization = $request->headers->get('Authorization') ?? null;
-        if (null === $authorization) {
+        if ($authorization === null) {
             return false;
         }
-        if (!str_starts_with($authorization, 'Bearer ')) {
+        if (! str_starts_with($authorization, 'Bearer ')) {
             return false;
         }
 

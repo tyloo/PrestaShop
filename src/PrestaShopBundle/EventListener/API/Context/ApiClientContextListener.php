@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,13 @@ class ApiClientContextListener
 {
     public function __construct(
         private readonly ApiClientContextBuilder $accessContextBuilder,
-        private readonly Security $security
+        private readonly Security $security,
     ) {
     }
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 

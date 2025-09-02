@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,11 +61,11 @@ class StockMovementType extends TranslatorAwareType
 
                 // Check that data exists, during prototype rendering it will be empty
                 $type = $data['type'] ?? StockMovement::EDITION_TYPE;
-                $increasedQuantity = !empty($data['delta_quantity']) && $data['delta_quantity'] > 0;
+                $increasedQuantity = ! empty($data['delta_quantity']) && $data['delta_quantity'] > 0;
 
                 // For orders, we display the kind of movements instead of the data range
                 if ($type === StockMovement::ORDERS_TYPE) {
-                    $label = ProductType::TYPE_VIRTUAL === $options['product_type'] ?
+                    $label = $options['product_type'] === ProductType::TYPE_VIRTUAL ?
                         $this->trans('Sold products', 'Admin.Catalog.Feature') :
                         $this->trans('Shipped products', 'Admin.Catalog.Feature')
                     ;
@@ -91,8 +92,8 @@ class StockMovementType extends TranslatorAwareType
         $data = $form->getData();
         $type = $data['type'] ?? 'prototype';
 
-        $view->vars['attr']['class'] = trim(
-            sprintf(
+        $view->vars['attr']['class'] = mb_trim(
+            \sprintf(
                 '%s %s-stock-movement',
                 $view->vars['attr']['class'] ?? '',
                 $type

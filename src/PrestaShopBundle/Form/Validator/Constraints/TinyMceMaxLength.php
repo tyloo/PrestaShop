@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class TinyMceMaxLength extends Constraint
 
     public function __construct($options = null)
     {
-        if (null !== $options && !is_array($options)) {
+        if ($options !== null && ! \is_array($options)) {
             $options = [
                 'max' => $options,
                 'message' => null,
@@ -51,8 +52,8 @@ class TinyMceMaxLength extends Constraint
 
         parent::__construct($options);
 
-        if (null === $this->max) {
-            throw new MissingOptionsException(sprintf('Option "max" must be given for constraint %s', self::class), ['max']);
+        if ($this->max === null) {
+            throw new MissingOptionsException(\sprintf('Option "max" must be given for constraint %s', self::class), ['max']);
         }
     }
 

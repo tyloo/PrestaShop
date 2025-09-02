@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -82,18 +83,15 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Shows list of carts
-     *
-     * @param Request $request
-     * @param CartFilter $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         CartFilter $filters,
-        #[Autowire(service: 'prestashop.core.kpi_row.factory.carts')] HookableKpiRowFactory $cartsKpiFactory,
-        #[Autowire(service: 'prestashop.core.grid.factory.cart')] GridFactory $cartGridFactory,
+        #[Autowire(service: 'prestashop.core.kpi_row.factory.carts')]
+        HookableKpiRowFactory $cartsKpiFactory,
+        #[Autowire(service: 'prestashop.core.grid.factory.cart')]
+        GridFactory $cartGridFactory,
     ): Response {
         $cartGrid = $cartGridFactory->getGrid($filters);
 
@@ -114,10 +112,6 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Delete given cart
-     *
-     * @param int $cartId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function deleteCartAction(
@@ -136,10 +130,6 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Deletes carts on bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function bulkDeleteCartAction(
@@ -163,17 +153,13 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Export carts in CSV
-     *
-     * @param Request $request
-     * @param CartFilter $filters
-     *
-     * @return CsvResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function exportCartAction(
         Request $request,
         CartFilter $filters,
-        #[Autowire(service: 'prestashop.core.grid.factory.cart')] GridFactory $cartGridFactory,
+        #[Autowire(service: 'prestashop.core.grid.factory.cart')]
+        GridFactory $cartGridFactory,
     ): CsvResponse {
         $filters = new CartFilter($filters->getShopConstraint(), ['limit' => null] + $filters->all());
         $cartGrid = $cartGridFactory->getGrid($filters);
@@ -209,17 +195,15 @@ class CartController extends PrestaShopAdminController
     }
 
     /**
-     * @param Request $request
-     * @param int $cartId
-     *
      * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function viewAction(
         Request $request,
         int $cartId,
-        #[Autowire(service: 'prestashop.core.kpi_row.factory.cart')] HookableKpiRowFactory $kpiRowFactory,
-        IniConfiguration $iniConfiguration
+        #[Autowire(service: 'prestashop.core.kpi_row.factory.cart')]
+        HookableKpiRowFactory $kpiRowFactory,
+        IniConfiguration $iniConfiguration,
     ) {
         try {
             $cartView = $this->dispatchQuery(new GetCartForViewing($cartId));
@@ -251,14 +235,12 @@ class CartController extends PrestaShopAdminController
     /**
      * Gets requested cart information
      *
-     * @param int $cartId
-     *
      * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function getInfoAction(
         int $cartId,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ) {
         try {
             $cartInfo = $this->dispatchQuery(
@@ -277,15 +259,11 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Creates empty cart
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function createAction(
         Request $request,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         try {
             $customerId = $request->request->getInt('customerId');
@@ -302,17 +280,12 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Changes the cart address information
-     *
-     * @param int $cartId
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function editAddressesAction(
         int $cartId,
         Request $request,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         $invoiceAddressId = $request->request->getInt('invoiceAddressId');
         $deliveryAddressId = $request->request->getInt('deliveryAddressId');
@@ -333,17 +306,11 @@ class CartController extends PrestaShopAdminController
         }
     }
 
-    /**
-     * @param int $cartId
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function editCurrencyAction(
         int $cartId,
         Request $request,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         try {
             $this->dispatchCommand(new UpdateCartCurrencyCommand(
@@ -360,17 +327,11 @@ class CartController extends PrestaShopAdminController
         }
     }
 
-    /**
-     * @param int $cartId
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function editLanguageAction(
         int $cartId,
         Request $request,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         try {
             $this->dispatchCommand(new UpdateCartLanguageCommand(
@@ -387,17 +348,11 @@ class CartController extends PrestaShopAdminController
         }
     }
 
-    /**
-     * @param Request $request
-     * @param int $cartId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function editCarrierAction(
         Request $request,
         int $cartId,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         try {
             $carrierId = (int) $request->request->get('carrierId');
@@ -415,17 +370,11 @@ class CartController extends PrestaShopAdminController
         }
     }
 
-    /**
-     * @param Request $request
-     * @param int $cartId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function updateDeliverySettingsAction(
         Request $request,
         int $cartId,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         $configuration = $this->getConfiguration();
         $recycledPackagingEnabled = (bool) $configuration->get('PS_RECYCLABLE_PACK');
@@ -451,17 +400,12 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Adds cart rule to cart
-     *
-     * @param Request $request
-     * @param int $cartId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function addCartRuleAction(
         Request $request,
         int $cartId,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         $cartRuleId = $request->request->getInt('cartRuleId');
         try {
@@ -478,17 +422,12 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Deletes cart rule from cart
-     *
-     * @param int $cartId
-     * @param int $cartRuleId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function deleteCartRuleAction(
         int $cartId,
         int $cartRuleId,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         try {
             $this->dispatchCommand(new RemoveCartRuleFromCartCommand($cartId, $cartRuleId));
@@ -504,17 +443,12 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Adds product to cart
-     *
-     * @param Request $request
-     * @param int $cartId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function addProductAction(
         Request $request,
         int $cartId,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         $productId = $request->request->getInt('product_id');
         $quantity = $request->request->getInt('product_quantity');
@@ -548,19 +482,13 @@ class CartController extends PrestaShopAdminController
     /**
      * Modifying a price for a product in the cart is actually performed by using generated specific prices,
      * that are used only for this cart and this product.
-     *
-     * @param Request $request
-     * @param int $cartId
-     * @param int $productId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function editProductPriceAction(
         Request $request,
         int $cartId,
         int $productId,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         try {
             $addSpecificPriceCommand = new UpdateProductPriceInCartCommand(
@@ -585,10 +513,6 @@ class CartController extends PrestaShopAdminController
     /**
      * Changes product in cart quantity
      *
-     * @param Request $request
-     * @param int $cartId
-     * @param int $productId
-     *
      * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
@@ -596,7 +520,7 @@ class CartController extends PrestaShopAdminController
         Request $request,
         int $cartId,
         int $productId,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ) {
         try {
             $newQty = $request->request->getInt('newQty');
@@ -627,17 +551,12 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Deletes product from cart
-     *
-     * @param Request $request
-     * @param int $cartId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function deleteProductAction(
         Request $request,
         int $cartId,
-        IniConfiguration $iniConfiguration
+        IniConfiguration $iniConfiguration,
     ): JsonResponse {
         try {
             $productId = $request->request->getInt('productId');
@@ -661,10 +580,6 @@ class CartController extends PrestaShopAdminController
     }
 
     /**
-     * @param int $cartId
-     *
-     * @return CartForOrderCreation
-     *
      * @throws CartConstraintException
      */
     private function getCartInfo(int $cartId): CartForOrderCreation
@@ -681,31 +596,23 @@ class CartController extends PrestaShopAdminController
      * For this reason custom headers where passed containing submitted file sizes
      *  to check if request contains all files that were submitted in browser
      *
-     * @param string $fileSizeHeaders
-     * @param array $fileCustomizations
-     *
      * @throws FileUploadException
      */
     private function assertAllUploadedFilesReachedRequest(string $fileSizeHeaders, array $fileCustomizations): void
     {
-        if (!empty($fileSizeHeaders)) {
+        if (! empty($fileSizeHeaders)) {
             $fileSizesByInputName = json_decode($fileSizeHeaders, true);
             foreach ($fileSizesByInputName as $name => $size) {
-                if (!isset($fileCustomizations[$name])) {
-                    throw new FileUploadException('Some files were possibly not uploaded due to post_max_size limit', UPLOAD_ERR_INI_SIZE);
+                if (! isset($fileCustomizations[$name])) {
+                    throw new FileUploadException('Some files were possibly not uploaded due to post_max_size limit', \UPLOAD_ERR_INI_SIZE);
                 }
             }
         }
     }
 
-    /**
-     * @param Exception $e
-     *
-     * @return array
-     */
     private function getErrorMessages(
         Exception $e,
-        IniConfiguration $iniConfig
+        IniConfiguration $iniConfig,
     ): array {
         $minimalQuantity = $e instanceof MinimalQuantityException ? $e->getMinimalQuantity() : 0;
 
@@ -771,14 +678,14 @@ class CartController extends PrestaShopAdminController
                 'Admin.Catalog.Notification'
             ),
             FileUploadException::class => [
-                UPLOAD_ERR_INI_SIZE => $this->trans(
+                \UPLOAD_ERR_INI_SIZE => $this->trans(
                     'Max file size allowed is "%s" bytes.',
                     [
                         $iniConfig->getUploadMaxSizeInBytes(),
                     ],
                     'Admin.Notifications.Error'
                 ),
-                UPLOAD_ERR_EXTENSION => $this->trans(
+                \UPLOAD_ERR_EXTENSION => $this->trans(
                     'Image format not recognized, allowed formats are: .gif, .jpg, .png',
                     [],
                     'Admin.Notifications.Error'
@@ -809,11 +716,6 @@ class CartController extends PrestaShopAdminController
         ];
     }
 
-    /**
-     * @param Exception $e
-     *
-     * @return int
-     */
     private function getErrorCode(Exception $e): int
     {
         return match ($e::class) {
@@ -825,26 +727,20 @@ class CartController extends PrestaShopAdminController
     /**
      * This method will be removed in the next patch version. We rely on Cart ObjectModel to simplify the code
      * It returns the number of items of the specific product/attribute that are gift for the cart
-     *
-     * @param int $cartId
-     * @param int $productId
-     * @param int|null $attributeId
-     *
-     * @return int
      */
     private function getProductGiftedQuantity(int $cartId, int $productId, ?int $attributeId): int
     {
         $cart = new Cart($cartId);
         $giftCartRules = $cart->getCartRules(CartRule::FILTER_ACTION_GIFT, false);
-        if (count($giftCartRules) <= 0) {
+        if (\count($giftCartRules) <= 0) {
             return 0;
         }
 
         $giftedQuantity = 0;
         foreach ($giftCartRules as $giftCartRule) {
             if (
-                $productId == $giftCartRule['gift_product']
-                && (null === $attributeId || $attributeId == $giftCartRule['gift_product_attribute'])
+                $productId === $giftCartRule['gift_product']
+                && ($attributeId === null || $attributeId === $giftCartRule['gift_product_attribute'])
             ) {
                 ++$giftedQuantity;
             }

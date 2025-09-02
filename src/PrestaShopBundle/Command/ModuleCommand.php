@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,6 +43,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ModuleCommand extends Command
 {
+    /**
+     * @var InputInterface
+     */
+    protected $input;
+
+    /**
+     * @var OutputInterface
+     */
+    protected $output;
+
     private $allowedActions = [
         'install',
         'uninstall',
@@ -52,16 +63,6 @@ class ModuleCommand extends Command
         'configure',
         'delete',
     ];
-
-    /**
-     * @var InputInterface
-     */
-    protected $input;
-
-    /**
-     * @var OutputInterface
-     */
-    protected $output;
 
     public function __construct(
         protected readonly TranslatorInterface $translator,
@@ -79,7 +80,7 @@ class ModuleCommand extends Command
         $this
             ->setName('prestashop:module')
             ->setDescription('Manage your modules via command line')
-            ->addArgument('action', InputArgument::REQUIRED, sprintf('Action to execute (Allowed actions: %s).', implode(' / ', $this->allowedActions)))
+            ->addArgument('action', InputArgument::REQUIRED, \sprintf('Action to execute (Allowed actions: %s).', implode(' / ', $this->allowedActions)))
             ->addArgument('module name', InputArgument::REQUIRED, 'Module on which the action will be executed')
             ->addArgument('file path', InputArgument::OPTIONAL, 'YML file path for configuration');
     }
@@ -90,7 +91,7 @@ class ModuleCommand extends Command
         $this->output = $output;
         // We need to have an employee or the module hooks don't work
         // see LegacyHookSubscriber
-        if (!$this->context->getContext()->employee) {
+        if (! $this->context->getContext()->employee) {
             // Even a non existing employee is fine
             $this->context->getContext()->employee = new Employee(42);
         }
@@ -107,7 +108,7 @@ class ModuleCommand extends Command
         $action = $input->getArgument('action');
         $file = $input->getArgument('file path');
 
-        if (!in_array($action, $this->allowedActions)) {
+        if (! \in_array($action, $this->allowedActions, true)) {
             $this->displayMessage(
                 $this->translator->trans(
                     'Unknown module action. It must be one of these values: %actions%',
@@ -138,9 +139,9 @@ class ModuleCommand extends Command
 
         // Check if validation passed and exit in case of errors
         $errors = $this->moduleSelfConfigurator->validate();
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             // Display errors as a list
-            $errors = array_map(fn($val): string => '- ' . $val, $errors);
+            $errors = array_map(fn ($val): string => '- ' . $val, $errors);
             // And add a default message at the top
             array_unshift($errors, $this->translator->trans(
                 'Validation of configuration details failed:',

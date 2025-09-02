@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,29 +42,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TaxOptionsType extends TranslatorAwareType
 {
     /**
-     * TaxOptionsType constructor.
-     *
      * Backwards compatibility break introduced in 1.7.8.0 due to extension of TranslatorAwareType
-     *
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param bool $isEcotaxEnabled
-     * @param FormChoiceProviderInterface $taxAddressTypeChoiceProvider
-     * @param FormChoiceProviderInterface $taxRuleGroupChoiceProvider
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly bool $isEcotaxEnabled,
         private readonly FormChoiceProviderInterface $taxAddressTypeChoiceProvider,
-        private readonly FormChoiceProviderInterface $taxRuleGroupChoiceProvider
+        private readonly FormChoiceProviderInterface $taxRuleGroupChoiceProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -115,16 +105,19 @@ class TaxOptionsType extends TranslatorAwareType
                 'required' => false,
                 'help' => $this->trans(
                     'If you disable the ecotax, the ecotax for all your products will be set to 0.',
-                    'Admin.International.Help'),
+                    'Admin.International.Help'
+                ),
                 'multistore_configuration_key' => 'PS_USE_ECOTAX',
             ])
             ->add('eco_tax_rule_group', ChoiceType::class, [
                 'label' => $this->trans(
                     'Ecotax',
-                    'Admin.International.Feature'),
+                    'Admin.International.Feature'
+                ),
                 'help' => $this->trans(
                     'Define the ecotax (e.g. French ecotax: 20%).',
-                    'Admin.International.Help'),
+                    'Admin.International.Help'
+                ),
                 'choices' => $this->taxRuleGroupChoiceProvider->getChoices(),
                 'multistore_configuration_key' => 'PS_ECOTAX_TAX_RULES_GROUP_ID',
                 'row_attr' => [
@@ -134,8 +127,6 @@ class TaxOptionsType extends TranslatorAwareType
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see MultistoreConfigurationTypeExtension
      */
     public function getParent(): string

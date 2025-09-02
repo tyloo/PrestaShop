@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,14 +42,10 @@ class ThemeTranslationsFactory extends TranslationsFactory
         /**
          * @var ThemeProvider the theme provider
          */
-        private readonly ThemeProvider $themeProvider
-    )
-    {
+        private readonly ThemeProvider $themeProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createCatalogue($themeName, $locale = 'en_US')
     {
         return $this->themeProvider
@@ -57,9 +54,6 @@ class ThemeTranslationsFactory extends TranslationsFactory
             ->getMessageCatalogue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createTranslationsArray($themeName, $locale = 'en_US', $theme = null, $search = null)
     {
         $this->themeProvider
@@ -77,8 +71,6 @@ class ThemeTranslationsFactory extends TranslationsFactory
     /**
      * @param string $locale the catalogue locale
      * @param string $domain the catalogue domain
-     *
-     * @return string
      */
     protected function removeLocaleFromDomain($locale, $domain): string
     {
@@ -86,8 +78,8 @@ class ThemeTranslationsFactory extends TranslationsFactory
     }
 
     /**
-     * @param string $themeName the theme name
-     * @param string $locale the catalogue locale
+     * @param string      $themeName the theme name
+     * @param string      $locale    the catalogue locale
      * @param string|null $search
      *
      * @return array

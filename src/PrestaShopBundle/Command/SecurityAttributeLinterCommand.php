@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,6 +47,7 @@ use Symfony\Component\Routing\Route;
 final class SecurityAttributeLinterCommand extends Command
 {
     public const ACTION_LIST_ALL = 'list';
+
     public const ACTION_FIND_MISSING = 'find-missing';
 
     /**
@@ -86,15 +88,15 @@ final class SecurityAttributeLinterCommand extends Command
         'admin_theme_customize_layouts',
     ];
 
-    public function __construct(private readonly AdminRouteProvider $adminRouteProvider, private readonly SecurityAttributeLinter $securityAttributeLinter)
-    {
+    public function __construct(
+        private readonly AdminRouteProvider $adminRouteProvider,
+        private readonly SecurityAttributeLinter $securityAttributeLinter,
+    ) {
         parent::__construct();
     }
 
     /**
      * @param string $expression
-     *
-     * @return string
      */
     public static function parseExpression($expression): string
     {
@@ -104,11 +106,11 @@ final class SecurityAttributeLinterCommand extends Command
         $matches2 = [];
         preg_match($pattern1, $expression, $matches1);
 
-        if (count($matches1) > 1) {
+        if (\count($matches1) > 1) {
             return $matches1[1];
         }
         preg_match($pattern2, $expression, $matches2);
-        if (count($matches2) > 1) {
+        if (\count($matches2) > 1) {
             return $matches2[1];
         }
 
@@ -123,13 +125,10 @@ final class SecurityAttributeLinterCommand extends Command
         return [self::ACTION_LIST_ALL, self::ACTION_FIND_MISSING];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         $description = 'Checks if Back Office route controllers has configured Security annotations.';
-        $actionDescription = sprintf(
+        $actionDescription = \sprintf(
             'Action to perform, must be one of: %s',
             implode(', ', self::getAvailableActions())
         );
@@ -140,19 +139,12 @@ final class SecurityAttributeLinterCommand extends Command
             ->addArgument('action', InputArgument::REQUIRED, $actionDescription);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $actionToPerform = $input->getArgument('action');
 
-        if (!in_array($actionToPerform, self::getAvailableActions())) {
-            throw new InvalidArgumentException(sprintf(
-                'Action must be one of: %s',
-                implode(', ', self::getAvailableActions())
-            )
-            );
+        if (! \in_array($actionToPerform, self::getAvailableActions(), true)) {
+            throw new InvalidArgumentException(\sprintf('Action must be one of: %s', implode(', ', self::getAvailableActions())));
         }
 
         switch ($actionToPerform) {
@@ -166,22 +158,18 @@ final class SecurityAttributeLinterCommand extends Command
                 break;
 
             default:
-                throw new RuntimeException(sprintf('Unknown action %s', $actionToPerform));
+                throw new RuntimeException(\sprintf('Unknown action %s', $actionToPerform));
         }
 
         return 0;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
     private function listAllRoutesAndRelatedPermissions(InputInterface $input, OutputInterface $output): void
     {
         $listing = [];
 
         foreach ($this->adminRouteProvider->getRoutes() as $route) {
-            /* @var Route $route */
+            /** @var Route $route */
             try {
                 $attributes = $this->securityAttributeLinter->getRouteSecurityAttributes($route);
 
@@ -209,17 +197,13 @@ final class SecurityAttributeLinterCommand extends Command
         $io->table($headers, $listing);
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
     private function findRoutesWithMissingSecurityAttributes(InputInterface $input, OutputInterface $output): bool
     {
         $notConfiguredRoutes = [];
 
         /** @var Route $route */
         foreach ($this->adminRouteProvider->getRoutes() as $routeName => $route) {
-            if (in_array($routeName, self::EXCEPTION_ROUTES)) {
+            if (\in_array($routeName, self::EXCEPTION_ROUTES, true)) {
                 continue;
             }
             try {
@@ -231,10 +215,10 @@ final class SecurityAttributeLinterCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        if (!empty($notConfiguredRoutes)) {
-            $io->warning(sprintf(
+        if (! empty($notConfiguredRoutes)) {
+            $io->warning(\sprintf(
                 '%s routes are not configured with #[AdminSecurity] attribute:',
-                count($notConfiguredRoutes)
+                \count($notConfiguredRoutes)
             ));
             $io->listing($notConfiguredRoutes);
 

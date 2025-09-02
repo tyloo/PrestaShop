@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -85,16 +86,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class FormThemeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param FormRendererInterface $formRenderer
-     */
-    public function __construct(protected FormRendererInterface $formRenderer)
-    {
+    public function __construct(
+        protected FormRendererInterface $formRenderer,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -109,20 +105,14 @@ class FormThemeExtension extends AbstractTypeExtension
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        if (!empty($options['form_theme'])) {
-            $formThemes = is_array($options['form_theme']) ? $options['form_theme'] : [$options['form_theme']];
+        if (! empty($options['form_theme'])) {
+            $formThemes = \is_array($options['form_theme']) ? $options['form_theme'] : [$options['form_theme']];
             $this->formRenderer->setTheme($view, $formThemes, $options['use_default_themes']);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

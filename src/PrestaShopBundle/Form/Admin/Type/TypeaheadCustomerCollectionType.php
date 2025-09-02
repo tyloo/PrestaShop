@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,12 +38,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TypeaheadCustomerCollectionType extends CommonAbstractType
 {
     /**
-     * {@inheritdoc}
-     *
      * @param object $customerAdapter
      */
-    public function __construct(protected $customerAdapter)
-    {
+    public function __construct(
+        protected $customerAdapter,
+    ) {
     }
 
     /**
@@ -61,12 +61,12 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
         $view->vars['limit'] = $options['limit'];
 
         // if form is submitted, inject datas to display collection
-        if (!empty($view->vars['value']) && !empty($view->vars['value']['data'])) {
+        if (! empty($view->vars['value']) && ! empty($view->vars['value']['data'])) {
             $collection = [];
 
             $i = 0;
             foreach ($view->vars['value']['data'] as $id) {
-                if (!$id) {
+                if (! $id) {
                     continue;
                 }
                 $customer = $this->customerAdapter->getCustomer($id);
@@ -77,7 +77,7 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
                 ++$i;
 
                 // if collection length is up to limit, break
-                if ($options['limit'] != 0 && $i >= $options['limit']) {
+                if ($options['limit'] !== 0 && $i >= $options['limit']) {
                     break;
                 }
             }
@@ -102,9 +102,6 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

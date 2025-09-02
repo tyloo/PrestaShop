@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProfileChoiceType extends AbstractType
 {
-    /**
-     * @param array $profileChoices
-     */
-    public function __construct(private readonly array $profileChoices)
-    {
+    public function __construct(
+        private readonly array $profileChoices,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -56,9 +52,6 @@ class ProfileChoiceType extends AbstractType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

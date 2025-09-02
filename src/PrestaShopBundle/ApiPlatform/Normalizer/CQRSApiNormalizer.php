@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,18 +77,18 @@ class CQRSApiNormalizer extends ObjectNormalizer
         ?PropertyTypeExtractorInterface $propertyTypeExtractor = null,
         ?ClassDiscriminatorResolverInterface $classDiscriminatorResolver = null,
         ?callable $objectClassResolver = null,
-        array $defaultContext = []
+        array $defaultContext = [],
     ) {
         parent::__construct($classMetadataFactory, $nameConverter, $propertyAccessor, $propertyTypeExtractor, $classDiscriminatorResolver, $objectClassResolver, $defaultContext);
     }
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = [])
     {
-        if (!empty($context['input']['class']) && $this->isDomainObject($context['input']['class'], [])) {
+        if (! empty($context['input']['class']) && $this->isDomainObject($context['input']['class'], [])) {
             $inputType = $context['input']['class'];
             unset($context['input']);
 
-            if (!empty($context['operation']) && $this->CQRSApiValidator->hasConstraints($type)) {
+            if (! empty($context['operation']) && $this->CQRSApiValidator->hasConstraints($type)) {
                 $apiResource = parent::denormalize($data, $type, $format, $context);
                 $this->CQRSApiValidator->validate($apiResource, $context['operation']);
             }
@@ -95,7 +96,7 @@ class CQRSApiNormalizer extends ObjectNormalizer
             // Prepare the list of localized values since the LocalizedValue attribute is set on the API Resource class
             // but not on the CQRS input class, we need to pass this information via the context
             $localizedValueParameters = $this->localizedValueUpdater->getLocalizedAttributesContext($type, $context);
-            if (!empty($localizedValueParameters)) {
+            if (! empty($localizedValueParameters)) {
                 // CQRS commands are base on Language IDs, so we force the conversion
                 foreach ($localizedValueParameters as $parameterName => $localizedValueParameter) {
                     $localizedValueParameters[$parameterName][LocalizedValue::DENORMALIZED_KEY] = LocalizedValue::ID_KEY;
@@ -103,12 +104,12 @@ class CQRSApiNormalizer extends ObjectNormalizer
                 }
                 $context += [LocalizedValue::LOCALIZED_VALUE_PARAMETERS => $localizedValueParameters];
             }
-            if (!empty($context['operation']) && !empty($context['operation']->getExtraProperties()['CQRSCommandMapping'])) {
+            if (! empty($context['operation']) && ! empty($context['operation']->getExtraProperties()['CQRSCommandMapping'])) {
                 $context[NormalizationMapper::NORMALIZATION_MAPPING] = ($context[NormalizationMapper::NORMALIZATION_MAPPING] ?? []) + $context['operation']->getExtraProperties()['CQRSCommandMapping'];
             }
 
-            if (!$this->serializer instanceof DenormalizerInterface) {
-                throw new LogicException(sprintf('Cannot create an instance of "%s" from serialized data because the serializer inject in "%s" is not a denormalizer.', $inputType, static::class));
+            if (! $this->serializer instanceof DenormalizerInterface) {
+                throw new LogicException(\sprintf('Cannot create an instance of "%s" from serialized data because the serializer inject in "%s" is not a denormalizer.', $inputType, static::class));
             }
 
             return $this->serializer->denormalize($data, $inputType, $format, $context);
@@ -138,7 +139,7 @@ class CQRSApiNormalizer extends ObjectNormalizer
     {
         // Some API Resource operation can define another class as the input, which is defined in the context,
         // if such input class is a domain class then this normalizer should handle it
-        if (!empty($context['input']['class'])) {
+        if (! empty($context['input']['class'])) {
             $objectOrType = $context['input']['class'];
         }
 
@@ -201,7 +202,7 @@ class CQRSApiNormalizer extends ObjectNormalizer
 
         foreach ($reflClass->getMethods(ReflectionMethod::IS_PUBLIC) as $reflMethod) {
             if (
-                0 !== $reflMethod->getNumberOfRequiredParameters()
+                $reflMethod->getNumberOfRequiredParameters() !== 0
                 || $reflMethod->isStatic()
                 || $reflMethod->isConstructor()
                 || $reflMethod->isDestructor()
@@ -250,11 +251,7 @@ class CQRSApiNormalizer extends ObjectNormalizer
      * Call all the method with multiple arguments and remove the data from the normalized data since it has already been denormalized into
      * the object.
      *
-     * @param array $data
-     * @param object $object
      * @param array<string, ReflectionMethod> $methodsWithMultipleArguments
-     *
-     * @return void
      */
     protected function executeMethodsWithMultipleArguments(array &$data, object $object, array $methodsWithMultipleArguments, array $context, ?string $format = null): void
     {
@@ -263,10 +260,10 @@ class CQRSApiNormalizer extends ObjectNormalizer
             // denormalize parameters
             foreach ($reflectionMethod->getParameters() as $parameter) {
                 $parameterType = $parameter->getType();
-                if ($parameterType instanceof ReflectionNamedType && !$parameterType->isBuiltin()) {
+                if ($parameterType instanceof ReflectionNamedType && ! $parameterType->isBuiltin()) {
                     $childContext = $this->createChildContext($context, $parameter->getName(), $format);
-                    if (!$this->serializer instanceof DenormalizerInterface) {
-                        throw new LogicException(sprintf('Cannot denormalize parameter "%s" for method "%s" because injected serializer is not a denormalizer.', $parameter->getName(), $reflectionMethod->getName()));
+                    if (! $this->serializer instanceof DenormalizerInterface) {
+                        throw new LogicException(\sprintf('Cannot denormalize parameter "%s" for method "%s" because injected serializer is not a denormalizer.', $parameter->getName(), $reflectionMethod->getName()));
                     }
 
                     if ($this->serializer->supportsDenormalization($methodParameters[$parameter->getName()], $parameterType->getName(), $format, $childContext)) {
@@ -281,9 +278,6 @@ class CQRSApiNormalizer extends ObjectNormalizer
     }
 
     /**
-     * @param ReflectionClass $reflectionClass
-     * @param array $normalizedData
-     *
      * @return array<string, ReflectionMethod>
      */
     protected function findMethodsWithMultipleArguments(ReflectionClass $reflectionClass, array $normalizedData): array
@@ -302,9 +296,9 @@ class CQRSApiNormalizer extends ObjectNormalizer
 
             // Remove set/with to get the potential matching property in data (use full method name by default)
             if (str_starts_with($reflectionMethod->getName(), 'set')) {
-                $methodPropertyName = lcfirst(substr($reflectionMethod->getName(), 3));
+                $methodPropertyName = lcfirst(mb_substr($reflectionMethod->getName(), 3));
             } elseif (str_starts_with($reflectionMethod->getName(), 'with')) {
-                $methodPropertyName = lcfirst(substr($reflectionMethod->getName(), 4));
+                $methodPropertyName = lcfirst(mb_substr($reflectionMethod->getName(), 4));
             } else {
                 $methodPropertyName = $reflectionMethod->getName();
             }
@@ -315,14 +309,14 @@ class CQRSApiNormalizer extends ObjectNormalizer
             }
 
             $methodParameters = $normalizedData[$methodPropertyName];
-            if (!is_array($methodParameters)) {
-                throw new InvalidArgumentException(sprintf('Value for method "%s" should be an array', $reflectionMethod->getName()));
+            if (! \is_array($methodParameters)) {
+                throw new InvalidArgumentException(\sprintf('Value for method "%s" should be an array', $reflectionMethod->getName()));
             }
 
             // Now check that all required parameters are present
             foreach ($reflectionMethod->getParameters() as $reflectionParameter) {
-                if (!$reflectionParameter->isOptional() && !isset($methodParameters[$reflectionParameter->getName()])) {
-                    throw new InvalidArgumentException(sprintf('Missing required parameter "%s" for method "%s"', $reflectionParameter->getName(), $reflectionMethod->getName()));
+                if (! $reflectionParameter->isOptional() && ! isset($methodParameters[$reflectionParameter->getName()])) {
+                    throw new InvalidArgumentException(\sprintf('Missing required parameter "%s" for method "%s"', $reflectionParameter->getName(), $reflectionMethod->getName()));
                 }
             }
             $methodsWithMultipleArguments[$methodPropertyName] = $reflectionMethod;

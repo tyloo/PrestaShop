@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,12 +41,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ModuleGuardListener implements EventSubscriberInterface
 {
     /**
-     * @param FolderGuardInterface $vendorFolderGuard
      * @param string $modulesDir
-     * @param LoggerInterface $logger
      */
-    public function __construct(private readonly FolderGuardInterface $vendorFolderGuard, private $modulesDir, private readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        private readonly FolderGuardInterface $vendorFolderGuard,
+        private $modulesDir,
+        private readonly LoggerInterface $logger,
+    ) {
     }
 
     /**
@@ -60,21 +62,18 @@ class ModuleGuardListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ModuleManagementEvent $event
-     */
     public function protectModule(ModuleManagementEvent $event): void
     {
         $moduleName = $event->getModule()->get('name');
-        $moduleVendorPath = $this->modulesDir . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'vendor';
+        $moduleVendorPath = $this->modulesDir . \DIRECTORY_SEPARATOR . $moduleName . \DIRECTORY_SEPARATOR . 'vendor';
 
         try {
-            $this->logger->info(sprintf('Protect vendor folder in module %s', $moduleName));
+            $this->logger->info(\sprintf('Protect vendor folder in module %s', $moduleName));
             $this->vendorFolderGuard->protectFolder($moduleVendorPath);
         } catch (IOException $e) {
-            $this->logger->error(sprintf('%s: %s', $e->getMessage(), $e->getPath()));
+            $this->logger->error(\sprintf('%s: %s', $e->getMessage(), $e->getPath()));
         } catch (FileNotFoundException) {
-            $this->logger->info(sprintf('Module %s has no vendor folder', $moduleName));
+            $this->logger->info(\sprintf('Module %s has no vendor folder', $moduleName));
         }
     }
 }

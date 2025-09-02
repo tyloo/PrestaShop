@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,8 +32,6 @@ namespace PrestaShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ShopUrl
- *
  * @ORM\Table(
  *     indexes={@ORM\Index(name="id_shop", columns={"id_shop", "main"})},
  *     uniqueConstraints={

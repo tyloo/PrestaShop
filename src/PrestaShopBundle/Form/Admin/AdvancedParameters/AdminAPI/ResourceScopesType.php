@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class ResourceScopesType extends TranslatorAwareType implements DataMapperInterf
         TranslatorInterface $translator,
         array $locales,
         private readonly ApiResourceScopesExtractorInterface $resourceScopeExtractor,
-        private readonly ModuleRepository $moduleRepository
+        private readonly ModuleRepository $moduleRepository,
     ) {
         parent::__construct($translator, $locales);
     }
@@ -80,7 +81,7 @@ class ResourceScopesType extends TranslatorAwareType implements DataMapperInterf
             foreach ($resource->getScopes() as $scope) {
                 $formattedData[] = [
                     'scope' => $scope,
-                    'associated' => is_array($viewData) && in_array($scope, $viewData),
+                    'associated' => \is_array($viewData) && \in_array($scope, $viewData, true),
                 ];
             }
             $resourceForm->setData($formattedData);
@@ -115,9 +116,6 @@ class ResourceScopesType extends TranslatorAwareType implements DataMapperInterf
         return AccordionType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $scopes = 0;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,8 +48,6 @@ class LogsController extends PrestaShopAdminController
 {
     /**
      * @param LogsFilters $filters the list of filters from the request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
@@ -73,17 +72,12 @@ class LogsController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
     #[DemoRestricted(redirectRoute: 'admin_logs_index')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_logs_index')]
     public function searchAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.definition.factory.logs')]
-        GridDefinitionFactoryInterface $definitionFactory
+        GridDefinitionFactoryInterface $definitionFactory,
     ): RedirectResponse {
         $this->dispatchHookWithParameters('actionAdminLogsControllerPostProcessBefore', ['controller' => $this]);
 
@@ -96,8 +90,6 @@ class LogsController extends PrestaShopAdminController
     }
 
     /**
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_logs_index')]
@@ -117,7 +109,7 @@ class LogsController extends PrestaShopAdminController
 
             $saveErrors = $formHandler->save($data);
 
-            if (0 === count($saveErrors)) {
+            if (\count($saveErrors) === 0) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_logs_index');
@@ -130,8 +122,6 @@ class LogsController extends PrestaShopAdminController
     }
 
     /**
-     * @return RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception\InvalidArgumentException
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_logs_index')]

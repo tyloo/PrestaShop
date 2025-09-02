@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,6 +34,7 @@ use PrestaShopBundle\Entity\Lang;
 class LangRepository extends EntityRepository implements LanguageRepositoryInterface
 {
     public const ISO_CODE = 'isoCode';
+
     public const LOCALE = 'locale';
 
     /**
@@ -86,9 +88,9 @@ class LangRepository extends EntityRepository implements LanguageRepositoryInter
     public function getOneByLocaleOrIsoCode($locale)
     {
         $language = $this->getOneByLocale($locale);
-        if (!$language) {
+        if (! $language) {
             $localeParts = explode('-', $locale);
-            $isoCode = strtolower($localeParts[0]);
+            $isoCode = mb_strtolower($localeParts[0]);
             $language = $this->getOneByIsoCode($isoCode);
         }
 

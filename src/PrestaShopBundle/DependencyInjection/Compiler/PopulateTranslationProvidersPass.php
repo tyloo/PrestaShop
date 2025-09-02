@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,12 +38,9 @@ class PopulateTranslationProvidersPass implements CompilerPassInterface
 {
     public const DEFINITION = 'prestashop.translation.translations_factory';
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has(self::DEFINITION)) {
+        if (! $container->has(self::DEFINITION)) {
             return;
         }
 

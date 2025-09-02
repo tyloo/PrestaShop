@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class FeatureFlagSwitchType extends AbstractType
 {
     public const TRANS_DOMAIN = 'Admin.Global';
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -57,9 +55,6 @@ class FeatureFlagSwitchType extends AbstractType
         $resolver->setAllowedTypes('forced_by_env', 'bool');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['types'] = $options['types'];
@@ -67,9 +62,6 @@ class FeatureFlagSwitchType extends AbstractType
         $view->vars['forced_by_env'] = $options['forced_by_env'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return SwitchType::class;

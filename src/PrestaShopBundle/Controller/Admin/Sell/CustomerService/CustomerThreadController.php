@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,18 +60,13 @@ class CustomerThreadController extends PrestaShopAdminController
 {
     /**
      * Show list of customer threads
-     *
-     * @param Request $request
-     * @param CustomerThreadFilter $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.factory.customer_thread')]
         GridFactoryInterface $customerGridFactory,
-        CustomerThreadFilter $filters
+        CustomerThreadFilter $filters,
     ): Response {
         $customerThreadGrid = $customerGridFactory->getGrid($filters);
 
@@ -85,16 +81,13 @@ class CustomerThreadController extends PrestaShopAdminController
     /**
      * View customer thread
      *
-     * @param Request $request
-     * @param int $customerThreadId
-     *
      * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'You do not have permission to view this.', redirectRoute: 'admin_customer_threads_index')]
     public function viewAction(
         Request $request,
         EmployeeContext $employeeContext,
-        int $customerThreadId
+        int $customerThreadId,
     ) {
         /** @var CustomerThreadView $customerThreadView */
         $customerThreadView = $this->dispatchQuery(
@@ -127,7 +120,6 @@ class CustomerThreadController extends PrestaShopAdminController
     /**
      * Reply to customer thread
      *
-     * @param Request $request
      * @param int $customerThreadId
      *
      * @return RedirectResponse
@@ -138,13 +130,13 @@ class CustomerThreadController extends PrestaShopAdminController
         $replyToCustomerThreadForm = $this->createForm(ReplyToCustomerThreadType::class);
         $replyToCustomerThreadForm->handleRequest($request);
 
-        if (!$replyToCustomerThreadForm->isSubmitted()) {
+        if (! $replyToCustomerThreadForm->isSubmitted()) {
             return $this->redirectToRoute('admin_customer_threads_view', [
                 'customerThreadId' => $customerThreadId,
             ]);
         }
 
-        if (!$replyToCustomerThreadForm->isValid()) {
+        if (! $replyToCustomerThreadForm->isValid()) {
             foreach ($replyToCustomerThreadForm->getErrors(true) as $error) {
                 $this->addFlash('error', $error->getMessage());
             }
@@ -183,9 +175,6 @@ class CustomerThreadController extends PrestaShopAdminController
     /**
      * Update customer thread status
      *
-     * @param int $customerThreadId
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_customer_threads_index')]
@@ -200,11 +189,6 @@ class CustomerThreadController extends PrestaShopAdminController
 
     /**
      * Updates customer thread status directly from list page.
-     *
-     * @param int $customerThreadId
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customer_threads')]
     public function updateStatusFromListAction(int $customerThreadId, Request $request): RedirectResponse
@@ -217,7 +201,6 @@ class CustomerThreadController extends PrestaShopAdminController
     /**
      * Forward customer thread to another employee
      *
-     * @param Request $request
      * @param int $customerThreadId
      *
      * @return RedirectResponse
@@ -228,13 +211,13 @@ class CustomerThreadController extends PrestaShopAdminController
         $forwardCustomerThreadForm = $this->createForm(ForwardCustomerThreadType::class);
         $forwardCustomerThreadForm->handleRequest($request);
 
-        if (!$forwardCustomerThreadForm->isSubmitted()) {
+        if (! $forwardCustomerThreadForm->isSubmitted()) {
             return $this->redirectToRoute('admin_customer_threads_view', [
                 'customerThreadId' => $customerThreadId,
             ]);
         }
 
-        if (!$forwardCustomerThreadForm->isValid()) {
+        if (! $forwardCustomerThreadForm->isValid()) {
             foreach ($forwardCustomerThreadForm->getErrors(true) as $error) {
                 $this->addFlash('error', $error->getMessage());
             }
@@ -246,7 +229,7 @@ class CustomerThreadController extends PrestaShopAdminController
 
         $data = $forwardCustomerThreadForm->getData();
 
-        if (!$data['employee_id'] && empty($data['someone_else_email'])) {
+        if (! $data['employee_id'] && empty($data['someone_else_email'])) {
             $this->addFlash('error', $this->trans('The email address is invalid.', [], 'Admin.Notifications.Error'));
 
             return $this->redirectToRoute('admin_customer_threads_view', [
@@ -279,7 +262,7 @@ class CustomerThreadController extends PrestaShopAdminController
 
             $this->addFlash(
                 'success',
-                sprintf('%s %s', $this->trans('Message forwarded to', [], 'Admin.Catalog.Feature'), $forwardEmail)
+                \sprintf('%s %s', $this->trans('Message forwarded to', [], 'Admin.Catalog.Feature'), $forwardEmail)
             );
         } catch (CustomerServiceException $e) {
             $this->addFlash('error', $this->getErrorMessageForException($e, $this->getErrorMessages()));
@@ -294,10 +277,6 @@ class CustomerThreadController extends PrestaShopAdminController
 
     /**
      * Delete customer thread
-     *
-     * @param int $customerThreadId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_customer_threads')]
     public function deleteAction(int $customerThreadId): RedirectResponse
@@ -316,10 +295,6 @@ class CustomerThreadController extends PrestaShopAdminController
 
     /**
      * Bulk delete customer thread
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_customer_threads')]
     public function bulkDeleteAction(Request $request): RedirectResponse
@@ -342,8 +317,6 @@ class CustomerThreadController extends PrestaShopAdminController
 
     /**
      * Returns customer thread error messages mapping.
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -380,16 +353,12 @@ class CustomerThreadController extends PrestaShopAdminController
 
     /**
      * Collects customer thread IDs from request.
-     *
-     * @param Request $request
-     *
-     * @return array
      */
     private function getBulkCustomerThreadsFromRequest(Request $request): array
     {
         $customerThreadIds = $request->request->all('customer_thread_bulk');
 
-        if (!is_array($customerThreadIds)) {
+        if (! \is_array($customerThreadIds)) {
             return [];
         }
 

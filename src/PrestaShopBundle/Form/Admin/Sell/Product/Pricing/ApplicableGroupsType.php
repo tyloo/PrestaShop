@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,7 +46,7 @@ class ApplicableGroupsType extends TranslatorAwareType
         protected FormChoiceProviderInterface $groupByIdChoiceProvider,
         protected FormChoiceProviderInterface $shopByIdChoiceProvider,
         protected bool $isMultiShopEnabled,
-        protected int $contextShopId
+        protected int $contextShopId,
     ) {
         parent::__construct($translator, $locales);
     }
@@ -85,6 +86,14 @@ class ApplicableGroupsType extends TranslatorAwareType
         }
     }
 
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'columns_number' => 4,
+        ]);
+    }
+
     /**
      * @return array<string, int>
      */
@@ -103,13 +112,5 @@ class ApplicableGroupsType extends TranslatorAwareType
         }
 
         return $choices;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        parent::configureOptions($resolver);
-        $resolver->setDefaults([
-            'columns_number' => 4,
-        ]);
     }
 }

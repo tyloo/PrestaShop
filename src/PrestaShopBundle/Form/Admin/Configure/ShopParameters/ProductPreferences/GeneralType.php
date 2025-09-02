@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,22 +44,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class GeneralType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param LegacyContext $legacyContext
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly LegacyContext $legacyContext
+        private readonly LegacyContext $legacyContext,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -79,7 +72,7 @@ class GeneralType extends TranslatorAwareType
                     'To hide prices for a specific group, go to [1]Customer Settings > Groups[/1].',
                     'Admin.Shopparameters.Help',
                     [
-                        '[1]' => sprintf(
+                        '[1]' => \sprintf(
                             '<a target="_blank" href="%s">',
                             $this->legacyContext->getAdminLink('AdminGroups')
                         ),
@@ -196,9 +189,6 @@ class GeneralType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -206,9 +196,6 @@ class GeneralType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'product_preferences_general_block';

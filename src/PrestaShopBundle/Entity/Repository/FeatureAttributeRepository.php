@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,10 +46,6 @@ class FeatureAttributeRepository
     private $shopId;
 
     /**
-     * FeatureAttributeRepository constructor.
-     *
-     * @param Connection $connection
-     * @param ContextAdapter $contextAdapter
      * @param string $tablePrefix
      *
      * @throws NotImplementedException
@@ -56,18 +53,18 @@ class FeatureAttributeRepository
     public function __construct(
         private Connection $connection,
         ContextAdapter $contextAdapter,
-        private $tablePrefix
+        private $tablePrefix,
     ) {
         $context = $contextAdapter->getContext();
 
-        if (!$context->employee instanceof Employee) {
+        if (! $context->employee instanceof Employee) {
             throw new RuntimeException('Determining the active language requires a contextual employee instance.');
         }
 
         $languageId = $context->employee->id_lang;
         $this->languageId = (int) $languageId;
 
-        if (!$context->shop instanceof Shop) {
+        if (! $context->shop instanceof Shop) {
             throw new RuntimeException('Determining the active shop requires a contextual shop instance.');
         }
 
@@ -79,9 +76,6 @@ class FeatureAttributeRepository
         $this->shopId = $shop->getContextualShopId();
     }
 
-    /**
-     * @return mixed
-     */
     public function getAttributes()
     {
         $query = str_replace(
@@ -133,9 +127,6 @@ class FeatureAttributeRepository
         return $this->castNumericToInt($rows);
     }
 
-    /**
-     * @return mixed
-     */
     public function getFeatures()
     {
         $query = str_replace(
@@ -194,7 +185,7 @@ class FeatureAttributeRepository
             $row['values'] = explode(',', (string) $row['values']);
 
             $row['values'] = array_map(function ($value) {
-                if (!str_contains($value, ':')) {
+                if (! str_contains($value, ':')) {
                     return $value;
                 }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class LegacySessionAlert
             return '';
         }
 
-        return match (intval($confirmationIndex)) {
+        return match (\intval($confirmationIndex)) {
             1 => $this->translator->trans('Successful deletion', [], 'Admin.Notifications.Success'),
             2 => $this->translator->trans('The selection has been successfully deleted.', [], 'Admin.Notifications.Success'),
             3 => $this->translator->trans('Successful creation', [], 'Admin.Notifications.Success'),
@@ -96,7 +97,7 @@ class LegacySessionAlert
             return '';
         }
 
-        return match (intval($errorIndex)) {
+        return match (\intval($errorIndex)) {
             1 => $this->translator->trans(
                 'The root category of the shop %shop% is not associated with the current shop. You can\'t access this page. Please change the root category of the shop.',
                 [

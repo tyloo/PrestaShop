@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,6 +37,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class DiscountConditionsType extends TranslatorAwareType
 {
     public const CART_CONDITIONS = 'cart_conditions';
+
     public const DELIVERY_CONDITIONS = 'delivery_conditions';
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -49,7 +51,7 @@ class DiscountConditionsType extends TranslatorAwareType
             ])
         ;
 
-        if (in_array($discountType, [DiscountType::FREE_SHIPPING, DiscountType::ORDER_LEVEL, DiscountType::FREE_GIFT])) {
+        if (\in_array($discountType, [DiscountType::FREE_SHIPPING, DiscountType::ORDER_LEVEL, DiscountType::FREE_GIFT], true)) {
             $builder->add(self::DELIVERY_CONDITIONS, DeliveryConditionsType::class, [
                 'label' => $this->trans('On delivery', 'Admin.Catalog.Feature'),
                 'label_tag_name' => 'h3',

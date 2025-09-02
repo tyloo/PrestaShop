@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,10 +59,6 @@ class EmployeeProvider implements UserProviderInterface
      * Fetch the Employee entity that matches the given username.
      * Cache system doesn't support "@" character, so we rely on a sha1 expression.
      *
-     * @param string $identifier
-     *
-     * @return UserInterface
-     *
      * @throws UserNotFoundException
      */
     public function loadUserByIdentifier(string $identifier): UserInterface
@@ -78,14 +75,12 @@ class EmployeeProvider implements UserProviderInterface
     /**
      * Reload an Employee based on the serialized one and returns a fresh instance.
      *
-     * @param UserInterface $user
-     *
      * @return UserInterface
      */
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof DoctrineEmployee) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
+        if (! $user instanceof DoctrineEmployee) {
+            throw new UnsupportedUserException(\sprintf('Instances of "%s" are not supported.', $user::class));
         }
 
         // Always reload the employee regardless of the cache
@@ -112,8 +107,8 @@ class EmployeeProvider implements UserProviderInterface
     {
         /** @var DoctrineEmployee|null $doctrineEmployee */
         $doctrineEmployee = $this->employeeRepository->loadEmployeeByIdentifier($email, $refresh);
-        if (empty($doctrineEmployee) || !$doctrineEmployee->isActive()) {
-            throw new UserNotFoundException(sprintf('Identifier "%s" does not exist.', $email));
+        if (empty($doctrineEmployee) || ! $doctrineEmployee->isActive()) {
+            throw new UserNotFoundException(\sprintf('Identifier "%s" does not exist.', $email));
         }
 
         return $doctrineEmployee;

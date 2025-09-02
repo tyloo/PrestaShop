@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,11 +58,6 @@ class ImageSettingsController extends PrestaShopAdminController
 {
     /**
      * Displays image settings listing page.
-     *
-     * @param Request $request
-     * @param ImageTypeFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -70,7 +66,7 @@ class ImageSettingsController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.grid.factory.image_type')]
         GridFactoryInterface $imageTypeGridFactory,
         #[Autowire(service: 'prestashop.admin.image_settings.form_handler')]
-        ConfigurationFormHandlerInterface $configFormHandler
+        ConfigurationFormHandlerInterface $configFormHandler,
     ): Response {
         // Get image type grid
         $imageTypeGrid = $imageTypeGridFactory->getGrid($filters);
@@ -105,7 +101,7 @@ class ImageSettingsController extends PrestaShopAdminController
     public function saveSettingsAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.image_settings.form_handler')]
-        ConfigurationFormHandlerInterface $configFormHandler
+        ConfigurationFormHandlerInterface $configFormHandler,
     ): Response {
         try {
             // Create form to set some image settings
@@ -129,10 +125,6 @@ class ImageSettingsController extends PrestaShopAdminController
 
     /**
      * Show "Add new" image type form and handles its submit.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_image_settings_index')]
     public function createAction(
@@ -167,11 +159,6 @@ class ImageSettingsController extends PrestaShopAdminController
 
     /**
      * Displays image type for edit and handles its submit.
-     *
-     * @param int $imageTypeId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_image_settings_index')]
     public function editAction(
@@ -214,10 +201,6 @@ class ImageSettingsController extends PrestaShopAdminController
 
     /**
      * Delete image type.
-     *
-     * @param int $imageTypeId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_image_settings_index')]
     public function deleteAction(Request $request, int $imageTypeId): RedirectResponse
@@ -243,10 +226,6 @@ class ImageSettingsController extends PrestaShopAdminController
 
     /**
      * Deletes image type in bulk action
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_image_settings_index')]
     public function bulkDeleteAction(Request $request): RedirectResponse
@@ -268,25 +247,7 @@ class ImageSettingsController extends PrestaShopAdminController
     }
 
     /**
-     * Collects IDs from request.
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    private function getBulkIdsFromRequest(Request $request): array
-    {
-        $ids = $request->request->all('image_type_bulk');
-
-        return array_map('intval', $ids);
-    }
-
-    /**
      * Regenerate thumbnails.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_image_settings_index')]
     public function regenerateThumbnailsAction(Request $request): RedirectResponse
@@ -306,5 +267,15 @@ class ImageSettingsController extends PrestaShopAdminController
         }
 
         return $this->redirectToRoute('admin_image_settings_index');
+    }
+
+    /**
+     * Collects IDs from request.
+     */
+    private function getBulkIdsFromRequest(Request $request): array
+    {
+        $ids = $request->request->all('image_type_bulk');
+
+        return array_map('intval', $ids);
     }
 }

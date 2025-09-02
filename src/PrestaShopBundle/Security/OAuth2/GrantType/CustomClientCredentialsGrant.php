@@ -50,7 +50,7 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
         DateInterval $accessTokenTTL,
         ClientEntityInterface $client,
         $userIdentifier,
-        array $scopes = []
+        array $scopes = [],
     ) {
         /** @var Client $client */
         if ($client->getLifetime() !== null) {
@@ -68,8 +68,7 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
      *
      * When both parameters are provided however, we throw an exception as we cannot tell which one should be prioritized.
      *
-     * @param string $parameter
-     * @param ServerRequestInterface $request
+     * @param string      $parameter
      * @param string|null $default
      *
      * @return string|null
@@ -106,16 +105,16 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
         }
 
         $scopes = [];
-        if (is_string($scope)) {
+        if (\is_string($scope)) {
             // Prioritize separation by comma, else use space
             if (str_contains($scope, ',')) {
                 $scopes = explode(',', $scope);
             } else {
                 $scopes = explode(' ', $scope);
             }
-            $scopes = array_map(fn (string $scope): string => trim($scope), $scopes);
-        } elseif (is_array($scope)) {
-            $scopes = array_map(fn (string $scope): string => trim($scope), $scope);
+            $scopes = array_map(fn (string $scope): string => mb_trim($scope), $scopes);
+        } elseif (\is_array($scope)) {
+            $scopes = array_map(fn (string $scope): string => mb_trim($scope), $scope);
         }
 
         return implode(' ', $scopes);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ class UploadedFileNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function normalize(mixed $object, ?string $format = null, array $context = [])
     {
-        if (!($object instanceof File)) {
+        if (! ($object instanceof File)) {
             throw new InvalidArgumentException('Expected object to be a ' . File::class);
         }
 

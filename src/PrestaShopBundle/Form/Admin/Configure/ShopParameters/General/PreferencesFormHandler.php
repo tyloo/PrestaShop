@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,13 +37,13 @@ use Symfony\Component\Form\FormFactoryInterface;
  */
 final class PreferencesFormHandler implements FormHandlerInterface
 {
-    public function __construct(private readonly FormFactoryInterface $formFactory, private readonly PreferencesFormDataProvider $formDataProvider, private readonly Configuration $configuration)
-    {
+    public function __construct(
+        private readonly FormFactoryInterface $formFactory,
+        private readonly PreferencesFormDataProvider $formDataProvider,
+        private readonly Configuration $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getForm()
     {
         return $this->formFactory->createBuilder()
@@ -53,9 +54,6 @@ final class PreferencesFormHandler implements FormHandlerInterface
             ->getForm();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function save(array $data)
     {
         return $this->formDataProvider->setData($data);

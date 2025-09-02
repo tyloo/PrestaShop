@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ class CategoryTreeSelectorType extends CollectionType
 {
     private const PROTOTYPE_INDEX_PLACEHOLDER = '__CATEGORY_INDEX__';
 
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -84,9 +80,6 @@ class CategoryTreeSelectorType extends CollectionType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -95,9 +88,6 @@ class CategoryTreeSelectorType extends CollectionType
         ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'category_tree_selector';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,23 +46,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PricingType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param string $defaultCurrencyIsoCode
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly string $defaultCurrencyIsoCode
+        private readonly string $defaultCurrencyIsoCode,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -113,9 +105,6 @@ class PricingType extends TranslatorAwareType
             ]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

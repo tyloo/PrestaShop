@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,19 +58,17 @@ class FloatParser
      *
      * @param string $value
      *
-     * @return float
-     *
      * @throws InvalidArgumentException if the provided value is not a string
      *                                  or if it cannot be interpreted as a number
      */
     public function fromString($value): float
     {
-        if (!is_string($value)) {
-            throw new InvalidArgumentException(sprintf('Invalid argument: string expected, got %s', gettype($value)));
+        if (! \is_string($value)) {
+            throw new InvalidArgumentException(\sprintf('Invalid argument: string expected, got %s', \gettype($value)));
         }
 
-        $value = trim($value);
-        if ('' === $value) {
+        $value = mb_trim($value);
+        if ($value === '') {
             return 0.0;
         }
 
@@ -79,14 +78,14 @@ class FloatParser
         // remove all non-digit characters
         $split = preg_split('/[^\dE-]+/', $value);
 
-        if (1 === count($split)) {
+        if (\count($split) === 1) {
             // there's no decimal part
             return (float) $value;
         }
 
         foreach ($split as $part) {
-            if ('' === $part) {
-                throw new InvalidArgumentException(sprintf('Invalid argument: "%s" cannot be interpreted as a number', $value));
+            if ($part === '') {
+                throw new InvalidArgumentException(\sprintf('Invalid argument: "%s" cannot be interpreted as a number', $value));
             }
         }
 

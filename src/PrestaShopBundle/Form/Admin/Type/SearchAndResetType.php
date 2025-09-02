@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,26 +39,21 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class SearchAndResetType extends AbstractType
 {
-    /**
-     * @param UrlGeneratorInterface $urlGenerator
-     */
-    public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $showResetButton = false;
 
-        if (null !== $form->getParent()) {
+        if ($form->getParent() !== null) {
             $configuredTypeNames = array_keys($form->getParent()->all());
             $availableValueNames = array_keys($form->getParent()->getData());
 
             $configuredData = array_intersect($configuredTypeNames, $availableValueNames);
-            if (!empty($configuredData)) {
+            if (! empty($configuredData)) {
                 $showResetButton = true;
             }
         }
@@ -65,22 +61,22 @@ class SearchAndResetType extends AbstractType
         $resetUrl = $options['attr']['data-url'] ?? null;
         $redirectUrl = $options['attr']['data-redirect'] ?? null;
 
-        if (null !== $options['reset_route']) {
+        if ($options['reset_route'] !== null) {
             $resetUrl = $this->urlGenerator->generate(
                 $options['reset_route'],
                 $options['reset_route_params']
             );
         }
 
-        if (null !== $options['redirect_route']) {
+        if ($options['redirect_route'] !== null) {
             $redirectUrl = $this->urlGenerator->generate(
                 $options['redirect_route'],
                 $options['redirect_route_params']
             );
         }
 
-        if (in_array(null, [$resetUrl, $redirectUrl])) {
-            throw new LogicException(sprintf('You must configure "reset_route" and "redirect_route" options for "%s" type.', self::class));
+        if (\in_array(null, [$resetUrl, $redirectUrl], true)) {
+            throw new LogicException(\sprintf('You must configure "reset_route" and "redirect_route" options for "%s" type.', self::class));
         }
 
         $view->vars['show_reset_button'] = $showResetButton;
@@ -88,9 +84,6 @@ class SearchAndResetType extends AbstractType
         $view->vars['reset_url'] = $resetUrl;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -107,9 +100,6 @@ class SearchAndResetType extends AbstractType
             ->setAllowedTypes('redirect_route_params', 'array');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'search_and_reset';

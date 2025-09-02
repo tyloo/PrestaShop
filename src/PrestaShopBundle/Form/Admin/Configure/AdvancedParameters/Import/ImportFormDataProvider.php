@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,19 +36,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 final class ImportFormDataProvider implements ImportFormDataProviderInterface
 {
-    /**
-     * @param FileFinder $importFileFinder
-     * @param RequestStack $requestStack
-     */
     public function __construct(
         private readonly FileFinder $importFileFinder,
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(ImportConfigInterface $importConfig): array
     {
         return [
@@ -66,7 +60,6 @@ final class ImportFormDataProvider implements ImportFormDataProviderInterface
     }
 
     /**
-     * {@inheritdoc}
      * @return list<array{key: 'To proceed, please upload a file first.', domain: 'Admin.Advparameters.Notification', parameters: array{}}>
      */
     public function setData(array $data): array
@@ -96,16 +89,12 @@ final class ImportFormDataProvider implements ImportFormDataProviderInterface
 
     /**
      * Get selected file after confirming that it is available in file system.
-     *
-     * @param ImportConfigInterface $importConfig
-     *
-     * @return string|null
      */
     private function getSelectedFile(ImportConfigInterface $importConfig): ?string
     {
         $importFiles = $this->importFileFinder->getImportFileNames();
         $selectedFile = $importConfig->getFileName();
-        if ($selectedFile && !in_array($selectedFile, $importFiles)) {
+        if ($selectedFile && ! \in_array($selectedFile, $importFiles, true)) {
             $selectedFile = null;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,27 +39,22 @@ use SplFileInfo;
  */
 final class ImportDataConfigurationFormDataProvider implements ImportFormDataProviderInterface
 {
-    /**
-     * @param ImportDirectory $importDirectory
-     * @param DataRowCollectionFactoryInterface $dataRowCollectionFactory
-     * @param ImportMatchRepository $importMatchRepository
-     * @param DataMatchSaver $dataMatchSaver
-     * @param array $entityFieldChoices
-     */
-    public function __construct(private readonly ImportDirectory $importDirectory, private readonly DataRowCollectionFactoryInterface $dataRowCollectionFactory, private readonly ImportMatchRepository $importMatchRepository, private readonly DataMatchSaver $dataMatchSaver, private readonly array $entityFieldChoices)
-    {
+    public function __construct(
+        private readonly ImportDirectory $importDirectory,
+        private readonly DataRowCollectionFactoryInterface $dataRowCollectionFactory,
+        private readonly ImportMatchRepository $importMatchRepository,
+        private readonly DataMatchSaver $dataMatchSaver,
+        private readonly array $entityFieldChoices,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(ImportConfigInterface $importConfig): array
     {
         $importFile = new SplFileInfo($this->importDirectory . $importConfig->getFileName());
         $dataRowCollection = $this->dataRowCollectionFactory->buildFromFile($importFile, 1);
 
         // Getting the number of cells in the first row
-        $rowSize = count($dataRowCollection->offsetGet(0));
+        $rowSize = \count($dataRowCollection->offsetGet(0));
 
         $data = [
             'csv' => $importConfig->getFileName(),
@@ -91,7 +87,6 @@ final class ImportDataConfigurationFormDataProvider implements ImportFormDataPro
     }
 
     /**
-     * {@inheritdoc}
      * @return list<(array{key: 'Please name your data matching configuration in order to save it.', domain: 'Admin.Advparameters.Feature', parameters: array{}} | array{key: 'This name already exists.', domain: 'Admin.Design.Notification', parameters: array{}})>
      */
     public function setData(array $data): array
@@ -129,8 +124,6 @@ final class ImportDataConfigurationFormDataProvider implements ImportFormDataPro
      * Checks if the configuration is already saved with the same name.
      *
      * @param string $matchName
-     *
-     * @return bool
      */
     private function configurationNameExists($matchName): bool
     {

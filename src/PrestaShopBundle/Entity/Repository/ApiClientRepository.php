@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,13 @@ use PrestaShopBundle\Entity\ApiClient;
 class ApiClientRepository extends EntityRepository
 {
     /**
-     * @param int $apiClientId
-     *
-     * @return ApiClient
-     *
      * @throws NoResultException
      */
     public function getById(int $apiClientId): ApiClient
     {
         $apiClient = $this->findOneBy(['id' => $apiClientId]);
 
-        if (null === $apiClient) {
+        if ($apiClient === null) {
             throw new NoResultException();
         }
 
@@ -53,18 +50,13 @@ class ApiClientRepository extends EntityRepository
     }
 
     /**
-     * @param string $clientId
-     * @param string|null $externalIssuer
-     *
-     * @return ApiClient
-     *
      * @throws NoResultException
      */
     public function getByClientId(string $clientId, ?string $externalIssuer = null): ApiClient
     {
         $apiClient = $this->findOneBy(['clientId' => $clientId, 'externalIssuer' => $externalIssuer]);
 
-        if (null === $apiClient) {
+        if ($apiClient === null) {
             throw new NoResultException();
         }
 

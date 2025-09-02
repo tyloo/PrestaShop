@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,16 +37,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UpdateOrderShippingType extends AbstractType
 {
-    /**
-     * @param ConfigurableFormChoiceProviderInterface $carrierForOrderChoiceProvider
-     */
-    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $carrierForOrderChoiceProvider)
-    {
+    public function __construct(
+        private readonly ConfigurableFormChoiceProviderInterface $carrierForOrderChoiceProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -62,9 +58,6 @@ class UpdateOrderShippingType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

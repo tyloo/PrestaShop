@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,24 +41,20 @@ use Symfony\Component\Finder\SplFileInfo;
 class RoutingCacheKeyGenerator implements CacheKeyGeneratorInterface
 {
     /**
-     * RoutingCacheKeyGenerator constructor.
-     *
-     * @param array $coreRoutingPaths
-     * @param array $activeModulesPaths
      * @param string $environment
      */
-    public function __construct(private readonly array $coreRoutingPaths, private readonly array $activeModulesPaths, private $environment = 'dev')
-    {
+    public function __construct(
+        private readonly array $coreRoutingPaths,
+        private readonly array $activeModulesPaths,
+        private $environment = 'dev',
+    ) {
     }
 
-    /**
-     * @return array
-     */
     public function getLastModifications(): array
     {
         $routingFiles = [];
 
-        if (count($this->coreRoutingPaths)) {
+        if (\count($this->coreRoutingPaths)) {
             $finder = new Finder();
             $finder->files()->in($this->coreRoutingPaths);
             $finder->name('/\.(yml|yaml)$/');
@@ -88,22 +85,19 @@ class RoutingCacheKeyGenerator implements CacheKeyGeneratorInterface
     public function getLatestModificationTime()
     {
         $lastModifications = $this->getLastModifications();
-        if (!count($lastModifications)) {
+        if (! \count($lastModifications)) {
             return null;
         }
 
         return reset($lastModifications);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCacheKey()
     {
         $cacheKey = preg_replace('@\\\\@', '_', __NAMESPACE__);
-        if ('prod' !== $this->environment) {
+        if ($this->environment !== 'prod') {
             $latestModification = $this->getLatestModificationTime();
-            if (null !== $latestModification) {
+            if ($latestModification !== null) {
                 $cacheKey .= '_' . $latestModification;
             }
         }

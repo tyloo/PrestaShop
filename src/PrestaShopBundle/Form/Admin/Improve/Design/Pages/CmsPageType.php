@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,32 +51,30 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CmsPageType extends TranslatorAwareType
 {
     public const TITLE_MAX_CHARS = 255;
+
     public const META_DESCRIPTION_MAX_CHARS = 512;
+
     public const FRIENDLY_URL_MAX_CHARS = 128;
+
     public const RECOMMENDED_TITLE_LENGTH = 70;
+
     public const RECOMMENDED_DESCRIPTION_LENGTH = 160;
 
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $allCmsCategories
      * @param bool $isMultiShopEnabled
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly array $allCmsCategories,
-        private $isMultiShopEnabled
+        private $isMultiShopEnabled,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $invalidCharsText = sprintf('%s <>{}', $this->trans('Invalid characters:', 'Admin.Notifications.Info'));
+        $invalidCharsText = \sprintf('%s <>{}', $this->trans('Invalid characters:', 'Admin.Notifications.Info'));
 
         $builder
             ->add('page_category_id', MaterialChoiceTreeType::class, [
@@ -86,7 +85,7 @@ class CmsPageType extends TranslatorAwareType
             ])
             ->add('title', TranslatableType::class, [
                 'label' => $this->trans('Title', 'Admin.Global'),
-                'help' => sprintf(
+                'help' => \sprintf(
                     '%s %s',
                     $this->trans('Used in the h1 page tag, and as the default title tag value.', 'Admin.Design.Help'),
                     $invalidCharsText
@@ -97,7 +96,7 @@ class CmsPageType extends TranslatorAwareType
                             'The field %field_name% is required at least in your default language.',
                             'Admin.Notifications.Error',
                             [
-                                '%field_name%' => sprintf(
+                                '%field_name%' => \sprintf(
                                     '"%s"',
                                     $this->trans('Title', 'Admin.Global')
                                 ),
@@ -135,7 +134,8 @@ class CmsPageType extends TranslatorAwareType
             ->add('meta_title', TranslatableType::class, [
                 'label' => $this->trans('Meta title', 'Admin.Global'),
                 'type' => TextWithRecommendedLengthType::class,
-                'help' => sprintf('%s %s',
+                'help' => \sprintf(
+                    '%s %s',
                     $this->trans('Used to override the title tag value. If left blank, the default title value is used.', 'Admin.Design.Help'),
                     $invalidCharsText
                 ),
@@ -194,7 +194,7 @@ class CmsPageType extends TranslatorAwareType
                             'The field %field_name% is required at least in your default language.',
                             'Admin.Notifications.Error',
                             [
-                                '%field_name%' => sprintf(
+                                '%field_name%' => \sprintf(
                                     '"%s"',
                                     $this->trans('Friendly URL', 'Admin.Global')
                                 ),
@@ -257,7 +257,7 @@ class CmsPageType extends TranslatorAwareType
                             'The %s field is required.',
                             'Admin.Notifications.Error',
                             [
-                                sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
+                                \sprintf('"%s"', $this->trans('Store association', 'Admin.Global')),
                             ]
                         ),
                     ]),
@@ -266,9 +266,6 @@ class CmsPageType extends TranslatorAwareType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

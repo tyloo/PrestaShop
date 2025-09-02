@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,11 +42,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SetUpUrlType extends TranslatorAwareType
 {
     /**
-     * SetUpUrlType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $canonicalUrlChoices
      * @param bool $isHtaccessFileWritable
      * @param bool $doesMainShopUrlExist
      * @param bool $isModRewriteActive
@@ -56,14 +52,11 @@ class SetUpUrlType extends TranslatorAwareType
         private readonly array $canonicalUrlChoices,
         private $isHtaccessFileWritable,
         private $isModRewriteActive,
-        private $doesMainShopUrlExist
+        private $doesMainShopUrlExist,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $friendlyUrlHelp = $this->trans(
@@ -71,7 +64,7 @@ class SetUpUrlType extends TranslatorAwareType
             'Admin.Shopparameters.Help'
         );
 
-        if (!$this->isModRewriteActive) {
+        if (! $this->isModRewriteActive) {
             $friendlyUrlHelp .=
                 '<br/>' . $this->trans(
                     'URL rewriting (mod_rewrite) is not active on your server, or it is not possible to check your server configuration. If you want to use Friendly URLs, you must activate this mod.',
@@ -134,8 +127,6 @@ class SetUpUrlType extends TranslatorAwareType
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see MultistoreConfigurationTypeExtension
      */
     public function getParent(): string

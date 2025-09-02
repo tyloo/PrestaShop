@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,15 +40,11 @@ class PaymentMethodsController extends PrestaShopAdminController
 {
     /**
      * Show payment method modules.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
-        PaymentModulesPresenter $paymentMethodsPresenter
+        PaymentModulesPresenter $paymentMethodsPresenter,
     ): Response {
         $legacyController = $request->attributes->get('_legacy_controller');
 

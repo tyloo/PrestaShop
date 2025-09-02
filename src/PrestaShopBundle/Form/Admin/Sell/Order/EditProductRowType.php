@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,26 +38,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EditProductRowType extends TranslatorAwareType
 {
-    /**
-     * EditProductRowType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider
-     * @param int $contextLangId
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider,
-        private readonly int $contextLangId
+        private readonly int $contextLangId,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $invoices = $options['order_id'] ?
@@ -69,7 +59,8 @@ class EditProductRowType extends TranslatorAwareType
         $builder
             ->add('price_tax_excluded', NumberType::class, [
                 'label' => false,
-                'unit' => sprintf('%s %s',
+                'unit' => \sprintf(
+                    '%s %s',
                     $options['symbol'],
                     $this->trans('tax excl.', 'Admin.Global')
                 ),
@@ -79,7 +70,8 @@ class EditProductRowType extends TranslatorAwareType
             ])
             ->add('price_tax_included', NumberType::class, [
                 'label' => false,
-                'unit' => sprintf('%s %s',
+                'unit' => \sprintf(
+                    '%s %s',
                     $options['symbol'],
                     $this->trans('tax incl.', 'Admin.Global')
                 ),
@@ -121,9 +113,6 @@ class EditProductRowType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,11 +72,6 @@ class ImageController extends PrestaShopAdminController
 
     /**
      * Retrieves images for all shops, but the cover (which is multi-shop compatable) is retrieved based on $shopId
-     *
-     * @param int $productId
-     * @param int $shopId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'You do not have permission to update this.')]
     public function getImagesForShopAction(int $productId, int $shopId): JsonResponse
@@ -89,11 +85,6 @@ class ImageController extends PrestaShopAdminController
         return $this->json(array_map([$this, 'formatImage'], $images));
     }
 
-    /**
-     * @param int $productId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to red or update this.')]
     public function productShopImagesAction(int $productId, Request $request): JsonResponse
     {
@@ -119,18 +110,13 @@ class ImageController extends PrestaShopAdminController
         return $this->getProductShopImagesJsonResponse($productId);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.')]
     public function addImageAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.product_image_form_builder')]
         FormBuilderInterface $productImageFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.product_image_form_handler')]
-        FormHandlerInterface $productImageFormHandler
+        FormHandlerInterface $productImageFormHandler,
     ): JsonResponse {
         $imageForm = $productImageFormBuilder->getForm();
         $imageForm->handleRequest($request);
@@ -138,13 +124,13 @@ class ImageController extends PrestaShopAdminController
         try {
             $result = $productImageFormHandler->handle($imageForm);
 
-            if (!$result->isSubmitted() || !$result->isValid()) {
+            if (! $result->isSubmitted() || ! $result->isValid()) {
                 return new JsonResponse([
                     'error' => 'Invalid form data.',
                     'form_errors' => $this->getFormErrorsForJS($imageForm),
                 ], Response::HTTP_BAD_REQUEST);
             }
-            if (null === $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() === null) {
                 return new JsonResponse([
                     'error' => 'Could not create image.',
                 ], Response::HTTP_BAD_REQUEST);
@@ -158,12 +144,6 @@ class ImageController extends PrestaShopAdminController
         return $this->getProductImageJsonResponse($result->getIdentifiableObjectId());
     }
 
-    /**
-     * @param Request $request
-     * @param int $productImageId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.')]
     public function updateImageAction(
         Request $request,
@@ -171,7 +151,7 @@ class ImageController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.product_image_form_builder')]
         FormBuilderInterface $productImageFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.product_image_form_handler')]
-        FormHandlerInterface $productImageFormHandler
+        FormHandlerInterface $productImageFormHandler,
     ): JsonResponse {
         $imageForm = $productImageFormBuilder->getFormFor($productImageId, [], [
             'method' => $request->getMethod(),
@@ -181,7 +161,7 @@ class ImageController extends PrestaShopAdminController
         try {
             $result = $productImageFormHandler->handleFor($productImageId, $imageForm);
 
-            if (!$result->isSubmitted() || !$result->isValid()) {
+            if (! $result->isSubmitted() || ! $result->isValid()) {
                 return new JsonResponse([
                     'error' => 'Invalid form data.',
                     'form_errors' => $this->getFormErrorsForJS($imageForm),
@@ -196,11 +176,6 @@ class ImageController extends PrestaShopAdminController
         return $this->getProductImageJsonResponse($productImageId);
     }
 
-    /**
-     * @param int $productImageId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.')]
     public function deleteImageAction(int $productImageId): JsonResponse
     {
@@ -223,11 +198,6 @@ class ImageController extends PrestaShopAdminController
         return new JsonResponse($this->formatShopImages($shopImages));
     }
 
-    /**
-     * @param int $productImageId
-     *
-     * @return JsonResponse
-     */
     private function getProductImageJsonResponse(int $productImageId): JsonResponse
     {
         $productImage = $this->dispatchQuery(new GetProductImage(
@@ -239,8 +209,6 @@ class ImageController extends PrestaShopAdminController
     }
 
     /**
-     * @param ProductImage $image
-     *
      * @return array<string, mixed>
      */
     private function formatImage(ProductImage $image): array
@@ -257,8 +225,6 @@ class ImageController extends PrestaShopAdminController
     }
 
     /**
-     * @param ShopProductImagesCollection $shopImagesCollection
-     *
      * @return array<int, array{shopId: int, shopName: string, images: array<int, array{imageId: int, isCover: bool}>}>
      */
     private function formatShopImages(ShopProductImagesCollection $shopImagesCollection): array
@@ -288,10 +254,6 @@ class ImageController extends PrestaShopAdminController
 
     /**
      * Gets an error by exception class and its code.
-     *
-     * @param Exception $e
-     *
-     * @return array
      */
     private function getErrorMessages(Exception $e): array
     {
@@ -326,7 +288,7 @@ class ImageController extends PrestaShopAdminController
                 'Admin.Notifications.Error'
             ),
             FileUploadException::class => [
-                UPLOAD_ERR_NO_FILE => $this->trans(
+                \UPLOAD_ERR_NO_FILE => $this->trans(
                     'No file was uploaded.',
                     [],
                     'Admin.Notifications.Error'

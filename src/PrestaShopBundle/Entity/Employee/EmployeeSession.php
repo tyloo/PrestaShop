@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,18 +61,28 @@ class EmployeeSession
     private string $token;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(name="date_add", type="datetime")
      */
     private DateTime $dateAdd;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(name="date_upd", type="datetime")
      */
     private DateTime $dateUpd;
+
+    public function __serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'token' => $this->token,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->id = $data['id'];
+        $this->token = $data['token'];
+    }
 
     public function getId(): int
     {
@@ -83,7 +94,7 @@ class EmployeeSession
         return $this->employee;
     }
 
-    public function setEmployee(?Employee $employee): EmployeeSession
+    public function setEmployee(?Employee $employee): self
     {
         $this->employee = $employee;
 
@@ -95,7 +106,7 @@ class EmployeeSession
         return $this->token;
     }
 
-    public function setToken(string $token): EmployeeSession
+    public function setToken(string $token): self
     {
         $this->token = $token;
 
@@ -122,22 +133,8 @@ class EmployeeSession
     public function updatedTimestamps(): void
     {
         $this->dateUpd = new DateTime();
-        if (!isset($this->dateAdd)) {
+        if (! isset($this->dateAdd)) {
             $this->dateAdd = new DateTime();
         }
-    }
-
-    public function __serialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'token' => $this->token,
-        ];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->id = $data['id'];
-        $this->token = $data['token'];
     }
 }

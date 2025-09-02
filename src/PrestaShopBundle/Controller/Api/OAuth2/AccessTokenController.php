@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AccessTokenController extends AbstractController
 {
-    public function __construct(private readonly AuthorizationServer $authorizationServer, private readonly HttpMessageFactoryInterface $httpMessageFactory, private readonly HttpFoundationFactoryInterface $httpFoundationFactory, private readonly ResponseFactoryInterface $responseFactory)
-    {
+    public function __construct(
+        private readonly AuthorizationServer $authorizationServer,
+        private readonly HttpMessageFactoryInterface $httpMessageFactory,
+        private readonly HttpFoundationFactoryInterface $httpFoundationFactory,
+        private readonly ResponseFactoryInterface $responseFactory,
+    ) {
     }
 
     public function __invoke(Request $request): Response

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,24 +43,15 @@ class AddOrderCartRuleType extends AbstractType
 {
     use TranslatorAwareTrait;
 
-    /**
-     * @param FormChoiceProviderInterface $orderDiscountTypeChoiceProvider
-     * @param ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider
-     * @param int $contextLangId
-     * @param TranslatorInterface $translator
-     */
     public function __construct(
         private FormChoiceProviderInterface $orderDiscountTypeChoiceProvider,
         private ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider,
         private int $contextLangId,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->setTranslator($translator);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $invoices = $options['order_id'] ?
@@ -98,9 +90,6 @@ class AddOrderCartRuleType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

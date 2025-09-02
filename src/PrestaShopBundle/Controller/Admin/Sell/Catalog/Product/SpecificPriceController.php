@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,7 +63,9 @@ class SpecificPriceController extends PrestaShopAdminController
                 $request->query->getInt('limit') ?: null,
                 $request->query->getInt('offset') ?: null,
                 // Show only specific prices for current context shop or All shops
-                ['shopIds' => [0, $this->getShopContext()->getId()]]
+                [
+                    'shopIds' => [0, $this->getShopContext()->getId()],
+                ]
             )
         );
 
@@ -72,9 +75,6 @@ class SpecificPriceController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @return Response
-     */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))")]
     public function createAction(
         Request $request,
@@ -82,7 +82,7 @@ class SpecificPriceController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.specific_price_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.specific_price_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         $form = $formBuilder->getForm(['product_id' => $productId]);
         $form->handleRequest($request);
@@ -109,9 +109,6 @@ class SpecificPriceController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @return Response
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function editAction(
         Request $request,
@@ -119,7 +116,7 @@ class SpecificPriceController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.specific_price_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.specific_price_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         $form = $formBuilder->getFormFor($specificPriceId);
         $form->handleRequest($request);
@@ -145,11 +142,6 @@ class SpecificPriceController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $specificPriceId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function deleteAction(int $specificPriceId): JsonResponse
     {
@@ -181,7 +173,7 @@ class SpecificPriceController extends PrestaShopAdminController
                     'Admin.Catalog.Notification'
                 ),
                 SpecificPriceConstraintException::REDUCTION_OR_PRICE_MUST_BE_SET => $this->trans(
-                    sprintf(
+                    \sprintf(
                         '%s or %s must be set',
                         $this->trans('Retail price (tax excl.)', [], 'Admin.Catalog.Feature'),
                         $this->trans('Reduction', [], 'Admin.Catalog.Feature')
@@ -194,8 +186,6 @@ class SpecificPriceController extends PrestaShopAdminController
     }
 
     /**
-     * @param SpecificPriceList $specificPriceListForEditing
-     *
      * @return array<int, array<string, mixed>>
      */
     private function formatSpecificPricesList(SpecificPriceList $specificPriceListForEditing): array
@@ -227,12 +217,6 @@ class SpecificPriceController extends PrestaShopAdminController
         return $list;
     }
 
-    /**
-     * @param FixedPriceInterface $fixedPrice
-     * @param string $currencyIsoCode
-     *
-     * @return string
-     */
     private function formatPrice(FixedPriceInterface $fixedPrice, string $currencyIsoCode): string
     {
         if (InitialPrice::isInitialPriceValue((string) $fixedPrice->getValue())) {
@@ -242,13 +226,6 @@ class SpecificPriceController extends PrestaShopAdminController
         return $this->getLanguageContext()->formatPrice((string) $fixedPrice->getValue(), $currencyIsoCode);
     }
 
-    /**
-     * @param string $reductionType
-     * @param DecimalNumber $reductionValue
-     * @param string $currencyIsoCode
-     *
-     * @return string
-     */
     private function formatImpact(string $reductionType, DecimalNumber $reductionValue, string $currencyIsoCode): string
     {
         if ($reductionValue->equalsZero()) {
@@ -258,16 +235,13 @@ class SpecificPriceController extends PrestaShopAdminController
         $reductionValue = $reductionValue->toNegative();
 
         if ($reductionType === Reduction::TYPE_AMOUNT) {
-            return sprintf('%s', $this->getLanguageContext()->formatPrice((string) $reductionValue, $currencyIsoCode));
+            return \sprintf('%s', $this->getLanguageContext()->formatPrice((string) $reductionValue, $currencyIsoCode));
         }
 
-        return sprintf('%s %%', (string) $reductionValue);
+        return \sprintf('%s %%', (string) $reductionValue);
     }
 
     /**
-     * @param DateTimeInterface $from
-     * @param DateTimeInterface $to
-     *
      * @return array<string, string>|null
      */
     private function formatPeriod(DateTimeInterface $from, DateTimeInterface $to): ?array

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,27 +45,20 @@ use Symfony\Component\Routing\Router;
  */
 class ControllerResponseBuilder
 {
-    /**
-     * @param GridFilterFormFactoryInterface $filterFormFactory
-     * @param Router $router
-     */
-    public function __construct(private readonly GridFilterFormFactoryInterface $filterFormFactory, private readonly Router $router)
-    {
+    public function __construct(
+        private readonly GridFilterFormFactoryInterface $filterFormFactory,
+        private readonly Router $router,
+    ) {
     }
 
     /**
-     * @param GridDefinitionFactoryInterface $definitionFactory
-     * @param Request $request
      * @param string $redirectRoute
-     * @param array $queryParamsToKeep
-     *
-     * @return RedirectResponse
      */
     public function buildSearchResponse(
         GridDefinitionFactoryInterface $definitionFactory,
         Request $request,
         $redirectRoute,
-        array $queryParamsToKeep = []
+        array $queryParamsToKeep = [],
     ): RedirectResponse {
         /** @var GridDefinitionInterface $definition */
         $definition = $definitionFactory->getDefinition();

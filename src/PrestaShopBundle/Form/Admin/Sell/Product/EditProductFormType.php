@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,24 +53,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class EditProductFormType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param EventSubscriberInterface $productTypeListener
-     * @param ToolbarButtonsProviderInterface $toolbarButtonsProvider
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly EventSubscriberInterface $productTypeListener,
-        private readonly ToolbarButtonsProviderInterface $toolbarButtonsProvider
+        private readonly ToolbarButtonsProviderInterface $toolbarButtonsProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $productId = $options['product_id'];
@@ -119,9 +111,6 @@ class EditProductFormType extends TranslatorAwareType
         $builder->addEventSubscriber($this->productTypeListener);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $formVars = [
@@ -134,9 +123,6 @@ class EditProductFormType extends TranslatorAwareType
         $view->vars = array_replace($view->vars, $formVars);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -166,24 +152,18 @@ class EditProductFormType extends TranslatorAwareType
             ->setAllowedTypes('product_type', 'string')
             ->setAllowedTypes('virtual_product_file_id', ['null', 'int'])
             ->setAllowedTypes('active', ['bool'])
-            ->setNormalizer('toolbar_buttons', fn(Options $options, $toolbarButtons): array => array_merge(
+            ->setNormalizer('toolbar_buttons', fn (Options $options, $toolbarButtons): array => array_merge(
                 $this->toolbarButtonsProvider->getToolbarButtonsOptions(['productId' => $options->offsetGet('product_id')]),
                 $toolbarButtons
             ))
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getParent()
     {
         return NavigationTabType::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix()
     {
         return 'product';

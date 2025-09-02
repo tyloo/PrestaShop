@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,14 +52,11 @@ class AttributeGroupType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        protected FeatureInterface $multistoreFeature
+        protected FeatureInterface $multistoreFeature,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -114,7 +112,8 @@ class AttributeGroupType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                 ],

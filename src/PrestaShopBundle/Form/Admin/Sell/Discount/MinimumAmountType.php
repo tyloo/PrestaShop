@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,7 @@ class MinimumAmountType extends TranslatorAwareType implements EventSubscriberIn
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly CurrencyDataProviderInterface $currencyDataProvider
+        private readonly CurrencyDataProviderInterface $currencyDataProvider,
     ) {
         parent::__construct($translator, $locales);
     }
@@ -83,9 +84,6 @@ class MinimumAmountType extends TranslatorAwareType implements EventSubscriberIn
         $builder->addEventSubscriber($this);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -99,7 +97,7 @@ class MinimumAmountType extends TranslatorAwareType implements EventSubscriberIn
     public function adaptValueField(FormEvent $event): void
     {
         $data = $event->getData();
-        if (!isset($data['type'])) {
+        if (! isset($data['type'])) {
             return;
         }
 

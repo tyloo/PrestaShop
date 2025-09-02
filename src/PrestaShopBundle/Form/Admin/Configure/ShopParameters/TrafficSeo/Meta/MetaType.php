@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,25 +51,21 @@ class MetaType extends AbstractType
     use TranslatorAwareTrait;
 
     public const TITLE_MAX_CHARS = 128;
+
     public const META_DESCRIPTION_MAX_CHARS = 255;
+
     public const RECOMMENDED_TITLE_LENGTH = 70;
+
     public const RECOMMENDED_DESCRIPTION_LENGTH = 160;
 
-    /**
-     * @param array $defaultPageChoices
-     * @param array $modulePageChoices
-     */
     public function __construct(
         private array $defaultPageChoices,
         private array $modulePageChoices,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -82,7 +79,7 @@ class MetaType extends AbstractType
                         'message' => $this->trans(
                             'The %s field is required.',
                             [
-                                sprintf('"%s"', $this->trans('Page name', [], 'Admin.Shopparameters.Feature')),
+                                \sprintf('"%s"', $this->trans('Page name', [], 'Admin.Shopparameters.Feature')),
                             ],
                             'Admin.Notifications.Error'
                         ),
@@ -168,7 +165,7 @@ class MetaType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
             $formData = $event->getData();
 
-            if (isset($formData['page_name']) && 'index' !== $formData['page_name']) {
+            if (isset($formData['page_name']) && $formData['page_name'] !== 'index') {
                 $form = $event->getForm();
                 $form->add('url_rewrite', TranslatableType::class, [
                     'constraints' => [

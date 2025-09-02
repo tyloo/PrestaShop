@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -116,7 +117,7 @@ class AdminAPIController extends PrestaShopAdminController
 
         try {
             $handlerResult = $formHandler->handle($apiClientForm);
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 /** @var CreatedApiClient $createdApiClient */
                 $createdApiClient = $handlerResult->getIdentifiableObjectId();
                 $this->displayTemporarySecret(
@@ -158,7 +159,7 @@ class AdminAPIController extends PrestaShopAdminController
         try {
             $handlerResult = $formHandler->handleFor($apiClientId, $apiClientForm);
 
-            if (null !== $handlerResult->getIdentifiableObjectId()) {
+            if ($handlerResult->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_api_clients_edit', ['apiClientId' => $apiClientId]);
@@ -199,7 +200,7 @@ class AdminAPIController extends PrestaShopAdminController
 
         try {
             $command = new EditApiClientCommand($apiClientId);
-            $command->setEnabled(!$editableApiClient->isEnabled());
+            $command->setEnabled(! $editableApiClient->isEnabled());
             $this->dispatchCommand($command);
         } catch (Exception $e) {
             return $this->json([
@@ -250,7 +251,7 @@ class AdminAPIController extends PrestaShopAdminController
     {
         $this->addFlash(
             'info',
-            sprintf(
+            \sprintf(
                 '%s <strong>%s</strong>',
                 $successMessage,
                 $this->trans('This secret value will only be displayed once. Don\'t forget to make a copy in a secure location.', [], 'Admin.Notifications.Info'),
@@ -261,9 +262,6 @@ class AdminAPIController extends PrestaShopAdminController
         $this->addFlash('client_secret', $secret);
     }
 
-    /**
-     * @return array
-     */
     private function getApiClientsToolbarButtons(): array
     {
         $toolbarButtons = [];
@@ -280,8 +278,6 @@ class AdminAPIController extends PrestaShopAdminController
 
     /**
      * Provides translated error messages for exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -304,17 +300,17 @@ class AdminAPIController extends PrestaShopAdminController
                 ),
                 ApiClientConstraintException::INVALID_CLIENT_ID => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Client ID', [], 'Admin.Advparameters.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Client ID', [], 'Admin.Advparameters.Feature'))],
                     'Admin.Notifications.Error',
                 ),
                 ApiClientConstraintException::INVALID_CLIENT_NAME => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Client Name', [], 'Admin.Advparameters.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Client Name', [], 'Admin.Advparameters.Feature'))],
                     'Admin.Notifications.Error',
                 ),
                 ApiClientConstraintException::INVALID_DESCRIPTION => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Description', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('Description', [], 'Admin.Global'))],
                     'Admin.Notifications.Error',
                 ),
                 ApiClientConstraintException::CLIENT_ID_TOO_LARGE => $this->trans(
@@ -357,7 +353,7 @@ class AdminAPIController extends PrestaShopAdminController
 
     private function isAdminAPIMultistoreDisabled(): bool
     {
-        return !$this->getFeatureFlagStateChecker()->isEnabled(FeatureFlagSettings::FEATURE_FLAG_ADMIN_API_MULTISTORE)
+        return ! $this->getFeatureFlagStateChecker()->isEnabled(FeatureFlagSettings::FEATURE_FLAG_ADMIN_API_MULTISTORE)
             && $this->getShopContext()->isMultiShopEnabled();
     }
 }

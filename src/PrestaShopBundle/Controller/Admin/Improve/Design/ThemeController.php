@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -69,6 +70,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 /**
  * Class ThemeController manages "Improve > Design > Theme & Logo" pages.
@@ -77,10 +79,6 @@ class ThemeController extends PrestaShopAdminController
 {
     /**
      * Show main themes page.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.')]
     public function indexAction(
@@ -115,10 +113,6 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * Upload shop logos.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_themes_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_themes_index')]
@@ -155,8 +149,6 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * Export current theme.
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_themes_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_themes_index', message: 'You do not have permission to view this.')]
@@ -180,10 +172,6 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * Import new theme.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[DemoRestricted(redirectRoute: 'admin_themes_index')]
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_themes_index', message: 'You do not have permission to add this.')]
@@ -205,7 +193,7 @@ class ThemeController extends PrestaShopAdminController
                     $importSource = ThemeImportSource::fromFtp($data['import_from_ftp']);
                 }
 
-                if (null === $importSource) {
+                if ($importSource === null) {
                     $this->addFlash(
                         'warning',
                         $this->trans('Please select theme\'s import source.', [], 'Admin.Notifications.Warning')
@@ -238,10 +226,6 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * Enable selected theme.
-     *
-     * @param string $themeName
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_themes_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_themes_index', message: 'You do not have permission to edit this.')]
@@ -267,10 +251,6 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * Delete selected theme.
-     *
-     * @param string $themeName
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_themes_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_themes_index', message: 'You do not have permission to delete this.')]
@@ -294,10 +274,6 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * Adapts selected theme to RTL languages.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_themes_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_themes_index', message: 'You do not have permission to edit this.')]
@@ -306,13 +282,13 @@ class ThemeController extends PrestaShopAdminController
         $form = $this->getAdaptThemeToRtlLanguageForm();
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted()) {
+        if (! $form->isSubmitted()) {
             return $this->redirectToRoute('admin_themes_index');
         }
 
         $data = $form->getData();
 
-        if (!$data['generate_rtl_css']) {
+        if (! $data['generate_rtl_css']) {
             return $this->redirectToRoute('admin_themes_index');
         }
 
@@ -334,10 +310,6 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * Reset theme's page layouts.
-     *
-     * @param string $themeName
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_themes_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_themes_index', message: 'You do not have permission to edit this.')]
@@ -358,10 +330,6 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * Show Front Office theme's pages layout customization.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     public function customizeLayoutsAction(
         Request $request,
@@ -370,7 +338,7 @@ class ThemeController extends PrestaShopAdminController
     ): Response {
         $canCustomizeLayout = $this->canCustomizePageLayouts($request);
 
-        if (!$canCustomizeLayout) {
+        if (! $canCustomizeLayout) {
             $this->addFlash(
                 'error',
                 $this->trans('You do not have permission to edit this.', [], 'Admin.Notifications.Error')
@@ -404,20 +372,12 @@ class ThemeController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
     protected function canCustomizePageLayouts(Request $request): bool
     {
-        return !$this->isDemoModeEnabled()
+        return ! $this->isDemoModeEnabled()
             && $this->isGranted(Permission::UPDATE, $request->attributes->get('_legacy_controller'));
     }
 
-    /**
-     * @return FormInterface
-     */
     protected function getAdaptThemeToRtlLanguageForm(): FormInterface
     {
         return $this->createForm(AdaptThemeToRTLLanguagesType::class);
@@ -425,10 +385,8 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * @param Exception $e
-     *
-     * @return array
      */
-    private function handleImportThemeException(\Throwable $e): array
+    private function handleImportThemeException(Throwable $e): array
     {
         return [
             ImportedThemeAlreadyExistsException::class => $this->trans(
@@ -440,26 +398,29 @@ class ThemeController extends PrestaShopAdminController
             ),
             ThemeConstraintException::class => [
                 ThemeConstraintException::RESTRICTED_ONLY_FOR_SINGLE_SHOP => $this->trans(
-                    'Themes can only be changed in single store context.', [], 'Admin.Notifications.Error'
+                    'Themes can only be changed in single store context.',
+                    [],
+                    'Admin.Notifications.Error'
                 ),
                 ThemeConstraintException::MISSING_CONFIGURATION_FILE => $this->trans(
-                    'Missing configuration file', [], 'Admin.Notifications.Error'
+                    'Missing configuration file',
+                    [],
+                    'Admin.Notifications.Error'
                 ),
                 ThemeConstraintException::INVALID_CONFIGURATION => $this->trans(
-                    'Invalid configuration', [], 'Admin.Notifications.Error'
+                    'Invalid configuration',
+                    [],
+                    'Admin.Notifications.Error'
                 ),
                 ThemeConstraintException::INVALID_DATA => $this->trans(
-                    'Invalid data', [], 'Admin.Notifications.Error'
+                    'Invalid data',
+                    [],
+                    'Admin.Notifications.Error'
                 ),
             ],
         ];
     }
 
-    /**
-     * @param ThemeException $e
-     *
-     * @return array
-     */
     private function handleEnableThemeException(ThemeException $e): array
     {
         return [
@@ -474,7 +435,7 @@ class ThemeController extends PrestaShopAdminController
             FailedToEnableThemeModuleException::class => $this->trans(
                 'Cannot %action% module %module%. %error_details%',
                 [
-                    '%action%' => strtolower($this->trans('Install', [], 'Admin.Actions')),
+                    '%action%' => mb_strtolower($this->trans('Install', [], 'Admin.Actions')),
                     '%module%' => ($e instanceof FailedToEnableThemeModuleException) ? $e->getModuleName() : '',
                     '%error_details%' => $e->getMessage(),
                 ],
@@ -483,11 +444,6 @@ class ThemeController extends PrestaShopAdminController
         ];
     }
 
-    /**
-     * @param ThemeException $e
-     *
-     * @return string
-     */
     private function handleDeleteThemeException(ThemeException $e): string
     {
         $errorMessages = [
@@ -501,11 +457,6 @@ class ThemeController extends PrestaShopAdminController
         return $this->getErrorMessageForException($e, $errorMessages);
     }
 
-    /**
-     * @param ThemeException $e
-     *
-     * @return string
-     */
     private function handleAdaptThemeToRTLLanguagesException(ThemeException $e): string
     {
         $errorMessages = [
@@ -517,8 +468,6 @@ class ThemeController extends PrestaShopAdminController
 
     /**
      * Gets exception or exception and its code error mapping.
-     *
-     * @return array
      */
     private function getLogoUploadErrorMessages(): array
     {
@@ -546,7 +495,7 @@ class ThemeController extends PrestaShopAdminController
             NotSupportedMailAndInvoiceImageExtensionException::class => $mailAndInvoiceImageFormatError,
             NotSupportedFaviconExtensionException::class => $iconFormatError,
             FileUploadException::class => [
-                UPLOAD_ERR_INI_SIZE => $this->trans(
+                \UPLOAD_ERR_INI_SIZE => $this->trans(
                     'File too large (limit of %s bytes).',
                     [
                         UploadedFile::getMaxFilesize(),

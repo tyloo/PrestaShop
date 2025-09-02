@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,28 +49,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VirtualProductFileType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param int $maxFileSizeInMegabytes
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly int $maxFileSizeInMegabytes,
         private readonly RouterInterface $router,
-        private readonly EventSubscriberInterface $virtualProductFileListener
+        private readonly EventSubscriberInterface $virtualProductFileListener,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $virtualProductFileDownloadUrl = null;
-        if (!empty($options['virtual_product_file_id'])) {
+        if (! empty($options['virtual_product_file_id'])) {
             $virtualProductFileDownloadUrl = $this->router->generate('admin_products_download_virtual_product_file', [
                 'virtualProductFileId' => (int) $options['virtual_product_file_id'],
             ]);
@@ -160,9 +153,6 @@ class VirtualProductFileType extends TranslatorAwareType
         $builder->addEventSubscriber($this->virtualProductFileListener);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

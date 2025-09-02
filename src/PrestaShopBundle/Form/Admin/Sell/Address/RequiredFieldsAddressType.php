@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,16 +37,11 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class RequiredFieldsAddressType extends AbstractType
 {
-    /**
-     * @param FormChoiceProviderInterface $addressRequiredFieldsChoicesProvider
-     */
-    public function __construct(private readonly FormChoiceProviderInterface $addressRequiredFieldsChoicesProvider)
-    {
+    public function __construct(
+        private readonly FormChoiceProviderInterface $addressRequiredFieldsChoicesProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

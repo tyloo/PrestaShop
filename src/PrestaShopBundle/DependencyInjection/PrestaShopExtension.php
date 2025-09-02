@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,12 +44,9 @@ use Throwable;
  */
 class PrestaShopExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new YamlFileLoader($container, new FileLocator(dirname(__DIR__) . '/Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(\dirname(__DIR__) . '/Resources/config'));
         $env = $container->getParameter('kernel.environment');
         $loader->load('services_' . $env . '.yml');
 
@@ -58,17 +56,11 @@ class PrestaShopExtension extends Extension implements PrependExtensionInterface
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration(array $config, ContainerBuilder $container)
     {
         return new AddOnsConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAlias(): string
     {
         return 'prestashop';
@@ -136,13 +128,13 @@ class PrestaShopExtension extends Extension implements PrependExtensionInterface
         foreach ($activeModules as $moduleName) {
             $modulePath = $moduleDir . $moduleName;
             // Load YAML definition from the config/api_platform folder in the module
-            $moduleConfigPath = sprintf('%s/config/api_platform', $modulePath);
+            $moduleConfigPath = \sprintf('%s/config/api_platform', $modulePath);
             if (file_exists($moduleConfigPath)) {
                 $paths[] = $moduleConfigPath;
             }
 
             // Load Doctrine entities that could be used as ApiPlatform DTO resources as well in the src/Entity folder
-            $entitiesRessourcesPath = sprintf('%s/src/Entity', $modulePath);
+            $entitiesRessourcesPath = \sprintf('%s/src/Entity', $modulePath);
             if (file_exists($entitiesRessourcesPath)) {
                 // APIPlatform is looping on included resources and doing a require_once on those resources in ReflectionClassRecursiveIterator::getReflectionClassesFromDirectories.
                 // This means that everything in those files is interpreted including the exit statement in some of those files ( especially in some index.php files used as an old way to make the directory read only ).
@@ -154,13 +146,13 @@ class PrestaShopExtension extends Extension implements PrependExtensionInterface
             }
 
             // Load ApiPlatform DTOs from the src/ApiPlatform/Resources folder
-            $moduleRessourcesPath = sprintf('%s/src/ApiPlatform/Resources', $modulePath);
+            $moduleRessourcesPath = \sprintf('%s/src/ApiPlatform/Resources', $modulePath);
             if (file_exists($moduleRessourcesPath)) {
                 $paths[] = $moduleRessourcesPath;
             }
         }
 
-        if (!empty($paths)) {
+        if (! empty($paths)) {
             $container->prependExtensionConfig('api_platform', ['mapping' => ['paths' => $paths]]);
         }
     }

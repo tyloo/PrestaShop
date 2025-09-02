@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,22 +41,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class LocalizationConfigurationType extends TranslatorAwareType
 {
-    /**
-     * @param array $languageChoices
-     * @param array $timezoneChoices
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly array $languageChoices,
-        private readonly array $timezoneChoices
+        private readonly array $timezoneChoices,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -93,16 +87,19 @@ class LocalizationConfigurationType extends TranslatorAwareType
                 ),
                 'autocomplete' => true,
             ])
-            ->add('detect_country_from_browser', SwitchType::class, [
-                'label' => $this->trans(
-                    'Set default country from browser language',
-                    'Admin.International.Feature'
-                ),
-                'help' => $this->trans(
-                    'Set country corresponding to browser language.',
-                    'Admin.International.Help'
-                ),
-            ]
+            ->add(
+                'detect_country_from_browser',
+                SwitchType::class,
+                [
+                    'label' => $this->trans(
+                        'Set default country from browser language',
+                        'Admin.International.Feature'
+                    ),
+                    'help' => $this->trans(
+                        'Set country corresponding to browser language.',
+                        'Admin.International.Help'
+                    ),
+                ]
             )
             ->add('default_currency', CurrencyChoiceType::class, [
                 'label' => $this->trans(

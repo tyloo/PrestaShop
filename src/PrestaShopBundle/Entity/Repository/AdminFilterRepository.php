@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,8 @@ use PrestaShopBundle\Entity\AdminFilter;
 class AdminFilterRepository extends EntityRepository
 {
     /**
-     * @param int $employeeId
-     * @param int $shopId
+     * @param int    $employeeId
+     * @param int    $shopId
      * @param string $controller
      * @param string $action
      *
@@ -55,8 +56,8 @@ class AdminFilterRepository extends EntityRepository
     }
 
     /**
-     * @param int $employeeId
-     * @param int $shopId
+     * @param int    $employeeId
+     * @param int    $shopId
      * @param string $filterId
      *
      * @return AdminFilter|null
@@ -71,8 +72,8 @@ class AdminFilterRepository extends EntityRepository
     }
 
     /**
-     * @param int $employeeId
-     * @param int $shopId
+     * @param int    $employeeId
+     * @param int    $shopId
      * @param string $controller
      * @param string $action
      *
@@ -85,7 +86,7 @@ class AdminFilterRepository extends EntityRepository
     {
         $adminFilter = $this->findByEmployeeAndRouteParams($employeeId, $shopId, $controller, $action);
 
-        if (null === $adminFilter) {
+        if ($adminFilter === null) {
             return false;
         }
 
@@ -97,8 +98,6 @@ class AdminFilterRepository extends EntityRepository
 
     /**
      * Removes filters from ps_admin_filter `filters` column using provided AdminFilter entity.
-     *
-     * @param AdminFilter $adminFilter
      *
      * @throws OptimisticLockException
      */
@@ -118,8 +117,6 @@ class AdminFilterRepository extends EntityRepository
 
     /**
      * Updates and persists modification to a filter (that was previously modified).
-     *
-     * @param AdminFilter $adminFilter
      */
     public function updateFilter(AdminFilter $adminFilter): void
     {
@@ -130,9 +127,8 @@ class AdminFilterRepository extends EntityRepository
     /**
      * Persist (create or update) filters into database using employee and uuid
      *
-     * @param int $employeeId
-     * @param int $shopId
-     * @param array $filters
+     * @param int    $employeeId
+     * @param int    $shopId
      * @param string $filterId
      *
      * @throws OptimisticLockException
@@ -141,7 +137,7 @@ class AdminFilterRepository extends EntityRepository
         $employeeId,
         $shopId,
         array $filters,
-        $filterId
+        $filterId,
     ): void {
         $adminFilter = $this->findByEmployeeAndFilterId($employeeId, $shopId, $filterId);
         $adminFilter ??= new AdminFilter();
@@ -162,9 +158,9 @@ class AdminFilterRepository extends EntityRepository
     /**
      * Persist (create or update) filters into database using employee and controller name and its action name.
      *
-     * @param int $employeeId
-     * @param int $shopId
-     * @param array $filters
+     * @param int    $employeeId
+     * @param int    $shopId
+     * @param array  $filters
      * @param string $controller
      * @param string $action
      *
@@ -175,7 +171,7 @@ class AdminFilterRepository extends EntityRepository
         $shopId,
         $filters,
         $controller,
-        $action
+        $action,
     ): void {
         $adminFilter = $this->findOneBy([
             'employee' => $employeeId,

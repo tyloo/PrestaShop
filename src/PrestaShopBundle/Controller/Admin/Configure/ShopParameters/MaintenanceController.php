@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,14 +75,14 @@ class MaintenanceController extends PrestaShopAdminController
         $form = $maintenanceFormHandler->getForm();
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted()) {
+        if (! $form->isSubmitted()) {
             return $redirectResponse;
         }
 
         $data = $form->getData();
         $saveErrors = $maintenanceFormHandler->save($data);
 
-        if (0 === count($saveErrors)) {
+        if (\count($saveErrors) === 0) {
             $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
 
             return $redirectResponse;

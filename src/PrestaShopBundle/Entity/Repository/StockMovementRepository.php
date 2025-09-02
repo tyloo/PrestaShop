@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,15 +38,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class StockMovementRepository extends StockManagementRepository
 {
     /**
-     * StockMovementRepository constructor.
-     *
-     * @param ContainerInterface $container
-     * @param Connection $connection
-     * @param EntityManager $entityManager
-     * @param ContextAdapter $contextAdapter
-     * @param ImageManager $imageManager
      * @param string $tablePrefix
-     * @param string $dateFormatFull
      */
     public function __construct(
         ContainerInterface $container,
@@ -54,7 +47,7 @@ class StockMovementRepository extends StockManagementRepository
         ContextAdapter $contextAdapter,
         ImageManager $imageManager,
         $tablePrefix,
-        protected string $dateFormatFull
+        protected string $dateFormatFull,
     ) {
         parent::__construct(
             $container,
@@ -67,18 +60,100 @@ class StockMovementRepository extends StockManagementRepository
     }
 
     /**
+     * Get movements from employees.
+     */
+    public function getEmployees()
+    {
+        $query = str_replace(
+            '{table_prefix}',
+            $this->tablePrefix,
+            'SELECT DISTINCT sm.id_employee, CONCAT(sm.employee_lastname, \' \', sm.employee_firstname) AS name
+            FROM {table_prefix}stock_mvt sm
+            INNER JOIN {table_prefix}stock_available sa ON (sa.id_stock_available = sm.id_stock)
+            WHERE
+            sa.id_shop = :shop_id
+            ORDER BY name ASC'
+        );
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue('shop_id', $this->getContextualShopId(), PDO::PARAM_INT);
+        $result = $statement->executeQuery();
+
+        $rows = $result->fetchAllAssociative();
+        $result->free();
+        $employees = $this->castNumericToInt($rows);
+
+        return $employees;
+    }
+
+    /**
+     * Get type of movements from employees.
+     *
+     * @param bool $grouped
+     */
+    public function getTypes($grouped = false)
+    {
+        if ($grouped) {
+            $select = 'GROUP_CONCAT(DISTINCT sm.id_stock_mvt_reason) as id_stock_mvt_reason, smrl.name AS name';
+            $groupBy = 'GROUP BY name';
+        } else {
+            $select = 'sm.id_stock_mvt_reason, smrl.name AS name';
+            $groupBy = 'GROUP BY id_stock_mvt_reason';
+        }
+
+        $query = str_replace(
+            '{table_prefix}',
+            $this->tablePrefix,
+            'SELECT ' . $select . '
+            FROM {table_prefix}stock_mvt sm
+            INNER JOIN {table_prefix}stock_available sa ON (sa.id_stock_available = sm.id_stock)
+            INNER JOIN {table_prefix}stock_mvt_reason_lang smrl ON (
+              smrl.id_stock_mvt_reason = sm.id_stock_mvt_reason
+              AND smrl.id_lang = :language_id)
+            WHERE
+            sa.id_shop = :shop_id
+            ' . $groupBy . '
+            ORDER BY name ASC'
+        );
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue('language_id', $this->getCurrentLanguageId(), PDO::PARAM_INT);
+        $statement->bindValue('shop_id', $this->getContextualShopId(), PDO::PARAM_INT);
+        $result = $statement->executeQuery();
+
+        $rows = $result->fetchAllAssociative();
+        $result->free();
+
+        if ($grouped) {
+            $types = $this->castIdsToArray($rows);
+        } else {
+            $types = $this->castNumericToInt($rows);
+        }
+
+        return $types;
+    }
+
+    public function saveStockMvt(StockMvt $stockMvt): int
+    {
+        $this->em->persist($stockMvt);
+        $this->em->flush();
+
+        return $stockMvt->getIdStockMvt();
+    }
+
+    /**
      * @param string $andWhereClause
      * @param string $having
-     * @param null $orderByClause
+     * @param null   $orderByClause
      *
      * @return mixed
      */
     protected function selectSql(
         $andWhereClause = '',
         $having = '',
-        $orderByClause = null
+        $orderByClause = null,
     ): string {
-        if (null === $orderByClause) {
+        if ($orderByClause === null) {
             $orderByClause = $this->orderByMovementsIds();
         }
 
@@ -182,16 +257,6 @@ class StockMovementRepository extends StockManagementRepository
     }
 
     /**
-     * @return string
-     */
-    private function orderByMovementsIds(): string
-    {
-        return 'ORDER BY sm.id_stock_mvt DESC';
-    }
-
-    /**
-     * @param array $rows
-     *
      * @return array
      */
     protected function addAdditionalData(array $rows)
@@ -203,9 +268,24 @@ class StockMovementRepository extends StockManagementRepository
         return $rows;
     }
 
+    protected function addFormattedDate(array $rows): array
+    {
+        foreach ($rows as &$row) {
+            $row['date_add_formatted'] = date(
+                $this->dateFormatFull,
+                strtotime((string) $row['date_add'])
+            );
+        }
+
+        return $rows;
+    }
+
+    private function orderByMovementsIds(): string
+    {
+        return 'ORDER BY sm.id_stock_mvt DESC';
+    }
+
     /**
-     * @param array $rows
-     *
      * @return array
      */
     private function addOrderLink(array $rows)
@@ -221,109 +301,6 @@ class StockMovementRepository extends StockManagementRepository
             } else {
                 $row['order_link'] = 'N/A';
             }
-        }
-
-        return $rows;
-    }
-
-    /**
-     * Get movements from employees.
-     *
-     * @return mixed
-     */
-    public function getEmployees()
-    {
-        $query = str_replace(
-            '{table_prefix}',
-            $this->tablePrefix,
-            'SELECT DISTINCT sm.id_employee, CONCAT(sm.employee_lastname, \' \', sm.employee_firstname) AS name
-            FROM {table_prefix}stock_mvt sm
-            INNER JOIN {table_prefix}stock_available sa ON (sa.id_stock_available = sm.id_stock)
-            WHERE
-            sa.id_shop = :shop_id
-            ORDER BY name ASC'
-        );
-
-        $statement = $this->connection->prepare($query);
-        $statement->bindValue('shop_id', $this->getContextualShopId(), PDO::PARAM_INT);
-        $result = $statement->executeQuery();
-
-        $rows = $result->fetchAllAssociative();
-        $result->free();
-        $employees = $this->castNumericToInt($rows);
-
-        return $employees;
-    }
-
-    /**
-     * Get type of movements from employees.
-     *
-     * @param bool $grouped
-     *
-     * @return mixed
-     */
-    public function getTypes($grouped = false)
-    {
-        if ($grouped) {
-            $select = 'GROUP_CONCAT(DISTINCT sm.id_stock_mvt_reason) as id_stock_mvt_reason, smrl.name AS name';
-            $groupBy = 'GROUP BY name';
-        } else {
-            $select = 'sm.id_stock_mvt_reason, smrl.name AS name';
-            $groupBy = 'GROUP BY id_stock_mvt_reason';
-        }
-
-        $query = str_replace(
-            '{table_prefix}',
-            $this->tablePrefix,
-            'SELECT ' . $select . '
-            FROM {table_prefix}stock_mvt sm
-            INNER JOIN {table_prefix}stock_available sa ON (sa.id_stock_available = sm.id_stock)
-            INNER JOIN {table_prefix}stock_mvt_reason_lang smrl ON (
-              smrl.id_stock_mvt_reason = sm.id_stock_mvt_reason
-              AND smrl.id_lang = :language_id)
-            WHERE
-            sa.id_shop = :shop_id
-            ' . $groupBy . '
-            ORDER BY name ASC'
-        );
-
-        $statement = $this->connection->prepare($query);
-        $statement->bindValue('language_id', $this->getCurrentLanguageId(), PDO::PARAM_INT);
-        $statement->bindValue('shop_id', $this->getContextualShopId(), PDO::PARAM_INT);
-        $result = $statement->executeQuery();
-
-        $rows = $result->fetchAllAssociative();
-        $result->free();
-
-        if ($grouped) {
-            $types = $this->castIdsToArray($rows);
-        } else {
-            $types = $this->castNumericToInt($rows);
-        }
-
-        return $types;
-    }
-
-    /**
-     * @param StockMvt $stockMvt
-     *
-     * @return int
-     */
-    public function saveStockMvt(StockMvt $stockMvt): int
-    {
-        $this->em->persist($stockMvt);
-        $this->em->flush();
-
-        return $stockMvt->getIdStockMvt();
-    }
-
-    protected function addFormattedDate(array $rows): array
-    {
-        foreach ($rows as &$row) {
-            $row['date_add_formatted'] = date(
-                $this->dateFormatFull,
-                strtotime((string) $row['date_add'])
-            );
         }
 
         return $rows;

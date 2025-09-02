@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,33 +40,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * MetaFormDataProvider constructor.
-     *
-     * @param DataConfigurationInterface $urlSchemaDataConfiguration
-     * @param TranslatorInterface $translator
-     * @param RouteValidator $routeValidator
-     */
-    public function __construct(private readonly DataConfigurationInterface $urlSchemaDataConfiguration, private readonly TranslatorInterface $translator, private readonly RouteValidator $routeValidator)
-    {
+    public function __construct(
+        private readonly DataConfigurationInterface $urlSchemaDataConfiguration,
+        private readonly TranslatorInterface $translator,
+        private readonly RouteValidator $routeValidator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->urlSchemaDataConfiguration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         $errors = $this->validateData($data);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             return $errors;
         }
 
@@ -74,8 +65,6 @@ final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInt
 
     /**
      * Implements custom validation for configuration form.
-     *
-     * @param array $data
      *
      * @return array - if array is not empty then error strings are returned
      *
@@ -86,7 +75,7 @@ final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInt
         $patternErrors = [];
         $fieldErrors = [];
         foreach ($data as $routeId => $rule) {
-            if (!$this->routeValidator->isRoutePattern($rule)) {
+            if (! $this->routeValidator->isRoutePattern($rule)) {
                 $patternErrors[] = $this->translator->trans(
                     'The route %routeRule% is not valid',
                     [
@@ -99,7 +88,7 @@ final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInt
             $errors = $this->routeValidator->isRouteValid($routeId, $rule);
 
             foreach (['missing', 'unknown'] as $type) {
-                if (!empty($errors[$type])) {
+                if (! empty($errors[$type])) {
                     foreach ($errors[$type] as $keyword) {
                         $fieldErrors[] = $this->translator->trans(
                             $type === 'missing'
@@ -117,7 +106,7 @@ final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInt
             }
         }
 
-        if (!empty($patternErrors)) {
+        if (! empty($patternErrors)) {
             return $patternErrors;
         }
 

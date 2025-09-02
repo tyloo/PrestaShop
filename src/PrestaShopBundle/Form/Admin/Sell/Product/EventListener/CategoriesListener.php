@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,16 +35,11 @@ use Symfony\Component\Form\FormEvents;
 
 class CategoriesListener implements EventSubscriberInterface
 {
-    /**
-     * @param FormCloner $formCloner
-     */
-    public function __construct(private readonly FormCloner $formCloner)
-    {
+    public function __construct(
+        private readonly FormCloner $formCloner,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -51,9 +47,6 @@ class CategoriesListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     */
     public function updateDefaultCategoryChoices(FormEvent $event): void
     {
         $form = $event->getForm();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,6 +44,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class DebugCommand extends Command
 {
     public const STATUS_OK = 0;
+
     public const STATUS_ERROR = 1;
 
     /**
@@ -50,8 +52,10 @@ class DebugCommand extends Command
      */
     protected $io;
 
-    public function __construct(private readonly CommandBusInterface $commandBus, private readonly DebugMode $debugConfiguration)
-    {
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+        private readonly DebugMode $debugConfiguration,
+    ) {
         parent::__construct();
     }
 
@@ -66,15 +70,9 @@ class DebugCommand extends Command
 
     protected function printDebugState()
     {
-        $this->io->success(sprintf('Debug mode is: %s', $this->debugConfiguration->isDebugModeEnabled() ? 'ON' : 'OFF'));
+        $this->io->success(\sprintf('Debug mode is: %s', $this->debugConfiguration->isDebugModeEnabled() ? 'ON' : 'OFF'));
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
@@ -88,7 +86,7 @@ class DebugCommand extends Command
         }
 
         // parse incoming to truthy
-        $newValue = filter_var($inputValue, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        $newValue = filter_var($inputValue, \FILTER_VALIDATE_BOOLEAN, \FILTER_NULL_ON_FAILURE);
         if ($newValue === null) {
             $this->io->error(
                 [

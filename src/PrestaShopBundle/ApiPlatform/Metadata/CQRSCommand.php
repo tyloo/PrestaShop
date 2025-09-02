@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -74,7 +75,6 @@ class CQRSCommand extends AbstractCQRSOperation
         ?array $exceptionToStatus = null,
         ?array $links = null,
         ?array $errors = null,
-
         ?string $shortName = null,
         ?string $class = null,
         ?bool $paginationEnabled = null,
@@ -131,16 +131,16 @@ class CQRSCommand extends AbstractCQRSOperation
         ?bool $experimentalOperation = null,
         ?bool $allowEmptyBody = null,
     ) {
-        $passedArguments = \get_defined_vars();
+        $passedArguments = get_defined_vars();
 
         $passedArguments['processor'] = $processor ?? CommandProcessor::class;
 
-        if (!empty($CQRSCommand)) {
+        if (! empty($CQRSCommand)) {
             $this->checkArgumentAndExtraParameterValidity('CQRSCommand', $CQRSCommand, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['CQRSCommand'] = $CQRSCommand;
         }
 
-        if (!empty($CQRSCommandMapping)) {
+        if (! empty($CQRSCommandMapping)) {
             $this->checkArgumentAndExtraParameterValidity('CQRSCommandMapping', $CQRSCommandMapping, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['CQRSCommandMapping'] = $CQRSCommandMapping;
         }
@@ -151,13 +151,11 @@ class CQRSCommand extends AbstractCQRSOperation
         }
 
         // Remove custom arguments
-        unset($passedArguments['CQRSCommand']);
-        unset($passedArguments['CQRSCommandMapping']);
-        unset($passedArguments['allowEmptyBody']);
+        unset($passedArguments['CQRSCommand'], $passedArguments['CQRSCommandMapping'], $passedArguments['allowEmptyBody']);
 
         // By default, the CQRS command is used as the input base class as it contains the exact available parameters for this operation
         // Exception in case the class doesn't exist we don't force the input because InputOutputResourceMetadataCollectionFactory will raise an exception when the resources are parsed
-        if (empty($passedArguments['input']) && !empty($passedArguments['extraProperties']['CQRSCommand']) && class_exists($passedArguments['extraProperties']['CQRSCommand'])) {
+        if (empty($passedArguments['input']) && ! empty($passedArguments['extraProperties']['CQRSCommand']) && class_exists($passedArguments['extraProperties']['CQRSCommand'])) {
             $passedArguments['input'] = $passedArguments['extraProperties']['CQRSCommand'];
         }
 

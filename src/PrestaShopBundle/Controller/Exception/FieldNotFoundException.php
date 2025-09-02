@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,8 +32,6 @@ namespace PrestaShopBundle\Controller\Exception;
 use Exception;
 
 /**
- * Class FieldNotFoundException
- *
  * Thrown when field for error message is not found
  */
 class FieldNotFoundException extends Exception

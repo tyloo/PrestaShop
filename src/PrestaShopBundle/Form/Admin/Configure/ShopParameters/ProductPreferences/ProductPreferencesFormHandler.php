@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ class ProductPreferencesFormHandler extends Handler
      */
     private $cacheClearer;
 
-    /**
-     * {@inheritdoc}
-     */
     public function save(array $data)
     {
         $errors = $this->formDataProvider->setData($data);
@@ -50,7 +48,7 @@ class ProductPreferencesFormHandler extends Handler
         if (empty($errors)) {
             $this->cacheClearer->clear();
 
-            if (isset($data['stock_management']) && !$data['stock_management']) {
+            if (isset($data['stock_management']) && ! $data['stock_management']) {
                 $data['allow_ordering_oos'] = 1;
             }
         }

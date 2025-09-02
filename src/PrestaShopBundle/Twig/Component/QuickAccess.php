@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -73,7 +74,7 @@ class QuickAccess
      */
     public function getQuickAccesses(): array
     {
-        if (null === $this->quickAccesses) {
+        if ($this->quickAccesses === null) {
             // Retrieve all quick accesses
             $quickAccesses = $this->quickAccessGenerator->getTokenizedQuickAccesses();
 
@@ -94,7 +95,7 @@ class QuickAccess
      */
     public function getActiveQuickAccess(): array|false
     {
-        if (null === $this->activeQuickAccess) {
+        if ($this->activeQuickAccess === null) {
             $this->activeQuickAccess = current(array_filter($this->getQuickAccesses(), fn ($data) => $data['active']));
         }
 
@@ -106,7 +107,7 @@ class QuickAccess
      */
     public function getCurrentPageQuickAccessLink(): string
     {
-        if (null === $this->currentPageQuickAccessLink) {
+        if ($this->currentPageQuickAccessLink === null) {
             $request = $this->requestStack->getMainRequest();
             // We don't use $request->getUri() because it adds an unwanted / on urls that include index.php
             $uri = $request->getSchemeAndHttpHost() . $request->getRequestUri();
@@ -121,7 +122,7 @@ class QuickAccess
      */
     public function getCurrentPageTitle(): string
     {
-        if (null === $this->currentPageTitle) {
+        if ($this->currentPageTitle === null) {
             $this->fillCurrentUrlFields();
         }
 
@@ -133,7 +134,7 @@ class QuickAccess
      */
     public function getCurrentPageIcon(): string
     {
-        if (null === $this->currentPageIcon) {
+        if ($this->currentPageIcon === null) {
             $this->fillCurrentUrlFields();
         }
 

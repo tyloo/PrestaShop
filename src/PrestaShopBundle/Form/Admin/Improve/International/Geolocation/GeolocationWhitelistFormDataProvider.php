@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,29 +37,21 @@ use PrestaShop\PrestaShop\Core\Validation\ValidatorInterface;
  */
 final class GeolocationWhitelistFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @param DataConfigurationInterface $dataConfiguration
-     * @param ValidatorInterface $validator
-     */
-    public function __construct(private readonly DataConfigurationInterface $dataConfiguration, private readonly ValidatorInterface $validator)
-    {
+    public function __construct(
+        private readonly DataConfigurationInterface $dataConfiguration,
+        private readonly ValidatorInterface $validator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->dataConfiguration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         $errors = [];
-        if (!$this->validator->isCleanHtml($data['geolocation_whitelist'])) {
+        if (! $this->validator->isCleanHtml($data['geolocation_whitelist'])) {
             $errors[] = [
                 'key' => 'Invalid whitelist',
                 'parameters' => [],
@@ -66,7 +59,7 @@ final class GeolocationWhitelistFormDataProvider implements FormDataProviderInte
             ];
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             return $errors;
         }
 

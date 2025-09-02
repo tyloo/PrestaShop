@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,10 +42,6 @@ class PreferencesController extends PrestaShopAdminController
 {
     /**
      * Show shipping preferences page.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -52,7 +49,7 @@ class PreferencesController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.admin.shipping_preferences.handling.form_handler')]
         FormHandlerInterface $handlingFormHandler,
         #[Autowire(service: 'prestashop.admin.shipping_preferences.carrier_options.form_handler')]
-        FormHandlerInterface $carrierOptionsFormHandler
+        FormHandlerInterface $carrierOptionsFormHandler,
     ): Response {
         $handlingForm = $handlingFormHandler->getForm();
         $carrierOptionsForm = $carrierOptionsFormHandler->getForm();
@@ -60,18 +57,13 @@ class PreferencesController extends PrestaShopAdminController
         return $this->doRenderForm($handlingForm, $carrierOptionsForm, $request);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_shipping_preferences')]
     public function processCarrierOptionsFormAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.shipping_preferences.handling.form_handler')]
         FormHandlerInterface $handlingFormHandler,
         #[Autowire(service: 'prestashop.admin.shipping_preferences.carrier_options.form_handler')]
-        FormHandlerInterface $carrierOptionsFormHandler
+        FormHandlerInterface $carrierOptionsFormHandler,
     ): Response {
         $this->dispatchHookWithParameters(
             'actionAdminShippingPreferencesControllerPostProcessCarrierOptionsBefore',
@@ -90,7 +82,7 @@ class PreferencesController extends PrestaShopAdminController
             $data = $form->getData();
             $saveErrors = $carrierOptionsFormHandler->save($data);
 
-            if (0 === count($saveErrors)) {
+            if (\count($saveErrors) === 0) {
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_shipping_preferences');
@@ -101,18 +93,13 @@ class PreferencesController extends PrestaShopAdminController
         return $this->doRenderForm($handlingFormHandler->getForm(), $form, $request);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_shipping_preferences')]
     public function processHandlingFormAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.shipping_preferences.handling.form_handler')]
         FormHandlerInterface $handlingFormHandler,
         #[Autowire(service: 'prestashop.admin.shipping_preferences.carrier_options.form_handler')]
-        FormHandlerInterface $carrierOptionsFormHandler
+        FormHandlerInterface $carrierOptionsFormHandler,
     ): Response {
         $this->dispatchHookWithParameters(
             'actionAdminShippingPreferencesControllerPostProcessHandlingBefore',
@@ -131,7 +118,7 @@ class PreferencesController extends PrestaShopAdminController
             $data = $form->getData();
             $saveErrors = $handlingFormHandler->save($data);
 
-            if (0 === count($saveErrors)) {
+            if (\count($saveErrors) === 0) {
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_shipping_preferences');
@@ -144,9 +131,7 @@ class PreferencesController extends PrestaShopAdminController
     /**
      * @param FormInterface $handlingForm
      * @param FormInterface $carrierOptionsForm
-     * @param Request $request
-     *
-     * @return Response
+     * @param Request       $request
      */
     private function doRenderForm($handlingForm, $carrierOptionsForm, $request): Response
     {

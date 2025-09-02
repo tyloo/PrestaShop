@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,12 +77,6 @@ class CombinationController extends PrestaShopAdminController
         ];
     }
 
-    /**
-     * @param Request $request
-     * @param int $combinationId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function editAction(
         Request $request,
@@ -89,7 +84,7 @@ class CombinationController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.combination_form_builder')]
         FormBuilderInterface $combinationFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.combination_form_handler')]
-        FormHandlerInterface $combinationFormHandler
+        FormHandlerInterface $combinationFormHandler,
     ): Response {
         $liteDisplaying = $request->query->has('liteDisplaying');
         try {
@@ -125,12 +120,6 @@ class CombinationController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @param string $languageCode
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchCombinationsForAssociationAction(
         Request $request,
@@ -138,9 +127,9 @@ class CombinationController extends PrestaShopAdminController
         LanguageRepositoryInterface $langRepository,
     ): JsonResponse {
         $language = $langRepository->getOneByLocaleOrIsoCode($languageCode);
-        if (null === $language) {
+        if ($language === null) {
             return $this->json([
-                'message' => sprintf(
+                'message' => \sprintf(
                     'Invalid language code %s was used which matches no existing language in this shop.',
                     $languageCode
                 ),
@@ -174,14 +163,6 @@ class CombinationController extends PrestaShopAdminController
         return $this->json($this->formatCombinationProductsForAssociation($combinationProducts));
     }
 
-    /**
-     * @param Request $request
-     * @param int $productId
-     * @param int|null $shopId
-     * @param int|null $languageId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchProductCombinationsAction(
         Request $request,
@@ -204,40 +185,12 @@ class CombinationController extends PrestaShopAdminController
         return $this->json(['combinations' => $productCombinationsCollection->getProductCombinations()]);
     }
 
-    /**
-     * @param CombinationForAssociation[] $combinationsForAssociation
-     *
-     * @return array<array<string, mixed>>
-     */
-    protected function formatCombinationProductsForAssociation(array $combinationsForAssociation): array
-    {
-        $productsData = [];
-        foreach ($combinationsForAssociation as $productForAssociation) {
-            $productsData[] = [
-                'product_id' => $productForAssociation->getProductId(),
-                'unique_identifier' => $productForAssociation->getProductId() . '_' . $productForAssociation->getCombinationId(),
-                'name' => $productForAssociation->getName(),
-                'reference' => $productForAssociation->getReference(),
-                'combination_id' => $productForAssociation->getCombinationId(),
-                'image' => $productForAssociation->getImageUrl(),
-                'quantity' => 1,
-            ];
-        }
-
-        return $productsData;
-    }
-
-    /**
-     * @param int $productId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function bulkEditFormAction(
         Request $request,
         int $productId,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.bulk_combination_form_builder')]
-        FormBuilderInterface $bulkFormBuilder
+        FormBuilderInterface $bulkFormBuilder,
     ): Response {
         $bulkCombinationForm = $bulkFormBuilder->getForm([], [
             'product_id' => $productId,
@@ -253,12 +206,6 @@ class CombinationController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @param int $productId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function bulkEditAction(
         Request $request,
@@ -266,10 +213,10 @@ class CombinationController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.bulk_combination_form_builder')]
         FormBuilderInterface $bulkFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.bulk_combination_form_handler')]
-        FormHandlerInterface $bulkFormHandler
+        FormHandlerInterface $bulkFormHandler,
     ): JsonResponse {
         $combinationIds = $request->request->get('combinationIds');
-        if (!$combinationIds) {
+        if (! $combinationIds) {
             return $this->json([
                 'error' => $this->getErrorMessageForException(new Exception(), [Exception::class => 'Missing combinationIds in request body']),
             ], Response::HTTP_BAD_REQUEST);
@@ -295,13 +242,13 @@ class CombinationController extends PrestaShopAdminController
                 $bulkCombinationForm->handleRequest($request);
                 $result = $bulkFormHandler->handleFor($combinationId, $bulkCombinationForm);
 
-                if (!$result->isSubmitted()) {
+                if (! $result->isSubmitted()) {
                     return $this->json([
                         'error' => $this->getErrorMessageForException(new Exception(), [Exception::class => 'No submitted data']),
                     ], Response::HTTP_BAD_REQUEST);
                 }
 
-                if (!$result->isValid()) {
+                if (! $result->isValid()) {
                     // it's the same form for all combinations, so if it is invalid for one, it will be invalid for all of them,
                     // so we return and break the loop
                     return $this->json([
@@ -328,16 +275,12 @@ class CombinationController extends PrestaShopAdminController
      * It can only be embedded into another view (does not have a route), it is included in this template:
      *
      * src/PrestaShopBundle/Resources/views/Admin/Sell/Catalog/Product/FormTheme/combination.html.twig
-     *
-     * @param int $productId
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', 'AdminProducts')")]
     public function paginatedListAction(
         int $productId,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.combination_list_form_builder')]
-        FormBuilderInterface $listFormBuilder
+        FormBuilderInterface $listFormBuilder,
     ): Response {
         $combinationsForm = $listFormBuilder->getForm();
 
@@ -352,12 +295,6 @@ class CombinationController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $productId
-     * @param int|null $shopId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function getAttributeGroupsAction(int $productId, ?int $shopId): JsonResponse
     {
@@ -370,11 +307,6 @@ class CombinationController extends PrestaShopAdminController
         return $this->json($this->formatAttributeGroupsForPresentation($attributeGroups));
     }
 
-    /**
-     * @param int|null $shopId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function getAllAttributeGroupsAction(?int $shopId): JsonResponse
     {
@@ -386,12 +318,6 @@ class CombinationController extends PrestaShopAdminController
         return $this->json($this->formatAttributeGroupsForPresentation($attributeGroups));
     }
 
-    /**
-     * @param int $productId
-     * @param ProductCombinationFilters $combinationFilters
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function getListAction(int $productId, ProductCombinationFilters $combinationFilters): JsonResponse
     {
@@ -409,12 +335,6 @@ class CombinationController extends PrestaShopAdminController
         return $this->json($this->formatListForPresentation($combinationsList));
     }
 
-    /**
-     * @param int $productId
-     * @param ProductCombinationFilters $filters
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function getCombinationIdsAction(int $productId, ProductCombinationFilters $filters): JsonResponse
     {
@@ -428,15 +348,9 @@ class CombinationController extends PrestaShopAdminController
             $filters->getFilters()
         ));
 
-        return $this->json(array_map(static fn(CombinationId $combinationId): int => $combinationId->getValue(), $combinationIds));
+        return $this->json(array_map(static fn (CombinationId $combinationId): int => $combinationId->getValue(), $combinationIds));
     }
 
-    /**
-     * @param int $combinationId
-     * @param int|null $shopId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function deleteAction(int $combinationId, ?int $shopId): JsonResponse
     {
@@ -456,18 +370,11 @@ class CombinationController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @param int $productId
-     * @param int|null $shopId
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function bulkDeleteAction(Request $request, int $productId, ?int $shopId): JsonResponse
     {
         $combinationIds = $request->request->get('combinationIds');
-        if (!$combinationIds) {
+        if (! $combinationIds) {
             return $this->json([
                 'error' => $this->getErrorMessageForException(new Exception(), [Exception::class => 'Missing combinationIds in request body']),
             ], Response::HTTP_BAD_REQUEST);
@@ -492,36 +399,6 @@ class CombinationController extends PrestaShopAdminController
         return $this->json(['success' => true]);
     }
 
-    /**
-     * Format the bulk exception into an array of errors returned in a JsonResponse.
-     *
-     * @param BulkCombinationException $bulkCombinationException
-     *
-     * @return JsonResponse
-     */
-    private function jsonBulkErrors(BulkCombinationException $bulkCombinationException): JsonResponse
-    {
-        $errors = [];
-        foreach ($bulkCombinationException->getBulkExceptions() as $productId => $productException) {
-            $errors[] = $this->trans(
-                'Error for combination %combination_id%: %error_message%',
-                [
-                    '%combination_id%' => $productId,
-                    '%error_message%' => $this->getErrorMessageForException($productException, $this->getErrorMessages()),
-                ],
-                'Admin.Catalog.Notification'
-            );
-        }
-
-        return $this->json(['errors' => $errors], Response::HTTP_BAD_REQUEST);
-    }
-
-    /**
-     * @param int $productId
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))")]
     public function updateCombinationFromListingAction(
         int $productId,
@@ -529,7 +406,7 @@ class CombinationController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.combination_list_form_builder')]
         FormBuilderInterface $listFormBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.combination_list_form_handler')]
-        FormHandlerInterface $listFormHandler
+        FormHandlerInterface $listFormHandler,
     ): JsonResponse {
         $combinationsListForm = $listFormBuilder->getForm([], [
             'method' => Request::METHOD_PATCH,
@@ -539,9 +416,10 @@ class CombinationController extends PrestaShopAdminController
             $combinationsListForm->handleRequest($request);
             $result = $listFormHandler->handleFor($productId, $combinationsListForm);
 
-            if (!$result->isSubmitted()) {
+            if (! $result->isSubmitted()) {
                 return $this->json(['errors' => $this->getFormErrorsForJS($combinationsListForm)], Response::HTTP_BAD_REQUEST);
-            } elseif (!$result->isValid()) {
+            }
+            if (! $result->isValid()) {
                 return $this->json([
                     'errors' => $this->getFormErrorsForJS($combinationsListForm),
                     'formContent' => $this->renderView('@PrestaShop/Admin/Sell/Catalog/Product/Combination/combination_list_form.html.twig', [
@@ -561,13 +439,6 @@ class CombinationController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param int $productId
-     * @param int|null $shopId
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller'))")]
     public function generateCombinationsAction(int $productId, ?int $shopId, Request $request): JsonResponse
     {
@@ -593,8 +464,51 @@ class CombinationController extends PrestaShopAdminController
         }
 
         return $this->json([
-            'combination_ids' => array_map(fn(CombinationId $combinationId): int => $combinationId->getValue(), $combinationsIds),
+            'combination_ids' => array_map(fn (CombinationId $combinationId): int => $combinationId->getValue(), $combinationsIds),
         ]);
+    }
+
+    /**
+     * @param CombinationForAssociation[] $combinationsForAssociation
+     *
+     * @return array<array<string, mixed>>
+     */
+    protected function formatCombinationProductsForAssociation(array $combinationsForAssociation): array
+    {
+        $productsData = [];
+        foreach ($combinationsForAssociation as $productForAssociation) {
+            $productsData[] = [
+                'product_id' => $productForAssociation->getProductId(),
+                'unique_identifier' => $productForAssociation->getProductId() . '_' . $productForAssociation->getCombinationId(),
+                'name' => $productForAssociation->getName(),
+                'reference' => $productForAssociation->getReference(),
+                'combination_id' => $productForAssociation->getCombinationId(),
+                'image' => $productForAssociation->getImageUrl(),
+                'quantity' => 1,
+            ];
+        }
+
+        return $productsData;
+    }
+
+    /**
+     * Format the bulk exception into an array of errors returned in a JsonResponse.
+     */
+    private function jsonBulkErrors(BulkCombinationException $bulkCombinationException): JsonResponse
+    {
+        $errors = [];
+        foreach ($bulkCombinationException->getBulkExceptions() as $productId => $productException) {
+            $errors[] = $this->trans(
+                'Error for combination %combination_id%: %error_message%',
+                [
+                    '%combination_id%' => $productId,
+                    '%error_message%' => $this->getErrorMessageForException($productException, $this->getErrorMessages()),
+                ],
+                'Admin.Catalog.Notification'
+            );
+        }
+
+        return $this->json(['errors' => $errors], Response::HTTP_BAD_REQUEST);
     }
 
     /**
@@ -616,10 +530,10 @@ class CombinationController extends PrestaShopAdminController
                     'id' => $attribute->getAttributeId(),
                     'name' => $attributeNames[$contextLangId] ?? reset($attributeNames),
                 ];
-                if (null !== $attribute->getColor()) {
+                if ($attribute->getColor() !== null) {
                     $attributeData['color'] = $attribute->getColor();
                 }
-                if (null !== $attribute->getTextureFilePath()) {
+                if ($attribute->getTextureFilePath() !== null) {
                     $attributeData['texture'] = $attribute->getTextureFilePath();
                 }
                 $attributes[] = $attributeData;
@@ -639,8 +553,6 @@ class CombinationController extends PrestaShopAdminController
     }
 
     /**
-     * @param CombinationListForEditing $combinationListForEditing
-     *
      * @return array<string, array<int, array<string,bool|int|string|float>>|int>
      */
     private function formatListForPresentation(CombinationListForEditing $combinationListForEditing): array
@@ -668,9 +580,6 @@ class CombinationController extends PrestaShopAdminController
         return $data;
     }
 
-    /**
-     * @return string
-     */
     private function getFallbackImageUrl(): string
     {
         return $this->container->get(ProductImagePathFactory::class)->getNoImagePath(ProductImagePathFactory::IMAGE_TYPE_SMALL_DEFAULT);
@@ -678,8 +587,6 @@ class CombinationController extends PrestaShopAdminController
 
     /**
      * Gets an error by exception class and its code.
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -687,34 +594,34 @@ class CombinationController extends PrestaShopAdminController
             ProductConstraintException::class => [
                 ProductConstraintException::INVALID_LOW_STOCK_THRESHOLD => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Low stock level', [], 'Admin.Catalog.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Low stock level', [], 'Admin.Catalog.Feature'))],
                     'Admin.Notifications.Error'
                 ),
                 ProductConstraintException::INVALID_LOW_STOCK_ALERT => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Low stock alert', [], 'Admin.Catalog.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Low stock alert', [], 'Admin.Catalog.Feature'))],
                     'Admin.Notifications.Error'
                 ),
                 ProductConstraintException::INVALID_AVAILABLE_DATE => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Availability date', [], 'Admin.Catalog.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Availability date', [], 'Admin.Catalog.Feature'))],
                     'Admin.Notifications.Error'
                 ),
                 ProductConstraintException::INVALID_MINIMAL_QUANTITY => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Minimum order quantity', [], 'Admin.Catalog.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Minimum order quantity', [], 'Admin.Catalog.Feature'))],
                     'Admin.Notifications.Error'
                 ),
             ],
             ProductStockConstraintException::class => [
                 ProductStockConstraintException::INVALID_QUANTITY => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Quantity', [], 'Admin.Catalog.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Quantity', [], 'Admin.Catalog.Feature'))],
                     'Admin.Notifications.Error'
                 ),
                 ProductStockConstraintException::INVALID_LOCATION => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Stock location', [], 'Admin.Catalog.Feature'))],
+                    [\sprintf('"%s"', $this->trans('Stock location', [], 'Admin.Catalog.Feature'))],
                     'Admin.Notifications.Error'
                 ),
             ],

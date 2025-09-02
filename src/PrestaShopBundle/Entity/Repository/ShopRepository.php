@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,15 +40,11 @@ class ShopRepository extends \Doctrine\ORM\EntityRepository
      */
     public function haveMultipleShops(): bool
     {
-        return count($this->findAll()) > 1;
+        return \count($this->findAll()) > 1;
     }
 
     /**
      * Get a list of shops for a given search term
-     *
-     * @param string $searchTerm
-     *
-     * @return array
      */
     public function findBySearchTerm(string $searchTerm): array
     {
@@ -57,7 +54,7 @@ class ShopRepository extends \Doctrine\ORM\EntityRepository
             ->where('s.active = true')
             ->andWhere('s.deleted = false')
             ->andWhere('LOWER(s.name) LIKE :searchTerm')
-            ->setParameter('searchTerm', '%' . strtolower($searchTerm) . '%');
+            ->setParameter('searchTerm', '%' . mb_strtolower($searchTerm) . '%');
 
         return $qb->getQuery()->getResult();
     }

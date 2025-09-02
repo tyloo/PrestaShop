@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,34 +41,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TextPreviewType extends TextType
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
         $view->vars['type'] = 'hidden';
         $view->vars['preview_class'] = $options['preview_class'];
         $view->vars['allow_html'] = $options['allow_html'];
-        if (!empty($options['prefix'])) {
+        if (! empty($options['prefix'])) {
             $view->vars['prefix'] = $options['prefix'];
         }
-        if (!empty($options['suffix'])) {
+        if (! empty($options['suffix'])) {
             $view->vars['suffix'] = $options['suffix'];
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'text_preview';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

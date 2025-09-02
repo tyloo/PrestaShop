@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,16 +37,11 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class PageLayoutsCustomizationType extends AbstractType
 {
-    /**
-     * @param array $pageLayoutsChoices
-     */
-    public function __construct(private readonly array $pageLayoutsChoices)
-    {
+    public function __construct(
+        private readonly array $pageLayoutsChoices,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

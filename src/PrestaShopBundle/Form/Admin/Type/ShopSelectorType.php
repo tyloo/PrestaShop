@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -88,17 +89,18 @@ class ShopSelectorType extends AbstractType
         parent::buildForm($builder, $options);
         $builder->addModelTransformer(new CallbackTransformer(
             function ($selection) {
-                if (is_array($selection)) {
-                    return array_map(fn(int $shopId) => $this->shopRepository->find($shopId), $selection);
-                } elseif (!empty($selection)) {
+                if (\is_array($selection)) {
+                    return array_map(fn (int $shopId) => $this->shopRepository->find($shopId), $selection);
+                }
+                if (! empty($selection)) {
                     $this->shopRepository->find($selection);
                 }
 
                 return null;
             },
             function ($selection) {
-                if (is_array($selection)) {
-                    return array_map(fn(Shop $shop): int => $shop->getId(), $selection);
+                if (\is_array($selection)) {
+                    return array_map(fn (Shop $shop): int => $shop->getId(), $selection);
                 }
 
                 return $selection instanceof Shop ? $selection->getId() : null;
@@ -111,7 +113,7 @@ class ShopSelectorType extends AbstractType
         $groups = [];
         /** @var ShopGroup $shopGroup */
         foreach ($this->shopGroups as $shopGroup) {
-            if (!$shopGroup->getShops()->count()) {
+            if (! $shopGroup->getShops()->count()) {
                 continue;
             }
             $groupShops = [];

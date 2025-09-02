@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,46 +42,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class NavigationTabType extends AbstractType
 {
-    /**
-     * @param LoggerInterface $logger
-     * @param bool $isDebug
-     */
-    public function __construct(private readonly LoggerInterface $logger, private readonly bool $isDebug)
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly bool $isDebug,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
-        if (!empty($options['toolbar_buttons'])) {
+        if (! empty($options['toolbar_buttons'])) {
             $this->addButtonCollection($builder, '_toolbar_buttons', $options['toolbar_buttons'], $options['toolbar_options']);
         }
-        if (!empty($options['footer_buttons'])) {
+        if (! empty($options['footer_buttons'])) {
             $this->addButtonCollection($builder, '_footer_buttons', $options['footer_buttons'], $options['footer_options']);
         }
     }
 
-    protected function addButtonCollection(FormBuilderInterface $builder, string $buttonCollectionName, array $buttons, array $buttonCollectionOptions): void
-    {
-        if ($builder->has($buttonCollectionName)) {
-            if ($this->isDebug) {
-                throw new InvalidConfigurationException(sprintf('You cannot add a field which name is %s on this component as it is used internally.', $buttonCollectionName));
-            } else {
-                $this->logger->warning(sprintf('You should not add a field which name is %s on this component as it is used internally.', $buttonCollectionName));
-            }
-        }
-
-        $builder->add($buttonCollectionName, ButtonCollectionType::class, array_merge([
-            'buttons' => $buttons,
-        ], $buttonCollectionOptions));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -96,5 +74,19 @@ class NavigationTabType extends AbstractType
             ->setAllowedTypes('footer_buttons', 'array')
             ->setAllowedTypes('footer_options', 'array')
         ;
+    }
+
+    protected function addButtonCollection(FormBuilderInterface $builder, string $buttonCollectionName, array $buttons, array $buttonCollectionOptions): void
+    {
+        if ($builder->has($buttonCollectionName)) {
+            if ($this->isDebug) {
+                throw new InvalidConfigurationException(\sprintf('You cannot add a field which name is %s on this component as it is used internally.', $buttonCollectionName));
+            }
+            $this->logger->warning(\sprintf('You should not add a field which name is %s on this component as it is used internally.', $buttonCollectionName));
+        }
+
+        $builder->add($buttonCollectionName, ButtonCollectionType::class, array_merge([
+            'buttons' => $buttons,
+        ], $buttonCollectionOptions));
     }
 }

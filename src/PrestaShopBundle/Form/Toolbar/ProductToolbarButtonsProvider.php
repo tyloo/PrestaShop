@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ProductToolbarButtonsProvider implements ToolbarButtonsProviderInterface
 {
-    public function __construct(private readonly TranslatorInterface $translator, private readonly RouterInterface $router, private readonly HelpProvider $helpUrlProvider, private readonly ModuleDataProvider $moduleDataProvider, private readonly LegacyContext $legacyContext)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly RouterInterface $router,
+        private readonly HelpProvider $helpUrlProvider,
+        private readonly ModuleDataProvider $moduleDataProvider,
+        private readonly LegacyContext $legacyContext,
+    ) {
     }
 
     public function getToolbarButtonsOptions(array $parameters): array
@@ -80,9 +86,9 @@ class ProductToolbarButtonsProvider implements ToolbarButtonsProviderInterface
             ],
         ];
 
-        if (!empty($parameters['productId'])) {
+        if (! empty($parameters['productId'])) {
             $statsModule = $this->moduleDataProvider->findByName('statsproduct');
-            if (!empty($statsModule['active'])) {
+            if (! empty($statsModule['active'])) {
                 $statsLink = $this->legacyContext->getAdminLink('AdminStats', true, ['module' => 'statsproduct', 'id_product' => $parameters['productId']]);
 
                 $toolbarButtons = array_merge([

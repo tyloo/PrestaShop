@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,8 +65,6 @@ class SecurityController extends PrestaShopAdminController
 {
     /**
      * Show sessions listing page.
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -99,10 +98,6 @@ class SecurityController extends PrestaShopAdminController
 
     /**
      * Process the Security general configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_security')]
     public function processGeneralFormAction(
@@ -119,10 +114,6 @@ class SecurityController extends PrestaShopAdminController
 
     /**
      * Process the Security password policy configuration form.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_security')]
     public function processPasswordPolicyFormAction(
@@ -138,46 +129,7 @@ class SecurityController extends PrestaShopAdminController
     }
 
     /**
-     * Process the Security configuration form.
-     *
-     * @param Request $request
-     * @param FormHandlerInterface $formHandler
-     * @param string $hookName
-     *
-     * @return RedirectResponse
-     */
-    protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): RedirectResponse
-    {
-        $this->dispatchHookWithParameters(
-            $hookName,
-            ['controller' => $this]
-        );
-
-        $this->dispatchHookWithParameters('actionAdminSecurityControllerPostProcessBefore', ['controller' => $this]);
-
-        $form = $formHandler->getForm();
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $data = $form->getData();
-            $saveErrors = $formHandler->save($data);
-
-            if (0 === count($saveErrors)) {
-                $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
-            } else {
-                $this->addFlashErrors($saveErrors);
-            }
-        }
-
-        return $this->redirectToRoute('admin_security');
-    }
-
-    /**
      * Show Employees sessions listing page.
-     *
-     * @param EmployeeFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function employeeSessionAction(
@@ -205,10 +157,6 @@ class SecurityController extends PrestaShopAdminController
 
     /**
      * Show Customers sessions listing page.
-     *
-     * @param CustomerFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function customerSessionAction(
@@ -234,9 +182,6 @@ class SecurityController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function clearCustomerSessionAction(): RedirectResponse
     {
@@ -253,9 +198,6 @@ class SecurityController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_security_sessions_customer_list');
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function clearEmployeeSessionAction(): RedirectResponse
     {
@@ -274,10 +216,6 @@ class SecurityController extends PrestaShopAdminController
 
     /**
      * Delete an employee session.
-     *
-     * @param int $sessionId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_security_sessions_employee_list')]
     public function deleteEmployeeSessionAction(int $sessionId): RedirectResponse
@@ -297,10 +235,6 @@ class SecurityController extends PrestaShopAdminController
 
     /**
      * Delete a customer session.
-     *
-     * @param int $sessionId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_security_sessions_customer_list')]
     public function deleteCustomerSessionAction(int $sessionId): RedirectResponse
@@ -320,10 +254,6 @@ class SecurityController extends PrestaShopAdminController
 
     /**
      * Bulk delete customer session.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function bulkDeleteCustomerSessionAction(Request $request): RedirectResponse
@@ -345,10 +275,6 @@ class SecurityController extends PrestaShopAdminController
 
     /**
      * Bulk delete employee session.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))")]
     public function bulkDeleteEmployeeSessionAction(Request $request): RedirectResponse
@@ -369,11 +295,36 @@ class SecurityController extends PrestaShopAdminController
     }
 
     /**
+     * Process the Security configuration form.
+     */
+    protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): RedirectResponse
+    {
+        $this->dispatchHookWithParameters(
+            $hookName,
+            ['controller' => $this]
+        );
+
+        $this->dispatchHookWithParameters('actionAdminSecurityControllerPostProcessBefore', ['controller' => $this]);
+
+        $form = $formHandler->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+            $saveErrors = $formHandler->save($data);
+
+            if (\count($saveErrors) === 0) {
+                $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
+            } else {
+                $this->addFlashErrors($saveErrors);
+            }
+        }
+
+        return $this->redirectToRoute('admin_security');
+    }
+
+    /**
      * Get human-readable error for exception.
-     *
-     * @param Exception $e
-     *
-     * @return array
      */
     protected function getErrorMessages(Exception $e): array
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,11 @@ use Twig\TwigFunction;
  */
 class DocumentationLinkExtension extends AbstractExtension
 {
-    /**
-     * @param DocumentationLinkProviderInterface $documentationLinkProvider
-     */
-    public function __construct(private readonly DocumentationLinkProviderInterface $documentationLinkProvider)
-    {
+    public function __construct(
+        private readonly DocumentationLinkProviderInterface $documentationLinkProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions()
     {
         return [

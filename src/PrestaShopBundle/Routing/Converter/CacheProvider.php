@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,18 +39,18 @@ class CacheProvider extends AbstractLegacyRouteProvider implements CacheCleanerI
      */
     private $legacyRoutes;
 
-    public function __construct(private readonly LegacyRouteProviderInterface $legacyRouteProvider, private readonly CacheItemPoolInterface $cache, private readonly CacheKeyGeneratorInterface $cacheKeyGenerator)
-    {
+    public function __construct(
+        private readonly LegacyRouteProviderInterface $legacyRouteProvider,
+        private readonly CacheItemPoolInterface $cache,
+        private readonly CacheKeyGeneratorInterface $cacheKeyGenerator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLegacyRoutes()
     {
-        if (null === $this->legacyRoutes) {
+        if ($this->legacyRoutes === null) {
             $cacheItem = $this->cache->getItem($this->cacheKeyGenerator->getCacheKey());
-            if (!$cacheItem->isHit()) {
+            if (! $cacheItem->isHit()) {
                 $this->legacyRoutes = $this->legacyRouteProvider->getLegacyRoutes();
                 $cacheItem->set($this->serializeLegacyRoutes($this->legacyRoutes));
                 $this->cache->save($cacheItem);

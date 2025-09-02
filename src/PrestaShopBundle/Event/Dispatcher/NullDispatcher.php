@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,12 +43,6 @@ class NullDispatcher implements EventDispatcherInterface, HookDispatcherInterfac
     {
     }
 
-    /**
-     * @param object $event
-     * @param string|null $eventName
-     *
-     * @return object
-     */
     public function dispatch(object $event, ?string $eventName = null): object
     {
         return $event;
@@ -78,7 +73,7 @@ class NullDispatcher implements EventDispatcherInterface, HookDispatcherInterfac
     }
 
     /**
-     * @param string $eventName
+     * @param string   $eventName
      * @param callable $listener
      */
     public function getListenerPriority($eventName, $listener): ?int
@@ -95,8 +90,6 @@ class NullDispatcher implements EventDispatcherInterface, HookDispatcherInterfac
     }
 
     /**
-     * @param HookInterface $hook
-     *
      * @return RenderedHookInterface|void
      */
     public function dispatchRendering(HookInterface $hook)
@@ -105,7 +98,6 @@ class NullDispatcher implements EventDispatcherInterface, HookDispatcherInterfac
 
     /**
      * @param string $hookName
-     * @param array $hookParameters
      *
      * @return RenderedHookInterface|void
      */

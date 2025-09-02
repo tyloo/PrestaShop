@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -80,92 +81,18 @@ final class GenerateHooksDocumentationCommand extends Command
 
     public function __construct(
         private readonly HookExtractor $hookExtractor,
-        private readonly string $hookFile
+        private readonly string $hookFile,
     ) {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setDescription('Extract Hooks Documentation files')
-            ->addArgument(
-                'output-dir',
-                InputArgument::REQUIRED,
-                'Directory containing the generated markdown files (ex: /home/user/devdocs-site/src/content/9/modules/concepts/hooks/list-of-hooks)',
-            );
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $outputDir = $input->getArgument('output-dir');
-        if (!is_dir($outputDir) || !is_writable($outputDir)) {
-            throw new InvalidArgumentException(sprintf('The directory "%s" does not exist or is not writable.', $outputDir));
-        }
-
-        $hooks = $this->hookExtractor->findHooks();
-        $formatedHooks = [];
-        $formatedHooksKeys = [];
-        foreach ($hooks as $hook) {
-            $formatedHooks[$hook['hook']] = $hook;
-            $formatedHooksKeys[] = $hook['hook'];
-        }
-
-        if (!file_exists($this->hookFile)) {
-            throw new Exception(sprintf('File %s has not been found', $this->hookFile));
-        }
-
-        $hookFileContent = simplexml_load_file($this->hookFile);
-
-        $xmlHooks = $this->parseHooks($hookFileContent->entities);
-
-        foreach ($xmlHooks as $key => $xmlHook) {
-            if (in_array($xmlHook['hook'], $formatedHooksKeys)) {
-                $xmlHooks[$key]['type'] = $formatedHooks[$xmlHook['hook']]['type'];
-                $xmlHooks[$key]['file'] = $formatedHooks[$xmlHook['hook']]['file'];
-                $xmlHooks[$key]['aliases'] = $formatedHooks[$xmlHook['hook']]['aliases'] ?? [];
-                $xmlHooks[$key]['used_parameters'] = $formatedHooks[$xmlHook['hook']]['used_parameters'] ?? [];
-                $xmlHooks[$key]['full_implementation'] = $formatedHooks[$xmlHook['hook']]['full_implementation'];
-                $xmlHooks[$key]['locations'] = $formatedHooks[$xmlHook['hook']]['locations'] ?? [];
-                $xmlHooks[$key]['dynamic'] = false;
-            } elseif ($matchingDynamicHook = $this->getMatchingDynamicHook($xmlHook['hook'])) {
-                $xmlHooks[$key]['type'] = $this->defineHookType($xmlHook['hook']);
-                $xmlHooks[$key]['file'] = $this->dynamicHookDetails[$matchingDynamicHook]['file'];
-                $xmlHooks[$key]['aliases'] = [];
-                $xmlHooks[$key]['used_parameters'] = [];
-                $xmlHooks[$key]['full_implementation'] = $this->dynamicHookDetails[$matchingDynamicHook]['full_implementation'];
-                $xmlHooks[$key]['locations'] = ['back office'];
-                $xmlHooks[$key]['dynamic'] = true;
-            } else {
-                $xmlHooks[$key]['type'] = $this->defineHookType($xmlHook['hook']);
-                $xmlHooks[$key]['file'] = '';
-                $xmlHooks[$key]['aliases'] = [];
-                $xmlHooks[$key]['used_parameters'] = [];
-                $xmlHooks[$key]['full_implementation'] = '';
-                $xmlHooks[$key]['locations'] = ['back office'];
-                $xmlHooks[$key]['dynamic'] = false;
-            }
-        }
-
-        $this->generateMarkdownFiles($xmlHooks, $outputDir, $output);
-
-        return Command::SUCCESS;
-    }
-
-    protected function getMatchingDynamicHook(string $hookName): ?string
-    {
-        $matchingHooks = array_filter(array_keys($this->dynamicHookDetails), fn ($str): bool => stripos($hookName, (string) $str) !== false);
-
-        return !empty($matchingHooks) ? reset($matchingHooks) : null;
     }
 
     public function generateMarkdownFiles(array $hooks, string $mdDir, OutputInterface $output): void
     {
         $outputDir = $mdDir;
-        if (!is_dir($outputDir)) {
+        if (! is_dir($outputDir)) {
             mkdir($outputDir, 0777, true);
         }
-        $outputDir = rtrim($outputDir, '/') . '/';
+        $outputDir = mb_rtrim($outputDir, '/') . '/';
 
         $githubBaseUrl = 'https://github.com/PrestaShop/PrestaShop/blob/9.0.x/';
         $generatedHooks = 0;
@@ -176,7 +103,7 @@ final class GenerateHooksDocumentationCommand extends Command
 
             // If documentation already exists we don't generate it because it may have more details in the documentation than we
             // can provide here, unless it's a dynamic hook then we update the automatic doc
-            if (file_exists($filePath) && !$hook['dynamic']) {
+            if (file_exists($filePath) && ! $hook['dynamic']) {
                 continue;
             }
 
@@ -243,7 +170,7 @@ final class GenerateHooksDocumentationCommand extends Command
 
         EOT;
 
-            if (!empty($fullImplementation)) {
+            if (! empty($fullImplementation)) {
                 $content .= <<<EOT
 
         ## Call of the Hook in the origin file
@@ -261,6 +188,80 @@ final class GenerateHooksDocumentationCommand extends Command
         }
 
         $output->writeln('<info> ' . $generatedHooks . ' hooks generated into ' . $mdDir . '</info>');
+    }
+
+    protected function configure(): void
+    {
+        $this
+            ->setDescription('Extract Hooks Documentation files')
+            ->addArgument(
+                'output-dir',
+                InputArgument::REQUIRED,
+                'Directory containing the generated markdown files (ex: /home/user/devdocs-site/src/content/9/modules/concepts/hooks/list-of-hooks)',
+            );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $outputDir = $input->getArgument('output-dir');
+        if (! is_dir($outputDir) || ! is_writable($outputDir)) {
+            throw new InvalidArgumentException(\sprintf('The directory "%s" does not exist or is not writable.', $outputDir));
+        }
+
+        $hooks = $this->hookExtractor->findHooks();
+        $formatedHooks = [];
+        $formatedHooksKeys = [];
+        foreach ($hooks as $hook) {
+            $formatedHooks[$hook['hook']] = $hook;
+            $formatedHooksKeys[] = $hook['hook'];
+        }
+
+        if (! file_exists($this->hookFile)) {
+            throw new Exception(\sprintf('File %s has not been found', $this->hookFile));
+        }
+
+        $hookFileContent = simplexml_load_file($this->hookFile);
+
+        $xmlHooks = $this->parseHooks($hookFileContent->entities);
+
+        foreach ($xmlHooks as $key => $xmlHook) {
+            if (\in_array($xmlHook['hook'], $formatedHooksKeys, true)) {
+                $xmlHooks[$key]['type'] = $formatedHooks[$xmlHook['hook']]['type'];
+                $xmlHooks[$key]['file'] = $formatedHooks[$xmlHook['hook']]['file'];
+                $xmlHooks[$key]['aliases'] = $formatedHooks[$xmlHook['hook']]['aliases'] ?? [];
+                $xmlHooks[$key]['used_parameters'] = $formatedHooks[$xmlHook['hook']]['used_parameters'] ?? [];
+                $xmlHooks[$key]['full_implementation'] = $formatedHooks[$xmlHook['hook']]['full_implementation'];
+                $xmlHooks[$key]['locations'] = $formatedHooks[$xmlHook['hook']]['locations'] ?? [];
+                $xmlHooks[$key]['dynamic'] = false;
+            } elseif ($matchingDynamicHook = $this->getMatchingDynamicHook($xmlHook['hook'])) {
+                $xmlHooks[$key]['type'] = $this->defineHookType($xmlHook['hook']);
+                $xmlHooks[$key]['file'] = $this->dynamicHookDetails[$matchingDynamicHook]['file'];
+                $xmlHooks[$key]['aliases'] = [];
+                $xmlHooks[$key]['used_parameters'] = [];
+                $xmlHooks[$key]['full_implementation'] = $this->dynamicHookDetails[$matchingDynamicHook]['full_implementation'];
+                $xmlHooks[$key]['locations'] = ['back office'];
+                $xmlHooks[$key]['dynamic'] = true;
+            } else {
+                $xmlHooks[$key]['type'] = $this->defineHookType($xmlHook['hook']);
+                $xmlHooks[$key]['file'] = '';
+                $xmlHooks[$key]['aliases'] = [];
+                $xmlHooks[$key]['used_parameters'] = [];
+                $xmlHooks[$key]['full_implementation'] = '';
+                $xmlHooks[$key]['locations'] = ['back office'];
+                $xmlHooks[$key]['dynamic'] = false;
+            }
+        }
+
+        $this->generateMarkdownFiles($xmlHooks, $outputDir, $output);
+
+        return Command::SUCCESS;
+    }
+
+    protected function getMatchingDynamicHook(string $hookName): ?string
+    {
+        $matchingHooks = array_filter(array_keys($this->dynamicHookDetails), fn ($str): bool => mb_stripos($hookName, (string) $str) !== false);
+
+        return ! empty($matchingHooks) ? reset($matchingHooks) : null;
     }
 
     private function escapeHookDetail(string $hookDetail): string
@@ -290,10 +291,11 @@ final class GenerateHooksDocumentationCommand extends Command
     {
         if (str_starts_with($hookName, 'action')) {
             return 'action';
-        } elseif (str_starts_with($hookName, 'display')) {
-            return 'display';
-        } else {
-            return 'notDefined';
         }
+        if (str_starts_with($hookName, 'display')) {
+            return 'display';
+        }
+
+        return 'notDefined';
     }
 }

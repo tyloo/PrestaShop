@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,10 +32,9 @@ namespace PrestaShopBundle\Utils;
 class Tree
 {
     /**
-     * @param array $elementlist
      * @param callable $getChildren; must return an array of children for the given element; signature function($element): array
-     * @param callable $getId; must return the id of the given element; signature function($element): int
-     * @param array $idStorage; store found ids (ensure recursion optimisation and avoiding infinite loop)
+     * @param callable $getId;       must return the id of the given element; signature function($element): int
+     * @param array    $idStorage;   store found ids (ensure recursion optimisation and avoiding infinite loop)
      *
      * @return array [ (int) 'id' => (int) 'id'] (make array construction easier)
      */
@@ -43,7 +43,7 @@ class Tree
         foreach ($elementlist as $child) {
             $childId = $getId($child);
             // Test made to ensure avoiding unecessary recursive call
-            if (!isset($idStorage[$childId])) {
+            if (! isset($idStorage[$childId])) {
                 $idStorage[$childId] = $childId;
                 static::extractChildrenId($getChildren($child), $getChildren, $getId, $idStorage);
             }

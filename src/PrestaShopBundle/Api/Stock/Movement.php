@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,22 +33,18 @@ class Movement
 {
     private readonly int $delta;
 
-    public function __construct(private readonly ProductIdentity $productIdentity, $delta)
-    {
+    public function __construct(
+        private readonly ProductIdentity $productIdentity,
+        $delta,
+    ) {
         $this->delta = (int) $delta;
     }
 
-    /**
-     * @return ProductIdentity
-     */
-    public function getProductIdentity(): \PrestaShopBundle\Entity\ProductIdentity
+    public function getProductIdentity(): ProductIdentity
     {
         return $this->productIdentity;
     }
 
-    /**
-     * @return int
-     */
     public function getDelta(): int
     {
         return $this->delta;

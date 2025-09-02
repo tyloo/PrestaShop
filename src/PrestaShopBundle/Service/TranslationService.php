@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ class TranslationService
 
     /**
      * @param string $lang
-     *
-     * @return mixed
      */
     public function langToLocale($lang)
     {
@@ -68,7 +67,7 @@ class TranslationService
         /** @var Lang|null $lang */
         $lang = $doctrine->getManager()->getRepository(Lang::class)->findOneByLocale($locale);
 
-        if (!$lang instanceof Lang) {
+        if (! $lang instanceof Lang) {
             throw InvalidLanguageException::localeNotFound($locale);
         }
 
@@ -76,35 +75,7 @@ class TranslationService
     }
 
     /**
-     * @return mixed
-     *
-     * @throws Exception
-     */
-    private function getLangToLocalesMapping()
-    {
-        $translationsDirectory = $this->getResourcesDirectory();
-
-        $legacyToStandardLocalesJson = file_get_contents($translationsDirectory . '/legacy-to-standard-locales.json');
-        $legacyToStandardLocales = json_decode($legacyToStandardLocalesJson, true);
-
-        $jsonLastErrorCode = json_last_error();
-        if (JSON_ERROR_NONE !== $jsonLastErrorCode) {
-            throw new Exception('The legacy to standard locales JSON could not be decoded', $jsonLastErrorCode);
-        }
-
-        return $legacyToStandardLocales;
-    }
-
-    /**
-     * @return string
-     */
-    private function getResourcesDirectory(): string
-    {
-        return $this->container->getParameter('kernel.project_dir') . '/app/Resources';
-    }
-
-    /**
-     * @param string $lang
+     * @param string      $lang
      * @param string|null $type
      * @param string|null $theme
      * @param string|null $search
@@ -116,7 +87,7 @@ class TranslationService
         $factory = $this->container->get('ps.translations_factory');
 
         if ($this->requiresThemeTranslationsFactory($theme, $type)) {
-            if ('classic' === $theme) {
+            if ($theme === 'classic') {
                 $type = 'front';
             } else {
                 $type = $theme;
@@ -148,18 +119,12 @@ class TranslationService
      *          ]
      *   ]
      *
-     * @param ProviderDefinitionInterface $providerDefinition
-     * @param string $locale
-     * @param array $search
-     *
-     * @return array
-     *
      * @throws Exception
      */
     public function getTranslationsTree(
         ProviderDefinitionInterface $providerDefinition,
         string $locale,
-        array $search
+        array $search,
     ): array {
         $translationTreeBuilder = $this->container->get('prestashop.translation.builder.translation_tree');
 
@@ -167,25 +132,7 @@ class TranslationService
     }
 
     /**
-     * @param string|null $theme
-     * @param string $type
-     *
-     * @return bool
-     */
-    private function requiresThemeTranslationsFactory($theme, $type): bool
-    {
-        return $type === 'themes' && null !== $theme;
-    }
-
-    /**
      * List translations for a specific domain.
-     *
-     * @param ProviderDefinitionInterface $providerDefinition
-     * @param string $locale
-     * @param string $domain
-     * @param array|null $search
-     *
-     * @return array
      *
      * @throws Exception
      *
@@ -197,7 +144,7 @@ class TranslationService
         ProviderDefinitionInterface $providerDefinition,
         string $locale,
         string $domain,
-        ?array $search = null
+        ?array $search = null,
     ): array {
         $domainCatalogue = $this->container->get('prestashop.translation.builder.translation_catalogue')->getDomainCatalogue(
             $providerDefinition,
@@ -218,10 +165,10 @@ class TranslationService
     /**
      * Save a translation in database.
      *
-     * @param Lang $lang
-     * @param string $domain
-     * @param string $key
-     * @param string $translationValue
+     * @param Lang        $lang
+     * @param string      $domain
+     * @param string      $key
+     * @param string      $translationValue
      * @param string|null $theme
      *
      * @return bool
@@ -256,17 +203,17 @@ class TranslationService
             $logger->error($exception->getMessage(), $log_context);
         }
 
-        if (null === $translation) {
+        if ($translation === null) {
             $translation = new Translation();
             $translation->setDomain($domain);
             $translation->setLang($lang);
-            $translation->setKey(htmlspecialchars_decode($key, ENT_QUOTES));
+            $translation->setKey(htmlspecialchars_decode($key, \ENT_QUOTES));
             $translation->setTranslation($translationValue);
-            if (!empty($theme)) {
+            if (! empty($theme)) {
                 $translation->setTheme($theme);
             }
         } else {
-            if (!empty($theme)) {
+            if (! empty($theme)) {
                 $translation->setTheme($theme);
             }
             $translation->setTranslation($translationValue);
@@ -274,7 +221,7 @@ class TranslationService
 
         $validator = Validation::createValidator();
         $violations = $validator->validate($translation, new PassVsprintf());
-        if (0 !== count($violations)) {
+        if (\count($violations) !== 0) {
             foreach ($violations as $violation) {
                 $logger->error($violation->getMessage(), $log_context);
             }
@@ -299,9 +246,9 @@ class TranslationService
     /**
      * Reset translation from database.
      *
-     * @param Lang $lang
-     * @param string $domain
-     * @param string $key
+     * @param Lang        $lang
+     * @param string      $domain
+     * @param string      $key
      * @param string|null $theme
      *
      * @return bool
@@ -316,14 +263,14 @@ class TranslationService
             'domain' => $domain,
             'key' => $key,
         ];
-        if (!empty($theme)) {
+        if (! empty($theme)) {
             $searchTranslation['theme'] = $theme;
         }
 
         $translation = $entityManager->getRepository(Translation::class)->findOneBy($searchTranslation);
 
         $resetTranslationSuccessfully = false;
-        if (null === $translation) {
+        if ($translation === null) {
             $resetTranslationSuccessfully = true;
         }
 
@@ -337,5 +284,37 @@ class TranslationService
         }
 
         return $resetTranslationSuccessfully;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function getLangToLocalesMapping()
+    {
+        $translationsDirectory = $this->getResourcesDirectory();
+
+        $legacyToStandardLocalesJson = file_get_contents($translationsDirectory . '/legacy-to-standard-locales.json');
+        $legacyToStandardLocales = json_decode($legacyToStandardLocalesJson, true);
+
+        $jsonLastErrorCode = json_last_error();
+        if ($jsonLastErrorCode !== \JSON_ERROR_NONE) {
+            throw new Exception('The legacy to standard locales JSON could not be decoded', $jsonLastErrorCode);
+        }
+
+        return $legacyToStandardLocales;
+    }
+
+    private function getResourcesDirectory(): string
+    {
+        return $this->container->getParameter('kernel.project_dir') . '/app/Resources';
+    }
+
+    /**
+     * @param string|null $theme
+     * @param string      $type
+     */
+    private function requiresThemeTranslationsFactory($theme, $type): bool
+    {
+        return $type === 'themes' && $theme !== null;
     }
 }

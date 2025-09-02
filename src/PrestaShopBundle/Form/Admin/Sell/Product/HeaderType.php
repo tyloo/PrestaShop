@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,26 +47,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HeaderType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param bool $stockManagementEnabled
-     * @param bool $isEcotaxEnabled
-     * @param ToolbarButtonsProviderInterface $toolbarButtonsProvider
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly bool $stockManagementEnabled,
         private readonly bool $isEcotaxEnabled,
-        private readonly ToolbarButtonsProviderInterface $toolbarButtonsProvider
+        private readonly ToolbarButtonsProviderInterface $toolbarButtonsProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -136,9 +127,6 @@ class HeaderType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

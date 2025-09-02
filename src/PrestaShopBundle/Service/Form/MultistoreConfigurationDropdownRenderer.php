@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,7 +57,7 @@ class MultistoreConfigurationDropdownRenderer
             $dropdownData = $this->groupShopDropdown($this->customizedConfigurationChecker, $shopGroups, $configurationKey);
         }
 
-        if (!$dropdownData['shouldDisplayDropdown']) {
+        if (! $dropdownData['shouldDisplayDropdown']) {
             // No dropdown is displayed if no shop overrides this configuration value, so we return an empty response.
             return '';
         }
@@ -67,11 +68,7 @@ class MultistoreConfigurationDropdownRenderer
     /**
      * Gathers data for multistore dropdown in group shop context
      *
-     * @param CustomizedConfigurationChecker $shopCustomizationChecker
      * @param ShopGroup[] $shopGroups
-     * @param string $configurationKey
-     *
-     * @return array
      */
     private function groupShopDropdown(CustomizedConfigurationChecker $shopCustomizationChecker, array $shopGroups, string $configurationKey): array
     {
@@ -82,7 +79,7 @@ class MultistoreConfigurationDropdownRenderer
             if ($this->shouldIncludeGroupShop($group)) {
                 $groupList[] = $group;
             }
-            if ($group->getId() === $this->shopContext->getShopConstraint()->getShopGroupId()?->getValue() && !$shouldDisplayDropdown) {
+            if ($group->getId() === $this->shopContext->getShopConstraint()->getShopGroupId()?->getValue() && ! $shouldDisplayDropdown) {
                 foreach ($group->getShops() as $shop) {
                     if ($shopCustomizationChecker->isConfigurationCustomizedForThisShop($configurationKey, $shop, true)) {
                         $shouldDisplayDropdown = true;
@@ -106,11 +103,7 @@ class MultistoreConfigurationDropdownRenderer
     /**
      * Gathers data for multistore dropdown in all shop context
      *
-     * @param CustomizedConfigurationChecker $shopCustomizationChecker
      * @param ShopGroup[] $shopGroups
-     * @param string $configurationKey
-     *
-     * @return array
      */
     private function allShopDropdown(CustomizedConfigurationChecker $shopCustomizationChecker, array $shopGroups, string $configurationKey): array
     {
@@ -145,7 +138,7 @@ class MultistoreConfigurationDropdownRenderer
     private function shouldIncludeGroupShop(ShopGroup $group): bool
     {
         // group shop is only included if we are in all shop context or in group context when this group is the current context
-        if (count($group->getShops()) > 0
+        if (\count($group->getShops()) > 0
             && (
                 $this->shopContext->getShopConstraint()->forAllShops()
                 || $group->getId() === $this->shopContext->getShopConstraint()->getShopGroupId()?->getValue()

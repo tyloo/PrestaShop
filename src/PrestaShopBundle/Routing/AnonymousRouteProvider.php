@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,7 +62,7 @@ class AnonymousRouteProvider implements CacheWarmerInterface
 
     public function isRouteAnonymous(string $routeName): bool
     {
-        return array_key_exists($routeName, $this->getAnonymousRoutes());
+        return \array_key_exists($routeName, $this->getAnonymousRoutes());
     }
 
     public function warmUp(string $cacheDir): array

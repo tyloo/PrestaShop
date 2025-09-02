@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,11 +58,6 @@ class UserLocaleSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param RequestEvent $event
-     *
-     * @return void
-     */
     public function onKernelRequest(RequestEvent $event): void
     {
         if ($this->security->getUser() instanceof SessionEmployeeInterface) {

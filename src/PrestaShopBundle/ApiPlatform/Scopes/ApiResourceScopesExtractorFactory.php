@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,7 @@ class ApiResourceScopesExtractorFactory
     {
         return new ApiResourceScopesExtractor(
             new AttributesResourceMetadataCollectionFactory(),
-            new Environment('dev' === $environmentName, $environmentName),
+            new Environment($environmentName === 'dev', $environmentName),
             new DisabledFeatureFlagStateChecker(),
             $container,
             $moduleDir,

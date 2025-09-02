@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,22 +45,24 @@ class DeliveryController extends PrestaShopAdminController
     /**
      * Main page for Delivery slips.
      *
-     * @param Request $request
-     *
      * @return Response|RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('update', request.get('_legacy_controller')) || is_granted('create', request.get('_legacy_controller')) || is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function slipAction(
         Request $request,
-        #[Autowire(service: 'prestashop.adapter.order.delivery.slip.options.form_handler')] FormHandlerInterface $formHandler,
-        #[Autowire(service: 'prestashop.adapter.order.delivery.slip.pdf.form_handler')] FormHandlerInterface $pdfFormHandler,
+        #[Autowire(service: 'prestashop.adapter.order.delivery.slip.options.form_handler')]
+        FormHandlerInterface $formHandler,
+        #[Autowire(service: 'prestashop.adapter.order.delivery.slip.pdf.form_handler')]
+        FormHandlerInterface $pdfFormHandler,
     ): Response {
         /** @var Form $form */
         $form = $formHandler->getForm();
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()
-            && $this->isGranted('update', $request->attributes->get('_legacy_controller')
+            && $this->isGranted(
+                'update',
+                $request->attributes->get('_legacy_controller')
             )) {
             $errors = $formHandler->save($form->getData());
             if (empty($errors)) {
@@ -88,15 +91,14 @@ class DeliveryController extends PrestaShopAdminController
     /**
      * Delivery slips PDF generator.
      *
-     * @param Request $request
-     *
      * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('update', request.get('_legacy_controller')) || is_granted('create', request.get('_legacy_controller')) || is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function generatePdfAction(
         Request $request,
-        #[Autowire(service: 'prestashop.adapter.order.delivery.slip.pdf.form_handler')] FormHandlerInterface $formHandler,
-        LegacyContext $legacyContext
+        #[Autowire(service: 'prestashop.adapter.order.delivery.slip.pdf.form_handler')]
+        FormHandlerInterface $formHandler,
+        LegacyContext $legacyContext,
     ) {
         /** @var Form $form */
         $form = $formHandler->getForm();
@@ -121,7 +123,7 @@ class DeliveryController extends PrestaShopAdminController
             }
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $this->addFlashErrors($errors);
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,26 +44,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ShippingType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param string $currencyIsoCode
-     * @param FormChoiceProviderInterface $carrierChoiceProvider
-     * @param FormChoiceProviderInterface $deliveryTimeNoteTypesProvider
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly string $currencyIsoCode,
         private readonly FormChoiceProviderInterface $carrierChoiceProvider,
-        private readonly FormChoiceProviderInterface $deliveryTimeNoteTypesProvider
+        private readonly FormChoiceProviderInterface $deliveryTimeNoteTypesProvider,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -114,9 +105,6 @@ class ShippingType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

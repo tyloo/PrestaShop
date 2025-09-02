@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,10 +53,6 @@ class ImportDataConfigurationController extends PrestaShopAdminController
 {
     /**
      * Shows import data page where the configuration of importable data and the final step of import is handled.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
      */
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
@@ -105,10 +102,6 @@ class ImportDataConfigurationController extends PrestaShopAdminController
 
     /**
      * Create import data match configuration.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_import')]
@@ -130,7 +123,7 @@ class ImportDataConfigurationController extends PrestaShopAdminController
         $errors = $formHandler->save($form->getData());
         $matches = [];
 
-        if (!$errors) {
+        if (! $errors) {
             $matches = $importMatchRepository->findAll();
         }
 
@@ -142,10 +135,6 @@ class ImportDataConfigurationController extends PrestaShopAdminController
 
     /**
      * Delete import data match configuration.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_import')]
@@ -160,10 +149,6 @@ class ImportDataConfigurationController extends PrestaShopAdminController
 
     /**
      * Get import data match configuration.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_import')]
     public function getAction(

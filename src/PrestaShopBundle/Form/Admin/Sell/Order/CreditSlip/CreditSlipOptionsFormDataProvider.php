@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,24 +35,16 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class CreditSlipOptionsFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @param DataConfigurationInterface $creditSlipOptionsConfiguration
-     */
-    public function __construct(private readonly DataConfigurationInterface $creditSlipOptionsConfiguration)
-    {
+    public function __construct(
+        private readonly DataConfigurationInterface $creditSlipOptionsConfiguration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->creditSlipOptionsConfiguration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         return $this->creditSlipOptionsConfiguration->updateConfiguration($data);

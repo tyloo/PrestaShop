@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,12 +48,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ManufacturerAddressType extends TranslatorAwareType
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $manufacturerChoices
-     * @param ConfigurableFormChoiceProviderInterface $statesChoiceProvider
      * @param int $contextCountryId
-     * @param Router $router
      */
     public function __construct(
         TranslatorInterface $translator,
@@ -60,19 +56,16 @@ class ManufacturerAddressType extends TranslatorAwareType
         private array $manufacturerChoices,
         private readonly ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
         private $contextCountryId,
-        private readonly Router $router
+        private readonly Router $router,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $nameHint = $this->trans('Invalid characters:', 'Admin.Global') . ' 0-9!<>,;?=+()@#"�{}_$%:';
         $data = $builder->getData();
-        $countryId = 0 !== $data['id_country'] ? $data['id_country'] : $this->contextCountryId;
+        $countryId = $data['id_country'] !== 0 ? $data['id_country'] : $this->contextCountryId;
         $stateChoices = $this->statesChoiceProvider->getChoices(['id_country' => $countryId]);
         $otherHint = $this->trans('Invalid characters:', 'Admin.Global') . ' <>{}';
 
@@ -90,7 +83,8 @@ class ManufacturerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new TypedRegex([
@@ -112,7 +106,8 @@ class ManufacturerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new TypedRegex([
@@ -185,7 +180,8 @@ class ManufacturerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new TypedRegex([
@@ -213,7 +209,8 @@ class ManufacturerAddressType extends TranslatorAwareType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->trans(
-                            'This field cannot be empty.', 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                 ],

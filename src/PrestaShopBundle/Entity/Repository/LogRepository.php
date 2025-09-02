@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,14 +44,11 @@ class LogRepository implements RepositoryInterface
      */
     public function __construct(
         private readonly Connection $connection,
-        private $databasePrefix
+        private $databasePrefix,
     ) {
         $this->logTable = $this->databasePrefix . 'log';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findAll()
     {
         $result = $this->connection->executeQuery("SELECT l.* FROM $this->logTable l");
@@ -105,8 +103,8 @@ class LogRepository implements RepositoryInterface
     {
         $employeeTable = $this->databasePrefix . 'employee';
         $queryBuilder = $this->connection->createQueryBuilder();
-        $wheres = array_filter($filters['filters'], fn($value): bool => !empty($value));
-        $scalarFilters = array_filter($wheres, fn($key): bool => !in_array($key, ['date_from', 'date_to', 'employee'], true), ARRAY_FILTER_USE_KEY);
+        $wheres = array_filter($filters['filters'], fn ($value): bool => ! empty($value));
+        $scalarFilters = array_filter($wheres, fn ($key): bool => ! \in_array($key, ['date_from', 'date_to', 'employee'], true), \ARRAY_FILTER_USE_KEY);
 
         $qb = $queryBuilder
             ->select('l.*', 'e.email', 'CONCAT(e.firstname, \' \', e.lastname) as employee')
@@ -122,7 +120,7 @@ class LogRepository implements RepositoryInterface
         }
 
         /* Manage Dates interval */
-        if (!empty($wheres['date_from']) && !empty($wheres['date_to'])) {
+        if (! empty($wheres['date_from']) && ! empty($wheres['date_to'])) {
             $qb->andWhere('l.date_add BETWEEN :date_from AND :date_to');
             $qb->setParameters([
                 'date_from' => $wheres['date_from'],
@@ -131,7 +129,7 @@ class LogRepository implements RepositoryInterface
         }
 
         /* Manage Employee filter */
-        if (!empty($wheres['employee'])) {
+        if (! empty($wheres['employee'])) {
             $qb->andWhere('e.lastname LIKE :employee OR e.firstname LIKE :employee');
             $qb->setParameter('employee', '%' . $wheres['employee'] . '%');
         }

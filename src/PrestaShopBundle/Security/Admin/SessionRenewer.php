@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,24 +40,18 @@ use Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface;
  */
 final class SessionRenewer
 {
-    /**
-     * @param ClearableTokenStorageInterface $storage
-     * @param RequestStack $requestStack
-     */
     public function __construct(
         private readonly ClearableTokenStorageInterface $storage,
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
     ) {
     }
 
     /**
      * Change PHPSESSID and clear tokens registered in session
-     *
-     * @return void
      */
     public function renew(): void
     {
-        if (!$this->requestStack->getSession()->isStarted()) {
+        if (! $this->requestStack->getSession()->isStarted()) {
             $this->requestStack->getSession()->start();
         }
 

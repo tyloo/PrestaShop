@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,16 +35,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChangeOrderCurrencyType extends AbstractType
 {
-    /**
-     * @param FormChoiceProviderInterface $currencyChoiceProvider
-     */
-    public function __construct(private readonly FormChoiceProviderInterface $currencyChoiceProvider)
-    {
+    public function __construct(
+        private readonly FormChoiceProviderInterface $currencyChoiceProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -53,9 +49,6 @@ class ChangeOrderCurrencyType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -66,16 +59,11 @@ class ChangeOrderCurrencyType extends AbstractType
         ;
     }
 
-    /**
-     * @param int|null $currentCurrencyId
-     *
-     * @return array
-     */
     private function getCurrencyChoices(?int $currentCurrencyId): array
     {
         $choices = $this->currencyChoiceProvider->getChoices();
 
-        if (null === $currentCurrencyId) {
+        if ($currentCurrencyId === null) {
             return $choices;
         }
 

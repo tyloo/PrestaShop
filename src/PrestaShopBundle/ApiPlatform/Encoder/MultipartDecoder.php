@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,7 +40,7 @@ class MultipartDecoder implements DecoderInterface
     public const FORMAT = 'multipart';
 
     public function __construct(
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
     ) {
     }
 
@@ -47,7 +48,7 @@ class MultipartDecoder implements DecoderInterface
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if (!$request) {
+        if (! $request) {
             return null;
         }
 
@@ -56,6 +57,6 @@ class MultipartDecoder implements DecoderInterface
 
     public function supportsDecoding(string $format)
     {
-        return self::FORMAT === $format;
+        return $format === self::FORMAT;
     }
 }

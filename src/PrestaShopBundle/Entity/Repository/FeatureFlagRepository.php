@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,6 @@ class FeatureFlagRepository extends EntityRepository
     /**
      * Get a feature flag entity by its name.
      *
-     * @param string $featureFlagName
-     *
      * @return FeatureFlag|null return null if feature flag cannot be found
      */
     public function getByName(string $featureFlagName): ?FeatureFlag
@@ -47,41 +46,31 @@ class FeatureFlagRepository extends EntityRepository
 
     /**
      * Check if a feature flag is enabled based on its name (if it doesn't exist false is returned).
-     *
-     * @param string $featureFlagName
-     *
-     * @return bool
      */
     public function isEnabled(string $featureFlagName): bool
     {
         $featureFlag = $this->getByName($featureFlagName);
 
-        return null !== $featureFlag && $featureFlag->isEnabled();
+        return $featureFlag !== null && $featureFlag->isEnabled();
     }
 
     /**
      * Check if a feature flag is disabled based on its name (if it doesn't exist true is returned).
-     *
-     * @param string $featureFlagName
-     *
-     * @return bool
      */
     public function isDisabled(string $featureFlagName): bool
     {
         $featureFlag = $this->getByName($featureFlagName);
 
-        return null === $featureFlag || !$featureFlag->isEnabled();
+        return $featureFlag === null || ! $featureFlag->isEnabled();
     }
 
     /**
      * Enable a feature flag by its flag name.
-     *
-     * @param string $featureFlagName
      */
     public function enable(string $featureFlagName): void
     {
         $featureFlag = $this->getByName($featureFlagName);
-        if (null !== $featureFlag) {
+        if ($featureFlag !== null) {
             $featureFlag->enable();
             $this->getEntityManager()->persist($featureFlag);
             $this->getEntityManager()->flush();
@@ -90,13 +79,11 @@ class FeatureFlagRepository extends EntityRepository
 
     /**
      * Disable a feature flag by its flag name.
-     *
-     * @param string $featureFlagName
      */
     public function disable(string $featureFlagName): void
     {
         $featureFlag = $this->getByName($featureFlagName);
-        if (null !== $featureFlag) {
+        if ($featureFlag !== null) {
             $featureFlag->disable();
             $this->getEntityManager()->persist($featureFlag);
             $this->getEntityManager()->flush();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,11 +53,11 @@ class ShopContextListener
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (!$event->isMainRequest()) {
+        if (! $event->isMainRequest()) {
             return;
         }
 
-        if (!$this->multistoreFeature->isUsed()) {
+        if (! $this->multistoreFeature->isUsed()) {
             // When multistore is not enabled shop context is pretty straightforward to setup, simply use the default shop
             $defaultShopId = $this->getConfiguredDefaultShopId();
             $shopConstraint = ShopConstraint::shop($defaultShopId);
@@ -65,7 +66,7 @@ class ShopContextListener
         } else {
             // When multishop is used the context must be specified via request parameters
             $shopConstraint = $this->getShopConstraintFromRequest($event->getRequest());
-            if (null === $shopConstraint) {
+            if ($shopConstraint === null) {
                 $event->setResponse(new JsonResponse('Multi shop is enabled, you must specify a shop context', JsonResponse::HTTP_BAD_REQUEST));
 
                 return;
@@ -102,7 +103,7 @@ class ShopContextListener
 
         if ($request->get('shopIds')) {
             $shopIds = $request->get('shopIds');
-            if (is_string($shopIds)) {
+            if (\is_string($shopIds)) {
                 $shopIds = explode(',', $shopIds);
             }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,21 +43,17 @@ trait DisablingSwitchTrait
     protected function shouldFormBeDisabled(FormInterface $form, $data): bool
     {
         $disabledValue = $form->getConfig()->getOption(DisablingSwitchExtension::DISABLED_VALUE_OPTION);
-        if (is_callable($disabledValue)) {
+        if (\is_callable($disabledValue)) {
             try {
                 $shouldBeDisabled = $disabledValue($data, $form);
             } catch (TypeError $typeError) {
-                throw new InvalidConfigurationException(
-                    'The callable provided for disabled_value option seems invalid, its prototype should be compatible with function($data, FormInterface $form): bool And $data is usually nullable',
-                    0,
-                    $typeError
-                );
+                throw new InvalidConfigurationException('The callable provided for disabled_value option seems invalid, its prototype should be compatible with function($data, FormInterface $form): bool And $data is usually nullable', 0, $typeError);
             }
         } else {
-            if (null === $disabledValue) {
+            if ($disabledValue === null) {
                 $disabledValue = $form->getConfig()->getOption('default_empty_data');
             }
-            if (null === $disabledValue) {
+            if ($disabledValue === null) {
                 $emptyData = $form->getConfig()->getOption('empty_data');
                 $disabledValue = $emptyData instanceof Closure ? $emptyData($form) : $emptyData;
             }

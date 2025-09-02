@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 abstract class ApiController
 {
     protected LoggerInterface $logger;
+
     protected ContainerInterface $container;
+
     protected AuthorizationCheckerInterface $authorizationChecker;
 
     public function setLogger(LoggerInterface $logger): void
@@ -59,8 +62,6 @@ abstract class ApiController
     }
 
     /**
-     * @param HttpException $exception
-     *
      * @return JsonResponse
      */
     protected function handleException(HttpException $exception)
@@ -80,7 +81,7 @@ abstract class ApiController
         $decodedContent = json_decode($content, true);
 
         $jsonLastError = json_last_error();
-        if ($jsonLastError !== JSON_ERROR_NONE) {
+        if ($jsonLastError !== \JSON_ERROR_NONE) {
             throw new BadRequestHttpException('The request body should be a valid JSON content');
         }
 
@@ -105,8 +106,6 @@ abstract class ApiController
     /**
      * Add additional info to JSON return.
      *
-     * @param Request $request
-     * @param QueryParamsCollection|null $queryParams
      * @param array $headers
      *
      * @return array
@@ -114,12 +113,12 @@ abstract class ApiController
     protected function addAdditionalInfo(
         Request $request,
         ?QueryParamsCollection $queryParams = null,
-        $headers = []
+        $headers = [],
     ) {
         $router = $this->container->get('router');
 
         $queryParamsArray = [];
-        if (null !== $queryParams) {
+        if ($queryParams !== null) {
             $queryParamsArray = $queryParams->getQueryParams();
         }
 
@@ -138,29 +137,29 @@ abstract class ApiController
             ),
         ];
 
-        if (array_key_exists('page_index', $allParams) && $allParams['page_index'] > 1) {
+        if (\array_key_exists('page_index', $allParams) && $allParams['page_index'] > 1) {
             $previousParams = $allParams;
-            if (array_key_exists('page_index', $previousParams)) {
+            if (\array_key_exists('page_index', $previousParams)) {
                 --$previousParams['page_index'];
             }
             $info['previous_url'] = $router->generate($request->attributes->get('_route'), $previousParams);
         }
 
-        if (array_key_exists('Total-Pages', $headers)
-            && array_key_exists('page_index', $allParams)
+        if (\array_key_exists('Total-Pages', $headers)
+            && \array_key_exists('page_index', $allParams)
             && $headers['Total-Pages'] > $allParams['page_index']) {
             $nextParams = $allParams;
-            if (array_key_exists('page_index', $nextParams)) {
+            if (\array_key_exists('page_index', $nextParams)) {
                 ++$nextParams['page_index'];
             }
             $info['next_url'] = $router->generate($request->attributes->get('_route'), $nextParams);
         }
 
-        if (array_key_exists('Total-Pages', $headers)) {
+        if (\array_key_exists('Total-Pages', $headers)) {
             $info['total_page'] = $headers['Total-Pages'];
         }
 
-        if (null !== $queryParams) {
+        if ($queryParams !== null) {
             $info['page_index'] = $queryParamsArray['page_index'];
             $info['page_size'] = $queryParamsArray['page_size'];
         }
@@ -170,9 +169,7 @@ abstract class ApiController
 
     /**
      * @param array $data
-     * @param Request $request
-     * @param QueryParamsCollection|null $queryParams
-     * @param int $status
+     * @param int   $status
      * @param array $headers
      *
      * @return JsonResponse
@@ -182,7 +179,7 @@ abstract class ApiController
         Request $request,
         ?QueryParamsCollection $queryParams = null,
         $status = 200,
-        $headers = []
+        $headers = [],
     ) {
         $response = [
             'info' => $this->addAdditionalInfo($request, $queryParams, $headers),
@@ -195,7 +192,6 @@ abstract class ApiController
     /**
      * Checks if access is granted.
      *
-     * @param mixed $accessLevel
      * @param string $controller name of the controller
      *
      * @return bool

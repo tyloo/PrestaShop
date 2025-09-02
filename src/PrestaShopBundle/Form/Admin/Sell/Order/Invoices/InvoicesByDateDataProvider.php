@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,13 +37,11 @@ use PrestaShop\PrestaShop\Core\Order\OrderInvoiceDataProviderInterface;
  */
 final class InvoicesByDateDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private readonly OrderInvoiceDataProviderInterface $orderInvoiceDataProvider)
-    {
+    public function __construct(
+        private readonly OrderInvoiceDataProviderInterface $orderInvoiceDataProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): array
     {
         $date = (new DateTime())->format('Y-m-d');
@@ -53,9 +52,6 @@ final class InvoicesByDateDataProvider implements FormDataProviderInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         // This form doesn't need to save any data, so it only validates the data
@@ -64,8 +60,6 @@ final class InvoicesByDateDataProvider implements FormDataProviderInterface
 
     /**
      * Perform validations on form data.
-     *
-     * @param array $data
      *
      * @return array Array of errors if any
      */
@@ -76,7 +70,7 @@ final class InvoicesByDateDataProvider implements FormDataProviderInterface
         $dateFrom = date_create($data['date_from']);
         $dateTo = date_create($data['date_to']);
 
-        if (false === $dateFrom) {
+        if ($dateFrom === false) {
             $errors[] = [
                 'key' => 'Invalid "From" date',
                 'domain' => 'Admin.Orderscustomers.Notification',
@@ -84,7 +78,7 @@ final class InvoicesByDateDataProvider implements FormDataProviderInterface
             ];
         }
 
-        if (false === $dateTo) {
+        if ($dateTo === false) {
             $errors[] = [
                 'key' => 'Invalid "To" date',
                 'domain' => 'Admin.Orderscustomers.Notification',
@@ -92,7 +86,7 @@ final class InvoicesByDateDataProvider implements FormDataProviderInterface
             ];
         }
 
-        if (empty($errors) && !$this->orderInvoiceDataProvider->getByDateInterval($dateFrom, $dateTo)) {
+        if (empty($errors) && ! $this->orderInvoiceDataProvider->getByDateInterval($dateFrom, $dateTo)) {
             $errors[] = [
                 'key' => 'No invoice has been found for this period.',
                 'domain' => 'Admin.Orderscustomers.Notification',

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,13 +38,11 @@ use Throwable;
  */
 final class HookDataCollector extends DataCollector
 {
-    public function __construct(private readonly HookRegistry $registry)
-    {
+    public function __construct(
+        private readonly HookRegistry $registry,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         $hooks = $this->registry->getHooks();
@@ -98,25 +97,17 @@ final class HookDataCollector extends DataCollector
         return $this->data['notRegisteredHooks'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reset(): void
     {
         $this->data = [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'ps.hooks_collector';
     }
 
     /**
-     * @param array $hooksList
-     *
      * @return array a better representation of arguments for HTML rendering
      */
     private function stringifyHookArguments(array &$hooksList)
@@ -131,7 +122,7 @@ final class HookDataCollector extends DataCollector
                             unset($modulesByType[$type]);
                         }
 
-                        if (array_key_exists('args', $module)) {
+                        if (\array_key_exists('args', $module)) {
                             $module['args'] = $this->cloneVar($module['args']);
                         }
                     }

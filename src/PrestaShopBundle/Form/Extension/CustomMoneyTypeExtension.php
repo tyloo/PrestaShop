@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,17 +46,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomMoneyTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @param Locale $locale
-     * @param int $defaultCurrencyId
-     * @param CurrencyRepository $currencyRepository
-     * @param LocaleNumberTransformer $localeNumberTransformer
-     */
     public function __construct(
         private readonly Locale $locale,
         private readonly int $defaultCurrencyId,
         private readonly CurrencyRepository $currencyRepository,
-        private readonly LocaleNumberTransformer $localeNumberTransformer
+        private readonly LocaleNumberTransformer $localeNumberTransformer,
     ) {
     }
 
@@ -64,9 +59,6 @@ class CustomMoneyTypeExtension extends AbstractTypeExtension
         return [MoneyType::class];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -81,9 +73,6 @@ class CustomMoneyTypeExtension extends AbstractTypeExtension
         $resolver->setAllowedTypes('scale', 'int');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
@@ -91,9 +80,6 @@ class CustomMoneyTypeExtension extends AbstractTypeExtension
         $view->vars['money_pattern'] = $this->getFrameworkPattern($options['currency']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // We only want to adapt the MoneyToLocalizedStringTransformer, so we save the current transformers
@@ -123,8 +109,6 @@ class CustomMoneyTypeExtension extends AbstractTypeExtension
      *
      * @param string $currencyCode e.g. EUR, USD
      *
-     * @return string
-     *
      * @throws InvalidArgumentException
      * @throws LocalizationException
      */
@@ -132,8 +116,8 @@ class CustomMoneyTypeExtension extends AbstractTypeExtension
     {
         $priceSpecification = $this->locale->getPriceSpecification($currencyCode);
 
-        if (!($priceSpecification instanceof Price)) {
-            throw new InvalidArgumentException(sprintf('Expected instance of %s', Price::class));
+        if (! ($priceSpecification instanceof Price)) {
+            throw new InvalidArgumentException(\sprintf('Expected instance of %s', Price::class));
         }
 
         // replace CLDR pattern placeholder with one understandable for framework

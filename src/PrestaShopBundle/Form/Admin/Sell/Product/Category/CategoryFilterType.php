@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,27 +42,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class CategoryFilterType extends AbstractType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param CategoryDataProvider $categoryProvider
-     * @param int $contextLangId
-     */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly CategoryDataProvider $categoryProvider, private readonly int $contextLangId)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly CategoryDataProvider $categoryProvider,
+        private readonly int $contextLangId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
         $view->vars['nested_tree'] = $options['nested_tree'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -81,17 +74,11 @@ class CategoryFilterType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'category_filter';
@@ -106,7 +93,7 @@ class CategoryFilterType extends AbstractType
                 'category_id' => $categoryId,
                 'name' => $category['name'],
             ];
-            if (!empty($category['children'])) {
+            if (! empty($category['children'])) {
                 $flattenedTree = array_merge(
                     $flattenedTree,
                     $this->flattenTree($category['children'])

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,7 +48,7 @@ final class LegacyLinkLinter implements RouteLinterInterface
         }
 
         // Route is not related to a legacy controller so legacy link is not relevant
-        if (!$route->hasDefault('_legacy_controller')) {
+        if (! $route->hasDefault('_legacy_controller')) {
             return true;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,20 +31,22 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ProductIdentity
 {
-    public function __construct(private readonly int $productId, private readonly int $combinationId = 0)
-    {
+    public function __construct(
+        private readonly int $productId,
+        private readonly int $combinationId = 0,
+    ) {
     }
 
-    public static function fromArray(array $identifiers): ProductIdentity
+    public static function fromArray(array $identifiers): self
     {
-        if (!array_key_exists('product_id', $identifiers)) {
+        if (! \array_key_exists('product_id', $identifiers)) {
             throw new BadRequestHttpException('The "productId" parameter is required');
         }
 
         $productId = (int) $identifiers['product_id'];
 
         $combinationId = 0;
-        if (array_key_exists('combination_id', $identifiers)) {
+        if (\array_key_exists('combination_id', $identifiers)) {
             $combinationId = (int) $identifiers['combination_id'];
         }
 

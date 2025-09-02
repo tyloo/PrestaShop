@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,12 @@ use Symfony\Component\Form\FormEvents;
 
 class DiscountListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly DiscountApplicationChoiceProvider $discountApplicationChoiceProvider, private readonly FormCloner $formCloner)
-    {
+    public function __construct(
+        private readonly DiscountApplicationChoiceProvider $discountApplicationChoiceProvider,
+        private readonly FormCloner $formCloner,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -50,13 +50,10 @@ class DiscountListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     */
     public function adaptDiscountChoices(FormEvent $event): void
     {
         $data = $event->getData();
-        if (!isset($data['reduction']['type'])) {
+        if (! isset($data['reduction']['type'])) {
             return;
         }
 

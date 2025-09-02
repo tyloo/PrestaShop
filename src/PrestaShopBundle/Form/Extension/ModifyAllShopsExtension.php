@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,13 +56,13 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
      */
     private $checkboxLabel;
 
-    public function __construct(private readonly FeatureInterface $multiStoreFeature, private readonly MultistoreContextCheckerInterface $multistoreContextChecker, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly FeatureInterface $multiStoreFeature,
+        private readonly MultistoreContextCheckerInterface $multistoreContextChecker,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [
@@ -70,12 +71,9 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (!$this->multiStoreFeature->isUsed() || !$this->multistoreContextChecker->isSingleShopContext()) {
+        if (! $this->multiStoreFeature->isUsed() || ! $this->multistoreContextChecker->isSingleShopContext()) {
             return;
         }
 
@@ -91,7 +89,8 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
             $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($label): void {
                 $form = $event->getForm();
                 $parent = $form->getParent();
-                $parent->add(self::MODIFY_ALL_SHOPS_PREFIX . $form->getName(),
+                $parent->add(
+                    self::MODIFY_ALL_SHOPS_PREFIX . $form->getName(),
                     CheckboxType::class,
                     [
                         'label' => $label,
@@ -105,14 +104,9 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
         }
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        if (!$this->multiStoreFeature->isUsed() || !$this->multistoreContextChecker->isSingleShopContext()) {
+        if (! $this->multiStoreFeature->isUsed() || ! $this->multistoreContextChecker->isSingleShopContext()) {
             return;
         }
 
@@ -121,9 +115,6 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
         ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -131,12 +122,9 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
         ]);
     }
 
-    /**
-     * @return string
-     */
     private function getCheckboxLabel(): string
     {
-        if (!$this->checkboxLabel) {
+        if (! $this->checkboxLabel) {
             $this->checkboxLabel = $this->translator->trans('Apply changes to all stores', [], 'Admin.Global');
         }
 

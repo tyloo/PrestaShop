@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use Symfony\Component\Form\FormEvents;
 
 class CombinationListener implements EventSubscriberInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -45,9 +43,6 @@ class CombinationListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     */
     public function adaptCombinationForm(FormEvent $event): void
     {
         $form = $event->getForm();

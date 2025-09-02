@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ResizableTextTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [TextType::class];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -61,19 +56,16 @@ class ResizableTextTypeExtension extends AbstractTypeExtension
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (isset($options['size'])) {
             $sizeClass = 'size-' . $options['size'];
 
-            if (!isset($view->vars['attr']['class'])) {
+            if (! isset($view->vars['attr']['class'])) {
                 $view->vars['attr']['class'] = '';
             }
 
-            $view->vars['attr']['class'] = trim($view->vars['attr']['class'] . ' ' . $sizeClass);
+            $view->vars['attr']['class'] = mb_trim($view->vars['attr']['class'] . ' ' . $sizeClass);
         }
     }
 }

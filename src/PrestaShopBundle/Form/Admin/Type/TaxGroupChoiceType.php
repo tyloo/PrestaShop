@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,18 +36,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TaxGroupChoiceType extends AbstractType
 {
     public function __construct(
-        private readonly FormChoiceProviderInterface $taxGroupChoiceProvider
+        private readonly FormChoiceProviderInterface $taxGroupChoiceProvider,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         // Set normalizer enables to use closure for choice generation with options
         $resolver->setNormalizer(
-            'choices', fn(Options $options) => $this->taxGroupChoiceProvider->getChoices()
+            'choices',
+            fn (Options $options) => $this->taxGroupChoiceProvider->getChoices()
         );
 
         $resolver->setDefaults([
@@ -56,9 +55,6 @@ class TaxGroupChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

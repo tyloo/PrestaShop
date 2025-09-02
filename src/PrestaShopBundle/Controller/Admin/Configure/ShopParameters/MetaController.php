@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -65,11 +66,6 @@ class MetaController extends PrestaShopAdminController
      *
      * So we have to inject them in the constructor to use the Autowire attribute and define the specific
      * service name, this way they are usable in all the shared protected/public methods in this controller.
-     *
-     * @param FormHandlerInterface $setUpUrlsFormHandler
-     * @param FormHandlerInterface $shopUrlsFormHandler
-     * @param FormHandlerInterface $seoOptionsFormHandler
-     * @param FormHandlerInterface $urlSchemaFormHandler
      */
     public function __construct(
         #[Autowire(service: 'prestashop.admin.meta_settings.set_up_urls.form_handler')]
@@ -135,7 +131,7 @@ class MetaController extends PrestaShopAdminController
         try {
             $result = $metaFormHandler->handle($metaForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_metas_index');
@@ -202,7 +198,7 @@ class MetaController extends PrestaShopAdminController
     ): RedirectResponse {
         $errors = $metaEraser->erase([$metaId]);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -223,7 +219,7 @@ class MetaController extends PrestaShopAdminController
         $metaToDelete = $request->request->all('meta_bulk');
         $errors = $metaEraser->erase($metaToDelete);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -340,7 +336,7 @@ class MetaController extends PrestaShopAdminController
     {
         $rootDir = $this->getConfiguration()->get('_PS_ROOT_DIR_');
 
-        if (!$robotsTextFileGenerator->generateFile()) {
+        if (! $robotsTextFileGenerator->generateFile()) {
             $this->addFlash(
                 'error',
                 $this->trans(
@@ -363,18 +359,45 @@ class MetaController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_metas_index');
     }
 
+    protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): FormInterface|RedirectResponse
+    {
+        $this->dispatchHookWithParameters(
+            'actionAdminShopParametersMetaControllerPostProcess' . $hookName . 'Before',
+            ['controller' => $this]
+        );
+
+        $this->dispatchHookWithParameters('actionAdminAdminShopParametersMetaControllerPostProcessBefore', ['controller' => $this]);
+
+        $form = $formHandler->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $saveErrors = $formHandler->save($data);
+
+            if (\count($saveErrors) === 0) {
+                $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
+
+                return $this->redirectToRoute('admin_metas_index');
+            }
+            $this->addFlashErrors($saveErrors);
+        }
+
+        return $form;
+    }
+
     private function doRenderForm(
         Request $request,
         MetaFilters $filters,
         FormInterface $setUpUrlsForm,
         FormInterface $shopUrlsForm,
         FormInterface $seoOptionsForm,
-        ?FormInterface $urlSchemaForm = null
+        ?FormInterface $urlSchemaForm = null,
     ): Response {
         $isShopContext = $this->getShopContext()->getShopConstraint()->isSingleShopContext();
         $isShopFeatureActive = $this->getShopContext()->isMultiShopEnabled();
 
-        $isGridDisplayed = !($isShopFeatureActive && !$isShopContext);
+        $isGridDisplayed = ! ($isShopFeatureActive && ! $isShopContext);
         $presentedGrid = null;
         if ($isGridDisplayed) {
             $grid = $this->metaGridFactory->getGrid($filters);
@@ -432,34 +455,6 @@ class MetaController extends PrestaShopAdminController
         );
     }
 
-    protected function processForm(Request $request, FormHandlerInterface $formHandler, string $hookName): FormInterface|RedirectResponse
-    {
-        $this->dispatchHookWithParameters(
-            'actionAdminShopParametersMetaControllerPostProcess' . $hookName . 'Before',
-            ['controller' => $this]
-        );
-
-        $this->dispatchHookWithParameters('actionAdminAdminShopParametersMetaControllerPostProcessBefore', ['controller' => $this]);
-
-        $form = $formHandler->getForm();
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $saveErrors = $formHandler->save($data);
-
-            if (0 === count($saveErrors)) {
-                $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
-
-                return $this->redirectToRoute('admin_metas_index');
-            } else {
-                $this->addFlashErrors($saveErrors);
-            }
-        }
-
-        return $form;
-    }
-
     private function getErrorMessages(): array
     {
         return [
@@ -467,7 +462,7 @@ class MetaController extends PrestaShopAdminController
                 MetaConstraintException::INVALID_URL_REWRITE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf(
+                        \sprintf(
                             '"%s"',
                             $this->trans('Rewritten URL', [], 'Admin.Shopparameters.Feature')
                         ),
@@ -477,7 +472,7 @@ class MetaController extends PrestaShopAdminController
                 MetaConstraintException::INVALID_PAGE_NAME => $this->trans(
                     'The %s field is required.',
                     [
-                        sprintf(
+                        \sprintf(
                             '"%s"',
                             $this->trans('Page name', [], 'Admin.Shopparameters.Feature')
                         ),
@@ -487,7 +482,7 @@ class MetaController extends PrestaShopAdminController
                 MetaConstraintException::INVALID_PAGE_TITLE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf(
+                        \sprintf(
                             '"%s"',
                             $this->trans('Page title', [], 'Admin.Shopparameters.Feature')
                         ),
@@ -497,7 +492,7 @@ class MetaController extends PrestaShopAdminController
                 MetaConstraintException::INVALID_META_DESCRIPTION => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf(
+                        \sprintf(
                             '"%s"',
                             $this->trans('Meta description', [], 'Admin.Global')
                         ),

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,14 +35,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class TestEnvironmentPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $env = $container->getParameter('kernel.environment');
 
-        if ('test' === $env) {
+        if ($env === 'test') {
             // see https://symfony.com/doc/current/testing.html#multiple-requests-in-one-test
             $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
             $container->getDefinition('doctrine')->clearTag('kernel.reset');

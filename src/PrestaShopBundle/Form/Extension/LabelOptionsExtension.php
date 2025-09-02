@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class LabelOptionsExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -66,28 +64,22 @@ class LabelOptionsExtension extends AbstractTypeExtension
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        if (!empty($options['label_tag_name'])) {
+        if (! empty($options['label_tag_name'])) {
             $view->vars['label_tag_name'] = $options['label_tag_name'];
         }
-        if (!empty($options['label_subtitle'])) {
+        if (! empty($options['label_subtitle'])) {
             $view->vars['label_subtitle'] = $options['label_subtitle'];
         }
-        if (!empty($options['label_help_box'])) {
+        if (! empty($options['label_help_box'])) {
             $view->vars['label_help_box'] = $options['label_help_box'];
         }
-        if (!empty($options['label_tab'])) {
+        if (! empty($options['label_tab'])) {
             $view->vars['label_tab'] = $options['label_tab'];
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

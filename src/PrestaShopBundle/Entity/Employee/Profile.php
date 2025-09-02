@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,15 +51,16 @@ class Profile
      */
     private Collection $authorizationRoles;
 
-    public function __construct(/**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_profile", type="integer", options={"unsigned": true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private ?int $id = null)
-    {
+    public function __construct(
+        /**
+         * @ORM\Id
+         *
+         * @ORM\Column(name="id_profile", type="integer", options={"unsigned": true})
+         *
+         * @ORM\GeneratedValue(strategy="AUTO")
+         */
+        private ?int $id = null,
+    ) {
         $this->authorizationRoles = new ArrayCollection();
     }
 

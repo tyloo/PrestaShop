@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,21 +56,20 @@ class BulkCombinationPriceType extends TranslatorAwareType
         private readonly string $defaultCurrencyIsoCode,
         private readonly string $weightUnit,
         private readonly ProductRepository $productRepository,
-        private readonly TaxComputer $taxComputer
+        private readonly TaxComputer $taxComputer,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('wholesale_price', MoneyType::class, [
                 'required' => false,
                 'label' => $this->trans('Cost price (tax excl.)', 'Admin.Catalog.Feature'),
-                'attr' => ['data-display-price-precision' => FormHelper::DEFAULT_PRICE_PRECISION],
+                'attr' => [
+                    'data-display-price-precision' => FormHelper::DEFAULT_PRICE_PRECISION,
+                ],
                 'currency' => $this->defaultCurrencyIsoCode,
                 'constraints' => [
                     new NotBlank(),

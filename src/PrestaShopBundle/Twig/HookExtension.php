@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,14 +40,11 @@ use Twig\TwigFunction;
  */
 class HookExtension extends AbstractExtension
 {
-    /**
-     * Constructor.
-     *
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param ModuleDataProvider $moduleDataProvider
-     */
-    public function __construct(private readonly HookDispatcherInterface $hookDispatcher, private readonly ModuleDataProvider $moduleDataProvider, private readonly ?ModuleRepository $moduleRepository = null)
-    {
+    public function __construct(
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly ModuleDataProvider $moduleDataProvider,
+        private readonly ?ModuleRepository $moduleRepository = null,
+    ) {
     }
 
     /**
@@ -92,8 +90,8 @@ class HookExtension extends AbstractExtension
      *
      * The listeners will then return html data to display in the Twig template.
      *
-     * @param string $hookName the name of the hook to trigger
-     * @param array $hookParameters the parameters to send to the Hook
+     * @param string $hookName       the name of the hook to trigger
+     * @param array  $hookParameters the parameters to send to the Hook
      *
      * @return array[string] All listener's responses, ordered by the listeners' priorities
      *
@@ -101,7 +99,7 @@ class HookExtension extends AbstractExtension
      */
     public function renderHooksArray($hookName, $hookParameters = []): array
     {
-        if ('' == $hookName) {
+        if ($hookName === '') {
             throw new Exception('Hook name missing');
         }
 
@@ -131,8 +129,8 @@ class HookExtension extends AbstractExtension
      *
      * The listeners will then return html data to display in the Twig template.
      *
-     * @param string $hookName the name of the hook to trigger
-     * @param array $hookParameters the parameters to send to the Hook
+     * @param string $hookName       the name of the hook to trigger
+     * @param array  $hookParameters the parameters to send to the Hook
      *
      * @return string all listener's responses, concatenated in a simple string, ordered by the listeners' priorities
      *
@@ -140,7 +138,7 @@ class HookExtension extends AbstractExtension
      */
     public function renderHook($hookName, array $hookParameters = [])
     {
-        if ($hookName == '') {
+        if ($hookName === '') {
             throw new Exception('Hook name missing');
         }
 
@@ -153,12 +151,10 @@ class HookExtension extends AbstractExtension
      * Return the concatenated content of a renderHooksArray response
      *
      * @param array $hooksArray the array returned by the renderHooksArray function
-     *
-     * @return string
      */
     public function hooksArrayContent($hooksArray): string
     {
-        if (!is_array($hooksArray)) {
+        if (! \is_array($hooksArray)) {
             return '';
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,7 +44,7 @@ class TranslationRepository extends EntityRepository implements TranslationRepos
         $queryBuilder->where('lang = :language');
         $queryBuilder->setParameter('language', $language);
 
-        if (null !== $theme) {
+        if ($theme !== null) {
             $queryBuilder->andWhere('theme = :theme');
             $queryBuilder->setParameter('theme', $theme);
         } else {

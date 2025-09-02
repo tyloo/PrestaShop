@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,12 +36,10 @@ final class UnsupportedModuleException extends NotFoundResourceException
 {
     /**
      * @param string $providerIdentifier the provider identifier
-     *
-     * @return self
      */
     public static function moduleNotProvided($providerIdentifier): self
     {
-        $exceptionMessage = sprintf(
+        $exceptionMessage = \sprintf(
             'The translation provider with the identifier "%s" require a module to be set.',
             $providerIdentifier
         );

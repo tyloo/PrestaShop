@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,10 @@ use Tab as LegacyTab;
 class MenuBuilder
 {
     private ?Tab $currentTab = null;
-    /** @var array<int, Tab[]> */
+
+    /**
+     * @var array<int, Tab[]>
+     */
     private array $ancestorsTab = [];
 
     public function __construct(
@@ -49,7 +53,7 @@ class MenuBuilder
         private readonly TabRepository $tabRepository,
         private readonly TranslatorInterface $translator,
         private readonly UrlGeneratorInterface $urlGenerator,
-        private readonly LegacyParametersConverter $legacyParametersConverter
+        private readonly LegacyParametersConverter $legacyParametersConverter,
     ) {
     }
 
@@ -61,13 +65,13 @@ class MenuBuilder
 
         $tab = null;
         $routeName = $this->getRouteName();
-        if (!empty($routeName)) {
+        if (! empty($routeName)) {
             $tab = $this->tabRepository->findOneByRouteName($routeName);
         }
 
-        if (!$tab) {
+        if (! $tab) {
             $className = $this->getLegacyControllerClassName();
-            if (!empty($className)) {
+            if (! empty($className)) {
                 $tab = $this->tabRepository->findOneByClassName($className);
             }
         }
@@ -82,8 +86,8 @@ class MenuBuilder
         $currentTab = $this->getCurrentTab();
         if ($currentTab) {
             $ancestorsTab = $this->getAncestorsTab($currentTab->getId());
-            if (!empty($ancestorsTab)) {
-                return count($ancestorsTab);
+            if (! empty($ancestorsTab)) {
+                return \count($ancestorsTab);
             }
         }
 
@@ -107,7 +111,7 @@ class MenuBuilder
     public function getBreadcrumbLinks(): array
     {
         $currentTab = $this->getCurrentTab();
-        if (null === $currentTab) {
+        if ($currentTab === null) {
             return [];
         }
 
@@ -125,16 +129,60 @@ class MenuBuilder
             'tab' => $this->convertTabToMenuLink($currentTab),
         ];
 
-        if (!empty($tabAncestors)) {
+        if (! empty($tabAncestors)) {
             $breadcrumbLinks['container'] = $this->convertTabToMenuLink(reset($tabAncestors));
         }
 
         $actionLink = $this->getActionLink();
-        if (null !== $actionLink) {
+        if ($actionLink !== null) {
             $breadcrumbLinks['action'] = $actionLink;
         }
 
         return $breadcrumbLinks;
+    }
+
+    /**
+     * @return array<int, MenuLink>
+     */
+    public function buildNavigationTabs(Tab $tab): array
+    {
+        // Get siblings tabs, filter them based on the employee authorizations
+        $currentLevelTabs = array_filter($this->tabRepository->findByParentId($tab->getIdParent()), fn (Tab $tab): bool => LegacyTab::checkTabRights($tab->getId())
+            && $tab->isEnabled()
+            && $tab->getClassName() !== 'AdminCarrierWizard');
+
+        $navigationTabs = [];
+
+        /** @var Tab $currentLevelTab */
+        foreach ($currentLevelTabs as $currentLevelTab) {
+            $tabLang = $currentLevelTab->getTabLangByLanguageId($this->getContextLanguageId());
+            $menuLink = new MenuLink(
+                name: $tabLang ? $tabLang->getName() : $currentLevelTab->getWording(),
+                href: $this->getLinkFromTab($currentLevelTab),
+                attributes: [
+                    'id_tab' => $currentLevelTab->getId(),
+                    'class_name' => $currentLevelTab->getClassName(),
+                    'current' => $currentLevelTab->getId() === $tab->getId(),
+                    'active' => $currentLevelTab->getActive(),
+                ]
+            );
+            $navigationTabs[] = $menuLink;
+        }
+
+        return $navigationTabs;
+    }
+
+    public function getLegacyControllerClassName(): ?string
+    {
+        $request = $this->requestStack->getMainRequest();
+        if ($request->attributes->has('_legacy_controller')) {
+            return $request->attributes->get('_legacy_controller');
+        }
+        if ($request->query->has('controller')) {
+            return $request->query->get('controller');
+        }
+
+        return null;
     }
 
     private function convertTabToMenuLink(Tab $tab): MenuLink
@@ -146,49 +194,18 @@ class MenuBuilder
         );
     }
 
-    /**
-     * @return array<int, MenuLink>
-     */
-    public function buildNavigationTabs(Tab $tab): array
-    {
-        // Get siblings tabs, filter them based on the employee authorizations
-        $currentLevelTabs = array_filter($this->tabRepository->findByParentId($tab->getIdParent()), fn(Tab $tab): bool => LegacyTab::checkTabRights($tab->getId())
-            && $tab->isEnabled()
-            && $tab->getClassName() !== 'AdminCarrierWizard');
-
-        $navigationTabs = [];
-
-        /* @var $currentLevelTab Tab */
-        foreach ($currentLevelTabs as $currentLevelTab) {
-            $tabLang = $currentLevelTab->getTabLangByLanguageId($this->getContextLanguageId());
-            $menuLink = new MenuLink(
-                name: $tabLang ? $tabLang->getName() : $currentLevelTab->getWording(),
-                href: $this->getLinkFromTab($currentLevelTab),
-                attributes: [
-                    'id_tab' => $currentLevelTab->getId(),
-                    'class_name' => $currentLevelTab->getClassName(),
-                    'current' => $currentLevelTab->getId() == $tab->getId(),
-                    'active' => $currentLevelTab->getActive(),
-                ]
-            );
-            $navigationTabs[] = $menuLink;
-        }
-
-        return $navigationTabs;
-    }
-
     private function getBreadcrumbLabel(Tab $tab): string
     {
-        if (null !== $tab->getWording() && null !== $tab->getWordingDomain()) {
+        if ($tab->getWording() !== null && $tab->getWordingDomain() !== null) {
             return $this->translator->trans($tab->getWording(), [], $tab->getWordingDomain());
         }
 
         $tabLang = $tab->getTabLangByLanguageId($this->getContextLanguageId());
-        if (null !== $tabLang) {
+        if ($tabLang !== null) {
             return $tabLang->getName();
         }
 
-        if (!$tab->getTabLangs()->isEmpty()) {
+        if (! $tab->getTabLangs()->isEmpty()) {
             return $tab->getTabLangs()->first()->getName();
         }
 
@@ -205,7 +222,7 @@ class MenuBuilder
         $action = $this->getLegacyAction();
 
         return match (true) {
-            null === $action, $action === '', str_starts_with($action, 'list') => new MenuLink(
+            $action === null, $action === '', str_starts_with($action, 'list') => new MenuLink(
                 name: $this->translator->trans('List', [], 'Admin.Actions'),
                 icon: 'icon-th-list'
             ),
@@ -253,36 +270,33 @@ class MenuBuilder
 
         if ($request->query->has('deleteImage')) {
             return 'delete_image';
-        } elseif ($request->query->has('delete' . $controllerTable)) {
-            return 'delete';
-        } elseif ($request->query->has('status' . $controllerTable) || $request->query->has('status')) {
-            return 'status';
-        } elseif ($request->query->has('position')) {
-            return 'position';
-        } elseif ($request->query->has('add' . $controllerTable)) {
-            return 'new';
-        } elseif ($request->query->has('update' . $controllerTable) && $objectId) {
-            return 'edit';
-        } elseif ($request->query->has('view' . $controllerTable)) {
-            return 'view';
-        } elseif ($request->query->has('details' . $controllerTable)) {
-            return 'details';
-        } elseif ($request->query->has('export' . $controllerTable)) {
-            return 'export';
-        } elseif ($request->query->has('action') && !empty($request->query->get('action'))) {
-            return $request->query->get('action');
         }
-
-        return null;
-    }
-
-    public function getLegacyControllerClassName(): ?string
-    {
-        $request = $this->requestStack->getMainRequest();
-        if ($request->attributes->has('_legacy_controller')) {
-            return $request->attributes->get('_legacy_controller');
-        } elseif ($request->query->has('controller')) {
-            return $request->query->get('controller');
+        if ($request->query->has('delete' . $controllerTable)) {
+            return 'delete';
+        }
+        if ($request->query->has('status' . $controllerTable) || $request->query->has('status')) {
+            return 'status';
+        }
+        if ($request->query->has('position')) {
+            return 'position';
+        }
+        if ($request->query->has('add' . $controllerTable)) {
+            return 'new';
+        }
+        if ($request->query->has('update' . $controllerTable) && $objectId) {
+            return 'edit';
+        }
+        if ($request->query->has('view' . $controllerTable)) {
+            return 'view';
+        }
+        if ($request->query->has('details' . $controllerTable)) {
+            return 'details';
+        }
+        if ($request->query->has('export' . $controllerTable)) {
+            return 'export';
+        }
+        if ($request->query->has('action') && ! empty($request->query->get('action'))) {
+            return $request->query->get('action');
         }
 
         return null;
@@ -300,7 +314,7 @@ class MenuBuilder
 
     private function getLinkFromTab(Tab $tab): string
     {
-        if (!empty($tab->getRouteName())) {
+        if (! empty($tab->getRouteName())) {
             $href = $this->urlGenerator->generate($tab->getRouteName());
         } else {
             $href = $this->context->getAdminLink($tab->getClassName());

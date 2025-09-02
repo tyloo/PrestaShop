@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ class TokenizedUrlsListener
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        if (!$event->isMainRequest() || $this->isRequestAnonymous($request) || TokenInUrls::isDisabled()) {
+        if (! $event->isMainRequest() || $this->isRequestAnonymous($request) || TokenInUrls::isDisabled()) {
             return;
         }
 
@@ -67,7 +68,7 @@ class TokenizedUrlsListener
             return;
         }
 
-        if (!$this->userTokenManager->isTokenValid()) {
+        if (! $this->userTokenManager->isTokenValid()) {
             // We don't use $request->getUri() because it adds an unwanted / on urls that include index.php
             $uri = $request->getRequestUri();
             // Remove _token/token if any

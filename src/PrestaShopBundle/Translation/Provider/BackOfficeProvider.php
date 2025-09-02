@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,9 +32,6 @@ namespace PrestaShopBundle\Translation\Provider;
  */
 class BackOfficeProvider extends AbstractProvider implements UseDefaultCatalogueInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getTranslationDomains(): array
     {
         return [
@@ -42,9 +40,6 @@ class BackOfficeProvider extends AbstractProvider implements UseDefaultCatalogue
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilters(): array
     {
         return [
@@ -53,19 +48,13 @@ class BackOfficeProvider extends AbstractProvider implements UseDefaultCatalogue
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return 'back';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultResourceDirectory(): string
     {
-        return $this->resourceDirectory . DIRECTORY_SEPARATOR . 'default';
+        return $this->resourceDirectory . \DIRECTORY_SEPARATOR . 'default';
     }
 }

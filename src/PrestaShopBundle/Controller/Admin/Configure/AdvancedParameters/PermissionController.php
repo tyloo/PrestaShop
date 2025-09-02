@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,8 +49,6 @@ class PermissionController extends PrestaShopAdminController
 {
     /**
      * Show permissions configuration page
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(): Response
@@ -80,10 +79,6 @@ class PermissionController extends PrestaShopAdminController
 
     /**
      * Update tab permissions for profile
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))")]
     public function updateTabPermissionsAction(Request $request): JsonResponse
@@ -114,10 +109,6 @@ class PermissionController extends PrestaShopAdminController
 
     /**
      * Updates module permissions for profile
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))")]
     public function updateModulePermissionsAction(Request $request): JsonResponse

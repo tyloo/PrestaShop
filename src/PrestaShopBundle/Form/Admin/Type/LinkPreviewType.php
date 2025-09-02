@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class LinkPreviewType extends HiddenType
 {
-    /**
-     * {@inheritDoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
@@ -50,17 +48,11 @@ class LinkPreviewType extends HiddenType
         $view->vars['button_label'] = $options['button_label'];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'link_preview';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

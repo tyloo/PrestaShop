@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class DataProviderException extends DomainException
         $this->InvalidConfigurationDataErrors = $InvalidConfigurationDataErrors ?: new InvalidConfigurationDataErrorCollection();
     }
 
-    /**
-     * @return InvalidConfigurationDataErrorCollection
-     */
     public function getInvalidConfigurationDataErrors(): InvalidConfigurationDataErrorCollection
     {
         return $this->InvalidConfigurationDataErrors;

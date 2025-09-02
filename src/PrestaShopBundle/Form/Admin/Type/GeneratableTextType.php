@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ class GeneratableTextType extends AbstractType
 {
     public const DEFAULT_GENERATED_VALUE_LENGTH = 32;
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -52,17 +50,11 @@ class GeneratableTextType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['generated_value_length'] = $options['generated_value_length'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return TextType::class;

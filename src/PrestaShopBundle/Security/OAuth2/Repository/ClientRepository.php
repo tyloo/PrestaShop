@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,7 +48,7 @@ class ClientRepository implements ClientRepositoryInterface
 {
     public function __construct(
         private readonly UserProviderInterface $userProvider,
-        private readonly UserPasswordHasherInterface $passwordEncoder
+        private readonly UserPasswordHasherInterface $passwordEncoder,
     ) {
     }
 
@@ -80,8 +81,8 @@ class ClientRepository implements ClientRepositoryInterface
             return false;
         }
 
-        if (!$client instanceof PasswordAuthenticatedUserInterface) {
-            throw new LogicException(sprintf('The class %s should implement %s.', $client::class, PasswordAuthenticatedUserInterface::class));
+        if (! $client instanceof PasswordAuthenticatedUserInterface) {
+            throw new LogicException(\sprintf('The class %s should implement %s.', $client::class, PasswordAuthenticatedUserInterface::class));
         }
 
         return $this->passwordEncoder->isPasswordValid($client, $clientSecret);

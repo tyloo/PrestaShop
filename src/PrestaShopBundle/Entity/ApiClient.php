@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -220,7 +221,7 @@ class ApiClient implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return array_map(fn (string $scope): string => 'ROLE_' . strtoupper($scope), $this->getScopes());
+        return array_map(fn (string $scope): string => 'ROLE_' . mb_strtoupper($scope), $this->getScopes());
     }
 
     public function getPassword(): string

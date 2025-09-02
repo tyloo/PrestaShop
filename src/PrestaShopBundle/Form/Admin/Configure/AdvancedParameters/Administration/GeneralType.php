@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,12 +38,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GeneralType extends TranslatorAwareType
 {
     public const FIELD_FRONT_COOKIE_LIFETIME = 'front_cookie_lifetime';
+
     public const FIELD_BACK_COOKIE_LIFETIME = 'back_cookie_lifetime';
+
     public const FIELD_COOKIE_SAMESITE = 'cookie_samesite';
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -67,9 +67,6 @@ class GeneralType extends TranslatorAwareType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -77,9 +74,6 @@ class GeneralType extends TranslatorAwareType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'administration_general_block';

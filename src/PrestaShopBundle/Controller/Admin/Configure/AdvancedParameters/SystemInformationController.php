@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,11 +41,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SystemInformationController extends PrestaShopAdminController
 {
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
         Request $request,
@@ -70,9 +66,6 @@ class SystemInformationController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @return JsonResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function displayCheckFilesAction(
         CheckMissingOrUpdatedFiles $requiredFilesChecker,

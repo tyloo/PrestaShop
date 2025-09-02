@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,21 +40,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ConfigurableCountryChoiceType extends AbstractType
 {
-    /**
-     * @param ConfigurableFormChoiceProviderInterface $countriesChoiceProvider
-     */
-    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $countriesChoiceProvider)
-    {
+    public function __construct(
+        private readonly ConfigurableFormChoiceProviderInterface $countriesChoiceProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         // Set normalizer enables to use closure for choice generation with options
         $resolver->setNormalizer(
-            'choices', fn(Options $options) => $this->countriesChoiceProvider->getChoices([
+            'choices',
+            fn (Options $options) => $this->countriesChoiceProvider->getChoices([
                 'active' => $options['active'],
                 'contains_states' => $options['contains_states'],
                 'list_states' => $options['list_states'],
@@ -68,9 +65,6 @@ class ConfigurableCountryChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

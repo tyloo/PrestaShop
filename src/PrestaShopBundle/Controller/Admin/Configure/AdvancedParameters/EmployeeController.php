@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -106,10 +107,6 @@ class EmployeeController extends PrestaShopAdminController
 
     /**
      * Save employee options.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_employees_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))")]
@@ -124,7 +121,7 @@ class EmployeeController extends PrestaShopAdminController
         if ($employeeOptionsForm->isSubmitted()) {
             $errors = $employeeOptionsFormHandler->save($employeeOptionsForm->getData());
 
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 $this->addFlashErrors($errors);
 
                 return $this->redirectToRoute('admin_employees_index');
@@ -248,7 +245,7 @@ class EmployeeController extends PrestaShopAdminController
         try {
             $result = $formHandler->handle($employeeForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash('success', $this->trans('Successful creation', [], 'Admin.Notifications.Success'));
 
                 return $this->redirectToRoute('admin_employees_index');
@@ -281,8 +278,8 @@ class EmployeeController extends PrestaShopAdminController
         EmployeeFormAccessCheckerInterface $formAccessChecker,
     ): Response {
         // If employee is editing his own profile - he doesn't need to have access to the edit form.
-        if ($this->getEmployeeContext()->getEmployee()->getId() != $employeeId) {
-            if (!$this->isGranted(Permission::UPDATE, $request->get('_legacy_controller'))) {
+        if ($this->getEmployeeContext()->getEmployee()->getId() !== $employeeId) {
+            if (! $this->isGranted(Permission::UPDATE, $request->get('_legacy_controller'))) {
                 $this->addFlash(
                     'error',
                     $this->trans(
@@ -296,7 +293,7 @@ class EmployeeController extends PrestaShopAdminController
             }
         }
 
-        if (!$formAccessChecker->canAccessEditFormFor($employeeId)) {
+        if (! $formAccessChecker->canAccessEditFormFor($employeeId)) {
             $this->addFlash(
                 'error',
                 $this->trans('You cannot edit the SuperAdmin profile.', [], 'Admin.Advparameters.Notification')
@@ -381,10 +378,6 @@ class EmployeeController extends PrestaShopAdminController
 
     /**
      * Get tabs which are accessible for given profile.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_employees_index')]
     public function getAccessibleTabsAction(
@@ -406,10 +399,6 @@ class EmployeeController extends PrestaShopAdminController
 
     /**
      * Get human readable error messages.
-     *
-     * @param Exception $e
-     *
-     * @return array
      */
     protected function getErrorMessages(Exception $e): array
     {
@@ -462,7 +451,7 @@ class EmployeeController extends PrestaShopAdminController
                 [],
                 'Admin.Advparameters.Notification'
             ),
-            EmailAlreadyUsedException::class => sprintf(
+            EmailAlreadyUsedException::class => \sprintf(
                 '%s %s',
                 $this->trans(
                     'An account already exists for this email address:',
@@ -479,17 +468,17 @@ class EmployeeController extends PrestaShopAdminController
                 ),
                 EmployeeConstraintException::INVALID_EMAIL => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Email', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('Email', [], 'Admin.Global'))],
                     'Admin.Notifications.Error',
                 ),
                 EmployeeConstraintException::INVALID_FIRST_NAME => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('First name', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('First name', [], 'Admin.Global'))],
                     'Admin.Notifications.Error',
                 ),
                 EmployeeConstraintException::INVALID_LAST_NAME => $this->trans(
                     'The %s field is invalid.',
-                    [sprintf('"%s"', $this->trans('Last name', [], 'Admin.Global'))],
+                    [\sprintf('"%s"', $this->trans('Last name', [], 'Admin.Global'))],
                     'Admin.Notifications.Error',
                 ),
                 EmployeeConstraintException::INVALID_PASSWORD => $this->trans(

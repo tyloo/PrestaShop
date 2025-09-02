@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,24 +36,16 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class WebserviceFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @param WebserviceConfiguration $webserviceConfiguration
-     */
-    public function __construct(private readonly WebserviceConfiguration $webserviceConfiguration)
-    {
+    public function __construct(
+        private readonly WebserviceConfiguration $webserviceConfiguration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return $this->webserviceConfiguration->getConfiguration();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setData(array $data)
     {
         return $this->webserviceConfiguration->updateConfiguration($data);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,18 +60,13 @@ class TaxRulesGroupController extends PrestaShopAdminController
 {
     /**
      * Show tax rules group page.
-     *
-     * @param Request $request
-     * @param TaxRulesGroupFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
         Request $request,
         TaxRulesGroupFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.factory.tax_rules_group')]
-        GridFactoryInterface $taxRulesGroupGridFactory
+        GridFactoryInterface $taxRulesGroupGridFactory,
     ): Response {
         $taxRulesGroupGrid = $taxRulesGroupGridFactory->getGrid($filters);
 
@@ -82,18 +78,13 @@ class TaxRulesGroupController extends PrestaShopAdminController
         ]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_tax_rules_groups_index')]
     public function createAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.builder.tax_rules_group_form_builder')]
         FormBuilderInterface $formBuilder,
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.tax_rules_group_form_handler')]
-        FormHandlerInterface $formHandler
+        FormHandlerInterface $formHandler,
     ): Response {
         $taxRulesGroupForm = $formBuilder->getForm();
         $taxRulesGroupForm->handleRequest($request);
@@ -121,12 +112,6 @@ class TaxRulesGroupController extends PrestaShopAdminController
 
     /**
      * Handles tax rules group edit
-     *
-     * @param Request $request
-     * @param int $taxRulesGroupId
-     * @param TaxRuleFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_tax_rules_groups_index')]
     public function editAction(
@@ -138,7 +123,7 @@ class TaxRulesGroupController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.tax_rules_group_form_handler')]
         FormHandlerInterface $formHandler,
         #[Autowire(service: 'prestashop.core.grid.factory.tax_rule')]
-        GridFactoryInterface $taxRuleGridFactory
+        GridFactoryInterface $taxRuleGridFactory,
     ): Response {
         $taxRulesGroupForm = null;
 
@@ -175,10 +160,6 @@ class TaxRulesGroupController extends PrestaShopAdminController
 
     /**
      * Deletes tax rules group.
-     *
-     * @param int $taxRulesGroupId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_tax_rules_groups_index')]
     public function deleteAction(int $taxRulesGroupId): RedirectResponse
@@ -198,10 +179,6 @@ class TaxRulesGroupController extends PrestaShopAdminController
 
     /**
      * Toggles status.
-     *
-     * @param int $taxRulesGroupId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_tax_rules_groups_index')]
     public function toggleStatusAction(int $taxRulesGroupId): RedirectResponse
@@ -213,7 +190,7 @@ class TaxRulesGroupController extends PrestaShopAdminController
             );
 
             $this->dispatchCommand(
-                new SetTaxRulesGroupStatusCommand($taxRulesGroupId, !$editableTaxRulesGroup->isActive())
+                new SetTaxRulesGroupStatusCommand($taxRulesGroupId, ! $editableTaxRulesGroup->isActive())
             );
 
             $this->addFlash(
@@ -229,10 +206,6 @@ class TaxRulesGroupController extends PrestaShopAdminController
 
     /**
      * Enables tax rules groups status on bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_tax_rules_groups_index')]
     public function bulkEnableStatusAction(Request $request): RedirectResponse
@@ -254,10 +227,6 @@ class TaxRulesGroupController extends PrestaShopAdminController
 
     /**
      * Disables tax rules groups status on bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_tax_rules_groups_index')]
     public function bulkDisableStatusAction(Request $request): RedirectResponse
@@ -279,10 +248,6 @@ class TaxRulesGroupController extends PrestaShopAdminController
 
     /**
      * Delete tax rules groups on bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_tax_rules_groups_index')]
     public function bulkDeleteAction(Request $request): RedirectResponse
@@ -302,11 +267,6 @@ class TaxRulesGroupController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_tax_rules_groups_index');
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
     private function getBulkTaxRulesGroupFromRequest(Request $request): array
     {
         $taxRulesGroupIds = $request->request->all('tax_rules_group_bulk');
@@ -314,9 +274,6 @@ class TaxRulesGroupController extends PrestaShopAdminController
         return array_map('intval', $taxRulesGroupIds);
     }
 
-    /**
-     * @return array
-     */
     private function getTaxRulesGroupToolbarButtons(): array
     {
         $toolbarButtons = [];
@@ -332,10 +289,6 @@ class TaxRulesGroupController extends PrestaShopAdminController
 
     /**
      * Gets error messages for exceptions
-     *
-     * @param Exception $e
-     *
-     * @return array
      */
     private function getErrorMessages(?Exception $e = null): array
     {
@@ -357,7 +310,7 @@ class TaxRulesGroupController extends PrestaShopAdminController
                     'Admin.Notifications.Error'
                 ),
             ],
-            CannotBulkDeleteTaxRulesGroupException::class => sprintf(
+            CannotBulkDeleteTaxRulesGroupException::class => \sprintf(
                 '%s: %s',
                 $this->trans(
                     'An error occurred while deleting this selection.',
@@ -366,7 +319,7 @@ class TaxRulesGroupController extends PrestaShopAdminController
                 ),
                 $e instanceof CannotBulkDeleteTaxRulesGroupException ? implode(', ', $e->getTaxRulesGroupsIds()) : ''
             ),
-            CannotBulkUpdateTaxRulesGroupException::class => sprintf(
+            CannotBulkUpdateTaxRulesGroupException::class => \sprintf(
                 '%s: %s',
                 $this->trans(
                     'An error occurred while updating the status.',

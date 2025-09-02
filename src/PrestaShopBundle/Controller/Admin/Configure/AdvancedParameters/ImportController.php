@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -62,10 +63,6 @@ class ImportController extends PrestaShopAdminController
 {
     /**
      * Show import form & handle forwarding to legacy controller.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function importAction(
@@ -79,7 +76,7 @@ class ImportController extends PrestaShopAdminController
     ): RedirectResponse|Response {
         $legacyController = $request->attributes->get('_legacy_controller');
 
-        if (!$this->checkImportDirectory($importDir)) {
+        if (! $this->checkImportDirectory($importDir)) {
             return $this->render(
                 '@PrestaShop/Admin/Configure/AdvancedParameters/ImportPage/import.html.twig',
                 $this->getTemplateParams($request)
@@ -91,12 +88,12 @@ class ImportController extends PrestaShopAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            if (!$this->checkImportFormSubmitPermissions($legacyController)) {
+            if (! $this->checkImportFormSubmitPermissions($legacyController)) {
                 return $this->redirectToRoute('admin_import');
             }
 
             $data = $form->getData();
-            if (!$errors = $formHandler->save($data)) {
+            if (! $errors = $formHandler->save($data)) {
                 // WIP import page 2 redirect
                 /*return $this->redirectToRoute(
                     'admin_import_data_configuration_index',
@@ -125,10 +122,6 @@ class ImportController extends PrestaShopAdminController
 
     /**
      * Handle import file upload via AJAX, sending authorization errors in JSON.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     public function uploadAction(
         Request $request,
@@ -142,18 +135,18 @@ class ImportController extends PrestaShopAdminController
             ]);
         }
 
-        if (!in_array($this->getAuthorizationLevel($legacyController), [
+        if (! \in_array($this->getAuthorizationLevel($legacyController), [
             Permission::LEVEL_CREATE,
             Permission::LEVEL_UPDATE,
             Permission::LEVEL_DELETE,
-        ])) {
+        ], true)) {
             return $this->json([
                 'error' => $this->trans('You do not have permission to update this.', [], 'Admin.Notifications.Error'),
             ]);
         }
 
         $uploadedFile = $request->files->get('file');
-        if (!$uploadedFile instanceof UploadedFile) {
+        if (! $uploadedFile instanceof UploadedFile) {
             return $this->json([
                 'error' => $this->trans('No file was uploaded.', [], 'Admin.Advparameters.Notification'),
             ]);
@@ -175,10 +168,6 @@ class ImportController extends PrestaShopAdminController
 
     /**
      * Delete import file.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_import')]
@@ -196,10 +185,6 @@ class ImportController extends PrestaShopAdminController
 
     /**
      * Download import file from history.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse|BinaryFileResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_import')]
@@ -219,10 +204,6 @@ class ImportController extends PrestaShopAdminController
 
     /**
      * Download import sample file.
-     *
-     * @param string $sampleName
-     *
-     * @return RedirectResponse|BinaryFileResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_import')]
     public function downloadSampleAction(
@@ -231,7 +212,7 @@ class ImportController extends PrestaShopAdminController
     ): RedirectResponse|BinaryFileResponse {
         $sampleFile = $sampleFileProvider->getFile($sampleName);
 
-        if (null === $sampleFile) {
+        if ($sampleFile === null) {
             return $this->redirectToRoute('admin_import');
         }
 
@@ -243,10 +224,6 @@ class ImportController extends PrestaShopAdminController
 
     /**
      * Get available entity fields.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_import')]
     public function getAvailableEntityFieldsAction(
@@ -266,10 +243,6 @@ class ImportController extends PrestaShopAdminController
 
     /**
      * Process the import.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_import')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_import')]
@@ -288,7 +261,7 @@ class ImportController extends PrestaShopAdminController
             $errors[] = $this->trans('To proceed, please upload a file first.', [], 'Admin.Advparameters.Notification');
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             return $this->json([
                 'errors' => $errors,
                 'isFinished' => true,
@@ -309,10 +282,6 @@ class ImportController extends PrestaShopAdminController
 
     /**
      * Get generic template parameters.
-     *
-     * @param Request $request
-     *
-     * @return array
      */
     protected function getTemplateParams(Request $request): array
     {
@@ -332,8 +301,6 @@ class ImportController extends PrestaShopAdminController
      * Checks permissions of import form in step 1.
      *
      * @param string $legacyController
-     *
-     * @return bool
      */
     private function checkImportFormSubmitPermissions($legacyController): bool
     {
@@ -350,11 +317,11 @@ class ImportController extends PrestaShopAdminController
             return false;
         }
 
-        if (!in_array($this->getAuthorizationLevel($legacyController), [
+        if (! \in_array($this->getAuthorizationLevel($legacyController), [
             Permission::LEVEL_CREATE,
             Permission::LEVEL_UPDATE,
             Permission::LEVEL_DELETE,
-        ])) {
+        ], true)) {
             $this->addFlash(
                 'error',
                 $this->trans(
@@ -372,14 +339,10 @@ class ImportController extends PrestaShopAdminController
 
     /**
      * Check if the import directory exists and is accessible.
-     *
-     * @param ImportDirectory $importDir
-     *
-     * @return bool
      */
     private function checkImportDirectory(ImportDirectory $importDir): bool
     {
-        if (!$importDir->exists()) {
+        if (! $importDir->exists()) {
             $this->addFlash(
                 'error',
                 $this->trans(
@@ -392,7 +355,7 @@ class ImportController extends PrestaShopAdminController
             return false;
         }
 
-        if (!$importDir->isWritable()) {
+        if (! $importDir->isWritable()) {
             $this->addFlash(
                 'warning',
                 $this->trans(
@@ -409,10 +372,6 @@ class ImportController extends PrestaShopAdminController
     /**
      * Forwards submitted form data to legacy import page.
      * To be removed in 1.7.7 version.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     private function forwardRequestToLegacyResponse(Request $request, LegacyContext $legacyContext): RedirectResponse
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,16 +69,10 @@ class UpdateEUTaxruleGroupsCommand extends Command
      */
     private $output;
 
-    public function __construct(private readonly string $localizationPath)
-    {
+    public function __construct(
+        private readonly string $localizationPath,
+    ) {
         parent::__construct();
-    }
-
-    protected function configure()
-    {
-        $this
-            ->setName('prestashop:taxes:update-eu-tax-rule-groups')
-            ->setDescription('Update EU Tax rule groups');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -85,7 +80,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
         /* Tweak */
         $this->output = $output;
 
-        if (!file_exists($this->localizationPath)) {
+        if (! file_exists($this->localizationPath)) {
             $output->writeln(
                 "<error>Could not find the folder containing the localization files (should be 'localization' at the root of the PrestaShop folder)</error>"
             );
@@ -95,23 +90,23 @@ class UpdateEUTaxruleGroupsCommand extends Command
 
         $euLocalizationFiles = [];
 
-        foreach (scandir($this->localizationPath, SCANDIR_SORT_ASCENDING) as $entry) {
-            if (!preg_match('/\.xml$/', $entry)) {
+        foreach (scandir($this->localizationPath, \SCANDIR_SORT_ASCENDING) as $entry) {
+            if (! preg_match('/\.xml$/', $entry)) {
                 continue;
             }
 
-            $localizationPackFile = $this->localizationPath . DIRECTORY_SEPARATOR . $entry;
+            $localizationPackFile = $this->localizationPath . \DIRECTORY_SEPARATOR . $entry;
 
             $localizationPack = @simplexml_load_file($localizationPackFile);
 
             // Some packs do not have taxes
-            if (!($localizationPack instanceof SimpleXMLElement) || !isset($localizationPack->taxes->tax)) {
+            if (! ($localizationPack instanceof SimpleXMLElement) || ! isset($localizationPack->taxes->tax)) {
                 continue;
             }
 
             foreach ($localizationPack->taxes->tax as $tax) {
                 if ((string) $tax['eu-tax-group'] === 'virtual') {
-                    if (!isset($euLocalizationFiles[$localizationPackFile])) {
+                    if (! isset($euLocalizationFiles[$localizationPackFile])) {
                         $euLocalizationFiles[$localizationPackFile] = [
                             'virtualTax' => $tax,
                             'pack' => $localizationPack,
@@ -170,7 +165,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
                     'from-eu-tax-group' => 'virtual',
                 ], ['eu-tax-group']);
 
-                if (null === $tax) {
+                if ($tax === null) {
                     return 1;
                 }
 
@@ -190,11 +185,18 @@ class UpdateEUTaxruleGroupsCommand extends Command
             file_put_contents($path, $dom->saveXML());
         }
 
-        $nUpdated = count($euLocalizationFiles);
+        $nUpdated = \count($euLocalizationFiles);
 
         $output->writeln("<info>Updated the virtual tax groups for $nUpdated localization files</info>");
 
         return 0;
+    }
+
+    protected function configure()
+    {
+        $this
+            ->setName('prestashop:taxes:update-eu-tax-rule-groups')
+            ->setDescription('Update EU Tax rule groups');
     }
 
     protected function addTax(SimpleXMLElement $taxes, SimpleXMLElement $tax, array $attributesToUpdate = [], array $attributesToRemove = []): ?SimpleXMLElement
@@ -202,7 +204,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
         $taxRulesGroups = $taxes->xpath('//taxRulesGroup[1]');
         $insertBefore = $taxRulesGroups[0] ?? false;
 
-        if (!$insertBefore) {
+        if (! $insertBefore) {
             $this->output->writeln("<error>Could not find any `taxRulesGroup`, don't know where to append the tax.</error>");
 
             return null;
@@ -229,7 +231,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
             $name = $attribute->getName();
 
             // This attribute seems to cause trouble, skip it.
-            if ($name === 'account_number' || in_array($name, $attributesToRemove)) {
+            if ($name === 'account_number' || \in_array($name, $attributesToRemove, true)) {
                 continue;
             }
 

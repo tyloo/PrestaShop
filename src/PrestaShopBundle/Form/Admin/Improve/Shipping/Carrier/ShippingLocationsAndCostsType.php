@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,7 +50,7 @@ class ShippingLocationsAndCostsType extends TranslatorAwareType
         array $locales,
         private readonly RouterInterface $router,
         private readonly ConfigurationInterface $configuration,
-        private readonly CurrencyDataProviderInterface $currencyDataProvider
+        private readonly CurrencyDataProviderInterface $currencyDataProvider,
     ) {
         parent::__construct($translator, $locales);
     }

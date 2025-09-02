@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -73,9 +74,6 @@ class UpdateLicensesCommand extends Command
         'modules/',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -83,9 +81,6 @@ class UpdateLicensesCommand extends Command
             ->setDescription('Rewrite your licenses to be up-to-date');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->text = str_replace('{currentYear}', date('Y'), $this->text);
@@ -108,7 +103,6 @@ class UpdateLicensesCommand extends Command
     }
 
     /**
-     * @param OutputInterface $output
      * @param string $ext
      */
     private function findAndCheckExtension(OutputInterface $output, $ext): void
@@ -165,8 +159,8 @@ class UpdateLicensesCommand extends Command
             ->ignoreDotFiles(false);
         $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
 
-        $output->writeln('Updating license in ' . strtoupper($ext) . ' files ...');
-        $progress = new ProgressBar($output, count($finder));
+        $output->writeln('Updating license in ' . mb_strtoupper($ext) . ' files ...');
+        $progress = new ProgressBar($output, \count($finder));
         $progress->start();
         $progress->setRedrawFrequency(20);
 
@@ -184,7 +178,7 @@ class UpdateLicensesCommand extends Command
             $this->license = $this->text;
             $this->makeGoodLicense($file);
 
-            if (in_array($file->getRelativePathName(), $filesToIgnore)) {
+            if (\in_array($file->getRelativePathName(), $filesToIgnore, true)) {
                 continue;
             }
 
@@ -192,7 +186,7 @@ class UpdateLicensesCommand extends Command
                 case 'php':
                     try {
                         $nodes = $parser->parse($file->getContents());
-                        if (count($nodes)) {
+                        if (\count($nodes)) {
                             $this->addLicenseToNode($nodes[0], $file);
                         }
                     } catch (\PhpParser\Error) {
@@ -229,9 +223,6 @@ class UpdateLicensesCommand extends Command
         $output->writeln('');
     }
 
-    /**
-     * @param SplFileInfo $file
-     */
     private function makeGoodLicense(SplFileInfo $file): void
     {
         if ($this->isAFLLicense($file->getRelativePathname())) {
@@ -243,8 +234,6 @@ class UpdateLicensesCommand extends Command
 
     /**
      * @param string $fileName
-     *
-     * @return bool
      */
     private function isAFLLicense($fileName): bool
     {
@@ -277,8 +266,8 @@ class UpdateLicensesCommand extends Command
 
     /**
      * @param SplFileInfo $file
-     * @param string $startDelimiter
-     * @param string $endDelimiter
+     * @param string      $startDelimiter
+     * @param string      $endDelimiter
      */
     private function addLicenseToFile($file, $startDelimiter = '\/', $endDelimiter = '\/'): void
     {
@@ -287,20 +276,20 @@ class UpdateLicensesCommand extends Command
         $regex = '%' . $startDelimiter . '\*([^*]|[\r\n]|(\*+([^*' . $endDelimiter . ']|[\r\n])))*\*+' . $endDelimiter . '%';
         $matches = [];
         $text = $this->license;
-        if ($startDelimiter != '\/') {
-            $text = $startDelimiter . ltrim($text, '/');
+        if ($startDelimiter !== '\/') {
+            $text = $startDelimiter . mb_ltrim($text, '/');
         }
-        if ($endDelimiter != '\/') {
-            $text = rtrim($text, '/') . $endDelimiter;
+        if ($endDelimiter !== '\/') {
+            $text = mb_rtrim($text, '/') . $endDelimiter;
         }
 
         // Try to find an existing license
         preg_match($regex, $content, $matches);
 
-        if (count($matches)) {
+        if (\count($matches)) {
             // Found - Replace it if prestashop one
             foreach ($matches as $match) {
-                if (stripos($match, 'prestashop') !== false) {
+                if (mb_stripos($match, 'prestashop') !== false) {
                     $content = str_replace($match, $text, $content);
                 }
             }
@@ -314,19 +303,18 @@ class UpdateLicensesCommand extends Command
 
     /**
      * @param Stmt $node
-     * @param SplFileInfo $file
      */
     private function addLicenseToNode($node, SplFileInfo $file): void
     {
-        if (!$node->hasAttribute('comments')) {
+        if (! $node->hasAttribute('comments')) {
             $needle = '<?php';
             $replace = "<?php\n" . $this->license . "\n";
             $haystack = $file->getContents();
 
-            $pos = strpos($haystack, $needle);
+            $pos = mb_strpos($haystack, $needle);
             // Important, if the <?php is in the middle of the file, continue
             if ($pos === 0) {
-                $newstring = substr_replace($haystack, $replace, $pos, strlen($needle));
+                $newstring = substr_replace($haystack, $replace, $pos, mb_strlen($needle));
                 file_put_contents($file->getRelativePathname(), $newstring);
             }
 
@@ -342,40 +330,29 @@ class UpdateLicensesCommand extends Command
         }
     }
 
-    /**
-     * @param SplFileInfo $file
-     */
     private function addLicenseToSmartyTemplate(SplFileInfo $file): void
     {
         $this->addLicenseToFile($file, '{', '}');
     }
 
-    /**
-     * @param SplFileInfo $file
-     */
     private function addLicenseToTwigTemplate(SplFileInfo $file): void
     {
-        if (strrpos($file->getRelativePathName(), 'html.twig') !== false) {
+        if (mb_strrpos($file->getRelativePathName(), 'html.twig') !== false) {
             $this->addLicenseToFile($file, '{#', '#}');
         }
     }
 
-    /**
-     * @param SplFileInfo $file
-     */
     private function addLicenseToHtmlFile(SplFileInfo $file): void
     {
         $this->addLicenseToFile($file, '<!--', '-->');
     }
 
     /**
-     * @param SplFileInfo $file
-     *
      * @return bool
      */
     private function addLicenseToJsonFile(SplFileInfo $file)
     {
-        if (!in_array($file->getFilename(), ['composer.json', 'package.json'])) {
+        if (! \in_array($file->getFilename(), ['composer.json', 'package.json'], true)) {
             return false;
         }
 
@@ -383,6 +360,6 @@ class UpdateLicensesCommand extends Command
         $content['author'] = 'PrestaShop';
         $content['license'] = $this->isAFLLicense($file->getRelativePathname()) ? 'AFL-3.0' : 'OSL-3.0';
 
-        return file_put_contents($file->getRelativePathname(), json_encode($content, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+        return file_put_contents($file->getRelativePathname(), json_encode($content, \JSON_UNESCAPED_SLASHES | \JSON_PRETTY_PRINT));
     }
 }

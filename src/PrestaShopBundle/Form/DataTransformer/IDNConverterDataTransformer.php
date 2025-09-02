@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,9 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 final class IDNConverterDataTransformer implements DataTransformerInterface
 {
-    public function __construct(private readonly InternationalizedDomainNameConverter $converter)
-    {
+    public function __construct(
+        private readonly InternationalizedDomainNameConverter $converter,
+    ) {
     }
 
     /**
@@ -57,6 +59,6 @@ final class IDNConverterDataTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        return is_string($value) ? $this->converter->emailToUtf8($value) : $value;
+        return \is_string($value) ? $this->converter->emailToUtf8($value) : $value;
     }
 }

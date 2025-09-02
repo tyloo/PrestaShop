@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -119,7 +120,7 @@ class AttributeGroup
 
     public function setGroupType(string $groupType): static
     {
-        if (!in_array($groupType, $this->groupTypeAvailable)) {
+        if (! \in_array($groupType, $this->groupTypeAvailable, true)) {
             throw new InvalidArgumentException('Invalid group type');
         }
 

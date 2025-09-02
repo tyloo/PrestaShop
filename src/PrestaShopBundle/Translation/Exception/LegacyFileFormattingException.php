@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,11 @@ final class LegacyFileFormattingException extends InvalidResourceException
 {
     /**
      * @param string $filePath the expected file path of the translations
-     * @param string $locale the translation locale
-     *
-     * @return self
+     * @param string $locale   the translation locale
      */
     public static function fileIsInvalid($filePath, $locale): self
     {
-        $exceptionMessage = sprintf(
+        $exceptionMessage = \sprintf(
             'The locale "%s" is not supported, because we have found an invalid file in the module.
             Have you updated the file "%s" manually?',
             $locale,

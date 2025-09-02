@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,9 @@ class ZipManager
         );
 
         foreach ($files as $filename => $file) {
-            if (!$file->isDir()) {
+            if (! $file->isDir()) {
                 $filePath = $file->getRealPath();
-                $relativePath = substr((string) $filename, strlen((string) $folder) + 1);
+                $relativePath = mb_substr((string) $filename, mb_strlen((string) $folder) + 1);
 
                 $zip->addFile($filePath, $relativePath);
             }

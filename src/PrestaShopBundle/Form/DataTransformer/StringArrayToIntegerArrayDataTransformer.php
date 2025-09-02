@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,24 +35,18 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 final class StringArrayToIntegerArrayDataTransformer implements DataTransformerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function transform($value)
     {
         // No transformation is required here due to this data is being sent to template
         return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseTransform($value)
     {
-        if (!is_array($value)) {
+        if (! \is_array($value)) {
             return $value;
         }
 
-        return array_map(fn($item): int => (int) $item, $value);
+        return array_map(fn ($item): int => (int) $item, $value);
     }
 }

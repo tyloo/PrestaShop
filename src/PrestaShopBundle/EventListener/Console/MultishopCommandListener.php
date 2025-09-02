@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,11 +47,12 @@ class MultishopCommandListener
     /**
      * @param string $rootDir
      */
-    public function __construct(Context $context, /**
+    public function __construct(
+        Context $context, /**
      * Path to root dir, needed to require config file.
      */
-    public $rootDir)
-    {
+        public $rootDir,
+    ) {
         $this->context = $context;
     }
 
@@ -86,7 +88,7 @@ class MultishopCommandListener
      */
     private function fixUnloadedConfig(): void
     {
-        if (!defined('_DB_PREFIX_')) {
+        if (! \defined('_DB_PREFIX_')) {
             require_once $this->rootDir . '/../config/config.inc.php';
         }
     }

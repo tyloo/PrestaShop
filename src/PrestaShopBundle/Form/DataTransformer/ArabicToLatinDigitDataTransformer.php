@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,9 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 final class ArabicToLatinDigitDataTransformer implements DataTransformerInterface
 {
-    public function __construct(private readonly ArabicToLatinDigitConverter $arabicToLatinDigitConverter)
-    {
+    public function __construct(
+        private readonly ArabicToLatinDigitConverter $arabicToLatinDigitConverter,
+    ) {
     }
 
     /**
@@ -51,12 +53,9 @@ final class ArabicToLatinDigitDataTransformer implements DataTransformerInterfac
         return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reverseTransform($value)
     {
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return null;
         }
 

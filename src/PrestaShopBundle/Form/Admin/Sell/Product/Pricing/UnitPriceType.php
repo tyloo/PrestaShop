@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,29 +45,23 @@ class UnitPriceType extends TranslatorAwareType
 {
     private const ENABLED_GROUP = 'enabled_group';
 
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param string $defaultCurrencyIsoCode
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly string $defaultCurrencyIsoCode
+        private readonly string $defaultCurrencyIsoCode,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('price_tax_excluded', MoneyType::class, [
                 'required' => false,
                 'label' => $this->trans('Retail price per unit (tax excl.)', 'Admin.Catalog.Feature'),
-                'attr' => ['data-display-price-precision' => FormHelper::DEFAULT_PRICE_PRECISION],
+                'attr' => [
+                    'data-display-price-precision' => FormHelper::DEFAULT_PRICE_PRECISION,
+                ],
                 'currency' => $this->defaultCurrencyIsoCode,
                 'constraints' => [
                     new NotBlank(),
@@ -104,9 +99,6 @@ class UnitPriceType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -118,7 +110,7 @@ class UnitPriceType extends TranslatorAwareType
             'required' => false,
             'columns_number' => 4,
             'disabling_switch' => true,
-            'disabled_value' => fn(?array $data, FormInterface $form): bool => $this->shouldBeDisabled($data, $form),
+            'disabled_value' => fn (?array $data, FormInterface $form): bool => $this->shouldBeDisabled($data, $form),
             'validation_groups' => function (FormInterface $form): array {
                 $shouldBeDisabled = $this->shouldBeDisabled($form->getData(), $form);
 
@@ -129,19 +121,14 @@ class UnitPriceType extends TranslatorAwareType
 
     /**
      * Check based on form data and submitted data is the form should be disabled.
-     *
-     * @param array|null $data
-     * @param FormInterface $form
-     *
-     * @return bool
      */
     private function shouldBeDisabled(?array $data, FormInterface $form): bool
     {
         $priceChild = $form->get('price_tax_excluded');
         $unityChild = $form->get('unity');
-        $hasPrice = !empty($priceChild->getData()) || !empty($data['price_tax_excluded']);
-        $hasUnity = !empty($unityChild->getData()) || !empty($data['unity']);
+        $hasPrice = ! empty($priceChild->getData()) || ! empty($data['price_tax_excluded']);
+        $hasUnity = ! empty($unityChild->getData()) || ! empty($data['unity']);
 
-        return !$hasPrice && !$hasUnity;
+        return ! $hasPrice && ! $hasUnity;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MaterialChoiceTableType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -49,26 +47,17 @@ class MaterialChoiceTableType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['isCheckSelectAll'] = count($form->getViewData()) === count($options['choices']);
+        $view->vars['isCheckSelectAll'] = \count($form->getViewData()) === \count($options['choices']);
         $view->vars['displayTotalItems'] = (bool) $options['display_total_items'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'material_choice_table';

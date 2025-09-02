@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class FeatureFlagType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        protected FormCloner $formCloner
+        protected FormCloner $formCloner,
     ) {
         parent::__construct($translator, $locales);
     }
@@ -68,7 +69,9 @@ class FeatureFlagType extends TranslatorAwareType
         $form->add($this->formCloner->cloneForm($form->get('enabled'), [
             'label' => $this->trans($featureFlagData['label'], $featureFlagData['label_domain']),
             'help' => $this->trans($featureFlagData['description'], $featureFlagData['description_domain']),
-            'attr' => ['disabled' => $featureFlagData['disabled']],
+            'attr' => [
+                'disabled' => $featureFlagData['disabled'],
+            ],
             'types' => $featureFlagData['type'],
             'used_type' => $featureFlagData['type_used'],
             'forced_by_env' => $featureFlagData['forced_by_env'],

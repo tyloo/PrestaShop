@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,19 +41,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ZoneType extends AbstractType
 {
-    /**
-     * ZoneType constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param bool $isMultistoreEnabled
-     */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly bool $isMultistoreEnabled)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly bool $isMultistoreEnabled,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -63,7 +57,9 @@ class ZoneType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->translator->trans(
-                            'This field cannot be empty.', [], 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            [],
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                     new Length([
@@ -91,7 +87,9 @@ class ZoneType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => $this->translator->trans(
-                            'This field cannot be empty.', [], 'Admin.Notifications.Error'
+                            'This field cannot be empty.',
+                            [],
+                            'Admin.Notifications.Error'
                         ),
                     ]),
                 ],

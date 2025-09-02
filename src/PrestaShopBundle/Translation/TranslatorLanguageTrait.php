@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,12 +34,10 @@ trait TranslatorLanguageTrait
 {
     /**
      * @param string $locale Locale code for the catalogue to check if loaded
-     *
-     * @return bool
      */
     public function isLanguageLoaded($locale): bool
     {
-        return !empty($this->catalogues[$locale]);
+        return ! empty($this->catalogues[$locale]);
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,22 +40,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ImportLocalizationPackType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $localizationPackChoices
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly array $localizationPackChoices
+        private readonly array $localizationPackChoices,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -99,8 +92,6 @@ class ImportLocalizationPackType extends TranslatorAwareType
 
     /**
      * Get import content choices.
-     *
-     * @return array
      */
     private function getContentToImportChoices(): array
     {

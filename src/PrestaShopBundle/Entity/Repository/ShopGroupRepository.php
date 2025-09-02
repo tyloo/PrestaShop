@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ class ShopGroupRepository extends \Doctrine\ORM\EntityRepository
     /**
      * Get a list of shop groups for a given search term
      *
-     * @param string $searchTerm
-     *
      * @return ShopGroup[]
      */
     public function findBySearchTerm(string $searchTerm): array
@@ -50,7 +49,7 @@ class ShopGroupRepository extends \Doctrine\ORM\EntityRepository
             ->where('sg.active = true')
             ->andWhere('sg.deleted = false')
             ->andWhere('LOWER(sg.name) LIKE :searchTerm')
-            ->setParameter('searchTerm', '%' . strtolower($searchTerm) . '%');
+            ->setParameter('searchTerm', '%' . mb_strtolower($searchTerm) . '%');
 
         return $qb->getQuery()->getResult();
     }

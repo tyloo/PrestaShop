@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -83,15 +84,15 @@ class FeatureFlagsFormDataProvider implements FormDataProviderInterface
     public function setData(array $flagsData): array
     {
         $featureFlags = $flagsData['feature_flags'];
-        if (!$this->validateFlagsData($featureFlags)) {
+        if (! $this->validateFlagsData($featureFlags)) {
             throw new InvalidArgumentException('Invalid feature flag configuration submitted');
         }
 
         foreach ($featureFlags as $flagName => $flagData) {
             $featureFlag = $this->getOneFeatureFlagByName($flagName);
 
-            if (null === $featureFlag) {
-                throw new InvalidArgumentException(sprintf('Invalid feature flag configuration submitted, flag %s does not exist', $flagName));
+            if ($featureFlag === null) {
+                throw new InvalidArgumentException(\sprintf('Invalid feature flag configuration submitted, flag %s does not exist', $flagName));
             }
 
             if ($this->featureFlagManager->isReadonly($flagName)) {
@@ -116,11 +117,11 @@ class FeatureFlagsFormDataProvider implements FormDataProviderInterface
     protected function validateFlagsData(array $flagsData): bool
     {
         foreach ($flagsData as $flagName => $flagData) {
-            if (!is_string($flagName)) {
+            if (! \is_string($flagName)) {
                 return false;
             }
 
-            if ($flagData['enabled'] !== null && !is_bool($flagData['enabled'])) {
+            if ($flagData['enabled'] !== null && ! \is_bool($flagData['enabled'])) {
                 return false;
             }
         }
@@ -140,8 +141,8 @@ class FeatureFlagsFormDataProvider implements FormDataProviderInterface
         $adminAPIMultistoreKey = FeatureFlagSettings::FEATURE_FLAG_ADMIN_API_MULTISTORE;
         $isMultistoreActive = $this->multiStoreFeature->isActive();
 
-        if (array_key_exists($adminAPIMultistoreKey, $featureFlagsData)) {
-            if (!$isMultistoreActive || !$adminApiEnabled) {
+        if (\array_key_exists($adminAPIMultistoreKey, $featureFlagsData)) {
+            if (! $isMultistoreActive || ! $adminApiEnabled) {
                 unset($featureFlagsData[$adminAPIMultistoreKey]);
             }
         }

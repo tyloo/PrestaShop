@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,14 +57,11 @@ class AppendConfigurationFileHooksListCommand extends Command
         private readonly array $serviceIds,
         private readonly array $optionFormHookNames,
         private readonly array $formTypes,
-        private readonly string $hookFile
+        private readonly string $hookFile,
     ) {
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -78,7 +76,7 @@ class AppendConfigurationFileHooksListCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        if (!in_array($this->env, ['dev', 'test'])) {
+        if (! \in_array($this->env, ['dev', 'test'], true)) {
             $io->warning('Dev or test environment is required to fully list all the hooks');
 
             return 1;
@@ -121,9 +119,9 @@ class AppendConfigurationFileHooksListCommand extends Command
             $io->error($e->getMessage());
         }
 
-        if (!empty($addedHooks)) {
+        if (! empty($addedHooks)) {
             $io->title('Hooks added to configuration file');
-            $io->note(sprintf('Total hooks added: %s', count($addedHooks)));
+            $io->note(\sprintf('Total hooks added: %s', \count($addedHooks)));
 
             return 0;
         }
@@ -140,7 +138,7 @@ class AppendConfigurationFileHooksListCommand extends Command
     {
         // We need to have an employee or the listing hooks don't work
         // see LegacyHookSubscriber
-        if (!$this->legacyContext->getContext()->employee) {
+        if (! $this->legacyContext->getContext()->employee) {
             // Even a non existing employee is fine
             $this->legacyContext->getContext()->employee = new Employee();
         }
@@ -167,23 +165,19 @@ class AppendConfigurationFileHooksListCommand extends Command
     /**
      * Appends given hooks in the configuration file.
      *
-     * @param array $hooks
-     *
-     * @return array
-     *
      * @throws Exception
      */
     private function appendHooksInConfigurationFile(array $hooks): array
     {
-        if (!file_exists($this->hookFile)) {
-            throw new Exception(sprintf('File %s has not been found', $this->hookFile));
+        if (! file_exists($this->hookFile)) {
+            throw new Exception(\sprintf('File %s has not been found', $this->hookFile));
         }
 
         $hookFileContent = file_get_contents($this->hookFile);
 
         $xmlFileContent = new SimpleXMLElement($hookFileContent);
 
-        if (!isset($xmlFileContent->entities, $xmlFileContent->entities->hook)) {
+        if (! isset($xmlFileContent->entities, $xmlFileContent->entities->hook)) {
             return [];
         }
 
@@ -191,7 +185,7 @@ class AppendConfigurationFileHooksListCommand extends Command
 
         $addedHooks = [];
         foreach ($hooks as $hook) {
-            if (in_array($hook['hook'], $existingHookNames)) {
+            if (\in_array($hook['hook'], $existingHookNames, true)) {
                 continue;
             }
 
@@ -207,7 +201,7 @@ class AppendConfigurationFileHooksListCommand extends Command
 
         $xmlContent = $xmlFileContent->asXML();
         if (empty($xmlContent)) {
-            throw new Exception(sprintf('Failed to save new xml content to file %s', $this->hookFile));
+            throw new Exception(\sprintf('Failed to save new xml content to file %s', $this->hookFile));
         }
 
         $dom = new DOMDocument('1.0');
@@ -223,16 +217,12 @@ class AppendConfigurationFileHooksListCommand extends Command
 
     /**
      * Gets existing hook names which are already defined in the file.
-     *
-     * @param SimpleXMLElement $hooksFromXmlFile
-     *
-     * @return array
      */
     private function filterExistingHookNames(SimpleXMLElement $hooksFromXmlFile): array
     {
         $hookNames = [];
         foreach ($hooksFromXmlFile as $hook) {
-            if (!isset($hook->name)) {
+            if (! isset($hook->name)) {
                 continue;
             }
 
@@ -244,8 +234,6 @@ class AppendConfigurationFileHooksListCommand extends Command
 
     /**
      * Gets hook descriptions
-     *
-     * @param array $hookNames
      *
      * @return HookDescription[]
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,35 +38,31 @@ use Symfony\Component\Validator\Constraints\Choice;
 class ChangeOrderAddressType extends AbstractType
 {
     public const SHIPPING_TYPE = 'shipping';
+
     public const INVOICE_TYPE = 'invoice';
 
-    /**
-     * @param ConfigurableFormChoiceProviderInterface $customerAddressProvider
-     */
-    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $customerAddressProvider)
-    {
+    public function __construct(
+        private readonly ConfigurableFormChoiceProviderInterface $customerAddressProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('new_address_id', ChoiceType::class, [
                 'choices' => $this->customerAddressProvider->getChoices($options),
             ])
-            ->add('address_type', HiddenType::class, [
-                'constraints' => [
-                    new Choice($this->getAvailableAddressTypes()),
-                ],
-            ]
+            ->add(
+                'address_type',
+                HiddenType::class,
+                [
+                    'constraints' => [
+                        new Choice($this->getAvailableAddressTypes()),
+                    ],
+                ]
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -75,9 +72,6 @@ class ChangeOrderAddressType extends AbstractType
             ->setAllowedTypes('customer_id', 'int');
     }
 
-    /**
-     * @return array
-     */
     public function getAvailableAddressTypes(): array
     {
         return [

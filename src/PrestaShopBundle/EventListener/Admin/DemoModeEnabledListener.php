@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,13 +55,13 @@ class DemoModeEnabledListener
 
     public function onKernelController(ControllerEvent $event): void
     {
-        if (!$this->shopConfiguration->getBoolean('_PS_MODE_DEMO_') || !$event->isMainRequest()) {
+        if (! $this->shopConfiguration->getBoolean('_PS_MODE_DEMO_') || ! $event->isMainRequest()) {
             return;
         }
 
         $controller = $event->getController();
 
-        if (!is_array($controller)) {
+        if (! \is_array($controller)) {
             return;
         }
 
@@ -69,7 +70,7 @@ class DemoModeEnabledListener
         $method = new ReflectionMethod($controllerObject, $methodName);
         $attributes = $method->getAttributes(DemoRestricted::class);
 
-        if ([] === $attributes) {
+        if ($attributes === []) {
             return;
         }
 
@@ -87,13 +88,11 @@ class DemoModeEnabledListener
 
         $url = $this->router->generate($demoRestricted->getRedirectRoute(), $routeParametersToKeep);
 
-        $event->setController(fn(): \Symfony\Component\HttpFoundation\RedirectResponse => new RedirectResponse($url));
+        $event->setController(fn (): RedirectResponse => new RedirectResponse($url));
     }
 
     /**
      * Send an error message when redirected, will only work on migrated pages.
-     *
-     * @param DemoRestricted $demoRestricted
      */
     private function showNotificationMessage(DemoRestricted $demoRestricted): void
     {
@@ -111,11 +110,6 @@ class DemoModeEnabledListener
 
     /**
      * Gets query parameters by comparing them to the current request attributes.
-     *
-     * @param array $queryParametersToKeep
-     * @param Request $request
-     *
-     * @return array
      */
     private function getQueryParamsFromRequestQuery(array $queryParametersToKeep, Request $request): array
     {
@@ -123,7 +117,7 @@ class DemoModeEnabledListener
 
         foreach ($queryParametersToKeep as $queryParameterName) {
             $value = $request->get($queryParameterName);
-            if (null !== $value) {
+            if ($value !== null) {
                 $result[$queryParameterName] = $value;
             }
         }

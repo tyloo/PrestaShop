@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -200,8 +201,6 @@ class PrestaShopAdminController extends AbstractController
      * Get error by exception from given messages
      *
      * @param array<string, string|array<int, string>> $messages
-     *
-     * @return string
      */
     protected function getErrorMessageForException(Throwable $e, array $messages = []): string
     {
@@ -215,11 +214,11 @@ class PrestaShopAdminController extends AbstractController
         if (isset($messages[$exceptionType])) {
             $message = $messages[$exceptionType];
 
-            if (is_string($message)) {
+            if (\is_string($message)) {
                 return $message;
             }
 
-            if (is_array($message) && isset($message[$exceptionCode])) {
+            if (\is_array($message) && isset($message[$exceptionCode])) {
                 return $message[$exceptionCode];
             }
         }
@@ -258,7 +257,7 @@ class PrestaShopAdminController extends AbstractController
 
         // Fallback error message
         $isDebug = $this->getParameter('kernel.debug');
-        if ($isDebug && !empty($e->getMessage())) {
+        if ($isDebug && ! empty($e->getMessage())) {
             return $this->trans(
                 'An unexpected error occurred. [%type% code %code%]: %message%',
                 [
@@ -284,8 +283,6 @@ class PrestaShopAdminController extends AbstractController
      * Returns form errors for JS implementation.
      *
      * Parse all errors mapped by id html field
-     *
-     * @param FormInterface $form
      *
      * @return array<array<string>> Errors
      *
@@ -343,7 +340,7 @@ class PrestaShopAdminController extends AbstractController
         Request $request,
         string $filterId,
         string $redirectRoute,
-        array $queryParamsToKeep = []
+        array $queryParamsToKeep = [],
     ): RedirectResponse {
         $responseBuilder = $this->container->get(ResponseBuilder::class);
 
@@ -358,11 +355,6 @@ class PrestaShopAdminController extends AbstractController
 
     /**
      * Updates the position of a grid based on the provided PositionDefinition and provided data.
-     *
-     * @param PositionDefinitionInterface $positionDefinition
-     * @param array $positionsData
-     *
-     * @return void
      *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -383,7 +375,7 @@ class PrestaShopAdminController extends AbstractController
     protected function addFlashErrors(array $errorMessages): void
     {
         foreach ($errorMessages as $error) {
-            $message = is_array($error) ? $this->trans($error['key'], $error['parameters'], $error['domain']) : $error;
+            $message = \is_array($error) ? $this->trans($error['key'], $error['parameters'], $error['domain']) : $error;
             $this->addFlash('error', $message);
         }
     }
@@ -400,8 +392,6 @@ class PrestaShopAdminController extends AbstractController
      * Return the authorization level of the current employee for the request controller.
      *
      * @param string $legacyControllerName Name of the legacy controller of which the level is requested
-     *
-     * @return int
      */
     protected function getAuthorizationLevel(string $legacyControllerName): int
     {
@@ -426,7 +416,7 @@ class PrestaShopAdminController extends AbstractController
 
     protected function hasAuthorizationByShopConstraint(ShopConstraint $shopConstraint): bool
     {
-        if (!$this->getShopContext()->isMultiShopEnabled()) {
+        if (! $this->getShopContext()->isMultiShopEnabled()) {
             return true;
         }
 

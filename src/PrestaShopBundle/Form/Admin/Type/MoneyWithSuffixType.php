@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MoneyWithSuffixType extends MoneyType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $pattern = self::getPattern($options['currency']);
@@ -56,9 +54,6 @@ class MoneyWithSuffixType extends MoneyType
         $view->vars['money_pattern'] = implode('{{ widget }}', $tokens);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -71,13 +66,13 @@ class MoneyWithSuffixType extends MoneyType
      * Can be used with array_walk().
      *
      * @param string $value
-     * @param int $key not used, it's only here to make this method compatible with array_walk
+     * @param int    $key    not used, it's only here to make this method compatible with array_walk
      * @param string $suffix
      */
     private function applySuffix(&$value, $key, $suffix): void
     {
-        if (strlen($value) > 0) {
-            $value = rtrim($value) . ' ' . $suffix;
+        if (mb_strlen($value) > 0) {
+            $value = mb_rtrim($value) . ' ' . $suffix;
         }
     }
 }

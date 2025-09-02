@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -99,7 +100,7 @@ class ButtonCollectionType extends AbstractType
                 $normalizedOptions = [];
 
                 foreach ($buttons as $buttonName => $options) {
-                    if (is_string($options)) {
+                    if (\is_string($options)) {
                         $options = [
                             'type' => $options,
                         ];
@@ -127,7 +128,7 @@ class ButtonCollectionType extends AbstractType
             ->setAllowedTypes('type', 'string')
             ->setAllowedTypes('group', 'string')
             ->setNormalizer('type', function (Options $options, $value) {
-                if (!class_exists($value)) {
+                if (! class_exists($value)) {
                     throw new InvalidArgumentException('Invalid button type provided, expected a FQCN string.');
                 }
 

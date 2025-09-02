@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,13 +35,11 @@ use Symfony\Component\Form\FormEvents;
 
 class VirtualProductFileListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly FormCloner $formCloner)
-    {
+    public function __construct(
+        private readonly FormCloner $formCloner,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents()
     {
         return [
@@ -50,16 +49,14 @@ class VirtualProductFileListener implements EventSubscriberInterface
 
     /**
      * Remove form constraints if there is no virtual file added, to avoid invalidating the form for nothing
-     *
-     * @param FormEvent $event
      */
     public function adaptFormConstraints(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();
 
-        $isAddingFile = !empty($data['has_file']) && empty($data['virtual_product_file_id']);
-        $onlyUpdatingFileSettings = !empty($data['has_file']) && !empty($data['virtual_product_file_id']) && empty($data['file']);
+        $isAddingFile = ! empty($data['has_file']) && empty($data['virtual_product_file_id']);
+        $onlyUpdatingFileSettings = ! empty($data['has_file']) && ! empty($data['virtual_product_file_id']) && empty($data['file']);
 
         if ($isAddingFile) {
             // when new file is being added we leave all constraints unchanged

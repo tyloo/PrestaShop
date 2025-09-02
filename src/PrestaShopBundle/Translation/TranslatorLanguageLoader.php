@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,6 +39,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TranslatorLanguageLoader
 {
     public const TRANSLATION_DIR = _PS_ROOT_DIR_ . '/translations';
+
     private const MODULE_TRANSLATION_FILENAME_PATTERN = '#^%s[A-Z][\w.-]+\.%s\.xlf$#';
 
     /**
@@ -53,11 +55,6 @@ class TranslatorLanguageLoader
         $this->xliffFileLoader = new XliffFileLoader();
     }
 
-    /**
-     * @param bool $isAdminContext
-     *
-     * @return self
-     */
     public function setIsAdminContext(bool $isAdminContext): self
     {
         $this->isAdminContext = $isAdminContext;
@@ -69,13 +66,13 @@ class TranslatorLanguageLoader
      * Loads a language into a translator
      *
      * @param TranslatorInterface $translator Translator to modify
-     * @param string $locale Locale code for the language to load
-     * @param bool $withDB [default=true] Whether to load translations from the database or not
-     * @param Theme|null $theme [default=false] Currently active theme (Front office only)
+     * @param string              $locale     Locale code for the language to load
+     * @param bool                $withDB     [default=true] Whether to load translations from the database or not
+     * @param Theme|null          $theme      [default=false] Currently active theme (Front office only)
      */
     public function loadLanguage(TranslatorInterface $translator, $locale, $withDB = true, ?Theme $theme = null): void
     {
-        if (!method_exists($translator, 'isLanguageLoaded')) {
+        if (! method_exists($translator, 'isLanguageLoaded')) {
             return;
         }
 
@@ -83,7 +80,7 @@ class TranslatorLanguageLoader
             $translator->addLoader('xlf', $this->xliffFileLoader);
             if ($withDB) {
                 $translator->addLoader('db', new SqlTranslationLoader());
-                if (null !== $theme) {
+                if ($theme !== null) {
                     $sqlThemeTranslationLoader = new SqlTranslationLoader();
                     $sqlThemeTranslationLoader->setTheme($theme);
                     $translator->addLoader('db.theme', $sqlThemeTranslationLoader);
@@ -109,7 +106,7 @@ class TranslatorLanguageLoader
                             // Load core user-translated wordings
                             $translator->addResource('db', $domain . '.' . $locale . '.db', $locale, $domain);
                         }
-                        if (!$this->isAdminContext && $theme !== null) {
+                        if (! $this->isAdminContext && $theme !== null) {
                             // Load theme user-translated wordings for core + theme wordings
                             $translator->addResource('db.theme', $domain . '.' . $locale . '.db', $locale, $domain);
                         }
@@ -136,14 +133,14 @@ class TranslatorLanguageLoader
         string $moduleName,
         string $modulePath,
         string $locale,
-        bool $withDB = true
+        bool $withDB = true,
     ): void {
-        $translationDir = sprintf('%s/translations/%s', $modulePath, $locale);
-        if (!is_dir($translationDir)) {
+        $translationDir = \sprintf('%s/translations/%s', $modulePath, $locale);
+        if (! is_dir($translationDir)) {
             return;
         }
 
-        $filenamePattern = sprintf(
+        $filenamePattern = \sprintf(
             self::MODULE_TRANSLATION_FILENAME_PATTERN,
             preg_quote(DomainHelper::buildModuleBaseDomain($moduleName)),
             $locale
@@ -168,16 +165,11 @@ class TranslatorLanguageLoader
         }
     }
 
-    /**
-     * @param Theme|null $theme
-     *
-     * @return array
-     */
     protected function getTranslationResourcesDirectories(?Theme $theme = null): array
     {
         $locations = ['core' => self::TRANSLATION_DIR];
 
-        if (null !== $theme) {
+        if ($theme !== null) {
             $activeThemeLocation = $theme->getDirectory() . '/translations';
             if (is_dir($activeThemeLocation)) {
                 $locations['theme'] = $activeThemeLocation;

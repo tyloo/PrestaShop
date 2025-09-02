@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ class CachingType extends TranslatorAwareType
         'CacheXcache' => ['xcache'],
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -63,7 +61,7 @@ class CachingType extends TranslatorAwareType
                 'choice_label' => function ($value, $key, $index) {
                     $disabled = false;
                     foreach ($this->extensionsList[$index] as $extensionName) {
-                        if (extension_loaded($extensionName)) {
+                        if (\extension_loaded($extensionName)) {
                             $disabled = false;
 
                             break;
@@ -76,7 +74,7 @@ class CachingType extends TranslatorAwareType
                 'choice_attr' => function ($value, $key, $index) {
                     $disabled = false;
                     foreach ($this->extensionsList[$index] as $extensionName) {
-                        if (extension_loaded($extensionName)) {
+                        if (\extension_loaded($extensionName)) {
                             $disabled = false;
 
                             break;
@@ -96,9 +94,6 @@ class CachingType extends TranslatorAwareType
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'performance_caching_block';
@@ -106,8 +101,6 @@ class CachingType extends TranslatorAwareType
 
     /**
      * If extensions are unavailable, option message should be completed with installation instructions.
-     *
-     * @return array
      */
     private function getErrorsMessages(): array
     {

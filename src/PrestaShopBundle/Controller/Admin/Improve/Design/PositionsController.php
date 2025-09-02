@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,14 +55,10 @@ class PositionsController extends PrestaShopAdminController
     /**
      * @var int
      */
-    protected $selectedModule = null;
+    protected $selectedModule;
 
     /**
      * Display hooks positions.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('update', request.get('_legacy_controller')) || is_granted('create', request.get('_legacy_controller')) || is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function indexAction(
@@ -70,10 +67,10 @@ class PositionsController extends PrestaShopAdminController
         Module $moduleAdapter,
         #[Autowire(service: 'prestashop.adapter.legacy.hook')]
         HookInformationProvider $hookProvider,
-        LegacyContext $legacyContextService
+        LegacyContext $legacyContextService,
     ): Response {
         $isSingleShopContext = $this->getShopContext()->getShopConstraint()->isSingleShopContext();
-        if (!$isSingleShopContext) {
+        if (! $isSingleShopContext) {
             return $this->render('@PrestaShop/Admin/Improve/Design/positions.html.twig', [
                 'isSingleShopContext' => $isSingleShopContext,
             ]);
@@ -82,7 +79,7 @@ class PositionsController extends PrestaShopAdminController
         $installedModules = $moduleAdapter->getModulesInstalled();
 
         $selectedModule = $request->get('show_modules');
-        if ($selectedModule && (string) $selectedModule != 'all') {
+        if ($selectedModule && (string) $selectedModule !== 'all') {
             $this->selectedModule = (int) $selectedModule;
         }
 
@@ -104,7 +101,7 @@ class PositionsController extends PrestaShopAdminController
                 $hook['id_hook']
             );
             // No module found, no need to continue
-            if (!is_array($hooks[$key]['modules'])) {
+            if (! \is_array($hooks[$key]['modules'])) {
                 unset($hooks[$key]);
 
                 continue;
@@ -116,7 +113,7 @@ class PositionsController extends PrestaShopAdminController
                 }
             }
 
-            $hooks[$key]['modules_count'] = count($hooks[$key]['modules']);
+            $hooks[$key]['modules_count'] = \count($hooks[$key]['modules']);
             // No module remaining after the check, no need to continue
             if ($hooks[$key]['modules_count'] === 0) {
                 unset($hooks[$key]);
@@ -159,10 +156,6 @@ class PositionsController extends PrestaShopAdminController
 
     /**
      * Unhook module.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller')~'_')", message: 'Access denied.')]
     public function unhookAction(
@@ -171,14 +164,14 @@ class PositionsController extends PrestaShopAdminController
         Module $moduleAdapter,
         #[Autowire(service: 'prestashop.adapter.validate')]
         Validate $validateAdapter,
-        ShopContextInterface $shopContext
+        ShopContextInterface $shopContext,
     ): Response {
         $unhooks = $request->request->all('unhooks');
         $context = null;
         if (empty($unhooks)) {
             $moduleId = $request->query->get('moduleId');
             $hookId = $request->query->get('hookId');
-            $unhooks = [sprintf('%d_%d', $hookId, $moduleId)];
+            $unhooks = [\sprintf('%d_%d', $hookId, $moduleId)];
             $context = $shopContext->getContextShopIds();
         }
 
@@ -191,7 +184,7 @@ class PositionsController extends PrestaShopAdminController
             $module = $moduleAdapter->getInstanceById($moduleId);
             $hook = new Hook($hookId);
 
-            if (!$module) {
+            if (! $module) {
                 $errors[] = $this->trans(
                     'This module cannot be loaded.',
                     [],
@@ -201,7 +194,7 @@ class PositionsController extends PrestaShopAdminController
                 continue;
             }
 
-            if (!$validateAdapter->isLoadedObject($hook)) {
+            if (! $validateAdapter->isLoadedObject($hook)) {
                 $errors[] = $this->trans(
                     'Hook cannot be loaded.',
                     [],
@@ -211,7 +204,7 @@ class PositionsController extends PrestaShopAdminController
                 continue;
             }
 
-            if (!$module->unregisterHook($hookId, $context) || !$module->unregisterExceptions($hookId, $context)) {
+            if (! $module->unregisterHook($hookId, $context) || ! $module->unregisterExceptions($hookId, $context)) {
                 $errors[] = $this->trans(
                     'An error occurred while deleting the module from its hook.',
                     [],
@@ -220,7 +213,7 @@ class PositionsController extends PrestaShopAdminController
             }
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -236,6 +229,37 @@ class PositionsController extends PrestaShopAdminController
         return $this->redirect(
             $this->generateUrl('admin_modules_positions')
         );
+    }
+
+    /**
+     * Toggle hook status
+     *
+     * @return JsonResponse
+     */
+    #[AdminSecurity("is_granted('update', request.get('_legacy_controller')~'_')", message: 'Access denied.')]
+    public function toggleStatusAction(Request $request)
+    {
+        $hookId = (int) $request->request->get('hookId');
+        $hookStatus = false;
+
+        try {
+            /** @var HookStatus $hookStatus */
+            $hookStatus = $this->dispatchQuery(new GetHookStatus($hookId));
+            $this->dispatchCommand(new UpdateHookStatusCommand($hookId, ! $hookStatus->isActive()));
+            $response = [
+                'status' => true,
+                'message' => $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success'),
+            ];
+        } catch (HookException $e) {
+            $response = [
+                'status' => false,
+                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
+            ];
+        }
+
+        $response['hook_status'] = $hookStatus;
+
+        return $this->json($response);
     }
 
     /**
@@ -263,42 +287,6 @@ class PositionsController extends PrestaShopAdminController
         }
     }
 
-    /**
-     * Toggle hook status
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    #[AdminSecurity("is_granted('update', request.get('_legacy_controller')~'_')", message: 'Access denied.')]
-    public function toggleStatusAction(Request $request)
-    {
-        $hookId = (int) $request->request->get('hookId');
-        $hookStatus = false;
-
-        try {
-            /** @var HookStatus $hookStatus */
-            $hookStatus = $this->dispatchQuery(new GetHookStatus($hookId));
-            $this->dispatchCommand(new UpdateHookStatusCommand($hookId, !$hookStatus->isActive()));
-            $response = [
-                'status' => true,
-                'message' => $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success'),
-            ];
-        } catch (HookException $e) {
-            $response = [
-                'status' => false,
-                'message' => $this->getErrorMessageForException($e, $this->getErrorMessages()),
-            ];
-        }
-
-        $response['hook_status'] = $hookStatus;
-
-        return $this->json($response);
-    }
-
-    /**
-     * @return array
-     */
     private function getErrorMessages(): array
     {
         return [

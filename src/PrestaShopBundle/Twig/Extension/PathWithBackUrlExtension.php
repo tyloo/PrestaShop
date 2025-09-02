@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,10 @@ class PathWithBackUrlExtension extends AbstractExtension
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly BackUrlProvider $backUrlProvider,
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [
@@ -60,11 +58,8 @@ class PathWithBackUrlExtension extends AbstractExtension
     /**
      * Gets original path or back url path.
      *
-     * @param string $name - route name
-     * @param array $parameters - route parameters
-     * @param bool $relative
-     *
-     * @return string
+     * @param string $name       - route name
+     * @param array  $parameters - route parameters
      */
     public function getPathWithBackUrl(string $name, array $parameters = [], bool $relative = false): string
     {
@@ -72,13 +67,13 @@ class PathWithBackUrlExtension extends AbstractExtension
 
         $request = $this->requestStack->getCurrentRequest();
 
-        if (null === $request) {
+        if ($request === null) {
             return $fallbackPath;
         }
 
         $backUrl = $this->backUrlProvider->getBackUrl($request);
 
-        if (!$backUrl) {
+        if (! $backUrl) {
             return $fallbackPath;
         }
 

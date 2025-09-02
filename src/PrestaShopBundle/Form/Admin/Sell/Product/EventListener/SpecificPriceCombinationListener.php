@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,13 +43,12 @@ use Symfony\Component\Form\FormEvents;
  */
 class SpecificPriceCombinationListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly FormCloner $formCloner, private readonly CombinationRepository $combinationRepository)
-    {
+    public function __construct(
+        private readonly FormCloner $formCloner,
+        private readonly CombinationRepository $combinationRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -56,15 +56,12 @@ class SpecificPriceCombinationListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     */
     public function updateCombinationChoices(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();
 
-        if (!isset($data['combination_id'])) {
+        if (! isset($data['combination_id'])) {
             return;
         }
 

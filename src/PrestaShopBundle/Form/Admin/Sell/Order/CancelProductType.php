@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,9 @@ class CancelProductType extends TranslatorAwareType
 
         foreach ($products as $product) {
             $builder
-                ->add('selected_' . $product->getOrderDetailId(), CheckboxType::class,
+                ->add(
+                    'selected_' . $product->getOrderDetailId(),
+                    CheckboxType::class,
                     [
                         'required' => false,
                         'label' => false,
@@ -56,7 +59,10 @@ class CancelProductType extends TranslatorAwareType
                     ]
                 )
                 ->add('quantity_' . $product->getOrderDetailId(), NumberType::class, [
-                    'attr' => ['max' => $product->getQuantity(), 'class' => 'refund-quantity'],
+                    'attr' => [
+                        'max' => $product->getQuantity(),
+                        'class' => 'refund-quantity',
+                    ],
                     'label' => $this->trans('Quantity', 'Admin.Global', []),
                     'invalid_message' => $this->trans('This field is invalid, it must contain numeric values', 'Admin.Notifications.Error', []),
                     'required' => false,
@@ -66,7 +72,7 @@ class CancelProductType extends TranslatorAwareType
                 ])
                 ->add('amount_' . $product->getOrderDetailId(), TextType::class, [
                     'attr' => ['max' => $product->getTotalPrice(), 'class' => 'refund-amount'],
-                    'label' => sprintf(
+                    'label' => \sprintf(
                         '%s (%s)',
                         $this->trans('Amount', 'Admin.Global', []),
                         $taxMethod
@@ -77,7 +83,9 @@ class CancelProductType extends TranslatorAwareType
                 ]);
         }
         $builder
-            ->add('shipping_amount', TextType::class,
+            ->add(
+                'shipping_amount',
+                TextType::class,
                 [
                     'label' => $this->trans('Shipping', 'Admin.Catalog.Feature', []),
                     'invalid_message' => $this->trans('The "shipping" field must be a valid number', 'Admin.Orderscustomers.Feature', []),
@@ -85,7 +93,9 @@ class CancelProductType extends TranslatorAwareType
                     'data' => (new DecimalNumber('0'))->toPrecision($precision),
                 ]
             )
-            ->add('shipping', CheckboxType::class,
+            ->add(
+                'shipping',
+                CheckboxType::class,
                 [
                     'label' => $this->trans('Shipping', 'Admin.Catalog.Feature', []),
                     'required' => false,
@@ -94,7 +104,9 @@ class CancelProductType extends TranslatorAwareType
                     ],
                 ]
             )
-            ->add('restock', CheckboxType::class,
+            ->add(
+                'restock',
+                CheckboxType::class,
                 [
                     'required' => false,
                     'label' => $this->trans('Re-stock products', 'Admin.Orderscustomers.Feature', []),
@@ -103,7 +115,9 @@ class CancelProductType extends TranslatorAwareType
                     ],
                 ]
             )
-            ->add('credit_slip', CheckboxType::class,
+            ->add(
+                'credit_slip',
+                CheckboxType::class,
                 [
                     'required' => false,
                     'label' => $this->trans('Generate a credit slip', 'Admin.Orderscustomers.Feature', []),
@@ -113,7 +127,9 @@ class CancelProductType extends TranslatorAwareType
                     'data' => true,
                 ]
             )
-            ->add('voucher', CheckboxType::class,
+            ->add(
+                'voucher',
+                CheckboxType::class,
                 [
                     'required' => false,
                     'label' => $this->trans('Generate a voucher', 'Admin.Orderscustomers.Feature', []),
@@ -122,7 +138,9 @@ class CancelProductType extends TranslatorAwareType
                     ],
                 ]
             )
-            ->add('voucher_refund_type', ChoiceType::class,
+            ->add(
+                'voucher_refund_type',
+                ChoiceType::class,
                 [
                     'required' => true,
                     'multiple' => false,
@@ -131,7 +149,7 @@ class CancelProductType extends TranslatorAwareType
                         $this->trans('Product(s) price:', 'Admin.Orderscustomers.Feature') => VoucherRefundType::PRODUCT_PRICES_REFUND,
                         $this->trans('Product(s) price, excluding amount of initial voucher:', 'Admin.Orderscustomers.Feature') => VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND,
                     ],
-                    'choice_attr' => fn($choice, $key): array => [
+                    'choice_attr' => fn ($choice, $key): array => [
                         'voucher-refund-type' => $choice,
                         'data-default-label' => $key,
                     ],

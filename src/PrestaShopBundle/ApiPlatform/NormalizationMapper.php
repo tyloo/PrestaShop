@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,17 +52,16 @@ class NormalizationMapper
      * path is not modified.
      *
      * @param mixed|null $normalizedData
-     * @param array $context
      */
     public function mapNormalizedData(mixed &$normalizedData, array &$context): void
     {
-        if (!is_object($normalizedData) && !is_array($normalizedData)) {
+        if (! \is_object($normalizedData) && ! \is_array($normalizedData)) {
             return;
         }
 
-        if (!empty($context[self::NORMALIZATION_MAPPING])) {
+        if (! empty($context[self::NORMALIZATION_MAPPING])) {
             $normalizationMapping = $context[self::NORMALIZATION_MAPPING];
-        } elseif (!empty($context['operation']) && !empty($context['operation']->getExtraProperties()['CQRSCommandMapping'])) {
+        } elseif (! empty($context['operation']) && ! empty($context['operation']->getExtraProperties()['CQRSCommandMapping'])) {
             $normalizationMapping = $context['operation']->getExtraProperties()['CQRSCommandMapping'];
         } else {
             return;

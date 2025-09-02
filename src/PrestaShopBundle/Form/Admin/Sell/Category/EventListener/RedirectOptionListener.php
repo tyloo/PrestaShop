@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use Symfony\Component\Form\FormEvents;
  */
 class RedirectOptionListener implements EventSubscriberInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -51,9 +49,6 @@ class RedirectOptionListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     */
     public function updateRedirectionOptions(FormEvent $event): void
     {
         $data = $event->getData();
@@ -61,7 +56,7 @@ class RedirectOptionListener implements EventSubscriberInterface
         $targetField = $form->get('target');
         $targetOptions = $targetField->getConfig()->getOptions();
         $dataType = $data['type'] ?? $form->get('type')->getConfig()->getOption('default_empty_data');
-        if (RedirectType::TYPE_NOT_FOUND === $dataType || RedirectType::TYPE_GONE === $dataType) {
+        if ($dataType === RedirectType::TYPE_NOT_FOUND || $dataType === RedirectType::TYPE_GONE) {
             $targetOptions['row_attr']['class'] = 'd-none';
         }
 

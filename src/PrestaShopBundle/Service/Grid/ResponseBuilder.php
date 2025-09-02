@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,39 +40,26 @@ use Symfony\Component\Routing\Router;
 
 class ResponseBuilder
 {
-    /**
-     * @param GridFilterFormFactoryInterface $filterFormFactory
-     * @param Router $router
-     * @param AdminFilterRepository $adminFilterRepository
-     * @param int|null $employeeId
-     * @param int $shopId
-     * @param RequestStack $requestStack
-     */
     public function __construct(
         private readonly GridFilterFormFactoryInterface $filterFormFactory,
         private readonly Router $router,
         private readonly AdminFilterRepository $adminFilterRepository,
         private readonly ?int $employeeId,
         private readonly int $shopId,
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
     ) {
     }
 
     /**
-     * @param GridDefinitionFactoryInterface $definitionFactory
-     * @param Request $request
      * @param string $filterId
      * @param string $redirectRoute
-     * @param array $queryParamsToKeep
-     *
-     * @return RedirectResponse
      */
     public function buildSearchResponse(
         GridDefinitionFactoryInterface $definitionFactory,
         Request $request,
         $filterId,
         $redirectRoute,
-        array $queryParamsToKeep = []
+        array $queryParamsToKeep = [],
     ): RedirectResponse {
         /** @var GridDefinitionInterface $definition */
         $definition = $definitionFactory->getDefinition();
@@ -97,7 +85,7 @@ class ResponseBuilder
                     $fieldLabel = $error->getOrigin()->getConfig()->getOption('label') ?: $error->getOrigin()->getName();
                     /** @var Session $session */
                     $session = $this->requestStack->getSession();
-                    $session->getFlashBag()->add('error', sprintf('%s: %s', $fieldLabel, $error->getMessage()));
+                    $session->getFlashBag()->add('error', \sprintf('%s: %s', $fieldLabel, $error->getMessage()));
                 }
             }
         }
@@ -114,11 +102,6 @@ class ResponseBuilder
         return new RedirectResponse($this->router->generate($redirectRoute, $redirectParams));
     }
 
-    /**
-     * @param string $filterId
-     *
-     * @return void
-     */
     private function resetPersistedFilter(string $filterId): void
     {
         if (empty($filterId)) {
@@ -129,7 +112,7 @@ class ResponseBuilder
             $this->shopId,
             $filterId
         );
-        if (!$adminFilter) {
+        if (! $adminFilter) {
             return;
         }
         $this->adminFilterRepository->unsetFilters($adminFilter);
@@ -137,10 +120,6 @@ class ResponseBuilder
 
     /**
      * Return true if array is empty (null values or empty array)
-     *
-     * @param array $formData
-     *
-     * @return bool
      */
     private function checkIsFormDataEmpty(array $formData): bool
     {
@@ -148,7 +127,7 @@ class ResponseBuilder
             if ($data === null) {
                 continue;
             }
-            if (is_array($data) && $this->checkIsFormDataEmpty($data)) {
+            if (\is_array($data) && $this->checkIsFormDataEmpty($data)) {
                 continue;
             }
 

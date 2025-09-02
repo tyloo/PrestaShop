@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,10 +40,10 @@ class ProductSearchAndResetType extends SearchAndResetType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
-        if (null !== $form->getParent()) {
+        if ($form->getParent() !== null) {
             $selectedFilters = array_keys($form->getParent()->getData());
 
-            if (count($selectedFilters) === 1 && $selectedFilters[0] === 'id_category') {
+            if (\count($selectedFilters) === 1 && $selectedFilters[0] === 'id_category') {
                 $view->vars['show_reset_button'] = false;
             }
         }

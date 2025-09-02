@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,48 +59,36 @@ class QueryListProvider implements ProviderInterface
         protected readonly CQRSApiSerializer $domainSerializer,
         protected readonly ContainerInterface $container,
         protected readonly ShopContext $shopContext,
-        protected readonly FiltersBuilderInterface $filtersBuilder
+        protected readonly FiltersBuilderInterface $filtersBuilder,
     ) {
     }
 
     /**
-     * @param Operation $operation
-     * @param array $uriVariables
-     * @param array $context
-     *
-     * @return object|array|null
-     *
      * @throws ExceptionInterface
      * @throws ReflectionException
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        if (!$operation instanceof CollectionOperationInterface) {
-            throw new TypeException(
-                sprintf(
-                    'Expected operation to be %s, %s given ',
-                    CollectionOperationInterface::class,
-                    $operation->getClass()
-                )
-            );
+        if (! $operation instanceof CollectionOperationInterface) {
+            throw new TypeException(\sprintf('Expected operation to be %s, %s given ', CollectionOperationInterface::class, $operation->getClass()));
         }
 
         $gridDataFactoryDefinition = $operation->getExtraProperties()['gridDataFactory'] ?? null;
 
-        if (null === $gridDataFactoryDefinition) {
-            throw new GridDataFactoryNotFoundException(sprintf('Resource %s has no Grid data factory defined.', $operation->getClass()));
+        if ($gridDataFactoryDefinition === null) {
+            throw new GridDataFactoryNotFoundException(\sprintf('Resource %s has no Grid data factory defined.', $operation->getClass()));
         }
 
-        if (!$this->container->has($gridDataFactoryDefinition)) {
+        if (! $this->container->has($gridDataFactoryDefinition)) {
             // We use UnexpectedValueException as it will be caught by API Platform and interpreted as a 400 http error, similar to the behaviour
             // for CQRS queries and commands not found
-            throw new UnexpectedValueException(sprintf('GridDataFactory service %s does not exist.', $gridDataFactoryDefinition));
+            throw new UnexpectedValueException(\sprintf('GridDataFactory service %s does not exist.', $gridDataFactoryDefinition));
         }
 
         /** @var GridDataFactoryInterface $gridDataFactory */
         $gridDataFactory = $this->container->get($gridDataFactoryDefinition);
-        if (!$gridDataFactory instanceof GridDataFactoryInterface) {
-            throw new UnexpectedValueException(sprintf('Provided service %s is not a GridDataFactory.', $gridDataFactoryDefinition));
+        if (! $gridDataFactory instanceof GridDataFactoryInterface) {
+            throw new UnexpectedValueException(\sprintf('Provided service %s is not a GridDataFactory.', $gridDataFactoryDefinition));
         }
 
         $filter = $this->createFilters($context, $operation);
@@ -141,52 +130,6 @@ class QueryListProvider implements ProviderInterface
         );
     }
 
-    private function createFilters(array $context, Operation $operation): Filters
-    {
-        $filtersClass = $operation->getExtraProperties()['filtersClass'] ?? Filters::class;
-        $filtersMapping = $operation->getExtraProperties()['filtersMapping'] ?? [];
-
-        $queryParameters = $context['filters'] ?? [];
-        $paginationFilters = $queryParameters['filters'] ?? [];
-        $paginationFilters = $this->domainSerializer->normalize(
-            $paginationFilters,
-            null,
-            [NormalizationMapper::NORMALIZATION_MAPPING => $filtersMapping]
-        );
-
-        $orderBy = $this->mapOrderByFieldForGrid($queryParameters['orderBy'] ?? null, $filtersMapping);
-        $paginationParameters = [
-            'filters' => $paginationFilters,
-            'orderBy' => $orderBy,
-            'sortOrder' => $queryParameters['sortOrder'] ?? 'asc',
-            'offset' => array_key_exists('offset', $queryParameters) ? (int) $queryParameters['offset'] : null,
-            'limit' => array_key_exists('limit', $queryParameters)
-                ? (int) $queryParameters['limit']
-                : self::DEFAULT_PAGINATED_ITEM_LIMIT,
-        ];
-
-        /* remove null parameters from the request so the default filter parameters can be used instead of null values. */
-        foreach ($paginationParameters as $key => $parameter) {
-            if ($parameter === null) {
-                unset($paginationParameters[$key]);
-            }
-        }
-
-        $request = $this->requestStack->getMainRequest();
-        // We force filter ID as empty string to avoid using a prefix in the query parameters (eg: we want limit=10 not product[limit]=10)
-        $this->filtersBuilder->setConfig([
-            'filter_id' => '',
-            'filters_class' => $filtersClass,
-            'request' => $request,
-            'shop_constraint' => $this->shopContext->getShopConstraint(),
-        ]);
-
-        $filters = $this->filtersBuilder->buildFilters();
-        $filters->add($paginationParameters);
-
-        return $filters;
-    }
-
     protected function mapOrderByFieldForGrid(?string $apiOrderBy, array $filtersMapping): ?string
     {
         if (empty($apiOrderBy) || empty($filtersMapping)) {
@@ -217,5 +160,51 @@ class QueryListProvider implements ProviderInterface
         }
 
         return $gridOrderBy;
+    }
+
+    private function createFilters(array $context, Operation $operation): Filters
+    {
+        $filtersClass = $operation->getExtraProperties()['filtersClass'] ?? Filters::class;
+        $filtersMapping = $operation->getExtraProperties()['filtersMapping'] ?? [];
+
+        $queryParameters = $context['filters'] ?? [];
+        $paginationFilters = $queryParameters['filters'] ?? [];
+        $paginationFilters = $this->domainSerializer->normalize(
+            $paginationFilters,
+            null,
+            [NormalizationMapper::NORMALIZATION_MAPPING => $filtersMapping]
+        );
+
+        $orderBy = $this->mapOrderByFieldForGrid($queryParameters['orderBy'] ?? null, $filtersMapping);
+        $paginationParameters = [
+            'filters' => $paginationFilters,
+            'orderBy' => $orderBy,
+            'sortOrder' => $queryParameters['sortOrder'] ?? 'asc',
+            'offset' => \array_key_exists('offset', $queryParameters) ? (int) $queryParameters['offset'] : null,
+            'limit' => \array_key_exists('limit', $queryParameters)
+                ? (int) $queryParameters['limit']
+                : self::DEFAULT_PAGINATED_ITEM_LIMIT,
+        ];
+
+        /* remove null parameters from the request so the default filter parameters can be used instead of null values. */
+        foreach ($paginationParameters as $key => $parameter) {
+            if ($parameter === null) {
+                unset($paginationParameters[$key]);
+            }
+        }
+
+        $request = $this->requestStack->getMainRequest();
+        // We force filter ID as empty string to avoid using a prefix in the query parameters (eg: we want limit=10 not product[limit]=10)
+        $this->filtersBuilder->setConfig([
+            'filter_id' => '',
+            'filters_class' => $filtersClass,
+            'request' => $request,
+            'shop_constraint' => $this->shopContext->getShopConstraint(),
+        ]);
+
+        $filters = $this->filtersBuilder->buildFilters();
+        $filters->add($paginationParameters);
+
+        return $filters;
     }
 }

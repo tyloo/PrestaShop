@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,11 +68,6 @@ class CarrierController extends PrestaShopAdminController
 {
     /**
      * Show carriers listing page
-     *
-     * @param Request $request
-     * @param CarrierFilters $filters
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -103,10 +99,6 @@ class CarrierController extends PrestaShopAdminController
 
     /**
      * Process Grid search.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchAction(
@@ -188,10 +180,6 @@ class CarrierController extends PrestaShopAdminController
 
     /**
      * Deletes carrier.
-     *
-     * @param int $carrierId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_carriers_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_carriers_index')]
@@ -209,10 +197,6 @@ class CarrierController extends PrestaShopAdminController
 
     /**
      * Toggles carrier status.
-     *
-     * @param int $carrierId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_carriers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_carriers_index', message: 'You need permission to edit this.')]
@@ -234,10 +218,6 @@ class CarrierController extends PrestaShopAdminController
 
     /**
      * Toggles carrier is-free status
-     *
-     * @param int $carrierId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_carriers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_carriers_index', message: 'You need permission to edit this.')]
@@ -259,10 +239,6 @@ class CarrierController extends PrestaShopAdminController
 
     /**
      * Changes carrier position
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_carriers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_carriers_index', message: 'You need permission to edit this.')]
@@ -286,10 +262,6 @@ class CarrierController extends PrestaShopAdminController
 
     /**
      * Bulk deletes carriers.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_carriers_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_carriers_index')]
@@ -312,10 +284,6 @@ class CarrierController extends PrestaShopAdminController
 
     /**
      * Enables carrier status on bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_carriers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_carriers_index')]
@@ -338,10 +306,6 @@ class CarrierController extends PrestaShopAdminController
 
     /**
      * Disables carrier status on bulk action.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_carriers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_carriers_index')]
@@ -415,10 +379,6 @@ class CarrierController extends PrestaShopAdminController
 
     /**
      * Get carrier IDs from request for bulk actions.
-     *
-     * @param Request $request
-     *
-     * @return array
      */
     private function getCarrierIdsFromRequest(Request $request): array
     {

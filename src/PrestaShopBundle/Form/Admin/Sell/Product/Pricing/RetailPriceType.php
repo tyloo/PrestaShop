@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,21 +59,18 @@ class RetailPriceType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         protected Locale $contextLocale,
-        protected \Currency $defaultCurrency,
+        protected Currency $defaultCurrency,
         protected $taxRuleGroupChoicesProvider,
         protected RouterInterface $router,
         protected bool $isTaxEnabled,
         protected bool $isEcotaxEnabled,
         protected int $ecoTaxGroupId,
         protected TaxComputer $taxComputer,
-        protected int $contextCountryId
+        protected int $contextCountryId,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($this->isTaxEnabled) {
@@ -85,12 +83,19 @@ class RetailPriceType extends TranslatorAwareType
         $taxRateHelpPlaceholderWithoutState = $this->trans(
             'Tax %1$s : %2$s%%',
             'Admin.Catalog.Feature',
-            ['%1$s' => $country->iso_code, '%2$s' => '_TAX_RATE_HELP_PLACEHOLDER_']
+            [
+                '%1$s' => $country->iso_code,
+                '%2$s' => '_TAX_RATE_HELP_PLACEHOLDER_',
+            ]
         );
         $taxRateHelpPlaceholderWithState = $this->trans(
             'Tax %1$s-%3$s: %2$s%%',
             'Admin.Catalog.Feature',
-            ['%1$s' => $country->iso_code, '%2$s' => '_TAX_RATE_HELP_PLACEHOLDER_', '%3s$s' => '_STATE_ISO_CODE_HELP_PLACEHOLDER_']
+            [
+                '%1$s' => $country->iso_code,
+                '%2$s' => '_TAX_RATE_HELP_PLACEHOLDER_',
+                '%3s$s' => '_STATE_ISO_CODE_HELP_PLACEHOLDER_',
+            ]
         );
 
         $builder
@@ -116,7 +121,7 @@ class RetailPriceType extends TranslatorAwareType
             ])
             ->add('tax_rules_group_id', ChoiceType::class, [
                 'choices' => $this->taxRuleGroupChoicesProvider->getChoices(),
-                'disabled' => !$this->isTaxEnabled,
+                'disabled' => ! $this->isTaxEnabled,
                 'required' => false,
                 // placeholder false is important to avoid empty option in select input despite required being false
                 'placeholder' => false,
@@ -129,7 +134,7 @@ class RetailPriceType extends TranslatorAwareType
                     'class' => 'retail-price-tax-rules-group-id',
                 ],
                 'label' => $this->trans('Tax rule', 'Admin.Catalog.Feature'),
-                'help' => !$this->isTaxEnabled ?
+                'help' => ! $this->isTaxEnabled ?
                     $this->trans('Tax feature is disabled, it will not affect price tax included.', 'Admin.Catalog.Feature')
                     : '', // we replace help text in js on load when tax is enabled
                 'help_attr' => [
@@ -210,9 +215,6 @@ class RetailPriceType extends TranslatorAwareType
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

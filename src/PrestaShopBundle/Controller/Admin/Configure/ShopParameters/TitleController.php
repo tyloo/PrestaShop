@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -98,11 +99,6 @@ class TitleController extends PrestaShopAdminController
 
     /**
      * Displays title form.
-     *
-     * @param int $titleId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You need permission to edit this.', redirectRoute: 'admin_title_index')]
     public function editAction(

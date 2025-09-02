@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,14 +62,14 @@ class SpecificPriceType extends TranslatorAwareType
         private readonly AttributeRepository $attributeRepository,
         private readonly EventSubscriberInterface $specificPriceCombinationListener,
         private readonly CombinationNameBuilderInterface $combinationNameBuilder,
-        private readonly int $languageId
+        private readonly int $languageId,
     ) {
         parent::__construct($translator, $locales);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if (!isset($builder->getData()['product_id'])) {
+        if (! isset($builder->getData()['product_id'])) {
             // product_id is required for create action and to load combinations choices list, but it is not editable
             throw new SpecificPriceException('product_id is required to add/edit specific price.');
         }
@@ -155,8 +156,6 @@ class SpecificPriceType extends TranslatorAwareType
      * Provides choices list with a selected choice only (so it can be shown during page load).
      * All the other choices are retrieved through ajax in javascript side.
      *
-     * @param FormBuilderInterface $builder
-     *
      * @return array<string, int>
      */
     private function getSelectedChoices(FormBuilderInterface $builder): array
@@ -168,14 +167,9 @@ class SpecificPriceType extends TranslatorAwareType
         ];
     }
 
-    /**
-     * @param int $combinationIdValue
-     *
-     * @return string
-     */
     private function getCombinationName(int $combinationIdValue): string
     {
-        if (NoCombinationId::NO_COMBINATION_ID === $combinationIdValue) {
+        if ($combinationIdValue === NoCombinationId::NO_COMBINATION_ID) {
             return $this->getAllCombinationsChoiceLabel();
         }
 

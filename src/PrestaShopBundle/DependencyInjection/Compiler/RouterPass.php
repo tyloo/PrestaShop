@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class RouterPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $container->setAlias('router', 'prestashop.router')->setPublic(true);

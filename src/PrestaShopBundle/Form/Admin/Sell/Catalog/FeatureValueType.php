@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class FeatureValueType extends TranslatorAwareType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -51,7 +49,7 @@ class FeatureValueType extends TranslatorAwareType
             ->add('feature_id', FeatureChoiceType::class, [
                 'attr' => [
                     // disable feature id choices when editing feature value and only allow changing them when creating new one
-                    'disabled' => !empty($builder->getData()['feature_value_id']),
+                    'disabled' => ! empty($builder->getData()['feature_value_id']),
                 ],
             ])
             ->add('value', TranslatableType::class, [

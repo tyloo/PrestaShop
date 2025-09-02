@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ class ConfigYamlLoader extends FileLoader
 {
     private $configValues = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function load($resource, $type = null): void
     {
         $path = $this->locator->locate($resource);
@@ -52,21 +50,16 @@ class ConfigYamlLoader extends FileLoader
         $this->configValues = array_merge_recursive($this->configValues, $configValues);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($resource, $type = null)
     {
-        return is_string($resource) && 'yml' === pathinfo(
+        return \is_string($resource) && pathinfo(
             $resource,
-            PATHINFO_EXTENSION
-        );
+            \PATHINFO_EXTENSION
+        ) === 'yml';
     }
 
     /**
      * Returns the parsed config after the YAML file has been loaded.
-     *
-     * @return array
      */
     public function getConfig(): array
     {
@@ -76,26 +69,25 @@ class ConfigYamlLoader extends FileLoader
     /**
      * Parses all imports.
      *
-     * @param array $content
      * @param string $file
      */
     private function parseImports(array $content, $file): void
     {
-        if (!isset($content['imports'])) {
+        if (! isset($content['imports'])) {
             return;
         }
 
-        if (!\is_array($content['imports'])) {
-            throw new InvalidArgumentException(sprintf('The "imports" key should contain an array in %s. Check your YAML syntax.', $file));
+        if (! \is_array($content['imports'])) {
+            throw new InvalidArgumentException(\sprintf('The "imports" key should contain an array in %s. Check your YAML syntax.', $file));
         }
 
         $defaultDirectory = \dirname($file);
         foreach ($content['imports'] as $import) {
-            if (!\is_array($import)) {
+            if (! \is_array($import)) {
                 $import = ['resource' => $import];
             }
-            if (!isset($import['resource'])) {
-                throw new InvalidArgumentException(sprintf('An import should provide a resource in %s. Check your YAML syntax.', $file));
+            if (! isset($import['resource'])) {
+                throw new InvalidArgumentException(\sprintf('An import should provide a resource in %s. Check your YAML syntax.', $file));
             }
 
             $this->setCurrentDir($defaultDirectory);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,21 +40,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ZoneChoiceType extends AbstractType
 {
-    /**
-     * @param ConfigurableFormChoiceProviderInterface $zonesChoiceProvider
-     */
-    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $zonesChoiceProvider)
-    {
+    public function __construct(
+        private readonly ConfigurableFormChoiceProviderInterface $zonesChoiceProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         // Set normalizer enables to use closure for choice generation with options
         $resolver->setNormalizer(
-            'choices', fn(Options $options) => $this->zonesChoiceProvider->getChoices([
+            'choices',
+            fn (Options $options) => $this->zonesChoiceProvider->getChoices([
                 'active' => $options['active'],
                 'active_first' => $options['active_first'],
             ])
@@ -66,9 +63,6 @@ class ZoneChoiceType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParent()
     {
         return ChoiceType::class;

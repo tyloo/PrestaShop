@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,21 +53,18 @@ class CombinationPriceImpactType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        protected \Currency $defaultCurrency,
+        protected Currency $defaultCurrency,
         protected string $weightUnit,
         protected bool $isTaxEnabled,
         protected bool $isEcotaxEnabled,
         protected int $ecoTaxGroupId,
         protected TaxComputer $taxComputer,
         protected int $contextCountryId,
-        protected Locale $contextLocale
+        protected Locale $contextLocale,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -236,9 +234,6 @@ class CombinationPriceImpactType extends TranslatorAwareType
         ;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

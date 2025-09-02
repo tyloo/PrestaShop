@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,21 +64,21 @@ class MultistoreHeader extends AbstractMultistoreHeader
 
     public function mount(): void
     {
-        if (!$this->isMultistoreUsed()) {
+        if (! $this->isMultistoreUsed()) {
             return;
         }
 
         parent::doMount();
-        if (!$this->isLockedToAllShopContext()) {
+        if (! $this->isLockedToAllShopContext()) {
             $this->groupList = array_filter(
                 $this->entityManager->getRepository(ShopGroup::class)->findBy(['active' => true]),
-                fn(ShopGroup $shopGroup): bool => !$shopGroup->getShops()->isEmpty() && $this->employeeContext->hasAuthorizationOnShopGroup($shopGroup->getId()),
+                fn (ShopGroup $shopGroup): bool => ! $shopGroup->getShops()->isEmpty() && $this->employeeContext->hasAuthorizationOnShopGroup($shopGroup->getId()),
             );
 
             // Filter not allowed shops
             foreach ($this->groupList as $group) {
                 foreach ($group->getShops() as $shop) {
-                    if (!$this->employeeContext->hasAuthorizationOnShop($shop->getId())) {
+                    if (! $this->employeeContext->hasAuthorizationOnShop($shop->getId())) {
                         $group->getshops()->removeElement($shop);
                     }
                 }
@@ -89,6 +90,6 @@ class MultistoreHeader extends AbstractMultistoreHeader
     {
         $controllerName = $this->menuBuilder->getLegacyControllerClassName();
 
-        return in_array($controllerName, $this->controllersLockedToAllShopContext);
+        return \in_array($controllerName, $this->controllersLockedToAllShopContext, true);
     }
 }

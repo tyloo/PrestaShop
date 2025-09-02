@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,11 +40,23 @@ class LegacyTranslationKey
     public const LEGACY_TRANSLATION_FORMAT = '#\<\{(?<module>[\w-]+)\}(?<theme>[\w-]+)\>(?<source>[\.\w_-]+)_(?<hash>[0-9a-f]+)#';
 
     /**
+     * @param string $module
+     * @param string $theme
+     * @param string $source
+     * @param string $hash
+     */
+    public function __construct(
+        private $module,
+        private $theme,
+        private $source,
+        private $hash,
+    ) {
+    }
+
+    /**
      * Parses a legacy translation key and returns its data
      *
      * @param string $key Legacy translation key
-     *
-     * @return LegacyTranslationKey
      *
      * @throws InvalidLegacyTranslationKeyException
      */
@@ -53,22 +66,12 @@ class LegacyTranslationKey
         preg_match(self::LEGACY_TRANSLATION_FORMAT, $key, $matches);
 
         foreach (['module', 'theme', 'source', 'hash'] as $item) {
-            if (!isset($matches[$item])) {
+            if (! isset($matches[$item])) {
                 throw InvalidLegacyTranslationKeyException::missingElementFromKey($item, $key);
             }
         }
 
         return new self($matches['module'], $matches['theme'], $matches['source'], $matches['hash']);
-    }
-
-    /**
-     * @param string $module
-     * @param string $theme
-     * @param string $source
-     * @param string $hash
-     */
-    public function __construct(private $module, private $theme, private $source, private $hash)
-    {
     }
 
     /**

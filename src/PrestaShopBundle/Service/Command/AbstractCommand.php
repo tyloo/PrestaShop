@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,12 +37,12 @@ use Symfony\Component\Console\Output\BufferedOutput;
 abstract class AbstractCommand
 {
     protected ?AppKernel $kernel;
+
     protected Application $application;
+
     protected $commands = [];
 
     /**
-     * Constructor.
-     *
      * Construct the symfony environment.
      *
      * @param AppKernel $kernel Symfony Kernel
@@ -50,10 +51,10 @@ abstract class AbstractCommand
     {
         set_time_limit(0);
 
-        if (null === $kernel) {
+        if ($kernel === null) {
             global $kernel;
 
-            if (null === $kernel) {
+            if ($kernel === null) {
                 require_once _PS_ROOT_DIR_ . '/app/AdminKernel.php';
                 $kernel = new AdminKernel(_PS_ENV_, _PS_MODE_DEV_);
             }

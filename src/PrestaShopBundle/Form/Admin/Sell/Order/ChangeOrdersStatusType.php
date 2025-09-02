@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,16 +37,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ChangeOrdersStatusType extends AbstractType
 {
-    /**
-     * @param FormChoiceProviderInterface $orderStatusChoiceProvider
-     */
-    public function __construct(private readonly FormChoiceProviderInterface $orderStatusChoiceProvider)
-    {
+    public function __construct(
+        private readonly FormChoiceProviderInterface $orderStatusChoiceProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -62,8 +58,8 @@ class ChangeOrdersStatusType extends AbstractType
 
         $builder->get('order_ids')
             ->addModelTransformer(new CallbackTransformer(
-                static fn($orderIds) => $orderIds,
-                static fn(array $orderIds): array => array_map(static fn($orderId): int => (int) $orderId, $orderIds)
+                static fn ($orderIds) => $orderIds,
+                static fn (array $orderIds): array => array_map(static fn ($orderId): int => (int) $orderId, $orderIds)
             ))
         ;
     }

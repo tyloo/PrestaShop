@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AlertExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -61,25 +59,19 @@ class AlertExtension extends AbstractTypeExtension
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        if (!empty($options['alert_message'])) {
-            $view->vars['alert_message'] = is_string($options['alert_message']) ? [$options['alert_message']] : $options['alert_message'];
+        if (! empty($options['alert_message'])) {
+            $view->vars['alert_message'] = \is_string($options['alert_message']) ? [$options['alert_message']] : $options['alert_message'];
             $view->vars['alert_type'] = $options['alert_type'];
             $view->vars['alert_position'] = $options['alert_position'];
 
-            if (is_string($options['alert_title'])) {
+            if (\is_string($options['alert_title'])) {
                 $view->vars['alert_title'] = $options['alert_title'];
             }
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getExtendedTypes(): iterable
     {
         return [FormType::class];

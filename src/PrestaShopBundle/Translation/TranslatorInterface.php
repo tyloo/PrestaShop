@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,9 @@ interface TranslatorInterface extends SymfonyTranslatorInterface
      * Performs a reverse search in the catalogue and returns the translation key if found.
      * AVOID USING THIS, IT PROVIDES APPROXIMATE RESULTS.
      *
-     * @param string $translated Translated string
-     * @param string $domain Translation domain
-     * @param string|null $locale Unused
+     * @param string      $translated Translated string
+     * @param string      $domain     Translation domain
+     * @param string|null $locale     Unused
      *
      * @return string The translation
      *

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -217,6 +218,34 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
         $this->sessions = new ArrayCollection();
     }
 
+    /**
+     * Optimize the way the employee is serialized in the session, it is important to return
+     * all the required info to later check that the serialized data is equal to the Employee
+     * in DB (including the profile). If you change the isEqualTo method you should probably
+     * update this serialization as well.
+     */
+    public function __serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'password' => $this->password,
+            'profileId' => $this->getProfile()->getId(),
+            // This is added in the serialized data so that early listeners can get the value from session early
+            'defaultLocale' => $this->getDefaultLocale(),
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->id = $data['id'] ?? 0;
+        $this->email = $data['email'] ?? '';
+        $this->password = $data['password'] ?? '';
+        $this->profile = new Profile($data['profileId'] ?? 0);
+        $this->defaultLanguage = new Lang();
+        $this->defaultLanguage->setLocale($data['defaultLocale'] ?? 'en');
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -241,15 +270,10 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
 
     /**
      * If you change this method you should probably also update the serialize/unserialize methods.
-     *
-     * @param UserInterface $user
-     *
-     * @return bool
      */
     public function isEqualTo(UserInterface $user): bool
     {
-        return
-            $user instanceof Employee
+        return $user instanceof self
             && $user->getUserIdentifier() === $this->getUserIdentifier()
             && $user->getPassword() === $this->getPassword()
             && $user->getProfile()->getId() === $this->getProfile()->getId()
@@ -280,7 +304,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
 
     public function addSession(EmployeeSession $employeeSession): static
     {
-        if (!$this->sessions->contains($employeeSession)) {
+        if (! $this->sessions->contains($employeeSession)) {
             $this->sessions[] = $employeeSession;
             $employeeSession->setEmployee($this);
         }
@@ -470,9 +494,8 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
 
     public function hasValidResetPasswordToken(): bool
     {
-        return
-            !empty($this->resetPasswordToken)
-            && $this->resetPasswordValidity instanceof \DateTime
+        return ! empty($this->resetPasswordToken)
+            && $this->resetPasswordValidity instanceof DateTime
             && $this->resetPasswordValidity->getTimestamp() > time()
         ;
     }
@@ -667,33 +690,5 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
         $this->lastCustomerId = $lastCustomerId;
 
         return $this;
-    }
-
-    /**
-     * Optimize the way the employee is serialized in the session, it is important to return
-     * all the required info to later check that the serialized data is equal to the Employee
-     * in DB (including the profile). If you change the isEqualTo method you should probably
-     * update this serialization as well.
-     */
-    public function __serialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'email' => $this->email,
-            'password' => $this->password,
-            'profileId' => $this->getProfile()->getId(),
-            // This is added in the serialized data so that early listeners can get the value from session early
-            'defaultLocale' => $this->getDefaultLocale(),
-        ];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->id = $data['id'] ?? 0;
-        $this->email = $data['email'] ?? '';
-        $this->password = $data['password'] ?? '';
-        $this->profile = new Profile($data['profileId'] ?? 0);
-        $this->defaultLanguage = new Lang();
-        $this->defaultLanguage->setLocale($data['defaultLocale'] ?? 'en');
     }
 }

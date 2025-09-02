@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -91,12 +92,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Responsible for displaying page content.
-     *
-     * @param CmsPageCategoryFilters $categoryFilters
-     * @param CmsPageFilters $cmsFilters
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -142,10 +137,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * @deprecated since 1.7.8 and will be removed in next major. Use CommonController:searchGridAction instead
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchAction(Request $request): RedirectResponse
@@ -168,10 +159,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Creates cms page
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to add this.')]
     public function createAction(
@@ -197,12 +184,12 @@ class CmsPageController extends PrestaShopAdminController
             $result = $cmsPageFormHandler->handle($form);
             $cmsPageId = $result->getIdentifiableObjectId();
 
-            if (null !== $cmsPageId) {
+            if ($cmsPageId !== null) {
                 $this->addFlash(
                     'success',
                     $this->trans('Successful creation', [], 'Admin.Notifications.Success')
                 );
-                if (!$request->request->has('save-and-preview')) {
+                if (! $request->request->has('save-and-preview')) {
                     return $this->redirectToParentIndexPageByCmsPageId($cmsPageId);
                 }
 
@@ -230,12 +217,6 @@ class CmsPageController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @param Request $request
-     * @param int $cmsPageId
-     *
-     * @return Response
-     */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
     public function editAction(
         Request $request,
@@ -317,10 +298,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Displays cms category page form and handles create new cms page category logic.
-     *
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to add this.')]
     public function createCmsCategoryAction(
@@ -337,7 +314,7 @@ class CmsPageController extends PrestaShopAdminController
         try {
             $result = $cmsPageCategoryFormHandler->handle($cmsPageCategoryForm);
 
-            if (null !== $result->getIdentifiableObjectId()) {
+            if ($result->getIdentifiableObjectId() !== null) {
                 $this->addFlash(
                     'success',
                     $this->trans('Successful creation', [], 'Admin.Notifications.Success')
@@ -365,11 +342,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Displays cms category page form and handles update cms page category logic.
-     *
-     * @param int $cmsCategoryId
-     * @param Request $request
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
     public function editCmsCategoryAction(
@@ -435,10 +407,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Deletes cms page category and all its children categories.
-     *
-     * @param int $cmsCategoryId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to delete this.')]
@@ -465,10 +433,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Deletes multiple cms page categories.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to delete this.')]
@@ -477,7 +441,7 @@ class CmsPageController extends PrestaShopAdminController
         $cmsCategoriesToDelete = $request->request->all('cms_page_category_bulk');
 
         try {
-            $cmsCategoriesToDelete = array_map(fn($item): int => (int) $item, $cmsCategoriesToDelete);
+            $cmsCategoriesToDelete = array_map(fn ($item): int => (int) $item, $cmsCategoriesToDelete);
 
             $this->dispatchCommand(
                 new BulkDeleteCmsPageCategoryCommand($cmsCategoriesToDelete)
@@ -499,17 +463,13 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Updates cms page category position.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
     public function updateCmsCategoryPositionAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.cms_page_category.position_definition')]
-        PositionDefinition $positionDefinition
+        PositionDefinition $positionDefinition,
     ): RedirectResponse {
         $cmsCategoryParentId = $request->query->getInt('id_cms_category') ?:
             CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID
@@ -538,15 +498,13 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Updates cms page listing position.
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
     public function updateCmsPositionAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.cms_page.position_definition')]
-        PositionDefinition $positionDefinition
+        PositionDefinition $positionDefinition,
     ): RedirectResponse {
         $cmsCategoryParentId = $request->query->getInt('id_cms_category') ?:
             CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID
@@ -577,8 +535,6 @@ class CmsPageController extends PrestaShopAdminController
      * Toggles cms page category status.
      *
      * @param int $cmsCategoryId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
@@ -605,10 +561,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Changes multiple cms page category statuses to enabled.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
@@ -616,7 +568,7 @@ class CmsPageController extends PrestaShopAdminController
     {
         $cmsCategoriesToEnable = $request->request->all('cms_page_category_bulk');
         try {
-            $cmsCategoriesToEnable = array_map(fn($item): int => (int) $item, $cmsCategoriesToEnable);
+            $cmsCategoriesToEnable = array_map(fn ($item): int => (int) $item, $cmsCategoriesToEnable);
 
             $this->dispatchCommand(
                 new BulkEnableCmsPageCategoryCommand($cmsCategoriesToEnable)
@@ -638,10 +590,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Changes multiple cms page category statuses to disabled.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
@@ -650,7 +598,7 @@ class CmsPageController extends PrestaShopAdminController
         $cmsCategoriesToDisable = $request->request->all('cms_page_category_bulk');
         try {
             $cmsCategoriesToDisable = array_map(
-                fn($item): int => (int) $item,
+                fn ($item): int => (int) $item,
                 $cmsCategoriesToDisable
             );
             $this->dispatchCommand(
@@ -675,8 +623,6 @@ class CmsPageController extends PrestaShopAdminController
      * Toggles cms page listing status.
      *
      * @param int $cmsId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
@@ -701,10 +647,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Disables multiple cms pages.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
@@ -713,7 +655,7 @@ class CmsPageController extends PrestaShopAdminController
         $cmsPagesToDisable = $request->request->all('cms_page_bulk');
 
         try {
-            $cmsPagesToDisable = array_map(fn($item): int => (int) $item, $cmsPagesToDisable);
+            $cmsPagesToDisable = array_map(fn ($item): int => (int) $item, $cmsPagesToDisable);
 
             $this->dispatchCommand(
                 new BulkDisableCmsPageCommand($cmsPagesToDisable)
@@ -735,10 +677,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Enables multiple cms pages.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to edit this.')]
@@ -748,7 +686,7 @@ class CmsPageController extends PrestaShopAdminController
 
         try {
             $cmsPagesToDisable = array_map(
-                fn($item): int => (int) $item,
+                fn ($item): int => (int) $item,
                 $cmsPagesToDisable
             );
 
@@ -772,10 +710,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Deletes multiple cms pages.
-     *
-     * @param Request $request
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to delete this.')]
@@ -787,7 +721,7 @@ class CmsPageController extends PrestaShopAdminController
 
         try {
             $cmsPagesToDisable = array_map(
-                fn($item): int => (int) $item,
+                fn ($item): int => (int) $item,
                 $cmsPagesToDisable
             );
 
@@ -813,8 +747,6 @@ class CmsPageController extends PrestaShopAdminController
      * Deletes cms page by given id.
      *
      * @param int $cmsId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'])]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_cms_pages_index', redirectQueryParamsToKeep: ['id_cms_category'], message: 'You do not have permission to delete this.')]
@@ -843,8 +775,6 @@ class CmsPageController extends PrestaShopAdminController
      * The redirection URL is generation thanks to the ProductPreviewProvider however it can't be used in the grid
      * since the LinkRowAction expects a symfony route, so this action is merely used as a proxy for symfony routing
      * and redirects to the appropriate product preview url.
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function previewAction(
@@ -860,10 +790,6 @@ class CmsPageController extends PrestaShopAdminController
     /**
      * This function is used for redirecting to the specific cms page category page. It uses bulk action ids which
      * share the same parent cms category in all cases.
-     *
-     * @param array $cmsPageCategoryIds
-     *
-     * @return RedirectResponse
      */
     private function redirectToParentIndexPageByCategoryBulkIds(array $cmsPageCategoryIds): RedirectResponse
     {
@@ -876,10 +802,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * This function is used for redirecting to the specific cms page category page.
-     *
-     * @param array $cmsPageIds
-     *
-     * @return RedirectResponse
      */
     private function redirectToParentIndexPageByBulkIds(array $cmsPageIds): RedirectResponse
     {
@@ -894,8 +816,6 @@ class CmsPageController extends PrestaShopAdminController
      * This function is used for redirecting to the specific cms page category page.
      *
      * @param int $cmsPageCategoryId
-     *
-     * @return RedirectResponse
      */
     private function redirectToParentIndexPage($cmsPageCategoryId): RedirectResponse
     {
@@ -910,8 +830,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * @param int $cmsPageId
-     *
-     * @return RedirectResponse
      */
     private function redirectToParentIndexPageByCmsPageId($cmsPageId): RedirectResponse
     {
@@ -928,8 +846,6 @@ class CmsPageController extends PrestaShopAdminController
      * Redirects to index page by given id.
      *
      * @param int $cmsPageCategoryId
-     *
-     * @return RedirectResponse
      */
     private function redirectToIndexPageById($cmsPageCategoryId): RedirectResponse
     {
@@ -949,8 +865,6 @@ class CmsPageController extends PrestaShopAdminController
      *
      * @param int $cmsPageCategoryChildId
      *
-     * @return CmsPageCategoryId
-     *
      * @throws CmsPageCategoryException
      */
     private function getParentCategoryId($cmsPageCategoryChildId): CmsPageCategoryId
@@ -965,8 +879,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * Provides translatable error messages for exceptions
-     *
-     * @return array
      */
     private function getErrorMessages(): array
     {
@@ -1013,49 +925,49 @@ class CmsPageController extends PrestaShopAdminController
                 CmsPageCategoryConstraintException::MISSING_DEFAULT_LANGUAGE_FOR_NAME => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Name', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Name', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CmsPageCategoryConstraintException::MISSING_DEFAULT_LANGUAGE_FOR_FRIENDLY_URL => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Friendly URL', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Friendly URL', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CmsPageCategoryConstraintException::INVALID_CATEGORY_NAME => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Name', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Name', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CmsPageCategoryConstraintException::INVALID_LINK_REWRITE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Friendly URL', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Friendly URL', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CmsPageCategoryConstraintException::INVALID_META_TITLE => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Meta title', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Meta title', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CmsPageCategoryConstraintException::INVALID_DESCRIPTION => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Description', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Description', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),
                 CmsPageCategoryConstraintException::INVALID_META_DESCRIPTION => $this->trans(
                     'The %s field is not valid',
                     [
-                        sprintf('"%s"', $this->trans('Meta description', [], 'Admin.Global')),
+                        \sprintf('"%s"', $this->trans('Meta description', [], 'Admin.Global')),
                     ],
                     'Admin.Notifications.Error'
                 ),
@@ -1087,8 +999,6 @@ class CmsPageController extends PrestaShopAdminController
 
     /**
      * @param int $cmsCategoryId
-     *
-     * @return array
      */
     private function getCmsPageIndexToolbarButtons($cmsCategoryId): array
     {

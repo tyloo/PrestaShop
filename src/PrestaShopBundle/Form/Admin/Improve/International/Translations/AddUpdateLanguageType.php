@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,22 +38,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class AddUpdateLanguageType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $nonInstalledLocalizationChoices
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private readonly array $nonInstalledLocalizationChoices
+        private readonly array $nonInstalledLocalizationChoices,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('iso_localization_pack', ChoiceType::class, [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,7 +68,7 @@ class APIClientCommand extends Command
     {
         $this
             ->setHelp('This command allows you to create an API Client to use the API')
-            ->addArgument('action', InputArgument::REQUIRED, sprintf('The action to perform possible values are: %s', implode(',', self::ACTIONS)))
+            ->addArgument('action', InputArgument::REQUIRED, \sprintf('The action to perform possible values are: %s', implode(',', self::ACTIONS)))
             ->addArgument('client-id', InputArgument::REQUIRED, 'Client ID')
             ->addOption('name', null, InputOption::VALUE_REQUIRED, 'Client Name')
             ->addOption('description', null, InputOption::VALUE_REQUIRED, 'Client Description', 'Created by CLI command.')
@@ -120,8 +121,8 @@ class APIClientCommand extends Command
         } else {
             $clientScopes = [];
             $inputScopes = $input->getOption('scopes') ?? '';
-            if (!empty($inputScopes)) {
-                $clientScopes = array_map(fn (string $scope): string => trim($scope), explode(',', (string) $inputScopes));
+            if (! empty($inputScopes)) {
+                $clientScopes = array_map(fn (string $scope): string => mb_trim($scope), explode(',', (string) $inputScopes));
             }
         }
 
@@ -142,7 +143,7 @@ class APIClientCommand extends Command
         $clientSecret = $createdApiClient->getSecret();
 
         $forcedSecret = $input->getOption('secret');
-        if (!empty($forcedSecret)) {
+        if (! empty($forcedSecret)) {
             $command = new ForceApiClientSecretCommand(
                 $createdApiClient->getApiClientId()->getValue(),
                 $forcedSecret,

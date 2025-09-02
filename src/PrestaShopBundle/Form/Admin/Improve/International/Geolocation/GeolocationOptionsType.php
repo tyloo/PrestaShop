@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,24 +40,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class GeolocationOptionsType extends TranslatorAwareType
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param array $locales
-     * @param array $countryChoices
-     * @param ConfigurationInterface $configuration
-     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         private readonly array $countryChoices,
-        private readonly ConfigurationInterface $configuration
+        private readonly ConfigurationInterface $configuration,
     ) {
         parent::__construct($translator, $locales);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
