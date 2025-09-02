@@ -63,7 +63,7 @@ if [ "${DISABLE_MAKE}" != "1" ]; then
   # Execute composer as default user so that we can set the env variables to increase timeout, also disable default_socket_timeout for php
   COMPOSER_PROCESS_TIMEOUT=600 COMPOSER_IPRESOLVE=4 php -ddefault_socket_timeout=-1 /usr/local/bin/composer install --ansi --prefer-dist --no-interaction --no-progress
   # Update the owner of composer installed folders to be www-data
-  chown -R www-data:www-data vendor modules themes
+  chown -R www-data:www-data var vendor modules themes
 
   echo "\n* Build assets ...";
   runuser -g www-data -u www-data -- /usr/bin/make assets
