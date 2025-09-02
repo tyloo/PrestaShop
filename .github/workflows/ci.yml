@@ -42,7 +42,7 @@ jobs:
         run: docker images
       -
         name: Start services
-        run: docker compose up --no-build
+        run: docker compose up --wait --no-build
       -
         name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost:8001
@@ -73,3 +73,5 @@ jobs:
       -
         name: Lint Dockerfile
         uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: .docker/Dockerfile
