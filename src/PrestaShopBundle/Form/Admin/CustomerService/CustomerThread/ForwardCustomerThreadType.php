@@ -41,23 +41,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ForwardCustomerThreadType extends AbstractType
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $employeeChoiceProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param FormChoiceProviderInterface $employeeChoiceProvider
      */
-    public function __construct(TranslatorInterface $translator, FormChoiceProviderInterface $employeeChoiceProvider)
+    public function __construct(private TranslatorInterface $translator, private FormChoiceProviderInterface $employeeChoiceProvider)
     {
-        $this->translator = $translator;
-        $this->employeeChoiceProvider = $employeeChoiceProvider;
     }
 
     /**

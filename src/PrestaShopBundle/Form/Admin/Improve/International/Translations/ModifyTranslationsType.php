@@ -40,25 +40,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ModifyTranslationsType extends TranslatorAwareType
 {
     public const CORE_TRANSLATIONS_CHOICE_INDEX = '0';
-    /**
-     * @var array
-     */
-    private $translationTypeChoices;
-
-    /**
-     * @var array
-     */
-    private $emailContentTypeChoices;
-
-    /**
-     * @var array
-     */
-    private $themeChoices;
-
-    /**
-     * @var array
-     */
-    private $moduleChoices;
 
     /**
      * @param TranslatorInterface $translator
@@ -71,16 +52,12 @@ class ModifyTranslationsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $translationTypeChoices,
-        array $emailContentTypeChoices,
-        array $themeChoices,
-        array $moduleChoices
+        private array $translationTypeChoices,
+        private array $emailContentTypeChoices,
+        private array $themeChoices,
+        private array $moduleChoices
     ) {
         parent::__construct($translator, $locales);
-        $this->translationTypeChoices = $translationTypeChoices;
-        $this->emailContentTypeChoices = $emailContentTypeChoices;
-        $this->themeChoices = $themeChoices;
-        $this->moduleChoices = $moduleChoices;
     }
 
     /**

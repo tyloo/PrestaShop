@@ -34,17 +34,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CustomerSearchType extends EntitySearchInputType
 {
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
     public function __construct(
         TranslatorInterface $translator,
-        RouterInterface $router
+        private RouterInterface $router
     ) {
         parent::__construct($translator);
-        $this->router = $router;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -60,9 +54,7 @@ class CustomerSearchType extends EntitySearchInputType
             'disabling_switch' => true,
             'switch_state_on_disable' => 'on',
             'disabling_switch_event' => null,
-            'disabled_value' => function ($data) {
-                return empty($data[0]['id_customer']);
-            },
+            'disabled_value' => fn($data): bool => empty($data[0]['id_customer']),
             'remote_url' => $this->router->generate('admin_customers_search', ['customer_search' => '__QUERY__']),
             'placeholder' => $this->trans('Search customer', 'Admin.Actions'),
             'suggestion_field' => 'fullname_and_email',

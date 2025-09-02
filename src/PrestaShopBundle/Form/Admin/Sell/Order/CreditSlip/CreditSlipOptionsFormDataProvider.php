@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class CreditSlipOptionsFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $creditSlipOptionsConfiguration;
-
-    /**
      * @param DataConfigurationInterface $creditSlipOptionsConfiguration
      */
-    public function __construct(DataConfigurationInterface $creditSlipOptionsConfiguration)
+    public function __construct(private DataConfigurationInterface $creditSlipOptionsConfiguration)
     {
-        $this->creditSlipOptionsConfiguration = $creditSlipOptionsConfiguration;
     }
 
     /**

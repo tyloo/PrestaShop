@@ -38,11 +38,6 @@ use Symfony\Component\Translation\MessageCatalogue;
 final class LegacyFileLoader implements LoaderInterface
 {
     /**
-     * @var LegacyFileReader
-     */
-    private $fileReader;
-
-    /**
      * @var DomainNormalizer
      */
     private $domainNormalizer;
@@ -50,9 +45,8 @@ final class LegacyFileLoader implements LoaderInterface
     /**
      * @param LegacyFileReader $fileReader
      */
-    public function __construct(LegacyFileReader $fileReader)
+    public function __construct(private LegacyFileReader $fileReader)
     {
-        $this->fileReader = $fileReader;
         $this->domainNormalizer = new DomainNormalizer();
     }
 

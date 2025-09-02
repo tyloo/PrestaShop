@@ -37,25 +37,11 @@ use PrestaShop\PrestaShop\Core\Validation\ValidatorInterface;
 final class GeolocationWhitelistFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $dataConfiguration;
-
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /**
      * @param DataConfigurationInterface $dataConfiguration
      * @param ValidatorInterface $validator
      */
-    public function __construct(
-        DataConfigurationInterface $dataConfiguration,
-        ValidatorInterface $validator
-    ) {
-        $this->dataConfiguration = $dataConfiguration;
-        $this->validator = $validator;
+    public function __construct(private DataConfigurationInterface $dataConfiguration, private ValidatorInterface $validator)
+    {
     }
 
     /**

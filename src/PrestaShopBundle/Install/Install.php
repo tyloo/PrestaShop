@@ -1020,9 +1020,7 @@ class Install extends AbstractInstall
     public function postInstall(): bool
     {
         $moduleCollection = ModuleManagerBuilder::getInstance()->buildRepository()->getInstalledModules();
-        $modules = array_map(function (Module $module): string {
-            return $module->get('name');
-        }, iterator_to_array($moduleCollection));
+        $modules = array_map(fn(Module $module): string => $module->get('name'), iterator_to_array($moduleCollection));
 
         if (!$this->executeAction(
             $modules,
@@ -1213,7 +1211,7 @@ class Install extends AbstractInstall
 
         // If we need, we generate a random name for admin folder (for security purpose!)
         if (file_exists(_PS_ROOT_DIR_ . '/admin/')) {
-            $randomizedAdminFolderName = $randomizedAdminFolderName ?? sprintf(
+            $randomizedAdminFolderName ??= sprintf(
                 'admin%03d%s/',
                 mt_rand(0, 999),
                 Tools::strtolower(Tools::passwdGen(16))

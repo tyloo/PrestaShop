@@ -39,11 +39,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CopyLanguageType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $themeChoices;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $themeChoices
@@ -51,10 +46,9 @@ class CopyLanguageType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $themeChoices
+        private array $themeChoices
     ) {
         parent::__construct($translator, $locales);
-        $this->themeChoices = $themeChoices;
     }
 
     /**

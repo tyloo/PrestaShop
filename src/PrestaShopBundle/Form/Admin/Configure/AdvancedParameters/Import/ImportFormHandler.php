@@ -36,44 +36,24 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ImportFormHandler implements ImportFormHandlerInterface
 {
     /**
-     * Form builder.
-     *
-     * @var FormBuilderInterface
-     */
-    private $formBuilder;
-
-    /**
-     * Hook dispatcher.
-     *
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var ImportFormDataProviderInterface
-     */
-    private $formDataProvider;
-    /**
-     * @var string
-     */
-    private $hookName;
-
-    /**
      * @param FormBuilderInterface $formBuilder
      * @param HookDispatcherInterface $hookDispatcher
      * @param ImportFormDataProviderInterface $formDataProvider
      * @param string $hookName
      */
     public function __construct(
-        FormBuilderInterface $formBuilder,
-        HookDispatcherInterface $hookDispatcher,
-        ImportFormDataProviderInterface $formDataProvider,
-        $hookName
-    ) {
-        $this->formBuilder = $formBuilder;
-        $this->hookDispatcher = $hookDispatcher;
-        $this->formDataProvider = $formDataProvider;
-        $this->hookName = $hookName;
+        /**
+         * Form builder.
+         */
+        private FormBuilderInterface $formBuilder,
+        /**
+         * Hook dispatcher.
+         */
+        private HookDispatcherInterface $hookDispatcher,
+        private ImportFormDataProviderInterface $formDataProvider,
+        private $hookName
+    )
+    {
     }
 
     /**

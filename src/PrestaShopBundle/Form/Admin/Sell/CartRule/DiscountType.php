@@ -41,25 +41,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DiscountType extends TranslatorAwareType
 {
-    /**
-     * @var DiscountListener
-     */
-    private $discountListener;
-
-    /**
-     * @var DiscountApplicationChoiceProvider
-     */
-    private $discountApplicationChoiceProvider;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        DiscountListener $discountListener,
-        DiscountApplicationChoiceProvider $discountApplicationChoiceProvider
+        private DiscountListener $discountListener,
+        private DiscountApplicationChoiceProvider $discountApplicationChoiceProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->discountListener = $discountListener;
-        $this->discountApplicationChoiceProvider = $discountApplicationChoiceProvider;
     }
 
     /**
@@ -115,9 +103,7 @@ class DiscountType extends TranslatorAwareType
                 'class' => 'discount-container',
             ],
             'disabling_switch' => true,
-            'disabled_value' => static function (?array $data) {
-                return empty($data['reduction']['value']);
-            },
+            'disabled_value' => static fn(?array $data): bool => empty($data['reduction']['value']),
         ]);
     }
 }

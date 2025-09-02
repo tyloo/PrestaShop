@@ -62,33 +62,9 @@ use Validate;
 class CustomerType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $isB2bFeatureEnabled;
-
-    /**
-     * @var array
-     */
-    private $riskChoices;
-
-    /**
-     * @var bool
-     */
-    private $isPartnerOffersEnabled;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @var FormCloner
      */
     protected $formCloner;
-    /**
-     * @var GroupByIdChoiceProvider
-     */
-    private $groupByIdChoiceProvider;
 
     /**
      * @param TranslatorInterface $translator
@@ -102,21 +78,16 @@ class CustomerType extends TranslatorAwareType
      */
     public function __construct(
         TranslatorInterface $translator,
-        GroupByIdChoiceProvider $groupByIdChoiceProvider,
+        private GroupByIdChoiceProvider $groupByIdChoiceProvider,
         array $locales,
-        array $riskChoices,
-        $isB2bFeatureEnabled,
-        $isPartnerOffersEnabled,
-        ConfigurationInterface $configuration,
+        private array $riskChoices,
+        private $isB2bFeatureEnabled,
+        private $isPartnerOffersEnabled,
+        private ConfigurationInterface $configuration,
         FormCloner $formCloner
     ) {
         parent::__construct($translator, $locales);
-        $this->isB2bFeatureEnabled = $isB2bFeatureEnabled;
-        $this->riskChoices = $riskChoices;
-        $this->isPartnerOffersEnabled = $isPartnerOffersEnabled;
-        $this->configuration = $configuration;
         $this->formCloner = $formCloner;
-        $this->groupByIdChoiceProvider = $groupByIdChoiceProvider;
     }
 
     /**

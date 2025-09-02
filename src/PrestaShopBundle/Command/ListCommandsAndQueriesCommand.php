@@ -204,13 +204,10 @@ class ListCommandsAndQueriesCommand extends Command
 
     private function doesMethodsMatchType(string $method, string $commandType): bool
     {
-        switch ($commandType) {
-            case 'Command':
-                return $method === 'POST' || $method === 'PUT';
-            case 'Query':
-                return $method === 'GET' || $method === 'DELETE';
-            default:
-                return false;
-        }
+        return match ($commandType) {
+            'Command' => $method === 'POST' || $method === 'PUT',
+            'Query' => $method === 'GET' || $method === 'DELETE',
+            default => false,
+        };
     }
 }

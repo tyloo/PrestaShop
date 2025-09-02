@@ -37,20 +37,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class OptionalFeaturesType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $isCombinationsUsed;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param bool $isCombinationsUsed
      */
-    public function __construct(TranslatorInterface $translator, array $locales, $isCombinationsUsed)
+    public function __construct(TranslatorInterface $translator, array $locales, private $isCombinationsUsed)
     {
         parent::__construct($translator, $locales);
-
-        $this->isCombinationsUsed = $isCombinationsUsed;
     }
 
     /**

@@ -70,19 +70,9 @@ class ConfigCommand extends Command
     protected $input;
 
     /**
-     * @var ShopConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @var ShopConstraint
      */
     private $shopConstraint;
-
-    /**
-     * @var LanguageDataProvider
-     */
-    private $languageDataProvider;
 
     /**
      * @var string|null
@@ -95,12 +85,10 @@ class ConfigCommand extends Command
     private $idLang;
 
     public function __construct(
-        ShopConfigurationInterface $configuration,
-        LanguageDataProvider $languageDataProvider
+        private ShopConfigurationInterface $configuration,
+        private LanguageDataProvider $languageDataProvider
     ) {
         parent::__construct();
-        $this->configuration = $configuration;
-        $this->languageDataProvider = $languageDataProvider;
     }
 
     protected function configure(): void

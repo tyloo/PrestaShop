@@ -49,23 +49,11 @@ class OrderMessageType extends AbstractType
 {
     use TranslatorAwareTrait;
 
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $orderMessageNameChoiceProvider;
-
-    /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $orderMessageChoiceProvider;
-
     public function __construct(
-        FormChoiceProviderInterface $orderMessageNameChoiceProvider,
-        ConfigurableFormChoiceProviderInterface $orderMessageChoiceProvider,
+        private FormChoiceProviderInterface $orderMessageNameChoiceProvider,
+        private ConfigurableFormChoiceProviderInterface $orderMessageChoiceProvider,
         TranslatorInterface $translator
     ) {
-        $this->orderMessageNameChoiceProvider = $orderMessageNameChoiceProvider;
-        $this->orderMessageChoiceProvider = $orderMessageChoiceProvider;
         $this->translator = $translator;
     }
 

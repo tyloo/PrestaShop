@@ -33,22 +33,11 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 class TreeBuilder
 {
     /**
-     * @var string
-     */
-    private $locale;
-    /**
-     * @var string|null
-     */
-    private $theme;
-
-    /**
      * @param string $locale
      * @param string|null $theme
      */
-    public function __construct($locale, $theme)
+    public function __construct(private $locale, private $theme)
     {
-        $this->locale = $locale;
-        $this->theme = $theme;
     }
 
     /**

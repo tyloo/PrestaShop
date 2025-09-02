@@ -51,33 +51,12 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
     public const MODIFY_ALL_SHOPS_PREFIX = 'modify_all_shops_';
 
     /**
-     * @var FeatureInterface
-     */
-    private $multiStoreFeature;
-
-    /**
-     * @var MultistoreContextCheckerInterface
-     */
-    private $multistoreContextChecker;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @var string
      */
     private $checkboxLabel;
 
-    public function __construct(
-        FeatureInterface $multiStoreFeature,
-        MultistoreContextCheckerInterface $multistoreContextChecker,
-        TranslatorInterface $translator
-    ) {
-        $this->multiStoreFeature = $multiStoreFeature;
-        $this->multistoreContextChecker = $multistoreContextChecker;
-        $this->translator = $translator;
+    public function __construct(private FeatureInterface $multiStoreFeature, private MultistoreContextCheckerInterface $multistoreContextChecker, private TranslatorInterface $translator)
+    {
     }
 
     /**

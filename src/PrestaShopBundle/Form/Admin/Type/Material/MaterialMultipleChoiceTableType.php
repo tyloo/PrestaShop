@@ -59,9 +59,7 @@ class MaterialMultipleChoiceTableType extends AbstractType
 
                     return $value;
                 },
-                function ($value) {
-                    return $value;
-                }
+                fn($value) => $value
             ));
         }
     }

@@ -62,11 +62,6 @@ class RetailPriceType extends TranslatorAwareType
     protected $defaultCurrency;
 
     /**
-     * @var FormChoiceProviderInterface|FormChoiceAttributeProviderInterface
-     */
-    protected $taxRuleGroupChoicesProvider;
-
-    /**
      * @var RouterInterface
      */
     protected $router;
@@ -96,12 +91,15 @@ class RetailPriceType extends TranslatorAwareType
      */
     protected $contextCountryId;
 
+    /**
+     * @param FormChoiceProviderInterface|FormChoiceAttributeProviderInterface $taxRuleGroupChoicesProvider
+     */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         Locale $contextLocale,
         Currency $defaultCurrency,
-        $taxRuleGroupChoicesProvider,
+        protected $taxRuleGroupChoicesProvider,
         RouterInterface $router,
         bool $isTaxEnabled,
         bool $isEcotaxEnabled,
@@ -112,7 +110,6 @@ class RetailPriceType extends TranslatorAwareType
         parent::__construct($translator, $locales);
         $this->contextLocale = $contextLocale;
         $this->defaultCurrency = $defaultCurrency;
-        $this->taxRuleGroupChoicesProvider = $taxRuleGroupChoicesProvider;
         $this->router = $router;
         $this->isTaxEnabled = $isTaxEnabled;
         $this->isEcotaxEnabled = $isEcotaxEnabled;

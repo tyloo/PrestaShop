@@ -31,25 +31,19 @@ use PrestaShopBundle\Entity\ProductIdentity;
 class Movement
 {
     /**
-     * @var ProductIdentity
-     */
-    private $productIdentity;
-
-    /**
      * @var int
      */
     private $delta;
 
-    public function __construct(ProductIdentity $productIdentity, $delta)
+    public function __construct(private ProductIdentity $productIdentity, $delta)
     {
-        $this->productIdentity = $productIdentity;
         $this->delta = (int) $delta;
     }
 
     /**
      * @return ProductIdentity
      */
-    public function getProductIdentity()
+    public function getProductIdentity(): \PrestaShopBundle\Entity\ProductIdentity
     {
         return $this->productIdentity;
     }

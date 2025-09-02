@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class MerchandiseReturnOptionsFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $optionsDataConfiguration;
-
-    /**
      * @param DataConfigurationInterface $optionsDataConfiguration
      */
-    public function __construct(DataConfigurationInterface $optionsDataConfiguration)
+    public function __construct(private DataConfigurationInterface $optionsDataConfiguration)
     {
-        $this->optionsDataConfiguration = $optionsDataConfiguration;
     }
 
     /**

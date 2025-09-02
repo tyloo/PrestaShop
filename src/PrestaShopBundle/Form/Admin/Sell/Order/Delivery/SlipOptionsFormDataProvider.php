@@ -35,14 +35,8 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class SlipOptionsFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var SlipOptionsConfiguration
-     */
-    private $configuration;
-
-    public function __construct(SlipOptionsConfiguration $configuration)
+    public function __construct(private SlipOptionsConfiguration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

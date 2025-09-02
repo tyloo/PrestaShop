@@ -36,16 +36,10 @@ use Twig\TwigFunction;
 class DocumentationLinkExtension extends AbstractExtension
 {
     /**
-     * @var DocumentationLinkProviderInterface
-     */
-    private $documentationLinkProvider;
-
-    /**
      * @param DocumentationLinkProviderInterface $documentationLinkProvider
      */
-    public function __construct(DocumentationLinkProviderInterface $documentationLinkProvider)
+    public function __construct(private DocumentationLinkProviderInterface $documentationLinkProvider)
     {
-        $this->documentationLinkProvider = $documentationLinkProvider;
     }
 
     /**

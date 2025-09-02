@@ -52,18 +52,12 @@ class SpecificPriceImpactType extends TranslatorAwareType
     private const FIXED_PRICE_GROUP = 'fixed_price_group';
     private const REDUCTION_GROUP = 'reduction_group';
 
-    /**
-     * @var string
-     */
-    private $defaultCurrencyIsoCode;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        string $defaultCurrencyIsoCode
+        private string $defaultCurrencyIsoCode
     ) {
         parent::__construct($translator, $locales);
-        $this->defaultCurrencyIsoCode = $defaultCurrencyIsoCode;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -88,9 +82,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
                     ]),
                 ],
                 'disabling_switch' => true,
-                'disabled_value' => function ($data, FormInterface $form): bool {
-                    return $this->shouldReductionBeDisabled($form);
-                },
+                'disabled_value' => fn($data, FormInterface $form): bool => $this->shouldReductionBeDisabled($form),
             ])
             ->add('fixed_price_tax_excluded', MoneyType::class, [
                 'required' => false,
@@ -107,9 +99,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
                     new Positive(['groups' => [self::FIXED_PRICE_GROUP]]),
                 ],
                 'disabling_switch' => true,
-                'disabled_value' => function ($data, FormInterface $form): bool {
-                    return $this->shouldFixedPriceBeDisabled($form);
-                },
+                'disabled_value' => fn($data, FormInterface $form): bool => $this->shouldFixedPriceBeDisabled($form),
             ])
         ;
 

@@ -41,12 +41,8 @@ class ModuleManagementEvent extends Event
     public const RESET = 'module.reset';
     public const DELETE = 'module.delete';
 
-    /** @var ModuleInterface */
-    private $module;
-
-    public function __construct(ModuleInterface $module)
+    public function __construct(private ModuleInterface $module)
     {
-        $this->module = $module;
     }
 
     public function getModule(): ModuleInterface

@@ -38,16 +38,10 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 class LegacyUrlListener
 {
     /**
-     * @var LegacyUrlConverter
-     */
-    private $converter;
-
-    /**
      * @param LegacyUrlConverter $converter
      */
-    public function __construct(LegacyUrlConverter $converter)
+    public function __construct(private LegacyUrlConverter $converter)
     {
-        $this->converter = $converter;
     }
 
     /**

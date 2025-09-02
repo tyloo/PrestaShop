@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class SqlRequestSettingsFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $dataConfiguration;
-
-    /**
      * @param DataConfigurationInterface $dataConfiguration
      */
-    public function __construct(DataConfigurationInterface $dataConfiguration)
+    public function __construct(private DataConfigurationInterface $dataConfiguration)
     {
-        $this->dataConfiguration = $dataConfiguration;
     }
 
     /**

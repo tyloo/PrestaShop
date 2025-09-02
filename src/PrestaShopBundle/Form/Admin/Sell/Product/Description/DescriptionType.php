@@ -44,21 +44,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class DescriptionType extends TranslatorAwareType
 {
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var string
-     */
-    private $employeeIsoCode;
-
-    /**
-     * @var int
-     */
-    private $shortDescriptionMaxLength;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param RouterInterface $router
@@ -68,14 +53,11 @@ class DescriptionType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        RouterInterface $router,
-        string $employeeIsoCode,
-        int $shortDescriptionMaxLength
+        private RouterInterface $router,
+        private string $employeeIsoCode,
+        private int $shortDescriptionMaxLength
     ) {
         parent::__construct($translator, $locales);
-        $this->router = $router;
-        $this->employeeIsoCode = $employeeIsoCode;
-        $this->shortDescriptionMaxLength = $shortDescriptionMaxLength;
     }
 
     /**

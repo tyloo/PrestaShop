@@ -37,18 +37,17 @@ use Symfony\Component\Routing\RouteCollection;
 class YamlModuleLoader extends Loader
 {
     /**
-     * @var array the list of activated modules
-     */
-    private $installedModulesPaths;
-
-    /**
      * @var bool we load the route collection only once per request
      */
     private $isLoaded = false;
 
-    public function __construct(array $installedModulesPaths)
+    public function __construct(
+        /**
+         * @var array the list of activated modules
+         */
+        private array $installedModulesPaths
+    )
     {
-        $this->installedModulesPaths = $installedModulesPaths;
     }
 
     /**

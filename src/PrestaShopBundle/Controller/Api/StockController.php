@@ -165,9 +165,7 @@ class StockController extends ApiController
             return $this->handleException(new BadRequestHttpException($exception->getMessage(), $exception));
         }
 
-        $dataCallback = function ($page, $limit) use ($queryParamsCollection) {
-            return $this->stockRepository->getDataExport($page, $limit, $queryParamsCollection);
-        };
+        $dataCallback = (fn($page, $limit) => $this->stockRepository->getDataExport($page, $limit, $queryParamsCollection));
 
         // headers columns
         $headersData = [

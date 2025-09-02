@@ -1146,9 +1146,7 @@ class OrderController extends PrestaShopAdminController
         $orderForViewing = $this->dispatchQuery(new GetOrderForViewing($orderId, QuerySorting::DESC));
 
         $products = $orderForViewing->getProducts()->getProducts();
-        $product = array_reduce($products, function ($result, OrderProductForViewing $item) use ($orderDetailId) {
-            return $item->getOrderDetailId() == $orderDetailId ? $item : $result;
-        });
+        $product = array_reduce($products, fn($result, OrderProductForViewing $item) => $item->getOrderDetailId() == $orderDetailId ? $item : $result);
 
         // The whole product row has been removed so we return an empty response
         if (null === $product) {

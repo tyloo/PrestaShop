@@ -477,7 +477,7 @@ class CmsPageController extends PrestaShopAdminController
         $cmsCategoriesToDelete = $request->request->all('cms_page_category_bulk');
 
         try {
-            $cmsCategoriesToDelete = array_map(function ($item) { return (int) $item; }, $cmsCategoriesToDelete);
+            $cmsCategoriesToDelete = array_map(fn($item): int => (int) $item, $cmsCategoriesToDelete);
 
             $this->dispatchCommand(
                 new BulkDeleteCmsPageCategoryCommand($cmsCategoriesToDelete)
@@ -616,7 +616,7 @@ class CmsPageController extends PrestaShopAdminController
     {
         $cmsCategoriesToEnable = $request->request->all('cms_page_category_bulk');
         try {
-            $cmsCategoriesToEnable = array_map(function ($item) { return (int) $item; }, $cmsCategoriesToEnable);
+            $cmsCategoriesToEnable = array_map(fn($item): int => (int) $item, $cmsCategoriesToEnable);
 
             $this->dispatchCommand(
                 new BulkEnableCmsPageCategoryCommand($cmsCategoriesToEnable)
@@ -650,9 +650,7 @@ class CmsPageController extends PrestaShopAdminController
         $cmsCategoriesToDisable = $request->request->all('cms_page_category_bulk');
         try {
             $cmsCategoriesToDisable = array_map(
-                function ($item) {
-                    return (int) $item;
-                },
+                fn($item): int => (int) $item,
                 $cmsCategoriesToDisable
             );
             $this->dispatchCommand(
@@ -715,7 +713,7 @@ class CmsPageController extends PrestaShopAdminController
         $cmsPagesToDisable = $request->request->all('cms_page_bulk');
 
         try {
-            $cmsPagesToDisable = array_map(function ($item) { return (int) $item; }, $cmsPagesToDisable);
+            $cmsPagesToDisable = array_map(fn($item): int => (int) $item, $cmsPagesToDisable);
 
             $this->dispatchCommand(
                 new BulkDisableCmsPageCommand($cmsPagesToDisable)
@@ -750,9 +748,7 @@ class CmsPageController extends PrestaShopAdminController
 
         try {
             $cmsPagesToDisable = array_map(
-                function ($item) {
-                    return (int) $item;
-                },
+                fn($item): int => (int) $item,
                 $cmsPagesToDisable
             );
 
@@ -791,9 +787,7 @@ class CmsPageController extends PrestaShopAdminController
 
         try {
             $cmsPagesToDisable = array_map(
-                function ($item) {
-                    return (int) $item;
-                },
+                fn($item): int => (int) $item,
                 $cmsPagesToDisable
             );
 

@@ -50,16 +50,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class InvoiceOptionsType extends TranslatorAwareType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $invoiceModelChoiceProvider;
-
-    /**
-     * @var int the next available invoice number
-     */
-    private $nextInvoiceNumber;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param FormChoiceProviderInterface $invoiceModelChoiceProvider
@@ -68,12 +58,10 @@ class InvoiceOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormChoiceProviderInterface $invoiceModelChoiceProvider,
-        $nextInvoiceNumber
+        private FormChoiceProviderInterface $invoiceModelChoiceProvider,
+        private $nextInvoiceNumber
     ) {
         parent::__construct($translator, $locales);
-        $this->invoiceModelChoiceProvider = $invoiceModelChoiceProvider;
-        $this->nextInvoiceNumber = $nextInvoiceNumber;
     }
 
     /**

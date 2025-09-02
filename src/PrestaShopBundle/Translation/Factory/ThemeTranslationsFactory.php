@@ -37,14 +37,13 @@ use PrestaShopBundle\Translation\Provider\ThemeProvider;
  */
 class ThemeTranslationsFactory extends TranslationsFactory
 {
-    /**
-     * @var ThemeProvider the theme provider
-     */
-    private $themeProvider;
-
-    public function __construct(ThemeProvider $themeProvider)
+    public function __construct(
+        /**
+         * @var ThemeProvider the theme provider
+         */
+        private ThemeProvider $themeProvider
+    )
     {
-        $this->themeProvider = $themeProvider;
     }
 
     /**

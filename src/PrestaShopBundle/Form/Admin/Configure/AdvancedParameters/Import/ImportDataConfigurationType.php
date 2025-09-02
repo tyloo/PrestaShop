@@ -42,16 +42,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ImportDataConfigurationType extends TranslatorAwareType
 {
     /**
-     * @var array choices for data matches
-     */
-    private $dataMatchChoices;
-
-    /**
-     * @var array choices for entity fields
-     */
-    private $entityFieldChoices;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $dataMatchChoices
@@ -60,13 +50,10 @@ class ImportDataConfigurationType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $dataMatchChoices,
-        array $entityFieldChoices
+        private array $dataMatchChoices,
+        private array $entityFieldChoices
     ) {
         parent::__construct($translator, $locales);
-
-        $this->dataMatchChoices = $dataMatchChoices;
-        $this->entityFieldChoices = $entityFieldChoices;
     }
 
     /**

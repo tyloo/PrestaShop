@@ -53,16 +53,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CurrencyType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $allCurrencies;
-
-    /**
-     * @var bool
-     */
-    private $isShopFeatureEnabled;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $allCurrencies
@@ -71,12 +61,10 @@ class CurrencyType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $allCurrencies,
-        $isShopFeatureEnabled
+        private array $allCurrencies,
+        private $isShopFeatureEnabled
     ) {
         parent::__construct($translator, $locales);
-        $this->allCurrencies = $allCurrencies;
-        $this->isShopFeatureEnabled = $isShopFeatureEnabled;
     }
 
     /**

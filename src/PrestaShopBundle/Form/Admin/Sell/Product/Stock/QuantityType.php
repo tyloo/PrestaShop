@@ -42,16 +42,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class QuantityType extends TranslatorAwareType
 {
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var bool
-     */
-    private $stockManagementEnabled;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param RouterInterface $router
@@ -60,12 +50,10 @@ class QuantityType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        RouterInterface $router,
-        bool $stockManagementEnabled
+        private RouterInterface $router,
+        private bool $stockManagementEnabled
     ) {
         parent::__construct($translator, $locales);
-        $this->router = $router;
-        $this->stockManagementEnabled = $stockManagementEnabled;
     }
 
     /**

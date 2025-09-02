@@ -40,33 +40,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class CarrierOptionsType extends TranslatorAwareType
 {
-    /**
-     * @var array
-     */
-    private $carriers;
-
-    /**
-     * @var array
-     */
-    private $orderByChoices;
-
-    /**
-     * @var array
-     */
-    private $orderWayChoices;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $carriers,
-        array $orderByChoices,
-        array $orderWayChoices
+        private array $carriers,
+        private array $orderByChoices,
+        private array $orderWayChoices
     ) {
         parent::__construct($translator, $locales);
-
-        $this->carriers = $carriers;
-        $this->orderByChoices = $orderByChoices;
-        $this->orderWayChoices = $orderWayChoices;
     }
 
     /**

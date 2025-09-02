@@ -38,11 +38,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class EmployeeOptionsType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $canOptionsBeChanged;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param bool $canOptionsBeChanged
@@ -50,11 +45,9 @@ class EmployeeOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        $canOptionsBeChanged
+        private $canOptionsBeChanged
     ) {
         parent::__construct($translator, $locales);
-
-        $this->canOptionsBeChanged = $canOptionsBeChanged;
     }
 
     /**

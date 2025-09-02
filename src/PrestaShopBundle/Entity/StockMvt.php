@@ -56,7 +56,7 @@ class StockMvt
     /**
      * @ORM\Column(name="id_order", type="integer", nullable=true)
      */
-    private ?int $idOrder;
+    private ?int $idOrder = null;
 
     /**
      * @ORM\Column(name="id_supply_order", type="integer", nullable=true, options={"default":0})
@@ -118,7 +118,7 @@ class StockMvt
     /**
      * @ORM\Column(name="referer", type="bigint", nullable=true)
      */
-    private ?int $referer;
+    private ?int $referer = null;
 
     public function __construct()
     {

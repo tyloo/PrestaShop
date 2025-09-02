@@ -40,16 +40,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class GeolocationOptionsType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $countryChoices;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $countryChoices
@@ -58,13 +48,10 @@ class GeolocationOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $countryChoices,
-        ConfigurationInterface $configuration
+        private array $countryChoices,
+        private ConfigurationInterface $configuration
     ) {
         parent::__construct($translator, $locales);
-
-        $this->countryChoices = $countryChoices;
-        $this->configuration = $configuration;
     }
 
     /**

@@ -69,9 +69,7 @@ class MinimumAmountType extends TranslatorAwareType
             'label' => $this->trans('Minimum amount', 'Admin.Catalog.Feature'),
             'required' => false,
             'disabling_switch' => true,
-            'disabled_value' => static function (?array $data): bool {
-                return empty($data['amount']);
-            },
+            'disabled_value' => static fn(?array $data): bool => empty($data['amount']),
         ]);
     }
 }

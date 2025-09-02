@@ -40,16 +40,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ConfigurableCountryChoiceType extends AbstractType
 {
     /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $countriesChoiceProvider;
-
-    /**
      * @param ConfigurableFormChoiceProviderInterface $countriesChoiceProvider
      */
-    public function __construct(ConfigurableFormChoiceProviderInterface $countriesChoiceProvider)
+    public function __construct(private ConfigurableFormChoiceProviderInterface $countriesChoiceProvider)
     {
-        $this->countriesChoiceProvider = $countriesChoiceProvider;
     }
 
     /**
@@ -59,13 +53,11 @@ class ConfigurableCountryChoiceType extends AbstractType
     {
         // Set normalizer enables to use closure for choice generation with options
         $resolver->setNormalizer(
-            'choices', function (Options $options) {
-                return $this->countriesChoiceProvider->getChoices([
-                    'active' => $options['active'],
-                    'contains_states' => $options['contains_states'],
-                    'list_states' => $options['list_states'],
-                ]);
-            }
+            'choices', fn(Options $options) => $this->countriesChoiceProvider->getChoices([
+                'active' => $options['active'],
+                'contains_states' => $options['contains_states'],
+                'list_states' => $options['list_states'],
+            ])
         );
 
         $resolver->setDefaults([

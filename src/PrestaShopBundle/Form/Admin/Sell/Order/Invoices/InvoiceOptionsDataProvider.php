@@ -36,25 +36,11 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class InvoiceOptionsDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $invoiceOptionsConfiguration;
-
-    /**
-     * @var int
-     */
-    private $nextInvoiceNumber;
-
-    /**
      * @param DataConfigurationInterface $invoiceOptionsConfiguration
      * @param int $nextInvoiceNumber next available invoice number
      */
-    public function __construct(
-        DataConfigurationInterface $invoiceOptionsConfiguration,
-        $nextInvoiceNumber
-    ) {
-        $this->invoiceOptionsConfiguration = $invoiceOptionsConfiguration;
-        $this->nextInvoiceNumber = $nextInvoiceNumber;
+    public function __construct(private DataConfigurationInterface $invoiceOptionsConfiguration, private $nextInvoiceNumber)
+    {
     }
 
     /**

@@ -46,31 +46,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SEOType extends TranslatorAwareType
 {
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var bool
-     */
-    private $friendlyUrlEnabled;
-
-    /**
-     * @var bool
-     */
-    private $forceFriendlyUrl;
-
-    /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param RouterInterface $router
@@ -81,18 +56,13 @@ class SEOType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        RouterInterface $router,
-        bool $friendlyUrlEnabled,
-        bool $forceFriendlyUrl,
-        LegacyContext $legacyContext,
-        ConfigurationInterface $configuration
+        private RouterInterface $router,
+        private bool $friendlyUrlEnabled,
+        private bool $forceFriendlyUrl,
+        private LegacyContext $legacyContext,
+        private ConfigurationInterface $configuration
     ) {
         parent::__construct($translator, $locales);
-        $this->router = $router;
-        $this->friendlyUrlEnabled = $friendlyUrlEnabled;
-        $this->forceFriendlyUrl = $forceFriendlyUrl;
-        $this->legacyContext = $legacyContext;
-        $this->configuration = $configuration;
     }
 
     /**

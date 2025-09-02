@@ -38,21 +38,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateMailTemplatesCommand extends Command
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    public function __construct(CommandBusInterface $commandBus, LegacyContext $legacyContext)
+    public function __construct(private CommandBusInterface $commandBus, private LegacyContext $legacyContext)
     {
         parent::__construct();
-        $this->commandBus = $commandBus;
-        $this->legacyContext = $legacyContext;
     }
 
     protected function configure()

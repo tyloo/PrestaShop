@@ -37,22 +37,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PaginationFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var PaginationConfiguration
-     */
-    private $configuration;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(
-        PaginationConfiguration $configuration,
-        TranslatorInterface $translator
-    ) {
-        $this->configuration = $configuration;
-        $this->translator = $translator;
+    public function __construct(private PaginationConfiguration $configuration, private TranslatorInterface $translator)
+    {
     }
 
     /**

@@ -57,12 +57,8 @@ class GeolocationIpAddressWhitelistType extends TranslatorAwareType
 
         $builder->get('geolocation_whitelist')
             ->addModelTransformer(new CallbackTransformer(
-                function ($ipWhitelistTextWithSemiColons) {
-                    return str_replace(';', "\n", $ipWhitelistTextWithSemiColons);
-                },
-                function ($ipWhitelistTextWithNewLines) {
-                    return str_replace(["\r\n", "\r", "\n"], ';', $ipWhitelistTextWithNewLines);
-                }
+                fn($ipWhitelistTextWithSemiColons) => str_replace(';', "\n", $ipWhitelistTextWithSemiColons),
+                fn($ipWhitelistTextWithNewLines) => str_replace(["\r\n", "\r", "\n"], ';', $ipWhitelistTextWithNewLines)
             ));
     }
 }

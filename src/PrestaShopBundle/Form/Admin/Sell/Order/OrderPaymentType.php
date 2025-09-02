@@ -42,56 +42,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class OrderPaymentType extends AbstractType
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $currencySymbolByIdChoiceProvider;
-
-    /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $orderInvoiceChoiceProvider;
-
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $installedPaymentModulesChoiceProvider;
-
-    /**
      * @param ConfigurableFormChoiceProviderInterface $currencySymbolByIdChoiceProvider
      * @param ConfigurableFormChoiceProviderInterface $orderInvoiceChoiceProvider
      * @param FormChoiceProviderInterface $installedPaymentModulesChoiceProvider
      * @param int $contextLanguageId
      * @param int $contextShopId
      */
-    public function __construct(
-        TranslatorInterface $translator,
-        ConfigurableFormChoiceProviderInterface $currencySymbolByIdChoiceProvider,
-        ConfigurableFormChoiceProviderInterface $orderInvoiceChoiceProvider,
-        FormChoiceProviderInterface $installedPaymentModulesChoiceProvider,
-        int $contextLanguageId,
-        int $contextShopId
-    ) {
-        $this->translator = $translator;
-        $this->currencySymbolByIdChoiceProvider = $currencySymbolByIdChoiceProvider;
-        $this->orderInvoiceChoiceProvider = $orderInvoiceChoiceProvider;
-        $this->contextLanguageId = $contextLanguageId;
-        $this->contextShopId = $contextShopId;
-        $this->installedPaymentModulesChoiceProvider = $installedPaymentModulesChoiceProvider;
+    public function __construct(private TranslatorInterface $translator, private ConfigurableFormChoiceProviderInterface $currencySymbolByIdChoiceProvider, private ConfigurableFormChoiceProviderInterface $orderInvoiceChoiceProvider, private FormChoiceProviderInterface $installedPaymentModulesChoiceProvider, private int $contextLanguageId, private int $contextShopId)
+    {
     }
 
     /**

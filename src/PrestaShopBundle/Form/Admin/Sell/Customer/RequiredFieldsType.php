@@ -36,16 +36,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class RequiredFieldsType extends AbstractType
 {
     /**
-     * @var array
-     */
-    private $customerRequiredFieldsChoices;
-
-    /**
      * @param array $customerRequiredFieldsChoices
      */
-    public function __construct(array $customerRequiredFieldsChoices)
+    public function __construct(private array $customerRequiredFieldsChoices)
     {
-        $this->customerRequiredFieldsChoices = $customerRequiredFieldsChoices;
     }
 
     /**

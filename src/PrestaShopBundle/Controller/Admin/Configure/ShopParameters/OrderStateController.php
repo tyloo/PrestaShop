@@ -150,11 +150,9 @@ class OrderStateController extends PrestaShopAdminController
             'templatesPreviewUrl' => _MAIL_DIR_,
             'enableSidebar' => true,
             'languages' => array_map(
-                function (array $language) {
-                    return [
-                        'id' => $language['iso_code'],
-                        'value' => sprintf('%s - %s', $language['iso_code'], $language['name']), ];
-                }, $context->getLanguages()),
+                fn(array $language): array => [
+                    'id' => $language['iso_code'],
+                    'value' => sprintf('%s - %s', $language['iso_code'], $language['name']), ], $context->getLanguages()),
             'multistoreInfoTip' => $this->trans(
                 'Note that this feature is only available in the "all stores" context. It will be added to all your stores.',
                 [],
@@ -204,11 +202,9 @@ class OrderStateController extends PrestaShopAdminController
             'templatesPreviewUrl' => _MAIL_DIR_,
             'enableSidebar' => true,
             'languages' => array_map(
-                function (array $language) {
-                    return [
-                        'id' => $language['iso_code'],
-                        'value' => sprintf('%s - %s', $language['iso_code'], $language['name']), ];
-                }, $context->getLanguages()),
+                fn(array $language): array => [
+                    'id' => $language['iso_code'],
+                    'value' => sprintf('%s - %s', $language['iso_code'], $language['name']), ], $context->getLanguages()),
             'layoutTitle' => $this->trans(
                 'Editing order status %name%',
                 [
@@ -450,18 +446,14 @@ class OrderStateController extends PrestaShopAdminController
             return [];
         }
 
-        return array_map(function (string $orderStateId): int {
-            return (int) $orderStateId;
-        }, $orderStateIds);
+        return array_map(fn(string $orderStateId): int => (int) $orderStateId, $orderStateIds);
     }
 
     private function getBulkOrderReturnStatesFromRequest(Request $request): array
     {
         $orderReturnStateIds = $request->request->all('order_return_states_order_return_states_bulk');
 
-        return array_map(static function (string $orderReturnStateId) {
-            return (int) $orderReturnStateId;
-        }, $orderReturnStateIds);
+        return array_map(static fn(string $orderReturnStateId): int => (int) $orderReturnStateId, $orderReturnStateIds);
     }
 
     /**

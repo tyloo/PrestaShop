@@ -58,9 +58,7 @@ class LocalizationExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'format_date',
-                function ($date) {
-                    return (new DateTime($date))->format($this->languageContext->getDateFormat());
-                }
+                fn($date): string => (new DateTime($date))->format($this->languageContext->getDateFormat())
             ),
         ];
     }

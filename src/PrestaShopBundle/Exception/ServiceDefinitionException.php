@@ -34,20 +34,13 @@ use Exception;
 class ServiceDefinitionException extends Exception
 {
     /**
-     * @var string
-     */
-    public $serviceId;
-
-    /**
      * @param string $message
      * @param string $serviceId
      * @param int $code
      * @param Exception $previous
      */
-    public function __construct($message, $serviceId, $code = 0, ?Exception $previous = null)
+    public function __construct($message, public $serviceId, $code = 0, ?Exception $previous = null)
     {
-        $this->serviceId = $serviceId;
-
         parent::__construct($message, $code, $previous);
     }
 }

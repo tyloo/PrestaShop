@@ -45,18 +45,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TinyMceMaxLengthValidator extends ConstraintValidator
 {
     /**
-     * @var Validate
-     */
-    private $validateAdapter;
-
-    /**
      * @var TranslatorInterface
      */
     protected $translator;
 
-    public function __construct(Validate $validate, TranslatorInterface $translator)
+    public function __construct(private Validate $validateAdapter, TranslatorInterface $translator)
     {
-        $this->validateAdapter = $validate;
         $this->translator = $translator;
     }
 

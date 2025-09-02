@@ -50,14 +50,8 @@ class ActionDispatcherLegacyHooksSubscriber implements EventSubscriberInterface
     public const MODULE_CONTROLLER = 3;
     public const NA_CONTROLLER = 0;
 
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    public function __construct(HookDispatcherInterface $hookDispatcher)
+    public function __construct(private HookDispatcherInterface $hookDispatcher)
     {
-        $this->hookDispatcher = $hookDispatcher;
     }
 
     public static function getSubscribedEvents()

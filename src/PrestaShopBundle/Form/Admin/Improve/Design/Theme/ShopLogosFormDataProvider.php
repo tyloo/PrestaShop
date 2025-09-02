@@ -38,25 +38,11 @@ use PrestaShop\PrestaShop\Core\Form\MultiStoreSettingsFormDataProviderInterface;
 final class ShopLogosFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var MultiStoreSettingsFormDataProviderInterface
-     */
-    private $themeMultiStoreSettingsFormDataProvider;
-
-    /**
      * @param CommandBusInterface $commandBus
      * @param MultiStoreSettingsFormDataProviderInterface $themeMultiStoreSettingsFormDataProvider
      */
-    public function __construct(
-        CommandBusInterface $commandBus,
-        MultiStoreSettingsFormDataProviderInterface $themeMultiStoreSettingsFormDataProvider
-    ) {
-        $this->commandBus = $commandBus;
-        $this->themeMultiStoreSettingsFormDataProvider = $themeMultiStoreSettingsFormDataProvider;
+    public function __construct(private CommandBusInterface $commandBus, private MultiStoreSettingsFormDataProviderInterface $themeMultiStoreSettingsFormDataProvider)
+    {
     }
 
     /**

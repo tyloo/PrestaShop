@@ -54,46 +54,16 @@ class SpecificPriceType extends TranslatorAwareType
 {
     private const COMBINATION_RESULTS_LIMIT = 20;
 
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var AttributeRepository
-     */
-    private $attributeRepository;
-
-    /**
-     * @var EventSubscriberInterface
-     */
-    private $specificPriceCombinationListener;
-
-    /**
-     * @var CombinationNameBuilderInterface
-     */
-    private $combinationNameBuilder;
-
-    /**
-     * @var int
-     */
-    private $languageId;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        ProductRepository $productRepository,
-        AttributeRepository $attributeRepository,
-        EventSubscriberInterface $specificPriceCombinationListener,
-        CombinationNameBuilderInterface $combinationNameBuilder,
-        int $contextLanguageId
+        private ProductRepository $productRepository,
+        private AttributeRepository $attributeRepository,
+        private EventSubscriberInterface $specificPriceCombinationListener,
+        private CombinationNameBuilderInterface $combinationNameBuilder,
+        private int $languageId
     ) {
         parent::__construct($translator, $locales);
-        $this->productRepository = $productRepository;
-        $this->attributeRepository = $attributeRepository;
-        $this->specificPriceCombinationListener = $specificPriceCombinationListener;
-        $this->combinationNameBuilder = $combinationNameBuilder;
-        $this->languageId = $contextLanguageId;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

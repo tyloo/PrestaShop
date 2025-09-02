@@ -59,36 +59,6 @@ final class EmployeeType extends AbstractType
     use TranslatorAwareTrait;
 
     /**
-     * @var array
-     */
-    private $languagesChoices;
-
-    /**
-     * @var array
-     */
-    private $profilesChoices;
-
-    /**
-     * @var bool
-     */
-    private $isMultistoreFeatureActive;
-
-    /**
-     * @var int
-     */
-    private $superAdminProfileId;
-
-    /**
-     * @var Router
-     */
-    private $router;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param array $languagesChoices
      * @param array $profilesChoices
      * @param bool $isMultistoreFeatureActive
@@ -97,22 +67,16 @@ final class EmployeeType extends AbstractType
      * @param Router $router
      */
     public function __construct(
-        array $languagesChoices,
-        array $profilesChoices,
-        bool $isMultistoreFeatureActive,
-        ConfigurationInterface $configuration,
-        int $superAdminProfileId,
-        Router $router,
+        private array $languagesChoices,
+        private array $profilesChoices,
+        private bool $isMultistoreFeatureActive,
+        private ConfigurationInterface $configuration,
+        private int $superAdminProfileId,
+        private Router $router,
         TranslatorInterface $translator,
         private readonly TabDataProvider $tabDataProvider,
         private readonly LanguageContext $languageContext,
     ) {
-        $this->languagesChoices = $languagesChoices;
-        $this->profilesChoices = $profilesChoices;
-        $this->isMultistoreFeatureActive = $isMultistoreFeatureActive;
-        $this->configuration = $configuration;
-        $this->superAdminProfileId = $superAdminProfileId;
-        $this->router = $router;
         $this->translator = $translator;
     }
 

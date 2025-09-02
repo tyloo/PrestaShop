@@ -34,19 +34,9 @@ namespace PrestaShopBundle\Routing\Converter;
 class LegacyRoute
 {
     /**
-     * @var string
-     */
-    private $routeName;
-
-    /**
      * @var array
      */
     private $legacyLinks;
-
-    /**
-     * @var array
-     */
-    private $routeParameters;
 
     /**
      * @var array
@@ -58,12 +48,10 @@ class LegacyRoute
      * @param array $legacyLinks
      * @param array $routeParameters
      */
-    public function __construct($routeName, array $legacyLinks, array $routeParameters)
+    public function __construct(private $routeName, array $legacyLinks, private array $routeParameters)
     {
-        $this->routeName = $routeName;
-        $this->routeParameters = $routeParameters;
         $this->legacyLinks = $this->buildLegacyLinks($legacyLinks);
-        $this->controllersActions = $this->buildControllerActions($this->legacyLinks, $routeName);
+        $this->controllersActions = $this->buildControllerActions($this->legacyLinks, $this->routeName);
     }
 
     /**
@@ -118,7 +106,7 @@ class LegacyRoute
     /**
      * @return array
      */
-    public function getRouteParameters()
+    public function getRouteParameters(): array
     {
         return $this->routeParameters;
     }
@@ -142,7 +130,7 @@ class LegacyRoute
         foreach ($legacyLinks as $legacyLink) {
             $linkParts = explode(':', $legacyLink);
             $legacyController = $linkParts[0];
-            $legacyAction = isset($linkParts[1]) ? $linkParts[1] : null;
+            $legacyAction = $linkParts[1] ?? null;
             $brokenLegacyLinks[] = [
                 'controller' => $legacyController,
                 'action' => $legacyAction,

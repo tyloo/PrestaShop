@@ -78,27 +78,27 @@ class Shipment
     /**
      * @ORM\Column(name="packed_at", type="datetime", nullable=true)
      */
-    private ?DateTime $packedAt;
+    private ?DateTime $packedAt = null;
 
     /**
      * @ORM\Column(name="shipped_at", type="datetime", nullable=true)
      */
-    private ?DateTime $shippedAt;
+    private ?DateTime $shippedAt = null;
 
     /**
      * @ORM\Column(name="delivered_at", type="datetime", nullable=true)
      */
-    private ?DateTime $deliveredAt;
+    private ?DateTime $deliveredAt = null;
 
     /**
      * @ORM\Column(name="cancelled_at", type="datetime", nullable=true)
      */
-    private ?DateTime $cancelledAt;
+    private ?DateTime $cancelledAt = null;
 
     /**
      * @ORM\Column(name="tracking_number", type="string", nullable=true)
      */
-    private ?string $trackingNumber;
+    private ?string $trackingNumber = null;
 
     /**
      * @ORM\Column(name="date_add", type="datetime", nullable=false)

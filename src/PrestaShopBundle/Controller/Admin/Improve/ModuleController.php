@@ -193,24 +193,12 @@ class ModuleController extends ModuleAbstractController
     ): JsonResponse {
         $action = $request->get('action');
 
-        switch ($action) {
-            case ModuleAdapter::ACTION_UPGRADE:
-            case ModuleAdapter::ACTION_RESET:
-            case ModuleAdapter::ACTION_ENABLE:
-            case ModuleAdapter::ACTION_DISABLE:
-                $deniedAccess = !$this->isGranted(Permission::UPDATE, self::CONTROLLER_NAME);
-                break;
-            case ModuleAdapter::ACTION_INSTALL:
-                $deniedAccess = !$this->isGranted(Permission::CREATE, self::CONTROLLER_NAME);
-                break;
-            case ModuleAdapter::ACTION_DELETE:
-            case ModuleAdapter::ACTION_UNINSTALL:
-                $deniedAccess = !$this->isGranted(Permission::DELETE, self::CONTROLLER_NAME);
-                break;
-
-            default:
-                $deniedAccess = false;
-        }
+        $deniedAccess = match ($action) {
+            ModuleAdapter::ACTION_UPGRADE, ModuleAdapter::ACTION_RESET, ModuleAdapter::ACTION_ENABLE, ModuleAdapter::ACTION_DISABLE => !$this->isGranted(Permission::UPDATE, self::CONTROLLER_NAME),
+            ModuleAdapter::ACTION_INSTALL => !$this->isGranted(Permission::CREATE, self::CONTROLLER_NAME),
+            ModuleAdapter::ACTION_DELETE, ModuleAdapter::ACTION_UNINSTALL => !$this->isGranted(Permission::DELETE, self::CONTROLLER_NAME),
+            default => false,
+        };
 
         if ($deniedAccess) {
             return new JsonResponse(

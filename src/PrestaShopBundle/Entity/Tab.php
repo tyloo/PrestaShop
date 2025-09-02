@@ -61,7 +61,7 @@ class Tab
     /**
      * @ORM\Column(name="module", type="string", length=64, nullable=true)
      */
-    private ?string $module;
+    private ?string $module = null;
 
     /**
      * @ORM\Column(name="class_name", type="string", length=64)
@@ -71,7 +71,7 @@ class Tab
     /**
      * @ORM\Column(name="route_name", type="string", length=256, nullable=true)
      */
-    private ?string $routeName;
+    private ?string $routeName = null;
 
     /**
      * @ORM\Column(name="active", type="boolean")
@@ -86,17 +86,17 @@ class Tab
     /**
      * @ORM\Column(name="icon", type="string", length=64, nullable=true)
      */
-    private ?string $icon;
+    private ?string $icon = null;
 
     /**
      * @ORM\Column(name="wording", type="string", length=255, nullable=true)
      */
-    private ?string $wording;
+    private ?string $wording = null;
 
     /**
      * @ORM\Column(name="wording_domain", type="string", length=255, nullable=true)
      */
-    private ?string $wordingDomain;
+    private ?string $wordingDomain = null;
 
     /**
      * @var Collection<TabLang>

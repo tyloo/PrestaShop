@@ -36,16 +36,10 @@ use PrestaShopBundle\Event\FilterSearchCriteriaEvent;
 class FilterCategorySearchCriteriaListener
 {
     /**
-     * @var DecoratedSearchCriteriaFactory
-     */
-    private $categorySearchCriteriaFactory;
-
-    /**
      * @param DecoratedSearchCriteriaFactory $categorySearchCriteriaFactory
      */
-    public function __construct(DecoratedSearchCriteriaFactory $categorySearchCriteriaFactory)
+    public function __construct(private DecoratedSearchCriteriaFactory $categorySearchCriteriaFactory)
     {
-        $this->categorySearchCriteriaFactory = $categorySearchCriteriaFactory;
     }
 
     /**

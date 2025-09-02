@@ -37,24 +37,17 @@ use PrestaShop\PrestaShop\Core\Repository\RepositoryInterface;
 class LogRepository implements RepositoryInterface
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-    /**
-     * @var string
-     */
-    private $databasePrefix;
-    /**
      * @var string
      */
     private $logTable;
 
+    /**
+     * @param string $databasePrefix
+     */
     public function __construct(
-        Connection $connection,
-        $databasePrefix
+        private Connection $connection,
+        private $databasePrefix
     ) {
-        $this->connection = $connection;
-        $this->databasePrefix = $databasePrefix;
         $this->logTable = $this->databasePrefix . 'log';
     }
 
@@ -115,12 +108,8 @@ class LogRepository implements RepositoryInterface
     {
         $employeeTable = $this->databasePrefix . 'employee';
         $queryBuilder = $this->connection->createQueryBuilder();
-        $wheres = array_filter($filters['filters'], function ($value) {
-            return !empty($value);
-        });
-        $scalarFilters = array_filter($wheres, function ($key) {
-            return !in_array($key, ['date_from', 'date_to', 'employee'], true);
-        }, ARRAY_FILTER_USE_KEY);
+        $wheres = array_filter($filters['filters'], fn($value): bool => !empty($value));
+        $scalarFilters = array_filter($wheres, fn($key): bool => !in_array($key, ['date_from', 'date_to', 'employee'], true), ARRAY_FILTER_USE_KEY);
 
         $qb = $queryBuilder
             ->select('l.*', 'e.email', 'CONCAT(e.firstname, \' \', e.lastname) as employee')

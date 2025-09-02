@@ -677,9 +677,7 @@ class CustomerController extends PrestaShopAdminController
         if ($form->isSubmitted()) {
             $data = $form->getData();
 
-            $customerIds = array_map(function ($customerId) {
-                return (int) $customerId;
-            }, $data['customers_to_delete']);
+            $customerIds = array_map(fn($customerId): int => (int) $customerId, $data['customers_to_delete']);
 
             try {
                 $command = new BulkDeleteCustomerCommand(
@@ -746,9 +744,7 @@ class CustomerController extends PrestaShopAdminController
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_customers_index', message: 'You do not have permission to edit this.')]
     public function enableBulkAction(Request $request): RedirectResponse
     {
-        $customerIds = array_map(function ($customerId) {
-            return (int) $customerId;
-        }, $request->request->all('customer_customers_bulk'));
+        $customerIds = array_map(fn($customerId): int => (int) $customerId, $request->request->all('customer_customers_bulk'));
 
         try {
             $command = new BulkEnableCustomerCommand($customerIds);
@@ -774,9 +770,7 @@ class CustomerController extends PrestaShopAdminController
     public function disableBulkAction(Request $request): RedirectResponse
     {
         try {
-            $customerIds = array_map(function ($customerId) {
-                return (int) $customerId;
-            }, $request->request->all('customer_customers_bulk'));
+            $customerIds = array_map(fn($customerId): int => (int) $customerId, $request->request->all('customer_customers_bulk'));
 
             $command = new BulkDisableCustomerCommand($customerIds);
 

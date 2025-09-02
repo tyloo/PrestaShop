@@ -34,15 +34,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TaxInclusionChoiceType extends AbstractType
 {
-    /**
-     * @var TaxInclusionChoiceProvider
-     */
-    private $taxInclusionChoiceProvider;
-
-    public function __construct(
-        TaxInclusionChoiceProvider $shippingInclusionChoiceProvider
-    ) {
-        $this->taxInclusionChoiceProvider = $shippingInclusionChoiceProvider;
+    public function __construct(private TaxInclusionChoiceProvider $taxInclusionChoiceProvider)
+    {
     }
 
     public function getParent(): string

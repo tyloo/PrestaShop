@@ -40,16 +40,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class DimensionsType extends TranslatorAwareType
 {
     /**
-     * @var string
-     */
-    private $dimensionUnit;
-
-    /**
-     * @var string
-     */
-    private $weightUnit;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param string $dimensionUnit
@@ -58,12 +48,10 @@ class DimensionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        string $dimensionUnit,
-        string $weightUnit
+        private string $dimensionUnit,
+        private string $weightUnit
     ) {
         parent::__construct($translator, $locales);
-        $this->dimensionUnit = $dimensionUnit;
-        $this->weightUnit = $weightUnit;
     }
 
     /**

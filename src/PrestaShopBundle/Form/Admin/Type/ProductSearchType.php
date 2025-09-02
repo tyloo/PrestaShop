@@ -38,25 +38,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ProductSearchType extends TranslatorAwareType
 {
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var string
-     */
-    private $languageIsoCode;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        RouterInterface $router,
-        string $employeeIsoCode
+        private RouterInterface $router,
+        private string $languageIsoCode
     ) {
         parent::__construct($translator, $locales);
-        $this->router = $router;
-        $this->languageIsoCode = $employeeIsoCode;
     }
 
     /**
@@ -84,12 +72,8 @@ class ProductSearchType extends TranslatorAwareType
                 'min_length' => 3,
                 'limit' => 1,
                 'filters' => [],
-                'identifier_field' => static function (Options $options): string {
-                    return $options->offsetGet('include_combinations') === true ? 'unique_identifier' : 'id';
-                },
-                'entry_type' => static function (Options $options): string {
-                    return $options->offsetGet('include_combinations') === true ? SearchedProductItemType::class : EntityItemType::class;
-                },
+                'identifier_field' => static fn(Options $options): string => $options->offsetGet('include_combinations') === true ? 'unique_identifier' : 'id',
+                'entry_type' => static fn(Options $options): string => $options->offsetGet('include_combinations') === true ? SearchedProductItemType::class : EntityItemType::class,
                 'remote_url' => static function (Options $options) use ($router, $languageIsoCode): string {
                     if ($options->offsetGet('include_combinations') === true) {
                         return $router->generate('admin_products_search_combinations_for_association', [

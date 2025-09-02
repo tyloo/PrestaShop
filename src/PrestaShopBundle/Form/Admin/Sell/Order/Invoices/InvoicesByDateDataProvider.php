@@ -36,14 +36,8 @@ use PrestaShop\PrestaShop\Core\Order\OrderInvoiceDataProviderInterface;
  */
 final class InvoicesByDateDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var OrderInvoiceDataProviderInterface
-     */
-    private $orderInvoiceDataProvider;
-
-    public function __construct(OrderInvoiceDataProviderInterface $orderInvoiceDataProvider)
+    public function __construct(private OrderInvoiceDataProviderInterface $orderInvoiceDataProvider)
     {
-        $this->orderInvoiceDataProvider = $orderInvoiceDataProvider;
     }
 
     /**

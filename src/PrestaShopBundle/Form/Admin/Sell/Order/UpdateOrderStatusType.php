@@ -34,25 +34,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 class UpdateOrderStatusType extends AbstractType
 {
     /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $statusChoiceProvider;
-
-    /**
-     * @var array
-     */
-    private $statusChoiceAttributes;
-
-    /**
      * @param ConfigurableFormChoiceProviderInterface $statusChoiceProvider
      * @param array $statusChoiceAttributes
      */
-    public function __construct(
-        ConfigurableFormChoiceProviderInterface $statusChoiceProvider,
-        array $statusChoiceAttributes
-    ) {
-        $this->statusChoiceProvider = $statusChoiceProvider;
-        $this->statusChoiceAttributes = $statusChoiceAttributes;
+    public function __construct(private ConfigurableFormChoiceProviderInterface $statusChoiceProvider, private array $statusChoiceAttributes)
+    {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

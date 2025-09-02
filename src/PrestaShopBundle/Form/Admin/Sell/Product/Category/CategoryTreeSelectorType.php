@@ -40,17 +40,10 @@ class CategoryTreeSelectorType extends CollectionType
     private const PROTOTYPE_INDEX_PLACEHOLDER = '__CATEGORY_INDEX__';
 
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @param TranslatorInterface $translator
      */
-    public function __construct(
-        TranslatorInterface $translator
-    ) {
-        $this->translator = $translator;
+    public function __construct(private TranslatorInterface $translator)
+    {
     }
 
     /**

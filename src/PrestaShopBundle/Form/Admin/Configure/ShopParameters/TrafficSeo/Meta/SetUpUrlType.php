@@ -41,26 +41,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SetUpUrlType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $canonicalUrlChoices;
-
-    /**
-     * @var bool
-     */
-    private $isHtaccessFileWritable;
-
-    /**
-     * @var bool
-     */
-    private $isModRewriteActive;
-
-    /**
-     * @var bool
-     */
-    private $doesMainShopUrlExist;
-
-    /**
      * SetUpUrlType constructor.
      *
      * @param TranslatorInterface $translator
@@ -68,20 +48,17 @@ class SetUpUrlType extends TranslatorAwareType
      * @param array $canonicalUrlChoices
      * @param bool $isHtaccessFileWritable
      * @param bool $doesMainShopUrlExist
+     * @param bool $isModRewriteActive
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $canonicalUrlChoices,
-        $isHtaccessFileWritable,
-        $isModRewriteActive,
-        $doesMainShopUrlExist
+        private array $canonicalUrlChoices,
+        private $isHtaccessFileWritable,
+        private $isModRewriteActive,
+        private $doesMainShopUrlExist
     ) {
         parent::__construct($translator, $locales);
-        $this->canonicalUrlChoices = $canonicalUrlChoices;
-        $this->isHtaccessFileWritable = $isHtaccessFileWritable;
-        $this->isModRewriteActive = $isModRewriteActive;
-        $this->doesMainShopUrlExist = $doesMainShopUrlExist;
     }
 
     /**

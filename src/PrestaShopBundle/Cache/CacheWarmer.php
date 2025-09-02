@@ -31,11 +31,8 @@ use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class CacheWarmer implements CacheWarmerInterface
 {
-    private $fileSystem;
-
-    public function __construct(Filesystem $fileSystem)
+    public function __construct(private Filesystem $fileSystem)
     {
-        $this->fileSystem = $fileSystem;
     }
 
     public function warmUp($cacheDir)

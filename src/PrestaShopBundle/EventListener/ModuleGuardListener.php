@@ -40,33 +40,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ModuleGuardListener implements EventSubscriberInterface
 {
     /**
-     * @var FolderGuardInterface
-     */
-    private $vendorFolderGuard;
-
-    /**
-     * @var string
-     */
-    private $modulesDir;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @param FolderGuardInterface $vendorFolderGuard
      * @param string $modulesDir
      * @param LoggerInterface $logger
      */
-    public function __construct(
-        FolderGuardInterface $vendorFolderGuard,
-        $modulesDir,
-        LoggerInterface $logger
-    ) {
-        $this->vendorFolderGuard = $vendorFolderGuard;
-        $this->modulesDir = $modulesDir;
-        $this->logger = $logger;
+    public function __construct(private FolderGuardInterface $vendorFolderGuard, private $modulesDir, private LoggerInterface $logger)
+    {
     }
 
     /**

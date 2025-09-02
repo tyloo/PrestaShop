@@ -53,16 +53,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class EditProductFormType extends TranslatorAwareType
 {
     /**
-     * @var EventSubscriberInterface
-     */
-    private $productTypeListener;
-
-    /**
-     * @var ToolbarButtonsProviderInterface
-     */
-    private $toolbarButtonsProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param EventSubscriberInterface $productTypeListener
@@ -71,12 +61,10 @@ class EditProductFormType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        EventSubscriberInterface $productTypeListener,
-        ToolbarButtonsProviderInterface $toolbarButtonsProvider
+        private EventSubscriberInterface $productTypeListener,
+        private ToolbarButtonsProviderInterface $toolbarButtonsProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->productTypeListener = $productTypeListener;
-        $this->toolbarButtonsProvider = $toolbarButtonsProvider;
     }
 
     /**
@@ -178,12 +166,10 @@ class EditProductFormType extends TranslatorAwareType
             ->setAllowedTypes('product_type', 'string')
             ->setAllowedTypes('virtual_product_file_id', ['null', 'int'])
             ->setAllowedTypes('active', ['bool'])
-            ->setNormalizer('toolbar_buttons', function (Options $options, $toolbarButtons) {
-                return array_merge(
-                    $this->toolbarButtonsProvider->getToolbarButtonsOptions(['productId' => $options->offsetGet('product_id')]),
-                    $toolbarButtons
-                );
-            })
+            ->setNormalizer('toolbar_buttons', fn(Options $options, $toolbarButtons): array => array_merge(
+                $this->toolbarButtonsProvider->getToolbarButtonsOptions(['productId' => $options->offsetGet('product_id')]),
+                $toolbarButtons
+            ))
         ;
     }
 

@@ -39,16 +39,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class LegacyLinkLinterCommand extends Command
 {
     /**
-     * @var LegacyLinkLinter
-     */
-    private $legacyLinkLinter;
-
-    /**
-     * @var AdminRouteProvider
-     */
-    private $adminRouteProvider;
-
-    /**
      * The _legacy_link configuration is not relevant for these routes, no need to apply the linter on them
      */
     private const ROUTE_WHITE_LIST = [
@@ -182,11 +172,9 @@ class LegacyLinkLinterCommand extends Command
         'AdminAdminAPI',
     ];
 
-    public function __construct(LegacyLinkLinter $legacyLinkLinter, AdminRouteProvider $adminRouteProvider)
+    public function __construct(private LegacyLinkLinter $legacyLinkLinter, private AdminRouteProvider $adminRouteProvider)
     {
         parent::__construct();
-        $this->legacyLinkLinter = $legacyLinkLinter;
-        $this->adminRouteProvider = $adminRouteProvider;
     }
 
     /**

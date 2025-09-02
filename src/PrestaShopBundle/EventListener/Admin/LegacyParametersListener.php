@@ -42,16 +42,10 @@ use Tools;
 class LegacyParametersListener
 {
     /**
-     * @var LegacyParametersConverter
-     */
-    private $converter;
-
-    /**
      * @param LegacyParametersConverter $converter
      */
-    public function __construct(LegacyParametersConverter $converter)
+    public function __construct(private LegacyParametersConverter $converter)
     {
-        $this->converter = $converter;
     }
 
     /**

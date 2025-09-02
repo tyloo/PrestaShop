@@ -35,17 +35,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SpecificPricePriorityType extends CollectionType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $priorityChoiceProvider;
-
-    /**
      * @param FormChoiceProviderInterface $priorityChoiceProvider
      */
-    public function __construct(
-        FormChoiceProviderInterface $priorityChoiceProvider
-    ) {
-        $this->priorityChoiceProvider = $priorityChoiceProvider;
+    public function __construct(private FormChoiceProviderInterface $priorityChoiceProvider)
+    {
     }
 
     public function configureOptions(OptionsResolver $resolver): void

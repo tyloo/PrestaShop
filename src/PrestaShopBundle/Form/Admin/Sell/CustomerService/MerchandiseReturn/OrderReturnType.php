@@ -41,11 +41,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class OrderReturnType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $stateChoices;
-
-    /**
      * OrderReturnType constructor.
      *
      * @param TranslatorInterface $translator
@@ -55,10 +50,9 @@ class OrderReturnType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $stateChoices
+        private array $stateChoices
     ) {
         parent::__construct($translator, $locales);
-        $this->stateChoices = $stateChoices;
     }
 
     /**

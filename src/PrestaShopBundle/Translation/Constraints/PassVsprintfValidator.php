@@ -38,11 +38,11 @@ class PassVsprintfValidator extends ConstraintValidator
     public function validate($translation, Constraint $constraint): void
     {
         if (!$constraint instanceof PassVsprintf) {
-            throw new UnexpectedTypeException($constraint, 'PrestaShopBundle\Translation\Constraints\PassVsprintf');
+            throw new UnexpectedTypeException($constraint, \PrestaShopBundle\Translation\Constraints\PassVsprintf::class);
         }
 
         if (!$translation instanceof Translation) {
-            throw new UnexpectedTypeException($translation, 'PrestaShopBundle\Entity\Translation');
+            throw new UnexpectedTypeException($translation, \PrestaShopBundle\Entity\Translation::class);
         }
 
         if ($this->countArgumentsOfTranslation($translation->getKey()) != $this->countArgumentsOfTranslation($translation->getTranslation())) {

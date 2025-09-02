@@ -36,29 +36,8 @@ use Symfony\Component\Form\FormFactoryInterface;
  */
 final class PreferencesFormHandler implements FormHandlerInterface
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var PreferencesFormDataProvider
-     */
-    private $formDataProvider;
-
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    public function __construct(
-        FormFactoryInterface $formFactory,
-        PreferencesFormDataProvider $formDataProvider,
-        Configuration $configuration
-    ) {
-        $this->formFactory = $formFactory;
-        $this->formDataProvider = $formDataProvider;
-        $this->configuration = $configuration;
+    public function __construct(private FormFactoryInterface $formFactory, private PreferencesFormDataProvider $formDataProvider, private Configuration $configuration)
+    {
     }
 
     /**

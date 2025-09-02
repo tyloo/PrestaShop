@@ -43,29 +43,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FooterType extends TranslatorAwareType
 {
     /**
-     * @var ProductProvider
-     */
-    private $productUrlProvider;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * @var ProductPreviewProvider
      */
     protected $productPreviewUrlProvider;
-
-    /**
-     * @var FeatureInterface
-     */
-    private $multiStoreFeature;
-
-    /**
-     * @var int|null
-     */
-    private $contextShopId;
 
     /**
      * @param TranslatorInterface $translator
@@ -79,18 +59,14 @@ class FooterType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        ProductProvider $productUrlProvider,
+        private ProductProvider $productUrlProvider,
         ProductPreviewProvider $productPreviewUrlProvider,
-        RouterInterface $router,
-        FeatureInterface $multiStoreFeature,
-        ?int $contextShopId
+        private RouterInterface $router,
+        private FeatureInterface $multiStoreFeature,
+        private ?int $contextShopId
     ) {
         parent::__construct($translator, $locales);
-        $this->productUrlProvider = $productUrlProvider;
         $this->productPreviewUrlProvider = $productPreviewUrlProvider;
-        $this->router = $router;
-        $this->contextShopId = $contextShopId;
-        $this->multiStoreFeature = $multiStoreFeature;
     }
 
     /**

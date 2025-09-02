@@ -37,24 +37,12 @@ class RouterProvider extends AbstractLegacyRouteProvider
     public const FEATURE_FLAG_NAME = '_legacy_feature_flag';
 
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var LegacyRouteFactory
-     */
-    private $factory;
-
-    /**
      * @var array|null
      */
     private $legacyRoutes;
 
-    public function __construct(RouterInterface $router, LegacyRouteFactory $factory)
+    public function __construct(private RouterInterface $router, private LegacyRouteFactory $factory)
     {
-        $this->router = $router;
-        $this->factory = $factory;
     }
 
     /**

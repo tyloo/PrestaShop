@@ -40,16 +40,10 @@ class ChangeOrderAddressType extends AbstractType
     public const INVOICE_TYPE = 'invoice';
 
     /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $customerAddressProvider;
-
-    /**
      * @param ConfigurableFormChoiceProviderInterface $customerAddressProvider
      */
-    public function __construct(ConfigurableFormChoiceProviderInterface $customerAddressProvider)
+    public function __construct(private ConfigurableFormChoiceProviderInterface $customerAddressProvider)
     {
-        $this->customerAddressProvider = $customerAddressProvider;
     }
 
     /**

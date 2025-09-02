@@ -38,16 +38,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProductSpecificPricePriorityType extends TranslatorAwareType
 {
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var SpecificPriceRepository
-     */
-    private $specificPriceRepository;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param RouterInterface $router
@@ -56,12 +46,10 @@ class ProductSpecificPricePriorityType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        RouterInterface $router,
-        SpecificPriceRepository $specificPriceRepository
+        private RouterInterface $router,
+        private SpecificPriceRepository $specificPriceRepository
     ) {
         parent::__construct($translator, $locales);
-        $this->router = $router;
-        $this->specificPriceRepository = $specificPriceRepository;
     }
 
     /**

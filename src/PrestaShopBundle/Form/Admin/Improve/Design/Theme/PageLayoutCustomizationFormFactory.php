@@ -37,33 +37,12 @@ use Symfony\Component\Form\FormFactoryInterface;
 final class PageLayoutCustomizationFormFactory implements PageLayoutCustomizationFormFactoryInterface
 {
     /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var ThemeRepository
-     */
-    private $themeRepository;
-
-    /**
-     * @var string
-     */
-    private $shopThemeName;
-
-    /**
      * @param FormFactoryInterface $formFactory
      * @param ThemeRepository $themeRepository
      * @param string $shopThemeName
      */
-    public function __construct(
-        FormFactoryInterface $formFactory,
-        ThemeRepository $themeRepository,
-        $shopThemeName
-    ) {
-        $this->formFactory = $formFactory;
-        $this->themeRepository = $themeRepository;
-        $this->shopThemeName = $shopThemeName;
+    public function __construct(private FormFactoryInterface $formFactory, private ThemeRepository $themeRepository, private $shopThemeName)
+    {
     }
 
     /**
@@ -94,9 +73,7 @@ final class PageLayoutCustomizationFormFactory implements PageLayoutCustomizatio
         $layouts = [];
 
         foreach ($customizationPages as $page) {
-            $selectedLayout = isset($pageLayouts[$page->getPage()]) ?
-                $pageLayouts[$page->getPage()] :
-                $defaultLayout['key'];
+            $selectedLayout = $pageLayouts[$page->getPage()] ?? $defaultLayout['key'];
 
             $layouts[$page->getPage()] = $selectedLayout;
         }

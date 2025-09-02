@@ -39,49 +39,14 @@ use SplFileInfo;
 final class ImportDataConfigurationFormDataProvider implements ImportFormDataProviderInterface
 {
     /**
-     * @var ImportDirectory
-     */
-    private $importDirectory;
-
-    /**
-     * @var DataRowCollectionFactoryInterface
-     */
-    private $dataRowCollectionFactory;
-
-    /**
-     * @var array
-     */
-    private $entityFieldChoices;
-
-    /**
-     * @var ImportMatchRepository
-     */
-    private $importMatchRepository;
-
-    /**
-     * @var DataMatchSaver
-     */
-    private $dataMatchSaver;
-
-    /**
      * @param ImportDirectory $importDirectory
      * @param DataRowCollectionFactoryInterface $dataRowCollectionFactory
      * @param ImportMatchRepository $importMatchRepository
      * @param DataMatchSaver $dataMatchSaver
      * @param array $entityFieldChoices
      */
-    public function __construct(
-        ImportDirectory $importDirectory,
-        DataRowCollectionFactoryInterface $dataRowCollectionFactory,
-        ImportMatchRepository $importMatchRepository,
-        DataMatchSaver $dataMatchSaver,
-        array $entityFieldChoices
-    ) {
-        $this->importDirectory = $importDirectory;
-        $this->dataRowCollectionFactory = $dataRowCollectionFactory;
-        $this->entityFieldChoices = $entityFieldChoices;
-        $this->importMatchRepository = $importMatchRepository;
-        $this->dataMatchSaver = $dataMatchSaver;
+    public function __construct(private ImportDirectory $importDirectory, private DataRowCollectionFactoryInterface $dataRowCollectionFactory, private ImportMatchRepository $importMatchRepository, private DataMatchSaver $dataMatchSaver, private array $entityFieldChoices)
+    {
     }
 
     /**

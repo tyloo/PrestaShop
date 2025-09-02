@@ -46,9 +46,7 @@ class TaxGroupChoiceType extends AbstractType
     {
         // Set normalizer enables to use closure for choice generation with options
         $resolver->setNormalizer(
-            'choices', function (Options $options) {
-                return $this->taxGroupChoiceProvider->getChoices();
-            }
+            'choices', fn(Options $options) => $this->taxGroupChoiceProvider->getChoices()
         );
 
         $resolver->setDefaults([

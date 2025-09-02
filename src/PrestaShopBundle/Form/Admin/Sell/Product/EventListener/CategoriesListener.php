@@ -35,17 +35,10 @@ use Symfony\Component\Form\FormEvents;
 class CategoriesListener implements EventSubscriberInterface
 {
     /**
-     * @var FormCloner
-     */
-    private $formCloner;
-
-    /**
      * @param FormCloner $formCloner
      */
-    public function __construct(
-        FormCloner $formCloner
-    ) {
-        $this->formCloner = $formCloner;
+    public function __construct(private FormCloner $formCloner)
+    {
     }
 
     /**

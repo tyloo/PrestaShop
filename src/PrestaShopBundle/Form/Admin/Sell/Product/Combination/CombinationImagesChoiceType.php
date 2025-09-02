@@ -36,11 +36,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CombinationImagesChoiceType extends TranslatorAwareType
 {
     /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $imagesChoiceProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array<int, array<string, mixed>> $locales
      * @param ConfigurableFormChoiceProviderInterface $imagesChoiceProvider
@@ -48,10 +43,9 @@ class CombinationImagesChoiceType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        ConfigurableFormChoiceProviderInterface $imagesChoiceProvider
+        private ConfigurableFormChoiceProviderInterface $imagesChoiceProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->imagesChoiceProvider = $imagesChoiceProvider;
     }
 
     /**
@@ -68,9 +62,7 @@ class CombinationImagesChoiceType extends TranslatorAwareType
             ->setDefaults([
                 'label' => $this->trans('Images', 'Admin.Global'),
                 'label_subtitle' => $this->trans('You can specify which images should be displayed when customer selects this combination. If you don\'t select any image, all will be displayed. The default image of the combination will be the first one selected from the list.', 'Admin.Catalog.Feature'),
-                'choice_attr' => function (string $choice, string $key): array {
-                    return ['data-image-url' => $key];
-                },
+                'choice_attr' => fn(string $choice, string $key): array => ['data-image-url' => $key],
                 'multiple' => true,
                 'expanded' => true,
             ]

@@ -34,16 +34,6 @@ use Doctrine\DBAL\Connection;
 class ModuleRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $databasePrefix;
-
-    /**
      * @var string
      */
     private $table;
@@ -52,10 +42,8 @@ class ModuleRepository
      * @param Connection $connection
      * @param string $databasePrefix
      */
-    public function __construct(Connection $connection, $databasePrefix)
+    public function __construct(private Connection $connection, private $databasePrefix)
     {
-        $this->connection = $connection;
-        $this->databasePrefix = $databasePrefix;
         $this->table = $this->databasePrefix . 'module';
     }
 

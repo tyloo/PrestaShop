@@ -35,14 +35,8 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class CustomerPreferencesDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var DataConfigurationInterface
-     */
-    private $generalDataConfiguration;
-
-    public function __construct(DataConfigurationInterface $generalDataConfiguration)
+    public function __construct(private DataConfigurationInterface $generalDataConfiguration)
     {
-        $this->generalDataConfiguration = $generalDataConfiguration;
     }
 
     /**

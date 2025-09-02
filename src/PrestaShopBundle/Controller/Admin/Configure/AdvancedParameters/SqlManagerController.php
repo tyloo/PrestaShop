@@ -422,11 +422,7 @@ class SqlManagerController extends PrestaShopAdminController
             return $deleteExceptionMessages[$code];
         }
 
-        if (isset($exceptionMessages[$type])) {
-            return $exceptionMessages[$type];
-        }
-
-        return $this->getErrorMessageForException($e);
+        return $exceptionMessages[$type] ?? $this->getErrorMessageForException($e);
     }
 
     /**
@@ -444,11 +440,7 @@ class SqlManagerController extends PrestaShopAdminController
             SqlRequestNotFoundException::class => $this->trans('The object cannot be loaded (or found).', [], 'Admin.Notifications.Error'),
         ];
 
-        if (isset($exceptionMessages[$type])) {
-            return $exceptionMessages[$type];
-        }
-
-        return $this->getErrorMessageForException($e);
+        return $exceptionMessages[$type] ?? $this->getErrorMessageForException($e);
     }
 
     /**
@@ -456,7 +448,7 @@ class SqlManagerController extends PrestaShopAdminController
      *
      * @return string Error message
      */
-    protected function handleExportException(Exception $e): string
+    protected function handleExportException(\Throwable $e): string
     {
         $type = $e::class;
 
@@ -484,11 +476,7 @@ class SqlManagerController extends PrestaShopAdminController
             FileWritingException::CANNOT_OPEN_FILE_FOR_WRITING => $this->trans('Cannot open export file for writing', [], 'Admin.Notifications.Error'),
         ];
 
-        if (isset($applicationErrors[$code])) {
-            return $applicationErrors[$code];
-        }
-
-        return $this->getErrorMessageForException($e);
+        return $applicationErrors[$code] ?? $this->getErrorMessageForException($e);
     }
 
     /**
@@ -504,11 +492,7 @@ class SqlManagerController extends PrestaShopAdminController
             SqlRequestNotFoundException::class => $this->trans('The object cannot be loaded (or found).', [], 'Admin.Notifications.Error'),
         ];
 
-        if (isset($domainErrors[$type])) {
-            return $domainErrors[$type];
-        }
-
-        return $this->getErrorMessageForException($e);
+        return $domainErrors[$type] ?? $this->getErrorMessageForException($e);
     }
 
     /**

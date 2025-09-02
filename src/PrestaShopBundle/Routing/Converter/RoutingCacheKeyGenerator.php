@@ -40,35 +40,14 @@ use Symfony\Component\Finder\SplFileInfo;
 class RoutingCacheKeyGenerator implements CacheKeyGeneratorInterface
 {
     /**
-     * @var array
-     */
-    private $coreRoutingPaths;
-
-    /**
-     * @var array
-     */
-    private $activeModulesPaths;
-
-    /**
-     * @var string
-     */
-    private $environment;
-
-    /**
      * RoutingCacheKeyGenerator constructor.
      *
      * @param array $coreRoutingPaths
      * @param array $activeModulesPaths
      * @param string $environment
      */
-    public function __construct(
-        array $coreRoutingPaths,
-        array $activeModulesPaths,
-        $environment = 'dev'
-    ) {
-        $this->coreRoutingPaths = $coreRoutingPaths;
-        $this->activeModulesPaths = $activeModulesPaths;
-        $this->environment = $environment;
+    public function __construct(private array $coreRoutingPaths, private array $activeModulesPaths, private $environment = 'dev')
+    {
     }
 
     /**

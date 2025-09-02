@@ -186,7 +186,7 @@ class AdminFilter
         $decoded = json_decode($this->getFilter(), true);
 
         return array_merge(
-            $this->getProductCatalogEmptyFilter(),
+            static::getProductCatalogEmptyFilter(),
             $decoded
         );
     }
@@ -200,7 +200,7 @@ class AdminFilter
     {
         $filter = array_intersect_key(
             $filter,
-            $this->getProductCatalogEmptyFilter()
+            static::getProductCatalogEmptyFilter()
         );
         $filter = self::sanitizeFilterParameters($filter);
 
@@ -212,46 +212,42 @@ class AdminFilter
      */
     public static function sanitizeFilterParameters(array $filter): mixed
     {
-        $filterMinMax = function ($filter) {
-            return function ($subject) use ($filter) {
-                $operator = null;
+        $filterMinMax = (fn($filter): \Closure => function ($subject) use ($filter) {
+            $operator = null;
 
-                if (str_contains($subject, '<=')) {
-                    $operator = '<=';
+            if (str_contains($subject, '<=')) {
+                $operator = '<=';
+            }
+
+            if (str_contains($subject, '>=')) {
+                $operator = '>=';
+            }
+
+            if (null === $operator) {
+                $pattern = '#BETWEEN (?P<min>\d+\.?\d*) AND (?P<max>\d+\.?\d*)#';
+                if (0 === preg_match($pattern, $subject, $matches)) {
+                    return '';
                 }
 
-                if (str_contains($subject, '>=')) {
-                    $operator = '>=';
+                return sprintf('BETWEEN %f AND %f', $matches['min'], $matches['max']);
+            } else {
+                $subjectWithoutOperator = str_replace($operator, '', $subject);
+
+                $flag = FILTER_DEFAULT;
+                if ($filter === FILTER_SANITIZE_NUMBER_FLOAT) {
+                    $flag = FILTER_FLAG_ALLOW_FRACTION;
                 }
 
-                if (null === $operator) {
-                    $pattern = '#BETWEEN (?P<min>\d+\.?\d*) AND (?P<max>\d+\.?\d*)#';
-                    if (0 === preg_match($pattern, $subject, $matches)) {
-                        return '';
-                    }
-
-                    return sprintf('BETWEEN %f AND %f', $matches['min'], $matches['max']);
-                } else {
-                    $subjectWithoutOperator = str_replace($operator, '', $subject);
-
-                    $flag = FILTER_DEFAULT;
-                    if ($filter === FILTER_SANITIZE_NUMBER_FLOAT) {
-                        $flag = FILTER_FLAG_ALLOW_FRACTION;
-                    }
-
-                    $filteredSubjectWithoutOperator = filter_var($subjectWithoutOperator, $filter, $flag);
-                    if (!$filteredSubjectWithoutOperator) {
-                        $filteredSubjectWithoutOperator = 0;
-                    }
-
-                    return $operator . $filteredSubjectWithoutOperator;
+                $filteredSubjectWithoutOperator = filter_var($subjectWithoutOperator, $filter, $flag);
+                if (!$filteredSubjectWithoutOperator) {
+                    $filteredSubjectWithoutOperator = 0;
                 }
-            };
-        };
 
-        $entNoquotesHtmlspecialchars = function (string $subject): string {
-            return htmlspecialchars($subject, ENT_NOQUOTES);
-        };
+                return $operator . $filteredSubjectWithoutOperator;
+            }
+        });
+
+        $entNoquotesHtmlspecialchars = (fn(string $subject): string => htmlspecialchars($subject, ENT_NOQUOTES));
 
         return filter_var_array($filter, [
             'filter_category' => FILTER_SANITIZE_NUMBER_INT,

@@ -39,18 +39,12 @@ use Symfony\Component\Routing\Router;
 class AdminUrlGeneratorFactory
 {
     /**
-     * @var Router
-     */
-    private $router;
-
-    /**
      * Constructor.
      *
      * @param Router $router
      */
-    public function __construct(Router $router)
+    public function __construct(private Router $router)
     {
-        $this->router = $router;
     }
 
     /**
@@ -70,7 +64,7 @@ class AdminUrlGeneratorFactory
      *
      * @return UrlGeneratorInterface the UrlGenerator instance for Admin Symfony routes
      */
-    public function forSymfony()
+    public function forSymfony(): \Symfony\Component\Routing\Router
     {
         return $this->router;
     }

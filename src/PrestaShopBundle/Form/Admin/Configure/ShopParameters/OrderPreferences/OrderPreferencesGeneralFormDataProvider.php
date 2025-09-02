@@ -38,29 +38,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class OrderPreferencesGeneralFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var GeneralConfiguration
-     */
-    private $generalConfiguration;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var CMSDataProvider
-     */
-    private $cmsDataProvider;
-
-    public function __construct(
-        GeneralConfiguration $generalConfiguration,
-        TranslatorInterface $translator,
-        CMSDataProvider $cmsDataProvider
-    ) {
-        $this->generalConfiguration = $generalConfiguration;
-        $this->translator = $translator;
-        $this->cmsDataProvider = $cmsDataProvider;
+    public function __construct(private GeneralConfiguration $generalConfiguration, private TranslatorInterface $translator, private CMSDataProvider $cmsDataProvider)
+    {
     }
 
     /**

@@ -34,16 +34,10 @@ use PrestaShop\PrestaShop\Core\Repository\TransactionManagerInterface;
 class TransactionManager implements TransactionManagerInterface
 {
     /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
      * @param EntityManager $entityManager
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(private EntityManager $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     /**

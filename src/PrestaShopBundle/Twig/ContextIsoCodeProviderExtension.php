@@ -35,16 +35,10 @@ use Twig\TwigFunction;
 class ContextIsoCodeProviderExtension extends AbstractExtension
 {
     /**
-     * @var string
-     */
-    private $isoCode;
-
-    /**
      * @param string $isoCode
      */
-    public function __construct($isoCode)
+    public function __construct(private $isoCode)
     {
-        $this->isoCode = $isoCode;
     }
 
     /**

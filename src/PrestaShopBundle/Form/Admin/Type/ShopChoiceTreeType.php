@@ -41,41 +41,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ShopChoiceTreeType extends AbstractType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $shopTreeChoiceProvider;
-
-    /**
-     * @var DataTransformerInterface
-     */
-    private $stringArrayToIntegerArrayDataTransformer;
-
-    /**
-     * @var ShopContextInterface
-     */
-    private $shopContext;
-
-    /**
-     * @var FeatureInterface
-     */
-    private $multiStoreFeature;
-
-    /**
      * @param FormChoiceProviderInterface $shopTreeChoiceProvider
      * @param DataTransformerInterface $stringArrayToIntegerArrayDataTransformer
      * @param ShopContextInterface $shopContext
      * @param FeatureInterface $multiStoreFeature
      */
-    public function __construct(
-        FormChoiceProviderInterface $shopTreeChoiceProvider,
-        DataTransformerInterface $stringArrayToIntegerArrayDataTransformer,
-        ShopContextInterface $shopContext,
-        FeatureInterface $multiStoreFeature
-    ) {
-        $this->shopTreeChoiceProvider = $shopTreeChoiceProvider;
-        $this->stringArrayToIntegerArrayDataTransformer = $stringArrayToIntegerArrayDataTransformer;
-        $this->shopContext = $shopContext;
-        $this->multiStoreFeature = $multiStoreFeature;
+    public function __construct(private FormChoiceProviderInterface $shopTreeChoiceProvider, private DataTransformerInterface $stringArrayToIntegerArrayDataTransformer, private ShopContextInterface $shopContext, private FeatureInterface $multiStoreFeature)
+    {
     }
 
     /**

@@ -35,14 +35,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupType extends AbstractType
 {
-    /**
-     * @var GroupByIdChoiceProvider
-     */
-    private $groupByIdChoiceProvider;
-
-    public function __construct(GroupByIdChoiceProvider $groupByIdChoiceProvider)
+    public function __construct(private GroupByIdChoiceProvider $groupByIdChoiceProvider)
     {
-        $this->groupByIdChoiceProvider = $groupByIdChoiceProvider;
     }
 
     public function getParent(): string

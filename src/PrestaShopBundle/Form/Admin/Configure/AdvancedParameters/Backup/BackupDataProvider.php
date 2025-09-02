@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class BackupDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $backupOptionsConfigurator;
-
-    /**
      * @param DataConfigurationInterface $backupOptionsConfigurator
      */
-    public function __construct(DataConfigurationInterface $backupOptionsConfigurator)
+    public function __construct(private DataConfigurationInterface $backupOptionsConfigurator)
     {
-        $this->backupOptionsConfigurator = $backupOptionsConfigurator;
     }
 
     /**

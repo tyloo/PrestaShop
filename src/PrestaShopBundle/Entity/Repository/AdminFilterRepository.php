@@ -144,7 +144,7 @@ class AdminFilterRepository extends EntityRepository
         $filterId
     ): void {
         $adminFilter = $this->findByEmployeeAndFilterId($employeeId, $shopId, $filterId);
-        $adminFilter = null === $adminFilter ? new AdminFilter() : $adminFilter;
+        $adminFilter ??= new AdminFilter();
 
         $adminFilter
             ->setController('')
@@ -184,7 +184,7 @@ class AdminFilterRepository extends EntityRepository
             'action' => $action,
         ]);
 
-        $adminFilter = null === $adminFilter ? new AdminFilter() : $adminFilter;
+        $adminFilter ??= new AdminFilter();
 
         $adminFilter
             ->setController($controller)

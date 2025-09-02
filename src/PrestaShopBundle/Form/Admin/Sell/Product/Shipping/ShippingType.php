@@ -44,38 +44,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ShippingType extends TranslatorAwareType
 {
     /**
-     * @var string
-     */
-    private $currencyIsoCode;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $carrierChoiceProvider;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $deliveryTimeNoteTypesProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param string $currencyIsoCode
      * @param FormChoiceProviderInterface $carrierChoiceProvider
-     * @param FormChoiceProviderInterface $additionalDeliveryTimeNoteTypesProvider
+     * @param FormChoiceProviderInterface $deliveryTimeNoteTypesProvider
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        string $currencyIsoCode,
-        FormChoiceProviderInterface $carrierChoiceProvider,
-        FormChoiceProviderInterface $additionalDeliveryTimeNoteTypesProvider
+        private string $currencyIsoCode,
+        private FormChoiceProviderInterface $carrierChoiceProvider,
+        private FormChoiceProviderInterface $deliveryTimeNoteTypesProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->currencyIsoCode = $currencyIsoCode;
-        $this->carrierChoiceProvider = $carrierChoiceProvider;
-        $this->deliveryTimeNoteTypesProvider = $additionalDeliveryTimeNoteTypesProvider;
     }
 
     /**

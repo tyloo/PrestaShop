@@ -52,8 +52,6 @@ final class StringArrayToIntegerArrayDataTransformer implements DataTransformerI
             return $value;
         }
 
-        return array_map(function ($item) {
-            return (int) $item;
-        }, $value);
+        return array_map(fn($item): int => (int) $item, $value);
     }
 }

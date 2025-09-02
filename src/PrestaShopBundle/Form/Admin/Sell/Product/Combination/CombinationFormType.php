@@ -44,11 +44,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CombinationFormType extends TranslatorAwareType
 {
     /**
-     * @var EventSubscriberInterface
-     */
-    private $combinationListener;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param EventSubscriberInterface $combinationListener
@@ -56,10 +51,9 @@ class CombinationFormType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        EventSubscriberInterface $combinationListener
+        private EventSubscriberInterface $combinationListener
     ) {
         parent::__construct($translator, $locales);
-        $this->combinationListener = $combinationListener;
     }
 
     /**

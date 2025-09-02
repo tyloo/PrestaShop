@@ -178,9 +178,7 @@ class SupplierController extends PrestaShopAdminController
 
         try {
             $suppliersToDelete = array_map(
-                function ($item) {
-                    return (int) $item;
-                },
+                fn($item): int => (int) $item,
                 $suppliersToDelete
             );
             $this->dispatchCommand(new BulkDeleteSupplierCommand($suppliersToDelete));
@@ -211,9 +209,7 @@ class SupplierController extends PrestaShopAdminController
 
         try {
             $suppliersToDisable = array_map(
-                function ($item) {
-                    return (int) $item;
-                },
+                fn($item): int => (int) $item,
                 $suppliersToDisable
             );
             $this->dispatchCommand(new BulkDisableSupplierCommand($suppliersToDisable));
@@ -243,9 +239,7 @@ class SupplierController extends PrestaShopAdminController
 
         try {
             $suppliersToEnable = array_map(
-                function ($item) {
-                    return (int) $item;
-                },
+                fn($item): int => (int) $item,
                 $suppliersToEnable
             );
             $this->dispatchCommand(new BulkEnableSupplierCommand($suppliersToEnable));

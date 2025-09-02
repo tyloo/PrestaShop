@@ -165,7 +165,7 @@ class XmlLoader
      */
     public function retrieveId($entity, $identifier)
     {
-        return isset($this->ids[$entity . ':' . $identifier]) ? $this->ids[$entity . ':' . $identifier] : 0;
+        return $this->ids[$entity . ':' . $identifier] ?? 0;
     }
 
     public function getIds()
@@ -210,7 +210,7 @@ class XmlLoader
 
         // Sort entities to populate database in good order (E.g. zones before countries)
         do {
-            $current = (isset($sort_entities)) ? $sort_entities : [];
+            $current = $sort_entities ?? [];
             $sort_entities = [];
             foreach ($entities as $key => $entity) {
                 if (isset($dependencies[$entity])) {
@@ -654,10 +654,10 @@ class XmlLoader
             $position[$data['id_parent']] = 0;
         }
         $data['position'] = $position[$data['id_parent']]++;
-        $data['icon'] = $data['icon'] ?? '';
-        $data['wording'] = $data['wording'] ?? '';
-        $data['wording_domain'] = $data['wording_domain'] ?? '';
-        $data['route_name'] = $data['route_name'] ?? '';
+        $data['icon'] ??= '';
+        $data['wording'] ??= '';
+        $data['wording_domain'] ??= '';
+        $data['route_name'] ??= '';
 
         // Generate primary key manually
         if (!$xml->fields['primary']) {
@@ -1156,7 +1156,7 @@ class XmlLoader
 
         // Sort entities to populate database in good order (E.g. zones before countries)
         do {
-            $current = (isset($sort_entities)) ? $sort_entities : [];
+            $current = $sort_entities ?? [];
             $sort_entities = [];
             foreach ($entities as $entity) {
                 if (isset($dependencies[$entity])) {
@@ -1326,7 +1326,7 @@ class XmlLoader
                 if ($is_multilang && $row['id_lang']) {
                     $node = [];
                     foreach ($multilang_columns as $column => $is_text) {
-                        $node[$column] = $row[isset($alias_multilang[$column]) ? $alias_multilang[$column] : $column];
+                        $node[$column] = $row[$alias_multilang[$column] ?? $column];
                     }
                     $nodes_lang[$row['id_lang']][$id] = $node;
                 }

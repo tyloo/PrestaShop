@@ -41,28 +41,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class LocalizationConfigurationType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $languageChoices;
-
-    /**
-     * @var array
-     */
-    private $timezoneChoices;
-
-    /**
      * @param array $languageChoices
      * @param array $timezoneChoices
      */
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $languageChoices,
-        array $timezoneChoices
+        private array $languageChoices,
+        private array $timezoneChoices
     ) {
         parent::__construct($translator, $locales);
-        $this->languageChoices = $languageChoices;
-        $this->timezoneChoices = $timezoneChoices;
     }
 
     /**

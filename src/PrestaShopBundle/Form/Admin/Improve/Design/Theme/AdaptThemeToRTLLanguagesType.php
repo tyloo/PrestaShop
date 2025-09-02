@@ -37,16 +37,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class AdaptThemeToRTLLanguagesType extends AbstractType
 {
     /**
-     * @var array
-     */
-    private $themeChoices;
-
-    /**
      * @param string[] $themeChoices
      */
-    public function __construct(array $themeChoices)
+    public function __construct(private array $themeChoices)
     {
-        $this->themeChoices = $themeChoices;
     }
 
     /**

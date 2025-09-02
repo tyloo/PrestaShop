@@ -38,11 +38,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AddUpdateLanguageType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $nonInstalledLocalizationChoices;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $nonInstalledLocalizationChoices
@@ -50,10 +45,9 @@ class AddUpdateLanguageType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $nonInstalledLocalizationChoices
+        private array $nonInstalledLocalizationChoices
     ) {
         parent::__construct($translator, $locales);
-        $this->nonInstalledLocalizationChoices = $nonInstalledLocalizationChoices;
     }
 
     /**

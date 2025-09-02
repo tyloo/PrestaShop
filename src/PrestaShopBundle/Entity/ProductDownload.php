@@ -56,12 +56,12 @@ class ProductDownload
     /**
      * @ORM\Column(name="display_filename", type="string", length=255, nullable=true)
      */
-    private ?string $displayFilename;
+    private ?string $displayFilename = null;
 
     /**
      * @ORM\Column(name="filename", type="string", length=255, nullable=true)
      */
-    private ?string $filename;
+    private ?string $filename = null;
 
     /**
      * @ORM\Column(name="date_add", type="datetime")
@@ -71,17 +71,17 @@ class ProductDownload
     /**
      * @ORM\Column(name="date_expiration", type="datetime", nullable=true)
      */
-    private ?DateTime $dateExpiration;
+    private ?DateTime $dateExpiration = null;
 
     /**
      * @ORM\Column(name="nb_days_accessible", type="integer", nullable=true, options={"unsigned"=true})
      */
-    private ?int $nbDaysAccessible;
+    private ?int $nbDaysAccessible = null;
 
     /**
      * @ORM\Column(name="nb_downloadable", type="integer", nullable=true, options={"default":1, "unsigned"=true})
      */
-    private ?int $nbDownloadable;
+    private ?int $nbDownloadable = null;
 
     /**
      * @ORM\Column(name="active", type="boolean", options={"default":1, "unsigned"=true})

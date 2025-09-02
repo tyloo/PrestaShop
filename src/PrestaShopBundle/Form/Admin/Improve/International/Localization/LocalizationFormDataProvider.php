@@ -36,17 +36,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 class LocalizationFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $dataConfiguration;
-
-    /**
      * @param DataConfigurationInterface $dataConfiguration
      */
-    public function __construct(
-        DataConfigurationInterface $dataConfiguration
-    ) {
-        $this->dataConfiguration = $dataConfiguration;
+    public function __construct(private DataConfigurationInterface $dataConfiguration)
+    {
     }
 
     /**

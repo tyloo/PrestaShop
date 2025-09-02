@@ -428,7 +428,7 @@ class ThemeController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function handleImportThemeException(Exception $e): array
+    private function handleImportThemeException(\Throwable $e): array
     {
         return [
             ImportedThemeAlreadyExistsException::class => $this->trans(

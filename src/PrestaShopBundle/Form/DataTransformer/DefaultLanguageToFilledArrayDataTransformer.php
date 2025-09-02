@@ -35,16 +35,10 @@ use Symfony\Component\Form\DataTransformerInterface;
 final class DefaultLanguageToFilledArrayDataTransformer implements DataTransformerInterface
 {
     /**
-     * @var int
-     */
-    private $defaultLanguageId;
-
-    /**
      * @param int $defaultLanguageId
      */
-    public function __construct($defaultLanguageId)
+    public function __construct(private $defaultLanguageId)
     {
-        $this->defaultLanguageId = $defaultLanguageId;
     }
 
     /**

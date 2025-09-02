@@ -475,16 +475,11 @@ class MailThemeController extends PrestaShopAdminController
         $renderer->addTransformation(new MailVariablesTransformation(MailTemplateInterface::HTML_TYPE, $mailLayoutVariables));
         $renderer->addTransformation(new MailVariablesTransformation(MailTemplateInterface::TXT_TYPE, $mailLayoutVariables));
 
-        switch ($type) {
-            case MailTemplateInterface::HTML_TYPE:
-                $renderedLayout = $renderer->renderHtml($layout, $language);
-                break;
-            case MailTemplateInterface::TXT_TYPE:
-                $renderedLayout = $renderer->renderTxt($layout, $language);
-                break;
-            default:
-                throw new NotFoundHttpException(sprintf('Requested type %s is not managed, please use one of these: %s', $type, implode(',', [MailTemplateInterface::HTML_TYPE, MailTemplateInterface::TXT_TYPE])));
-        }
+        $renderedLayout = match ($type) {
+            MailTemplateInterface::HTML_TYPE => $renderer->renderHtml($layout, $language),
+            MailTemplateInterface::TXT_TYPE => $renderer->renderTxt($layout, $language),
+            default => throw new NotFoundHttpException(sprintf('Requested type %s is not managed, please use one of these: %s', $type, implode(',', [MailTemplateInterface::HTML_TYPE, MailTemplateInterface::TXT_TYPE]))),
+        };
 
         return $renderedLayout;
     }

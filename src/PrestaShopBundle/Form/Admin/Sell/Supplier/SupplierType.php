@@ -56,26 +56,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SupplierType extends TranslatorAwareType
 {
     /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $statesChoiceProvider;
-
-    /**
-     * @var int
-     */
-    private $contextCountryId;
-
-    /**
-     * @var bool
-     */
-    private $isMultistoreEnabled;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $router;
-
-    /**
      * @param ConfigurableFormChoiceProviderInterface $statesChoiceProvider
      * @param int $contextCountryId
      * @param TranslatorInterface $translator
@@ -84,19 +64,14 @@ class SupplierType extends TranslatorAwareType
      * @param array $locales
      */
     public function __construct(
-        ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
-        int $contextCountryId,
+        private ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
+        private int $contextCountryId,
         TranslatorInterface $translator,
-        bool $isMultistoreEnabled,
-        UrlGeneratorInterface $router,
+        private bool $isMultistoreEnabled,
+        private UrlGeneratorInterface $router,
         array $locales = []
     ) {
         parent::__construct($translator, $locales);
-
-        $this->statesChoiceProvider = $statesChoiceProvider;
-        $this->contextCountryId = $contextCountryId;
-        $this->isMultistoreEnabled = $isMultistoreEnabled;
-        $this->router = $router;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

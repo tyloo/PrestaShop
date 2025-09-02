@@ -43,16 +43,10 @@ use Symfony\Component\Form\FormInterface;
 class ProductTypeListener implements EventSubscriberInterface
 {
     /**
-     * @var HookInformationProvider
-     */
-    private $hookInformationProvider;
-
-    /**
      * @param HookInformationProvider $hookInformationProvider
      */
-    public function __construct(HookInformationProvider $hookInformationProvider)
+    public function __construct(private HookInformationProvider $hookInformationProvider)
     {
-        $this->hookInformationProvider = $hookInformationProvider;
     }
 
     /**

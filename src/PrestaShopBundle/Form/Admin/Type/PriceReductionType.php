@@ -42,32 +42,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PriceReductionType extends TranslatorAwareType
 {
-    /**
-     * @var EventSubscriberInterface
-     */
-    private $eventSubscriber;
-
-    /**
-     * @var ReductionTypeChoiceProvider
-     */
-    private $reductionTypeChoiceProvider;
-
-    /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        EventSubscriberInterface $eventSubscriber,
-        ReductionTypeChoiceProvider $reductionTypeChoiceProvider,
-        CurrencyDataProviderInterface $currencyDataProvider
+        private EventSubscriberInterface $eventSubscriber,
+        private ReductionTypeChoiceProvider $reductionTypeChoiceProvider,
+        private CurrencyDataProviderInterface $currencyDataProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->eventSubscriber = $eventSubscriber;
-        $this->reductionTypeChoiceProvider = $reductionTypeChoiceProvider;
-        $this->currencyDataProvider = $currencyDataProvider;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

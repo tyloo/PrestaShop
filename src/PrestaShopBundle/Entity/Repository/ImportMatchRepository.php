@@ -35,11 +35,6 @@ use PrestaShop\PrestaShop\Core\Repository\RepositoryInterface;
 class ImportMatchRepository implements RepositoryInterface
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
      * @var string database table name with prefix
      */
     private $importMatchTable;
@@ -48,9 +43,8 @@ class ImportMatchRepository implements RepositoryInterface
      * @param Connection $connection
      * @param string $tablePrefix
      */
-    public function __construct(Connection $connection, $tablePrefix)
+    public function __construct(private Connection $connection, $tablePrefix)
     {
-        $this->connection = $connection;
         $this->importMatchTable = $tablePrefix . 'import_match';
     }
 

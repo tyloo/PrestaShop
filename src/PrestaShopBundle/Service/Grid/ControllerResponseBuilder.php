@@ -44,22 +44,12 @@ use Symfony\Component\Routing\Router;
  */
 class ControllerResponseBuilder
 {
-    /** @var GridFilterFormFactoryInterface */
-    private $filterFormFactory;
-
-    /** @var Router */
-    private $router;
-
     /**
      * @param GridFilterFormFactoryInterface $filterFormFactory
      * @param Router $router
      */
-    public function __construct(
-        GridFilterFormFactoryInterface $filterFormFactory,
-        Router $router
-    ) {
-        $this->filterFormFactory = $filterFormFactory;
-        $this->router = $router;
+    public function __construct(private GridFilterFormFactoryInterface $filterFormFactory, private Router $router)
+    {
     }
 
     /**

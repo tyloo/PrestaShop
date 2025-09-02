@@ -35,15 +35,8 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class PerformanceFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var DataConfigurationInterface
-     */
-    private $dataConfiguration;
-
-    public function __construct(
-        DataConfigurationInterface $dataConfiguration
-    ) {
-        $this->dataConfiguration = $dataConfiguration;
+    public function __construct(private DataConfigurationInterface $dataConfiguration)
+    {
     }
 
     /**

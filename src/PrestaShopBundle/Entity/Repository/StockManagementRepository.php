@@ -72,11 +72,6 @@ abstract class StockManagementRepository
     protected $imageManager;
 
     /**
-     * @var string
-     */
-    protected $tablePrefix;
-
-    /**
      * @var int
      */
     protected $foundRows = 0;
@@ -101,14 +96,13 @@ abstract class StockManagementRepository
         EntityManager $entityManager,
         ContextAdapter $contextAdapter,
         ImageManager $imageManager,
-        $tablePrefix
+        protected $tablePrefix
     ) {
         $this->container = $container;
         $this->connection = $connection;
         $this->em = $entityManager;
         $this->contextAdapter = $contextAdapter;
         $this->imageManager = $imageManager;
-        $this->tablePrefix = $tablePrefix;
     }
 
     /**

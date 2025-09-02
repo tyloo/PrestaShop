@@ -42,18 +42,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CustomizationFieldType extends TranslatorAwareType
 {
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $customizationFieldTypeChoiceProvider;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormChoiceProviderInterface $customizationFieldTypeChoiceProvider
+        private FormChoiceProviderInterface $customizationFieldTypeChoiceProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->customizationFieldTypeChoiceProvider = $customizationFieldTypeChoiceProvider;
     }
 
     /**

@@ -42,15 +42,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class GenerateByStatusType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $orderCountsByState;
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $orderStateChoiceProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param FormChoiceProviderInterface $orderStateChoiceProvider
@@ -59,12 +50,10 @@ class GenerateByStatusType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormChoiceProviderInterface $orderStateChoiceProvider,
-        array $orderCountsByState
+        private FormChoiceProviderInterface $orderStateChoiceProvider,
+        private array $orderCountsByState
     ) {
         parent::__construct($translator, $locales);
-        $this->orderCountsByState = $orderCountsByState;
-        $this->orderStateChoiceProvider = $orderStateChoiceProvider;
     }
 
     /**

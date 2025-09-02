@@ -45,32 +45,14 @@ class ExtraModulesType extends TranslatorAwareType
 {
     public const HOOK_NAME = 'displayAdminProductsExtra';
 
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var ModuleDataProvider
-     */
-    private $moduleDataProvider;
-
-    /**
-     * @var ModuleRepository
-     */
-    private $moduleRepository;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        HookDispatcherInterface $hookDispatcher,
-        ModuleDataProvider $moduleDataProvider,
-        ModuleRepository $moduleRepository
+        private HookDispatcherInterface $hookDispatcher,
+        private ModuleDataProvider $moduleDataProvider,
+        private ModuleRepository $moduleRepository
     ) {
         parent::__construct($translator, $locales);
-        $this->hookDispatcher = $hookDispatcher;
-        $this->moduleDataProvider = $moduleDataProvider;
-        $this->moduleRepository = $moduleRepository;
     }
 
     /**

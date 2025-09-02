@@ -41,31 +41,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
     /**
      * @var array
      */
-    private $countryChoices;
-
-    /**
-     * @var array
-     */
-    private $groupChoices;
-
-    /**
-     * @var array
-     */
-    private $carrierChoices;
-
-    /**
-     * @var array
-     */
     private $paymentModules;
-
-    /**
-     * @var CountryDataProvider
-     */
-    private $countryDataProvider;
-    /**
-     * @var CurrencyByIdChoiceProvider
-     */
-    private $currencyChoicesProvider;
 
     /**
      * @param TranslatorInterface $translator
@@ -81,20 +57,14 @@ class PaymentModulePreferencesType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         array $paymentModules,
-        array $countryChoices,
-        array $groupChoices,
-        array $carrierChoices,
-        CurrencyByIdChoiceProvider $currencyChoicesProvider,
-        CountryDataProvider $countryDataProvider
+        private array $countryChoices,
+        private array $groupChoices,
+        private array $carrierChoices,
+        private CurrencyByIdChoiceProvider $currencyChoicesProvider,
+        private CountryDataProvider $countryDataProvider
     ) {
         parent::__construct($translator, $locales);
-
-        $this->countryChoices = $countryChoices;
-        $this->groupChoices = $groupChoices;
-        $this->carrierChoices = $carrierChoices;
         $this->paymentModules = $this->sortPaymentModules($paymentModules);
-        $this->countryDataProvider = $countryDataProvider;
-        $this->currencyChoicesProvider = $currencyChoicesProvider;
     }
 
     /**

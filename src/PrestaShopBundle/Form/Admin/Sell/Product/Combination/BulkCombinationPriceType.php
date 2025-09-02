@@ -49,39 +49,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BulkCombinationPriceType extends TranslatorAwareType
 {
-    /**
-     * @var string
-     */
-    private $defaultCurrencyIsoCode;
-
-    /**
-     * @var string
-     */
-    private $weightUnit;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var TaxComputer
-     */
-    private $taxComputer;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        string $defaultCurrencyIsoCode,
-        string $weightUnit,
-        ProductRepository $productRepository,
-        TaxComputer $taxComputer
+        private string $defaultCurrencyIsoCode,
+        private string $weightUnit,
+        private ProductRepository $productRepository,
+        private TaxComputer $taxComputer
     ) {
         parent::__construct($translator, $locales);
-        $this->defaultCurrencyIsoCode = $defaultCurrencyIsoCode;
-        $this->weightUnit = $weightUnit;
-        $this->productRepository = $productRepository;
-        $this->taxComputer = $taxComputer;
     }
 
     /**

@@ -34,33 +34,12 @@ use Psr\Cache\CacheItemPoolInterface;
 class CacheProvider extends AbstractLegacyRouteProvider implements CacheCleanerInterface
 {
     /**
-     * @var CacheItemPoolInterface
-     */
-    private $cache;
-
-    /**
-     * @var LegacyRouteProviderInterface
-     */
-    private $legacyRouteProvider;
-
-    /**
-     * @var CacheKeyGeneratorInterface
-     */
-    private $cacheKeyGenerator;
-
-    /**
      * @var LegacyRoute[]
      */
     private $legacyRoutes;
 
-    public function __construct(
-        LegacyRouteProviderInterface $legacyRouteProvider,
-        CacheItemPoolInterface $cache,
-        CacheKeyGeneratorInterface $cacheKeyGenerator
-    ) {
-        $this->legacyRouteProvider = $legacyRouteProvider;
-        $this->cache = $cache;
-        $this->cacheKeyGenerator = $cacheKeyGenerator;
+    public function __construct(private LegacyRouteProviderInterface $legacyRouteProvider, private CacheItemPoolInterface $cache, private CacheKeyGeneratorInterface $cacheKeyGenerator)
+    {
     }
 
     /**

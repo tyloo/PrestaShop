@@ -43,35 +43,17 @@ class AddOrderCartRuleType extends AbstractType
     use TranslatorAwareTrait;
 
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $orderDiscountTypeChoiceProvider;
-
-    /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $orderInvoiceByIdChoiceProvider;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param FormChoiceProviderInterface $orderDiscountTypeChoiceProvider
      * @param ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider
      * @param int $contextLangId
      * @param TranslatorInterface $translator
      */
     public function __construct(
-        FormChoiceProviderInterface $orderDiscountTypeChoiceProvider,
-        ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider,
-        int $contextLangId,
+        private FormChoiceProviderInterface $orderDiscountTypeChoiceProvider,
+        private ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider,
+        private int $contextLangId,
         TranslatorInterface $translator
     ) {
-        $this->orderDiscountTypeChoiceProvider = $orderDiscountTypeChoiceProvider;
-        $this->orderInvoiceByIdChoiceProvider = $orderInvoiceByIdChoiceProvider;
-        $this->contextLangId = $contextLangId;
         $this->setTranslator($translator);
     }
 

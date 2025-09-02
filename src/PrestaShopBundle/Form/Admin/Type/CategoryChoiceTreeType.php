@@ -36,16 +36,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CategoryChoiceTreeType extends AbstractType
 {
     /**
-     * @var array
-     */
-    private $categoryTreeChoices;
-
-    /**
      * @param array $categoryTreeChoices
      */
-    public function __construct(array $categoryTreeChoices)
+    public function __construct(private array $categoryTreeChoices)
     {
-        $this->categoryTreeChoices = $categoryTreeChoices;
     }
 
     /**

@@ -56,16 +56,6 @@ class CmsPageType extends TranslatorAwareType
     public const RECOMMENDED_DESCRIPTION_LENGTH = 160;
 
     /**
-     * @var array
-     */
-    private $allCmsCategories;
-
-    /**
-     * @var bool
-     */
-    private $isMultiShopEnabled;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $allCmsCategories
@@ -74,13 +64,10 @@ class CmsPageType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $allCmsCategories,
-        $isMultiShopEnabled
+        private array $allCmsCategories,
+        private $isMultiShopEnabled
     ) {
         parent::__construct($translator, $locales);
-
-        $this->allCmsCategories = $allCmsCategories;
-        $this->isMultiShopEnabled = $isMultiShopEnabled;
     }
 
     /**

@@ -35,12 +35,8 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 class MailThemeFormDataProvider implements FormDataProviderInterface
 {
-    /** @var DataConfigurationInterface */
-    private $mailThemeConfiguration;
-
-    public function __construct(DataConfigurationInterface $mailThemeConfiguration)
+    public function __construct(private DataConfigurationInterface $mailThemeConfiguration)
     {
-        $this->mailThemeConfiguration = $mailThemeConfiguration;
     }
 
     /**

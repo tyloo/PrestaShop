@@ -37,16 +37,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ChangeOrdersStatusType extends AbstractType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $orderStatusChoiceProvider;
-
-    /**
      * @param FormChoiceProviderInterface $orderStatusChoiceProvider
      */
-    public function __construct(FormChoiceProviderInterface $orderStatusChoiceProvider)
+    public function __construct(private FormChoiceProviderInterface $orderStatusChoiceProvider)
     {
-        $this->orderStatusChoiceProvider = $orderStatusChoiceProvider;
     }
 
     /**
@@ -68,14 +62,8 @@ class ChangeOrdersStatusType extends AbstractType
 
         $builder->get('order_ids')
             ->addModelTransformer(new CallbackTransformer(
-                static function ($orderIds) {
-                    return $orderIds;
-                },
-                static function (array $orderIds) {
-                    return array_map(static function ($orderId) {
-                        return (int) $orderId;
-                    }, $orderIds);
-                }
+                static fn($orderIds) => $orderIds,
+                static fn(array $orderIds): array => array_map(static fn($orderId): int => (int) $orderId, $orderIds)
             ))
         ;
     }

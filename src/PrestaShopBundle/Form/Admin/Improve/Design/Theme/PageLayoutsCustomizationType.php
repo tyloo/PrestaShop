@@ -37,16 +37,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class PageLayoutsCustomizationType extends AbstractType
 {
     /**
-     * @var array
-     */
-    private $pageLayoutsChoices;
-
-    /**
      * @param array $pageLayoutsChoices
      */
-    public function __construct(array $pageLayoutsChoices)
+    public function __construct(private array $pageLayoutsChoices)
     {
-        $this->pageLayoutsChoices = $pageLayoutsChoices;
     }
 
     /**

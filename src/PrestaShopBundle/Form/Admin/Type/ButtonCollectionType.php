@@ -105,7 +105,7 @@ class ButtonCollectionType extends AbstractType
                         ];
                     }
 
-                    $options['name'] = $options['name'] ?? $buttonName;
+                    $options['name'] ??= $buttonName;
                     $normalizedOptions[$options['name']] = $resolver->resolve($options);
                 }
 

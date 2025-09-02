@@ -40,16 +40,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class EmailConfigurationType extends TranslatorAwareType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $mailMethodChoiceProvider;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $contactsChoiceProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param FormChoiceProviderInterface $mailMethodChoiceProvider
@@ -58,13 +48,10 @@ class EmailConfigurationType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormChoiceProviderInterface $mailMethodChoiceProvider,
-        FormChoiceProviderInterface $contactsChoiceProvider
+        private FormChoiceProviderInterface $mailMethodChoiceProvider,
+        private FormChoiceProviderInterface $contactsChoiceProvider
     ) {
         parent::__construct($translator, $locales);
-
-        $this->mailMethodChoiceProvider = $mailMethodChoiceProvider;
-        $this->contactsChoiceProvider = $contactsChoiceProvider;
     }
 
     /**

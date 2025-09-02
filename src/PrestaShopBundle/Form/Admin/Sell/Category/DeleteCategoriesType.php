@@ -39,16 +39,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class DeleteCategoriesType extends AbstractType
 {
     /**
-     * @var array
-     */
-    private $categoryDeleteModelChoices;
-
-    /**
      * @param array $categoryDeleteModelChoices
      */
-    public function __construct(array $categoryDeleteModelChoices)
+    public function __construct(private array $categoryDeleteModelChoices)
     {
-        $this->categoryDeleteModelChoices = $categoryDeleteModelChoices;
     }
 
     /**

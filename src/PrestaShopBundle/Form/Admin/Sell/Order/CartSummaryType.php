@@ -40,33 +40,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CartSummaryType extends AbstractType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $orderStatesChoiceProvider;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $paymentModulesChoiceProvider;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @param FormChoiceProviderInterface $orderStatesChoiceProvider
      * @param FormChoiceProviderInterface $paymentModulesChoiceProvider
      * @param TranslatorInterface $translator
      */
-    public function __construct(
-        FormChoiceProviderInterface $orderStatesChoiceProvider,
-        FormChoiceProviderInterface $paymentModulesChoiceProvider,
-        TranslatorInterface $translator
-    ) {
-        $this->orderStatesChoiceProvider = $orderStatesChoiceProvider;
-        $this->paymentModulesChoiceProvider = $paymentModulesChoiceProvider;
-        $this->translator = $translator;
+    public function __construct(private FormChoiceProviderInterface $orderStatesChoiceProvider, private FormChoiceProviderInterface $paymentModulesChoiceProvider, private TranslatorInterface $translator)
+    {
     }
 
     /**

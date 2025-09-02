@@ -45,11 +45,6 @@ class UnitPriceType extends TranslatorAwareType
     private const ENABLED_GROUP = 'enabled_group';
 
     /**
-     * @var string
-     */
-    private $defaultCurrencyIsoCode;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param string $defaultCurrencyIsoCode
@@ -57,10 +52,9 @@ class UnitPriceType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        string $defaultCurrencyIsoCode
+        private string $defaultCurrencyIsoCode
     ) {
         parent::__construct($translator, $locales);
-        $this->defaultCurrencyIsoCode = $defaultCurrencyIsoCode;
     }
 
     /**
@@ -124,9 +118,7 @@ class UnitPriceType extends TranslatorAwareType
             'required' => false,
             'columns_number' => 4,
             'disabling_switch' => true,
-            'disabled_value' => function (?array $data, FormInterface $form): bool {
-                return $this->shouldBeDisabled($data, $form);
-            },
+            'disabled_value' => fn(?array $data, FormInterface $form): bool => $this->shouldBeDisabled($data, $form),
             'validation_groups' => function (FormInterface $form): array {
                 $shouldBeDisabled = $this->shouldBeDisabled($form->getData(), $form);
 

@@ -71,9 +71,7 @@ class MultistoreHeader extends AbstractMultistoreHeader
         if (!$this->isLockedToAllShopContext()) {
             $this->groupList = array_filter(
                 $this->entityManager->getRepository(ShopGroup::class)->findBy(['active' => true]),
-                function (ShopGroup $shopGroup) {
-                    return !$shopGroup->getShops()->isEmpty() && $this->employeeContext->hasAuthorizationOnShopGroup($shopGroup->getId());
-                },
+                fn(ShopGroup $shopGroup): bool => !$shopGroup->getShops()->isEmpty() && $this->employeeContext->hasAuthorizationOnShopGroup($shopGroup->getId()),
             );
 
             // Filter not allowed shops

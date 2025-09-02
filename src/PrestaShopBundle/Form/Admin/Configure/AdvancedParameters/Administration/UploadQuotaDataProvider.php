@@ -41,18 +41,8 @@ use PrestaShopBundle\Form\Exception\InvalidConfigurationDataErrorCollection;
  */
 final class UploadQuotaDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var DataConfigurationInterface
-     */
-    private $dataConfiguration;
-    private UploadSizeConfigurationInterface $uploadSizeConfiguration;
-
-    public function __construct(
-        DataConfigurationInterface $dataConfiguration,
-        UploadSizeConfigurationInterface $uploadSizeConfiguration
-    ) {
-        $this->dataConfiguration = $dataConfiguration;
-        $this->uploadSizeConfiguration = $uploadSizeConfiguration;
+    public function __construct(private DataConfigurationInterface $dataConfiguration, private UploadSizeConfigurationInterface $uploadSizeConfiguration)
+    {
     }
 
     /**
@@ -117,20 +107,12 @@ final class UploadQuotaDataProvider implements FormDataProviderInterface
             $value_length = strlen($value);
             $qty = (int) substr($value, 0, $value_length - 1);
             $unit = strtolower(substr($value, $value_length - 1));
-            switch ($unit) {
-                case 'k':
-                    $qty *= 1024;
-
-                    break;
-                case 'm':
-                    $qty *= 1048576;
-
-                    break;
-                case 'g':
-                    $qty *= 1073741824;
-
-                    break;
-            }
+            match ($unit) {
+                'k' => $qty *= 1024,
+                'm' => $qty *= 1048576,
+                'g' => $qty *= 1073741824,
+                default => $qty,
+            };
 
             return $qty;
         }

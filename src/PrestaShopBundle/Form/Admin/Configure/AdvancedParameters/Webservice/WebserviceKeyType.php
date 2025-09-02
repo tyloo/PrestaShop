@@ -46,21 +46,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class WebserviceKeyType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $isMultistoreFeatureUsed;
-
-    /**
-     * @var array
-     */
-    private $resourceChoices;
-
-    /**
-     * @var array
-     */
-    private $permissionChoices;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param bool $isMultistoreFeatureUsed
@@ -70,14 +55,11 @@ class WebserviceKeyType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        $isMultistoreFeatureUsed,
-        array $resourceChoices,
-        array $permissionChoices
+        private $isMultistoreFeatureUsed,
+        private array $resourceChoices,
+        private array $permissionChoices
     ) {
         parent::__construct($translator, $locales);
-        $this->isMultistoreFeatureUsed = $isMultistoreFeatureUsed;
-        $this->resourceChoices = $resourceChoices;
-        $this->permissionChoices = $permissionChoices;
     }
 
     /**
@@ -154,9 +136,7 @@ class WebserviceKeyType extends TranslatorAwareType
 
         // remove "all" configuration since it's not an actual permission
         $builder->get('permissions')->addModelTransformer(new CallbackTransformer(
-            function ($value) {
-                return $value;
-            },
+            fn($value) => $value,
             function ($value) {
                 if (isset($value['all'])) {
                     unset($value['all']);
@@ -172,12 +152,8 @@ class WebserviceKeyType extends TranslatorAwareType
             ]);
 
             $builder->get('shop_association')->addModelTransformer(new CallbackTransformer(
-                function ($value) {
-                    return null === $value ? [] : $value;
-                },
-                function ($value) {
-                    return null === $value ? [] : $value;
-                }
+                fn($value) => $value ?? [],
+                fn($value) => $value ?? []
             ));
         }
     }

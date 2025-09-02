@@ -77,14 +77,8 @@ class PageVoter extends Voter
      */
     public const LEVEL_READ = Permission::LEVEL_READ;
 
-    /**
-     * @var AccessCheckerInterface
-     */
-    private $accessChecker;
-
-    public function __construct(AccessCheckerInterface $accessChecker)
+    public function __construct(private AccessCheckerInterface $accessChecker)
     {
-        $this->accessChecker = $accessChecker;
     }
 
     /**

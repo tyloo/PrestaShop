@@ -181,7 +181,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
             && !is_iterable($data)
             && method_exists($data, 'getValue')
             // Check that ValueObject is part of the namespace
-            && str_contains(get_class($data), 'ValueObject')
+            && str_contains($data::class, 'ValueObject')
             && $this->getConstructorParameter($data);
     }
 
@@ -237,7 +237,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
 
     protected function getConstructorParameter(object|string $type): ?ReflectionParameter
     {
-        $objectType = is_object($type) ? get_class($type) : $type;
+        $objectType = is_object($type) ? $type::class : $type;
         if (!array_key_exists($objectType, $this->constructorParameter)) {
             $metadata = $this->classMetadataFactory->getMetadataFor($type);
             if (!$metadata->getReflectionClass()->getConstructor()) {

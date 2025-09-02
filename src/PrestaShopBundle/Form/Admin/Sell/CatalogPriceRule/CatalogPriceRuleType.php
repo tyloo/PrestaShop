@@ -49,41 +49,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CatalogPriceRuleType extends AbstractType
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var bool
-     */
-    private $isMultiShopEnabled;
-
-    /**
-     * @var array
-     */
-    private $groupByIdChoices;
-
-    /**
-     * @var array
-     */
-    private $shopByIdChoices;
-
-    /**
      * @param TranslatorInterface $translator
      * @param bool $isMultiShopEnabled
      * @param array $groupByIdChoices
      * @param array $shopByIdChoices
      */
-    public function __construct(
-        TranslatorInterface $translator,
-        bool $isMultiShopEnabled,
-        array $groupByIdChoices,
-        array $shopByIdChoices
-    ) {
-        $this->translator = $translator;
-        $this->isMultiShopEnabled = $isMultiShopEnabled;
-        $this->groupByIdChoices = $groupByIdChoices;
-        $this->shopByIdChoices = $shopByIdChoices;
+    public function __construct(private TranslatorInterface $translator, private bool $isMultiShopEnabled, private array $groupByIdChoices, private array $shopByIdChoices)
+    {
     }
 
     /**

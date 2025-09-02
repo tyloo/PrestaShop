@@ -152,11 +152,9 @@ class MenuBuilder
     public function buildNavigationTabs(Tab $tab): array
     {
         // Get siblings tabs, filter them based on the employee authorizations
-        $currentLevelTabs = array_filter($this->tabRepository->findByParentId($tab->getIdParent()), function (Tab $tab) {
-            return LegacyTab::checkTabRights($tab->getId())
-                && $tab->isEnabled()
-                && $tab->getClassName() !== 'AdminCarrierWizard';
-        });
+        $currentLevelTabs = array_filter($this->tabRepository->findByParentId($tab->getIdParent()), fn(Tab $tab): bool => LegacyTab::checkTabRights($tab->getId())
+            && $tab->isEnabled()
+            && $tab->getClassName() !== 'AdminCarrierWizard');
 
         $navigationTabs = [];
 
@@ -206,48 +204,33 @@ class MenuBuilder
     {
         $action = $this->getLegacyAction();
 
-        switch (true) {
-            // In legacy no action is always equivalent to list action, but maybe we should change this into null and consider no action can be identified
-            case null === $action:
-            case $action === '':
-            case str_starts_with($action, 'list'):
-                return new MenuLink(
-                    name: $this->translator->trans('List', [], 'Admin.Actions'),
-                    icon: 'icon-th-list'
-                );
-
-            case str_starts_with($action, 'add'):
-            case str_starts_with($action, 'new'):
-                return new MenuLink(
-                    name: $this->translator->trans('Add', [], 'Admin.Actions'),
-                    icon: 'icon-plus'
-                );
-            case str_starts_with($action, 'edit'):
-            case str_starts_with($action, 'update'):
-                return new MenuLink(
-                    name: $this->translator->trans('Edit', [], 'Admin.Actions'),
-                    icon: 'icon-pencil'
-                );
-
-            case str_starts_with($action, 'details'):
-            case str_starts_with($action, 'view'):
-                return new MenuLink(
-                    name: $this->translator->trans('View details', [], 'Admin.Actions'),
-                    icon: 'icon-zoom-in'
-                );
-            case str_starts_with($action, 'options'):
-                return new MenuLink(
-                    name: $this->translator->trans('Options', [], 'Admin.Actions'),
-                    icon: 'icon-cogs'
-                );
-            case str_starts_with($action, 'generator'):
-                return new MenuLink(
-                    name: $this->translator->trans('Generator', [], 'Admin.Actions'),
-                    icon: 'icon-flask'
-                );
-            default:
-                return null;
-        }
+        return match (true) {
+            null === $action, $action === '', str_starts_with($action, 'list') => new MenuLink(
+                name: $this->translator->trans('List', [], 'Admin.Actions'),
+                icon: 'icon-th-list'
+            ),
+            str_starts_with($action, 'add'), str_starts_with($action, 'new') => new MenuLink(
+                name: $this->translator->trans('Add', [], 'Admin.Actions'),
+                icon: 'icon-plus'
+            ),
+            str_starts_with($action, 'edit'), str_starts_with($action, 'update') => new MenuLink(
+                name: $this->translator->trans('Edit', [], 'Admin.Actions'),
+                icon: 'icon-pencil'
+            ),
+            str_starts_with($action, 'details'), str_starts_with($action, 'view') => new MenuLink(
+                name: $this->translator->trans('View details', [], 'Admin.Actions'),
+                icon: 'icon-zoom-in'
+            ),
+            str_starts_with($action, 'options') => new MenuLink(
+                name: $this->translator->trans('Options', [], 'Admin.Actions'),
+                icon: 'icon-cogs'
+            ),
+            str_starts_with($action, 'generator') => new MenuLink(
+                name: $this->translator->trans('Generator', [], 'Admin.Actions'),
+                icon: 'icon-flask'
+            ),
+            default => null,
+        };
     }
 
     private function getLegacyAction(): ?string

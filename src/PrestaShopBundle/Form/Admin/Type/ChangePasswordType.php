@@ -47,16 +47,10 @@ class ChangePasswordType extends AbstractType
     use TranslatorAwareTrait;
 
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(ConfigurationInterface $configuration, TranslatorInterface $translator)
+    public function __construct(private ConfigurationInterface $configuration, TranslatorInterface $translator)
     {
-        $this->configuration = $configuration;
         $this->translator = $translator;
     }
 

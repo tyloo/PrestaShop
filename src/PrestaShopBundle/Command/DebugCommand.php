@@ -50,21 +50,9 @@ class DebugCommand extends Command
      */
     protected $io;
 
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
-
-    /**
-     * @var DebugMode
-     */
-    private $debugConfiguration;
-
-    public function __construct(CommandBusInterface $commandBus, DebugMode $debugConfiguration)
+    public function __construct(private CommandBusInterface $commandBus, private DebugMode $debugConfiguration)
     {
         parent::__construct();
-        $this->commandBus = $commandBus;
-        $this->debugConfiguration = $debugConfiguration;
     }
 
     protected function configure()

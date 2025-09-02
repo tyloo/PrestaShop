@@ -36,20 +36,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 abstract class TranslatorAwareType extends CommonAbstractType
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * All languages available on shop. Used for translations.
      *
      * @param array<int, array<string, mixed>> $locales
      */
     protected $locales;
 
-    public function __construct(TranslatorInterface $translator, array $locales)
+    public function __construct(private TranslatorInterface $translator, array $locales)
     {
-        $this->translator = $translator;
         $this->locales = $locales;
     }
 

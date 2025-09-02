@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class EmployeeOptionsFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $employeeOptionsConfiguration;
-
-    /**
      * @param DataConfigurationInterface $employeeOptionsConfiguration
      */
-    public function __construct(DataConfigurationInterface $employeeOptionsConfiguration)
+    public function __construct(private DataConfigurationInterface $employeeOptionsConfiguration)
     {
-        $this->employeeOptionsConfiguration = $employeeOptionsConfiguration;
     }
 
     /**

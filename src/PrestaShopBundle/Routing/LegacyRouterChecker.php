@@ -153,26 +153,13 @@ class LegacyRouterChecker
     {
         $action = $this->getLegacyAction($request, $table);
 
-        switch (true) {
-            case str_starts_with($action, 'add'):
-            case str_starts_with($action, 'generator'):
-            case str_starts_with($action, 'new'):
-                return Permission::CREATE;
-            case str_starts_with($action, 'edit'):
-            case str_starts_with($action, 'update'):
-            case str_starts_with($action, 'options'):
-            case str_starts_with($action, 'status'): // This is the legacy toggle
-                return Permission::UPDATE;
-            case str_starts_with($action, 'delete'):
-                return Permission::DELETE;
-            case $action === '': // In legacy empty action is usually the listing which a specific case for the view
-            case str_starts_with($action, 'export'):
-            case str_starts_with($action, 'details'):
-            case str_starts_with($action, 'view'):
-            case str_starts_with($action, 'list'):
-            default:
-                return Permission::READ;
-        }
+        return match (true) {
+            str_starts_with($action, 'add'), str_starts_with($action, 'generator'), str_starts_with($action, 'new') => Permission::CREATE,
+            // This is the legacy toggle
+            str_starts_with($action, 'edit'), str_starts_with($action, 'update'), str_starts_with($action, 'options'), str_starts_with($action, 'status') => Permission::UPDATE,
+            str_starts_with($action, 'delete') => Permission::DELETE,
+            default => Permission::READ,
+        };
     }
 
     private function getLegacyAction(Request $request, string $table): string

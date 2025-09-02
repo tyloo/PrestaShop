@@ -428,9 +428,7 @@ class CombinationController extends PrestaShopAdminController
             $filters->getFilters()
         ));
 
-        return $this->json(array_map(static function (CombinationId $combinationId): int {
-            return $combinationId->getValue();
-        }, $combinationIds));
+        return $this->json(array_map(static fn(CombinationId $combinationId): int => $combinationId->getValue(), $combinationIds));
     }
 
     /**
@@ -595,7 +593,7 @@ class CombinationController extends PrestaShopAdminController
         }
 
         return $this->json([
-            'combination_ids' => array_map(function (CombinationId $combinationId) { return $combinationId->getValue(); }, $combinationsIds),
+            'combination_ids' => array_map(fn(CombinationId $combinationId): int => $combinationId->getValue(), $combinationsIds),
         ]);
     }
 

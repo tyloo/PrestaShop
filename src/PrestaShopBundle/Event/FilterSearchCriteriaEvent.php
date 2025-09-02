@@ -42,22 +42,16 @@ class FilterSearchCriteriaEvent extends Event
     public const NAME = 'prestashop.search_criteria.filter';
 
     /**
-     * @var SearchCriteriaInterface
-     */
-    private $searchCriteria;
-
-    /**
      * @param SearchCriteriaInterface $searchCriteria
      */
-    public function __construct(SearchCriteriaInterface $searchCriteria)
+    public function __construct(private SearchCriteriaInterface $searchCriteria)
     {
-        $this->searchCriteria = $searchCriteria;
     }
 
     /**
      * @return SearchCriteriaInterface
      */
-    public function getSearchCriteria()
+    public function getSearchCriteria(): \PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface
     {
         return $this->searchCriteria;
     }

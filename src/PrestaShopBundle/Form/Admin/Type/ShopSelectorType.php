@@ -89,9 +89,7 @@ class ShopSelectorType extends AbstractType
         $builder->addModelTransformer(new CallbackTransformer(
             function ($selection) {
                 if (is_array($selection)) {
-                    return array_map(function (int $shopId) {
-                        return $this->shopRepository->find($shopId);
-                    }, $selection);
+                    return array_map(fn(int $shopId) => $this->shopRepository->find($shopId), $selection);
                 } elseif (!empty($selection)) {
                     $this->shopRepository->find($selection);
                 }
@@ -100,9 +98,7 @@ class ShopSelectorType extends AbstractType
             },
             function ($selection) {
                 if (is_array($selection)) {
-                    return array_map(function (Shop $shop) {
-                        return $shop->getId();
-                    }, $selection);
+                    return array_map(fn(Shop $shop): int => $shop->getId(), $selection);
                 }
 
                 return $selection instanceof Shop ? $selection->getId() : null;

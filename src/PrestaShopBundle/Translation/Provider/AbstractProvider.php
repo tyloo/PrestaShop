@@ -38,16 +38,6 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
     public const DEFAULT_LOCALE = 'en-US';
 
     /**
-     * @var LoaderInterface the loader interface
-     */
-    private $databaseLoader;
-
-    /**
-     * @var string the resource directory
-     */
-    protected $resourceDirectory;
-
-    /**
      * @var string the Catalogue locale
      */
     protected $locale;
@@ -57,10 +47,17 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
      */
     protected $domain;
 
-    public function __construct(LoaderInterface $databaseLoader, $resourceDirectory)
+    /**
+     * @param string $resourceDirectory
+     */
+    public function __construct(/**
+     * @var LoaderInterface the loader interface
+     */
+    private LoaderInterface $databaseLoader, /**
+     * @var string the resource directory
+     */
+    protected $resourceDirectory)
     {
-        $this->databaseLoader = $databaseLoader;
-        $this->resourceDirectory = $resourceDirectory;
         $this->locale = self::DEFAULT_LOCALE;
     }
 

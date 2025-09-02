@@ -42,25 +42,13 @@ use Symfony\Component\Routing\RouterInterface;
 final class LegacyUrlConverter
 {
     /**
-     * @var LegacyRouteProviderInterface
-     */
-    private $legacyRouteProvider;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * LegacyUrlConverter constructor.
      *
      * @param RouterInterface $router
      * @param LegacyRouteProviderInterface $legacyRouteProvider
      */
-    public function __construct(RouterInterface $router, LegacyRouteProviderInterface $legacyRouteProvider)
+    public function __construct(private RouterInterface $router, private LegacyRouteProviderInterface $legacyRouteProvider)
     {
-        $this->router = $router;
-        $this->legacyRouteProvider = $legacyRouteProvider;
     }
 
     /**
@@ -71,7 +59,7 @@ final class LegacyUrlConverter
      * @throws ArgumentException
      * @throws RouteNotFoundException
      */
-    public function convertByParameters(array $parameters)
+    public function convertByParameters(array $parameters): string
     {
         if (empty($parameters['controller'])) {
             throw new ArgumentException('Missing required controller argument');
@@ -93,7 +81,7 @@ final class LegacyUrlConverter
      * @throws RouteNotFoundException
      * @throws AlreadyConvertedException
      */
-    public function convertByUrl($url)
+    public function convertByUrl($url): string
     {
         $this->checkAlreadyMatchingRoute($url);
 
@@ -120,7 +108,7 @@ final class LegacyUrlConverter
      * @throws RouteNotFoundException
      * @throws AlreadyConvertedException
      */
-    public function convertByRequest(Request $request)
+    public function convertByRequest(Request $request): string
     {
         $this->router->getContext()->fromRequest($request);
         $this->checkAlreadyMatchingRoute($request->getRequestUri());

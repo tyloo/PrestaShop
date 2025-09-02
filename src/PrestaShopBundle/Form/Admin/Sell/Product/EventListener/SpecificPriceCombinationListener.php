@@ -42,22 +42,8 @@ use Symfony\Component\Form\FormEvents;
  */
 class SpecificPriceCombinationListener implements EventSubscriberInterface
 {
-    /**
-     * @var FormCloner
-     */
-    private $formCloner;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    public function __construct(
-        FormCloner $formCloner,
-        CombinationRepository $combinationRepository
-    ) {
-        $this->formCloner = $formCloner;
-        $this->combinationRepository = $combinationRepository;
+    public function __construct(private FormCloner $formCloner, private CombinationRepository $combinationRepository)
+    {
     }
 
     /**

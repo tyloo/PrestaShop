@@ -44,23 +44,11 @@ class FileLoader
     private $cache = [];
 
     /**
-     * @var string Path for data files
-     */
-    private $dataPath;
-
-    /**
-     * @var string Path for translated data files
-     */
-    private $langPath;
-
-    /**
      * @param string $dataPath Path for data files
      * @param string $langPath Path for translated data files
      */
-    public function __construct(string $dataPath, string $langPath)
+    public function __construct(private string $dataPath, private string $langPath)
     {
-        $this->dataPath = $dataPath;
-        $this->langPath = $langPath;
     }
 
     /**

@@ -43,26 +43,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class AddProductRowType extends TranslatorAwareType
 {
-    /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $orderInvoiceByIdChoiceProvider;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider,
-        int $contextLangId
+        private ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider,
+        private int $contextLangId
     ) {
         parent::__construct($translator, $locales);
-
-        $this->orderInvoiceByIdChoiceProvider = $orderInvoiceByIdChoiceProvider;
-        $this->contextLangId = $contextLangId;
     }
 
     /**

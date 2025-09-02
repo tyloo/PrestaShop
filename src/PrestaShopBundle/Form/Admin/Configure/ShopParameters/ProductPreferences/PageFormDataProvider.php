@@ -36,15 +36,8 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 class PageFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var PageConfiguration
-     */
-    private $configuration;
-
-    public function __construct(
-        PageConfiguration $configuration
-    ) {
-        $this->configuration = $configuration;
+    public function __construct(private PageConfiguration $configuration)
+    {
     }
 
     /**

@@ -47,21 +47,12 @@ class TranslationsExtension extends AbstractExtension
     public $logger;
 
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * @var string
      */
     private $theme;
 
-    private Environment $twig;
-
-    public function __construct(RouterInterface $router, Environment $twig)
+    public function __construct(private RouterInterface $router, private Environment $twig)
     {
-        $this->router = $router;
-        $this->twig = $twig;
     }
 
     /**

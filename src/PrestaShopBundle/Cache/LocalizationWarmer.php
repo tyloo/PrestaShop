@@ -32,13 +32,8 @@ use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class LocalizationWarmer implements CacheWarmerInterface
 {
-    private $version;
-    private $country;
-
-    public function __construct($version, $country)
+    public function __construct(private $version, private $country)
     {
-        $this->version = $version;
-        $this->country = $country;
     }
 
     public function warmUp($cacheDir)

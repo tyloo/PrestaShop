@@ -47,23 +47,11 @@ class GridExtension extends AbstractExtension
     public const BASE_COLUMN_HEADER_TEMPLATE_PATH = '@PrestaShop/Admin/Common/Grid/Columns/Header/Content';
 
     /**
-     * @var Environment
-     */
-    private $twig;
-
-    /**
-     * @var AdapterInterface
-     */
-    private $cache;
-
-    /**
      * @param Environment $twig
      * @param AdapterInterface $cache
      */
-    public function __construct(Environment $twig, AdapterInterface $cache)
+    public function __construct(private Environment $twig, private AdapterInterface $cache)
     {
-        $this->twig = $twig;
-        $this->cache = $cache;
     }
 
     /**
@@ -90,12 +78,8 @@ class GridExtension extends AbstractExtension
     public function getTests()
     {
         return [
-            new TwigTest('formview', static function ($value) {
-                return $value instanceof FormView;
-            }),
-            new TwigTest('form', static function ($value) {
-                return $value instanceof FormInterface;
-            }),
+            new TwigTest('formview', static fn($value): bool => $value instanceof FormView),
+            new TwigTest('form', static fn($value): bool => $value instanceof FormInterface),
         ];
     }
 
@@ -110,7 +94,7 @@ class GridExtension extends AbstractExtension
      *
      * @throws RuntimeException when template cannot be found for column
      */
-    public function renderColumnContent(array $record, array $column, array $grid)
+    public function renderColumnContent(array $record, array $column, array $grid): string
     {
         $templateCacheKey = sprintf('column_%s_%s_%s_content', $grid['id'], $column['id'], $column['type']);
 
@@ -147,7 +131,7 @@ class GridExtension extends AbstractExtension
      *
      * @return string
      */
-    public function renderColumnHeader(array $column, array $grid)
+    public function renderColumnHeader(array $column, array $grid): string
     {
         $templateCacheKey = sprintf(
             'column_%s_%s_%s_header',

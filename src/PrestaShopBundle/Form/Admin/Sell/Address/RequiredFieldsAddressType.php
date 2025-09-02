@@ -37,16 +37,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class RequiredFieldsAddressType extends AbstractType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $addressRequiredFieldsChoicesProvider;
-
-    /**
      * @param FormChoiceProviderInterface $addressRequiredFieldsChoicesProvider
      */
-    public function __construct(FormChoiceProviderInterface $addressRequiredFieldsChoicesProvider)
+    public function __construct(private FormChoiceProviderInterface $addressRequiredFieldsChoicesProvider)
     {
-        $this->addressRequiredFieldsChoicesProvider = $addressRequiredFieldsChoicesProvider;
     }
 
     /**

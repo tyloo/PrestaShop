@@ -39,16 +39,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class DeleteCustomersType extends AbstractType
 {
     /**
-     * @var array
-     */
-    private $customerDeleteMethodChoices;
-
-    /**
      * @param array $customerDeleteMethodChoices
      */
-    public function __construct(array $customerDeleteMethodChoices)
+    public function __construct(private array $customerDeleteMethodChoices)
     {
-        $this->customerDeleteMethodChoices = $customerDeleteMethodChoices;
     }
 
     /**

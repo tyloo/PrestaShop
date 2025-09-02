@@ -210,9 +210,7 @@ class OrderMessageController extends PrestaShopAdminController
     public function bulkDeleteAction(Request $request): RedirectResponse
     {
         try {
-            $orderMessageIds = array_map(static function ($orderMessageId) {
-                return (int) $orderMessageId;
-            }, $request->request->all('order_message_order_messages_bulk'));
+            $orderMessageIds = array_map(static fn($orderMessageId): int => (int) $orderMessageId, $request->request->all('order_message_order_messages_bulk'));
 
             $this->dispatchCommand(new BulkDeleteOrderMessageCommand($orderMessageIds));
 

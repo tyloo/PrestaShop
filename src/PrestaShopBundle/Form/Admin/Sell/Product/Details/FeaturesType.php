@@ -41,25 +41,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FeaturesType extends TranslatorAwareType
 {
-    /**
-     * @var FeaturesChoiceProvider
-     */
-    private $featuresChoiceProvider;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FeaturesChoiceProvider $featuresChoiceProvider,
-        UrlGeneratorInterface $urlGenerator
+        private FeaturesChoiceProvider $featuresChoiceProvider,
+        private UrlGeneratorInterface $urlGenerator
     ) {
         parent::__construct($translator, $locales);
-        $this->featuresChoiceProvider = $featuresChoiceProvider;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**

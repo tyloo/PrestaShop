@@ -87,9 +87,7 @@ class DemoModeEnabledListener
 
         $url = $this->router->generate($demoRestricted->getRedirectRoute(), $routeParametersToKeep);
 
-        $event->setController(function () use ($url) {
-            return new RedirectResponse($url);
-        });
+        $event->setController(fn(): \Symfony\Component\HttpFoundation\RedirectResponse => new RedirectResponse($url));
     }
 
     /**

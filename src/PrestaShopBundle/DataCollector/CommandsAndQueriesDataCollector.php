@@ -38,16 +38,10 @@ use Throwable;
 final class CommandsAndQueriesDataCollector extends DataCollector
 {
     /**
-     * @var ExecutedCommandRegistry
-     */
-    private $executedCommandRegistry;
-
-    /**
      * @param ExecutedCommandRegistry $executedCommandRegistry
      */
-    public function __construct(ExecutedCommandRegistry $executedCommandRegistry)
+    public function __construct(private ExecutedCommandRegistry $executedCommandRegistry)
     {
-        $this->executedCommandRegistry = $executedCommandRegistry;
     }
 
     /**

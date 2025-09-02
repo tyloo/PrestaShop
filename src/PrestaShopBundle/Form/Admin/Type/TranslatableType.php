@@ -54,26 +54,6 @@ class TranslatableType extends TranslatorAwareType
     private $availableLocales;
 
     /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
-     * @var bool indicates whether to save the selected form language or not
-     */
-    private $saveFormLocaleChoice;
-
-    /**
-     * @var int default form language ID
-     */
-    private $defaultFormLanguageId;
-
-    /**
-     * @var int default language of the shop, used as a fallback when default form language is not set
-     */
-    private $defaultShopLanguageId;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $availableLocales
@@ -86,18 +66,14 @@ class TranslatableType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         array $availableLocales,
-        UrlGeneratorInterface $urlGenerator,
-        $saveFormLocaleChoice,
-        $defaultFormLanguageId,
-        $defaultShopLanguageId
+        private UrlGeneratorInterface $urlGenerator,
+        private $saveFormLocaleChoice,
+        private $defaultFormLanguageId,
+        private $defaultShopLanguageId
     ) {
         parent::__construct($translator, $locales);
         $this->enabledLocales = $this->filterEnableLocales($availableLocales);
         $this->availableLocales = $availableLocales;
-        $this->urlGenerator = $urlGenerator;
-        $this->saveFormLocaleChoice = $saveFormLocaleChoice;
-        $this->defaultFormLanguageId = $defaultFormLanguageId;
-        $this->defaultShopLanguageId = $defaultShopLanguageId;
     }
 
     /**
@@ -173,12 +149,9 @@ class TranslatableType extends TranslatorAwareType
             'options' => [],
             'error_bubbling' => false,
             'only_enabled_locales' => false,
-            'locales' => function (Options $options) {
-                return $options['only_enabled_locales'] ?
-                    $this->enabledLocales :
-                    $this->availableLocales
-                ;
-            },
+            'locales' => fn(Options $options) => $options['only_enabled_locales'] ?
+                $this->enabledLocales :
+                $this->availableLocales,
             // These two options allow to override the default choice of the component between tab and dropdown (by
             // default it is based on input type being a textarea)
             'use_tabs' => null,

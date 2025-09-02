@@ -33,51 +33,8 @@ namespace PrestaShopBundle\Twig\Layout;
  */
 class TemplateVariables
 {
-    private string $isoUser;
-    private bool $isRtlLanguage;
-    private string $controllerName;
-    private bool $isMultiShop;
-    private bool $isMenuCollapsed;
-    private array $jsRouterMetadata;
-    private bool $isDebugMode;
-    private bool $installDirExists;
-    private string $version;
-    private ?string $defaultTabLink;
-    private bool $isMaintenanceEnabled;
-    private bool $isFrontOfficeAccessibleForAdmins;
-    private bool $isDisplayedWithTabs;
-    private string $baseUrl;
-
-    public function __construct(
-        string $isoUser,
-        bool $isRtlLanguage,
-        string $controllerName,
-        bool $isMultiShop,
-        bool $isMenuCollapsed,
-        array $jsRouterMetadata,
-        bool $isDebugMode,
-        bool $installDirExists,
-        string $version,
-        ?string $defaultTabLink,
-        bool $isMaintenanceEnabled,
-        bool $isFrontOfficeAccessibleForAdmins,
-        bool $isDisplayedWithTabs,
-        string $baseUrl,
-    ) {
-        $this->isoUser = $isoUser;
-        $this->isRtlLanguage = $isRtlLanguage;
-        $this->controllerName = $controllerName;
-        $this->isMultiShop = $isMultiShop;
-        $this->isMenuCollapsed = $isMenuCollapsed;
-        $this->jsRouterMetadata = $jsRouterMetadata;
-        $this->isDebugMode = $isDebugMode;
-        $this->installDirExists = $installDirExists;
-        $this->version = $version;
-        $this->defaultTabLink = $defaultTabLink;
-        $this->isMaintenanceEnabled = $isMaintenanceEnabled;
-        $this->isFrontOfficeAccessibleForAdmins = $isFrontOfficeAccessibleForAdmins;
-        $this->isDisplayedWithTabs = $isDisplayedWithTabs;
-        $this->baseUrl = $baseUrl;
+    public function __construct(private string $isoUser, private bool $isRtlLanguage, private string $controllerName, private bool $isMultiShop, private bool $isMenuCollapsed, private array $jsRouterMetadata, private bool $isDebugMode, private bool $installDirExists, private string $version, private ?string $defaultTabLink, private bool $isMaintenanceEnabled, private bool $isFrontOfficeAccessibleForAdmins, private bool $isDisplayedWithTabs, private string $baseUrl)
+    {
     }
 
     public function getIsoUser(): string

@@ -49,21 +49,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class VirtualProductFileType extends TranslatorAwareType
 {
     /**
-     * @var int
-     */
-    private $maxFileSizeInMegabytes;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var EventSubscriberInterface
-     */
-    private $virtualProductFileListener;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param int $maxFileSizeInMegabytes
@@ -71,14 +56,11 @@ class VirtualProductFileType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        int $maxFileSizeInMegabytes,
-        RouterInterface $router,
-        EventSubscriberInterface $virtualProductFileListener
+        private int $maxFileSizeInMegabytes,
+        private RouterInterface $router,
+        private EventSubscriberInterface $virtualProductFileListener
     ) {
         parent::__construct($translator, $locales);
-        $this->maxFileSizeInMegabytes = $maxFileSizeInMegabytes;
-        $this->router = $router;
-        $this->virtualProductFileListener = $virtualProductFileListener;
     }
 
     /**

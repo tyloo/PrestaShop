@@ -60,27 +60,15 @@ class CombinationItemType extends TranslatorAwareType
      */
     protected $defaultCurrency;
 
-    /**
-     * @var FeatureInterface
-     */
-    private $multiStoreFeature;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
         Currency $defaultCurrency,
-        FeatureInterface $multiStoreFeature,
-        int $contextShopId
+        private FeatureInterface $multiStoreFeature,
+        private int $contextShopId
     ) {
         parent::__construct($translator, $locales);
         $this->defaultCurrency = $defaultCurrency;
-        $this->multiStoreFeature = $multiStoreFeature;
-        $this->contextShopId = $contextShopId;
     }
 
     /**

@@ -37,41 +37,13 @@ use Symfony\Component\Translation\MessageCatalogue;
 final class LegacyModuleExtractor implements LegacyModuleExtractorInterface
 {
     /**
-     * @var ExtractorInterface the PHP Code extractor
-     */
-    private $phpExtractor;
-
-    /**
-     * @var ExtractorInterface the Smarty Code extractor
-     */
-    private $smartyExtractor;
-
-    /**
-     * @var ExtractorInterface the Twig Code extractor
-     */
-    private $twigExtractor;
-
-    /**
-     * @var string the "modules" directory path
-     */
-    private $modulesDirectory;
-
-    /**
      * @param ExtractorInterface $phpExtractor
      * @param ExtractorInterface $smartyExtractor
      * @param ExtractorInterface $twigExtractor
      * @param string $modulesDirectory
      */
-    public function __construct(
-        ExtractorInterface $phpExtractor,
-        ExtractorInterface $smartyExtractor,
-        ExtractorInterface $twigExtractor,
-        $modulesDirectory
-    ) {
-        $this->phpExtractor = $phpExtractor;
-        $this->smartyExtractor = $smartyExtractor;
-        $this->twigExtractor = $twigExtractor;
-        $this->modulesDirectory = $modulesDirectory;
+    public function __construct(private ExtractorInterface $phpExtractor, private ExtractorInterface $smartyExtractor, private ExtractorInterface $twigExtractor, private $modulesDirectory)
+    {
     }
 
     /**

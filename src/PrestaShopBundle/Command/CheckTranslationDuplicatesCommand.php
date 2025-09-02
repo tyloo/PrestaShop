@@ -35,15 +35,9 @@ use Symfony\Component\Translation\TranslatorBagInterface;
 
 class CheckTranslationDuplicatesCommand extends Command
 {
-    /**
-     * @var TranslatorBagInterface
-     */
-    private $translator;
-
-    public function __construct(TranslatorBagInterface $translator)
+    public function __construct(private TranslatorBagInterface $translator)
     {
         parent::__construct();
-        $this->translator = $translator;
     }
 
     protected function configure()

@@ -103,7 +103,7 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
     private function createAnnotationMappingDriver($moduleNamespace, $moduleEntityDirectory): DoctrineOrmMappingsPass
     {
         $reader = new Reference('annotation_reader');
-        $driverDefinition = new Definition('Doctrine\ORM\Mapping\Driver\AnnotationDriver', [$reader, [$moduleEntityDirectory]]);
+        $driverDefinition = new Definition(\Doctrine\ORM\Mapping\Driver\AnnotationDriver::class, [$reader, [$moduleEntityDirectory]]);
         $indexFile = $moduleEntityDirectory . '/index.php';
         if (file_exists($indexFile)) {
             $driverDefinition->addMethodCall('addExcludePaths', [[$indexFile]]);

@@ -47,11 +47,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ManufacturerType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $isMultistoreEnabled;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param bool $isMultistoreEnabled
@@ -59,11 +54,9 @@ class ManufacturerType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        $isMultistoreEnabled
+        private $isMultistoreEnabled
     ) {
         parent::__construct($translator, $locales);
-
-        $this->isMultistoreEnabled = $isMultistoreEnabled;
     }
 
     /**

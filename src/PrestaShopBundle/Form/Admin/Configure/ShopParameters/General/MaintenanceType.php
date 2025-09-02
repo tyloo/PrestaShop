@@ -44,11 +44,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class MaintenanceType extends TranslatorAwareType
 {
     /**
-     * @var string
-     */
-    private $currentIp;
-
-    /**
      * MaintenanceType constructor.
      *
      * @param TranslatorInterface $translator
@@ -58,10 +53,9 @@ class MaintenanceType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        string $currentIp
+        private string $currentIp
     ) {
         parent::__construct($translator, $locales);
-        $this->currentIp = $currentIp;
     }
 
     /**

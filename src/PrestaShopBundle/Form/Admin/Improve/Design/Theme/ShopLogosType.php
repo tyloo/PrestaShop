@@ -45,33 +45,12 @@ use Symfony\Component\Form\FormInterface;
 class ShopLogosType extends AbstractType
 {
     /**
-     * @var bool
-     */
-    private $isShopFeatureUsed;
-
-    /**
-     * @var bool
-     */
-    private $isSingleShopContext;
-
-    /**
-     * @var array
-     */
-    private $contextShopIds;
-
-    /**
-     * @param bool $isMultiShopEnabled
+     * @param bool $isShopFeatureUsed
      * @param bool $isSingleShopContext
      * @param array $contextShopIds
      */
-    public function __construct(
-        $isMultiShopEnabled,
-        $isSingleShopContext,
-        array $contextShopIds
-    ) {
-        $this->isShopFeatureUsed = $isMultiShopEnabled;
-        $this->isSingleShopContext = $isSingleShopContext;
-        $this->contextShopIds = $contextShopIds;
+    public function __construct(private $isShopFeatureUsed, private $isSingleShopContext, private array $contextShopIds)
+    {
     }
 
     /**
@@ -174,9 +153,7 @@ class ShopLogosType extends AbstractType
     private function transformMultiStoreFields(FormBuilderInterface $builder, $suffix): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($form) {
-                return $form;
-            },
+            fn($form) => $form,
             function ($form) use ($suffix) {
                 $restrictedToShopFields = [];
                 foreach ($form as $fieldName => $value) {

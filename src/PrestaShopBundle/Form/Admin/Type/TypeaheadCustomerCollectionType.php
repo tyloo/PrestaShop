@@ -36,16 +36,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TypeaheadCustomerCollectionType extends CommonAbstractType
 {
-    protected $customerAdapter;
-
     /**
      * {@inheritdoc}
      *
      * @param object $customerAdapter
      */
-    public function __construct($customerAdapter)
+    public function __construct(protected $customerAdapter)
     {
-        $this->customerAdapter = $customerAdapter;
     }
 
     /**
@@ -95,8 +92,8 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('data', 'Symfony\Component\Form\Extension\Core\Type\CollectionType', [
-            'entry_type' => 'Symfony\Component\Form\Extension\Core\Type\HiddenType',
+        $builder->add('data', \Symfony\Component\Form\Extension\Core\Type\CollectionType::class, [
+            'entry_type' => \Symfony\Component\Form\Extension\Core\Type\HiddenType::class,
             'allow_add' => true,
             'allow_delete' => true,
             'label' => false,

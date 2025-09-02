@@ -64,11 +64,6 @@ class ThemeExtractor
     private $outputPath;
 
     /**
-     * @var SmartyExtractor the Smarty Extractor
-     */
-    private $smartyExtractor;
-
-    /**
      * @var ThemeProvider the Theme Provider
      */
     private $themeProvider;
@@ -78,9 +73,11 @@ class ThemeExtractor
      */
     private $overrideFromDatabase = false;
 
-    public function __construct(SmartyExtractor $smartyExtractor)
+    public function __construct(/**
+     * @var SmartyExtractor the Smarty Extractor
+     */
+    private SmartyExtractor $smartyExtractor)
     {
-        $this->smartyExtractor = $smartyExtractor;
         $this->dumpers[] = new XliffFileDumper();
     }
 

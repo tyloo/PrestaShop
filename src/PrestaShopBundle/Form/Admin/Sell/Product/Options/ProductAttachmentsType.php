@@ -38,11 +38,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProductAttachmentsType extends TranslatorAwareType
 {
     /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param UrlGeneratorInterface $urlGenerator
@@ -50,10 +45,9 @@ class ProductAttachmentsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        UrlGeneratorInterface $urlGenerator
+        private UrlGeneratorInterface $urlGenerator
     ) {
         parent::__construct($translator, $locales);
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**

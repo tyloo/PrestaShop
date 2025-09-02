@@ -41,11 +41,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CatalogPriceRulesType extends TranslatorAwareType
 {
     /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    /**
      * PricingType constructor.
      *
      * @param TranslatorInterface $translator
@@ -55,10 +50,9 @@ class CatalogPriceRulesType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        LegacyContext $legacyContext
+        private LegacyContext $legacyContext
     ) {
         parent::__construct($translator, $locales);
-        $this->legacyContext = $legacyContext;
     }
 
     /**

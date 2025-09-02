@@ -46,18 +46,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class MinimumAmountType extends TranslatorAwareType implements EventSubscriberInterface
 {
-    /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        CurrencyDataProviderInterface $currencyDataProvider
+        private CurrencyDataProviderInterface $currencyDataProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->currencyDataProvider = $currencyDataProvider;
     }
 
     public static function getSubscribedEvents(): array

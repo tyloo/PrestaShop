@@ -59,7 +59,7 @@ class SessionEmployeeProvider
      */
     public function getEmployeeFromSession(?Request $request = null): ?SessionEmployeeInterface
     {
-        $request = $request ?? $this->requestStack->getCurrentRequest();
+        $request ??= $this->requestStack->getCurrentRequest();
         if (null === $request) {
             return null;
         }

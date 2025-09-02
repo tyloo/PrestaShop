@@ -92,7 +92,7 @@ class ImageType
     /**
      * @ORM\Column(name="theme_name", type="string", length=255)
      */
-    private ?string $themeName;
+    private ?string $themeName = null;
 
     public function getId(): int
     {

@@ -40,16 +40,6 @@ class CategoryRepository
     use NormalizeFieldTrait;
 
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $tablePrefix;
-
-    /**
      * @var int
      */
     private $languageId;
@@ -60,11 +50,6 @@ class CategoryRepository
     private $shopId;
 
     /**
-     * @var LegacyContext
-     */
-    private $contextAdapter;
-
-    /**
      * @param Connection $connection
      * @param ContextAdapter $contextAdapter
      * @param string $tablePrefix
@@ -72,15 +57,11 @@ class CategoryRepository
      * @throws NotImplementedException
      */
     public function __construct(
-        Connection $connection,
-        ContextAdapter $contextAdapter,
-        $tablePrefix
+        private Connection $connection,
+        private ContextAdapter $contextAdapter,
+        private $tablePrefix
     ) {
-        $this->connection = $connection;
-        $this->tablePrefix = $tablePrefix;
-
-        $this->contextAdapter = $contextAdapter;
-        $context = $contextAdapter->getContext();
+        $context = $this->contextAdapter->getContext();
 
         if (!$context->employee instanceof Employee) {
             throw new RuntimeException('Determining the active language requires a contextual employee instance.');

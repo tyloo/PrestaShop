@@ -37,19 +37,12 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class MetaSettingsSetUpUrlsFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $setUpUrlDataConfiguration;
-
-    /**
      * MetaFormDataProvider constructor.
      *
      * @param DataConfigurationInterface $setUpUrlDataConfiguration
      */
-    public function __construct(
-        DataConfigurationInterface $setUpUrlDataConfiguration
-    ) {
-        $this->setUpUrlDataConfiguration = $setUpUrlDataConfiguration;
+    public function __construct(private DataConfigurationInterface $setUpUrlDataConfiguration)
+    {
     }
 
     /**

@@ -78,9 +78,7 @@ class MultistoreProductHeader extends AbstractMultistoreHeader
         $productShops = $this->productRepository->getAssociatedShopIds(new ProductId($productId));
 
         if (!empty($productShops)) {
-            $productShopIds = array_map(function (ShopId $shopId) {
-                return $shopId->getValue();
-            }, $productShops);
+            $productShopIds = array_map(fn(ShopId $shopId): int => $shopId->getValue(), $productShops);
 
             /** @var ShopGroup $shopGroup */
             foreach ($groupList as $shopGroup) {

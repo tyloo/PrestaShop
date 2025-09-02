@@ -38,17 +38,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductTypeType extends AbstractType
 {
     /**
-     * @var FormChoiceProviderInterface|FormChoiceAttributeProviderInterface
-     */
-    private $formChoiceProvider;
-
-    /**
      * @param FormChoiceProviderInterface|FormChoiceAttributeProviderInterface $formChoiceProvider
      */
-    public function __construct(
-        $formChoiceProvider
-    ) {
-        $this->formChoiceProvider = $formChoiceProvider;
+    public function __construct(private $formChoiceProvider)
+    {
     }
 
     public function getParent(): string

@@ -42,18 +42,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class UrlSchemaType extends TranslatorAwareType
 {
-    /**
-     * @var DefaultRouteProvider
-     */
-    private $defaultRouteProvider;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        DefaultRouteProvider $defaultRouteProvider
+        private DefaultRouteProvider $defaultRouteProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->defaultRouteProvider = $defaultRouteProvider;
     }
 
     /**

@@ -154,7 +154,7 @@ final class GenerateHooksDocumentationCommand extends Command
 
     protected function getMatchingDynamicHook(string $hookName): ?string
     {
-        $matchingHooks = array_filter(array_keys($this->dynamicHookDetails), fn ($str): bool => stripos($hookName, $str) !== false);
+        $matchingHooks = array_filter(array_keys($this->dynamicHookDetails), fn ($str): bool => stripos($hookName, (string) $str) !== false);
 
         return !empty($matchingHooks) ? reset($matchingHooks) : null;
     }

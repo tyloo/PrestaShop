@@ -39,11 +39,6 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 final class BackUrlRedirectResponseListener
 {
     /**
-     * @var BackUrlProvider
-     */
-    private $backUrlProvider;
-
-    /**
      * @var int|null
      */
     private $employeeId;
@@ -52,10 +47,9 @@ final class BackUrlRedirectResponseListener
      * @param BackUrlProvider $backUrlProvider
      */
     public function __construct(
-        BackUrlProvider $backUrlProvider,
+        private BackUrlProvider $backUrlProvider,
         LegacyContext $legacyContext
     ) {
-        $this->backUrlProvider = $backUrlProvider;
         $context = $legacyContext->getContext();
         if (null !== $context && $context->employee instanceof Employee) {
             $this->employeeId = $context->employee->id;

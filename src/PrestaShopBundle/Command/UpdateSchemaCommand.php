@@ -39,27 +39,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateSchemaCommand extends Command
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    private $dbName;
-
-    private $dbPrefix;
-
     private array $executedQueries = [];
 
     private $forceSql = false;
 
     private $dumpSql = false;
 
-    public function __construct(string $databaseName, string $databasePrefix, EntityManager $manager)
+    public function __construct(private string $dbName, private string $dbPrefix, private EntityManager $em)
     {
         parent::__construct();
-        $this->dbName = $databaseName;
-        $this->dbPrefix = $databasePrefix;
-        $this->em = $manager;
     }
 
     protected function configure()

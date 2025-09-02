@@ -36,14 +36,8 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 final class IDNConverterDataTransformer implements DataTransformerInterface
 {
-    /**
-     * @var InternationalizedDomainNameConverter
-     */
-    private $converter;
-
-    public function __construct(InternationalizedDomainNameConverter $converter)
+    public function __construct(private InternationalizedDomainNameConverter $converter)
     {
-        $this->converter = $converter;
     }
 
     /**

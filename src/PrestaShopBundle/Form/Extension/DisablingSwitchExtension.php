@@ -56,15 +56,8 @@ class DisablingSwitchExtension extends AbstractTypeExtension
     public const DISABLED_VALUE_OPTION = 'disabled_value';
     public const SWITCH_STATE_ON_DISABLE_OPTION = 'switch_state_on_disable';
 
-    /**
-     * @var AddDisablingSwitchListener
-     */
-    private $addDisablingSwitchListener;
-
-    public function __construct(
-        AddDisablingSwitchListener $addDisablingSwitchListener
-    ) {
-        $this->addDisablingSwitchListener = $addDisablingSwitchListener;
+    public function __construct(private AddDisablingSwitchListener $addDisablingSwitchListener)
+    {
     }
 
     /**

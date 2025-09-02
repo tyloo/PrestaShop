@@ -42,25 +42,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class NavigationTabType extends AbstractType
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var bool
-     */
-    private $isDebug;
-
-    /**
      * @param LoggerInterface $logger
      * @param bool $isDebug
      */
-    public function __construct(
-        LoggerInterface $logger,
-        bool $isDebug
-    ) {
-        $this->logger = $logger;
-        $this->isDebug = $isDebug;
+    public function __construct(private LoggerInterface $logger, private bool $isDebug)
+    {
     }
 
     /**

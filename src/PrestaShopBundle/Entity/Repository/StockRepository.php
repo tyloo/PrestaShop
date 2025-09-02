@@ -45,11 +45,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class StockRepository extends StockManagementRepository
 {
     /**
-     * @var StockManager
-     */
-    private $stockManager;
-
-    /**
      * @var array
      */
     private $orderStates = [];
@@ -76,7 +71,7 @@ class StockRepository extends StockManagementRepository
         EntityManager $entityManager,
         ContextAdapter $contextAdapter,
         ImageManager $imageManager,
-        StockManager $stockManager,
+        private StockManager $stockManager,
         $tablePrefix
     ) {
         parent::__construct(
@@ -87,8 +82,6 @@ class StockRepository extends StockManagementRepository
             $imageManager,
             $tablePrefix
         );
-
-        $this->stockManager = $stockManager;
 
         $configuration = new Configuration();
         $this->orderStates['error'] = (int) $configuration->get('PS_OS_ERROR');
@@ -102,9 +95,7 @@ class StockRepository extends StockManagementRepository
      */
     public function bulkUpdateStock(MovementsCollection $movements)
     {
-        $products = $movements->map(function (Movement $movement) {
-            return $this->updateStock($movement);
-        });
+        $products = $movements->map(fn(Movement $movement) => $this->updateStock($movement));
 
         return $products;
     }

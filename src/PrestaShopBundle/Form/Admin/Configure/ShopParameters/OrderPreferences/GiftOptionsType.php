@@ -45,26 +45,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class GiftOptionsType extends TranslatorAwareType
 {
     /**
-     * @var string
-     */
-    private $defaultCurrencyIsoCode;
-
-    /**
-     * @var array
-     */
-    private $taxChoices;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param ConfigurationInterface $configuration
@@ -75,17 +55,12 @@ class GiftOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        ConfigurationInterface $configuration,
-        $defaultCurrencyIsoCode,
-        array $taxChoices,
-        RouterInterface $router
+        private ConfigurationInterface $configuration,
+        private $defaultCurrencyIsoCode,
+        private array $taxChoices,
+        private RouterInterface $router
     ) {
         parent::__construct($translator, $locales);
-
-        $this->defaultCurrencyIsoCode = $defaultCurrencyIsoCode;
-        $this->taxChoices = $taxChoices;
-        $this->router = $router;
-        $this->configuration = $configuration;
     }
 
     /**

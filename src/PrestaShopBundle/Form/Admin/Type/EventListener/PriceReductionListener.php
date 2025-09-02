@@ -38,15 +38,8 @@ use Symfony\Component\Form\FormEvents;
 
 class PriceReductionListener implements EventSubscriberInterface
 {
-    /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
-    public function __construct(
-        CurrencyDataProviderInterface $currencyDataProvider
-    ) {
-        $this->currencyDataProvider = $currencyDataProvider;
+    public function __construct(private CurrencyDataProviderInterface $currencyDataProvider)
+    {
     }
 
     /**

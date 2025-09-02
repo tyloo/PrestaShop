@@ -37,18 +37,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LowStockThresholdType extends TranslatorAwareType
 {
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        RouterInterface $router
+        private RouterInterface $router
     ) {
         parent::__construct($translator, $locales);
-        $this->router = $router;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

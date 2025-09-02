@@ -40,11 +40,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class VisibilityType extends TranslatorAwareType
 {
     /**
-     * @var FormChoiceProviderInterface&FormChoiceAttributeProviderInterface
-     */
-    private $productVisibilityChoiceProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param FormChoiceProviderInterface&FormChoiceAttributeProviderInterface $productVisibilityChoiceProvider
@@ -52,10 +47,9 @@ class VisibilityType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        $productVisibilityChoiceProvider
+        private $productVisibilityChoiceProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->productVisibilityChoiceProvider = $productVisibilityChoiceProvider;
     }
 
     /**

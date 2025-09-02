@@ -47,21 +47,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class HeaderType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $stockManagementEnabled;
-
-    /**
-     * @var bool
-     */
-    private $isEcotaxEnabled;
-
-    /**
-     * @var ToolbarButtonsProviderInterface
-     */
-    private $toolbarButtonsProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param bool $stockManagementEnabled
@@ -71,14 +56,11 @@ class HeaderType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        bool $stockManagementEnabled,
-        bool $isEcotaxEnabled,
-        ToolbarButtonsProviderInterface $toolbarButtonsProvider
+        private bool $stockManagementEnabled,
+        private bool $isEcotaxEnabled,
+        private ToolbarButtonsProviderInterface $toolbarButtonsProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->stockManagementEnabled = $stockManagementEnabled;
-        $this->isEcotaxEnabled = $isEcotaxEnabled;
-        $this->toolbarButtonsProvider = $toolbarButtonsProvider;
     }
 
     /**

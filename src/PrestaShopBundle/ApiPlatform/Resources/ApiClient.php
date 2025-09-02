@@ -57,7 +57,7 @@ class ApiClient
 
     public string $description;
 
-    public ?string $externalIssuer;
+    public ?string $externalIssuer = null;
 
     public bool $enabled;
 

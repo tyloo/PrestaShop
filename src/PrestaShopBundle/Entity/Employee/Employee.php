@@ -110,12 +110,12 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
     /**
      * @ORM\Column(name="reset_password_token", type="string", length=40, nullable=true)
      */
-    private ?string $resetPasswordToken;
+    private ?string $resetPasswordToken = null;
 
     /**
      * @ORM\Column(name="reset_password_validity", type="datetime", nullable=true)
      */
-    private ?DateTime $resetPasswordValidity;
+    private ?DateTime $resetPasswordValidity = null;
 
     /**
      * @ORM\Column(name="default_tab", type="integer", options={"default": 0, "unsigned": true})
@@ -130,7 +130,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
     /**
      * @ORM\Column(name="last_connection_date", type="date", nullable=true)
      */
-    private ?DateTime $lastConnectionDate;
+    private ?DateTime $lastConnectionDate = null;
 
     /**
      * @ORM\Column(name="has_enabled_gravatar", type="boolean", options={"default": 0})
@@ -140,22 +140,22 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
     /**
      * @ORM\Column(name="stats_date_from", type="date", nullable=true)
      */
-    private ?DateTime $statsDateFrom;
+    private ?DateTime $statsDateFrom = null;
 
     /**
      * @ORM\Column(name="stats_date_to", type="date", nullable=true)
      */
-    private ?DateTime $statsDateTo;
+    private ?DateTime $statsDateTo = null;
 
     /**
      * @ORM\Column(name="stats_compare_from", type="date", nullable=true)
      */
-    private ?DateTime $statsCompareFrom;
+    private ?DateTime $statsCompareFrom = null;
 
     /**
      * @ORM\Column(name="stats_compare_to", type="date", nullable=true)
      */
-    private ?DateTime $statsCompareTo;
+    private ?DateTime $statsCompareTo = null;
 
     /**
      * @ORM\Column(name="stats_compare_option", type="integer", options={"default": 1, "unsigned": true})
@@ -165,22 +165,22 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
     /**
      * @ORM\Column(name="preselect_date_range", type="string", length=32, nullable=true)
      */
-    private ?string $preselectDateRange;
+    private ?string $preselectDateRange = null;
 
     /**
      * @ORM\Column(name="bo_color", type="string", length=32, nullable=true)
      */
-    private ?string $boColor;
+    private ?string $boColor = null;
 
     /**
      * @ORM\Column(name="bo_theme", type="string", length=32, nullable=true)
      */
-    private ?string $boTheme;
+    private ?string $boTheme = null;
 
     /**
      * @ORM\Column(name="bo_css", type="string", length=64, nullable=true)
      */
-    private ?string $boCss;
+    private ?string $boCss = null;
 
     /**
      * @ORM\Column(name="bo_width", type="integer", options={"default": 0, "unsigned": true})
@@ -195,7 +195,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
     /**
      * @ORM\Column(name="optin", type="boolean", nullable=true)
      */
-    private ?bool $optIn;
+    private ?bool $optIn = null;
 
     /**
      * @ORM\Column(name="id_last_order", type="integer", options={"default": 0, "unsigned": true})

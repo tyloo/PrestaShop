@@ -131,12 +131,10 @@ class CancelProductType extends TranslatorAwareType
                         $this->trans('Product(s) price:', 'Admin.Orderscustomers.Feature') => VoucherRefundType::PRODUCT_PRICES_REFUND,
                         $this->trans('Product(s) price, excluding amount of initial voucher:', 'Admin.Orderscustomers.Feature') => VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND,
                     ],
-                    'choice_attr' => function ($choice, $key) {
-                        return [
-                            'voucher-refund-type' => $choice,
-                            'data-default-label' => $key,
-                        ];
-                    },
+                    'choice_attr' => fn($choice, $key): array => [
+                        'voucher-refund-type' => $choice,
+                        'data-default-label' => $key,
+                    ],
                     'data' => VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND,
                 ]
             )

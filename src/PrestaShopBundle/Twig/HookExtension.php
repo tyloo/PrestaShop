@@ -40,34 +40,13 @@ use Twig\TwigFunction;
 class HookExtension extends AbstractExtension
 {
     /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var ModuleDataProvider
-     */
-    private $moduleDataProvider;
-
-    /**
-     * @var ModuleRepository
-     */
-    private $moduleRepository;
-
-    /**
      * Constructor.
      *
      * @param HookDispatcherInterface $hookDispatcher
      * @param ModuleDataProvider $moduleDataProvider
      */
-    public function __construct(
-        HookDispatcherInterface $hookDispatcher,
-        ModuleDataProvider $moduleDataProvider,
-        ?ModuleRepository $moduleRepository = null
-    ) {
-        $this->hookDispatcher = $hookDispatcher;
-        $this->moduleDataProvider = $moduleDataProvider;
-        $this->moduleRepository = $moduleRepository;
+    public function __construct(private HookDispatcherInterface $hookDispatcher, private ModuleDataProvider $moduleDataProvider, private ?ModuleRepository $moduleRepository = null)
+    {
     }
 
     /**

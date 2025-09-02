@@ -47,26 +47,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ManufacturerAddressType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $manufacturerChoices;
-
-    /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $statesChoiceProvider;
-
-    /**
-     * @var int
-     */
-    private $contextCountryId;
-
-    /**
-     * @var Router
-     */
-    private $router;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $manufacturerChoices
@@ -77,16 +57,12 @@ class ManufacturerAddressType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $manufacturerChoices,
-        ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
-        $contextCountryId,
-        Router $router
+        private array $manufacturerChoices,
+        private ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
+        private $contextCountryId,
+        private Router $router
     ) {
         parent::__construct($translator, $locales);
-        $this->manufacturerChoices = $manufacturerChoices;
-        $this->statesChoiceProvider = $statesChoiceProvider;
-        $this->contextCountryId = $contextCountryId;
-        $this->router = $router;
     }
 
     /**

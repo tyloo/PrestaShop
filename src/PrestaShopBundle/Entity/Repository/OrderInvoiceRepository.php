@@ -34,22 +34,11 @@ use Doctrine\DBAL\Connection;
 class OrderInvoiceRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-    /**
-     * @var string
-     */
-    private $tablePrefix;
-
-    /**
      * @param Connection $connection
      * @param string $tablePrefix
      */
-    public function __construct(Connection $connection, $tablePrefix)
+    public function __construct(private Connection $connection, private $tablePrefix)
     {
-        $this->connection = $connection;
-        $this->tablePrefix = $tablePrefix;
     }
 
     /**

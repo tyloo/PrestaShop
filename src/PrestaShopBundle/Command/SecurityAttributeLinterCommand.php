@@ -47,15 +47,6 @@ final class SecurityAttributeLinterCommand extends Command
 {
     public const ACTION_LIST_ALL = 'list';
     public const ACTION_FIND_MISSING = 'find-missing';
-    /**
-     * @var AdminRouteProvider
-     */
-    private $adminRouteProvider;
-
-    /**
-     * @var SecurityAttributeLinter
-     */
-    private $securityAttributeLinter;
 
     /**
      * @var array
@@ -95,11 +86,9 @@ final class SecurityAttributeLinterCommand extends Command
         'admin_theme_customize_layouts',
     ];
 
-    public function __construct(AdminRouteProvider $adminRouteProvider, SecurityAttributeLinter $securityAttributeLinter)
+    public function __construct(private AdminRouteProvider $adminRouteProvider, private SecurityAttributeLinter $securityAttributeLinter)
     {
         parent::__construct();
-        $this->adminRouteProvider = $adminRouteProvider;
-        $this->securityAttributeLinter = $securityAttributeLinter;
     }
 
     /**

@@ -38,11 +38,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SuppliersType extends TranslatorAwareType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $supplierNameByIdChoiceProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param FormChoiceProviderInterface $supplierNameByIdChoiceProvider
@@ -50,10 +45,9 @@ class SuppliersType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormChoiceProviderInterface $supplierNameByIdChoiceProvider
+        private FormChoiceProviderInterface $supplierNameByIdChoiceProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->supplierNameByIdChoiceProvider = $supplierNameByIdChoiceProvider;
     }
 
     /**
@@ -71,9 +65,7 @@ class SuppliersType extends TranslatorAwareType
                 'required' => false,
                 // placeholder false is important to avoid empty option in select input despite required being false
                 'placeholder' => false,
-                'choice_attr' => function ($choice, $name) {
-                    return ['data-label' => $name];
-                },
+                'choice_attr' => fn($choice, $name): array => ['data-label' => $name],
                 'label' => $this->trans('Choose the suppliers associated with this product', 'Admin.Catalog.Feature'),
                 'label_tag_name' => 'h4',
             ])

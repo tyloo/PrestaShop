@@ -52,7 +52,7 @@ class EmployeeSession
      *
      * @ORM\JoinColumn(name="id_employee", referencedColumnName="id_employee", nullable=true, options={"unsigned": true}, onDelete="CASCADE")
      */
-    private ?Employee $employee;
+    private ?Employee $employee = null;
 
     /**
      * @ORM\Column(name="token", type="string", length=40, nullable=true)

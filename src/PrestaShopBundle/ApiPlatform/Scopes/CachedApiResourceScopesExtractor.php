@@ -57,9 +57,7 @@ class CachedApiResourceScopesExtractor implements ApiResourceScopesExtractorInte
     {
         return $this->getCachedResourceOrUseFallback(
             md5(self::class) . 'all_resources',
-            function () {
-                return $this->decorated->getAllApiResourceScopes();
-            }
+            fn(): array => $this->decorated->getAllApiResourceScopes()
         );
     }
 
@@ -67,9 +65,7 @@ class CachedApiResourceScopesExtractor implements ApiResourceScopesExtractorInte
     {
         return $this->getCachedResourceOrUseFallback(
             md5(self::class) . 'enabled_resources',
-            function () {
-                return $this->decorated->getEnabledApiResourceScopes();
-            }
+            fn(): array => $this->decorated->getEnabledApiResourceScopes()
         );
     }
 

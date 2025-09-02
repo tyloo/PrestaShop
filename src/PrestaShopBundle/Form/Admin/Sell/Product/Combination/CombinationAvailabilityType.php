@@ -41,16 +41,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CombinationAvailabilityType extends TranslatorAwareType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $outOfStockTypeChoiceProvider;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param FormChoiceProviderInterface $outOfStockTypeChoiceProvider
@@ -59,12 +49,10 @@ class CombinationAvailabilityType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormChoiceProviderInterface $outOfStockTypeChoiceProvider,
-        RouterInterface $router
+        private FormChoiceProviderInterface $outOfStockTypeChoiceProvider,
+        private RouterInterface $router
     ) {
         parent::__construct($translator, $locales);
-        $this->outOfStockTypeChoiceProvider = $outOfStockTypeChoiceProvider;
-        $this->router = $router;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

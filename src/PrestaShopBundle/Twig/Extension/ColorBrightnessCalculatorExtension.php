@@ -36,16 +36,10 @@ use Twig\TwigFunction;
 class ColorBrightnessCalculatorExtension extends AbstractExtension
 {
     /**
-     * @var ColorBrightnessCalculator
-     */
-    private $brightnessCalculator;
-
-    /**
      * @param ColorBrightnessCalculator $brightnessCalculator
      */
-    public function __construct(ColorBrightnessCalculator $brightnessCalculator)
+    public function __construct(private ColorBrightnessCalculator $brightnessCalculator)
     {
-        $this->brightnessCalculator = $brightnessCalculator;
     }
 
     /**

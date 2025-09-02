@@ -44,8 +44,8 @@ class DomainObjectDetector
         // Check the type if a string is provided
         if (is_string($objectOrType) && class_exists($objectOrType)) {
             $objectClass = $objectOrType;
-        } elseif (is_object($objectOrType) && class_exists(get_class($objectOrType))) {
-            $objectClass = get_class($objectOrType);
+        } elseif (is_object($objectOrType) && class_exists($objectOrType::class)) {
+            $objectClass = $objectOrType::class;
         } else {
             return false;
         }

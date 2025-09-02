@@ -35,14 +35,8 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class LogsFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var LogsConfiguration
-     */
-    private $logsConfiguration;
-
-    public function __construct(LogsConfiguration $logsConfiguration)
+    public function __construct(private LogsConfiguration $logsConfiguration)
     {
-        $this->logsConfiguration = $logsConfiguration;
     }
 
     /**

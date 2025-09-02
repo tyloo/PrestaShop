@@ -34,13 +34,10 @@ use RuntimeException;
 class NamingConventionException extends LinterException
 {
     /**
-     * @var string
+     * @param string $expectedRouteName
      */
-    protected $expectedRouteName;
-
-    public function __construct($message = '', $code = 0, ?RuntimeException $previous = null, $expectedRouteName = null)
+    public function __construct($message = '', $code = 0, ?RuntimeException $previous = null, protected $expectedRouteName = null)
     {
-        $this->expectedRouteName = $expectedRouteName;
         parent::__construct($message, $code, $previous);
     }
 

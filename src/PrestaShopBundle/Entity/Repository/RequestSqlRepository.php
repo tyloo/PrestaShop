@@ -35,10 +35,6 @@ use PrestaShop\PrestaShop\Core\Repository\RepositoryInterface;
 class RequestSqlRepository implements RepositoryInterface
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-    /**
      * @var string
      */
     private $requestSqlTable;
@@ -47,9 +43,8 @@ class RequestSqlRepository implements RepositoryInterface
      * @param Connection $connection
      * @param string $dbPrefix
      */
-    public function __construct(Connection $connection, $dbPrefix)
+    public function __construct(private Connection $connection, $dbPrefix)
     {
-        $this->connection = $connection;
         $this->requestSqlTable = $dbPrefix . 'request_sql';
     }
 

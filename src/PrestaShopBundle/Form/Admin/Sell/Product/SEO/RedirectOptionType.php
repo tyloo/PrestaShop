@@ -43,31 +43,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RedirectOptionType extends TranslatorAwareType
 {
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var DataTransformerInterface
-     */
-    private $targetTransformer;
-
-    /**
-     * @var EventSubscriberInterface
-     */
-    private $eventSubscriber;
-
-    /**
-     * @var string
-     */
-    private $employeeIsoCode;
-
-    /**
-     * @var int
-     */
-    private $homeCategoryId;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param RouterInterface $router
@@ -79,18 +54,13 @@ class RedirectOptionType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        RouterInterface $router,
-        DataTransformerInterface $targetTransformer,
-        EventSubscriberInterface $eventSubscriber,
-        string $employeeIsoCode,
-        int $homeCategoryId
+        private RouterInterface $router,
+        private DataTransformerInterface $targetTransformer,
+        private EventSubscriberInterface $eventSubscriber,
+        private string $employeeIsoCode,
+        private int $homeCategoryId
     ) {
         parent::__construct($translator, $locales);
-        $this->router = $router;
-        $this->targetTransformer = $targetTransformer;
-        $this->eventSubscriber = $eventSubscriber;
-        $this->employeeIsoCode = $employeeIsoCode;
-        $this->homeCategoryId = $homeCategoryId;
     }
 
     /**

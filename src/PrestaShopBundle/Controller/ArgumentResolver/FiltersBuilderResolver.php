@@ -39,15 +39,11 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
  */
 class FiltersBuilderResolver implements ArgumentValueResolverInterface
 {
-    /** @var FiltersBuilderInterface */
-    private $builder;
-
     /**
      * @param FiltersBuilderInterface $builder
      */
-    public function __construct(FiltersBuilderInterface $builder)
+    public function __construct(private FiltersBuilderInterface $builder)
     {
-        $this->builder = $builder;
     }
 
     /**

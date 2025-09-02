@@ -33,41 +33,13 @@ use Symfony\Component\Form\FormFactoryInterface;
 final class TranslationsSettingsFormHandler implements FormHandlerInterface
 {
     /**
-     * @var FormFactoryInterface the form builder
-     */
-    protected $formFactory;
-
-    /**
-     * @var HookDispatcherInterface the event dispatcher
-     */
-    protected $hookDispatcher;
-
-    /**
-     * @var string the hook name to be dispatched
-     */
-    protected $hookName;
-
-    /**
-     * @var string
-     */
-    protected $form;
-
-    /**
      * @param FormFactoryInterface $formFactory
      * @param HookDispatcherInterface $hookDispatcher
      * @param string $form
      * @param string $hookName
      */
-    public function __construct(
-        FormFactoryInterface $formFactory,
-        HookDispatcherInterface $hookDispatcher,
-        string $form,
-        string $hookName
-    ) {
-        $this->formFactory = $formFactory;
-        $this->hookDispatcher = $hookDispatcher;
-        $this->form = $form;
-        $this->hookName = $hookName;
+    public function __construct(protected FormFactoryInterface $formFactory, protected HookDispatcherInterface $hookDispatcher, protected string $form, protected string $hookName)
+    {
     }
 
     /**

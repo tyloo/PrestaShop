@@ -41,16 +41,14 @@ class MultishopCommandListener
     public $context;
 
     /**
-     * Path to root dir, needed to require config file.
-     *
-     * @var string
+     * @param string $rootDir
      */
-    public $rootDir;
-
-    public function __construct(Context $context, $rootDir)
+    public function __construct(Context $context, /**
+     * Path to root dir, needed to require config file.
+     */
+    public $rootDir)
     {
         $this->context = $context;
-        $this->rootDir = $rootDir;
     }
 
     public function onConsoleCommand(ConsoleCommandEvent $event): void

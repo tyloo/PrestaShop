@@ -65,14 +65,8 @@ class AddDisablingSwitchListener implements EventSubscriberInterface
     private const DISABLED_VALUE = '0';
     private const ENABLED_VALUE = '1';
 
-    /**
-     * @var FormCloner
-     */
-    private $formCloner;
-
-    public function __construct(FormCloner $formCloner)
+    public function __construct(private FormCloner $formCloner)
     {
-        $this->formCloner = $formCloner;
     }
 
     /**

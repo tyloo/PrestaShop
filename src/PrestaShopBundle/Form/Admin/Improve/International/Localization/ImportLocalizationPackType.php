@@ -40,11 +40,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ImportLocalizationPackType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $localizationPackChoices;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $localizationPackChoices
@@ -52,11 +47,9 @@ class ImportLocalizationPackType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $localizationPackChoices
+        private array $localizationPackChoices
     ) {
         parent::__construct($translator, $locales);
-
-        $this->localizationPackChoices = $localizationPackChoices;
     }
 
     /**

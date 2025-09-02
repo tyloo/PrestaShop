@@ -36,15 +36,11 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MailThemeConfigurationType extends AbstractType
 {
-    /** @var array */
-    private $mailThemes;
-
     /**
      * @param array $mailThemes
      */
-    public function __construct(array $mailThemes)
+    public function __construct(private array $mailThemes)
     {
-        $this->mailThemes = $mailThemes;
     }
 
     /**

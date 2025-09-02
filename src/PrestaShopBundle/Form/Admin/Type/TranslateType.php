@@ -39,41 +39,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class TranslateType extends CommonAbstractType
 {
     /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
-     * @var bool
-     */
-    private $saveFormLocaleChoice;
-
-    /**
-     * @var int
-     */
-    private $defaultFormLanguageId;
-
-    /**
-     * @var int
-     */
-    private $defaultShopLanguageId;
-
-    /**
      * @param UrlGeneratorInterface $urlGenerator
      * @param bool $saveFormLocaleChoice
      * @param int $defaultFormLanguageId
      * @param int $defaultShopLanguageId
      */
-    public function __construct(
-        UrlGeneratorInterface $urlGenerator,
-        $saveFormLocaleChoice,
-        $defaultFormLanguageId,
-        $defaultShopLanguageId
-    ) {
-        $this->urlGenerator = $urlGenerator;
-        $this->saveFormLocaleChoice = $saveFormLocaleChoice;
-        $this->defaultFormLanguageId = $defaultFormLanguageId;
-        $this->defaultShopLanguageId = $defaultShopLanguageId;
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private $saveFormLocaleChoice, private $defaultFormLanguageId, private $defaultShopLanguageId)
+    {
     }
 
     /**

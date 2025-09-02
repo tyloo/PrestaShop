@@ -45,11 +45,6 @@ class DetailsType extends TranslatorAwareType
     protected $isFeatureEnabled;
 
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $productConditionChoiceProvider;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param FormChoiceProviderInterface $productConditionChoiceProvider
@@ -58,11 +53,10 @@ class DetailsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormChoiceProviderInterface $productConditionChoiceProvider,
+        private FormChoiceProviderInterface $productConditionChoiceProvider,
         bool $isFeatureEnabled
     ) {
         parent::__construct($translator, $locales);
-        $this->productConditionChoiceProvider = $productConditionChoiceProvider;
         $this->isFeatureEnabled = $isFeatureEnabled;
     }
 

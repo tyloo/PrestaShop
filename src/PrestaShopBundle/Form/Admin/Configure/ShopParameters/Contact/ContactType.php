@@ -50,16 +50,6 @@ class ContactType extends TranslatorAwareType
     public const MAX_TITLE_LENGTH = 255;
 
     /**
-     * @var bool
-     */
-    private $isShopFeatureEnabled;
-
-    /**
-     * @var DataTransformerInterface
-     */
-    private $singleDefaultLanguageArrayToFilledArrayDataTransformer;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param DataTransformerInterface $singleDefaultLanguageArrayToFilledArrayDataTransformer
@@ -68,12 +58,10 @@ class ContactType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        DataTransformerInterface $singleDefaultLanguageArrayToFilledArrayDataTransformer,
-        $isShopFeatureEnabled
+        private DataTransformerInterface $singleDefaultLanguageArrayToFilledArrayDataTransformer,
+        private $isShopFeatureEnabled
     ) {
         parent::__construct($translator, $locales);
-        $this->isShopFeatureEnabled = $isShopFeatureEnabled;
-        $this->singleDefaultLanguageArrayToFilledArrayDataTransformer = $singleDefaultLanguageArrayToFilledArrayDataTransformer;
     }
 
     /**

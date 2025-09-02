@@ -37,19 +37,12 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class MetaSettingsSeoOptionsFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $seoOptionsDataConfiguration;
-
-    /**
      * MetaFormDataProvider constructor.
      *
      * @param DataConfigurationInterface $seoOptionsDataConfiguration
      */
-    public function __construct(
-        DataConfigurationInterface $seoOptionsDataConfiguration
-    ) {
-        $this->seoOptionsDataConfiguration = $seoOptionsDataConfiguration;
+    public function __construct(private DataConfigurationInterface $seoOptionsDataConfiguration)
+    {
     }
 
     /**

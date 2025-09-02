@@ -41,21 +41,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ExportCataloguesType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $exportTranslationCoreTypeChoices;
-
-    /**
-     * @var array
-     */
-    private $themeChoices;
-
-    /**
-     * @var array
-     */
-    private $moduleChoices;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $themeChoices
@@ -65,14 +50,11 @@ class ExportCataloguesType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $exportTranslationCoreTypeChoices,
-        array $themeChoices,
-        array $moduleChoices
+        private array $exportTranslationCoreTypeChoices,
+        private array $themeChoices,
+        private array $moduleChoices
     ) {
         parent::__construct($translator, $locales);
-        $this->exportTranslationCoreTypeChoices = $exportTranslationCoreTypeChoices;
-        $this->themeChoices = $themeChoices;
-        $this->moduleChoices = $moduleChoices;
     }
 
     /**

@@ -52,26 +52,14 @@ class CmsPageCategoryType extends TranslatorAwareType
     public const META_DESCRIPTION_MAX_LENGTH = 512;
 
     /**
-     * @var array
-     */
-    private $allCmsCategories;
-
-    /**
-     * @var bool
-     */
-    private $isShopFeatureEnabled;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $allCmsCategories
      * @param bool $isShopFeatureEnabled
      */
-    public function __construct(TranslatorInterface $translator, array $locales, array $allCmsCategories, $isShopFeatureEnabled)
+    public function __construct(TranslatorInterface $translator, array $locales, private array $allCmsCategories, private $isShopFeatureEnabled)
     {
         parent::__construct($translator, $locales);
-        $this->allCmsCategories = $allCmsCategories;
-        $this->isShopFeatureEnabled = $isShopFeatureEnabled;
     }
 
     /**

@@ -46,26 +46,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class HandlingType extends TranslatorAwareType
 {
-    /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        ConfigurationInterface $configuration,
-        CurrencyDataProviderInterface $currencyDataProvider
+        private ConfigurationInterface $configuration,
+        private CurrencyDataProviderInterface $currencyDataProvider
     ) {
         parent::__construct($translator, $locales);
-
-        $this->currencyDataProvider = $currencyDataProvider;
-        $this->configuration = $configuration;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

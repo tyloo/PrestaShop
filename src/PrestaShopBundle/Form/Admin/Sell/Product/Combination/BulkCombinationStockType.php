@@ -47,11 +47,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class BulkCombinationStockType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $stockManagementEnabled;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param bool $stockManagementEnabled
@@ -59,10 +54,9 @@ class BulkCombinationStockType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        bool $stockManagementEnabled
+        private bool $stockManagementEnabled
     ) {
         parent::__construct($translator, $locales);
-        $this->stockManagementEnabled = $stockManagementEnabled;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -74,9 +68,7 @@ class BulkCombinationStockType extends TranslatorAwareType
                     'label' => $this->trans('Edit quantity', 'Admin.Catalog.Feature'),
                     'disabling_switch' => true,
                     'disabling_switch_event' => 'combinationSwitchDeltaQuantity',
-                    'disabled_value' => function (?array $data) {
-                        return empty($data['quantity']) && empty($data['delta']);
-                    },
+                    'disabled_value' => fn(?array $data): bool => empty($data['quantity']) && empty($data['delta']),
                     'modify_all_shops' => true,
                 ])
                 ->add('fixed_quantity', IntegerType::class, [

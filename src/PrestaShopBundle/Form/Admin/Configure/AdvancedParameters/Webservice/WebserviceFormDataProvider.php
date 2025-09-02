@@ -36,16 +36,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class WebserviceFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var WebserviceConfiguration
-     */
-    private $webserviceConfiguration;
-
-    /**
      * @param WebserviceConfiguration $webserviceConfiguration
      */
-    public function __construct(WebserviceConfiguration $webserviceConfiguration)
+    public function __construct(private WebserviceConfiguration $webserviceConfiguration)
     {
-        $this->webserviceConfiguration = $webserviceConfiguration;
     }
 
     /**

@@ -35,16 +35,10 @@ use Symfony\Component\Routing\RouterInterface;
 final class AdminRouteProvider
 {
     /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * @param RouterInterface $router
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(private RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     /**

@@ -37,16 +37,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class UpdateOrderShippingType extends AbstractType
 {
     /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $carrierForOrderChoiceProvider;
-
-    /**
      * @param ConfigurableFormChoiceProviderInterface $carrierForOrderChoiceProvider
      */
-    public function __construct(ConfigurableFormChoiceProviderInterface $carrierForOrderChoiceProvider)
+    public function __construct(private ConfigurableFormChoiceProviderInterface $carrierForOrderChoiceProvider)
     {
-        $this->carrierForOrderChoiceProvider = $carrierForOrderChoiceProvider;
     }
 
     /**

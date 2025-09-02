@@ -35,16 +35,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ChangeOrderCurrencyType extends AbstractType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $currencyChoiceProvider;
-
-    /**
      * @param FormChoiceProviderInterface $currencyChoiceProvider
      */
-    public function __construct(FormChoiceProviderInterface $currencyChoiceProvider)
+    public function __construct(private FormChoiceProviderInterface $currencyChoiceProvider)
     {
-        $this->currencyChoiceProvider = $currencyChoiceProvider;
     }
 
     /**

@@ -40,16 +40,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ZoneChoiceType extends AbstractType
 {
     /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $zonesChoiceProvider;
-
-    /**
      * @param ConfigurableFormChoiceProviderInterface $zonesChoiceProvider
      */
-    public function __construct(ConfigurableFormChoiceProviderInterface $zonesChoiceProvider)
+    public function __construct(private ConfigurableFormChoiceProviderInterface $zonesChoiceProvider)
     {
-        $this->zonesChoiceProvider = $zonesChoiceProvider;
     }
 
     /**
@@ -59,12 +53,10 @@ class ZoneChoiceType extends AbstractType
     {
         // Set normalizer enables to use closure for choice generation with options
         $resolver->setNormalizer(
-            'choices', function (Options $options) {
-                return $this->zonesChoiceProvider->getChoices([
-                    'active' => $options['active'],
-                    'active_first' => $options['active_first'],
-                ]);
-            }
+            'choices', fn(Options $options) => $this->zonesChoiceProvider->getChoices([
+                'active' => $options['active'],
+                'active_first' => $options['active_first'],
+            ])
         );
 
         $resolver->setDefaults([

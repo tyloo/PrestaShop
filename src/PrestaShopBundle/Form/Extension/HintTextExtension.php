@@ -56,7 +56,7 @@ class HintTextExtension extends AbstractTypeExtension
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['hint'] = isset($options['hint']) ? $options['hint'] : null;
+        $view->vars['hint'] = $options['hint'] ?? null;
     }
 
     /**

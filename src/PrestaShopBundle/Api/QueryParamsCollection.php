@@ -181,16 +181,12 @@ abstract class QueryParamsCollection
      */
     protected function parseFilterParamsArray(array $queryParams, array $allParameters): array
     {
-        $filters = array_filter(array_keys($allParameters), function ($filter) {
-            return in_array($filter, $this->getValidFilterParams());
-        });
+        $filters = array_filter(array_keys($allParameters), fn($filter): bool => in_array($filter, $this->getValidFilterParams()));
 
         $filterParams = [];
         array_walk($filters, function ($filter) use ($allParameters, &$filterParams): void {
             if (is_array($allParameters[$filter])) {
-                $allParameters[$filter] = array_filter($allParameters[$filter], function ($value) {
-                    return is_int($value) || (is_string($value) && strlen(trim($value)) > 0);
-                });
+                $allParameters[$filter] = array_filter($allParameters[$filter], fn($value): bool => is_int($value) || (is_string($value) && strlen(trim($value)) > 0));
             }
 
             $filterParams[$filter] = $allParameters[$filter];
@@ -400,9 +396,7 @@ abstract class QueryParamsCollection
             return $filters;
         }
 
-        $placeholders = array_map(function ($index) use ($column) {
-            return ':' . $column . '_' . $index;
-        }, array_keys($value));
+        $placeholders = array_map(fn($index): string => ':' . $column . '_' . $index, array_keys($value));
 
         $filters[] = sprintf('AND {%s} IN (%s)', $column, implode(',', $placeholders));
 
@@ -743,9 +737,7 @@ abstract class QueryParamsCollection
                 '{combination_name}',
             ];
 
-            $conditions = array_map(function ($field) use ($index) {
-                return sprintf('%s LIKE :keyword_%d', $field, $index);
-            }, $fields);
+            $conditions = array_map(fn($field): string => sprintf('%s LIKE :keyword_%d', $field, $index), $fields);
 
             return 'AND (' . implode(' OR ', $conditions) . ')';
         }, range(0, count($this->queryParams['filter']['keywords']) - 1));

@@ -48,21 +48,15 @@ class LanguageType extends TranslatorAwareType
     private const MAX_NAME_LENGTH = 32;
 
     /**
-     * @var bool
-     */
-    private $isMultistoreFeatureActive;
-
-    /**
      * LanguageType constructor.
      *
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param bool $isMultistoreFeatureActive
      */
-    public function __construct(TranslatorInterface $translator, array $locales, bool $isMultistoreFeatureActive)
+    public function __construct(TranslatorInterface $translator, array $locales, private bool $isMultistoreFeatureActive)
     {
         parent::__construct($translator, $locales);
-        $this->isMultistoreFeatureActive = $isMultistoreFeatureActive;
     }
 
     /**

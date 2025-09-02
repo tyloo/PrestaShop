@@ -99,15 +99,15 @@ class AdminSecurity
             $values = $data;
         }
 
-        $values['message'] = $values['message'] ?? $message ?? $this->message;
-        $values['domain'] = $values['domain'] ?? $domain ?? $this->domain;
-        $values['url'] = $values['url'] ?? $url ?? $this->url;
-        $values['redirectQueryParamsToKeep'] = $values['redirectQueryParamsToKeep'] ?? $redirectQueryParamsToKeep ?? $this->redirectQueryParamsToKeep;
+        $values['message'] ??= $message ?? $this->message;
+        $values['domain'] ??= $domain ?? $this->domain;
+        $values['url'] ??= $url ?? $this->url;
+        $values['redirectQueryParamsToKeep'] ??= $redirectQueryParamsToKeep ?? $this->redirectQueryParamsToKeep;
 
-        $values['statusCode'] = $values['statusCode'] ?? $statusCode;
-        $values['exceptionCode'] = $values['exceptionCode'] ?? $exceptionCode;
-        $values['redirectRoute'] = $values['redirectRoute'] ?? $redirectRoute;
-        $values['jsonResponse'] = $values['jsonResponse'] ?? $jsonResponse ?? false;
+        $values['statusCode'] ??= $statusCode;
+        $values['exceptionCode'] ??= $exceptionCode;
+        $values['redirectRoute'] ??= $redirectRoute;
+        $values['jsonResponse'] ??= $jsonResponse ?? false;
 
         foreach ($values as $k => $v) {
             if (!method_exists($this, $name = 'set' . $k)) {

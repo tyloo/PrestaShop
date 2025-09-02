@@ -37,25 +37,11 @@ use PrestaShop\PrestaShop\Core\Geolocation\GeoLite\GeoLiteCityCheckerInterface;
 final class GeolocationByIpAddressFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $dataConfiguration;
-
-    /**
-     * @var GeoLiteCityCheckerInterface
-     */
-    private $geoLiteCityChecker;
-
-    /**
      * @param DataConfigurationInterface $dataConfiguration
      * @param GeoLiteCityCheckerInterface $geoLiteCityChecker
      */
-    public function __construct(
-        DataConfigurationInterface $dataConfiguration,
-        GeoLiteCityCheckerInterface $geoLiteCityChecker
-    ) {
-        $this->dataConfiguration = $dataConfiguration;
-        $this->geoLiteCityChecker = $geoLiteCityChecker;
+    public function __construct(private DataConfigurationInterface $dataConfiguration, private GeoLiteCityCheckerInterface $geoLiteCityChecker)
+    {
     }
 
     /**

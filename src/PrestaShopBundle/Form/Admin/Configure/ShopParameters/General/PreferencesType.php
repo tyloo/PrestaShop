@@ -43,30 +43,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PreferencesType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $isShopFeatureEnabled;
-
-    /**
-     * @var bool
-     */
-    private $isSingleShopContext;
-
-    /**
-     * @var bool
-     */
-    private $isAllShopContext;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param ConfigurationInterface $configuration
@@ -75,21 +51,15 @@ class PreferencesType extends TranslatorAwareType
      * @param bool $isAllShopContext
      */
     public function __construct(
-        RequestStack $requestStack,
+        private RequestStack $requestStack,
         TranslatorInterface $translator,
         array $locales,
-        ConfigurationInterface $configuration,
-        bool $isShopFeatureEnabled,
-        bool $isSingleShopContext,
-        bool $isAllShopContext
+        private ConfigurationInterface $configuration,
+        private bool $isShopFeatureEnabled,
+        private bool $isSingleShopContext,
+        private bool $isAllShopContext
     ) {
         parent::__construct($translator, $locales);
-
-        $this->isShopFeatureEnabled = $isShopFeatureEnabled;
-        $this->isSingleShopContext = $isSingleShopContext;
-        $this->isAllShopContext = $isAllShopContext;
-        $this->configuration = $configuration;
-        $this->requestStack = $requestStack;
     }
 
     /**

@@ -40,15 +40,6 @@ class Profile
     public const ADMIN_PROFILE_ID = 1;
 
     /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_profile", type="integer", options={"unsigned": true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private ?int $id = null;
-
-    /**
      * @ORM\ManyToMany(targetEntity="PrestaShopBundle\Entity\Employee\AuthorizationRole")
      *
      * @ORM\JoinTable(
@@ -59,9 +50,15 @@ class Profile
      */
     private Collection $authorizationRoles;
 
-    public function __construct(?int $id = null)
+    public function __construct(/**
+     * @ORM\Id
+     *
+     * @ORM\Column(name="id_profile", type="integer", options={"unsigned": true})
+     *
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private ?int $id = null)
     {
-        $this->id = $id;
         $this->authorizationRoles = new ArrayCollection();
     }
 

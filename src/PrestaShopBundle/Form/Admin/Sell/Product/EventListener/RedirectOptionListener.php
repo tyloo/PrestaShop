@@ -61,17 +61,10 @@ class RedirectOptionListener implements EventSubscriberInterface
         $targetField = $form->get('target');
         $targetOptions = $targetField->getConfig()->getOptions();
         $dataType = $data['type'] ?? RedirectType::TYPE_NOT_FOUND;
-        switch ($dataType) {
-            case RedirectType::TYPE_CATEGORY_PERMANENT:
-            case RedirectType::TYPE_CATEGORY_TEMPORARY:
-                $entityType = 'category';
-                break;
-            case RedirectType::TYPE_PRODUCT_PERMANENT:
-            case RedirectType::TYPE_PRODUCT_TEMPORARY:
-            default:
-                $entityType = 'product';
-                break;
-        }
+        $entityType = match ($dataType) {
+            RedirectType::TYPE_CATEGORY_PERMANENT, RedirectType::TYPE_CATEGORY_TEMPORARY => 'category',
+            default => 'product',
+        };
 
         // Adapt target options
         $targetOptions['entity_type'] = $entityType;

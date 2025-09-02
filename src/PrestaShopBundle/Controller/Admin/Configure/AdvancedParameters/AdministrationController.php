@@ -192,48 +192,43 @@ class AdministrationController extends PrestaShopAdminController
      */
     private function getErrorMessage(InvalidConfigurationDataError $error): string
     {
-        switch ($error->getErrorCode()) {
-            case FormDataProvider::ERROR_NOT_NUMERIC_OR_LOWER_THAN_ZERO:
-                return $this->trans(
-                    '%s is invalid. Please enter an integer greater than or equal to 0.',
-                    [$this->getFieldLabel($error->getFieldName())],
-                    'Admin.Notifications.Error',
-                );
-            case FormDataProvider::ERROR_COOKIE_LIFETIME_MAX_VALUE_EXCEEDED:
-                return $this->trans(
-                    '%s is invalid. Please enter an integer lower than %s.',
-                    [
-                        $this->getFieldLabel($error->getFieldName()),
-                        CookieOptions::MAX_COOKIE_VALUE,
-                    ],
-                    'Admin.Notifications.Error',
-                );
-            case FormDataProvider::ERROR_COOKIE_SAMESITE_NONE:
-                return $this->trans(
-                    'The SameSite=None attribute is only available in secure mode.',
-                    [],
-                    'Admin.Advparameters.Notification'
-                );
-            case FormDataProvider::ERROR_MAX_SIZE_ATTACHED_FILES:
-                return $this->trans(
-                    '%s is invalid. Please enter an integer between %s and %s.',
-                    [
-                        $this->getFieldLabel($error->getFieldName()),
-                        0,
-                        $this->uploadSizeConfiguration->getMaxUploadSizeInBytes() / 1048576,
-                    ],
-                    'Admin.Advparameters.Notification'
-                );
-        }
-
-        return $this->trans(
-            '%s is invalid.',
-            [
-                $this->getFieldLabel($error->getFieldName()),
-                CookieOptions::MAX_COOKIE_VALUE,
-            ],
-            'Admin.Notifications.Error',
-        );
+        return match ($error->getErrorCode()) {
+            FormDataProvider::ERROR_NOT_NUMERIC_OR_LOWER_THAN_ZERO => $this->trans(
+                '%s is invalid. Please enter an integer greater than or equal to 0.',
+                [$this->getFieldLabel($error->getFieldName())],
+                'Admin.Notifications.Error',
+            ),
+            FormDataProvider::ERROR_COOKIE_LIFETIME_MAX_VALUE_EXCEEDED => $this->trans(
+                '%s is invalid. Please enter an integer lower than %s.',
+                [
+                    $this->getFieldLabel($error->getFieldName()),
+                    CookieOptions::MAX_COOKIE_VALUE,
+                ],
+                'Admin.Notifications.Error',
+            ),
+            FormDataProvider::ERROR_COOKIE_SAMESITE_NONE => $this->trans(
+                'The SameSite=None attribute is only available in secure mode.',
+                [],
+                'Admin.Advparameters.Notification'
+            ),
+            FormDataProvider::ERROR_MAX_SIZE_ATTACHED_FILES => $this->trans(
+                '%s is invalid. Please enter an integer between %s and %s.',
+                [
+                    $this->getFieldLabel($error->getFieldName()),
+                    0,
+                    $this->uploadSizeConfiguration->getMaxUploadSizeInBytes() / 1048576,
+                ],
+                'Admin.Advparameters.Notification'
+            ),
+            default => $this->trans(
+                '%s is invalid.',
+                [
+                    $this->getFieldLabel($error->getFieldName()),
+                    CookieOptions::MAX_COOKIE_VALUE,
+                ],
+                'Admin.Notifications.Error',
+            ),
+        };
     }
 
     /**
@@ -249,44 +244,38 @@ class AdministrationController extends PrestaShopAdminController
          * building the whole form just to retrieve labels sound like an overhead.
          * Maybe move labels to some other service and then retrieve them in both UploadQuotaType and here.
          */
-        switch ($fieldName) {
-            case UploadQuotaType::FIELD_MAX_SIZE_ATTACHED_FILES:
-                return $this->trans(
-                    'Maximum size for attached files',
-                    [],
-                    'Admin.Advparameters.Feature'
-                );
-            case UploadQuotaType::FIELD_MAX_SIZE_DOWNLOADABLE_FILE:
-                return $this->trans(
-                    'Maximum size for a downloadable product',
-                    [],
-                    'Admin.Advparameters.Feature'
-                );
-            case UploadQuotaType::FIELD_MAX_SIZE_PRODUCT_IMAGE:
-                return $this->trans(
-                    'Maximum size for a product\'s image',
-                    [],
-                    'Admin.Advparameters.Feature'
-                );
-            case GeneralType::FIELD_FRONT_COOKIE_LIFETIME:
-                return $this->trans(
-                    'Lifetime of front office cookies',
-                    [],
-                    'Admin.Advparameters.Feature'
-                );
-            case GeneralType::FIELD_BACK_COOKIE_LIFETIME:
-                return $this->trans(
-                    'Lifetime of back office cookies',
-                    [],
-                    'Admin.Advparameters.Feature'
-                );
-        }
-
-        throw new FieldNotFoundException(
-            sprintf(
-                'Field name for field %s not found',
-                $fieldName
-            )
-        );
+        return match ($fieldName) {
+            UploadQuotaType::FIELD_MAX_SIZE_ATTACHED_FILES => $this->trans(
+                'Maximum size for attached files',
+                [],
+                'Admin.Advparameters.Feature'
+            ),
+            UploadQuotaType::FIELD_MAX_SIZE_DOWNLOADABLE_FILE => $this->trans(
+                'Maximum size for a downloadable product',
+                [],
+                'Admin.Advparameters.Feature'
+            ),
+            UploadQuotaType::FIELD_MAX_SIZE_PRODUCT_IMAGE => $this->trans(
+                'Maximum size for a product\'s image',
+                [],
+                'Admin.Advparameters.Feature'
+            ),
+            GeneralType::FIELD_FRONT_COOKIE_LIFETIME => $this->trans(
+                'Lifetime of front office cookies',
+                [],
+                'Admin.Advparameters.Feature'
+            ),
+            GeneralType::FIELD_BACK_COOKIE_LIFETIME => $this->trans(
+                'Lifetime of back office cookies',
+                [],
+                'Admin.Advparameters.Feature'
+            ),
+            default => throw new FieldNotFoundException(
+                sprintf(
+                    'Field name for field %s not found',
+                    $fieldName
+                )
+            ),
+        };
     }
 }

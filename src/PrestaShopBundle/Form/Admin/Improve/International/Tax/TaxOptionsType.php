@@ -41,21 +41,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TaxOptionsType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $isEcotaxEnabled;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $taxAddressTypeChoiceProvider;
-
-    /**
-     * @var FormChoiceProviderInterface
-     */
-    private $taxRuleGroupChoiceProvider;
-
-    /**
      * TaxOptionsType constructor.
      *
      * Backwards compatibility break introduced in 1.7.8.0 due to extension of TranslatorAwareType
@@ -69,14 +54,11 @@ class TaxOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        bool $isEcotaxEnabled,
-        FormChoiceProviderInterface $taxAddressTypeChoiceProvider,
-        FormChoiceProviderInterface $taxRuleGroupChoiceProvider
+        private bool $isEcotaxEnabled,
+        private FormChoiceProviderInterface $taxAddressTypeChoiceProvider,
+        private FormChoiceProviderInterface $taxRuleGroupChoiceProvider
     ) {
         parent::__construct($translator, $locales);
-        $this->isEcotaxEnabled = $isEcotaxEnabled;
-        $this->taxAddressTypeChoiceProvider = $taxAddressTypeChoiceProvider;
-        $this->taxRuleGroupChoiceProvider = $taxRuleGroupChoiceProvider;
     }
 
     /**

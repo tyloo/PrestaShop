@@ -35,17 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class PaymentPreferencesFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $paymentModulePreferencesConfiguration;
-
-    /**
      * @param DataConfigurationInterface $paymentModulePreferencesConfiguration
      */
-    public function __construct(
-        DataConfigurationInterface $paymentModulePreferencesConfiguration
-    ) {
-        $this->paymentModulePreferencesConfiguration = $paymentModulePreferencesConfiguration;
+    public function __construct(private DataConfigurationInterface $paymentModulePreferencesConfiguration)
+    {
     }
 
     /**

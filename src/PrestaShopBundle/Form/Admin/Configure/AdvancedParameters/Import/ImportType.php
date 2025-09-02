@@ -137,9 +137,7 @@ class ImportType extends TranslatorAwareType
 
                     return is_numeric($entity) ? $entity : Entity::getFromName($entity);
                 },
-                function ($entity) {
-                    return $entity;
-                }
+                fn($entity) => $entity
             ));
     }
 

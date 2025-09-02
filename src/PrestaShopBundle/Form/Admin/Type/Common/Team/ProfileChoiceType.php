@@ -36,16 +36,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProfileChoiceType extends AbstractType
 {
     /**
-     * @var array
-     */
-    private $profileChoices;
-
-    /**
      * @param array $profileChoices
      */
-    public function __construct(array $profileChoices)
+    public function __construct(private array $profileChoices)
     {
-        $this->profileChoices = $profileChoices;
     }
 
     /**

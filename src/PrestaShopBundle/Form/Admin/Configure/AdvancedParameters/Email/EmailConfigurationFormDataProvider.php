@@ -36,17 +36,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class EmailConfigurationFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $emailDataConfigurator;
-
-    /**
      * @param DataConfigurationInterface $emailDataConfigurator
      */
-    public function __construct(
-        DataConfigurationInterface $emailDataConfigurator
-    ) {
-        $this->emailDataConfigurator = $emailDataConfigurator;
+    public function __construct(private DataConfigurationInterface $emailDataConfigurator)
+    {
     }
 
     /**

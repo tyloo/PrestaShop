@@ -55,21 +55,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CustomerAddressType extends TranslatorAwareType
 {
     /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $stateChoiceProvider;
-
-    /**
-     * @var int
-     */
-    private $contextCountryId;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * CustomerAddressType constructor.
      *
      * Backwards compatibility break introduced in 1.7.8.0 due to addition of Router as mandatory constructor argument
@@ -84,14 +69,11 @@ class CustomerAddressType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        ConfigurableFormChoiceProviderInterface $stateChoiceProvider,
-        $contextCountryId,
-        RouterInterface $router
+        private ConfigurableFormChoiceProviderInterface $stateChoiceProvider,
+        private $contextCountryId,
+        private RouterInterface $router
     ) {
         parent::__construct($translator, $locales);
-        $this->stateChoiceProvider = $stateChoiceProvider;
-        $this->contextCountryId = $contextCountryId;
-        $this->router = $router;
     }
 
     /**

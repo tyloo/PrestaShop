@@ -580,9 +580,7 @@ class CategoryController extends PrestaShopAdminController
             try {
                 $categoriesDeleteData = $deleteCategoriesForm->getData();
                 $idParent = (int) $categoriesDeleteData['categories_to_delete_parent'];
-                $categoryIds = array_map(function ($categoryId) {
-                    return (int) $categoryId;
-                }, $categoriesDeleteData['categories_to_delete']);
+                $categoryIds = array_map(fn($categoryId): int => (int) $categoryId, $categoriesDeleteData['categories_to_delete']);
 
                 $command = new BulkDeleteCategoriesCommand(
                     $categoryIds,

@@ -40,35 +40,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class MetaSettingsShopUrlsFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $shopUrlsDataConfiguration;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var Validate
-     */
-    private $validate;
-
-    /**
      * MetaFormDataProvider constructor.
      *
      * @param DataConfigurationInterface $shopUrlsDataConfiguration
      * @param TranslatorInterface $translator
      * @param Validate $validate
      */
-    public function __construct(
-        DataConfigurationInterface $shopUrlsDataConfiguration,
-        TranslatorInterface $translator,
-        Validate $validate
-    ) {
-        $this->shopUrlsDataConfiguration = $shopUrlsDataConfiguration;
-        $this->translator = $translator;
-        $this->validate = $validate;
+    public function __construct(private DataConfigurationInterface $shopUrlsDataConfiguration, private TranslatorInterface $translator, private Validate $validate)
+    {
     }
 
     /**

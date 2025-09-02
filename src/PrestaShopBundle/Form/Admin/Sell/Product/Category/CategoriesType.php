@@ -40,16 +40,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CategoriesType extends TranslatorAwareType
 {
     /**
-     * @var ConfigurableFormChoiceProviderInterface
-     */
-    private $defaultCategoryChoiceProvider;
-
-    /**
-     * @var EventSubscriberInterface
-     */
-    private $eventSubscriber;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param ConfigurableFormChoiceProviderInterface $defaultCategoryChoiceProvider
@@ -58,12 +48,10 @@ class CategoriesType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        ConfigurableFormChoiceProviderInterface $defaultCategoryChoiceProvider,
-        EventSubscriberInterface $eventSubscriber
+        private ConfigurableFormChoiceProviderInterface $defaultCategoryChoiceProvider,
+        private EventSubscriberInterface $eventSubscriber
     ) {
         parent::__construct($translator, $locales);
-        $this->defaultCategoryChoiceProvider = $defaultCategoryChoiceProvider;
-        $this->eventSubscriber = $eventSubscriber;
     }
 
     /**

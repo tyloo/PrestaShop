@@ -31,23 +31,17 @@ namespace PrestaShopBundle\Routing\Linter\Exception;
 class ControllerNotFoundException extends LinterException
 {
     /**
-     * @var string
-     */
-    private $invalidController;
-
-    /**
      * {@inheritDoc}
      */
-    public function __construct($message, string $invalidController)
+    public function __construct($message, private string $invalidController)
     {
         parent::__construct($message, 0, null);
-        $this->invalidController = $invalidController;
     }
 
     /**
      * @return string
      */
-    public function getInvalidController()
+    public function getInvalidController(): string
     {
         return $this->invalidController;
     }

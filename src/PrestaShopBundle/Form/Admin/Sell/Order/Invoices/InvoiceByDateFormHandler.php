@@ -41,16 +41,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 final class InvoiceByDateFormHandler extends Handler
 {
     /**
-     * @var OrderInvoiceDataProviderInterface
-     */
-    private $orderInvoiceDataProvider;
-
-    /**
-     * @var PDFGeneratorInterface
-     */
-    private $pdfGenerator;
-
-    /**
      * @param FormFactoryInterface $formFactory
      * @param HookDispatcherInterface $hookDispatcher
      * @param FormDataProviderInterface $formDataProvider
@@ -65,12 +55,10 @@ final class InvoiceByDateFormHandler extends Handler
         FormDataProviderInterface $formDataProvider,
         string $form,
         $hookName,
-        OrderInvoiceDataProviderInterface $orderInvoiceDataProvider,
-        PDFGeneratorInterface $pdfGenerator
+        private OrderInvoiceDataProviderInterface $orderInvoiceDataProvider,
+        private PDFGeneratorInterface $pdfGenerator
     ) {
         parent::__construct($formFactory, $hookDispatcher, $formDataProvider, $form, $hookName);
-        $this->orderInvoiceDataProvider = $orderInvoiceDataProvider;
-        $this->pdfGenerator = $pdfGenerator;
     }
 
     /**

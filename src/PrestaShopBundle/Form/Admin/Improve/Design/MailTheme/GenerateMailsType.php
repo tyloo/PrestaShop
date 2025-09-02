@@ -39,17 +39,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class GenerateMailsType extends TranslatorAwareType
 {
-    /** @var array */
-    private $mailThemes;
-
-    /** @var array */
-    private $themes;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
     /**
      * @param TranslatorInterface $translator
      * @param array $locales
@@ -60,14 +49,11 @@ class GenerateMailsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        ConfigurationInterface $configuration,
-        array $mailThemes,
-        array $themes
+        private ConfigurationInterface $configuration,
+        private array $mailThemes,
+        private array $themes
     ) {
         parent::__construct($translator, $locales);
-        $this->mailThemes = $mailThemes;
-        $this->themes = $themes;
-        $this->configuration = $configuration;
     }
 
     /**

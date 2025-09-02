@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
 final class TaxOptionsFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $taxOptionsDataConfiguration;
-
-    /**
      * @param DataConfigurationInterface $taxOptionsDataConfiguration
      */
-    public function __construct(DataConfigurationInterface $taxOptionsDataConfiguration)
+    public function __construct(private DataConfigurationInterface $taxOptionsDataConfiguration)
     {
-        $this->taxOptionsDataConfiguration = $taxOptionsDataConfiguration;
     }
 
     /**

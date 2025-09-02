@@ -61,11 +61,6 @@ class DefaultEmptyDataTransformer implements DataTransformerInterface
     /**
      * @var mixed
      */
-    private $emptyData;
-
-    /**
-     * @var mixed
-     */
     private $viewEmptyData;
 
     /**
@@ -82,13 +77,11 @@ class DefaultEmptyDataTransformer implements DataTransformerInterface
      * @param mixed $emptyData This value will be used in form view and submit in place of empty value
      * @param mixed $viewEmptyData This will be used only on the form view (optional)
      */
-    public function __construct($emptyData, $viewEmptyData = null)
+    public function __construct(private $emptyData, $viewEmptyData = null)
     {
-        $this->emptyData = $emptyData;
-
         // We use the second parameter only if provided, default value is the same as emptyData
         // This trick is used to allow setting null value
-        $this->viewEmptyData = 2 === func_num_args() ? $viewEmptyData : $emptyData;
+        $this->viewEmptyData = 2 === func_num_args() ? $viewEmptyData : $this->emptyData;
     }
 
     /**

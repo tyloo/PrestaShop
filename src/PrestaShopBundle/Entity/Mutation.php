@@ -87,7 +87,7 @@ class Mutation
     /**
      * @ORM\Column(name="mutation_details", type="string", length=255, nullable=true)
      */
-    private ?string $mutationDetails;
+    private ?string $mutationDetails = null;
 
     /**
      * @ORM\Column(name="date_add", type="datetime", nullable=false)

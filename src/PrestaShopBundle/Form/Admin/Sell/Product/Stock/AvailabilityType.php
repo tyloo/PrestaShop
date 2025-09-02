@@ -45,16 +45,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class AvailabilityType extends TranslatorAwareType
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $outOfStockTypeChoiceProvider;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param FormChoiceProviderInterface $outOfStockTypeChoiceProvider
@@ -63,12 +53,10 @@ class AvailabilityType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FormChoiceProviderInterface $outOfStockTypeChoiceProvider,
-        RouterInterface $router
+        private FormChoiceProviderInterface $outOfStockTypeChoiceProvider,
+        private RouterInterface $router
     ) {
         parent::__construct($translator, $locales);
-        $this->outOfStockTypeChoiceProvider = $outOfStockTypeChoiceProvider;
-        $this->router = $router;
     }
 
     /**

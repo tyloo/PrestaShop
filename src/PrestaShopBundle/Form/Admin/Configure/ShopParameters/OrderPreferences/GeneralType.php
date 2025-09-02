@@ -44,35 +44,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class GeneralType extends TranslatorAwareType
 {
-    /**
-     * CMS pages choices for Terms Of Service.
-     *
-     * @var array
-     */
-    private $tosCmsChoices;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        CurrencyDataProviderInterface $currencyDataProvider,
-        ConfigurationInterface $configuration,
-        array $tosCmsChoices
+        private CurrencyDataProviderInterface $currencyDataProvider,
+        private ConfigurationInterface $configuration,
+        /**
+         * CMS pages choices for Terms Of Service.
+         */
+        private array $tosCmsChoices
     ) {
         parent::__construct($translator, $locales);
-
-        $this->tosCmsChoices = $tosCmsChoices;
-        $this->configuration = $configuration;
-        $this->currencyDataProvider = $currencyDataProvider;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

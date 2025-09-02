@@ -69,9 +69,7 @@ class ImageSettingsType extends TranslatorAwareType
                     $this->trans('WebP', 'Admin.Design.Feature') => 'webp',
                     $this->trans('AVIF', 'Admin.Design.Feature') => 'avif',
                 ],
-                'choice_attr' => function (string $choice, string $key) use ($avifEnabled): array {
-                    return ['disabled' => $choice === 'jpg' || $choice === 'avif' && !$avifEnabled];
-                },
+                'choice_attr' => fn(string $choice, string $key): array => ['disabled' => $choice === 'jpg' || $choice === 'avif' && !$avifEnabled],
             ])
             ->add('base-format', ChoiceType::class, [
                 'label' => $this->trans('Base format', 'Admin.Design.Feature'),

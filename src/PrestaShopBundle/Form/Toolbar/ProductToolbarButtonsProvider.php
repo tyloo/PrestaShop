@@ -41,43 +41,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ProductToolbarButtonsProvider implements ToolbarButtonsProviderInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var HelpProvider
-     */
-    private $helpUrlProvider;
-
-    /**
-     * @var ModuleDataProvider
-     */
-    private $moduleDataProvider;
-
-    /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    public function __construct(
-        TranslatorInterface $translator,
-        RouterInterface $router,
-        HelpProvider $helpUrlProvider,
-        ModuleDataProvider $moduleDataProvider,
-        LegacyContext $legacyContext
-    ) {
-        $this->translator = $translator;
-        $this->router = $router;
-        $this->helpUrlProvider = $helpUrlProvider;
-        $this->moduleDataProvider = $moduleDataProvider;
-        $this->legacyContext = $legacyContext;
+    public function __construct(private TranslatorInterface $translator, private RouterInterface $router, private HelpProvider $helpUrlProvider, private ModuleDataProvider $moduleDataProvider, private LegacyContext $legacyContext)
+    {
     }
 
     public function getToolbarButtonsOptions(array $parameters): array

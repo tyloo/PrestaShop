@@ -37,19 +37,9 @@ class SupplierRepository
     use NormalizeFieldTrait;
 
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
      * @var int
      */
     public $shopId;
-
-    /**
-     * @var string
-     */
-    private $tablePrefix;
 
     /**
      * @param Connection $connection
@@ -59,13 +49,10 @@ class SupplierRepository
      * @throws NotImplementedException
      */
     public function __construct(
-        Connection $connection,
+        private Connection $connection,
         ContextAdapter $contextAdapter,
-        $tablePrefix
+        private $tablePrefix
     ) {
-        $this->connection = $connection;
-        $this->tablePrefix = $tablePrefix;
-
         $context = $contextAdapter->getContext();
 
         if (!$context->shop instanceof Shop) {

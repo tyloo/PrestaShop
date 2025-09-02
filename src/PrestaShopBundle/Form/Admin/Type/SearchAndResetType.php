@@ -39,16 +39,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SearchAndResetType extends AbstractType
 {
     /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
      * @param UrlGeneratorInterface $urlGenerator
      */
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -68,8 +62,8 @@ class SearchAndResetType extends AbstractType
             }
         }
 
-        $resetUrl = isset($options['attr']['data-url']) ? $options['attr']['data-url'] : null;
-        $redirectUrl = isset($options['attr']['data-redirect']) ? $options['attr']['data-redirect'] : null;
+        $resetUrl = $options['attr']['data-url'] ?? null;
+        $redirectUrl = $options['attr']['data-redirect'] ?? null;
 
         if (null !== $options['reset_route']) {
             $resetUrl = $this->urlGenerator->generate(

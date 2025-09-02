@@ -51,22 +51,8 @@ final class GeneralDataProvider implements FormDataProviderInterface
      */
     public const MAX_COOKIE_VALUE = 876000;
 
-    /**
-     * @var DataConfigurationInterface
-     */
-    private $dataConfiguration;
-
-    /**
-     * @var bool
-     */
-    private $sslEnabled;
-
-    public function __construct(
-        DataConfigurationInterface $dataConfiguration,
-        bool $sslEnabled
-    ) {
-        $this->dataConfiguration = $dataConfiguration;
-        $this->sslEnabled = $sslEnabled;
+    public function __construct(private DataConfigurationInterface $dataConfiguration, private bool $sslEnabled)
+    {
     }
 
     /**

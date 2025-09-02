@@ -38,16 +38,6 @@ class FeatureAttributeRepository
     use NormalizeFieldTrait;
 
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $tablePrefix;
-
-    /**
      * @var int
      */
     private $languageId;
@@ -67,13 +57,10 @@ class FeatureAttributeRepository
      * @throws NotImplementedException
      */
     public function __construct(
-        Connection $connection,
+        private Connection $connection,
         ContextAdapter $contextAdapter,
-        $tablePrefix
+        private $tablePrefix
     ) {
-        $this->connection = $connection;
-        $this->tablePrefix = $tablePrefix;
-
         $context = $contextAdapter->getContext();
 
         if (!$context->employee instanceof Employee) {

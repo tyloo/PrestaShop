@@ -312,7 +312,7 @@ class ExportModuleTranslationsCommand extends Command
     private function resolveLocale(string $localeOrIso): string
     {
         // If it's already a full locale (contains hyphen), return as-is
-        if (strpos($localeOrIso, '-') !== false) {
+        if (str_contains($localeOrIso, '-')) {
             return $localeOrIso;
         }
 

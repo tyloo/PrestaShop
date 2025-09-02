@@ -34,14 +34,13 @@ use PrestaShopBundle\Translation\Exception\UnsupportedLocaleException;
  */
 class LegacyFileReader
 {
-    /**
-     * @var Converter Converts IETF language tags into two-letter language code
-     */
-    private $localeConverter;
-
-    public function __construct(Converter $converter)
+    public function __construct(
+        /**
+         * @var Converter Converts IETF language tags into two-letter language code
+         */
+        private Converter $localeConverter
+    )
     {
-        $this->localeConverter = $converter;
     }
 
     /**

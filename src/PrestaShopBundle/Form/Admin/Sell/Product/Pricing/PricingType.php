@@ -46,11 +46,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PricingType extends TranslatorAwareType
 {
     /**
-     * @var string
-     */
-    private $defaultCurrencyIsoCode;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param string $defaultCurrencyIsoCode
@@ -58,10 +53,9 @@ class PricingType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        string $defaultCurrencyIsoCode
+        private string $defaultCurrencyIsoCode
     ) {
         parent::__construct($translator, $locales);
-        $this->defaultCurrencyIsoCode = $defaultCurrencyIsoCode;
     }
 
     /**

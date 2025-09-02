@@ -40,34 +40,9 @@ use Symfony\Component\Translation\MessageCatalogue;
 class ThemeExporter
 {
     /**
-     * @var ThemeExtractor the theme extractor
-     */
-    private $themeExtractor;
-
-    /**
      * @var ThemeProvider the theme provider
      */
     private $themeProvider;
-
-    /**
-     * @var ZipManager the zip manager
-     */
-    private $zipManager;
-
-    /**
-     * @var ThemeRepository the theme repository
-     */
-    private $themeRepository;
-
-    /**
-     * @var XliffFileDumper the Xliff dumper
-     */
-    private $dumper;
-
-    /**
-     * @var Filesystem the Filesystem
-     */
-    private $filesystem;
 
     /**
      * @var string the cache directory path
@@ -80,22 +55,32 @@ class ThemeExporter
     public $exportDir;
 
     public function __construct(
-        ThemeExtractor $themeExtractor,
+        /**
+         * @var ThemeExtractor the theme extractor
+         */
+        private ThemeExtractor $themeExtractor,
         ThemeProvider $themeProvider,
-        ThemeRepository $themeRepository,
-        XliffFileDumper $dumper,
-        ZipManager $zipManager,
-        Filesystem $filesystem
+        /**
+         * @var ThemeRepository the theme repository
+         */
+        private ThemeRepository $themeRepository,
+        /**
+         * @var XliffFileDumper the Xliff dumper
+         */
+        private XliffFileDumper $dumper,
+        /**
+         * @var ZipManager the zip manager
+         */
+        private ZipManager $zipManager,
+        /**
+         * @var Filesystem the Filesystem
+         */
+        private Filesystem $filesystem
     ) {
-        $this->themeExtractor = $themeExtractor;
         $this->themeExtractor
             ->setThemeProvider($themeProvider);
 
         $this->themeProvider = $themeProvider;
-        $this->themeRepository = $themeRepository;
-        $this->dumper = $dumper;
-        $this->zipManager = $zipManager;
-        $this->filesystem = $filesystem;
     }
 
     /**

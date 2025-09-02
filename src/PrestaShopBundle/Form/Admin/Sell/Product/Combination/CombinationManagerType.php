@@ -47,18 +47,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class CombinationManagerType extends TranslatorAwareType
 {
-    /**
-     * @var FeatureInterface
-     */
-    private $multiStoreFeature;
-
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        FeatureInterface $multiStoreFeature
+        private FeatureInterface $multiStoreFeature
     ) {
         parent::__construct($translator, $locales);
-        $this->multiStoreFeature = $multiStoreFeature;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

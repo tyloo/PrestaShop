@@ -40,35 +40,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var DataConfigurationInterface
-     */
-    private $urlSchemaDataConfiguration;
-
-    /**
-     * @var RouteValidator
-     */
-    private $routeValidator;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * MetaFormDataProvider constructor.
      *
      * @param DataConfigurationInterface $urlSchemaDataConfiguration
      * @param TranslatorInterface $translator
      * @param RouteValidator $routeValidator
      */
-    public function __construct(
-        DataConfigurationInterface $urlSchemaDataConfiguration,
-        TranslatorInterface $translator,
-        RouteValidator $routeValidator
-    ) {
-        $this->urlSchemaDataConfiguration = $urlSchemaDataConfiguration;
-        $this->routeValidator = $routeValidator;
-        $this->translator = $translator;
+    public function __construct(private DataConfigurationInterface $urlSchemaDataConfiguration, private TranslatorInterface $translator, private RouteValidator $routeValidator)
+    {
     }
 
     /**

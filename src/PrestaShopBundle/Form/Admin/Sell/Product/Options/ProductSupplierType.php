@@ -52,21 +52,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProductSupplierType extends TranslatorAwareType
 {
     /**
-     * @var string
-     */
-    private $defaultCurrencyIsoCode;
-
-    /**
-     * @var CurrencyRepository
-     */
-    private $currencyRepository;
-
-    /**
-     * @var FormCloner
-     */
-    private $formCloner;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param string $defaultCurrencyIsoCode
@@ -76,14 +61,11 @@ class ProductSupplierType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        string $defaultCurrencyIsoCode,
-        CurrencyRepository $currencyRepository,
-        FormCloner $formCloner
+        private string $defaultCurrencyIsoCode,
+        private CurrencyRepository $currencyRepository,
+        private FormCloner $formCloner
     ) {
         parent::__construct($translator, $locales);
-        $this->defaultCurrencyIsoCode = $defaultCurrencyIsoCode;
-        $this->currencyRepository = $currencyRepository;
-        $this->formCloner = $formCloner;
     }
 
     /**

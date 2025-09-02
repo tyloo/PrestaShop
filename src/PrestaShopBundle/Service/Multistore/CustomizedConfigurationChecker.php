@@ -34,14 +34,8 @@ use PrestaShopBundle\Entity\Shop;
 
 class CustomizedConfigurationChecker
 {
-    /**
-     * @var ShopConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ShopConfigurationInterface $configuration)
+    public function __construct(private ShopConfigurationInterface $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

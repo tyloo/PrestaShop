@@ -41,11 +41,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ImportThemeType extends TranslatorAwareType
 {
     /**
-     * @var array
-     */
-    private $themeZipsChoices;
-
-    /**
      * @param TranslatorInterface $translator
      * @param array $locales
      * @param array $themeZipsChoices
@@ -53,10 +48,9 @@ class ImportThemeType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        array $themeZipsChoices
+        private array $themeZipsChoices
     ) {
         parent::__construct($translator, $locales);
-        $this->themeZipsChoices = $themeZipsChoices;
     }
 
     /**

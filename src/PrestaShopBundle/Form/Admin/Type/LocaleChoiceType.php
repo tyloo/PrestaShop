@@ -33,14 +33,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocaleChoiceType extends AbstractType
 {
-    /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    public function __construct(LegacyContext $legacyContext)
+    public function __construct(private LegacyContext $legacyContext)
     {
-        $this->legacyContext = $legacyContext;
     }
 
     public function getParent(): string

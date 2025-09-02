@@ -79,13 +79,9 @@ class NavBar
         $currentId = (int) Tab::getCurrentParentId();
         $controllerName = $this->menuBuilder->getLegacyControllerClassName();
 
-        $filteredTabs = array_filter($tabs, function ($tab) {
-            return $this->isValidTab($tab);
-        });
+        $filteredTabs = array_filter($tabs, fn($tab): bool => $this->isValidTab($tab));
 
-        $processedTabs = array_map(function ($tab) use ($currentId, $level, $controllerName) {
-            return $this->processTab($tab, $currentId, $level, $controllerName);
-        }, $filteredTabs);
+        $processedTabs = array_map(fn($tab): array => $this->processTab($tab, $currentId, $level, $controllerName), $filteredTabs);
 
         return array_values(array_filter($processedTabs));
     }

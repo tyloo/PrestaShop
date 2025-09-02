@@ -39,16 +39,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ShopUrlType extends TranslatorAwareType
 {
     /**
-     * @var bool
-     */
-    private $isShopFeatureActive;
-
-    /**
-     * @var bool
-     */
-    private $doesMainShopUrlExist;
-
-    /**
      * ShopUrlType constructor.
      *
      * @param TranslatorInterface $translator
@@ -59,12 +49,10 @@ class ShopUrlType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        bool $isShopFeatureActive,
-        bool $doesMainShopUrlExist
+        private bool $isShopFeatureActive,
+        private bool $doesMainShopUrlExist
     ) {
         parent::__construct($translator, $locales);
-        $this->isShopFeatureActive = $isShopFeatureActive;
-        $this->doesMainShopUrlExist = $doesMainShopUrlExist;
     }
 
     /**

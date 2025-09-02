@@ -41,7 +41,7 @@ class Client implements ClientEntityInterface
 {
     use ClientTrait;
     use EntityTrait;
-    protected ?int $lifetime;
+    protected ?int $lifetime = null;
 
     public function __construct()
     {

@@ -168,7 +168,7 @@ class LanguageList
         if ($xml) {
             foreach ($xml->entities->country as $country) {
                 $iso = strtolower((string) $country['iso_code']);
-                $countryList[$iso] = isset($langCountries[$iso]) ? $langCountries[$iso] : $defaultCountries[$iso];
+                $countryList[$iso] = $langCountries[$iso] ?? $defaultCountries[$iso];
             }
         }
         asort($countryList);

@@ -38,18 +38,11 @@ use Symfony\Component\Translation\MessageCatalogueInterface;
  */
 class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInterface, UseModuleInterface
 {
-    /**
-     * @var ExternalModuleLegacySystemProvider
-     */
-    private $externalModuleLegacySystemProvider;
-
     public function __construct(
         LoaderInterface $databaseLoader,
-        ExternalModuleLegacySystemProvider $externalModuleLegacySystemProvider,
+        private ExternalModuleLegacySystemProvider $externalModuleLegacySystemProvider,
         $resourceDirectory
     ) {
-        $this->externalModuleLegacySystemProvider = $externalModuleLegacySystemProvider;
-
         parent::__construct($databaseLoader, $resourceDirectory);
     }
 

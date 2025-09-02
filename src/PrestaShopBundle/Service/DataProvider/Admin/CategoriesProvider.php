@@ -45,11 +45,6 @@ class CategoriesProvider
     /**
      * @var array
      */
-    private $modulesTheme;
-
-    /**
-     * @var array
-     */
     private $categories;
 
     /**
@@ -62,12 +57,8 @@ class CategoriesProvider
      */
     private $categoriesFromSource;
 
-    public function __construct(array $addonsCategories, array $modulesTheme)
+    public function __construct(array $addonsCategories, private array $modulesTheme)
     {
-        // List of modules (getModulesToEnable) present in the current theme's YML file
-        // We will use that to determine which modules will go to "Theme modules" category
-        $this->modulesTheme = $modulesTheme;
-
         // A list of categories and subcategories we got from local YML file
         // In the past, this was fetched from addons marketplace
         $this->categoriesFromSource = $this->sortCategories($addonsCategories);
@@ -126,7 +117,7 @@ class CategoriesProvider
                 $category->id_category,
                 $category->name,
                 [],
-                isset($category->tab) ? $category->tab : null
+                $category->tab ?? null
             );
         }
 
@@ -224,9 +215,7 @@ class CategoriesProvider
     {
         uasort(
             $categories,
-            function ($a, $b) {
-                return ($a['order'] ?? 0) <=> ($b['order'] ?? 0);
-            }
+            fn($a, $b): int => ($a['order'] ?? 0) <=> ($b['order'] ?? 0)
         );
 
         // Convert array to object to be consistent with current API call

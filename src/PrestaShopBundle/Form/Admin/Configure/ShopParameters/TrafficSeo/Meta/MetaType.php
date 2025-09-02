@@ -55,26 +55,14 @@ class MetaType extends AbstractType
     public const RECOMMENDED_DESCRIPTION_LENGTH = 160;
 
     /**
-     * @var array
-     */
-    private $defaultPageChoices;
-
-    /**
-     * @var array
-     */
-    private $modulePageChoices;
-
-    /**
      * @param array $defaultPageChoices
      * @param array $modulePageChoices
      */
     public function __construct(
-        array $defaultPageChoices,
-        array $modulePageChoices,
+        private array $defaultPageChoices,
+        private array $modulePageChoices,
         TranslatorInterface $translator
     ) {
-        $this->defaultPageChoices = $defaultPageChoices;
-        $this->modulePageChoices = $modulePageChoices;
         $this->translator = $translator;
     }
 

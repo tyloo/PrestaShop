@@ -123,8 +123,8 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
         $normalizedData = $this->decorated->normalize($object, $format, $context);
 
         // Then update the localized values to use the appropriate indexes
-        if (is_object($object) && class_exists(get_class($object))) {
-            $normalizedData = $this->updateLocalizedValues($normalizedData, get_class($object), false, $context);
+        if (is_object($object) && class_exists($object::class)) {
+            $normalizedData = $this->updateLocalizedValues($normalizedData, $object::class, false, $context);
         }
 
         // Finally perform normalization mapping

@@ -64,16 +64,14 @@ class MergeShipmentType extends AbstractType
         $builder->add('merge_to_shipment', ChoiceType::class, [
             'label' => $this->translator->trans('Select shipment to merge to', [], 'Admin.Orderscustomers.Feature'),
             'choices' => $options['shipments'],
-            'choice_label' => function ($shipment) {
-                return $this->translator->trans(
-                    'Shipment %shipment_id% - carrier %carrier_name%',
-                    [
-                        '%shipment_id%' => $shipment->getId(),
-                        '%carrier_name%' => $shipment->getCarrierSummary()->getName(),
-                    ],
-                    'Admin.Orderscustomers.Feature'
-                );
-            },
+            'choice_label' => fn($shipment): string => $this->translator->trans(
+                'Shipment %shipment_id% - carrier %carrier_name%',
+                [
+                    '%shipment_id%' => $shipment->getId(),
+                    '%carrier_name%' => $shipment->getCarrierSummary()->getName(),
+                ],
+                'Admin.Orderscustomers.Feature'
+            ),
             'choice_value' => fn ($shipment): string => $shipment ? (string) $shipment->getId() : '',
             'placeholder' => $this->translator->trans('Select shipment', [], 'Admin.Orderscustomers.Feature'),
             'required' => true,

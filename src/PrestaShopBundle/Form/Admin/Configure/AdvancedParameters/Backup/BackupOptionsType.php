@@ -38,11 +38,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class BackupOptionsType extends TranslatorAwareType
 {
     /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
      * BackupOptionsType constructor.
      *
      * @param TranslatorInterface $translator
@@ -52,10 +47,9 @@ class BackupOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        Configuration $configuration
+        private Configuration $configuration
     ) {
         parent::__construct($translator, $locales);
-        $this->configuration = $configuration;
     }
 
     /**

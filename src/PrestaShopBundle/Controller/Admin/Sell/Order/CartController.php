@@ -816,12 +816,10 @@ class CartController extends PrestaShopAdminController
      */
     private function getErrorCode(Exception $e): int
     {
-        switch ($e::class) {
-            case ProductOutOfStockException::class:
-                return Response::HTTP_CONFLICT;
-        }
-
-        return Response::HTTP_INTERNAL_SERVER_ERROR;
+        return match ($e::class) {
+            ProductOutOfStockException::class => Response::HTTP_CONFLICT,
+            default => Response::HTTP_INTERNAL_SERVER_ERROR,
+        };
     }
 
     /**

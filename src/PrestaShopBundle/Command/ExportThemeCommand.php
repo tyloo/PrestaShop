@@ -40,30 +40,12 @@ Smarty_Autoloader::register();
 
 class ExportThemeCommand extends Command
 {
-    /**
-     * @var ThemeRepository
-     */
-    private $themeRepository;
-
-    /**
-     * @var ThemeExporter
-     */
-    private $themeExporter;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(
-        ThemeRepository $themeRepository,
-        ThemeExporter $themeExporter,
-        TranslatorInterface $translator
+        private ThemeRepository $themeRepository,
+        private ThemeExporter $themeExporter,
+        private TranslatorInterface $translator
     ) {
         parent::__construct();
-        $this->themeRepository = $themeRepository;
-        $this->themeExporter = $themeExporter;
-        $this->translator = $translator;
     }
 
     protected function configure()
