@@ -71,7 +71,7 @@ class ShopConstraintNormalizer implements DenormalizerInterface, NormalizerInter
         return [
             'shopId' => $object->getShopId()?->getValue(),
             'shopGroupId' => $object->getShopGroupId()?->getValue(),
-            'shopIds' => $object instanceof ShopCollection ? array_map(fn (ShopId $shopId) => $shopId->getValue(), $object->getShopIds()) : null,
+            'shopIds' => $object instanceof ShopCollection ? array_map(fn (ShopId $shopId): int => $shopId->getValue(), $object->getShopIds()) : null,
             'isStrict' => $object->isStrict(),
         ];
     }

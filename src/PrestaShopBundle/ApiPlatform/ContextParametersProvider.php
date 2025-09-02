@@ -58,7 +58,7 @@ class ContextParametersProvider
                 'shopConstraint' => [
                     'shopId' => $shopConstraint->getShopId()?->getValue(),
                     'shopGroupId' => $shopConstraint->getShopGroupId()?->getValue(),
-                    'shopIds' => $shopConstraint instanceof ShopCollection ? array_map(fn (ShopId $shopId) => $shopId->getValue(), $shopConstraint->getShopIds()) : null,
+                    'shopIds' => $shopConstraint instanceof ShopCollection ? array_map(fn (ShopId $shopId): int => $shopId->getValue(), $shopConstraint->getShopIds()) : null,
                     'isStrict' => $shopConstraint->isStrict(),
                 ],
                 'shopId' => $this->shopContext->getId(),

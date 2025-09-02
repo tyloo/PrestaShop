@@ -702,7 +702,7 @@ class OrderController extends PrestaShopAdminController
         /** @var OrderShipment[] $shipments */
         $shipments = $this->dispatchQuery(new GetOrderShipments($orderId));
 
-        $shipments = array_filter($shipments, fn (OrderShipment $s) => $s->getId() !== $shipmentId);
+        $shipments = array_filter($shipments, fn (OrderShipment $s): bool => $s->getId() !== $shipmentId);
 
         foreach ($products as &$p) {
             $p = $p->toArray();

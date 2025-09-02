@@ -229,7 +229,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
 
         $deleteSQL = PHP_EOL . "/* Auto generated hooks removed for version $prestashopVersion */" . PHP_EOL;
         $deleteSQL .= 'DELETE FROM `PREFIX_hook` WHERE `name` IN (' . PHP_EOL;
-        $deleteSQL .= implode(',' . PHP_EOL, array_map(fn (string $hookName) => "  '$hookName'", $removedHooks));
+        $deleteSQL .= implode(',' . PHP_EOL, array_map(fn (string $hookName): string => "  '$hookName'", $removedHooks));
         $deleteSQL .= PHP_EOL . ');' . PHP_EOL;
         $deleteSQL .= '/* Clean hook registrations related to removed hooks */' . PHP_EOL;
         $deleteSQL .= 'DELETE FROM `PREFIX_hook_module` WHERE `id_hook` NOT IN (SELECT id_hook FROM `PREFIX_hook`);' . PHP_EOL;

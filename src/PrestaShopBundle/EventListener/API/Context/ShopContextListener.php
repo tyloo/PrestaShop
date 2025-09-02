@@ -106,7 +106,7 @@ class ShopContextListener
                 $shopIds = explode(',', $shopIds);
             }
 
-            return ShopCollection::shops(array_map(fn (string $shopId) => (int) $shopId, $shopIds));
+            return ShopCollection::shops(array_map(fn (string $shopId): int => (int) $shopId, $shopIds));
         }
 
         // Parameter allShops indicate the all shops context regardless of its value, it can be empty it's enough

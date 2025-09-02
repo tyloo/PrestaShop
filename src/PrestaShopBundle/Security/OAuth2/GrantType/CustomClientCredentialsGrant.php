@@ -113,9 +113,9 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
             } else {
                 $scopes = explode(' ', $scope);
             }
-            $scopes = array_map(fn (string $scope) => trim($scope), $scopes);
+            $scopes = array_map(fn (string $scope): string => trim($scope), $scopes);
         } elseif (is_array($scope)) {
-            $scopes = array_map(fn (string $scope) => trim($scope), $scope);
+            $scopes = array_map(fn (string $scope): string => trim($scope), $scope);
         }
 
         return implode(' ', $scopes);

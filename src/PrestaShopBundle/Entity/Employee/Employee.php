@@ -231,7 +231,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
     {
         return array_merge(
             [self::ROLE_EMPLOYEE],
-            $this->getProfile()->getAuthorizationRoles()->map(fn (AuthorizationRole $authorizationRole) => $authorizationRole->getSlug())->toArray()
+            $this->getProfile()->getAuthorizationRoles()->map(fn (AuthorizationRole $authorizationRole): string => $authorizationRole->getSlug())->toArray()
         );
     }
 
