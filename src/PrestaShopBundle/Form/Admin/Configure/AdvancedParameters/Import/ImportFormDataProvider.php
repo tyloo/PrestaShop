@@ -101,7 +101,7 @@ final class ImportFormDataProvider implements ImportFormDataProviderInterface
      *
      * @return string|null
      */
-    private function getSelectedFile(ImportConfigInterface $importConfig)
+    private function getSelectedFile(ImportConfigInterface $importConfig): ?string
     {
         $importFiles = $this->importFileFinder->getImportFileNames();
         $selectedFile = $importConfig->getFileName();

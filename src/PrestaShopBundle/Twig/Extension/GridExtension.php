@@ -212,7 +212,7 @@ class GridExtension extends AbstractExtension
      *
      * @return string|null
      */
-    private function getTemplatePath(array $column, array $grid, $basePath, $defaultTemplate = null)
+    private function getTemplatePath(array $column, array $grid, $basePath, $defaultTemplate = null): ?string
     {
         $gridId = $grid['id'];
         $columnId = $column['id'];

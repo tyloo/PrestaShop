@@ -339,7 +339,7 @@ class FeatureController extends PrestaShopAdminController
     /**
      * @return string|null
      */
-    private function getSettingsTipMessage()
+    private function getSettingsTipMessage(): ?string
     {
         if ($this->isFeatureEnabled()) {
             return null;

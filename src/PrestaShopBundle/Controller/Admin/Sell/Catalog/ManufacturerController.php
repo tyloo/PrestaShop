@@ -785,7 +785,7 @@ class ManufacturerController extends PrestaShopAdminController
     /**
      * @return string|null
      */
-    private function getSettingsTipMessage()
+    private function getSettingsTipMessage(): ?string
     {
         if ($this->getConfiguration()->get('PS_DISPLAY_MANUFACTURERS')) {
             return null;

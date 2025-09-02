@@ -80,7 +80,7 @@ final class SecurityAttributeLinter implements RouteLinterInterface
      *
      * @return array|null
      */
-    private function extractControllerAndMethodNamesFromRoute(Route $route)
+    private function extractControllerAndMethodNamesFromRoute(Route $route): ?array
     {
         $controller = $route->getDefault('_controller');
 

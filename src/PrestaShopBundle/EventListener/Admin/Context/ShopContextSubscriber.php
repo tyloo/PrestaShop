@@ -194,7 +194,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
     /**
      * @return ShopConstraint|null
      */
-    private function getLegacyMultiShopConstraint(Request $request)
+    private function getLegacyMultiShopConstraint(Request $request): ?ShopConstraint
     {
         $multishopContext = $request->attributes->get(LegacyControllerConstants::MULTISHOP_CONTEXT_ATTRIBUTE);
 

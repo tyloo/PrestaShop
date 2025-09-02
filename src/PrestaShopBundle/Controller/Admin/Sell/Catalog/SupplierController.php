@@ -540,7 +540,7 @@ class SupplierController extends PrestaShopAdminController
     /**
      * @return string|null
      */
-    protected function getSettingsTipMessage()
+    protected function getSettingsTipMessage(): ?string
     {
         if ($this->getConfiguration()->get('PS_DISPLAY_SUPPLIERS')) {
             return null;

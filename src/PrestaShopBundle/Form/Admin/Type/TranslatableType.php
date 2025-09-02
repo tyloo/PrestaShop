@@ -253,7 +253,7 @@ class TranslatableType extends TranslatorAwareType
         FormErrorIterator $formErrors,
         FormInterface $form,
         array $locales
-    ) {
+    ): ?array {
         $errorByLocale = null;
         $formError = $formErrors[0];
         $nonDefaultLanguageFormKey = null;
