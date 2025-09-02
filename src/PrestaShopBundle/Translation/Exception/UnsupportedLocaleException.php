@@ -39,7 +39,7 @@ final class UnsupportedLocaleException extends NotFoundResourceException
      *
      * @return self
      */
-    public static function fileNotFound($filePath, $locale)
+    public static function fileNotFound($filePath, $locale): self
     {
         $exceptionMessage = sprintf(
             'The locale "%s" is not supported, because we can\'t find the related file in the module:
@@ -56,7 +56,7 @@ final class UnsupportedLocaleException extends NotFoundResourceException
      *
      * @return self
      */
-    public static function invalidLocale($locale)
+    public static function invalidLocale($locale): self
     {
         $exceptionMessage = sprintf(
             'The provided locale `%s` is invalid.',

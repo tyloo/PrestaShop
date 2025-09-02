@@ -248,7 +248,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
      *
      * @return MessageCatalogue
      */
-    private function filterDomains(MessageCatalogueInterface $catalogue)
+    private function filterDomains(MessageCatalogueInterface $catalogue): MessageCatalogue
     {
         $normalizer = new DomainNormalizer();
         $newCatalogue = new MessageCatalogue($catalogue->getLocale());

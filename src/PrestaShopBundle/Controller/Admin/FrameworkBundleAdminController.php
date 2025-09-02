@@ -572,7 +572,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @return JsonResponse
      */
-    protected function returnErrorJsonResponse(array $errors, $httpStatusCode)
+    protected function returnErrorJsonResponse(array $errors, $httpStatusCode): JsonResponse
     {
         $response = new JsonResponse();
         $response->setStatusCode($httpStatusCode);

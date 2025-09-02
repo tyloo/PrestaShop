@@ -84,7 +84,7 @@ class LegacyRoute
      *
      * @return LegacyRoute
      */
-    public static function buildLegacyRoute($routeName, array $routeDefaults)
+    public static function buildLegacyRoute($routeName, array $routeDefaults): static
     {
         $legacyLinks = $routeDefaults['_legacy_link'];
         if (!is_array($legacyLinks)) {

@@ -36,13 +36,13 @@ class ApiResourceScopes
     public static function createModuleScopes(
         array $scopes,
         string $moduleName
-    ) {
+    ): self {
         return new self($scopes, $moduleName);
     }
 
     public static function createCoreScopes(
         array $scopes
-    ) {
+    ): self {
         return new self($scopes, null);
     }
 

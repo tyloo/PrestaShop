@@ -139,7 +139,7 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
      *
      * @return MessageCatalogueInterface
      */
-    private function filterCatalogue(MessageCatalogueInterface $defaultCatalogue)
+    private function filterCatalogue(MessageCatalogueInterface $defaultCatalogue): MessageCatalogue
     {
         // return only elements whose domain matches the filters
         $filters = $this->getFilters();

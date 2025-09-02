@@ -65,7 +65,7 @@ class LegacyTranslationKey
      *
      * @throws InvalidLegacyTranslationKeyException
      */
-    public static function buildFromString($key)
+    public static function buildFromString($key): self
     {
         $matches = [];
         preg_match(self::LEGACY_TRANSLATION_FORMAT, $key, $matches);

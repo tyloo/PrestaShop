@@ -72,7 +72,7 @@ class ResponseBuilder
         $filterId,
         $redirectRoute,
         array $queryParamsToKeep = []
-    ) {
+    ): RedirectResponse {
         /** @var GridDefinitionInterface $definition */
         $definition = $definitionFactory->getDefinition();
 

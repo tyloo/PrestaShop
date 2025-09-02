@@ -376,7 +376,7 @@ class ThemeExporter
      *
      * @return MessageCatalogue
      */
-    protected function addLocaleToDomain($locale, MessageCatalogue $sourceCatalogue)
+    protected function addLocaleToDomain($locale, MessageCatalogue $sourceCatalogue): MessageCatalogue
     {
         $catalogue = new MessageCatalogue($locale, []);
         foreach ($sourceCatalogue->all() as $domain => $messages) {

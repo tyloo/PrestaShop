@@ -38,7 +38,7 @@ final class UnsupportedModuleException extends NotFoundResourceException
      *
      * @return self
      */
-    public static function moduleNotProvided($providerIdentifier)
+    public static function moduleNotProvided($providerIdentifier): self
     {
         $exceptionMessage = sprintf(
             'The translation provider with the identifier "%s" require a module to be set.',

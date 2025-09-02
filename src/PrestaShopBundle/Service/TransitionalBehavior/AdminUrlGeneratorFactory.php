@@ -60,7 +60,7 @@ class AdminUrlGeneratorFactory
      *
      * @return UrlGeneratorInterface the UrlGenerator instance for Admin legacy controllers
      */
-    public function forLegacy(LegacyContext $legacyContext)
+    public function forLegacy(LegacyContext $legacyContext): LegacyUrlGenerator
     {
         return new LegacyUrlGenerator($legacyContext, $this->router);
     }

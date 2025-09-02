@@ -100,7 +100,7 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
      *
      * @return DoctrineOrmMappingsPass
      */
-    private function createAnnotationMappingDriver($moduleNamespace, $moduleEntityDirectory)
+    private function createAnnotationMappingDriver($moduleNamespace, $moduleEntityDirectory): DoctrineOrmMappingsPass
     {
         $reader = new Reference('annotation_reader');
         $driverDefinition = new Definition('Doctrine\ORM\Mapping\Driver\AnnotationDriver', [$reader, [$moduleEntityDirectory]]);

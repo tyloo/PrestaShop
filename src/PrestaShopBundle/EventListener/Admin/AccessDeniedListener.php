@@ -107,7 +107,7 @@ class AccessDeniedListener
     /**
      * @return Response
      */
-    private function getAccessDeniedResponse(Request $request, AdminSecurityAttribute $adminSecurity)
+    private function getAccessDeniedResponse(Request $request, AdminSecurityAttribute $adminSecurity): JsonResponse|RedirectResponse
     {
         if ($request->isXmlHttpRequest() || $adminSecurity->hasJSONResponse()) {
             return new JsonResponse([
