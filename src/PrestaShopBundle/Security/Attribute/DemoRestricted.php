@@ -89,7 +89,7 @@ class DemoRestricted
     /**
      * @return string
      */
-    public function getRedirectRoute()
+    public function getRedirectRoute(): ?string
     {
         return $this->redirectRoute;
     }
@@ -125,7 +125,7 @@ class DemoRestricted
     /**
      * @return array
      */
-    public function getRedirectQueryParamsToKeep()
+    public function getRedirectQueryParamsToKeep(): array
     {
         return $this->redirectQueryParamsToKeep;
     }

@@ -42,7 +42,7 @@ return RectorConfig::configure()
         // __DIR__ . '/tests',
         // __DIR__ . '/webservice',
     ])
-    ->withTypeCoverageLevel(20)
+    ->withTypeCoverageLevel(21)
     // ->withDeadCodeLevel(0)
     // ->withCodeQualityLevel(0)
     // ->withCodingStyleLevel(0)

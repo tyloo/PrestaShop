@@ -50,7 +50,7 @@ class EmployeeDropdown
         return $this->employeeContext->getEmployee();
     }
 
-    public function getDisplayBackOfficeEmployeeMenu()
+    public function getDisplayBackOfficeEmployeeMenu(): ActionsBarButtonsCollection
     {
         if ($this->displayBackOfficeEmployeeMenu === null) {
             $menuLinksCollections = new ActionsBarButtonsCollection();
