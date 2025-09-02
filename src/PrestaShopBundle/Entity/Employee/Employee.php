@@ -472,7 +472,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
     {
         return
             !empty($this->resetPasswordToken)
-            && !empty($this->resetPasswordValidity)
+            && $this->resetPasswordValidity instanceof \DateTime
             && $this->resetPasswordValidity->getTimestamp() > time()
         ;
     }
