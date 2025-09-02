@@ -38,7 +38,6 @@ fi
 
 if [ "${DISABLE_MAKE}" != "1" ]; then
   mkdir -p /var/www/.npm
-  chown -R www-data:www-data /var/www/.npm
 
   echo "\n* Install node $NODE_VERSION...";
   export NVM_DIR=/usr/local/nvm
@@ -54,8 +53,8 @@ if [ "${DISABLE_MAKE}" != "1" ]; then
 
   echo "\n* Install composer ...";
   mkdir -p /var/www/.composer
-  chown -R www-data:www-data /var/www/.composer
-  runuser -g www-data -u www-data -- php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');" && php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer && rm -rf /tmp/composer-setup.php
+
+  php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');" && php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer && rm -rf /tmp/composer-setup.php
   if [ ! -f /usr/local/bin/composer ]; then
     echo Composer installation failed
     exit 1
@@ -64,11 +63,9 @@ if [ "${DISABLE_MAKE}" != "1" ]; then
   echo "\n* Running composer ...";
   # Execute composer as default user so that we can set the env variables to increase timeout, also disable default_socket_timeout for php
   COMPOSER_PROCESS_TIMEOUT=600 COMPOSER_IPRESOLVE=4 php -ddefault_socket_timeout=-1 /usr/local/bin/composer install --ansi --prefer-dist --no-interaction --no-progress
-  # Update the owner of composer installed folders to be www-data
-  chown -R www-data:www-data app config var vendor modules themes
 
   echo "\n* Build assets ...";
-  runuser -g www-data -u www-data -- /usr/bin/make assets
+  /usr/bin/make assets
 
   echo "\n* Wait for assets built...";
   /usr/bin/make wait-assets
@@ -133,11 +130,11 @@ if [ ! -f ./app/config/parameters.php ]; then
         fi
 
         echo "\n* Launching the installer script..."
-        runuser -g www-data -u www-data -- php /var/www/html/$PS_FOLDER_INSTALL/index_cli.php \
-        --domain="$PS_DOMAIN" --db_server=$DB_SERVER:$DB_PORT --db_name="$DB_NAME" --db_user=$DB_USER \
-        --db_password=$DB_PASSWD --prefix="$DB_PREFIX" --firstname="Marc" --lastname="Beier" \
-        --password="$ADMIN_PASSWD" --email="$ADMIN_MAIL" --language=$PS_LANGUAGE --country=$PS_COUNTRY \
-        --all_languages=$PS_ALL_LANGUAGES --newsletter=0 --send_email=0 --ssl=$PS_ENABLE_SSL --fixtures=$PS_INSTALL_DEMO_PRODUCTS
+        php /var/www/html/$PS_FOLDER_INSTALL/index_cli.php \
+            --domain="$PS_DOMAIN" --db_server=$DB_SERVER:$DB_PORT --db_name="$DB_NAME" --db_user=$DB_USER \
+            --db_password=$DB_PASSWD --prefix="$DB_PREFIX" --firstname="Marc" --lastname="Beier" \
+            --password="$ADMIN_PASSWD" --email="$ADMIN_MAIL" --language=$PS_LANGUAGE --country=$PS_COUNTRY \
+            --all_languages=$PS_ALL_LANGUAGES --newsletter=0 --send_email=0 --ssl=$PS_ENABLE_SSL --fixtures=$PS_INSTALL_DEMO_PRODUCTS
 
         if [ $? -ne 0 ]; then
             echo 'warning: PrestaShop installation failed.'
@@ -154,9 +151,9 @@ fi
 
 if [ $PS_USE_DOCKER_MAILDEV -eq 1 ]; then
     echo "\n* Configuring emails to use maildev ..."
-    runuser -g www-data -u www-data -- php /var/www/html/bin/console prestashop:config set PS_MAIL_METHOD --value "2"
-    runuser -g www-data -u www-data -- php /var/www/html/bin/console prestashop:config set PS_MAIL_SERVER --value "maildev"
-    runuser -g www-data -u www-data -- php /var/www/html/bin/console prestashop:config set PS_MAIL_SMTP_PORT --value "1025"
+    php /var/www/html/bin/console prestashop:config set PS_MAIL_METHOD --value "2"
+    php /var/www/html/bin/console prestashop:config set PS_MAIL_SERVER --value "maildev"
+    php /var/www/html/bin/console prestashop:config set PS_MAIL_SMTP_PORT --value "1025"
 fi
 
 if [ $BLACKFIRE_ENABLE -eq 1 ]; then

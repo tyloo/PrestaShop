@@ -42,11 +42,7 @@ jobs:
         run: docker images
       -
         name: Start services
-        run: |
-          # Set environment variables for proper user mapping
-          export USER_ID=1001
-          export GROUP_ID=1001
-          docker compose up --no-build
+        run: docker compose up --no-build
       -
         name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost:8001
