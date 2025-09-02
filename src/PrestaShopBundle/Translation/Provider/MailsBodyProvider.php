@@ -50,7 +50,7 @@ class MailsBodyProvider extends AbstractProvider implements UseDefaultCatalogueI
     /**
      * {@inheritdoc}
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'mails_body';
     }

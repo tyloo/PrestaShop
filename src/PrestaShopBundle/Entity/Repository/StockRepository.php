@@ -321,7 +321,7 @@ class StockRepository extends StockManagementRepository
     /**
      * @return string
      */
-    private function orderByProductIds()
+    private function orderByProductIds(): string
     {
         return 'ORDER BY p.id_product DESC, COALESCE(pa.id_product_attribute, 0) DESC';
     }

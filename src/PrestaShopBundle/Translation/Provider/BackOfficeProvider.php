@@ -56,7 +56,7 @@ class BackOfficeProvider extends AbstractProvider implements UseDefaultCatalogue
     /**
      * {@inheritdoc}
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'back';
     }

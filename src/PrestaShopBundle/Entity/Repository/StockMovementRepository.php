@@ -191,7 +191,7 @@ class StockMovementRepository extends StockManagementRepository
     /**
      * @return string
      */
-    private function orderByMovementsIds()
+    private function orderByMovementsIds(): string
     {
         return 'ORDER BY sm.id_stock_mvt DESC';
     }

@@ -161,7 +161,7 @@ class LayoutExtension extends AbstractExtension implements GlobalsInterface
      *
      * @return string The extension name
      */
-    public function getName()
+    public function getName(): string
     {
         return 'twig_layout_extension';
     }

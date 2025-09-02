@@ -60,7 +60,7 @@ class FrontOfficeProvider extends AbstractProvider implements UseDefaultCatalogu
     /**
      * {@inheritdoc}
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'front';
     }

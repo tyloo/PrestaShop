@@ -51,7 +51,7 @@ class ModulesProvider extends AbstractProvider implements UseDefaultCatalogueInt
     /**
      * {@inheritdoc}
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'modules';
     }

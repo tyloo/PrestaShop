@@ -107,7 +107,7 @@ class DemoRestricted
      *
      * @return string
      */
-    public function getAliasName()
+    public function getAliasName(): string
     {
         return 'demo_restricted';
     }

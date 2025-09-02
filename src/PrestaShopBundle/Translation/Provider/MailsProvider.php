@@ -50,7 +50,7 @@ class MailsProvider extends AbstractProvider implements UseDefaultCatalogueInter
     /**
      * {@inheritdoc}
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'mails';
     }

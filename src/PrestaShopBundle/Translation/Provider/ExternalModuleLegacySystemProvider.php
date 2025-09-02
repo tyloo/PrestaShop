@@ -100,7 +100,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
     /**
      * {@inheritdoc}
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'external_legacy_module';
     }
