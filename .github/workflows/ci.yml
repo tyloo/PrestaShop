@@ -34,12 +34,15 @@ jobs:
             *.cache-from=type=gha,scope=${{github.ref}}
             *.cache-from=type=gha,scope=refs/heads/main
             *.cache-to=type=gha,scope=${{github.ref}},mode=max
+            *.platform=linux/amd64
+            *.tags=prestashop:latest
+            *.output=type=docker
       -
         name: List Docker images
         run: docker images
       -
         name: Start services
-        run: docker compose up
+        run: docker compose up --no-build
       -
         name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost:8001
