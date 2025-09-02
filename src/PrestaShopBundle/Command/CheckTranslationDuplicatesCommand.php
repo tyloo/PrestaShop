@@ -35,7 +35,7 @@ use Symfony\Component\Translation\TranslatorBagInterface;
 
 class CheckTranslationDuplicatesCommand extends Command
 {
-    public function __construct(private TranslatorBagInterface $translator)
+    public function __construct(private readonly TranslatorBagInterface $translator)
     {
         parent::__construct();
     }
@@ -119,7 +119,7 @@ class CheckTranslationDuplicatesCommand extends Command
         // Remove PrestaShop arguments %<arg>%
         $message = preg_replace(Translator::$regexClassicParams, '~', $message);
         // Remove all related sprintf arguments
-        $message = preg_replace(Translator::$regexSprintfParams, '~', $message);
+        $message = preg_replace(Translator::$regexSprintfParams, '~', (string) $message);
 
         return $message;
     }

@@ -39,7 +39,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DatePickerType extends AbstractType
 {
-    public function __construct(private DataTransformerInterface $arabicToLatinDigitDataTransformer)
+    public function __construct(private readonly DataTransformerInterface $arabicToLatinDigitDataTransformer)
     {
     }
 

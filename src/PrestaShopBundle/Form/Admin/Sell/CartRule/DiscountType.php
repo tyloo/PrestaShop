@@ -44,8 +44,8 @@ class DiscountType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private DiscountListener $discountListener,
-        private DiscountApplicationChoiceProvider $discountApplicationChoiceProvider
+        private readonly DiscountListener $discountListener,
+        private readonly DiscountApplicationChoiceProvider $discountApplicationChoiceProvider
     ) {
         parent::__construct($translator, $locales);
     }

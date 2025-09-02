@@ -37,7 +37,7 @@ class SpecificPricePriorityType extends CollectionType
     /**
      * @param FormChoiceProviderInterface $priorityChoiceProvider
      */
-    public function __construct(private FormChoiceProviderInterface $priorityChoiceProvider)
+    public function __construct(private readonly FormChoiceProviderInterface $priorityChoiceProvider)
     {
     }
 

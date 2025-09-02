@@ -54,7 +54,7 @@ class LanguageType extends TranslatorAwareType
      * @param array $locales
      * @param bool $isMultistoreFeatureActive
      */
-    public function __construct(TranslatorInterface $translator, array $locales, private bool $isMultistoreFeatureActive)
+    public function __construct(TranslatorInterface $translator, array $locales, private readonly bool $isMultistoreFeatureActive)
     {
         parent::__construct($translator, $locales);
     }

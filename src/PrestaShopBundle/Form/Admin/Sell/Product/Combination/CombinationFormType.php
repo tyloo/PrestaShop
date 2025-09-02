@@ -51,7 +51,7 @@ class CombinationFormType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private EventSubscriberInterface $combinationListener
+        private readonly EventSubscriberInterface $combinationListener
     ) {
         parent::__construct($translator, $locales);
     }

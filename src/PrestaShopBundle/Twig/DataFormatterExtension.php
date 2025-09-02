@@ -43,10 +43,10 @@ class DataFormatterExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('arrayCast', [$this, 'arrayCast']),
-            new TwigFilter('intCast', [$this, 'intCast']),
-            new TwigFilter('unsetElement', [$this, 'unsetElement']),
-            new TwigFilter('array_pluck', [$this, 'arrayPluck']),
+            new TwigFilter('arrayCast', $this->arrayCast(...)),
+            new TwigFilter('intCast', $this->intCast(...)),
+            new TwigFilter('unsetElement', $this->unsetElement(...)),
+            new TwigFilter('array_pluck', $this->arrayPluck(...)),
         ];
     }
 
@@ -58,10 +58,10 @@ class DataFormatterExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('arrayCast', [$this, 'arrayCast']),
-            new TwigFunction('intCast', [$this, 'intCast']),
-            new TwigFunction('unsetElement', [$this, 'unsetElement']),
-            new TwigFunction('array_pluck', [$this, 'arrayPluck']),
+            new TwigFunction('arrayCast', $this->arrayCast(...)),
+            new TwigFunction('intCast', $this->intCast(...)),
+            new TwigFunction('unsetElement', $this->unsetElement(...)),
+            new TwigFunction('array_pluck', $this->arrayPluck(...)),
         ];
     }
 

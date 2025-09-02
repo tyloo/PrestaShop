@@ -37,7 +37,7 @@ final class BackupDataProvider implements FormDataProviderInterface
     /**
      * @param DataConfigurationInterface $backupOptionsConfigurator
      */
-    public function __construct(private DataConfigurationInterface $backupOptionsConfigurator)
+    public function __construct(private readonly DataConfigurationInterface $backupOptionsConfigurator)
     {
     }
 

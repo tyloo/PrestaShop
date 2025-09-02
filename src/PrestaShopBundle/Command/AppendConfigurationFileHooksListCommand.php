@@ -47,16 +47,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class AppendConfigurationFileHooksListCommand extends Command
 {
     public function __construct(
-        private string $env,
+        private readonly string $env,
         private readonly HookExtractor $hookExtractor,
-        private LegacyContext $legacyContext,
-        private GridDefinitionHookByServiceIdsProvider $gridDefinitionHookByServiceIdsProvider,
-        private IdentifiableObjectHookByFormTypeProvider $identifiableObjectHookByFormTypeProvider,
-        private HookDescriptionGenerator $hookDescriptionGenerator,
-        private array $serviceIds,
-        private array $optionFormHookNames,
-        private array $formTypes,
-        private string $hookFile
+        private readonly LegacyContext $legacyContext,
+        private readonly GridDefinitionHookByServiceIdsProvider $gridDefinitionHookByServiceIdsProvider,
+        private readonly IdentifiableObjectHookByFormTypeProvider $identifiableObjectHookByFormTypeProvider,
+        private readonly HookDescriptionGenerator $hookDescriptionGenerator,
+        private readonly array $serviceIds,
+        private readonly array $optionFormHookNames,
+        private readonly array $formTypes,
+        private readonly string $hookFile
     ) {
         parent::__construct();
     }
@@ -90,7 +90,7 @@ class AppendConfigurationFileHooksListCommand extends Command
         $fixtureHooks = [];
         foreach ($hooks as $hook) {
             // This is used to filter out the hooks with placeholders
-            if (preg_match('/<[^>]+>/', $hook['hook']) > 0) {
+            if (preg_match('/<[^>]+>/', (string) $hook['hook']) > 0) {
                 continue;
             }
             $fixtureHooks[$hook['hook']] = [

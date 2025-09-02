@@ -59,11 +59,11 @@ class FooterType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private ProductProvider $productUrlProvider,
+        private readonly ProductProvider $productUrlProvider,
         ProductPreviewProvider $productPreviewUrlProvider,
-        private RouterInterface $router,
-        private FeatureInterface $multiStoreFeature,
-        private ?int $contextShopId
+        private readonly RouterInterface $router,
+        private readonly FeatureInterface $multiStoreFeature,
+        private readonly ?int $contextShopId
     ) {
         parent::__construct($translator, $locales);
         $this->productPreviewUrlProvider = $productPreviewUrlProvider;

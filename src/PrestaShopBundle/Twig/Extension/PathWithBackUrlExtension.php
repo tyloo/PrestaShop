@@ -52,7 +52,7 @@ class PathWithBackUrlExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'pathWithBackUrl',
-                [$this, 'getPathWithBackUrl']
+                $this->getPathWithBackUrl(...)
             ),
         ];
     }

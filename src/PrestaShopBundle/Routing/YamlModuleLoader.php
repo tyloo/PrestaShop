@@ -45,7 +45,7 @@ class YamlModuleLoader extends Loader
         /**
          * @var array the list of activated modules
          */
-        private array $installedModulesPaths
+        private readonly array $installedModulesPaths
     )
     {
     }

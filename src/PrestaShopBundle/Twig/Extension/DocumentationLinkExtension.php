@@ -38,7 +38,7 @@ class DocumentationLinkExtension extends AbstractExtension
     /**
      * @param DocumentationLinkProviderInterface $documentationLinkProvider
      */
-    public function __construct(private DocumentationLinkProviderInterface $documentationLinkProvider)
+    public function __construct(private readonly DocumentationLinkProviderInterface $documentationLinkProvider)
     {
     }
 
@@ -50,7 +50,7 @@ class DocumentationLinkExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'documentation_link',
-                [$this->documentationLinkProvider, 'getLink']
+                $this->documentationLinkProvider->getLink(...)
             ),
         ];
     }

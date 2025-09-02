@@ -55,8 +55,8 @@ final class InvoiceByDateFormHandler extends Handler
         FormDataProviderInterface $formDataProvider,
         string $form,
         $hookName,
-        private OrderInvoiceDataProviderInterface $orderInvoiceDataProvider,
-        private PDFGeneratorInterface $pdfGenerator
+        private readonly OrderInvoiceDataProviderInterface $orderInvoiceDataProvider,
+        private readonly PDFGeneratorInterface $pdfGenerator
     ) {
         parent::__construct($formFactory, $hookDispatcher, $formDataProvider, $form, $hookName);
     }

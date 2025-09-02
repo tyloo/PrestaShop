@@ -249,7 +249,7 @@ class UpdateLicensesCommand extends Command
     private function isAFLLicense($fileName): bool
     {
         foreach ($this->aflLicense as $afl) {
-            if (str_starts_with($fileName, $afl)) {
+            if (str_starts_with($fileName, (string) $afl)) {
                 return true;
             }
         }

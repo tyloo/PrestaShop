@@ -39,7 +39,7 @@ use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 class TranslationCacheClearer implements CacheClearerInterface
 {
     public function __construct(
-        private string $legacyCacheDir
+        private readonly string $legacyCacheDir
     ) {
     }
 

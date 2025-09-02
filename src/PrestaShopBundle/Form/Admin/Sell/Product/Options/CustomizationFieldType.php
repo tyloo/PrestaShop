@@ -45,7 +45,7 @@ class CustomizationFieldType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FormChoiceProviderInterface $customizationFieldTypeChoiceProvider
+        private readonly FormChoiceProviderInterface $customizationFieldTypeChoiceProvider
     ) {
         parent::__construct($translator, $locales);
     }

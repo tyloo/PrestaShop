@@ -48,7 +48,7 @@ class ControllerResponseBuilder
      * @param GridFilterFormFactoryInterface $filterFormFactory
      * @param Router $router
      */
-    public function __construct(private GridFilterFormFactoryInterface $filterFormFactory, private Router $router)
+    public function __construct(private readonly GridFilterFormFactoryInterface $filterFormFactory, private readonly Router $router)
     {
     }
 

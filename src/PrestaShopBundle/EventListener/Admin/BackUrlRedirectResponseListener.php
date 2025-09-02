@@ -47,7 +47,7 @@ final class BackUrlRedirectResponseListener
      * @param BackUrlProvider $backUrlProvider
      */
     public function __construct(
-        private BackUrlProvider $backUrlProvider,
+        private readonly BackUrlProvider $backUrlProvider,
         LegacyContext $legacyContext
     ) {
         $context = $legacyContext->getContext();

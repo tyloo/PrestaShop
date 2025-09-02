@@ -38,7 +38,7 @@ class FilterCategorySearchCriteriaListener
     /**
      * @param DecoratedSearchCriteriaFactory $categorySearchCriteriaFactory
      */
-    public function __construct(private DecoratedSearchCriteriaFactory $categorySearchCriteriaFactory)
+    public function __construct(private readonly DecoratedSearchCriteriaFactory $categorySearchCriteriaFactory)
     {
     }
 

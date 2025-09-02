@@ -41,7 +41,7 @@ class RouterProvider extends AbstractLegacyRouteProvider
      */
     private $legacyRoutes;
 
-    public function __construct(private RouterInterface $router, private LegacyRouteFactory $factory)
+    public function __construct(private readonly RouterInterface $router, private readonly LegacyRouteFactory $factory)
     {
     }
 

@@ -47,7 +47,7 @@ class ContextIsoCodeProviderExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('get_context_iso_code', [$this, 'getIsoCode']),
+            new TwigFunction('get_context_iso_code', $this->getIsoCode(...)),
         ];
     }
 

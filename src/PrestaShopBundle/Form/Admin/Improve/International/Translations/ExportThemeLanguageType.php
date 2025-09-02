@@ -46,7 +46,7 @@ class ExportThemeLanguageType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $themeChoices
+        private readonly array $themeChoices
     ) {
         parent::__construct($translator, $locales);
     }

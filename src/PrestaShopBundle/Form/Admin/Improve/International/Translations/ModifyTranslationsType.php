@@ -52,10 +52,10 @@ class ModifyTranslationsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $translationTypeChoices,
-        private array $emailContentTypeChoices,
+        private readonly array $translationTypeChoices,
+        private readonly array $emailContentTypeChoices,
         private array $themeChoices,
-        private array $moduleChoices
+        private readonly array $moduleChoices
     ) {
         parent::__construct($translator, $locales);
     }

@@ -76,7 +76,7 @@ class ThemeExtractor
     public function __construct(/**
      * @var SmartyExtractor the Smarty Extractor
      */
-    private SmartyExtractor $smartyExtractor)
+    private readonly SmartyExtractor $smartyExtractor)
     {
         $this->dumpers[] = new XliffFileDumper();
     }
@@ -106,7 +106,7 @@ class ThemeExtractor
     {
         $this->catalog = new MessageCatalogue($locale);
         // remove the last "/"
-        $themeDirectory = substr($theme->getDirectory(), 0, -1);
+        $themeDirectory = substr((string) $theme->getDirectory(), 0, -1);
 
         $options = [
             'path' => $themeDirectory,

@@ -45,7 +45,7 @@ final class ImportDataConfigurationFormDataProvider implements ImportFormDataPro
      * @param DataMatchSaver $dataMatchSaver
      * @param array $entityFieldChoices
      */
-    public function __construct(private ImportDirectory $importDirectory, private DataRowCollectionFactoryInterface $dataRowCollectionFactory, private ImportMatchRepository $importMatchRepository, private DataMatchSaver $dataMatchSaver, private array $entityFieldChoices)
+    public function __construct(private readonly ImportDirectory $importDirectory, private readonly DataRowCollectionFactoryInterface $dataRowCollectionFactory, private readonly ImportMatchRepository $importMatchRepository, private readonly DataMatchSaver $dataMatchSaver, private readonly array $entityFieldChoices)
     {
     }
 

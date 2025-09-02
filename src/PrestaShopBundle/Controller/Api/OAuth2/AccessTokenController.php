@@ -44,7 +44,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AccessTokenController extends AbstractController
 {
-    public function __construct(private AuthorizationServer $authorizationServer, private HttpMessageFactoryInterface $httpMessageFactory, private HttpFoundationFactoryInterface $httpFoundationFactory, private ResponseFactoryInterface $responseFactory)
+    public function __construct(private readonly AuthorizationServer $authorizationServer, private readonly HttpMessageFactoryInterface $httpMessageFactory, private readonly HttpFoundationFactoryInterface $httpFoundationFactory, private readonly ResponseFactoryInterface $responseFactory)
     {
     }
 

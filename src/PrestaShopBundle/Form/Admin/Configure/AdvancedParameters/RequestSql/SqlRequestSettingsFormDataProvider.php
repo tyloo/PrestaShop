@@ -37,7 +37,7 @@ final class SqlRequestSettingsFormDataProvider implements FormDataProviderInterf
     /**
      * @param DataConfigurationInterface $dataConfiguration
      */
-    public function __construct(private DataConfigurationInterface $dataConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $dataConfiguration)
     {
     }
 

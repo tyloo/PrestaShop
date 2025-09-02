@@ -36,7 +36,7 @@ class TransactionManager implements TransactionManagerInterface
     /**
      * @param EntityManager $entityManager
      */
-    public function __construct(private EntityManager $entityManager)
+    public function __construct(private readonly EntityManager $entityManager)
     {
     }
 

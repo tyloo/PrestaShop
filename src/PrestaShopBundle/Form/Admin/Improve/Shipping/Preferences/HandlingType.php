@@ -49,8 +49,8 @@ class HandlingType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private ConfigurationInterface $configuration,
-        private CurrencyDataProviderInterface $currencyDataProvider
+        private readonly ConfigurationInterface $configuration,
+        private readonly CurrencyDataProviderInterface $currencyDataProvider
     ) {
         parent::__construct($translator, $locales);
     }

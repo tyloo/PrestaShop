@@ -47,7 +47,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class ScopeRepository implements ScopeRepositoryInterface
 {
     /** @var ApiResourceScopes[] */
-    private array $apiResourceScopes;
+    private readonly array $apiResourceScopes;
 
     public function __construct(
         private readonly ApiResourceScopesExtractorInterface $scopesExtractor,

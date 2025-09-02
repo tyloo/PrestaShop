@@ -45,7 +45,7 @@ class ProductAttachmentsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private UrlGeneratorInterface $urlGenerator
+        private readonly UrlGeneratorInterface $urlGenerator
     ) {
         parent::__construct($translator, $locales);
     }

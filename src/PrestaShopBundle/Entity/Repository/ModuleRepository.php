@@ -42,7 +42,7 @@ class ModuleRepository
      * @param Connection $connection
      * @param string $databasePrefix
      */
-    public function __construct(private Connection $connection, private $databasePrefix)
+    public function __construct(private readonly Connection $connection, private $databasePrefix)
     {
         $this->table = $this->databasePrefix . 'module';
     }

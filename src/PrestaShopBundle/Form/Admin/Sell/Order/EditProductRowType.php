@@ -48,8 +48,8 @@ class EditProductRowType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider,
-        private int $contextLangId
+        private readonly ConfigurableFormChoiceProviderInterface $orderInvoiceByIdChoiceProvider,
+        private readonly int $contextLangId
     ) {
         parent::__construct($translator, $locales);
     }

@@ -51,7 +51,7 @@ class GeneralType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private LegacyContext $legacyContext
+        private readonly LegacyContext $legacyContext
     ) {
         parent::__construct($translator, $locales);
     }

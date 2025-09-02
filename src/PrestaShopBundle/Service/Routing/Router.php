@@ -67,7 +67,7 @@ class Router extends BaseRouter
 
     public static function generateTokenizedUrl($url, $token): string
     {
-        $components = parse_url($url);
+        $components = parse_url((string) $url);
         $baseUrl = ($components['path'] ?? '');
         $queryParams = [];
         if (isset($components['query'])) {

@@ -47,7 +47,7 @@ final class LegacyUrlConverter
      * @param RouterInterface $router
      * @param LegacyRouteProviderInterface $legacyRouteProvider
      */
-    public function __construct(private RouterInterface $router, private LegacyRouteProviderInterface $legacyRouteProvider)
+    public function __construct(private readonly RouterInterface $router, private readonly LegacyRouteProviderInterface $legacyRouteProvider)
     {
     }
 

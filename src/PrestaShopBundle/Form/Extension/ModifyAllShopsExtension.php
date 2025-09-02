@@ -55,7 +55,7 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
      */
     private $checkboxLabel;
 
-    public function __construct(private FeatureInterface $multiStoreFeature, private MultistoreContextCheckerInterface $multistoreContextChecker, private TranslatorInterface $translator)
+    public function __construct(private readonly FeatureInterface $multiStoreFeature, private readonly MultistoreContextCheckerInterface $multistoreContextChecker, private readonly TranslatorInterface $translator)
     {
     }
 

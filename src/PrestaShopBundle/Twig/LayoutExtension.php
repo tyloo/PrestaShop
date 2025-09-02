@@ -99,7 +99,7 @@ class LayoutExtension extends AbstractExtension implements GlobalsInterface
     public function getFilters()
     {
         return [
-            new TwigFilter('configuration', [$this, 'getConfiguration'], ['deprecated' => true]),
+            new TwigFilter('configuration', $this->getConfiguration(...), ['deprecated' => true]),
         ];
     }
 
@@ -111,9 +111,9 @@ class LayoutExtension extends AbstractExtension implements GlobalsInterface
     public function getFunctions()
     {
         return [
-            new TwigFunction('getAdminLink', [$this, 'getAdminLink']),
-            new TwigFunction('youtube_link', [$this, 'getYoutubeLink']),
-            new TwigFunction('configuration', [$this, 'getConfiguration']),
+            new TwigFunction('getAdminLink', $this->getAdminLink(...)),
+            new TwigFunction('youtube_link', $this->getYoutubeLink(...)),
+            new TwigFunction('configuration', $this->getConfiguration(...)),
         ];
     }
 

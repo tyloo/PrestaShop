@@ -42,7 +42,7 @@ class ConfigurableCountryChoiceType extends AbstractType
     /**
      * @param ConfigurableFormChoiceProviderInterface $countriesChoiceProvider
      */
-    public function __construct(private ConfigurableFormChoiceProviderInterface $countriesChoiceProvider)
+    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $countriesChoiceProvider)
     {
     }
 

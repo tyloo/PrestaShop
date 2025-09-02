@@ -48,8 +48,8 @@ class CategoriesType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private ConfigurableFormChoiceProviderInterface $defaultCategoryChoiceProvider,
-        private EventSubscriberInterface $eventSubscriber
+        private readonly ConfigurableFormChoiceProviderInterface $defaultCategoryChoiceProvider,
+        private readonly EventSubscriberInterface $eventSubscriber
     ) {
         parent::__construct($translator, $locales);
     }

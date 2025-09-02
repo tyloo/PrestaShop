@@ -42,7 +42,7 @@ class ChangeOrderAddressType extends AbstractType
     /**
      * @param ConfigurableFormChoiceProviderInterface $customerAddressProvider
      */
-    public function __construct(private ConfigurableFormChoiceProviderInterface $customerAddressProvider)
+    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $customerAddressProvider)
     {
     }
 

@@ -38,7 +38,7 @@ class ColorBrightnessCalculatorExtension extends AbstractExtension
     /**
      * @param ColorBrightnessCalculator $brightnessCalculator
      */
-    public function __construct(private ColorBrightnessCalculator $brightnessCalculator)
+    public function __construct(private readonly ColorBrightnessCalculator $brightnessCalculator)
     {
     }
 
@@ -50,7 +50,7 @@ class ColorBrightnessCalculatorExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'is_color_bright',
-                [$this->brightnessCalculator, 'isBright']
+                $this->brightnessCalculator->isBright(...)
             ),
         ];
     }

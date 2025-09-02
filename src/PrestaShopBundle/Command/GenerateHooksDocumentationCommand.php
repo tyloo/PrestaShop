@@ -80,7 +80,7 @@ final class GenerateHooksDocumentationCommand extends Command
 
     public function __construct(
         private readonly HookExtractor $hookExtractor,
-        private string $hookFile
+        private readonly string $hookFile
     ) {
         parent::__construct();
     }

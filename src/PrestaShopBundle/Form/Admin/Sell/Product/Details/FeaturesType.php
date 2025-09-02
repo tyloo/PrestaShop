@@ -44,8 +44,8 @@ class FeaturesType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FeaturesChoiceProvider $featuresChoiceProvider,
-        private UrlGeneratorInterface $urlGenerator
+        private readonly FeaturesChoiceProvider $featuresChoiceProvider,
+        private readonly UrlGeneratorInterface $urlGenerator
     ) {
         parent::__construct($translator, $locales);
     }

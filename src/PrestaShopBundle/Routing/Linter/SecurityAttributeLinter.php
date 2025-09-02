@@ -84,11 +84,11 @@ final class SecurityAttributeLinter implements RouteLinterInterface
     {
         $controller = $route->getDefault('_controller');
 
-        if (!str_contains($controller, '::')) {
+        if (!str_contains((string) $controller, '::')) {
             return null;
         }
 
-        [$controller, $method] = explode('::', $controller, 2);
+        [$controller, $method] = explode('::', (string) $controller, 2);
 
         return [
             'controller' => $controller,

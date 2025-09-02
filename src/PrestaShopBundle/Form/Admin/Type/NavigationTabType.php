@@ -45,7 +45,7 @@ class NavigationTabType extends AbstractType
      * @param LoggerInterface $logger
      * @param bool $isDebug
      */
-    public function __construct(private LoggerInterface $logger, private bool $isDebug)
+    public function __construct(private readonly LoggerInterface $logger, private readonly bool $isDebug)
     {
     }
 

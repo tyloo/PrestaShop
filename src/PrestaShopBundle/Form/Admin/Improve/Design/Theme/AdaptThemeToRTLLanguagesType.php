@@ -39,7 +39,7 @@ class AdaptThemeToRTLLanguagesType extends AbstractType
     /**
      * @param string[] $themeChoices
      */
-    public function __construct(private array $themeChoices)
+    public function __construct(private readonly array $themeChoices)
     {
     }
 

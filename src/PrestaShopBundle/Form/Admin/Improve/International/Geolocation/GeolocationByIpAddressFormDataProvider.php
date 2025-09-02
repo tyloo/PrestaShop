@@ -40,7 +40,7 @@ final class GeolocationByIpAddressFormDataProvider implements FormDataProviderIn
      * @param DataConfigurationInterface $dataConfiguration
      * @param GeoLiteCityCheckerInterface $geoLiteCityChecker
      */
-    public function __construct(private DataConfigurationInterface $dataConfiguration, private GeoLiteCityCheckerInterface $geoLiteCityChecker)
+    public function __construct(private readonly DataConfigurationInterface $dataConfiguration, private readonly GeoLiteCityCheckerInterface $geoLiteCityChecker)
     {
     }
 

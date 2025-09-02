@@ -38,7 +38,7 @@ class ReplyToCustomerThreadType extends AbstractType
     /**
      * @param TranslatorInterface $translator
      */
-    public function __construct(private TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
     }
 

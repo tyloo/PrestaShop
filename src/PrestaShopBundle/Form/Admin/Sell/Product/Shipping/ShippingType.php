@@ -53,9 +53,9 @@ class ShippingType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private string $currencyIsoCode,
-        private FormChoiceProviderInterface $carrierChoiceProvider,
-        private FormChoiceProviderInterface $deliveryTimeNoteTypesProvider
+        private readonly string $currencyIsoCode,
+        private readonly FormChoiceProviderInterface $carrierChoiceProvider,
+        private readonly FormChoiceProviderInterface $deliveryTimeNoteTypesProvider
     ) {
         parent::__construct($translator, $locales);
     }

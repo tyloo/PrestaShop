@@ -48,9 +48,9 @@ class ExtraModulesType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private HookDispatcherInterface $hookDispatcher,
-        private ModuleDataProvider $moduleDataProvider,
-        private ModuleRepository $moduleRepository
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly ModuleDataProvider $moduleDataProvider,
+        private readonly ModuleRepository $moduleRepository
     ) {
         parent::__construct($translator, $locales);
     }

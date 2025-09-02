@@ -37,7 +37,7 @@ final class PaymentPreferencesFormDataProvider implements FormDataProviderInterf
     /**
      * @param DataConfigurationInterface $paymentModulePreferencesConfiguration
      */
-    public function __construct(private DataConfigurationInterface $paymentModulePreferencesConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $paymentModulePreferencesConfiguration)
     {
     }
 

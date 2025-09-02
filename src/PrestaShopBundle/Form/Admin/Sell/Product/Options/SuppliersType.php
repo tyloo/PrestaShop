@@ -45,7 +45,7 @@ class SuppliersType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FormChoiceProviderInterface $supplierNameByIdChoiceProvider
+        private readonly FormChoiceProviderInterface $supplierNameByIdChoiceProvider
     ) {
         parent::__construct($translator, $locales);
     }

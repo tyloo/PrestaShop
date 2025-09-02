@@ -248,7 +248,7 @@ class LoginController extends PrestaShopAdminController
             if (empty($maintenanceIpConfiguration)) {
                 $maintenanceIps = [];
             } else {
-                $maintenanceIps = explode(',', $maintenanceIpConfiguration);
+                $maintenanceIps = explode(',', (string) $maintenanceIpConfiguration);
             }
 
             $maintenanceIps = array_merge(['127.0.0.1', '::1'], $maintenanceIps);

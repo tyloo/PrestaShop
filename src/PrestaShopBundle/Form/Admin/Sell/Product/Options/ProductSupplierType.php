@@ -61,9 +61,9 @@ class ProductSupplierType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private string $defaultCurrencyIsoCode,
-        private CurrencyRepository $currencyRepository,
-        private FormCloner $formCloner
+        private readonly string $defaultCurrencyIsoCode,
+        private readonly CurrencyRepository $currencyRepository,
+        private readonly FormCloner $formCloner
     ) {
         parent::__construct($translator, $locales);
     }

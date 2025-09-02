@@ -364,7 +364,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
         try {
             $routeInfo = $this->router->match($request->getPathInfo());
             $controller = $routeInfo['_controller'];
-            [$className, $methodName] = explode('::', $controller);
+            [$className, $methodName] = explode('::', (string) $controller);
 
             $reflectionClass = new ReflectionClass($className);
             $classAttributes = $reflectionClass->getAttributes(AllShopContext::class);

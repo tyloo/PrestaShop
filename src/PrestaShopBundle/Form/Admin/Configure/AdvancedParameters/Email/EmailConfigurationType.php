@@ -48,8 +48,8 @@ class EmailConfigurationType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FormChoiceProviderInterface $mailMethodChoiceProvider,
-        private FormChoiceProviderInterface $contactsChoiceProvider
+        private readonly FormChoiceProviderInterface $mailMethodChoiceProvider,
+        private readonly FormChoiceProviderInterface $contactsChoiceProvider
     ) {
         parent::__construct($translator, $locales);
     }

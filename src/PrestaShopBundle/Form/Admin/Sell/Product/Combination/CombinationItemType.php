@@ -64,8 +64,8 @@ class CombinationItemType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         Currency $defaultCurrency,
-        private FeatureInterface $multiStoreFeature,
-        private int $contextShopId
+        private readonly FeatureInterface $multiStoreFeature,
+        private readonly int $contextShopId
     ) {
         parent::__construct($translator, $locales);
         $this->defaultCurrency = $defaultCurrency;

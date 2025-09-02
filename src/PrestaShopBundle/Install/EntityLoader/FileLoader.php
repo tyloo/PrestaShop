@@ -47,7 +47,7 @@ class FileLoader
      * @param string $dataPath Path for data files
      * @param string $langPath Path for translated data files
      */
-    public function __construct(private string $dataPath, private string $langPath)
+    public function __construct(private readonly string $dataPath, private readonly string $langPath)
     {
     }
 

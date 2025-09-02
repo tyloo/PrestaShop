@@ -57,7 +57,7 @@ class CmsPageCategoryType extends TranslatorAwareType
      * @param array $allCmsCategories
      * @param bool $isShopFeatureEnabled
      */
-    public function __construct(TranslatorInterface $translator, array $locales, private array $allCmsCategories, private $isShopFeatureEnabled)
+    public function __construct(TranslatorInterface $translator, array $locales, private readonly array $allCmsCategories, private $isShopFeatureEnabled)
     {
         parent::__construct($translator, $locales);
     }

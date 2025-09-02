@@ -41,7 +41,7 @@ class ThemeTranslationsFactory extends TranslationsFactory
         /**
          * @var ThemeProvider the theme provider
          */
-        private ThemeProvider $themeProvider
+        private readonly ThemeProvider $themeProvider
     )
     {
     }

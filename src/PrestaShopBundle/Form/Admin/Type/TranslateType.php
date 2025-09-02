@@ -44,7 +44,7 @@ class TranslateType extends CommonAbstractType
      * @param int $defaultFormLanguageId
      * @param int $defaultShopLanguageId
      */
-    public function __construct(private UrlGeneratorInterface $urlGenerator, private $saveFormLocaleChoice, private $defaultFormLanguageId, private $defaultShopLanguageId)
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator, private $saveFormLocaleChoice, private $defaultFormLanguageId, private $defaultShopLanguageId)
     {
     }
 

@@ -172,7 +172,7 @@ class LegacyLinkLinterCommand extends Command
         'AdminAdminAPI',
     ];
 
-    public function __construct(private LegacyLinkLinter $legacyLinkLinter, private AdminRouteProvider $adminRouteProvider)
+    public function __construct(private readonly LegacyLinkLinter $legacyLinkLinter, private readonly AdminRouteProvider $adminRouteProvider)
     {
         parent::__construct();
     }

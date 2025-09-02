@@ -64,7 +64,7 @@ class CmsPageType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $allCmsCategories,
+        private readonly array $allCmsCategories,
         private $isMultiShopEnabled
     ) {
         parent::__construct($translator, $locales);

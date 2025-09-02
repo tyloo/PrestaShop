@@ -45,12 +45,12 @@ class ImportFormHandler implements ImportFormHandlerInterface
         /**
          * Form builder.
          */
-        private FormBuilderInterface $formBuilder,
+        private readonly FormBuilderInterface $formBuilder,
         /**
          * Hook dispatcher.
          */
-        private HookDispatcherInterface $hookDispatcher,
-        private ImportFormDataProviderInterface $formDataProvider,
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly ImportFormDataProviderInterface $formDataProvider,
         private $hookName
     )
     {

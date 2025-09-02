@@ -38,7 +38,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MultistoreConfigurationTypeExtension extends AbstractTypeExtension
 {
-    public function __construct(private MultistoreCheckboxEnabler $multistoreCheckboxEnabler)
+    public function __construct(private readonly MultistoreCheckboxEnabler $multistoreCheckboxEnabler)
     {
     }
 

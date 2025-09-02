@@ -50,9 +50,9 @@ class ExportCataloguesType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $exportTranslationCoreTypeChoices,
-        private array $themeChoices,
-        private array $moduleChoices
+        private readonly array $exportTranslationCoreTypeChoices,
+        private readonly array $themeChoices,
+        private readonly array $moduleChoices
     ) {
         parent::__construct($translator, $locales);
     }

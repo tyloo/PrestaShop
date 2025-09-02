@@ -42,7 +42,7 @@ final class LegacyModuleExtractor implements LegacyModuleExtractorInterface
      * @param ExtractorInterface $twigExtractor
      * @param string $modulesDirectory
      */
-    public function __construct(private ExtractorInterface $phpExtractor, private ExtractorInterface $smartyExtractor, private ExtractorInterface $twigExtractor, private $modulesDirectory)
+    public function __construct(private readonly ExtractorInterface $phpExtractor, private readonly ExtractorInterface $smartyExtractor, private readonly ExtractorInterface $twigExtractor, private $modulesDirectory)
     {
     }
 

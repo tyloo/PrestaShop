@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GenderType extends AbstractType
 {
-    public function __construct(private GenderByIdChoiceProvider $genderByIdChoiceProvider)
+    public function __construct(private readonly GenderByIdChoiceProvider $genderByIdChoiceProvider)
     {
     }
 

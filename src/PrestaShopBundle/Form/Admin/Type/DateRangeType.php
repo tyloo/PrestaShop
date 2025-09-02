@@ -104,8 +104,8 @@ class DateRangeType extends AbstractType
                 ],
             ]);
 
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'adaptUnlimited']);
-            $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'adaptUnlimited']);
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, $this->adaptUnlimited(...));
+            $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->adaptUnlimited(...));
         }
     }
 

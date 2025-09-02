@@ -45,7 +45,7 @@ class TranslatorLanguageLoader
      */
     private $isAdminContext = false;
 
-    private XliffFileLoader $xliffFileLoader;
+    private readonly XliffFileLoader $xliffFileLoader;
 
     public function __construct(
         private readonly ModuleRepository $moduleRepository,

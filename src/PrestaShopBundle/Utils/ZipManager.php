@@ -46,7 +46,7 @@ class ZipManager
         foreach ($files as $filename => $file) {
             if (!$file->isDir()) {
                 $filePath = $file->getRealPath();
-                $relativePath = substr($filename, strlen($folder) + 1);
+                $relativePath = substr((string) $filename, strlen((string) $folder) + 1);
 
                 $zip->addFile($filePath, $relativePath);
             }

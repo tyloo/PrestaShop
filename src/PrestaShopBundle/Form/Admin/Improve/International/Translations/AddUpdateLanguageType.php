@@ -45,7 +45,7 @@ class AddUpdateLanguageType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $nonInstalledLocalizationChoices
+        private readonly array $nonInstalledLocalizationChoices
     ) {
         parent::__construct($translator, $locales);
     }

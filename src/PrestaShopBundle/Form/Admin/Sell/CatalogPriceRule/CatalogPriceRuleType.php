@@ -54,7 +54,7 @@ class CatalogPriceRuleType extends AbstractType
      * @param array $groupByIdChoices
      * @param array $shopByIdChoices
      */
-    public function __construct(private TranslatorInterface $translator, private bool $isMultiShopEnabled, private array $groupByIdChoices, private array $shopByIdChoices)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly bool $isMultiShopEnabled, private readonly array $groupByIdChoices, private readonly array $shopByIdChoices)
     {
     }
 

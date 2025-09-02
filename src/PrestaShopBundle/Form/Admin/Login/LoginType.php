@@ -44,7 +44,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class LoginType extends AbstractType
 {
-    private bool $isDemoModeEnabled;
+    private readonly bool $isDemoModeEnabled;
 
     public function __construct(
         protected readonly TranslatorInterface $translator,

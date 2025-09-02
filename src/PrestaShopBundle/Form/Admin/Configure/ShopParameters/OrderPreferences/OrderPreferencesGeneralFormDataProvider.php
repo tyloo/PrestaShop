@@ -38,7 +38,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class OrderPreferencesGeneralFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private GeneralConfiguration $generalConfiguration, private TranslatorInterface $translator, private CMSDataProvider $cmsDataProvider)
+    public function __construct(private readonly GeneralConfiguration $generalConfiguration, private readonly TranslatorInterface $translator, private readonly CMSDataProvider $cmsDataProvider)
     {
     }
 

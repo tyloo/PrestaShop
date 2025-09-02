@@ -56,9 +56,9 @@ class VirtualProductFileType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private int $maxFileSizeInMegabytes,
-        private RouterInterface $router,
-        private EventSubscriberInterface $virtualProductFileListener
+        private readonly int $maxFileSizeInMegabytes,
+        private readonly RouterInterface $router,
+        private readonly EventSubscriberInterface $virtualProductFileListener
     ) {
         parent::__construct($translator, $locales);
     }

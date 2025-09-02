@@ -54,9 +54,9 @@ class TaxOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private bool $isEcotaxEnabled,
-        private FormChoiceProviderInterface $taxAddressTypeChoiceProvider,
-        private FormChoiceProviderInterface $taxRuleGroupChoiceProvider
+        private readonly bool $isEcotaxEnabled,
+        private readonly FormChoiceProviderInterface $taxAddressTypeChoiceProvider,
+        private readonly FormChoiceProviderInterface $taxRuleGroupChoiceProvider
     ) {
         parent::__construct($translator, $locales);
     }

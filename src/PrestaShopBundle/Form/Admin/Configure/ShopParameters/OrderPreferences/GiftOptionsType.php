@@ -55,10 +55,10 @@ class GiftOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private ConfigurationInterface $configuration,
+        private readonly ConfigurationInterface $configuration,
         private $defaultCurrencyIsoCode,
-        private array $taxChoices,
-        private RouterInterface $router
+        private readonly array $taxChoices,
+        private readonly RouterInterface $router
     ) {
         parent::__construct($translator, $locales);
     }

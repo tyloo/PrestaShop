@@ -121,7 +121,7 @@ class APIClientCommand extends Command
             $clientScopes = [];
             $inputScopes = $input->getOption('scopes') ?? '';
             if (!empty($inputScopes)) {
-                $clientScopes = array_map(fn (string $scope): string => trim($scope), explode(',', $inputScopes));
+                $clientScopes = array_map(fn (string $scope): string => trim($scope), explode(',', (string) $inputScopes));
             }
         }
 

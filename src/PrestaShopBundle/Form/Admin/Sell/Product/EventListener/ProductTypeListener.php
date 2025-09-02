@@ -45,7 +45,7 @@ class ProductTypeListener implements EventSubscriberInterface
     /**
      * @param HookInformationProvider $hookInformationProvider
      */
-    public function __construct(private HookInformationProvider $hookInformationProvider)
+    public function __construct(private readonly HookInformationProvider $hookInformationProvider)
     {
     }
 

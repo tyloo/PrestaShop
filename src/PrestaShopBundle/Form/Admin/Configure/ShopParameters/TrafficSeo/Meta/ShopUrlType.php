@@ -49,8 +49,8 @@ class ShopUrlType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private bool $isShopFeatureActive,
-        private bool $doesMainShopUrlExist
+        private readonly bool $isShopFeatureActive,
+        private readonly bool $doesMainShopUrlExist
     ) {
         parent::__construct($translator, $locales);
     }

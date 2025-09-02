@@ -54,11 +54,11 @@ class RedirectOptionType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private RouterInterface $router,
-        private DataTransformerInterface $targetTransformer,
-        private EventSubscriberInterface $eventSubscriber,
-        private string $employeeIsoCode,
-        private int $homeCategoryId
+        private readonly RouterInterface $router,
+        private readonly DataTransformerInterface $targetTransformer,
+        private readonly EventSubscriberInterface $eventSubscriber,
+        private readonly string $employeeIsoCode,
+        private readonly int $homeCategoryId
     ) {
         parent::__construct($translator, $locales);
     }

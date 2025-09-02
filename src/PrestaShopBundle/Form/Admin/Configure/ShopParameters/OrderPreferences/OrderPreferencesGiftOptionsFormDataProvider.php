@@ -37,7 +37,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class OrderPreferencesGiftOptionsFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private GiftOptionsConfiguration $giftOptionsConfiguration, private TranslatorInterface $translator)
+    public function __construct(private readonly GiftOptionsConfiguration $giftOptionsConfiguration, private readonly TranslatorInterface $translator)
     {
     }
 

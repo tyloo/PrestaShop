@@ -49,7 +49,7 @@ class MinimumAmountType extends TranslatorAwareType implements EventSubscriberIn
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private CurrencyDataProviderInterface $currencyDataProvider
+        private readonly CurrencyDataProviderInterface $currencyDataProvider
     ) {
         parent::__construct($translator, $locales);
     }

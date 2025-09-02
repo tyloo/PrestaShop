@@ -35,7 +35,7 @@ class Movement
      */
     private $delta;
 
-    public function __construct(private ProductIdentity $productIdentity, $delta)
+    public function __construct(private readonly ProductIdentity $productIdentity, $delta)
     {
         $this->delta = (int) $delta;
     }

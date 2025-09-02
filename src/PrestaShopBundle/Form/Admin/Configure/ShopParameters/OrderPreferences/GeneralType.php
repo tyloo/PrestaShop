@@ -47,12 +47,12 @@ class GeneralType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private CurrencyDataProviderInterface $currencyDataProvider,
-        private ConfigurationInterface $configuration,
+        private readonly CurrencyDataProviderInterface $currencyDataProvider,
+        private readonly ConfigurationInterface $configuration,
         /**
          * CMS pages choices for Terms Of Service.
          */
-        private array $tosCmsChoices
+        private readonly array $tosCmsChoices
     ) {
         parent::__construct($translator, $locales);
     }

@@ -85,8 +85,8 @@ class ConfigCommand extends Command
     private $idLang;
 
     public function __construct(
-        private ShopConfigurationInterface $configuration,
-        private LanguageDataProvider $languageDataProvider
+        private readonly ShopConfigurationInterface $configuration,
+        private readonly LanguageDataProvider $languageDataProvider
     ) {
         parent::__construct();
     }

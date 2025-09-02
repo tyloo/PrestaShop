@@ -57,7 +57,7 @@ class CategoriesProvider
      */
     private $categoriesFromSource;
 
-    public function __construct(array $addonsCategories, private array $modulesTheme)
+    public function __construct(array $addonsCategories, private readonly array $modulesTheme)
     {
         // A list of categories and subcategories we got from local YML file
         // In the past, this was fetched from addons marketplace

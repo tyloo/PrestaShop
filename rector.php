@@ -42,7 +42,7 @@ return RectorConfig::configure()
         // __DIR__ . '/tests',
         // __DIR__ . '/webservice',
     ])
-    ->withPhpSets(php80: true)
+    ->withPhpSets(php81: true)
     // ->withComposerBased(twig: true, doctrine: true, symfony: true)
     // ->withAttributesSets(symfony: true, doctrine: true)
     ->withTypeCoverageLevel(23)

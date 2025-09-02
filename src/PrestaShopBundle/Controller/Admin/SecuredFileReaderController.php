@@ -65,7 +65,7 @@ class SecuredFileReaderController extends AbstractController
     /**
      * @param string $uploadDir
      */
-    public function __construct(private string $uploadDir)
+    public function __construct(private readonly string $uploadDir)
     {
     }
 

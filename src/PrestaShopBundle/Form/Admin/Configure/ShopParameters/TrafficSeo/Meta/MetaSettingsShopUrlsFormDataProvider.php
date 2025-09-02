@@ -46,7 +46,7 @@ final class MetaSettingsShopUrlsFormDataProvider implements FormDataProviderInte
      * @param TranslatorInterface $translator
      * @param Validate $validate
      */
-    public function __construct(private DataConfigurationInterface $shopUrlsDataConfiguration, private TranslatorInterface $translator, private Validate $validate)
+    public function __construct(private readonly DataConfigurationInterface $shopUrlsDataConfiguration, private readonly TranslatorInterface $translator, private readonly Validate $validate)
     {
     }
 

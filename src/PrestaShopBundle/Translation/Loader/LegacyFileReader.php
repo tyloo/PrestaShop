@@ -38,7 +38,7 @@ class LegacyFileReader
         /**
          * @var Converter Converts IETF language tags into two-letter language code
          */
-        private Converter $localeConverter
+        private readonly Converter $localeConverter
     )
     {
     }

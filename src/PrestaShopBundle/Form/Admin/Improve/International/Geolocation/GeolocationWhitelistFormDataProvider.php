@@ -40,7 +40,7 @@ final class GeolocationWhitelistFormDataProvider implements FormDataProviderInte
      * @param DataConfigurationInterface $dataConfiguration
      * @param ValidatorInterface $validator
      */
-    public function __construct(private DataConfigurationInterface $dataConfiguration, private ValidatorInterface $validator)
+    public function __construct(private readonly DataConfigurationInterface $dataConfiguration, private readonly ValidatorInterface $validator)
     {
     }
 

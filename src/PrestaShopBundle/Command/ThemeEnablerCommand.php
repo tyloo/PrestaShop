@@ -45,7 +45,7 @@ final class ThemeEnablerCommand extends Command
      */
     public const RETURN_CODE_FAILED = 1;
 
-    public function __construct(private ThemeManager $themeManager)
+    public function __construct(private readonly ThemeManager $themeManager)
     {
         parent::__construct();
     }

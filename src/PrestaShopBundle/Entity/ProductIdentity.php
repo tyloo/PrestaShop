@@ -30,7 +30,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ProductIdentity
 {
-    public function __construct(private int $productId, private int $combinationId = 0)
+    public function __construct(private readonly int $productId, private readonly int $combinationId = 0)
     {
     }
 

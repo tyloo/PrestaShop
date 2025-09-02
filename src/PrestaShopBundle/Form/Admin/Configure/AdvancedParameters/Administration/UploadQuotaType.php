@@ -45,8 +45,8 @@ class UploadQuotaType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private ConfigurationInterface $configuration,
-        private UploadSizeConfigurationInterface $uploadSizeConfiguration
+        private readonly ConfigurationInterface $configuration,
+        private readonly UploadSizeConfigurationInterface $uploadSizeConfiguration
     ) {
         parent::__construct($translator, $locales);
     }

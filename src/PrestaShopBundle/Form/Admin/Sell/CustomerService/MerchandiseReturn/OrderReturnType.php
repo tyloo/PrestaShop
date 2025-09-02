@@ -50,7 +50,7 @@ class OrderReturnType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $stateChoices
+        private readonly array $stateChoices
     ) {
         parent::__construct($translator, $locales);
     }

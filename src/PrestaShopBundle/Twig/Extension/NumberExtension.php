@@ -42,7 +42,7 @@ class NumberExtension extends AbstractExtension
      */
     public function getFunctions()
     {
-        return [new TwigFunction('number', [$this, 'createNumber'])];
+        return [new TwigFunction('number', $this->createNumber(...))];
     }
 
     public function createNumber($number): DecimalNumber

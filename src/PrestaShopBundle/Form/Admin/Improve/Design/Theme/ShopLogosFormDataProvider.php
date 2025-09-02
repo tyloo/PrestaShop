@@ -41,7 +41,7 @@ final class ShopLogosFormDataProvider implements FormDataProviderInterface
      * @param CommandBusInterface $commandBus
      * @param MultiStoreSettingsFormDataProviderInterface $themeMultiStoreSettingsFormDataProvider
      */
-    public function __construct(private CommandBusInterface $commandBus, private MultiStoreSettingsFormDataProviderInterface $themeMultiStoreSettingsFormDataProvider)
+    public function __construct(private readonly CommandBusInterface $commandBus, private readonly MultiStoreSettingsFormDataProviderInterface $themeMultiStoreSettingsFormDataProvider)
     {
     }
 

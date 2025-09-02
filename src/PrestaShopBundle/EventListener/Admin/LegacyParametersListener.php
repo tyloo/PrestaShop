@@ -44,7 +44,7 @@ class LegacyParametersListener
     /**
      * @param LegacyParametersConverter $converter
      */
-    public function __construct(private LegacyParametersConverter $converter)
+    public function __construct(private readonly LegacyParametersConverter $converter)
     {
     }
 

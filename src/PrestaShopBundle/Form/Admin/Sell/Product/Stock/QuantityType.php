@@ -50,8 +50,8 @@ class QuantityType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private RouterInterface $router,
-        private bool $stockManagementEnabled
+        private readonly RouterInterface $router,
+        private readonly bool $stockManagementEnabled
     ) {
         parent::__construct($translator, $locales);
     }

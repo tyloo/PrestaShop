@@ -226,12 +226,12 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
     protected function getOperationDomain(HttpOperation $operation): ?string
     {
         // All our domain API resources (in the core and in the module) are in a sub namespace ending with ApiPlatform\Resources
-        if (!str_contains($operation->getClass(), 'ApiPlatform\Resources\\')) {
+        if (!str_contains((string) $operation->getClass(), 'ApiPlatform\Resources\\')) {
             return null;
         }
 
         // Get the last part of the FQCN after ApiPlatform\Resources
-        $domainEnd = substr($operation->getClass(), strrpos($operation->getClass(), 'ApiPlatform\Resources\\') + strlen('ApiPlatform\Resources\\'));
+        $domainEnd = substr((string) $operation->getClass(), strrpos((string) $operation->getClass(), 'ApiPlatform\Resources\\') + strlen('ApiPlatform\Resources\\'));
         if (empty($domainEnd)) {
             return null;
         }
@@ -465,7 +465,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
             // Replace properties that are scanned from CQRS command to their expected API path
             if ($this->propertyAccessor->isReadable($definition['properties'], $cqrsPath)) {
                 // Automatic value from context are simply removed from the schema, the others are "moved" to match the expected property path
-                if (!str_starts_with($apiPath, '[_context]') && $this->propertyAccessor->isWritable($definition['properties'], $apiPath)) {
+                if (!str_starts_with((string) $apiPath, '[_context]') && $this->propertyAccessor->isWritable($definition['properties'], $apiPath)) {
                     $this->propertyAccessor->setValue($definition['properties'], $apiPath, $this->propertyAccessor->getValue($definition['properties'], $cqrsPath));
                 }
 

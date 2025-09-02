@@ -63,10 +63,10 @@ class SSLMiddlewareListener
         // If It's Sf route and SSL enabled and forced, redirect to https
         $enabled = (1 === (int) $this->configuration->get('PS_SSL_ENABLED'));
         $serverParams = $event->getRequest()->server;
-        $refererSsl = ($serverParams->has('HTTP_REFERER') && str_starts_with($serverParams->get('HTTP_REFERER'), 'https'));
+        $refererSsl = ($serverParams->has('HTTP_REFERER') && str_starts_with((string) $serverParams->get('HTTP_REFERER'), 'https'));
 
         if ($enabled && $refererSsl) {
-            $forwardedProto = ($serverParams->has('HTTP_X_FORWARDED_PROTO') && str_starts_with($serverParams->get('HTTP_X_FORWARDED_PROTO'), 'https'));
+            $forwardedProto = ($serverParams->has('HTTP_X_FORWARDED_PROTO') && str_starts_with((string) $serverParams->get('HTTP_X_FORWARDED_PROTO'), 'https'));
 
             if ($forwardedProto) {
                 throw new RuntimeException("Infinite redirection detected, please fill in the 'PS_TRUSTED_PROXIES' environment variable or disable the PS_SSL_ENABLED configuration");

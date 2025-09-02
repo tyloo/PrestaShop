@@ -38,7 +38,7 @@ class ProfileChoiceType extends AbstractType
     /**
      * @param array $profileChoices
      */
-    public function __construct(private array $profileChoices)
+    public function __construct(private readonly array $profileChoices)
     {
     }
 

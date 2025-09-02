@@ -57,10 +57,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class AppendHooksListForSqlUpgradeFileCommand extends Command
 {
     public function __construct(
-        private string $env,
-        private LegacyContext $legacyContext,
-        private HttpClientInterface $httpClient,
-        private string $projectDir,
+        private readonly string $env,
+        private readonly LegacyContext $legacyContext,
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $projectDir,
     ) {
         parent::__construct();
     }

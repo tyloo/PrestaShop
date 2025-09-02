@@ -37,7 +37,7 @@ final class MerchandiseReturnOptionsFormDataProvider implements FormDataProvider
     /**
      * @param DataConfigurationInterface $optionsDataConfiguration
      */
-    public function __construct(private DataConfigurationInterface $optionsDataConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $optionsDataConfiguration)
     {
     }
 

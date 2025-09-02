@@ -59,7 +59,7 @@ class StockType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FormChoiceProviderInterface $packStockTypeChoiceProvider,
+        private readonly FormChoiceProviderInterface $packStockTypeChoiceProvider,
         RouterInterface $router,
         string $employeeIsoCode
     ) {

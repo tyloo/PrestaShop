@@ -68,7 +68,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
      */
     private $output;
 
-    public function __construct(private string $localizationPath)
+    public function __construct(private readonly string $localizationPath)
     {
         parent::__construct();
     }

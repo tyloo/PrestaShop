@@ -39,7 +39,7 @@ class MailThemeConfigurationType extends AbstractType
     /**
      * @param array $mailThemes
      */
-    public function __construct(private array $mailThemes)
+    public function __construct(private readonly array $mailThemes)
     {
     }
 

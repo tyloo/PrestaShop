@@ -50,8 +50,8 @@ class ImportDataConfigurationType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $dataMatchChoices,
-        private array $entityFieldChoices
+        private readonly array $dataMatchChoices,
+        private readonly array $entityFieldChoices
     ) {
         parent::__construct($translator, $locales);
     }

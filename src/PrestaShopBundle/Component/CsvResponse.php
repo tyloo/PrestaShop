@@ -86,7 +86,7 @@ class CsvResponse extends StreamedResponse
         parent::__construct($callback, $status, $headers);
 
         if (null === $callback) {
-            $this->setCallback([$this, 'processData']);
+            $this->setCallback($this->processData(...));
         }
 
         $this->setFileName('export_' . date('Y-m-d_His') . '.csv');

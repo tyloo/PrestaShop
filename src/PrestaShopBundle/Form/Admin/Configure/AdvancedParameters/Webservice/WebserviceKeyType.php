@@ -56,8 +56,8 @@ class WebserviceKeyType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         private $isMultistoreFeatureUsed,
-        private array $resourceChoices,
-        private array $permissionChoices
+        private readonly array $resourceChoices,
+        private readonly array $permissionChoices
     ) {
         parent::__construct($translator, $locales);
     }

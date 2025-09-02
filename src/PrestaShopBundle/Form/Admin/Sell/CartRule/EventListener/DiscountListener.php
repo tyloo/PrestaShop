@@ -35,7 +35,7 @@ use Symfony\Component\Form\FormEvents;
 
 class DiscountListener implements EventSubscriberInterface
 {
-    public function __construct(private DiscountApplicationChoiceProvider $discountApplicationChoiceProvider, private FormCloner $formCloner)
+    public function __construct(private readonly DiscountApplicationChoiceProvider $discountApplicationChoiceProvider, private readonly FormCloner $formCloner)
     {
     }
 

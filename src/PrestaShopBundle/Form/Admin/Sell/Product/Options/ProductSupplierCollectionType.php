@@ -34,7 +34,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProductSupplierCollectionType extends CollectionType
 {
-    public function __construct(private TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
     }
 

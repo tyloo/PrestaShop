@@ -75,7 +75,7 @@ class SSLMiddlewareListener
         $route = $event->getRequest()->attributes->get('_route');
         if (!empty($route)) {
             foreach (self::NOT_PROTECTED_ROUTES as $routePattern) {
-                if (preg_match($routePattern, $route)) {
+                if (preg_match($routePattern, (string) $route)) {
                     return;
                 }
             }

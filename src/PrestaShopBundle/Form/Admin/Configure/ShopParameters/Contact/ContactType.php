@@ -58,7 +58,7 @@ class ContactType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private DataTransformerInterface $singleDefaultLanguageArrayToFilledArrayDataTransformer,
+        private readonly DataTransformerInterface $singleDefaultLanguageArrayToFilledArrayDataTransformer,
         private $isShopFeatureEnabled
     ) {
         parent::__construct($translator, $locales);

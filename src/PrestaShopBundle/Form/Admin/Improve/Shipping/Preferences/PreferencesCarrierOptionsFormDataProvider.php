@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 class PreferencesCarrierOptionsFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private DataConfigurationInterface $dataConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $dataConfiguration)
     {
     }
 

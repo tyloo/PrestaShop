@@ -37,7 +37,7 @@ class UpdateOrderStatusType extends AbstractType
      * @param ConfigurableFormChoiceProviderInterface $statusChoiceProvider
      * @param array $statusChoiceAttributes
      */
-    public function __construct(private ConfigurableFormChoiceProviderInterface $statusChoiceProvider, private array $statusChoiceAttributes)
+    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $statusChoiceProvider, private readonly array $statusChoiceAttributes)
     {
     }
 

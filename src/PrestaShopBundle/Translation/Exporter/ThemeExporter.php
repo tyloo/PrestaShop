@@ -58,24 +58,24 @@ class ThemeExporter
         /**
          * @var ThemeExtractor the theme extractor
          */
-        private ThemeExtractor $themeExtractor,
+        private readonly ThemeExtractor $themeExtractor,
         ThemeProvider $themeProvider,
         /**
          * @var ThemeRepository the theme repository
          */
-        private ThemeRepository $themeRepository,
+        private readonly ThemeRepository $themeRepository,
         /**
          * @var XliffFileDumper the Xliff dumper
          */
-        private XliffFileDumper $dumper,
+        private readonly XliffFileDumper $dumper,
         /**
          * @var ZipManager the zip manager
          */
-        private ZipManager $zipManager,
+        private readonly ZipManager $zipManager,
         /**
          * @var Filesystem the Filesystem
          */
-        private Filesystem $filesystem
+        private readonly Filesystem $filesystem
     ) {
         $this->themeExtractor
             ->setThemeProvider($themeProvider);
@@ -385,7 +385,7 @@ class ThemeExporter
         }
 
         $notes = $metadata['notes'][0]['content'];
-        if (1 !== preg_match('/(?<file>\S+):(?<line>\S+)/m', $notes, $matches)) {
+        if (1 !== preg_match('/(?<file>\S+):(?<line>\S+)/m', (string) $notes, $matches)) {
             return $defaultMetadata;
         }
 

@@ -31,7 +31,7 @@ use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 class CacheWarmer implements CacheWarmerInterface
 {
-    public function __construct(private Filesystem $fileSystem)
+    public function __construct(private readonly Filesystem $fileSystem)
     {
     }
 

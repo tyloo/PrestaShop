@@ -47,7 +47,7 @@ class BackupOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private Configuration $configuration
+        private readonly Configuration $configuration
     ) {
         parent::__construct($translator, $locales);
     }

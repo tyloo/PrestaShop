@@ -38,7 +38,7 @@ class CacheProvider extends AbstractLegacyRouteProvider implements CacheCleanerI
      */
     private $legacyRoutes;
 
-    public function __construct(private LegacyRouteProviderInterface $legacyRouteProvider, private CacheItemPoolInterface $cache, private CacheKeyGeneratorInterface $cacheKeyGenerator)
+    public function __construct(private readonly LegacyRouteProviderInterface $legacyRouteProvider, private readonly CacheItemPoolInterface $cache, private readonly CacheKeyGeneratorInterface $cacheKeyGenerator)
     {
     }
 

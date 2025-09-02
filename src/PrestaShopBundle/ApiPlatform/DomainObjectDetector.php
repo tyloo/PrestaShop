@@ -58,7 +58,7 @@ class DomainObjectDetector
         // Even if the class is not a command itself, but it is part of the domain namespace
         // then it is part of the domain
         foreach ($this->domainNamespaces as $domainNamespace) {
-            if (str_starts_with($objectClass, $domainNamespace)) {
+            if (str_starts_with($objectClass, (string) $domainNamespace)) {
                 return true;
             }
         }

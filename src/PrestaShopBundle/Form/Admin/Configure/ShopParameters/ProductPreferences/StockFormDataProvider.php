@@ -37,7 +37,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class StockFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private StockConfiguration $configuration, private TranslatorInterface $translator)
+    public function __construct(private readonly StockConfiguration $configuration, private readonly TranslatorInterface $translator)
     {
     }
 

@@ -46,7 +46,7 @@ class ZoneType extends AbstractType
      * @param TranslatorInterface $translator
      * @param bool $isMultistoreEnabled
      */
-    public function __construct(private TranslatorInterface $translator, private bool $isMultistoreEnabled)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly bool $isMultistoreEnabled)
     {
     }
 

@@ -49,7 +49,7 @@ class TinyMceMaxLengthValidator extends ConstraintValidator
      */
     protected $translator;
 
-    public function __construct(private Validate $validateAdapter, TranslatorInterface $translator)
+    public function __construct(private readonly Validate $validateAdapter, TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

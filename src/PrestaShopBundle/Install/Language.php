@@ -44,7 +44,7 @@ class Language
 
     public function __construct($iso)
     {
-        $this->iso_code = strtolower($iso);
+        $this->iso_code = strtolower((string) $iso);
         $xmlPath = _PS_INSTALL_LANGS_PATH_ . $iso . '/';
         $this->setPropertiesFromXml($xmlPath);
         $this->is_rtl = ($this->is_rtl === 'true') ? true : false;

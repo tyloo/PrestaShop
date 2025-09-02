@@ -45,7 +45,7 @@ class UpdateSchemaCommand extends Command
 
     private $dumpSql = false;
 
-    public function __construct(private string $dbName, private string $dbPrefix, private EntityManager $em)
+    public function __construct(private readonly string $dbName, private readonly string $dbPrefix, private readonly EntityManager $em)
     {
         parent::__construct();
     }
@@ -172,7 +172,7 @@ class UpdateSchemaCommand extends Command
         $removedTables = [];
         foreach ($queries as $key => $sql) {
             $matches = [];
-            if (preg_match('/DROP TABLE (.+?)$/', $sql, $matches)) {
+            if (preg_match('/DROP TABLE (.+?)$/', (string) $sql, $matches)) {
                 unset($queries[$key]);
                 $removedTables[] = $matches[1];
             }
@@ -193,7 +193,7 @@ class UpdateSchemaCommand extends Command
     {
         foreach ($queries as $key => $sql) {
             $matches = [];
-            if (preg_match('/ALTER TABLE (.+?) /', $sql, $matches)) {
+            if (preg_match('/ALTER TABLE (.+?) /', (string) $sql, $matches)) {
                 $alteredTables = $matches[1];
                 if (in_array($alteredTables, $removedTables)) {
                     unset($queries[$key]);
@@ -213,7 +213,7 @@ class UpdateSchemaCommand extends Command
     {
         $dropForeignKeyQueries = [];
         foreach ($queries as $key => $sql) {
-            if (preg_match('/ DROP FOREIGN KEY /', $sql)) {
+            if (preg_match('/ DROP FOREIGN KEY /', (string) $sql)) {
                 if (in_array($sql, $dropForeignKeyQueries)) {
                     unset($queries[$key]);
                 } else {
@@ -233,7 +233,7 @@ class UpdateSchemaCommand extends Command
     public function removeAddConstraints(array &$queries): void
     {
         foreach ($queries as $key => $sql) {
-            if (preg_match('/ ADD CONSTRAINT /', $sql)) {
+            if (preg_match('/ ADD CONSTRAINT /', (string) $sql)) {
                 unset($queries[$key]);
             }
         }
@@ -251,7 +251,7 @@ class UpdateSchemaCommand extends Command
         $constraints = [];
 
         foreach ($queries as $key => $sql) {
-            if (preg_match('/ DROP FOREIGN KEY /', $sql)) {
+            if (preg_match('/ DROP FOREIGN KEY /', (string) $sql)) {
                 $constraints[] = $sql;
                 unset($queries[$key]);
             }
@@ -276,24 +276,24 @@ class UpdateSchemaCommand extends Command
     {
         foreach ($queries as $key => $sql) {
             $matches = [];
-            if (!preg_match('/ALTER TABLE (.+?) /', $sql, $matches)) {
+            if (!preg_match('/ALTER TABLE (.+?) /', (string) $sql, $matches)) {
                 continue;
             }
 
             $tableName = $matches[1];
             $matches = [];
-            preg_match_all('/([^\s,]*?) CHANGE (.+?) (.+?)(, CHANGE |$)/', $sql, $matches);
+            preg_match_all('/([^\s,]*?) CHANGE (.+?) (.+?)(, CHANGE |$)/', (string) $sql, $matches);
             if (empty($matches[2]) || !is_array($matches[2])) {
                 continue;
             }
 
             foreach ($matches[2] as $matchKey => $fieldName) {
-                $findChange = strpos($matches[0][$matchKey], ', CHANGE ');
+                $findChange = strpos((string) $matches[0][$matchKey], ', CHANGE ');
                 // remove table name
                 $matches[0][$matchKey] = preg_replace(
                     '/(.+?) CHANGE/',
                     ' CHANGE',
-                    rtrim($matches[0][$matchKey], ', CHANGE ')
+                    rtrim((string) $matches[0][$matchKey], ', CHANGE ')
                 );
                 $matches[0][$matchKey] .= $findChange !== false ? ', CHANGE ' : '';
                 // remove quote
@@ -342,8 +342,8 @@ class UpdateSchemaCommand extends Command
 
                 $queries[$key] = preg_replace(
                     '/ CHANGE ' . $originalFieldName . ' (.+?)(, CHANGE |$)/uis',
-                    $matches[0][$matchKey],
-                    $queries[$key]
+                    (string) $matches[0][$matchKey],
+                    (string) $queries[$key]
                 );
             }
         }

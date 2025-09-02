@@ -38,7 +38,7 @@ final class EmailConfigurationFormDataProvider implements FormDataProviderInterf
     /**
      * @param DataConfigurationInterface $emailDataConfigurator
      */
-    public function __construct(private DataConfigurationInterface $emailDataConfigurator)
+    public function __construct(private readonly DataConfigurationInterface $emailDataConfigurator)
     {
     }
 

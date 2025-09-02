@@ -48,7 +48,7 @@ class LegacyRoute
      * @param array $legacyLinks
      * @param array $routeParameters
      */
-    public function __construct(private $routeName, array $legacyLinks, private array $routeParameters)
+    public function __construct(private $routeName, array $legacyLinks, private readonly array $routeParameters)
     {
         $this->legacyLinks = $this->buildLegacyLinks($legacyLinks);
         $this->controllersActions = $this->buildControllerActions($this->legacyLinks, $this->routeName);
@@ -128,7 +128,7 @@ class LegacyRoute
     {
         $brokenLegacyLinks = [];
         foreach ($legacyLinks as $legacyLink) {
-            $linkParts = explode(':', $legacyLink);
+            $linkParts = explode(':', (string) $legacyLink);
             $legacyController = $linkParts[0];
             $legacyAction = $linkParts[1] ?? null;
             $brokenLegacyLinks[] = [

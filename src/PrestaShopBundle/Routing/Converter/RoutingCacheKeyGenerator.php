@@ -46,7 +46,7 @@ class RoutingCacheKeyGenerator implements CacheKeyGeneratorInterface
      * @param array $activeModulesPaths
      * @param string $environment
      */
-    public function __construct(private array $coreRoutingPaths, private array $activeModulesPaths, private $environment = 'dev')
+    public function __construct(private readonly array $coreRoutingPaths, private readonly array $activeModulesPaths, private $environment = 'dev')
     {
     }
 

@@ -50,7 +50,7 @@ class ImageDropzoneType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FeatureInterface $multiStoreFeature
+        private readonly FeatureInterface $multiStoreFeature
     ) {
         parent::__construct($translator, $locales);
     }

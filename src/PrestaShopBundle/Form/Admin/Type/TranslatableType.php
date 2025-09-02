@@ -66,7 +66,7 @@ class TranslatableType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         array $availableLocales,
-        private UrlGeneratorInterface $urlGenerator,
+        private readonly UrlGeneratorInterface $urlGenerator,
         private $saveFormLocaleChoice,
         private $defaultFormLanguageId,
         private $defaultShopLanguageId

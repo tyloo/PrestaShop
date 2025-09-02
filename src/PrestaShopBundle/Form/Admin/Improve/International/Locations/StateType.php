@@ -53,7 +53,7 @@ class StateType extends AbstractType
      * @param ConfigurableFormChoiceProviderInterface $countriesChoiceProvider
      * @param ConfigurableFormChoiceProviderInterface $zonesChoiceProvider
      */
-    public function __construct(private TranslatorInterface $translator, private ConfigurableFormChoiceProviderInterface $countriesChoiceProvider, private ConfigurableFormChoiceProviderInterface $zonesChoiceProvider)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurableFormChoiceProviderInterface $countriesChoiceProvider, private readonly ConfigurableFormChoiceProviderInterface $zonesChoiceProvider)
     {
     }
 

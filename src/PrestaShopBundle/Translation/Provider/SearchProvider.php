@@ -40,7 +40,7 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
 {
     public function __construct(
         LoaderInterface $databaseLoader,
-        private ExternalModuleLegacySystemProvider $externalModuleLegacySystemProvider,
+        private readonly ExternalModuleLegacySystemProvider $externalModuleLegacySystemProvider,
         $resourceDirectory
     ) {
         parent::__construct($databaseLoader, $resourceDirectory);

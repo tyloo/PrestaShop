@@ -45,7 +45,7 @@ final class LegacyFileLoader implements LoaderInterface
     /**
      * @param LegacyFileReader $fileReader
      */
-    public function __construct(private LegacyFileReader $fileReader)
+    public function __construct(private readonly LegacyFileReader $fileReader)
     {
         $this->domainNormalizer = new DomainNormalizer();
     }

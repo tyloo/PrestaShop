@@ -41,7 +41,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ProductToolbarButtonsProvider implements ToolbarButtonsProviderInterface
 {
-    public function __construct(private TranslatorInterface $translator, private RouterInterface $router, private HelpProvider $helpUrlProvider, private ModuleDataProvider $moduleDataProvider, private LegacyContext $legacyContext)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly RouterInterface $router, private readonly HelpProvider $helpUrlProvider, private readonly ModuleDataProvider $moduleDataProvider, private readonly LegacyContext $legacyContext)
     {
     }
 

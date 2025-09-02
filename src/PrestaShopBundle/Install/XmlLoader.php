@@ -729,7 +729,7 @@ class XmlLoader
         }
 
         // For each path copy images
-        $path = array_map('trim', explode(',', $path));
+        $path = array_map('trim', explode(',', (string) $path));
         foreach ($path as $p) {
             $from_path = $this->img_path . $p . '/';
             $dst_path = _PS_IMG_DIR_ . $p . '/';
@@ -894,7 +894,7 @@ class XmlLoader
             $tables = [];
             foreach (Db::getInstance()->executeS('SHOW TABLES') as $row) {
                 $table = current($row);
-                if (preg_match('#^' . _DB_PREFIX_ . '(.+?)(_lang)?$#i', $table, $m)) {
+                if (preg_match('#^' . _DB_PREFIX_ . '(.+?)(_lang)?$#i', (string) $table, $m)) {
                     $tables[$m[1]] = (isset($m[2]) && $m[2]) ? true : false;
                 }
             }
@@ -972,11 +972,11 @@ class XmlLoader
 
     public function checkIfTypeIsText($type)
     {
-        if (preg_match('#^(longtext|text|tinytext)#i', $type)) {
+        if (preg_match('#^(longtext|text|tinytext)#i', (string) $type)) {
             return true;
         }
 
-        if (preg_match('#^varchar\(([0-9]+)\)$#i', $type, $m)) {
+        if (preg_match('#^varchar\(([0-9]+)\)$#i', (string) $type, $m)) {
             return (int) $m[1] >= 64 ? true : false;
         }
 
@@ -1392,10 +1392,10 @@ class XmlLoader
             $ids[$entity][$primary] = $entity . '_' . $primary;
         } else {
             $value = $row[$id_format];
-            $value = preg_replace('#[^a-z0-9_-]#i', '_', $value);
-            $value = preg_replace('#_+#', '_', $value);
-            $value = preg_replace('#^_+#', '', $value);
-            $value = preg_replace('#_+$#', '', $value);
+            $value = preg_replace('#[^a-z0-9_-]#i', '_', (string) $value);
+            $value = preg_replace('#_+#', '_', (string) $value);
+            $value = preg_replace('#^_+#', '', (string) $value);
+            $value = preg_replace('#_+$#', '', (string) $value);
 
             $store_identifier = $value;
             $i = 1;
@@ -1448,7 +1448,7 @@ class XmlLoader
             }
         }
 
-        $path_list = array_map('trim', explode(',', $path));
+        $path_list = array_map('trim', explode(',', (string) $path));
         foreach ($path_list as $p) {
             $backup_path = $this->img_path . $p . '/';
             $from_path = _PS_IMG_DIR_ . $p . '/';

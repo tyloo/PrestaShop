@@ -58,15 +58,15 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
         /**
          * @var LoaderInterface Translation loader from legacy files
          */
-        private LoaderInterface $legacyFileLoader,
+        private readonly LoaderInterface $legacyFileLoader,
         /**
          * @var LegacyModuleExtractorInterface Extractor
          */
-        private LegacyModuleExtractorInterface $legacyModuleExtractor,
+        private readonly LegacyModuleExtractorInterface $legacyModuleExtractor,
         /**
          * @var ModuleProvider Module provider
          */
-        private ModuleProvider $moduleProvider
+        private readonly ModuleProvider $moduleProvider
     ) {
         parent::__construct($databaseLoader, $resourceDirectory);
     }
@@ -117,7 +117,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
      *
      * @return AbstractProvider|SearchProviderInterface|void
      */
-    public function setDomain($domain)
+    public function setDomain($domain): never
     {
         throw new InvalidArgumentException(self::class . ' does not allow calls to setDomain()');
     }
@@ -198,7 +198,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
         foreach ($catalogueFromPhpAndSmartyFiles->all() as $currentDomain => $items) {
             foreach (array_keys($items) as $translationKey) {
                 // Same as in Translate::getModuleTranslation()
-                $legacyKey = md5(preg_replace("/\\\*'/", "\'", $translationKey));
+                $legacyKey = md5((string) preg_replace("/\\\*'/", "\'", $translationKey));
 
                 if ($catalogueFromLegacyTranslationFiles->has($legacyKey, $currentDomain)) {
                     $legacyFilesCatalogue->set(

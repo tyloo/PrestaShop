@@ -36,7 +36,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CurrencyChoiceType extends AbstractType
 {
-    public function __construct(private CurrencyDataProviderInterface $currencyDataProvider, private CurrencyByIdChoiceProvider $currencyByIdChoiceProvider)
+    public function __construct(private readonly CurrencyDataProviderInterface $currencyDataProvider, private readonly CurrencyByIdChoiceProvider $currencyByIdChoiceProvider)
     {
     }
 

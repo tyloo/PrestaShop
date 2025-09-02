@@ -37,7 +37,7 @@ class OrderInvoiceRepository
      * @param Connection $connection
      * @param string $tablePrefix
      */
-    public function __construct(private Connection $connection, private $tablePrefix)
+    public function __construct(private readonly Connection $connection, private $tablePrefix)
     {
     }
 

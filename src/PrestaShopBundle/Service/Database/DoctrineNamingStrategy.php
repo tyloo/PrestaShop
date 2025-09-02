@@ -44,8 +44,8 @@ class DoctrineNamingStrategy extends UnderscoreNamingStrategy
      * @param string $prefix
      */
     public function __construct(
-        private Reader $reader,
-        private string $prefix,
+        private readonly Reader $reader,
+        private readonly string $prefix,
     ) {
         parent::__construct(CASE_LOWER, true);
     }

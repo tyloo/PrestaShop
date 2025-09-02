@@ -44,7 +44,7 @@ class ForwardCustomerThreadType extends AbstractType
      * @param TranslatorInterface $translator
      * @param FormChoiceProviderInterface $employeeChoiceProvider
      */
-    public function __construct(private TranslatorInterface $translator, private FormChoiceProviderInterface $employeeChoiceProvider)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly FormChoiceProviderInterface $employeeChoiceProvider)
     {
     }
 

@@ -70,7 +70,7 @@ class CountryChoiceType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => [],
-            'choice_attr' => [$this, 'getChoiceAttr'],
+            'choice_attr' => $this->getChoiceAttr(...),
             'placeholder' => '--',
             'add_all_countries_option' => false,
             'with_dni_attr' => false,

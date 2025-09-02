@@ -53,9 +53,9 @@ class DescriptionType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private RouterInterface $router,
-        private string $employeeIsoCode,
-        private int $shortDescriptionMaxLength
+        private readonly RouterInterface $router,
+        private readonly string $employeeIsoCode,
+        private readonly int $shortDescriptionMaxLength
     ) {
         parent::__construct($translator, $locales);
     }

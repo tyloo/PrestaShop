@@ -49,8 +49,8 @@ class CombinationAvailabilityType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FormChoiceProviderInterface $outOfStockTypeChoiceProvider,
-        private RouterInterface $router
+        private readonly FormChoiceProviderInterface $outOfStockTypeChoiceProvider,
+        private readonly RouterInterface $router
     ) {
         parent::__construct($translator, $locales);
     }

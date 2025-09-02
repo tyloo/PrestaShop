@@ -70,8 +70,8 @@ abstract class AbstractCategoryType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $customerGroupChoices,
-        private FeatureInterface $multiStoreFeature,
+        private readonly array $customerGroupChoices,
+        private readonly FeatureInterface $multiStoreFeature,
         ConfigurationInterface $configuration
     ) {
         parent::__construct($translator, $locales);

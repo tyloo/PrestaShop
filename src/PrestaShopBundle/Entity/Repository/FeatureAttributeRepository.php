@@ -194,7 +194,7 @@ class FeatureAttributeRepository
     private function explodeCollections($rows)
     {
         return array_map(function ($row) {
-            $row['values'] = explode(',', $row['values']);
+            $row['values'] = explode(',', (string) $row['values']);
 
             $row['values'] = array_map(function ($value) {
                 if (!str_contains($value, ':')) {

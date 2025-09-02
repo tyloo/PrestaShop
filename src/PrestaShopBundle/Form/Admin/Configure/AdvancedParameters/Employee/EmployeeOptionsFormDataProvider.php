@@ -37,7 +37,7 @@ final class EmployeeOptionsFormDataProvider implements FormDataProviderInterface
     /**
      * @param DataConfigurationInterface $employeeOptionsConfiguration
      */
-    public function __construct(private DataConfigurationInterface $employeeOptionsConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $employeeOptionsConfiguration)
     {
     }
 

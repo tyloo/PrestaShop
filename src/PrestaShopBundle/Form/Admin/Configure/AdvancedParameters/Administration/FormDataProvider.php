@@ -40,7 +40,7 @@ final class FormDataProvider implements FormDataProviderInterface
     public const ERROR_COOKIE_SAMESITE_NONE = 3;
     public const ERROR_MAX_SIZE_ATTACHED_FILES = 4;
 
-    public function __construct(private DataConfigurationInterface $dataConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $dataConfiguration)
     {
     }
 

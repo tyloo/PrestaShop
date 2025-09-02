@@ -184,7 +184,7 @@ class PositionsController extends PrestaShopAdminController
 
         $errors = [];
         foreach ($unhooks as $unhook) {
-            $explode = explode('_', $unhook);
+            $explode = explode('_', (string) $unhook);
             $hookId = (int) isset($explode[0]) ? $explode[0] : 0;
             $moduleId = (int) isset($explode[1]) ? $explode[1] : 0;
             /** @var LegacyModule|false $module */

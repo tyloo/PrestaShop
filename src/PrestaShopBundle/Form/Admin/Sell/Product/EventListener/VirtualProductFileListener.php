@@ -34,7 +34,7 @@ use Symfony\Component\Form\FormEvents;
 
 class VirtualProductFileListener implements EventSubscriberInterface
 {
-    public function __construct(private FormCloner $formCloner)
+    public function __construct(private readonly FormCloner $formCloner)
     {
     }
 

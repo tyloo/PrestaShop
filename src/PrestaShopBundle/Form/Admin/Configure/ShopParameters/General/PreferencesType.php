@@ -51,13 +51,13 @@ class PreferencesType extends TranslatorAwareType
      * @param bool $isAllShopContext
      */
     public function __construct(
-        private RequestStack $requestStack,
+        private readonly RequestStack $requestStack,
         TranslatorInterface $translator,
         array $locales,
-        private ConfigurationInterface $configuration,
-        private bool $isShopFeatureEnabled,
-        private bool $isSingleShopContext,
-        private bool $isAllShopContext
+        private readonly ConfigurationInterface $configuration,
+        private readonly bool $isShopFeatureEnabled,
+        private readonly bool $isSingleShopContext,
+        private readonly bool $isAllShopContext
     ) {
         parent::__construct($translator, $locales);
     }

@@ -34,7 +34,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ApiPlatformCompilerPass implements CompilerPassInterface
 {
-    private Inflector $inflector;
+    private readonly Inflector $inflector;
 
     public function __construct()
     {

@@ -63,7 +63,7 @@ class TokenizedUrlsListener
         /*
          * every route prefixed by '_' won't be secured
          */
-        if (str_starts_with($route, '_') || str_starts_with($route, 'api_')) {
+        if (str_starts_with((string) $route, '_') || str_starts_with((string) $route, 'api_')) {
             return;
         }
 

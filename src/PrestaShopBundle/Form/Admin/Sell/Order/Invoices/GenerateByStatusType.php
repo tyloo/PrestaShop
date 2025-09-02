@@ -50,7 +50,7 @@ class GenerateByStatusType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FormChoiceProviderInterface $orderStateChoiceProvider,
+        private readonly FormChoiceProviderInterface $orderStateChoiceProvider,
         private array $orderCountsByState
     ) {
         parent::__construct($translator, $locales);

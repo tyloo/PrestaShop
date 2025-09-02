@@ -45,7 +45,7 @@ class LogRepository implements RepositoryInterface
      * @param string $databasePrefix
      */
     public function __construct(
-        private Connection $connection,
+        private readonly Connection $connection,
         private $databasePrefix
     ) {
         $this->logTable = $this->databasePrefix . 'log';

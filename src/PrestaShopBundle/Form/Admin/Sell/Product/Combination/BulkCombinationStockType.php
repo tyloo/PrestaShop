@@ -54,7 +54,7 @@ class BulkCombinationStockType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private bool $stockManagementEnabled
+        private readonly bool $stockManagementEnabled
     ) {
         parent::__construct($translator, $locales);
     }

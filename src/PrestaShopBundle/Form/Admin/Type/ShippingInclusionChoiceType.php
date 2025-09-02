@@ -34,7 +34,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ShippingInclusionChoiceType extends AbstractType
 {
-    public function __construct(private ShippingInclusionChoiceProvider $shippingInclusionChoiceProvider)
+    public function __construct(private readonly ShippingInclusionChoiceProvider $shippingInclusionChoiceProvider)
     {
     }
 

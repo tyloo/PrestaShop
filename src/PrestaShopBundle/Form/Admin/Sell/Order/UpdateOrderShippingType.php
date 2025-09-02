@@ -39,7 +39,7 @@ class UpdateOrderShippingType extends AbstractType
     /**
      * @param ConfigurableFormChoiceProviderInterface $carrierForOrderChoiceProvider
      */
-    public function __construct(private ConfigurableFormChoiceProviderInterface $carrierForOrderChoiceProvider)
+    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $carrierForOrderChoiceProvider)
     {
     }
 

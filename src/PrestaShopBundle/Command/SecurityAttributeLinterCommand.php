@@ -86,7 +86,7 @@ final class SecurityAttributeLinterCommand extends Command
         'admin_theme_customize_layouts',
     ];
 
-    public function __construct(private AdminRouteProvider $adminRouteProvider, private SecurityAttributeLinter $securityAttributeLinter)
+    public function __construct(private readonly AdminRouteProvider $adminRouteProvider, private readonly SecurityAttributeLinter $securityAttributeLinter)
     {
         parent::__construct();
     }

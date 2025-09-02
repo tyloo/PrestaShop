@@ -57,11 +57,11 @@ class SpecificPriceType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private ProductRepository $productRepository,
-        private AttributeRepository $attributeRepository,
-        private EventSubscriberInterface $specificPriceCombinationListener,
-        private CombinationNameBuilderInterface $combinationNameBuilder,
-        private int $languageId
+        private readonly ProductRepository $productRepository,
+        private readonly AttributeRepository $attributeRepository,
+        private readonly EventSubscriberInterface $specificPriceCombinationListener,
+        private readonly CombinationNameBuilderInterface $combinationNameBuilder,
+        private readonly int $languageId
     ) {
         parent::__construct($translator, $locales);
     }

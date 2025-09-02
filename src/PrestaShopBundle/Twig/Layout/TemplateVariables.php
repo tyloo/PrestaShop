@@ -33,7 +33,7 @@ namespace PrestaShopBundle\Twig\Layout;
  */
 class TemplateVariables
 {
-    public function __construct(private string $isoUser, private bool $isRtlLanguage, private string $controllerName, private bool $isMultiShop, private bool $isMenuCollapsed, private array $jsRouterMetadata, private bool $isDebugMode, private bool $installDirExists, private string $version, private ?string $defaultTabLink, private bool $isMaintenanceEnabled, private bool $isFrontOfficeAccessibleForAdmins, private bool $isDisplayedWithTabs, private string $baseUrl)
+    public function __construct(private readonly string $isoUser, private readonly bool $isRtlLanguage, private readonly string $controllerName, private readonly bool $isMultiShop, private readonly bool $isMenuCollapsed, private readonly array $jsRouterMetadata, private readonly bool $isDebugMode, private readonly bool $installDirExists, private readonly string $version, private readonly ?string $defaultTabLink, private readonly bool $isMaintenanceEnabled, private readonly bool $isFrontOfficeAccessibleForAdmins, private readonly bool $isDisplayedWithTabs, private readonly string $baseUrl)
     {
     }
 

@@ -61,8 +61,8 @@ class EditProductFormType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private EventSubscriberInterface $productTypeListener,
-        private ToolbarButtonsProviderInterface $toolbarButtonsProvider
+        private readonly EventSubscriberInterface $productTypeListener,
+        private readonly ToolbarButtonsProviderInterface $toolbarButtonsProvider
     ) {
         parent::__construct($translator, $locales);
     }

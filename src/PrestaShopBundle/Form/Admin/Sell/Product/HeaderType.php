@@ -56,9 +56,9 @@ class HeaderType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private bool $stockManagementEnabled,
-        private bool $isEcotaxEnabled,
-        private ToolbarButtonsProviderInterface $toolbarButtonsProvider
+        private readonly bool $stockManagementEnabled,
+        private readonly bool $isEcotaxEnabled,
+        private readonly ToolbarButtonsProviderInterface $toolbarButtonsProvider
     ) {
         parent::__construct($translator, $locales);
     }

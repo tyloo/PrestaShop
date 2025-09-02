@@ -41,7 +41,7 @@ class SearchAndResetType extends AbstractType
     /**
      * @param UrlGeneratorInterface $urlGenerator
      */
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
     {
     }
 

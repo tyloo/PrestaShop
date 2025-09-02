@@ -37,7 +37,7 @@ class InvalidConfigurationDataError
      * @param string $fieldName
      * @param int|null $languageId
      */
-    public function __construct(private int $errorCode, private string $fieldName, private ?int $languageId = null)
+    public function __construct(private readonly int $errorCode, private readonly string $fieldName, private readonly ?int $languageId = null)
     {
     }
 

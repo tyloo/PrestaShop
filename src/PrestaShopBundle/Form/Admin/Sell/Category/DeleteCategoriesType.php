@@ -41,7 +41,7 @@ class DeleteCategoriesType extends AbstractType
     /**
      * @param array $categoryDeleteModelChoices
      */
-    public function __construct(private array $categoryDeleteModelChoices)
+    public function __construct(private readonly array $categoryDeleteModelChoices)
     {
     }
 

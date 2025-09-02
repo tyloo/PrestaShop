@@ -45,7 +45,7 @@ class HookExtension extends AbstractExtension
      * @param HookDispatcherInterface $hookDispatcher
      * @param ModuleDataProvider $moduleDataProvider
      */
-    public function __construct(private HookDispatcherInterface $hookDispatcher, private ModuleDataProvider $moduleDataProvider, private ?ModuleRepository $moduleRepository = null)
+    public function __construct(private readonly HookDispatcherInterface $hookDispatcher, private readonly ModuleDataProvider $moduleDataProvider, private readonly ?ModuleRepository $moduleRepository = null)
     {
     }
 
@@ -57,9 +57,9 @@ class HookExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('renderhook', [$this, 'renderHook'], ['is_safe' => ['html']]),
-            new TwigFilter('renderhooksarray', [$this, 'renderHooksArray'], ['is_safe' => ['html']]),
-            new TwigFilter('hooksarraycontent', [$this, 'hooksArrayContent']),
+            new TwigFilter('renderhook', $this->renderHook(...), ['is_safe' => ['html']]),
+            new TwigFilter('renderhooksarray', $this->renderHooksArray(...), ['is_safe' => ['html']]),
+            new TwigFilter('hooksarraycontent', $this->hooksArrayContent(...)),
         ];
     }
 
@@ -71,9 +71,9 @@ class HookExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('renderhook', [$this, 'renderHook'], ['is_safe' => ['html']]),
-            new TwigFunction('renderhooksarray', [$this, 'renderHooksArray'], ['is_safe' => ['html']]),
-            new TwigFunction('hooksarraycontent', [$this, 'hooksArrayContent']),
+            new TwigFunction('renderhook', $this->renderHook(...), ['is_safe' => ['html']]),
+            new TwigFunction('renderhooksarray', $this->renderHooksArray(...), ['is_safe' => ['html']]),
+            new TwigFunction('hooksarraycontent', $this->hooksArrayContent(...)),
         ];
     }
 

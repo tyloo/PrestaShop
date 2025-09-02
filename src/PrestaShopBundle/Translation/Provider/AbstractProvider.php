@@ -53,7 +53,7 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
     public function __construct(/**
      * @var LoaderInterface the loader interface
      */
-    private LoaderInterface $databaseLoader, /**
+    private readonly LoaderInterface $databaseLoader, /**
      * @var string the resource directory
      */
     protected $resourceDirectory)

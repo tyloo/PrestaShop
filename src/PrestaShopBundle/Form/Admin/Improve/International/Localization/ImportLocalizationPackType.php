@@ -47,7 +47,7 @@ class ImportLocalizationPackType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $localizationPackChoices
+        private readonly array $localizationPackChoices
     ) {
         parent::__construct($translator, $locales);
     }

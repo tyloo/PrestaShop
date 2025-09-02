@@ -41,7 +41,7 @@ class DeleteCustomersType extends AbstractType
     /**
      * @param array $customerDeleteMethodChoices
      */
-    public function __construct(private array $customerDeleteMethodChoices)
+    public function __construct(private readonly array $customerDeleteMethodChoices)
     {
     }
 

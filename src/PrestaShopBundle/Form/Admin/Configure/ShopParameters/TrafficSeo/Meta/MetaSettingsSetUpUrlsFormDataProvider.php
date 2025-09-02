@@ -41,7 +41,7 @@ final class MetaSettingsSetUpUrlsFormDataProvider implements FormDataProviderInt
      *
      * @param DataConfigurationInterface $setUpUrlDataConfiguration
      */
-    public function __construct(private DataConfigurationInterface $setUpUrlDataConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $setUpUrlDataConfiguration)
     {
     }
 

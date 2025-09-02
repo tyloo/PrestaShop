@@ -46,7 +46,7 @@ class ShopChoiceTreeType extends AbstractType
      * @param ShopContextInterface $shopContext
      * @param FeatureInterface $multiStoreFeature
      */
-    public function __construct(private FormChoiceProviderInterface $shopTreeChoiceProvider, private DataTransformerInterface $stringArrayToIntegerArrayDataTransformer, private ShopContextInterface $shopContext, private FeatureInterface $multiStoreFeature)
+    public function __construct(private readonly FormChoiceProviderInterface $shopTreeChoiceProvider, private readonly DataTransformerInterface $stringArrayToIntegerArrayDataTransformer, private readonly ShopContextInterface $shopContext, private readonly FeatureInterface $multiStoreFeature)
     {
     }
 

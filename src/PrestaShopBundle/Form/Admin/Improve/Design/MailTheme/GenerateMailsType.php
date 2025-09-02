@@ -49,9 +49,9 @@ class GenerateMailsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private ConfigurationInterface $configuration,
-        private array $mailThemes,
-        private array $themes
+        private readonly ConfigurationInterface $configuration,
+        private readonly array $mailThemes,
+        private readonly array $themes
     ) {
         parent::__construct($translator, $locales);
     }

@@ -329,7 +329,7 @@ class StockMovementRepository extends StockManagementRepository
         foreach ($rows as &$row) {
             $row['date_add_formatted'] = date(
                 $this->dateFormatFull,
-                strtotime($row['date_add'])
+                strtotime((string) $row['date_add'])
             );
         }
 

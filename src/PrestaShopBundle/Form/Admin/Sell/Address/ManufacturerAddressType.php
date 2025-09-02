@@ -58,9 +58,9 @@ class ManufacturerAddressType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         private array $manufacturerChoices,
-        private ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
+        private readonly ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
         private $contextCountryId,
-        private Router $router
+        private readonly Router $router
     ) {
         parent::__construct($translator, $locales);
     }

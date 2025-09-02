@@ -129,7 +129,7 @@ class CommonController extends PrestaShopAdminController
         // urls from route
         $callerParameters = $request->attributes->get('caller_parameters', []);
         foreach ($callerParameters as $k => $v) {
-            if (str_starts_with($k, '_')) {
+            if (str_starts_with((string) $k, '_')) {
                 unset($callerParameters[$k]);
             }
         }

@@ -41,7 +41,7 @@ class ManufacturerType extends AbstractType
      * @param TranslatorInterface $translator
      * @param FormChoiceProviderInterface $manufacturerChoiceProvider
      */
-    public function __construct(private TranslatorInterface $translator, private FormChoiceProviderInterface $manufacturerChoiceProvider)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly FormChoiceProviderInterface $manufacturerChoiceProvider)
     {
     }
 

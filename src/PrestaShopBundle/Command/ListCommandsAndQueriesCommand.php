@@ -51,10 +51,10 @@ class ListCommandsAndQueriesCommand extends Command
     private array $apiResourcesList;
 
     public function __construct(
-        private CommandDefinitionParser $commandDefinitionParser,
+        private readonly CommandDefinitionParser $commandDefinitionParser,
         private array $commandAndQueries,
-        private ResourceNameCollectionFactoryInterface $resourceNameCollectionFactory,
-        private ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory
+        private readonly ResourceNameCollectionFactoryInterface $resourceNameCollectionFactory,
+        private readonly ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory
     ) {
         parent::__construct();
         $this->isFormatSimple = false;

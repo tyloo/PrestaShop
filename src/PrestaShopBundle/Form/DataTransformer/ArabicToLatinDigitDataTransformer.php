@@ -36,7 +36,7 @@ use Symfony\Component\Form\DataTransformerInterface;
  */
 final class ArabicToLatinDigitDataTransformer implements DataTransformerInterface
 {
-    public function __construct(private ArabicToLatinDigitConverter $arabicToLatinDigitConverter)
+    public function __construct(private readonly ArabicToLatinDigitConverter $arabicToLatinDigitConverter)
     {
     }
 

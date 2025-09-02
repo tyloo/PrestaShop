@@ -48,7 +48,7 @@ class ImportThemeType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $themeZipsChoices
+        private readonly array $themeZipsChoices
     ) {
         parent::__construct($translator, $locales);
     }

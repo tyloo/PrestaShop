@@ -55,7 +55,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private string $defaultCurrencyIsoCode
+        private readonly string $defaultCurrencyIsoCode
     ) {
         parent::__construct($translator, $locales);
     }

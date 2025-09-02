@@ -53,7 +53,7 @@ class DetailsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FormChoiceProviderInterface $productConditionChoiceProvider,
+        private readonly FormChoiceProviderInterface $productConditionChoiceProvider,
         bool $isFeatureEnabled
     ) {
         parent::__construct($translator, $locales);

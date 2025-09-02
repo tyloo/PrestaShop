@@ -76,14 +76,14 @@ class LegacyRouterChecker
         if ($isModule) {
             $moduleName = $tab->getModule();
             $controllers = Dispatcher::getControllers(_PS_MODULE_DIR_ . $moduleName . '/controllers/admin/');
-            if (!isset($controllers[strtolower($queryController)])) {
+            if (!isset($controllers[strtolower((string) $queryController)])) {
                 throw new NotFoundHttpException(sprintf(
                     'Controller %s was not found. It belonged to module %s, make sure it is still installed.',
                     $queryController,
                     $moduleName
                 ));
             } else {
-                $controllerName = $controllers[strtolower($queryController)];
+                $controllerName = $controllers[strtolower((string) $queryController)];
                 // Controllers in modules can be named AdminXXX.php or AdminXXXController.php
                 include_once _PS_MODULE_DIR_ . "{$moduleName}/controllers/admin/$controllerName.php";
                 if (file_exists(
@@ -110,10 +110,10 @@ class LegacyRouterChecker
             // Controller not found, previously the legacy Dispatcher rendered the first child if present which doesn't make sense.
             // It's clearer to actually return a not found exception, for now the dispatcher is still used as fallback in index.php
             // but when it's cleared and only Symfony handles the whole routing then we can display a proper not found Symfony page
-            if (!isset($controllers[strtolower($queryController)])) {
+            if (!isset($controllers[strtolower((string) $queryController)])) {
                 $controllerClass = 'AdminNotFoundController';
             } else {
-                $controllerClass = $controllers[strtolower($queryController)];
+                $controllerClass = $controllers[strtolower((string) $queryController)];
             }
             $controllerName = $queryController;
         }
@@ -140,8 +140,8 @@ class LegacyRouterChecker
         $request->attributes->set(LegacyControllerConstants::IS_MODULE_ATTRIBUTE, $isModule);
 
         // Strip the ending Controller part
-        if (str_ends_with($controllerName, 'Controller')) {
-            $controllerName = substr($controllerName, 0, -strlen('Controller'));
+        if (str_ends_with((string) $controllerName, 'Controller')) {
+            $controllerName = substr((string) $controllerName, 0, -strlen('Controller'));
         }
         $request->attributes->set(LegacyControllerConstants::CONTROLLER_NAME_ATTRIBUTE, $controllerName);
         $request->attributes->set(LegacyControllerConstants::CONTROLLER_ACTION_ATTRIBUTE, $this->getPermission($request, $controller->table ?? ''));
@@ -195,7 +195,7 @@ class LegacyRouterChecker
         $context = $this->legacyContext->getContext();
         $cookie = $context->cookie;
         if ($cookie->shopContext && $context->employee->isLoggedBack()) {
-            $split = explode('-', $cookie->shopContext);
+            $split = explode('-', (string) $cookie->shopContext);
             if (count($split) == 2) {
                 if ($split[0] == 'g') {
                     if ($context->employee->hasAuthOnShopGroup((int) $split[1])) {

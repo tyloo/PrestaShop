@@ -42,7 +42,7 @@ abstract class TranslatorAwareType extends CommonAbstractType
      */
     protected $locales;
 
-    public function __construct(private TranslatorInterface $translator, array $locales)
+    public function __construct(private readonly TranslatorInterface $translator, array $locales)
     {
         $this->locales = $locales;
     }

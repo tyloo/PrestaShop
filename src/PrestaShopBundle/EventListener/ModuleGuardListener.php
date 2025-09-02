@@ -44,7 +44,7 @@ class ModuleGuardListener implements EventSubscriberInterface
      * @param string $modulesDir
      * @param LoggerInterface $logger
      */
-    public function __construct(private FolderGuardInterface $vendorFolderGuard, private $modulesDir, private LoggerInterface $logger)
+    public function __construct(private readonly FolderGuardInterface $vendorFolderGuard, private $modulesDir, private readonly LoggerInterface $logger)
     {
     }
 

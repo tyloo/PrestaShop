@@ -47,8 +47,8 @@ class ApiResourceScopes
     }
 
     private function __construct(
-        private array $scopes,
-        private ?string $moduleName
+        private readonly array $scopes,
+        private readonly ?string $moduleName
     ) {
     }
 

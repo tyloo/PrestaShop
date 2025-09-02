@@ -52,10 +52,10 @@ class CustomMoneyTypeExtension extends AbstractTypeExtension
      * @param LocaleNumberTransformer $localeNumberTransformer
      */
     public function __construct(
-        private Locale $locale,
-        private int $defaultCurrencyId,
-        private CurrencyRepository $currencyRepository,
-        private LocaleNumberTransformer $localeNumberTransformer
+        private readonly Locale $locale,
+        private readonly int $defaultCurrencyId,
+        private readonly CurrencyRepository $currencyRepository,
+        private readonly LocaleNumberTransformer $localeNumberTransformer
     ) {
     }
 

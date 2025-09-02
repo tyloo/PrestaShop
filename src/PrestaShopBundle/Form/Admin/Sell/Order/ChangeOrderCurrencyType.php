@@ -37,7 +37,7 @@ class ChangeOrderCurrencyType extends AbstractType
     /**
      * @param FormChoiceProviderInterface $currencyChoiceProvider
      */
-    public function __construct(private FormChoiceProviderInterface $currencyChoiceProvider)
+    public function __construct(private readonly FormChoiceProviderInterface $currencyChoiceProvider)
     {
     }
 

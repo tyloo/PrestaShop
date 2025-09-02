@@ -42,7 +42,7 @@ class FiltersBuilderResolver implements ArgumentValueResolverInterface
     /**
      * @param FiltersBuilderInterface $builder
      */
-    public function __construct(private FiltersBuilderInterface $builder)
+    public function __construct(private readonly FiltersBuilderInterface $builder)
     {
     }
 

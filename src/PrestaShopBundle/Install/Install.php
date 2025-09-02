@@ -191,7 +191,7 @@ class Install extends AbstractInstall
         $cookie_iv = defined('_COOKIE_IV_') ? _COOKIE_IV_ : Tools::passwdGen(32);
         $database_port = null;
 
-        $splits = preg_split('#:#', $database_host);
+        $splits = preg_split('#:#', (string) $database_host);
         $nbSplits = count($splits);
 
         if ($nbSplits >= 2) {
@@ -350,7 +350,7 @@ class Install extends AbstractInstall
         $instance->execute('SET FOREIGN_KEY_CHECKS=0');
         foreach ($instance->executeS('SHOW TABLES') as $row) {
             $table = current($row);
-            if (empty(_DB_PREFIX_) || preg_match('#^' . _DB_PREFIX_ . '#i', $table)) {
+            if (empty(_DB_PREFIX_) || preg_match('#^' . _DB_PREFIX_ . '#i', (string) $table)) {
                 $instance->execute(($truncate ? 'TRUNCATE TABLE ' : 'DROP TABLE ') . '`' . $table . '`');
             }
         }
@@ -446,7 +446,7 @@ class Install extends AbstractInstall
                     $version = substr($version, 0, 2);
                     $localization_file_content = $this->getLocalizationPackContent($version, $iso_country);
 
-                    if ($xml = @simplexml_load_string($localization_file_content)) {
+                    if ($xml = @simplexml_load_string((string) $localization_file_content)) {
                         foreach ($xml->languages->language as $language) {
                             $iso_codes_to_install[] = (string) $language->attributes()->iso_code;
                         }

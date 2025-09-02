@@ -47,8 +47,8 @@ class LocalizationConfigurationType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $languageChoices,
-        private array $timezoneChoices
+        private readonly array $languageChoices,
+        private readonly array $timezoneChoices
     ) {
         parent::__construct($translator, $locales);
     }

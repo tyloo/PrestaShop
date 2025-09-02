@@ -39,7 +39,7 @@ class RequiredFieldsAddressType extends AbstractType
     /**
      * @param FormChoiceProviderInterface $addressRequiredFieldsChoicesProvider
      */
-    public function __construct(private FormChoiceProviderInterface $addressRequiredFieldsChoicesProvider)
+    public function __construct(private readonly FormChoiceProviderInterface $addressRequiredFieldsChoicesProvider)
     {
     }
 

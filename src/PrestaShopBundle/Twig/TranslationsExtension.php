@@ -51,7 +51,7 @@ class TranslationsExtension extends AbstractExtension
      */
     private $theme;
 
-    public function __construct(private RouterInterface $router, private Environment $twig)
+    public function __construct(private readonly RouterInterface $router, private readonly Environment $twig)
     {
     }
 
@@ -63,8 +63,8 @@ class TranslationsExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('getTranslationsTree', [$this, 'getTranslationsTree']),
-            new TwigFunction('getTranslationsForms', [$this, 'getTranslationsForms']),
+            new TwigFunction('getTranslationsTree', $this->getTranslationsTree(...)),
+            new TwigFunction('getTranslationsForms', $this->getTranslationsForms(...)),
         ];
     }
 
@@ -229,7 +229,7 @@ class TranslationsExtension extends AbstractExtension
      */
     protected function renderEditTranslationForm($properties): string
     {
-        [$domain, $locale] = explode('.', $properties['camelized_domain']);
+        [$domain, $locale] = explode('.', (string) $properties['camelized_domain']);
         $translationValue = $this->getTranslationValue($properties['translation']);
         $defaultTranslationValue = $this->getDefaultTranslationValue(
             $properties['translation_key'],
@@ -510,7 +510,7 @@ class TranslationsExtension extends AbstractExtension
     protected function parseDomain($subtree): string
     {
         [$camelizedDomain] = $subtree['__messages'];
-        [$domain] = explode('.', $camelizedDomain);
+        [$domain] = explode('.', (string) $camelizedDomain);
 
         return $domain;
     }

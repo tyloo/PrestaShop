@@ -69,9 +69,9 @@ class CustomerAddressType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private ConfigurableFormChoiceProviderInterface $stateChoiceProvider,
+        private readonly ConfigurableFormChoiceProviderInterface $stateChoiceProvider,
         private $contextCountryId,
-        private RouterInterface $router
+        private readonly RouterInterface $router
     ) {
         parent::__construct($translator, $locales);
     }

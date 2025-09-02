@@ -43,7 +43,7 @@ class UpdateFormVarsExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'update_form_vars',
-                [$this, 'updateFormVars']
+                $this->updateFormVars(...)
             ),
         ];
     }

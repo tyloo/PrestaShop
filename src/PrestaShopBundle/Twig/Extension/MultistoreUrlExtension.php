@@ -60,9 +60,9 @@ class MultistoreUrlExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('multistore_url', [$this, 'generateUrl']),
-            new TwigFunction('multistore_group_url', [$this, 'generateGroupUrl']),
-            new TwigFunction('multistore_shop_url', [$this, 'generateShopUrl']),
+            new TwigFunction('multistore_url', $this->generateUrl(...)),
+            new TwigFunction('multistore_group_url', $this->generateGroupUrl(...)),
+            new TwigFunction('multistore_shop_url', $this->generateShopUrl(...)),
         ];
     }
 

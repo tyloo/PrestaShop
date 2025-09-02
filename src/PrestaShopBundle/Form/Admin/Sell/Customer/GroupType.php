@@ -35,7 +35,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupType extends AbstractType
 {
-    public function __construct(private GroupByIdChoiceProvider $groupByIdChoiceProvider)
+    public function __construct(private readonly GroupByIdChoiceProvider $groupByIdChoiceProvider)
     {
     }
 

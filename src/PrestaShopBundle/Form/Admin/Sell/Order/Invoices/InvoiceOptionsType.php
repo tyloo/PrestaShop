@@ -58,7 +58,7 @@ class InvoiceOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private FormChoiceProviderInterface $invoiceModelChoiceProvider,
+        private readonly FormChoiceProviderInterface $invoiceModelChoiceProvider,
         private $nextInvoiceNumber
     ) {
         parent::__construct($translator, $locales);

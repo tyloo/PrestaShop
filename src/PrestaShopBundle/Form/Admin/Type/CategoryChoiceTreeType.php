@@ -38,7 +38,7 @@ class CategoryChoiceTreeType extends AbstractType
     /**
      * @param array $categoryTreeChoices
      */
-    public function __construct(private array $categoryTreeChoices)
+    public function __construct(private readonly array $categoryTreeChoices)
     {
     }
 

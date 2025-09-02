@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class SlipPdfFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private SlipPdfConfiguration $configuration)
+    public function __construct(private readonly SlipPdfConfiguration $configuration)
     {
     }
 

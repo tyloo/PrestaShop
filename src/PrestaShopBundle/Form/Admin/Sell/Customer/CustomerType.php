@@ -78,12 +78,12 @@ class CustomerType extends TranslatorAwareType
      */
     public function __construct(
         TranslatorInterface $translator,
-        private GroupByIdChoiceProvider $groupByIdChoiceProvider,
+        private readonly GroupByIdChoiceProvider $groupByIdChoiceProvider,
         array $locales,
-        private array $riskChoices,
+        private readonly array $riskChoices,
         private $isB2bFeatureEnabled,
         private $isPartnerOffersEnabled,
-        private ConfigurationInterface $configuration,
+        private readonly ConfigurationInterface $configuration,
         FormCloner $formCloner
     ) {
         parent::__construct($translator, $locales);

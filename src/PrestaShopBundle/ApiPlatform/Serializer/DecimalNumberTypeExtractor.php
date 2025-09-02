@@ -46,7 +46,7 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 class DecimalNumberTypeExtractor implements PropertyTypeExtractorInterface
 {
     private array $reflectionClasses = [];
-    private Inflector $inflector;
+    private readonly Inflector $inflector;
 
     public function __construct(
         protected ClassMetadataFactoryInterface $classMetadataFactory,

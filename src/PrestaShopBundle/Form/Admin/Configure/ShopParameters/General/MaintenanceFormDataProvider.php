@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class MaintenanceFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private MaintenanceConfiguration $maintenanceConfiguration)
+    public function __construct(private readonly MaintenanceConfiguration $maintenanceConfiguration)
     {
     }
 

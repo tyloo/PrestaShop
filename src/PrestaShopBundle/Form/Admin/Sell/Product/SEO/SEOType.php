@@ -56,11 +56,11 @@ class SEOType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private RouterInterface $router,
-        private bool $friendlyUrlEnabled,
-        private bool $forceFriendlyUrl,
-        private LegacyContext $legacyContext,
-        private ConfigurationInterface $configuration
+        private readonly RouterInterface $router,
+        private readonly bool $friendlyUrlEnabled,
+        private readonly bool $forceFriendlyUrl,
+        private readonly LegacyContext $legacyContext,
+        private readonly ConfigurationInterface $configuration
     ) {
         parent::__construct($translator, $locales);
     }

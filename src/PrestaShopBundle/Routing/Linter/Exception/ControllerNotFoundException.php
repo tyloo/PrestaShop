@@ -33,7 +33,7 @@ class ControllerNotFoundException extends LinterException
     /**
      * {@inheritDoc}
      */
-    public function __construct($message, private string $invalidController)
+    public function __construct($message, private readonly string $invalidController)
     {
         parent::__construct($message, 0, null);
     }

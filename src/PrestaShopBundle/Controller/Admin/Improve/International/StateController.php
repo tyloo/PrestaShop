@@ -115,7 +115,7 @@ class StateController extends PrestaShopAdminController
                 $htmlResponse = '';
                 if ($request->query->get('no_empty')) {
                     $emptyValue = $request->get('empty_value') ?: '-';
-                    $htmlResponse = '<option value="0">' . htmlentities($emptyValue, ENT_QUOTES, 'utf-8') . '</option>' . "\n";
+                    $htmlResponse = '<option value="0">' . htmlentities((string) $emptyValue, ENT_QUOTES, 'utf-8') . '</option>' . "\n";
                 }
 
                 $queryStateId = (int) $request->query->get('id_state');

@@ -47,9 +47,9 @@ class LocalizationExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('date_format_full', [$this, 'dateFormatFull']),
-            new TwigFilter('date_format_lite', [$this, 'dateFormatLite']),
-            new TwigFilter('price_format', [$this, 'priceFormat']),
+            new TwigFilter('date_format_full', $this->dateFormatFull(...)),
+            new TwigFilter('date_format_lite', $this->dateFormatLite(...)),
+            new TwigFilter('price_format', $this->priceFormat(...)),
         ];
     }
 

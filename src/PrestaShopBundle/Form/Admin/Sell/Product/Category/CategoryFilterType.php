@@ -46,7 +46,7 @@ class CategoryFilterType extends AbstractType
      * @param CategoryDataProvider $categoryProvider
      * @param int $contextLangId
      */
-    public function __construct(private TranslatorInterface $translator, private CategoryDataProvider $categoryProvider, private int $contextLangId)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly CategoryDataProvider $categoryProvider, private readonly int $contextLangId)
     {
     }
 

@@ -50,7 +50,7 @@ class GridExtension extends AbstractExtension
      * @param Environment $twig
      * @param AdapterInterface $cache
      */
-    public function __construct(private Environment $twig, private AdapterInterface $cache)
+    public function __construct(private readonly Environment $twig, private readonly AdapterInterface $cache)
     {
     }
 
@@ -60,13 +60,13 @@ class GridExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('column_content', [$this, 'renderColumnContent'], [
+            new TwigFunction('column_content', $this->renderColumnContent(...), [
                 'is_safe' => ['html'],
             ]),
-            new TwigFunction('column_header', [$this, 'renderColumnHeader'], [
+            new TwigFunction('column_header', $this->renderColumnHeader(...), [
                 'is_safe' => ['html'],
             ]),
-            new TwigFunction('is_ordering_column', [$this, 'isOrderingColumn'], [
+            new TwigFunction('is_ordering_column', $this->isOrderingColumn(...), [
                 'is_safe' => ['html'],
             ]),
         ];
@@ -177,7 +177,7 @@ class GridExtension extends AbstractExtension
         foreach ($grid['columns'] as $column) {
             if ('position' == $column['type']) {
                 $positionField = $column['id'];
-                if (strtolower($positionField) == strtolower($grid['sorting']['order_by'])) {
+                if (strtolower((string) $positionField) == strtolower((string) $grid['sorting']['order_by'])) {
                     return true;
                 }
             }

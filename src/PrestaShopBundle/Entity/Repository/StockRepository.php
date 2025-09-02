@@ -71,7 +71,7 @@ class StockRepository extends StockManagementRepository
         EntityManager $entityManager,
         ContextAdapter $contextAdapter,
         ImageManager $imageManager,
-        private StockManager $stockManager,
+        private readonly StockManager $stockManager,
         $tablePrefix
     ) {
         parent::__construct(

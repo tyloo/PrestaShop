@@ -58,10 +58,10 @@ class PaymentModulePreferencesType extends TranslatorAwareType
         array $locales,
         array $paymentModules,
         private array $countryChoices,
-        private array $groupChoices,
-        private array $carrierChoices,
-        private CurrencyByIdChoiceProvider $currencyChoicesProvider,
-        private CountryDataProvider $countryDataProvider
+        private readonly array $groupChoices,
+        private readonly array $carrierChoices,
+        private readonly CurrencyByIdChoiceProvider $currencyChoicesProvider,
+        private readonly CountryDataProvider $countryDataProvider
     ) {
         parent::__construct($translator, $locales);
         $this->paymentModules = $this->sortPaymentModules($paymentModules);

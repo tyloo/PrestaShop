@@ -42,7 +42,7 @@ class ZoneChoiceType extends AbstractType
     /**
      * @param ConfigurableFormChoiceProviderInterface $zonesChoiceProvider
      */
-    public function __construct(private ConfigurableFormChoiceProviderInterface $zonesChoiceProvider)
+    public function __construct(private readonly ConfigurableFormChoiceProviderInterface $zonesChoiceProvider)
     {
     }
 

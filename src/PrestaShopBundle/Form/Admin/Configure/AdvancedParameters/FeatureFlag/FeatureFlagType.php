@@ -63,7 +63,7 @@ class FeatureFlagType extends TranslatorAwareType
                 ],
                 'required' => false,
             ])
-            ->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'adaptSwitchOption'])
+            ->addEventListener(FormEvents::PRE_SET_DATA, $this->adaptSwitchOption(...))
         ;
     }
 

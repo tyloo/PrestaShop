@@ -38,7 +38,7 @@ final class GeolocationOptionsFormDataProvider implements FormDataProviderInterf
     /**
      * @param DataConfigurationInterface $dataConfiguration
      */
-    public function __construct(private DataConfigurationInterface $dataConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $dataConfiguration)
     {
     }
 
@@ -50,7 +50,7 @@ final class GeolocationOptionsFormDataProvider implements FormDataProviderInterf
         $configuration = $this->dataConfiguration->getConfiguration();
 
         if (!empty($configuration['geolocation_countries'])) {
-            $configuration['geolocation_countries'] = explode(';', $configuration['geolocation_countries']);
+            $configuration['geolocation_countries'] = explode(';', (string) $configuration['geolocation_countries']);
         } else {
             $configuration['geolocation_countries'] = [];
         }

@@ -50,7 +50,7 @@ class DebugCommand extends Command
      */
     protected $io;
 
-    public function __construct(private CommandBusInterface $commandBus, private DebugMode $debugConfiguration)
+    public function __construct(private readonly CommandBusInterface $commandBus, private readonly DebugMode $debugConfiguration)
     {
         parent::__construct();
     }

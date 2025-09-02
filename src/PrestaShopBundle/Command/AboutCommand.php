@@ -43,7 +43,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'about', description: 'Display information about the current project')]
 class AboutCommand extends BaseAboutCommand
 {
-    public function __construct(private Configuration $configuration)
+    public function __construct(private readonly Configuration $configuration)
     {
         parent::__construct();
     }

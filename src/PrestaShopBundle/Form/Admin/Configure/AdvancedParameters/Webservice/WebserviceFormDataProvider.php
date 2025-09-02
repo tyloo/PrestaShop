@@ -38,7 +38,7 @@ final class WebserviceFormDataProvider implements FormDataProviderInterface
     /**
      * @param WebserviceConfiguration $webserviceConfiguration
      */
-    public function __construct(private WebserviceConfiguration $webserviceConfiguration)
+    public function __construct(private readonly WebserviceConfiguration $webserviceConfiguration)
     {
     }
 

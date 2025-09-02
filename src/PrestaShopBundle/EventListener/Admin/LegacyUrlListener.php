@@ -40,7 +40,7 @@ class LegacyUrlListener
     /**
      * @param LegacyUrlConverter $converter
      */
-    public function __construct(private LegacyUrlConverter $converter)
+    public function __construct(private readonly LegacyUrlConverter $converter)
     {
     }
 

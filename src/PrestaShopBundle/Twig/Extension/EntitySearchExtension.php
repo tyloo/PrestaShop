@@ -42,7 +42,7 @@ class EntitySearchExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('entity_field', [$this, 'getEntityField']),
+            new TwigFilter('entity_field', $this->getEntityField(...)),
         ];
     }
 

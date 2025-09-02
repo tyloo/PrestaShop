@@ -37,7 +37,7 @@ use Throwable;
  */
 final class HookDataCollector extends DataCollector
 {
-    public function __construct(private HookRegistry $registry)
+    public function __construct(private readonly HookRegistry $registry)
     {
     }
 

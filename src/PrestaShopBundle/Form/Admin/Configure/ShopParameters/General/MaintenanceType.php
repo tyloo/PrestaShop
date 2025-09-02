@@ -53,7 +53,7 @@ class MaintenanceType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private string $currentIp
+        private readonly string $currentIp
     ) {
         parent::__construct($translator, $locales);
     }

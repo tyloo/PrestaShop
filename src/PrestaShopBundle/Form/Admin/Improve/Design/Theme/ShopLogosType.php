@@ -49,7 +49,7 @@ class ShopLogosType extends AbstractType
      * @param bool $isSingleShopContext
      * @param array $contextShopIds
      */
-    public function __construct(private $isShopFeatureUsed, private $isSingleShopContext, private array $contextShopIds)
+    public function __construct(private $isShopFeatureUsed, private $isSingleShopContext, private readonly array $contextShopIds)
     {
     }
 

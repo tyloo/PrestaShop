@@ -75,7 +75,7 @@ class LegacyParametersConverter
 
             // Loop through the _legacy_link until a controller and action is found
             foreach ($legacyLinks as $legacyLink) {
-                $linkParts = explode(':', $legacyLink);
+                $linkParts = explode(':', (string) $legacyLink);
                 if (!isset($legacyParameters['controller'])) {
                     $legacyParameters['controller'] = $linkParts[0];
                 }

@@ -47,8 +47,8 @@ class FeatureFlagsFormDataProvider implements FormDataProviderInterface
     public function __construct(
         protected EntityManagerInterface $doctrineEntityManager,
         protected readonly string $stability,
-        private CacheClearerInterface $cacheClearer,
-        private FeatureFlagManager $featureFlagManager,
+        private readonly CacheClearerInterface $cacheClearer,
+        private readonly FeatureFlagManager $featureFlagManager,
         private readonly FeatureInterface $multiStoreFeature,
         private readonly ConfigurationInterface $configuration,
     ) {

@@ -45,9 +45,9 @@ class PriceReductionType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private EventSubscriberInterface $eventSubscriber,
-        private ReductionTypeChoiceProvider $reductionTypeChoiceProvider,
-        private CurrencyDataProviderInterface $currencyDataProvider
+        private readonly EventSubscriberInterface $eventSubscriber,
+        private readonly ReductionTypeChoiceProvider $reductionTypeChoiceProvider,
+        private readonly CurrencyDataProviderInterface $currencyDataProvider
     ) {
         parent::__construct($translator, $locales);
     }

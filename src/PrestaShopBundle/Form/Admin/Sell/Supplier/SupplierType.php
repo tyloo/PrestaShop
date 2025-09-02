@@ -64,11 +64,11 @@ class SupplierType extends TranslatorAwareType
      * @param array $locales
      */
     public function __construct(
-        private ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
-        private int $contextCountryId,
+        private readonly ConfigurableFormChoiceProviderInterface $statesChoiceProvider,
+        private readonly int $contextCountryId,
         TranslatorInterface $translator,
-        private bool $isMultistoreEnabled,
-        private UrlGeneratorInterface $router,
+        private readonly bool $isMultistoreEnabled,
+        private readonly UrlGeneratorInterface $router,
         array $locales = []
     ) {
         parent::__construct($translator, $locales);

@@ -39,7 +39,7 @@ class PageLayoutsCustomizationType extends AbstractType
     /**
      * @param array $pageLayoutsChoices
      */
-    public function __construct(private array $pageLayoutsChoices)
+    public function __construct(private readonly array $pageLayoutsChoices)
     {
     }
 

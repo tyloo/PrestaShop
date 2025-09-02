@@ -42,7 +42,7 @@ use Symfony\Component\Routing\Route;
  */
 final class NamingConventionLinterCommand extends Command
 {
-    public function __construct(private AdminRouteProvider $adminRouteProvider, private NamingConventionLinter $namingConventionLinter)
+    public function __construct(private readonly AdminRouteProvider $adminRouteProvider, private readonly NamingConventionLinter $namingConventionLinter)
     {
         parent::__construct();
     }

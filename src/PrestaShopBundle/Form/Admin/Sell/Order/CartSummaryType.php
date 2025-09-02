@@ -44,7 +44,7 @@ class CartSummaryType extends AbstractType
      * @param FormChoiceProviderInterface $paymentModulesChoiceProvider
      * @param TranslatorInterface $translator
      */
-    public function __construct(private FormChoiceProviderInterface $orderStatesChoiceProvider, private FormChoiceProviderInterface $paymentModulesChoiceProvider, private TranslatorInterface $translator)
+    public function __construct(private readonly FormChoiceProviderInterface $orderStatesChoiceProvider, private readonly FormChoiceProviderInterface $paymentModulesChoiceProvider, private readonly TranslatorInterface $translator)
     {
     }
 

@@ -47,8 +47,8 @@ class SizeWeightSettings extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private string $dimensionUnit,
-        private string $weightUnit,
+        private readonly string $dimensionUnit,
+        private readonly string $weightUnit,
     ) {
         parent::__construct($translator, $locales);
     }

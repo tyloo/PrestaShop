@@ -48,7 +48,7 @@ class OrderPaymentType extends AbstractType
      * @param int $contextLanguageId
      * @param int $contextShopId
      */
-    public function __construct(private TranslatorInterface $translator, private ConfigurableFormChoiceProviderInterface $currencySymbolByIdChoiceProvider, private ConfigurableFormChoiceProviderInterface $orderInvoiceChoiceProvider, private FormChoiceProviderInterface $installedPaymentModulesChoiceProvider, private int $contextLanguageId, private int $contextShopId)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurableFormChoiceProviderInterface $currencySymbolByIdChoiceProvider, private readonly ConfigurableFormChoiceProviderInterface $orderInvoiceChoiceProvider, private readonly FormChoiceProviderInterface $installedPaymentModulesChoiceProvider, private readonly int $contextLanguageId, private readonly int $contextShopId)
     {
     }
 

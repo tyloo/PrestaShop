@@ -39,7 +39,7 @@ class ChangeOrdersStatusType extends AbstractType
     /**
      * @param FormChoiceProviderInterface $orderStatusChoiceProvider
      */
-    public function __construct(private FormChoiceProviderInterface $orderStatusChoiceProvider)
+    public function __construct(private readonly FormChoiceProviderInterface $orderStatusChoiceProvider)
     {
     }
 

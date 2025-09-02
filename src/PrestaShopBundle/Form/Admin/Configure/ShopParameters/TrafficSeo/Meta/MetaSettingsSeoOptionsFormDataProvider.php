@@ -41,7 +41,7 @@ final class MetaSettingsSeoOptionsFormDataProvider implements FormDataProviderIn
      *
      * @param DataConfigurationInterface $seoOptionsDataConfiguration
      */
-    public function __construct(private DataConfigurationInterface $seoOptionsDataConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $seoOptionsDataConfiguration)
     {
     }
 

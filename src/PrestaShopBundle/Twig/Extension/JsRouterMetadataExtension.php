@@ -50,7 +50,7 @@ class JsRouterMetadataExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('js_router_metadata', [$this, 'getJsRouterMetadata']),
+            new TwigFunction('js_router_metadata', $this->getJsRouterMetadata(...)),
         ];
     }
 

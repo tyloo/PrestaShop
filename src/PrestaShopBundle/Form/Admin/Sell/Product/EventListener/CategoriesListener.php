@@ -37,7 +37,7 @@ class CategoriesListener implements EventSubscriberInterface
     /**
      * @param FormCloner $formCloner
      */
-    public function __construct(private FormCloner $formCloner)
+    public function __construct(private readonly FormCloner $formCloner)
     {
     }
 

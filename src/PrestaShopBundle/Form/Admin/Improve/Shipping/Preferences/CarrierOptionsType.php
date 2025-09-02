@@ -43,9 +43,9 @@ class CarrierOptionsType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private array $carriers,
-        private array $orderByChoices,
-        private array $orderWayChoices
+        private readonly array $carriers,
+        private readonly array $orderByChoices,
+        private readonly array $orderWayChoices
     ) {
         parent::__construct($translator, $locales);
     }

@@ -37,7 +37,7 @@ final class CreditSlipOptionsFormDataProvider implements FormDataProviderInterfa
     /**
      * @param DataConfigurationInterface $creditSlipOptionsConfiguration
      */
-    public function __construct(private DataConfigurationInterface $creditSlipOptionsConfiguration)
+    public function __construct(private readonly DataConfigurationInterface $creditSlipOptionsConfiguration)
     {
     }
 

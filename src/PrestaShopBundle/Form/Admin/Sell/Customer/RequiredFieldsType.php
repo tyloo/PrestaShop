@@ -38,7 +38,7 @@ class RequiredFieldsType extends AbstractType
     /**
      * @param array $customerRequiredFieldsChoices
      */
-    public function __construct(private array $customerRequiredFieldsChoices)
+    public function __construct(private readonly array $customerRequiredFieldsChoices)
     {
     }
 

@@ -46,7 +46,7 @@ final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInt
      * @param TranslatorInterface $translator
      * @param RouteValidator $routeValidator
      */
-    public function __construct(private DataConfigurationInterface $urlSchemaDataConfiguration, private TranslatorInterface $translator, private RouteValidator $routeValidator)
+    public function __construct(private readonly DataConfigurationInterface $urlSchemaDataConfiguration, private readonly TranslatorInterface $translator, private readonly RouteValidator $routeValidator)
     {
     }
 
@@ -90,7 +90,7 @@ final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInt
                 $patternErrors[] = $this->translator->trans(
                     'The route %routeRule% is not valid',
                     [
-                        '%routeRule%' => htmlspecialchars($rule),
+                        '%routeRule%' => htmlspecialchars((string) $rule),
                     ],
                     'Admin.Shopparameters.Feature'
                 );

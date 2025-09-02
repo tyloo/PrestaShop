@@ -52,10 +52,10 @@ class BulkCombinationPriceType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private string $defaultCurrencyIsoCode,
-        private string $weightUnit,
-        private ProductRepository $productRepository,
-        private TaxComputer $taxComputer
+        private readonly string $defaultCurrencyIsoCode,
+        private readonly string $weightUnit,
+        private readonly ProductRepository $productRepository,
+        private readonly TaxComputer $taxComputer
     ) {
         parent::__construct($translator, $locales);
     }

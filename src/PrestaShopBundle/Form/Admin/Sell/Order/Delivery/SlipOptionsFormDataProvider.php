@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Form\FormDataProviderInterface;
  */
 final class SlipOptionsFormDataProvider implements FormDataProviderInterface
 {
-    public function __construct(private SlipOptionsConfiguration $configuration)
+    public function __construct(private readonly SlipOptionsConfiguration $configuration)
     {
     }
 

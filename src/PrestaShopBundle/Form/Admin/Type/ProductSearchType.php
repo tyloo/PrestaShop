@@ -41,8 +41,8 @@ class ProductSearchType extends TranslatorAwareType
     public function __construct(
         TranslatorInterface $translator,
         array $locales,
-        private RouterInterface $router,
-        private string $languageIsoCode
+        private readonly RouterInterface $router,
+        private readonly string $languageIsoCode
     ) {
         parent::__construct($translator, $locales);
     }

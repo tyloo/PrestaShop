@@ -40,7 +40,7 @@ final class CommandsAndQueriesDataCollector extends DataCollector
     /**
      * @param ExecutedCommandRegistry $executedCommandRegistry
      */
-    public function __construct(private ExecutedCommandRegistry $executedCommandRegistry)
+    public function __construct(private readonly ExecutedCommandRegistry $executedCommandRegistry)
     {
     }
 

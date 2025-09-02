@@ -36,7 +36,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class IntegerTypeExtension extends AbstractTypeExtension
 {
-    public function __construct(private LocaleNumberTransformer $localeNumberTransformer)
+    public function __construct(private readonly LocaleNumberTransformer $localeNumberTransformer)
     {
     }
 
