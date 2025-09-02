@@ -14,6 +14,10 @@ ARG USER_ID
 ARG NODE_VERSION
 ARG INSTALL_XDEBUG
 
+
+RUN groupmod -g $GROUP_ID www-data \
+  && usermod -u $USER_ID -g $GROUP_ID www-data
+
 COPY .docker/wait-for-it.sh /tmp/
 
 # Install mailutils to make sendmail work
