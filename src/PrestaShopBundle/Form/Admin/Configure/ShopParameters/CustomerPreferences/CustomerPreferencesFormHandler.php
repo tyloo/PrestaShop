@@ -58,7 +58,7 @@ final class CustomerPreferencesFormHandler extends Handler
     /**
      * @param TabRepository $tabRepository
      */
-    public function setTabRepository(TabRepository $tabRepository)
+    public function setTabRepository(TabRepository $tabRepository): void
     {
         $this->tabRepository = $tabRepository;
     }
@@ -70,7 +70,7 @@ final class CustomerPreferencesFormHandler extends Handler
      *
      * @throws InvalidArgumentException
      */
-    private function handleB2bUpdate($b2bMode)
+    private function handleB2bUpdate($b2bMode): void
     {
         $b2bTabs = ['AdminOutstanding'];
         foreach ($b2bTabs as $tabName) {

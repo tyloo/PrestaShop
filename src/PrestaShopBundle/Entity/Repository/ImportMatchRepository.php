@@ -110,7 +110,7 @@ class ImportMatchRepository implements RepositoryInterface
      *
      * @param int $id
      */
-    public function deleteById($id)
+    public function deleteById($id): void
     {
         $this->connection->delete(
             $this->importMatchTable,

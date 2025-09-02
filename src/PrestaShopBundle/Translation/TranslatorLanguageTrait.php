@@ -44,7 +44,7 @@ trait TranslatorLanguageTrait
     /**
      * @param string $locale Locale code for the catalogue to be cleared
      */
-    public function clearLanguage($locale)
+    public function clearLanguage($locale): void
     {
         unset($this->catalogues[$locale]);
     }

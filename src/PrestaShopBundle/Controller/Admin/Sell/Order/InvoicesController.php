@@ -152,7 +152,7 @@ class InvoicesController extends PrestaShopAdminController
     public function generatePdfByIdAction(
         int $invoiceId,
         #[Autowire(service: 'prestashop.adapter.pdf.generator.single_invoice')] PDFGeneratorInterface $invoicePdfGenerator
-    ) {
+    ): void {
         $invoicePdfGenerator->generatePDF([$invoiceId]);
 
         // When using legacy generator,

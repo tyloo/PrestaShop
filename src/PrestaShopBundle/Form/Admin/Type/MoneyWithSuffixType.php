@@ -40,7 +40,7 @@ class MoneyWithSuffixType extends MoneyType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $pattern = self::getPattern($options['currency']);
 
@@ -59,7 +59,7 @@ class MoneyWithSuffixType extends MoneyType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -74,7 +74,7 @@ class MoneyWithSuffixType extends MoneyType
      * @param int $key not used, it's only here to make this method compatible with array_walk
      * @param string $suffix
      */
-    private function applySuffix(&$value, $key, $suffix)
+    private function applySuffix(&$value, $key, $suffix): void
     {
         if (strlen($value) > 0) {
             $value = rtrim($value) . ' ' . $suffix;

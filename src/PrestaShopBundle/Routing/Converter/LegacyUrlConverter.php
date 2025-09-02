@@ -240,7 +240,7 @@ final class LegacyUrlConverter
      *
      * @throws AlreadyConvertedException
      */
-    private function checkAlreadyMatchingRoute($url)
+    private function checkAlreadyMatchingRoute($url): void
     {
         try {
             $urlPath = parse_url($url, PHP_URL_PATH);

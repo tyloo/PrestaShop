@@ -200,7 +200,7 @@ class CsvResponse extends StreamedResponse
      *
      * @throws LogicException
      */
-    public function processData()
+    public function processData(): void
     {
         $this->initStart();
 
@@ -222,7 +222,7 @@ class CsvResponse extends StreamedResponse
     /**
      * Process to data export if $this->data is an array.
      */
-    private function processDataArray()
+    private function processDataArray(): void
     {
         $handle = tmpfile();
 
@@ -240,7 +240,7 @@ class CsvResponse extends StreamedResponse
     /**
      * Process to data export if $this->data is a callable function.
      */
-    private function processDataCallback()
+    private function processDataCallback(): void
     {
         $handle = tmpfile();
 
@@ -277,7 +277,7 @@ class CsvResponse extends StreamedResponse
     /**
      * Just init $this->start if it is null.
      */
-    private function initStart()
+    private function initStart(): void
     {
         if (null !== $this->start) {
             return;
@@ -297,7 +297,7 @@ class CsvResponse extends StreamedResponse
      *
      * @throws LogicException
      */
-    private function incrementData()
+    private function incrementData(): void
     {
         if (self::MODE_PAGINATION === $this->modeType) {
             $this->setStart($this->start + 1);
@@ -317,7 +317,7 @@ class CsvResponse extends StreamedResponse
     /**
      * @param resource $handle file pointer
      */
-    private function dumpFile($handle)
+    private function dumpFile($handle): void
     {
         fseek($handle, 0);
 

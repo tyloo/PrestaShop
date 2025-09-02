@@ -97,7 +97,7 @@ class DemoModeEnabledListener
      *
      * @param DemoRestricted $demoRestricted
      */
-    private function showNotificationMessage(DemoRestricted $demoRestricted)
+    private function showNotificationMessage(DemoRestricted $demoRestricted): void
     {
         /** @var Session $session */
         $session = $this->requestStack->getSession();

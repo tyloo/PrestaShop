@@ -54,7 +54,7 @@ class FilterCmsPageCategorySearchCriteriaListener
     /**
      * @param FilterSearchCriteriaEvent $event
      */
-    public function onFilterSearchCriteria(FilterSearchCriteriaEvent $event)
+    public function onFilterSearchCriteria(FilterSearchCriteriaEvent $event): void
     {
         $isAvailableFilter = $event->getSearchCriteria() instanceof CmsPageCategoryFilters
             || $event->getSearchCriteria() instanceof CmsPageFilters

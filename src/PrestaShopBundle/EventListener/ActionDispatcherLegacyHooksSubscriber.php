@@ -72,7 +72,7 @@ class ActionDispatcherLegacyHooksSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function callActionDispatcherBeforeHook(ControllerEvent $event)
+    public function callActionDispatcherBeforeHook(ControllerEvent $event): void
     {
         if (!$event->isMainRequest()) {
             return;
@@ -97,7 +97,7 @@ class ActionDispatcherLegacyHooksSubscriber implements EventSubscriberInterface
         $requestAttributes->set('controller_name', $controller::class);
     }
 
-    public function callActionDispatcherAfterHook(ResponseEvent $event)
+    public function callActionDispatcherAfterHook(ResponseEvent $event): void
     {
         if (!$event->isMainRequest()) {
             return;

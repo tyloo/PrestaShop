@@ -137,7 +137,7 @@ final class SecurityAttributeLinterCommand extends Command
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $description = 'Checks if Back Office route controllers has configured Security annotations.';
         $actionDescription = sprintf(
@@ -187,7 +187,7 @@ final class SecurityAttributeLinterCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    private function listAllRoutesAndRelatedPermissions(InputInterface $input, OutputInterface $output)
+    private function listAllRoutesAndRelatedPermissions(InputInterface $input, OutputInterface $output): void
     {
         $listing = [];
 

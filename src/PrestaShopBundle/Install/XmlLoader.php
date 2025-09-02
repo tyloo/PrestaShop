@@ -91,7 +91,7 @@ class XmlLoader
      *
      * @param array $languages array(id_lang => iso)
      */
-    public function setLanguages(array $languages)
+    public function setLanguages(array $languages): void
     {
         $this->languages = $languages;
     }
@@ -103,7 +103,7 @@ class XmlLoader
         return $translator;
     }
 
-    public function setDefaultPath()
+    public function setDefaultPath(): void
     {
         $this->path_type = 'common';
         $this->data_path = _PS_INSTALL_DATA_PATH_ . 'xml/';
@@ -112,7 +112,7 @@ class XmlLoader
         $this->fileLoader = new FileLoader($this->data_path, $this->lang_path);
     }
 
-    public function setFixturesPath($path = null)
+    public function setFixturesPath($path = null): void
     {
         if ($path === null) {
             $path = _PS_INSTALL_FIXTURES_PATH_ . 'fashion/';
@@ -140,7 +140,7 @@ class XmlLoader
      *
      * @param string $error
      */
-    public function setError($error)
+    public function setError($error): void
     {
         $this->errors[] = $error;
     }
@@ -152,7 +152,7 @@ class XmlLoader
      * @param string $identifier
      * @param int $id
      */
-    public function storeId($entity, $identifier, $id)
+    public function storeId($entity, $identifier, $id): void
     {
         $this->ids[$entity . ':' . $identifier] = $id;
     }
@@ -173,7 +173,7 @@ class XmlLoader
         return $this->ids;
     }
 
-    public function setIds($ids)
+    public function setIds($ids): void
     {
         $this->ids = $ids;
     }
@@ -240,7 +240,7 @@ class XmlLoader
      *
      * @throws PrestashopInstallerException
      */
-    public function populateFromXmlFiles()
+    public function populateFromXmlFiles(): void
     {
         $entities = $this->getSortedEntities();
 
@@ -257,7 +257,7 @@ class XmlLoader
      *
      * @throws PrestashopInstallerException
      */
-    public function populateEntity($entity)
+    public function populateEntity($entity): void
     {
         $populateEntityMethod = 'populateEntity' . Tools::toCamelCase($entity);
         if (method_exists($this, $populateEntityMethod)) {
@@ -386,7 +386,7 @@ class XmlLoader
     /**
      * Special case for "country" entity.
      */
-    public function populateEntityCountry()
+    public function populateEntityCountry(): void
     {
         $xml = $this->fileLoader->load('country');
 
@@ -439,7 +439,7 @@ class XmlLoader
     /**
      * Special case for "tag" entity.
      */
-    public function populateEntityTag()
+    public function populateEntityTag(): void
     {
         foreach ($this->languages as $id_lang => $iso) {
             if (!file_exists($this->lang_path . $this->getFallBackToDefaultLanguage($iso) . '/data/tag.xml')) {
@@ -492,7 +492,7 @@ class XmlLoader
         return $data;
     }
 
-    public function flushDelayedInserts()
+    public function flushDelayedInserts(): void
     {
         foreach ($this->delayed_inserts as $entity => $queries) {
             $type = Db::INSERT_IGNORE;
@@ -517,7 +517,7 @@ class XmlLoader
      * @param array $data
      * @param array $data_lang
      */
-    public function createEntity($entity, $identifier, $classname, array $data, array $data_lang = [])
+    public function createEntity($entity, $identifier, $classname, array $data, array $data_lang = []): void
     {
         $xml = $this->fileLoader->load($entity);
         if ($classname) {
@@ -577,12 +577,12 @@ class XmlLoader
         $this->storeId($entity, $identifier, $entity_id);
     }
 
-    public function createEntityAttribute($identifier, array $data, array $data_lang = [])
+    public function createEntityAttribute($identifier, array $data, array $data_lang = []): void
     {
         $this->createEntity('attribute', $identifier, 'ProductAttribute', $data, $data_lang);
     }
 
-    public function createEntityConfiguration($identifier, array $data, array $data_lang)
+    public function createEntityConfiguration($identifier, array $data, array $data_lang): void
     {
         if (Db::getInstance()->getValue('SELECT id_configuration FROM ' . _DB_PREFIX_ . 'configuration WHERE name = \'' . pSQL($data['name']) . '\'')) {
             return;
@@ -628,7 +628,7 @@ class XmlLoader
         return $this;
     }
 
-    public function createEntityStockAvailable($identifier, array $data, array $data_lang)
+    public function createEntityStockAvailable($identifier, array $data, array $data_lang): void
     {
         $stock_available = new StockAvailable();
         $stock_available->updateQuantity($data['id_product'], $data['id_product_attribute'], $data['quantity'], $data['id_shop']);
@@ -643,7 +643,7 @@ class XmlLoader
      *
      * @throws PrestashopInstallerException
      */
-    public function createEntityTab($identifier, array $data, array $data_lang)
+    public function createEntityTab($identifier, array $data, array $data_lang): void
     {
         static $position = [];
 
@@ -712,7 +712,7 @@ class XmlLoader
         return ++$this->primaries[$entity];
     }
 
-    public function copyImages($entity, $identifier, $path, array $data, $extension = 'jpg')
+    public function copyImages($entity, $identifier, $path, array $data, $extension = 'jpg'): void
     {
         // Get list of image types
         $reference = [
@@ -809,12 +809,12 @@ class XmlLoader
         Image::moveToNewFileSystem();
     }
 
-    public function copyImagesOrderState($identifier, array $data)
+    public function copyImagesOrderState($identifier, array $data): void
     {
         $this->copyImages('order_state', $identifier, 'os', $data, 'gif');
     }
 
-    public function copyImagesTab($identifier, array $data)
+    public function copyImagesTab($identifier, array $data): void
     {
         $from_path = $this->img_path . 't/';
         $dst_path = _PS_IMG_DIR_ . 't/';
@@ -828,7 +828,7 @@ class XmlLoader
         }
     }
 
-    public function copyImagesImage($identifier)
+    public function copyImagesImage($identifier): void
     {
         $path = $this->img_path . 'p/';
         $image = new Image($this->retrieveId('image', $identifier));
@@ -1101,7 +1101,7 @@ class XmlLoader
         return $dependencies;
     }
 
-    public function generateEntitySchema($entity, array $fields, array $config)
+    public function generateEntitySchema($entity, array $fields, array $config): void
     {
         if ($this->entityExists($entity)) {
             $xml = $this->fileLoader->load($entity);
@@ -1138,7 +1138,7 @@ class XmlLoader
     /**
      * ONLY FOR DEVELOPMENT PURPOSE.
      */
-    public function generateAllEntityFiles()
+    public function generateAllEntityFiles(): void
     {
         $entities = [];
         foreach ($this->getEntitiesList() as $entity) {
@@ -1150,7 +1150,7 @@ class XmlLoader
     /**
      * ONLY FOR DEVELOPMENT PURPOSE.
      */
-    public function generateEntityFiles($entities)
+    public function generateEntityFiles($entities): void
     {
         $dependencies = $this->getDependencies();
 
@@ -1183,7 +1183,7 @@ class XmlLoader
         }
     }
 
-    public function generateEntityContent($entity)
+    public function generateEntityContent($entity): void
     {
         $xml = $this->fileLoader->load($entity);
         if (method_exists($this, 'getEntityContents' . Tools::toCamelCase($entity))) {
@@ -1411,7 +1411,7 @@ class XmlLoader
     /**
      * ONLY FOR DEVELOPMENT PURPOSE.
      */
-    public function createXmlEntityNodes($entity, array $nodes, SimpleXMLElement $entities)
+    public function createXmlEntityNodes($entity, array $nodes, SimpleXMLElement $entities): void
     {
         $types = array_merge($this->getColumns($entity), $this->getColumns($entity, true));
         foreach ($nodes as $id => $node) {
@@ -1430,7 +1430,7 @@ class XmlLoader
     /**
      * ONLY FOR DEVELOPMENT PURPOSE.
      */
-    public function backupImage($entity, $path)
+    public function backupImage($entity, $path): void
     {
         $reference = [
             'product' => 'products',
@@ -1471,7 +1471,7 @@ class XmlLoader
     /**
      * ONLY FOR DEVELOPMENT PURPOSE.
      */
-    public function backupImageImage()
+    public function backupImageImage(): void
     {
         $types = [];
         foreach (ImageType::getImagesTypes('products') as $type) {
@@ -1502,7 +1502,7 @@ class XmlLoader
     /**
      * ONLY FOR DEVELOPMENT PURPOSE.
      */
-    public function backupImageTab()
+    public function backupImageTab(): void
     {
         $backup_path = $this->img_path . 't/';
         $from_path = _PS_IMG_DIR_ . 't/';

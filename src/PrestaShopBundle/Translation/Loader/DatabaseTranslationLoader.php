@@ -107,7 +107,7 @@ class DatabaseTranslationLoader implements LoaderInterface
      * @param QueryBuilder $queryBuilder
      * @param Lang $currentLang
      */
-    private function addLangConstraint(QueryBuilder $queryBuilder, Lang $currentLang)
+    private function addLangConstraint(QueryBuilder $queryBuilder, Lang $currentLang): void
     {
         $queryBuilder->andWhere('t.lang =:lang')
             ->setParameter('lang', $currentLang);
@@ -117,7 +117,7 @@ class DatabaseTranslationLoader implements LoaderInterface
      * @param QueryBuilder $queryBuilder
      * @param string|null $theme
      */
-    private function addThemeConstraint(QueryBuilder $queryBuilder, $theme)
+    private function addThemeConstraint(QueryBuilder $queryBuilder, $theme): void
     {
         if (null === $theme) {
             $queryBuilder->andWhere('t.theme IS NULL');
@@ -132,7 +132,7 @@ class DatabaseTranslationLoader implements LoaderInterface
      * @param QueryBuilder $queryBuilder
      * @param string $domain
      */
-    private function addDomainConstraint(QueryBuilder $queryBuilder, $domain)
+    private function addDomainConstraint(QueryBuilder $queryBuilder, $domain): void
     {
         if ($domain !== '*') {
             $queryBuilder->andWhere('REGEXP(t.domain, :domain) = true')

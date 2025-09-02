@@ -65,7 +65,7 @@ class InvalidLegacyTranslationKeyException extends Exception
     /**
      * @param string $key
      */
-    private function setKey($key)
+    private function setKey($key): void
     {
         $this->key = $key;
     }

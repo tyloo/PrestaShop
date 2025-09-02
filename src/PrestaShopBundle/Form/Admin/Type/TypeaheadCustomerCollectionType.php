@@ -54,7 +54,7 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
      * Add the vars to the view
      * Inject collection customer
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['placeholder'] = $options['placeholder'];
         $view->vars['remote_url'] = $options['remote_url'];
@@ -93,7 +93,7 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
      *
      * Builds the form.
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('data', 'Symfony\Component\Form\Extension\Core\Type\CollectionType', [
             'entry_type' => 'Symfony\Component\Form\Extension\Core\Type\HiddenType',
@@ -108,7 +108,7 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'remote_url' => '',

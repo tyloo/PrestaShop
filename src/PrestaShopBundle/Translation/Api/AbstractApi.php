@@ -35,7 +35,7 @@ abstract class AbstractApi
      */
     protected $translator;
 
-    public function setTranslator(TranslatorInterface $translator)
+    public function setTranslator(TranslatorInterface $translator): void
     {
         $this->translator = $translator;
     }

@@ -70,7 +70,7 @@ final class SecurityAttributeLinter implements RouteLinterInterface
     /**
      * {@inheritdoc}
      */
-    public function lint($routeName, Route $route)
+    public function lint($routeName, Route $route): void
     {
         $this->getRouteSecurityAttributes($route);
     }

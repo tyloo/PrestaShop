@@ -98,7 +98,7 @@ class FileLoader
      * @param string $entity Entity name
      * @param string|null $iso [default=null] 2-letter language code. If not provided, it flushes all languages for this entity
      */
-    public function flushCache(string $entity, ?string $iso = null)
+    public function flushCache(string $entity, ?string $iso = null): void
     {
         if (!empty($iso)) {
             unset($this->cache[$entity][$iso]);

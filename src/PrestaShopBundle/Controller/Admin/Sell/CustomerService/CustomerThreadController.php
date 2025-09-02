@@ -396,7 +396,7 @@ class CustomerThreadController extends PrestaShopAdminController
         return array_map('intval', $customerThreadIds);
     }
 
-    private function handleCustomerThreadStatusUpdate(int $customerThreadId, string $newStatus)
+    private function handleCustomerThreadStatusUpdate(int $customerThreadId, string $newStatus): void
     {
         try {
             $this->dispatchCommand(

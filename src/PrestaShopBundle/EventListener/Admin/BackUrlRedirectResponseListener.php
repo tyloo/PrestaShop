@@ -62,7 +62,7 @@ final class BackUrlRedirectResponseListener
         }
     }
 
-    public function onKernelResponse(ResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         // No need to continue because the employee is not connected
         if (!$this->employeeId) {

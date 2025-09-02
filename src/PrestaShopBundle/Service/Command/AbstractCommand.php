@@ -93,7 +93,7 @@ abstract class AbstractCommand
     /**
      * Add cache:clear to the execution.
      */
-    public function addCacheClear()
+    public function addCacheClear(): void
     {
         $this->commands[] = [
             'command' => 'doctrine:cache:clear-metadata',

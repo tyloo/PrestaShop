@@ -126,7 +126,7 @@ abstract class AbstractLegacyRouteProvider implements LegacyRouteProviderInterfa
     /**
      * Init the controller actions has map.
      */
-    private function initControllerActions()
+    private function initControllerActions(): void
     {
         if (null === $this->controllersActions) {
             $this->controllersActions = [];

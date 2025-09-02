@@ -56,7 +56,7 @@ class AccessDeniedListener
     ) {
     }
 
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         if (!$event->isMainRequest()
             || (!$event->getThrowable() instanceof AccessDeniedException && !$event->getThrowable() instanceof AccessDeniedHttpException)

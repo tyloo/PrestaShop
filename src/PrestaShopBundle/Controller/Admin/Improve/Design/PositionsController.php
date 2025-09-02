@@ -244,7 +244,7 @@ class PositionsController extends PrestaShopAdminController
      *
      * @param int $messageId The message id from legacy context
      */
-    private function manageLegacyFlashes($messageId)
+    private function manageLegacyFlashes($messageId): void
     {
         if (empty($messageId)) {
             return;

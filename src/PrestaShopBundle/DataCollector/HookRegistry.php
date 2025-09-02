@@ -63,7 +63,7 @@ final class HookRegistry
      * @param string $file filepath where the "Hook::exec" call have been done
      * @param int $line position in file where the "Hook::exec" call have been done
      */
-    public function selectHook($hookName, $hookArguments, $file, $line)
+    public function selectHook($hookName, $hookArguments, $file, $line): void
     {
         $this->currentHook = [
             'name' => $hookName,
@@ -77,7 +77,7 @@ final class HookRegistry
     /**
      * Notify the registry that the selected hook have been called.
      */
-    public function hookWasCalled()
+    public function hookWasCalled(): void
     {
         $this->currentHook['status'] = self::HOOK_CALLED;
     }
@@ -85,7 +85,7 @@ final class HookRegistry
     /**
      * Notify the registry that the selected hook have been called.
      */
-    public function hookWasNotRegistered()
+    public function hookWasNotRegistered(): void
     {
         $this->currentHook['status'] = self::HOOK_NOT_REGISTERED;
     }
@@ -93,7 +93,7 @@ final class HookRegistry
     /**
      * @param ModuleCore $module
      */
-    public function hookedByModule(ModuleInterface $module)
+    public function hookedByModule(ModuleInterface $module): void
     {
         $this->currentHook['modules'][$module->name] = [
             'callback' => [],
@@ -107,7 +107,7 @@ final class HookRegistry
      * @param ModuleCore $module
      * @param array $args All arguments passed to the Module callback
      */
-    public function hookedByCallback(ModuleInterface $module, $args)
+    public function hookedByCallback(ModuleInterface $module, $args): void
     {
         $this->currentHook['modules'][$module->name]['callback'] = [
             'args' => $args,
@@ -120,7 +120,7 @@ final class HookRegistry
      * @param ModuleCore $module
      * @param array $args All arguments passed to the Module callback
      */
-    public function hookedByWidget(ModuleInterface $module, $args)
+    public function hookedByWidget(ModuleInterface $module, $args): void
     {
         $this->currentHook['modules'][$module->name]['widget'] = [
             'args' => $args,
@@ -164,7 +164,7 @@ final class HookRegistry
      *
      * Theses hooks will be used by the HookDataCollector
      */
-    public function collect()
+    public function collect(): void
     {
         $name = $this->currentHook['name'];
         $status = $this->currentHook['status'];

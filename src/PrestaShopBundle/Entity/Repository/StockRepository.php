@@ -149,7 +149,7 @@ class StockRepository extends StockManagementRepository
     /**
      * Sync all stock with Manager.
      */
-    private function syncAllStock($idProduct)
+    private function syncAllStock($idProduct): void
     {
         (new StockManager())->updatePhysicalProductQuantity(
             $this->getCurrentShop()->id,

@@ -180,7 +180,7 @@ class ThemeProvider extends AbstractProvider
      *
      * Will update translations files of the Theme
      */
-    public function synchronizeTheme()
+    public function synchronizeTheme(): void
     {
         $theme = $this->themeRepository->getInstanceByName($this->themeName);
 

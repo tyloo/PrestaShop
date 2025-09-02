@@ -63,7 +63,7 @@ class ProductPreferencesFormHandler extends Handler
      *
      * @param CacheClearerInterface $cacheClearer the Cache clearer
      */
-    public function setCacheClearer(CacheClearerInterface $cacheClearer)
+    public function setCacheClearer(CacheClearerInterface $cacheClearer): void
     {
         $this->cacheClearer = $cacheClearer;
     }

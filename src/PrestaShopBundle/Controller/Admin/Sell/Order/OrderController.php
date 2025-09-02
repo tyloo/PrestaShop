@@ -819,7 +819,7 @@ class OrderController extends PrestaShopAdminController
     /**
      * @param OrderForViewing $orderForViewing
      */
-    private function handleOutOfStockProduct(OrderForViewing $orderForViewing)
+    private function handleOutOfStockProduct(OrderForViewing $orderForViewing): void
     {
         $isStockManagementEnabled = (bool) $this->getConfiguration()->get('PS_STOCK_MANAGEMENT');
         if (!$isStockManagementEnabled || $orderForViewing->isDelivered() || $orderForViewing->isShipped()) {
@@ -2143,7 +2143,7 @@ class OrderController extends PrestaShopAdminController
     /**
      * @param ChangeOrderStatusException $e
      */
-    private function handleChangeOrderStatusException(ChangeOrderStatusException $e)
+    private function handleChangeOrderStatusException(ChangeOrderStatusException $e): void
     {
         $orderIds = array_merge(
             $e->getOrdersWithFailedToUpdateStatus(),

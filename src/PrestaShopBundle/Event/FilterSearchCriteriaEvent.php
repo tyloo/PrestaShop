@@ -65,7 +65,7 @@ class FilterSearchCriteriaEvent extends Event
     /**
      * @param SearchCriteriaInterface $searchCriteria
      */
-    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria)
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria): void
     {
         $this->searchCriteria = $searchCriteria;
     }

@@ -161,7 +161,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
     /**
      * Initialize PrestaShop Context
      */
-    private function initContext()
+    private function initContext(): void
     {
         // We need to have an employee or the listing hooks don't work
         // see LegacyHookSubscriber
@@ -244,7 +244,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
      * @param string $pathToFile
      * @param string $content
      */
-    private function appendSqlToFile($pathToFile, $content)
+    private function appendSqlToFile($pathToFile, $content): void
     {
         $fileSystem = new Filesystem();
 

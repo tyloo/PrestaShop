@@ -50,7 +50,7 @@ class Language
         $this->is_rtl = ($this->is_rtl === 'true') ? true : false;
     }
 
-    public function setPropertiesFromXml($xmlPath)
+    public function setPropertiesFromXml($xmlPath): void
     {
         $xml = @simplexml_load_file($xmlPath . '/language.xml');
         if ($xml) {

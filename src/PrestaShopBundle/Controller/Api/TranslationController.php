@@ -297,7 +297,7 @@ class TranslationController extends ApiController
     /**
      * @param array $content
      */
-    private function guardAgainstInvalidTranslationEditRequest($content)
+    private function guardAgainstInvalidTranslationEditRequest($content): void
     {
         $message = 'Each item of JSON-encoded array in the request body should contain ' .
             'a "locale", a "domain", a "default" and a "edited" values. ' .
@@ -342,7 +342,7 @@ class TranslationController extends ApiController
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
-    private function translateMultilingualContent(array $modifiedDomains, Lang $lang)
+    private function translateMultilingualContent(array $modifiedDomains, Lang $lang): void
     {
         if (in_array('AdminNavigationMenu', $modifiedDomains)) {
             // reset translator

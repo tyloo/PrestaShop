@@ -41,7 +41,7 @@ class ConfigYamlLoader extends FileLoader
     /**
      * {@inheritdoc}
      */
-    public function load($resource, $type = null)
+    public function load($resource, $type = null): void
     {
         $path = $this->locator->locate($resource);
         $configValues = Yaml::parse(file_get_contents($path), Yaml::PARSE_CONSTANT);
@@ -79,7 +79,7 @@ class ConfigYamlLoader extends FileLoader
      * @param array $content
      * @param string $file
      */
-    private function parseImports(array $content, $file)
+    private function parseImports(array $content, $file): void
     {
         if (!isset($content['imports'])) {
             return;

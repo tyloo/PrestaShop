@@ -111,7 +111,7 @@ class UpdateLicensesCommand extends Command
      * @param OutputInterface $output
      * @param string $ext
      */
-    private function findAndCheckExtension(OutputInterface $output, $ext)
+    private function findAndCheckExtension(OutputInterface $output, $ext): void
     {
         $finder = new Finder();
         $finder
@@ -232,7 +232,7 @@ class UpdateLicensesCommand extends Command
     /**
      * @param SplFileInfo $file
      */
-    private function makeGoodLicense(SplFileInfo $file)
+    private function makeGoodLicense(SplFileInfo $file): void
     {
         if ($this->isAFLLicense($file->getRelativePathname())) {
             $this->makeAFLLicense();
@@ -260,7 +260,7 @@ class UpdateLicensesCommand extends Command
     /**
      * Replace for OSL licenses.
      */
-    private function makeOSLLicense()
+    private function makeOSLLicense(): void
     {
         $this->license = str_replace('{licenseName}', 'Open Software License (OSL 3.0)', $this->license);
         $this->license = str_replace('{licenseLink}', 'https://opensource.org/licenses/OSL-3.0', $this->license);
@@ -269,7 +269,7 @@ class UpdateLicensesCommand extends Command
     /**
      * Replace for AFL licenses.
      */
-    private function makeAFLLicense()
+    private function makeAFLLicense(): void
     {
         $this->license = str_replace('{licenseName}', 'Academic Free License 3.0 (AFL-3.0)', $this->license);
         $this->license = str_replace('{licenseLink}', 'https://opensource.org/licenses/AFL-3.0', $this->license);
@@ -280,7 +280,7 @@ class UpdateLicensesCommand extends Command
      * @param string $startDelimiter
      * @param string $endDelimiter
      */
-    private function addLicenseToFile($file, $startDelimiter = '\/', $endDelimiter = '\/')
+    private function addLicenseToFile($file, $startDelimiter = '\/', $endDelimiter = '\/'): void
     {
         $content = $file->getContents();
         // Regular expression found thanks to Stephen Ostermiller's Blog. http://blog.ostermiller.org/find-comment
@@ -316,7 +316,7 @@ class UpdateLicensesCommand extends Command
      * @param Stmt $node
      * @param SplFileInfo $file
      */
-    private function addLicenseToNode($node, SplFileInfo $file)
+    private function addLicenseToNode($node, SplFileInfo $file): void
     {
         if (!$node->hasAttribute('comments')) {
             $needle = '<?php';
@@ -345,7 +345,7 @@ class UpdateLicensesCommand extends Command
     /**
      * @param SplFileInfo $file
      */
-    private function addLicenseToSmartyTemplate(SplFileInfo $file)
+    private function addLicenseToSmartyTemplate(SplFileInfo $file): void
     {
         $this->addLicenseToFile($file, '{', '}');
     }
@@ -353,7 +353,7 @@ class UpdateLicensesCommand extends Command
     /**
      * @param SplFileInfo $file
      */
-    private function addLicenseToTwigTemplate(SplFileInfo $file)
+    private function addLicenseToTwigTemplate(SplFileInfo $file): void
     {
         if (strrpos($file->getRelativePathName(), 'html.twig') !== false) {
             $this->addLicenseToFile($file, '{#', '#}');
@@ -363,7 +363,7 @@ class UpdateLicensesCommand extends Command
     /**
      * @param SplFileInfo $file
      */
-    private function addLicenseToHtmlFile(SplFileInfo $file)
+    private function addLicenseToHtmlFile(SplFileInfo $file): void
     {
         $this->addLicenseToFile($file, '<!--', '-->');
     }

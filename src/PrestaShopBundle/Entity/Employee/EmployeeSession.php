@@ -119,7 +119,7 @@ class EmployeeSession
      *
      * @ORM\PreUpdate
      */
-    public function updatedTimestamps()
+    public function updatedTimestamps(): void
     {
         $this->dateUpd = new DateTime();
         if (!isset($this->dateAdd)) {

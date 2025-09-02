@@ -77,7 +77,7 @@ class ShopLogosType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $shopLogoSettings = new ShopLogoSettings();
 
@@ -120,7 +120,7 @@ class ShopLogosType extends AbstractType
      *
      * @param FormBuilderInterface $builder
      */
-    private function appendWithMultiShopCheckboxFormFields(FormBuilderInterface $builder)
+    private function appendWithMultiShopCheckboxFormFields(FormBuilderInterface $builder): void
     {
         // usually checkboxes should be visible in shop group but on this page it only works for single shop context.
         $isAllowedToDisplay = $this->isShopFeatureUsed && $this->isSingleShopContext;
@@ -149,7 +149,7 @@ class ShopLogosType extends AbstractType
      *
      * @param FormBuilderInterface $builder
      */
-    private function appendWithMultiShopSwitchField(FormBuilderInterface $builder)
+    private function appendWithMultiShopSwitchField(FormBuilderInterface $builder): void
     {
         $isAllowedToDisplay = $this->isShopFeatureUsed && $this->isSingleShopContext;
 
@@ -171,7 +171,7 @@ class ShopLogosType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param string $suffix - helps to find multi shop checkbox field
      */
-    private function transformMultiStoreFields(FormBuilderInterface $builder, $suffix)
+    private function transformMultiStoreFields(FormBuilderInterface $builder, $suffix): void
     {
         $builder->addModelTransformer(new CallbackTransformer(
             function ($form) {
@@ -206,7 +206,7 @@ class ShopLogosType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param string $suffix - helps to find multi shop checkbox field
      */
-    private function disableAllShopContextFields(FormBuilderInterface $builder, $suffix)
+    private function disableAllShopContextFields(FormBuilderInterface $builder, $suffix): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($suffix): void {
             $form = $event->getForm();
@@ -240,7 +240,7 @@ class ShopLogosType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param string $suffix - helps to find multi shop checkbox field
      */
-    private function setShopRestrictionSource(FormBuilderInterface $builder, $suffix)
+    private function setShopRestrictionSource(FormBuilderInterface $builder, $suffix): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($suffix): void {
             $form = $event->getForm();

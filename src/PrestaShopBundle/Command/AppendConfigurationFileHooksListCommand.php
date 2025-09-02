@@ -136,7 +136,7 @@ class AppendConfigurationFileHooksListCommand extends Command
     /**
      * Initialize PrestaShop Context
      */
-    private function initContext()
+    private function initContext(): void
     {
         // We need to have an employee or the listing hooks don't work
         // see LegacyHookSubscriber

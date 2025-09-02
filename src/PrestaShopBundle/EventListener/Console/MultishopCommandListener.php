@@ -53,7 +53,7 @@ class MultishopCommandListener
         $this->rootDir = $rootDir;
     }
 
-    public function onConsoleCommand(ConsoleCommandEvent $event)
+    public function onConsoleCommand(ConsoleCommandEvent $event): void
     {
         $definition = $event->getCommand()->getDefinition();
         $input = $event->getInput();
@@ -83,7 +83,7 @@ class MultishopCommandListener
      * This function is an hack.
      * Calling setShopContext will trigger a sql request, we need to be sure the config is properly loaded.
      */
-    private function fixUnloadedConfig()
+    private function fixUnloadedConfig(): void
     {
         if (!defined('_DB_PREFIX_')) {
             require_once $this->rootDir . '/../config/config.inc.php';

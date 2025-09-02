@@ -73,7 +73,7 @@ class TranslatorLanguageLoader
      * @param bool $withDB [default=true] Whether to load translations from the database or not
      * @param Theme|null $theme [default=false] Currently active theme (Front office only)
      */
-    public function loadLanguage(TranslatorInterface $translator, $locale, $withDB = true, ?Theme $theme = null)
+    public function loadLanguage(TranslatorInterface $translator, $locale, $withDB = true, ?Theme $theme = null): void
     {
         if (!method_exists($translator, 'isLanguageLoaded')) {
             return;

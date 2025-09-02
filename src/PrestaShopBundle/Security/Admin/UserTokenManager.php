@@ -94,7 +94,7 @@ class UserTokenManager implements CacheClearerInterface
         return false;
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->tokens = [];
     }

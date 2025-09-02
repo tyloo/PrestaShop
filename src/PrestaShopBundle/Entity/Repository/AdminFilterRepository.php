@@ -102,7 +102,7 @@ class AdminFilterRepository extends EntityRepository
      *
      * @throws OptimisticLockException
      */
-    public function unsetFilters(AdminFilter $adminFilter)
+    public function unsetFilters(AdminFilter $adminFilter): void
     {
         $currentFilters = json_decode($adminFilter->getFilter(), true);
 
@@ -142,7 +142,7 @@ class AdminFilterRepository extends EntityRepository
         $shopId,
         array $filters,
         $filterId
-    ) {
+    ): void {
         $adminFilter = $this->findByEmployeeAndFilterId($employeeId, $shopId, $filterId);
         $adminFilter = null === $adminFilter ? new AdminFilter() : $adminFilter;
 
@@ -176,7 +176,7 @@ class AdminFilterRepository extends EntityRepository
         $filters,
         $controller,
         $action
-    ) {
+    ): void {
         $adminFilter = $this->findOneBy([
             'employee' => $employeeId,
             'shop' => $shopId,

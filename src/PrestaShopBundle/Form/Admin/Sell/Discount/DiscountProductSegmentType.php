@@ -44,7 +44,7 @@ class DiscountProductSegmentType extends TranslatorAwareType
 
     public const SUPPLIER = 'supplier';
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(self::MANUFACTURER, ManufacturerType::class, [
@@ -85,7 +85,7 @@ class DiscountProductSegmentType extends TranslatorAwareType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

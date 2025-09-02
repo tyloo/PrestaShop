@@ -85,7 +85,7 @@ class TranslationsFactory implements TranslationsFactoryInterface
     /**
      * @param AbstractProvider $provider
      */
-    public function addProvider(AbstractProvider $provider)
+    public function addProvider(AbstractProvider $provider): void
     {
         $this->providers[] = $provider;
     }

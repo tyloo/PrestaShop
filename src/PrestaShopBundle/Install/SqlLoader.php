@@ -62,7 +62,7 @@ class SqlLoader
      *
      * @param array $data
      */
-    public function setMetaData(array $data)
+    public function setMetaData(array $data): void
     {
         foreach ($data as $k => $v) {
             $this->metadata[$k] = $v;

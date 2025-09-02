@@ -32,7 +32,7 @@ use ZipArchive;
 
 class ZipManager
 {
-    public function createArchive($filename, $folder)
+    public function createArchive($filename, $folder): void
     {
         $zip = new ZipArchive();
 

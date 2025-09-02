@@ -145,7 +145,7 @@ class ThemeExtractor
      * @param string $locale
      * @param MessageCatalogue $catalogue
      */
-    private function overrideFromDefaultCatalog($locale, &$catalogue)
+    private function overrideFromDefaultCatalog($locale, &$catalogue): void
     {
         $defaultCatalogue = $this->themeProvider
             ->setLocale($locale)

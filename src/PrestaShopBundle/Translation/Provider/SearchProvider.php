@@ -127,7 +127,7 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
     /**
      * {@inheritdoc}
      */
-    public function setModuleName($moduleName)
+    public function setModuleName($moduleName): void
     {
         $this->externalModuleLegacySystemProvider->setModuleName($moduleName);
     }

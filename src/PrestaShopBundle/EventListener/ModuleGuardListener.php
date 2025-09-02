@@ -84,7 +84,7 @@ class ModuleGuardListener implements EventSubscriberInterface
     /**
      * @param ModuleManagementEvent $event
      */
-    public function protectModule(ModuleManagementEvent $event)
+    public function protectModule(ModuleManagementEvent $event): void
     {
         $moduleName = $event->getModule()->get('name');
         $moduleVendorPath = $this->modulesDir . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'vendor';

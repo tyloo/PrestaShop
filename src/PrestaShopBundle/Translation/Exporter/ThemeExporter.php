@@ -165,7 +165,7 @@ class ThemeExporter
     /**
      * @param string $exportDir
      */
-    public function setExportDir($exportDir)
+    public function setExportDir($exportDir): void
     {
         $this->exportDir = str_replace('/export', DIRECTORY_SEPARATOR . 'export', $exportDir);
     }
@@ -247,7 +247,7 @@ class ThemeExporter
     /**
      * @param string $themeName
      */
-    public function cleanArtifacts($themeName)
+    public function cleanArtifacts($themeName): void
     {
         $this->filesystem->remove($this->getFlattenizationFolder($themeName));
         $this->filesystem->remove($this->getTemporaryExtractionFolder($themeName));

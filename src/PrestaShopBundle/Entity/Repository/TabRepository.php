@@ -94,7 +94,7 @@ class TabRepository extends EntityRepository
      *
      * @throws InvalidArgumentException
      */
-    public function changeStatusByClassName($className, $status)
+    public function changeStatusByClassName($className, $status): void
     {
         if (!is_bool($status)) {
             throw new InvalidArgumentException(sprintf('Invalid type: bool expected, got %s', gettype($status)));
@@ -114,7 +114,7 @@ class TabRepository extends EntityRepository
      * @param string $moduleName
      * @param bool $enabled
      */
-    public function changeEnabledByModuleName($moduleName, $enabled)
+    public function changeEnabledByModuleName($moduleName, $enabled): void
     {
         $tabs = $this->findByModule($moduleName);
         /** @var Tab $tab */

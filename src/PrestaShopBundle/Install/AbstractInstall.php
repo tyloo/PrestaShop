@@ -56,7 +56,7 @@ abstract class AbstractInstall
         $this->language = LanguageList::getInstance();
     }
 
-    public function setError($errors)
+    public function setError($errors): void
     {
         if (!is_array($errors)) {
             $errors = [$errors];

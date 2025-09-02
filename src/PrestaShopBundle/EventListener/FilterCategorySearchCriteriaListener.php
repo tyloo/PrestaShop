@@ -51,7 +51,7 @@ class FilterCategorySearchCriteriaListener
     /**
      * @param FilterSearchCriteriaEvent $event
      */
-    public function onFilterSearchCriteria(FilterSearchCriteriaEvent $event)
+    public function onFilterSearchCriteria(FilterSearchCriteriaEvent $event): void
     {
         if (!$event->getSearchCriteria() instanceof CategoryFilters) {
             return;

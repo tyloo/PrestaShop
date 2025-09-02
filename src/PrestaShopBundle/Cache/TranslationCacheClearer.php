@@ -43,7 +43,7 @@ class TranslationCacheClearer implements CacheClearerInterface
     ) {
     }
 
-    public function clear(string $cacheDir)
+    public function clear(string $cacheDir): void
     {
         $fs = new Filesystem();
 

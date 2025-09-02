@@ -135,7 +135,7 @@ class Install extends AbstractInstall
         parent::__construct();
     }
 
-    public function setError($errors)
+    public function setError($errors): void
     {
         if (empty($errors)) {
             return;
@@ -342,7 +342,7 @@ class Install extends AbstractInstall
      *
      * @param bool $truncate If true truncate the table, if false drop the table
      */
-    public function clearDatabase($truncate = false)
+    public function clearDatabase($truncate = false): void
     {
         $this->getLogger()->log($truncate ? 'Truncating database' : 'Dropping database tables');
 
@@ -361,7 +361,7 @@ class Install extends AbstractInstall
     /**
      * Initialize the prestashop context with default values during tests.
      */
-    public function initializeTestContext()
+    public function initializeTestContext(): void
     {
         $this->getLogger()->log('Initializing test context');
 
@@ -683,7 +683,7 @@ class Install extends AbstractInstall
         return $languages;
     }
 
-    public function copyLanguageImages($iso)
+    public function copyLanguageImages($iso): void
     {
         $img_path = _PS_INSTALL_LANGS_PATH_ . $iso . '/img/';
         if (!is_dir($img_path)) {

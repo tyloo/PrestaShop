@@ -50,7 +50,7 @@ class ModuleTemplateLoader extends FilesystemLoader
      * @param array $modulePaths
      * @param array $namespaces
      */
-    private function registerNamespacesFromConfig(array $modulePaths, array $namespaces)
+    private function registerNamespacesFromConfig(array $modulePaths, array $namespaces): void
     {
         foreach ($namespaces as $namespace => $namespacePath) {
             $templatePaths = [];

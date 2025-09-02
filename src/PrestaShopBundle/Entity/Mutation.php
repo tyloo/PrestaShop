@@ -183,7 +183,7 @@ class Mutation
      *
      * @ORM\PreUpdate
      */
-    public function updateTimestamps()
+    public function updateTimestamps(): void
     {
         $this->dateAdd = new DateTime();
     }
