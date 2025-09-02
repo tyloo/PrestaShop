@@ -35,14 +35,18 @@ jobs:
             *.cache-from=type=gha,scope=refs/heads/main
             *.cache-to=type=gha,scope=${{github.ref}},mode=max
             *.platform=linux/amd64
-            *.tags=prestashop:latest
+            *.tags=prestashop-prestashop-git:latest
             *.output=type=docker
       -
         name: List Docker images
         run: docker images
       -
         name: Start services
-        run: docker compose up --no-build
+        run: |
+          # Set environment variables for proper user mapping
+          export USER_ID=1001
+          export GROUP_ID=1001
+          docker compose up --no-build
       -
         name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost:8001
