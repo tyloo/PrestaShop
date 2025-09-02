@@ -316,7 +316,7 @@ class StockMovementRepository extends StockManagementRepository
      *
      * @return int
      */
-    public function saveStockMvt(StockMvt $stockMvt)
+    public function saveStockMvt(StockMvt $stockMvt): int
     {
         $this->em->persist($stockMvt);
         $this->em->flush();

@@ -372,7 +372,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @throws LogicException
      */
-    protected function authorizationLevel($controller)
+    protected function authorizationLevel($controller): int
     {
         if ($this->isGranted(Permission::DELETE, $controller)) {
             return Permission::LEVEL_DELETE;

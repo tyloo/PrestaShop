@@ -84,7 +84,7 @@ class DataFormatterExtension extends AbstractExtension
      *
      * @return int $toCast casted in int
      */
-    public function intCast($toCast)
+    public function intCast($toCast): int
     {
         return (int) $toCast;
     }

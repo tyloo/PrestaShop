@@ -68,7 +68,7 @@ class RequestSqlRepository implements RepositoryInterface
      *
      * @return int Number of request sql rows
      */
-    public function getCount()
+    public function getCount(): int
     {
         $statement = $this->connection->query("SELECT COUNT(rs.id_request_sql) AS c FROM $this->requestSqlTable rs");
         $row = $statement->fetch();
