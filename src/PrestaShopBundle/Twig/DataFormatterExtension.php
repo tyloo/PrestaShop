@@ -72,7 +72,7 @@ class DataFormatterExtension extends AbstractExtension
      *
      * @return array $toCast casted in array
      */
-    public function arrayCast($toCast)
+    public function arrayCast($toCast): array
     {
         return (array) $toCast;
     }
