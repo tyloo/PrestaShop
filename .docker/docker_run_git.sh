@@ -172,6 +172,7 @@ if [ $BLACKFIRE_ENABLE -eq 1 ]; then
     fi
 fi
 
+# Set proper permissions for the var directory using ACL
 setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 

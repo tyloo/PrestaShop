@@ -21,7 +21,7 @@ RUN groupmod -g $GROUP_ID www-data \
 COPY .docker/wait-for-it.sh /tmp/
 
 # Install mailutils to make sendmail work
-RUN apt update && apt install -y mailutils
+RUN apt update && apt install -y mailutils acl
 
 ENV NODE_VERSION       $NODE_VERSION
 
