@@ -172,9 +172,11 @@ if [ $BLACKFIRE_ENABLE -eq 1 ]; then
     fi
 fi
 
-# Set proper permissions for the var directory using ACL
-setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
-setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
+# Set proper permissions for all directories that Symfony/PrestaShop needs to write to
+echo "\n* Setting proper permissions for all writable directories...";
+setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX .
+setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX .
+echo "\n* Permissions set successfully!";
 
 echo "\n***"
 echo "**"
