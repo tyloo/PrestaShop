@@ -127,7 +127,7 @@ class InvoicesController extends PrestaShopAdminController
      *
      * @return bool false if an error occurred, true otherwise
      */
-    private function processForm(FormHandlerInterface $formHandler, Request $request)
+    private function processForm(FormHandlerInterface $formHandler, Request $request): bool
     {
         $form = $formHandler->getForm();
         $form->handleRequest($request);

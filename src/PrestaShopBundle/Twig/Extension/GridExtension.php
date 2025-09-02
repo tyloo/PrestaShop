@@ -182,7 +182,7 @@ class GridExtension extends AbstractExtension
      *
      * @return bool
      */
-    public function isOrderingColumn(array $grid)
+    public function isOrderingColumn(array $grid): bool
     {
         if (empty($grid['columns'])
             || empty($grid['sorting']['order_by'])

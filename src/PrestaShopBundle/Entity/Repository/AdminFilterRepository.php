@@ -81,7 +81,7 @@ class AdminFilterRepository extends EntityRepository
      * @throws ORMInvalidArgumentException
      * @throws OptimisticLockException
      */
-    public function removeByEmployeeAndRouteParams($employeeId, $shopId, $controller, $action)
+    public function removeByEmployeeAndRouteParams($employeeId, $shopId, $controller, $action): bool
     {
         $adminFilter = $this->findByEmployeeAndRouteParams($employeeId, $shopId, $controller, $action);
 

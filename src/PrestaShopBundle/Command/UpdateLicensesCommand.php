@@ -246,7 +246,7 @@ class UpdateLicensesCommand extends Command
      *
      * @return bool
      */
-    private function isAFLLicense($fileName)
+    private function isAFLLicense($fileName): bool
     {
         foreach ($this->aflLicense as $afl) {
             if (str_starts_with($fileName, $afl)) {

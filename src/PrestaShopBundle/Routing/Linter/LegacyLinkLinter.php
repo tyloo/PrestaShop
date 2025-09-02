@@ -39,7 +39,7 @@ final class LegacyLinkLinter implements RouteLinterInterface
      *
      * {@inheritdoc}
      */
-    public function lint($routeName, Route $route)
+    public function lint($routeName, Route $route): bool
     {
         // Legacy link already configured
         if ($route->hasDefault('_legacy_link')) {

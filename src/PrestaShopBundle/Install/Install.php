@@ -162,7 +162,7 @@ class Install extends AbstractInstall
         $database_name,
         $database_prefix,
         $database_engine
-    ) {
+    ): bool {
         // Check permissions for settings file
         if (
             file_exists(_PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $this->settingsFile)
@@ -276,7 +276,7 @@ class Install extends AbstractInstall
         return $this->clearCache();
     }
 
-    protected function clearCache()
+    protected function clearCache(): bool
     {
         if (defined('_PS_IN_TEST_')) {
             return true;
@@ -298,7 +298,7 @@ class Install extends AbstractInstall
      * PROCESS : installDatabase
      * Generate settings file and create database structure.
      */
-    public function installDatabase($clear_database = false)
+    public function installDatabase($clear_database = false): bool
     {
         $this->getLogger()->log('Installing database');
 
@@ -424,7 +424,7 @@ class Install extends AbstractInstall
      * PROCESS : installDefaultData
      * Create default shop and languages.
      */
-    public function installDefaultData($shop_name, $iso_country = false, $all_languages = false, $clear_database = false)
+    public function installDefaultData($shop_name, $iso_country = false, $all_languages = false, $clear_database = false): bool
     {
         $this->getLogger()->log('Installing default data');
 
@@ -484,7 +484,7 @@ class Install extends AbstractInstall
      *
      * @return bool
      */
-    public function populateDatabase($entity = null)
+    public function populateDatabase($entity = null): bool
     {
         $this->getLogger()->log('Populating database');
 
@@ -546,7 +546,7 @@ class Install extends AbstractInstall
         return true;
     }
 
-    public function createShop($shop_name)
+    public function createShop($shop_name): bool
     {
         $this->getLogger()->log('Creating shop');
 
@@ -743,7 +743,7 @@ class Install extends AbstractInstall
      * PROCESS : configureShop
      * Set default shop configuration.
      */
-    public function configureShop(array $data = [])
+    public function configureShop(array $data = []): bool
     {
         $this->getLogger()->log('Configuring shop');
 
@@ -1093,7 +1093,7 @@ class Install extends AbstractInstall
      * PROCESS : installFixtures
      * Install fixtures (E.g. demo products).
      */
-    public function installFixtures($entity = null, array $data = [])
+    public function installFixtures($entity = null, array $data = []): bool
     {
         $this->getLogger()->log('Installing fixtures');
 

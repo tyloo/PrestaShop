@@ -117,7 +117,7 @@ class DemoRestricted
      *
      * @return bool
      */
-    public function allowArray()
+    public function allowArray(): bool
     {
         return true;
     }

@@ -102,7 +102,7 @@ final class BackUrlRedirectResponseListener
         string $urlA,
         string $urlB,
         Request $request
-    ) {
+    ): bool {
         $parsedUrlA = parse_url($urlA);
         $parsedUrlB = parse_url($urlB);
 
