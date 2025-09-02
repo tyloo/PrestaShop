@@ -44,10 +44,10 @@ jobs:
         name: Start services
         run: |
           docker compose up --wait --no-build
-          # Wait for PrestaShop to be fully initialized (composer install, assets build, etc.)
-          echo "Waiting for PrestaShop initialization to complete..."
-          timeout 600 bash -c 'until docker compose exec -T prestashop-git test -f /var/www/html/app/config/parameters.php; do echo "Waiting for PrestaShop installation..."; sleep 10; done'
-          echo "PrestaShop is ready!"
+          # Wait for PrestaShop web server to be fully ready to handle requests
+          echo "Waiting for PrestaShop web server to be ready..."
+          timeout 600 bash -c 'until docker compose exec -T prestashop-git test -f /tmp/prestashop-ready.lock; do echo "Waiting for web server to be ready..."; sleep 10; done'
+          echo "PrestaShop web server is ready!"
       -
         name: Check HTTP reachability
         run: curl -v --fail-with-body http://localhost:8001

@@ -191,4 +191,7 @@ echo "***\n"
 
 echo "\n* Starting web server now\n";
 
+# Create lock file to indicate the service is ready
+touch /tmp/prestashop-ready.lock
+
 exec apache2-foreground
