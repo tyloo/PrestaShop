@@ -227,7 +227,7 @@ class Install extends AbstractInstall
             ],
         ];
 
-        array_walk($parameters['parameters'], function (&$param) {
+        array_walk($parameters['parameters'], function (&$param): void {
             $param = str_replace('%', '%%', $param ?? '');
         });
 
@@ -504,11 +504,11 @@ class Install extends AbstractInstall
 
         try {
             if ($entity) {
-                $this->callWithUnityAutoincrement(function () use ($xml_loader, $entity) {
+                $this->callWithUnityAutoincrement(function () use ($xml_loader, $entity): void {
                     $xml_loader->populateEntity($entity);
                 });
             } else {
-                $this->callWithUnityAutoincrement(function () use ($xml_loader) {
+                $this->callWithUnityAutoincrement(function () use ($xml_loader): void {
                     $xml_loader->populateFromXmlFiles();
                 });
             }
@@ -615,7 +615,7 @@ class Install extends AbstractInstall
 
         foreach ($languages_list as $iso) {
             if (!in_array($iso, $languages_available)) {
-                $this->callWithUnityAutoincrement(function () use ($iso) {
+                $this->callWithUnityAutoincrement(function () use ($iso): void {
                     EntityLanguage::downloadAndInstallLanguagePack($iso);
                 });
 
@@ -658,7 +658,7 @@ class Install extends AbstractInstall
                 }
             }
 
-            $this->callWithUnityAutoincrement(function () use ($iso, $params_lang, &$errors) {
+            $this->callWithUnityAutoincrement(function () use ($iso, $params_lang, &$errors): void {
                 EntityLanguage::installFirstLanguagePack($iso, $params_lang, $errors);
             });
 
@@ -859,7 +859,7 @@ class Install extends AbstractInstall
         $localization_file_content = $this->getLocalizationPackContent($version, $data['shop_country']);
 
         $locale = new LocalizationPack();
-        $this->callWithUnityAutoincrement(function () use ($locale, $localization_file_content) {
+        $this->callWithUnityAutoincrement(function () use ($locale, $localization_file_content): void {
             $locale->loadLocalisationPack($localization_file_content, [], true);
         });
 
@@ -1136,11 +1136,11 @@ class Install extends AbstractInstall
         $xml_loader->setLanguages($languages);
 
         if ($entity) {
-            $this->callWithUnityAutoincrement(function () use ($xml_loader, $entity) {
+            $this->callWithUnityAutoincrement(function () use ($xml_loader, $entity): void {
                 $xml_loader->populateEntity($entity);
             });
         } else {
-            $this->callWithUnityAutoincrement(function () use ($xml_loader) {
+            $this->callWithUnityAutoincrement(function () use ($xml_loader): void {
                 $xml_loader->populateFromXmlFiles();
             });
             Tools::deleteDirectory($temp_dir, true);

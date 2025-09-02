@@ -208,7 +208,7 @@ class ShopLogosType extends AbstractType
      */
     private function disableAllShopContextFields(FormBuilderInterface $builder, $suffix)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($suffix) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($suffix): void {
             $form = $event->getForm();
 
             if ($form->isSubmitted()) {
@@ -242,7 +242,7 @@ class ShopLogosType extends AbstractType
      */
     private function setShopRestrictionSource(FormBuilderInterface $builder, $suffix)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($suffix) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($suffix): void {
             $form = $event->getForm();
 
             if ($form->isSubmitted()) {

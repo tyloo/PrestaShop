@@ -54,7 +54,7 @@ class StockMovementType extends TranslatorAwareType
             ])
             ->add('type', HiddenType::class)
             // Quantity field depends on the data, then it's added via form event
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options): void {
                 $data = $event->getData();
                 $form = $event->getForm();
 

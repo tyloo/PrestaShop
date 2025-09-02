@@ -57,7 +57,7 @@ final class IntegerMinMaxFilterType extends AbstractType
             'max_field_options' => [],
             'constraints' => [
                 new Callback([
-                    'callback' => function (?array $impactData, ExecutionContextInterface $context) {
+                    'callback' => function (?array $impactData, ExecutionContextInterface $context): void {
                         if (!isset($impactData['min_field']) || !isset($impactData['max_field'])) {
                             return;
                         }

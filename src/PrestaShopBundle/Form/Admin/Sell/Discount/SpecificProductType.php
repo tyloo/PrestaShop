@@ -131,10 +131,10 @@ class SpecificProductType extends TranslatorAwareType
         ;
 
         // Dynamically update combination choices to include the posted value
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
             $this->updateCombinationChoices($event);
         });
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $this->updateCombinationChoices($event);
         });
     }

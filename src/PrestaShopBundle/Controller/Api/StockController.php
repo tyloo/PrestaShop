@@ -260,7 +260,7 @@ class StockController extends ApiController
             'Admin.Notifications.Error'
         );
 
-        array_walk($decodedContent, function ($item, $index) use ($messageMissingParameters, $messageEmptyData) {
+        array_walk($decodedContent, function ($item, $index) use ($messageMissingParameters, $messageEmptyData): void {
             if (!array_key_exists('product_id', $item) || !array_key_exists('delta', $item)) {
                 throw new BadRequestHttpException(sprintf($messageMissingParameters, $index));
             }

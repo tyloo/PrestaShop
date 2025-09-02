@@ -385,7 +385,7 @@ class CustomerType extends TranslatorAwareType
         }
 
         // We add a listener that will make password field not required, if we want to create a guest
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
             $form = $event->getForm();
             $formData = $event->getData();
 

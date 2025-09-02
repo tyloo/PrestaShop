@@ -85,7 +85,7 @@ class DeltaQuantityType extends TranslatorAwareType
         ;
 
         $builder->get('quantity')->addViewTransformer(new NumberToLocalizedStringTransformer(0, false));
-        $builder->addEventListener(FormEvents::SUBMIT, static function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::SUBMIT, static function (FormEvent $event): void {
             $formData = $event->getData();
             if (isset($formData['quantity'], $formData['delta'])) {
                 $deltaQuantity = (int) $formData['delta'];

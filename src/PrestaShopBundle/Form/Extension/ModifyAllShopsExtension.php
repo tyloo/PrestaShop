@@ -109,7 +109,7 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
             // the children are not accessible nor parseable
             // For this reason the only moment where children are all present is when the form is already completely built, which is why we have
             // to add the new fields directly on the built form, so we need to rely on form events to handle this
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($label) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($label): void {
                 $form = $event->getForm();
                 $parent = $form->getParent();
                 $parent->add(self::MODIFY_ALL_SHOPS_PREFIX . $form->getName(),

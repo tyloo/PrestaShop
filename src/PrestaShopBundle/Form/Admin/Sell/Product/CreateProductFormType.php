@@ -55,7 +55,7 @@ class CreateProductFormType extends TranslatorAwareType
             ])
         ;
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $data = $event->getData();
             if (!empty($data['shop_id'])) {
                 return;

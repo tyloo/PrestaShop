@@ -35,7 +35,7 @@ trait NormalizeFieldTrait
      */
     protected function castNumericToInt($rows)
     {
-        $castIdentifiersToIntegers = function (&$columnValue, $columnName) {
+        $castIdentifiersToIntegers = function (&$columnValue, $columnName): void {
             if ($this->shouldCastToInt($columnName, $columnValue)) {
                 $columnValue = (int) $columnValue;
             }
@@ -53,7 +53,7 @@ trait NormalizeFieldTrait
      */
     protected function castIdsToArray($rows)
     {
-        $castIdentifiersToArray = function (&$columnValue, $columnName) {
+        $castIdentifiersToArray = function (&$columnValue, $columnName): void {
             if ($this->shouldCastToInt($columnName, $columnValue)) {
                 $columnValue = array_map('intval', explode(',', $columnValue));
             }

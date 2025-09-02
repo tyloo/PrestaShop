@@ -130,7 +130,7 @@ class ProductSupplierType extends TranslatorAwareType
             ])
         ;
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $productSupplierData = $event->getData();
             if (empty($productSupplierData['currency_id'])) {
                 return;

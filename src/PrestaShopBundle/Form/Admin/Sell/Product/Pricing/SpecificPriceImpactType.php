@@ -137,7 +137,7 @@ class SpecificPriceImpactType extends TranslatorAwareType
             },
             'constraints' => [
                 new Callback([
-                    'callback' => function (?array $impactData, ExecutionContextInterface $context) {
+                    'callback' => function (?array $impactData, ExecutionContextInterface $context): void {
                         $this->validatePriceIsDefined($impactData, $context);
                     },
                 ]),
