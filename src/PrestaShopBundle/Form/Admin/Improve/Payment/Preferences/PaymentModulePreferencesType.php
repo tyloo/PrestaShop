@@ -249,7 +249,7 @@ class PaymentModulePreferencesType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getAdditionalCurrencyChoices()
+    private function getAdditionalCurrencyChoices(): array
     {
         return [
             $this->trans('Customer currency', 'Admin.Payment.Feature') => -1,

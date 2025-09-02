@@ -301,7 +301,7 @@ class AttributeGroupController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         return [
             AttributeGroupNotFoundException::class => $this->trans(

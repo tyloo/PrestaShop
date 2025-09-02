@@ -1938,7 +1938,7 @@ class OrderController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function getErrorMessages(Exception $e)
+    private function getErrorMessages(Exception $e): array
     {
         $refundableQuantity = 0;
         if ($e instanceof InvalidCancelProductException) {

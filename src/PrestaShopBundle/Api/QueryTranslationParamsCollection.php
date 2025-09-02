@@ -35,7 +35,7 @@ class QueryTranslationParamsCollection extends QueryParamsCollection
     /**
      * @return array
      */
-    protected function getValidFilterParams()
+    protected function getValidFilterParams(): array
     {
         return [];
     }
@@ -43,7 +43,7 @@ class QueryTranslationParamsCollection extends QueryParamsCollection
     /**
      * @return array
      */
-    protected function getValidOrderParams()
+    protected function getValidOrderParams(): array
     {
         return [];
     }

@@ -974,7 +974,7 @@ class CmsPageController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         return [
             CmsPageNotFoundException::class => $this->trans(

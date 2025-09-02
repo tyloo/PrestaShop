@@ -70,7 +70,7 @@ class ThemeProvider extends AbstractProvider
     /**
      * {@inheritdoc}
      */
-    public function getTranslationDomains()
+    public function getTranslationDomains(): array
     {
         if (empty($this->domain)) {
             return ['*'];
@@ -82,7 +82,7 @@ class ThemeProvider extends AbstractProvider
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         if (empty($this->domain)) {
             return ['*'];
@@ -133,7 +133,7 @@ class ThemeProvider extends AbstractProvider
     /**
      * {@inheritdoc}
      */
-    public function getDirectories()
+    public function getDirectories(): array
     {
         return [
             $this->getResourceDirectory(),

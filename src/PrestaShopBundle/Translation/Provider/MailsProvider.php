@@ -34,7 +34,7 @@ class MailsProvider extends AbstractProvider implements UseDefaultCatalogueInter
     /**
      * {@inheritdoc}
      */
-    public function getTranslationDomains()
+    public function getTranslationDomains(): array
     {
         return ['EmailsSubject*'];
     }
@@ -42,7 +42,7 @@ class MailsProvider extends AbstractProvider implements UseDefaultCatalogueInter
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return ['#EmailsSubject*#'];
     }

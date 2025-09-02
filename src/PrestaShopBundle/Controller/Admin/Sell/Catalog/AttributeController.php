@@ -342,7 +342,7 @@ class AttributeController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         $notFoundMessage = $this->trans(
             'The object cannot be loaded (or found).',

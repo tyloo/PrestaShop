@@ -42,7 +42,7 @@ class ModuleProvider extends AbstractProvider implements SearchProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getTranslationDomains()
+    public function getTranslationDomains(): array
     {
         return ['^' . preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName)) . '([A-Z]|$)'];
     }
@@ -50,7 +50,7 @@ class ModuleProvider extends AbstractProvider implements SearchProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return ['#^' . preg_quote(DomainHelper::buildModuleBaseDomain($this->moduleName)) . '([A-Z]|\.|$)#'];
     }

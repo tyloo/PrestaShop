@@ -47,7 +47,7 @@ class QueryStockParamsCollection extends QueryParamsCollection
     /**
      * @return array
      */
-    protected function getValidFilterParams()
+    protected function getValidFilterParams(): array
     {
         return [
             'productId',
@@ -63,7 +63,7 @@ class QueryStockParamsCollection extends QueryParamsCollection
     /**
      * @return array
      */
-    protected function getValidOrderParams()
+    protected function getValidOrderParams(): array
     {
         return [
             'product',

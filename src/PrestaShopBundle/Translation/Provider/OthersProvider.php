@@ -35,7 +35,7 @@ class OthersProvider extends AbstractProvider implements UseDefaultCatalogueInte
     /**
      * {@inheritdoc}
      */
-    public function getTranslationDomains()
+    public function getTranslationDomains(): array
     {
         return ['^messages*'];
     }
@@ -43,7 +43,7 @@ class OthersProvider extends AbstractProvider implements UseDefaultCatalogueInte
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return ['#^messages*#'];
     }

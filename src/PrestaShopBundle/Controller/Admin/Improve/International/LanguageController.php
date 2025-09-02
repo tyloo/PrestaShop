@@ -311,7 +311,7 @@ class LanguageController extends PrestaShopAdminController
     /**
      * @return array
      */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         $iniConfig = $this->container->get(IniConfiguration::class);
 

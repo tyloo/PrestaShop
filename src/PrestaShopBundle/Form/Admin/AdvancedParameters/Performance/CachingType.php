@@ -109,7 +109,7 @@ class CachingType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getErrorsMessages()
+    private function getErrorsMessages(): array
     {
         return [
             'CacheMemcache' => $this->trans('Memcached via PHP::Memcache', 'Admin.Advparameters.Feature')

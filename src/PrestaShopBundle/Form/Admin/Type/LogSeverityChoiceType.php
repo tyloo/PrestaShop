@@ -57,7 +57,7 @@ class LogSeverityChoiceType extends TranslatorAwareType
         return ChoiceType::class;
     }
 
-    private function getSeveritysChoices()
+    private function getSeveritysChoices(): array
     {
         return [
             $this->trans('Informative only', 'Admin.Advparameters.Help') => PrestaShopLogger::LOG_SEVERITY_LEVEL_INFORMATIVE,

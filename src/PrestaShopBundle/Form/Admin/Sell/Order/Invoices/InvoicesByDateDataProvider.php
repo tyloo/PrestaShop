@@ -49,7 +49,7 @@ final class InvoicesByDateDataProvider implements FormDataProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): array
     {
         $date = (new DateTime())->format('Y-m-d');
 

@@ -283,7 +283,7 @@ class AdminAPIController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         return [
             ApiClientNotFoundException::class => $this->trans(

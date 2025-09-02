@@ -129,7 +129,7 @@ final class SecurityAttributeLinterCommand extends Command
     /**
      * @return string[]
      */
-    public static function getAvailableActions()
+    public static function getAvailableActions(): array
     {
         return [self::ACTION_LIST_ALL, self::ACTION_FIND_MISSING];
     }

@@ -84,7 +84,7 @@ class ChangeOrderAddressType extends AbstractType
     /**
      * @return array
      */
-    public function getAvailableAddressTypes()
+    public function getAvailableAddressTypes(): array
     {
         return [
             self::SHIPPING_TYPE,

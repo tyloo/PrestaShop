@@ -68,7 +68,7 @@ final class NamingConventionLinter implements RouteLinterInterface
      *
      * @return array
      */
-    private function getControllerAndMethodName(Route $route)
+    private function getControllerAndMethodName(Route $route): array
     {
         $defaultController = $route->getDefault('_controller');
         if (!str_contains($defaultController, '::')) {

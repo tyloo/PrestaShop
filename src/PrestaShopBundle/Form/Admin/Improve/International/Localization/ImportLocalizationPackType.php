@@ -109,7 +109,7 @@ class ImportLocalizationPackType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getContentToImportChoices()
+    private function getContentToImportChoices(): array
     {
         return [
             $this->trans('States', 'Admin.International.Feature') => LocalizationPackImportConfigInterface::CONTENT_STATES,

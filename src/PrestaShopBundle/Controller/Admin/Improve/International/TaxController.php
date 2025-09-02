@@ -362,7 +362,7 @@ class TaxController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         return [
             TaxNotFoundException::class => $this->trans(

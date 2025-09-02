@@ -87,7 +87,7 @@ class OrderPreferencesGiftOptionsFormDataProvider implements FormDataProviderInt
      *
      * @return array Returns array of errors
      */
-    protected function validate(array $data)
+    protected function validate(array $data): array
     {
         $giftWrappingPrice = $data['gift_wrapping_price'] ?? null;
 

@@ -70,7 +70,7 @@ class System extends AbstractInstall
         });
     }
 
-    public function checkTests($list, $type)
+    public function checkTests($list, $type): array
     {
         $tests = ConfigurationTest::check($list);
 

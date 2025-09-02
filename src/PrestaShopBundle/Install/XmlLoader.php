@@ -1227,7 +1227,7 @@ class XmlLoader
     /**
      * ONLY FOR DEVELOPMENT PURPOSE.
      */
-    public function getEntityContents($entity)
+    public function getEntityContents($entity): array
     {
         $xml = $this->fileLoader->load($entity);
         $primary = !empty($xml->fields['primary']) ? (string) $xml->fields['primary'] : 'id_' . $entity;
@@ -1339,7 +1339,7 @@ class XmlLoader
         ];
     }
 
-    public function getEntityContentsTag()
+    public function getEntityContentsTag(): array
     {
         $nodes_lang = [];
 

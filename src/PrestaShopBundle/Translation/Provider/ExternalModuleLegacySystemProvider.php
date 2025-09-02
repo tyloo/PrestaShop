@@ -84,7 +84,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return ['#^' . preg_quote($this->domain) . '([A-Z]|$)#'];
     }
@@ -92,7 +92,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
     /**
      * {@inheritdoc}
      */
-    public function getTranslationDomains()
+    public function getTranslationDomains(): array
     {
         return ['^' . preg_quote($this->domain) . '([A-Z]|$)'];
     }

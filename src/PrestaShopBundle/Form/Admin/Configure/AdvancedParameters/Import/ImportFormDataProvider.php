@@ -48,7 +48,7 @@ final class ImportFormDataProvider implements ImportFormDataProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getData(ImportConfigInterface $importConfig)
+    public function getData(ImportConfigInterface $importConfig): array
     {
         return [
             'csv' => $this->getSelectedFile($importConfig),

@@ -31,7 +31,7 @@ class StockApi extends AbstractApi
     /**
      * @return string[] List of translations
      */
-    public function getTranslations()
+    public function getTranslations(): array
     {
         return [
             'alert_bulk_edit' => $this->translator->trans('Use checkboxes to bulk edit quantities', [], 'Admin.Catalog.Feature'),

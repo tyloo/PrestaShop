@@ -215,7 +215,7 @@ class MonitoringController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function identifySearchableGrid(Request $request)
+    private function identifySearchableGrid(Request $request): array
     {
         $gridId = EmptyCategoryGridDefinitionFactory::GRID_ID;
 

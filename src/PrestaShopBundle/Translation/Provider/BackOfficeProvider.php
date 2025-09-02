@@ -34,7 +34,7 @@ class BackOfficeProvider extends AbstractProvider implements UseDefaultCatalogue
     /**
      * {@inheritdoc}
      */
-    public function getTranslationDomains()
+    public function getTranslationDomains(): array
     {
         return [
             '^Admin[A-Z]',
@@ -45,7 +45,7 @@ class BackOfficeProvider extends AbstractProvider implements UseDefaultCatalogue
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             '#^Admin[A-Z]#',

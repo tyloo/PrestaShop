@@ -706,7 +706,7 @@ class CartController extends PrestaShopAdminController
     private function getErrorMessages(
         Exception $e,
         IniConfiguration $iniConfig
-    ) {
+    ): array {
         $minimalQuantity = $e instanceof MinimalQuantityException ? $e->getMinimalQuantity() : 0;
 
         return [

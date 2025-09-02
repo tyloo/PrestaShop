@@ -829,7 +829,7 @@ class CategoryController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         return [
             CannotDeleteImageException::class => $this->trans('Unable to delete associated images.', [], 'Admin.Notifications.Error'),

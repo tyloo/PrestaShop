@@ -142,7 +142,7 @@ class CategoryRepository
      *
      * @return array
      */
-    private function buildTreeCategories($rows)
+    private function buildTreeCategories($rows): array
     {
         $idRootCategory = (new CategoryDataProvider($this->contextAdapter))->getRootCategory()->id;
 

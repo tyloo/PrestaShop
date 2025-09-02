@@ -156,7 +156,7 @@ class CreditSlipController extends PrestaShopAdminController
      *
      * @return array
      */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         return [
             CreditSlipNotFoundException::class => [

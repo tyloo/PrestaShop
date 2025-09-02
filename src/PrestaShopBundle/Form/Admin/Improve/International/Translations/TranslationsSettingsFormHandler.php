@@ -90,7 +90,7 @@ final class TranslationsSettingsFormHandler implements FormHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function save(array $data)
+    public function save(array $data): array
     {
         // Translations forms do not save data
         return [];

@@ -212,7 +212,7 @@ class TranslationsExtension extends AbstractExtension
     /**
      * @return array
      */
-    protected function getSharedEditFormViewProperties()
+    protected function getSharedEditFormViewProperties(): array
     {
         return [
             'action' => $this->router->generate('admin_international_translations_edit'),

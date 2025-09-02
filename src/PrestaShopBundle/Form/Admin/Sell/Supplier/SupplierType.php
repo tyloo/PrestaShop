@@ -342,7 +342,7 @@ class SupplierType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getAddressCommonConstraints()
+    private function getAddressCommonConstraints(): array
     {
         return [
             new TypedRegex([
@@ -364,7 +364,7 @@ class SupplierType extends TranslatorAwareType
      *
      * @return array
      */
-    private function getPhoneCommonConstraints()
+    private function getPhoneCommonConstraints(): array
     {
         return [
             new TypedRegex([

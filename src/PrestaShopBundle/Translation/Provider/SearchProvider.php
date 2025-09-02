@@ -56,7 +56,7 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
     /**
      * {@inheritdoc}
      */
-    public function getTranslationDomains()
+    public function getTranslationDomains(): array
     {
         return ['^' . preg_quote($this->domain) . '([A-Z]|$)'];
     }
@@ -64,7 +64,7 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return ['#^' . preg_quote($this->domain, '#') . '([A-Z]|\.|$)#'];
     }

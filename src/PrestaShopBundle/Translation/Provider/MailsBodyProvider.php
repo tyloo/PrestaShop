@@ -34,7 +34,7 @@ class MailsBodyProvider extends AbstractProvider implements UseDefaultCatalogueI
     /**
      * {@inheritdoc}
      */
-    public function getTranslationDomains()
+    public function getTranslationDomains(): array
     {
         return ['EmailsBody*'];
     }
@@ -42,7 +42,7 @@ class MailsBodyProvider extends AbstractProvider implements UseDefaultCatalogueI
     /**
      * {@inheritdoc}
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return ['#EmailsBody*#'];
     }
