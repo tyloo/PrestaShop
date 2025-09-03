@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,25 +42,19 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\QueryResult\AttachmentInformati
 #[AsQueryHandler]
 class SearchAttachmentHandler implements SearchAttachmentHandlerInterface
 {
-    /**
-     * @param AttachmentRepository $repository
-     */
-    public function __construct(private readonly AttachmentRepository $repository)
-    {
+    public function __construct(
+        private readonly AttachmentRepository $repository,
+    ) {
     }
 
     /**
-     * @param SearchAttachment $query
-     *
-     * @return array
-     *
      * @throws EmptySearchException
      */
     public function handle(SearchAttachment $query): array
     {
         $attachments = $this->repository->search($query->getSearchPhrase());
         if (empty($attachments)) {
-            throw new EmptySearchException(sprintf('No attachments found with search "%s"', $query->getSearchPhrase()));
+            throw new EmptySearchException(\sprintf('No attachments found with search "%s"', $query->getSearchPhrase()));
         }
 
         $attachmentInfos = [];

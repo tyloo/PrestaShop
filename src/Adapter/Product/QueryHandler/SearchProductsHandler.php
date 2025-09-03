@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,35 +55,26 @@ use Shop;
 #[AsQueryHandler]
 final class SearchProductsHandler extends AbstractOrderHandler implements SearchProductsHandlerInterface
 {
-    /**
-     * @param int $contextLangId
-     * @param LocaleInterface $contextLocale
-     * @param Tools $tools
-     * @param CurrencyDataProvider $currencyDataProvider
-     * @param ContextStateManager $contextStateManager
-     */
-    public function __construct(private readonly int $contextLangId, private readonly LocaleInterface $contextLocale, private readonly Tools $tools, private readonly CurrencyDataProvider $currencyDataProvider, private readonly ContextStateManager $contextStateManager)
-    {
+    public function __construct(
+        private readonly int $contextLangId,
+        private readonly LocaleInterface $contextLocale,
+        private readonly Tools $tools,
+        private readonly CurrencyDataProvider $currencyDataProvider,
+        private readonly ContextStateManager $contextStateManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param SearchProducts $query
-     *
-     * @return array
-     */
     public function handle(SearchProducts $query): array
     {
         $currency = $this->currencyDataProvider->getCurrencyByIsoCode($query->getAlphaIsoCode()->getValue());
-        if (null === $currency) {
-            throw new CurrencyNotFoundException(sprintf('Could not find currency matching ISO code %s', $query->getAlphaIsoCode()->getValue()));
+        if ($currency === null) {
+            throw new CurrencyNotFoundException(\sprintf('Could not find currency matching ISO code %s', $query->getAlphaIsoCode()->getValue()));
         }
 
         $this->contextStateManager
             ->setCurrency($currency)
         ;
-        if (null !== $query->getOrderId()) {
+        if ($query->getOrderId() !== null) {
             $order = $this->getOrder($query->getOrderId());
             $this->contextStateManager
                 ->setShop(new Shop($order->id_shop))
@@ -98,19 +90,13 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
         return $foundProducts;
     }
 
-    /**
-     * @param SearchProducts $query
-     * @param Currency $currency
-     *
-     * @return array
-     */
     private function searchProducts(SearchProducts $query, Currency $currency): array
     {
         $computingPrecision = new ComputingPrecision();
         $currencyPrecision = $computingPrecision->getPrecision((int) $currency->precision);
         $order = null;
         $address = null;
-        if (null !== $query->getOrderId()) {
+        if ($query->getOrderId() !== null) {
             $order = $this->getOrder($query->getOrderId());
             $orderAddressId = $order->{Configuration::get('PS_TAX_ADDRESS_TYPE', null, null, $order->id_shop)};
             $address = new Address($orderAddressId);
@@ -140,21 +126,12 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
         return $foundProducts;
     }
 
-    /**
-     * @param Product $product
-     * @param string $isoCodeCurrency
-     * @param int $computingPrecision
-     * @param Order|null $order
-     * @param Address|null $address
-     *
-     * @return FoundProduct
-     */
     private function createFoundProductFromLegacy(
         Product $product,
         string $isoCodeCurrency,
         int $computingPrecision,
         ?Order $order = null,
-        ?Address $address = null
+        ?Address $address = null,
     ): FoundProduct {
         // It's important to use null (not 0) as attribute ID so that Product::priceCalculation can fallback to default combination
         $priceTaxExcluded = $this->getProductPriceForOrder((int) $product->id, null, false, $computingPrecision, $order) ?? 0.00;
@@ -177,8 +154,6 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
     }
 
     /**
-     * @param Product $product
-     *
      * @return ProductCustomizationField[]
      */
     private function getProductCustomizationFields(Product $product): array
@@ -186,7 +161,7 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
         $fields = $product->getCustomizationFields();
         $customizationFields = [];
 
-        if (false !== $fields) {
+        if ($fields !== false) {
             foreach ($fields as $typeId => $typeFields) {
                 foreach ($typeFields as $field) {
                     $customizationField = new ProductCustomizationField(
@@ -204,24 +179,16 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
         return $customizationFields;
     }
 
-    /**
-     * @param Product $product
-     * @param string $currencyIsoCode
-     * @param int $computingPrecision
-     * @param Order|null $order
-     *
-     * @return array
-     */
     private function getProductCombinations(
         Product $product,
         string $currencyIsoCode,
         int $computingPrecision,
-        ?Order $order = null
+        ?Order $order = null,
     ): array {
         $productCombinations = [];
         $combinations = $product->getAttributeCombinations();
 
-        if (false !== $combinations) {
+        if ($combinations !== false) {
             foreach ($combinations as $combination) {
                 $productAttributeId = (int) $combination['id_product_attribute'];
                 $attribute = $combination['attribute_name'];
@@ -253,12 +220,6 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
     }
 
     /**
-     * @param int $productId
-     * @param int|null $productAttributeId
-     * @param bool $withTaxes
-     * @param int $computingPrecision
-     * @param Order|null $order
-     *
      * @return float|null
      */
     private function getProductPriceForOrder(
@@ -268,7 +229,7 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
         int $computingPrecision,
         ?Order $order)
     {
-        if (null === $order) {
+        if ($order === null) {
             return Product::getPriceStatic($productId, $withTaxes, $productAttributeId, $computingPrecision);
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShopException;
 final class DeleteCmsPageHandler extends AbstractCmsPageHandler implements DeleteCmsPageHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageException
      */
     public function handle(DeleteCmsPageCommand $command)
@@ -49,11 +48,11 @@ final class DeleteCmsPageHandler extends AbstractCmsPageHandler implements Delet
         $cms = $this->getCmsPageIfExistsById($command->getCmsPageId()->getValue());
 
         try {
-            if (false === $cms->delete()) {
-                throw new CannotDeleteCmsPageException(sprintf('An error occurred when deleting cms page with id %s', $command->getCmsPageId()->getValue()), CannotDeleteCmsPageException::FAILED_DELETE);
+            if ($cms->delete() === false) {
+                throw new CannotDeleteCmsPageException(\sprintf('An error occurred when deleting cms page with id %s', $command->getCmsPageId()->getValue()), CannotDeleteCmsPageException::FAILED_DELETE);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CmsPageException(sprintf('An unexpected error occurred when deleting cms page with id %s', $command->getCmsPageId()->getValue()), 0, $prestaShopException);
+            throw new CmsPageException(\sprintf('An unexpected error occurred when deleting cms page with id %s', $command->getCmsPageId()->getValue()), 0, $prestaShopException);
         }
     }
 }

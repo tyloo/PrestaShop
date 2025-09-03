@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,24 +44,21 @@ use PrestaShopException;
 class BulkDeleteCarrierHandler implements BulkDeleteCarrierHandlerInterface
 {
     public function __construct(
-        private readonly CarrierRepository $carrierRepository
+        private readonly CarrierRepository $carrierRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteCarrierCommand $command)
     {
         foreach ($command->getCarrierIds() as $carrierId) {
             $carrier = $this->carrierRepository->get($carrierId);
 
             try {
-                if (!$carrier->delete()) {
-                    throw new CannotDeleteCarrierException(sprintf('Cannot delete carrier with id "%d"', $carrierId->getValue()), CannotDeleteCarrierException::BULK_DELETE);
+                if (! $carrier->delete()) {
+                    throw new CannotDeleteCarrierException(\sprintf('Cannot delete carrier with id "%d"', $carrierId->getValue()), CannotDeleteCarrierException::BULK_DELETE);
                 }
             } catch (PrestaShopException) {
-                throw new CarrierException(sprintf('An error occurred when deleting carrier with id "%d"', $carrierId->getValue()));
+                throw new CarrierException(\sprintf('An error occurred when deleting carrier with id "%d"', $carrierId->getValue()));
             }
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,13 +42,11 @@ use PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId;
 #[AsCommandHandler]
 class AddCountryHandler implements AddCountryHandlerInterface
 {
-    public function __construct(private readonly CountryRepository $countryRepository)
-    {
+    public function __construct(
+        private readonly CountryRepository $countryRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddCountryCommand $command): CountryId
     {
         $country = new Country();
@@ -62,15 +61,15 @@ class AddCountryHandler implements AddCountryHandlerInterface
         $country->id_shop_list = $command->getShopAssociation();
         $country->contains_states = $command->containsStates();
 
-        if (null !== $command->getZipCodeFormat()) {
+        if ($command->getZipCodeFormat() !== null) {
             $country->zip_code_format = $command->getZipCodeFormat()->getValue();
         }
 
-        if (null !== $command->getDefaultCurrency()) {
+        if ($command->getDefaultCurrency() !== null) {
             $country->id_currency = $command->getDefaultCurrency();
         }
 
-        if (null !== $command->getZoneId()) {
+        if ($command->getZoneId() !== null) {
             $country->id_zone = $command->getZoneId()->getValue();
         }
 

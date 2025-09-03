@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,12 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\RemoveAllProductTag
 #[AsCommandHandler]
 final class RemoveAllProductTagsHandler implements RemoveAllProductTagsHandlerInterface
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param ProductTagUpdater $productTagUpdater
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductTagUpdater $productTagUpdater)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly ProductTagUpdater $productTagUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(RemoveAllProductTagsCommand $command): void
     {
         $this->productTagUpdater->setProductTags(

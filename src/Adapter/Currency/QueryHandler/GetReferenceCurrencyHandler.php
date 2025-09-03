@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,12 @@ use PrestaShop\PrestaShop\Core\Localization\CLDR\LocaleRepository;
 #[AsQueryHandler]
 class GetReferenceCurrencyHandler implements GetReferenceCurrencyHandlerInterface
 {
-    /**
-     * @param LocaleRepository $localeRepository
-     * @param array $languages
-     */
-    public function __construct(private readonly LocaleRepository $localeRepository, private readonly array $languages)
-    {
+    public function __construct(
+        private readonly LocaleRepository $localeRepository,
+        private readonly array $languages,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetReferenceCurrency $query): ReferenceCurrency
     {
         $localizedNames = [];
@@ -59,7 +55,7 @@ class GetReferenceCurrencyHandler implements GetReferenceCurrencyHandlerInterfac
         foreach ($this->languages as $language) {
             $locale = $this->localeRepository->getLocale($language->getLocale());
             $localeCurrency = $locale->getCurrency($query->getIsoCode()->getValue());
-            if (null !== $localeCurrency) {
+            if ($localeCurrency !== null) {
                 $currency = $localeCurrency;
                 $localizedNames[$language->getId()] = $localeCurrency->getDisplayName();
                 $localizedSymbols[$language->getId()] = $localeCurrency->getSymbol(CurrencyInterface::SYMBOL_TYPE_NARROW) ?: $localeCurrency->getIsoCode();
@@ -71,8 +67,8 @@ class GetReferenceCurrencyHandler implements GetReferenceCurrencyHandlerInterfac
             $localizedPatterns[$language->getId()] = $locale->getCurrencyPattern();
         }
 
-        if (null === $currency) {
-            throw new CurrencyNotFoundException(sprintf('Can not find reference currency with ISO code %s', $query->getIsoCode()->getValue()));
+        if ($currency === null) {
+            throw new CurrencyNotFoundException(\sprintf('Can not find reference currency with ISO code %s', $query->getIsoCode()->getValue()));
         }
 
         return new ReferenceCurrency(

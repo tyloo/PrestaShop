@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,26 +50,26 @@ abstract class AbstractAttributeGroupQueryHandler
 
     public function __construct(
         AttributeRepository $attributeRepository,
-        AttributeGroupRepository $attributeGroupRepository
+        AttributeGroupRepository $attributeGroupRepository,
     ) {
         $this->attributeRepository = $attributeRepository;
         $this->attributeGroupRepository = $attributeGroupRepository;
     }
 
     /**
-     * @param array<int, AttributeGroupObjectModel> $attributeGroups
+     * @param array<int, AttributeGroupObjectModel>        $attributeGroups
      * @param array<int, array<int, AttributeObjectModel>> $attributes
      *
      * @return AttributeGroup[]
      */
     protected function formatAttributeGroupsList(
         array $attributeGroups,
-        array $attributes
+        array $attributes,
     ): array {
         $attributeGroupsResult = [];
 
         foreach ($attributeGroups as $attributeGroupId => $attributeGroup) {
-            if (!isset($attributes[$attributeGroupId])) {
+            if (! isset($attributes[$attributeGroupId])) {
                 $attributesResult = [];
             } else {
                 $attributesResult = [];

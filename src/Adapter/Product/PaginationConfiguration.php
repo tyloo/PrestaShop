@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PaginationConfiguration implements DataConfigurationInterface
 {
-    public function __construct(private readonly ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -51,9 +50,6 @@ class PaginationConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $config)
     {
         $errors = [];
@@ -67,9 +63,6 @@ class PaginationConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         $resolver = new OptionsResolver();

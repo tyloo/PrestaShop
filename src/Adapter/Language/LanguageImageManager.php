@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -75,9 +76,9 @@ class LanguageImageManager
     /**
      * Sets up the language flag image for the given language
      *
-     * @param string $localeCode IETF language tag
-     * @param int $langId Language id
-     * @param string|null $flagCode If provided, use this flag code. By default, auto-detect using locale code.
+     * @param string      $localeCode IETF language tag
+     * @param int         $langId     Language id
+     * @param string|null $flagCode   If provided, use this flag code. By default, auto-detect using locale code.
      */
     public function setupLanguageFlag(string $localeCode, int $langId, ?string $flagCode = null): void
     {
@@ -85,7 +86,7 @@ class LanguageImageManager
 
         $flagPath = $this->getFlagPath($flagCode);
 
-        if (!file_exists($flagPath)) {
+        if (! file_exists($flagPath)) {
             $flagPath = static::FALLBACK_FLAG_SOURCE;
         }
 
@@ -108,7 +109,7 @@ class LanguageImageManager
         ];
 
         $imageTypes = ImageType::getAll();
-        if (!empty($imageTypes)) {
+        if (! empty($imageTypes)) {
             foreach (array_keys($imageTypes) as $alias) {
                 $formattedImageType = ImageType::getFormattedName($alias);
                 $from = $this->getPlaceholderImageFilename(static::DEFAULT_LANGUAGE_CODE, $formattedImageType);
@@ -127,7 +128,6 @@ class LanguageImageManager
     /**
      * Deletes images associated with the language
      *
-     * @param int $langId
      * @param string $isoCode 2-letter ISO code
      */
     public function deleteImages(int $langId, string $isoCode): void
@@ -150,38 +150,24 @@ class LanguageImageManager
 
     /**
      * @param string $locale IETF language tag
-     *
-     * @return string
      */
     private function getFlagCountryCodeFromLocale(string $locale): string
     {
         return strtolower(explode('-', $locale)[1]);
     }
 
-    /**
-     * @param string $countryCode
-     *
-     * @return string
-     */
     private function getFlagPath(string $countryCode): string
     {
-        return sprintf(static::FLAGS_SOURCE, $countryCode);
+        return \sprintf(static::FLAGS_SOURCE, $countryCode);
     }
 
-    /**
-     * @param int $langId
-     *
-     * @return string
-     */
     private function getFlagDestination(int $langId): string
     {
-        return sprintf(static::FLAGS_DESTINATION, $langId);
+        return \sprintf(static::FLAGS_DESTINATION, $langId);
     }
 
     /**
      * Removes a file if it exists
-     *
-     * @param string $file
      */
     private function unlinkIfExists(string $file): void
     {
@@ -190,18 +176,12 @@ class LanguageImageManager
         }
     }
 
-    /**
-     * @param string $isoCode
-     * @param string|null $imageTypeName
-     *
-     * @return string
-     */
     private function getPlaceholderImageFilename(string $isoCode, ?string $imageTypeName = null): string
     {
-        if (null !== $imageTypeName) {
-            return sprintf(static::PLACEHOLDER_IMAGE_NAME_PATTERNS[1], $isoCode, $imageTypeName);
+        if ($imageTypeName !== null) {
+            return \sprintf(static::PLACEHOLDER_IMAGE_NAME_PATTERNS[1], $isoCode, $imageTypeName);
         }
 
-        return sprintf(static::PLACEHOLDER_IMAGE_NAME_PATTERNS[0], $isoCode);
+        return \sprintf(static::PLACEHOLDER_IMAGE_NAME_PATTERNS[0], $isoCode);
     }
 }

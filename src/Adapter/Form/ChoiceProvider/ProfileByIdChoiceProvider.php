@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,11 @@ final class ProfileByIdChoiceProvider implements FormChoiceProviderInterface
     /**
      * @param int $contextLangId
      */
-    public function __construct(private $contextLangId)
-    {
+    public function __construct(
+        private $contextLangId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         return FormChoiceFormatter::formatFormChoices(

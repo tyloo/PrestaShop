@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use PrestaShop\PrestaShop\Core\Backup\Manager\BackupRemoverInterface;
  */
 final class BackupRemover implements BackupRemoverInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function remove(BackupInterface $backup): bool
     {
         $legacyBackup = new PrestaShopBackup($backup->getFileName());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,14 +62,14 @@ class DebugProfiling
             $definesClean = php_strip_whitespace($customDefinesPath);
         }
 
-        if (!preg_match('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', $definesClean, $debugProfilingValue)) {
+        if (! preg_match('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', $definesClean, $debugProfilingValue)) {
             $definesClean = php_strip_whitespace($definesPath);
-            if (!preg_match('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', $definesClean, $debugProfilingValue)) {
+            if (! preg_match('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', $definesClean, $debugProfilingValue)) {
                 return false;
             }
         }
 
-        return 'true' === Tools::strtolower($debugProfilingValue[1]);
+        return Tools::strtolower($debugProfilingValue[1]) === 'true';
     }
 
     /**
@@ -124,16 +125,16 @@ class DebugProfiling
         $cleanedFileContent = php_strip_whitespace($filename);
         $fileContent = Tools::file_get_contents($filename);
 
-        if (!preg_match('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', $cleanedFileContent)) {
+        if (! preg_match('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', $cleanedFileContent)) {
             return self::DEBUG_PROFILING_ERROR_NO_DEFINITION_FOUND;
         }
 
         $fileContent = preg_replace('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', "define('_PS_DEBUG_PROFILING_', " . $value . ');', $fileContent);
-        if (!@file_put_contents($filename, $fileContent)) {
+        if (! @file_put_contents($filename, $fileContent)) {
             return self::DEBUG_PROFILING_ERROR_NO_WRITE_ACCESS;
         }
 
-        if (function_exists('opcache_invalidate')) {
+        if (\function_exists('opcache_invalidate')) {
             @opcache_invalidate($filename);
         }
 
@@ -153,17 +154,17 @@ class DebugProfiling
         $cleanedFileContent = php_strip_whitespace($customFileName);
         $fileContent = Tools::file_get_contents($customFileName);
 
-        if (!preg_match('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', $cleanedFileContent)) {
+        if (! preg_match('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', $cleanedFileContent)) {
             return self::DEBUG_PROFILING_ERROR_NO_DEFINITION_FOUND;
         }
 
         $fileContent = preg_replace('/define\(\'_PS_DEBUG_PROFILING_\', ([a-zA-Z]+)\);/Ui', "define('_PS_DEBUG_PROFILING_', " . $value . ');', $fileContent);
 
-        if (!@file_put_contents($customFileName, $fileContent)) {
+        if (! @file_put_contents($customFileName, $fileContent)) {
             return self::DEBUG_PROFILING_ERROR_NO_WRITE_ACCESS_CUSTOM;
         }
 
-        if (function_exists('opcache_invalidate')) {
+        if (\function_exists('opcache_invalidate')) {
             @opcache_invalidate($customFileName);
         }
 

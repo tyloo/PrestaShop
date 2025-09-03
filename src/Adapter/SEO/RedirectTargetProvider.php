@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,27 +46,20 @@ use PrestaShop\PrestaShop\Core\Domain\QueryResult\RedirectTargetInformation;
  */
 class RedirectTargetProvider
 {
-    /**
-     * @param ProductPreviewRepository $productPreviewRepository
-     * @param CategoryPreviewRepository $categoryPreviewRepository
-     * @param LegacyContext $legacyContext
-     */
-    public function __construct(private readonly ProductPreviewRepository $productPreviewRepository, private readonly CategoryPreviewRepository $categoryPreviewRepository, private readonly LegacyContext $legacyContext)
-    {
+    public function __construct(
+        private readonly ProductPreviewRepository $productPreviewRepository,
+        private readonly CategoryPreviewRepository $categoryPreviewRepository,
+        private readonly LegacyContext $legacyContext,
+    ) {
     }
 
     /**
-     * @param string $redirectType
-     * @param int $redirectTargetId
-     *
-     * @return RedirectTargetInformation|null
-     *
      * @throws CategoryNotFoundException
      * @throws ProductNotFoundException
      */
     public function getRedirectTarget(
         string $redirectType,
-        int $redirectTargetId
+        int $redirectTargetId,
     ): ?RedirectTargetInformation {
         if (empty($redirectTargetId)) {
             return null;
@@ -79,10 +73,6 @@ class RedirectTargetProvider
     }
 
     /**
-     * @param int $redirectTargetId
-     *
-     * @return RedirectTargetInformation
-     *
      * @throws ProductNotFoundException
      */
     private function getProductTarget(int $redirectTargetId): RedirectTargetInformation
@@ -102,10 +92,6 @@ class RedirectTargetProvider
     }
 
     /**
-     * @param int $redirectTargetId
-     *
-     * @return RedirectTargetInformation
-     *
      * @throws CategoryNotFoundException
      */
     private function getCategoryTarget(int $redirectTargetId): RedirectTargetInformation

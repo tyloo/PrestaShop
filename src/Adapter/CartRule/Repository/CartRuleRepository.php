@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
     public function __construct(
         protected readonly CartRuleValidator $cartRuleValidator,
         protected readonly Connection $connection,
-        protected readonly string $dbPrefix
+        protected readonly string $dbPrefix,
     ) {
     }
 
@@ -66,7 +67,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
 
     public function assertAllCartRulesExists(array $cartRuleIds): void
     {
-        $cartRuleIds = array_map(static fn(CartRuleId $cartRuleId): int => $cartRuleId->getValue(), $cartRuleIds);
+        $cartRuleIds = array_map(static fn (CartRuleId $cartRuleId): int => $cartRuleId->getValue(), $cartRuleIds);
 
         $qb = $this->connection->createQueryBuilder();
 
@@ -79,7 +80,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
             ->fetchAssociative()
         ;
 
-        if (!isset($result['cart_rules_count']) || count($cartRuleIds) !== (int) $result['cart_rules_count']) {
+        if (! isset($result['cart_rules_count']) || \count($cartRuleIds) !== (int) $result['cart_rules_count']) {
             throw new CartRuleNotFoundException('Failed to assert that all provided cart rules exists');
         }
     }
@@ -97,10 +98,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRuleId $cartRuleId
      * @param RestrictionRuleGroup[] $restrictionRuleGroups
-     *
-     * @return void
      */
     public function setProductRestrictions(CartRuleId $cartRuleId, array $restrictionRuleGroups): void
     {
@@ -135,12 +133,12 @@ class CartRuleRepository extends AbstractObjectModelRepository
                 $productRuleValues = [];
                 $checkedIds = [];
                 foreach ($restrictionRule->getEntityIds() as $id) {
-                    if (in_array($id, $checkedIds, true)) {
+                    if (\in_array($id, $checkedIds, true)) {
                         // skip in case there are duplicates
                         continue;
                     }
 
-                    $productRuleValues[] = sprintf('(%d, %d)', $productRuleId, $id);
+                    $productRuleValues[] = \sprintf('(%d, %d)', $productRuleId, $id);
                     $checkedIds[] = $id;
                 }
 
@@ -153,8 +151,6 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRuleId $cartRuleId
-     *
      * @return RestrictionRuleGroup[]
      */
     public function getProductRestrictions(CartRuleId $cartRuleId): array
@@ -231,18 +227,14 @@ class CartRuleRepository extends AbstractObjectModelRepository
         // finally build the complex restriction rule groups by retrieving related values by array keys structured above
         $restrictionRuleGroups = [];
         foreach ($quantityForGroups as $groupId => $quantity) {
-            if (!isset($typesForRules[$groupId])) {
-                throw new CartRuleException(
-                    sprintf('Unexpected state of cart rule product restrictions. Failed to retrieve types for rules of group %d', $groupId)
-                );
+            if (! isset($typesForRules[$groupId])) {
+                throw new CartRuleException(\sprintf('Unexpected state of cart rule product restrictions. Failed to retrieve types for rules of group %d', $groupId));
             }
 
             $restrictionRules = [];
             foreach ($typesForRules[$groupId] as $productRuleId => $type) {
-                if (!isset($ruleItemIdsForRules[$productRuleId])) {
-                    throw new CartRuleException(
-                        sprintf('Unexpected state of cart rule product restrictions. Failed to retrieve item ids for rule %d', $productRuleId)
-                    );
+                if (! isset($ruleItemIdsForRules[$productRuleId])) {
+                    throw new CartRuleException(\sprintf('Unexpected state of cart rule product restrictions. Failed to retrieve item ids for rule %d', $productRuleId));
                 }
 
                 $restrictionRules[] = new RestrictionRule($type, $ruleItemIdsForRules[$productRuleId]);
@@ -255,9 +247,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRule $cartRule
      * @param array<int|string, string|int[]> $propertiesToUpdate
-     * @param int $errorCode
      */
     public function partialUpdate(CartRule $cartRule, array $propertiesToUpdate, int $errorCode = 0): void
     {
@@ -271,8 +261,6 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRuleId $cartRuleId
-     *
      * @return int[]
      */
     public function getRestrictedCartRuleIds(CartRuleId $cartRuleId): array
@@ -303,10 +291,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRuleId $cartRuleId
      * @param CartRuleId[] $restrictedCartRuleIds
-     *
-     * @return void
      */
     public function restrictCartRules(CartRuleId $cartRuleId, array $restrictedCartRuleIds): void
     {
@@ -320,16 +305,16 @@ class CartRuleRepository extends AbstractObjectModelRepository
         $insertValues = [];
         foreach ($restrictedCartRuleIds as $restrictedCartRuleId) {
             // skip duplicate ids if for some reason they exist
-            if (in_array($restrictedCartRuleId, $checkedIds, true)) {
+            if (\in_array($restrictedCartRuleId, $checkedIds, true)) {
                 continue;
             }
 
-            $insertValues[] = sprintf('(%d,%d)', $cartRuleId->getValue(), $restrictedCartRuleId->getValue());
+            $insertValues[] = \sprintf('(%d,%d)', $cartRuleId->getValue(), $restrictedCartRuleId->getValue());
             $checkedIds[] = $restrictedCartRuleId;
         }
 
         $this->connection->executeStatement(
-            sprintf(
+            \sprintf(
                 'INSERT INTO %s (`id_cart_rule_1`, `id_cart_rule_2`) VALUES %s',
                 $this->dbPrefix . 'cart_rule_combination',
                 implode(',', $insertValues)
@@ -338,10 +323,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRuleId $cartRuleId
      * @param CarrierId[] $restrictedCarrierIds
-     *
-     * @return void
      */
     public function setCarrierRestrictions(CartRuleId $cartRuleId, array $restrictedCarrierIds): void
     {
@@ -350,8 +332,6 @@ class CartRuleRepository extends AbstractObjectModelRepository
 
     /**
      * @param GroupId[] $restrictedGroupIds
-     *
-     * @return void
      */
     public function setGroupRestrictions(CartRuleId $cartRuleId, array $restrictedGroupIds): void
     {
@@ -359,10 +339,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRuleId $cartRuleId
      * @param CountryId[] $restrictedCountryIds
-     *
-     * @return void
      */
     public function setCountryRestrictions(CartRuleId $cartRuleId, array $restrictedCountryIds): void
     {
@@ -370,8 +347,6 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRuleId $cartRuleId
-     *
      * @return int[]
      */
     public function getRestrictedCarrierIds(CartRuleId $cartRuleId): array
@@ -412,8 +387,6 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRuleId $cartRuleId
-     *
      * @return int[]
      */
     public function getRestrictedCountryIds(CartRuleId $cartRuleId): array
@@ -478,16 +451,12 @@ class CartRuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CartRuleId $cartRuleId
      * @param CarrierId[]|CountryId[]|GroupId[] $entityIds
-     * @param string $entityName
-     *
-     * @return void
      */
     private function setRestrictionsByName(CartRuleId $cartRuleId, array $entityIds, string $entityName): void
     {
         $availableEntityNames = ['carrier', 'country', 'group'];
-        if (!in_array($entityName, $availableEntityNames, true)) {
+        if (! \in_array($entityName, $availableEntityNames, true)) {
             throw new InvalidArgumentException('Invalid $entityName provided');
         }
 
@@ -502,16 +471,16 @@ class CartRuleRepository extends AbstractObjectModelRepository
         foreach ($entityIds as $entityId) {
             $entityIdValue = $entityId->getValue();
             // skip duplicate ids if for some reason they exist
-            if (in_array($entityIdValue, $checkedIds, true)) {
+            if (\in_array($entityIdValue, $checkedIds, true)) {
                 continue;
             }
 
-            $insertValues[] = sprintf('(%d,%d)', $cartRuleId->getValue(), $entityIdValue);
+            $insertValues[] = \sprintf('(%d,%d)', $cartRuleId->getValue(), $entityIdValue);
             $checkedIds[] = $entityIdValue;
         }
 
         $this->connection->executeStatement(
-            sprintf(
+            \sprintf(
                 'INSERT INTO %s (`id_cart_rule`, `id_' . $entityName . '`) VALUES %s',
                 $this->dbPrefix . 'cart_rule_' . $entityName,
                 implode(',', $insertValues)

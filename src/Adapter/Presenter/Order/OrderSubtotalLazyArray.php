@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,25 +40,29 @@ use TaxConfiguration;
 
 class OrderSubtotalLazyArray extends AbstractLazyArray
 {
-    /** @var TaxConfiguration */
+    /**
+     * @var TaxConfiguration
+     */
     private $taxConfiguration;
 
-    /** @var PriceFormatter */
+    /**
+     * @var PriceFormatter
+     */
     private $priceFormatter;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $includeTaxes;
 
-    /** @var TranslatorComponent */
+    /**
+     * @var TranslatorComponent
+     */
     private $translator;
 
-    /**
-     * OrderSubtotalLazyArray constructor.
-     *
-     * @param Order $order
-     */
-    public function __construct(private readonly Order $order)
-    {
+    public function __construct(
+        private readonly Order $order,
+    ) {
         $this->taxConfiguration = new TaxConfiguration();
         $this->includeTaxes = $this->includeTaxes();
         $this->priceFormatter = new PriceFormatter();
@@ -120,7 +125,7 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
     public function getShipping()
     {
         $cart = new Cart($this->order->id_cart);
-        if (!$cart->isVirtualCart()) {
+        if (! $cart->isVirtualCart()) {
             $shippingCost = ($this->includeTaxes)
                 ? $this->order->total_shipping_tax_incl : $this->order->total_shipping_tax_excl;
 
@@ -128,7 +133,7 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
                 'type' => 'shipping',
                 'label' => $this->translator->trans('Shipping and handling', [], 'Shop.Theme.Checkout'),
                 'amount' => $shippingCost,
-                'value' => $shippingCost != 0 ? $this->priceFormatter->format(
+                'value' => $shippingCost !== 0 ? $this->priceFormatter->format(
                     $shippingCost,
                     Currency::getCurrencyInstance((int) $this->order->id_currency)
                 )
@@ -150,7 +155,7 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getTax()
     {
-        if (!Configuration::get('PS_TAX_DISPLAY')) {
+        if (! Configuration::get('PS_TAX_DISPLAY')) {
             return [
                 'type' => 'tax',
                 'label' => null,

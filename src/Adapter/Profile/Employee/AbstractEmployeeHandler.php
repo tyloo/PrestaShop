@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,10 +34,6 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\EmployeeId;
 abstract class AbstractEmployeeHandler
 {
     /**
-     * @param EmployeeId $employeeId
-     *
-     * @return Employee
-     *
      * @throws EmployeeNotFoundException
      */
     protected function getEmployee(EmployeeId $employeeId): Employee
@@ -44,7 +41,7 @@ abstract class AbstractEmployeeHandler
         $employee = new Employee($employeeId->getValue());
 
         if ($employee->id !== $employeeId->getValue()) {
-            throw new EmployeeNotFoundException($employeeId, sprintf('Employee with id "%s" was not found', $employeeId->getValue()));
+            throw new EmployeeNotFoundException($employeeId, \sprintf('Employee with id "%s" was not found', $employeeId->getValue()));
         }
 
         return $employee;

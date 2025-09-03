@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,24 +53,19 @@ use PrestaShopException;
 final class AddOfficialCurrencyHandler extends AbstractCurrencyHandler implements AddCurrencyHandlerInterface
 {
     /**
-     * @param LocaleRepository $localeRepoCLDR
      * @param LanguageInterface[] $languages
-     * @param CurrencyCommandValidator $validator
-     * @param CurrencyDataProviderInterface $currencyDataProvider
      */
     public function __construct(
         LocaleRepository $localeRepoCLDR,
         array $languages,
         CurrencyCommandValidator $validator,
         private readonly CurrencyDataProviderInterface $currencyDataProvider,
-        PatternTransformer $patternTransformer
+        PatternTransformer $patternTransformer,
     ) {
         parent::__construct($localeRepoCLDR, $languages, $validator, $patternTransformer);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotCreateCurrencyException
      * @throws CurrencyConstraintException
      * @throws CurrencyException
@@ -96,14 +92,9 @@ final class AddOfficialCurrencyHandler extends AbstractCurrencyHandler implement
         return new CurrencyId((int) $entity->id);
     }
 
-    /**
-     * @param AddCurrencyCommand $command
-     *
-     * @return int
-     */
     private function getPrecision(AddCurrencyCommand $command): int
     {
-        if (null !== $command->getPrecision()) {
+        if ($command->getPrecision() !== null) {
             return $command->getPrecision()->getValue();
         }
 
@@ -118,8 +109,6 @@ final class AddOfficialCurrencyHandler extends AbstractCurrencyHandler implement
     /**
      * @param string $isoCode
      *
-     * @return string
-     *
      * @throws CurrencyNotFoundException
      */
     private function findNumericIsoCodeFromAlphaCode($isoCode): string
@@ -133,7 +122,7 @@ final class AddOfficialCurrencyHandler extends AbstractCurrencyHandler implement
             }
         }
 
-        throw new CurrencyNotFoundException(sprintf('ISO code "%s" does not match any currency in CLDR database', $isoCode));
+        throw new CurrencyNotFoundException(\sprintf('ISO code "%s" does not match any currency in CLDR database', $isoCode));
     }
 
     /**

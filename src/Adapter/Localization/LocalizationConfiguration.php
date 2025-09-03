@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,18 +38,13 @@ use PrestaShop\PrestaShop\Core\Language\LanguageActivatorInterface;
  */
 class LocalizationConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @param Configuration $configuration
-     * @param LanguageActivatorInterface $languageActivator
-     * @param CurrencyManager $currencyManager
-     */
-    public function __construct(private readonly Configuration $configuration, private readonly LanguageActivatorInterface $languageActivator, private readonly CurrencyManager $currencyManager)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+        private readonly LanguageActivatorInterface $languageActivator,
+        private readonly CurrencyManager $currencyManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -61,9 +57,6 @@ class LocalizationConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $config)
     {
         $errors = [];
@@ -73,7 +66,7 @@ class LocalizationConfiguration implements DataConfigurationInterface
 
             // only update currency related data if it has changed
             $currentConfig = $this->getConfiguration();
-            if ($currentConfig['default_currency'] != $config['default_currency']) {
+            if ($currentConfig['default_currency'] !== $config['default_currency']) {
                 $this->configuration->set('PS_CURRENCY_DEFAULT', (int) $config['default_currency']);
                 $this->currencyManager->updateDefaultCurrency();
             }
@@ -88,9 +81,6 @@ class LocalizationConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $config)
     {
         return isset(

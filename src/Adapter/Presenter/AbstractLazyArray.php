@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -84,8 +85,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
     private $methodCacheResults = [];
 
     /**
-     * AbstractLazyArray constructor.
-     *
      * @throws ReflectionException
      */
     public function __construct()
@@ -137,7 +136,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
     {
         foreach ($array as $key => $value) {
             // do not override any existing method
-            if (!$this->arrayAccessList->offsetExists($key)) {
+            if (! $this->arrayAccessList->offsetExists($key)) {
                 $this->arrayAccessList->offsetSet(
                     $key,
                     [
@@ -149,10 +148,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         }
     }
 
-    /**
-     * @param mixed $key
-     * @param Closure $closure
-     */
     public function appendClosure($key, Closure $closure)
     {
         $this->arrayAccessList->offsetSet(
@@ -166,8 +161,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     /**
      * The number of keys defined into the lazyArray.
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -195,10 +188,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
      *
      * Get the value associated with the $index from the lazyArray.
      *
-     * @param mixed $index
-     *
-     * @return mixed
-     *
      * @throws RuntimeException
      */
     public function __get($index)
@@ -210,9 +199,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
      * The properties are provided as an array. But callers checking the type of this class (is_object === true)
      * think they must use the object syntax.
      *
-     * @param mixed $name
-     * @param mixed $value
-     *
      * @throws RuntimeException
      */
     public function __set($name, $value)
@@ -223,8 +209,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
     /**
      * The properties are provided as an array. But callers checking the type of this class (is_object === true)
      * think they must use the object syntax.
-     *
-     * @param mixed $name
      *
      * @throws RuntimeException
      */
@@ -245,10 +229,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
     /**
      * Get the value associated with the $index from the lazyArray.
      *
-     * @param mixed $index
-     *
-     * @return mixed
-     *
      * @throws RuntimeException
      */
     #[ReturnTypeWillChange]
@@ -260,7 +240,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
                 case 'method':
                     $isResultAvailableInCache = (isset($this->methodCacheResults[$index]));
 
-                    if (!$isResultAvailableInCache) {
+                    if (! $isResultAvailableInCache) {
                         $methodName = $this->arrayAccessList[$index]['value'];
                         $this->methodCacheResults[$index] = $this->{$methodName}();
                     }
@@ -272,7 +252,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
                 case 'closure':
                     $isResultAvailableInCache = (isset($this->methodCacheResults[$index]));
 
-                    if (!$isResultAvailableInCache) {
+                    if (! $isResultAvailableInCache) {
                         $methodName = $this->arrayAccessList[$index]['value'];
                         $this->methodCacheResults[$index] = $methodName();
                     }
@@ -299,10 +279,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     /**
      * Check if the index exists inside the lazyArray.
-     *
-     * @param mixed $index
-     *
-     * @return bool
      */
     public function offsetExists($index): bool
     {
@@ -321,8 +297,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     /**
      * Get the result associated with the current index.
-     *
-     * @return mixed
      *
      * @throws RuntimeException
      */
@@ -355,8 +329,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     /**
      * Check if we are at the end of the lazyArray.
-     *
-     * @return bool
      */
     public function valid(): bool
     {
@@ -382,15 +354,13 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
     {
         $arrayCopy = $this->arrayAccessList->getArrayCopy();
         foreach ($arrayCopy as $key => $value) {
-            if (!array_key_exists($key, $array)) {
+            if (! \array_key_exists($key, $array)) {
                 $this->offsetUnset($key, true);
             }
         }
     }
 
     /**
-     * @param mixed $offset
-     * @param mixed $value
      * @param bool $force if set, allow override of an existing method
      *
      * @throws RuntimeException
@@ -401,8 +371,8 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         if ($this->arrayAccessList->offsetExists($offset)) {
             $offsetData = $this->arrayAccessList->offsetGet($offset);
 
-            if (!$force && $offsetData['type'] !== 'variable' && !$offsetData['isRewritable']) {
-                $errorMessage = sprintf(
+            if (! $force && $offsetData['type'] !== 'variable' && ! $offsetData['isRewritable']) {
+                $errorMessage = \sprintf(
                     'Trying to set the index %s of the LazyArray %s already defined by a method is not allowed.',
                     print_r($offset, true),
                     static::class
@@ -419,7 +389,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
     }
 
     /**
-     * @param mixed $offset
      * @param bool $force if set, allow unset of an existing method
      *
      * @throws RuntimeException
@@ -449,7 +418,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     private function isResultRewritable(ReflectionClass $reflexionClass, ?LazyArrayAttribute $methodAttributeInstance): bool
     {
-        if (!is_null($methodAttributeInstance) && !is_null($methodAttributeInstance->isRewritable)) {
+        if ($methodAttributeInstance !== null && $methodAttributeInstance->isRewritable !== null) {
             return $methodAttributeInstance->isRewritable;
         }
 
@@ -457,7 +426,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         $classAttributeInstance = null;
         $classAttributes = $reflexionClass->getAttributes();
 
-        if (!empty($classAttributes)) {
+        if (! empty($classAttributes)) {
             $classAttributeInstance = $classAttributes[0]->newInstance();
             if (isset($classAttributeInstance->isRewritable)) {
                 return $classAttributeInstance->isRewritable;
@@ -472,7 +441,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         $attributeInstance = null;
         $methodAttributes = $method->getAttributes(LazyArrayAttribute::class);
 
-        if (!empty($methodAttributes)) {
+        if (! empty($methodAttributes)) {
             $attributeInstance = $methodAttributes[0]->newInstance();
         }
 
@@ -481,7 +450,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     private function getIndexNameFromMethod(?LazyArrayAttribute $attributeInstance, ReflectionMethod $method): string
     {
-        if (!is_null($attributeInstance) && !empty($attributeInstance->indexName)) {
+        if ($attributeInstance !== null && ! empty($attributeInstance->indexName)) {
             return $attributeInstance->indexName;
         }
 
@@ -490,13 +459,13 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     private function isArrayAccessMethod($attributeInstance, $method): bool
     {
-        if (!is_null($attributeInstance)) {
+        if ($attributeInstance !== null) {
             return $attributeInstance->arrayAccess;
         }
 
         @trigger_error(
             'Configuring a method as arrayAccess through annotations is deprecated since version 9.0.0, use php attributes instead, using the LazyArrayAttribute class.',
-            E_USER_DEPRECATED
+            \E_USER_DEPRECATED
         );
 
         $methodDoc = $method->getDocComment();

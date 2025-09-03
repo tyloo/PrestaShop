@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,9 +51,6 @@ class TabTranslator extends EntityTranslator
         parent::translate($languageId, $shopId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function doTranslate(array $data, string $fieldName): string
     {
         $message = $this->sourceIndex[$data['id_tab']] ?? $this->getSourceString($data, $fieldName);
@@ -71,7 +69,7 @@ class TabTranslator extends EntityTranslator
     {
         $tableName = $this->dbPrefix . 'tab';
 
-        $sql = sprintf("SELECT id_tab, wording, wording_domain FROM %s WHERE wording > '' and wording_domain > ''", $tableName);
+        $sql = \sprintf("SELECT id_tab, wording, wording_domain FROM %s WHERE wording > '' and wording_domain > ''", $tableName);
         $results = $this->db->executeS($sql);
 
         $souceIndex = [];

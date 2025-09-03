@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ use RequestSql;
 final class BulkDeleteSqlRequestHandler implements BulkDeleteSqlRequestHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SqlRequestException
      */
     public function handle(BulkDeleteSqlRequestCommand $command)
@@ -51,11 +50,8 @@ final class BulkDeleteSqlRequestHandler implements BulkDeleteSqlRequestHandlerIn
             foreach ($command->getSqlRequestIds() as $sqlRequestId) {
                 $entity = new RequestSql($sqlRequestId->getValue());
 
-                if (false === $entity->delete()) {
-                    throw new CannotDeleteSqlRequestException(
-                        sprintf('Failed to delete SqlRequest with id %d', $sqlRequestId->getValue()),
-                        CannotDeleteSqlRequestException::CANNOT_BULK_DELETE
-                    );
+                if ($entity->delete() === false) {
+                    throw new CannotDeleteSqlRequestException(\sprintf('Failed to delete SqlRequest with id %d', $sqlRequestId->getValue()), CannotDeleteSqlRequestException::CANNOT_BULK_DELETE);
                 }
             }
         } catch (PrestaShopException $prestaShopException) {

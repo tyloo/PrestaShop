@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,15 +41,12 @@ use Product;
  */
 class RelatedProductsUpdater
 {
-    /**
-     * @param ProductRepository $productRepository
-     */
-    public function __construct(private readonly ProductRepository $productRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+    ) {
     }
 
     /**
-     * @param ProductId $productId
      * @param ProductId[] $relatedProductIds
      */
     public function setRelatedProducts(ProductId $productId, array $relatedProductIds): void
@@ -68,45 +66,31 @@ class RelatedProductsUpdater
     }
 
     /**
-     * @param Product $product
-     * @param array $relatedProductIds
-     *
      * @throws CoreException
      */
     private function insertRelatedProducts(Product $product, array $relatedProductIds): void
     {
-        $ids = array_map(fn(ProductId $productId): int => $productId->getValue(), $relatedProductIds);
+        $ids = array_map(fn (ProductId $productId): int => $productId->getValue(), $relatedProductIds);
 
         try {
             $product->changeAccessories($ids);
         } catch (PrestaShopException) {
-            throw new CoreException(sprintf(
-                'Error occurred when updating related products for product #%d',
-                $product->id
-            ));
+            throw new CoreException(\sprintf('Error occurred when updating related products for product #%d', $product->id));
         }
     }
 
     /**
-     * @param Product $product
-     *
      * @throws CannotUpdateProductException
      * @throws CoreException
      */
     private function deleteRelatedProducts(Product $product): void
     {
         try {
-            if (!$product->deleteAccessories()) {
-                throw new CannotUpdateProductException(sprintf(
-                    'Failed to delete related products for product #%d',
-                    $product->id
-                ));
+            if (! $product->deleteAccessories()) {
+                throw new CannotUpdateProductException(\sprintf('Failed to delete related products for product #%d', $product->id));
             }
         } catch (PrestaShopException) {
-            throw new CoreException(sprintf(
-                'Error occurred when updating related products for product #%d',
-                $product->id
-            ));
+            throw new CoreException(\sprintf('Error occurred when updating related products for product #%d', $product->id));
         }
     }
 }

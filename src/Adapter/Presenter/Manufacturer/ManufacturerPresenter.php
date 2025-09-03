@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,14 +53,13 @@ class ManufacturerPresenter
 
     /**
      * @param array|Manufacturer $manufacturer Manufacturer object or an array
-     * @param Language $language
      *
      * @return ManufacturerLazyArray
      */
     public function present(array|Manufacturer $manufacturer, Language $language)
     {
         // Convert to array if a Manufacturer object was passed
-        if (is_object($manufacturer)) {
+        if (\is_object($manufacturer)) {
             $manufacturer = (array) $manufacturer;
         }
 

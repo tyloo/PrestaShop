@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ use RequestSql;
 final class GetSqlRequestForEditingHandler implements GetSqlRequestForEditingHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SqlRequestException
      * @throws SqlRequestNotFoundException
      */
@@ -57,8 +56,6 @@ final class GetSqlRequestForEditingHandler implements GetSqlRequestForEditingHan
     }
 
     /**
-     * @param SqlRequestId $requestSqlId
-     *
      * @return RequestSql
      *
      * @throws SqlRequestNotFoundException
@@ -67,20 +64,18 @@ final class GetSqlRequestForEditingHandler implements GetSqlRequestForEditingHan
     {
         $entity = new RequestSql($requestSqlId->getValue());
 
-        if (0 >= $entity->id) {
-            throw new SqlRequestNotFoundException(sprintf('SqlRequest with id "%s" cannot be found', $requestSqlId->getValue()));
+        if ($entity->id <= 0) {
+            throw new SqlRequestNotFoundException(\sprintf('SqlRequest with id "%s" cannot be found', $requestSqlId->getValue()));
         }
 
         if ((int) $entity->id !== $requestSqlId->getValue()) {
-            throw new SqlRequestNotFoundException(sprintf('The retrieved id "%s" does not match requested SqlRequest id "%s"', $entity->id, $requestSqlId->getValue()));
+            throw new SqlRequestNotFoundException(\sprintf('The retrieved id "%s" does not match requested SqlRequest id "%s"', $entity->id, $requestSqlId->getValue()));
         }
 
         return $entity;
     }
 
     /**
-     * @param RequestSql $entity
-     *
      * @return EditableSqlRequest
      *
      * @throws SqlRequestException

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\SetComb
 #[AsCommandHandler]
 final class SetCombinationImagesHandler implements SetCombinationImagesHandlerInterface
 {
-    /**
-     * @param CombinationImagesUpdater $combinationImagesUpdater
-     */
-    public function __construct(private readonly CombinationImagesUpdater $combinationImagesUpdater)
-    {
+    public function __construct(
+        private readonly CombinationImagesUpdater $combinationImagesUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(SetCombinationImagesCommand $command): void
     {
         $this->combinationImagesUpdater->associateImages($command->getCombinationId(), $command->getImageIds());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,16 +48,14 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 final class AddCustomerHandler extends AbstractCustomerHandler implements AddCustomerHandlerInterface
 {
     /**
-     * @param Hashing $hashing
      * @param string $legacyCookieKey
      */
-    public function __construct(private readonly Hashing $hashing, private $legacyCookieKey)
-    {
+    public function __construct(
+        private readonly Hashing $hashing,
+        private $legacyCookieKey,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddCustomerCommand $command)
     {
         // Prepare new legacy customer object
@@ -70,13 +69,13 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
 
         $this->assertRequiredFieldsAreNotMissing($customer);
 
-        if (false === $customer->validateFields(false)) {
+        if ($customer->validateFields(false) === false) {
             throw new CustomerException('Customer contains invalid field values');
         }
 
         // If dealing with a registered customer, we need to check if the email does not exist.
         // Two guests with the same email can co-exist, two registered customers can not.
-        if (!$command->isGuest()) {
+        if (! $command->isGuest()) {
             $this->assertCustomerWithGivenEmailDoesNotExist($command->getEmail());
         }
 
@@ -84,7 +83,7 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
         $this->assertCustomerCanAccessDefaultGroup($command);
 
         $customer->add();
-        if (null !== $command->getGroupIds()) {
+        if ($command->getGroupIds() !== null) {
             $customer->updateGroup($command->getGroupIds());
         }
 
@@ -94,8 +93,6 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
     /**
      * Checks if a registered customer (is_guest = false) doesn't already exist in the database.
      * In that case, we refuse the creation, we cannot have two registered customers with the same email.
-     *
-     * @param Email $email
      */
     private function assertCustomerWithGivenEmailDoesNotExist(Email $email)
     {
@@ -103,20 +100,13 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
         $customer->getByEmail($email->getValue());
 
         if ($customer->id) {
-            throw new DuplicateCustomerEmailException(
-                $email, sprintf('Registered customer with email "%s" already exists', $email->getValue()),
-                DuplicateCustomerEmailException::ADD
-            );
+            throw new DuplicateCustomerEmailException($email, \sprintf('Registered customer with email "%s" already exists', $email->getValue()), DuplicateCustomerEmailException::ADD);
         }
     }
 
-    /**
-     * @param Customer $customer
-     * @param AddCustomerCommand $command
-     */
     private function fillCustomerWithCommandData(Customer $customer, AddCustomerCommand $command)
     {
-        $apeCode = null !== $command->getApeCode() ?
+        $apeCode = $command->getApeCode() !== null ?
             $command->getApeCode()->getValue() :
             null;
 
@@ -150,13 +140,11 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
 
     /**
      * Checks if the default group of the customer was provided in the group list
-     *
-     * @param AddCustomerCommand $command
      */
     private function assertCustomerCanAccessDefaultGroup(AddCustomerCommand $command)
     {
-        if (!in_array($command->getDefaultGroupId(), $command->getGroupIds())) {
-            throw new CustomerDefaultGroupAccessException(sprintf('Customer default group with id "%s" must be in access groups', $command->getDefaultGroupId()));
+        if (! \in_array($command->getDefaultGroupId(), $command->getGroupIds(), true)) {
+            throw new CustomerDefaultGroupAccessException(\sprintf('Customer default group with id "%s" must be in access groups', $command->getDefaultGroupId()));
         }
     }
 }

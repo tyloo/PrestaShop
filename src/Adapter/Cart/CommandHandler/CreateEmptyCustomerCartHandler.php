@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,29 +43,18 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class CreateEmptyCustomerCartHandler implements CreateEmptyCustomerCartHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(CreateEmptyCustomerCartCommand $command)
     {
         $customer = new Customer($command->getCustomerId()->getValue());
 
         $lastEmptyCartId = $customer->getLastEmptyCart(false);
 
-        if ($lastEmptyCartId) {
-            $cart = new Cart($lastEmptyCartId);
-        } else {
-            $cart = $this->createEmptyCustomerCart($customer);
-        }
+        $cart = $lastEmptyCartId ? new Cart($lastEmptyCartId) : $this->createEmptyCustomerCart($customer);
 
         return new CartId((int) $cart->id);
     }
 
     /**
-     * @param Customer $customer
-     *
-     * @return Cart
-     *
      * @throws PrestaShopException
      */
     private function createEmptyCustomerCart(Customer $customer): Cart
@@ -81,7 +71,7 @@ final class CreateEmptyCustomerCartHandler implements CreateEmptyCustomerCartHan
         $cart->id_currency = Currency::getDefaultCurrencyId();
 
         $addresses = $customer->getAddresses($cart->id_lang);
-        $addressId = !empty($addresses) ? (int) reset($addresses)['id_address'] : null;
+        $addressId = ! empty($addresses) ? (int) reset($addresses)['id_address'] : null;
         $cart->id_address_delivery = $addressId;
         $cart->id_address_invoice = $addressId;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ use Tools;
 class PriceFormatter
 {
     /**
-     * @param float $price
+     * @param float    $price
      * @param int|null $currency
      *
      * @return float
@@ -47,7 +48,7 @@ class PriceFormatter
     }
 
     /**
-     * @param float $price
+     * @param float                   $price
      * @param int|Currency|array|null $currency
      *
      * @return string
@@ -55,9 +56,9 @@ class PriceFormatter
     public function format($price, $currency = null)
     {
         $context = Context::getContext();
-        $priceCurrency = is_array($currency) ? $currency['iso_code'] : null;
-        $priceCurrency = !$priceCurrency && $currency instanceof Currency ? $currency->iso_code : $priceCurrency;
-        $priceCurrency = !$priceCurrency ? $context->currency->iso_code : $priceCurrency;
+        $priceCurrency = \is_array($currency) ? $currency['iso_code'] : null;
+        $priceCurrency = ! $priceCurrency && $currency instanceof Currency ? $currency->iso_code : $priceCurrency;
+        $priceCurrency = ! $priceCurrency ? $context->currency->iso_code : $priceCurrency;
 
         return Tools::getContextLocale($context)->formatPrice($price, $priceCurrency);
     }

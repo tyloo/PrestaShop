@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,18 +38,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class EnabledLanguagesKpi implements KpiInterface
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param ConfigurationInterface $configuration
-     * @param string $clickLink a link for clicking on the KPI
+     * @param string $clickLink  a link for clicking on the KPI
      * @param string $sourceLink a link to refresh KPI
      */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $configuration, private $clickLink, private $sourceLink)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurationInterface $configuration,
+        private $clickLink,
+        private $sourceLink,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $enabledLanguages = $this->configuration->get('ENABLED_LANGUAGES');
@@ -61,7 +61,7 @@ final class EnabledLanguagesKpi implements KpiInterface
         $kpi->href = $this->clickLink;
         $kpi->title = $this->translator->trans('Enabled Languages', [], 'Admin.International.Feature');
 
-        if (false !== $enabledLanguages) {
+        if ($enabledLanguages !== false) {
             $kpi->value = $enabledLanguages;
         }
 

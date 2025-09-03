@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,20 +44,17 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class EditOrderMessageHandler extends AbstractOrderMessageHandler implements EditOrderMessageHandlerInterface
 {
-    /**
-     * @param EditOrderMessageCommand $command
-     */
     public function handle(EditOrderMessageCommand $command): void
     {
         $this->assertNameIsNotAlreadyUsed($command);
 
         $orderMessage = $this->getOrderMessage($command->getOrderMessageId());
 
-        if (null !== $command->getLocalizedName()) {
+        if ($command->getLocalizedName() !== null) {
             $orderMessage->name = $command->getLocalizedName();
         }
 
-        if (null !== $command->getLocalizedMessage()) {
+        if ($command->getLocalizedMessage() !== null) {
             $orderMessage->message = $command->getLocalizedMessage();
         }
 
@@ -68,11 +66,11 @@ final class EditOrderMessageHandler extends AbstractOrderMessageHandler implemen
         }
 
         try {
-            if (false === $orderMessage->update()) {
-                throw new OrderMessageException(sprintf('Failed to update order message with id "%s"', $command->getOrderMessageId()->getValue()));
+            if ($orderMessage->update() === false) {
+                throw new OrderMessageException(\sprintf('Failed to update order message with id "%s"', $command->getOrderMessageId()->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new OrderMessageException(sprintf('Failed to update order message with id "%s"', $command->getOrderMessageId()->getValue()), 0, $prestaShopException);
+            throw new OrderMessageException(\sprintf('Failed to update order message with id "%s"', $command->getOrderMessageId()->getValue()), 0, $prestaShopException);
         }
     }
 
@@ -80,7 +78,7 @@ final class EditOrderMessageHandler extends AbstractOrderMessageHandler implemen
     {
         foreach ($command->getLocalizedName() as $langId => $langName) {
             $orderMessages = OrderMessage::getOrderMessages($langId);
-            if (!is_array($orderMessages)) {
+            if (! \is_array($orderMessages)) {
                 continue;
             }
 
@@ -90,11 +88,7 @@ final class EditOrderMessageHandler extends AbstractOrderMessageHandler implemen
                 }
 
                 if ($orderMessage['name'] === $langName) {
-                    throw new OrderMessageNameAlreadyUsedException(
-                        $langName,
-                        $langId,
-                        'An order message already exists for this name'
-                    );
+                    throw new OrderMessageNameAlreadyUsedException($langName, $langId, 'An order message already exists for this name');
                 }
             }
         }

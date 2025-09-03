@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,13 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Exception\DeleteAttributeGr
 #[AsCommandHandler]
 final class BulkDeleteAttributeGroupHandler extends AbstractAttributeGroupHandler implements BulkDeleteAttributeGroupHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteAttributeGroupCommand $command)
     {
         foreach ($command->getAttributeGroupIds() as $attributeGroupId) {
             $attributeGroup = $this->getAttributeGroupById($attributeGroupId);
 
-            if (false === $this->deleteAttributeGroup($attributeGroup)) {
-                throw new DeleteAttributeGroupException(sprintf('Failed to delete attribute group with id "%s"', $attributeGroupId->getValue()), DeleteAttributeGroupException::FAILED_BULK_DELETE);
+            if ($this->deleteAttributeGroup($attributeGroup) === false) {
+                throw new DeleteAttributeGroupException(\sprintf('Failed to delete attribute group with id "%s"', $attributeGroupId->getValue()), DeleteAttributeGroupException::FAILED_BULK_DELETE);
             }
         }
     }

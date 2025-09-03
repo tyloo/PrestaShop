@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ use RequestSql;
 final class AddSqlRequestHandler extends AbstractSqlRequestHandler implements AddSqlRequestHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotAddSqlRequestException
      * @throws SqlRequestException
      */
@@ -60,8 +59,8 @@ final class AddSqlRequestHandler extends AbstractSqlRequestHandler implements Ad
 
             $entity->add();
 
-            if (0 >= $entity->id) {
-                throw new CannotAddSqlRequestException(sprintf('Invalid entity id after creation: %s', $entity->id));
+            if ($entity->id <= 0) {
+                throw new CannotAddSqlRequestException(\sprintf('Invalid entity id after creation: %s', $entity->id));
             }
 
             return new SqlRequestId((int) $entity->id);

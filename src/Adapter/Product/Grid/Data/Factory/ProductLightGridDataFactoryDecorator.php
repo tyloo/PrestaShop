@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,18 +48,12 @@ class ProductLightGridDataFactoryDecorator implements GridDataFactoryInterface
      */
     private $locale;
 
-    /**
-     * @param GridDataFactoryInterface $productGridDataFactory
-     * @param Repository $localeRepository
-     * @param string $contextLocale
-     * @param int $defaultCurrencyId
-     */
     public function __construct(
         private readonly GridDataFactoryInterface $productGridDataFactory,
         Repository $localeRepository,
         string $contextLocale,
         private readonly int $defaultCurrencyId,
-        private readonly bool $stockManagementEnabled
+        private readonly bool $stockManagementEnabled,
     ) {
         $this->locale = $localeRepository->getLocale(
             $contextLocale
@@ -66,8 +61,6 @@ class ProductLightGridDataFactoryDecorator implements GridDataFactoryInterface
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
      * @return GridData
      */
     public function getData(SearchCriteriaInterface $searchCriteria)
@@ -85,10 +78,6 @@ class ProductLightGridDataFactoryDecorator implements GridDataFactoryInterface
 
     /**
      * Applies modifications for product grid.
-     *
-     * @param array $products
-     *
-     * @return array
      */
     private function applyModification(array $products): array
     {

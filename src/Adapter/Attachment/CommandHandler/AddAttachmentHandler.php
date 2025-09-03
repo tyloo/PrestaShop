@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,18 +48,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[AsCommandHandler]
 final class AddAttachmentHandler extends AbstractAttachmentHandler implements AddAttachmentHandlerInterface
 {
-    /**
-     * @param ValidatorInterface $validator
-     * @param AttachmentFileUploaderInterface $fileUploader
-     */
-    public function __construct(ValidatorInterface $validator, protected AttachmentFileUploaderInterface $fileUploader)
-    {
+    public function __construct(
+        ValidatorInterface $validator,
+        protected AttachmentFileUploaderInterface $fileUploader,
+    ) {
         parent::__construct($validator);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws AttachmentConstraintException
      * @throws AttachmentException
      * @throws AttachmentNotFoundException
@@ -88,7 +85,7 @@ final class AddAttachmentHandler extends AbstractAttachmentHandler implements Ad
 
             $this->fileUploader->upload($command->getFilePathName(), $uniqueFileName, $command->getFileSize());
 
-            if (false === $attachment->add()) {
+            if ($attachment->add() === false) {
                 throw new CannotAddAttachmentException('Failed to add attachment');
             }
         } catch (PrestaShopException $prestaShopException) {

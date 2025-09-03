@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,26 +41,23 @@ use PrestaShopException;
 class ToggleCarrierIsFreeHandler implements ToggleCarrierIsFreeHandlerInterface
 {
     public function __construct(
-        private readonly CarrierRepository $carrierRepository
+        private readonly CarrierRepository $carrierRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ToggleCarrierIsFreeCommand $command)
     {
         $carrier = $this->carrierRepository->get($command->getCarrierId());
 
         try {
             $carrier->setFieldsToUpdate(['is_free' => true]);
-            $carrier->is_free = !(bool) $carrier->is_free;
+            $carrier->is_free = ! (bool) $carrier->is_free;
 
-            if (false === $carrier->update()) {
-                throw new CannotToggleCarrierIsFreeStatusException(sprintf('Unable to toggle is-free status of carrier with id "%d"', $command->getCarrierId()->getValue()));
+            if ($carrier->update() === false) {
+                throw new CannotToggleCarrierIsFreeStatusException(\sprintf('Unable to toggle is-free status of carrier with id "%d"', $command->getCarrierId()->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CarrierException(sprintf('An error occurred when toggling is-free status of carrier with id "%d"', $command->getCarrierId()->getValue()), 0, $prestaShopException);
+            throw new CarrierException(\sprintf('An error occurred when toggling is-free status of carrier with id "%d"', $command->getCarrierId()->getValue()), 0, $prestaShopException);
         }
     }
 }

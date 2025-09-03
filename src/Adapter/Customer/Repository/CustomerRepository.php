@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,10 +39,6 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 class CustomerRepository extends AbstractObjectModelRepository
 {
     /**
-     * @param CustomerId $customerId
-     *
-     * @return Customer
-     *
      * @throws CustomerNotFoundException
      */
     public function get(CustomerId $customerId): Customer
@@ -57,8 +54,6 @@ class CustomerRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CustomerId $customerId
-     *
      * @throws CustomerNotFoundException
      */
     public function assertCustomerExists(CustomerId $customerId): void

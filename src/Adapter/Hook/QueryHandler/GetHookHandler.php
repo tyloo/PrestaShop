@@ -45,7 +45,7 @@ final class GetHookHandler implements GetHookHandlerInterface
         $hook = new Hook($hookId);
 
         if ($hook->id !== $hookId) {
-            throw new HookNotFoundException(sprintf('Hook with id "%d" was not found.', $hookId));
+            throw new HookNotFoundException(\sprintf('Hook with id "%d" was not found.', $hookId));
         }
 
         return new HookQueryResult(

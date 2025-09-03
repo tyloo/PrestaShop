@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,12 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class GroupByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @param ConfigurationInterface $configuration
-     * @param int $contextLangId
-     */
-    public function __construct(private readonly ConfigurationInterface $configuration, private readonly int $contextLangId)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly int $contextLangId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices(): array
     {
         $choices = [];
@@ -59,7 +55,7 @@ final class GroupByIdChoiceProvider implements FormChoiceProviderInterface
         foreach ($groups as $group) {
             $groupId = $group['id_group'];
 
-            if (in_array($groups, $groupsToSkip)) {
+            if (\in_array($groups, $groupsToSkip, true)) {
                 continue;
             }
 

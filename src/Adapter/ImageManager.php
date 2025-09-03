@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,11 +35,9 @@ use ImageManager as LegacyImageManager;
  */
 class ImageManager
 {
-    /**
-     * @param LegacyContext $legacyContext
-     */
-    public function __construct(private readonly LegacyContext $legacyContext)
-    {
+    public function __construct(
+        private readonly LegacyContext $legacyContext,
+    ) {
     }
 
     /**
@@ -46,7 +45,7 @@ class ImageManager
      *
      * Use it upon a new Image management system is available.
      *
-     * @param int $imageId
+     * @param int    $imageId
      * @param string $imageType
      * @param string $tableName
      * @param string $imageDir
@@ -59,9 +58,8 @@ class ImageManager
 
         // because legacy uses relative path to reach a directory under root directory...
         $replacement = 'src="' . $this->legacyContext->getRootUrl();
-        $thumbPath = preg_replace('/src="(\\.\\.\\/)+/', $replacement, $thumbPath);
 
-        return $thumbPath;
+        return preg_replace('/src="(\\.\\.\\/)+/', $replacement, $thumbPath);
     }
 
     /**
@@ -88,7 +86,7 @@ class ImageManager
     }
 
     /**
-     * @param int $imageId
+     * @param int    $imageId
      * @param string $imageType
      * @param string $tableName
      * @param string $imageDir
@@ -108,7 +106,7 @@ class ImageManager
     }
 
     /**
-     * @param int $imageId
+     * @param int    $imageId
      * @param string $imageType
      * @param string $tableName
      * @param string $imageDir
@@ -117,7 +115,7 @@ class ImageManager
      */
     private function getImagePath($imageId, $imageType, $tableName, $imageDir)
     {
-        if ($tableName == 'product') {
+        if ($tableName === 'product') {
             $image = new Image($imageId);
 
             return $imageDir . $image->getExistingImgPath() . '.' . $imageType;
@@ -127,7 +125,7 @@ class ImageManager
     }
 
     /**
-     * @param int $imageId
+     * @param int    $imageId
      * @param string $imageType
      * @param string $tableName
      *

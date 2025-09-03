@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,20 +46,18 @@ use Symfony\Component\HttpFoundation\RequestStack;
 final class SearchCriteriaWithCategoryParentIdFilterFactory implements DecoratedSearchCriteriaFactory
 {
     /**
-     * @param Configuration $configuration
-     * @param Context $shopContext
-     * @param FeatureInterface $multistoreFeature
-     * @param MultistoreContextCheckerInterface $multistoreContextChecker
      * @param int $contextShopCategoryId
-     * @param RequestStack $requestStack
      */
-    public function __construct(private readonly Configuration $configuration, private readonly Context $shopContext, private readonly FeatureInterface $multistoreFeature, private readonly MultistoreContextCheckerInterface $multistoreContextChecker, private $contextShopCategoryId, private readonly RequestStack $requestStack)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+        private readonly Context $shopContext,
+        private readonly FeatureInterface $multistoreFeature,
+        private readonly MultistoreContextCheckerInterface $multistoreContextChecker,
+        private $contextShopCategoryId,
+        private readonly RequestStack $requestStack,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createFrom(SearchCriteriaInterface $searchCriteria)
     {
         $categoryParentId = $this->resolveCategoryParentId();
@@ -84,27 +83,27 @@ final class SearchCriteriaWithCategoryParentIdFilterFactory implements Decorated
     {
         /** @var Request $request */
         $request = $this->requestStack->getCurrentRequest();
-        if (!empty($request->attributes->get('categoryId'))) {
+        if (! empty($request->attributes->get('categoryId'))) {
             return (int) $request->attributes->get('categoryId');
         }
 
-        $categoriesCountWithoutParent = count(Category::getCategoriesWithoutParent());
+        $categoriesCountWithoutParent = \count(Category::getCategoriesWithoutParent());
         $isMultistoreFeatureUsed = $this->multistoreFeature->isUsed();
 
-        if (!$isMultistoreFeatureUsed && $categoriesCountWithoutParent > 1) {
+        if (! $isMultistoreFeatureUsed && $categoriesCountWithoutParent > 1) {
             return $this->configuration->getInt('PS_ROOT_CATEGORY');
         }
 
-        if ($isMultistoreFeatureUsed && 1 === $categoriesCountWithoutParent) {
+        if ($isMultistoreFeatureUsed && $categoriesCountWithoutParent === 1) {
             return $this->configuration->getInt('PS_HOME_CATEGORY');
         }
 
         if ($isMultistoreFeatureUsed
             && $categoriesCountWithoutParent > 1
-            && !$this->multistoreContextChecker->isSingleShopContext()
+            && ! $this->multistoreContextChecker->isSingleShopContext()
         ) {
             if ($this->multistoreFeature->isActive()
-                && count($this->shopContext->getShops(true, true)) === 1
+                && \count($this->shopContext->getShops(true, true)) === 1
             ) {
                 return $this->contextShopCategoryId;
             }

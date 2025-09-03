@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,48 +38,39 @@ use PrestaShop\PrestaShop\Core\Currency\CurrencyDataProviderInterface;
  */
 class CurrencyDataProvider implements CurrencyDataProviderInterface
 {
-    /** @var Currency */
+    /**
+     * @var Currency
+     */
     private $defaultCurrency;
 
     /**
-     * @param ConfigurationInterface $configuration
      * @param int $shopId
      */
-    public function __construct(private readonly ConfigurationInterface $configuration, private $shopId)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private $shopId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrencies($object = false, $active = true, $group_by = false)
     {
         return Currency::getCurrencies($object = false, $active = true, $group_by = false);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findAll($currentShopOnly = true)
     {
         return Currency::findAll(true, false, $currentShopOnly);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findAllInstalled()
     {
         return Currency::findAllInstalled();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrencyByIsoCode($isoCode, $idLang = null)
     {
         $currencyId = Currency::getIdByIsoCode($isoCode, 0, false, true);
-        if (!$currencyId) {
+        if (! $currencyId) {
             return null;
         }
 
@@ -102,15 +94,12 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
         return $this->getCurrencyByIsoCode($isoCode, $idLang);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrencyByIsoCodeOrCreate($isoCode, $idLang = null)
     {
         // Soft deleted currencies are not kept duplicated any more, so if one try to recreate it the one in database is reused
         $currency = $this->getCurrencyByIsoCode($isoCode, $idLang);
-        if (null === $currency) {
-            if (null === $idLang) {
+        if ($currency === null) {
+            if ($idLang === null) {
                 $idLang = $this->configuration->get('PS_LANG_DEFAULT');
             }
 
@@ -120,27 +109,18 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
         return $currency;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function saveCurrency(Currency $currencyEntity)
     {
-        if (false === $currencyEntity->save()) {
+        if ($currencyEntity->save() === false) {
             throw new Exception('Failed saving Currency entity');
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCurrencyById($currencyId)
     {
         return new Currency($currencyId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultCurrencyIsoCode()
     {
         return $this->getDefaultCurrency()->iso_code;
@@ -148,12 +128,10 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
 
     /**
      * Returns default Currency set in Configuration
-     *
-     * @return Currency
      */
     public function getDefaultCurrency(): Currency
     {
-        if (null === $this->defaultCurrency) {
+        if ($this->defaultCurrency === null) {
             $this->defaultCurrency = new Currency((int) $this->configuration->get('PS_CURRENCY_DEFAULT'), null, $this->shopId);
         }
 

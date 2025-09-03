@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,7 +45,7 @@ class ManufacturerLazyArray extends AbstractLazyArray
         array $manufacturer,
         private readonly Language $language,
         private readonly ImageRetriever $imageRetriever,
-        private readonly Link $link
+        private readonly Link $link,
     ) {
         $this->manufacturer = $manufacturer;
 
@@ -88,8 +89,8 @@ class ManufacturerLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getNbProducts()
     {
-        if (!isset($this->manufacturer['nb_products'])) {
-            $this->manufacturer['nb_products'] = count(
+        if (! isset($this->manufacturer['nb_products'])) {
+            $this->manufacturer['nb_products'] = \count(
                 (new Manufacturer($this->manufacturer['id'], $this->language->getId()))
                     ->getProductsLite($this->language->getId())
             );

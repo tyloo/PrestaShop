@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,22 +36,17 @@ use PrestaShop\PrestaShop\Core\Language\Pack\LanguagePackInstallerInterface;
  */
 final class LanguagePackImporter implements LanguagePackImporterInterface
 {
-    /**
-     * @param LanguagePackInstallerInterface $languagePack
-     * @param CacheClearerInterface $entireCacheClearer
-     */
-    public function __construct(private readonly LanguagePackInstallerInterface $languagePack, private readonly CacheClearerInterface $entireCacheClearer)
-    {
+    public function __construct(
+        private readonly LanguagePackInstallerInterface $languagePack,
+        private readonly CacheClearerInterface $entireCacheClearer,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function import($isoCode)
     {
         $result = $this->languagePack->downloadAndInstallLanguagePack($isoCode);
 
-        if (!empty($result)) {
+        if (! empty($result)) {
             return $result;
         }
 

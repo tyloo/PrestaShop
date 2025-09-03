@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,9 +58,6 @@ class DeleteSupplierLogoImageHandler implements DeleteSupplierLogoImageHandlerIn
         $this->tmpImageDir = $tmpImageDir;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteSupplierLogoImageCommand $command): void
     {
         $fs = new Filesystem();
@@ -68,7 +66,7 @@ class DeleteSupplierLogoImageHandler implements DeleteSupplierLogoImageHandlerIn
 
         foreach ($imageTypes as $imageType) {
             foreach (ImageFormatConfiguration::SUPPORTED_FORMATS as $imageFormat) {
-                $path = sprintf(
+                $path = \sprintf(
                     '%s%s-%s.' . $imageFormat,
                     $this->imageDir,
                     $command->getSupplierId()->getValue(),
@@ -80,7 +78,7 @@ class DeleteSupplierLogoImageHandler implements DeleteSupplierLogoImageHandlerIn
             }
         }
 
-        $imagePath = sprintf(
+        $imagePath = \sprintf(
             '%s%s.jpg',
             $this->imageDir,
             $command->getSupplierId()->getValue()
@@ -90,7 +88,7 @@ class DeleteSupplierLogoImageHandler implements DeleteSupplierLogoImageHandlerIn
         }
 
         // Delete tmp image
-        $imgTmpPath = sprintf(
+        $imgTmpPath = \sprintf(
             '%ssupplier_%s.jpg',
             $this->tmpImageDir,
             $command->getSupplierId()->getValue()
@@ -100,7 +98,7 @@ class DeleteSupplierLogoImageHandler implements DeleteSupplierLogoImageHandlerIn
         }
 
         // Delete tmp image mini
-        $imgMiniTmpPath = sprintf(
+        $imgMiniTmpPath = \sprintf(
             '%ssupplier_mini_%s.jpg',
             $this->tmpImageDir,
             $command->getSupplierId()->getValue()

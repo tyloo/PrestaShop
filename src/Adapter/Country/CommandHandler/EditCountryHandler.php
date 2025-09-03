@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,62 +40,60 @@ use PrestaShop\PrestaShop\Core\Domain\Country\CommandHandler\EditCountryHandlerI
 #[AsCommandHandler]
 class EditCountryHandler implements EditCountryHandlerInterface
 {
-    public function __construct(private readonly CountryRepository $countryRepository)
-    {
+    public function __construct(
+        private readonly CountryRepository $countryRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditCountryCommand $command): void
     {
         $country = $this->countryRepository->get($command->getCountryId());
 
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $country->name = $command->getLocalizedNames();
         }
 
-        if (null !== $command->getIsoCode()) {
+        if ($command->getIsoCode() !== null) {
             $country->iso_code = $command->getIsoCode();
         }
 
-        if (null !== $command->getCallPrefix()) {
+        if ($command->getCallPrefix() !== null) {
             $country->call_prefix = $command->getCallPrefix();
         }
 
-        if (null !== $command->needZipCode()) {
+        if ($command->needZipCode() !== null) {
             $country->need_zip_code = $command->needZipCode();
         }
 
-        if (null !== $command->isEnabled()) {
+        if ($command->isEnabled() !== null) {
             $country->active = $command->isEnabled();
         }
 
-        if (null !== $command->needIdNumber()) {
+        if ($command->needIdNumber() !== null) {
             $country->need_identification_number = $command->needIdNumber();
         }
 
-        if (null !== $command->displayTaxLabel()) {
+        if ($command->displayTaxLabel() !== null) {
             $country->display_tax_label = $command->displayTaxLabel();
         }
 
-        if (null !== $command->getShopAssociation()) {
+        if ($command->getShopAssociation() !== null) {
             $country->id_shop_list = $command->getShopAssociation();
         }
 
-        if (null !== $command->containsStates()) {
+        if ($command->containsStates() !== null) {
             $country->contains_states = $command->containsStates();
         }
 
-        if (null !== $command->getZipCodeFormat()) {
+        if ($command->getZipCodeFormat() !== null) {
             $country->zip_code_format = $command->getZipCodeFormat()->getValue();
         }
 
-        if (null !== $command->getDefaultCurrency()) {
+        if ($command->getDefaultCurrency() !== null) {
             $country->id_currency = $command->getDefaultCurrency();
         }
 
-        if (null !== $command->getZoneId()) {
+        if ($command->getZoneId() !== null) {
             $country->id_zone = $command->getZoneId();
         }
 

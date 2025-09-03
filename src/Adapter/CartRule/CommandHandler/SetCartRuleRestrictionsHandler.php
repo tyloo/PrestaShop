@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,17 +43,17 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\ValueObject\GroupId;
 class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerInterface
 {
     public function __construct(
-        protected readonly CartRuleRepository $cartRuleRepository
+        protected readonly CartRuleRepository $cartRuleRepository,
     ) {
     }
 
     public function handle(SetCartRuleRestrictionsCommand $command): void
     {
-        if (null === $command->getRestrictedCartRuleIds()
-            && null === $command->getProductRestrictionRuleGroups()
-            && null === $command->getRestrictedCarrierIds()
-            && null === $command->getRestrictedCountryIds()
-            && null === $command->getRestrictedGroupIds()
+        if ($command->getRestrictedCartRuleIds() === null
+            && $command->getProductRestrictionRuleGroups() === null
+            && $command->getRestrictedCarrierIds() === null
+            && $command->getRestrictedCountryIds() === null
+            && $command->getRestrictedGroupIds() === null
         ) {
             // no restrictions were modified
             return;
@@ -61,27 +62,27 @@ class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerIn
         $cartRule = $this->cartRuleRepository->get($command->getCartRuleId());
 
         $restrictedCartRuleIds = $command->getRestrictedCartRuleIds();
-        if (null !== $restrictedCartRuleIds) {
+        if ($restrictedCartRuleIds !== null) {
             $this->setCartRuleRestrictions($cartRule, $restrictedCartRuleIds);
         }
 
         $productRestrictionGroups = $command->getProductRestrictionRuleGroups();
-        if (null !== $productRestrictionGroups) {
+        if ($productRestrictionGroups !== null) {
             $this->setProductRestrictions($cartRule, $productRestrictionGroups);
         }
 
         $restrictedCarrierIds = $command->getRestrictedCarrierIds();
-        if (null !== $restrictedCarrierIds) {
+        if ($restrictedCarrierIds !== null) {
             $this->setCarrierRestrictions($cartRule, $restrictedCarrierIds);
         }
 
         $restrictedCountryIds = $command->getRestrictedCountryIds();
-        if (null !== $restrictedCountryIds) {
+        if ($restrictedCountryIds !== null) {
             $this->setCountryRestrictions($cartRule, $restrictedCountryIds);
         }
 
         $restrictedGroupIds = $command->getRestrictedGroupIds();
-        if (null !== $restrictedGroupIds) {
+        if ($restrictedGroupIds !== null) {
             $this->setGroupRestrictions($cartRule, $restrictedGroupIds);
         }
 
@@ -94,7 +95,8 @@ class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerIn
         $cartRuleId = new CartRuleId((int) $cartRule->id);
         $this->cartRuleRepository->assertAllCartRulesExists($restrictedCartRuleIds);
         $this->cartRuleRepository->restrictCartRules($cartRuleId, $restrictedCartRuleIds);
-        $hasRestrictions = !empty($restrictedCartRuleIds);
+
+        $hasRestrictions = ! empty($restrictedCartRuleIds);
 
         $cartRule->cart_rule_restriction = $hasRestrictions;
         $this->cartRuleRepository->partialUpdate($cartRule, ['cart_rule_restriction']);
@@ -111,48 +113,40 @@ class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerIn
     {
         $this->cartRuleRepository->setProductRestrictions(new CartRuleId((int) $cartRule->id), $restrictionRuleGroups);
 
-        $cartRule->product_restriction = !empty($restrictionRuleGroups);
+        $cartRule->product_restriction = ! empty($restrictionRuleGroups);
         $this->cartRuleRepository->partialUpdate($cartRule, ['product_restriction']);
     }
 
     /**
-     * @param CartRule $cartRule
      * @param CarrierId[] $restrictedCarrierIds
-     *
-     * @return void
      */
     private function setCarrierRestrictions(CartRule $cartRule, array $restrictedCarrierIds): void
     {
         $this->cartRuleRepository->setCarrierRestrictions(new CartRuleId((int) $cartRule->id), $restrictedCarrierIds);
 
-        $cartRule->carrier_restriction = !empty($restrictedCarrierIds);
+        $cartRule->carrier_restriction = ! empty($restrictedCarrierIds);
         $this->cartRuleRepository->partialUpdate($cartRule, ['carrier_restriction']);
     }
 
     /**
-     * @param CartRule $cartRule
      * @param CountryId[] $restrictedCountryIds
-     *
-     * @return void
      */
     private function setCountryRestrictions(CartRule $cartRule, array $restrictedCountryIds): void
     {
         $this->cartRuleRepository->setCountryRestrictions(new CartRuleId((int) $cartRule->id), $restrictedCountryIds);
 
-        $cartRule->country_restriction = !empty($restrictedCountryIds);
+        $cartRule->country_restriction = ! empty($restrictedCountryIds);
         $this->cartRuleRepository->partialUpdate($cartRule, ['country_restriction']);
     }
 
     /**
      * @param GroupId[] $restrictedGroupIds
-     *
-     * @return void
      */
     private function setGroupRestrictions(CartRule $cartRule, array $restrictedGroupIds): void
     {
         $this->cartRuleRepository->setGroupRestrictions(new CartRuleId((int) $cartRule->id), $restrictedGroupIds);
 
-        $cartRule->group_restriction = !empty($restrictedGroupIds);
+        $cartRule->group_restriction = ! empty($restrictedGroupIds);
         $this->cartRuleRepository->partialUpdate($cartRule, ['group_restriction']);
     }
 }

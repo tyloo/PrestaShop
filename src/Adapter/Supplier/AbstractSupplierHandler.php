@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,8 +44,6 @@ abstract class AbstractSupplierHandler extends AbstractObjectModelHandler
     /**
      * Gets legacy Supplier
      *
-     * @param SupplierId $supplierId
-     *
      * @return Supplier
      *
      * @throws SupplierException
@@ -58,15 +57,13 @@ abstract class AbstractSupplierHandler extends AbstractObjectModelHandler
         }
 
         if ($supplier->id !== $supplierId->getValue()) {
-            throw new SupplierNotFoundException(sprintf('Supplier with id "%s" was not found.', $supplierId->getValue()));
+            throw new SupplierNotFoundException(\sprintf('Supplier with id "%s" was not found.', $supplierId->getValue()));
         }
 
         return $supplier;
     }
 
     /**
-     * @param SupplierId $supplierId
-     *
      * @return Address
      *
      * @throws SupplierException
@@ -79,8 +76,8 @@ abstract class AbstractSupplierHandler extends AbstractObjectModelHandler
 
             $address = new Address($addressId);
 
-            if (null === $address->id_supplier) {
-                throw new AddressNotFoundException(sprintf('Address for supplier with id "%s" was not found', $supplierIdValue));
+            if ($address->id_supplier === null) {
+                throw new AddressNotFoundException(\sprintf('Address for supplier with id "%s" was not found', $supplierIdValue));
             }
         } catch (PrestaShopException $prestaShopException) {
             throw new SupplierException('Failed to get supplier address', 0, $prestaShopException);
@@ -96,24 +93,21 @@ abstract class AbstractSupplierHandler extends AbstractObjectModelHandler
         try {
             return $supplier->delete();
         } catch (PrestaShopException) {
-            throw new SupplierException(sprintf('An error occurred when deleting Supplier object with id "%s".', $supplier->id));
+            throw new SupplierException(\sprintf('An error occurred when deleting Supplier object with id "%s".', $supplier->id));
         }
     }
 
     /**
-     * @param Supplier $supplier
-     * @param Address $address
-     *
      * @throws PrestaShopException
      * @throws SupplierException
      */
     protected function validateFields(Supplier $supplier, Address $address)
     {
-        if (false === $supplier->validateFields(false) || false === $supplier->validateFieldsLang(false)) {
+        if ($supplier->validateFields(false) === false || $supplier->validateFieldsLang(false) === false) {
             throw new SupplierException('Supplier contains invalid field values');
         }
 
-        if (false === $address->validateFields(false) || false === $address->validateFieldsLang(false)) {
+        if ($address->validateFields(false) === false || $address->validateFieldsLang(false) === false) {
             throw new SupplierException('Supplier address contains invalid field values');
         }
     }

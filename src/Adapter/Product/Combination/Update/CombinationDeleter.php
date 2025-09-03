@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,19 +41,13 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
 
 class CombinationDeleter
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param CombinationRepository $combinationRepository
-     * @param DefaultCombinationUpdater $defaultCombinationUpdater
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly CombinationRepository $combinationRepository, private readonly DefaultCombinationUpdater $defaultCombinationUpdater)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly DefaultCombinationUpdater $defaultCombinationUpdater,
+    ) {
     }
 
-    /**
-     * @param CombinationId $combinationId
-     * @param ShopConstraint $shopConstraint
-     */
     public function deleteCombination(CombinationId $combinationId, ShopConstraint $shopConstraint): void
     {
         $combination = $this->combinationRepository->getByShopConstraint($combinationId, $shopConstraint);
@@ -65,7 +60,6 @@ class CombinationDeleter
     }
 
     /**
-     * @param ProductId $productId
      * @param CombinationId[] $combinationIds
      */
     public function bulkDeleteProductCombinations(ProductId $productId, array $combinationIds, ShopConstraint $shopConstraint): void
@@ -78,8 +72,6 @@ class CombinationDeleter
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @throws InvalidProductTypeException
      * @throws CannotDeleteCombinationException
      * @throws CoreException
@@ -94,9 +86,6 @@ class CombinationDeleter
         $this->combinationRepository->deleteByProductId($productId, $shopConstraint);
     }
 
-    /**
-     * @param ProductId $productId
-     */
     private function updateDefaultCombination(ProductId $productId, ShopConstraint $shopConstraint): void
     {
         $newDefaultCombinationId = $this->combinationRepository->findFirstCombinationId($productId, $shopConstraint);

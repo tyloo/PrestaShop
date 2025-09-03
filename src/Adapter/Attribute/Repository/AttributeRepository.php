@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,15 +52,13 @@ use RuntimeException;
  */
 class AttributeRepository extends AbstractMultiShopObjectModelRepository
 {
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     /**
-     * @param AttributeId $attributeId
-     *
-     * @return ProductAttribute
-     *
      * @throws AttributeNotFoundException
      * @throws CoreException
      */
@@ -76,10 +75,6 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductAttribute $attribute
-     *
-     * @return AttributeId
-     *
      * @throws CoreException
      */
     public function add(ProductAttribute $attribute): AttributeId
@@ -121,15 +116,14 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
 
         $result = (int) $qb->executeQuery()->fetchAssociative()['total'];
 
-        if (count($attributeIds) !== $result) {
+        if (\count($attributeIds) !== $result) {
             throw new AttributeNotFoundException('Some of provided attributes does not exist');
         }
     }
 
     /**
-     * @param ShopConstraint $shopConstraint
      * @param AttributeGroupId[] $attributeGroupIds
-     * @param AttributeId[] $attributeIds get only certain attributes (e.g. when need to get only certain combinations attributes)
+     * @param AttributeId[]      $attributeIds      get only certain attributes (e.g. when need to get only certain combinations attributes)
      *
      * @return array<int, array<int, ProductAttribute>> arrays of product attributes indexed by product attribute groups
      */
@@ -139,7 +133,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
             return [];
         }
 
-        $attributeGroupIdValues = array_map(static fn(AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
+        $attributeGroupIdValues = array_map(static fn (AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
 
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -156,8 +150,8 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
             ->addOrderBy('a.position', 'ASC')
         ;
 
-        if (!empty($attributeIds)) {
-            $attributeIdValues = array_map(static fn(AttributeId $attributeId): int => $attributeId->getValue(), $attributeIds);
+        if (! empty($attributeIds)) {
+            $attributeIdValues = array_map(static fn (AttributeId $attributeId): int => $attributeId->getValue(), $attributeIds);
 
             $qb->andWhere($qb->expr()->in('a.id_attribute', ':attributeIds'))
                 ->setParameter('attributeIds', $attributeIdValues, Connection::PARAM_INT_ARRAY)
@@ -181,7 +175,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
 
         $results = $qb->executeQuery()->fetchAllAssociative();
 
-        if (!$results) {
+        if (! $results) {
             return [];
         }
 
@@ -211,14 +205,13 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
 
     /**
      * @param CombinationId[] $combinationIds
-     * @param LanguageId $langId
      *
      * @return array<int, CombinationAttributeInformation[]>
      */
     public function getAttributesInfoByCombinationIds(array $combinationIds, LanguageId $langId): array
     {
         $attributeCombinationAssociations = $this->getAttributeCombinationAssociations($combinationIds);
-        $attributeIds = array_unique(array_map(static fn(array $attributeByCombination): int => (int) $attributeByCombination['id_attribute'], $attributeCombinationAssociations));
+        $attributeIds = array_unique(array_map(static fn (array $attributeByCombination): int => (int) $attributeByCombination['id_attribute'], $attributeCombinationAssociations));
 
         $attributesInfoByAttributeId = $this->getAttributesInformation($attributeIds, $langId->getValue());
 
@@ -233,15 +226,15 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
      * If at least one of them is missing in any shop, it throws exception.
      *
      * @param AttributeId[] $attributeIds
-     * @param ShopId[] $shopIds
+     * @param ShopId[]      $shopIds
      *
      * @throws ShopAssociationNotFound
      */
     public function assertExistsInEveryShop(array $attributeIds, array $shopIds): void
     {
-        $attributeIdValues = array_map(static fn(AttributeId $attributeId): int => $attributeId->getValue(), $attributeIds);
+        $attributeIdValues = array_map(static fn (AttributeId $attributeId): int => $attributeId->getValue(), $attributeIds);
 
-        $shopIdValues = array_map(static fn(ShopId $shopId): int => $shopId->getValue(), $shopIds);
+        $shopIdValues = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $shopIds);
 
         $qb = $this->connection->createQueryBuilder();
         $results = $qb
@@ -266,7 +259,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
         }
 
         foreach ($attributeIdValues as $attributeIdValue) {
-            if (!isset($attributeShops[$attributeIdValue]) || $attributeShops[$attributeIdValue] !== $shopIdValues) {
+            if (! isset($attributeShops[$attributeIdValue]) || $attributeShops[$attributeIdValue] !== $shopIdValues) {
                 throw new ShopAssociationNotFound('Provided attributes do not exist in every shop');
             }
         }
@@ -283,7 +276,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
             return [];
         }
 
-        $combinationIds = array_map(fn(CombinationId $id): int => $id->getValue(), $combinationIds);
+        $combinationIds = array_map(fn (CombinationId $id): int => $id->getValue(), $combinationIds);
 
         $qb = $this->connection->createQueryBuilder();
         $qb->select('pac.id_attribute')
@@ -298,7 +291,6 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
 
     /**
      * @param int[] $attributeIds
-     * @param int $langId
      *
      * @return array<int, array<string, mixed>>
      */
@@ -344,14 +336,14 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param array<int, array<string, int>> $attributeCombinationAssociations
+     * @param array<int, array<string, int>>   $attributeCombinationAssociations
      * @param array<int, array<string, mixed>> $attributesInfoByAttributeId
      *
      * @return array<int, CombinationAttributeInformation[]>
      */
     private function buildCombinationAttributeInformationList(
         array $attributeCombinationAssociations,
-        array $attributesInfoByAttributeId
+        array $attributesInfoByAttributeId,
     ): array {
         $attributesInfoByCombinationId = [];
         foreach ($attributeCombinationAssociations as $attributeCombinationAssociation) {

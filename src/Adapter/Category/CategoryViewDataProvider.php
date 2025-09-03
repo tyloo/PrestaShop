@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,14 @@ use Tools;
 class CategoryViewDataProvider
 {
     /**
-     * @param ConfigurationInterface $configuration
-     * @param FeatureInterface $multishopFeature
-     * @param Context $shopContext
      * @param int $contextLangId
      */
-    public function __construct(private readonly ConfigurationInterface $configuration, private readonly FeatureInterface $multishopFeature, private readonly Context $shopContext, private $contextLangId)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly FeatureInterface $multishopFeature,
+        private readonly Context $shopContext,
+        private $contextLangId,
+    ) {
     }
 
     /**
@@ -60,14 +62,14 @@ class CategoryViewDataProvider
     {
         $category = new Category($categoryId);
 
-        $categoriesWithoutParentCount = count(Category::getCategoriesWithoutParent());
+        $categoriesWithoutParentCount = \count(Category::getCategoriesWithoutParent());
         $categoriesTree = $category->getParentsCategories();
         $categoryName = $category->name[$this->contextLangId] ?? null;
 
         if (empty($categoriesTree)
-            && ($category->id != (int) $this->configuration->get('PS_ROOT_CATEGORY') || Tools::isSubmit('id_category'))
+            && ($category->id !== (int) $this->configuration->get('PS_ROOT_CATEGORY') || Tools::isSubmit('id_category'))
             && $this->shopContext->isShopContext()
-            && !$this->multishopFeature->isUsed()
+            && ! $this->multishopFeature->isUsed()
             && $categoriesWithoutParentCount > 1
         ) {
             $categoriesTree = [['name' => $categoryName]];
@@ -79,7 +81,7 @@ class CategoryViewDataProvider
             'breadcrumb_tree' => $categoriesTree,
             'id' => $category->id,
             'id_parent' => $category->id_parent,
-            'is_home_category' => $this->configuration->get('PS_HOME_CATEGORY') == $category->id,
+            'is_home_category' => $this->configuration->get('PS_HOME_CATEGORY') === $category->id,
             'name' => $categoryName,
         ];
     }

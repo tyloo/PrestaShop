@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,14 +49,13 @@ class CategoriesProvider
 
     /**
      * @param int $contextLanguageId
-     * @param array $contextShopIds
      */
     public function __construct(
         $contextLanguageId,
-        array $contextShopIds
+        array $contextShopIds,
     ) {
         $this->contextLanguageId = (int) $contextLanguageId;
-        $this->contextShopIds = array_map(fn($item) => (int) $item, $contextShopIds);
+        $this->contextShopIds = array_map(fn ($item) => (int) $item, $contextShopIds);
     }
 
     /**
@@ -101,7 +101,7 @@ class CategoriesProvider
         ;
 
         $result = Db::getInstance()->getRow($mainCategoryQuery);
-        $categories = is_array($result) ? $result : [];
+        $categories = \is_array($result) ? $result : [];
 
         $childrenQuery = new DbQuery();
         $childrenQuery
@@ -119,7 +119,7 @@ class CategoriesProvider
         ;
 
         $childCategories = Db::getInstance()->executeS($childrenQuery);
-        $childCategories = is_array($childCategories) ? $childCategories : [];
+        $childCategories = \is_array($childCategories) ? $childCategories : [];
 
         foreach ($childCategories as $childCategory) {
             $categories['children'][] = $this->collectNestedCategoriesIdsAndNames($childCategory['id_cms_category']);

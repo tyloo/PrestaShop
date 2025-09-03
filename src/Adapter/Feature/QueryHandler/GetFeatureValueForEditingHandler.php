@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,11 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
 #[AsQueryHandler]
 class GetFeatureValueForEditingHandler implements GetFeatureValueForEditingHandlerInterface
 {
-    /**
-     * @param FeatureValueRepository $featureValueRepository
-     */
-    public function __construct(private readonly FeatureValueRepository $featureValueRepository)
-    {
+    public function __construct(
+        private readonly FeatureValueRepository $featureValueRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(GetFeatureValueForEditing $query): EditableFeatureValue
     {
         $featureValue = $this->featureValueRepository->get($query->getFeatureValueId());

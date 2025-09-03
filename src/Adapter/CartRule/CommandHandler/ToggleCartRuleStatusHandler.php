@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,21 +41,12 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\Exception\UpdateCartRuleException
 #[AsCommandHandler]
 final class ToggleCartRuleStatusHandler extends AbstractCartRuleHandler implements ToggleCartRuleStatusHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ToggleCartRuleStatusCommand $command): void
     {
         $cartRule = $this->getCartRule($command->getCartRuleId());
 
-        if (!$this->toggleCartRuleStatus($cartRule, $command->getExpectedStatus())) {
-            throw new UpdateCartRuleException(
-                sprintf(
-                    'Unable to toggle cart rule status with id "%s"',
-                    $cartRule->id
-                ),
-                UpdateCartRuleException::FAILED_UPDATE_STATUS
-            );
+        if (! $this->toggleCartRuleStatus($cartRule, $command->getExpectedStatus())) {
+            throw new UpdateCartRuleException(\sprintf('Unable to toggle cart rule status with id "%s"', $cartRule->id), UpdateCartRuleException::FAILED_UPDATE_STATUS);
         }
     }
 }

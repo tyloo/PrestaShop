@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,11 +42,6 @@ class ContainerFinder
      */
     protected $context;
 
-    /**
-     * ContainerFinder constructor.
-     *
-     * @param Context $context
-     */
     public function __construct(Context $context)
     {
         $this->context = $context;
@@ -65,13 +61,13 @@ class ContainerFinder
         if (isset($this->context->controller)
             && method_exists($this->context->controller, 'getContainer')
             && ($container = $this->context->controller->getContainer())
-            && null !== $container
+            && $container !== null
         ) {
             return $container;
         }
 
         $container = SymfonyContainer::getInstance();
-        if (null !== $container) {
+        if ($container !== null) {
             return $container;
         }
 

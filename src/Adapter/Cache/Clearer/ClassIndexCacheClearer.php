@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerInterface;
  */
 final class ClassIndexCacheClearer implements CacheClearerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function clear()
     {
         PrestashopAutoload::getInstance()->generateIndex();

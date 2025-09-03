@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,17 +48,18 @@ class ModuleDataProvider
      */
     private $employeeID;
 
-    public function __construct(/**
-     * Logger.
-     */
-    private readonly LoggerInterface $logger, /**
+    public function __construct(
+        /**
+         * Logger.
+         */
+        private readonly LoggerInterface $logger, /**
      * Translator.
      */
-    private readonly TranslatorInterface $translator, /**
+        private readonly TranslatorInterface $translator, /**
      * EntityManager for module history.
      */
-    private readonly ?EntityManager $entityManager = null)
-    {
+        private readonly ?EntityManager $entityManager = null,
+    ) {
         $this->employeeID = 0;
     }
 
@@ -79,7 +81,7 @@ class ModuleDataProvider
     public function findByName($name)
     {
         $result = Db::getInstance()->getRow(
-            sprintf(
+            \sprintf(
                 'SELECT `id_module` as `id`, `active`, `version` FROM `%smodule` WHERE `name` = "%s"',
                 _DB_PREFIX_,
                 pSQL($name)
@@ -91,7 +93,7 @@ class ModuleDataProvider
             $result['active'] = $this->isEnabled($name);
             $lastAccessDate = '0000-00-00 00:00:00';
 
-            if (!Tools::isPHPCLI() && null !== $this->entityManager && $this->employeeID) {
+            if (! Tools::isPHPCLI() && $this->entityManager !== null && $this->employeeID) {
                 $moduleID = (int) $result['id'];
 
                 $qb = $this->entityManager->createQueryBuilder();
@@ -103,7 +105,7 @@ class ModuleDataProvider
                 $query->useResultCache(true);
                 $modulesHistory = $query->getResult();
 
-                if (array_key_exists($moduleID, $modulesHistory)) {
+                if (\array_key_exists($moduleID, $modulesHistory)) {
                     $lastAccessDate = $modulesHistory[$moduleID]->getDateUpd()->format('Y-m-d H:i:s');
                 }
             }
@@ -121,8 +123,6 @@ class ModuleDataProvider
     /**
      * Return installed modules along with their id, name and version
      * If a specific shop is selected, active keys are added
-     *
-     * @return array
      */
     public function getInstalled(): array
     {
@@ -130,7 +130,7 @@ class ModuleDataProvider
         $from = ' FROM `' . _DB_PREFIX_ . 'module` m';
 
         $id_shops = (new Context())->getContextListShopID();
-        if (count($id_shops) > 0) {
+        if (\count($id_shops) > 0) {
             $from .= ' LEFT JOIN `' . _DB_PREFIX_ . 'module_shop` ms ON ms.`id_module` = m.`id_module`';
             $from .= ' AND ms.`id_shop` IN (' . implode(',', array_map('intval', $id_shops)) . ')';
         }
@@ -198,9 +198,9 @@ class ModuleDataProvider
         AND ms.`id_shop` IN (' . implode(',', array_map('intval', $id_shops)) . ')');
         if ($result) {
             return $result['active'] && $result['shop_active'];
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public function isInstalled($name)
@@ -209,11 +209,6 @@ class ModuleDataProvider
         return (bool) $this->getModuleIdByName($name);
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function isInstalledAndActive(string $name): bool
     {
         return (bool) $this->getModuleIdByName($name, true);
@@ -222,8 +217,8 @@ class ModuleDataProvider
     /**
      * Returns the Module Id
      *
-     * @param string $name The technical module name
-     * @param bool $activeModulesOnly Should we return the module only if it's active ?
+     * @param string $name              The technical module name
+     * @param bool   $activeModulesOnly Should we return the module only if it's active ?
      *
      * @return int the Module Id, or 0 if not found
      */
@@ -248,13 +243,13 @@ class ModuleDataProvider
      */
     public function isModuleMainClassValid($name)
     {
-        if (!Validate::isModuleName($name)) {
+        if (! Validate::isModuleName($name)) {
             return false;
         }
 
         $file_path = _PS_MODULE_DIR_ . $name . '/' . $name . '.php';
         // Check if file exists (slightly faster than file_exists)
-        if (!(int) @filemtime($file_path)) {
+        if (! (int) @filemtime($file_path)) {
             return false;
         }
 
@@ -337,6 +332,6 @@ class ModuleDataProvider
             WHERE m.`id_module` = ' . $id . '
             AND ms.`id_shop` IN (' . implode(',', $id_shops) . ')');
 
-        return !empty($result);
+        return ! empty($result);
     }
 }

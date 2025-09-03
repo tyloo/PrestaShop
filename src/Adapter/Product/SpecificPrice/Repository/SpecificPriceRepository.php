@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,22 +52,15 @@ use SpecificPrice;
  */
 class SpecificPriceRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param SpecificPriceValidator $specificPriceValidator
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly SpecificPriceValidator $specificPriceValidator, private readonly ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly SpecificPriceValidator $specificPriceValidator,
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     /**
-     * @param SpecificPrice $specificPrice
-     * @param int $errorCode
-     *
-     * @return SpecificPriceId
-     *
      * @throws SpecificPriceConstraintException
      * @throws CoreException
      */
@@ -80,10 +74,6 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param SpecificPriceId $specificPriceId
-     *
-     * @return SpecificPrice
-     *
      * @throws SpecificPriceNotFoundException
      */
     public function get(SpecificPriceId $specificPriceId): SpecificPrice
@@ -98,11 +88,6 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
         return $specificPrice;
     }
 
-    /**
-     * @param SpecificPriceId $specificPriceId
-     *
-     * @return void
-     */
     public function delete(SpecificPriceId $specificPriceId): void
     {
         $objectModel = $this->getObjectModel(
@@ -115,7 +100,6 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param SpecificPrice $specificPrice
      * @param string[] $updatableProperties
      */
     public function partialUpdate(SpecificPrice $specificPrice, array $updatableProperties): void
@@ -130,10 +114,6 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param LanguageId $langId
-     * @param int|null $limit
-     * @param int|null $offset
      * @param array<string, mixed> $filters
      *
      * @return array<int, array<string, string|null>>
@@ -143,7 +123,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
         LanguageId $langId,
         ?int $limit = null,
         ?int $offset = null,
-        array $filters = []
+        array $filters = [],
     ): array {
         $qb = $this->getSpecificPricesQueryBuilder($productId, $langId, $filters)
             ->select('
@@ -164,13 +144,11 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return SpecificPriceId[]
      */
     public function getProductSpecificPricesIds(ProductId $productId): array
     {
-        return array_map(static fn(array $specificPrice): SpecificPriceId => new SpecificPriceId((int) $specificPrice['id_specific_price']), $this->connection
+        return array_map(static fn (array $specificPrice): SpecificPriceId => new SpecificPriceId((int) $specificPrice['id_specific_price']), $this->connection
             ->createQueryBuilder()
             ->from($this->dbPrefix . 'specific_price', 'sp')
             ->select('sp.id_specific_price')
@@ -180,11 +158,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param LanguageId $langId
      * @param array<string, mixed> $filters
-     *
-     * @return int
      */
     public function countProductSpecificPrices(ProductId $productId, LanguageId $langId, array $filters = []): int
     {
@@ -197,19 +171,6 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
 
     /**
      * Finds id of specific price by properties which defines its uniqueness
-     *
-     * @param int $productId
-     * @param int $combinationId
-     * @param int $shopId
-     * @param int $groupId
-     * @param int $countryId
-     * @param int $currencyId
-     * @param int $customerId
-     * @param int $fromQuantity
-     * @param string $durationFrom
-     * @param string $durationTo
-     *
-     * @return SpecificPriceId|null
      *
      * @throws CoreException
      * @throws SpecificPriceConstraintException
@@ -224,7 +185,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
         int $customerId,
         int $fromQuantity,
         string $durationFrom,
-        string $durationTo
+        string $durationTo,
     ): ?SpecificPriceId {
         try {
             $id = (int) SpecificPrice::exists(
@@ -240,25 +201,16 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
                 $durationTo
             );
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                'Something went wrong when trying to find existing specific price',
-                0,
-                $prestaShopException->getPrevious()
-            );
+            throw new CoreException('Something went wrong when trying to find existing specific price', 0, $prestaShopException->getPrevious());
         }
 
-        if (!$id) {
+        if (! $id) {
             return null;
         }
 
         return new SpecificPriceId($id);
     }
 
-    /**
-     * @param ProductId $productId
-     *
-     * @return PriorityList|null
-     */
     public function findPrioritiesForProduct(ProductId $productId): ?PriorityList
     {
         $qb = $this->connection->createQueryBuilder()
@@ -270,7 +222,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
 
         $result = $qb->executeQuery()->fetchOne();
 
-        if (!$result) {
+        if (! $result) {
             return null;
         }
 
@@ -278,8 +230,6 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @return PriorityList
-     *
      * @throws CoreException
      */
     public function getDefaultPriorities(): PriorityList
@@ -287,22 +237,14 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
         try {
             $priorities = explode(';', (string) $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                'Something went wrong when trying to get default priorities of specific prices',
-                0,
-                $prestaShopException->getPrevious()
-            );
+            throw new CoreException('Something went wrong when trying to get default priorities of specific prices', 0, $prestaShopException->getPrevious());
         }
 
         return new PriorityList($priorities);
     }
 
     /**
-     * @param ProductId $productId
-     * @param LanguageId $langId
      * @param array<string, mixed> $filters
-     *
-     * @return QueryBuilder
      */
     private function getSpecificPricesQueryBuilder(ProductId $productId, LanguageId $langId, array $filters): QueryBuilder
     {
@@ -349,7 +291,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
             ->setParameter('langId', $langId->getValue())
         ;
 
-        if (!empty($filters['shopIds'])) {
+        if (! empty($filters['shopIds'])) {
             $qb->andWhere($qb->expr()->in('sp.id_shop', ':shopIds'))
                 ->setParameter('shopIds', $filters['shopIds'], Connection::PARAM_INT_ARRAY)
             ;
@@ -359,8 +301,6 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param SpecificPrice $specificPrice
-     *
      * @throws SpecificPriceConstraintException
      */
     private function assertSpecificPriceIsUniquePerProduct(SpecificPrice $specificPrice): void
@@ -383,14 +323,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
 
         // It is valid if its the same specific price that we are updating
         if ($alreadyExistingId && $alreadyExistingId->getValue() !== (int) $specificPrice->id) {
-            throw new SpecificPriceConstraintException(
-                sprintf(
-                    'Identical specific price already exists for product "%d" and combination "%d',
-                    $productId,
-                    $combinationId
-                ),
-                SpecificPriceConstraintException::NOT_UNIQUE_PER_PRODUCT
-            );
+            throw new SpecificPriceConstraintException(\sprintf('Identical specific price already exists for product "%d" and combination "%d', $productId, $combinationId), SpecificPriceConstraintException::NOT_UNIQUE_PER_PRODUCT);
         }
     }
 }

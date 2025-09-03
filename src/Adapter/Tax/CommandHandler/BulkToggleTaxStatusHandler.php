@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class BulkToggleTaxStatusHandler extends AbstractTaxHandler implements BulkToggleTaxStatusHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkToggleTaxStatusCommand $command)
     {
         foreach ($command->getTaxIds() as $taxId) {
@@ -50,11 +48,11 @@ final class BulkToggleTaxStatusHandler extends AbstractTaxHandler implements Bul
             $tax->active = $command->getExpectedStatus();
 
             try {
-                if (!$tax->save()) {
-                    throw new UpdateTaxException(sprintf('Unable to toggle Tax with id "%s"', $taxId->getValue()), UpdateTaxException::FAILED_BULK_UPDATE_STATUS);
+                if (! $tax->save()) {
+                    throw new UpdateTaxException(\sprintf('Unable to toggle Tax with id "%s"', $taxId->getValue()), UpdateTaxException::FAILED_BULK_UPDATE_STATUS);
                 }
             } catch (PrestaShopException) {
-                throw new TaxException(sprintf('An error occurred when updating Tax status with id "%s"', $taxId->getValue()));
+                throw new TaxException(\sprintf('An error occurred when updating Tax status with id "%s"', $taxId->getValue()));
             }
         }
     }

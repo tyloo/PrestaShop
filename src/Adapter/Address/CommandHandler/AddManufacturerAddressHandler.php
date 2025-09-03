@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use PrestaShopException;
 final class AddManufacturerAddressHandler extends AbstractAddressHandler implements AddManufacturerAddressHandlerInterface
 {
     /**
-     * @param AddManufacturerAddressCommand $command
-     *
      * @return AddressId
      *
      * @throws AddressException
@@ -54,19 +53,17 @@ final class AddManufacturerAddressHandler extends AbstractAddressHandler impleme
 
         try {
             $this->validateAddress($address);
-            if (false === $address->add()) {
-                throw new AddressException(sprintf('Failed to add new address "%s"', $command->getAddress()));
+            if ($address->add() === false) {
+                throw new AddressException(\sprintf('Failed to add new address "%s"', $command->getAddress()));
             }
         } catch (PrestaShopException) {
-            throw new AddressException(sprintf('An error occurred when adding new address "%s"', $command->getAddress()));
+            throw new AddressException(\sprintf('An error occurred when adding new address "%s"', $command->getAddress()));
         }
 
         return new AddressId((int) $address->id);
     }
 
     /**
-     * @param AddManufacturerAddressCommand $command
-     *
      * @return Address
      */
     private function createAddressFromCommand(AddManufacturerAddressCommand $command)

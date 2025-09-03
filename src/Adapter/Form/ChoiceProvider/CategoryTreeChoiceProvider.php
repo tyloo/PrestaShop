@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,16 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 final class CategoryTreeChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @param CategoryDataProvider $categoryDataProvider
-     * @param int $contextShopRootCategoryId
+     * @param int  $contextShopRootCategoryId
      * @param bool $enabledCategoriesOnly
      */
-    public function __construct(private readonly CategoryDataProvider $categoryDataProvider, private $contextShopRootCategoryId, private $enabledCategoriesOnly = false)
-    {
+    public function __construct(
+        private readonly CategoryDataProvider $categoryDataProvider,
+        private $contextShopRootCategoryId,
+        private $enabledCategoriesOnly = false,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $categories = $this->categoryDataProvider->getNestedCategories($this->contextShopRootCategoryId, false, $this->enabledCategoriesOnly);
@@ -59,8 +59,6 @@ final class CategoryTreeChoiceProvider implements FormChoiceProviderInterface
     }
 
     /**
-     * @param array $category
-     *
      * @return array
      */
     private function buildChoiceTree(array $category)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,10 @@ class MemcacheServerManager
      */
     private $tableName;
 
-    public function __construct(private readonly Connection $connection, $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        $dbPrefix,
+    ) {
         $this->tableName = $dbPrefix . 'memcached_servers';
     }
 
@@ -49,8 +52,8 @@ class MemcacheServerManager
      * Add a memcache server.
      *
      * @param string $serverIp
-     * @param int $serverPort
-     * @param int $serverWeight
+     * @param int    $serverPort
+     * @param int    $serverWeight
      */
     public function addServer($serverIp, $serverPort, $serverWeight)
     {
@@ -72,23 +75,23 @@ class MemcacheServerManager
      * Test if a Memcache configuration is valid.
      *
      * @param string $serverIp
-     * @param int $serverPort
+     * @param int    $serverPort
      *
      * @return bool
      */
     public function testConfiguration($serverIp, $serverPort)
     {
-        if (extension_loaded('memcached')) {
+        if (\extension_loaded('memcached')) {
             $memcached = new Memcached();
             $memcached->addServer($serverIp, (int) $serverPort);
             $version = $memcached->getVersion();
 
-            return is_array($version) && false === in_array('255.255.255', $version, true);
+            return \is_array($version) && \in_array('255.255.255', $version, true) === false;
         }
 
         $memcache = new Memcache();
 
-        return true === $memcache->connect($serverIp, (int) $serverPort);
+        return $memcache->connect($serverIp, (int) $serverPort) === true;
     }
 
     /**
@@ -102,7 +105,7 @@ class MemcacheServerManager
     {
         $deletionSuccess = $this->connection->delete($this->tableName, ['id_memcached_server' => $serverId]);
 
-        return 1 === $deletionSuccess;
+        return $deletionSuccess === 1;
     }
 
     /**

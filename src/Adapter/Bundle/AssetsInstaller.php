@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,7 +44,7 @@ final class AssetsInstaller
     {
         // We retrieve the kernel from the global scope
         global $kernel;
-        if (!$kernel instanceof KernelInterface) {
+        if (! $kernel instanceof KernelInterface) {
             throw new PrestaShopException('Kernel is not initialized. Cannot install assets.');
         }
 
@@ -60,11 +61,8 @@ final class AssetsInstaller
         ]), $output);
 
         // If the command failed (!= 0), we throw an exception with the output of the command
-        if (0 !== $errorCode) {
-            throw new PrestaShopException(sprintf(
-                'Failed to install bundle assets: %s',
-                $output->fetch()
-            ));
+        if ($errorCode !== 0) {
+            throw new PrestaShopException(\sprintf('Failed to install bundle assets: %s', $output->fetch()));
         }
     }
 }

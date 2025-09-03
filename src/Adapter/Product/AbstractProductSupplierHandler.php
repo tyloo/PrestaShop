@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,19 +45,13 @@ abstract class AbstractProductSupplierHandler
      */
     protected $productSupplierRepository;
 
-    /**
-     * @param ProductSupplierRepository $productSupplierRepository
-     */
     public function __construct(
-        ProductSupplierRepository $productSupplierRepository
+        ProductSupplierRepository $productSupplierRepository,
     ) {
         $this->productSupplierRepository = $productSupplierRepository;
     }
 
     /**
-     * @param ProductId $productId
-     * @param CombinationId|null $combinationId
-     *
      * @return array<int, ProductSupplierForEditing>
      */
     protected function getProductSuppliersInfo(ProductId $productId, ?CombinationId $combinationId = null): array
@@ -69,7 +64,7 @@ abstract class AbstractProductSupplierHandler
             // Integrate the ID in the name so that suppliers with identical names are less confusing
             $supplierName = $productSupplierInfo['name'];
             if ($hasDuplicatedSupplierNames) {
-                $supplierName = sprintf('%d - %s', (int) $productSupplierInfo['id_supplier'], $supplierName);
+                $supplierName = \sprintf('%d - %s', (int) $productSupplierInfo['id_supplier'], $supplierName);
             }
 
             $productSuppliers[] = new ProductSupplierForEditing(
@@ -89,10 +84,6 @@ abstract class AbstractProductSupplierHandler
 
     /**
      * Loads ProductSupplier object model with data from DTO.
-     *
-     * @param ProductSupplierUpdate $productSupplierUpdate
-     *
-     * @return ProductSupplier
      */
     protected function loadEntityFromDTO(ProductSupplierUpdate $productSupplierUpdate): ProductSupplier
     {

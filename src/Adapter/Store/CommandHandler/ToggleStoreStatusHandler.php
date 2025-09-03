@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,16 @@ use PrestaShop\PrestaShop\Core\Domain\Store\Repository\StoreRepository;
 #[AsCommandHandler]
 class ToggleStoreStatusHandler implements ToggleStoreStatusHandlerInterface
 {
-    public function __construct(private readonly StoreRepository $storeRepository)
-    {
+    public function __construct(
+        private readonly StoreRepository $storeRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ToggleStoreStatusCommand $command): void
     {
         $store = $this->storeRepository->get($command->getStoreId());
-        $store->active = !$store->active;
+        $store->active = ! $store->active;
+
         $this->storeRepository->partialUpdate(
             $store,
             ['active'],

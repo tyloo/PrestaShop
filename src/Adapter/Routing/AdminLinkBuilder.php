@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,16 +45,15 @@ class AdminLinkBuilder implements EntityLinkBuilderInterface
      *  'customer' => 'AdminCustomers',
      * ];
      *
-     * @param Link $link Link class that generates links
+     * @param Link  $link              Link class that generates links
      * @param array $entityControllers List of entities with appropriate controller
      */
-    public function __construct(private readonly Link $link, private array $entityControllers)
-    {
+    public function __construct(
+        private readonly Link $link,
+        private array $entityControllers,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getViewLink($entity, array $parameters)
     {
         $controller = $this->entityControllers[$entity];
@@ -62,9 +62,6 @@ class AdminLinkBuilder implements EntityLinkBuilderInterface
         return $this->link->getAdminLink($controller, true, $parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEditLink($entity, array $parameters)
     {
         $controller = $this->entityControllers[$entity];
@@ -76,14 +73,13 @@ class AdminLinkBuilder implements EntityLinkBuilderInterface
     /**
      * @param string $action
      * @param string $entity
-     * @param array $parameters
      *
      * @return array
      */
     private function buildActionParameters($action, $entity, array $parameters)
     {
-        unset($parameters['current_index']);
-        unset($parameters['token']);
+        unset($parameters['current_index'], $parameters['token']);
+
         $editAction = $action . $entity;
 
         return array_merge(
@@ -92,11 +88,8 @@ class AdminLinkBuilder implements EntityLinkBuilderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBuild($entity)
     {
-        return !empty($this->entityControllers[$entity]);
+        return ! empty($this->entityControllers[$entity]);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use PrestaShopException;
 final class BulkDeleteCmsPageCategoryHandler implements BulkDeleteCmsPageCategoryHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageCategoryException
      */
     public function handle(BulkDeleteCmsPageCategoryCommand $command)
@@ -52,12 +51,12 @@ final class BulkDeleteCmsPageCategoryHandler implements BulkDeleteCmsPageCategor
             foreach ($command->getCmsPageCategoryIds() as $cmsPageCategoryId) {
                 $entity = new CMSCategory($cmsPageCategoryId->getValue());
 
-                if (0 >= $entity->id) {
-                    throw new CmsPageCategoryNotFoundException(sprintf('Cms category object with id "%s" has not been found for deleting.', $cmsPageCategoryId->getValue()));
+                if ($entity->id <= 0) {
+                    throw new CmsPageCategoryNotFoundException(\sprintf('Cms category object with id "%s" has not been found for deleting.', $cmsPageCategoryId->getValue()));
                 }
 
-                if (false === $entity->delete()) {
-                    throw new CannotDeleteCmsPageCategoryException(sprintf('Unable to delete  cms category object with id "%s"', $cmsPageCategoryId->getValue()), CannotDeleteCmsPageCategoryException::FAILED_BULK_DELETE);
+                if ($entity->delete() === false) {
+                    throw new CannotDeleteCmsPageCategoryException(\sprintf('Unable to delete  cms category object with id "%s"', $cmsPageCategoryId->getValue()), CannotDeleteCmsPageCategoryException::FAILED_BULK_DELETE);
                 }
             }
         } catch (PrestaShopException $prestaShopException) {

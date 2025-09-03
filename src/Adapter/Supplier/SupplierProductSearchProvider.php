@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,14 +49,12 @@ class SupplierProductSearchProvider implements ProductSearchProviderInterface
 
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private readonly Supplier $supplier
+        private readonly Supplier $supplier,
     ) {
         $this->sortOrdersCollection = new SortOrdersCollection($this->translator);
     }
 
     /**
-     * @param ProductSearchContext $context
-     * @param ProductSearchQuery $query
      * @param string $type
      *
      * @return int|array
@@ -63,7 +62,7 @@ class SupplierProductSearchProvider implements ProductSearchProviderInterface
     private function getProductsOrCount(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-        $type = 'products'
+        $type = 'products',
     ) {
         $isTypeProducts = $type === 'products';
 
@@ -74,25 +73,22 @@ class SupplierProductSearchProvider implements ProductSearchProviderInterface
             $query->getResultsPerPage(),
             $query->getSortOrder()->toLegacyOrderBy(),
             $query->getSortOrder()->toLegacyOrderWay(),
-            !$isTypeProducts
+            ! $isTypeProducts
         );
 
         return $isTypeProducts ? $result : (int) $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function runQuery(
         ProductSearchContext $context,
-        ProductSearchQuery $query
+        ProductSearchQuery $query,
     ) {
         $products = $this->getProductsOrCount($context, $query, 'products');
         $count = $this->getProductsOrCount($context, $query, 'count');
 
         $result = new ProductSearchResult();
 
-        if (!empty($products)) {
+        if (! empty($products)) {
             $result
                 ->setProducts($products)
                 ->setTotalProductsCount($count);

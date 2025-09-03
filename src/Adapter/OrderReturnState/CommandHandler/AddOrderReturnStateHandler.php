@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\ValueObject\OrderReturnSt
 #[AsCommandHandler]
 final class AddOrderReturnStateHandler extends AbstractOrderReturnStateHandler implements AddOrderReturnStateHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddOrderReturnStateCommand $command)
     {
         $orderReturnState = new OrderReturnState();
@@ -52,7 +50,7 @@ final class AddOrderReturnStateHandler extends AbstractOrderReturnStateHandler i
         $this->fillOrderReturnStateWithCommandData($orderReturnState, $command);
         $this->assertRequiredFieldsAreNotMissing($orderReturnState);
 
-        if (false === $orderReturnState->validateFields(false)) {
+        if ($orderReturnState->validateFields(false) === false) {
             throw new OrderReturnStateException('Order status contains invalid field values');
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,13 +60,13 @@ class LegacyHookSubscriber implements EventSubscriberInterface
 
         // Hack Symfony cache clear : if context not mounted, bypass legacy call
         $legacyContext = Context::getContext();
-        if (!$legacyContext || empty($legacyContext->shop) || empty($legacyContext->employee)) {
+        if (! $legacyContext || empty($legacyContext->shop) || empty($legacyContext->employee)) {
             return $listeners;
         }
 
         $hooks = Hook::getHooks();
 
-        if (is_array($hooks)) {
+        if (\is_array($hooks)) {
             foreach ($hooks as $hook) {
                 $name = strtolower((string) $hook['name']);
                 $id = $hook['id_hook'];
@@ -73,11 +74,11 @@ class LegacyHookSubscriber implements EventSubscriberInterface
                 $moduleListeners = [];
                 $modules = [];
                 // Symfony cache clear bug fix : call bqSQL alias function
-                if (function_exists('bqSQL')) {
+                if (\function_exists('bqSQL')) {
                     $modules = Hook::getHookModuleExecList($name);
                 }
 
-                if (is_array($modules)) {
+                if (\is_array($modules)) {
                     foreach ($modules as $order => $module) {
                         $moduleId = $module['id_module'];
                         $functionName = 'call_' . $id . '_' . $moduleId;
@@ -101,20 +102,20 @@ class LegacyHookSubscriber implements EventSubscriberInterface
      * "call_<hookID>_<moduleID>(HookEvent $event, $hookName)"
      *
      * @param string $name The method called
-     * @param array $args The HookEvent, and then the hook name (eventName)
+     * @param array  $args The HookEvent, and then the hook name (eventName)
      *
      * @throws BadMethodCallException
      */
     public function __call($name, $args)
     {
-        if (!str_starts_with($name, 'call_')) {
+        if (! str_starts_with($name, 'call_')) {
             throw new BadMethodCallException("The call to '" . $name . "' is not recognized.");
         }
 
         $ids = explode('_', $name);
         array_shift($ids); // remove 'call'
 
-        if (count($ids) !== 2) {
+        if (\count($ids) !== 2) {
             throw new BadMethodCallException("The call to '" . $name . "' is not recognized.");
         }
 
@@ -130,8 +131,8 @@ class LegacyHookSubscriber implements EventSubscriberInterface
 
         if (
             $event instanceof RenderingHookEvent
-            && 0 !== $moduleId
-            && !empty($content)
+            && $moduleId !== 0
+            && ! empty($content)
         ) {
             $event->setContent([array_values($content)[0]], array_keys($content)[0]);
         }

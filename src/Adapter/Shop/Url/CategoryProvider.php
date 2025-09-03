@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,17 +35,15 @@ use PrestaShop\PrestaShop\Core\Shop\Url\UrlProviderInterface;
  */
 final class CategoryProvider implements UrlProviderInterface
 {
-    /**
-     * @param Link $link
-     */
-    public function __construct(private readonly Link $link)
-    {
+    public function __construct(
+        private readonly Link $link,
+    ) {
     }
 
     /**
      * Create a link to a category.
      *
-     * @param int $categoryId
+     * @param int    $categoryId
      * @param string $rewrite
      *
      * @return string

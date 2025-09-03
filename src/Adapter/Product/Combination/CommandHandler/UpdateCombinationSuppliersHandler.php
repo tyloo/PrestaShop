@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,22 +39,14 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\UpdateC
 #[AsCommandHandler]
 class UpdateCombinationSuppliersHandler extends AbstractProductSupplierHandler implements UpdateCombinationSuppliersHandlerInterface
 {
-    /**
-     * @param CombinationRepository $combinationRepository
-     * @param ProductSupplierRepository $productSupplierRepository
-     * @param ProductSupplierUpdater $productSupplierUpdater
-     */
     public function __construct(
         private readonly CombinationRepository $combinationRepository,
         ProductSupplierRepository $productSupplierRepository,
-        private readonly ProductSupplierUpdater $productSupplierUpdater
+        private readonly ProductSupplierUpdater $productSupplierUpdater,
     ) {
         parent::__construct($productSupplierRepository);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateCombinationSuppliersCommand $command): array
     {
         $combinationId = $command->getCombinationId();

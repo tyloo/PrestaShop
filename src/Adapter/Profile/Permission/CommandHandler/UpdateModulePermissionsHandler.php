@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,8 +44,6 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\Permission\Exception\PermissionUpd
 final class UpdateModulePermissionsHandler implements UpdateModulePermissionsHandlerInterface
 {
     /**
-     * @param UpdateModulePermissionsCommand $command
-     *
      * @throws PermissionUpdateException
      */
     public function handle(UpdateModulePermissionsCommand $command): void
@@ -56,7 +55,7 @@ final class UpdateModulePermissionsHandler implements UpdateModulePermissionsHan
             $command->isActive()
         );
 
-        if ('error' === $result) {
+        if ($result === 'error') {
             throw new PermissionUpdateException('Failed to update module permissions');
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,15 +41,12 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CannotSetRequiredFields
 #[AsCommandHandler]
 final class SetRequiredFieldsForCustomerHandler implements SetRequiredFieldsForCustomerHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SetRequiredFieldsForCustomerCommand $command)
     {
         $customer = new Customer();
 
-        if (!$customer->addFieldsRequiredDatabase($command->getRequiredFields())) {
-            throw new CannotSetRequiredFieldsForCustomerException(sprintf('Cannot set "%s" required fields for customer', implode(',', $command->getRequiredFields())));
+        if (! $customer->addFieldsRequiredDatabase($command->getRequiredFields())) {
+            throw new CannotSetRequiredFieldsForCustomerException(\sprintf('Cannot set "%s" required fields for customer', implode(',', $command->getRequiredFields())));
         }
     }
 }

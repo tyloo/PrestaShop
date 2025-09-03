@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,12 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\QueryResult\FoundCartRule;
 #[AsQueryHandler]
 final class SearchCartRulesHandler implements SearchCartRulesHandlerInterface
 {
-    /**
-     * @param int $contextLangId
-     */
-    public function __construct(private readonly int $contextLangId)
-    {
+    public function __construct(
+        private readonly int $contextLangId,
+    ) {
     }
 
     /**
-     * @param SearchCartRules $query
-     *
      * @return FoundCartRule[]
      */
     public function handle(SearchCartRules $query): array

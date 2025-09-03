@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,7 +49,7 @@ class DiscountRepository extends AbstractObjectModelRepository
     public function __construct(
         protected readonly DiscountValidator $cartRuleValidator,
         protected readonly Connection $connection,
-        protected readonly string $dbPrefix
+        protected readonly string $dbPrefix,
     ) {
     }
 
@@ -73,8 +74,6 @@ class DiscountRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param DiscountId $discountId
-     *
      * @return ProductRuleGroup[]
      *
      * @throws InvalidArgumentException
@@ -106,7 +105,7 @@ class DiscountRepository extends AbstractObjectModelRepository
             $productRulesResult = $qb->executeQuery()->fetchAllAssociative();
 
             $productRules = [];
-            if (!empty($productRulesResult)) {
+            if (! empty($productRulesResult)) {
                 foreach ($productRulesResult as $productRuleData) {
                     $qb = $this->connection->createQueryBuilder();
                     $qb
@@ -117,7 +116,7 @@ class DiscountRepository extends AbstractObjectModelRepository
                     ;
                     $productRuleValuesResult = $qb->executeQuery()->fetchAllAssociative();
                     $itemIds = [];
-                    if (!empty($productRuleValuesResult)) {
+                    if (! empty($productRuleValuesResult)) {
                         foreach ($productRuleValuesResult as $productRuleValueData) {
                             $itemIds[] = (int) $productRuleValueData['id_item'];
                         }
@@ -125,7 +124,7 @@ class DiscountRepository extends AbstractObjectModelRepository
 
                     $productType = ProductRuleType::tryFrom((string) $productRuleData['type']);
                     if (empty($productType)) {
-                        throw new InvalidArgumentException(sprintf('Unknow product rule type %s', (string) $productRuleData['type']));
+                        throw new InvalidArgumentException(\sprintf('Unknow product rule type %s', (string) $productRuleData['type']));
                     }
 
                     $productRules[] = new ProductRule($productType, $itemIds);
@@ -139,8 +138,6 @@ class DiscountRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param DiscountId $discountId
-     *
      * @return int[]
      */
     public function getCarriers(DiscountId $discountId): array
@@ -183,7 +180,7 @@ class DiscountRepository extends AbstractObjectModelRepository
             ->fetchOne()
         ;
 
-        if (false === $cartRuleId) {
+        if ($cartRuleId === false) {
             return null;
         }
 

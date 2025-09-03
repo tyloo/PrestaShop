@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,67 +39,67 @@ class DiscountFiller
     public function fillUpdatableProperties(CartRule $cartRule, UpdateDiscountCommand $command): array
     {
         $updatableProperties = [];
-        if (null !== $command->getValidFrom()) {
+        if ($command->getValidFrom() !== null) {
             $cartRule->date_from = $command->getValidFrom()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_from';
         }
 
-        if (null !== $command->getValidTo()) {
+        if ($command->getValidTo() !== null) {
             $cartRule->date_to = $command->getValidTo()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_to';
         }
 
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $cartRule->name = $command->getLocalizedNames();
             $this->fillLocalizedValues($cartRule, 'name', $command->getLocalizedNames(), $updatableProperties);
         }
 
-        if (null !== $command->getDescription()) {
+        if ($command->getDescription() !== null) {
             $cartRule->description = $command->getDescription();
             $updatableProperties[] = 'description';
         }
 
-        if (null !== $command->getCode()) {
+        if ($command->getCode() !== null) {
             $cartRule->code = $command->getCode();
             $updatableProperties[] = 'code';
         }
 
-        if (null !== $command->isHighlightInCart()) {
+        if ($command->isHighlightInCart() !== null) {
             $cartRule->highlight = $command->isHighlightInCart();
             $updatableProperties[] = 'highlight';
         }
 
-        if (null !== $command->allowPartialUse()) {
+        if ($command->allowPartialUse() !== null) {
             $cartRule->partial_use = $command->allowPartialUse();
             $updatableProperties[] = 'partial_use';
         }
 
-        if (null !== $command->isActive()) {
+        if ($command->isActive() !== null) {
             $cartRule->active = $command->isActive();
             $updatableProperties[] = 'active';
         }
 
-        if (null !== $command->getCustomerId()) {
+        if ($command->getCustomerId() !== null) {
             $cartRule->id_customer = $command->getCustomerId()->getValue();
             $updatableProperties[] = 'id_customer';
         }
 
-        if (null !== $command->getTotalQuantity()) {
+        if ($command->getTotalQuantity() !== null) {
             $cartRule->quantity = $command->getTotalQuantity();
             $updatableProperties[] = 'quantity';
         }
 
-        if (null !== $command->getQuantityPerUser()) {
+        if ($command->getQuantityPerUser() !== null) {
             $cartRule->quantity_per_user = $command->getQuantityPerUser();
             $updatableProperties[] = 'quantity_per_user';
         }
 
-        if (null !== $command->getReductionProduct()) {
+        if ($command->getReductionProduct() !== null) {
             $cartRule->reduction_product = $command->getReductionProduct();
             $updatableProperties[] = 'reduction_product';
         }
 
-        if (null !== $command->getAmountDiscount()) {
+        if ($command->getAmountDiscount() !== null) {
             $cartRule->reduction_amount = (float) (string) $command->getAmountDiscount()->getAmount();
             $cartRule->reduction_currency = $command->getAmountDiscount()->getCurrencyId()->getValue();
             $cartRule->reduction_tax = $command->getAmountDiscount()->isTaxIncluded();
@@ -109,7 +110,7 @@ class DiscountFiller
             $updatableProperties[] = 'reduction_percent';
         }
 
-        if (null !== $command->getPercentDiscount()) {
+        if ($command->getPercentDiscount() !== null) {
             $cartRule->reduction_percent = (float) (string) $command->getPercentDiscount();
             $cartRule->reduction_amount = null;
             $cartRule->reduction_currency = 0;
@@ -120,12 +121,12 @@ class DiscountFiller
             $updatableProperties[] = 'reduction_tax';
         }
 
-        if (null !== $command->getProductId()) {
+        if ($command->getProductId() !== null) {
             $cartRule->gift_product = $command->getProductId()->getValue();
             $updatableProperties[] = 'gift_product';
         }
 
-        if (null !== $command->getCombinationId()) {
+        if ($command->getCombinationId() !== null) {
             $cartRule->gift_product_attribute = $command->getCombinationId()->getValue();
             $updatableProperties[] = 'gift_product_attribute';
         }

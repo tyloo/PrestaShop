@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,15 +39,12 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\QueryResult\EditableCustome
 #[AsQueryHandler]
 class GetCustomerGroupForEditingHandler implements GetCustomerGroupForEditingHandlerInterface
 {
-    public function __construct(private readonly GroupRepository $customerGroupRepository)
-    {
+    public function __construct(
+        private readonly GroupRepository $customerGroupRepository,
+    ) {
     }
 
     /**
-     * @param GetCustomerGroupForEditing $query
-     *
-     * @return EditableCustomerGroup
-     *
      * @throws GroupNotFoundException
      */
     public function handle(GetCustomerGroupForEditing $query): EditableCustomerGroup

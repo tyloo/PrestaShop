@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,15 +44,14 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 class ProductTypeUpdater
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param ProductPackUpdater $productPackUpdater
-     * @param CombinationDeleter $combinationDeleter
-     * @param VirtualProductUpdater $virtualProductUpdater
-     * @param ProductStockUpdater $productStockUpdater
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductPackUpdater $productPackUpdater, private readonly CombinationDeleter $combinationDeleter, private readonly VirtualProductUpdater $virtualProductUpdater, private readonly ProductStockUpdater $productStockUpdater, private readonly ProductPackRepository $productPackRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly ProductPackUpdater $productPackUpdater,
+        private readonly CombinationDeleter $combinationDeleter,
+        private readonly VirtualProductUpdater $virtualProductUpdater,
+        private readonly ProductStockUpdater $productStockUpdater,
+        private readonly ProductPackRepository $productPackRepository,
+    ) {
     }
 
     public function updateType(ProductId $productId, ProductType $productType): void
@@ -89,15 +89,15 @@ class ProductTypeUpdater
         $resetProductStock = $product->product_type !== ProductType::TYPE_COMBINATIONS && $productType->getValue() === ProductType::TYPE_COMBINATIONS;
 
         $product->product_type = $productType->getValue();
-        $product->is_virtual = ProductType::TYPE_VIRTUAL === $productType->getValue();
-        $product->cache_is_pack = ProductType::TYPE_PACK === $productType->getValue();
+        $product->is_virtual = $productType->getValue() === ProductType::TYPE_VIRTUAL;
+        $product->cache_is_pack = $productType->getValue() === ProductType::TYPE_PACK;
         if ($productType->getValue() !== ProductType::TYPE_COMBINATIONS) {
             $product->cache_default_attribute = 0;
             $updatedProperties[] = 'cache_default_attribute';
         }
 
         // Virtual product cannot have ecotax
-        if ($productType->getValue() === ProductType::TYPE_VIRTUAL && !empty($product->ecotax)) {
+        if ($productType->getValue() === ProductType::TYPE_VIRTUAL && ! empty($product->ecotax)) {
             $product->price += $product->ecotax;
             $product->ecotax = 0;
             $updatedProperties[] = 'ecotax';
@@ -129,11 +129,8 @@ class ProductTypeUpdater
         }
 
         $packsAssociatedToProduct = $this->productPackRepository->getPacksContaining($productId);
-        if (!empty($packsAssociatedToProduct)) {
-            throw new InvalidProductTypeException(
-                InvalidProductTypeException::EXPECTED_NO_EXISTING_PACK_ASSOCIATIONS,
-                'You cannot change this product into a pack because it is already associated as a pack content'
-            );
+        if (! empty($packsAssociatedToProduct)) {
+            throw new InvalidProductTypeException(InvalidProductTypeException::EXPECTED_NO_EXISTING_PACK_ASSOCIATIONS, 'You cannot change this product into a pack because it is already associated as a pack content');
         }
     }
 }

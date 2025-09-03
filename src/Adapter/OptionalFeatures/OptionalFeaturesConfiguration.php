@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,13 +38,13 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
  */
 class OptionalFeaturesConfiguration implements DataConfigurationInterface
 {
-    public function __construct(private readonly CombinationFeature $combinationFeature, private readonly FeatureFeature $featureFeature, private readonly GroupFeature $groupFeature)
-    {
+    public function __construct(
+        private readonly CombinationFeature $combinationFeature,
+        private readonly FeatureFeature $featureFeature,
+        private readonly GroupFeature $groupFeature,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -53,9 +54,6 @@ class OptionalFeaturesConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -67,9 +65,6 @@ class OptionalFeaturesConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         return isset(

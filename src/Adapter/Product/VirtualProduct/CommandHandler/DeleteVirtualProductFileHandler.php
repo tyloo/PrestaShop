@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\VirtualProductFile\CommandHandler\
 #[AsCommandHandler]
 class DeleteVirtualProductFileHandler implements DeleteVirtualProductFileHandlerInterface
 {
-    /**
-     * @param VirtualProductUpdater $virtualProductUpdater
-     */
-    public function __construct(private readonly VirtualProductUpdater $virtualProductUpdater)
-    {
+    public function __construct(
+        private readonly VirtualProductUpdater $virtualProductUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteVirtualProductFileCommand $command): void
     {
         $this->virtualProductUpdater->deleteFile($command->getVirtualProductFileId());

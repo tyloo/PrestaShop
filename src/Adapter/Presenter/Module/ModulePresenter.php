@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,10 @@ use PrestaShop\PrestaShop\Core\Module\ModuleInterface;
 
 class ModulePresenter implements PresenterInterface
 {
-    public function __construct(private readonly Currency $currency, private readonly PriceFormatter $priceFormatter)
-    {
+    public function __construct(
+        private readonly Currency $currency,
+        private readonly PriceFormatter $priceFormatter,
+    ) {
     }
 
     /**
@@ -48,7 +51,7 @@ class ModulePresenter implements PresenterInterface
      */
     public function present($module)
     {
-        if (!($module instanceof ModuleInterface)) {
+        if (! ($module instanceof ModuleInterface)) {
             throw new Exception('ModulePresenter can only present instance of Module');
         }
 
@@ -56,7 +59,7 @@ class ModulePresenter implements PresenterInterface
         $attributes['id'] = $module->database->get('id', $attributes['id']);
         $attributes['price'] = $this->getModulePrice($attributes['price']);
         // Round to the nearest 0.5
-        $attributes['starsRate'] = str_replace('.', '', (string) (round(floatval($attributes['avgRate']) * 2) / 2));
+        $attributes['starsRate'] = str_replace('.', '', (string) (round(\floatval($attributes['avgRate']) * 2) / 2));
 
         $moduleInstance = $module->getInstance();
 
@@ -80,7 +83,7 @@ class ModulePresenter implements PresenterInterface
     private function getModulePrice($prices)
     {
         $iso_code = $this->currency->iso_code;
-        if (array_key_exists($iso_code, $prices)) {
+        if (\array_key_exists($iso_code, $prices)) {
             $prices['displayPrice'] = $this->priceFormatter->convertAndFormat($prices[$iso_code]);
             $prices['raw'] = $prices[$iso_code];
         } else {

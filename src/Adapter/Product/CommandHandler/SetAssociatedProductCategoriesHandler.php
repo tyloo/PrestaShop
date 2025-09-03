@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\SetAssociatedProduc
 #[AsCommandHandler]
 final class SetAssociatedProductCategoriesHandler implements SetAssociatedProductCategoriesHandlerInterface
 {
-    /**
-     * @param ProductCategoryUpdater $productCategoryUpdater
-     */
-    public function __construct(private readonly ProductCategoryUpdater $productCategoryUpdater)
-    {
+    public function __construct(
+        private readonly ProductCategoryUpdater $productCategoryUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SetAssociatedProductCategoriesCommand $command): void
     {
         $this->productCategoryUpdater->updateCategories(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,17 +36,12 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
  */
 final class SupplierLogoThumbnailProvider implements ImageProviderInterface
 {
-    /**
-     * @param ImageTagSourceParserInterface $imageTagSourceParser
-     * @param ImageManager $imageManager
-     */
-    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser, private readonly ImageManager $imageManager)
-    {
+    public function __construct(
+        private readonly ImageTagSourceParserInterface $imageTagSourceParser,
+        private readonly ImageManager $imageManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath($supplierId)
     {
         $imageTag = $this->imageManager->getThumbnailForListing(

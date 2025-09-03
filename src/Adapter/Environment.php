@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,44 +54,34 @@ class Environment implements EnvironmentInterface
 
     public function __construct(?bool $isDebug = null, ?string $name = null, ?string $appId = null)
     {
-        if (null === $isDebug) {
-            $this->isDebug = defined('_PS_MODE_DEV_') ? _PS_MODE_DEV_ : true;
+        if ($isDebug === null) {
+            $this->isDebug = \defined('_PS_MODE_DEV_') ? _PS_MODE_DEV_ : true;
         } else {
             $this->isDebug = $isDebug;
         }
 
-        if (null !== $name) {
+        if ($name !== null) {
             $this->name = $name;
         } else {
-            if (defined('_PS_ENV_')) {
+            if (\defined('_PS_ENV_')) {
                 $this->name = _PS_ENV_;
             } else {
                 $this->name = $this->isDebug ? 'dev' : 'prod';
             }
         }
 
-        if (null !== $appId) {
+        if ($appId !== null) {
             $this->appId = $appId;
         } else {
-            if (defined('_PS_APP_ID_')) {
-                $this->appId = _PS_APP_ID_;
-            } else {
-                $this->appId = 'admin';
-            }
+            $this->appId = \defined('_PS_APP_ID_') ? _PS_APP_ID_ : 'admin';
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isDebug()
     {
         return $this->isDebug;
@@ -101,12 +92,9 @@ class Environment implements EnvironmentInterface
         return $this->appId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCacheDir()
     {
-        if (defined('_PS_CACHE_DIR_')) {
+        if (\defined('_PS_CACHE_DIR_')) {
             return _PS_CACHE_DIR_;
         }
 

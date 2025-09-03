@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,16 +37,11 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
  */
 final class ManufacturerLogoThumbnailProvider implements ImageProviderInterface
 {
-    /**
-     * @param ImageTagSourceParserInterface $imageTagSourceParser
-     */
-    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser)
-    {
+    public function __construct(
+        private readonly ImageTagSourceParserInterface $imageTagSourceParser,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath($manufacturerId)
     {
         $pathToImage = _PS_MANU_IMG_DIR_ . $manufacturerId . '.jpg';

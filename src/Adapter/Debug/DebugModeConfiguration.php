@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,12 +38,9 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 class DebugModeConfiguration implements DataConfigurationInterface
 {
     /**
-     * @param DebugMode $debugMode Debug mode manager
-     * @param Configuration $configuration
-     * @param string $configDefinesPath Path to the application defines path
-     * @param ClassIndexCacheClearer $classIndexCacheClearer
-     * @param DebugProfiling $debugProfiling Debug profiling manager
-     * @param CacheClearerInterface $cacheClearer
+     * @param DebugMode      $debugMode         Debug mode manager
+     * @param string         $configDefinesPath Path to the application defines path
+     * @param DebugProfiling $debugProfiling    Debug profiling manager
      */
     public function __construct(
         private readonly DebugMode $debugMode,
@@ -70,9 +68,6 @@ class DebugModeConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         $errors = [];
@@ -84,7 +79,7 @@ class DebugModeConfiguration implements DataConfigurationInterface
             $this->configuration->set('PS_DEBUG_COOKIE_NAME', $configuration['debug_cookie_name']);
             $this->configuration->set('PS_DEBUG_COOKIE_VALUE', $configuration['debug_cookie_value']);
 
-            if (empty($configuration['debug_cookie_name']) && !empty($configuration['debug_cookie_value'])) {
+            if (empty($configuration['debug_cookie_name']) && ! empty($configuration['debug_cookie_value'])) {
                 $errors[] = [
                     'key' => 'Error: The cookie name is required when the cookie value is set.',
                     'domain' => 'Admin.Advparameters.Notification',
@@ -150,9 +145,6 @@ class DebugModeConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         $keys = [
@@ -164,7 +156,7 @@ class DebugModeConfiguration implements DataConfigurationInterface
         ];
         $array_keys = array_keys($configuration);
 
-        return count(array_intersect($keys, $array_keys)) === count($keys);
+        return \count(array_intersect($keys, $array_keys)) === \count($keys);
     }
 
     /**
@@ -197,8 +189,6 @@ class DebugModeConfiguration implements DataConfigurationInterface
     /**
      * Change Debug profiling value if needed.
      *
-     * @param bool $enableStatus
-     *
      * @return int|null Status of update
      */
     private function updateDebugProfiling(bool $enableStatus): ?int
@@ -206,7 +196,7 @@ class DebugModeConfiguration implements DataConfigurationInterface
         $isProfilingEnabled = $this->debugProfiling->isProfilingEnabled();
 
         if ($enableStatus !== $isProfilingEnabled) {
-            return (true === $enableStatus) ? $this->debugProfiling->enable() : $this->debugProfiling->disable();
+            return ($enableStatus === true) ? $this->debugProfiling->enable() : $this->debugProfiling->disable();
         }
 
         return null;

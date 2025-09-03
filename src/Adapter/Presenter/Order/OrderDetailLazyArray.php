@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,13 +57,9 @@ class OrderDetailLazyArray extends AbstractLazyArray
      */
     private $translator;
 
-    /**
-     * OrderDetailLazyArray constructor.
-     *
-     * @param Order $order
-     */
-    public function __construct(private readonly Order $order)
-    {
+    public function __construct(
+        private readonly Order $order,
+    ) {
         $this->context = Context::getContext();
         $this->translator = Context::getContext()->getTranslator();
         $this->locale = $this->context->getCurrentLocale();
@@ -107,18 +104,12 @@ class OrderDetailLazyArray extends AbstractLazyArray
         return $this->context->link->getPageLink('order-detail', null, null, 'id_order=' . $this->order->id);
     }
 
-    /**
-     * @return mixed
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getReorderUrl()
     {
         return HistoryController::getUrlToReorder((int) $this->order->id, $this->context);
     }
 
-    /**
-     * @return mixed
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getInvoiceUrl()
     {
@@ -207,7 +198,7 @@ class OrderDetailLazyArray extends AbstractLazyArray
                 $orderShipping[$shippingId]['shipping_date'] =
                     Tools::displayDate($shipping['date_add'], false);
                 $orderShipping[$shippingId]['shipping_weight'] =
-                    ($shipping['weight'] > 0) ? sprintf('%.3f', $shipping['weight']) . ' ' .
+                    ($shipping['weight'] > 0) ? \sprintf('%.3f', $shipping['weight']) . ' ' .
                         Configuration::get('PS_WEIGHT_UNIT') : '-';
                 $shippingCost =
                     ($order->getTaxCalculationMethod()) ? $shipping['shipping_cost_tax_excl']

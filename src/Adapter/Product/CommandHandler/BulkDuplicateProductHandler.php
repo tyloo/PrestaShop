@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,23 +43,17 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 #[AsCommandHandler]
 class BulkDuplicateProductHandler extends AbstractBulkHandler implements BulkDuplicateProductHandlerInterface
 {
-    /**
-     * @param ProductDuplicator $productDuplicator
-     */
-    public function __construct(private readonly ProductDuplicator $productDuplicator)
-    {
+    public function __construct(
+        private readonly ProductDuplicator $productDuplicator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDuplicateProductCommand $command): array
     {
         return $this->handleBulkAction($command->getProductIds(), $command);
     }
 
     /**
-     * @param ProductId $productId
      * @param BulkDuplicateProductCommand $command
      *
      * @return ProductId

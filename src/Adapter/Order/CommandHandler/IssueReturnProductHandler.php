@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,21 +53,16 @@ use Validate;
 #[AsCommandHandler]
 class IssueReturnProductHandler extends AbstractOrderCommandHandler implements IssueReturnProductHandlerInterface
 {
-    /**
-     * @param ConfigurationInterface $configuration
-     * @param OrderRefundCalculator $orderRefundCalculator
-     * @param OrderSlipCreator $orderSlipCreator
-     * @param VoucherGenerator $voucherGenerator
-     * @param OrderRefundUpdater $refundUpdater
-     * @param ContextStateManager $contextStateManager
-     */
-    public function __construct(private readonly ConfigurationInterface $configuration, private readonly OrderRefundCalculator $orderRefundCalculator, private readonly OrderSlipCreator $orderSlipCreator, private readonly VoucherGenerator $voucherGenerator, private readonly OrderRefundUpdater $refundUpdater, private readonly ContextStateManager $contextStateManager)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly OrderRefundCalculator $orderRefundCalculator,
+        private readonly OrderSlipCreator $orderSlipCreator,
+        private readonly VoucherGenerator $voucherGenerator,
+        private readonly OrderRefundUpdater $refundUpdater,
+        private readonly ContextStateManager $contextStateManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(IssueReturnProductCommand $command): void
     {
         if ((int) $this->configuration->get('PS_ORDER_RETURN') <= 0) {
@@ -74,11 +70,8 @@ class IssueReturnProductHandler extends AbstractOrderCommandHandler implements I
         }
 
         $order = $this->getOrder($command->getOrderId());
-        if (!$order->hasBeenDelivered()) {
-            throw new InvalidOrderStateException(
-                InvalidOrderStateException::DELIVERY_NOT_FOUND,
-                'Can not perform return product on order with not delivered yet'
-            );
+        if (! $order->hasBeenDelivered()) {
+            throw new InvalidOrderStateException(InvalidOrderStateException::DELIVERY_NOT_FOUND, 'Can not perform return product on order with not delivered yet');
         }
 
         $this->setOrderContext($this->contextStateManager, $order);
@@ -110,7 +103,12 @@ class IssueReturnProductHandler extends AbstractOrderCommandHandler implements I
             }
 
             // Hook called only for the shop concerned
-            Hook::exec('actionProductCancel', ['order' => $order, 'id_order_detail' => (int) $orderDetailId, 'cancel_quantity' => $productRefund['quantity'], 'action' => CancellationActionType::RETURN_PRODUCT], null, false, true, false, $order->id_shop);
+            Hook::exec('actionProductCancel', [
+                'order' => $order,
+                'id_order_detail' => (int) $orderDetailId,
+                'cancel_quantity' => $productRefund['quantity'],
+                'action' => CancellationActionType::RETURN_PRODUCT,
+            ], null, false, true, false, $order->id_shop);
         }
 
         // Update order carrier weight
@@ -118,7 +116,7 @@ class IssueReturnProductHandler extends AbstractOrderCommandHandler implements I
         if (Validate::isLoadedObject($orderCarrier)) {
             $orderCarrier->weight = (float) $order->getTotalWeight();
             if ($orderCarrier->update()) {
-                $order->weight = sprintf('%.3f %s', $orderCarrier->weight, $this->configuration->get('PS_WEIGHT_UNIT'));
+                $order->weight = \sprintf('%.3f %s', $orderCarrier->weight, $this->configuration->get('PS_WEIGHT_UNIT'));
             }
         }
 

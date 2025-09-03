@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Supplier\CommandHandler\SetSupplie
 #[AsCommandHandler]
 class SetSuppliersHandler implements SetSuppliersHandlerInterface
 {
-    /**
-     * @param ProductSupplierUpdater $productSupplierUpdater
-     */
-    public function __construct(private readonly ProductSupplierUpdater $productSupplierUpdater)
-    {
+    public function __construct(
+        private readonly ProductSupplierUpdater $productSupplierUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(SetSuppliersCommand $command): array
     {
         return $this->productSupplierUpdater->associateSuppliers($command->getProductId(), $command->getSupplierIds());

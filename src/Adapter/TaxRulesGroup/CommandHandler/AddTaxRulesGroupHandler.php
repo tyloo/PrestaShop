@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,17 +49,11 @@ class AddTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler implements Ad
      */
     protected $taxRulesGroupRepository;
 
-    /**
-     * @param TaxRulesGroupRepository $taxRulesGroupRepository
-     */
     public function __construct(TaxRulesGroupRepository $taxRulesGroupRepository)
     {
         $this->taxRulesGroupRepository = $taxRulesGroupRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddTaxRulesGroupCommand $command): TaxRulesGroupId
     {
         $taxRulesGroup = new TaxRulesGroup();

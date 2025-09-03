@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class StorePresenter
 
     public function __construct(
         Link $link,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->link = $link;
         $this->imageRetriever = new ImageRetriever($link);
@@ -60,15 +61,15 @@ class StorePresenter
     }
 
     /**
-     * @param array|Store $store Store object or an array
-     * @param Language $language
+     * @param array|Store $store    Store object or an array
+     * @param Language    $language
      *
      * @return StoreLazyArray
      */
     public function present($store, $language)
     {
         // Convert to array if a Store object was passed
-        if (is_object($store)) {
+        if (\is_object($store)) {
             $store = (array) $store;
         }
 

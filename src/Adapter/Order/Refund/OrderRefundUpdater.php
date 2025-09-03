@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,10 +36,6 @@ use PrestaShopException;
 class OrderRefundUpdater
 {
     /**
-     * @param OrderRefundSummary $orderRefundSummary
-     * @param bool $returnedProducts
-     * @param bool $restock
-     *
      * @throws CancelProductFromOrderException
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
@@ -46,7 +43,7 @@ class OrderRefundUpdater
     public function updateRefundData(
         OrderRefundSummary $orderRefundSummary,
         bool $returnedProducts,
-        bool $restock
+        bool $restock,
     ) {
         // Update order details (after credit slip to avoid updating refunded quantities while the credit slip fails)
         foreach ($orderRefundSummary->getProductRefunds() as $orderDetailId => $productRefund) {
@@ -69,7 +66,7 @@ class OrderRefundUpdater
                 $orderDetail->product_quantity_reinjected += $quantityToReinject;
             }
 
-            if (!$orderDetail->update()) {
+            if (! $orderDetail->update()) {
                 throw new CancelProductFromOrderException('Cannot update order detail');
             }
 
@@ -82,7 +79,7 @@ class OrderRefundUpdater
                     $customization->quantity_refunded += $productRefund['quantity'];
                 }
 
-                if (!$customization->update()) {
+                if (! $customization->update()) {
                     throw new CancelProductFromOrderException('Cannot update customization');
                 }
             }

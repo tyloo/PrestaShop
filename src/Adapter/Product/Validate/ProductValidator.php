@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,14 +43,13 @@ use Product;
  */
 class ProductValidator extends AbstractObjectModelValidator
 {
-    public function __construct(private readonly ShopConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private readonly ShopConfigurationInterface $configuration,
+    ) {
     }
 
     /**
      * This method is specific for product creation only.
-     *
-     * @param Product $product
      *
      * @throws CoreException
      */
@@ -65,8 +65,6 @@ class ProductValidator extends AbstractObjectModelValidator
 
     /**
      * Validates Product object model properties using legacy validation
-     *
-     * @param Product $product
      *
      * @throws CoreException
      * @throws ProductConstraintException
@@ -90,8 +88,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     *
      * @throws ProductConstraintException
      */
     private function validateProductType(Product $product): void
@@ -100,8 +96,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     *
      * @throws ProductConstraintException
      */
     private function validateCustomizability(Product $product): void
@@ -112,8 +106,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     *
      * @throws ProductConstraintException
      */
     private function validateBasicInfo(Product $product): void
@@ -124,8 +116,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     *
      * @throws CoreException
      */
     private function validateOptions(Product $product): void
@@ -141,8 +131,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     *
      * @throws ProductConstraintException
      */
     private function validateDetails(Product $product): void
@@ -155,8 +143,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     *
      * @throws ProductConstraintException
      */
     private function validateShipping(Product $product): void
@@ -172,8 +158,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     *
      * @throws ProductConstraintException
      */
     private function validatePrices(Product $product): void
@@ -186,8 +170,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     *
      * @throws ProductConstraintException
      * @throws ProductPackConstraintException
      * @throws ProductStockConstraintException
@@ -208,9 +190,6 @@ class ProductValidator extends AbstractObjectModelValidator
         );
     }
 
-    /**
-     * @param Product $product
-     */
     private function validateSeo(Product $product): void
     {
         $this->validateProductProperty($product, 'redirect_type', ProductConstraintException::INVALID_REDIRECT_TYPE);
@@ -221,10 +200,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     * @param string $propertyName
-     * @param int $errorCode
-     *
      * @throws ProductConstraintException
      */
     private function validateProductProperty(Product $product, string $propertyName, int $errorCode = 0): void
@@ -238,10 +213,6 @@ class ProductValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Product $product
-     * @param string $propertyName
-     * @param int $errorCode
-     *
      * @throws ProductConstraintException
      */
     private function validateProductLocalizedProperty(Product $product, string $propertyName, int $errorCode = 0): void
@@ -256,12 +227,10 @@ class ProductValidator extends AbstractObjectModelValidator
 
     /**
      * To be online a product has some minimum data to be set
-     *
-     * @param Product $product
      */
     private function validateOnlineRequirement(Product $product): void
     {
-        if (!$product->active) {
+        if (! $product->active) {
             return;
         }
 

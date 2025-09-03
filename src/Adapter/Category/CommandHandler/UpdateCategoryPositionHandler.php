@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CategoryNotFoundExcepti
 #[AsCommandHandler]
 final class UpdateCategoryPositionHandler implements UpdateCategoryPositionHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateCategoryPositionCommand $command)
     {
         $parentCategoryId = $command->getParentCategoryId()->getValue();
@@ -59,19 +57,19 @@ final class UpdateCategoryPositionHandler implements UpdateCategoryPositionHandl
             }
         }
 
-        if (null === $position) {
+        if ($position === null) {
             throw new CategoryException('Category position cannot be updated');
         }
 
         $category = new Category($categoryId);
 
-        if (!$category->id) {
-            throw new CategoryNotFoundException($command->getCategoryId(), sprintf('Category with id "%s" was not found', $categoryId));
+        if (! $category->id) {
+            throw new CategoryNotFoundException($command->getCategoryId(), \sprintf('Category with id "%s" was not found', $categoryId));
         }
 
         if ($category->updatePosition((bool) $command->getWay(), $position)) {
             /* Position '0' was not found in given positions so try to reorder parent category */
-            if (!$command->isFoundFirst()) {
+            if (! $command->isFoundFirst()) {
                 Category::cleanPositions((int) $category->id_parent);
             }
         }

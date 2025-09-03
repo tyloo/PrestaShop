@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,12 +36,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 
 class CatalogPriceRuleRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     /**
@@ -50,7 +49,7 @@ class CatalogPriceRuleRepository
         ProductId $productId,
         LanguageId $langId,
         ?int $limit = null,
-        ?int $offset = null
+        ?int $offset = null,
     ): array {
         $qb = $this->getCatalogPriceRulesQueryBuilder($langId, $productId)
             ->select('
@@ -75,12 +74,6 @@ class CatalogPriceRuleRepository
         return $qb->executeQuery()->fetchAllAssociative();
     }
 
-    /**
-     * @param ProductId $productId
-     * @param LanguageId $langId
-     *
-     * @return int
-     */
     public function countByProductId(ProductId $productId, LanguageId $langId): int
     {
         $qb = $this->getCatalogPriceRulesQueryBuilder($langId, $productId)
@@ -89,12 +82,6 @@ class CatalogPriceRuleRepository
         return (int) $qb->executeQuery()->fetchAssociative()['total_catalog_price_rules'];
     }
 
-    /**
-     * @param LanguageId $langId
-     * @param ProductId $productId
-     *
-     * @return QueryBuilder
-     */
     private function getCatalogPriceRulesQueryBuilder(LanguageId $langId, ProductId $productId): QueryBuilder
     {
         return $this->connection->createQueryBuilder()

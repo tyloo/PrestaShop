@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,25 +30,17 @@ namespace PrestaShop\PrestaShop\Adapter\Language\RTL;
 use PrestaShop\PrestaShop\Adapter\Language\LanguageDataProvider;
 use PrestaShop\PrestaShop\Core\Language\RTL\InstalledLanguageCheckerInterface;
 
-/**
- * Class InstalledLanguageChecker
- */
 final class InstalledLanguageChecker implements InstalledLanguageCheckerInterface
 {
-    /**
-     * @param LanguageDataProvider $languageDataProvider
-     */
-    public function __construct(private readonly LanguageDataProvider $languageDataProvider)
-    {
+    public function __construct(
+        private readonly LanguageDataProvider $languageDataProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isInstalledRtlLanguage()
     {
         $languages = $this->languageDataProvider->getLanguages(false);
 
-        return in_array('1', array_column($languages, 'is_rtl'));
+        return \in_array('1', array_column($languages, 'is_rtl'), true);
     }
 }

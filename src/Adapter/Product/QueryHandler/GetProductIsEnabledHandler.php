@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,13 @@ use PrestaShop\PrestaShop\Core\Domain\Product\QueryHandler\GetProductIsEnabledHa
 #[AsQueryHandler]
 final class GetProductIsEnabledHandler implements GetProductIsEnabledHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetProductIsEnabled $query)
     {
         $productId = $query->getProductId()->getValue();
         $product = new Product($productId);
 
         if ($product->id !== $productId) {
-            throw new ProductNotFoundException(sprintf('Product with id "%d" was not found.', $productId));
+            throw new ProductNotFoundException(\sprintf('Product with id "%d" was not found.', $productId));
         }
 
         return (bool) $product->active;

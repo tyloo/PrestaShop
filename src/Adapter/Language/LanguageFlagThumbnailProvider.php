@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,19 +38,17 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
 final class LanguageFlagThumbnailProvider implements ImageProviderInterface
 {
     /**
-     * @param ImageTagSourceParserInterface $imageTagSourceParser
      * @param int $contextShopId
      */
-    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser, private $contextShopId)
-    {
+    public function __construct(
+        private readonly ImageTagSourceParserInterface $imageTagSourceParser,
+        private $contextShopId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath($languageId)
     {
-        $pathToImage = _PS_IMG_DIR_ . 'l' . DIRECTORY_SEPARATOR . $languageId . '.jpg';
+        $pathToImage = _PS_IMG_DIR_ . 'l' . \DIRECTORY_SEPARATOR . $languageId . '.jpg';
 
         $imageTag = ImageManager::thumbnail(
             $pathToImage,

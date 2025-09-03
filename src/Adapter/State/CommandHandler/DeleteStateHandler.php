@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,18 +42,15 @@ use State;
 #[AsCommandHandler]
 class DeleteStateHandler implements DeleteStateHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteStateCommand $command): void
     {
         $state = new State($command->getStateId()->getValue());
 
-        if (0 >= $state->id) {
-            throw new StateNotFoundException(sprintf('Unable to find state with id "%d" for deletion', $command->getStateId()->getValue()));
+        if ($state->id <= 0) {
+            throw new StateNotFoundException(\sprintf('Unable to find state with id "%d" for deletion', $command->getStateId()->getValue()));
         }
 
-        if (!$state->delete()) {
+        if (! $state->delete()) {
             throw DeleteStateException::createDeleteFailure($command->getStateId());
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,19 +36,20 @@ use Doctrine\DBAL\Connection;
 final class DataMatchSaver
 {
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
      */
-    public function __construct(private readonly Connection $connection, private $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private $dbPrefix,
+    ) {
     }
 
     /**
      * Save data match.
      *
-     * @param string $name name of the match
-     * @param array $value value of the match
-     * @param int $skipRows number of rows to skip from the import file
+     * @param string $name     name of the match
+     * @param array  $value    value of the match
+     * @param int    $skipRows number of rows to skip from the import file
      *
      * @return bool
      */

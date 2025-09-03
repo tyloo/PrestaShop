@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,11 +44,6 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtils;
 #[AsQueryHandler]
 final class GetCatalogPriceRuleForEditingHandler extends AbstractCatalogPriceRuleHandler implements GetCatalogPriceRuleForEditingHandlerInterface
 {
-    /**
-     * @param GetCatalogPriceRuleForEditing $query
-     *
-     * @return EditableCatalogPriceRule
-     */
     public function handle(GetCatalogPriceRuleForEditing $query): EditableCatalogPriceRule
     {
         $catalogPriceRuleId = $query->getCatalogPriceRuleId();
@@ -67,8 +63,8 @@ final class GetCatalogPriceRuleForEditingHandler extends AbstractCatalogPriceRul
             new DecimalNumber($specificPriceRule->price),
             new Reduction($specificPriceRule->reduction_type, (string) $specificPriceRule->reduction),
             (bool) $specificPriceRule->reduction_tax,
-            !DateTimeUtils::isNull($from) ? new DateTime($from) : null,
-            !DateTimeUtils::isNull($to) ? new DateTime($to) : null
+            ! DateTimeUtils::isNull($from) ? new DateTime($from) : null,
+            ! DateTimeUtils::isNull($to) ? new DateTime($to) : null
         );
     }
 }

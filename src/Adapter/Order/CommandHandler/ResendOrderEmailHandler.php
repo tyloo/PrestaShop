@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,16 +44,13 @@ use Validate;
 #[AsCommandHandler]
 final class ResendOrderEmailHandler extends AbstractOrderCommandHandler implements ResendOrderEmailHandlerInterface
 {
-    /**
-     * @param ResendOrderEmailCommand $command
-     */
     public function handle(ResendOrderEmailCommand $command): void
     {
         $order = $this->getOrder($command->getOrderId());
         $orderState = new OrderState($command->getOrderStatusId());
 
-        if (!Validate::isLoadedObject($orderState)) {
-            throw new OrderException(sprintf('An error occurred while loading order status. Order status with "%s" was not found.', $command->getOrderId()->getValue()));
+        if (! Validate::isLoadedObject($orderState)) {
+            throw new OrderException(\sprintf('An error occurred while loading order status. Order status with "%s" was not found.', $command->getOrderId()->getValue()));
         }
 
         $history = new OrderHistory($command->getOrderHistoryId());
@@ -60,11 +58,11 @@ final class ResendOrderEmailHandler extends AbstractOrderCommandHandler implemen
         $carrier = new Carrier($order->id_carrier, (int) $order->getAssociatedLanguage()->getId());
         $templateVars = [];
 
-        if ($orderState->id == Configuration::get('PS_OS_SHIPPING') && $order->getShippingNumber()) {
+        if ($orderState->id === Configuration::get('PS_OS_SHIPPING') && $order->getShippingNumber()) {
             $templateVars = ['{followup}' => str_replace('@', $order->getShippingNumber(), $carrier->url)];
         }
 
-        if (!$history->sendEmail($order, $templateVars)) {
+        if (! $history->sendEmail($order, $templateVars)) {
             throw new OrderEmailSendException('Failed to resend order email.', OrderEmailSendException::FAILED_RESEND);
         }
     }

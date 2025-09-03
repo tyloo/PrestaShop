@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use PrestaShopException;
 final class BulkEnableCmsPageHandler extends AbstractCmsPageHandler implements BulkEnableCmsPageHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageException
      */
     public function handle(BulkEnableCmsPageCommand $command)
@@ -56,8 +55,6 @@ final class BulkEnableCmsPageHandler extends AbstractCmsPageHandler implements B
     }
 
     /**
-     * @param BulkEnableCmsPageCommand $command
-     *
      * @throws CannotEnableCmsPageException
      * @throws CmsPageException
      * @throws PrestaShopException
@@ -71,8 +68,8 @@ final class BulkEnableCmsPageHandler extends AbstractCmsPageHandler implements B
 
             $cms->active = true;
 
-            if (false === $cms->update()) {
-                throw new CannotEnableCmsPageException(sprintf('Failed to enable cms page with id %s', $cmsPage->getValue()));
+            if ($cms->update() === false) {
+                throw new CannotEnableCmsPageException(\sprintf('Failed to enable cms page with id %s', $cmsPage->getValue()));
             }
         }
     }

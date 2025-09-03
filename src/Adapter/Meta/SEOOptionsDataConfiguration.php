@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ class SEOOptionsDataConfiguration extends AbstractMultistoreConfiguration
         'product_attributes_in_title',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -51,9 +49,6 @@ class SEOOptionsDataConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         $errors = [];
@@ -70,15 +65,10 @@ class SEOOptionsDataConfiguration extends AbstractMultistoreConfiguration
         return $errors;
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
-        $resolver = (new OptionsResolver())
+        return (new OptionsResolver())
             ->setDefined(self::CONFIGURATION_FIELDS)
             ->setAllowedTypes('product_attributes_in_title', 'bool');
-
-        return $resolver;
     }
 }

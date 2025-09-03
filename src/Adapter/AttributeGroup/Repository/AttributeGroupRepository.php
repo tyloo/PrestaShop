@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,10 +50,6 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param AttributeGroup $attributeGroup
-     *
-     * @return AttributeGroupId
-     *
      * @throws CoreException
      */
     public function add(AttributeGroup $attributeGroup): AttributeGroupId
@@ -77,10 +74,6 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param AttributeGroupId $attributeGroupId
-     *
-     * @return AttributeGroup
-     *
      * @throws ShopAssociationNotFound
      * @throws CoreException
      */
@@ -97,7 +90,6 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ShopConstraint $shopConstraint
      * @param AttributeGroupId[] $attributeGroupIds get only certain attribute groups (e.g. when need to get only certain combinations attributes groups)
      *
      * @return array<int, AttributeGroup> array key is the id of attribute group
@@ -121,8 +113,8 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
             ->orderBy('ag.position', 'ASC')
         ;
 
-        if (!empty($attributeGroupIds)) {
-            $attributeGroupIdValues = array_map(static fn(AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
+        if (! empty($attributeGroupIds)) {
+            $attributeGroupIdValues = array_map(static fn (AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
 
             $qb->andWhere($qb->expr()->in('ag.id_attribute_group', ':attributeGroupIds'))
                 ->setParameter('attributeGroupIds', $attributeGroupIdValues, Connection::PARAM_INT_ARRAY)
@@ -144,7 +136,7 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
 
         $results = $qb->executeQuery()->fetchAllAssociative();
 
-        if (!$results) {
+        if (! $results) {
             return [];
         }
 
@@ -177,15 +169,15 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
      * If at least one of them is missing in any shop, it throws exception.
      *
      * @param AttributeGroupId[] $attributeGroupIds
-     * @param ShopId[] $shopIds
+     * @param ShopId[]           $shopIds
      *
      * @throws ShopAssociationNotFound
      */
     public function assertExistsInEveryShop(array $attributeGroupIds, array $shopIds): void
     {
-        $attributeGroupIdValues = array_map(static fn(AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
+        $attributeGroupIdValues = array_map(static fn (AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
 
-        $shopIdValues = array_map(static fn(ShopId $shopId): int => $shopId->getValue(), $shopIds);
+        $shopIdValues = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $shopIds);
 
         $qb = $this->connection->createQueryBuilder();
         $results = $qb
@@ -210,7 +202,7 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
         }
 
         foreach ($attributeGroupIdValues as $attributeGroupIdValue) {
-            if (!isset($attributeGroupShops[$attributeGroupIdValue]) || $attributeGroupShops[$attributeGroupIdValue] !== $shopIdValues) {
+            if (! isset($attributeGroupShops[$attributeGroupIdValue]) || $attributeGroupShops[$attributeGroupIdValue] !== $shopIdValues) {
                 throw new ShopAssociationNotFound('Provided attribute groups does not exist in every shop');
             }
         }

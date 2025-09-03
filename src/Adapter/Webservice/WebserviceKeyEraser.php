@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,7 +64,7 @@ final class WebserviceKeyEraser
 
         /** @var WebserviceKey $webserviceKey */
         foreach ($webserviceKeys->getResults() as $webserviceKey) {
-            if (!$webserviceKey->delete()) {
+            if (! $webserviceKey->delete()) {
                 $errors[] = [
                     'key' => "Can't delete #%id%",
                     'parameters' => [

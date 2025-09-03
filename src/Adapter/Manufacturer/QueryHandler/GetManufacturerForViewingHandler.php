@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ use Product;
 #[AsQueryHandler]
 final class GetManufacturerForViewingHandler implements GetManufacturerForViewingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetManufacturerForViewing $query)
     {
         $manufacturer = $this->getManufacturer($query->getManufacturerId());
@@ -57,8 +55,6 @@ final class GetManufacturerForViewingHandler implements GetManufacturerForViewin
     }
 
     /**
-     * @param ManufacturerId $manufacturerId
-     *
      * @return Manufacturer
      */
     private function getManufacturer(ManufacturerId $manufacturerId)
@@ -66,16 +62,13 @@ final class GetManufacturerForViewingHandler implements GetManufacturerForViewin
         $manufacturer = new Manufacturer($manufacturerId->getValue());
 
         if ($manufacturer->id !== $manufacturerId->getValue()) {
-            throw new ManufacturerNotFoundException(sprintf('Manufacturer with id "%s" was not found.', $manufacturerId->getValue()));
+            throw new ManufacturerNotFoundException(\sprintf('Manufacturer with id "%s" was not found.', $manufacturerId->getValue()));
         }
 
         return $manufacturer;
     }
 
     /**
-     * @param Manufacturer $manufacturer
-     * @param LanguageId $languageId
-     *
      * @return array
      */
     private function getManufacturerProducts(Manufacturer $manufacturer, LanguageId $languageId)
@@ -93,7 +86,7 @@ final class GetManufacturerForViewingHandler implements GetManufacturerForViewin
             foreach ($productCombinations as $combination) {
                 $attributeId = $combination['id_product_attribute'];
 
-                if (!isset($combinations[$attributeId])) {
+                if (! isset($combinations[$attributeId])) {
                     $combinations[$attributeId] = [
                         'reference' => $combination['reference'],
                         'ean13' => $combination['ean13'],
@@ -104,14 +97,14 @@ final class GetManufacturerForViewingHandler implements GetManufacturerForViewin
                     ];
                 }
 
-                $attribute = sprintf(
+                $attribute = \sprintf(
                     '%s - %s',
                     $combination['group_name'],
                     $combination['attribute_name']
                 );
 
-                if (!empty($combinations[$attributeId]['attributes'])) {
-                    $attribute = sprintf(', %s', $attribute);
+                if (! empty($combinations[$attributeId]['attributes'])) {
+                    $attribute = \sprintf(', %s', $attribute);
                 }
 
                 $combinations[$attributeId]['attributes'] .= $attribute;
@@ -133,9 +126,6 @@ final class GetManufacturerForViewingHandler implements GetManufacturerForViewin
     }
 
     /**
-     * @param Manufacturer $manufacturer
-     * @param LanguageId $languageId
-     *
      * @return array
      */
     private function getManufacturerAddresses(Manufacturer $manufacturer, LanguageId $languageId)

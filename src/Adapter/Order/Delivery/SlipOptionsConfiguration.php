@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,9 @@ final class SlipOptionsConfiguration implements DataConfigurationInterface
 
     public const ENABLE_PRODUCT_IMAGE = 'PS_PDF_IMG_DELIVERY';
 
-    public function __construct(private readonly Configuration $configuration)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+    ) {
     }
 
     /**
@@ -58,9 +60,6 @@ final class SlipOptionsConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -72,9 +71,6 @@ final class SlipOptionsConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         return isset(

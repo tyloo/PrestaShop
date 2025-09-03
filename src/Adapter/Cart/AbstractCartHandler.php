@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,8 +46,6 @@ use Shop;
 abstract class AbstractCartHandler
 {
     /**
-     * @param CartId $cartId
-     *
      * @return Cart
      *
      * @throws CartNotFoundException
@@ -56,20 +55,16 @@ abstract class AbstractCartHandler
         try {
             $cart = new Cart($cartId->getValue());
         } catch (PrestaShopException) {
-            throw new CartException(sprintf('An error occurred when trying to load cart with id "%s', $cartId->getValue()));
+            throw new CartException(\sprintf('An error occurred when trying to load cart with id "%s', $cartId->getValue()));
         }
 
-        if (!Validate::isLoadedObject($cart) || $cartId->getValue() !== (int) $cart->id) {
-            throw new CartNotFoundException(sprintf('Cart with id "%s" was not found', $cartId->getValue()));
+        if (! Validate::isLoadedObject($cart) || $cartId->getValue() !== (int) $cart->id) {
+            throw new CartNotFoundException(\sprintf('Cart with id "%s" was not found', $cartId->getValue()));
         }
 
         return $cart;
     }
 
-    /**
-     * @param ContextStateManager $contextStateManager
-     * @param Cart $cart
-     */
     protected function setCartContext(ContextStateManager $contextStateManager, Cart $cart): void
     {
         $contextStateManager

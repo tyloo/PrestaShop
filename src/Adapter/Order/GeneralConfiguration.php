@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,9 +50,6 @@ class GeneralConfiguration extends AbstractMultistoreConfiguration
         'enable_backorder_status',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -69,9 +67,6 @@ class GeneralConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -91,12 +86,9 @@ class GeneralConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
-        $resolver = (new OptionsResolver())
+        return (new OptionsResolver())
             ->setDefined(self::CONFIGURATION_FIELDS)
             ->setAllowedTypes('enable_final_summary', 'bool')
             ->setAllowedTypes('enable_guest_checkout', 'bool')
@@ -107,7 +99,5 @@ class GeneralConfiguration extends AbstractMultistoreConfiguration
             ->setAllowedTypes('enable_tos', 'bool')
             ->setAllowedTypes('tos_cms_id', 'int')
             ->setAllowedTypes('enable_backorder_status', 'bool');
-
-        return $resolver;
     }
 }

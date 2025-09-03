@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,11 +45,7 @@ class CurrencyManager
         ObjectModel::updateMultishopTable('Currency', ['conversion_rate' => 1], 'a.id_currency');
 
         $tmpContext = Shop::getContext();
-        if ($tmpContext == Shop::CONTEXT_GROUP) {
-            $tmpShop = Shop::getContextShopGroupID();
-        } else {
-            $tmpShop = (int) Shop::getContextShopID();
-        }
+        $tmpShop = $tmpContext === Shop::CONTEXT_GROUP ? Shop::getContextShopGroupID() : (int) Shop::getContextShopID();
 
         foreach (Shop::getContextListShopID() as $shopId) {
             Shop::setContext(Shop::CONTEXT_SHOP, (int) $shopId);

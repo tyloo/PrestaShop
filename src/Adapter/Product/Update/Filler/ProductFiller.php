@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,13 +42,11 @@ class ProductFiller implements ProductFillerInterface
     /**
      * @param ProductFillerInterface[] $updatablePropertyFillers
      */
-    public function __construct(private readonly iterable $updatablePropertyFillers)
-    {
+    public function __construct(
+        private readonly iterable $updatablePropertyFillers,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function fillUpdatableProperties(Product $product, UpdateProductCommand $command): array
     {
         $updatableProperties = [];

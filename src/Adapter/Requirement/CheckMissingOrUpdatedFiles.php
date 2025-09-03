@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class CheckMissingOrUpdatedFiles
 {
     /**
      * @param string|null $dir
-     * @param string $path
+     * @param string      $path
      *
      * @return array
      */
@@ -47,9 +48,9 @@ class CheckMissingOrUpdatedFiles
             'updated' => [],
         ];
 
-        if (null === $dir) {
+        if ($dir === null) {
             $xml = @simplexml_load_file(_PS_API_URL_ . '/xml/md5-' . Version::MAJOR_VERSION . '/' . Version::VERSION . '.xml');
-            if (!$xml) {
+            if (! $xml) {
                 return $fileList;
             }
 
@@ -65,7 +66,7 @@ class CheckMissingOrUpdatedFiles
                 continue;
             }
 
-            if (!file_exists(_PS_ROOT_DIR_ . '/' . $filename)) {
+            if (! file_exists(_PS_ROOT_DIR_ . '/' . $filename)) {
                 $fileList['missing'][] = $filename;
             } elseif (md5_file(_PS_ROOT_DIR_ . '/' . $filename) !== (string) $file) {
                 $fileList['updated'][] = $filename;

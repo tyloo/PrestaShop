@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,9 +52,9 @@ class Tools
     }
 
     /**
-     * @param string $html
+     * @param string      $html
      * @param string|null $uri_unescape
-     * @param bool $allow_style
+     * @param bool        $allow_style
      *
      * @return string
      */
@@ -118,7 +119,7 @@ class Tools
      * Warning - this method accepts our own PS rounding constants with different integer values.
      *
      * @param float $value
-     * @param int $precision
+     * @param int   $precision
      *
      * @return float
      */
@@ -130,7 +131,7 @@ class Tools
     /**
      * Return domain name according to configuration and depending on ssl activation.
      *
-     * @param bool $http if true, return domain name with protocol
+     * @param bool $http     if true, return domain name with protocol
      * @param bool $entities if true, convert special chars to HTML entities
      *
      * @return string domain
@@ -153,8 +154,8 @@ class Tools
     /**
      * Copy content.
      *
-     * @param string $source
-     * @param string $destination
+     * @param string        $source
+     * @param string        $destination
      * @param resource|null $streamContext
      *
      * @return bool|int
@@ -168,7 +169,7 @@ class Tools
      * Sanitize a string.
      *
      * @param string $value
-     * @param bool $allowHtml
+     * @param bool   $allowHtml
      *
      * @return string
      */
@@ -180,8 +181,8 @@ class Tools
     /**
      * Get a valid image URL to use from BackOffice.
      *
-     * @param string $fileName image file name
-     * @param bool $escapeHtmlEntities if true - escape html entities on file name argument
+     * @param string $fileName           image file name
+     * @param bool   $escapeHtmlEntities if true - escape html entities on file name argument
      *
      * @return string image URL
      */

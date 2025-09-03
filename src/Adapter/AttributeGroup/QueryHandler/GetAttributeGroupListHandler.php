@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupI
 #[AsQueryHandler]
 class GetAttributeGroupListHandler extends AbstractAttributeGroupQueryHandler implements GetAttributeGroupListHandlerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function handle(GetAttributeGroupList $query): array
     {
         $shopConstraint = $query->getShopConstraint();
@@ -51,7 +49,7 @@ class GetAttributeGroupListHandler extends AbstractAttributeGroupQueryHandler im
             $attributeGroups,
             $this->attributeRepository->getGroupedAttributes(
                 $shopConstraint,
-                array_map(static fn(int $id): AttributeGroupId => new AttributeGroupId($id), array_keys($attributeGroups))
+                array_map(static fn (int $id): AttributeGroupId => new AttributeGroupId($id), array_keys($attributeGroups))
             )
         );
     }

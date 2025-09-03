@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,13 +43,13 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId;
 #[AsCommandHandler]
 final class AddProductImageHandler implements AddProductImageHandlerInterface
 {
-    public function __construct(private readonly ProductImageUploader $productImageUploader, private readonly ProductImageRepository $productImageRepository, private readonly ProductImageFileValidator $imageValidator)
-    {
+    public function __construct(
+        private readonly ProductImageUploader $productImageUploader,
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly ProductImageFileValidator $imageValidator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddProductImageCommand $command): ImageId
     {
         $filePath = $command->getFilePath();

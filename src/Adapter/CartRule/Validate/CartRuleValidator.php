@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -107,10 +108,7 @@ class CartRuleValidator extends AbstractObjectModelValidator
         }
 
         if ($duplicateCodeCartRuleId && $duplicateCodeCartRuleId !== (int) $cartRule->id) {
-            throw new CartRuleConstraintException(
-                sprintf('Cart rule with code "%s" already exists', $code),
-                CartRuleConstraintException::NON_UNIQUE_CODE
-            );
+            throw new CartRuleConstraintException(\sprintf('Cart rule with code "%s" already exists', $code), CartRuleConstraintException::NON_UNIQUE_CODE);
         }
     }
 }

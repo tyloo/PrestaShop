@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,32 +53,43 @@ use Tools;
 
 class OrderLazyArray extends AbstractLazyArray
 {
-    /** @var CartPresenter */
+    /**
+     * @var CartPresenter
+     */
     private $cartPresenter;
 
-    /** @var ObjectPresenter */
+    /**
+     * @var ObjectPresenter
+     */
     private $objectPresenter;
 
-    /** @var PriceFormatter */
+    /**
+     * @var PriceFormatter
+     */
     private $priceFormatter;
 
-    /** @var TranslatorComponent */
+    /**
+     * @var TranslatorComponent
+     */
     private $translator;
 
-    /** @var TaxConfiguration */
+    /**
+     * @var TaxConfiguration
+     */
     private $taxConfiguration;
 
-    /** @var OrderSubtotalLazyArray */
+    /**
+     * @var OrderSubtotalLazyArray
+     */
     private $subTotals;
 
     /**
-     * OrderArray constructor.
-     *
      * @throws AnnotationException
      * @throws ReflectionException
      */
-    public function __construct(private readonly Order $order)
-    {
+    public function __construct(
+        private readonly Order $order,
+    ) {
         $this->cartPresenter = new CartPresenter();
         $this->objectPresenter = new ObjectPresenter();
         $this->priceFormatter = new PriceFormatter();
@@ -87,9 +99,6 @@ class OrderLazyArray extends AbstractLazyArray
         parent::__construct();
     }
 
-    /**
-     * @return mixed
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getTotals()
     {
@@ -116,9 +125,6 @@ class OrderLazyArray extends AbstractLazyArray
         return $this->order->id_address_delivery;
     }
 
-    /**
-     * @return mixed
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getSubtotals()
     {
@@ -131,12 +137,10 @@ class OrderLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getProductsCount()
     {
-        return count($this->getProducts());
+        return \count($this->getProducts());
     }
 
     /**
-     * @return mixed
-     *
      * @throws PrestaShopException
      */
     #[LazyArrayAttribute(arrayAccess: true)]
@@ -183,7 +187,7 @@ class OrderLazyArray extends AbstractLazyArray
             if ($orderPaid && $orderProduct['is_virtual']) {
                 $id_product_download = ProductDownload::getIdFromIdProduct($orderProduct['product_id']);
                 $product_download = new ProductDownload($id_product_download);
-                if ($product_download->display_filename != '') {
+                if ($product_download->display_filename !== '') {
                     $orderProduct['download_link'] =
                         $product_download->getTextLink($orderProduct['download_hash'])
                         . '&id_order=' . (int) $order->id
@@ -195,11 +199,7 @@ class OrderLazyArray extends AbstractLazyArray
                 if (($cartProduct['id_product'] === $orderProduct['id_product'])
                     && ($cartProduct['id_product_attribute'] === $orderProduct['id_product_attribute'])
                 ) {
-                    if (isset($cartProduct['attributes'])) {
-                        $orderProduct['attributes'] = $cartProduct['attributes'];
-                    } else {
-                        $orderProduct['attributes'] = [];
-                    }
+                    $orderProduct['attributes'] = $cartProduct['attributes'] ?? [];
 
                     $orderProduct['cover'] = $cartProduct['cover'];
                     $orderProduct['default_image'] = $cartProduct['default_image'];
@@ -301,7 +301,7 @@ class OrderLazyArray extends AbstractLazyArray
             $orderHistory[$historyId]['contrast'] = (new ColorBrightnessCalculator())->isBright($history['color']) ? 'dark' : 'bright';
         }
 
-        if (!isset($orderHistory['current'])) {
+        if (! isset($orderHistory['current'])) {
             $orderHistory['current'] = $this->getDefaultHistory();
         }
 
@@ -344,7 +344,7 @@ class OrderLazyArray extends AbstractLazyArray
 
         $carrier = new Carrier((int) $order->id_carrier, (int) $order->getAssociatedLanguage()->getId());
         $orderCarrier = $this->objectPresenter->present($carrier);
-        $orderCarrier['name'] = ($carrier->name == '0') ? Configuration::get('PS_SHOP_NAME') : $carrier->name;
+        $orderCarrier['name'] = ($carrier->name === '0') ? Configuration::get('PS_SHOP_NAME') : $carrier->name;
         $orderCarrier['delay'] = $carrier->delay;
 
         return $orderCarrier;
@@ -366,7 +366,7 @@ class OrderLazyArray extends AbstractLazyArray
         $addressDelivery = new Address((int) $order->id_address_delivery);
         $addressInvoice = new Address((int) $order->id_address_invoice);
 
-        if (!$order->isVirtual()) {
+        if (! $order->isVirtual()) {
             $orderAddresses['delivery'] = $this->objectPresenter->present($addressDelivery);
             $orderAddresses['delivery']['formatted'] =
                 AddressFormat::generateAddress($addressDelivery, [], '<br />');
@@ -387,7 +387,7 @@ class OrderLazyArray extends AbstractLazyArray
         $order = $this->order;
 
         $carrier = $this->getCarrier();
-        if (!empty($carrier['url']) && !empty($order->getShippingNumber())) {
+        if (! empty($carrier['url']) && ! empty($order->getShippingNumber())) {
             return str_replace('@', $order->getShippingNumber(), $carrier['url']);
         }
 
@@ -453,12 +453,12 @@ class OrderLazyArray extends AbstractLazyArray
     private function addOrderReferenceToCustomizationFileUrls(array $products): array
     {
         /**
-         * @param array|string $url
+         * @param array|string $imageUrl
          *
          * @return array|string
          */
         $addReferenceFunction = function ($imageUrl) use (&$addReferenceFunction) {
-            if (is_array($imageUrl)) {
+            if (\is_array($imageUrl)) {
                 foreach ($imageUrl as $key => $url) {
                     $imageUrl[$key] = $addReferenceFunction($url);
                 }

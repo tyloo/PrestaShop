@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,16 +42,11 @@ use Validate;
 #[AsCommandHandler]
 final class UpdateCartCarrierHandler extends AbstractCartHandler implements UpdateCartCarrierHandlerInterface
 {
-    /**
-     * @param ContextStateManager $contextStateManager
-     */
-    public function __construct(private readonly ContextStateManager $contextStateManager)
-    {
+    public function __construct(
+        private readonly ContextStateManager $contextStateManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateCartCarrierCommand $command)
     {
         $this->assertActiveCarrier($command->getNewCarrierId());
@@ -70,24 +66,22 @@ final class UpdateCartCarrierHandler extends AbstractCartHandler implements Upda
     }
 
     /**
-     * @param int $carrierId
-     *
      * @throws CartConstraintException
      */
     private function assertActiveCarrier(int $carrierId): void
     {
-        if (0 === $carrierId) {
+        if ($carrierId === 0) {
             return;
         }
 
         $carrier = new Carrier($carrierId);
 
-        if (!Validate::isLoadedObject($carrier) || (int) $carrier->id !== $carrierId) {
-            throw new CartConstraintException(sprintf('Carrier with id "%d" was not found', $carrierId), CartConstraintException::INVALID_CARRIER);
+        if (! Validate::isLoadedObject($carrier) || (int) $carrier->id !== $carrierId) {
+            throw new CartConstraintException(\sprintf('Carrier with id "%d" was not found', $carrierId), CartConstraintException::INVALID_CARRIER);
         }
 
-        if (!$carrier->active) {
-            throw new CartConstraintException(sprintf('Carrier with id "%d" is not active', $carrierId), CartConstraintException::INVALID_CARRIER);
+        if (! $carrier->active) {
+            throw new CartConstraintException(\sprintf('Carrier with id "%d" is not active', $carrierId), CartConstraintException::INVALID_CARRIER);
         }
     }
 
@@ -99,13 +93,9 @@ final class UpdateCartCarrierHandler extends AbstractCartHandler implements Upda
      *
      * However the structure of deliveryOptions is still used with comma in legacy, so
      * this method provides assurance for deliveryOption structure until major refactoring
-     *
-     * @param int $carrierId
-     *
-     * @return string
      */
     private function formatLegacyDeliveryOptionFromCarrierId(int $carrierId): string
     {
-        return sprintf('%d,', $carrierId);
+        return \sprintf('%d,', $carrierId);
     }
 }

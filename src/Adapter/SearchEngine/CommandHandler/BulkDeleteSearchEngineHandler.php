@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,8 +44,6 @@ use PrestaShopException;
 final class BulkDeleteSearchEngineHandler extends AbstractSearchEngineHandler implements BulkDeleteSearchEngineHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SearchEngineException
      */
     public function handle(BulkDeleteSearchEngineCommand $command): void
@@ -53,17 +52,11 @@ final class BulkDeleteSearchEngineHandler extends AbstractSearchEngineHandler im
             $searchEngine = $this->getSearchEngine($searchEngineId);
 
             try {
-                if (!$searchEngine->delete()) {
-                    throw new DeleteSearchEngineException(
-                        sprintf(
-                            'Cannot delete Search Engine object with id "%d"',
-                            $searchEngineId->getValue()
-                        ),
-                        DeleteSearchEngineException::FAILED_BULK_DELETE
-                    );
+                if (! $searchEngine->delete()) {
+                    throw new DeleteSearchEngineException(\sprintf('Cannot delete Search Engine object with id "%d"', $searchEngineId->getValue()), DeleteSearchEngineException::FAILED_BULK_DELETE);
                 }
             } catch (PrestaShopException) {
-                throw new SearchEngineException(sprintf('An error occurred when deleting Search Engine with id "%d"', $searchEngineId->getValue()));
+                throw new SearchEngineException(\sprintf('An error occurred when deleting Search Engine with id "%d"', $searchEngineId->getValue()));
             }
         }
     }

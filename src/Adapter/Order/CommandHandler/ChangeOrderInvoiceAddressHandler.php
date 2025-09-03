@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,17 +44,12 @@ use Validate;
 #[AsCommandHandler]
 final class ChangeOrderInvoiceAddressHandler extends AbstractOrderHandler implements ChangeOrderInvoiceAddressHandlerInterface
 {
-    /**
-     * @param OrderAmountUpdater $orderAmountUpdater
-     * @param OrderDetailUpdater $orderDetailTaxUpdater
-     */
-    public function __construct(private readonly OrderAmountUpdater $orderAmountUpdater, private readonly OrderDetailUpdater $orderDetailTaxUpdater)
-    {
+    public function __construct(
+        private readonly OrderAmountUpdater $orderAmountUpdater,
+        private readonly OrderDetailUpdater $orderDetailTaxUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ChangeOrderInvoiceAddressCommand $command)
     {
         $order = $this->getOrder($command->getOrderId());
@@ -61,7 +57,7 @@ final class ChangeOrderInvoiceAddressHandler extends AbstractOrderHandler implem
 
         $cart = Cart::getCartByOrderId($order->id);
 
-        if (!Validate::isLoadedObject($address)) {
+        if (! Validate::isLoadedObject($address)) {
             throw new OrderException('New invoice address is not valid');
         }
 

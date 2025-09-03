@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,54 +46,37 @@ final class Backup implements BackupInterface
     /**
      * @param string $fileName Backup file name
      */
-    public function __construct(private $fileName)
-    {
+    public function __construct(
+        private $fileName,
+    ) {
         $this->legacyBackup = new PrestaShopBackup($this->fileName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFileName()
     {
         return $this->fileName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilePath()
     {
         return $this->legacyBackup->getBackupPath() . $this->getFileName();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUrl()
     {
         return $this->legacyBackup->getBackupURL();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSize()
     {
         return filesize($this->legacyBackup->id);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAge()
     {
         return time() - $this->getDate()->getTimestamp();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDate()
     {
         [$timestamp] = explode('-', $this->fileName);

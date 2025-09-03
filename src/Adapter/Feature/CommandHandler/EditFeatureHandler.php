@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,26 +40,24 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsCommandHandler]
 class EditFeatureHandler extends AbstractObjectModelHandler implements EditFeatureHandlerInterface
 {
-    public function __construct(private readonly FeatureRepository $featureRepository)
-    {
+    public function __construct(
+        private readonly FeatureRepository $featureRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditFeatureCommand $command): void
     {
         $feature = $this->featureRepository->get($command->getFeatureId());
 
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $feature->name = $command->getLocalizedNames();
         }
 
         $this->featureRepository->update($feature);
 
         // ObjectModel::update doesn't seem to remove unassociated shops, so we must always update them manually afterwards
-        if (null !== $command->getAssociatedShopIds()) {
-            $this->associateWithShops($feature, array_map(static fn(ShopId $shopId) => $shopId->getValue(), $command->getAssociatedShopIds()));
+        if ($command->getAssociatedShopIds() !== null) {
+            $this->associateWithShops($feature, array_map(static fn (ShopId $shopId) => $shopId->getValue(), $command->getAssociatedShopIds()));
         }
     }
 }

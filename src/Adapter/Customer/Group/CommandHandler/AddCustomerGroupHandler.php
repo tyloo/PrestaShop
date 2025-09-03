@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class AddCustomerGroupHandler implements AddCustomerGroupHandlerInterface
 {
     public function __construct(
         private readonly CustomerGroupValidator $customerGroupValidator,
-        private readonly GroupRepository $customerGroupRepository
+        private readonly GroupRepository $customerGroupRepository,
     ) {
     }
 

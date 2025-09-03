@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,23 +43,18 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Customization\ValueObject\Customiz
 #[AsCommandHandler]
 final class RemoveAllCustomizationFieldsFromProductHandler implements RemoveAllCustomizationFieldsFromProductHandlerInterface
 {
-    /**
-     * @param CustomizationFieldDeleter $customizationFieldDeleter
-     * @param ProductRepository $productRepository
-     * @param ProductCustomizationFieldUpdater $productCustomizationFieldUpdater
-     */
-    public function __construct(private readonly CustomizationFieldDeleter $customizationFieldDeleter, private readonly ProductRepository $productRepository, private readonly ProductCustomizationFieldUpdater $productCustomizationFieldUpdater)
-    {
+    public function __construct(
+        private readonly CustomizationFieldDeleter $customizationFieldDeleter,
+        private readonly ProductRepository $productRepository,
+        private readonly ProductCustomizationFieldUpdater $productCustomizationFieldUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(RemoveAllCustomizationFieldsFromProductCommand $command): void
     {
         $product = $this->productRepository->getProductByDefaultShop($command->getProductId());
 
-        $customizationFieldIds = array_map(fn(array $field): CustomizationFieldId => new CustomizationFieldId((int) $field['id_customization_field']), $product->getCustomizationFieldIds());
+        $customizationFieldIds = array_map(fn (array $field): CustomizationFieldId => new CustomizationFieldId((int) $field['id_customization_field']), $product->getCustomizationFieldIds());
 
         $this->customizationFieldDeleter->bulkDelete($customizationFieldIds);
         $this->productCustomizationFieldUpdater->refreshProductCustomizability($command->getProductId());

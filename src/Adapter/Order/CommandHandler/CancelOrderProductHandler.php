@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,15 +52,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[AsCommandHandler]
 final class CancelOrderProductHandler extends AbstractOrderCommandHandler implements CancelOrderProductHandlerInterface
 {
-    /**
-     * CancelOrderProductHandler constructor.
-     *
-     * @param OrderProductQuantityUpdater $orderProductQuantityUpdater
-     * @param LoggerInterface $logger
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater, private readonly LoggerInterface $logger, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater,
+        private readonly LoggerInterface $logger,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     /**
@@ -113,28 +110,19 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
         }
     }
 
-    /**
-     * @param Order $order*
-     */
     private function checkOrderState(Order $order)
     {
         if ($order->hasBeenPaid() || $order->hasPayments()) {
-            throw new InvalidOrderStateException(
-                InvalidOrderStateException::ALREADY_PAID,
-                'Can not cancel product on an order which is already paid'
-            );
+            throw new InvalidOrderStateException(InvalidOrderStateException::ALREADY_PAID, 'Can not cancel product on an order which is already paid');
         }
     }
 
-    /**
-     * @param Order $order
-     */
     private function cancelOrder(Order $order)
     {
         $history = new OrderHistory();
         $history->id_order = (int) $order->id;
         $history->changeIdOrderState((int) Configuration::get('PS_OS_CANCELED'), $order);
-        if (!$history->addWithemail()) {
+        if (! $history->addWithemail()) {
             // email failure must not block order update process
             $this->logger->warning(
                 $this->translator->trans(
@@ -147,8 +135,6 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
     }
 
     /**
-     * @param array $orderDetails
-     *
      * @throws InvalidCancelProductException
      */
     private function assertCancelableProductQuantities(array $orderDetails)
@@ -168,20 +154,17 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
     }
 
     /**
-     * @param Order $order
-     * @param array $orderDetails
-     *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      * @throws \PrestaShop\PrestaShop\Core\Domain\Order\Exception\OrderException
      */
     private function cancelProducts(Order $order, array $orderDetails)
     {
-        if (!empty($orderDetails['productsOrderDetails'])) {
+        if (! empty($orderDetails['productsOrderDetails'])) {
             foreach ($orderDetails['productsOrderDetails'] as $orderDetail) {
                 $qty_cancel_product = $orderDetails['productCancelQuantity'][$orderDetail->id_order_detail];
                 $newQuantity = max((int) $orderDetail->product_quantity - (int) $qty_cancel_product, 0);
-                $orderInvoice = $orderDetail->id_order_invoice != 0 ? new OrderInvoice($orderDetail->id_order_invoice) : null;
+                $orderInvoice = $orderDetail->id_order_invoice !== 0 ? new OrderInvoice($orderDetail->id_order_invoice) : null;
                 $this->orderProductQuantityUpdater->update($order, $orderDetail, $newQuantity, $orderInvoice);
                 // Hook called only for the shop concerned
                 Hook::exec('actionProductCancel', ['order' => $order, 'id_order_detail' => (int) $orderDetail->id_order_detail, 'cancel_quantity' => $qty_cancel_product, 'action' => CancellationActionType::CANCEL_PRODUCT], null, false, true, false, $order->id_shop);

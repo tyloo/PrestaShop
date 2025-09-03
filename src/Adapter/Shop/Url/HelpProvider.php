@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class HelpProvider implements UrlProviderInterface
 {
-    public function __construct(private readonly LegacyContext $legacyContext, private readonly TranslatorInterface $translator, private readonly RouterInterface $router, private readonly Documentation $documentation)
-    {
+    public function __construct(
+        private readonly LegacyContext $legacyContext,
+        private readonly TranslatorInterface $translator,
+        private readonly RouterInterface $router,
+        private readonly Documentation $documentation,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getUrl(string $section = '', string $title = '')
     {
         if (empty($title)) {

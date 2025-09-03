@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,22 +36,17 @@ class ImagePathFactory
      */
     private $pathToBaseDir;
 
-    /**
-     * @param string $pathToBaseDir
-     */
     public function __construct(
-        string $pathToBaseDir
+        string $pathToBaseDir,
     ) {
         $this->pathToBaseDir = rtrim($pathToBaseDir, '/');
     }
 
     /**
      * @param int|string $imageName
-     *
-     * @return string
      */
     public function getPath($imageName): string
     {
-        return sprintf('%s/%s.jpg', $this->pathToBaseDir, $imageName);
+        return \sprintf('%s/%s.jpg', $this->pathToBaseDir, $imageName);
     }
 }

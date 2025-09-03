@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,10 @@ class StockMovementRepository
 {
     private const DEFAULT_LIMIT = 10;
 
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     /**
@@ -48,7 +51,7 @@ class StockMovementRepository
     public function getLastStockMovements(
         StockId $stockId,
         int $offset = 0,
-        int $limit = self::DEFAULT_LIMIT
+        int $limit = self::DEFAULT_LIMIT,
     ): array {
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder
@@ -141,9 +144,9 @@ class StockMovementRepository
         $groupingCondition = 'sm.id_order IS NULL';
         $queryBuilder
             ->addSelect(
-                sprintf('MIN(@grouping_id := CASE WHEN @grouping_id IS NULL THEN %s WHEN %s THEN %s ELSE @grouping_id END) grouping_id', $stockMovementId, $groupingCondition, $stockMovementId),
-                sprintf("CASE WHEN %s THEN CONCAT('edition-', %s) ELSE CONCAT('orders-', @grouping_id) END grouping_name", $groupingCondition, $stockMovementId),
-                sprintf("CASE WHEN %s THEN 'edition' ELSE 'orders' END grouping_type", $groupingCondition)
+                \sprintf('MIN(@grouping_id := CASE WHEN @grouping_id IS NULL THEN %s WHEN %s THEN %s ELSE @grouping_id END) grouping_id', $stockMovementId, $groupingCondition, $stockMovementId),
+                \sprintf("CASE WHEN %s THEN CONCAT('edition-', %s) ELSE CONCAT('orders-', @grouping_id) END grouping_name", $groupingCondition, $stockMovementId),
+                \sprintf("CASE WHEN %s THEN 'edition' ELSE 'orders' END grouping_type", $groupingCondition)
             )
             ->groupBy('grouping_name')
         ;

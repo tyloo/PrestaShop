@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,25 +39,20 @@ class BasicInformationFiller implements ProductFillerInterface
 {
     use LocalizedObjectModelTrait;
 
-    /**
-     * @param int $defaultLanguageId
-     */
-    public function __construct(private int $defaultLanguageId)
-    {
+    public function __construct(
+        private int $defaultLanguageId,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function fillUpdatableProperties(Product $product, UpdateProductCommand $command): array
     {
         $updatableProperties = [];
 
         $localizedNames = $command->getLocalizedNames();
-        if (null !== $localizedNames) {
+        if ($localizedNames !== null) {
             $defaultName = $localizedNames[$this->defaultLanguageId] ?? $product->name[$this->defaultLanguageId];
             // Go through all the product languages and make sure name is filled for each of them
-            if (!empty($defaultName)) {
+            if (! empty($defaultName)) {
                 $productLanguages = array_keys($product->name);
                 foreach ($productLanguages as $languageId) {
                     // Prevent forcing an empty value and use the default language instead
@@ -73,12 +69,12 @@ class BasicInformationFiller implements ProductFillerInterface
         }
 
         $localizedDescriptions = $command->getLocalizedDescriptions();
-        if (null !== $localizedDescriptions) {
+        if ($localizedDescriptions !== null) {
             $this->fillLocalizedValues($product, 'description', $localizedDescriptions, $updatableProperties);
         }
 
         $localizedShortDescriptions = $command->getLocalizedShortDescriptions();
-        if (null !== $localizedShortDescriptions) {
+        if ($localizedShortDescriptions !== null) {
             $this->fillLocalizedValues($product, 'description_short', $localizedShortDescriptions, $updatableProperties);
         }
 

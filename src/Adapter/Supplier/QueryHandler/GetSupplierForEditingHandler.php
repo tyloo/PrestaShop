@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,11 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
 #[AsQueryHandler]
 final class GetSupplierForEditingHandler extends AbstractSupplierHandler implements GetSupplierForEditingHandlerInterface
 {
-    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser)
-    {
+    public function __construct(
+        private readonly ImageTagSourceParserInterface $imageTagSourceParser,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetSupplierForEditing $query)
     {
         $supplierId = $query->getSupplierId();
@@ -73,23 +72,18 @@ final class GetSupplierForEditingHandler extends AbstractSupplierHandler impleme
         );
     }
 
-    /**
-     * @param int $imageId
-     *
-     * @return array|null
-     */
     private function getLogoImage(int $imageId): ?array
     {
         $imagePath = _PS_SUPP_IMG_DIR_ . $imageId . '.jpg';
         $imageTag = $this->getTmpImageTag($imagePath, $imageId, 'supplier');
         $imageSize = $this->getImageSize($imagePath);
 
-        if (empty($imageTag) || null === $imageSize) {
+        if (empty($imageTag) || $imageSize === null) {
             return null;
         }
 
         return [
-            'size' => sprintf('%skB', $imageSize),
+            'size' => \sprintf('%skB', $imageSize),
             'path' => $this->imageTagSourceParser->parse($imageTag),
         ];
     }

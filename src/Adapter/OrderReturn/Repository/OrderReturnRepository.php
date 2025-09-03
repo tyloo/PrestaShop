@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,19 +39,13 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 
 class OrderReturnRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param OrderReturnValidator $orderReturnValidator
-     */
-    public function __construct(private readonly OrderReturnValidator $orderReturnValidator)
-    {
+    public function __construct(
+        private readonly OrderReturnValidator $orderReturnValidator,
+    ) {
     }
 
     /**
      * Gets legacy OrderReturn
-     *
-     * @param OrderReturnId $orderReturnId
-     *
-     * @return OrderReturn
      *
      * @throws OrderReturnException
      * @throws CoreException
@@ -68,8 +63,6 @@ class OrderReturnRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param OrderReturn $orderReturn
-     *
      * @throws CoreException
      */
     public function update(OrderReturn $orderReturn): void

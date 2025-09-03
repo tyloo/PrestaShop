@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,18 +54,16 @@ abstract class AbstractAttributeGroupHandler
             $attributeGroup = new AttributeGroup($idValue);
 
             if ($attributeGroup->id !== $idValue) {
-                throw new AttributeGroupNotFoundException(sprintf('Attribute group with id "%s" was not found.', $idValue));
+                throw new AttributeGroupNotFoundException(\sprintf('Attribute group with id "%s" was not found.', $idValue));
             }
         } catch (PrestaShopException) {
-            throw new AttributeGroupException(sprintf('An error occurred when trying to get attribute group with id %s', $idValue));
+            throw new AttributeGroupException(\sprintf('An error occurred when trying to get attribute group with id %s', $idValue));
         }
 
         return $attributeGroup;
     }
 
     /**
-     * @param AttributeGroup $attributeGroup
-     *
      * @return bool
      *
      * @throws AttributeGroupException
@@ -74,7 +73,7 @@ abstract class AbstractAttributeGroupHandler
         try {
             return $attributeGroup->delete();
         } catch (PrestaShopException) {
-            throw new AttributeGroupException(sprintf('An error occurred when trying to delete attribute with id %s', $attributeGroup->id));
+            throw new AttributeGroupException(\sprintf('An error occurred when trying to delete attribute with id %s', $attributeGroup->id));
         }
     }
 }

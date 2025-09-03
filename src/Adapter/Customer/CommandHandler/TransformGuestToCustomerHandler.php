@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,13 +46,11 @@ final class TransformGuestToCustomerHandler implements TransformGuestToCustomerH
     /**
      * @param int $contextLangId
      */
-    public function __construct(private $contextLangId)
-    {
+    public function __construct(
+        private $contextLangId,
+    ) {
     }
 
-    /**
-     * @param TransformGuestToCustomerCommand $command
-     */
     public function handle(TransformGuestToCustomerCommand $command)
     {
         $customerId = $command->getCustomerId();
@@ -60,35 +59,30 @@ final class TransformGuestToCustomerHandler implements TransformGuestToCustomerH
         $this->assertCustomerExists($customerId, $customer);
         $this->assertCustomerIsGuest($customer);
 
-        if (!$customer->transformToCustomer($this->contextLangId)) {
-            throw new CustomerTransformationException(sprintf('Failed to transform guest into customer'), CustomerTransformationException::TRANSFORMATION_FAILED);
+        if (! $customer->transformToCustomer($this->contextLangId)) {
+            throw new CustomerTransformationException(\sprintf('Failed to transform guest into customer'), CustomerTransformationException::TRANSFORMATION_FAILED);
         }
     }
 
     /**
-     * @param CustomerId $customerId
-     * @param Customer $customer
-     *
      * @throws CustomerNotFoundException
      */
     private function assertCustomerExists(CustomerId $customerId, Customer $customer)
     {
         if ($customer->id !== $customerId->getValue()) {
-            throw new CustomerNotFoundException(sprintf('Customer with id "%d" was not found', $customerId->getValue()));
+            throw new CustomerNotFoundException(\sprintf('Customer with id "%d" was not found', $customerId->getValue()));
         }
     }
 
     /**
      * Checks if a customer with the same email already exists in database.
      *
-     * @param Customer $customer
-     *
      * @throws CustomerTransformationException
      */
     private function assertCustomerIsGuest(Customer $customer)
     {
         if (Customer::customerExists($customer->email)) {
-            throw new CustomerTransformationException(sprintf('Customer with id "%s" already exists as non-guest', $customer->id), CustomerTransformationException::CUSTOMER_IS_NOT_GUEST);
+            throw new CustomerTransformationException(\sprintf('Customer with id "%s" already exists as non-guest', $customer->id), CustomerTransformationException::CUSTOMER_IS_NOT_GUEST);
         }
     }
 }

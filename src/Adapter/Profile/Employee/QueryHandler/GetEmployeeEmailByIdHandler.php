@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 #[AsQueryHandler]
 final class GetEmployeeEmailByIdHandler extends AbstractEmployeeHandler implements GetEmployeeEmailByIdHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetEmployeeEmailById $query): Email
     {
         $employee = $this->getEmployee($query->getEmployeeId());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,8 +47,6 @@ use State;
 class EditStateHandler implements EditStateHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotUpdateStateException
      * @throws StateConstraintException
      * @throws StateException
@@ -58,23 +57,23 @@ class EditStateHandler implements EditStateHandlerInterface
         $state = $this->getState($command->getStateId());
 
         try {
-            if (null !== $command->getZoneId()->getValue()) {
+            if ($command->getZoneId()->getValue() !== null) {
                 $state->id_zone = $command->getZoneId()->getValue();
             }
 
-            if (null !== $command->getCountryId()->getValue()) {
+            if ($command->getCountryId()->getValue() !== null) {
                 $state->id_country = $command->getCountryId()->getValue();
             }
 
-            if (null !== $command->getIsoCode()) {
+            if ($command->getIsoCode() !== null) {
                 $state->iso_code = $command->getIsoCode();
             }
 
-            if (null !== $command->getName()) {
+            if ($command->getName() !== null) {
                 $state->name = $command->getName();
             }
 
-            if (null !== $command->getActive()) {
+            if ($command->getActive() !== null) {
                 $state->active = $command->getActive();
             }
 
@@ -83,7 +82,7 @@ class EditStateHandler implements EditStateHandlerInterface
                 throw new StateConstraintException('State contains invalid field values: ' . $isValid);
             }
 
-            if (false === $state->update()) {
+            if ($state->update() === false) {
                 throw new CannotUpdateStateException('Failed to update state');
             }
         } catch (PrestaShopException $prestaShopException) {
@@ -92,10 +91,6 @@ class EditStateHandler implements EditStateHandlerInterface
     }
 
     /**
-     * @param StateId $stateId
-     *
-     * @return State
-     *
      * @throws StateNotFoundException
      * @throws StateException
      */
@@ -106,11 +101,11 @@ class EditStateHandler implements EditStateHandlerInterface
         try {
             $state = new State($stateIdValue);
         } catch (PrestaShopException $prestaShopException) {
-            throw new StateException(sprintf('Failed to get state with id: "%s"', $stateIdValue), 0, $prestaShopException);
+            throw new StateException(\sprintf('Failed to get state with id: "%s"', $stateIdValue), 0, $prestaShopException);
         }
 
         if ($state->id !== $stateIdValue) {
-            throw new StateNotFoundException(sprintf('State with id "%s" was not found.', $stateIdValue));
+            throw new StateNotFoundException(\sprintf('State with id "%s" was not found.', $stateIdValue));
         }
 
         return $state;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,9 +58,6 @@ class DeleteManufacturerLogoImageHandler extends AbstractManufacturerCommandHand
         $this->tmpImageDir = $tmpImageDir;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteManufacturerLogoImageCommand $command): void
     {
         $fs = new Filesystem();
@@ -67,7 +65,7 @@ class DeleteManufacturerLogoImageHandler extends AbstractManufacturerCommandHand
         $imageTypes = ImageType::getImagesTypes('manufacturers');
         foreach ($imageTypes as $imageType) {
             foreach (ImageFormatConfiguration::SUPPORTED_FORMATS as $imageFormat) {
-                $path = sprintf(
+                $path = \sprintf(
                     '%s%s-%s.' . $imageFormat,
                     $this->imageDir,
                     $command->getManufacturerId()->getValue(),
@@ -77,7 +75,7 @@ class DeleteManufacturerLogoImageHandler extends AbstractManufacturerCommandHand
                     $fs->remove($path);
                 }
 
-                $path = sprintf(
+                $path = \sprintf(
                     '%s%s-%s2x.' . $imageFormat,
                     $this->imageDir,
                     $command->getManufacturerId()->getValue(),
@@ -89,7 +87,7 @@ class DeleteManufacturerLogoImageHandler extends AbstractManufacturerCommandHand
             }
         }
 
-        $imagePath = sprintf(
+        $imagePath = \sprintf(
             '%s%s.jpg',
             $this->imageDir,
             $command->getManufacturerId()->getValue()
@@ -99,7 +97,7 @@ class DeleteManufacturerLogoImageHandler extends AbstractManufacturerCommandHand
         }
 
         // Delete tmp image
-        $imgTmpPath = sprintf(
+        $imgTmpPath = \sprintf(
             '%smanufacturer_%s.jpg',
             $this->tmpImageDir,
             $command->getManufacturerId()->getValue()
@@ -109,7 +107,7 @@ class DeleteManufacturerLogoImageHandler extends AbstractManufacturerCommandHand
         }
 
         // Delete tmp image mini
-        $imgMiniTmpPath = sprintf(
+        $imgMiniTmpPath = \sprintf(
             '%smanufacturer_mini_%s.jpg',
             $this->tmpImageDir,
             $command->getManufacturerId()->getValue()

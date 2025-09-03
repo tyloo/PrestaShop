@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,9 +47,6 @@ use Validate;
 #[AsCommandHandler]
 final class SendCartToCustomerHandler implements SendCartToCustomerHanlderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SendCartToCustomerCommand $command)
     {
         $cart = $this->getCart($command->getCartId());
@@ -83,14 +81,12 @@ final class SendCartToCustomerHandler implements SendCartToCustomerHanlderInterf
             $cart->id_shop
         );
 
-        if (!$emailWasSent) {
+        if (! $emailWasSent) {
             throw new CartException('Failed to send email to customer.');
         }
     }
 
     /**
-     * @param CartId $cartId
-     *
      * @return Cart
      *
      * @throws CartNotFoundException
@@ -99,8 +95,8 @@ final class SendCartToCustomerHandler implements SendCartToCustomerHanlderInterf
     {
         $cart = new Cart($cartId->getValue());
 
-        if (!Validate::isLoadedObject($cart)) {
-            throw new CartNotFoundException(sprintf('Cart with id "%d" was not found', $cartId->getValue()));
+        if (! Validate::isLoadedObject($cart)) {
+            throw new CartNotFoundException(\sprintf('Cart with id "%d" was not found', $cartId->getValue()));
         }
 
         return $cart;
@@ -117,16 +113,14 @@ final class SendCartToCustomerHandler implements SendCartToCustomerHanlderInterf
     {
         $customer = new Customer($customerId);
 
-        if (!Validate::isLoadedObject($customer)) {
-            throw new CartException(sprintf('Customer with id "%d" was not found', $customerId));
+        if (! Validate::isLoadedObject($customer)) {
+            throw new CartException(\sprintf('Customer with id "%d" was not found', $customerId));
         }
 
         return $customer;
     }
 
     /**
-     * @param Cart $cart
-     *
      * @return string
      */
     private function generateCheckoutUrl(Cart $cart)

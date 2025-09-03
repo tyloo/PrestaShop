@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,20 +46,13 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
  */
 class EmployeeSessionRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param int $cookieLifetime
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly int $cookieLifetime)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly int $cookieLifetime,
+    ) {
     }
 
-    /**
-     * @param EmployeeSessionId $sessionId
-     *
-     * @return EmployeeSession
-     */
     public function get(EmployeeSessionId $sessionId): EmployeeSession
     {
         /** @var EmployeeSession $session */
@@ -71,17 +65,12 @@ class EmployeeSessionRepository extends AbstractObjectModelRepository
         return $session;
     }
 
-    /**
-     * @param EmployeeSessionId $employeeSessionId
-     */
     public function delete(EmployeeSessionId $employeeSessionId): void
     {
         $this->deleteObjectModel($this->get($employeeSessionId), CannotDeleteEmployeeSessionException::class);
     }
 
     /**
-     * @param array $employeeSessionIds
-     *
      * @throws CannotBulkDeleteEmployeeSessionException
      */
     public function bulkDelete(array $employeeSessionIds): void
@@ -99,16 +88,11 @@ class EmployeeSessionRepository extends AbstractObjectModelRepository
             return;
         }
 
-        throw new CannotBulkDeleteEmployeeSessionException(
-            $failedIds,
-            sprintf('Failed to delete following employees sessions: "%s"', implode(', ', $failedIds))
-        );
+        throw new CannotBulkDeleteEmployeeSessionException($failedIds, \sprintf('Failed to delete following employees sessions: "%s"', implode(', ', $failedIds)));
     }
 
     /**
      * Clear outdated employee sessions
-     *
-     * @return void
      *
      * @throws CannotClearEmployeeSessionException
      */

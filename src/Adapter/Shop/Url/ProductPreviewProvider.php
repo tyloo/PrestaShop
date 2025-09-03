@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,7 +48,7 @@ class ProductPreviewProvider implements UrlProviderInterface
     public function __construct(
         Link $link,
         private readonly bool $urlRewritingIsEnabled,
-        int $employeeId
+        int $employeeId,
     ) {
         $this->link = $link;
         $this->employeeId = $employeeId;
@@ -55,12 +56,6 @@ class ProductPreviewProvider implements UrlProviderInterface
 
     /**
      * Create a link to a product.
-     *
-     * @param int|null $productId
-     * @param bool $active
-     * @param int|null $shopId
-     *
-     * @return string
      */
     public function getUrl(?int $productId = null, ?bool $active = true, ?int $shopId = null): string
     {
@@ -75,12 +70,12 @@ class ProductPreviewProvider implements UrlProviderInterface
             $this->urlRewritingIsEnabled
         );
 
-        if (!$active) {
+        if (! $active) {
             $token = Tools::getAdminTokenLite('AdminProducts');
-            $preview_url = sprintf(
+            $preview_url = \sprintf(
                 '%s%sadtoken=%s&id_employee=%d&preview=1',
                 $preview_url,
-                (!str_contains((string) $preview_url, '?')) ? '?' : '&',
+                (! str_contains((string) $preview_url, '?')) ? '?' : '&',
                 $token,
                 $this->employeeId
             );

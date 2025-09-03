@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,17 +45,15 @@ use Shop;
  */
 class ProductIndexationUpdater
 {
-    public function __construct(private readonly ContextStateManager $contextStateManager, private readonly bool $isSearchIndexationOn)
-    {
+    public function __construct(
+        private readonly ContextStateManager $contextStateManager,
+        private readonly bool $isSearchIndexationOn,
+    ) {
     }
 
     /**
      * Checks if one of the updated fields is used for the indexation, if one of them is
      * then a new indexation is needed.
-     *
-     * @param array $updatedFields
-     *
-     * @return bool
      */
     public function isIndexationNeeded(array $updatedFields): bool
     {
@@ -72,7 +71,7 @@ class ProductIndexationUpdater
         ];
 
         foreach ($updatedFields as $langFieldName => $regularFieldName) {
-            if (in_array($langFieldName, $indexedFields) || in_array($regularFieldName, $indexedFields)) {
+            if (\in_array($langFieldName, $indexedFields, true) || \in_array($regularFieldName, $indexedFields, true)) {
                 return true;
             }
         }
@@ -80,28 +79,21 @@ class ProductIndexationUpdater
         return false;
     }
 
-    /**
-     * @param Product $product
-     *
-     * @return bool
-     */
     public function isVisibleOnSearch(Product $product): bool
     {
-        return in_array(
+        return \in_array(
             $product->visibility,
-            [ProductVisibility::VISIBLE_EVERYWHERE, ProductVisibility::VISIBLE_IN_SEARCH]
+            [ProductVisibility::VISIBLE_EVERYWHERE, ProductVisibility::VISIBLE_IN_SEARCH], true
         ) && $product->active;
     }
 
     /**
-     * @param Product $product
-     *
      * @throws CannotUpdateProductException
      * @throws CoreException
      */
     public function updateIndexation(Product $product, ShopConstraint $shopConstraint): void
     {
-        if (!$this->isSearchIndexationOn) {
+        if (! $this->isSearchIndexationOn) {
             return;
         }
 
@@ -113,8 +105,6 @@ class ProductIndexationUpdater
     }
 
     /**
-     * @param int $productId
-     *
      * @throws CannotUpdateProductException
      * @throws CoreException
      */
@@ -132,11 +122,7 @@ class ProductIndexationUpdater
                 $this->updateProductIndexesByShopConstraint($productId, $shopConstraint);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred while updating search indexes for product %d', $productId),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred while updating search indexes for product %d', $productId), 0, $prestaShopException);
         } finally {
             $this->contextStateManager->restorePreviousContext();
         }
@@ -145,18 +131,12 @@ class ProductIndexationUpdater
     private function updateProductIndexesByShopConstraint(int $productId, ShopConstraint $shopConstraint): void
     {
         $this->adaptShopContext($shopConstraint);
-        if (!Search::indexation(false, $productId)) {
-            throw new CannotUpdateProductException(
-                sprintf('Cannot update search indexes for product %d', $productId),
-                CannotUpdateProductException::FAILED_UPDATE_SEARCH_INDEXATION
-            );
+        if (! Search::indexation(false, $productId)) {
+            throw new CannotUpdateProductException(\sprintf('Cannot update search indexes for product %d', $productId), CannotUpdateProductException::FAILED_UPDATE_SEARCH_INDEXATION);
         }
     }
 
     /**
-     * @param int $productId
-     * @param ShopConstraint $shopConstraint
-     *
      * @throws CoreException
      */
     private function removeProductIndexes(int $productId, ShopConstraint $shopConstraint): void
@@ -173,11 +153,7 @@ class ProductIndexationUpdater
                 $this->removeProductIndexesByShopConstraint($productId, $shopConstraint);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred while removing search indexes for product %d', $productId),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred while removing search indexes for product %d', $productId), 0, $prestaShopException);
         } finally {
             $this->contextStateManager->restorePreviousContext();
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,20 +45,18 @@ class CustomerDataProvider
      */
     public function getCustomer($id)
     {
-        if (!$id) {
+        if (! $id) {
             throw new LogicException('You need to provide a customer id', 5002);
         }
 
-        $customer = new Customer($id);
-
-        return $customer;
+        return new Customer($id);
     }
 
     public function getIdByEmail(string $email)
     {
         $id = null;
         $customers = Customer::getCustomersByEmail($email);
-        if (!empty($customers)) {
+        if (! empty($customers)) {
             $id = current($customers)['id_customer'];
         }
 
@@ -91,8 +90,6 @@ class CustomerDataProvider
 
     /**
      * Provides customer messages
-     *
-     * @param int $customerId
      */
     public function getCustomerMessages(int $customerId, ?int $orderId = null, ?int $limit = null)
     {
@@ -114,7 +111,7 @@ class CustomerDataProvider
         $mainSql .= ' GROUP BY cm.id_customer_message
             ORDER BY cm.date_add DESC';
 
-        $count = Db::getInstance()->executeS(sprintf('SELECT COUNT(*) AS total FROM (%s) AS messages', $mainSql));
+        $count = Db::getInstance()->executeS(\sprintf('SELECT COUNT(*) AS total FROM (%s) AS messages', $mainSql));
 
         if ($limit) {
             $mainSql .= ' LIMIT ' . $limit;

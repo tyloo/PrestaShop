@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,10 +42,6 @@ abstract class AbstractCatalogPriceRuleHandler
 {
     /**
      * Gets legacy SpecificPriceRule
-     *
-     * @param CatalogPriceRuleId $catalogPriceRuleId
-     *
-     * @return SpecificPriceRule
      */
     protected function getSpecificPriceRule(CatalogPriceRuleId $catalogPriceRuleId): SpecificPriceRule
     {
@@ -55,7 +52,7 @@ abstract class AbstractCatalogPriceRuleHandler
         }
 
         if ($specificPriceRule->id !== $catalogPriceRuleId->getValue()) {
-            throw new CatalogPriceRuleNotFoundException(sprintf('SpecificPriceRule with id "%s" was not found.', $catalogPriceRuleId->getValue()));
+            throw new CatalogPriceRuleNotFoundException(\sprintf('SpecificPriceRule with id "%s" was not found.', $catalogPriceRuleId->getValue()));
         }
 
         return $specificPriceRule;
@@ -63,8 +60,6 @@ abstract class AbstractCatalogPriceRuleHandler
 
     /**
      * Deletes legacy SpecificPriceRule
-     *
-     * @param SpecificPriceRule $specificPriceRule
      *
      * @return bool
      *
@@ -75,14 +70,11 @@ abstract class AbstractCatalogPriceRuleHandler
         try {
             return $specificPriceRule->delete();
         } catch (PrestaShopException) {
-            throw new CatalogPriceRuleException(sprintf('An error occurred when deleting SpecificPriceRule object with id "%s".', $specificPriceRule->id));
+            throw new CatalogPriceRuleException(\sprintf('An error occurred when deleting SpecificPriceRule object with id "%s".', $specificPriceRule->id));
         }
     }
 
     /**
-     * @param DateTime $from
-     * @param DateTime $to
-     *
      * @throws CatalogPriceRuleConstraintException
      */
     protected function assertDateRangeIsNotInverse(DateTime $from, DateTime $to)

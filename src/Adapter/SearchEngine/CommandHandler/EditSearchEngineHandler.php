@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,32 +43,30 @@ use PrestaShopException;
 final class EditSearchEngineHandler extends AbstractSearchEngineHandler implements EditSearchEngineHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SearchEngineException
      */
     public function handle(EditSearchEngineCommand $command): void
     {
         $searchEngine = $this->getSearchEngine($command->getSearchEngineId());
 
-        if (null !== $command->getServer()) {
+        if ($command->getServer() !== null) {
             $searchEngine->server = $command->getServer();
         }
 
-        if (null !== $command->getQueryKey()) {
+        if ($command->getQueryKey() !== null) {
             $searchEngine->getvar = $command->getQueryKey();
         }
 
         try {
-            if (false === $searchEngine->validateFields(false)) {
+            if ($searchEngine->validateFields(false) === false) {
                 throw new SearchEngineException('Search engine contain invalid field values.');
             }
 
-            if (!$searchEngine->update()) {
-                throw new SearchEngineException(sprintf('Cannot update search engine with id "%d"', $searchEngine->id));
+            if (! $searchEngine->update()) {
+                throw new SearchEngineException(\sprintf('Cannot update search engine with id "%d"', $searchEngine->id));
             }
         } catch (PrestaShopException) {
-            throw new SearchEngineException(sprintf('Cannot update search engine with id "%d"', $searchEngine->id));
+            throw new SearchEngineException(\sprintf('Cannot update search engine with id "%d"', $searchEngine->id));
         }
     }
 }

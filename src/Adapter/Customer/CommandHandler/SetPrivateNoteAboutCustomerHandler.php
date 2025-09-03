@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,16 +41,13 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerNotFoundExcepti
 #[AsCommandHandler]
 final class SetPrivateNoteAboutCustomerHandler implements SetPrivateNoteAboutCustomerHandlerInterface
 {
-    /**
-     * @param SetPrivateNoteAboutCustomerCommand $command
-     */
     public function handle(SetPrivateNoteAboutCustomerCommand $command)
     {
         $customerId = $command->getCustomerId();
         $customer = new Customer($customerId->getValue());
 
         if ($customer->id !== $customerId->getValue()) {
-            throw new CustomerNotFoundException(sprintf('Customer with id "%d" was not found.', $customerId->getValue()));
+            throw new CustomerNotFoundException(\sprintf('Customer with id "%d" was not found.', $customerId->getValue()));
         }
 
         $customer->note = $command->getPrivateNote();

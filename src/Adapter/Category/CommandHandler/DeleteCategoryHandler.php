@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ use PrestaShop\PrestaShop\Core\Domain\Category\Exception\FailedToDeleteCategoryE
 final class DeleteCategoryHandler extends AbstractDeleteCategoryHandler implements DeleteCategoryHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CategoryNotFoundException
      * @throws CannotDeleteRootCategoryForShopException
      * @throws FailedToDeleteCategoryException
@@ -52,16 +51,16 @@ final class DeleteCategoryHandler extends AbstractDeleteCategoryHandler implemen
         $categoryIdValue = $command->getCategoryId()->getValue();
         $category = new Category($categoryIdValue);
 
-        if (!$category->id) {
-            throw new CategoryNotFoundException($command->getCategoryId(), sprintf('Category with id %s cannot be found.', var_export($categoryIdValue, true)));
+        if (! $category->id) {
+            throw new CategoryNotFoundException($command->getCategoryId(), \sprintf('Category with id %s cannot be found.', var_export($categoryIdValue, true)));
         }
 
         if ($category->isRootCategoryForAShop()) {
-            throw new CannotDeleteRootCategoryForShopException(sprintf("Shop's root category with id %s cannot be deleted.", var_export($categoryIdValue, true)));
+            throw new CannotDeleteRootCategoryForShopException(\sprintf("Shop's root category with id %s cannot be deleted.", var_export($categoryIdValue, true)));
         }
 
-        if (!$category->delete()) {
-            throw new FailedToDeleteCategoryException(sprintf('Failed to delete category with id %s', var_export($categoryIdValue, true)));
+        if (! $category->delete()) {
+            throw new FailedToDeleteCategoryException(\sprintf('Failed to delete category with id %s', var_export($categoryIdValue, true)));
         }
 
         $this->updateProductCategories([

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,17 +42,12 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\QueryHandler\SearchCustomersHandl
 #[AsQueryHandler]
 final class SearchCustomersHandler implements SearchCustomersHandlerInterface
 {
-    /**
-     * @param Configuration $configuration
-     * @param int $contextLangId
-     */
-    public function __construct(private readonly Configuration $configuration, private readonly int $contextLangId)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+        private readonly int $contextLangId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SearchCustomers $query)
     {
         $limit = 50;
@@ -69,7 +65,7 @@ final class SearchCustomersHandler implements SearchCustomersHandlerInterface
                 $limit,
                 $query->getShopConstraint()
             );
-            if (!is_array($customersResult)) {
+            if (! \is_array($customersResult)) {
                 continue;
             }
 
@@ -86,11 +82,11 @@ final class SearchCustomersHandler implements SearchCustomersHandlerInterface
             }
 
             foreach ($customersResult as $customerArray) {
-                if (!$customerArray['active']) {
+                if (! $customerArray['active']) {
                     continue;
                 }
 
-                $customerArray['fullname_and_email'] = sprintf(
+                $customerArray['fullname_and_email'] = \sprintf(
                     '%s %s - %s',
                     $customerArray['firstname'],
                     $customerArray['lastname'],
@@ -105,15 +101,12 @@ final class SearchCustomersHandler implements SearchCustomersHandlerInterface
                         $customerArray['groups'][$id_group] = [
                             'id_group' => $id_group,
                             'name' => $groupNames[$id_group] ?? '',
-                            'default' => $id_group == $customerArray['id_default_group'],
+                            'default' => $id_group === $customerArray['id_default_group'],
                         ];
                     }
                 }
 
-                unset($customerArray['group_ids']);
-
-                // Removing some information that could be considered a security risk
-                unset(
+                unset($customerArray['group_ids'],
                     $customerArray['passwd'],
                     $customerArray['secure_key'],
                     $customerArray['last_passwd_gen'],
@@ -121,9 +114,11 @@ final class SearchCustomersHandler implements SearchCustomersHandlerInterface
                     $customerArray['reset_password_validity']
                 );
 
+                // Removing some information that could be considered a security risk
+
                 $isB2BEnabled = $this->configuration->getBoolean('PS_B2B_ENABLE');
 
-                if (!$isB2BEnabled) {
+                if (! $isB2BEnabled) {
                     unset(
                         $customerArray['company']
                     );

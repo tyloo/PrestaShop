@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ use PrestaShopException;
 final class GetCmsPageCategoryForEditingHandler implements GetCmsPageCategoryForEditingHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageCategoryException
      */
     public function handle(GetCmsPageCategoryForEditing $query)
@@ -53,13 +52,13 @@ final class GetCmsPageCategoryForEditingHandler implements GetCmsPageCategoryFor
         try {
             $cmsPageCategory = new CMSCategory($query->getCmsPageCategoryId()->getValue());
 
-            if (0 >= $cmsPageCategory->id) {
-                throw new CmsPageCategoryNotFoundException(sprintf('Cms category object with id "%s" has not been found', $query->getCmsPageCategoryId()->getValue()));
+            if ($cmsPageCategory->id <= 0) {
+                throw new CmsPageCategoryNotFoundException(\sprintf('Cms category object with id "%s" has not been found', $query->getCmsPageCategoryId()->getValue()));
             }
 
             $shopIds = $cmsPageCategory->getAssociatedShops();
         } catch (PrestaShopException $prestaShopException) {
-            throw new CmsPageCategoryException(sprintf('An error occurred when retrieving cms page category data with id %s', $query->getCmsPageCategoryId()->getValue()), 0, $prestaShopException);
+            throw new CmsPageCategoryException(\sprintf('An error occurred when retrieving cms page category data with id %s', $query->getCmsPageCategoryId()->getValue()), 0, $prestaShopException);
         }
 
         return new EditableCmsPageCategory(

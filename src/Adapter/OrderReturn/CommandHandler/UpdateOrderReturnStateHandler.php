@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,19 +40,12 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturn\Exception\OrderReturnException
 #[AsCommandHandler]
 class UpdateOrderReturnStateHandler implements UpdateOrderReturnStateHandlerInterface
 {
-    /**
-     * UpdateOrderReturnStateHandler constructor.
-     *
-     * @param OrderReturnRepository $orderReturnRepository
-     * @param OrderReturnStateRepository $orderReturnStateRepository
-     */
-    public function __construct(private readonly OrderReturnRepository $orderReturnRepository, private readonly OrderReturnStateRepository $orderReturnStateRepository)
-    {
+    public function __construct(
+        private readonly OrderReturnRepository $orderReturnRepository,
+        private readonly OrderReturnStateRepository $orderReturnStateRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateOrderReturnStateCommand $command): void
     {
         $orderReturn = $this->orderReturnRepository->get($command->getOrderReturnId());
@@ -61,11 +55,6 @@ class UpdateOrderReturnStateHandler implements UpdateOrderReturnStateHandlerInte
     }
 
     /**
-     * @param OrderReturn $orderReturn
-     * @param UpdateOrderReturnStateCommand $command
-     *
-     * @return OrderReturn
-     *
      * @throws OrderReturnException
      */
     private function updateOrderReturnWithCommandData(OrderReturn $orderReturn, UpdateOrderReturnStateCommand $command): OrderReturn

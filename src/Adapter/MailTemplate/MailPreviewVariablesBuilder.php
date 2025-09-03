@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,33 +59,23 @@ final class MailPreviewVariablesBuilder
 
     public const RETURN_SLIP = 'return_slip';
 
-    /** @var Context */
+    /**
+     * @var Context
+     */
     private $context;
 
-    /**
-     * MailPreviewVariablesBuilder constructor.
-     *
-     * @param ConfigurationInterface $configuration
-     * @param LegacyContext $legacyContext
-     * @param ContextEmployeeProviderInterface $employeeProvider
-     * @param MailPartialTemplateRenderer $mailPartialTemplateRenderer
-     * @param Locale $locale
-     * @param TranslatorInterface $translator
-     */
     public function __construct(
         private readonly ConfigurationInterface $configuration,
         private readonly LegacyContext $legacyContext,
         private readonly ContextEmployeeProviderInterface $employeeProvider,
         private readonly MailPartialTemplateRenderer $mailPartialTemplateRenderer,
         private readonly Locale $locale,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
         $this->context = $this->legacyContext->getContext();
     }
 
     /**
-     * @param LayoutInterface $mailLayout
-     *
      * @return array
      *
      * @throws SmartyException
@@ -97,14 +88,10 @@ final class MailPreviewVariablesBuilder
         // Logo url
         $logoMail = $this->configuration->get('PS_LOGO_MAIL');
         $logo = $this->configuration->get('PS_LOGO');
-        if (!empty($logoMail) && file_exists($imageDir . $logoMail)) {
+        if (! empty($logoMail) && file_exists($imageDir . $logoMail)) {
             $templateVars['{shop_logo}'] = $baseUrl . 'img/' . $logoMail;
         } else {
-            if (!empty($logo) && file_exists($imageDir . $logo)) {
-                $templateVars['{shop_logo}'] = $baseUrl . 'img/' . $logo;
-            } else {
-                $templateVars['{shop_logo}'] = '';
-            }
+            $templateVars['{shop_logo}'] = ! empty($logo) && file_exists($imageDir . $logo) ? $baseUrl . 'img/' . $logo : '';
         }
 
         $employeeData = $this->employeeProvider->getData();
@@ -118,20 +105,19 @@ final class MailPreviewVariablesBuilder
         $templateVars['{guest_tracking_url}'] = $this->context->link->getPageLink('guest-tracking');
         $templateVars['{history_url}'] = $this->context->link->getPageLink('history');
         $templateVars['{color}'] = $this->configuration->get('PS_MAIL_COLOR');
-        $templateVars = array_merge($templateVars, $this->buildOrderVariables($mailLayout));
 
-        return $templateVars;
+        return array_merge($templateVars, $this->buildOrderVariables($mailLayout));
     }
 
     /**
-     * @param string $id
-     * @param array $parameters
+     * @param string      $id
+     * @param array       $parameters
      * @param string|null $domain
      * @param string|null $local
      *
      * @return string
      */
-    protected function trans($id, $parameters = [], $domain = null, $local = null)
+    private function trans($id, $parameters = [], $domain = null, $local = null)
     {
         return $this->translator->trans($id, $parameters, $domain, $local);
     }
@@ -146,13 +132,13 @@ final class MailPreviewVariablesBuilder
     private function buildOrderVariables(LayoutInterface $mailLayout)
     {
         $orders = Order::getOrdersWithInformations(1);
-        if (!isset($orders[0]['id_order'])) {
+        if (! isset($orders[0]['id_order'])) {
             return [];
         }
 
         $order = new Order($orders[0]['id_order']);
 
-        if (self::ORDER_CONFIRMATION == $mailLayout->getName()) {
+        if ($mailLayout->getName() === self::ORDER_CONFIRMATION) {
             $productTemplateList = $this->getProductList($order);
             $productListTxt = $this->mailPartialTemplateRenderer->render('order_conf_product_list.txt', $this->context->language, $productTemplateList);
             $productListHtml = $this->mailPartialTemplateRenderer->render('order_conf_product_list.tpl', $this->context->language, $productTemplateList);
@@ -170,20 +156,20 @@ final class MailPreviewVariablesBuilder
                 '{discounts}' => $cartRulesListHtml,
                 '{discounts_txt}' => $cartRulesListTxt,
             ];
-        } elseif (self::DOWNLOAD_PRODUCT == $mailLayout->getName()) {
+        } elseif ($mailLayout->getName() === self::DOWNLOAD_PRODUCT) {
             $virtualProductTemplateList = $this->getFakeVirtualProductList();
             $virtualProductListTxt = $this->mailPartialTemplateRenderer->render('download_product_virtual_products.txt', $this->context->language, $virtualProductTemplateList);
             $virtualProductListHtml = $this->mailPartialTemplateRenderer->render('download_product_virtual_products.tpl', $this->context->language, $virtualProductTemplateList);
             $productVariables = [
-                '{nbProducts}' => count($virtualProductTemplateList),
+                '{nbProducts}' => \count($virtualProductTemplateList),
                 '{virtualProducts}' => $virtualProductListHtml,
                 '{virtualProductsTxt}' => $virtualProductListTxt,
             ];
-        } elseif (self::EMAIL_ALERTS_MODULE == $mailLayout->getModuleName() && self::NEW_ORDER == $mailLayout->getName()) {
+        } elseif ($mailLayout->getModuleName() === self::EMAIL_ALERTS_MODULE && $mailLayout->getName() === self::NEW_ORDER) {
             $productVariables = [
                 '{items}' => $this->getNewOrderItems($order),
             ];
-        } elseif (self::EMAIL_ALERTS_MODULE == $mailLayout->getModuleName() && self::RETURN_SLIP == $mailLayout->getName()) {
+        } elseif ($mailLayout->getModuleName() === self::EMAIL_ALERTS_MODULE && $mailLayout->getName() === self::RETURN_SLIP) {
             $productVariables = [
                 '{items}' => $this->getReturnSlipItems($order),
             ];
@@ -223,8 +209,6 @@ final class MailPreviewVariablesBuilder
     }
 
     /**
-     * @param Order $order
-     *
      * @return string
      *
      * @throws PrestaShopException
@@ -249,7 +233,7 @@ final class MailPreviewVariablesBuilder
                     }
 
                     if (isset($customization['datas'][Product::CUSTOMIZE_FILE])) {
-                        $customizationText .= count($customization['datas'][Product::CUSTOMIZE_FILE])
+                        $customizationText .= \count($customization['datas'][Product::CUSTOMIZE_FILE])
                             . ' '
                             . $this->trans('image(s)', [], 'Modules.Mailalerts.Admin')
                             . '<br />';
@@ -272,7 +256,7 @@ final class MailPreviewVariablesBuilder
 					<td style="padding:0.6em 0.4em;">
 						<strong><a href="' . $url . '">' . $product['product_name'] . '</a>'
                 . (isset($product['attributes_small']) ? ' ' . $product['attributes_small'] : '')
-                . (!empty($customizationText) ? '<br />' . $customizationText : '')
+                . (! empty($customizationText) ? '<br />' . $customizationText : '')
                 . '</strong>
 					</td>
 					<td style="padding:0.6em 0.4em; text-align:right;">' . $this->locale->formatPrice($unitPrice, $this->context->currency->iso_code) . '</td>
@@ -295,8 +279,6 @@ final class MailPreviewVariablesBuilder
     }
 
     /**
-     * @param Order $order
-     *
      * @return string
      *
      * @throws PrestaShopException
@@ -321,8 +303,6 @@ final class MailPreviewVariablesBuilder
     }
 
     /**
-     * @param Order $order
-     *
      * @return array
      *
      * @throws \PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException
@@ -339,7 +319,7 @@ final class MailPreviewVariablesBuilder
             $price = Product::getPriceStatic((int) $product['id_product'], false, $product['id_product_attribute'] ? (int) $product['id_product_attribute'] : null, 6, null, false, true, $product['cart_quantity'], false, (int) $order->id_customer, (int) $order->id_cart, (int) $order->{$this->configuration->get('PS_TAX_ADDRESS_TYPE')}, $specific_price, true, true, null, true, $product['id_customization']);
             $priceWithTax = Product::getPriceStatic((int) $product['id_product'], true, $product['id_product_attribute'] ? (int) $product['id_product_attribute'] : null, 2, null, false, true, $product['cart_quantity'], false, (int) $order->id_customer, (int) $order->id_cart, (int) $order->{$this->configuration->get('PS_TAX_ADDRESS_TYPE')}, $specific_price, true, true, null, true, $product['id_customization']);
 
-            $productPrice = Product::getTaxCalculationMethod() == PS_TAX_EXC ? Tools::ps_round($price, 2) : $priceWithTax;
+            $productPrice = Product::getTaxCalculationMethod() === PS_TAX_EXC ? Tools::ps_round($price, 2) : $priceWithTax;
 
             $productTemplate = [
                 'id_product' => $product['id_product'],
@@ -371,7 +351,7 @@ final class MailPreviewVariablesBuilder
                     }
 
                     if (isset($customization['datas'][Product::CUSTOMIZE_FILE])) {
-                        $customizationText .= $this->trans('%d image(s)', [count($customization['datas'][Product::CUSTOMIZE_FILE])], 'Admin.Payment.Notification') . '<br />';
+                        $customizationText .= $this->trans('%d image(s)', [\count($customization['datas'][Product::CUSTOMIZE_FILE])], 'Admin.Payment.Notification') . '<br />';
                     }
 
                     $customizationQuantity = (int) $customization['quantity'];
@@ -414,9 +394,9 @@ final class MailPreviewVariablesBuilder
     }
 
     /**
-     * @param Address $address Address $the_address that needs to be txt formated
-     * @param string $lineSeparator Line separator
-     * @param array $fieldsStyle Associative array to replace styled fields
+     * @param Address $address       Address $the_address that needs to be txt formated
+     * @param string  $lineSeparator Line separator
+     * @param array   $fieldsStyle   Associative array to replace styled fields
      *
      * @return string
      */

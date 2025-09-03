@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,20 +35,16 @@ use PrestaShop\PrestaShop\Core\Domain\Security\Command\DeleteEmployeeSessionComm
 use PrestaShop\PrestaShop\Core\Domain\Security\CommandHandler\DeleteEmployeeSessionHandlerInterface;
 
 /**
- * Class DeleteEmployeeSessionHandler
- *
  * @internal
  */
 #[AsCommandHandler]
 final class DeleteEmployeeSessionHandler implements DeleteEmployeeSessionHandlerInterface
 {
-    public function __construct(private readonly EmployeeSessionRepository $repository)
-    {
+    public function __construct(
+        private readonly EmployeeSessionRepository $repository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteEmployeeSessionCommand $command): void
     {
         $this->repository->delete($command->getEmployeeSessionId());

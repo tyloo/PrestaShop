@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,20 +42,17 @@ use SpecificPriceRule;
 #[AsCommandHandler]
 final class AddCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler implements AddCatalogPriceRuleHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddCatalogPriceRuleCommand $command): CatalogPriceRuleId
     {
         try {
             $specificPriceRule = $this->fetchSpecificPriceRuleFromCommand($command);
 
-            if (false === $specificPriceRule->validateFields(false)) {
+            if ($specificPriceRule->validateFields(false) === false) {
                 throw new CatalogPriceRuleException('Specific price rule contains invalid field values');
             }
 
-            if (false === $specificPriceRule->add()) {
-                throw new CatalogPriceRuleException(sprintf('Failed to create specific price rule'));
+            if ($specificPriceRule->add() === false) {
+                throw new CatalogPriceRuleException(\sprintf('Failed to create specific price rule'));
             }
 
             $specificPriceRule->deleteConditions();
@@ -67,10 +65,6 @@ final class AddCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler i
     }
 
     /**
-     * @param AddCatalogPriceRuleCommand $command
-     *
-     * @return SpecificPriceRule
-     *
      * @throws PrestaShopException
      */
     private function fetchSpecificPriceRuleFromCommand(AddCatalogPriceRuleCommand $command): SpecificPriceRule

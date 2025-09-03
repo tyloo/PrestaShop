@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,14 +49,6 @@ use Tools;
 class OrderRefundCalculator
 {
     /**
-     * @param Order $order
-     * @param array $orderDetailRefunds
-     * @param DecimalNumber $shippingRefund
-     * @param int $voucherRefundType
-     * @param DecimalNumber|null $chosenVoucherAmount
-     *
-     * @return OrderRefundSummary
-     *
      * @throws InvalidCancelProductException
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
@@ -65,7 +58,7 @@ class OrderRefundCalculator
         array $orderDetailRefunds,
         DecimalNumber $shippingRefund,
         int $voucherRefundType,
-        ?DecimalNumber $chosenVoucherAmount
+        ?DecimalNumber $chosenVoucherAmount,
     ): OrderRefundSummary {
         $isTaxIncluded = $this->isTaxIncludedInOrder($order);
         $precision = $this->getPrecision($order);
@@ -118,7 +111,7 @@ class OrderRefundCalculator
         }
 
         // Something has to be refunded (check refunds count instead of the sum in case a voucher is implied)
-        if (count($productRefunds) <= 0 && $refundedAmount->isLowerOrEqualThanZero()) {
+        if (\count($productRefunds) <= 0 && $refundedAmount->isLowerOrEqualThanZero()) {
             throw new InvalidCancelProductException(InvalidCancelProductException::NO_REFUNDS);
         }
 
@@ -135,8 +128,6 @@ class OrderRefundCalculator
     }
 
     /**
-     * @param array $orderDetailRefunds
-     *
      * @return OrderDetail[]
      *
      * @throws PrestaShopDatabaseException
@@ -154,11 +145,6 @@ class OrderRefundCalculator
     }
 
     /**
-     * @param array $orderDetailRefunds
-     * @param bool $isTaxIncluded
-     * @param array $orderDetails
-     * @param int $precision
-     *
      * @return array
      *
      * @throws InvalidCancelProductException
@@ -167,7 +153,7 @@ class OrderRefundCalculator
         array $orderDetailRefunds,
         bool $isTaxIncluded,
         array $orderDetails,
-        int $precision
+        int $precision,
     ) {
         $productRefunds = [];
         /** @var OrderDetailRefund $orderDetailRefund */
@@ -191,7 +177,7 @@ class OrderRefundCalculator
             $productMaxRefund = (int) $quantity * $productUnitPrice;
 
             // If refunded amount is null it means the whole product is refunded (used for standard refund, and return product)
-            if (null === $orderDetailRefund->getRefundedAmount()) {
+            if ($orderDetailRefund->getRefundedAmount() === null) {
                 $productRefundAmount = (float) (string) $productMaxRefund;
             } else {
                 $productRefundAmount = (float) (string) $orderDetailRefund->getRefundedAmount() <= $productMaxRefund ?
@@ -224,11 +210,6 @@ class OrderRefundCalculator
         return $productRefunds;
     }
 
-    /**
-     * @param Order $order
-     *
-     * @return bool
-     */
     private function isTaxIncludedInOrder(Order $order): bool
     {
         $customer = new Customer($order->id_customer);
@@ -238,11 +219,6 @@ class OrderRefundCalculator
         return $taxCalculationMethod === PS_TAX_INC;
     }
 
-    /**
-     * @param Order $order
-     *
-     * @return int
-     */
     private function getPrecision(Order $order): int
     {
         $currency = new Currency($order->id_currency);

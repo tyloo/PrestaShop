@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,17 +40,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class DisabledCategoriesKpi implements KpiInterface
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param ConfigurationInterface $kpiConfiguration
      * @param string $sourceUrl
      */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $kpiConfiguration, private $sourceUrl)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurationInterface $kpiConfiguration,
+        private $sourceUrl,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $helper = new HelperKpi();
@@ -58,7 +57,7 @@ final class DisabledCategoriesKpi implements KpiInterface
         $helper->color = 'color1';
         $helper->title = $this->translator->trans('Disabled Categories', [], 'Admin.Catalog.Feature');
 
-        if (false !== $this->kpiConfiguration->get('DISABLED_CATEGORIES')) {
+        if ($this->kpiConfiguration->get('DISABLED_CATEGORIES') !== false) {
             $helper->value = $this->kpiConfiguration->get('DISABLED_CATEGORIES');
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ abstract class AbstractManufacturerCommandHandler extends AbstractManufacturerHa
     /**
      * Deletes legacy Manufacturer
      *
-     * @param Manufacturer $manufacturer
-     *
      * @return bool
      *
      * @throws ManufacturerException
@@ -50,14 +49,13 @@ abstract class AbstractManufacturerCommandHandler extends AbstractManufacturerHa
         try {
             return $manufacturer->delete();
         } catch (PrestaShopException) {
-            throw new ManufacturerException(sprintf('An error occurred when deleting Manufacturer object with id "%s".', $manufacturer->id));
+            throw new ManufacturerException(\sprintf('An error occurred when deleting Manufacturer object with id "%s".', $manufacturer->id));
         }
     }
 
     /**
      * Toggles legacy manufacturer status
      *
-     * @param Manufacturer $manufacturer
      * @param bool $newStatus
      *
      * @return bool
@@ -71,7 +69,7 @@ abstract class AbstractManufacturerCommandHandler extends AbstractManufacturerHa
         try {
             return $manufacturer->save();
         } catch (PrestaShopException) {
-            throw new ManufacturerException(sprintf('An error occurred when updating manufacturer status with id "%s"', $manufacturer->id));
+            throw new ManufacturerException(\sprintf('An error occurred when updating manufacturer status with id "%s"', $manufacturer->id));
         }
     }
 }

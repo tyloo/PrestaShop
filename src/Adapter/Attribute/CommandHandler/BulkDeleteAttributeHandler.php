@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Attribute\Exception\DeleteA
 final class BulkDeleteAttributeHandler extends AbstractAttributeHandler implements BulkDeleteAttributeHandlerInterface
 {
     /**
-     * @param BulkDeleteAttributeCommand $command
-     *
      * @throws AttributeException
      */
     public function handle(BulkDeleteAttributeCommand $command)
@@ -49,8 +48,8 @@ final class BulkDeleteAttributeHandler extends AbstractAttributeHandler implemen
         foreach ($command->getAttributeIds() as $attributeId) {
             $attribute = $this->getAttributeById($attributeId);
 
-            if (false === $this->deleteAttribute($attribute)) {
-                throw new DeleteAttributeException(sprintf('Failed to delete attribute with id "%s"', $attribute->id), DeleteAttributeException::FAILED_BULK_DELETE);
+            if ($this->deleteAttribute($attribute) === false) {
+                throw new DeleteAttributeException(\sprintf('Failed to delete attribute with id "%s"', $attribute->id), DeleteAttributeException::FAILED_BULK_DELETE);
             }
         }
     }

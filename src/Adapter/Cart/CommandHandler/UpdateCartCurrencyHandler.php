@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class UpdateCartCurrencyHandler extends AbstractCartHandler implements UpdateCartCurrencyHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateCartCurrencyCommand $command): void
     {
         $currency = $this->getCurrencyObject($command->getNewCurrencyId());
@@ -57,19 +55,15 @@ final class UpdateCartCurrencyHandler extends AbstractCartHandler implements Upd
         $cart->id_currency = (int) $currency->id;
 
         try {
-            if (false === $cart->update()) {
+            if ($cart->update() === false) {
                 throw new CartException('Failed to update cart currency.');
             }
         } catch (PrestaShopException) {
-            throw new CartException(sprintf('An error occurred while trying to update currency for cart with id "%s"', $cart->id));
+            throw new CartException(\sprintf('An error occurred while trying to update currency for cart with id "%s"', $cart->id));
         }
     }
 
     /**
-     * @param CurrencyId $currencyId
-     *
-     * @return Currency
-     *
      * @throws CurrencyNotFoundException
      */
     private function getCurrencyObject(CurrencyId $currencyId): Currency
@@ -77,33 +71,29 @@ final class UpdateCartCurrencyHandler extends AbstractCartHandler implements Upd
         $currency = new Currency($currencyId->getValue());
 
         if ($currencyId->getValue() !== $currency->id) {
-            throw new CurrencyNotFoundException(sprintf('Currency with id "%s" was not found', $currencyId->getValue()));
+            throw new CurrencyNotFoundException(\sprintf('Currency with id "%s" was not found', $currencyId->getValue()));
         }
 
         return $currency;
     }
 
     /**
-     * @param Currency $currency
-     *
      * @throws CurrencyException
      */
     private function assertCurrencyIsActive(Currency $currency): void
     {
-        if (!$currency->active) {
-            throw new CurrencyException(sprintf('Currency "%s" cannot be used in cart because it is disabled', $currency->iso_code), CurrencyException::IS_DISABLED);
+        if (! $currency->active) {
+            throw new CurrencyException(\sprintf('Currency "%s" cannot be used in cart because it is disabled', $currency->iso_code), CurrencyException::IS_DISABLED);
         }
     }
 
     /**
-     * @param Currency $currency
-     *
      * @throws CurrencyException
      */
     private function assertCurrencyIsNotDeleted(Currency $currency): void
     {
         if ($currency->deleted) {
-            throw new CurrencyException(sprintf('Currency "%s" cannot be used in cart because it is deleted', $currency->iso_code), CurrencyException::IS_DELETED);
+            throw new CurrencyException(\sprintf('Currency "%s" cannot be used in cart because it is deleted', $currency->iso_code), CurrencyException::IS_DELETED);
         }
     }
 }

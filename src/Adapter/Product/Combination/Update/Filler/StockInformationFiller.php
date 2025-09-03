@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,39 +39,36 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime;
  */
 class StockInformationFiller implements CombinationFillerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function fillUpdatableProperties(Combination $combination, UpdateCombinationCommand $command): array
     {
         $updatableProperties = [];
 
         $localizedLaterLabels = $command->getLocalizedAvailableLaterLabels();
-        if (null !== $localizedLaterLabels) {
+        if ($localizedLaterLabels !== null) {
             $combination->available_later = $localizedLaterLabels;
             $updatableProperties['available_later'] = array_keys($localizedLaterLabels);
         }
 
         $localizedNowLabels = $command->getLocalizedAvailableNowLabels();
-        if (null !== $localizedNowLabels) {
+        if ($localizedNowLabels !== null) {
             $combination->available_now = $localizedNowLabels;
             $updatableProperties['available_now'] = array_keys($localizedNowLabels);
         }
 
-        if (null !== $command->getAvailableDate()) {
+        if ($command->getAvailableDate() !== null) {
             $combination->available_date = $command->getAvailableDate()->format(DateTime::DEFAULT_DATE_FORMAT);
             $updatableProperties[] = 'available_date';
         }
 
         $lowStockThreshold = $command->getLowStockThreshold();
-        if (null !== $lowStockThreshold) {
+        if ($lowStockThreshold !== null) {
             $combination->low_stock_threshold = $lowStockThreshold->getValue();
             $combination->low_stock_alert = $lowStockThreshold->isEnabled();
             $updatableProperties[] = 'low_stock_threshold';
             $updatableProperties[] = 'low_stock_alert';
         }
 
-        if (null !== $command->getMinimalQuantity()) {
+        if ($command->getMinimalQuantity() !== null) {
             $combination->minimal_quantity = $command->getMinimalQuantity();
             $updatableProperties[] = 'minimal_quantity';
         }

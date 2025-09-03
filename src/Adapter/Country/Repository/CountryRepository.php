@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,13 +44,12 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
  */
 class CountryRepository extends AbstractObjectModelRepository
 {
-    public function __construct(private readonly CountryValidator $countryValidator)
-    {
+    public function __construct(
+        private readonly CountryValidator $countryValidator,
+    ) {
     }
 
     /**
-     * @param CountryId $countryId
-     *
      * @throws CountryNotFoundException
      */
     public function assertCountryExists(CountryId $countryId): void
@@ -62,10 +62,6 @@ class CountryRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CountryId $countryId
-     *
-     * @return Country
-     *
      * @throws CountryNotFoundException
      */
     public function get(CountryId $countryId): Country
@@ -81,10 +77,6 @@ class CountryRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param Country $country
-     *
-     * @return Country
-     *
      * @throws CountryConstraintException
      * @throws CoreException
      */
@@ -98,10 +90,6 @@ class CountryRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param Country $country
-     *
-     * @return Country
-     *
      * @throws CannotEditCountryException
      * @throws CoreException
      */

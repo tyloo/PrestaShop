@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ use Validate;
 #[AsCommandHandler]
 final class AddPaymentHandler extends AbstractOrderHandler implements AddPaymentHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddPaymentCommand $command)
     {
         $order = $this->getOrder($command->getOrderId());
@@ -51,17 +49,13 @@ final class AddPaymentHandler extends AbstractOrderHandler implements AddPayment
         $currency = new Currency($command->getPaymentCurrencyId()->getValue());
         $orderHasInvoice = $order->hasInvoice();
 
-        if ($orderHasInvoice) {
-            $orderInvoice = new OrderInvoice($command->getOrderInvoiceId());
-        } else {
-            $orderInvoice = null;
-        }
+        $orderInvoice = $orderHasInvoice ? new OrderInvoice($command->getOrderInvoiceId()) : null;
 
-        if (!Validate::isLoadedObject($currency)) {
+        if (! Validate::isLoadedObject($currency)) {
             throw new OrderException('The selected currency is invalid.');
         }
 
-        if ($orderHasInvoice && !Validate::isLoadedObject($orderInvoice)) {
+        if ($orderHasInvoice && ! Validate::isLoadedObject($orderInvoice)) {
             throw new OrderException('The invoice is invalid.');
         }
 
@@ -75,7 +69,7 @@ final class AddPaymentHandler extends AbstractOrderHandler implements AddPayment
             $command->getEmployeeId()->getValue()
         );
 
-        if (!$paymentAdded) {
+        if (! $paymentAdded) {
             throw new OrderException('An error occurred during payment.');
         }
     }

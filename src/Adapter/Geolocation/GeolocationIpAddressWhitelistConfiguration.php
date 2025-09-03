@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,16 +35,11 @@ use PrestaShop\PrestaShop\Core\ConfigurationInterface;
  */
 final class GeolocationIpAddressWhitelistConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct(private readonly ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -51,9 +47,6 @@ final class GeolocationIpAddressWhitelistConfiguration implements DataConfigurat
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $config)
     {
         if ($this->validateConfiguration($config)) {
@@ -63,9 +56,6 @@ final class GeolocationIpAddressWhitelistConfiguration implements DataConfigurat
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $config)
     {
         return isset(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,22 +39,22 @@ class AddressFactory
      * default shop configuration.
      *
      * @param int|null $id_address
-     * @param bool $with_geoloc
+     * @param bool     $with_geoloc
      *
      * @return Address
      */
     public function findOrCreate($id_address = null, $with_geoloc = false)
     {
-        $func_args = func_get_args();
+        $func_args = \func_get_args();
 
-        return call_user_func_array(['\\Address', 'initialize'], $func_args);
+        return \call_user_func_array(['\\Address', 'initialize'], $func_args);
     }
 
     /**
      * Check if an address exists depending on given $id_address.
      *
-     * @param int $id_address
-     * @param bool $useCache [default=false] If true, use Cache for optimizing queries
+     * @param int  $id_address
+     * @param bool $useCache   [default=false] If true, use Cache for optimizing queries
      *
      * @return bool
      */

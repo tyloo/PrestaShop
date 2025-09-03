@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,12 +37,14 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class ProductDeleter
 {
-    public function __construct(private readonly ProductRepository $productRepository, private readonly CombinationRepository $combinationRepository, private readonly ProductImageRepository $productImageRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly ProductImageRepository $productImageRepository,
+    ) {
     }
 
     /**
-     * @param ProductId $productId
      * @param ShopId[] $shopIds
      */
     public function deleteFromShops(ProductId $productId, array $shopIds): void
@@ -58,10 +61,6 @@ class ProductDeleter
         $this->productRepository->deleteFromShops($productId, $shopIds);
     }
 
-    /**
-     * @param ProductId $productId
-     * @param ShopConstraint $shopConstraint
-     */
     public function deleteByShopConstraint(ProductId $productId, ShopConstraint $shopConstraint): void
     {
         $shopIds = $this->productRepository->getShopIdsByConstraint($productId, $shopConstraint);
@@ -72,7 +71,6 @@ class ProductDeleter
     }
 
     /**
-     * @param ProductId $productId
      * @param ShopId[] $shopIds
      */
     private function removeImages(ProductId $productId, array $shopIds): void
@@ -86,12 +84,11 @@ class ProductDeleter
     }
 
     /**
-     * @param ProductId $productId
      * @param ShopId[] $shopIds
      */
     private function removeCombinations(ProductId $productId, array $shopIds): void
     {
-        if (!$this->productRepository->hasCombinations($productId)) {
+        if (! $this->productRepository->hasCombinations($productId)) {
             return;
         }
 

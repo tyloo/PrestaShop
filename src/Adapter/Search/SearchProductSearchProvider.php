@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,17 +51,14 @@ class SearchProductSearchProvider implements ProductSearchProviderInterface
     private $sortOrdersCollection;
 
     public function __construct(
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
         $this->sortOrdersCollection = new SortOrdersCollection($this->translator);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function runQuery(
         ProductSearchContext $context,
-        ProductSearchQuery $query
+        ProductSearchQuery $query,
     ) {
         $products = [];
         $count = 0;
@@ -127,7 +125,7 @@ class SearchProductSearchProvider implements ProductSearchProviderInterface
 
         $result = new ProductSearchResult();
 
-        if (!empty($products)) {
+        if (! empty($products)) {
             $result
                 ->setProducts($products)
                 ->setTotalProductsCount($count);

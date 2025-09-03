@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,16 +44,13 @@ use Zone;
 #[AsQueryHandler]
 final class GetZoneForEditingHandler implements GetZoneForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetZoneForEditing $query): EditableZone
     {
         $zoneId = $query->getZoneId();
         $zone = new Zone($zoneId->getValue());
 
         if ($zone->id !== $zoneId->getValue()) {
-            throw new ZoneNotFoundException(sprintf('Zone with id "%d" not found', $zoneId->getValue()));
+            throw new ZoneNotFoundException(\sprintf('Zone with id "%d" not found', $zoneId->getValue()));
         }
 
         return new EditableZone(

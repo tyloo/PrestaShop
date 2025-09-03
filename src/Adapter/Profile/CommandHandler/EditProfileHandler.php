@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,26 +43,21 @@ use Profile;
 #[AsCommandHandler]
 final class EditProfileHandler implements EditProfileHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditProfileCommand $command)
     {
         $profile = $this->getProfile($command->getProfileId());
         $profile->name = $command->getLocalizedNames();
 
-        if (false === $profile->validateFieldsLang(false)) {
+        if ($profile->validateFieldsLang(false) === false) {
             throw new ProfileException('Cannot edit Profile because it contains invalid data');
         }
 
-        if (false === $profile->update()) {
+        if ($profile->update() === false) {
             throw new ProfileException('Failed to edit Profile');
         }
     }
 
     /**
-     * @param ProfileId $profileId
-     *
      * @return Profile
      *
      * @throws ProfileNotFoundException
@@ -73,7 +69,7 @@ final class EditProfileHandler implements EditProfileHandlerInterface
         $profile = new Profile($profileId->getValue());
 
         if ($profile->id !== $profileId->getValue()) {
-            throw new ProfileNotFoundException(sprintf('Profile with id "%s" was not found', $profileId->getValue()));
+            throw new ProfileNotFoundException(\sprintf('Profile with id "%s" was not found', $profileId->getValue()));
         }
 
         return $profile;

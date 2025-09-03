@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,8 +60,12 @@ use PrestaShopException;
  */
 class ProductImageRepository extends AbstractMultiShopObjectModelRepository
 {
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ProductRepository $productRepository, private readonly ProductImageValidator $productImageValidator)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly ProductRepository $productRepository,
+        private readonly ProductImageValidator $productImageValidator,
+    ) {
     }
 
     /**
@@ -74,12 +79,10 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             ->addOrderBy('i.id_image', 'ASC')
         ;
 
-        return array_map(static fn(string $id): Image => new Image((int) $id), $qb->executeQuery()->fetchFirstColumn());
+        return array_map(static fn (string $id): Image => new Image((int) $id), $qb->executeQuery()->fetchFirstColumn());
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return Image[]
      */
     public function getImages(ProductId $productId, ShopConstraint $shopConstraint): array
@@ -99,15 +102,12 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         }
 
         return array_map(
-            fn(ImageId $imageId): Image => $this->getByShopConstraint($imageId, $shopConstraint),
+            fn (ImageId $imageId): Image => $this->getByShopConstraint($imageId, $shopConstraint),
             $this->getImageIds($productId, $shopConstraint)
         );
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopConstraint $shopConstraint
-     *
      * @return ImageId[]
      */
     public function getImageIds(ProductId $productId, ShopConstraint $shopConstraint): array
@@ -121,7 +121,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             ->addOrderBy('i.id_image', 'ASC')
         ;
 
-        if (!$shopConstraint->forAllShops()) {
+        if (! $shopConstraint->forAllShops()) {
             $qb
                 ->innerJoin(
                     'i',
@@ -161,14 +161,9 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             }
         }
 
-        return array_map(static fn(string $id): ImageId => new ImageId((int) $id), $qb->executeQuery()->fetchFirstColumn());
+        return array_map(static fn (string $id): ImageId => new ImageId((int) $id), $qb->executeQuery()->fetchFirstColumn());
     }
 
-    /**
-     * @param ProductId $productId
-     *
-     * @return ImageId|null
-     */
     public function getDefaultImageId(ProductId $productId, ShopId $shopId): ?ImageId
     {
         $coverId = $this->findCoverId($productId, $shopId);
@@ -178,15 +173,9 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
 
         $imagesIds = $this->getImageIds($productId, ShopConstraint::shop($shopId->getValue()));
 
-        return !empty($imagesIds) ? reset($imagesIds) : null;
+        return ! empty($imagesIds) ? reset($imagesIds) : null;
     }
 
-    /**
-     * @param ProductId $productId
-     * @param ShopId $shopId
-     *
-     * @return ImageId|null
-     */
     public function findCoverId(ProductId $productId, ShopId $shopId): ?ImageId
     {
         $qb = $this->connection->createQueryBuilder()
@@ -220,7 +209,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             return [];
         }
 
-        $combinationIds = array_map(fn(CombinationId $id): int => $id->getValue(), $combinationIds);
+        $combinationIds = array_map(fn (CombinationId $id): int => $id->getValue(), $combinationIds);
 
         $qb = $this->connection->createQueryBuilder();
         $qb->select('pai.id_product_attribute, pai.id_image')
@@ -247,7 +236,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         $imagesIdsByCombinationIds = [];
         foreach ($results as $result) {
             $id = (int) $result['id_image'];
-            if (!isset($imageIds[$id])) {
+            if (! isset($imageIds[$id])) {
                 $imageIds[$id] = new ImageId($id);
             }
 
@@ -258,10 +247,6 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ImageId $imageId
-     *
-     * @return Image
-     *
      * @throws CoreException
      */
     public function get(ImageId $imageId, ShopId $shopId): Image
@@ -287,22 +272,20 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         // finds first associated shop and uses it to load object model
         $shopId = reset($shopIds);
 
-        if (!$shopId) {
-            throw new ShopAssociationNotFound(sprintf('Image %d is not associated to any shop', $imageId->getValue()));
+        if (! $shopId) {
+            throw new ShopAssociationNotFound(\sprintf('Image %d is not associated to any shop', $imageId->getValue()));
         }
 
         return $this->get($imageId, $shopId);
     }
 
     /**
-     * @param ImageId $imageId
-     *
      * @return ShopId[]
      */
     public function getAssociatedShopIds(ImageId $imageId): array
     {
         return array_map(
-            static fn(array $shop): ShopId => new ShopId((int) $shop['id_shop']),
+            static fn (array $shop): ShopId => new ShopId((int) $shop['id_shop']),
             $this->connection->createQueryBuilder()
                 ->select('id_shop')
                 ->from($this->dbPrefix . 'image_shop')
@@ -314,9 +297,6 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ImageId $imageId
-     * @param ShopConstraint $shopConstraint
-     *
      * @return ShopId[]
      */
     public function getAssociatedShopIdsByShopConstraint(ImageId $imageId, ShopConstraint $shopConstraint): array
@@ -354,7 +334,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             ;
         }
 
-        return array_map(static fn(array $shop): ShopId => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $shop): ShopId => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     public function create(ProductId $productId, ShopConstraint $shopConstraint): Image
@@ -377,12 +357,6 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
      * specified shop constraint. Unles the image is associated to no shops matching the shop constraint, in
      * which case no duplication is done and null is returned.
      *
-     * @param ImageId $sourceImageId
-     * @param ProductId $newProductId
-     * @param ShopConstraint $shopConstraint
-     *
-     * @return Image|null
-     *
      * @throws CoreException
      */
     public function duplicate(ImageId $sourceImageId, ProductId $newProductId, ShopConstraint $shopConstraint): ?Image
@@ -404,10 +378,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ImageId $imageId
      * @param ShopId[] $shopIds
-     *
-     * @return void
      */
     public function deleteFromShops(ImageId $imageId, array $shopIds): void
     {
@@ -423,12 +394,6 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         );
     }
 
-    /**
-     * @param ImageId $imageId
-     * @param ShopConstraint $shopConstraint
-     *
-     * @return void
-     */
     public function deleteByShopConstraint(ImageId $imageId, ShopConstraint $shopConstraint): void
     {
         $shopIds = $this->getAssociatedShopIdsByShopConstraint($imageId, $shopConstraint);
@@ -445,8 +410,6 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ImageId $imageId
-     *
      * @return ShopId[]
      */
     public function getShopIdsByCoverId(ImageId $imageId): array
@@ -462,16 +425,11 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         ;
 
         return array_map(
-            static fn(array $shop): ShopId => new ShopId((int) $shop['id_shop']),
+            static fn (array $shop): ShopId => new ShopId((int) $shop['id_shop']),
             $results
         );
     }
 
-    /**
-     * @param ProductId $productId
-     *
-     * @return ShopProductImagesCollection
-     */
     public function getImagesFromAllShop(ProductId $productId): ShopProductImagesCollection
     {
         $results = $this->connection->createQueryBuilder()
@@ -500,7 +458,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         }
 
         $shopProductImagesArray = array_map(
-            fn(int $shopId, array $productImages): ShopProductImages => new ShopProductImages($shopId, ShopImageAssociationCollection::from(...$productImages)),
+            fn (int $shopId, array $productImages): ShopProductImages => new ShopProductImages($shopId, ShopImageAssociationCollection::from(...$productImages)),
             array_keys($productImagesByShop),
             $productImagesByShop
         );
@@ -585,11 +543,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
                 continue;
             }
 
-            if ($coverId === null) {
-                $newValue = 1;
-            } else {
-                $newValue = null;
-            }
+            $newValue = $coverId === null ? 1 : null;
 
             if ($newValue === $image['cover']) {
                 continue;
@@ -621,7 +575,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
 
     /**
      * @param array<int|string, string|int[]> $updatableProperties
-     * @param ShopId[] $shopIds
+     * @param ShopId[]                        $shopIds
      */
     public function partialUpdateForShops(Image $image, array $updatableProperties, array $shopIds, int $errorCode = 0): void
     {
@@ -645,10 +599,6 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ImageId $imageId
-     *
-     * @return Image
-     *
      * @throws CoreException
      */
     public function getImageById(ImageId $imageId): Image
@@ -674,7 +624,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             throw new CoreException('Error occurred when trying to get product image types');
         }
 
-        if (!$results) {
+        if (! $results) {
             return [];
         }
 

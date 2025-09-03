@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,23 +39,18 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 final class LanguageCopier implements LanguageCopierInterface
 {
-    /**
-     * @param LanguageDataProvider $languageDataProvider
-     * @param Filesystem $filesystem
-     * @param ThemeCollection $themeCollection
-     */
-    public function __construct(private readonly LanguageDataProvider $languageDataProvider, private readonly Filesystem $filesystem, private readonly ThemeCollection $themeCollection)
-    {
+    public function __construct(
+        private readonly LanguageDataProvider $languageDataProvider,
+        private readonly Filesystem $filesystem,
+        private readonly ThemeCollection $themeCollection,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function copy(LanguageCopierConfigInterface $config)
     {
         $errors = $this->validateConfig($config);
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             return $errors;
         }
 
@@ -67,7 +63,7 @@ final class LanguageCopier implements LanguageCopierInterface
 
         foreach ($languageFiles as $source => $destination) {
             try {
-                $this->filesystem->mkdir(dirname((string) $destination));
+                $this->filesystem->mkdir(\dirname((string) $destination));
             } catch (IOExceptionInterface) {
                 $errors[] = [
                     'key' => 'Cannot create the folder "%folder%". Please check your directory writing permissions.',
@@ -102,7 +98,7 @@ final class LanguageCopier implements LanguageCopierInterface
                     $config->getThemeTo()
                 );
 
-                if (!$changedModuleTranslationKeys) {
+                if (! $changedModuleTranslationKeys) {
                     $errors[] = [
                         'key' => 'Impossible to translate "%dest%".',
                         'domain' => 'Admin.International.Notification',
@@ -114,7 +110,7 @@ final class LanguageCopier implements LanguageCopierInterface
             }
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $errors[] = [
                 'key' => 'A part of the data has been copied but some of the language files could not be found.',
                 'domain' => 'Admin.International.Notification',
@@ -127,8 +123,6 @@ final class LanguageCopier implements LanguageCopierInterface
 
     /**
      * Validates given configuration.
-     *
-     * @param LanguageCopierConfigInterface $config
      *
      * @return array of errors
      */
@@ -179,7 +173,7 @@ final class LanguageCopier implements LanguageCopierInterface
                 }
             }
 
-            if (!$fromThemeFound || !$toThemeFound) {
+            if (! $fromThemeFound || ! $toThemeFound) {
                 $errors[] = [
                     'key' => 'Theme(s) not found',
                     'domain' => 'Admin.International.Notification',
@@ -227,7 +221,7 @@ final class LanguageCopier implements LanguageCopierInterface
             }
 
             $content = str_replace(array_keys($arrayReplace), array_values($arrayReplace), $content);
-            $result = file_put_contents($path, $content) === false ? false : true;
+            $result = file_put_contents($path, $content) !== false;
         }
 
         return $result;

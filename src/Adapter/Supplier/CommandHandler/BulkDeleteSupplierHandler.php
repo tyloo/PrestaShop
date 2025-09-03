@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\Exception\SupplierException;
 final class BulkDeleteSupplierHandler extends AbstractDeleteSupplierHandler implements BulkDeleteSupplierHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SupplierException
      */
     public function handle(BulkDeleteSupplierCommand $command)
@@ -49,8 +48,8 @@ final class BulkDeleteSupplierHandler extends AbstractDeleteSupplierHandler impl
             try {
                 $this->removeSupplier($supplierId);
             } catch (SupplierException $e) {
-                if (SupplierException::class === $e::class) {
-                    throw new CannotDeleteSupplierException(sprintf('Cannot delete Supplier object with id "%s".', $supplierId->getValue()), CannotDeleteSupplierException::FAILED_BULK_DELETE);
+                if ($e::class === SupplierException::class) {
+                    throw new CannotDeleteSupplierException(\sprintf('Cannot delete Supplier object with id "%s".', $supplierId->getValue()), CannotDeleteSupplierException::FAILED_BULK_DELETE);
                 }
 
                 throw $e;

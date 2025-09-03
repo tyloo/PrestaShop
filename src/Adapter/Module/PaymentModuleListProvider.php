@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,18 +36,13 @@ use PrestaShopBundle\Entity\Repository\ModuleRepository as ModuleEntityRepositor
  */
 final class PaymentModuleListProvider implements PaymentModuleListProviderInterface
 {
-    /**
-     * @param ModuleRepositoryInterface $moduleRepository
-     * @param ModuleEntityRepository $moduleEntityRepository
-     * @param int $shopId
-     */
-    public function __construct(private readonly ModuleRepositoryInterface $moduleRepository, private readonly ModuleEntityRepository $moduleEntityRepository, private readonly int $shopId)
-    {
+    public function __construct(
+        private readonly ModuleRepositoryInterface $moduleRepository,
+        private readonly ModuleEntityRepository $moduleEntityRepository,
+        private readonly int $shopId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPaymentModuleList()
     {
         $modules = $this->moduleRepository->getInstalledModules();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,13 +45,11 @@ use Throwable;
 class SwitchShipmentCarrierHandler implements SwitchShipmentCarrierHandlerInterface
 {
     public function __construct(
-        private readonly ShipmentRepository $shipmentRepository
+        private readonly ShipmentRepository $shipmentRepository,
     ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws ShipmentNotFoundException
      * @throws CannotSaveShipmentException
      */
@@ -63,11 +62,11 @@ class SwitchShipmentCarrierHandler implements SwitchShipmentCarrierHandlerInterf
             /** @var Shipment|null $shipment */
             $shipment = $this->shipmentRepository->findOneBy(['id' => $shipmentId]);
         } catch (Throwable $throwable) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $shipmentId), 0, $throwable);
+            throw new ShipmentNotFoundException(\sprintf('Could not find shipment with id "%s"', $shipmentId), 0, $throwable);
         }
 
         if ($shipment === null) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $shipmentId), 0);
+            throw new ShipmentNotFoundException(\sprintf('Could not find shipment with id "%s"', $shipmentId), 0);
         }
 
         $shipment->setCarrierId($carrierId);
@@ -75,7 +74,7 @@ class SwitchShipmentCarrierHandler implements SwitchShipmentCarrierHandlerInterf
         try {
             $this->shipmentRepository->save($shipment);
         } catch (Throwable $throwable) {
-            throw new CannotSaveShipmentException(sprintf('Could not save shipment update with id "%s"', $shipmentId), 0, $throwable);
+            throw new CannotSaveShipmentException(\sprintf('Could not save shipment update with id "%s"', $shipmentId), 0, $throwable);
         }
     }
 }

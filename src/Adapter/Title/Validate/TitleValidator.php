@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
 class TitleValidator extends AbstractObjectModelValidator
 {
     /**
-     * @param Gender $title
-     *
      * @throws TitleConstraintException
      * @throws CoreException
      */
@@ -60,17 +59,13 @@ class TitleValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Gender $title
-     * @param string $propertyName
-     * @param int $errorCode
-     *
      * @throws TitleConstraintException
      * @throws CoreException
      */
     private function validateTitleProperty(
         Gender $title,
         string $propertyName,
-        int $errorCode = 0
+        int $errorCode = 0,
     ): void {
         $this->validateObjectModelProperty(
             $title,

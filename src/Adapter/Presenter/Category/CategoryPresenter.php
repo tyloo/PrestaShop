@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,14 +55,11 @@ class CategoryPresenter
 
     /**
      * @param array|Category $category Category object or an array
-     * @param Language $language
-     *
-     * @return CategoryLazyArray
      */
     public function present(array|Category $category, Language $language): CategoryLazyArray
     {
         // Convert to array if a Category object was passed
-        if (is_object($category)) {
+        if (\is_object($category)) {
             $category = (array) $category;
         }
 

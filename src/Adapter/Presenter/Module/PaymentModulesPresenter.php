@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,18 +37,14 @@ use PrestaShop\PrestaShop\Adapter\Presenter\PresenterInterface;
  */
 class PaymentModulesPresenter
 {
-    /**
-     * @param PresenterInterface $modulePresenter
-     * @param PaymentModuleListProvider $paymentModuleListProvider
-     */
-    public function __construct(private readonly PresenterInterface $modulePresenter, private readonly PaymentModuleListProvider $paymentModuleListProvider)
-    {
+    public function __construct(
+        private readonly PresenterInterface $modulePresenter,
+        private readonly PaymentModuleListProvider $paymentModuleListProvider,
+    ) {
     }
 
     /**
      * Get presented payment modules.
-     *
-     * @return array
      */
     public function present(): array
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,15 +62,6 @@ class ModuleTabRegister
      */
     protected $tabRepository;
 
-    /**
-     * @param TabRepository $tabRepository
-     * @param LangRepository $langRepository
-     * @param LoggerInterface $logger
-     * @param TranslatorInterface $translator
-     * @param Filesystem $filesystem
-     * @param array $languages
-     * @param Loader $routingConfigLoader
-     */
     public function __construct(
         TabRepository $tabRepository,
         LangRepository $langRepository,
@@ -77,7 +69,7 @@ class ModuleTabRegister
         private readonly TranslatorInterface $translator,
         private readonly Filesystem $filesystem,
         private readonly array $languages,
-        private readonly Loader $routingConfigLoader
+        private readonly Loader $routingConfigLoader,
     ) {
         $this->langRepository = $langRepository;
         $this->tabRepository = $tabRepository;
@@ -87,8 +79,6 @@ class ModuleTabRegister
      * Fetch module-defined tabs and find undeclared ModuleAdminControllers.
      *
      * This is done automatically as part of the module installation.
-     *
-     * @param ModuleInterface $module
      */
     public function registerTabs(ModuleInterface $module)
     {
@@ -106,9 +96,6 @@ class ModuleTabRegister
         }
     }
 
-    /**
-     * @param ModuleInterface $module
-     */
     public function enableTabs(ModuleInterface $module)
     {
         $this->tabRepository->changeEnabledByModuleName($module->get('name'), true);
@@ -119,7 +106,6 @@ class ModuleTabRegister
      * add them to the list to register.
      *
      * @param string $moduleName
-     * @param array $tabs
      *
      * @return array
      */
@@ -127,14 +113,14 @@ class ModuleTabRegister
     {
         // Function to get only class name from tabs already declared
         $tabsNames = array_map(function ($tab) {
-            if (array_key_exists('class_name', $tab)) {
+            if (\array_key_exists('class_name', $tab)) {
                 return $tab['class_name'];
             }
         }, $tabs);
 
         $detectedControllers = $this->getDetectedModuleControllers($moduleName);
         foreach ($detectedControllers as $adminControllerName) {
-            if (in_array($adminControllerName, $tabsNames)) {
+            if (\in_array($adminControllerName, $tabsNames, true)) {
                 continue;
             }
 
@@ -155,16 +141,12 @@ class ModuleTabRegister
      * Returns a list of all detected controllers, either from admin/controllers folder
      * or from the routing file.
      *
-     * @param string $moduleName
-     *
-     * @return array
-     *
      * @throws Exception
      */
     protected function getDetectedModuleControllers(string $moduleName): array
     {
         $legacyControllersFilenames = $this->getModuleAdminControllersFilename($moduleName);
-        $legacyControllers = array_map(fn($legacyControllersFilename) => str_replace('Controller.php', '', $legacyControllersFilename), $legacyControllersFilenames);
+        $legacyControllers = array_map(fn ($legacyControllersFilename) => str_replace('Controller.php', '', $legacyControllersFilename), $legacyControllersFilenames);
 
         $routingControllers = $this->getModuleControllersFromRouting($moduleName);
 
@@ -175,7 +157,6 @@ class ModuleTabRegister
      * Check mandatory data for tab registration, such as class name and class exists.
      *
      * @param string $moduleName
-     * @param ParameterBag $data
      *
      * @return bool (= true) when no issue detected
      *
@@ -184,24 +165,24 @@ class ModuleTabRegister
     protected function checkIsValid($moduleName, ParameterBag $data)
     {
         $className = $data->get('class_name', null);
-        if (null === $className) {
+        if ($className === null) {
             throw new Exception('Missing class name of tab');
         }
 
         // Check controller exists
         $detectedControllers = $this->getDetectedModuleControllers($moduleName);
-        if (empty($data->get('route_name')) && !in_array($className, $detectedControllers)) {
-            throw new Exception(sprintf('Class "%sController" not found in controllers/admin nor routing file', $className));
+        if (empty($data->get('route_name')) && ! \in_array($className, $detectedControllers, true)) {
+            throw new Exception(\sprintf('Class "%sController" not found in controllers/admin nor routing file', $className));
         }
 
         // Deprecation check
-        if ($data->has('ParentClassName') && !$data->has('parent_class_name')) {
+        if ($data->has('ParentClassName') && ! $data->has('parent_class_name')) {
             $this->logger->warning('Tab attribute "ParentClassName" is deprecated. You must use "parent_class_name" instead.');
         }
 
         // Check if the tab was already added manually
-        if (!empty($this->tabRepository->findOneIdByClassName($className))) {
-            throw new Exception(sprintf('Cannot register tab "%s" because it already exists', $className));
+        if (! empty($this->tabRepository->findOneIdByClassName($className))) {
+            throw new Exception(\sprintf('Cannot register tab "%s" because it already exists', $className));
         }
 
         return true;
@@ -220,7 +201,7 @@ class ModuleTabRegister
     {
         $modulePath = rtrim(_PS_MODULE_DIR_, '/') . '/' . $moduleName . '/controllers/admin/';
 
-        if (!$this->filesystem->exists($modulePath)) {
+        if (! $this->filesystem->exists($modulePath)) {
             return [];
         }
 
@@ -238,8 +219,6 @@ class ModuleTabRegister
      * Parses the routes file from the module and return the list of associated controller
      * via the _legacy_controller routing option.
      *
-     * @param string $moduleName
-     *
      * @return string[]
      *
      * @throws Exception
@@ -247,7 +226,7 @@ class ModuleTabRegister
     protected function getModuleControllersFromRouting(string $moduleName): array
     {
         $routingFile = rtrim(_PS_MODULE_DIR_, '/') . '/' . $moduleName . '/config/routes.yml';
-        if (!$this->filesystem->exists($routingFile)) {
+        if (! $this->filesystem->exists($routingFile)) {
             return [];
         }
 
@@ -255,7 +234,7 @@ class ModuleTabRegister
         $moduleRoutes = $this->routingConfigLoader->import($routingFile, 'yaml');
         foreach ($moduleRoutes->getIterator() as $route) {
             $legacyController = $route->getDefault('_legacy_controller');
-            if (!empty($legacyController)) {
+            if (! empty($legacyController)) {
                 $routingControllers[] = $legacyController;
             }
         }
@@ -272,14 +251,12 @@ class ModuleTabRegister
      */
     protected function getModuleAdminControllersFilename($moduleName)
     {
-        return array_map(fn(SplFileInfo $file) => $file->getFilename(), $this->getModuleAdminControllers($moduleName));
+        return array_map(fn (SplFileInfo $file) => $file->getFilename(), $this->getModuleAdminControllers($moduleName));
     }
 
     /**
      * From the name given by the module maintainer, associate a value per language
      * installed on the shop.
-     *
-     * @param mixed $names
      *
      * @return array Name to use for each installed language
      */
@@ -289,13 +266,13 @@ class ModuleTabRegister
 
         foreach ($this->languages as $lang) {
             // In case we just receive a string, we apply it to all languages
-            if (!is_array($names)) {
+            if (! \is_array($names)) {
                 $translatedNames[$lang['id_lang']] = $names;
-            } elseif (array_key_exists($lang['locale'], $names)) {
+            } elseif (\array_key_exists($lang['locale'], $names)) {
                 $translatedNames[$lang['id_lang']] = $names[$lang['locale']];
-            } elseif (array_key_exists($lang['language_code'], $names)) {
+            } elseif (\array_key_exists($lang['language_code'], $names)) {
                 $translatedNames[$lang['id_lang']] = $names[$lang['language_code']];
-            } elseif (array_key_exists($lang['iso_code'], $names)) {
+            } elseif (\array_key_exists($lang['iso_code'], $names)) {
                 $translatedNames[$lang['id_lang']] = $names[$lang['iso_code']];
             } else {
                 $translatedNames[$lang['id_lang']] = reset($names); // Get the first name available in the array
@@ -308,7 +285,6 @@ class ModuleTabRegister
     /**
      * Install a tab according to its defined structure.
      *
-     * @param ModuleInterface $module
      * @param ParameterBag $tabDetails the structure of the tab
      *
      * @throws Exception in case of error from validation or save
@@ -335,7 +311,7 @@ class ModuleTabRegister
         $tab->wording = $tabDetails->get('wording');
         $tab->wording_domain = $tabDetails->get('wording_domain');
 
-        if (!$tab->save()) {
+        if (! $tab->save()) {
             throw new Exception($this->translator->trans('Failed to install admin tab "%name%".', ['%name%' => $tab->name], 'Admin.Modules.Notification'));
         }
     }
@@ -351,13 +327,13 @@ class ModuleTabRegister
     {
         $idParent = 0;
         $parentClassName = $tabDetails->get('parent_class_name', $tabDetails->get('ParentClassName'));
-        if (!empty($parentClassName)) {
+        if (! empty($parentClassName)) {
             // Could be a previously duplicated tab
             $idParent = $this->tabRepository->findOneIdByClassName($parentClassName . self::SUFFIX);
-            if (!$idParent) {
+            if (! $idParent) {
                 $idParent = $this->tabRepository->findOneIdByClassName($parentClassName);
             }
-        } elseif (true === $tabDetails->getBoolean('visible', true)) {
+        } elseif ($tabDetails->getBoolean('visible', true) === true) {
             $idParent = $this->tabRepository->findOneIdByClassName($this->defaultParent);
         }
 
@@ -375,7 +351,7 @@ class ModuleTabRegister
     protected function duplicateParentIfAlone($idParent)
     {
         // If the given parent has already children, don't touch anything
-        if ($idParent === 0 || count($this->tabRepository->findByParentId($idParent))) {
+        if ($idParent === 0 || \count($this->tabRepository->findByParentId($idParent))) {
             return $idParent;
         }
 

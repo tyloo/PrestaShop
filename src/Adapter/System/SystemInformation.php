@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,11 @@ use PrestaShop\PrestaShop\Adapter\Shop\ShopInformation;
  */
 class SystemInformation
 {
-    public function __construct(private readonly HostingInformation $hostingInformation, private readonly MailingInformation $mailingInformation, private readonly ShopInformation $shopInformation)
-    {
+    public function __construct(
+        private readonly HostingInformation $hostingInformation,
+        private readonly MailingInformation $mailingInformation,
+        private readonly ShopInformation $shopInformation,
+    ) {
     }
 
     /**

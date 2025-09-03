@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,14 +46,12 @@ class PricesDropProductSearchProvider implements ProductSearchProviderInterface
     private $sortOrdersCollection;
 
     public function __construct(
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
         $this->sortOrdersCollection = new SortOrdersCollection($this->translator);
     }
 
     /**
-     * @param ProductSearchContext $context
-     * @param ProductSearchQuery $query
      * @param string $type
      *
      * @return array|int
@@ -60,7 +59,7 @@ class PricesDropProductSearchProvider implements ProductSearchProviderInterface
     private function getProductsOrCount(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-        $type = 'products'
+        $type = 'products',
     ) {
         return Product::getPricesDrop(
             $context->getIdLang(),
@@ -72,14 +71,11 @@ class PricesDropProductSearchProvider implements ProductSearchProviderInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function runQuery(
         ProductSearchContext $context,
-        ProductSearchQuery $query
+        ProductSearchQuery $query,
     ) {
-        if (!$products = $this->getProductsOrCount($context, $query, 'products')) {
+        if (! $products = $this->getProductsOrCount($context, $query, 'products')) {
             $products = [];
         }
 
@@ -87,7 +83,7 @@ class PricesDropProductSearchProvider implements ProductSearchProviderInterface
 
         $result = new ProductSearchResult();
 
-        if (!empty($products)) {
+        if (! empty($products)) {
             $result
                 ->setProducts($products)
                 ->setTotalProductsCount($count);

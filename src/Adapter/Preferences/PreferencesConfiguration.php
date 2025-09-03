@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,11 @@ use PrestaShop\PrestaShop\Core\Http\CookieOptions;
  */
 class PreferencesConfiguration implements DataConfigurationInterface
 {
-    public function __construct(private readonly Configuration $configuration)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -58,12 +57,9 @@ class PreferencesConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
-        if (false === $this->validateConfiguration($configuration)) {
+        if ($this->validateConfiguration($configuration) === false) {
             return [
                 [
                     'key' => 'Invalid configuration',
@@ -100,19 +96,12 @@ class PreferencesConfiguration implements DataConfigurationInterface
     /**
      * Validate the SSL configuration can be disabled if the SameSite Cookie
      * is not settled to None
-     *
-     * @param array $configuration
-     *
-     * @return bool
      */
     protected function validateSameSiteConfiguration(array $configuration): bool
     {
         return $configuration['enable_ssl'] === false && $this->configuration->get('PS_COOKIE_SAMESITE') === CookieOptions::SAMESITE_NONE;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         return isset(

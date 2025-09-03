@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,20 +37,13 @@ use PrestaShop\PrestaShop\Core\Shop\Url\UrlProviderInterface;
  */
 class ProductProvider implements UrlProviderInterface
 {
-    /**
-     * @param Link $link
-     */
-    public function __construct(private readonly Link $link)
-    {
+    public function __construct(
+        private readonly Link $link,
+    ) {
     }
 
     /**
      * Create a link to a product.
-     *
-     * @param int|null $productId
-     * @param string|null $rewrite
-     *
-     * @return string
      */
     public function getUrl(?int $productId = null, ?string $rewrite = null): string
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use PrestaShop\PrestaShop\Core\Order\OrderInvoiceDataProviderInterface;
  */
 final class OrderInvoiceDataProvider implements OrderInvoiceDataProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getByDateInterval(DateTimeInterface $dateFrom, DateTimeInterface $dateTo)
     {
         return OrderInvoice::getByDateInterval(
@@ -47,17 +45,11 @@ final class OrderInvoiceDataProvider implements OrderInvoiceDataProviderInterfac
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getByStatus($orderStateId)
     {
         return OrderInvoice::getByStatus($orderStateId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNextInvoiceNumber()
     {
         return Order::getLastInvoiceNumber() + 1;

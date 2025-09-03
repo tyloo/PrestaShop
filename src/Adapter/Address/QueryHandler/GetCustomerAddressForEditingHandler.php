@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,8 +52,6 @@ use PrestaShopException;
 final class GetCustomerAddressForEditingHandler extends AbstractCustomerAddressHandler implements GetCustomerAddressForEditingHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws AddressException
      * @throws AddressNotFoundException
      * @throws CustomerException
@@ -73,10 +72,10 @@ final class GetCustomerAddressForEditingHandler extends AbstractCustomerAddressH
         }
 
         if ($customer->id !== $customerId->getValue()) {
-            throw new CustomerNotFoundException(sprintf('Customer with id "%d" was not found.', $customerId->getValue()));
+            throw new CustomerNotFoundException(\sprintf('Customer with id "%d" was not found.', $customerId->getValue()));
         }
 
-        $editableCustomerAddress = new EditableCustomerAddress(
+        return new EditableCustomerAddress(
             $addressId,
             $customerId,
             $customer->email,
@@ -97,7 +96,5 @@ final class GetCustomerAddressForEditingHandler extends AbstractCustomerAddressH
             $address->other,
             $this->getRequiredFields()
         );
-
-        return $editableCustomerAddress;
     }
 }

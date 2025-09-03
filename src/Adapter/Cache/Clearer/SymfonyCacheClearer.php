@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,14 +55,11 @@ final class SymfonyCacheClearer implements CacheClearerInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function clear()
     {
-        /* @var AppKernel */
+        /** @var AppKernel */
         global $kernel;
-        if (!$kernel) {
+        if (! $kernel) {
             return;
         }
 
@@ -72,7 +70,7 @@ final class SymfonyCacheClearer implements CacheClearerInterface
         $this->clearCacheRequested = true;
 
         $cacheClearLocked = CacheClearLocker::lock($kernel->getEnvironment(), $kernel->getAppId());
-        if (false === $cacheClearLocked) {
+        if ($cacheClearLocked === false) {
             // The lock was not possible for some reason we should exit
             return;
         }
@@ -93,7 +91,7 @@ final class SymfonyCacheClearer implements CacheClearerInterface
                         $applicationKernel = new $applicationKernelClass($environment, false);
                         $cacheDir = $applicationKernel->getCacheDir();
 
-                        if (!file_exists($cacheDir)) {
+                        if (! file_exists($cacheDir)) {
                             $this->logger->info('SymfonyCacheClearer: No cache to clear for ' . $applicationKernel->getAppId() . ' env ' . $environment);
                             continue;
                         }
@@ -113,9 +111,9 @@ final class SymfonyCacheClearer implements CacheClearerInterface
                                 $this->manualClearCache($cacheDir);
                                 $this->unlockOtherCache($kernel, $applicationKernel->getEnvironment(), $applicationKernel->getAppId());
                                 continue;
-                            } else {
-                                $this->logger->info('SymfonyCacheClearer: Successfully cleared cache for ' . $applicationKernel->getAppId() . ' env ' . $environment);
                             }
+
+                            $this->logger->info('SymfonyCacheClearer: Successfully cleared cache for ' . $applicationKernel->getAppId() . ' env ' . $environment);
                         } catch (Throwable $e) {
                             // Leave this loop instance since cache warmup is likely to fail as well
                             $this->logger->error('SymfonyCacheClearer: Error while clearing cache for ' . $applicationKernel->getAppId() . ' env ' . $environment . ': ' . $e->getMessage());
@@ -159,28 +157,28 @@ final class SymfonyCacheClearer implements CacheClearerInterface
         });
     }
 
-    protected function manualClearCache(string $cacheDir): void
+    private function manualClearCache(string $cacheDir): void
     {
         for ($i = 0; $i < self::MANUAL_REMOVAL_TRIALS; ++$i) {
             try {
-                $this->logger->info(sprintf('SymfonyCacheClearer: Trying manual removal %d/%d of cache folder %s', $i + 1, self::MANUAL_REMOVAL_TRIALS, $cacheDir));
+                $this->logger->info(\sprintf('SymfonyCacheClearer: Trying manual removal %d/%d of cache folder %s', $i + 1, self::MANUAL_REMOVAL_TRIALS, $cacheDir));
                 $this->filesystem->remove($cacheDir);
-                if (!is_dir($cacheDir)) {
+                if (! is_dir($cacheDir)) {
                     break;
                 }
             } catch (Throwable $e) {
-                $this->logger->error(sprintf('Error while removing cache folder: %s', $e->getMessage()));
+                $this->logger->error(\sprintf('Error while removing cache folder: %s', $e->getMessage()));
             }
         }
 
         if (is_dir($cacheDir)) {
-            $this->logger->error(sprintf('Folder cache %s still present even after %d manual removals', $cacheDir, self::MANUAL_REMOVAL_TRIALS));
+            $this->logger->error(\sprintf('Folder cache %s still present even after %d manual removals', $cacheDir, self::MANUAL_REMOVAL_TRIALS));
         } else {
-            $this->logger->info(sprintf('Cache folder %s successfully cleared manually', $cacheDir));
+            $this->logger->info(\sprintf('Cache folder %s successfully cleared manually', $cacheDir));
         }
     }
 
-    protected function unlockOtherCache(AppKernel $currentKernel, string $otherEnvironment, string $otherAppId): void
+    private function unlockOtherCache(AppKernel $currentKernel, string $otherEnvironment, string $otherAppId): void
     {
         // We don't unlock the current process during the loop, this will be done in the "finally" block at the end of the loop
         if ($otherEnvironment === $currentKernel->getEnvironment() && $otherAppId === $currentKernel->getAppId()) {

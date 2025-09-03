@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,8 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\MovementReasonId
 
 class MovementReasonRepository
 {
-    public function __construct(private readonly ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     /**
@@ -48,11 +50,8 @@ class MovementReasonRepository
     {
         $id = (int) $this->configuration->get($configurationKey);
 
-        if (!$id) {
-            throw new MovementReasonConfigurationNotFoundException(sprintf(
-                'Movement reason id is not configured by "%s"',
-                $configurationKey
-            ));
+        if (! $id) {
+            throw new MovementReasonConfigurationNotFoundException(\sprintf('Movement reason id is not configured by "%s"', $configurationKey));
         }
 
         return new MovementReasonId($id);

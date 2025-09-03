@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,26 +41,18 @@ use PrestaShop\PrestaShop\Core\Domain\Store\Repository\StoreRepository;
 #[AsCommandHandler]
 class BulkDeleteStoreHandler implements BulkDeleteStoreHandlerInterface
 {
-    public function __construct(private readonly StoreRepository $storeRepository)
-    {
+    public function __construct(
+        private readonly StoreRepository $storeRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteStoreCommand $command): void
     {
         foreach ($command->getStoreIds() as $storeId) {
             try {
                 $this->storeRepository->delete($storeId);
             } catch (CannotDeleteStoreException $e) {
-                throw new CannotDeleteStoreException(
-                    sprintf(
-                        'Error occurred when trying to bulk delete stores. [%s]',
-                        $e->getMessage()
-                    ),
-                    CannotDeleteStoreException::FAILED_BULK_DELETE
-                );
+                throw new CannotDeleteStoreException(\sprintf('Error occurred when trying to bulk delete stores. [%s]', $e->getMessage()), CannotDeleteStoreException::FAILED_BULK_DELETE);
             }
         }
     }

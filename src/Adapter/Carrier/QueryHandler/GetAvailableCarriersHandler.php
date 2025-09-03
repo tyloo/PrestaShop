@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -80,7 +81,7 @@ class GetAvailableCarriersHandler implements GetAvailableCarriersHandlerInterfac
         $allCarrierIds = $this->mapCarrierToProducts($carriersMapping);
 
         foreach ($allCarrierIds as $carrierId => $productIds) {
-            if (!in_array($carrierId, $commonCarriers, true)) {
+            if (! \in_array($carrierId, $commonCarriers, true)) {
                 $carrier = $carriersIndex[$carrierId];
                 $productPreviews = array_map(function (int $pid) use ($products) {
                     $product = $products[$pid];
@@ -110,7 +111,7 @@ class GetAvailableCarriersHandler implements GetAvailableCarriersHandlerInterfac
         foreach ($carriersMapping as $carriers) {
             $carrierIds = array_column($carriers, 'id_carrier');
 
-            $commonCarriers = is_null($commonCarriers)
+            $commonCarriers = $commonCarriers === null
                 ? $carrierIds
                 : array_intersect($commonCarriers, $carrierIds);
         }
@@ -159,11 +160,11 @@ class GetAvailableCarriersHandler implements GetAvailableCarriersHandlerInterfac
      */
     private function getProductName(Product $product): string
     {
-        if (is_array($product->name)) {
+        if (\is_array($product->name)) {
             $languageId = $this->languageContext->getId();
 
-            if (!isset($product->name[$languageId])) {
-                throw new RuntimeException(sprintf('Product name not found for product ID %d and language ID %d.', $product->id, $languageId));
+            if (! isset($product->name[$languageId])) {
+                throw new RuntimeException(\sprintf('Product name not found for product ID %d and language ID %d.', $product->id, $languageId));
             }
 
             return $product->name[$languageId];

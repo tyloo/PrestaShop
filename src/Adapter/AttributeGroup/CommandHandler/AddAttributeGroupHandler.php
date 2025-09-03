@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,13 +45,10 @@ final class AddAttributeGroupHandler implements AddAttributeGroupHandlerInterfac
 {
     public function __construct(
         private readonly AttributeGroupRepository $attributeGroupRepository,
-        private readonly AttributeGroupValidator $validator
+        private readonly AttributeGroupValidator $validator,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddAttributeGroupCommand $command): AttributeGroupId
     {
         $attributeGroup = new AttributeGroup();
@@ -61,8 +59,7 @@ final class AddAttributeGroupHandler implements AddAttributeGroupHandlerInterfac
         $attributeGroup->id_shop_list = $command->getAssociatedShopIds();
 
         $this->validator->validate($attributeGroup);
-        $id = $this->attributeGroupRepository->add($attributeGroup);
 
-        return $id;
+        return $this->attributeGroupRepository->add($attributeGroup);
     }
 }

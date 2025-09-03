@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,25 +40,20 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\CommandHandler\EditFeatureValueHan
 #[AsCommandHandler]
 class EditFeatureValueHandler implements EditFeatureValueHandlerInterface
 {
-    /**
-     * @param FeatureValueRepository $featureValueRepository
-     */
-    public function __construct(private readonly FeatureValueRepository $featureValueRepository)
-    {
+    public function __construct(
+        private readonly FeatureValueRepository $featureValueRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(EditFeatureValueCommand $command): void
     {
         $featureValue = $this->featureValueRepository->get($command->getFeatureValueId());
 
-        if (null !== $command->getLocalizedValues()) {
+        if ($command->getLocalizedValues() !== null) {
             $featureValue->value = $command->getLocalizedValues();
         }
 
-        if (null !== $command->getFeatureId()) {
+        if ($command->getFeatureId() !== null) {
             $featureValue->id_feature = $command->getFeatureId()->getValue();
         }
 

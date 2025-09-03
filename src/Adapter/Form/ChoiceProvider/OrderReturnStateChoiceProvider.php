@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,17 +35,13 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 
 class OrderReturnStateChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @param int $contextLangId
-     */
-    public function __construct(private readonly int $contextLangId)
-    {
+    public function __construct(
+        private readonly int $contextLangId,
+    ) {
     }
 
     /**
      * Get available order return states.
-     *
-     * @return array
      *
      * @throws OrderReturnStateException
      */
@@ -54,7 +51,7 @@ class OrderReturnStateChoiceProvider implements FormChoiceProviderInterface
         $orderStates = OrderReturnState::getOrderReturnStates($this->contextLangId);
 
         foreach ($orderStates as $orderState) {
-            $indexName = sprintf('%s - %s', $orderState['id_order_return_state'], $orderState['name']);
+            $indexName = \sprintf('%s - %s', $orderState['id_order_return_state'], $orderState['name']);
             $choices[$indexName] = (int) $orderState['id_order_return_state'];
         }
 

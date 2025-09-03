@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
 #[AsQueryHandler]
 final class GetCmsCategoryIdForRedirectionHandler extends AbstractCmsPageHandler implements GetCmsCategoryIdHandlerForRedirectionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCmsCategoryIdForRedirection $query)
     {
         try {

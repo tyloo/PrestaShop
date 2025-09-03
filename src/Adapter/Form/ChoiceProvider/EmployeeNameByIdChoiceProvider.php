@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class EmployeeNameByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $employees = Employee::getEmployees();
@@ -44,7 +42,7 @@ final class EmployeeNameByIdChoiceProvider implements FormChoiceProviderInterfac
         $choices = [];
 
         foreach ($employees as $employee) {
-            $name = sprintf('%s. %s', substr((string) $employee['firstname'], 0, 1), $employee['lastname']);
+            $name = \sprintf('%s. %s', substr((string) $employee['firstname'], 0, 1), $employee['lastname']);
 
             $choices[$name] = (int) $employee['id_employee'];
         }

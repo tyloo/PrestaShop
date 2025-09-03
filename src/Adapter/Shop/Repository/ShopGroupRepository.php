@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,15 +41,13 @@ use ShopGroup;
  */
 class ShopGroupRepository extends AbstractObjectModelRepository
 {
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     /**
-     * @param ShopGroupId $shopGroupId
-     *
-     * @return ShopGroup
-     *
      * @throws ShopGroupNotFoundException
      */
     public function get(ShopGroupId $shopGroupId): ShopGroup
@@ -64,10 +63,6 @@ class ShopGroupRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ShopId $shopId
-     *
-     * @return ShopGroup
-     *
      * @throws ShopGroupNotFoundException
      * @throws ShopNotFoundException
      */
@@ -77,10 +72,6 @@ class ShopGroupRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ShopId $shopId
-     *
-     * @return ShopGroupId
-     *
      * @throws ShopNotFoundException
      */
     public function getShopGroupIdByShopId(ShopId $shopId): ShopGroupId
@@ -94,16 +85,14 @@ class ShopGroupRepository extends AbstractObjectModelRepository
         ;
 
         $result = $qb->executeQuery()->fetchAssociative();
-        if (false === $result) {
-            throw new ShopNotFoundException(sprintf('Could not find shop with id %d', $shopId->getValue()));
+        if ($result === false) {
+            throw new ShopNotFoundException(\sprintf('Could not find shop with id %d', $shopId->getValue()));
         }
 
         return new ShopGroupId((int) $result['id_shop_group']);
     }
 
     /**
-     * @param ShopGroupId $shopGroupId
-     *
      * @throws ShopGroupNotFoundException
      */
     public function assertShopGroupExists(ShopGroupId $shopGroupId): void
@@ -116,13 +105,11 @@ class ShopGroupRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ShopGroupId $shopGroupId
-     *
      * @return ShopId[]
      */
     public function getShopsFromGroup(ShopGroupId $shopGroupId): array
     {
-        return array_map(static fn(array $shop) => new ShopId((int) $shop['id_shop']), $this->connection
+        return array_map(static fn (array $shop) => new ShopId((int) $shop['id_shop']), $this->connection
             ->createQueryBuilder()
             ->select('s.id_shop')
             ->from($this->dbPrefix . 'shop', 's')

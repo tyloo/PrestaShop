@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,11 @@ use PrestaShop\PrestaShop\Core\Multistore\MultistoreConfig;
  */
 class MultistoreFeature implements FeatureInterface
 {
-    /**
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct(private readonly ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isUsed()
     {
         // internally it checks if feature is active
@@ -55,33 +51,21 @@ class MultistoreFeature implements FeatureInterface
         return Shop::isFeatureActive();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isActive()
     {
         return (bool) $this->configuration->get(MultistoreConfig::FEATURE_STATUS);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enable()
     {
         $this->configuration->set(MultistoreConfig::FEATURE_STATUS, 1);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function disable()
     {
         $this->configuration->set(MultistoreConfig::FEATURE_STATUS, 0);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($status)
     {
         $status ? $this->enable() : $this->disable();

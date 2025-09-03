@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,20 +35,16 @@ use PrestaShop\PrestaShop\Core\Domain\Security\Command\DeleteCustomerSessionComm
 use PrestaShop\PrestaShop\Core\Domain\Security\CommandHandler\DeleteCustomerSessionHandlerInterface;
 
 /**
- * Class DeleteCustomerSessionHandler
- *
  * @internal
  */
 #[AsCommandHandler]
 final class DeleteCustomerSessionHandler implements DeleteCustomerSessionHandlerInterface
 {
-    public function __construct(private readonly CustomerSessionRepository $repository)
-    {
+    public function __construct(
+        private readonly CustomerSessionRepository $repository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteCustomerSessionCommand $command): void
     {
         $this->repository->delete($command->getCustomerSessionId());

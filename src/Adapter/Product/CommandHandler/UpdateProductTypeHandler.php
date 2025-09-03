@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\UpdateProductTypeHa
 #[AsCommandHandler]
 class UpdateProductTypeHandler implements UpdateProductTypeHandlerInterface
 {
-    /**
-     * @param ProductTypeUpdater $productTypeUpdater
-     */
-    public function __construct(private readonly ProductTypeUpdater $productTypeUpdater)
-    {
+    public function __construct(
+        private readonly ProductTypeUpdater $productTypeUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(UpdateProductTypeCommand $command): void
     {
         $this->productTypeUpdater->updateType($command->getProductId(), $command->getProductType());

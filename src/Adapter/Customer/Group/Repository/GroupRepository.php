@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,10 +44,6 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractMultiShopObjectModelRepository
 class GroupRepository extends AbstractMultiShopObjectModelRepository
 {
     /**
-     * @param GroupId $customerGroupId
-     *
-     * @return CustomerGroup
-     *
      * @throws CoreException
      * @throws GroupNotFoundException
      */
@@ -63,8 +60,6 @@ class GroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param GroupId $groupId
-     *
      * @throws GroupNotFoundException
      */
     public function assertGroupExists(GroupId $groupId): void
@@ -77,10 +72,6 @@ class GroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param CustomerGroup $customerGroup
-     *
-     * @return GroupId
-     *
      * @throws CoreException
      */
     public function create(CustomerGroup $customerGroup): GroupId
@@ -95,8 +86,6 @@ class GroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param int $customerGroupId
-     *
      * @return int[]
      */
     public function getAssociatedShopIds(int $customerGroupId): array
@@ -104,9 +93,6 @@ class GroupRepository extends AbstractMultiShopObjectModelRepository
         return $this->getObjectModelAssociatedShopIds($customerGroupId, CustomerGroup::class);
     }
 
-    /**
-     * @param CustomerGroup $customerGroup
-     */
     public function partialUpdate(CustomerGroup $customerGroup, array $propertiesToUpdate): void
     {
         $this->partiallyUpdateObjectModel($customerGroup, $propertiesToUpdate, CannotUpdateGroupException::class);

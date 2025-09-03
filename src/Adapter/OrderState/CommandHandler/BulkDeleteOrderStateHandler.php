@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ use PrestaShop\PrestaShop\Core\Domain\OrderState\Exception\OrderStateException;
 class BulkDeleteOrderStateHandler extends AbstractOrderStateHandler implements BulkDeleteOrderStateHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws BulkDeleteOrderStateException
      */
     public function handle(BulkDeleteOrderStateCommand $command): void
@@ -53,7 +52,7 @@ class BulkDeleteOrderStateHandler extends AbstractOrderStateHandler implements B
             try {
                 $orderState = $this->getOrderState($orderStateId);
 
-                if (!$this->deleteOrderState($orderState)) {
+                if (! $this->deleteOrderState($orderState)) {
                     $errors[] = $orderState->id;
                 }
             } catch (OrderStateException) {
@@ -61,11 +60,8 @@ class BulkDeleteOrderStateHandler extends AbstractOrderStateHandler implements B
             }
         }
 
-        if (!empty($errors)) {
-            throw new BulkDeleteOrderStateException(
-                $errors,
-                'Failed to delete all of selected order statuses'
-            );
+        if (! empty($errors)) {
+            throw new BulkDeleteOrderStateException($errors, 'Failed to delete all of selected order statuses');
         }
     }
 }

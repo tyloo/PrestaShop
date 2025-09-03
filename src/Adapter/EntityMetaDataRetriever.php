@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class EntityMetaDataRetriever
             $metaData->setTableName($classVars['definition']['table']);
             $metaData->setPrimaryKeyFieldNames([$classVars['definition']['primary']]);
         } else {
-            throw new CoreException(sprintf('Cannot get metadata for entity `%s`.', $className));
+            throw new CoreException(\sprintf('Cannot get metadata for entity `%s`.', $className));
         }
 
         return $metaData;

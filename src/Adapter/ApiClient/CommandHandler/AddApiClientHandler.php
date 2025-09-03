@@ -48,7 +48,7 @@ class AddApiClientHandler implements AddApiClientCommandHandlerInterface
     public function __construct(
         private readonly ApiClientRepository $repository,
         private readonly ValidatorInterface $validator,
-        private readonly PasswordHasherInterface $passwordHasher
+        private readonly PasswordHasherInterface $passwordHasher,
     ) {
     }
 
@@ -57,6 +57,7 @@ class AddApiClientHandler implements AddApiClientCommandHandlerInterface
         $apiClient = new ApiClient();
         $apiClient->setClientId($command->getClientId());
         $apiClient->setClientName($command->getClientName());
+
         $secret = RandomString::generate();
         $apiClient->setClientSecret($this->passwordHasher->hash($secret));
         $apiClient->setEnabled($command->isEnabled());
@@ -66,12 +67,8 @@ class AddApiClientHandler implements AddApiClientCommandHandlerInterface
 
         $errors = $this->validator->validate($apiClient);
 
-        if (count($errors) > 0) {
-            throw ApiClientConstraintException::buildFromPropertyPath(
-                $errors->get(0)->getPropertyPath(),
-                $errors->get(0)->getMessage(),
-                $errors->get(0)->getMessageTemplate()
-            );
+        if (\count($errors) > 0) {
+            throw ApiClientConstraintException::buildFromPropertyPath($errors->get(0)->getPropertyPath(), $errors->get(0)->getMessage(), $errors->get(0)->getMessageTemplate());
         }
 
         try {

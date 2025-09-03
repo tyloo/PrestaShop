@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,16 +45,11 @@ use ProductDownload as VirtualProductFile;
 #[AsCommandHandler]
 final class AddVirtualProductFileHandler implements AddVirtualProductFileHandlerInterface
 {
-    /**
-     * @param VirtualProductUpdater $virtualProductUpdater
-     */
-    public function __construct(private readonly VirtualProductUpdater $virtualProductUpdater)
-    {
+    public function __construct(
+        private readonly VirtualProductUpdater $virtualProductUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddVirtualProductFileCommand $command): VirtualProductFileId
     {
         return $this->virtualProductUpdater->addFile(
@@ -63,11 +59,6 @@ final class AddVirtualProductFileHandler implements AddVirtualProductFileHandler
         );
     }
 
-    /**
-     * @param AddVirtualProductFileCommand $command
-     *
-     * @return VirtualProductFile
-     */
     private function buildObjectModel(AddVirtualProductFileCommand $command): VirtualProductFile
     {
         $virtualProductFile = new VirtualProductFile();

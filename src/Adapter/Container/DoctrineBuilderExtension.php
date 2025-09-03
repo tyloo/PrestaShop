@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,23 +43,18 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class DoctrineBuilderExtension implements ContainerBuilderExtensionInterface
 {
-    /**
-     * @param EnvironmentInterface $environment
-     */
-    public function __construct(private readonly EnvironmentInterface $environment)
-    {
+    public function __construct(
+        private readonly EnvironmentInterface $environment,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $container)
     {
         $configDirectories = [$container->getParameter('kernel.project_dir') . '/app/config'];
         $fileLocator = new FileLocator($configDirectories);
 
         $configLoader = new ConfigYamlLoader($fileLocator);
-        $configPath = sprintf('config_legacy_%s.yml', $this->environment->getName());
+        $configPath = \sprintf('config_legacy_%s.yml', $this->environment->getName());
         $configLoader->load($configPath);
         $config = $configLoader->getConfig();
 

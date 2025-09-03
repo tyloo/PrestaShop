@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,20 +35,16 @@ use PrestaShop\PrestaShop\Core\Domain\Security\Command\ClearOutdatedEmployeeSess
 use PrestaShop\PrestaShop\Core\Domain\Security\CommandHandler\ClearOutdatedEmployeeSessionHandlerInterface;
 
 /**
- * Class ClearOutdatedEmployeeSessionHandler
- *
  * @internal
  */
 #[AsCommandHandler]
 class ClearOutdatedEmployeeSessionHandler implements ClearOutdatedEmployeeSessionHandlerInterface
 {
-    public function __construct(private readonly EmployeeSessionRepository $repository)
-    {
+    public function __construct(
+        private readonly EmployeeSessionRepository $repository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ClearOutdatedEmployeeSessionCommand $command): void
     {
         $this->repository->clearOutdatedSessions();

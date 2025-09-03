@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,22 +41,13 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\Exception\CannotDeleteCartRuleExc
 #[AsCommandHandler]
 final class DeleteCartRuleHandler extends AbstractCartRuleHandler implements DeleteCartRuleHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteCartRuleCommand $command): void
     {
         $cartRuleId = $command->getCartRuleId();
         $cartRule = $this->getCartRule($cartRuleId);
 
-        if (!$this->deleteCartRule($cartRule)) {
-            throw new CannotDeleteCartRuleException(
-                sprintf(
-                    'Cannot delete SpecificPriceRule object with id "%s".',
-                    $cartRuleId->getValue()
-                ),
-                CannotDeleteCartRuleException::FAILED_DELETE
-            );
+        if (! $this->deleteCartRule($cartRule)) {
+            throw new CannotDeleteCartRuleException(\sprintf('Cannot delete SpecificPriceRule object with id "%s".', $cartRuleId->getValue()), CannotDeleteCartRuleException::FAILED_DELETE);
         }
     }
 }

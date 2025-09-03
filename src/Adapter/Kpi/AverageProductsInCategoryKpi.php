@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,17 +40,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class AverageProductsInCategoryKpi implements KpiInterface
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param ConfigurationInterface $kpiConfiguration
      * @param string $sourceUrl
      */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $kpiConfiguration, private $sourceUrl)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurationInterface $kpiConfiguration,
+        private $sourceUrl,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $helper = new HelperKpi();
@@ -59,7 +58,7 @@ final class AverageProductsInCategoryKpi implements KpiInterface
         $helper->title =
             $this->translator->trans('Average number of products per category', [], 'Admin.Catalog.Feature');
 
-        if (false !== $this->kpiConfiguration->get('PRODUCTS_PER_CATEGORY')) {
+        if ($this->kpiConfiguration->get('PRODUCTS_PER_CATEGORY') !== false) {
             $helper->value = $this->kpiConfiguration->get('PRODUCTS_PER_CATEGORY');
         }
 

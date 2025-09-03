@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,16 +44,11 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtil;
 #[AsQueryHandler]
 class GetCatalogPriceRuleListForProductHandler implements GetCatalogPriceRuleListForProductHandlerInterface
 {
-    /**
-     * @param CatalogPriceRuleRepository $catalogPriceRuleRepository
-     */
-    public function __construct(private readonly CatalogPriceRuleRepository $catalogPriceRuleRepository)
-    {
+    public function __construct(
+        private readonly CatalogPriceRuleRepository $catalogPriceRuleRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCatalogPriceRuleListForProduct $query): CatalogPriceRuleList
     {
         $catalogPriceRules = $this->catalogPriceRuleRepository->getByProductId(

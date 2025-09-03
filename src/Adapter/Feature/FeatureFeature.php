@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,47 +36,33 @@ use PrestaShop\PrestaShop\Core\Feature\FeatureInterface;
  */
 class FeatureFeature implements FeatureInterface
 {
-    public function __construct(private readonly Configuration $configuration)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isUsed()
     {
         return Feature::isCurrentlyUsed();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isActive()
     {
         return Feature::isFeatureActive();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function enable()
     {
         $this->configuration->set('PS_FEATURE_FEATURE_ACTIVE', true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function disable()
     {
         $this->configuration->set('PS_FEATURE_FEATURE_ACTIVE', false);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function update($status)
     {
-        true === $status ? $this->enable() : $this->disable();
+        $status === true ? $this->enable() : $this->disable();
     }
 }

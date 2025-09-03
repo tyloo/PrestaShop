@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\QueryResult\AttachmentInformati
 #[AsQueryHandler]
 class GetAttachmentInformationHandler implements GetAttachmentInformationHandlerInterface
 {
-    public function __construct(private readonly AttachmentRepository $attachmentRepository)
-    {
+    public function __construct(
+        private readonly AttachmentRepository $attachmentRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetAttachmentInformation $query): AttachmentInformation
     {
         $attachment = $this->attachmentRepository->get($query->getAttachmentId());

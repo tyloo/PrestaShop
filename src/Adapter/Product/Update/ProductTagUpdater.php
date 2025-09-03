@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,18 +42,15 @@ use Product;
  */
 class ProductTagUpdater
 {
-    /**
-     * @param TagRepository $tagRepository
-     * @param ProductIndexationUpdater $productIndexationUpdater
-     */
-    public function __construct(private readonly TagRepository $tagRepository, private readonly ProductIndexationUpdater $productIndexationUpdater)
-    {
+    public function __construct(
+        private readonly TagRepository $tagRepository,
+        private readonly ProductIndexationUpdater $productIndexationUpdater,
+    ) {
     }
 
     /**
      * Removes previous tags & sets new list of tags for a product.
      *
-     * @param Product $product
      * @param LocalizedTags[] $localizedTagsList
      *
      * @throws CannotUpdateProductException
@@ -64,7 +62,7 @@ class ProductTagUpdater
 
         // We check if the values have changed, it represents an additional query to check but it's better than performing
         // an update of search indexes for nothing.
-        if (!$this->hasModification($productId, $localizedTagsList)) {
+        if (! $this->hasModification($productId, $localizedTagsList)) {
             return;
         }
 
@@ -93,23 +91,20 @@ class ProductTagUpdater
     }
 
     /**
-     * @param ProductId $productId
      * @param LocalizedTags[] $localizedTagsList
-     *
-     * @return bool
      */
     private function hasModification(ProductId $productId, array $localizedTagsList): bool
     {
         $localizedProductTags = $this->tagRepository->getLocalizedProductTags($productId);
         $currentTagLanguages = array_keys($localizedProductTags);
-        $updateTagLanguages = array_map(static fn(LocalizedTags $localizedTags): int => $localizedTags->getLanguageId()->getValue(), $localizedTagsList);
+        $updateTagLanguages = array_map(static fn (LocalizedTags $localizedTags): int => $localizedTags->getLanguageId()->getValue(), $localizedTagsList);
 
         if (array_diff($currentTagLanguages, $updateTagLanguages)) {
             return true;
         }
 
         foreach ($localizedTagsList as $localizedTags) {
-            if (empty($localizedProductTags[$localizedTags->getLanguageId()->getValue()]) && !empty($localizedTags->getTags())) {
+            if (empty($localizedProductTags[$localizedTags->getLanguageId()->getValue()]) && ! empty($localizedTags->getTags())) {
                 return true;
             }
 
@@ -125,8 +120,6 @@ class ProductTagUpdater
 
     /**
      * @param string[] $tags
-     *
-     * @return string
      */
     private function stringifyTags(array $tags): string
     {

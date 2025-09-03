@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,30 +50,22 @@ use Validate;
 #[AsCommandHandler]
 final class IssuePartialRefundHandler extends AbstractOrderCommandHandler implements IssuePartialRefundHandlerInterface
 {
-    /**
-     * @param ConfigurationInterface $configuration
-     * @param OrderRefundCalculator $orderRefundCalculator
-     * @param OrderSlipCreator $orderSlipCreator
-     * @param VoucherGenerator $voucherGenerator
-     * @param OrderRefundUpdater $refundUpdater
-     * @param ContextStateManager $contextStateManager
-     */
-    public function __construct(private readonly ConfigurationInterface $configuration, private readonly OrderRefundCalculator $orderRefundCalculator, private readonly OrderSlipCreator $orderSlipCreator, private readonly VoucherGenerator $voucherGenerator, private readonly OrderRefundUpdater $refundUpdater, private readonly ContextStateManager $contextStateManager)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly OrderRefundCalculator $orderRefundCalculator,
+        private readonly OrderSlipCreator $orderSlipCreator,
+        private readonly VoucherGenerator $voucherGenerator,
+        private readonly OrderRefundUpdater $refundUpdater,
+        private readonly ContextStateManager $contextStateManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(IssuePartialRefundCommand $command): void
     {
         /** @var Order $order */
         $order = $this->getOrder($command->getOrderId());
-        if (!$order->hasBeenPaid() && !$order->hasPayments()) {
-            throw new InvalidOrderStateException(
-                InvalidOrderStateException::NOT_PAID,
-                'Can not perform partial refund on an order which is not paid'
-            );
+        if (! $order->hasBeenPaid() && ! $order->hasPayments()) {
+            throw new InvalidOrderStateException(InvalidOrderStateException::NOT_PAID, 'Can not perform partial refund on an order which is not paid');
         }
 
         $this->setOrderContext($this->contextStateManager, $order);
@@ -84,10 +77,6 @@ final class IssuePartialRefundHandler extends AbstractOrderCommandHandler implem
         }
     }
 
-    /**
-     * @param IssuePartialRefundCommand $command
-     * @param Order $order
-     */
     private function issuePartialRefund(IssuePartialRefundCommand $command, Order $order): void
     {
         $orderRefundSummary = $this->orderRefundCalculator->computeOrderRefund(
@@ -100,7 +89,7 @@ final class IssuePartialRefundHandler extends AbstractOrderCommandHandler implem
 
         // @todo This part should probably be in a share abstract class as it will probably be common with other handlers
         // Update order details and reinject quantities
-        $shouldReinjectProducts = !$order->hasBeenDelivered() || $command->restockRefundedProducts();
+        $shouldReinjectProducts = ! $order->hasBeenDelivered() || $command->restockRefundedProducts();
         foreach ($orderRefundSummary->getProductRefunds() as $orderDetailId => $productRefund) {
             $orderDetail = $orderRefundSummary->getOrderDetailById($orderDetailId);
             if ($shouldReinjectProducts) {
@@ -108,7 +97,13 @@ final class IssuePartialRefundHandler extends AbstractOrderCommandHandler implem
             }
 
             // Hook called only for the shop concerned
-            Hook::exec('actionProductCancel', ['order' => $order, 'id_order_detail' => (int) $orderDetailId, 'cancel_quantity' => $productRefund['quantity'], 'cancel_amount' => $productRefund['amount'], 'action' => CancellationActionType::PARTIAL_REFUND], null, false, true, false, $order->id_shop);
+            Hook::exec('actionProductCancel', [
+                'order' => $order,
+                'id_order_detail' => (int) $orderDetailId,
+                'cancel_quantity' => $productRefund['quantity'],
+                'cancel_amount' => $productRefund['amount'],
+                'action' => CancellationActionType::PARTIAL_REFUND,
+            ], null, false, true, false, $order->id_shop);
         }
 
         // Update order carrier weight
@@ -116,7 +111,7 @@ final class IssuePartialRefundHandler extends AbstractOrderCommandHandler implem
         if (Validate::isLoadedObject($orderCarrier)) {
             $orderCarrier->weight = (float) $order->getTotalWeight();
             if ($orderCarrier->update()) {
-                $order->weight = sprintf('%.3f %s', $orderCarrier->weight, $this->configuration->get('PS_WEIGHT_UNIT'));
+                $order->weight = \sprintf('%.3f %s', $orderCarrier->weight, $this->configuration->get('PS_WEIGHT_UNIT'));
             }
         }
 

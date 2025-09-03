@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,20 +45,13 @@ class SearchProductsForAssociationHandler implements SearchProductsForAssociatio
      */
     protected $productRepository;
 
-    /**
-     * @param ProductRepository $productRepository
-     * @param ProductImagePathFactory $productImagePathFactory
-     */
     public function __construct(
         ProductRepository $productRepository,
-        private readonly ProductImagePathFactory $productImagePathFactory
+        private readonly ProductImagePathFactory $productImagePathFactory,
     ) {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(SearchProductsForAssociation $query): array
     {
         $foundProducts = $this->productRepository->searchProducts(
@@ -75,11 +69,6 @@ class SearchProductsForAssociationHandler implements SearchProductsForAssociatio
         return $productsForAssociation;
     }
 
-    /**
-     * @param array $foundProduct
-     *
-     * @return ProductForAssociation
-     */
     private function createResult(array $foundProduct): ProductForAssociation
     {
         if (empty($foundProduct['id_image'])) {

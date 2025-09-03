@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\DeleteC
 #[AsCommandHandler]
 class DeleteCombinationHandler implements DeleteCombinationHandlerInterface
 {
-    /**
-     * @param CombinationDeleter $combinationDeleter
-     */
-    public function __construct(private readonly CombinationDeleter $combinationDeleter)
-    {
+    public function __construct(
+        private readonly CombinationDeleter $combinationDeleter,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(DeleteCombinationCommand $command): void
     {
         $this->combinationDeleter->deleteCombination($command->getCombinationId(), $command->getShopConstraint());

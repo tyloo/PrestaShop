@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,16 +48,11 @@ use Shop;
 #[AsCommandHandler]
 final class AddCartRuleToCartHandler extends AbstractCartHandler implements AddCartRuleToCartHandlerInterface
 {
-    /**
-     * @param ContextStateManager $contextStateManager
-     */
-    public function __construct(private readonly ContextStateManager $contextStateManager)
-    {
+    public function __construct(
+        private readonly ContextStateManager $contextStateManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddCartRuleToCartCommand $command)
     {
         $cart = $this->getCart($command->getCartId());
@@ -78,7 +74,7 @@ final class AddCartRuleToCartHandler extends AbstractCartHandler implements AddC
             throw new CartRuleValidityException($errorMessage);
         }
 
-        if (!$cart->addCartRule($cartRule->id)) {
+        if (! $cart->addCartRule($cartRule->id)) {
             $this->contextStateManager->restorePreviousContext();
 
             throw new CartException('Failed to add cart rule to cart.');
@@ -92,10 +88,6 @@ final class AddCartRuleToCartHandler extends AbstractCartHandler implements AddC
      *
      * Returns null if cart rule is valid.
      * Returns translated error message if cart rule is not valid.
-     *
-     * @param CartRule $cartRule
-     *
-     * @return string|null
      */
     private function validateCartRule(CartRule $cartRule, Cart $cart): ?string
     {
@@ -108,7 +100,7 @@ final class AddCartRuleToCartHandler extends AbstractCartHandler implements AddC
         }
 
         // if its valid, don't return any error message
-        if (true === $isValid) {
+        if ($isValid === true) {
             return null;
         }
 

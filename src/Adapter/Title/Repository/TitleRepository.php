@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,18 +44,12 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
  */
 class TitleRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param TitleValidator $titleValidator
-     */
-    public function __construct(private readonly TitleValidator $titleValidator)
-    {
+    public function __construct(
+        private readonly TitleValidator $titleValidator,
+    ) {
     }
 
     /**
-     * @param TitleId $titleId
-     *
-     * @return Gender
-     *
      * @throws CoreException
      * @throws TitleNotFoundException
      */
@@ -70,12 +65,6 @@ class TitleRepository extends AbstractObjectModelRepository
         return $title;
     }
 
-    /**
-     * @param Gender $title
-     * @param int $errorCode
-     *
-     * @return TitleId
-     */
     public function add(Gender $title, int $errorCode = 0): TitleId
     {
         $this->titleValidator->validate($title);
@@ -88,15 +77,10 @@ class TitleRepository extends AbstractObjectModelRepository
         return new TitleId($id);
     }
 
-    /**
-     * @param Gender $title
-     * @param array $propertiesToUpdate
-     * @param int $errorCode
-     */
     public function partialUpdate(
         Gender $title,
         array $propertiesToUpdate,
-        int $errorCode
+        int $errorCode,
     ): void {
         $this->partiallyUpdateObjectModel(
             $title,
@@ -107,8 +91,6 @@ class TitleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param Gender $title
-     *
      * @throws CoreException
      * @throws TitleNotFoundException
      */

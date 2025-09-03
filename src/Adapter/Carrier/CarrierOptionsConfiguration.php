@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ class CarrierOptionsConfiguration extends AbstractMultistoreConfiguration
 {
     private const CONFIGURATION_FIELDS = ['default_carrier', 'carrier_default_order_by', 'carrier_default_order_way'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -50,9 +48,6 @@ class CarrierOptionsConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -65,17 +60,12 @@ class CarrierOptionsConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
-        $resolver = (new OptionsResolver())
+        return (new OptionsResolver())
             ->setDefined(self::CONFIGURATION_FIELDS)
             ->setAllowedTypes('default_carrier', 'int')
             ->setAllowedTypes('carrier_default_order_by', 'int')
             ->setAllowedTypes('carrier_default_order_way', 'int');
-
-        return $resolver;
     }
 }

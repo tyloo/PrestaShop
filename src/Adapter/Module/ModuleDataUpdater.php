@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,7 +68,7 @@ class ModuleDataUpdater
         $module_list = LegacyModule::getModulesOnDisk();
 
         foreach ($module_list as $module) {
-            if ($module->name != $name) {
+            if ($module->name !== $name) {
                 continue;
             }
 
@@ -77,12 +78,10 @@ class ModuleDataUpdater
 
                 LegacyModule::upgradeModuleVersion($name, $module->version);
 
-                return !count($legacy_instance->getErrors());
-            } elseif (LegacyModule::getUpgradeStatus($name)) {
-                return true;
+                return ! \count($legacy_instance->getErrors());
             }
 
-            return true;
+            return (bool) LegacyModule::getUpgradeStatus($name);
         }
 
         return false;

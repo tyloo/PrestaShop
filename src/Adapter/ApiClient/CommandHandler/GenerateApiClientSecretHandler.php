@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,7 +45,7 @@ class GenerateApiClientSecretHandler implements GenerateApiClientSecretHandlerIn
 {
     public function __construct(
         private readonly ApiClientRepository $repository,
-        private readonly PasswordHasherInterface $passwordHasher
+        private readonly PasswordHasherInterface $passwordHasher,
     ) {
     }
 
@@ -53,7 +54,7 @@ class GenerateApiClientSecretHandler implements GenerateApiClientSecretHandlerIn
         try {
             $apiClient = $this->repository->getById($command->getApiClientId()->getValue());
         } catch (NoResultException $noResultException) {
-            throw new ApiClientNotFoundException(sprintf('Could not find Api client with ID %s', $command->getApiClientId()->getValue()), 0, $noResultException);
+            throw new ApiClientNotFoundException(\sprintf('Could not find Api client with ID %s', $command->getApiClientId()->getValue()), 0, $noResultException);
         }
 
         try {

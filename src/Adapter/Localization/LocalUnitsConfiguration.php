@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,11 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
  */
 class LocalUnitsConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @param Configuration $configuration
-     */
-    public function __construct(private readonly Configuration $configuration)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -55,9 +51,6 @@ class LocalUnitsConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $config)
     {
         $errors = [];
@@ -72,9 +65,6 @@ class LocalUnitsConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $config)
     {
         return isset(

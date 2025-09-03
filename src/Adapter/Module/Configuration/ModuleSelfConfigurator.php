@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -91,7 +92,7 @@ class ModuleSelfConfigurator
         ModuleRepository $moduleRepository,
         Configuration $configuration,
         Connection $connection,
-        Filesystem $filesystem
+        Filesystem $filesystem,
     ) {
         $this->module = null;
         $this->configFile = null;
@@ -125,7 +126,7 @@ class ModuleSelfConfigurator
      */
     public function setModule($name)
     {
-        if (!is_string($name)) {
+        if (! \is_string($name)) {
             throw new UnexpectedTypeException($name, 'string');
         }
 
@@ -149,7 +150,7 @@ class ModuleSelfConfigurator
         }
 
         // If we do not know in which module to search, we cannot go further
-        if (!$this->module) {
+        if (! $this->module) {
             return null;
         }
 
@@ -191,7 +192,7 @@ class ModuleSelfConfigurator
      */
     public function setFile($filepath)
     {
-        if (!is_string($filepath)) {
+        if (! \is_string($filepath)) {
             throw new UnexpectedTypeException($filepath, 'string');
         }
 
@@ -222,7 +223,7 @@ class ModuleSelfConfigurator
 
         if ($file === null) {
             $errors[] = 'No config file to apply';
-        } elseif (!file_exists($file)) {
+        } elseif (! file_exists($file)) {
             $errors[] = 'Specified config file is not found';
         } else {
             try {
@@ -236,7 +237,7 @@ class ModuleSelfConfigurator
             }
         }
 
-        if (!$this->module || !$this->moduleRepository->getModule($this->module)->hasValidInstance()) {
+        if (! $this->module || ! $this->moduleRepository->getModule($this->module)->hasValidInstance()) {
             $errors[] = 'The module specified is invalid';
         }
 
@@ -250,7 +251,7 @@ class ModuleSelfConfigurator
      */
     public function configure()
     {
-        if (count($this->validate())) {
+        if (\count($this->validate())) {
             return false;
         }
 
@@ -277,8 +278,8 @@ class ModuleSelfConfigurator
     protected function convertRelativeToAbsolutePaths($file)
     {
         // If we do not deal with any kind of URL, add the path to the YML config file
-        if (!filter_var($file, FILTER_VALIDATE_URL)) {
-            $file = dirname((string) $this->getFile()) . '/' . $file;
+        if (! filter_var($file, \FILTER_VALIDATE_URL)) {
+            $file = \dirname((string) $this->getFile()) . '/' . $file;
         }
 
         return $file;
@@ -296,9 +297,9 @@ class ModuleSelfConfigurator
      */
     protected function extractFilePath($data)
     {
-        if (is_scalar($data)) {
+        if (\is_scalar($data)) {
             $file = $data;
-        } elseif (is_array($data) && !empty($data['file'])) {
+        } elseif (\is_array($data) && ! empty($data['file'])) {
             $file = $data['file'];
         } else {
             throw new Exception('Missing file path');
@@ -320,7 +321,7 @@ class ModuleSelfConfigurator
         require_once $file;
 
         // Load class of same name as the file
-        $className = pathinfo($file, PATHINFO_FILENAME);
+        $className = pathinfo($file, \PATHINFO_FILENAME);
 
         return new $className();
     }
@@ -334,7 +335,7 @@ class ModuleSelfConfigurator
      */
     protected function loadYmlFile($file)
     {
-        if (array_key_exists($file, $this->configs)) {
+        if (\array_key_exists($file, $this->configs)) {
             return $this->configs[$file];
         }
 
@@ -354,11 +355,11 @@ class ModuleSelfConfigurator
             return;
         }
 
-        if (array_key_exists('update', $config['configuration'])) {
+        if (\array_key_exists('update', $config['configuration'])) {
             $this->runConfigurationUpdate($config['configuration']['update']);
         }
 
-        if (array_key_exists('delete', $config['configuration'])) {
+        if (\array_key_exists('delete', $config['configuration'])) {
             $this->runConfigurationDelete($config['configuration']['delete']);
         }
     }
@@ -410,7 +411,7 @@ class ModuleSelfConfigurator
             $file = $this->extractFilePath($data);
 
             $module = $this->moduleRepository->getModule($this->module);
-            $params = !empty($data['params']) ? $data['params'] : [];
+            $params = ! empty($data['params']) ? $data['params'] : [];
 
             $this->loadPhpFile($file)->run($module, $params);
         }
@@ -486,13 +487,13 @@ class ModuleSelfConfigurator
     protected function runConfigurationUpdate($config)
     {
         foreach ($config as $key => $data) {
-            if (is_array($data) && isset($data['value'])) {
+            if (\is_array($data) && isset($data['value'])) {
                 $value = $data['value'];
-            } elseif (is_scalar($data)) {
+            } elseif (\is_scalar($data)) {
                 // string / integer / decimal / bool
                 $value = $data;
             } else {
-                throw new Exception(sprintf('No value given for key %s', $key));
+                throw new Exception(\sprintf('No value given for key %s', $key));
             }
 
             $this->configuration->set($key, $value);

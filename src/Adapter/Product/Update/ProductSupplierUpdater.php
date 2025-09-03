@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,15 +55,13 @@ use ProductSupplier;
  */
 class ProductSupplierUpdater
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param CombinationRepository $combinationRepository
-     * @param SupplierRepository $supplierRepository
-     * @param ProductSupplierRepository $productSupplierRepository
-     * @param int $defaultCurrencyId
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly CombinationRepository $combinationRepository, private readonly SupplierRepository $supplierRepository, private readonly ProductSupplierRepository $productSupplierRepository, private readonly int $defaultCurrencyId)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly SupplierRepository $supplierRepository,
+        private readonly ProductSupplierRepository $productSupplierRepository,
+        private readonly int $defaultCurrencyId,
+    ) {
     }
 
     /**
@@ -70,7 +69,6 @@ class ProductSupplierUpdater
      * exist they are removed. If some associations are missing they are created with empty values. Existing and valid
      * association are not modified. If the product has combination the association is created for all of them.
      *
-     * @param ProductId $productId
      * @param SupplierId[] $supplierIds
      *
      * @return ProductSupplierAssociation[]
@@ -111,7 +109,7 @@ class ProductSupplierUpdater
             // Loop through all combinations to check if they have a matching association if not it will need to be created
             foreach ($combinationIds as $combinationId) {
                 // Search matching association by combination, if none is found the association is missing
-                $matchingAssociations = array_filter($supplierAssociations, fn(ProductSupplierAssociation $association) => $association->getCombinationId()->getValue() === $combinationId->getValue());
+                $matchingAssociations = array_filter($supplierAssociations, fn (ProductSupplierAssociation $association) => $association->getCombinationId()->getValue() === $combinationId->getValue());
 
                 if (empty($matchingAssociations)) {
                     $productSupplier = new ProductSupplier();
@@ -136,7 +134,7 @@ class ProductSupplierUpdater
 
         // Check if product has a default supplier if not we must define it
         $defaultSupplierId = $this->productSupplierRepository->getDefaultSupplierId($productId);
-        if (null === $defaultSupplierId) {
+        if ($defaultSupplierId === null) {
             // We use the first created association by default
             $firstAssociation = $allAssociations[0];
 
@@ -151,8 +149,6 @@ class ProductSupplierUpdater
      * When new combinations are created some product supplier are absent, so we get associated suppliers and associate
      * them again, it will only created the missing ones without modifying the existing ones.
      *
-     * @param ProductId $productId
-     *
      * @return ProductSupplierAssociation[]
      */
     public function updateMissingProductSuppliers(ProductId $productId): array
@@ -166,14 +162,13 @@ class ProductSupplierUpdater
     }
 
     /**
-     * @param ProductId $productId
      * @param array<int, ProductSupplier> $productSuppliers
      *
      * @return array<int, ProductSupplierAssociation>
      */
     public function updateSuppliersForProduct(
         ProductId $productId,
-        array $productSuppliers
+        array $productSuppliers,
     ): array {
         $product = $this->productRepository->getProductByDefaultShop($productId);
 
@@ -185,8 +180,6 @@ class ProductSupplierUpdater
     }
 
     /**
-     * @param ProductId $productId
-     * @param CombinationId $combinationId
      * @param array<int, ProductSupplier> $productSuppliers
      *
      * @return array<int, ProductSupplierAssociation>
@@ -194,15 +187,13 @@ class ProductSupplierUpdater
     public function updateSuppliersForCombination(
         ProductId $productId,
         CombinationId $combinationId,
-        array $productSuppliers
+        array $productSuppliers,
     ): array {
         return $this->updateProductSuppliers($productId, $productSuppliers, $combinationId);
     }
 
     /**
      * Removes all product suppliers associated to specified product without combinations
-     *
-     * @param ProductId $productId
      */
     public function removeAllForProduct(ProductId $productId): void
     {
@@ -215,9 +206,6 @@ class ProductSupplierUpdater
 
     /**
      * When the default supplier is changed we must update all the synced field for the product and all its combinations.
-     *
-     * @param ProductId $productId
-     * @param SupplierId $defaultSupplierId
      */
     public function updateProductDefaultSupplier(ProductId $productId, SupplierId $defaultSupplierId): void
     {
@@ -254,7 +242,7 @@ class ProductSupplierUpdater
     {
         foreach ($productIds as $productId) {
             $suppliers = $this->productSupplierRepository->getAssociatedSupplierIds($productId);
-            if (!empty($suppliers)) {
+            if (! empty($suppliers)) {
                 $this->associateSuppliers($productId, $suppliers);
             } else {
                 $this->resetDefaultSupplier($this->productRepository->getProductByDefaultShop($productId));
@@ -263,9 +251,7 @@ class ProductSupplierUpdater
     }
 
     /**
-     * @param ProductId $productId
      * @param array<int, ProductSupplier> $productSuppliers
-     * @param CombinationIdInterface $combinationId
      *
      * @return ProductSupplierAssociation[]
      */
@@ -277,10 +263,8 @@ class ProductSupplierUpdater
         /** @var ProductSupplier|null $updatedDefaultSupplier */
         $updatedDefaultSupplier = null;
         foreach ($productSuppliers as $productSupplier) {
-            if (!$productSupplier->id) {
-                throw new ProductSupplierNotFoundException(sprintf(
-                    'Trying to update a nonexistent ProductSupplier for product #%d', $productId->getValue()
-                ));
+            if (! $productSupplier->id) {
+                throw new ProductSupplierNotFoundException(\sprintf('Trying to update a nonexistent ProductSupplier for product #%d', $productId->getValue()));
             }
 
             $this->productSupplierRepository->update($productSupplier);
@@ -297,7 +281,7 @@ class ProductSupplierUpdater
         }
 
         // If product supplier associated to default supplier was updated we need to update the product's default supplier related data
-        if (null !== $updatedDefaultSupplier) {
+        if ($updatedDefaultSupplier !== null) {
             // CombinationInterface is either a CombinationId (identified combination) or a NoCombinationId (no combination for standard product)
             // So if $combinationId is a CombinationId we are updating a combination which also needs its default data to be updated
             if ($combinationId instanceof CombinationId) {
@@ -313,8 +297,6 @@ class ProductSupplierUpdater
 
     /**
      * Update the default data for combination since it has two fields that must be synced with the supplier
-     *
-     * @param ProductSupplier $defaultCombinationSupplier
      */
     private function updateDefaultSupplierDataForCombination(ProductSupplier $defaultCombinationSupplier): void
     {
@@ -336,8 +318,6 @@ class ProductSupplierUpdater
     /**
      * Update the default data for product since it has two fields that must be synced with the supplier, and most importantly
      * it is the one saving the default supplier association
-     *
-     * @param ProductSupplier $defaultProductSupplier
      */
     private function updateDefaultSupplierDataForProduct(ProductSupplier $defaultProductSupplier): void
     {
@@ -355,11 +335,6 @@ class ProductSupplierUpdater
 
     /**
      * Find the ProductSupplier associated to the default combination of a product.
-     *
-     * @param ProductId $productId
-     * @param SupplierId $supplierId
-     *
-     * @return ProductSupplier|null
      */
     private function getDefaultCombinationProductSupplier(ProductId $productId, SupplierId $supplierId): ?ProductSupplier
     {
@@ -381,11 +356,6 @@ class ProductSupplierUpdater
     /**
      * Return the default ProductSupplier instance of a product, the one not associated to any combination.
      *
-     * @param ProductId $productId
-     * @param SupplierId $supplierId
-     *
-     * @return ProductSupplier
-     *
      * @throws ProductSupplierNotFoundException
      */
     private function getDefaultProductSupplier(ProductId $productId, SupplierId $supplierId): ProductSupplier
@@ -397,9 +367,6 @@ class ProductSupplierUpdater
         ));
     }
 
-    /**
-     * @param Product $product
-     */
     private function resetDefaultSupplier(Product $product): void
     {
         $product->supplier_reference = '';
@@ -414,30 +381,18 @@ class ProductSupplierUpdater
     }
 
     /**
-     * @param ProductId $productId
-     * @param CombinationIdInterface|null $combinationId
-     *
      * @return array<int, ProductSupplierId>
      */
     private function getProductSupplierIds(ProductId $productId, ?CombinationIdInterface $combinationId = null): array
     {
-        return array_map(fn(array $currentSupplier): ProductSupplierId => new ProductSupplierId((int) $currentSupplier['id_product_supplier']), $this->productSupplierRepository->getProductSuppliersInfo($productId, $combinationId));
+        return array_map(fn (array $currentSupplier): ProductSupplierId => new ProductSupplierId((int) $currentSupplier['id_product_supplier']), $this->productSupplierRepository->getProductSuppliersInfo($productId, $combinationId));
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @throws InvalidProductTypeException
      */
     private function throwInvalidTypeException(ProductId $productId, string $appropriateMethod): void
     {
-        throw new InvalidProductTypeException(
-            InvalidProductTypeException::EXPECTED_NO_COMBINATIONS_TYPE,
-            sprintf(
-                'Product #%d has combinations. Use %s::%s to set product suppliers for specified combination',
-                $productId->getValue(),
-                self::class,
-                $appropriateMethod
-            ));
+        throw new InvalidProductTypeException(InvalidProductTypeException::EXPECTED_NO_COMBINATIONS_TYPE, \sprintf('Product #%d has combinations. Use %s::%s to set product suppliers for specified combination', $productId->getValue(), self::class, $appropriateMethod));
     }
 }

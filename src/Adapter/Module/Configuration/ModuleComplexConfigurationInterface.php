@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,11 +34,5 @@ use PrestaShop\PrestaShop\Core\Module\ModuleInterface;
  */
 interface ModuleComplexConfigurationInterface
 {
-    /**
-     * @param ModuleInterface $module
-     * @param array $params
-     *
-     * @return mixed
-     */
     public function run(ModuleInterface $module, array $params);
 }

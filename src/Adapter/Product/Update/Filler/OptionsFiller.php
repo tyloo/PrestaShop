@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,50 +36,47 @@ use Product;
  */
 class OptionsFiller implements ProductFillerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function fillUpdatableProperties(Product $product, UpdateProductCommand $command): array
     {
         $updatableProperties = [];
 
-        if (null !== $command->getVisibility()) {
+        if ($command->getVisibility() !== null) {
             $product->visibility = $command->getVisibility()->getValue();
             $updatableProperties[] = 'visibility';
         }
 
-        if (null !== $command->isAvailableForOrder()) {
+        if ($command->isAvailableForOrder() !== null) {
             $product->available_for_order = $command->isAvailableForOrder();
             $updatableProperties[] = 'available_for_order';
         }
 
         $availableForOrder = $product->available_for_order;
 
-        if (null !== $command->showPrice() && !$availableForOrder) {
+        if ($command->showPrice() !== null && ! $availableForOrder) {
             $product->show_price = $command->showPrice();
             $updatableProperties[] = 'show_price';
-        } elseif ($availableForOrder && !$product->show_price) {
+        } elseif ($availableForOrder && ! $product->show_price) {
             $product->show_price = true;
             $updatableProperties[] = 'show_price';
         }
 
-        if (null !== $command->isOnlineOnly()) {
+        if ($command->isOnlineOnly() !== null) {
             $product->online_only = $command->isOnlineOnly();
             $updatableProperties[] = 'online_only';
         }
 
-        if (null !== $command->getCondition()) {
+        if ($command->getCondition() !== null) {
             $product->condition = $command->getCondition()->getValue();
             $updatableProperties[] = 'condition';
         }
 
-        if (null !== $command->showCondition()) {
+        if ($command->showCondition() !== null) {
             $product->show_condition = $command->showCondition();
             $updatableProperties[] = 'show_condition';
         }
 
         $manufacturerId = $command->getManufacturerId();
-        if (null !== $manufacturerId) {
+        if ($manufacturerId !== null) {
             $product->id_manufacturer = $manufacturerId->getValue();
             $updatableProperties[] = 'id_manufacturer';
         }

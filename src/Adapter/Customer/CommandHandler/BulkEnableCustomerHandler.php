@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\CommandHandler\BulkEnableCustomer
 #[AsCommandHandler]
 final class BulkEnableCustomerHandler extends AbstractCustomerHandler implements BulkEnableCustomerHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkEnableCustomerCommand $command)
     {
         foreach ($command->getCustomerIds() as $customerId) {

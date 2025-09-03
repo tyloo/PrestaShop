@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,13 +35,11 @@ use Doctrine\DBAL\Connection;
  */
 final class EmployeeLanguageUpdater
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param int $langDefaultId
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly int $langDefaultId)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly int $langDefaultId,
+    ) {
     }
 
     public function replaceDeletedLanguage(int $deletedLangId)

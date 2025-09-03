@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,13 +45,11 @@ use PrestaShop\PrestaShop\Core\Domain\Exception\BulkCommandExceptionInterface;
 #[AsCommandHandler]
 class BulkDeleteSearchTermsAliasesHandler extends AbstractBulkCommandHandler implements BulkDeleteSearchTermsAliasesHandlerInterface
 {
-    public function __construct(protected AliasRepository $aliasRepository)
-    {
+    public function __construct(
+        protected AliasRepository $aliasRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteSearchTermsAliasesCommand $command): void
     {
         $this->handleBulkAction($command->getSearchTerms(), AliasException::class);
@@ -58,18 +57,12 @@ class BulkDeleteSearchTermsAliasesHandler extends AbstractBulkCommandHandler imp
 
     /**
      * @param SearchTerm $term
-     * @param mixed $command
-     *
-     * @return void
      */
     protected function handleSingleAction(mixed $term, mixed $command): void
     {
         $this->aliasRepository->deleteAliasesBySearchTerm($term);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function buildBulkException(array $caughtExceptions): BulkCommandExceptionInterface
     {
         return new BulkAliasException(
@@ -78,9 +71,6 @@ class BulkDeleteSearchTermsAliasesHandler extends AbstractBulkCommandHandler imp
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function supports(mixed $term): bool
     {
         return $term instanceof SearchTerm;

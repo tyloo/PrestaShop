@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,16 +45,12 @@ use PrestaShop\PrestaShop\Core\Localization\LocaleInterface;
 #[AsQueryHandler]
 final class GetCustomerOrdersHandler extends AbstractCustomerHandler implements GetCustomerOrdersHandlerInterface
 {
-    /**
-     * @param LocaleInterface $locale
-     */
-    public function __construct(private readonly LocaleInterface $locale)
-    {
+    public function __construct(
+        private readonly LocaleInterface $locale,
+    ) {
     }
 
     /**
-     * @param GetCustomerOrders $query
-     *
      * @return OrderSummary[]
      *
      * @throws CustomerNotFoundException
@@ -68,8 +65,6 @@ final class GetCustomerOrdersHandler extends AbstractCustomerHandler implements 
     }
 
     /**
-     * @param int $customerId
-     *
      * @throws LocalizationException
      */
     private function getOrders(int $customerId)

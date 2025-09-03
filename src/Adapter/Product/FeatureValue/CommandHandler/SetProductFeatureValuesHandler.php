@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\FeatureValue\CommandHandler\SetPro
 #[AsCommandHandler]
 class SetProductFeatureValuesHandler implements SetProductFeatureValuesHandlerInterface
 {
-    public function __construct(private readonly ProductFeatureValueUpdater $productFeatureValueUpdater)
-    {
+    public function __construct(
+        private readonly ProductFeatureValueUpdater $productFeatureValueUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(SetProductFeatureValuesCommand $command): array
     {
         return $this->productFeatureValueUpdater->setFeatureValues($command->getProductId(), $command->getFeatureValues());

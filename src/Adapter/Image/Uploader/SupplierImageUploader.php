@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 final class SupplierImageUploader extends AbstractImageUploader implements ImageUploaderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function upload($supplierId, UploadedFile $image)
     {
         $this->checkImageIsAllowedForUpload($image);

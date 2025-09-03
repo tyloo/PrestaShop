@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,16 +43,11 @@ use Shop;
 #[AsCommandHandler]
 final class BulkDeleteLanguagesHandler extends AbstractLanguageHandler implements BulkDeleteLanguagesHandlerInterface
 {
-    /**
-     * @param RobotsTextFileGenerator $robotsTextFileGenerator
-     */
-    public function __construct(private readonly RobotsTextFileGenerator $robotsTextFileGenerator)
-    {
+    public function __construct(
+        private readonly RobotsTextFileGenerator $robotsTextFileGenerator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteLanguagesCommand $command)
     {
         // language can only be modified in "ALL SHOPS" context
@@ -63,19 +59,13 @@ final class BulkDeleteLanguagesHandler extends AbstractLanguageHandler implement
             try {
                 $this->assertLanguageIsNotDefault($language);
             } catch (DefaultLanguageException) {
-                throw new DefaultLanguageException(
-                    sprintf(
-                        'Default language "%s" cannot be deleted',
-                        $language->iso_code
-                    ),
-                    DefaultLanguageException::CANNOT_DELETE_DEFAULT_ERROR
-                );
+                throw new DefaultLanguageException(\sprintf('Default language "%s" cannot be deleted', $language->iso_code), DefaultLanguageException::CANNOT_DELETE_DEFAULT_ERROR);
             }
 
             $this->assertLanguageIsNotInUse($language);
 
-            if (false === $language->delete()) {
-                throw new LanguageException(sprintf('Failed to delete language "%s"', $language->iso_code));
+            if ($language->delete() === false) {
+                throw new LanguageException(\sprintf('Failed to delete language "%s"', $language->iso_code));
             }
         }
 

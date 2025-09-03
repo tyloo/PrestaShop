@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,10 +45,6 @@ use RequestSql;
 final class EditSqlRequestHandler extends AbstractSqlRequestHandler implements EditSqlRequestHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @param EditSqlRequestCommand $command
-     *
      * @throws CannotEditSqlRequestException
      * @throws SqlRequestException
      * @throws SqlRequestNotFoundException
@@ -59,23 +56,23 @@ final class EditSqlRequestHandler extends AbstractSqlRequestHandler implements E
         try {
             $entity = new RequestSql($command->getSqlRequestId()->getValue());
 
-            if (0 >= $entity->id) {
-                throw new SqlRequestNotFoundException(sprintf('SqlRequest with id "%s" was not found for edit', $command->getSqlRequestId()->getValue()));
+            if ($entity->id <= 0) {
+                throw new SqlRequestNotFoundException(\sprintf('SqlRequest with id "%s" was not found for edit', $command->getSqlRequestId()->getValue()));
             }
 
-            if (null !== $command->getName()) {
+            if ($command->getName() !== null) {
                 $entity->name = $command->getName();
             }
 
-            if (null !== $command->getSql()) {
+            if ($command->getSql() !== null) {
                 $entity->sql = $command->getSql();
             }
 
-            if (false === $entity->update()) {
-                throw new CannotEditSqlRequestException(sprintf('Error occurred when updating SqlRequest with id "%s"', $command->getSqlRequestId()->getValue()));
+            if ($entity->update() === false) {
+                throw new CannotEditSqlRequestException(\sprintf('Error occurred when updating SqlRequest with id "%s"', $command->getSqlRequestId()->getValue()));
             }
         } catch (PrestaShopException) {
-            throw new SqlRequestException(sprintf('Error occurred when updating SqlRequest with id "%s"', $command->getSqlRequestId()->getValue()));
+            throw new SqlRequestException(\sprintf('Error occurred when updating SqlRequest with id "%s"', $command->getSqlRequestId()->getValue()));
         }
     }
 }

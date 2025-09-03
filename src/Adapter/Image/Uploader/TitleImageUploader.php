@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,11 +45,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class TitleImageUploader extends AbstractImageUploader implements ImageUploaderInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @param int|null $imageWidth
-     * @param int|null $imageHeight
-     *
      * @throws ImageUploadException
      * @throws TitleImageUploadingException
      * @throws UploadedImageConstraintException
@@ -65,23 +61,18 @@ class TitleImageUploader extends AbstractImageUploader implements ImageUploaderI
         $this->uploadFromTemp($tempImageName, $destination);
 
         // Copy new image
-        if (!ImageManager::resize(
+        if (! ImageManager::resize(
             $destination,
             $destination,
             $imageWidth,
             $imageHeight
         )) {
-            throw new TitleImageUploadingException(
-                'An error occurred while uploading the image. Check your directory permissions.',
-                TitleImageUploadingException::UNEXPECTED_ERROR
-            );
+            throw new TitleImageUploadingException('An error occurred while uploading the image. Check your directory permissions.', TitleImageUploadingException::UNEXPECTED_ERROR);
         }
     }
 
     /**
      * Deletes old image
-     *
-     * @param int $id
      */
     protected function deleteOldImage(int $id): void
     {
@@ -89,7 +80,7 @@ class TitleImageUploader extends AbstractImageUploader implements ImageUploaderI
         $title->deleteImage();
 
         // Remove thumbnail
-        if (!file_exists(_PS_GENDERS_DIR_ . $id . '.jpg')) {
+        if (! file_exists(_PS_GENDERS_DIR_ . $id . '.jpg')) {
             $currentFile = _PS_TMP_IMG_DIR_ . 'genders_mini_' . $id . '.jpg';
 
             if (file_exists($currentFile)) {

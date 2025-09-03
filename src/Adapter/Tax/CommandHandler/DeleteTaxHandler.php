@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,20 +41,17 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class DeleteTaxHandler extends AbstractTaxHandler implements DeleteTaxHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteTaxCommand $command)
     {
         $tax = $this->getTax($command->getTaxId());
         $taxIdValue = $command->getTaxId()->getValue();
 
         try {
-            if (!$tax->delete()) {
-                throw new DeleteTaxException(sprintf('Cannot delete Tax object with id "%s"', $taxIdValue), DeleteTaxException::FAILED_DELETE);
+            if (! $tax->delete()) {
+                throw new DeleteTaxException(\sprintf('Cannot delete Tax object with id "%s"', $taxIdValue), DeleteTaxException::FAILED_DELETE);
             }
         } catch (PrestaShopException) {
-            throw new TaxException(sprintf('An error occurred when deleting Tax object with id "%s"', $taxIdValue));
+            throw new TaxException(\sprintf('An error occurred when deleting Tax object with id "%s"', $taxIdValue));
         }
     }
 }

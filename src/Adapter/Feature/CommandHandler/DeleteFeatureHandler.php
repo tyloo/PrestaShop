@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\CommandHandler\DeleteFeatureHandle
 #[AsCommandHandler]
 class DeleteFeatureHandler implements DeleteFeatureHandlerInterface
 {
-    public function __construct(private readonly FeatureRepository $featureRepository)
-    {
+    public function __construct(
+        private readonly FeatureRepository $featureRepository,
+    ) {
     }
 
     public function handle(DeleteFeatureCommand $command): void

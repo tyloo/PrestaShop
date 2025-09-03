@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,28 +50,25 @@ final class EditAttributeGroupHandler implements EditAttributeGroupHandlerInterf
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditAttributeGroupCommand $command): void
     {
         $attributeGroup = $this->attributeGroupRepository->get($command->getAttributeGroupId());
         $propertiesToUpdate = [];
 
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $this->fillLocalizedValues($attributeGroup, 'name', $command->getLocalizedNames(), $propertiesToUpdate);
         }
 
-        if (null !== $command->getLocalizedPublicNames()) {
+        if ($command->getLocalizedPublicNames() !== null) {
             $this->fillLocalizedValues($attributeGroup, 'public_name', $command->getLocalizedPublicNames(), $propertiesToUpdate);
         }
 
-        if (null !== $command->getType()) {
+        if ($command->getType() !== null) {
             $propertiesToUpdate[] = 'group_type';
             $attributeGroup->group_type = $command->getType()->getValue();
         }
 
-        if (null !== $command->getAssociatedShopIds()) {
+        if ($command->getAssociatedShopIds() !== null) {
             $attributeGroup->id_shop_list = $command->getAssociatedShopIds();
             $propertiesToUpdate[] = 'id_shop_list';
         }

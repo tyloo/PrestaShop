@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,13 +37,12 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\QueryHandler\SearchForSearchTermHand
 #[AsQueryHandler]
 class SearchForSearchTermHandler implements SearchForSearchTermHandlerInterface
 {
-    public function __construct(protected readonly AliasRepository $aliasRepository)
-    {
+    public function __construct(
+        protected readonly AliasRepository $aliasRepository,
+    ) {
     }
 
     /**
-     * @param SearchForSearchTerm $query
-     *
      * @return string[]
      */
     public function handle(SearchForSearchTerm $query): array

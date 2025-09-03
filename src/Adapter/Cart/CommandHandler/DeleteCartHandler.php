@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,13 +49,11 @@ class DeleteCartHandler extends AbstractCartHandler implements DeleteCartHandler
 {
     public function __construct(
         protected readonly CartRepository $cartRepository,
-        protected readonly OrderRepository $orderRepository
+        protected readonly OrderRepository $orderRepository,
     ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotDeleteCartException
      * @throws CannotDeleteOrderedCartException
      * @throws CartException
@@ -64,7 +63,7 @@ class DeleteCartHandler extends AbstractCartHandler implements DeleteCartHandler
     {
         try {
             $this->orderRepository->getByCartId($command->getCartId());
-            throw new CannotDeleteOrderedCartException(sprintf('Cart "%s" with order cannot be deleted.', $command->getCartId()->getValue()));
+            throw new CannotDeleteOrderedCartException(\sprintf('Cart "%s" with order cannot be deleted.', $command->getCartId()->getValue()));
         } catch (OrderNotFoundException) {
             // Cart is not linked to any order, we can safely delete it
             $this->cartRepository->delete($command->getCartId());

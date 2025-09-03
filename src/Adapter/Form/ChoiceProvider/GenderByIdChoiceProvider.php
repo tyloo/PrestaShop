@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class GenderByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $genders = Gender::getGenders();

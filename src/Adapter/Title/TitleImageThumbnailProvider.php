@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,18 +38,13 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
  */
 class TitleImageThumbnailProvider implements ImageProviderInterface
 {
-    /**
-     * @param ImageTagSourceParserInterface $imageTagSourceParser
-     * @param ImageManager $imageManager
-     * @param string $genderImageDirectoryName
-     */
-    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser, private readonly ImageManager $imageManager, private readonly string $genderImageDirectoryName)
-    {
+    public function __construct(
+        private readonly ImageTagSourceParserInterface $imageTagSourceParser,
+        private readonly ImageManager $imageManager,
+        private readonly string $genderImageDirectoryName,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath($titleId): ?string
     {
         $imageTag = $this->imageManager->getThumbnailForListing(

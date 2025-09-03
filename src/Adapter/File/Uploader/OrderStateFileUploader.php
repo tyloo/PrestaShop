@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,19 +45,12 @@ class OrderStateFileUploader implements OrderStateFileUploaderInterface
      */
     protected $uploadSizeConfiguration;
 
-    /**
-     * @param UploadSizeConfigurationInterface $uploadSizeConfiguration
-     */
     public function __construct(UploadSizeConfigurationInterface $uploadSizeConfiguration)
     {
         $this->uploadSizeConfiguration = $uploadSizeConfiguration;
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @param bool $throwExceptionOnFailure
-     *
      * @throws OrderStateConstraintException
      * @throws OrderStateUploadFailedException
      */
@@ -64,16 +58,13 @@ class OrderStateFileUploader implements OrderStateFileUploaderInterface
         string $filePath,
         int $id,
         int $fileSize,
-        bool $throwExceptionOnFailure = true
+        bool $throwExceptionOnFailure = true,
     ): void {
         $this->checkFileAllowedForUpload($fileSize);
         $this->uploadFile($filePath, $id);
     }
 
     /**
-     * @param string $filePath
-     * @param int $id
-     *
      * @throws OrderStateUploadFailedException
      */
     protected function uploadFile(string $filePath, int $id): void
@@ -81,13 +72,11 @@ class OrderStateFileUploader implements OrderStateFileUploaderInterface
         try {
             move_uploaded_file($filePath, _PS_ORDER_STATE_IMG_DIR_ . $id . '.gif');
         } catch (FileException $fileException) {
-            throw new OrderStateUploadFailedException(sprintf('Failed to copy the file %s.', $filePath), 0, $fileException);
+            throw new OrderStateUploadFailedException(\sprintf('Failed to copy the file %s.', $filePath), 0, $fileException);
         }
     }
 
     /**
-     * @param int $fileSize
-     *
      * @throws OrderStateConstraintException
      */
     protected function checkFileAllowedForUpload(int $fileSize): void
@@ -95,10 +84,7 @@ class OrderStateFileUploader implements OrderStateFileUploaderInterface
         $maxFileSize = $this->uploadSizeConfiguration->getMaxUploadSizeInBytes();
 
         if ($maxFileSize > 0 && $fileSize > $maxFileSize) {
-            throw new OrderStateConstraintException(
-                sprintf('Max file size allowed is "%s" bytes. Uploaded file size is "%s".', $maxFileSize, $fileSize),
-                OrderStateConstraintException::INVALID_FILE_SIZE
-            );
+            throw new OrderStateConstraintException(\sprintf('Max file size allowed is "%s" bytes. Uploaded file size is "%s".', $maxFileSize, $fileSize), OrderStateConstraintException::INVALID_FILE_SIZE);
         }
     }
 }

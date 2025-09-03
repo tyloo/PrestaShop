@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,22 +47,16 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractMultiShopObjectModelRepository
  */
 class CustomizationFieldRepository extends AbstractMultiShopObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param CustomizationFieldValidator $customizationFieldValidator
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly CustomizationFieldValidator $customizationFieldValidator)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly CustomizationFieldValidator $customizationFieldValidator,
+    ) {
     }
 
     /**
      * This getter without specified shop is useful when the product is only fetched for deletion.
      * In which case the shopId doesn't matter we don't care about multishop content since the entity is about to be deleted.
-     *
-     * @param CustomizationFieldId $fieldId
-     *
-     * @return CustomizationField
      *
      * @throws CoreException
      */
@@ -78,11 +73,6 @@ class CustomizationFieldRepository extends AbstractMultiShopObjectModelRepositor
     }
 
     /**
-     * @param CustomizationFieldId $fieldId
-     * @param ShopId $shopId
-     *
-     * @return CustomizationField
-     *
      * @throws CoreException
      */
     public function getForShop(CustomizationFieldId $fieldId, ShopId $shopId): CustomizationField
@@ -99,11 +89,7 @@ class CustomizationFieldRepository extends AbstractMultiShopObjectModelRepositor
     }
 
     /**
-     * @param CustomizationField $customizationField
      * @param ShopId[] $shopIds
-     * @param int $errorCode
-     *
-     * @return CustomizationFieldId
      *
      * @throws CoreException
      */
@@ -116,7 +102,6 @@ class CustomizationFieldRepository extends AbstractMultiShopObjectModelRepositor
     }
 
     /**
-     * @param CustomizationField $customizationField
      * @param ShopId[] $shopIds
      *
      * @throws CannotUpdateCustomizationFieldException
@@ -127,17 +112,11 @@ class CustomizationFieldRepository extends AbstractMultiShopObjectModelRepositor
         $this->updateObjectModelForShops($customizationField, $shopIds, CannotUpdateCustomizationFieldException::class);
     }
 
-    /**
-     * @param CustomizationField $customizationField
-     */
     public function delete(CustomizationField $customizationField): void
     {
         $this->deleteObjectModel($customizationField, CannotDeleteCustomizationFieldException::class);
     }
 
-    /**
-     * @param CustomizationField $customizationField
-     */
     public function softDelete(CustomizationField $customizationField): void
     {
         $this->softDeleteObjectModel($customizationField, CannotDeleteCustomizationFieldException::class);
@@ -146,9 +125,6 @@ class CustomizationFieldRepository extends AbstractMultiShopObjectModelRepositor
     /**
      * Returns the list of customization associated to a product (only their IDs), by default soft deleted entities
      * are filtered.
-     *
-     * @param ProductId $productId
-     * @param bool $includeSoftDeleted
      *
      * @return CustomizationFieldId[]
      */
@@ -161,10 +137,10 @@ class CustomizationFieldRepository extends AbstractMultiShopObjectModelRepositor
             ->setParameter('productId', $productId->getValue())
         ;
 
-        if (!$includeSoftDeleted) {
+        if (! $includeSoftDeleted) {
             $qb->andWhere('cf.is_deleted = 0');
         }
 
-        return array_map(static fn(array $customizationFieldId) => new CustomizationFieldId((int) $customizationFieldId['id_customization_field']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $customizationFieldId) => new CustomizationFieldId((int) $customizationFieldId['id_customization_field']), $qb->executeQuery()->fetchAllAssociative());
     }
 }

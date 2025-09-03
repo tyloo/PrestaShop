@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,21 +52,16 @@ use Validate;
 #[AsCommandHandler]
 class IssueStandardRefundHandler extends AbstractOrderCommandHandler implements IssueStandardRefundHandlerInterface
 {
-    /**
-     * @param ConfigurationInterface $configuration
-     * @param OrderRefundCalculator $orderRefundCalculator
-     * @param OrderSlipCreator $orderSlipCreator
-     * @param VoucherGenerator $voucherGenerator
-     * @param OrderRefundUpdater $refundUpdater
-     * @param ContextStateManager $contextStateManager
-     */
-    public function __construct(private readonly ConfigurationInterface $configuration, private readonly OrderRefundCalculator $orderRefundCalculator, private readonly OrderSlipCreator $orderSlipCreator, private readonly VoucherGenerator $voucherGenerator, private readonly OrderRefundUpdater $refundUpdater, private readonly ContextStateManager $contextStateManager)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly OrderRefundCalculator $orderRefundCalculator,
+        private readonly OrderSlipCreator $orderSlipCreator,
+        private readonly VoucherGenerator $voucherGenerator,
+        private readonly OrderRefundUpdater $refundUpdater,
+        private readonly ContextStateManager $contextStateManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(IssueStandardRefundCommand $command): void
     {
         if ((int) $this->configuration->get('PS_ORDER_RETURN') <= 0) {
@@ -74,18 +70,12 @@ class IssueStandardRefundHandler extends AbstractOrderCommandHandler implements 
 
         /** @var Order $order */
         $order = $this->getOrder($command->getOrderId());
-        if (!$order->hasBeenPaid() && !$order->hasPayments()) {
-            throw new InvalidOrderStateException(
-                InvalidOrderStateException::NOT_PAID,
-                'Can not perform standard refund on an order which is not paid'
-            );
+        if (! $order->hasBeenPaid() && ! $order->hasPayments()) {
+            throw new InvalidOrderStateException(InvalidOrderStateException::NOT_PAID, 'Can not perform standard refund on an order which is not paid');
         }
 
         if ($order->hasBeenDelivered()) {
-            throw new InvalidOrderStateException(
-                InvalidOrderStateException::UNEXPECTED_DELIVERY,
-                'Can not perform standard refund on order already delivered'
-            );
+            throw new InvalidOrderStateException(InvalidOrderStateException::UNEXPECTED_DELIVERY, 'Can not perform standard refund on order already delivered');
         }
 
         $this->setOrderContext($this->contextStateManager, $order);
@@ -97,10 +87,6 @@ class IssueStandardRefundHandler extends AbstractOrderCommandHandler implements 
         }
     }
 
-    /**
-     * @param IssueStandardRefundCommand $command
-     * @param Order $order
-     */
     private function issueStandardRefund(IssueStandardRefundCommand $command, Order $order): void
     {
         $shippingRefundAmount = new DecimalNumber((string) ($command->refundShippingCost() ? $order->total_shipping_tax_incl : 0));
@@ -118,7 +104,12 @@ class IssueStandardRefundHandler extends AbstractOrderCommandHandler implements 
             // For standard refund the order is necessarily NOT delivered yet, so reinjection is automatic
             $this->reinjectQuantity($orderDetail, $productRefund['quantity']);
             // Hook called only for the shop concerned
-            Hook::exec('actionProductCancel', ['order' => $order, 'id_order_detail' => (int) $orderDetailId, 'cancel_quantity' => $productRefund['quantity'], 'action' => CancellationActionType::STANDARD_REFUND], null, false, true, false, $order->id_shop);
+            Hook::exec('actionProductCancel', [
+                'order' => $order,
+                'id_order_detail' => (int) $orderDetailId,
+                'cancel_quantity' => $productRefund['quantity'],
+                'action' => CancellationActionType::STANDARD_REFUND,
+            ], null, false, true, false, $order->id_shop);
         }
 
         // Update order carrier weight
@@ -126,7 +117,7 @@ class IssueStandardRefundHandler extends AbstractOrderCommandHandler implements 
         if (Validate::isLoadedObject($orderCarrier)) {
             $orderCarrier->weight = (float) $order->getTotalWeight();
             if ($orderCarrier->update()) {
-                $order->weight = sprintf('%.3f %s', $orderCarrier->weight, $this->configuration->get('PS_WEIGHT_UNIT'));
+                $order->weight = \sprintf('%.3f %s', $orderCarrier->weight, $this->configuration->get('PS_WEIGHT_UNIT'));
             }
         }
 

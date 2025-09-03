@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,16 +55,11 @@ use Shop;
 #[AsCommandHandler]
 final class UpdateProductQuantityInCartHandler extends AbstractCartHandler implements UpdateProductQuantityInCartHandlerInterface
 {
-    /**
-     * @param ContextStateManager $contextStateManager
-     */
-    public function __construct(private readonly ContextStateManager $contextStateManager)
-    {
+    public function __construct(
+        private readonly ContextStateManager $contextStateManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateProductQuantityInCartCommand $command)
     {
         $cart = $this->getCart($command->getCartId());
@@ -80,9 +76,6 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
     }
 
     /**
-     * @param Cart $cart
-     * @param UpdateProductQuantityInCartCommand $command
-     *
      * @throws CartConstraintException
      * @throws CartException
      * @throws ProductException
@@ -95,7 +88,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
         $qtyDiff = abs($command->getNewQuantity() - $previousQty);
 
         if ($qtyDiff === 0) {
-            throw new CartConstraintException(sprintf('Cart quantity is already %d', $command->getNewQuantity()), CartConstraintException::UNCHANGED_QUANTITY);
+            throw new CartConstraintException(\sprintf('Cart quantity is already %d', $command->getNewQuantity()), CartConstraintException::UNCHANGED_QUANTITY);
         }
 
         // $cart::updateQty needs customer context
@@ -111,11 +104,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
         $this->assertProductIsInStock($product, $command);
         $this->assertProductCustomization($product, $command);
 
-        if ($previousQty < $command->getNewQuantity()) {
-            $action = 'up';
-        } else {
-            $action = 'down';
-        }
+        $action = $previousQty < $command->getNewQuantity() ? 'up' : 'down';
 
         $updateResult = $cart->updateQty(
             $qtyDiff,
@@ -125,7 +114,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
             $action
         );
 
-        if (!$updateResult) {
+        if (! $updateResult) {
             throw new CartException('Failed to update product quantity in cart');
         }
 
@@ -141,20 +130,16 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
     }
 
     /**
-     * @param Cart $cart
-     *
      * @throws CartException
      */
     private function assertOrderDoesNotExistForCart(Cart $cart)
     {
         if ($cart->orderExists()) {
-            throw new CartException(sprintf('Order for cart with id "%s" already exists.', $cart->id));
+            throw new CartException(\sprintf('Order for cart with id "%s" already exists.', $cart->id));
         }
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return Product
      *
      * @throws ProductNotFoundException
@@ -164,49 +149,44 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
         $product = new Product($productId->getValue(), true);
 
         if ($product->id !== $productId->getValue()) {
-            throw new ProductNotFoundException(sprintf('Product with id "%s" was not found', $productId->getValue()));
+            throw new ProductNotFoundException(\sprintf('Product with id "%s" was not found', $productId->getValue()));
         }
 
         return $product;
     }
 
     /**
-     * @param Product $product
-     * @param UpdateProductQuantityInCartCommand $command
-     *
      * @throws ProductOutOfStockException
      * @throws PackOutOfStockException
      */
     private function assertProductIsInStock(Product $product, UpdateProductQuantityInCartCommand $command): void
     {
         $isAvailableWhenOutOfStock = Product::isAvailableWhenOutOfStock($product->out_of_stock);
-        if (null !== $command->getCombinationId()) {
+        if ($command->getCombinationId() !== null) {
             $isEnoughQuantity = ProductAttribute::checkAttributeQty(
                 $command->getCombinationId()->getValue(),
                 $command->getNewQuantity()
             );
 
-            if (!$isAvailableWhenOutOfStock && !$isEnoughQuantity) {
-                throw new ProductOutOfStockException(
-                    sprintf('Product with id "%s" is out of stock, thus cannot be added to cart', $product->id)
-                );
-            }
-
-            return;
-        } elseif (Pack::isPack($product->id)) {
-            $hasPackEnoughQuantity = Pack::isInStock($product->id, $command->getNewQuantity());
-
-            if (!$isAvailableWhenOutOfStock && !$hasPackEnoughQuantity) {
-                throw new PackOutOfStockException(
-                    sprintf('Product with id "%s" is out of stock, thus cannot be added to cart', $product->id)
-                );
+            if (! $isAvailableWhenOutOfStock && ! $isEnoughQuantity) {
+                throw new ProductOutOfStockException(\sprintf('Product with id "%s" is out of stock, thus cannot be added to cart', $product->id));
             }
 
             return;
         }
 
-        if (!$product->checkQty($command->getNewQuantity())) {
-            throw new ProductOutOfStockException(sprintf('Product with id "%s" is out of stock, thus cannot be added to cart', $product->id));
+        if (Pack::isPack($product->id)) {
+            $hasPackEnoughQuantity = Pack::isInStock($product->id, $command->getNewQuantity());
+
+            if (! $isAvailableWhenOutOfStock && ! $hasPackEnoughQuantity) {
+                throw new PackOutOfStockException(\sprintf('Product with id "%s" is out of stock, thus cannot be added to cart', $product->id));
+            }
+
+            return;
+        }
+
+        if (! $product->checkQty($command->getNewQuantity())) {
+            throw new ProductOutOfStockException(\sprintf('Product with id "%s" is out of stock, thus cannot be added to cart', $product->id));
         }
     }
 
@@ -214,27 +194,15 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
      * If product is customizable and customization is not provided,
      * then exception is thrown.
      *
-     * @param Product $product
-     * @param UpdateProductQuantityInCartCommand $command
-     *
      * @throws ProductCustomizationNotFoundException
      */
     private function assertProductCustomization(Product $product, UpdateProductQuantityInCartCommand $command)
     {
-        if (null === $command->getCustomizationId() && !$product->hasAllRequiredCustomizableFields()) {
-            throw new ProductCustomizationNotFoundException(sprintf(
-                'Missing customization for product with id "%s"',
-                $product->id
-            ));
+        if ($command->getCustomizationId() === null && ! $product->hasAllRequiredCustomizableFields()) {
+            throw new ProductCustomizationNotFoundException(\sprintf('Missing customization for product with id "%s"', $product->id));
         }
     }
 
-    /**
-     * @param Cart $cart
-     * @param UpdateProductQuantityInCartCommand $command
-     *
-     * @return int
-     */
     private function findPreviousQuantityInCart(Cart $cart, UpdateProductQuantityInCartCommand $command): int
     {
         $isCombination = ($command->getCombinationId() !== null);

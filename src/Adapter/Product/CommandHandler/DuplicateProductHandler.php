@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,16 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 #[AsCommandHandler]
 final class DuplicateProductHandler implements DuplicateProductHandlerInterface
 {
-    /**
-     * @param ProductDuplicator $productDuplicator
-     */
-    public function __construct(private readonly ProductDuplicator $productDuplicator)
-    {
+    public function __construct(
+        private readonly ProductDuplicator $productDuplicator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DuplicateProductCommand $command): ProductId
     {
         return $this->productDuplicator->duplicate($command->getProductId(), $command->getShopConstraint());

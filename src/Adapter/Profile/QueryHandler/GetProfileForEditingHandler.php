@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,17 +44,15 @@ use Profile;
 final class GetProfileForEditingHandler extends AbstractObjectModelHandler implements GetProfileForEditingHandlerInterface
 {
     /**
-     * @param ImageTagSourceParserInterface $imageTagSourceParser
      * @param string $imgDir
-     * @param string $defaultAvatarUrl
      */
-    public function __construct(private readonly string $defaultAvatarUrl, private readonly ImageTagSourceParserInterface $imageTagSourceParser, private $imgDir = _PS_PROFILE_IMG_DIR_)
-    {
+    public function __construct(
+        private readonly string $defaultAvatarUrl,
+        private readonly ImageTagSourceParserInterface $imageTagSourceParser,
+        private $imgDir = _PS_PROFILE_IMG_DIR_,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetProfileForEditing $query): EditableProfile
     {
         $profileId = $query->getProfileId();
@@ -69,8 +68,6 @@ final class GetProfileForEditingHandler extends AbstractObjectModelHandler imple
     }
 
     /**
-     * @param ProfileId $profileId
-     *
      * @return Profile
      *
      * @throws ProfileNotFoundException
@@ -80,29 +77,24 @@ final class GetProfileForEditingHandler extends AbstractObjectModelHandler imple
         $profile = new Profile($profileId->getValue());
 
         if ($profile->id !== $profileId->getValue()) {
-            throw new ProfileNotFoundException(sprintf('Profile with id "%s" was not found', $profileId->getValue()));
+            throw new ProfileNotFoundException(\sprintf('Profile with id "%s" was not found', $profileId->getValue()));
         }
 
         return $profile;
     }
 
-    /**
-     * @param int $imageId
-     *
-     * @return array|null
-     */
     private function getAvatarUrl(int $imageId): ?array
     {
         $imagePath = $this->imgDir . $imageId . '.jpg';
         $imageTag = $this->getTmpImageTag($imagePath, $imageId, 'profile');
         $imageSize = $this->getImageSize($imagePath);
 
-        if (empty($imageTag) || null === $imageSize) {
+        if (empty($imageTag) || $imageSize === null) {
             return null;
         }
 
         return [
-            'size' => sprintf('%skB', $imageSize),
+            'size' => \sprintf('%skB', $imageSize),
             'path' => $this->imageTagSourceParser->parse($imageTag),
         ];
     }

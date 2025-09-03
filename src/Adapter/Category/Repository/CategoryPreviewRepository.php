@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,20 +45,13 @@ class CategoryPreviewRepository
 {
     public const BREADCRUMB_SEPARATOR = ' > ';
 
-    /**
-     * @param CategoryRepository $categoryRepository
-     * @param ImagePathFactory $categoryImagePathFactory
-     */
-    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly ImagePathFactory $categoryImagePathFactory)
-    {
+    public function __construct(
+        private readonly CategoryRepository $categoryRepository,
+        private readonly ImagePathFactory $categoryImagePathFactory,
+    ) {
     }
 
     /**
-     * @param CategoryId $categoryId
-     * @param LanguageId $languageId
-     *
-     * @return CategoryPreview
-     *
      * @throws CategoryNotFoundException
      */
     public function getPreview(CategoryId $categoryId, LanguageId $languageId): CategoryPreview
@@ -68,7 +62,7 @@ class CategoryPreviewRepository
             static::BREADCRUMB_SEPARATOR
         );
         $names = explode(static::BREADCRUMB_SEPARATOR, $breadcrumb);
-        $name = $names[count($names) - 1] ?? $names[0];
+        $name = $names[\count($names) - 1] ?? $names[0];
 
         if (file_exists(_PS_CAT_IMG_DIR_ . $categoryId->getValue() . '.jpg')) {
             $imagePath = $this->categoryImagePathFactory->getPath($categoryId->getValue());

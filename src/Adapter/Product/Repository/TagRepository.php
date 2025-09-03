@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,12 +43,10 @@ use Tag;
  */
 class TagRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     public function addTagsByLanguage(ProductId $productId, LocalizedTags $localizedTags): void
@@ -57,22 +56,15 @@ class TagRepository
 
         try {
             // assign new tags to product
-            if (!Tag::addTags($langIdValue, $productIdValue, $localizedTags->getTags())) {
-                throw new CannotUpdateProductException(
-                    sprintf('Failed to update product #%d tags in lang #%d', $productIdValue, $langIdValue),
-                    CannotUpdateProductException::FAILED_UPDATE_TAGS
-                );
+            if (! Tag::addTags($langIdValue, $productIdValue, $localizedTags->getTags())) {
+                throw new CannotUpdateProductException(\sprintf('Failed to update product #%d tags in lang #%d', $productIdValue, $langIdValue), CannotUpdateProductException::FAILED_UPDATE_TAGS);
             }
         } catch (PrestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when trying to add tags to product #%d', $productIdValue
-                ));
+            throw new CoreException(\sprintf('Error occurred when trying to add tags to product #%d', $productIdValue));
         }
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @throws CannotUpdateProductException
      * @throws CoreException
      */
@@ -81,23 +73,15 @@ class TagRepository
         $productIdValue = $productId->getValue();
 
         try {
-            if (!Tag::deleteTagsForProduct($productIdValue)) {
-                throw new CannotUpdateProductException(
-                    sprintf('Failed to delete all tags for product #%d', $productIdValue),
-                    CannotUpdateProductException::FAILED_UPDATE_TAGS
-                );
+            if (! Tag::deleteTagsForProduct($productIdValue)) {
+                throw new CannotUpdateProductException(\sprintf('Failed to delete all tags for product #%d', $productIdValue), CannotUpdateProductException::FAILED_UPDATE_TAGS);
             }
         } catch (PrestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when trying to delete product #%d tags', $productIdValue
-                ));
+            throw new CoreException(\sprintf('Error occurred when trying to delete product #%d tags', $productIdValue));
         }
     }
 
     /**
-     * @param ProductId $productId
-     * @param LanguageId $languageId
-     *
      * @throws CannotUpdateProductException
      * @throws CoreException
      */
@@ -107,22 +91,15 @@ class TagRepository
         $langIdValue = $languageId->getValue();
 
         try {
-            if (!Tag::deleteProductTagsInLang($productIdValue, $langIdValue)) {
-                throw new CannotUpdateProductException(
-                    sprintf('Failed to delete product #%d previous tags in lang #%d', $productIdValue, $langIdValue),
-                    CannotUpdateProductException::FAILED_UPDATE_TAGS
-                );
+            if (! Tag::deleteProductTagsInLang($productIdValue, $langIdValue)) {
+                throw new CannotUpdateProductException(\sprintf('Failed to delete product #%d previous tags in lang #%d', $productIdValue, $langIdValue), CannotUpdateProductException::FAILED_UPDATE_TAGS);
             }
         } catch (PrestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when trying to delete product #%d tags', $productIdValue
-                ));
+            throw new CoreException(\sprintf('Error occurred when trying to delete product #%d tags', $productIdValue));
         }
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return array Localized tags for a product
      */
     public function getLocalizedProductTags(ProductId $productId): array

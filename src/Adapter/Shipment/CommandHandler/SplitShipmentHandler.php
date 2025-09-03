@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ class SplitShipmentHandler implements SplitShipmentHandlerInterface
     ) {
     }
 
-    /**
-     * @param SplitShipment $command
-     */
     public function handle(SplitShipment $command): void
     {
         $carrierId = $command->getCarrierId()->getValue();
@@ -52,8 +50,8 @@ class SplitShipmentHandler implements SplitShipmentHandlerInterface
         $products = $command->getOrderDetailQuantity()->getValue();
         $findShipment = $this->repository->findOneBy(['id' => $shipmentToRemoveProductId]);
 
-        if (!$findShipment) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $shipmentToRemoveProductId));
+        if (! $findShipment) {
+            throw new ShipmentNotFoundException(\sprintf('Could not find shipment with id "%s"', $shipmentToRemoveProductId));
         }
 
         $shipmentProducts = array_map(function ($product) {

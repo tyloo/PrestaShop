@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\RemoveA
 #[AsCommandHandler]
 final class RemoveAllCombinationImagesHandler implements RemoveAllCombinationImagesHandlerInterface
 {
-    /**
-     * @param CombinationImagesUpdater $combinationImagesUpdater
-     */
-    public function __construct(private readonly CombinationImagesUpdater $combinationImagesUpdater)
-    {
+    public function __construct(
+        private readonly CombinationImagesUpdater $combinationImagesUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(RemoveAllCombinationImagesCommand $command): void
     {
         $this->combinationImagesUpdater->deleteAllImageAssociations($command->getCombinationId());

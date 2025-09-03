@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -90,7 +91,7 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
         private readonly bool $isEcotaxEnabled,
         private readonly int $ecoTaxGroupId,
         ShopRepository $shopRepository,
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
     ) {
         $this->locale = $localeRepository->getLocale(
             $contextLocale
@@ -99,13 +100,10 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
-        if (!$searchCriteria instanceof ShopSearchCriteriaInterface) {
-            throw new InvalidArgumentException(sprintf('Invalid search criteria, expected a %s', ShopSearchCriteriaInterface::class));
+        if (! $searchCriteria instanceof ShopSearchCriteriaInterface) {
+            throw new InvalidArgumentException(\sprintf('Invalid search criteria, expected a %s', ShopSearchCriteriaInterface::class));
         }
 
         $productData = $this->productGridDataFactory->getData($searchCriteria);
@@ -120,11 +118,6 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
 
     /**
      * Applies modifications for product grid.
-     *
-     * @param array $products
-     * @param ShopSearchCriteriaInterface $searchCriteria
-     *
-     * @return array
      */
     private function applyModification(array $products, ShopSearchCriteriaInterface $searchCriteria): array
     {
@@ -193,9 +186,9 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
     {
         foreach ($products as $i => $product) {
             // Transform list of IDs into list of names
-            if ($searchCriteria->getShopConstraint()->forAllShops() || null !== $searchCriteria->getShopConstraint()->getShopGroupId()) {
+            if ($searchCriteria->getShopConstraint()->forAllShops() || $searchCriteria->getShopConstraint()->getShopGroupId() !== null) {
                 $shopIds = $this->productRepository->getAssociatedShopIds(new ProductId((int) $product['id_product']));
-                $products[$i]['associated_shops_ids'] = array_map(static fn(ShopId $shopId) => $shopId->getValue(), $shopIds);
+                $products[$i]['associated_shops_ids'] = array_map(static fn (ShopId $shopId) => $shopId->getValue(), $shopIds);
                 $products[$i]['associated_shops'] = $this->getShopsNames(
                     $shopIds,
                     $searchCriteria
@@ -208,8 +201,6 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
 
     /**
      * Returns language iso code based on locale, en-US => en
-     *
-     * @return string
      */
     private function getLanguageIsoCode(): string
     {
@@ -218,15 +209,12 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
 
     /**
      * @param ShopId[] $shopIds
-     * @param ShopSearchCriteriaInterface $searchCriteria
-     *
-     * @return array
      */
     private function getShopsNames(array $shopIds, ShopSearchCriteriaInterface $searchCriteria): array
     {
         $shopNames = [];
         foreach ($shopIds as $shopId) {
-            if (!isset($this->shopsNames[$shopId->getValue()])) {
+            if (! isset($this->shopsNames[$shopId->getValue()])) {
                 $this->shopsNames[$shopId->getValue()] = $this->shopRepository->get($shopId);
             }
 

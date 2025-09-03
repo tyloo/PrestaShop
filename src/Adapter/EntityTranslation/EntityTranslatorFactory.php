@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,9 +60,6 @@ class EntityTranslatorFactory
      */
     private $dbPrefix;
 
-    /**
-     * @param TranslatorInterface $translator
-     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->db = Db::getInstance();
@@ -74,9 +72,7 @@ class EntityTranslatorFactory
      * Builds an entity translator based on a table name
      *
      * @param string $tableName Table name (accepts with or without db prefix and _lang suffix)
-     * @param string $locale IETF language tag
-     *
-     * @return EntityTranslatorInterface
+     * @param string $locale    IETF language tag
      */
     public function buildFromTableName(string $tableName, string $locale): EntityTranslatorInterface
     {
@@ -89,8 +85,6 @@ class EntityTranslatorFactory
      * Builds an entity translator
      *
      * @param DataLangCore $dataLang DataLang class for this entity
-     *
-     * @return EntityTranslatorInterface
      */
     public function build(DataLangCore $dataLang): EntityTranslatorInterface
     {

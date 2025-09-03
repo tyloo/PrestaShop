@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,19 +47,12 @@ class CartProductsComparator
      */
     private $knownUpdates = [];
 
-    /**
-     * @param Cart $cart
-     */
-    public function __construct(private readonly Cart $cart)
-    {
+    public function __construct(
+        private readonly Cart $cart,
+    ) {
         $this->savedProducts = $this->cart->getProducts(true);
     }
 
-    /**
-     * @param array $knownUpdates
-     *
-     * @return CartProductsComparator
-     */
     public function setKnownUpdates(array $knownUpdates): self
     {
         $this->knownUpdates = $knownUpdates;
@@ -112,8 +106,6 @@ class CartProductsComparator
      * Returns the list of updates for products that were not in the cart previously
      *
      * @param array[] $newProducts
-     *
-     * @return array
      */
     private function getAllAdditionalProducts(array $newProducts): array
     {
@@ -121,7 +113,7 @@ class CartProductsComparator
         foreach ($newProducts as $newProduct) {
             // Then try and find the product in new products
             $oldProduct = $this->getMatchingProduct($this->savedProducts, $newProduct);
-            if (null === $oldProduct) {
+            if ($oldProduct === null) {
                 $additionalProducts[] = new CartProductUpdate(
                     (int) $newProduct['id_product'],
                     (int) $newProduct['id_product_attribute'],
@@ -148,7 +140,7 @@ class CartProductsComparator
         foreach ($this->savedProducts as $oldProduct) {
             // Then try and find the product in new products
             $newProduct = $this->getMatchingProduct($newProducts, $oldProduct);
-            if (null === $newProduct) {
+            if ($newProduct === null) {
                 $deltaQuantity = -(int) $oldProduct['cart_quantity'];
             } else {
                 $deltaQuantity = (int) $newProduct['cart_quantity'] - (int) $oldProduct['cart_quantity'];
@@ -187,7 +179,7 @@ class CartProductsComparator
                 }
             }
 
-            if (0 !== $updateProduct->getDeltaQuantity()) {
+            if ($updateProduct->getDeltaQuantity() !== 0) {
                 $filteredUpdates[] = $updateProduct;
             }
         }
@@ -195,22 +187,16 @@ class CartProductsComparator
         return $filteredUpdates;
     }
 
-    /**
-     * @param array $products
-     * @param array $searchedProduct
-     *
-     * @return array|null
-     */
     private function getMatchingProduct(array $products, array $searchedProduct): ?array
     {
         return array_reduce($products, function ($carry, $item) use ($searchedProduct) {
-            if (null !== $carry) {
+            if ($carry !== null) {
                 return $carry;
             }
 
-            $productMatch = $item['id_product'] == $searchedProduct['id_product'];
-            $combinationMatch = $item['id_product_attribute'] == $searchedProduct['id_product_attribute'];
-            $customizationMatch = $item['id_customization'] == $searchedProduct['id_customization'];
+            $productMatch = $item['id_product'] === $searchedProduct['id_product'];
+            $combinationMatch = $item['id_product_attribute'] === $searchedProduct['id_product_attribute'];
+            $customizationMatch = $item['id_customization'] === $searchedProduct['id_customization'];
 
             return $productMatch && $combinationMatch && $customizationMatch ? $item : null;
         });

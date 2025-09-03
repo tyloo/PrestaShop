@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,26 +43,23 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class AddManufacturerHandler extends AbstractManufacturerHandler implements AddManufacturerHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddManufacturerCommand $command)
     {
         $manufacturer = new Manufacturer();
         $this->fillLegacyManufacturerWithData($manufacturer, $command);
 
         try {
-            if (false === $manufacturer->validateFields(false)) {
+            if ($manufacturer->validateFields(false) === false) {
                 throw new ManufacturerException('Manufacturer contains invalid field values');
             }
 
-            if (!$manufacturer->add()) {
-                throw new ManufacturerException(sprintf('Failed to add new manufacturer "%s"', $command->getName()));
+            if (! $manufacturer->add()) {
+                throw new ManufacturerException(\sprintf('Failed to add new manufacturer "%s"', $command->getName()));
             }
 
             $this->addShopAssociation($manufacturer, $command);
         } catch (PrestaShopException) {
-            throw new ManufacturerException(sprintf('Failed to add new manufacturer "%s"', $command->getName()));
+            throw new ManufacturerException(\sprintf('Failed to add new manufacturer "%s"', $command->getName()));
         }
 
         return new ManufacturerId((int) $manufacturer->id);
@@ -69,9 +67,6 @@ final class AddManufacturerHandler extends AbstractManufacturerHandler implement
 
     /**
      * Add manufacturer and shop association
-     *
-     * @param Manufacturer $manufacturer
-     * @param AddManufacturerCommand $command
      *
      * @throws PrestaShopDatabaseException
      */
@@ -83,10 +78,6 @@ final class AddManufacturerHandler extends AbstractManufacturerHandler implement
         );
     }
 
-    /**
-     * @param Manufacturer $manufacturer
-     * @param AddManufacturerCommand $command
-     */
     private function fillLegacyManufacturerWithData(Manufacturer $manufacturer, AddManufacturerCommand $command)
     {
         $manufacturer->name = $command->getName();

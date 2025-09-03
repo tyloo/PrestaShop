@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\QueryResult\EditableMeta;
 final class GetMetaForEditingHandler implements GetMetaForEditingHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws MetaNotFoundException
      */
     public function handle(GetMetaForEditing $query)
@@ -52,12 +51,12 @@ final class GetMetaForEditingHandler implements GetMetaForEditingHandlerInterfac
 
         $entity = new Meta($metaId->getValue());
 
-        if (0 >= $entity->id) {
-            throw new MetaNotFoundException(sprintf('Meta with id "%s" cannot be found', $metaId->getValue()));
+        if ($entity->id <= 0) {
+            throw new MetaNotFoundException(\sprintf('Meta with id "%s" cannot be found', $metaId->getValue()));
         }
 
         if ((int) $entity->id !== $metaId->getValue()) {
-            throw new MetaNotFoundException(sprintf('The retrieved id "%s" does not match requested Meta id "%s"', $entity->id, $metaId->getValue()));
+            throw new MetaNotFoundException(\sprintf('The retrieved id "%s" does not match requested Meta id "%s"', $entity->id, $metaId->getValue()));
         }
 
         return new EditableMeta(

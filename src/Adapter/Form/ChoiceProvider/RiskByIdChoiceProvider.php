@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,15 +31,10 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 use Risk;
 
 /**
- * Class RiskByIdChoiceProvider
- *
  * @internal
  */
 final class RiskByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         $risks = Risk::getRisks();

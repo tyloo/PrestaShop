@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,8 +35,9 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class ManufacturerNameByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    public function __construct(private readonly array $manufacturers)
-    {
+    public function __construct(
+        private readonly array $manufacturers,
+    ) {
     }
 
     /**

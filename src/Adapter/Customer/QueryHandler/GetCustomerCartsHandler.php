@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,16 +44,11 @@ use PrestaShop\PrestaShop\Core\Localization\LocaleInterface;
 #[AsQueryHandler]
 final class GetCustomerCartsHandler extends AbstractCustomerHandler implements GetCustomerCartsHandlerInterface
 {
-    /**
-     * @param LocaleInterface $locale
-     */
-    public function __construct(private readonly LocaleInterface $locale)
-    {
+    public function __construct(
+        private readonly LocaleInterface $locale,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCustomerCarts $query): array
     {
         $customerId = $query->getCustomerId();
@@ -62,10 +58,6 @@ final class GetCustomerCartsHandler extends AbstractCustomerHandler implements G
     }
 
     /**
-     * @param int $customerId
-     *
-     * @return array
-     *
      * @throws LocalizationException
      */
     private function getCarts(int $customerId): array

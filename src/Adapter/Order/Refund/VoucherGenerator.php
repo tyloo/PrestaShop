@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,20 +45,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class VoucherGenerator
 {
-    /**
-     * @param Locale $locale
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(private readonly Locale $locale, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly Locale $locale,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     /**
-     * @param Order $order
-     * @param float $voucherAmount
-     * @param string $currencyIsoCode
-     * @param bool $isTaxIncluded
-     *
      * @throws OrderException
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
@@ -67,7 +61,7 @@ class VoucherGenerator
         Order $order,
         float $voucherAmount,
         string $currencyIsoCode,
-        bool $isTaxIncluded
+        bool $isTaxIncluded,
     ) {
         $cartRule = new CartRule();
         $cartRule->description = $this->translator->trans(
@@ -79,16 +73,17 @@ class VoucherGenerator
         $langIds = Language::getIDs(false);
         foreach ($langIds as $langId) {
             // Define a temporary name
-            $cartRule->name[$langId] = sprintf('V0C%1$dO%2$d', $order->id_customer, $order->id);
+            $cartRule->name[$langId] = \sprintf('V0C%1$dO%2$d', $order->id_customer, $order->id);
         }
 
         // Define a temporary code
-        $cartRule->code = sprintf('V0C%1$dO%2$d', $order->id_customer, $order->id);
+        $cartRule->code = \sprintf('V0C%1$dO%2$d', $order->id_customer, $order->id);
         $cartRule->quantity = 1;
         $cartRule->quantity_per_user = 1;
 
         // Specific to the customer
         $cartRule->id_customer = $order->id_customer;
+
         $now = time();
         $cartRule->date_from = date('Y-m-d H:i:s', $now);
         $cartRule->date_to = date('Y-m-d H:i:s', strtotime('+1 year'));
@@ -100,18 +95,18 @@ class VoucherGenerator
         $cartRule->minimum_amount_currency = $order->id_currency;
         $cartRule->reduction_currency = $order->id_currency;
 
-        if (!$cartRule->add()) {
+        if (! $cartRule->add()) {
             throw new OrderException('You cannot generate a voucher.');
         }
 
         // Update the voucher code and name
         foreach ($langIds as $langId) {
-            $cartRule->name[$langId] = sprintf('V%1$dC%2$dO%3$d', $cartRule->id, $order->id_customer, $order->id);
+            $cartRule->name[$langId] = \sprintf('V%1$dC%2$dO%3$d', $cartRule->id, $order->id_customer, $order->id);
         }
 
-        $cartRule->code = sprintf('V%1$dC%2$dO%3$d', $cartRule->id, $order->id_customer, $order->id);
+        $cartRule->code = \sprintf('V%1$dC%2$dO%3$d', $cartRule->id, $order->id_customer, $order->id);
 
-        if (!$cartRule->update()) {
+        if (! $cartRule->update()) {
             throw new OrderException('You cannot generate a voucher.');
         }
 
@@ -129,7 +124,7 @@ class VoucherGenerator
         // @todo: use private method to send mail and later a decoupled mail sender
         $orderLanguage = $order->getAssociatedLanguage();
 
-        if (!empty($customer->email)) {
+        if (! empty($customer->email)) {
             @Mail::Send(
                 (int) $orderLanguage->getId(),
                 'voucher',

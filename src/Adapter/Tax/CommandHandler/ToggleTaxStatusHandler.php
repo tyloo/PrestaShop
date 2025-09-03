@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class ToggleTaxStatusHandler extends AbstractTaxHandler implements ToggleTaxStatusHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ToggleTaxStatusCommand $command)
     {
         $tax = $this->getTax($command->getTaxId());
@@ -50,11 +48,11 @@ final class ToggleTaxStatusHandler extends AbstractTaxHandler implements ToggleT
         $tax->active = $command->getExpectedStatus();
 
         try {
-            if (!$tax->save()) {
-                throw new UpdateTaxException(sprintf('Unable to toggle Tax with id "%s"', $taxIdValue), UpdateTaxException::FAILED_UPDATE_STATUS);
+            if (! $tax->save()) {
+                throw new UpdateTaxException(\sprintf('Unable to toggle Tax with id "%s"', $taxIdValue), UpdateTaxException::FAILED_UPDATE_STATUS);
             }
         } catch (PrestaShopException) {
-            throw new TaxException(sprintf('An error occurred when enabling ETax with id "%s"', $taxIdValue));
+            throw new TaxException(\sprintf('An error occurred when enabling ETax with id "%s"', $taxIdValue));
         }
     }
 }

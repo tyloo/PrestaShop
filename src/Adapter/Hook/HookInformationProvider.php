@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ class HookInformationProvider
     /**
      * Return Hooks List.
      *
-     * @param bool $position Where position is active
+     * @param bool $position         Where position is active
      * @param bool $onlyDisplayHooks Only hook with display hook name
      *
      * @return array Hooks List
@@ -59,7 +60,7 @@ class HookInformationProvider
     /**
      * Return Hooks list.
      *
-     * @param int $hookId Hook id
+     * @param int $hookId   Hook id
      * @param int $moduleId Module id
      *
      * @return array Modules list
@@ -69,11 +70,6 @@ class HookInformationProvider
         return Hook::getModulesFromHook($hookId, $moduleId);
     }
 
-    /**
-     * @param string $hookName
-     *
-     * @return array
-     */
     public function getRegisteredModulesByHookName(string $hookName): array
     {
         $extraModulesList = Hook::getHookModuleExecList($hookName);

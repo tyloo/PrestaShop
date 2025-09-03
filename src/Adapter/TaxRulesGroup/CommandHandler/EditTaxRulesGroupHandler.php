@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,17 +49,12 @@ class EditTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler implements E
      */
     protected $taxRulesGroupRepository;
 
-    /**
-     * @param TaxRulesGroupRepository $taxRulesGroupRepository
-     */
     public function __construct(TaxRulesGroupRepository $taxRulesGroupRepository)
     {
         $this->taxRulesGroupRepository = $taxRulesGroupRepository;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotUpdateTaxRulesGroupException
      * @throws TaxRulesGroupException
      */
@@ -67,12 +63,12 @@ class EditTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler implements E
         $taxRulesGroup = $this->getTaxRulesGroup($command->getTaxRulesGroupId());
 
         $updatableProperties = [];
-        if (null !== $command->getName()) {
+        if ($command->getName() !== null) {
             $taxRulesGroup->name = $command->getName();
             $updatableProperties[] = 'name';
         }
 
-        if (null !== $command->isEnabled()) {
+        if ($command->isEnabled() !== null) {
             $taxRulesGroup->active = $command->isEnabled();
             $updatableProperties[] = 'active';
         }

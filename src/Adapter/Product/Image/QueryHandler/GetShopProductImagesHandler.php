@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\QueryResult\Shop\ShopProduct
 #[AsQueryHandler]
 final class GetShopProductImagesHandler implements GetShopProductImagesHandlerInterface
 {
-    public function __construct(private readonly ProductImageRepository $productImageRepository)
-    {
+    public function __construct(
+        private readonly ProductImageRepository $productImageRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(GetShopProductImages $query): ShopProductImagesCollection
     {
         return $this->productImageRepository->getImagesFromAllShop($query->getProductId());

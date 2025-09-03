@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,21 +58,19 @@ use Traversable;
  */
 class CombinationCreator
 {
-    /**
-     * @param CombinationGeneratorInterface $combinationGenerator
-     * @param CombinationRepository $combinationRepository
-     * @param ProductRepository $productRepository
-     * @param StockAvailableRepository $stockAvailableRepository
-     * @param DefaultCombinationUpdater $defaultCombinationUpdater
-     */
-    public function __construct(private readonly CombinationGeneratorInterface $combinationGenerator, private readonly CombinationRepository $combinationRepository, private readonly ProductRepository $productRepository, private readonly StockAvailableRepository $stockAvailableRepository, private readonly AttributeGroupRepository $attributeGroupRepository, private readonly AttributeRepository $attributeRepository, private readonly DefaultCombinationUpdater $defaultCombinationUpdater)
-    {
+    public function __construct(
+        private readonly CombinationGeneratorInterface $combinationGenerator,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly ProductRepository $productRepository,
+        private readonly StockAvailableRepository $stockAvailableRepository,
+        private readonly AttributeGroupRepository $attributeGroupRepository,
+        private readonly AttributeRepository $attributeRepository,
+        private readonly DefaultCombinationUpdater $defaultCombinationUpdater,
+    ) {
     }
 
     /**
-     * @param ProductId $productId
      * @param GroupedAttributeIds[] $groupedAttributeIdsList
-     * @param ShopConstraint $shopConstraint
      *
      * @return CombinationId[]
      *
@@ -105,14 +104,12 @@ class CombinationCreator
     /**
      * Makes sure combinations out_of_stock type has the same value as the product out_of_stock type.
      *
-     * @param Product $product
-     * @param ShopConstraint $shopConstraint
      * @param ShopId[] $shopIdsByConstraint
      */
     private function syncOutOfStockType(
         Product $product,
         ShopConstraint $shopConstraint,
-        array $shopIdsByConstraint
+        array $shopIdsByConstraint,
     ): void {
         $productId = new ProductId((int) $product->id);
         $productStockAvailable = $this->stockAvailableRepository->getForProduct($productId, new ShopId($product->getShopId()));
@@ -145,8 +142,6 @@ class CombinationCreator
     }
 
     /**
-     * @param Product $product
-     * @param Traversable $generatedCombinations
      * @param ShopId[] $shopIds
      *
      * @return CombinationId[] the ids of newly created combinations
@@ -159,7 +154,7 @@ class CombinationCreator
         $newCombinationIds = [];
 
         foreach ($generatedCombinations as $generatedCombination) {
-            if (!$hasCombinations || !$matchingCombinationId = $this->findMatchingCombinationId($productId, $generatedCombination)) {
+            if (! $hasCombinations || ! $matchingCombinationId = $this->findMatchingCombinationId($productId, $generatedCombination)) {
                 // Product has no combinations yet, so we create new combinations and skip the rest of the loop
                 $newCombinationIds[] = $this->persistCombination($productId, $generatedCombination, $shopIds);
                 continue;
@@ -184,7 +179,6 @@ class CombinationCreator
     }
 
     /**
-     * @param ProductId $productId
      * @param ShopId[] $shopIds
      */
     private function updateDefaultCombination(ProductId $productId, array $shopIds): void
@@ -200,10 +194,7 @@ class CombinationCreator
     }
 
     /**
-     * @param ProductId $productId
      * @param int[] $generatedCombination
-     *
-     * @return CombinationId|null
      */
     private function findMatchingCombinationId(ProductId $productId, array $generatedCombination): ?CombinationId
     {
@@ -213,16 +204,13 @@ class CombinationCreator
     }
 
     /**
-     * @param ProductId $productId
-     * @param int[] $generatedCombination
+     * @param int[]    $generatedCombination
      * @param ShopId[] $shopIds
-     *
-     * @return CombinationId
      */
     private function persistCombination(
         ProductId $productId,
         array $generatedCombination,
-        array $shopIds
+        array $shopIds,
     ): CombinationId {
         $combination = $this->combinationRepository->create($productId, $shopIds);
         $combinationId = new CombinationId((int) $combination->id);
@@ -253,8 +241,6 @@ class CombinationCreator
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @throws CoreException
      */
     private function applySpecificPriceRules(ProductId $productId): void
@@ -268,18 +254,14 @@ class CombinationCreator
     }
 
     /**
-     * @param ProductId $productId
      * @param GroupedAttributeIds[] $groupedAttributeIdsList
-     * @param ShopConstraint $shopConstraint
-     *
-     * @return void
      *
      * @throws CannotGenerateCombinationException
      */
     private function assertAttributesExistenceInShops(
         ProductId $productId,
         array $groupedAttributeIdsList,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ): void {
         $attributeGroupIds = [];
         $attributeIds = [];
@@ -294,11 +276,7 @@ class CombinationCreator
             $this->attributeGroupRepository->assertExistsInEveryShop($attributeGroupIds, $shopIds);
             $this->attributeRepository->assertExistsInEveryShop($attributeIds, $shopIds);
         } catch (ShopAssociationNotFound $shopAssociationNotFound) {
-            throw new CannotGenerateCombinationException(
-                'Not all provided attributes exists in all shops',
-                CannotGenerateCombinationException::DIFFERENT_ATTRIBUTES_BETWEEN_SHOPS,
-                $shopAssociationNotFound
-            );
+            throw new CannotGenerateCombinationException('Not all provided attributes exists in all shops', CannotGenerateCombinationException::DIFFERENT_ATTRIBUTES_BETWEEN_SHOPS, $shopAssociationNotFound);
         }
     }
 }

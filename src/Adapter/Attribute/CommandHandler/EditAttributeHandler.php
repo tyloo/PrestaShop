@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,38 +48,35 @@ class EditAttributeHandler implements EditAttributeHandlerInterface
     public function __construct(
         private AttributeRepository $attributeRepository,
         private AttributeValidator $attributeValidator,
-        private AttributeFileUploader $attributeFileUploader
+        private AttributeFileUploader $attributeFileUploader,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditAttributeCommand $command): void
     {
         $attribute = $this->attributeRepository->get($command->getAttributeId());
         $propertiesToUpdate = [];
 
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $this->fillLocalizedValues($attribute, 'name', $command->getLocalizedNames(), $propertiesToUpdate);
         }
 
-        if (null !== $command->getColor()) {
+        if ($command->getColor() !== null) {
             $attribute->color = $command->getColor();
             $propertiesToUpdate[] = 'color';
         }
 
-        if (null !== $command->getAttributeGroupId()) {
+        if ($command->getAttributeGroupId() !== null) {
             $attribute->id_attribute_group = $command->getAttributeGroupId()->getValue();
             $propertiesToUpdate[] = 'id_attribute_group';
         }
 
-        if (null !== $command->getAssociatedShopIds()) {
+        if ($command->getAssociatedShopIds() !== null) {
             $attribute->id_shop_list = $command->getAssociatedShopIds();
             $propertiesToUpdate[] = 'id_shop_list';
         }
 
-        if (null !== $command->getTextureFilePath()) {
+        if ($command->getTextureFilePath() !== null) {
             $this->attributeFileUploader->deleteOldFile($command->getAttributeId()->getValue());
             $this->attributeFileUploader->upload($command->getTextureFilePath(), $command->getAttributeId()->getValue());
         }

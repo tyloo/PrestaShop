@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,19 +46,14 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsQueryHandler]
 final class GetCategoriesTreeHandler implements GetCategoriesTreeHandlerInterface
 {
-    /**
-     * @param CategoryDisplayNameBuilder $displayNameBuilder
-     * @param ContextStateManager $contextStateManager
-     * @param ShopRepository $shopRepository
-     * @param int $rootCategoryId
-     */
-    public function __construct(private readonly CategoryDisplayNameBuilder $displayNameBuilder, private readonly ContextStateManager $contextStateManager, private readonly ShopRepository $shopRepository, private readonly int $rootCategoryId)
-    {
+    public function __construct(
+        private readonly CategoryDisplayNameBuilder $displayNameBuilder,
+        private readonly ContextStateManager $contextStateManager,
+        private readonly ShopRepository $shopRepository,
+        private readonly int $rootCategoryId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCategoriesTree $query): array
     {
         $langId = $query->getLanguageId();
@@ -78,8 +74,6 @@ final class GetCategoriesTreeHandler implements GetCategoriesTreeHandlerInterfac
 
     /**
      * @param array<string, array<string, mixed>> $categories
-     * @param ShopId $shopId
-     * @param LanguageId $langId
      *
      * @return CategoryForTree[]
      */
@@ -93,7 +87,7 @@ final class GetCategoriesTreeHandler implements GetCategoriesTreeHandlerInterfac
             $categoryActive = (bool) $category['active'];
             $categoryChildren = [];
 
-            if (!empty($category['children'])) {
+            if (! empty($category['children'])) {
                 $categoryChildren = $this->buildCategoriesTree(
                     $category['children'],
                     $shopId,

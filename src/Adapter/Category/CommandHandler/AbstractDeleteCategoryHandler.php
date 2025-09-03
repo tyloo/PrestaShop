@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,22 +47,16 @@ abstract class AbstractDeleteCategoryHandler
      */
     protected $homeCategoryId;
 
-    /**
-     * @param int $homeCategoryId
-     * @param ProductRepository $productRepository
-     * @param CategoryRepository $categoryRepository
-     */
     public function __construct(
         int $homeCategoryId,
         private readonly ProductRepository $productRepository,
-        private readonly CategoryRepository $categoryRepository
+        private readonly CategoryRepository $categoryRepository,
     ) {
         $this->homeCategoryId = $homeCategoryId;
     }
 
     /**
      * @param array<int, int[]> $deletedCategoryIdsByParent
-     * @param CategoryDeleteMode $mode
      */
     protected function updateProductCategories(array $deletedCategoryIdsByParent, CategoryDeleteMode $mode): void
     {
@@ -70,15 +65,12 @@ abstract class AbstractDeleteCategoryHandler
     }
 
     /**
-     * @param int $categoryId
      * @param array<int, int[]> $deletedCategoryIdsByParent
-     *
-     * @return int|null
      */
     private function findCategoryParentId(int $categoryId, array $deletedCategoryIdsByParent): ?int
     {
         foreach ($deletedCategoryIdsByParent as $parentId => $deletedIds) {
-            if (!in_array($categoryId, $deletedIds, true)) {
+            if (! \in_array($categoryId, $deletedIds, true)) {
                 continue;
             }
 
@@ -100,8 +92,6 @@ abstract class AbstractDeleteCategoryHandler
     }
 
     /**
-     * @param Product $product
-     * @param int $categoryId
      * @param array<int, int[]> $deletedCategoryIdsByParent
      */
     private function addProductDefaultCategory(Product $product, int $categoryId, array $deletedCategoryIdsByParent): void
@@ -115,7 +105,6 @@ abstract class AbstractDeleteCategoryHandler
 
     /**
      * @param array<int, int[]> $deletedCategoryIdsByParent
-     * @param CategoryDeleteMode $mode
      */
     private function updateProductsWithoutCategories(array $deletedCategoryIdsByParent, CategoryDeleteMode $mode): void
     {
@@ -211,6 +200,6 @@ abstract class AbstractDeleteCategoryHandler
             return [];
         }
 
-        return array_map(static fn(array $result): ProductId => new ProductId((int) $result['id_product']), $results);
+        return array_map(static fn (array $result): ProductId => new ProductId((int) $result['id_product']), $results);
     }
 }

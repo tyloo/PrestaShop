@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,22 +39,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
 {
-    /**
-     * UrlSchemaDataConfiguration constructor.
-     *
-     * @param Configuration $configuration
-     * @param Context $shopContext
-     * @param FeatureInterface $multistoreFeature
-     * @param array $rules
-     */
-    public function __construct(Configuration $configuration, Context $shopContext, FeatureInterface $multistoreFeature, private readonly array $rules)
-    {
+    public function __construct(
+        Configuration $configuration,
+        Context $shopContext,
+        FeatureInterface $multistoreFeature,
+        private readonly array $rules,
+    ) {
         parent::__construct($configuration, $shopContext, $multistoreFeature);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $configResult = [];
@@ -67,9 +61,6 @@ final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
         return $configResult;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -83,9 +74,6 @@ final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
         $rulesIds = array_keys($this->rules);
@@ -108,6 +96,6 @@ final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
      */
     private function getConfigurationKey($routeId)
     {
-        return sprintf('PS_ROUTE_%s', $routeId);
+        return \sprintf('PS_ROUTE_%s', $routeId);
     }
 }

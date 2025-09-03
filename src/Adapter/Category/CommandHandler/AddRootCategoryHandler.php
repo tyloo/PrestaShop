@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,9 +52,6 @@ final class AddRootCategoryHandler extends AbstractEditCategoryHandler implement
         parent::__construct($categoryImageUploader, $categoryRepository);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddRootCategoryCommand $command)
     {
         /** @var Category $category */
@@ -73,8 +71,6 @@ final class AddRootCategoryHandler extends AbstractEditCategoryHandler implement
     /**
      * Creates legacy root category
      *
-     * @param AddRootCategoryCommand $command
-     *
      * @return Category
      *
      * @throws CannotAddCategoryException
@@ -90,39 +86,39 @@ final class AddRootCategoryHandler extends AbstractEditCategoryHandler implement
         $category->link_rewrite = $command->getLocalizedLinkRewrites();
         $category->active = $command->isActive();
 
-        if (null !== $command->getLocalizedDescriptions()) {
+        if ($command->getLocalizedDescriptions() !== null) {
             $category->description = $command->getLocalizedDescriptions();
         }
 
-        if (null !== $command->getLocalizedAdditionalDescriptions()) {
+        if ($command->getLocalizedAdditionalDescriptions() !== null) {
             $category->additional_description = $command->getLocalizedAdditionalDescriptions();
         }
 
-        if (null !== $command->getLocalizedMetaTitles()) {
+        if ($command->getLocalizedMetaTitles() !== null) {
             $category->meta_title = $command->getLocalizedMetaTitles();
         }
 
-        if (null !== $command->getLocalizedMetaDescriptions()) {
+        if ($command->getLocalizedMetaDescriptions() !== null) {
             $category->meta_description = $command->getLocalizedMetaDescriptions();
         }
 
-        if (null !== $command->getAssociatedGroupIds()) {
+        if ($command->getAssociatedGroupIds() !== null) {
             $category->groupBox = $command->getAssociatedGroupIds();
         }
 
-        if (false === $category->validateFields(false)) {
+        if ($category->validateFields(false) === false) {
             throw new CategoryException('Invalid data for creating root category.');
         }
 
-        if (false === $category->validateFieldsLang(false)) {
+        if ($category->validateFieldsLang(false) === false) {
             throw new CategoryException('Invalid language data for creating root category.');
         }
 
-        if (null !== $command->getRedirectOption()) {
+        if ($command->getRedirectOption() !== null) {
             $this->fillWithRedirectOption($category, $command->getRedirectOption());
         }
 
-        if (false === $category->save()) {
+        if ($category->save() === false) {
             throw new CannotAddCategoryException('Failed to create root category.');
         }
 

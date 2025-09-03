@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,16 +45,15 @@ use PrestaShopException;
 final class GetCmsPageForEditingHandler extends AbstractCmsPageHandler implements GetCmsPageForEditingHandlerInterface
 {
     /**
-     * @param Link $link
      * @param int $langId
      */
-    public function __construct(private readonly Link $link, private $langId)
-    {
+    public function __construct(
+        private readonly Link $link,
+        private $langId,
+    ) {
     }
 
     /**
-     * @param GetCmsPageForEditing $query
-     *
      * @return EditableCmsPage
      *
      * @throws CmsPageException
@@ -80,7 +80,7 @@ final class GetCmsPageForEditingHandler extends AbstractCmsPageHandler implement
                 $this->link->getCMSLink($cms, null, null, $this->langId)
             );
         } catch (PrestaShopException) {
-            throw new CmsPageException(sprintf('An error occurred when getting cms page for editing with id "%s"', $cmsPageId));
+            throw new CmsPageException(\sprintf('An error occurred when getting cms page for editing with id "%s"', $cmsPageId));
         }
     }
 }

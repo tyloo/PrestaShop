@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,18 +51,17 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class AddMetaHandler implements AddMetaHandlerInterface
 {
     /**
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param ValidatorInterface $validator
      * @param int $defaultLanguageId
-     * @param MetaDataProvider $metaDataProvider
      */
-    public function __construct(private readonly HookDispatcherInterface $hookDispatcher, private readonly ValidatorInterface $validator, private $defaultLanguageId, private readonly MetaDataProvider $metaDataProvider)
-    {
+    public function __construct(
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly ValidatorInterface $validator,
+        private $defaultLanguageId,
+        private readonly MetaDataProvider $metaDataProvider,
+    ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotAddMetaException
      * @throws MetaException
      */
@@ -79,7 +79,7 @@ final class AddMetaHandler implements AddMetaHandlerInterface
 
             $rewriteUrls = $command->getLocalisedRewriteUrls();
             foreach ($rewriteUrls as $idLang => $rewriteUrl) {
-                if (!$rewriteUrl) {
+                if (! $rewriteUrl) {
                     $rewriteUrls[$idLang] = $rewriteUrls[$this->defaultLanguageId];
                 }
             }
@@ -87,8 +87,8 @@ final class AddMetaHandler implements AddMetaHandlerInterface
             $entity->url_rewrite = $rewriteUrls;
             $entity->add();
 
-            if (0 >= $entity->id) {
-                throw new CannotAddMetaException(sprintf('Invalid entity id after creation: %s', $entity->id));
+            if ($entity->id <= 0) {
+                throw new CannotAddMetaException(\sprintf('Invalid entity id after creation: %s', $entity->id));
             }
         } catch (PrestaShopException $prestaShopException) {
             throw new MetaException('Failed to create meta entity', 0, $prestaShopException);
@@ -100,8 +100,6 @@ final class AddMetaHandler implements AddMetaHandlerInterface
     }
 
     /**
-     * @param AddMetaCommand $command
-     *
      * @throws MetaConstraintException
      */
     private function assertUrlRewriteHasDefaultLanguage(AddMetaCommand $command)
@@ -111,14 +109,12 @@ final class AddMetaHandler implements AddMetaHandlerInterface
             new DefaultLanguage()
         );
 
-        if (0 !== count($urlRewriteErrors) && 'index' !== $command->getPageName()->getValue()) {
+        if (\count($urlRewriteErrors) !== 0 && $command->getPageName()->getValue() !== 'index') {
             throw new MetaConstraintException('The url rewrite is missing for the default language when creating new meta record', MetaConstraintException::INVALID_URL_REWRITE);
         }
     }
 
     /**
-     * @param AddMetaCommand $command
-     *
      * @throws MetaConstraintException
      */
     private function assertIsUrlRewriteValid(AddMetaCommand $command)
@@ -126,22 +122,20 @@ final class AddMetaHandler implements AddMetaHandlerInterface
         foreach ($command->getLocalisedRewriteUrls() as $idLang => $rewriteUrl) {
             $errors = $this->validator->validate($rewriteUrl, new IsUrlRewrite());
 
-            if (0 !== count($errors)) {
-                throw new MetaConstraintException(sprintf('Url rewrite %s for language with id %s is not valid', $rewriteUrl, $idLang), MetaConstraintException::INVALID_URL_REWRITE);
+            if (\count($errors) !== 0) {
+                throw new MetaConstraintException(\sprintf('Url rewrite %s for language with id %s is not valid', $rewriteUrl, $idLang), MetaConstraintException::INVALID_URL_REWRITE);
             }
         }
     }
 
     /**
-     * @param AddMetaCommand $command
-     *
      * @throws MetaConstraintException
      */
     private function assertIsValidPageName(AddMetaCommand $command)
     {
         $availablePages = $this->metaDataProvider->getAvailablePages();
-        if (!in_array($command->getPageName()->getValue(), $availablePages, true)) {
-            throw new MetaConstraintException(sprintf('Given page name %s is not available. Available values are %s', $command->getPageName()->getValue(), var_export($availablePages, true)), MetaConstraintException::INVALID_PAGE_NAME);
+        if (! \in_array($command->getPageName()->getValue(), $availablePages, true)) {
+            throw new MetaConstraintException(\sprintf('Given page name %s is not available. Available values are %s', $command->getPageName()->getValue(), var_export($availablePages, true)), MetaConstraintException::INVALID_PAGE_NAME);
         }
     }
 }

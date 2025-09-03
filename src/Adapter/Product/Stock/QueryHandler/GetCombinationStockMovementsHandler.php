@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\QueryHandler\GetCombinationS
 #[AsQueryHandler]
 class GetCombinationStockMovementsHandler extends AbstractGetStockMovementsHandler implements GetCombinationStockMovementsHandlerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function handle(GetCombinationStockMovements $query): array
     {
         return $this->getStockMovements(

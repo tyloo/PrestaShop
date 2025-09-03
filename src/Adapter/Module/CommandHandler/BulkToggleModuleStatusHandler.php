@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,10 +44,6 @@ use Psr\Log\LoggerInterface;
 #[AsCommandHandler]
 class BulkToggleModuleStatusHandler implements BulkToggleModuleStatusHandlerInterface
 {
-    /**
-     * @param ModuleManager $moduleManager
-     * @param LoggerInterface $logger
-     */
     public function __construct(
         private readonly ModuleManager $moduleManager,
         private readonly ModuleRepository $moduleRepository,
@@ -54,9 +51,6 @@ class BulkToggleModuleStatusHandler implements BulkToggleModuleStatusHandlerInte
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkToggleModuleStatusCommand $command): void
     {
         $modulesToUpdate = [];
@@ -64,7 +58,7 @@ class BulkToggleModuleStatusHandler implements BulkToggleModuleStatusHandlerInte
         // If one module is not found the whole bulk is cancelled because an exception is thrown
         foreach ($command->getModules() as $moduleName) {
             $module = $this->moduleRepository->getPresentModule($moduleName);
-            if (!$module->isInstalled()) {
+            if (! $module->isInstalled()) {
                 throw new ModuleNotInstalledException('Cannot toggle status for module ' . $moduleName . ' since it is not installed');
             }
 
@@ -80,7 +74,7 @@ class BulkToggleModuleStatusHandler implements BulkToggleModuleStatusHandlerInte
             if ($command->getExpectedStatus()) {
                 if ($this->moduleManager->enable($moduleName)) {
                     $this->logger->warning(
-                        sprintf(
+                        \sprintf(
                             'The module %s has been enabled',
                             $moduleName
                         )
@@ -89,7 +83,7 @@ class BulkToggleModuleStatusHandler implements BulkToggleModuleStatusHandlerInte
             } else {
                 if ($this->moduleManager->disable($moduleName)) {
                     $this->logger->warning(
-                        sprintf(
+                        \sprintf(
                             'The module %s has been disabled',
                             $moduleName
                         )
@@ -101,6 +95,6 @@ class BulkToggleModuleStatusHandler implements BulkToggleModuleStatusHandlerInte
 
     private function isDisablingAlreadyDisabledModule(bool $expectedStatus, string $moduleName): bool
     {
-        return !$expectedStatus && !$this->moduleManager->isInstalledAndActive($moduleName);
+        return ! $expectedStatus && ! $this->moduleManager->isInstalledAndActive($moduleName);
     }
 }

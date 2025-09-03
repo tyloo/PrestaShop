@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,17 +46,12 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsQueryHandler]
 class GetProductImageHandler implements GetProductImageHandlerInterface
 {
-    /**
-     * @param ProductImageRepository $productImageRepository
-     * @param ProductImagePathFactory $productImageUrlFactory
-     */
-    public function __construct(private readonly ProductImageRepository $productImageRepository, private readonly ProductImagePathFactory $productImageUrlFactory)
-    {
+    public function __construct(
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly ProductImagePathFactory $productImageUrlFactory,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(GetProductImage $query): ProductImage
     {
         $imageId = $query->getImageId();
@@ -80,7 +76,7 @@ class GetProductImageHandler implements GetProductImageHandlerInterface
             $this->productImageUrlFactory->getPath($imageId),
             $this->productImageUrlFactory->getPathByType($imageId, ProductImagePathFactory::IMAGE_TYPE_SMALL_DEFAULT),
             array_map(
-                static fn(ShopId $shopId): int => $shopId->getValue(),
+                static fn (ShopId $shopId): int => $shopId->getValue(),
                 $this->productImageRepository->getAssociatedShopIds($imageId)
             )
         );

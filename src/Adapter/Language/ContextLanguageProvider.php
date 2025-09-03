@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Language\ContextLanguageProviderInterface;
 class ContextLanguageProvider implements ContextLanguageProviderInterface
 {
     public function __construct(
-        protected readonly LegacyContext $context
+        protected readonly LegacyContext $context,
     ) {
     }
 
@@ -46,7 +47,7 @@ class ContextLanguageProvider implements ContextLanguageProviderInterface
     {
         $langId = (int) $this->context->getContext()->language->id;
 
-        if (!$langId) {
+        if (! $langId) {
             throw new CoreException('Context language is missing');
         }
 

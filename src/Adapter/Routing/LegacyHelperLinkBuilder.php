@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,6 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
 {
     /**
      * @param string $entity
-     * @param array $parameters
      *
      * @return string
      *
@@ -46,7 +46,7 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
      */
     public function getViewLink($entity, array $parameters)
     {
-        if (!isset($parameters['current_index'])) {
+        if (! isset($parameters['current_index'])) {
             throw new InvalidArgumentException('Missing parameter current_index to build legacy link');
         }
 
@@ -58,7 +58,6 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
 
     /**
      * @param string $entity
-     * @param array $parameters
      *
      * @return string
      *
@@ -66,7 +65,7 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
      */
     public function getEditLink($entity, array $parameters)
     {
-        if (!isset($parameters['current_index'])) {
+        if (! isset($parameters['current_index'])) {
             throw new InvalidArgumentException('Missing parameter current_index to build legacy link');
         }
 
@@ -79,7 +78,6 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
     /**
      * @param string $action
      * @param string $entity
-     * @param array $parameters
      *
      * @return array
      */
@@ -101,9 +99,6 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
         return $parameters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canBuild($entity)
     {
         return true;

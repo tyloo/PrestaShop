@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,89 +55,52 @@ class ProductImagePathFactory
      */
     private $pathToBaseDir;
 
-    /**
-     * @param string $pathToBaseDir
-     * @param string $temporaryImgDir
-     * @param string $contextLangIsoCode
-     */
     public function __construct(
         string $pathToBaseDir,
         string $temporaryImgDir,
-        private readonly string $contextLangIsoCode
+        private readonly string $contextLangIsoCode,
     ) {
         // make sure one trailing slash is always there
         $this->temporaryImgDir = rtrim($temporaryImgDir, '/') . '/';
         $this->pathToBaseDir = rtrim($pathToBaseDir, '/') . '/';
     }
 
-    /**
-     * @param ImageId $imageId
-     * @param string $extension
-     *
-     * @return string
-     */
     public function getPath(ImageId $imageId, string $extension = self::DEFAULT_IMAGE_FORMAT): string
     {
         $path = $this->getBaseImagePathWithoutExtension($imageId);
 
-        return sprintf('%s.%s', $path, $extension);
+        return \sprintf('%s.%s', $path, $extension);
     }
 
-    /**
-     * @param ImageId $imageId
-     * @param string $type
-     * @param string $extension
-     *
-     * @return string
-     */
     public function getPathByType(ImageId $imageId, string $type, string $extension = self::DEFAULT_IMAGE_FORMAT): string
     {
         $path = $this->getBaseImagePathWithoutExtension($imageId);
 
-        return sprintf('%s-%s.%s', $path, $type, $extension);
+        return \sprintf('%s-%s.%s', $path, $type, $extension);
     }
 
     /**
-     * @param string $type
      * @param string|null $langIso if null, will use $contextLangIsoCode by default
-     *
-     * @return string
      */
     public function getNoImagePath(string $type, ?string $langIso = null): string
     {
-        if (!$langIso) {
+        if (! $langIso) {
             $langIso = $this->contextLangIsoCode;
         }
 
-        return sprintf('%s%s-%s-%s.jpg', $this->pathToBaseDir, $langIso, 'default', $type);
+        return \sprintf('%s%s-%s-%s.jpg', $this->pathToBaseDir, $langIso, 'default', $type);
     }
 
-    /**
-     * @param int $productId
-     *
-     * @return string
-     */
     public function getCachedCover(int $productId): string
     {
-        return sprintf('%sproduct_%d.jpg', $this->temporaryImgDir, $productId);
+        return \sprintf('%sproduct_%d.jpg', $this->temporaryImgDir, $productId);
     }
 
-    /**
-     * @param int $productId
-     * @param int $shopId
-     *
-     * @return string
-     */
     public function getHelperThumbnail(int $productId, int $shopId): string
     {
-        return sprintf('%sproduct_mini_%d_%d.jpg', $this->temporaryImgDir, $productId, $shopId);
+        return \sprintf('%sproduct_mini_%d_%d.jpg', $this->temporaryImgDir, $productId, $shopId);
     }
 
-    /**
-     * @param ImageId $imageId
-     *
-     * @return string
-     */
     public function getImageFolder(ImageId $imageId): string
     {
         $path = implode('/', str_split((string) $imageId->getValue()));
@@ -144,11 +108,6 @@ class ProductImagePathFactory
         return $this->pathToBaseDir . $path;
     }
 
-    /**
-     * @param ImageId $imageId
-     *
-     * @return string
-     */
     private function getBaseImagePathWithoutExtension(ImageId $imageId): string
     {
         return $this->getImageFolder($imageId) . '/' . $imageId->getValue();

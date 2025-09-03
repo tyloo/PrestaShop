@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,48 +35,31 @@ use PrestaShop\PrestaShop\Core\Employee\ContextEmployeeProviderInterface;
  */
 final class ContextEmployeeProvider implements ContextEmployeeProviderInterface
 {
-    /**
-     * @param ?Employee $contextEmployee
-     */
-    public function __construct(private readonly ?Employee $contextEmployee)
-    {
+    public function __construct(
+        private readonly ?Employee $contextEmployee,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSuperAdmin()
     {
         return $this->contextEmployee && $this->contextEmployee->isSuperAdmin();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId()
     {
         return (int) $this->contextEmployee?->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLanguageId()
     {
         return (int) $this->contextEmployee?->id_lang;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getProfileId()
     {
         return (int) $this->contextEmployee?->id_profile;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData()
     {
         return [

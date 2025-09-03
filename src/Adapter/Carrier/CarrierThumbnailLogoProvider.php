@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,11 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
  */
 class CarrierThumbnailLogoProvider implements ImageProviderInterface
 {
-    /**
-     * @param ImageTagSourceParserInterface $imageTagSourceParser
-     */
-    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser)
-    {
+    public function __construct(
+        private readonly ImageTagSourceParserInterface $imageTagSourceParser,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPath($carrierId)
     {
         $pathToImage = _PS_SHIP_IMG_DIR_ . $carrierId . '.jpg';

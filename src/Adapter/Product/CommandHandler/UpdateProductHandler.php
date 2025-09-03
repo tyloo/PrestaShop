@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,18 +43,13 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopCollection;
 #[AsCommandHandler]
 class UpdateProductHandler implements UpdateProductHandlerInterface
 {
-    /**
-     * @param ProductFillerInterface $productUpdatablePropertyFiller
-     * @param ProductRepository $productRepository
-     * @param ProductIndexationUpdater $productIndexationUpdater
-     */
-    public function __construct(private readonly ProductFillerInterface $productUpdatablePropertyFiller, private readonly ProductRepository $productRepository, private readonly ProductIndexationUpdater $productIndexationUpdater)
-    {
+    public function __construct(
+        private readonly ProductFillerInterface $productUpdatablePropertyFiller,
+        private readonly ProductRepository $productRepository,
+        private readonly ProductIndexationUpdater $productIndexationUpdater,
+    ) {
     }
 
-    /**
-     * @param UpdateProductCommand $command
-     */
     public function handle(UpdateProductCommand $command): void
     {
         $shopConstraint = $command->getShopConstraint();
@@ -66,7 +62,7 @@ class UpdateProductHandler implements UpdateProductHandlerInterface
             $command
         );
 
-        if (null !== $command->isActive()) {
+        if ($command->isActive() !== null) {
             $product->active = $command->isActive();
             $updatableProperties[] = 'active';
         }

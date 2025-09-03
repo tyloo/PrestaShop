@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\QueryResult\EditableTaxRules
 final class GetTaxRulesGroupForEditingHandler extends AbstractTaxRulesGroupHandler implements GetTaxRulesGroupForEditingHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws TaxRulesGroupNotFoundException
      */
     public function handle(GetTaxRulesGroupForEditing $query): EditableTaxRulesGroup

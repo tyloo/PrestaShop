@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,26 +44,18 @@ class SeoFiller implements ProductFillerInterface
 {
     use LocalizedObjectModelTrait;
 
-    /**
-     * @param ProductRepository $productRepository
-     * @param CategoryRepository $categoryRepository
-     * @param Tools $tools
-     */
-    public function __construct(private ProductRepository $productRepository, private CategoryRepository $categoryRepository, private Tools $tools)
-    {
+    public function __construct(
+        private ProductRepository $productRepository,
+        private CategoryRepository $categoryRepository,
+        private Tools $tools,
+    ) {
     }
 
-    /**
-     * @param Product $product
-     * @param UpdateProductCommand $command
-     *
-     * @return array
-     */
     public function fillUpdatableProperties(Product $product, UpdateProductCommand $command): array
     {
         $updatableProperties = [];
 
-        if (null !== $command->getRedirectOption()) {
+        if ($command->getRedirectOption() !== null) {
             $updatableProperties = array_merge(
                 $updatableProperties,
                 $this->fillWithRedirectOption($product, $command->getRedirectOption())
@@ -70,22 +63,22 @@ class SeoFiller implements ProductFillerInterface
         }
 
         $localizedMetaDescriptions = $command->getLocalizedMetaDescriptions();
-        if (null !== $localizedMetaDescriptions) {
+        if ($localizedMetaDescriptions !== null) {
             $this->fillLocalizedValues($product, 'meta_description', $localizedMetaDescriptions, $updatableProperties);
         }
 
         $localizedMetaTitles = $command->getLocalizedMetaTitles();
-        if (null !== $localizedMetaTitles) {
+        if ($localizedMetaTitles !== null) {
             $this->fillLocalizedValues($product, 'meta_title', $localizedMetaTitles, $updatableProperties);
         }
 
         $localizedLinkRewrites = $command->getLocalizedLinkRewrites();
 
-        if (null !== $localizedLinkRewrites) {
+        if ($localizedLinkRewrites !== null) {
             foreach ($localizedLinkRewrites as $langId => $linkRewrite) {
-                if (!empty($linkRewrite)) {
+                if (! empty($linkRewrite)) {
                     $product->link_rewrite[$langId] = $linkRewrite;
-                } elseif (!empty($product->name[$langId])) {
+                } elseif (! empty($product->name[$langId])) {
                     // When link rewrite is provided empty, then use product name.
                     $product->link_rewrite[$langId] = $this->tools->linkRewrite($product->name[$langId]);
                 } else {
@@ -97,15 +90,15 @@ class SeoFiller implements ProductFillerInterface
         }
 
         foreach ($product->link_rewrite as $langId => $linkRewrite) {
-            if (!empty($linkRewrite) || empty($product->name[$langId])) {
+            if (! empty($linkRewrite) || empty($product->name[$langId])) {
                 continue;
             }
 
             $product->link_rewrite[$langId] = $this->tools->linkRewrite($product->name[$langId]);
 
-            if (!isset($updatableProperties['link_rewrite'])
+            if (! isset($updatableProperties['link_rewrite'])
                 // strict false is important, because array_search could also return 0 as found item index
-                || !in_array($langId, $updatableProperties['link_rewrite'], true)
+                || ! \in_array($langId, $updatableProperties['link_rewrite'], true)
             ) {
                 // we only add updatable property for lang if it is not yet added
                 $updatableProperties['link_rewrite'][] = $langId;
@@ -116,9 +109,6 @@ class SeoFiller implements ProductFillerInterface
     }
 
     /**
-     * @param Product $product
-     * @param RedirectOption $redirectOption
-     *
      * @return string[] updatable properties
      *
      * @throws CategoryNotFoundException
@@ -131,7 +121,7 @@ class SeoFiller implements ProductFillerInterface
 
         if ($redirectType->isProductType()) {
             $this->productRepository->assertProductExists(new ProductId($redirectTarget->getValue()));
-        } elseif ($redirectType->isCategoryType() && !$redirectTarget->isNoTarget()) {
+        } elseif ($redirectType->isCategoryType() && ! $redirectTarget->isNoTarget()) {
             $this->categoryRepository->assertCategoryExists(new CategoryId($redirectTarget->getValue()));
         }
 

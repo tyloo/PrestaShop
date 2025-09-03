@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,8 +56,6 @@ class GetShipmentProductsHandler implements GetShipmentProductsHandlerInterface
     }
 
     /**
-     * @param GetShipmentProducts $query
-     *
      * @return OrderShipmentProduct[]
      */
     public function handle(GetShipmentProducts $query)
@@ -67,10 +66,10 @@ class GetShipmentProductsHandler implements GetShipmentProductsHandlerInterface
         try {
             $result = $this->repository->findOneBy(['id' => $shipmentId]);
         } catch (Throwable $throwable) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $shipmentId), 0, $throwable);
+            throw new ShipmentNotFoundException(\sprintf('Could not find shipment with id "%s"', $shipmentId), 0, $throwable);
         }
 
-        if (!empty($result)) {
+        if (! empty($result)) {
             foreach ($result->getProducts() as $product) {
                 $orderDetail = new OrderDetail($product->getOrderDetailId());
                 $productInstance = $this->productRepository->get(new ProductId($orderDetail->product_id), new ShopId($orderDetail->id_shop));
@@ -105,11 +104,11 @@ class GetShipmentProductsHandler implements GetShipmentProductsHandlerInterface
      */
     private function getProductName(Product $product): string
     {
-        if (is_array($product->name)) {
+        if (\is_array($product->name)) {
             $languageId = $this->languageContext->getId();
 
-            if (!isset($product->name[$languageId])) {
-                throw new RuntimeException(sprintf('Product name not found for product ID %d and language ID %d.', $product->id, $languageId));
+            if (! isset($product->name[$languageId])) {
+                throw new RuntimeException(\sprintf('Product name not found for product ID %d and language ID %d.', $product->id, $languageId));
             }
 
             return $product->name[$languageId];

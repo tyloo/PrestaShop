@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\QueryResult\EditableAttribu
 #[AsQueryHandler]
 final class GetAttributeGroupForEditingHandler implements GetAttributeGroupForEditingHandlerInterface
 {
-    public function __construct(private readonly AttributeGroupRepository $attributeGroupRepository)
-    {
+    public function __construct(
+        private readonly AttributeGroupRepository $attributeGroupRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetAttributeGroupForEditing $query): EditableAttributeGroup
     {
         $attributeGroup = $this->attributeGroupRepository->get(

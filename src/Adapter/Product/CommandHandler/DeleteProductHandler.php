@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\DeleteProductHandle
 #[AsCommandHandler]
 class DeleteProductHandler implements DeleteProductHandlerInterface
 {
-    public function __construct(private readonly ProductDeleter $productDeleter)
-    {
+    public function __construct(
+        private readonly ProductDeleter $productDeleter,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteProductCommand $command): void
     {
         $this->productDeleter->deleteByShopConstraint(

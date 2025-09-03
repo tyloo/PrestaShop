@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,9 +32,6 @@ use PrestaShop\PrestaShop\Core\Customer\CustomerDataSourceInterface;
 
 final class CustomerDataSource implements CustomerDataSourceInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function hasCustomerWithEmail(string $email): bool
     {
         return Customer::customerExists($email, false, false);

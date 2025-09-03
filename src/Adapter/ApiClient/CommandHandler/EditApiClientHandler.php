@@ -45,7 +45,7 @@ class EditApiClientHandler implements EditApiClientCommandHandlerInterface
 {
     public function __construct(
         private readonly ApiClientRepository $repository,
-        private readonly ValidatorInterface $validator
+        private readonly ValidatorInterface $validator,
     ) {
     }
 
@@ -54,41 +54,37 @@ class EditApiClientHandler implements EditApiClientCommandHandlerInterface
         try {
             $apiClient = $this->repository->getById($command->getApiClientId()->getValue());
         } catch (NoResultException $noResultException) {
-            throw new ApiClientNotFoundException(sprintf('Could not find Api client %s', $command->getClientId()), 0, $noResultException);
+            throw new ApiClientNotFoundException(\sprintf('Could not find Api client %s', $command->getClientId()), 0, $noResultException);
         }
 
-        if (!is_null($command->getClientId())) {
+        if ($command->getClientId() !== null) {
             $apiClient->setClientId($command->getClientId());
         }
 
-        if (!is_null($command->getClientName())) {
+        if ($command->getClientName() !== null) {
             $apiClient->setClientName($command->getClientName());
         }
 
-        if (!is_null($command->isEnabled())) {
+        if ($command->isEnabled() !== null) {
             $apiClient->setEnabled($command->isEnabled());
         }
 
-        if (!is_null($command->getDescription())) {
+        if ($command->getDescription() !== null) {
             $apiClient->setDescription($command->getDescription());
         }
 
-        if (!is_null($command->getScopes())) {
+        if ($command->getScopes() !== null) {
             $apiClient->setScopes($command->getScopes());
         }
 
-        if (!is_null($command->getLifetime())) {
+        if ($command->getLifetime() !== null) {
             $apiClient->setLifetime($command->getLifetime());
         }
 
         $errors = $this->validator->validate($apiClient);
 
-        if (count($errors) > 0) {
-            throw ApiClientConstraintException::buildFromPropertyPath(
-                $errors->get(0)->getPropertyPath(),
-                $errors->get(0)->getMessage(),
-                $errors->get(0)->getMessageTemplate()
-            );
+        if (\count($errors) > 0) {
+            throw ApiClientConstraintException::buildFromPropertyPath($errors->get(0)->getPropertyPath(), $errors->get(0)->getMessage(), $errors->get(0)->getMessageTemplate());
         }
 
         try {

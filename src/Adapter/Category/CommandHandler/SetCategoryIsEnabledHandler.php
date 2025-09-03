@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CategoryNotFoundExcepti
 final class SetCategoryIsEnabledHandler implements SetCategoryIsEnabledHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CategoryNotFoundException
      * @throws CannotUpdateCategoryStatusException
      */
@@ -50,12 +49,12 @@ final class SetCategoryIsEnabledHandler implements SetCategoryIsEnabledHandlerIn
         $categoryId = $command->getCategoryId()->getValue();
         $entity = new Category($categoryId);
 
-        if (!$entity->id) {
-            throw new CategoryNotFoundException($command->getCategoryId(), sprintf('Category with id "%s" was not found', $categoryId));
+        if (! $entity->id) {
+            throw new CategoryNotFoundException($command->getCategoryId(), \sprintf('Category with id "%s" was not found', $categoryId));
         }
 
-        if (!$entity->toggleStatus()) {
-            throw new CannotUpdateCategoryStatusException(sprintf('Cannot update status for category with id "%s"', $categoryId));
+        if (! $entity->toggleStatus()) {
+            throw new CannotUpdateCategoryStatusException(\sprintf('Cannot update status for category with id "%s"', $categoryId));
         }
     }
 }

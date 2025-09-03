@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,16 +45,12 @@ use Symfony\Component\Form\DataTransformerInterface;
 #[AsQueryHandler]
 final class GetContactForEditingHandler implements GetContactForEditingHandlerInterface
 {
-    /**
-     * @param DataTransformerInterface $stringArrayToIntegerArrayDataTransformer
-     */
-    public function __construct(private readonly DataTransformerInterface $stringArrayToIntegerArrayDataTransformer)
-    {
+    public function __construct(
+        private readonly DataTransformerInterface $stringArrayToIntegerArrayDataTransformer,
+    ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws ContactException
      */
     public function handle(GetContactForEditing $query)
@@ -61,8 +58,8 @@ final class GetContactForEditingHandler implements GetContactForEditingHandlerIn
         try {
             $contact = new Contact($query->getContactId()->getValue());
 
-            if (0 >= $contact->id) {
-                throw new ContactNotFoundException(sprintf('Contact object with id %s was not found', var_export($query->getContactId()->getValue(), true)));
+            if ($contact->id <= 0) {
+                throw new ContactNotFoundException(\sprintf('Contact object with id %s was not found', var_export($query->getContactId()->getValue(), true)));
             }
 
             $editableContact = new EditableContact(
@@ -74,7 +71,7 @@ final class GetContactForEditingHandler implements GetContactForEditingHandlerIn
                 $this->stringArrayToIntegerArrayDataTransformer->reverseTransform($contact->getAssociatedShops())
             );
         } catch (PrestaShopException $prestaShopException) {
-            throw new ContactException(sprintf('An unexpected error occurred when retrieving contact with id %s', var_export($query->getContactId()->getValue(), true)), 0, $prestaShopException);
+            throw new ContactException(\sprintf('An unexpected error occurred when retrieving contact with id %s', var_export($query->getContactId()->getValue(), true)), 0, $prestaShopException);
         }
 
         return $editableContact;

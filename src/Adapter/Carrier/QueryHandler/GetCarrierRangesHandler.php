@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult\CarrierRangesCollectio
 final class GetCarrierRangesHandler implements GetCarrierRangesHandlerInterface
 {
     public function __construct(
-        private readonly CarrierRangeRepository $carrierRangeRepository
+        private readonly CarrierRangeRepository $carrierRangeRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCarrierRanges $query): CarrierRangesCollection
     {
         // Get carriers ranges

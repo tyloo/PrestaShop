@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ use PrestaShop\PrestaShop\Core\Domain\Title\QueryResult\EditableTitle;
 #[AsQueryHandler]
 class GetTitleForEditingHandler extends AbstractTitleHandler implements GetTitleForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetTitleForEditing $query): EditableTitle
     {
         $title = $this->titleRepository->get($query->getTitleId());

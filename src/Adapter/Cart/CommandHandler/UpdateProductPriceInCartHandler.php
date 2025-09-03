@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use SpecificPrice;
 #[AsCommandHandler]
 final class UpdateProductPriceInCartHandler extends AbstractCartHandler implements UpdateProductPriceInCartHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateProductPriceInCartCommand $command)
     {
         $cart = $this->getCart($command->getCartId());
@@ -71,8 +69,6 @@ final class UpdateProductPriceInCartHandler extends AbstractCartHandler implemen
 
     /**
      * Deletes specific price for cart & product if it already exists.
-     *
-     * @param UpdateProductPriceInCartCommand $command
      */
     private function deleteSpecificPriceIfExists(UpdateProductPriceInCartCommand $command)
     {

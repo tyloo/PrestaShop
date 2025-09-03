@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use PrestaShopException;
 final class BulkDisableCmsPageCategoryHandler implements BulkDisableCmsPageCategoryHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageCategoryException
      */
     public function handle(BulkDisableCmsPageCategoryCommand $command)
@@ -52,14 +51,14 @@ final class BulkDisableCmsPageCategoryHandler implements BulkDisableCmsPageCateg
             foreach ($command->getCmsPageCategoryIds() as $cmsPageCategoryId) {
                 $entity = new CMSCategory($cmsPageCategoryId->getValue());
 
-                if (0 >= $entity->id) {
-                    throw new CmsPageCategoryNotFoundException(sprintf('Cms category object with id "%s" has not been found for disabling status.', $cmsPageCategoryId->getValue()));
+                if ($entity->id <= 0) {
+                    throw new CmsPageCategoryNotFoundException(\sprintf('Cms category object with id "%s" has not been found for disabling status.', $cmsPageCategoryId->getValue()));
                 }
 
                 $entity->active = false;
 
-                if (false === $entity->update()) {
-                    throw new CannotDisableCmsPageCategoryException(sprintf('Unable to disable cms category object with id "%s"', $cmsPageCategoryId->getValue()));
+                if ($entity->update() === false) {
+                    throw new CannotDisableCmsPageCategoryException(\sprintf('Unable to disable cms category object with id "%s"', $cmsPageCategoryId->getValue()));
                 }
             }
         } catch (PrestaShopException $prestaShopException) {

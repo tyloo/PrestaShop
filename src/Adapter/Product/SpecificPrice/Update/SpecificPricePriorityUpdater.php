@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,39 +43,27 @@ use SpecificPrice;
  */
 class SpecificPricePriorityUpdater
 {
-    /**
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
     /**
-     * @param ProductId $productId
-     * @param PriorityList $priorityList
-     *
      * @throws CoreException
      */
     public function setPrioritiesForProduct(ProductId $productId, PriorityList $priorityList): void
     {
         try {
-            if (!SpecificPrice::setSpecificPriority($productId->getValue(), $priorityList->getPriorities())) {
-                throw new CannotSetSpecificPricePrioritiesException(sprintf(
-                    'Failed updating specific price priorities for product #%d',
-                    $productId->getValue()
-                ));
+            if (! SpecificPrice::setSpecificPriority($productId->getValue(), $priorityList->getPriorities())) {
+                throw new CannotSetSpecificPricePrioritiesException(\sprintf('Failed updating specific price priorities for product #%d', $productId->getValue()));
             }
         } catch (Exception) {
-            throw new CoreException(sprintf(
-                'Error occurred when trying to set specific price priorities for product #%d',
-                $productId->getValue()
-            ));
+            throw new CoreException(\sprintf('Error occurred when trying to set specific price priorities for product #%d', $productId->getValue()));
         }
     }
 
-    /**
-     * @param PriorityList $priorityList
-     */
     public function updateDefaultPriorities(PriorityList $priorityList): void
     {
         try {
@@ -87,9 +76,6 @@ class SpecificPricePriorityUpdater
         }
     }
 
-    /**
-     * @param ProductId $productId
-     */
     public function removePrioritiesForProduct(ProductId $productId): void
     {
         try {
@@ -98,10 +84,7 @@ class SpecificPricePriorityUpdater
                 ['id_product' => $productId->getValue()]
             );
         } catch (Exception) {
-            throw new CoreException(sprintf(
-                'Error occurred when trying to remove specific price priorities for product #%d',
-                $productId->getValue()
-            ));
+            throw new CoreException(\sprintf('Error occurred when trying to remove specific price priorities for product #%d', $productId->getValue()));
         }
     }
 }

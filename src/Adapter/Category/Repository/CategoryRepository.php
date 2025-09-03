@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,19 +49,13 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
  */
 class CategoryRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     /**
-     * @param CategoryId $categoryId
-     *
-     * @return Category
-     *
      * @throws CategoryNotFoundException
      */
     public function get(CategoryId $categoryId): Category
@@ -88,7 +83,7 @@ class CategoryRepository extends AbstractObjectModelRepository
      */
     public function getLocalizedNames(array $categoryIds): array
     {
-        $categoryIds = array_map(fn($categoryId) => $categoryId->getValue(), $categoryIds
+        $categoryIds = array_map(fn ($categoryId) => $categoryId->getValue(), $categoryIds
         );
 
         $qb = $this->connection->createQueryBuilder();
@@ -100,7 +95,7 @@ class CategoryRepository extends AbstractObjectModelRepository
 
         $results = $qb->executeQuery()->fetchAllAssociative();
 
-        if (!$results) {
+        if (! $results) {
             return [];
         }
 
@@ -116,8 +111,6 @@ class CategoryRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CategoryId $categoryId
-     *
      * @throws CategoryNotFoundException
      * @throws CoreException
      */
@@ -136,9 +129,6 @@ class CategoryRepository extends AbstractObjectModelRepository
 
     /**
      * Provides ids of categories which are not unique per shop and language.
-     *
-     * @param ShopId $shopId
-     * @param LanguageId $languageId
      *
      * @return CategoryId[]
      */
@@ -175,9 +165,6 @@ class CategoryRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CategoryId $categoryId
-     * @param LanguageId $languageId
-     *
      * @return string[]
      */
     public function getBreadcrumbParts(CategoryId $categoryId, LanguageId $languageId): array
@@ -228,22 +215,12 @@ class CategoryRepository extends AbstractObjectModelRepository
         return $parentNames;
     }
 
-    /**
-     * @param CategoryId $categoryId
-     * @param LanguageId $languageId
-     * @param string $separator
-     *
-     * @return string
-     */
     public function getBreadcrumb(CategoryId $categoryId, LanguageId $languageId, string $separator = ' > '): string
     {
         return implode($separator, $this->getBreadcrumbParts($categoryId, $languageId));
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopConstraint $shopConstraint
-     *
      * @return CategoryId[]
      */
     public function getProductCategoryIds(ProductId $productId, ShopConstraint $shopConstraint): array
@@ -294,7 +271,6 @@ class CategoryRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
      * @param CategoryId[] $addedCategories
      */
     public function addProductAssociations(ProductId $productId, array $addedCategories): void
@@ -315,7 +291,7 @@ class CategoryRepository extends AbstractObjectModelRepository
             return;
         }
 
-        $categoryIds = array_unique(array_map(static fn(CategoryId $categoryId): int => $categoryId->getValue(), $newCategories));
+        $categoryIds = array_unique(array_map(static fn (CategoryId $categoryId): int => $categoryId->getValue(), $newCategories));
 
         $maxPositions = $this->connection
             ->createQueryBuilder()
@@ -349,12 +325,11 @@ class CategoryRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
      * @param CategoryId[] $removedCategories
      */
     public function removeProductAssociations(ProductId $productId, array $removedCategories): void
     {
-        $categoryIds = array_values(array_unique(array_map(static fn(CategoryId $categoryId): int => $categoryId->getValue(), $removedCategories)));
+        $categoryIds = array_values(array_unique(array_map(static fn (CategoryId $categoryId): int => $categoryId->getValue(), $removedCategories)));
 
         $currentPositions = $this->connection
             ->createQueryBuilder()
@@ -405,7 +380,7 @@ class CategoryRepository extends AbstractObjectModelRepository
         ;
 
         if (empty($result['id_category'])) {
-            throw new ShopNotFoundException(sprintf('Could not find shop with id %d', $shopId->getValue()));
+            throw new ShopNotFoundException(\sprintf('Could not find shop with id %d', $shopId->getValue()));
         }
 
         return new CategoryId((int) $result['id_category']);
@@ -413,11 +388,6 @@ class CategoryRepository extends AbstractObjectModelRepository
 
     /**
      * Returns defined product default category for the specified shop, but only if it is associated.
-     *
-     * @param ProductId $productId
-     * @param ShopId $shopId
-     *
-     * @return CategoryId|null
      */
     public function getProductDefaultCategory(ProductId $productId, ShopId $shopId): ?CategoryId
     {
@@ -447,7 +417,7 @@ class CategoryRepository extends AbstractObjectModelRepository
             ->fetchAssociative()
         ;
 
-        return !empty($result['id_category_default']) ? new CategoryId((int) $result['id_category_default']) : null;
+        return ! empty($result['id_category_default']) ? new CategoryId((int) $result['id_category_default']) : null;
     }
 
     /**
@@ -456,9 +426,6 @@ class CategoryRepository extends AbstractObjectModelRepository
      * e.g. if certain shop contains following categories in english language:
      *      Clothes -> Men, Bags -> Men, Clothes -> Woman, Bags -> Women,
      *      then method should return ["Men", "Women"]
-     *
-     * @param ShopId $shopId
-     * @param LanguageId $languageId
      *
      * @return string[]
      */

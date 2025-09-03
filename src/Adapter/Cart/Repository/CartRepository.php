@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,10 +42,6 @@ class CartRepository extends AbstractObjectModelRepository
     /**
      * Retrieve Cart by CartId.
      *
-     * @param CartId $cartId
-     *
-     * @return Cart
-     *
      * @throws CartException
      * @throws CoreException
      */
@@ -62,10 +59,6 @@ class CartRepository extends AbstractObjectModelRepository
 
     /**
      * Delete Cart by CartId.
-     *
-     * @param CartId $cartId
-     *
-     * @return void
      *
      * @throws CartException
      * @throws CoreException

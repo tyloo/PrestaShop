@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,18 +45,13 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 #[AsCommandHandler]
 class UpdateProductStockAvailableHandler implements UpdateProductStockHandlerInterface
 {
-    /**
-     * @param ProductStockUpdater $productStockUpdater
-     * @param ProductRepository $productRepository
-     * @param CombinationRepository $combinationRepository
-     */
-    public function __construct(private readonly ProductStockUpdater $productStockUpdater, private readonly ProductRepository $productRepository, private readonly CombinationRepository $combinationRepository)
-    {
+    public function __construct(
+        private readonly ProductStockUpdater $productStockUpdater,
+        private readonly ProductRepository $productRepository,
+        private readonly CombinationRepository $combinationRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(UpdateProductStockAvailableCommand $command): void
     {
         $productId = $command->getProductId();
@@ -82,7 +78,7 @@ class UpdateProductStockAvailableHandler implements UpdateProductStockHandlerInt
             $shopConstraint
         );
 
-        if (null !== $outOfStockType) {
+        if ($outOfStockType !== null) {
             if ($shopConstraint->forAllShops() || ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds())) {
                 if ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
                     $updatedShopIds = $shopConstraint->getShopIds();

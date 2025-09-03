@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,10 +40,6 @@ abstract class AbstractSearchEngineHandler
     /**
      * Gets legacy search engine.
      *
-     * @param SearchEngineId $searchEngineId
-     *
-     * @return SearchEngine
-     *
      * @throws SearchEngineException
      */
     protected function getSearchEngine(SearchEngineId $searchEngineId): SearchEngine
@@ -54,7 +51,7 @@ abstract class AbstractSearchEngineHandler
         }
 
         if ($searchEngine->id !== $searchEngineId->getValue()) {
-            throw new SearchEngineNotFoundException(sprintf('Search engine with id "%d" not found', $searchEngineId->getValue()));
+            throw new SearchEngineNotFoundException(\sprintf('Search engine with id "%d" not found', $searchEngineId->getValue()));
         }
 
         return $searchEngine;

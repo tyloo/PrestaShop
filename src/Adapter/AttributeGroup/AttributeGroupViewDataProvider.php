@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,15 +42,13 @@ final class AttributeGroupViewDataProvider implements AttributeGroupViewDataProv
 {
     /**
      * @param int $contextLangId
-     * @param ConfigurationInterface $configuration
      */
-    public function __construct(private $contextLangId, private readonly ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private $contextLangId,
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isColorGroup($attributeGroupId)
     {
         $attributeGroup = $this->getAttributeGroupById($attributeGroupId);
@@ -57,14 +56,11 @@ final class AttributeGroupViewDataProvider implements AttributeGroupViewDataProv
         return (bool) $attributeGroup->is_color_group;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAttributeGroupNameById($attributeGroupId)
     {
         $attributeGroup = $this->getAttributeGroupById($attributeGroupId);
 
-        if (!isset($attributeGroup->name[$this->contextLangId])) {
+        if (! isset($attributeGroup->name[$this->contextLangId])) {
             return $attributeGroup->name[$this->configuration->get('PS_LANG_DEFAULT')];
         }
 
@@ -87,10 +83,10 @@ final class AttributeGroupViewDataProvider implements AttributeGroupViewDataProv
             $attributeGroup = new AttributeGroup($attributeGroupId);
 
             if ($attributeGroup->id !== $attributeGroupId) {
-                throw new AttributeGroupNotFoundException(sprintf('Attribute group with id "%s" was not found.', $attributeGroupId));
+                throw new AttributeGroupNotFoundException(\sprintf('Attribute group with id "%s" was not found.', $attributeGroupId));
             }
         } catch (PrestaShopException) {
-            throw new AttributeGroupException(sprintf('An error occurred when trying to get attribute group with id %s', $attributeGroupId));
+            throw new AttributeGroupException(\sprintf('An error occurred when trying to get attribute group with id %s', $attributeGroupId));
         }
 
         return $attributeGroup;

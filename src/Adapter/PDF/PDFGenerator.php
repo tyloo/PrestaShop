@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,17 +37,12 @@ use Smarty;
  */
 final class PDFGenerator implements PDFGeneratorInterface
 {
-    /**
-     * @param Smarty $smarty
-     * @param PDFTemplateTypeProviderInterface $templateTypeProvider
-     */
-    public function __construct(private readonly Smarty $smarty, private readonly PDFTemplateTypeProviderInterface $templateTypeProvider)
-    {
+    public function __construct(
+        private readonly Smarty $smarty,
+        private readonly PDFTemplateTypeProviderInterface $templateTypeProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function generatePDF(array $objectCollection)
     {
         $pdf = new PDF($objectCollection, $this->templateTypeProvider->getPDFTemplateType(), $this->smarty);

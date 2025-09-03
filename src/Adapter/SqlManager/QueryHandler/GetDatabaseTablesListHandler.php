@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use RequestSql;
 #[AsQueryHandler]
 final class GetDatabaseTablesListHandler implements GetDatabaseTablesListHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetDatabaseTablesList $query)
     {
         $dbTables = (new RequestSql())->getTables();

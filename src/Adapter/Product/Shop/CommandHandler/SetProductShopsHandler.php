@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsCommandHandler]
 class SetProductShopsHandler implements SetProductShopsHandlerInterface
 {
-    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductDeleter $productDeleter, private readonly ProductShopUpdater $productShopUpdater)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly ProductDeleter $productDeleter,
+        private readonly ProductShopUpdater $productShopUpdater,
+    ) {
     }
 
     public function handle(SetProductShopsCommand $command): void
@@ -69,7 +73,6 @@ class SetProductShopsHandler implements SetProductShopsHandlerInterface
     }
 
     /**
-     * @param ShopId $sourceShopId
      * @param ShopId[] $initialShopIds
      */
     private function assertSourceShopIsAlreadyAssociated(ShopId $sourceShopId, array $initialShopIds): void
@@ -78,13 +81,7 @@ class SetProductShopsHandler implements SetProductShopsHandlerInterface
             return;
         }
 
-        throw new InvalidProductShopAssociationException(
-            sprintf(
-                'Source shopId must be one of current product shops. Could not find %d in the associated shops',
-                $sourceShopId->getValue()
-            ),
-            InvalidProductShopAssociationException::SOURCE_SHOP_NOT_ASSOCIATED
-        );
+        throw new InvalidProductShopAssociationException(\sprintf('Source shopId must be one of current product shops. Could not find %d in the associated shops', $sourceShopId->getValue()), InvalidProductShopAssociationException::SOURCE_SHOP_NOT_ASSOCIATED);
     }
 
     /**
@@ -93,7 +90,6 @@ class SetProductShopsHandler implements SetProductShopsHandlerInterface
      *
      * @param ShopId[] $searchableShopIds
      * @param ShopId[] $shopIds
-     * @param ShopId $shopToIgnore
      *
      * @return ShopId[]
      */
@@ -115,10 +111,7 @@ class SetProductShopsHandler implements SetProductShopsHandlerInterface
     }
 
     /**
-     * @param ShopId $searchableShopId
      * @param ShopId[] $shopIds
-     *
-     * @return bool
      */
     private function shopInArray(ShopId $searchableShopId, array $shopIds): bool
     {

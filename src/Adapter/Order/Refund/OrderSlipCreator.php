@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,18 +58,13 @@ class OrderSlipCreator
      */
     private $orderSlipCreated;
 
-    /**
-     * @param ConfigurationInterface $configuration
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(private readonly ConfigurationInterface $configuration, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     /**
-     * @param Order $order
-     * @param OrderRefundSummary $orderRefundSummary
-     *
      * @throws InvalidCancelProductException
      * @throws OrderException
      * @throws PrestaShopDatabaseException
@@ -76,7 +72,7 @@ class OrderSlipCreator
      */
     public function create(
         Order $order,
-        OrderRefundSummary $orderRefundSummary
+        OrderRefundSummary $orderRefundSummary,
     ) {
         if ($orderRefundSummary->getRefundedAmount() > 0) {
             $orderSlipCreated = $this->createOrderSlip(
@@ -85,15 +81,15 @@ class OrderSlipCreator
                 $orderRefundSummary->getRefundedShipping(),
                 $orderRefundSummary->getVoucherAmount(),
                 $orderRefundSummary->isVoucherChosen(),
-                !$orderRefundSummary->isTaxIncluded(),
+                ! $orderRefundSummary->isTaxIncluded(),
                 $orderRefundSummary->getPrecision()
             );
 
-            if (!$orderSlipCreated) {
+            if (! $orderSlipCreated) {
                 throw new OrderException('You cannot generate a partial credit slip.');
             }
 
-            $fullQuantityList = array_map(fn($orderDetail) => $orderDetail['quantity'], $orderRefundSummary->getProductRefunds());
+            $fullQuantityList = array_map(fn ($orderDetail) => $orderDetail['quantity'], $orderRefundSummary->getProductRefunds());
 
             // Hook called only for the shop concerned
             Hook::exec('actionOrderSlipAdd', [
@@ -105,7 +101,7 @@ class OrderSlipCreator
 
             $customer = new Customer((int) $order->id_customer);
 
-            if (!empty($customer->email)) {
+            if (! empty($customer->email)) {
                 // @todo: use private method to send mail
                 $params = [
                     '{lastname}' => $customer->lastname,
@@ -151,14 +147,6 @@ class OrderSlipCreator
      *
      * @todo this copy uses array data but could probably be refactored to use OrderDetailRefund objects
      *
-     * @param Order $order
-     * @param array $product_list
-     * @param float $shipping_cost
-     * @param float $amount
-     * @param bool $amount_choosen
-     * @param bool $add_tax
-     * @param int $precision
-     *
      * @return bool
      *
      * @throws PrestaShopDatabaseException
@@ -171,7 +159,7 @@ class OrderSlipCreator
         float $amount = 0,
         bool $amount_choosen = false,
         bool $add_tax = true,
-        int $precision = 6
+        int $precision = 6,
     ) {
         $currency = new Currency((int) $order->id_currency);
         $orderSlip = new OrderSlip();
@@ -212,6 +200,7 @@ class OrderSlipCreator
         $orderSlip->amount = 0;
         $orderSlip->total_products_tax_excl = 0;
         $orderSlip->total_products_tax_incl = 0;
+
         $total_products = [];
         foreach ($product_list as &$product) {
             $order_detail = new OrderDetail((int) $product['id_order_detail']);
@@ -230,12 +219,12 @@ class OrderSlipCreator
                 $orderSlip->total_products_tax_incl += $price * $quantity;
             }
 
-            if (in_array($this->configuration->get('PS_ROUND_TYPE'), [Order::ROUND_ITEM, Order::ROUND_LINE])) {
-                if (!isset($total_products[$id_tax_rules_group])) {
+            if (\in_array($this->configuration->get('PS_ROUND_TYPE'), [Order::ROUND_ITEM, Order::ROUND_LINE], true)) {
+                if (! isset($total_products[$id_tax_rules_group])) {
                     $total_products[$id_tax_rules_group] = 0;
                 }
             } else {
-                if (!isset($total_products[$id_tax_rules_group . '_' . $id_address])) {
+                if (! isset($total_products[$id_tax_rules_group . '_' . $id_address])) {
                     $total_products[$id_tax_rules_group . '_' . $id_address] = 0;
                 }
             }
@@ -284,7 +273,7 @@ class OrderSlipCreator
         unset($product);
 
         foreach ($total_products as $key => $price) {
-            if ($this->configuration->get('PS_ROUND_TYPE') == Order::ROUND_TOTAL) {
+            if ($this->configuration->get('PS_ROUND_TYPE') === Order::ROUND_TOTAL) {
                 $tmp = explode('_', $key);
                 $address = Address::initialize((int) $tmp[1], true);
                 $tax_calculator = TaxManagerFactory::getManager($address, (int) $tmp[0])->getTaxCalculator();
@@ -304,16 +293,16 @@ class OrderSlipCreator
         }
 
         if ($add_tax) {
-            $orderSlip->total_products_tax_incl -= $amount && !$amount_choosen ? $amount : 0;
+            $orderSlip->total_products_tax_incl -= $amount && ! $amount_choosen ? $amount : 0;
             $orderSlip->amount = $amount_choosen ? $amount : $orderSlip->total_products_tax_excl;
         } else {
-            $orderSlip->total_products_tax_excl -= $amount && !$amount_choosen ? $amount : 0;
+            $orderSlip->total_products_tax_excl -= $amount && ! $amount_choosen ? $amount : 0;
             $orderSlip->amount = $amount_choosen ? $amount : $orderSlip->total_products_tax_incl;
         }
 
         $orderSlip->shipping_cost_amount = $orderSlip->total_shipping_tax_incl;
 
-        if ($amount && !$amount_choosen) {
+        if ($amount && ! $amount_choosen) {
             $orderSlip->order_slip_type = VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND;
         }
 
@@ -321,7 +310,7 @@ class OrderSlipCreator
             $orderSlip->order_slip_type = VoucherRefundType::SPECIFIC_AMOUNT_REFUND;
         }
 
-        if (!$orderSlip->add()) {
+        if (! $orderSlip->add()) {
             return false;
         }
 
@@ -337,10 +326,6 @@ class OrderSlipCreator
     }
 
     /**
-     * @param array $product
-     *
-     * @return bool
-     *
      * @throws PrestaShopDatabaseException
      */
     private function addProductOrderSlip(int $orderSlipId, array $product): bool

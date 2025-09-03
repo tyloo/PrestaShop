@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use PrestaShop\PrestaShop\Core\Domain\SearchEngine\QueryResult\SearchEngineForEd
 final class GetSearchEngineForEditingHandler extends AbstractSearchEngineHandler implements GetSearchEngineForEditingHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SearchEngineException
      */
     public function handle(GetSearchEngineForEditing $query): SearchEngineForEditing

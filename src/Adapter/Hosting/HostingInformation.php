@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -67,10 +68,10 @@ class HostingInformation
     private function getPhpInformation()
     {
         return [
-            'version' => PHP_VERSION,
-            'memoryLimit' => ini_get('memory_limit'),
-            'maxExecutionTime' => ini_get('max_execution_time'),
-            'maxFileSizeUpload' => ini_get('upload_max_filesize'),
+            'version' => \PHP_VERSION,
+            'memoryLimit' => \ini_get('memory_limit'),
+            'maxExecutionTime' => \ini_get('max_execution_time'),
+            'maxFileSizeUpload' => \ini_get('upload_max_filesize'),
         ];
     }
 
@@ -79,7 +80,7 @@ class HostingInformation
      */
     public function getUname()
     {
-        return function_exists('php_uname') ? php_uname('s') . ' ' . php_uname('v') . ' ' . php_uname('m') : '';
+        return \function_exists('php_uname') ? php_uname('s') . ' ' . php_uname('v') . ' ' . php_uname('m') : '';
     }
 
     /**
@@ -90,9 +91,6 @@ class HostingInformation
         return Tools::apacheModExists('mod_instaweb');
     }
 
-    /**
-     * @return string
-     */
     public function getHostname(): string
     {
         return gethostname();

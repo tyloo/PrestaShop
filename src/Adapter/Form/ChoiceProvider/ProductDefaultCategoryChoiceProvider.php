@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,33 +54,23 @@ class ProductDefaultCategoryChoiceProvider implements ConfigurableFormChoiceProv
      */
     private $languageId;
 
-    /**
-     * @param int $homeCategoryId
-     * @param CategoryRepository $categoryRepository
-     * @param CategoryDisplayNameBuilder $categoryDisplayNameBuilder
-     * @param int $shopId
-     * @param int $languageId
-     */
     public function __construct(
         int $homeCategoryId,
         private readonly CategoryRepository $categoryRepository,
         private readonly CategoryDisplayNameBuilder $categoryDisplayNameBuilder,
         int $shopId,
-        int $languageId
+        int $languageId,
     ) {
         $this->defaultCategoryId = new CategoryId($homeCategoryId);
         $this->shopId = new ShopId($shopId);
         $this->languageId = new LanguageId($languageId);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getChoices(array $options): array
     {
         $options = $this->resolveOptions($options);
 
-        if (!$options['product_id']) {
+        if (! $options['product_id']) {
             $category = $this->categoryRepository->get($this->defaultCategoryId);
             $displayName = $this->getDisplayName(
                 $this->defaultCategoryId,
@@ -94,8 +85,6 @@ class ProductDefaultCategoryChoiceProvider implements ConfigurableFormChoiceProv
     }
 
     /**
-     * @param int $productId
-     *
      * @return array<string, int>
      */
     private function getChoicesForExistingProduct(int $productId): array
@@ -112,12 +101,6 @@ class ProductDefaultCategoryChoiceProvider implements ConfigurableFormChoiceProv
         return $choices;
     }
 
-    /**
-     * @param CategoryId $categoryId
-     * @param string $categoryName
-     *
-     * @return string
-     */
     private function getDisplayName(CategoryId $categoryId, string $categoryName): string
     {
         return $this->categoryDisplayNameBuilder->build(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,18 +41,13 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 #[AsQueryHandler]
 class GetRelatedProductsHandler implements GetRelatedProductsHandlerInterface
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param ProductImageRepository $productImageRepository
-     * @param ProductImagePathFactory $productImagePathFactory
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductImageRepository $productImageRepository, private readonly ProductImagePathFactory $productImagePathFactory)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly ProductImagePathFactory $productImagePathFactory,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetRelatedProducts $query): array
     {
         $results = $this->productRepository->getRelatedProducts($query->getProductId(), $query->getLanguageId());

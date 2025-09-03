@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,13 +37,11 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\CommandHandler\DeleteSearchTermAlias
 #[AsCommandHandler]
 class DeleteSearchTermAliasesHandler implements DeleteSearchTermAliasesHandlerInterface
 {
-    public function __construct(private readonly AliasRepository $aliasRepository)
-    {
+    public function __construct(
+        private readonly AliasRepository $aliasRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteSearchTermAliasesCommand $command): void
     {
         $this->aliasRepository->deleteAliasesBySearchTerm($command->getSearchTerm());

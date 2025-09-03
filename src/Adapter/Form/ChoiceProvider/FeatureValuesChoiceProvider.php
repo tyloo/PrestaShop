@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,14 +50,11 @@ class FeatureValuesChoiceProvider implements ConfigurableFormChoiceProviderInter
 
     public function __construct(
         private readonly FeatureValueRepository $featureValueRepository,
-        LegacyContext $legacyContext
+        LegacyContext $legacyContext,
     ) {
         $this->contextLanguageId = (int) $legacyContext->getLanguage()->getId();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getChoices(array $options)
     {
         if (empty($options['feature_id'])) {

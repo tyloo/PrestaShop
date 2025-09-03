@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,8 +37,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class ProductImageProvider implements ProductImageProviderInterface
 {
-    public function __construct(private readonly ProductImageRepository $productImageRepository, private readonly CombinationRepository $combinationRepository, private readonly ProductImagePathFactory $productImagePathFactory)
-    {
+    public function __construct(
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly ProductImagePathFactory $productImagePathFactory,
+    ) {
     }
 
     public function getProductCoverUrl(ProductId $productId, ShopId $shopId): string

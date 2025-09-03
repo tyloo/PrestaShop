@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 final class SymfonyContainer
 {
-    /** @var ContainerInterface|null */
+    /**
+     * @var ContainerInterface|null
+     */
     private static $instance;
 
     /**
@@ -47,10 +50,10 @@ final class SymfonyContainer
      */
     public static function getInstance()
     {
-        if (!isset(self::$instance)) {
+        if (! isset(self::$instance)) {
             global $kernel;
 
-            if (null !== $kernel && $kernel instanceof KernelInterface) {
+            if ($kernel !== null && $kernel instanceof KernelInterface) {
                 try {
                     self::$instance = $kernel->getContainer();
                 } catch (LogicException) {

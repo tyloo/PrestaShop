@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ use Profile;
 #[AsCommandHandler]
 final class UpdateTabPermissionsHandler implements UpdateTabPermissionsHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateTabPermissionsCommand $command): void
     {
         $access = new Access();
@@ -67,7 +65,7 @@ final class UpdateTabPermissionsHandler implements UpdateTabPermissionsHandlerIn
             $result = 'error';
         }
 
-        if ('error' === $result) {
+        if ($result === 'error') {
             throw new PermissionUpdateException('Failed to update permissions');
         }
     }

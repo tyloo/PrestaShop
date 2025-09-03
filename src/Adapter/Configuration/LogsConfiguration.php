@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,13 +38,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class LogsConfiguration implements DataConfigurationInterface
 {
-    public function __construct(private readonly ConfigurationInterface $configuration, private readonly TranslatorInterface $translator, private readonly Validate $validate)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly TranslatorInterface $translator,
+        private readonly Validate $validate,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -52,9 +53,6 @@ class LogsConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -63,13 +61,13 @@ class LogsConfiguration implements DataConfigurationInterface
             $invalidEmails = [];
 
             foreach ($checkEmails as $email) {
-                if (!$this->validate->isEmail($email)) {
+                if (! $this->validate->isEmail($email)) {
                     $invalidEmails[] = $email;
                 }
             }
 
-            if (!empty($invalidEmails)) {
-                $nbInvalidEmails = count($invalidEmails);
+            if (! empty($invalidEmails)) {
+                $nbInvalidEmails = \count($invalidEmails);
 
                 if ($nbInvalidEmails > 1) {
                     $errors[] = $this->translator->trans(
@@ -97,9 +95,6 @@ class LogsConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         $resolver = new OptionsResolver();

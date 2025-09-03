@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,13 +42,11 @@ use ProductAttribute;
 class AttributeValidator extends AbstractObjectModelValidator
 {
     public function __construct(
-        private readonly ShopRepository $shopRepository
+        private readonly ShopRepository $shopRepository,
     ) {
     }
 
     /**
-     * @param ProductAttribute $attribute
-     *
      * @throws CoreException
      */
     public function validate(ProductAttribute $attribute): void

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,29 +37,26 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\Command\UpdateCombinat
  */
 class PricesFiller implements CombinationFillerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function fillUpdatableProperties(Combination $combination, UpdateCombinationCommand $command): array
     {
         $updatableProperties = [];
 
-        if (null !== $command->getImpactOnPrice()) {
+        if ($command->getImpactOnPrice() !== null) {
             $combination->price = (float) (string) $command->getImpactOnPrice();
             $updatableProperties[] = 'price';
         }
 
-        if (null !== $command->getEcoTax()) {
+        if ($command->getEcoTax() !== null) {
             $combination->ecotax = (float) (string) $command->getEcoTax();
             $updatableProperties[] = 'ecotax';
         }
 
-        if (null !== $command->getImpactOnUnitPrice()) {
+        if ($command->getImpactOnUnitPrice() !== null) {
             $combination->unit_price_impact = (float) (string) $command->getImpactOnUnitPrice();
             $updatableProperties[] = 'unit_price_impact';
         }
 
-        if (null !== $command->getWholesalePrice()) {
+        if ($command->getWholesalePrice() !== null) {
             $combination->wholesale_price = (float) (string) $command->getWholesalePrice();
             $updatableProperties[] = 'wholesale_price';
         }

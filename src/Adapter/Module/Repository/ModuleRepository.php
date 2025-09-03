@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,9 @@ use Symfony\Component\Finder\Finder;
  */
 class ModuleRepository extends AbstractObjectModelRepository
 {
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     public const ADDITIONAL_ALLOWED_MODULES = [
         'autoupgrade',
     ];
@@ -73,10 +76,6 @@ class ModuleRepository extends AbstractObjectModelRepository
      */
     protected $moduleDir;
 
-    /**
-     * @param string $rootDir
-     * @param string $moduleDir
-     */
     public function __construct(string $rootDir, string $moduleDir)
     {
         $this->rootDir = $rootDir;
@@ -84,8 +83,6 @@ class ModuleRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ModuleId $moduleId
-     *
      * @throws CoreException
      * @throws ModuleNotFoundException
      */
@@ -99,12 +96,10 @@ class ModuleRepository extends AbstractObjectModelRepository
      *
      * This method must not trigger any exception because it is called during install and/or on kernel initialisation,
      * it must not block those steps in any occasion.
-     *
-     * @return array
      */
     public function getActiveModules(): array
     {
-        if (!defined('_DB_PREFIX_')) {
+        if (! \defined('_DB_PREFIX_')) {
             return []; // getActiveModules() can be called during install BEFORE the database configuration has been defined
         }
 
@@ -114,11 +109,11 @@ class ModuleRepository extends AbstractObjectModelRepository
                 'SELECT m.* FROM `' . _DB_PREFIX_ . 'module` m WHERE m.`active` = 1'
             );
 
-            if (is_array($modulesData)) {
-                $activeModulesInDb = array_map(fn(array $module): string => $module['name'], $modulesData);
+            if (\is_array($modulesData)) {
+                $activeModulesInDb = array_map(fn (array $module): string => $module['name'], $modulesData);
 
                 foreach ($this->getModulesFromFolder() as $moduleName => $modulePath) {
-                    if (in_array($moduleName, $activeModulesInDb)) {
+                    if (\in_array($moduleName, $activeModulesInDb, true)) {
                         $activeModules[] = $moduleName;
                     }
                 }
@@ -133,8 +128,6 @@ class ModuleRepository extends AbstractObjectModelRepository
 
     /**
      * Return present modules (even if those not installed in DB).
-     *
-     * @return array
      */
     public function getPresentModules(): array
     {
@@ -151,12 +144,10 @@ class ModuleRepository extends AbstractObjectModelRepository
      *
      * This method must not trigger any exception because it is called during install and/or on kernel initialisation,
      * it must not block those steps in any occasion.
-     *
-     * @return array
      */
     public function getInstalledModules(): array
     {
-        if (!defined('_DB_PREFIX_')) {
+        if (! \defined('_DB_PREFIX_')) {
             return [];
         }
 
@@ -166,11 +157,11 @@ class ModuleRepository extends AbstractObjectModelRepository
                 'SELECT m.* FROM `' . _DB_PREFIX_ . 'module` m'
             );
 
-            if (is_array($modulesData)) {
-                $installedModulesInDb = array_map(fn(array $module): string => $module['name'], $modulesData);
+            if (\is_array($modulesData)) {
+                $installedModulesInDb = array_map(fn (array $module): string => $module['name'], $modulesData);
 
                 foreach ($this->getModulesFromFolder() as $moduleName => $modulePath) {
-                    if (in_array($moduleName, $installedModulesInDb)) {
+                    if (\in_array($moduleName, $installedModulesInDb, true)) {
                         $installedModules[] = $moduleName;
                     }
                 }
@@ -189,12 +180,12 @@ class ModuleRepository extends AbstractObjectModelRepository
      */
     public function getInstalledModulesPaths(): array
     {
-        if (null === $this->installedModulesPaths) {
+        if ($this->installedModulesPaths === null) {
             $this->installedModulesPaths = [];
             $installedModules = $this->getInstalledModules();
 
             foreach ($this->getModulesFromFolder() as $moduleName => $modulePath) {
-                if (in_array($moduleName, $installedModules)) {
+                if (\in_array($moduleName, $installedModules, true)) {
                     $this->installedModulesPaths[$moduleName] = $modulePath;
                 }
             }
@@ -210,12 +201,12 @@ class ModuleRepository extends AbstractObjectModelRepository
      */
     public function getActiveModulesPaths(): array
     {
-        if (null === $this->activeModulesPaths) {
+        if ($this->activeModulesPaths === null) {
             $this->activeModulesPaths = [];
             $activeModules = $this->getActiveModules();
 
             foreach ($this->getModulesFromFolder() as $moduleName => $modulePath) {
-                if (in_array($moduleName, $activeModules)) {
+                if (\in_array($moduleName, $activeModules, true)) {
                     $this->activeModulesPaths[$moduleName] = $modulePath;
                 }
             }
@@ -231,7 +222,7 @@ class ModuleRepository extends AbstractObjectModelRepository
      */
     public function getPresentModulesPaths(): array
     {
-        if (null === $this->presentModulesPaths) {
+        if ($this->presentModulesPaths === null) {
             $this->presentModulesPaths = [];
 
             foreach ($this->getModulesFromFolder() as $moduleName => $modulePath) {
@@ -257,7 +248,7 @@ class ModuleRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        $modules = array_filter($content['packages'], fn(array $package) => self::COMPOSER_PACKAGE_TYPE === $package['type'] && !empty($package['name']));
+        $modules = array_filter($content['packages'], fn (array $package) => $package['type'] === self::COMPOSER_PACKAGE_TYPE && ! empty($package['name']));
         $modules = array_map(function (array $package) {
             $vendorName = explode('/', (string) $package['name']);
 
@@ -282,7 +273,7 @@ class ModuleRepository extends AbstractObjectModelRepository
         $modules = [];
 
         foreach ($this->getModulesFromFolder() as $moduleName => $modulePath) {
-            if (!in_array($moduleName, $nativeModules)) {
+            if (! \in_array($moduleName, $nativeModules, true)) {
                 $modules[] = $moduleName;
             }
         }
@@ -292,8 +283,6 @@ class ModuleRepository extends AbstractObjectModelRepository
 
     /**
      * Returns an iterable of module names
-     *
-     * @return iterable
      */
     private function getModulesFromFolder(): iterable
     {

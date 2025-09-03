@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class ObjectPresenter implements PresenterInterface
      */
     public function present($object)
     {
-        if (!($object instanceof ObjectModel)) {
+        if (! ($object instanceof ObjectModel)) {
             throw new Exception('ObjectPresenter can only present ObjectModel classes');
         }
 
@@ -65,13 +66,13 @@ class ObjectPresenter implements PresenterInterface
     /**
      * Execute filterHtml hook for html Content for objectPresenter.
      *
-     * @param string $type
+     * @param string      $type
      * @param ObjectModel $presentedObject
-     * @param array $htmlFields
+     * @param array       $htmlFields
      */
     private function filterHtmlContent($type, &$presentedObject, $htmlFields)
     {
-        if (!empty($htmlFields) && is_array($htmlFields)) {
+        if (! empty($htmlFields) && \is_array($htmlFields)) {
             // Chained hook call - if multiple modules are hooked here, they will receive the result of the previous one as a parameter
             $filteredHtml = Hook::exec(
                 'filterHtmlContent',
@@ -88,7 +89,7 @@ class ObjectPresenter implements PresenterInterface
                 true
             );
 
-            if (!empty($filteredHtml['object'])) {
+            if (! empty($filteredHtml['object'])) {
                 $presentedObject = $filteredHtml['object'];
             }
         }

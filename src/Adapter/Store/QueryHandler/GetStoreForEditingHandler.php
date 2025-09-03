@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,12 @@ use PrestaShopException;
 #[AsQueryHandler]
 class GetStoreForEditingHandler implements GetStoreForEditingHandlerInterface
 {
-    public function __construct(private readonly StoreRepository $storeRepository)
-    {
+    public function __construct(
+        private readonly StoreRepository $storeRepository,
+    ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws StoreException
      */
     public function handle(GetStoreForEditing $query): StoreForEditing
@@ -52,11 +52,11 @@ class GetStoreForEditingHandler implements GetStoreForEditingHandlerInterface
         try {
             $store = $this->storeRepository->get($query->getStoreId());
 
-            if (0 >= $store->id) {
-                throw new StoreNotFoundException(sprintf('Store object with id %d was not found', $query->getStoreId()->getValue()));
+            if ($store->id <= 0) {
+                throw new StoreNotFoundException(\sprintf('Store object with id %d was not found', $query->getStoreId()->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new StoreException(sprintf('An unexpected error occurred when retrieving store with id %d', $query->getStoreId()->getValue()), 0, $prestaShopException);
+            throw new StoreException(\sprintf('An unexpected error occurred when retrieving store with id %d', $query->getStoreId()->getValue()), 0, $prestaShopException);
         }
 
         return new StoreForEditing($store->id, $store->active);

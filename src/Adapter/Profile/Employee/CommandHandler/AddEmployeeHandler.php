@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,18 +47,13 @@ use PrestaShop\PrestaShop\Core\Employee\ContextEmployeeProviderInterface;
 #[AsCommandHandler]
 final class AddEmployeeHandler extends AbstractEmployeeHandler implements AddEmployeeHandlerInterface
 {
-    /**
-     * @param Hashing $hashing
-     * @param ProfileAccessCheckerInterface $profileAccessChecker
-     * @param ContextEmployeeProviderInterface $contextEmployeeProvider
-     */
-    public function __construct(private readonly Hashing $hashing, private readonly ProfileAccessCheckerInterface $profileAccessChecker, private readonly ContextEmployeeProviderInterface $contextEmployeeProvider)
-    {
+    public function __construct(
+        private readonly Hashing $hashing,
+        private readonly ProfileAccessCheckerInterface $profileAccessChecker,
+        private readonly ContextEmployeeProviderInterface $contextEmployeeProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddEmployeeCommand $command)
     {
         $canAccessProfile = $this->profileAccessChecker->canEmployeeAccessProfile(
@@ -65,7 +61,7 @@ final class AddEmployeeHandler extends AbstractEmployeeHandler implements AddEmp
             (int) $command->getProfileId()
         );
 
-        if (!$canAccessProfile) {
+        if (! $canAccessProfile) {
             throw new InvalidProfileException('You cannot access the provided profile.');
         }
 
@@ -81,8 +77,6 @@ final class AddEmployeeHandler extends AbstractEmployeeHandler implements AddEmp
 
     /**
      * Create legacy employee object.
-     *
-     * @param AddEmployeeCommand $command
      *
      * @return Employee
      */
@@ -102,8 +96,8 @@ final class AddEmployeeHandler extends AbstractEmployeeHandler implements AddEmp
         $employee->id_last_customer = $employee->getLastElementsForNotify('customer');
         $employee->has_enabled_gravatar = $command->hasEnabledGravatar();
 
-        if (false === $employee->add()) {
-            throw new EmployeeException(sprintf('Failed to add new employee with email "%s"', $command->getEmail()->getValue()));
+        if ($employee->add() === false) {
+            throw new EmployeeException(\sprintf('Failed to add new employee with email "%s"', $command->getEmail()->getValue()));
         }
 
         return $employee;

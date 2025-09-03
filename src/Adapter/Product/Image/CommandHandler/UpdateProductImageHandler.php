@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,19 +44,14 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopCollection;
 #[AsCommandHandler]
 class UpdateProductImageHandler implements UpdateProductImageHandlerInterface
 {
-    /**
-     * @param ProductImageRepository $productImageRepository
-     * @param ProductImageUpdater $productImageUpdater
-     * @param ProductImageUploader $productImageUploader
-     * @param ProductImageFileValidator $imageValidator
-     */
-    public function __construct(private readonly ProductImageRepository $productImageRepository, private readonly ProductImageUpdater $productImageUpdater, private readonly ProductImageUploader $productImageUploader, private readonly ProductImageFileValidator $imageValidator)
-    {
+    public function __construct(
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly ProductImageUpdater $productImageUpdater,
+        private readonly ProductImageUploader $productImageUploader,
+        private readonly ProductImageFileValidator $imageValidator,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(UpdateProductImageCommand $command): void
     {
         $shopConstraint = $command->getShopConstraint();
@@ -66,7 +62,7 @@ class UpdateProductImageHandler implements UpdateProductImageHandlerInterface
 
         $imageId = $command->getImageId();
 
-        if (null !== $command->getFilePath()) {
+        if ($command->getFilePath() !== null) {
             $this->imageValidator->assertFileUploadLimits($command->getFilePath());
             $this->imageValidator->assertIsValidImageType($command->getFilePath());
         }
@@ -81,14 +77,14 @@ class UpdateProductImageHandler implements UpdateProductImageHandlerInterface
             // only is_cover prop is multi-shop compatible now and is handled separately,
             // so we don't really care from which shop other properties are loaded
             $shopId = reset($associatedShopIds);
-            if (!$shopId) {
+            if (! $shopId) {
                 throw new ShopAssociationNotFound('Image is not associated to any shop');
             }
         } elseif ($shopConstraint->getShopId()) {
             $shopId = $shopConstraint->getShopId();
         }
 
-        if (!$shopId) {
+        if (! $shopId) {
             throw new InvalidShopConstraintException('Could not deduce shopId from provided ShopConstraint');
         }
 
@@ -97,7 +93,7 @@ class UpdateProductImageHandler implements UpdateProductImageHandlerInterface
             $shopId
         );
 
-        if (null !== $command->getLocalizedLegends()) {
+        if ($command->getLocalizedLegends() !== null) {
             $image->legend = $command->getLocalizedLegends();
             $this->productImageRepository->partialUpdateForShops(
                 $image,
@@ -111,11 +107,11 @@ class UpdateProductImageHandler implements UpdateProductImageHandlerInterface
             $this->productImageUpdater->updateProductCover($image, $command->getShopConstraint());
         }
 
-        if (null !== $command->getFilePath()) {
+        if ($command->getFilePath() !== null) {
             $this->productImageUploader->upload($image, $command->getFilePath());
         }
 
-        if (null !== $command->getPosition()) {
+        if ($command->getPosition() !== null) {
             $this->productImageUpdater->updatePosition($image, $command->getPosition());
         }
     }

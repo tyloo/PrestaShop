@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,46 +43,43 @@ class StockInformationFiller implements ProductFillerInterface
     use LocalizedObjectModelTrait;
 
     /**
-     * @param Product $product
-     * @param UpdateProductCommand $command
-     *
      * @return string[]|array<string, int[]>
      */
     public function fillUpdatableProperties(
         Product $product,
-        UpdateProductCommand $command
+        UpdateProductCommand $command,
     ): array {
         $updatableProperties = [];
 
         $localizedLaterLabels = $command->getLocalizedAvailableLaterLabels();
-        if (null !== $localizedLaterLabels) {
+        if ($localizedLaterLabels !== null) {
             $this->fillLocalizedValues($product, 'available_later', $localizedLaterLabels, $updatableProperties);
         }
 
         $localizedNowLabels = $command->getLocalizedAvailableNowLabels();
-        if (null !== $localizedNowLabels) {
+        if ($localizedNowLabels !== null) {
             $this->fillLocalizedValues($product, 'available_now', $localizedNowLabels, $updatableProperties);
         }
 
         $lowStockThreshold = $command->getLowStockThreshold();
-        if (null !== $lowStockThreshold) {
+        if ($lowStockThreshold !== null) {
             $product->low_stock_threshold = $lowStockThreshold->getValue();
             $product->low_stock_alert = $lowStockThreshold->isEnabled();
             $updatableProperties[] = 'low_stock_threshold';
             $updatableProperties[] = 'low_stock_alert';
         }
 
-        if (null !== $command->getMinimalQuantity()) {
+        if ($command->getMinimalQuantity() !== null) {
             $product->minimal_quantity = $command->getMinimalQuantity();
             $updatableProperties[] = 'minimal_quantity';
         }
 
-        if (null !== $command->getPackStockType()) {
+        if ($command->getPackStockType() !== null) {
             $product->pack_stock_type = $command->getPackStockType()->getValue();
             $updatableProperties[] = 'pack_stock_type';
         }
 
-        if (null !== $command->getAvailableDate()) {
+        if ($command->getAvailableDate() !== null) {
             $product->available_date = $command->getAvailableDate()->format(DateTime::DEFAULT_DATE_FORMAT);
             $updatableProperties[] = 'available_date';
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,8 +39,10 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtil;
 #[AsCommandHandler]
 class EditCartRuleHandler implements EditCartRuleHandlerInterface
 {
-    public function __construct(private readonly CartRuleRepository $cartRuleRepository, private readonly CartRuleActionFiller $cartRuleActionFiller)
-    {
+    public function __construct(
+        private readonly CartRuleRepository $cartRuleRepository,
+        private readonly CartRuleActionFiller $cartRuleActionFiller,
+    ) {
     }
 
     public function handle(EditCartRuleCommand $command): void
@@ -55,45 +58,42 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
     }
 
     /**
-     * @param CartRule $cartRule
-     * @param EditCartRuleCommand $command
-     *
      * @return array<int|string, string|int[]> updatable properties
      */
     private function fillUpdatableProperties(CartRule $cartRule, EditCartRuleCommand $command): array
     {
         $propertiesToUpdate = [];
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $cartRule->name = $command->getLocalizedNames();
             $propertiesToUpdate['name'] = array_keys($command->getLocalizedNames());
         }
 
-        if (null !== $command->getDescription()) {
+        if ($command->getDescription() !== null) {
             $cartRule->description = $command->getDescription();
             $propertiesToUpdate[] = 'description';
         }
 
-        if (null !== $command->getCode()) {
+        if ($command->getCode() !== null) {
             $cartRule->code = $command->getCode();
             $propertiesToUpdate[] = 'code';
         }
 
-        if (null !== $command->highlightInCart()) {
+        if ($command->highlightInCart() !== null) {
             $cartRule->highlight = $command->highlightInCart();
             $propertiesToUpdate[] = 'highlight';
         }
 
-        if (null !== $command->allowPartialUse()) {
+        if ($command->allowPartialUse() !== null) {
             $cartRule->partial_use = $command->allowPartialUse();
             $propertiesToUpdate[] = 'partial_use';
         }
 
-        if (null !== $command->getPriority()) {
+        if ($command->getPriority() !== null) {
             $cartRule->priority = $command->getPriority();
             $propertiesToUpdate[] = 'priority';
         }
 
-        if (null !== $command->isActive()) {
+        if ($command->isActive() !== null) {
             $cartRule->active = $command->isActive();
             $propertiesToUpdate[] = 'active';
         }
@@ -107,32 +107,29 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
     /**
      * Fills cart rule with conditions data from command.
      *
-     * @param CartRule $cartRule
-     * @param EditCartRuleCommand $command
-     *
      * @return array<int|string, string|int[]> updatable properties
      */
     private function fillConditions(CartRule $cartRule, EditCartRuleCommand $command): array
     {
         $updatableProperties = [];
 
-        if (null !== $command->getCustomerId()) {
+        if ($command->getCustomerId() !== null) {
             $cartRule->id_customer = $command->getCustomerId()->getValue();
             $updatableProperties[] = 'id_customer';
         }
 
-        if (null !== $command->getValidFrom()) {
+        if ($command->getValidFrom() !== null) {
             $cartRule->date_from = $command->getValidFrom()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_from';
         }
 
-        if (null !== $command->getValidTo()) {
+        if ($command->getValidTo() !== null) {
             $cartRule->date_to = $command->getValidTo()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_to';
         }
 
         $minimumAmount = $command->getMinimumAmount();
-        if (null !== $minimumAmount) {
+        if ($minimumAmount !== null) {
             $cartRule->minimum_amount = (float) (string) $minimumAmount->getAmount();
             $cartRule->minimum_amount_currency = $minimumAmount->getCurrencyId()->getValue();
             $cartRule->minimum_amount_tax = $minimumAmount->isTaxIncluded();
@@ -145,12 +142,12 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
             ]);
         }
 
-        if (null !== $command->getTotalQuantity()) {
+        if ($command->getTotalQuantity() !== null) {
             $cartRule->quantity = $command->getTotalQuantity();
             $updatableProperties[] = 'quantity';
         }
 
-        if (null !== $command->getQuantityPerUser()) {
+        if ($command->getQuantityPerUser() !== null) {
             $cartRule->quantity_per_user = $command->getQuantityPerUser();
             $updatableProperties[] = 'quantity_per_user';
         }
@@ -161,16 +158,13 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
     /**
      * Fills cart rule with actions data from command.
      *
-     * @param CartRule $cartRule
-     * @param EditCartRuleCommand $command
-     *
      * @return string[] updatable properties
      */
     private function fillActions(CartRule $cartRule, EditCartRuleCommand $command): array
     {
         $cartRuleAction = $command->getCartRuleAction();
 
-        if (null === $cartRuleAction) {
+        if ($cartRuleAction === null) {
             return [];
         }
 

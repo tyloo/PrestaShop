@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,16 +45,11 @@ use Shop;
 #[AsCommandHandler]
 final class RemoveProductFromCartHandler extends AbstractCartHandler implements RemoveProductFromCartHandlerInterface
 {
-    /**
-     * @param ContextStateManager $contextStateManager
-     */
-    public function __construct(private readonly ContextStateManager $contextStateManager)
-    {
+    public function __construct(
+        private readonly ContextStateManager $contextStateManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(RemoveProductFromCartCommand $command)
     {
         $cart = $this->getCart($command->getCartId());
@@ -73,8 +69,8 @@ final class RemoveProductFromCartHandler extends AbstractCartHandler implements 
                 $command->getCustomizationId() ?: 0
             );
 
-            if (!$removed) {
-                throw new CartException(sprintf('Failed to remove product with id "%d" from cart', $command->getProductId()->getValue()));
+            if (! $removed) {
+                throw new CartException(\sprintf('Failed to remove product with id "%d" from cart', $command->getProductId()->getValue()));
             }
         } finally {
             $this->contextStateManager->restorePreviousContext();

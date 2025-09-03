@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,20 +52,14 @@ use ProductSupplier;
  */
 class ProductSupplierRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param ProductSupplierValidator $productSupplierValidator
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ProductSupplierValidator $productSupplierValidator)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly ProductSupplierValidator $productSupplierValidator,
+    ) {
     }
 
     /**
-     * @param ProductSupplierId $productSupplierId
-     *
-     * @return ProductSupplier
-     *
      * @throws ProductSupplierNotFoundException
      */
     public function get(ProductSupplierId $productSupplierId): ProductSupplier
@@ -84,10 +79,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
      * If the association had a productSupplierId defined which doesn't match the found result it means the provided
      * data is not consistent so an exception is raised.
      *
-     * @param SupplierAssociationInterface $association
-     *
-     * @return ProductSupplierId|null
-     *
      * @throws InvalidProductSupplierAssociationException
      */
     public function findIdByAssociation(SupplierAssociationInterface $association): ?ProductSupplierId
@@ -102,7 +93,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             ->setParameter('supplierId', $association->getSupplierId()->getValue())
         ;
 
-        if (null !== $association->getProductId()) {
+        if ($association->getProductId() !== null) {
             $qb
                 ->andWhere('ps.id_product = :productId')
                 ->setParameter('productId', $association->getProductId()->getValue())
@@ -118,12 +109,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
 
         if ($association->getProductSupplierId() !== null
             && $productSupplierId !== $association->getProductSupplierId()->getValue()) {
-            throw new InvalidProductSupplierAssociationException(sprintf(
-                'Invalid ProductSupplier ID in association: %s Provided is %d but the persisted one is %d.',
-                (string) $association,
-                $association->getProductSupplierId()->getValue(),
-                $productSupplierId
-            ));
+            throw new InvalidProductSupplierAssociationException(\sprintf('Invalid ProductSupplier ID in association: %s Provided is %d but the persisted one is %d.', (string) $association, $association->getProductSupplierId()->getValue(), $productSupplierId));
         }
 
         return new ProductSupplierId($productSupplierId);
@@ -133,10 +119,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
      * Returns the ProductSupplier matching the association, if it's not found an exception is thrown. If you are unsure
      * of the presence of an association use getIdByAssociation instead to check the presence, it returns null when not found.
      *
-     * @param SupplierAssociationInterface $association
-     *
-     * @return ProductSupplier
-     *
      * @throws InvalidProductSupplierAssociationException
      * @throws ProductSupplierNotAssociatedException
      * @throws ProductSupplierNotFoundException
@@ -145,10 +127,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
     {
         $productSupplierId = $this->findIdByAssociation($association);
         if ($productSupplierId === null) {
-            throw new ProductSupplierNotAssociatedException(sprintf(
-                'Could not find a ProductSupplier matching this association: %s',
-                (string) $association
-            ));
+            throw new ProductSupplierNotAssociatedException(\sprintf('Could not find a ProductSupplier matching this association: %s', (string) $association));
         }
 
         return $this->get($productSupplierId);
@@ -157,10 +136,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
     /**
      * Returns the ID of the Supplier set as default for this product, data comes from product table
      * but is only returned if the association is present in product_supplier relation table.
-     *
-     * @param ProductId $productId
-     *
-     * @return SupplierId|null
      */
     public function getDefaultSupplierId(ProductId $productId): ?SupplierId
     {
@@ -180,7 +155,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
 
         $result = $qb->executeQuery()->fetchAssociative();
 
-        if (!$result) {
+        if (! $result) {
             return null;
         }
 
@@ -189,10 +164,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
 
     /**
      * Returns the ProductSupplier associated to a product as its default one.
-     *
-     * @param ProductId $productId
-     *
-     * @return ProductSupplierId|null
      */
     public function getDefaultProductSupplierId(ProductId $productId): ?ProductSupplierId
     {
@@ -220,9 +191,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param SupplierId $supplierId
-     *
      * @return ProductSupplierAssociation[]
      */
     public function getAssociationsForSupplier(ProductId $productId, SupplierId $supplierId): array
@@ -243,17 +211,15 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        return array_map(fn(array $row) => new ProductSupplierAssociation(
+        return array_map(fn (array $row) => new ProductSupplierAssociation(
             $productId->getValue(),
             (int) $row['id_product_attribute'],
             $supplierId->getValue(),
-            !empty($row['id_product_supplier']) ? (int) $row['id_product_supplier'] : null
+            ! empty($row['id_product_supplier']) ? (int) $row['id_product_supplier'] : null
         ), $results);
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return SupplierId[]
      */
     public function getAssociatedSupplierIds(ProductId $productId): array
@@ -272,15 +238,10 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        return array_map(static fn(array $row): SupplierId => new SupplierId((int) $row['id_supplier']), $results);
+        return array_map(static fn (array $row): SupplierId => new SupplierId((int) $row['id_supplier']), $results);
     }
 
     /**
-     * @param ProductSupplier $productSupplier
-     * @param int $errorCode
-     *
-     * @return ProductSupplierId
-     *
      * @throws CannotAddProductSupplierException
      */
     public function add(ProductSupplier $productSupplier, int $errorCode = 0): ProductSupplierId
@@ -292,8 +253,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductSupplier $productSupplier
-     *
      * @throws CannotUpdateProductSupplierException
      */
     public function update(ProductSupplier $productSupplier): void
@@ -303,8 +262,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductSupplierId $productSupplierId
-     *
      * @throws CannotDeleteProductSupplierException
      */
     public function delete(ProductSupplierId $productSupplierId): void
@@ -313,8 +270,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param array $productSupplierIds
-     *
      * @throws CannotBulkDeleteProductSupplierException
      */
     public function bulkDelete(array $productSupplierIds): void
@@ -332,18 +287,9 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             return;
         }
 
-        throw new CannotBulkDeleteProductSupplierException($failedIds, sprintf(
-            'Failed to delete following product suppliers: %s',
-            implode(', ', $failedIds)
-        ));
+        throw new CannotBulkDeleteProductSupplierException($failedIds, \sprintf('Failed to delete following product suppliers: %s', implode(', ', $failedIds)));
     }
 
-    /**
-     * @param ProductId $productId
-     * @param CombinationIdInterface|null $combinationId
-     *
-     * @return array
-     */
     public function getProductSuppliersInfo(ProductId $productId, ?CombinationIdInterface $combinationId = null): array
     {
         $qb = $this->connection->createQueryBuilder();
@@ -372,8 +318,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
 
     /**
      * Returns true if some suppliers have identical names, in which case we integrate the ID into the name to avoid confusion.
-     *
-     * @return bool
      */
     public function hasDuplicateSuppliersName(): bool
     {
@@ -386,7 +330,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
         $suppliers = $qb->executeQuery()->fetchAllAssociative();
         $names = [];
         foreach ($suppliers as $supplier) {
-            if (in_array($supplier['name'], $names)) {
+            if (\in_array($supplier['name'], $names, true)) {
                 return true;
             }
 
@@ -399,14 +343,11 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
     /**
      * Returns the list of ProductSupplierId which don't match the expected suppliers.
      *
-     * @param ProductId $productId
-     * @param array $expectedSuppliersId
-     *
      * @return ProductSupplierId[]
      */
     public function getUselessProductSupplierIds(ProductId $productId, array $expectedSuppliersId): array
     {
-        $supplierIds = array_map(fn(SupplierId $supplierId) => (string) $supplierId->getValue(), $expectedSuppliersId);
+        $supplierIds = array_map(fn (SupplierId $supplierId) => (string) $supplierId->getValue(), $expectedSuppliersId);
 
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -423,6 +364,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        return array_map(static fn(array $row): ProductSupplierId => new ProductSupplierId((int) $row['id_product_supplier']), $uselessProductSupplierIds);
+        return array_map(static fn (array $row): ProductSupplierId => new ProductSupplierId((int) $row['id_product_supplier']), $uselessProductSupplierIds);
     }
 }

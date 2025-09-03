@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,15 +58,10 @@ abstract class AbstractEditCategoryHandler extends AbstractObjectModelHandler
         $redirectType = $redirectOption->getRedirectType();
         $redirectTarget = $redirectOption->getRedirectTarget();
 
-        if ($redirectType->isCategoryType() && !$redirectTarget->isNoTarget()) {
+        if ($redirectType->isCategoryType() && ! $redirectTarget->isNoTarget()) {
             $this->categoryRepository->assertCategoryExists(new CategoryId($redirectTarget->getValue()));
-        } elseif (!$redirectType->isCategoryType() && !$redirectTarget->isNoTarget()) {
-            throw new CategoryConstraintException(sprintf(
-                'Invalid redirect target "%d". This should have a value of 0 if the redirect type is "%d"',
-                $redirectTarget->getValue(),
-                $redirectType->getValue(),
-            ),
-                CategoryConstraintException::INVALID_REDIRECT_TARGET);
+        } elseif (! $redirectType->isCategoryType() && ! $redirectTarget->isNoTarget()) {
+            throw new CategoryConstraintException(\sprintf('Invalid redirect target "%d". This should have a value of 0 if the redirect type is "%d"', $redirectTarget->getValue(), $redirectType->getValue()), CategoryConstraintException::INVALID_REDIRECT_TARGET);
         }
 
         $category->redirect_type = $redirectType->getValue();

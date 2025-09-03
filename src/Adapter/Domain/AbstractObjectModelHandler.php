@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,14 +44,11 @@ abstract class AbstractObjectModelHandler
     /**
      * This function assigns stores ids to the given object. It removes previously set shop ids and adds new ids instead.
      *
-     * @param ObjectModel $objectModel
-     * @param array $shopAssociation
-     *
      * @throws PrestaShopDatabaseException
      */
     protected function associateWithShops(ObjectModel $objectModel, array $shopAssociation)
     {
-        if (empty($shopAssociation) || !Shop::isFeatureActive()) {
+        if (empty($shopAssociation) || ! Shop::isFeatureActive()) {
             return;
         }
 
@@ -58,14 +56,14 @@ abstract class AbstractObjectModelHandler
         $primaryKeyName = (string) $objectModel::$definition['primary'];
         $primaryKeyValue = (int) $objectModel->id;
 
-        if (!Shop::isTableAssociated($tableName)) {
+        if (! Shop::isTableAssociated($tableName)) {
             return;
         }
 
         // Get list of shop id we want to exclude from asso deletion
         $excludeIds = $shopAssociation;
         foreach (Db::getInstance()->executeS('SELECT id_shop FROM ' . _DB_PREFIX_ . 'shop') as $row) {
-            if (!Context::getContext()->employee->hasAuthOnShop($row['id_shop'])) {
+            if (! Context::getContext()->employee->hasAuthOnShop($row['id_shop'])) {
                 $excludeIds[] = $row['id_shop'];
             }
         }
@@ -99,7 +97,6 @@ abstract class AbstractObjectModelHandler
     }
 
     /**
-     * @param ObjectModel $objectModel
      * @param array $multiStoreColumnAssociation - an array key contains shop id while values contains the mapping of
      *                                           column and its value
      */
@@ -112,7 +109,7 @@ abstract class AbstractObjectModelHandler
         foreach ($multiStoreColumnAssociation as $shopId => $items) {
             $shop = new Shop($shopId);
 
-            if (0 >= $shop->id || !is_array($items)) {
+            if ($shop->id <= 0 || ! \is_array($items)) {
                 continue;
             }
 
@@ -131,7 +128,7 @@ abstract class AbstractObjectModelHandler
 
     /**
      * @param string $imagePath the original image path
-     * @param int $imageId
+     * @param int    $imageId
      * @param string $belongsTo object name to which image belongs (e.g. 'supplier', 'manufacturer')
      *
      * @return string

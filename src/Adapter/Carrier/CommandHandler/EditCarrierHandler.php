@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,57 +54,54 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditCarrierCommand $command): CarrierId
     {
         $newCarrier = $this->carrierRepository->getEditableOrNewVersion($command->getCarrierId());
         $newCarrierId = new CarrierId($newCarrier->id);
 
         // General information
-        if (null !== $command->getName()) {
+        if ($command->getName() !== null) {
             $newCarrier->name = $command->getName();
         }
 
-        if (null !== $command->getGrade()) {
+        if ($command->getGrade() !== null) {
             $newCarrier->grade = $command->getGrade();
         }
 
-        if (null !== $command->getTrackingUrl()) {
+        if ($command->getTrackingUrl() !== null) {
             $newCarrier->url = $command->getTrackingUrl();
         }
 
-        if (null !== $command->getPosition()) {
+        if ($command->getPosition() !== null) {
             $newCarrier->position = $command->getPosition();
         }
 
-        if (null !== $command->getActive()) {
+        if ($command->getActive() !== null) {
             $newCarrier->active = $command->getActive();
         }
 
-        if (null !== $command->getLocalizedDelay()) {
+        if ($command->getLocalizedDelay() !== null) {
             $newCarrier->delay = $command->getLocalizedDelay();
         }
 
-        if (null !== $command->getMaxWidth()) {
+        if ($command->getMaxWidth() !== null) {
             $newCarrier->max_width = $command->getMaxWidth();
         }
 
-        if (null !== $command->getMaxHeight()) {
+        if ($command->getMaxHeight() !== null) {
             $newCarrier->max_height = $command->getMaxHeight();
         }
 
-        if (null !== $command->getMaxDepth()) {
+        if ($command->getMaxDepth() !== null) {
             $newCarrier->max_depth = $command->getMaxDepth();
         }
 
-        if (null !== $command->getMaxWeight()) {
+        if ($command->getMaxWeight() !== null) {
             $newCarrier->max_weight = $command->getMaxWeight();
         }
 
         // Shipping information
-        if (null !== $command->hasAdditionalHandlingFee()) {
+        if ($command->hasAdditionalHandlingFee() !== null) {
             $newCarrier->shipping_handling = $command->hasAdditionalHandlingFee();
         } else {
             // If carrier is free, we should not have shipping handling
@@ -112,7 +110,7 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
             }
         }
 
-        if (null !== $command->isFree()) {
+        if ($command->isFree() !== null) {
             $newCarrier->is_free = $command->isFree();
         } else {
             // If carrier has additional handling fee, we should not have free shipping enabled
@@ -125,7 +123,7 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
             $newCarrier->shipping_method = $command->getShippingMethod()->getValue();
         }
 
-        if (null !== $command->getRangeBehavior()) {
+        if ($command->getRangeBehavior() !== null) {
             $newCarrier->range_behavior = (bool) $command->getRangeBehavior()->getValue();
         }
 
@@ -138,7 +136,7 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
             $this->carrierValidator->validateLogoUpload($command->getLogoPathName());
         }
 
-        if (!empty($command->getAssociatedShopIds())) {
+        if (! empty($command->getAssociatedShopIds())) {
             foreach ($command->getAssociatedShopIds() as $shopId) {
                 $this->shopRepository->assertShopExists($shopId);
             }
@@ -158,7 +156,7 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
             CannotUpdateCarrierException::FAILED_UPDATE_CARRIER
         );
 
-        if (null !== $command->getAssociatedShopIds()) {
+        if ($command->getAssociatedShopIds() !== null) {
             $this->carrierRepository->updateAssociatedShops($newCarrierId, array_map(fn (ShopId $shopId) => $shopId->getValue(), $command->getAssociatedShopIds()));
         }
 
@@ -170,7 +168,7 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
             }
         }
 
-        if (null !== $command->getZones()) {
+        if ($command->getZones() !== null) {
             $this->carrierRepository->updateAssociatedZones($newCarrierId, $command->getZones());
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,9 +47,6 @@ class CustomerConfiguration extends AbstractMultistoreConfiguration
         'enable_offers',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -63,9 +61,6 @@ class CustomerConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $config)
     {
         if ($this->validateConfiguration($config)) {
@@ -82,12 +77,9 @@ class CustomerConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
-        $resolver = (new OptionsResolver())
+        return (new OptionsResolver())
             ->setDefined(self::CONFIGURATION_FIELDS)
             ->setAllowedTypes('redisplay_cart_at_login', 'bool')
             ->setAllowedTypes('send_email_after_registration', 'bool')
@@ -95,7 +87,5 @@ class CustomerConfiguration extends AbstractMultistoreConfiguration
             ->setAllowedTypes('enable_b2b_mode', 'bool')
             ->setAllowedTypes('ask_for_birthday', 'bool')
             ->setAllowedTypes('enable_offers', 'bool');
-
-        return $resolver;
     }
 }

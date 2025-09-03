@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,8 +35,6 @@ use Validate as ValidateLegacy;
 class Validate
 {
     /**
-     * @param mixed $way
-     *
      * @return bool
      */
     public static function isOrderWay($way)
@@ -44,8 +43,6 @@ class Validate
     }
 
     /**
-     * @param mixed $order
-     *
      * @return bool
      */
     public static function isOrderBy($order)
@@ -54,8 +51,6 @@ class Validate
     }
 
     /**
-     * @param mixed $date
-     *
      * @return bool
      */
     public static function isDate($date)
@@ -67,7 +62,7 @@ class Validate
      * Check if HTML content is clean.
      *
      * @param string $html
-     * @param bool $allowIframe
+     * @param bool   $allowIframe
      *
      * @return bool
      */
@@ -78,10 +73,6 @@ class Validate
 
     /**
      * Check for a given email validity.
-     *
-     * @param string $email
-     *
-     * @return bool
      */
     public function isEmail(string $email): bool
     {
@@ -152,8 +143,6 @@ class Validate
      * Check the given string is a valid object class name
      *
      * @param string $objectClassName object class name
-     *
-     * @return bool
      */
     public static function isValidObjectClassName(string $objectClassName): bool
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,20 +64,14 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
      */
     protected $nonConfigurableTabs;
 
-    /**
-     * @param AuthorizationCheckerInterface $authorizationChecker
-     */
     public function __construct(
         private readonly AuthorizationCheckerInterface $authorizationChecker,
         private readonly int $languageId,
-        array $nonConfigurableTabs
+        array $nonConfigurableTabs,
     ) {
         $this->nonConfigurableTabs = $nonConfigurableTabs;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetPermissionsForConfiguration $query): ConfigurablePermissions
     {
         $profiles = $this->getProfilesForPermissionsConfiguration();
@@ -141,9 +136,6 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
         return $profiles;
     }
 
-    /**
-     * @return array
-     */
     private function getTabsForPermissionsConfiguration(): array
     {
         $nonConfigurableTabs = $this->getNonConfigurableTabs();
@@ -161,7 +153,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
                 continue;
             }
 
-            if (in_array((int) $tab['id_tab'], $nonConfigurableTabs)) {
+            if (\in_array((int) $tab['id_tab'], $nonConfigurableTabs, true)) {
                 continue;
             }
 
@@ -176,20 +168,10 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
         return $this->buildTabsTree($tabs);
     }
 
-    /**
-     * @param array $tabs
-     * @param int $parentId
-     * @param int $nestingLevel
-     *
-     * @return array
-     */
     private function buildTabsTree(array &$tabs, int $parentId = 0, int $nestingLevel = 0): array
     {
-        if (self::MAX_NESTING_LEVEL < $nestingLevel) {
-            throw new RuntimeException(sprintf(
-                'Maximum nesting level of "%d" reached in "%s"', self::MAX_NESTING_LEVEL,
-                __METHOD__
-            ));
+        if ($nestingLevel > self::MAX_NESTING_LEVEL) {
+            throw new RuntimeException(\sprintf('Maximum nesting level of "%d" reached in "%s"', self::MAX_NESTING_LEVEL, __METHOD__));
         }
 
         $children = [];
@@ -207,11 +189,6 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
         return $children;
     }
 
-    /**
-     * @param array $profiles
-     *
-     * @return array
-     */
     private function getTabPermissionsForProfiles(array $profiles): array
     {
         $permissions = [];
@@ -220,30 +197,20 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
             // Allow only whitelisted elements
             $permissions[$profile['id']] = array_filter(
                 Profile::getProfileAccesses($profile['id']),
-                fn($item) => in_array($item['id_tab'], $this->whitelist)
+                fn ($item) => \in_array($item['id_tab'], $this->whitelist, true)
             );
         }
 
         return $permissions;
     }
 
-    /**
-     * @param int $employeeProfileId
-     * @param bool $hasEmployeeEditPermission
-     * @param array $profileTabPermissions
-     * @param array $profiles
-     * @param array $tabs
-     * @param array $permissions
-     *
-     * @return array
-     */
     private function getBulkConfigurationForProfiles(
         int $employeeProfileId,
         bool $hasEmployeeEditPermission,
         array $profileTabPermissions,
         array $profiles,
         array $tabs,
-        array $permissions
+        array $permissions,
     ): array {
         $bulkConfiguration = [];
 
@@ -258,7 +225,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
 
             // if employee does not have "edit" permission
             // then configuration is disabled
-            if (!$hasEmployeeEditPermission) {
+            if (! $hasEmployeeEditPermission) {
                 $bulkConfiguration[$profile['id']] = [
                     ControllerPermission::VIEW => false,
                     ControllerPermission::ADD => false,
@@ -272,7 +239,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
 
             foreach ($tabs as $tab) {
                 foreach ($permissions as $permission) {
-                    if (!$profileTabPermissions[$employeeProfileId][$tab['id']][$permission]) {
+                    if (! $profileTabPermissions[$employeeProfileId][$tab['id']][$permission]) {
                         $bulkConfiguration[$profile['id']][ControllerPermission::VIEW] = false;
                         $bulkConfiguration[$profile['id']][ControllerPermission::ALL] = false;
 
@@ -282,7 +249,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
 
                 foreach ($tab['children'] as $childTab) {
                     foreach ($permissions as $permission) {
-                        if (!$profileTabPermissions[$employeeProfileId][$childTab['id']][$permission]) {
+                        if (! $profileTabPermissions[$employeeProfileId][$childTab['id']][$permission]) {
                             $bulkConfiguration[$profile['id']][ControllerPermission::ADD] = false;
                             $bulkConfiguration[$profile['id']][ControllerPermission::ALL] = false;
 
@@ -292,7 +259,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
 
                     foreach ($childTab['children'] as $subChild) {
                         foreach ($permissions as $permission) {
-                            if (!$profileTabPermissions[$employeeProfileId][$subChild['id']][$permission]) {
+                            if (! $profileTabPermissions[$employeeProfileId][$subChild['id']][$permission]) {
                                 $bulkConfiguration[$profile['id']][ControllerPermission::EDIT] = false;
                                 $bulkConfiguration[$profile['id']][ControllerPermission::ALL] = false;
 
@@ -302,7 +269,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
 
                         foreach ($subChild['children'] as $subSubChild) {
                             foreach ($permissions as $permission) {
-                                if (!$profileTabPermissions[$employeeProfileId][$subSubChild['id']][$permission]) {
+                                if (! $profileTabPermissions[$employeeProfileId][$subSubChild['id']][$permission]) {
                                     $bulkConfiguration[$profile['id']][ControllerPermission::DELETE] = false;
                                     $bulkConfiguration[$profile['id']][ControllerPermission::ALL] = false;
 
@@ -318,11 +285,6 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
         return $bulkConfiguration;
     }
 
-    /**
-     * @param array $profiles
-     *
-     * @return array
-     */
     private function getModulePermissionsForProfiles(array $profiles): array
     {
         $profilePermissionsForModules = [];

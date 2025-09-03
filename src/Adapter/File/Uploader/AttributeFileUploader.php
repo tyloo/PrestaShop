@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,7 +40,7 @@ class AttributeFileUploader implements AttributeFileUploaderInterface
                 move_uploaded_file($filePath, _PS_IMG_DIR_ . 'co/' . $id . '.jpg');
             }
         } catch (FileException) {
-            throw new AttributeUploadFailedException(sprintf('Failed to copy the file %s.', $filePath));
+            throw new AttributeUploadFailedException(\sprintf('Failed to copy the file %s.', $filePath));
         }
     }
 

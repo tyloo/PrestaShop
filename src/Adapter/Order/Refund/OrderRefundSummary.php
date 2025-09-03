@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,18 +34,16 @@ use OrderDetail;
  */
 class OrderRefundSummary
 {
-    /**
-     * @param array $orderDetails
-     * @param array $productRefunds
-     * @param float $refundedAmount
-     * @param float $refundedShipping
-     * @param float $voucherAmount
-     * @param bool $voucherChosen
-     * @param bool $isTaxIncluded
-     * @param int $precision
-     */
-    public function __construct(private array $orderDetails, private readonly array $productRefunds, private readonly float $refundedAmount, private readonly float $refundedShipping, private readonly float $voucherAmount, private readonly bool $voucherChosen, private readonly bool $isTaxIncluded, private readonly int $precision)
-    {
+    public function __construct(
+        private array $orderDetails,
+        private readonly array $productRefunds,
+        private readonly float $refundedAmount,
+        private readonly float $refundedShipping,
+        private readonly float $voucherAmount,
+        private readonly bool $voucherChosen,
+        private readonly bool $isTaxIncluded,
+        private readonly int $precision,
+    ) {
     }
 
     /**
@@ -55,67 +54,41 @@ class OrderRefundSummary
         return $this->orderDetails;
     }
 
-    /**
-     * @return array
-     */
     public function getProductRefunds(): array
     {
         return $this->productRefunds;
     }
 
-    /**
-     * @return float
-     */
     public function getRefundedAmount(): float
     {
         return $this->refundedAmount;
     }
 
-    /**
-     * @return float
-     */
     public function getRefundedShipping(): float
     {
         return $this->refundedShipping;
     }
 
-    /**
-     * @return float
-     */
     public function getVoucherAmount(): float
     {
         return $this->voucherAmount;
     }
 
-    /**
-     * @return bool
-     */
     public function isVoucherChosen(): bool
     {
         return $this->voucherChosen;
     }
 
-    /**
-     * @return bool
-     */
     public function isTaxIncluded(): bool
     {
         return $this->isTaxIncluded;
     }
 
-    /**
-     * @return int
-     */
     public function getPrecision(): int
     {
         return $this->precision;
     }
 
-    /**
-     * @param int $orderDetailId
-     *
-     * @return OrderDetail|null
-     */
     public function getOrderDetailById(int $orderDetailId): ?OrderDetail
     {
         return $this->orderDetails[$orderDetailId] ?? null;

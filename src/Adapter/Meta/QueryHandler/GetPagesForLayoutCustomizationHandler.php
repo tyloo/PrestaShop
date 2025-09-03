@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,13 +42,11 @@ final class GetPagesForLayoutCustomizationHandler implements GetPagesForLayoutCu
     /**
      * @param int $contextLangId
      */
-    public function __construct(private $contextLangId)
-    {
+    public function __construct(
+        private $contextLangId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetPagesForLayoutCustomization $query)
     {
         $metas = Meta::getAllMeta($this->contextLangId);

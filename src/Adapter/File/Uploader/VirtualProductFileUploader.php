@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,12 +41,10 @@ use ProductDownload as VirtualProductFile;
  */
 class VirtualProductFileUploader
 {
-    /**
-     * @param VirtualProductFileValidator $virtualProductFileValidator
-     * @param string $virtualProductFileDir
-     */
-    public function __construct(private readonly VirtualProductFileValidator $virtualProductFileValidator, private readonly string $virtualProductFileDir)
-    {
+    public function __construct(
+        private readonly VirtualProductFileValidator $virtualProductFileValidator,
+        private readonly string $virtualProductFileDir,
+    ) {
     }
 
     /**
@@ -64,20 +63,11 @@ class VirtualProductFileUploader
         return $destination;
     }
 
-    /**
-     * @param string $filename
-     */
     public function remove(string $filename): void
     {
         $this->removeFile($this->virtualProductFileDir . $filename);
     }
 
-    /**
-     * @param string $newFilepath
-     * @param string|null $oldFilename
-     *
-     * @return string
-     */
     public function replace(string $newFilepath, ?string $oldFilename): string
     {
         if ($oldFilename) {
@@ -88,9 +78,6 @@ class VirtualProductFileUploader
     }
 
     /**
-     * @param string $filePath
-     * @param string $destination
-     *
      * @throws FileUploadException
      */
     private function copyFile(string $filePath, string $destination): void
@@ -103,8 +90,6 @@ class VirtualProductFileUploader
     }
 
     /**
-     * @param string $filePath
-     *
      * @throws CannotUnlinkFileException
      */
     private function removeFile(string $filePath): void

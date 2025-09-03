@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,24 +46,20 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 class ProductCustomizationFieldUpdater
 {
-    /**
-     * @param CustomizationFieldRepository $customizationFieldRepository
-     * @param CustomizationFieldDeleter $customizationFieldDeleter
-     * @param ProductRepository $productRepository
-     */
-    public function __construct(private readonly CustomizationFieldRepository $customizationFieldRepository, private readonly CustomizationFieldDeleter $customizationFieldDeleter, private readonly ProductRepository $productRepository)
-    {
+    public function __construct(
+        private readonly CustomizationFieldRepository $customizationFieldRepository,
+        private readonly CustomizationFieldDeleter $customizationFieldDeleter,
+        private readonly ProductRepository $productRepository,
+    ) {
     }
 
     /**
-     * @param ProductId $productId
      * @param LegacyCustomizationField[] $customizationFields
-     * @param ShopConstraint $shopConstraint
      */
     public function setProductCustomizationFields(
         ProductId $productId,
         array $customizationFields,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ): void {
         $productShops = $this->productRepository->getAssociatedShopIds($productId);
         $deletableFieldIds = $this->getDeletableFieldIds($customizationFields, $productId);
@@ -87,9 +84,6 @@ class ProductCustomizationFieldUpdater
         $this->refreshProductCustomizability($productId);
     }
 
-    /**
-     * @param ProductId $productId
-     */
     public function refreshProductCustomizability(ProductId $productId): void
     {
         // The modified fields are defined as multishop, but they depend on the association with customization fields
@@ -97,7 +91,7 @@ class ProductCustomizationFieldUpdater
         $product = $this->productRepository->getByShopConstraint($productId, ShopConstraint::allShops());
         if ($product->hasActivatedRequiredCustomizableFields()) {
             $product->customizable = ProductCustomizabilitySettings::REQUIRES_CUSTOMIZATION;
-        } elseif (!empty($product->getNonDeletedCustomizationFieldIds())) {
+        } elseif (! empty($product->getNonDeletedCustomizationFieldIds())) {
             $product->customizable = ProductCustomizabilitySettings::ALLOWS_CUSTOMIZATION;
         } else {
             $product->customizable = ProductCustomizabilitySettings::NOT_CUSTOMIZABLE;
@@ -118,7 +112,6 @@ class ProductCustomizationFieldUpdater
      * Checks provided customization fields against existing ones to determine which ones to delete
      *
      * @param LegacyCustomizationField[] $providedCustomizationFields
-     * @param ProductId $productId
      *
      * @return CustomizationFieldId[] ids of customization fields which should be deleted
      */

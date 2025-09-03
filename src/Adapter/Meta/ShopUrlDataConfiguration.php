@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,19 +38,13 @@ use ShopUrl;
  */
 final class ShopUrlDataConfiguration implements DataConfigurationInterface
 {
-    /**
-     * ShopUrlDataConfiguration constructor.
-     *
-     * @param ShopUrl $mainShopUrl
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct(private readonly ShopUrl $mainShopUrl, private readonly ConfigurationInterface $configuration, private readonly HtaccessFileGenerator $htaccessFileGenerator)
-    {
+    public function __construct(
+        private readonly ShopUrl $mainShopUrl,
+        private readonly ConfigurationInterface $configuration,
+        private readonly HtaccessFileGenerator $htaccessFileGenerator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -59,16 +54,13 @@ final class ShopUrlDataConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         $errors = [];
 
         try {
             if ($this->validateConfiguration($configuration)) {
-                if (!$this->isValidUri($configuration['physical_uri'])) {
+                if (! $this->isValidUri($configuration['physical_uri'])) {
                     return [
                         [
                             'key' => 'The Base URI is not valid.',
@@ -95,9 +87,6 @@ final class ShopUrlDataConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         return isset(
@@ -116,6 +105,6 @@ final class ShopUrlDataConfiguration implements DataConfigurationInterface
      */
     private function isValidUri($uri)
     {
-        return is_string($uri) && preg_match('#^(?:[~\-_\/&\.\+]|\w|%\d+|\s)+$#', $uri);
+        return \is_string($uri) && preg_match('#^(?:[~\-_\/&\.\+]|\w|%\d+|\s)+$#', $uri);
     }
 }

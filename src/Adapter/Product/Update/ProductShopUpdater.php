@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,20 +53,22 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 use Product;
 
-/**
- * Class ProductShopUpdater
- */
 class ProductShopUpdater
 {
-    public function __construct(private readonly ProductRepository $productRepository, private readonly StockAvailableRepository $stockAvailableRepository, private readonly ShopRepository $shopRepository, private readonly ProductImageRepository $productImageRepository, private readonly ProductStockUpdater $productStockUpdater, private readonly CombinationRepository $combinationRepository, private readonly CombinationStockUpdater $combinationStockUpdater, private readonly DefaultCombinationUpdater $defaultCombinationUpdater, private readonly ProductCategoryUpdater $productCategoryUpdater, private readonly CategoryRepository $categoryRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly StockAvailableRepository $stockAvailableRepository,
+        private readonly ShopRepository $shopRepository,
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly ProductStockUpdater $productStockUpdater,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly CombinationStockUpdater $combinationStockUpdater,
+        private readonly DefaultCombinationUpdater $defaultCombinationUpdater,
+        private readonly ProductCategoryUpdater $productCategoryUpdater,
+        private readonly CategoryRepository $categoryRepository,
+    ) {
     }
 
-    /**
-     * @param ProductId $productId
-     * @param ShopId $sourceShopId
-     * @param ShopId $targetShopId
-     */
     public function copyToShop(ProductId $productId, ShopId $sourceShopId, ShopId $targetShopId): void
     {
         $this->shopRepository->assertShopExists($sourceShopId);
@@ -160,10 +163,6 @@ class ProductShopUpdater
         $this->combinationRepository->updateCombinationOutOfStockType($productId, $outOfStockType, $targetConstraint);
     }
 
-    /**
-     * @param Product $sourceProduct
-     * @param ShopId $targetShopId
-     */
     private function copyCarriersToShop(Product $sourceProduct, ShopId $targetShopId): void
     {
         $sourceCarriers = $sourceProduct->getCarriers();
@@ -180,23 +179,17 @@ class ProductShopUpdater
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopId $sourceShopId
-     * @param ShopId $targetShopId
-     *
-     * @return void
-     *
      * @throws \PrestaShop\PrestaShop\Core\Domain\Shop\Exception\ShopException
      * @throws \PrestaShop\PrestaShop\Core\Exception\CoreException
      */
     private function copyImageAssociations(ProductId $productId, ShopId $sourceShopId, ShopId $targetShopId): void
     {
         $imagesFromSourceShop = $this->productImageRepository->getImages($productId, ShopConstraint::shop($sourceShopId->getValue()));
-        $targetImageIds = array_map(static fn(ImageId $imageId): int => $imageId->getValue(), $this->productImageRepository->getImageIds($productId, ShopConstraint::shop($targetShopId->getValue())));
+        $targetImageIds = array_map(static fn (ImageId $imageId): int => $imageId->getValue(), $this->productImageRepository->getImageIds($productId, ShopConstraint::shop($targetShopId->getValue())));
 
         foreach ($imagesFromSourceShop as $image) {
             // skip image if it is already associated with the target shop
-            if (in_array((int) $image->id, $targetImageIds, true)) {
+            if (\in_array((int) $image->id, $targetImageIds, true)) {
                 continue;
             }
 

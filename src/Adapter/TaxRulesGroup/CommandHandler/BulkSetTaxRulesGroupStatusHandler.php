@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\Exception\TaxRulesGroupExcep
 final class BulkSetTaxRulesGroupStatusHandler extends AbstractTaxRulesGroupHandler implements BulkToggleTaxRulesGroupStatusHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotBulkUpdateTaxRulesGroupException
      */
     public function handle(BulkSetTaxRulesGroupStatusCommand $command): void
@@ -52,7 +51,7 @@ final class BulkSetTaxRulesGroupStatusHandler extends AbstractTaxRulesGroupHandl
             try {
                 $taxRuleGroup = $this->getTaxRulesGroup($taxRuleGroupId);
 
-                if (!$this->setTaxRulesGroupStatus($taxRuleGroup, $command->getExpectedStatus())) {
+                if (! $this->setTaxRulesGroupStatus($taxRuleGroup, $command->getExpectedStatus())) {
                     $errors[] = $taxRuleGroup->id;
                 }
             } catch (TaxRulesGroupException) {
@@ -60,7 +59,7 @@ final class BulkSetTaxRulesGroupStatusHandler extends AbstractTaxRulesGroupHandl
             }
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             throw new CannotBulkUpdateTaxRulesGroupException($errors, 'Failed to set all tax rules groups statuses without errors');
         }
     }

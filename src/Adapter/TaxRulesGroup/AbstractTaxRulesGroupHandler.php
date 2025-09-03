@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,6 @@ abstract class AbstractTaxRulesGroupHandler extends AbstractObjectModelHandler
     /**
      * Gets legacy TaxRuleGroup object
      *
-     * @param TaxRulesGroupId $taxRulesGroupId
-     *
-     * @return TaxRulesGroup
-     *
      * @throws TaxRulesGroupNotFoundException
      */
     protected function getTaxRulesGroup(TaxRulesGroupId $taxRulesGroupId): TaxRulesGroup
@@ -55,11 +52,11 @@ abstract class AbstractTaxRulesGroupHandler extends AbstractObjectModelHandler
         try {
             $taxRulesGroup = new TaxRulesGroup($taxRulesGroupIdValue);
         } catch (PrestaShopException) {
-            throw new TaxRulesGroupNotFoundException(sprintf('Tax rules group with id "%s" was not found.', $taxRulesGroupIdValue));
+            throw new TaxRulesGroupNotFoundException(\sprintf('Tax rules group with id "%s" was not found.', $taxRulesGroupIdValue));
         }
 
         if ($taxRulesGroup->id !== $taxRulesGroupIdValue) {
-            throw new TaxRulesGroupNotFoundException(sprintf('Tax rules group with id "%s" was not found.', $taxRulesGroupIdValue));
+            throw new TaxRulesGroupNotFoundException(\sprintf('Tax rules group with id "%s" was not found.', $taxRulesGroupIdValue));
         }
 
         return $taxRulesGroup;
@@ -68,10 +65,6 @@ abstract class AbstractTaxRulesGroupHandler extends AbstractObjectModelHandler
     /**
      * Deletes legacy TaxRulesGroup
      *
-     * @param TaxRulesGroup $taxRulesGroup
-     *
-     * @return bool
-     *
      * @throws CannotDeleteTaxRulesGroupException
      */
     protected function deleteTaxRulesGroup(TaxRulesGroup $taxRulesGroup): bool
@@ -79,15 +72,12 @@ abstract class AbstractTaxRulesGroupHandler extends AbstractObjectModelHandler
         try {
             return $taxRulesGroup->delete();
         } catch (PrestaShopException) {
-            throw new CannotDeleteTaxRulesGroupException(sprintf('An error occurred when deleting tax rules group object with id "%s".', $taxRulesGroup->id));
+            throw new CannotDeleteTaxRulesGroupException(\sprintf('An error occurred when deleting tax rules group object with id "%s".', $taxRulesGroup->id));
         }
     }
 
     /**
      * Set legacy tax rules group status
-     *
-     * @param TaxRulesGroup $taxRulesGroup
-     * @param bool $newStatus
      *
      * @return bool
      *
@@ -100,7 +90,7 @@ abstract class AbstractTaxRulesGroupHandler extends AbstractObjectModelHandler
         try {
             return $taxRulesGroup->save();
         } catch (PrestaShopException) {
-            throw new TaxRulesGroupException(sprintf('An error occurred when updating tax rules group status with id "%s"', $taxRulesGroup->id));
+            throw new TaxRulesGroupException(\sprintf('An error occurred when updating tax rules group status with id "%s"', $taxRulesGroup->id));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,6 @@ abstract class AbstractCartRuleHandler
     /**
      * Gets legacy CartRule
      *
-     * @param CartRuleId $cartRuleId
-     *
-     * @return CartRule
-     *
      * @throws CartRuleException
      * @throws CartRuleNotFoundException
      */
@@ -58,7 +55,7 @@ abstract class AbstractCartRuleHandler
         }
 
         if ($cartRule->id !== $cartRuleId->getValue()) {
-            throw new CartRuleNotFoundException(sprintf('CartRule with id "%s" was not found.', $cartRuleId->getValue()));
+            throw new CartRuleNotFoundException(\sprintf('CartRule with id "%s" was not found.', $cartRuleId->getValue()));
         }
 
         return $cartRule;
@@ -66,8 +63,6 @@ abstract class AbstractCartRuleHandler
 
     /**
      * Deletes legacy CartRule
-     *
-     * @param CartRule $cartRule
      *
      * @return bool
      *
@@ -78,17 +73,12 @@ abstract class AbstractCartRuleHandler
         try {
             return $cartRule->delete();
         } catch (PrestaShopException) {
-            throw new CartRuleException(sprintf('An error occurred when deleting CartRule object with id "%s".', $cartRule->id));
+            throw new CartRuleException(\sprintf('An error occurred when deleting CartRule object with id "%s".', $cartRule->id));
         }
     }
 
     /**
      * Toggles legacy cart rule status
-     *
-     * @param CartRule $cartRule
-     * @param bool $newStatus
-     *
-     * @return bool
      *
      * @throws CartRuleException
      */
@@ -99,7 +89,7 @@ abstract class AbstractCartRuleHandler
         try {
             return $cartRule->save();
         } catch (PrestaShopException) {
-            throw new CartRuleException(sprintf('An error occurred when updating cart rule status with id "%s"', $cartRule->id));
+            throw new CartRuleException(\sprintf('An error occurred when updating cart rule status with id "%s"', $cartRule->id));
         }
     }
 }

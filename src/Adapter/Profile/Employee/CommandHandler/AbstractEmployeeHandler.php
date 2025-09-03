@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,34 +44,27 @@ use Profile;
 abstract class AbstractEmployeeHandler extends AbstractObjectModelHandler
 {
     /**
-     * @param EmployeeId $employeeId
-     * @param Employee $employee
-     *
      * @throws EmployeeNotFoundException
      */
     protected function assertEmployeeWasFoundById(EmployeeId $employeeId, Employee $employee)
     {
-        if (!$employee->id) {
-            throw new EmployeeNotFoundException($employeeId, sprintf('Employee with id "%s" cannot be found.', $employeeId->getValue()));
+        if (! $employee->id) {
+            throw new EmployeeNotFoundException($employeeId, \sprintf('Employee with id "%s" cannot be found.', $employeeId->getValue()));
         }
     }
 
     /**
      * If employee is admin and no other admins exists, then terminate command execution.
-     *
-     * @param Employee $employee
      */
     protected function assertEmployeeIsNotTheOnlyAdminInShop(Employee $employee)
     {
         if ($employee->isLastAdmin()) {
-            throw new AdminEmployeeException(sprintf('Employee with id %s is the only admin in shop and status cannot be changed.', $employee->id), AdminEmployeeException::CANNOT_CHANGE_LAST_ADMIN);
+            throw new AdminEmployeeException(\sprintf('Employee with id %s is the only admin in shop and status cannot be changed.', $employee->id), AdminEmployeeException::CANNOT_CHANGE_LAST_ADMIN);
         }
     }
 
     /**
      * If logged in employee is trying to toggle itself, then terminate execution.
-     *
-     * @param Employee $employee
      */
     protected function assertLoggedInEmployeeIsNotTheSameAsBeingUpdatedEmployee(Employee $employee)
     {

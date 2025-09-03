@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,27 +54,17 @@ class ProductImageUploader extends AbstractImageUploader
      */
     private $fileSystem;
 
-    /**
-     * @param ProductImagePathFactory $productImagePathFactory
-     * @param int $contextShopId
-     * @param ImageGenerator $imageGenerator
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param ProductImageRepository $productImageRepository
-     */
     public function __construct(
         private readonly ProductImagePathFactory $productImagePathFactory,
         private readonly int $contextShopId,
         private readonly ImageGenerator $imageGenerator,
         private readonly HookDispatcherInterface $hookDispatcher,
-        private readonly ProductImageRepository $productImageRepository
+        private readonly ProductImageRepository $productImageRepository,
     ) {
         $this->fileSystem = new Filesystem();
     }
 
     /**
-     * @param Image $image
-     * @param string $filePath
-     *
      * @return string destination path of main image
      *
      * @throws CannotUnlinkImageException
@@ -93,7 +84,10 @@ class ProductImageUploader extends AbstractImageUploader
 
         $this->hookDispatcher->dispatchWithParameters(
             'actionWatermark',
-            ['id_image' => $imageId->getValue(), 'id_product' => $productId]
+            [
+                'id_image' => $imageId->getValue(),
+                'id_product' => $productId,
+            ]
         );
 
         $this->deleteCachedImages($productId);
@@ -102,8 +96,6 @@ class ProductImageUploader extends AbstractImageUploader
     }
 
     /**
-     * @param Image $image
-     *
      * @throws CannotUnlinkImageException
      */
     public function remove(Image $image): void
@@ -114,9 +106,6 @@ class ProductImageUploader extends AbstractImageUploader
     }
 
     /**
-     * @param ImageId $imageId
-     * @param int $productId
-     *
      * @throws ImageUploadException
      */
     private function createDestinationDirectory(ImageId $imageId, int $productId): void
@@ -129,16 +118,11 @@ class ProductImageUploader extends AbstractImageUploader
         try {
             $this->fileSystem->mkdir($imageFolder, PsFileSystem::DEFAULT_MODE_FOLDER);
         } catch (IOException) {
-            throw new ImageUploadException(sprintf(
-                'Error occurred when trying to create directory for product #%d image',
-                $productId
-            ));
+            throw new ImageUploadException(\sprintf('Error occurred when trying to create directory for product #%d image', $productId));
         }
     }
 
     /**
-     * @param int $productId
-     *
      * @throws CannotUnlinkImageException
      */
     private function deleteCachedImages(int $productId): void
@@ -149,17 +133,12 @@ class ProductImageUploader extends AbstractImageUploader
         ];
 
         foreach ($cachedImages as $cachedImage) {
-            if (!file_exists($cachedImage)) {
+            if (! file_exists($cachedImage)) {
                 continue;
             }
 
-            if (!@unlink($cachedImage)) {
-                throw new CannotUnlinkImageException(
-                    sprintf(
-                        'Failed to remove cached image "%s"',
-                        $cachedImage
-                    )
-                );
+            if (! @unlink($cachedImage)) {
+                throw new CannotUnlinkImageException(\sprintf('Failed to remove cached image "%s"', $cachedImage));
             }
         }
     }
@@ -170,30 +149,22 @@ class ProductImageUploader extends AbstractImageUploader
      * them correctly. So for now this service only handles removing generated image types.
      * When Image ObjectModel is no longer used, it could also remove the remaining files.
      *
-     * @param string $imagePath
-     * @param array $imageTypes
-     *
      * @throws CannotUnlinkImageException
      */
     private function deleteGeneratedImages(string $imagePath, array $imageTypes): void
     {
-        $fileExtension = pathinfo($imagePath, PATHINFO_EXTENSION);
+        $fileExtension = pathinfo($imagePath, \PATHINFO_EXTENSION);
         $destinationExtension = '.jpg';
         $imageBaseName = rtrim($imagePath, '.' . $fileExtension);
 
         foreach ($imageTypes as $imageType) {
-            $generatedImagePath = sprintf('%s-%s%s', $imageBaseName, stripslashes((string) $imageType->name), $destinationExtension);
-            if (!file_exists($generatedImagePath)) {
+            $generatedImagePath = \sprintf('%s-%s%s', $imageBaseName, stripslashes((string) $imageType->name), $destinationExtension);
+            if (! file_exists($generatedImagePath)) {
                 continue;
             }
 
-            if (!@unlink($generatedImagePath)) {
-                throw new CannotUnlinkImageException(
-                    sprintf(
-                        'Failed to remove generated image "%s"',
-                        $generatedImagePath
-                    )
-                );
+            if (! @unlink($generatedImagePath)) {
+                throw new CannotUnlinkImageException(\sprintf('Failed to remove generated image "%s"', $generatedImagePath));
             }
         }
     }

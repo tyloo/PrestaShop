@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -59,13 +60,11 @@ class TranslationRouteFinder
      */
     public const THEMES = 'themes';
 
-    /**
-     * @param TranslationService $translationService
-     * @param Link $link
-     * @param ModuleRepositoryInterface $moduleRepository
-     */
-    public function __construct(private readonly TranslationService $translationService, private readonly Link $link, private readonly ModuleRepositoryInterface $moduleRepository)
-    {
+    public function __construct(
+        private readonly TranslationService $translationService,
+        private readonly Link $link,
+        private readonly ModuleRepositoryInterface $moduleRepository,
+    ) {
     }
 
     /**
@@ -81,7 +80,7 @@ class TranslationRouteFinder
 
         switch ($propertyAccessor->getValue($routeProperties, '[translation_type]')) {
             case self::MAILS:
-                if (self::BODY === $propertyAccessor->getValue($routeProperties, '[email_content_type]')) {
+                if ($propertyAccessor->getValue($routeProperties, '[email_content_type]') === self::BODY) {
                     $language = $propertyAccessor->getValue($routeProperties, '[language]');
                     $route = $this->link->getAdminLink(
                         'AdminTranslations',
@@ -104,7 +103,7 @@ class TranslationRouteFinder
 
                 // If module is not using the new translation system -
                 // generate a legacy link for it
-                if (!$this->isModuleUsingNewTranslationSystem($moduleName)) {
+                if (! $this->isModuleUsingNewTranslationSystem($moduleName)) {
                     $language = $propertyAccessor->getValue($routeProperties, '[language]');
                     $route = $this->link->getAdminLink(
                         'AdminTranslations',
@@ -150,7 +149,7 @@ class TranslationRouteFinder
             case self::MAILS:
                 $emailContentType = $propertyAccessor->getValue($routeProperties, '[email_content_type]');
 
-                if (self::BODY === $emailContentType) {
+                if ($emailContentType === self::BODY) {
                     $parameters = [];
                 }
 
@@ -160,7 +159,7 @@ class TranslationRouteFinder
                 $moduleName = $propertyAccessor->getValue($routeProperties, '[module]');
                 $parameters['selected'] = $moduleName;
 
-                if (!$this->isModuleUsingNewTranslationSystem($moduleName)) {
+                if (! $this->isModuleUsingNewTranslationSystem($moduleName)) {
                     $parameters = [];
                 }
 
@@ -181,7 +180,7 @@ class TranslationRouteFinder
     {
         $module = $this->moduleRepository->getModule($moduleName);
 
-        if (!($module->getInstance() instanceof Module)) {
+        if (! ($module->getInstance() instanceof Module)) {
             throw new InvalidModuleException($moduleName);
         }
 

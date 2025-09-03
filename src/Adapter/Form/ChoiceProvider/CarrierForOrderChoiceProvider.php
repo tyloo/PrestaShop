@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class CarrierForOrderChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices(array $options): array
     {
         $options = $this->resolveOptions($options);
@@ -57,11 +55,6 @@ final class CarrierForOrderChoiceProvider implements ConfigurableFormChoiceProvi
         );
     }
 
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
     private function resolveOptions(array $options): array
     {
         $resolver = new OptionsResolver();

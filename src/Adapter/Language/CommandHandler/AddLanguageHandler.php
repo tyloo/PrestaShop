@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,13 +46,12 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\LanguageId;
 #[AsCommandHandler]
 final class AddLanguageHandler extends AbstractLanguageHandler implements AddLanguageHandlerInterface
 {
-    public function __construct(private readonly ImageValidator $imageValidator, private readonly RobotsTextFileGenerator $robotsTextFileGenerator)
-    {
+    public function __construct(
+        private readonly ImageValidator $imageValidator,
+        private readonly RobotsTextFileGenerator $robotsTextFileGenerator,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddLanguageCommand $command)
     {
         $this->assertLanguageWithIsoCodeDoesNotExist($command->getIsoCode());
@@ -79,22 +79,17 @@ final class AddLanguageHandler extends AbstractLanguageHandler implements AddLan
     }
 
     /**
-     * @param IsoCode $isoCode
-     *
      * @throws LanguageConstraintException
      */
     private function assertLanguageWithIsoCodeDoesNotExist(IsoCode $isoCode)
     {
         if (Language::getIdByIso($isoCode->getValue())) {
-            throw new LanguageConstraintException(sprintf('Language with ISO code "%s" already exists', $isoCode->getValue()), LanguageConstraintException::DUPLICATE_ISO_CODE);
+            throw new LanguageConstraintException(\sprintf('Language with ISO code "%s" already exists', $isoCode->getValue()), LanguageConstraintException::DUPLICATE_ISO_CODE);
         }
     }
 
     /**
      * Add language and shop association
-     *
-     * @param Language $language
-     * @param AddLanguageCommand $command
      */
     private function addShopAssociation(Language $language, AddLanguageCommand $command)
     {
@@ -105,8 +100,6 @@ final class AddLanguageHandler extends AbstractLanguageHandler implements AddLan
     }
 
     /**
-     * @param AddLanguageCommand $command
-     *
      * @return Language
      */
     private function createLegacyLanguageObjectFromCommand(AddLanguageCommand $command)
@@ -124,27 +117,23 @@ final class AddLanguageHandler extends AbstractLanguageHandler implements AddLan
         $language->is_rtl = $command->isRtl();
         $language->active = $command->isActive();
 
-        if (false === $language->validateFields(false)) {
+        if ($language->validateFields(false) === false) {
             throw new LanguageException('Cannot add language with invalid data');
         }
 
-        if (false === $language->add()) {
-            throw new LanguageException(sprintf('Failed to add new language "%s"', $command->getName()));
+        if ($language->add() === false) {
+            throw new LanguageException(\sprintf('Failed to add new language "%s"', $command->getName()));
         }
 
         return $language;
     }
 
-    /**
-     * @param Language $language
-     * @param AddLanguageCommand $command
-     */
     private function uploadFlagImage(Language $language, AddLanguageCommand $command)
     {
         $this->uploadImage(
             $language->id,
             $command->getFlagImagePath(),
-            'l' . DIRECTORY_SEPARATOR
+            'l' . \DIRECTORY_SEPARATOR
         );
     }
 }

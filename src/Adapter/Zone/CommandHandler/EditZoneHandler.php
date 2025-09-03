@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use Zone;
 final class EditZoneHandler extends AbstractObjectModelHandler implements EditZoneHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws ZoneException
      */
     public function handle(EditZoneCommand $command): void
@@ -51,31 +50,31 @@ final class EditZoneHandler extends AbstractObjectModelHandler implements EditZo
         try {
             $zone = new Zone($command->getZoneId()->getValue());
         } catch (PrestaShopException $prestaShopException) {
-            throw new ZoneException(sprintf('Failed to get zone with id "%d"', $command->getZoneId()->getValue()), 0, $prestaShopException);
+            throw new ZoneException(\sprintf('Failed to get zone with id "%d"', $command->getZoneId()->getValue()), 0, $prestaShopException);
         }
 
         if ($zone->id !== $command->getZoneId()->getValue()) {
-            throw new ZoneNotFoundException(sprintf('Zone with id "%d" was not found', $command->getZoneId()->getValue()));
+            throw new ZoneNotFoundException(\sprintf('Zone with id "%d" was not found', $command->getZoneId()->getValue()));
         }
 
-        if (null !== $command->getName()) {
+        if ($command->getName() !== null) {
             $zone->name = $command->getName();
         }
 
-        if (null !== $command->isEnabled()) {
+        if ($command->isEnabled() !== null) {
             $zone->active = $command->isEnabled();
         }
 
         try {
-            if (!$zone->update()) {
-                throw new CannotEditZoneException(sprintf('Cannot update zone with id "%d"', $zone->id));
+            if (! $zone->update()) {
+                throw new CannotEditZoneException(\sprintf('Cannot update zone with id "%d"', $zone->id));
             }
 
-            if (null !== $command->getShopAssociation()) {
+            if ($command->getShopAssociation() !== null) {
                 $this->associateWithShops($zone, $command->getShopAssociation());
             }
         } catch (PrestaShopException) {
-            throw new CannotEditZoneException(sprintf('Cannot update zone with id "%d"', $zone->id));
+            throw new CannotEditZoneException(\sprintf('Cannot update zone with id "%d"', $zone->id));
         }
     }
 }

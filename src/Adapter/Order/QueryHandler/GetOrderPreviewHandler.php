@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,22 +65,14 @@ final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
      */
     private $addressFormatter;
 
-    /**
-     * @param LocaleRepository $localeRepository
-     * @param string $locale
-     * @param AddressFormatterInterface|null $addressFormatter
-     */
     public function __construct(
         private readonly LocaleRepository $localeRepository,
         private readonly string $locale,
-        ?AddressFormatterInterface $addressFormatter = null
+        ?AddressFormatterInterface $addressFormatter = null,
     ) {
         $this->addressFormatter = $addressFormatter ?? new AddressFormatter();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetOrderPreview $query): OrderPreview
     {
         $order = $this->getOrder($query->getOrderId());
@@ -90,34 +83,25 @@ final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
             $this->getShippingDetails($order),
             $this->getProductDetails($order),
             $order->isVirtual(),
-            $priceDisplayMethod == PS_TAX_INC,
+            $priceDisplayMethod === PS_TAX_INC,
             $this->addressFormatter->format(new AddressId((int) $order->id_address_invoice)),
             $this->addressFormatter->format(new AddressId((int) $order->id_address_delivery))
         );
     }
 
     /**
-     * @param OrderId $orderId
-     *
-     * @return Order
-     *
      * @throws OrderNotFoundException
      */
     private function getOrder(OrderId $orderId): Order
     {
         $order = new Order($orderId->getValue());
         if ($order->id !== $orderId->getValue()) {
-            throw new OrderNotFoundException($orderId, sprintf('Order with id "%s" was not found.', $orderId->getValue()));
+            throw new OrderNotFoundException($orderId, \sprintf('Order with id "%s" was not found.', $orderId->getValue()));
         }
 
         return $order;
     }
 
-    /**
-     * @param Order $order
-     *
-     * @return OrderPreviewInvoiceDetails
-     */
     private function getInvoiceDetails(Order $order): OrderPreviewInvoiceDetails
     {
         $customer = new Customer($order->id_customer);
@@ -144,9 +128,6 @@ final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     private function getShippingDetails(Order $order): OrderPreviewShippingDetails
     {
         $address = new Address($order->id_address_delivery);
@@ -187,8 +168,6 @@ final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
     }
 
     /**
-     * @param Order $order
-     *
      * @return OrderPreviewProductDetail[]
      */
     private function getProductDetails(Order $order): array
@@ -213,7 +192,7 @@ final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
 
             $totalTaxAmount = $totalPriceTaxIncl->minus($totalPriceTaxExcl);
 
-            if (PS_TAX_INC === $taxCalculationMethod) {
+            if ($taxCalculationMethod === PS_TAX_INC) {
                 $unitPrice = $detail['unit_price_tax_incl'];
                 $totalPrice = $detail['total_price_tax_incl'];
             }
@@ -237,11 +216,6 @@ final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
         return $productDetails;
     }
 
-    /**
-     * @param Order $order
-     *
-     * @return int
-     */
     private function getOrderTaxCalculationMethod(Order $order): int
     {
         $customer = new Customer($order->id_customer);

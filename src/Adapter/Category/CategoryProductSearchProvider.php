@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,14 +49,12 @@ class CategoryProductSearchProvider implements ProductSearchProviderInterface
 
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private readonly Category $category
+        private readonly Category $category,
     ) {
         $this->sortOrdersCollection = new SortOrdersCollection($this->translator);
     }
 
     /**
-     * @param ProductSearchContext $context
-     * @param ProductSearchQuery $query
      * @param string $type
      *
      * @return array|false|int
@@ -65,7 +64,7 @@ class CategoryProductSearchProvider implements ProductSearchProviderInterface
     private function getProductsOrCount(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-        $type = 'products'
+        $type = 'products',
     ) {
         if ($query->getSortOrder()->isRandom()) {
             return $this->category->getProducts(
@@ -79,36 +78,33 @@ class CategoryProductSearchProvider implements ProductSearchProviderInterface
                 true,
                 $query->getResultsPerPage()
             );
-        } else {
-            return $this->category->getProducts(
-                $context->getIdLang(),
-                $query->getPage(),
-                $query->getResultsPerPage(),
-                $query->getSortOrder()->toLegacyOrderBy(),
-                $query->getSortOrder()->toLegacyOrderWay(),
-                $type !== 'products'
-            );
         }
+
+        return $this->category->getProducts(
+            $context->getIdLang(),
+            $query->getPage(),
+            $query->getResultsPerPage(),
+            $query->getSortOrder()->toLegacyOrderBy(),
+            $query->getSortOrder()->toLegacyOrderWay(),
+            $type !== 'products'
+        );
     }
 
     /**
-     * @param ProductSearchContext $context
-     * @param ProductSearchQuery $query
-     *
      * @return ProductSearchResult
      *
      * @throws PrestaShopDatabaseException
      */
     public function runQuery(
         ProductSearchContext $context,
-        ProductSearchQuery $query
+        ProductSearchQuery $query,
     ) {
         $products = $this->getProductsOrCount($context, $query, 'products');
         $count = $this->getProductsOrCount($context, $query, 'count');
 
         $result = new ProductSearchResult();
 
-        if (!empty($products)) {
+        if (! empty($products)) {
             $result
                 ->setProducts($products)
                 ->setTotalProductsCount($count);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,9 +36,6 @@ use PrestaShop\PrestaShop\Core\Order\OrderStateDataProviderInterface;
  */
 final class OrderStateDataProvider implements OrderStateDataProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getOrderStates($languageId)
     {
         return OrderState::getOrderStates($languageId, false);

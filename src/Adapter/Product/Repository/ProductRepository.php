@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,24 +73,17 @@ use Product;
 
 class ProductRepository extends AbstractMultiShopObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param ProductValidator $productValidator
-     * @param TaxRulesGroupRepository $taxRulesGroupRepository
-     * @param ManufacturerRepository $manufacturerRepository
-     * @param CategoryRepository $categoryRepository
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ProductValidator $productValidator, private readonly TaxRulesGroupRepository $taxRulesGroupRepository, private readonly ManufacturerRepository $manufacturerRepository, private readonly CategoryRepository $categoryRepository)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly ProductValidator $productValidator,
+        private readonly TaxRulesGroupRepository $taxRulesGroupRepository,
+        private readonly ManufacturerRepository $manufacturerRepository,
+        private readonly CategoryRepository $categoryRepository,
+    ) {
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopId $shopId
-     *
-     * @return Product
-     *
      * @throws CoreException
      */
     public function get(ProductId $productId, ShopId $shopId): Product
@@ -98,10 +92,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     *
-     * @return ShopId
-     *
      * @throws ProductNotFoundException
      */
     public function getProductDefaultShopId(ProductId $productId): ShopId
@@ -116,10 +106,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
 
         $result = $qb->executeQuery()->fetchAssociative();
         if (empty($result['id_shop_default'])) {
-            throw new ProductNotFoundException(sprintf(
-                'Could not find Product with id %d',
-                $productId->getValue()
-            ));
+            throw new ProductNotFoundException(\sprintf('Could not find Product with id %d', $productId->getValue()));
         }
 
         return new ShopId((int) $result['id_shop_default']);
@@ -128,11 +115,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     /**
      * Returns the default shop of a product among a group, if the product's default shop is in the group it will
      * naturally be returned. In the other case the first shop associated to the product in the group is returned.
-     *
-     * @param ProductId $productId
-     * @param ShopGroupId $shopGroupId
-     *
-     * @return ShopId
      */
     public function getProductDefaultShopIdForGroup(ProductId $productId, ShopGroupId $shopGroupId): ShopId
     {
@@ -161,11 +143,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
 
         $result = $qb->executeQuery()->fetchAllAssociative();
         if (empty($result)) {
-            throw new ShopGroupAssociationNotFound(sprintf(
-                'Could not find association between Product %d and Shop group %d',
-                $productId->getValue(),
-                $shopGroupId->getValue()
-            ));
+            throw new ShopGroupAssociationNotFound(\sprintf('Could not find association between Product %d and Shop group %d', $productId->getValue(), $shopGroupId->getValue()));
         }
 
         // By default, the first shop from the group is considered the default one
@@ -182,11 +160,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopConstraint $shopConstraint
-     *
-     * @return Product
-     *
      * @throws CoreException
      */
     public function getByShopConstraint(ProductId $productId, ShopConstraint $shopConstraint): Product
@@ -209,10 +182,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     /**
      * @param array<int, string> $localizedNames
      * @param array<int, string> $localizedLinkRewrites
-     * @param string $productType
-     * @param ShopId $shopId
-     *
-     * @return Product
      *
      * @throws CoreException
      */
@@ -220,15 +189,15 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         array $localizedNames,
         array $localizedLinkRewrites,
         string $productType,
-        ShopId $shopId
+        ShopId $shopId,
     ): Product {
         $defaultCategoryId = $this->categoryRepository->getShopDefaultCategory($shopId);
 
         $product = new Product(null, false, null, $shopId->getValue());
         $product->active = false;
         $product->id_category_default = $defaultCategoryId->getValue();
-        $product->is_virtual = ProductType::TYPE_VIRTUAL === $productType;
-        $product->cache_is_pack = ProductType::TYPE_PACK === $productType;
+        $product->is_virtual = $productType === ProductType::TYPE_VIRTUAL;
+        $product->cache_is_pack = $productType === ProductType::TYPE_PACK;
         $product->product_type = $productType;
         $product->id_shop_default = $shopId->getValue();
         $product->name = $localizedNames;
@@ -245,12 +214,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         return $product;
     }
 
-    /**
-     * @param Product $product
-     * @param array $propertiesToUpdate
-     * @param ShopConstraint $shopConstraint
-     * @param int $errorCode
-     */
     public function partialUpdate(Product $product, array $propertiesToUpdate, ShopConstraint $shopConstraint, int $errorCode): void
     {
         $this->validateProduct($product, $propertiesToUpdate);
@@ -266,13 +229,11 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
      * @param CarrierReferenceId[] $carrierReferenceIds
-     * @param ShopConstraint $shopConstraint
      */
     public function setCarrierReferences(ProductId $productId, array $carrierReferenceIds, ShopConstraint $shopConstraint): void
     {
-        $shopIds = array_map(fn(ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
+        $shopIds = array_map(fn (ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
 
         $productIdValue = $productId->getValue();
 
@@ -288,7 +249,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         $insertValues = [];
         foreach ($carrierReferenceIds as $referenceId) {
             foreach ($shopIds as $shopId) {
-                $insertValues[] = sprintf(
+                $insertValues[] = \sprintf(
                     '(%d, %d, %d)',
                     $productIdValue,
                     $referenceId->getValue(),
@@ -313,11 +274,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         $this->connection->executeStatement($stmt);
     }
 
-    /**
-     * @param Product $product
-     * @param ShopConstraint $shopConstraint
-     * @param int $errorCode
-     */
     public function update(Product $product, ShopConstraint $shopConstraint, int $errorCode): void
     {
         $this->validateProduct($product);
@@ -330,8 +286,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return ShopId[]
      */
     public function getAssociatedShopIds(ProductId $productId): array
@@ -344,13 +298,10 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        return array_map(static fn(array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopGroupId $shopGroupId
-     *
      * @return ShopId[]
      */
     public function getAssociatedShopIdsFromGroup(ProductId $productId, ShopGroupId $shopGroupId): array
@@ -371,11 +322,10 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        return array_map(static fn(array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**
-     * @param ProductId $productId
      * @param ShopId[] $shopIds
      *
      * @throws CannotDeleteProductException
@@ -397,10 +347,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         $this->deleteObjectModelFromShops($product, $shopIds, CannotDeleteProductException::class);
     }
 
-    /**
-     * @param ProductId $productId
-     * @param ShopConstraint $shopConstraint
-     */
     public function deleteByShopConstraint(ProductId $productId, ShopConstraint $shopConstraint): void
     {
         // We fetch the product from its default shop, the values don't matter anyway we just need a Product instance
@@ -409,11 +355,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         $this->deleteObjectModelFromShops($product, $shopIds, CannotDeleteProductException::class);
     }
 
-    /**
-     * @param ProductId $productId
-     *
-     * @return bool
-     */
     public function hasCombinations(ProductId $productId): bool
     {
         $result = $this->connection->createQueryBuilder()
@@ -425,17 +366,15 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             ->fetchOne()
         ;
 
-        return !empty($result);
+        return ! empty($result);
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return AttributeGroupId[]
      */
     public function getProductAttributesGroupIds(ProductId $productId, ShopConstraint $shopConstraint): array
     {
-        $shopIds = array_map(static fn(ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
+        $shopIds = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
 
         $qb = $this->connection->createQueryBuilder();
         $qb->select('a.id_attribute_group')
@@ -461,17 +400,15 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
 
         $results = $qb->executeQuery()->fetchFirstColumn();
 
-        return array_map(static fn(string $id): AttributeGroupId => new AttributeGroupId((int) $id), $results);
+        return array_map(static fn (string $id): AttributeGroupId => new AttributeGroupId((int) $id), $results);
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return AttributeId[]
      */
     public function getProductAttributesIds(ProductId $productId, ShopConstraint $shopConstraint): array
     {
-        $shopIds = array_map(static fn(ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
+        $shopIds = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
 
         $qb = $this->connection->createQueryBuilder();
         $qb->select('pac.id_attribute')
@@ -491,21 +428,19 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
 
         $results = $qb->executeQuery()->fetchFirstColumn();
 
-        return array_map(static fn(string $id): AttributeId => new AttributeId((int) $id), $results);
+        return array_map(static fn (string $id): AttributeId => new AttributeId((int) $id), $results);
     }
 
     /**
      * Updates the Product's cache default attribute by selecting appropriate value from combination tables
-     *
-     * @param ProductId $productId
      */
     public function updateCachedDefaultCombination(ProductId $productId, ShopConstraint $shopConstraint): void
     {
-        $shopIds = array_map(fn(ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
+        $shopIds = array_map(fn (ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
 
         $defaultShopId = $this->getProductDefaultShopId($productId)->getValue();
         $defaultCombinations = $this->connection->fetchAllAssociative(
-            sprintf('
+            \sprintf('
                 SELECT id_product_attribute, id_shop
                 FROM %sproduct_attribute_shop
                 WHERE id_product = %d
@@ -519,7 +454,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             )
         );
 
-        $productShopTable = sprintf('%sproduct_shop', $this->dbPrefix);
+        $productShopTable = \sprintf('%sproduct_shop', $this->dbPrefix);
         $combinationIdForDefaultShop = null;
         $combinationShopIds = [];
 
@@ -532,7 +467,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
                 $combinationIdForDefaultShop = $combinationId;
             }
 
-            $this->connection->executeStatement(sprintf(
+            $this->connection->executeStatement(\sprintf(
                 'UPDATE %s SET cache_default_attribute = %d WHERE id_product = %d AND id_shop = %d',
                 $productShopTable,
                 $combinationId,
@@ -541,7 +476,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             ));
         }
 
-        $this->connection->executeStatement(sprintf(
+        $this->connection->executeStatement(\sprintf(
             'UPDATE %sproduct SET cache_default_attribute = %d WHERE id_product = %d',
             $this->dbPrefix,
             $combinationIdForDefaultShop,
@@ -551,7 +486,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         $unhandledShopIds = array_diff($shopIds, $combinationShopIds);
         foreach ($unhandledShopIds as $shopId) {
             // reset default combination to 0 to all shop ids which have no combinations
-            $this->connection->executeStatement(sprintf(
+            $this->connection->executeStatement(\sprintf(
                 'UPDATE %s SET cache_default_attribute = %d WHERE id_product = %d AND id_shop = %d',
                 $productShopTable,
                 0,
@@ -562,10 +497,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     *
-     * @return ProductType
-     *
      * @throws ProductNotFoundException
      */
     public function getProductType(ProductId $productId): ProductType
@@ -580,13 +511,10 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         ;
 
         if (empty($result)) {
-            throw new ProductNotFoundException(sprintf(
-                'Cannot find product type for product %d because it does not exist',
-                $productId->getValue()
-            ));
+            throw new ProductNotFoundException(\sprintf('Cannot find product type for product %d because it does not exist', $productId->getValue()));
         }
 
-        if (!empty($result['product_type'])) {
+        if (! empty($result['product_type'])) {
             return new ProductType($result['product_type']);
         }
 
@@ -595,10 +523,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     *
-     * @return Product
-     *
      * @throws ProductNotFoundException
      */
     public function getProductByDefaultShop(ProductId $productId): Product
@@ -609,9 +533,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopId $shopId
-     *
      * @throws ShopAssociationNotFound
      */
     public function assertProductIsAssociatedToShop(ProductId $productId, ShopId $shopId): void
@@ -625,11 +546,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
 
     /**
      * Gets position product position in category
-     *
-     * @param ProductId $productId
-     * @param CategoryId $categoryId
-     *
-     * @return int|null
      */
     public function getPositionInCategory(ProductId $productId, CategoryId $categoryId): ?int
     {
@@ -644,7 +560,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
 
         $position = $qb->executeQuery()->fetchOne();
 
-        if (!$position) {
+        if (! $position) {
             return null;
         }
 
@@ -652,9 +568,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param LanguageId $languageId
-     *
      * @return array<array<string, string>>
      *                                      e.g [
      *                                      ['id_product' => '1', 'name' => 'Product name', 'reference' => 'demo15'],
@@ -671,18 +584,13 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         try {
             $accessories = Product::getAccessoriesLight($languageId->getValue(), $productIdValue);
         } catch (PrestaShopException) {
-            throw new CoreException(sprintf(
-                'Error occurred when fetching related products for product #%d',
-                $productIdValue
-            ));
+            throw new CoreException(\sprintf('Error occurred when fetching related products for product #%d', $productIdValue));
         }
 
         return $accessories;
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @throws ProductNotFoundException
      */
     public function assertProductExists(ProductId $productId): void
@@ -698,7 +606,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     public function assertAllProductsExists(array $productIds): void
     {
         // @todo: no shop association. Should it be checked here?
-        $ids = array_map(fn(ProductId $productId): int => $productId->getValue(), $productIds);
+        $ids = array_map(fn (ProductId $productId): int => $productId->getValue(), $productIds);
         $ids = array_unique($ids);
 
         $qb = $this->connection->createQueryBuilder();
@@ -710,22 +618,12 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
 
         $results = $qb->executeQuery()->fetchAssociative();
 
-        if (!$results || (int) $results['product_count'] !== count($ids)) {
-            throw new ProductNotFoundException(
-                sprintf(
-                    'Some of these products do not exist: %s',
-                    implode(',', $ids)
-                )
-            );
+        if (! $results || (int) $results['product_count'] !== \count($ids)) {
+            throw new ProductNotFoundException(\sprintf('Some of these products do not exist: %s', implode(',', $ids)));
         }
     }
 
     /**
-     * @param string $searchPhrase
-     * @param LanguageId $languageId
-     * @param ShopId $shopId
-     * @param int|null $limit
-     *
      * @return array<int, array<string, int|string>>
      */
     public function searchProducts(string $searchPhrase, LanguageId $languageId, ShopId $shopId, ?int $limit = null): array
@@ -747,12 +645,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param string $searchPhrase
-     * @param LanguageId $languageId
-     * @param ShopId $shopId
-     * @param array $filters
-     * @param int|null $limit
-     *
      * @return array<int, array<string, int|string>>
      *
      * @throws Exception
@@ -763,7 +655,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         LanguageId $languageId,
         ShopId $shopId,
         array $filters = [],
-        ?int $limit = null
+        ?int $limit = null,
     ): array {
         $qb = $this->getSearchQueryBuilder(
             $searchPhrase,
@@ -803,21 +695,12 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         return new TaxRulesGroupId((int) $result);
     }
 
-    /**
-     * @param string $searchPhrase
-     * @param LanguageId $languageId
-     * @param ShopId $shopId
-     * @param array $filters
-     * @param int|null $limit
-     *
-     * @return QueryBuilder
-     */
     protected function getSearchQueryBuilder(
         string $searchPhrase,
         LanguageId $languageId,
         ShopId $shopId,
         array $filters = [],
-        ?int $limit = null
+        ?int $limit = null,
     ): QueryBuilder {
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -853,7 +736,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             $qb->expr()->like('pa.ean13', ':dbSearchPhrase'),
             $qb->expr()->like('pa.supplier_reference', ':dbSearchPhrase')
         ));
-        $dbSearchPhrase = sprintf('%%%s%%', $searchPhrase);
+        $dbSearchPhrase = \sprintf('%%%s%%', $searchPhrase);
         $qb->setParameter('dbSearchPhrase', $dbSearchPhrase);
 
         foreach ($filters as $type => $filter) {
@@ -867,7 +750,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             }
         }
 
-        if (!empty($limit)) {
+        if (! empty($limit)) {
             $qb->setMaxResults($limit);
         }
 
@@ -882,11 +765,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopId $shopId
-     *
-     * @return Product
-     *
      * @throws CoreException
      */
     private function getProductByShopId(ProductId $productId, ShopId $shopId): Product
@@ -906,9 +784,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     /**
      * Returns a single shop ID when the constraint is a single shop, and the list of shops associated to the product
      * when the constraint is for all shops (shop group constraint is forbidden)
-     *
-     * @param ProductId $productId
-     * @param ShopConstraint $shopConstraint
      *
      * @return ShopId[]
      */
@@ -932,10 +807,6 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     /**
      * @todo: this should be removable soon once the deprecated stock properties have been removed see PR #26682
      *
-     * @param Product $product
-     *
-     * @return Product
-     *
      * @throws CoreException
      */
     private function loadProduct(Product $product): Product
@@ -943,20 +814,13 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
         try {
             $product->loadStockData();
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when trying to load Product stock #%d', $product->id),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to load Product stock #%d', $product->id), 0, $prestaShopException);
         }
 
         return $product;
     }
 
     /**
-     * @param Product $product
-     * @param array $propertiesToUpdate
-     *
      * @throws CoreException
      * @throws ProductConstraintException
      * @throws ProductException
@@ -967,9 +831,9 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     private function validateProduct(Product $product, array $propertiesToUpdate = []): void
     {
-        $taxRulesGroupIdIsBeingUpdated = empty($propertiesToUpdate) || in_array('id_tax_rules_group', $propertiesToUpdate, true);
+        $taxRulesGroupIdIsBeingUpdated = empty($propertiesToUpdate) || \in_array('id_tax_rules_group', $propertiesToUpdate, true);
         $taxRulesGroupId = (int) $product->id_tax_rules_group;
-        $manufacturerIdIsBeingUpdated = empty($propertiesToUpdate) || in_array('id_manufacturer', $propertiesToUpdate, true);
+        $manufacturerIdIsBeingUpdated = empty($propertiesToUpdate) || \in_array('id_manufacturer', $propertiesToUpdate, true);
         $manufacturerId = (int) $product->id_manufacturer;
 
         if ($taxRulesGroupIdIsBeingUpdated && $taxRulesGroupId !== ProductTaxRulesGroupSettings::NONE_APPLIED) {

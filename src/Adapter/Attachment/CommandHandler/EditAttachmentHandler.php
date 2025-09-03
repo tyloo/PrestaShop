@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,18 +46,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[AsCommandHandler]
 final class EditAttachmentHandler extends AbstractAttachmentHandler implements EditAttachmentHandlerInterface
 {
-    /**
-     * @param ValidatorInterface $validator
-     * @param AttachmentFileUploaderInterface $fileUploader
-     */
-    public function __construct(ValidatorInterface $validator, protected AttachmentFileUploaderInterface $fileUploader)
-    {
+    public function __construct(
+        ValidatorInterface $validator,
+        protected AttachmentFileUploaderInterface $fileUploader,
+    ) {
         parent::__construct($validator);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws AttachmentConstraintException
      * @throws AttachmentException
      * @throws AttachmentNotFoundException
@@ -69,20 +66,17 @@ final class EditAttachmentHandler extends AbstractAttachmentHandler implements E
         try {
             $attachment = new Attachment($attachmentIdValue);
         } catch (PrestaShopException) {
-            throw new AttachmentNotFoundException(sprintf('Attachment with id "%s" was not found.', $attachmentIdValue));
+            throw new AttachmentNotFoundException(\sprintf('Attachment with id "%s" was not found.', $attachmentIdValue));
         }
 
         if ($attachment->id !== $attachmentIdValue) {
-            throw new AttachmentNotFoundException(sprintf('Attachment with id "%s" was not found.', $attachmentIdValue));
+            throw new AttachmentNotFoundException(\sprintf('Attachment with id "%s" was not found.', $attachmentIdValue));
         }
 
         $this->updateAttachmentFromCommandData($attachment, $command);
     }
 
     /**
-     * @param Attachment $attachment
-     * @param EditAttachmentCommand $command
-     *
      * @throws AttachmentConstraintException
      * @throws AttachmentException
      * @throws AttachmentNotFoundException
@@ -91,7 +85,7 @@ final class EditAttachmentHandler extends AbstractAttachmentHandler implements E
     private function updateAttachmentFromCommandData(Attachment $attachment, EditAttachmentCommand $command)
     {
         try {
-            if (!$attachment->validateFields(false) && !$attachment->validateFieldsLang(false)) {
+            if (! $attachment->validateFields(false) && ! $attachment->validateFieldsLang(false)) {
                 throw new AttachmentConstraintException('Attachment contains invalid field values', AttachmentConstraintException::INVALID_FIELDS);
             }
 
@@ -103,7 +97,7 @@ final class EditAttachmentHandler extends AbstractAttachmentHandler implements E
 
             $this->assertValidFields($attachment);
 
-            if (null !== $command->getPathName()) {
+            if ($command->getPathName() !== null) {
                 $uniqueFileName = $this->getUniqueFileName();
 
                 $attachment->file_name = $command->getOriginalFileName();
@@ -120,7 +114,7 @@ final class EditAttachmentHandler extends AbstractAttachmentHandler implements E
                 );
             }
 
-            if (false === $attachment->update()) {
+            if ($attachment->update() === false) {
                 throw new CannotUpdateAttachmentException('Failed to update attachment');
             }
         } catch (PrestaShopException $prestaShopException) {

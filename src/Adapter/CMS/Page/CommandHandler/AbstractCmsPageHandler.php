@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,11 +57,11 @@ abstract class AbstractCmsPageHandler extends AbstractObjectModelHandler
         try {
             $cms = new CMS($cmsId);
 
-            if (0 >= $cms->id) {
-                throw new CmsPageNotFoundException(sprintf('Cms page with id "%s" not found', $cmsId));
+            if ($cms->id <= 0) {
+                throw new CmsPageNotFoundException(\sprintf('Cms page with id "%s" not found', $cmsId));
             }
         } catch (PrestaShopException) {
-            throw new CmsPageException(sprintf('An error occurred when trying to get cms page with id %s', $cmsId));
+            throw new CmsPageException(\sprintf('An error occurred when trying to get cms page with id %s', $cmsId));
         }
 
         return $cms;
@@ -77,11 +78,11 @@ abstract class AbstractCmsPageHandler extends AbstractObjectModelHandler
     {
         try {
             $cmsCategory = new CMSCategory($cmsCategoryId);
-            if (0 >= $cmsCategory->id) {
-                throw new CmsPageCategoryNotFoundException(sprintf('Cms page category with id "%s" not found', $cmsCategoryId));
+            if ($cmsCategory->id <= 0) {
+                throw new CmsPageCategoryNotFoundException(\sprintf('Cms page category with id "%s" not found', $cmsCategoryId));
             }
         } catch (PrestaShopException) {
-            throw new CmsPageCategoryException(sprintf('An error occurred when trying to get cms page category with id %s', $cmsCategoryId));
+            throw new CmsPageCategoryException(\sprintf('An error occurred when trying to get cms page category with id %s', $cmsCategoryId));
         }
     }
 }

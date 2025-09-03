@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,17 +59,13 @@ class ProductPackRepository extends AbstractObjectModelRepository
 
     public function __construct(
         Connection $connection,
-        string $dbPrefix
+        string $dbPrefix,
     ) {
         $this->connection = $connection;
         $this->dbPrefix = $dbPrefix;
     }
 
     /**
-     * @param PackId $productId
-     * @param LanguageId $languageId
-     * @param ShopConstraint $shopConstraint
-     *
      * @return array<array<string, string>>
      *                                      e.g [
      *                                      ['id_product_item' => '1', 'id_product_attribute_item' => '1', 'name' => 'Product name', 'reference' => 'demo15', 'quantity' => '1'],
@@ -79,7 +76,7 @@ class ProductPackRepository extends AbstractObjectModelRepository
      */
     public function getPackedProducts(PackId $productId, LanguageId $languageId, ShopConstraint $shopConstraint): array
     {
-        if (!$shopConstraint->isSingleShopContext()) {
+        if (! $shopConstraint->isSingleShopContext()) {
             throw new InvalidShopConstraintException('Product Pack has no features related with shop group or all shops, use single shop constraint');
         }
 
@@ -109,23 +106,13 @@ class ProductPackRepository extends AbstractObjectModelRepository
             ;
             $packedProducts = $qb->executeQuery()->fetchAll();
         } catch (Throwable $throwable) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when fetching packed products for pack #%d',
-                    $productIdValue
-                ),
-                $throwable->getCode(),
-                $throwable
-            );
+            throw new CoreException(\sprintf('Error occurred when fetching packed products for pack #%d', $productIdValue), $throwable->getCode(), $throwable);
         }
 
         return $packedProducts;
     }
 
     /**
-     * @param PackId $packId
-     * @param QuantifiedProduct $productForPacking
-     *
      * @throws CoreException
      * @throws ProductPackException
      */
@@ -142,24 +129,15 @@ class ProductPackRepository extends AbstractObjectModelRepository
                     $productForPacking->getCombinationId()->getValue() :
                     NoCombinationId::NO_COMBINATION_ID
             );
-            if (!$packed) {
-                throw new ProductPackException(
-                    $this->appendIdsToMessage('Failed to add product to pack.', $productForPacking, $packIdValue),
-                    ProductPackException::FAILED_ADDING_TO_PACK
-                );
+            if (! $packed) {
+                throw new ProductPackException($this->appendIdsToMessage('Failed to add product to pack.', $productForPacking, $packIdValue), ProductPackException::FAILED_ADDING_TO_PACK);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                $this->appendIdsToMessage('Error occurred when trying to add product to pack.', $productForPacking, $packIdValue),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException($this->appendIdsToMessage('Error occurred when trying to add product to pack.', $productForPacking, $packIdValue), 0, $prestaShopException);
         }
     }
 
     /**
-     * @param PackId $packId
-     *
      * @throws CoreException
      * @throws ProductPackException
      */
@@ -169,26 +147,14 @@ class ProductPackRepository extends AbstractObjectModelRepository
 
         try {
             // We don't reset cache_is_pack for product we want to keep it tru as long as product type doesn't change
-            if (!Pack::deleteItems($packIdValue, false)) {
-                throw new ProductPackException(
-                    sprintf('Failed to remove products from pack #%d', $packIdValue),
-                    ProductPackException::FAILED_DELETING_PRODUCTS_FROM_PACK
-                );
+            if (! Pack::deleteItems($packIdValue, false)) {
+                throw new ProductPackException(\sprintf('Failed to remove products from pack #%d', $packIdValue), ProductPackException::FAILED_DELETING_PRODUCTS_FROM_PACK);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when trying to remove pack items from pack #%d', $packIdValue),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to remove pack items from pack #%d', $packIdValue), 0, $prestaShopException);
         }
     }
 
-    /**
-     * @param ProductId $productId
-     *
-     * @return array
-     */
     public function getPacksContaining(ProductId $productId): array
     {
         $this->assertProductExists($productId);
@@ -201,35 +167,26 @@ class ProductPackRepository extends AbstractObjectModelRepository
 
         $packs = $qb->executeQuery()->fetchAllAssociative();
 
-        return array_map(fn(array $packData) => new PackId((int) $packData['id_product_pack']), $packs);
+        return array_map(fn (array $packData) => new PackId((int) $packData['id_product_pack']), $packs);
     }
 
     /**
      * Builds string with ids, that will help to identify objects that was being updated in case of error
-     *
-     * @param string $messageBody
-     * @param QuantifiedProduct $product
-     * @param int $packId
-     *
-     * @return string
      */
     private function appendIdsToMessage(string $messageBody, QuantifiedProduct $product, int $packId): string
     {
         if ($product->getCombinationId() !== null) {
-            $combinationId = sprintf(' combinationId #%d', $product->getCombinationId()->getValue());
+            $combinationId = \sprintf(' combinationId #%d', $product->getCombinationId()->getValue());
         }
 
-        return sprintf(
-            sprintf('%s. [packId #%%d; productId #%%d;%%s]', $messageBody),
+        return \sprintf(
+            \sprintf('%s. [packId #%%d; productId #%%d;%%s]', $messageBody),
             $packId,
             $product->getProductId()->getValue(),
             $combinationId ?? ''
         );
     }
 
-    /**
-     * @param ProductId $productId
-     */
     protected function assertProductExists(ProductId $productId): void
     {
         $this->assertObjectModelExists($productId->getValue(), 'product', ProductNotFoundException::class);

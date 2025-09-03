@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,13 +50,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[AsCommandHandler]
 class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterface
 {
-    public function __construct(private readonly TranslatorInterface $translator, private readonly Link $contextLink)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly Link $contextLink,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SendProcessOrderEmailCommand $command): void
     {
         $cartId = $command->getCartId();
@@ -66,7 +66,7 @@ class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterf
             $cartLanguage = $cart->getAssociatedLanguage();
             $langId = (int) $cartLanguage->getId();
 
-            if (!Mail::send(
+            if (! Mail::send(
                 $langId,
                 'backoffice_order',
                 $this->getSubject($cartLanguage),
@@ -91,8 +91,6 @@ class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterf
     /**
      * Provides legacy cart object
      *
-     * @param CartId $cartId
-     *
      * @return Cart
      *
      * @throws CartNotFoundException
@@ -103,7 +101,7 @@ class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterf
         $cart = new Cart($cartIdValue);
 
         if ($cart->id !== $cartIdValue) {
-            throw new CartNotFoundException(sprintf('Cart #%s not found', $cartIdValue));
+            throw new CartNotFoundException(\sprintf('Cart #%s not found', $cartIdValue));
         }
 
         return $cart;
@@ -111,8 +109,6 @@ class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterf
 
     /**
      * Provides legacy customer object
-     *
-     * @param CustomerId $customerId
      *
      * @return Customer
      *
@@ -124,7 +120,7 @@ class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterf
         $customer = new Customer($customerIdValue);
 
         if ($customer->id !== $customerIdValue) {
-            throw new CustomerNotFoundException(sprintf('Customer #%d not found', $customerIdValue));
+            throw new CustomerNotFoundException(\sprintf('Customer #%d not found', $customerIdValue));
         }
 
         return $customer;
@@ -132,10 +128,6 @@ class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterf
 
     /**
      * Provides translated subject for email
-     *
-     * @param Language $cartLanguage
-     *
-     * @return string
      */
     private function getSubject(Language $cartLanguage): string
     {
@@ -149,12 +141,6 @@ class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterf
 
     /**
      * Provides email template variables
-     *
-     * @param int $cartId
-     * @param Language $cartLanguage
-     * @param Customer $customer
-     *
-     * @return array
      */
     private function getEmailTemplateVars(int $cartId, Language $cartLanguage, Customer $customer): array
     {

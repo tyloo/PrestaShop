@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,21 +57,15 @@ class ImageThumbnailsRegenerator
         // Save start time to calculate remaining time and to avoid timeout on long running processes
         $this->startTime = time();
         ini_set('max_execution_time', $this->maxExecutionTime); // ini_set may be disabled, we need the real value
-        $this->maxExecutionTime = (int) ini_get('max_execution_time');
+        $this->maxExecutionTime = (int) \ini_get('max_execution_time');
     }
 
     /**
      * Delete previous resized images.
-     *
-     * @param string $dir
-     * @param array $types
-     * @param bool $isProduct
-     *
-     * @return bool
      */
     public function deletePreviousImages(string $dir, array $types, bool $isProduct = false): bool
     {
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             return false;
         }
 
@@ -88,7 +83,7 @@ class ImageThumbnailsRegenerator
          * Scan all files in the given folder.
          * We do this also in case of products, because it will take care of placeholder thumbnails, hence the second regex.
          */
-        $filesToDelete = scandir($dir, SCANDIR_SORT_NONE);
+        $filesToDelete = scandir($dir, \SCANDIR_SORT_NONE);
         foreach ($filesToDelete as $file) {
             if ((preg_match($regexStandard, $file) || preg_match($regexPlaceholders, $file)) && file_exists($dir . $file)) {
                 unlink($dir . $file);
@@ -104,7 +99,7 @@ class ImageThumbnailsRegenerator
                 $pathToImageFolder = $dir . $image->getImgFolder();
                 if (file_exists($pathToImageFolder)) {
                     // Scan all files in the given folder
-                    $filesToDelete = scandir($pathToImageFolder, SCANDIR_SORT_NONE);
+                    $filesToDelete = scandir($pathToImageFolder, \SCANDIR_SORT_NONE);
                     foreach ($filesToDelete as $d) {
                         if (preg_match($regexProducts, $d) && file_exists($pathToImageFolder . $d)) {
                             unlink($pathToImageFolder . $d);
@@ -119,16 +114,10 @@ class ImageThumbnailsRegenerator
 
     /**
      * Regenerate images.
-     *
-     * @param string $dir
-     * @param array $type
-     * @param bool $productsImages
-     *
-     * @return bool|array
      */
     public function regenerateNewImages(string $dir, array $type, bool $productsImages = false): bool|array
     {
-        if (!is_dir($dir)) {
+        if (! is_dir($dir)) {
             return false;
         }
 
@@ -141,8 +130,8 @@ class ImageThumbnailsRegenerator
          */
         $configuredImageFormats = $this->imageFormatConfiguration->getGenerationFormats();
 
-        if (!$productsImages) {
-            foreach (scandir($dir, SCANDIR_SORT_NONE) as $originalImageName) {
+        if (! $productsImages) {
+            foreach (scandir($dir, \SCANDIR_SORT_NONE) as $originalImageName) {
                 /*
                  * Let's find all original image files in this folder.
                  * They are either ID.jpg or ID_thumb.jpg in case of category thumbnails
@@ -151,19 +140,19 @@ class ImageThumbnailsRegenerator
                     foreach ($type as $imageType) {
                         // Customizable writing dir
                         $newDir = $dir;
-                        if (!file_exists($newDir)) {
+                        if (! file_exists($newDir)) {
                             continue;
                         }
 
                         foreach ($configuredImageFormats as $imageFormat) {
                             $thumbnailName = substr($originalImageName, 0, -4) . '-' . stripslashes((string) $imageType->getName()) . '.' . $imageFormat;
                             // If thumbnail does not exist
-                            if (!file_exists($newDir . $thumbnailName)) {
+                            if (! file_exists($newDir . $thumbnailName)) {
                                 // Check if original image exists
-                                if (!file_exists($dir . $originalImageName) || !filesize($dir . $originalImageName)) {
+                                if (! file_exists($dir . $originalImageName) || ! filesize($dir . $originalImageName)) {
                                     $errors[] = $this->translator->trans('Source file does not exist or is empty (%filepath%)', ['%filepath%' => $dir . $originalImageName], 'Admin.Design.Notification');
                                 } else {
-                                    if (!LegacyImageManager::resize(
+                                    if (! LegacyImageManager::resize(
                                         $dir . $originalImageName,
                                         $newDir . $thumbnailName,
                                         (int) $imageType->getWidth(),
@@ -191,8 +180,8 @@ class ImageThumbnailsRegenerator
                         foreach ($configuredImageFormats as $imageFormat) {
                             $thumbnailName = $imageObj->getExistingImgPath() . '-' . stripslashes((string) $imageType->getName()) . '.' . $imageFormat;
 
-                            if (!file_exists($dir . $thumbnailName)) {
-                                if (!LegacyImageManager::resize(
+                            if (! file_exists($dir . $thumbnailName)) {
+                                if (! LegacyImageManager::resize(
                                     $originalImageName,
                                     $dir . $thumbnailName,
                                     (int) $imageType->getWidth(),
@@ -240,14 +229,14 @@ class ImageThumbnailsRegenerator
 		LEFT JOIN `' . _DB_PREFIX_ . 'hook` h ON hm.`id_hook` = h.`id_hook`
 		WHERE h.`name` = \'actionWatermark\' AND m.`active` = 1');
 
-        if ($result && count($result)) {
+        if ($result && \count($result)) {
             $productsImages = $this->productImageRepository->getAllImages();
             foreach ($productsImages as $imageObj) {
                 if (file_exists($dir . $imageObj->getExistingImgPath() . '.jpg')) {
                     foreach ($result as $module) {
                         $moduleInstance = LegacyModule::getInstanceByName($module['name']);
-                        if ($moduleInstance && is_callable([$moduleInstance, 'hookActionWatermark'])) {
-                            call_user_func([$moduleInstance, 'hookActionWatermark'], ['id_image' => $imageObj->id, 'id_product' => $imageObj->id_product, 'image_type' => $formats]);
+                        if ($moduleInstance && \is_callable([$moduleInstance, 'hookActionWatermark'])) {
+                            \call_user_func([$moduleInstance, 'hookActionWatermark'], ['id_image' => $imageObj->id, 'id_product' => $imageObj->id_product, 'image_type' => $formats]);
                         }
 
                         if (time() - $this->startTime > $this->maxExecutionTime - 4) { // stop 4 seconds before the tiemout, just enough time to process the end of the page on a slow server
@@ -263,12 +252,6 @@ class ImageThumbnailsRegenerator
 
     /**
      * Regenerate no-pictures images.
-     *
-     * @param string $dir
-     * @param array $type
-     * @param array $languages
-     *
-     * @return bool
      */
     public function regenerateNoPictureImages(string $dir, array $type, array $languages): bool
     {
@@ -287,19 +270,19 @@ class ImageThumbnailsRegenerator
                 // We get the "no image available" in the folder of the object
                 $file = $dir . $language->getIsoCode() . '.jpg';
 
-                if (!file_exists($file)) {
+                if (! file_exists($file)) {
                     // If it doesn't exist, we use an image for default language
                     $file = $dir . $defaultLang->getIsoCode() . '.jpg';
 
-                    if (!file_exists($file)) {
+                    if (! file_exists($file)) {
                         // If it doesn't exist, we use a fallback one in the root of img directory
                         $file = _PS_IMG_DIR_ . 'noimageavailable.jpg';
                     }
                 }
 
                 foreach ($configuredImageFormats as $imageFormat) {
-                    if (!file_exists($dir . $language->getIsoCode() . '-default-' . stripslashes((string) $image_type->getName()) . '.' . $imageFormat)) {
-                        if (!LegacyImageManager::resize(
+                    if (! file_exists($dir . $language->getIsoCode() . '-default-' . stripslashes((string) $image_type->getName()) . '.' . $imageFormat)) {
+                        if (! LegacyImageManager::resize(
                             $file,
                             $dir . $language->getIsoCode() . '-default-' . stripslashes((string) $image_type->getName()) . '.' . $imageFormat,
                             (int) $image_type->getWidth(),
@@ -323,15 +306,15 @@ class ImageThumbnailsRegenerator
      */
     public function deleteImagesFromType($imageTypeName, $path): void
     {
-        foreach (glob($path . '*', GLOB_BRACE) as $file) {
+        foreach (glob($path . '*', \GLOB_BRACE) as $file) {
             if (is_dir($file)) {
                 $this->deleteImagesFromType($imageTypeName, $file . '/');
             } else {
                 if (
                     preg_match('/\/(\d+|\w{2}-default)-' . $imageTypeName . '\.(jpg|png|webp|avif)$/', $file)
                 ) {
-                    if (!unlink($file)) {
-                        throw new ImageNotDeletedException(sprintf('Unable to delete image "%s"', $file));
+                    if (! unlink($file)) {
+                        throw new ImageNotDeletedException(\sprintf('Unable to delete image "%s"', $file));
                     }
                 }
             }

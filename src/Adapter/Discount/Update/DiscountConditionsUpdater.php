@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,14 +45,7 @@ class DiscountConditionsUpdater
     }
 
     /**
-     * @param DiscountId $discountId
-     * @param int|null $minimumProductsQuantity
-     * @param array|null $productConditions
-     * @param Money|null $minimumAmount
-     * @param bool|null $minimumShippingIncluded
      * @param int[]|null $carrierIds
-     *
-     * @return void
      */
     public function update(
         DiscountId $discountId,
@@ -65,29 +59,29 @@ class DiscountConditionsUpdater
         // todo: when other conditions are added we check that only one is provided
         $discount = $this->discountRepository->get($discountId);
         $updatableProperties = $this->cleanAllConditions($discount);
-        if (null !== $minimumProductsQuantity) {
+        if ($minimumProductsQuantity !== null) {
             $updatableProperties = array_merge($updatableProperties, $this->updateMinimalProductQuantity($discount, $minimumProductsQuantity));
         }
 
-        if (null !== $minimumAmount) {
+        if ($minimumAmount !== null) {
             $updatableProperties = array_merge($updatableProperties, $this->updateMinimalAmount($discount, $minimumAmount, $minimumShippingIncluded));
         }
 
         // Product conditions can define product segments or a list of products (which is equivalent to a segment based on a product criteria)
-        if (null !== $productConditions) {
+        if ($productConditions !== null) {
             $updatableProperties = array_merge($updatableProperties, $this->applyProductConditions($discount, $productConditions));
         }
 
-        if (null !== $carrierIds) {
+        if ($carrierIds !== null) {
             $updatableProperties = array_merge($updatableProperties, $this->applyCarrierConditions($discount, $carrierIds));
         }
 
-        if (null !== $countryIds) {
+        if ($countryIds !== null) {
             $updatableProperties = array_merge($updatableProperties, $this->applyCountryConditions($discount, $countryIds));
         }
 
         $updatableProperties = array_unique($updatableProperties);
-        if (!empty($updatableProperties)) {
+        if (! empty($updatableProperties)) {
             $this->discountRepository->partialUpdate($discount, $updatableProperties, CannotUpdateDiscountException::FAILED_UPDATE_CONDITIONS);
         }
     }
@@ -115,10 +109,7 @@ class DiscountConditionsUpdater
     }
 
     /**
-     * @param CartRule $discount
      * @param ProductRuleGroup[] $productRuleGroups
-     *
-     * @return array
      */
     private function applyProductConditions(
         CartRule $discount,
@@ -156,16 +147,16 @@ class DiscountConditionsUpdater
                 $productRuleValues = [];
                 $checkedIds = [];
                 foreach ($productRule->getItemIds() as $itemId) {
-                    if (in_array($itemId, $checkedIds, true)) {
+                    if (\in_array($itemId, $checkedIds, true)) {
                         // Skip in case there are duplicates
                         continue;
                     }
 
-                    $productRuleValues[] = sprintf('(%d, %d)', $productRuleId, $itemId);
+                    $productRuleValues[] = \sprintf('(%d, %d)', $productRuleId, $itemId);
                     $checkedIds[] = $itemId;
                 }
 
-                $this->connection->prepare(sprintf(
+                $this->connection->prepare(\sprintf(
                     'INSERT INTO %s (id_product_rule, id_item) VALUES %s',
                     $this->dbPrefix . 'cart_rule_product_rule_value',
                     implode(',', $productRuleValues)
@@ -174,7 +165,7 @@ class DiscountConditionsUpdater
             }
         }
 
-        $discount->product_restriction = !empty($productRuleGroups);
+        $discount->product_restriction = ! empty($productRuleGroups);
 
         return ['product_restriction'];
     }

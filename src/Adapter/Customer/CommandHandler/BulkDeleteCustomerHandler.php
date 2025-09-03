@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\CommandHandler\BulkDeleteCustomer
 #[AsCommandHandler]
 final class BulkDeleteCustomerHandler extends AbstractCustomerHandler implements BulkDeleteCustomerHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteCustomerCommand $command)
     {
         foreach ($command->getCustomerIds() as $customerId) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ use PrestaShop\PrestaShop\Core\Domain\Address\QueryResult\EditableManufacturerAd
 #[AsQueryHandler]
 final class GetManufacturerAddressForEditingHandler extends AbstractAddressHandler implements GetManufacturerAddressForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetManufacturerAddressForEditing $query)
     {
         $addressId = $query->getAddressId();

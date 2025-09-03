@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,19 +49,14 @@ use Shop;
 #[AsCommandHandler]
 final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditEmployeeHandlerInterface
 {
-    /**
-     * @param Hashing $hashing
-     * @param ProfileAccessCheckerInterface $profileAccessChecker
-     * @param ContextEmployeeProviderInterface $contextEmployeeProvider
-     * @param LegacyContext $legacyContext
-     */
-    public function __construct(private readonly Hashing $hashing, private readonly ProfileAccessCheckerInterface $profileAccessChecker, private readonly ContextEmployeeProviderInterface $contextEmployeeProvider, private readonly LegacyContext $legacyContext)
-    {
+    public function __construct(
+        private readonly Hashing $hashing,
+        private readonly ProfileAccessCheckerInterface $profileAccessChecker,
+        private readonly ContextEmployeeProviderInterface $contextEmployeeProvider,
+        private readonly LegacyContext $legacyContext,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditEmployeeCommand $command)
     {
         $canAccessProfile = $this->profileAccessChecker->canEmployeeAccessProfile(
@@ -68,7 +64,7 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
             (int) $command->getProfileId()
         );
 
-        if (!$canAccessProfile) {
+        if (! $canAccessProfile) {
             throw new InvalidProfileException('You cannot access the provided profile.');
         }
 
@@ -79,16 +75,13 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
 
         $this->updateEmployeeWithCommandData($employee, $command);
 
-        if (null !== $command->getPlainPassword() && $employee->id == $this->contextEmployeeProvider->getId()) {
+        if ($command->getPlainPassword() !== null && $employee->id === $this->contextEmployeeProvider->getId()) {
             $this->updatePasswordInCookie($employee);
         }
     }
 
     /**
      * Update employee object model with data from employee edit command.
-     *
-     * @param Employee $employee
-     * @param EditEmployeeCommand $command
      *
      * @throws EmployeeException
      */
@@ -105,23 +98,23 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
         $employee->has_enabled_gravatar = $command->hasEnabledGravatar();
 
         // Allow changing profile and active status only when editing not own account.
-        if ($employee->id != $this->contextEmployeeProvider->getId()) {
+        if ($employee->id !== $this->contextEmployeeProvider->getId()) {
             $employee->id_profile = $command->getProfileId();
             $employee->active = $command->isActive();
         }
 
         $shopAssociation = $command->getShopAssociation();
 
-        if (!$employee->isSuperAdmin() && empty($shopAssociation)) {
+        if (! $employee->isSuperAdmin() && empty($shopAssociation)) {
             throw new MissingShopAssociationException('Employee must be associated to at least one shop.');
         }
 
-        if (null !== $command->getPlainPassword()) {
+        if ($command->getPlainPassword() !== null) {
             $employee->passwd = $this->hashing->hash($command->getPlainPassword()->getValue());
         }
 
-        if (false === $employee->update()) {
-            throw new EmployeeException(sprintf('Cannot update employee with id "%s"', $employee->id));
+        if ($employee->update() === false) {
+            throw new EmployeeException(\sprintf('Cannot update employee with id "%s"', $employee->id));
         }
 
         if ($employee->isSuperAdmin()) {
@@ -129,13 +122,12 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
         }
 
         // Allow changing shop association only when editing not own account.
-        if (null !== $shopAssociation && $employee->id != $this->contextEmployeeProvider->getId()) {
+        if ($shopAssociation !== null && $employee->id !== $this->contextEmployeeProvider->getId()) {
             $this->associateWithShops($employee, $shopAssociation);
         }
     }
 
     /**
-     * @param Employee $employee
      * @param string $email
      *
      * @throws EmailAlreadyUsedException
@@ -154,8 +146,6 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
 
     /**
      * Update employee password in cookie.
-     *
-     * @param Employee $employee
      */
     private function updatePasswordInCookie(Employee $employee)
     {

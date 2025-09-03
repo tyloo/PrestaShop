@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,16 +43,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsQueryHandler]
 final class GetProductCustomizationFieldsHandler implements GetProductCustomizationFieldsHandlerInterface
 {
-    /**
-     * @param CustomizationFieldRepository $customizationFieldRepository
-     */
-    public function __construct(private readonly CustomizationFieldRepository $customizationFieldRepository)
-    {
+    public function __construct(
+        private readonly CustomizationFieldRepository $customizationFieldRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetProductCustomizationFields $query): array
     {
         $fieldIds = $this->customizationFieldRepository->getCustomizationFieldIds($query->getProductId());
@@ -64,12 +60,6 @@ final class GetProductCustomizationFieldsHandler implements GetProductCustomizat
         return $customizationFields;
     }
 
-    /**
-     * @param CustomizationFieldId $fieldId
-     * @param ShopId $shopId
-     *
-     * @return CustomizationField
-     */
     private function buildCustomizationField(CustomizationFieldId $fieldId, ShopId $shopId): CustomizationField
     {
         $fieldEntity = $this->customizationFieldRepository->getForShop($fieldId, $shopId);

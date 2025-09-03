@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,11 +41,6 @@ use PrestaShop\PrestaShop\Core\Domain\OrderMessage\QueryResult\EditableOrderMess
 #[AsQueryHandler]
 final class GetOrderMessageForEditingHandler extends AbstractOrderMessageHandler implements GetOrderMessageForEditingHandlerInterface
 {
-    /**
-     * @param GetOrderMessageForEditing $query
-     *
-     * @return EditableOrderMessage
-     */
     public function handle(GetOrderMessageForEditing $query): EditableOrderMessage
     {
         $orderMessage = $this->getOrderMessage($query->getOrderMessageId());

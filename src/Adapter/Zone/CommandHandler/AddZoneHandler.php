@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ use Zone;
 #[AsCommandHandler]
 final class AddZoneHandler extends AbstractObjectModelHandler implements AddZoneHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddZoneCommand $command): ZoneId
     {
         $zone = new Zone();
@@ -55,19 +53,19 @@ final class AddZoneHandler extends AbstractObjectModelHandler implements AddZone
 
         try {
             $errors = $zone->validateFieldsRequiredDatabase();
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 $missingFields = array_keys($errors);
 
-                throw new MissingZoneRequiredFieldsException($missingFields, sprintf('One or more required fields for zone are missing. Missing fields are: %s', implode(', ', $missingFields)));
+                throw new MissingZoneRequiredFieldsException($missingFields, \sprintf('One or more required fields for zone are missing. Missing fields are: %s', implode(', ', $missingFields)));
             }
 
-            if (!$zone->add()) {
-                throw new ZoneException(sprintf('Failed to add new zone "%s"', $command->getName()));
+            if (! $zone->add()) {
+                throw new ZoneException(\sprintf('Failed to add new zone "%s"', $command->getName()));
             }
 
             $this->associateWithShops($zone, $command->getShopAssociation());
         } catch (PrestaShopException) {
-            throw new ZoneException(sprintf('Failed to add new zone "%s"', $command->getName()));
+            throw new ZoneException(\sprintf('Failed to add new zone "%s"', $command->getName()));
         }
 
         return new ZoneId((int) $zone->id);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,17 +44,12 @@ use PrestaShopException;
 #[AsCommandHandler]
 class AddCartRuleHandler implements AddCartRuleHandlerInterface
 {
-    /**
-     * @param CartRuleRepository $cartRuleRepository
-     * @param CartRuleActionFiller $cartRuleActionFiller
-     */
-    public function __construct(private readonly CartRuleRepository $cartRuleRepository, private readonly CartRuleActionFiller $cartRuleActionFiller)
-    {
+    public function __construct(
+        private readonly CartRuleRepository $cartRuleRepository,
+        private readonly CartRuleActionFiller $cartRuleActionFiller,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddCartRuleCommand $command): CartRuleId
     {
         $cartRule = $this->cartRuleRepository->add($this->buildCartRuleFromCommandData($command));
@@ -62,10 +58,6 @@ class AddCartRuleHandler implements AddCartRuleHandlerInterface
     }
 
     /**
-     * @param AddCartRuleCommand $command
-     *
-     * @return CartRule
-     *
      * @throws PrestaShopException
      */
     private function buildCartRuleFromCommandData(AddCartRuleCommand $command): CartRule
@@ -88,15 +80,12 @@ class AddCartRuleHandler implements AddCartRuleHandlerInterface
 
     /**
      * Fills cart rule with conditions data from command.
-     *
-     * @param CartRule $cartRule
-     * @param AddCartRuleCommand $command
      */
     private function fillCartRuleConditionsFromCommandData(CartRule $cartRule, AddCartRuleCommand $command): void
     {
-        $cartRule->id_customer = null !== $command->getCustomerId() ? $command->getCustomerId()->getValue() : null;
+        $cartRule->id_customer = $command->getCustomerId() !== null ? $command->getCustomerId()->getValue() : null;
 
-        if (null === $command->getValidFrom() || null === $command->getValidTo()) {
+        if ($command->getValidFrom() === null || $command->getValidTo() === null) {
             $now = new DateTimeImmutable();
 
             $cartRule->date_from = $now->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,21 +42,18 @@ use PrestaShop\PrestaShop\Core\Domain\Hook\Exception\HookNotFoundException;
 #[AsCommandHandler]
 class UpdateHookStatusCommandHandler implements UpdateHookStatusCommandHandlerInterface
 {
-    /**
-     * @param UpdateHookStatusCommand $command
-     */
     public function handle(UpdateHookStatusCommand $command)
     {
         $hookId = $command->getHookId()->getValue();
         $hook = new Hook($hookId);
 
         if ($hook->id !== $hookId) {
-            throw new HookNotFoundException(sprintf('Hook with id "%d" was not found', $hookId));
+            throw new HookNotFoundException(\sprintf('Hook with id "%d" was not found', $hookId));
         }
 
         $hook->active = $command->isActive();
-        if (!$hook->save()) {
-            throw new CannotUpdateHookException(sprintf('Cannot update status for hook with id "%d"', $hookId));
+        if (! $hook->save()) {
+            throw new CannotUpdateHookException(\sprintf('Cannot update status for hook with id "%d"', $hookId));
         }
     }
 }

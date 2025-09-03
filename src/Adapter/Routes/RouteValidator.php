@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,7 +61,6 @@ class RouteValidator
     /**
      * Check if a route rule is valid.
      *
-     * @param string $routeId
      * @param string $rule Rule to verify
      *
      * @return array - returns list of missing or unknown keywords

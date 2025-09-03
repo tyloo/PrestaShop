@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\FeatureValue\QueryResult\ProductFe
 #[AsQueryHandler]
 class GetProductFeatureValuesHandler implements GetProductFeatureValuesHandlerInterface
 {
-    public function __construct(private readonly FeatureValueRepository $featureValueRepository)
-    {
+    public function __construct(
+        private readonly FeatureValueRepository $featureValueRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(GetProductFeatureValues $query): array
     {
         $featureValuesData = $this->featureValueRepository->getAllProductFeatureValues($query->getProductId());
@@ -56,7 +55,7 @@ class GetProductFeatureValuesHandler implements GetProductFeatureValuesHandlerIn
                 (int) $featureValuesDatum['id_feature'],
                 (int) $featureValuesDatum['id_feature_value'],
                 $featureValuesDatum['localized_values'],
-                1 === (int) $featureValuesDatum['custom']
+                (int) $featureValuesDatum['custom'] === 1
             );
         }
 

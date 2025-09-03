@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject\SupplierId;
 #[AsQueryHandler]
 class GetAssociatedSuppliersHandler implements GetAssociatedSuppliersHandlerInterface
 {
-    /**
-     * @param ProductSupplierRepository $productSupplierRepository
-     */
-    public function __construct(private readonly ProductSupplierRepository $productSupplierRepository)
-    {
+    public function __construct(
+        private readonly ProductSupplierRepository $productSupplierRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(GetAssociatedSuppliers $query): AssociatedSuppliers
     {
         $defaultSupplier = $this->productSupplierRepository->getDefaultSupplierId($query->getProductId());
@@ -56,7 +52,7 @@ class GetAssociatedSuppliersHandler implements GetAssociatedSuppliersHandlerInte
 
         return new AssociatedSuppliers(
             $defaultSupplier ? $defaultSupplier->getValue() : NoSupplierId::NO_SUPPLIER_ID,
-            array_map(static fn(SupplierId $supplierId): int => $supplierId->getValue(), $supplierIds)
+            array_map(static fn (SupplierId $supplierId): int => $supplierId->getValue(), $supplierIds)
         );
     }
 }

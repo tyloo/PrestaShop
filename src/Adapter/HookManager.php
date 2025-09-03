@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,13 @@ class HookManager
     /**
      * Execute modules for specified hook.
      *
-     * @param string $hook_name Hook Name
-     * @param array $hook_args Parameters for the functions
-     * @param int $id_module Execute hook for this module only
-     * @param bool $array_return If specified, module output will be set by name in an array
-     * @param bool $check_exceptions Check permission exceptions
-     * @param bool $use_push Force change to be refreshed on Dashboard widgets
-     * @param int $id_shop If specified, hook will be execute the shop with this ID
+     * @param string $hook_name        Hook Name
+     * @param array  $hook_args        Parameters for the functions
+     * @param int    $id_module        Execute hook for this module only
+     * @param bool   $array_return     If specified, module output will be set by name in an array
+     * @param bool   $check_exceptions Check permission exceptions
+     * @param bool   $use_push         Force change to be refreshed on Dashboard widgets
+     * @param int    $id_shop          If specified, hook will be execute the shop with this ID
      *
      * @return string|array|void|null modules output
      *
@@ -58,7 +59,7 @@ class HookManager
         $array_return = false,
         $check_exceptions = true,
         $use_push = false,
-        $id_shop = null
+        $id_shop = null,
     ) {
         $sfContainer = SymfonyContainer::getInstance();
         $request = null;
@@ -67,7 +68,7 @@ class HookManager
             $request = $sfContainer->get('request_stack')->getCurrentRequest();
         }
 
-        if (null !== $request) {
+        if ($request !== null) {
             $hook_args = array_merge(['request' => $request], $hook_args);
 
             // If Symfony application is booted, we use it to dispatch Hooks
@@ -76,28 +77,28 @@ class HookManager
             return $hookDispatcher
                 ->dispatchRenderingWithParameters($hook_name, $hook_args)
                 ->getContent();
-        } else {
-            try {
-                return Hook::exec($hook_name, $hook_args, $id_module, $array_return, $check_exceptions, $use_push, $id_shop);
-            } catch (Exception $e) {
-                $logger = ServiceLocator::get(LegacyLogger::class);
-                $environment = ServiceLocator::get(Environment::class);
-                $logger->error(
-                    sprintf(
-                        'Exception on hook %s for module %s. %s',
-                        $hook_name,
-                        $id_module,
-                        $e->getMessage()
-                    ),
-                    [
-                        'object_type' => 'Module',
-                        'object_id' => $id_module,
-                        'allow_duplicate' => true,
-                    ]
-                );
-                if ($environment->isDebug()) {
-                    throw new CoreException($e->getMessage(), $e->getCode(), $e);
-                }
+        }
+
+        try {
+            return Hook::exec($hook_name, $hook_args, $id_module, $array_return, $check_exceptions, $use_push, $id_shop);
+        } catch (Exception $exception) {
+            $logger = ServiceLocator::get(LegacyLogger::class);
+            $environment = ServiceLocator::get(Environment::class);
+            $logger->error(
+                \sprintf(
+                    'Exception on hook %s for module %s. %s',
+                    $hook_name,
+                    $id_module,
+                    $exception->getMessage()
+                ),
+                [
+                    'object_type' => 'Module',
+                    'object_id' => $id_module,
+                    'allow_duplicate' => true,
+                ]
+            );
+            if ($environment->isDebug()) {
+                throw new CoreException($exception->getMessage(), $exception->getCode(), $exception);
             }
         }
     }

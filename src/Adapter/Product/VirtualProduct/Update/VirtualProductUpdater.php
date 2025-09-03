@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,24 +46,18 @@ use ProductDownload as VirtualProductFile;
  */
 class VirtualProductUpdater
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param VirtualProductFileUploader $virtualProductFileUploader
-     * @param VirtualProductFileRepository $virtualProductFileRepository
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly VirtualProductFileUploader $virtualProductFileUploader, private readonly VirtualProductFileRepository $virtualProductFileRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly VirtualProductFileUploader $virtualProductFileUploader,
+        private readonly VirtualProductFileRepository $virtualProductFileRepository,
+    ) {
     }
 
-    /**
-     * @param VirtualProductFile $virtualProductFile
-     * @param string|null $newFilePath
-     */
     public function updateFile(VirtualProductFile $virtualProductFile, ?string $newFilePath): void
     {
         if ($newFilePath) {
             $uploadedFilePath = $this->virtualProductFileUploader->replace($newFilePath, $virtualProductFile->filename);
-            $virtualProductFile->filename = pathinfo($uploadedFilePath, PATHINFO_FILENAME);
+            $virtualProductFile->filename = pathinfo($uploadedFilePath, \PATHINFO_FILENAME);
         }
 
         $this->virtualProductFileRepository->update($virtualProductFile);
@@ -71,12 +66,6 @@ class VirtualProductUpdater
     /**
      * Add virtual product file to a product
      * Legacy object ProductDownload is referred as VirtualProductFile in Core
-     *
-     * @param ProductId $productId
-     * @param string $filePath
-     * @param VirtualProductFile $virtualProductFile
-     *
-     * @return VirtualProductFileId
      *
      * @throws InvalidProductTypeException
      * @throws VirtualProductFileConstraintException
@@ -90,24 +79,18 @@ class VirtualProductUpdater
 
         try {
             $this->virtualProductFileRepository->findByProductId($productId);
-            throw new VirtualProductFileConstraintException(
-                sprintf('File already exists for product #%d', $product->id),
-                VirtualProductFileConstraintException::ALREADY_HAS_A_FILE
-            );
+            throw new VirtualProductFileConstraintException(\sprintf('File already exists for product #%d', $product->id), VirtualProductFileConstraintException::ALREADY_HAS_A_FILE);
         } catch (VirtualProductFileNotFoundException) {
             // Expected behaviour, the product should have no virtual file yet
         }
 
         $uploadedFilePath = $this->virtualProductFileUploader->upload($filePath);
-        $virtualProductFile->filename = pathinfo($uploadedFilePath, PATHINFO_FILENAME);
+        $virtualProductFile->filename = pathinfo($uploadedFilePath, \PATHINFO_FILENAME);
         $virtualProductFile->id_product = $productId->getValue();
 
         return $this->virtualProductFileRepository->add($virtualProductFile);
     }
 
-    /**
-     * @param VirtualProductFileId $virtualProductFileId
-     */
     public function deleteFile(VirtualProductFileId $virtualProductFileId): void
     {
         $virtualProductFile = $this->virtualProductFileRepository->get($virtualProductFileId);
@@ -117,8 +100,6 @@ class VirtualProductUpdater
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @throws InvalidProductTypeException
      */
     public function deleteFileForProduct(ProductId $productId): void

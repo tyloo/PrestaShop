@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,28 +53,23 @@ use Validate;
 #[AsCommandHandler]
 final class DeleteCartRuleFromOrderHandler extends AbstractOrderHandler implements DeleteCartRuleFromOrderHandlerInterface
 {
-    /**
-     * @param OrderAmountUpdater $orderAmountUpdater
-     * @param ContextStateManager $contextStateManager
-     * @param OrderProductQuantityUpdater $orderProductQuantityUpdater
-     */
-    public function __construct(private readonly OrderAmountUpdater $orderAmountUpdater, private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater, private readonly ContextStateManager $contextStateManager)
-    {
+    public function __construct(
+        private readonly OrderAmountUpdater $orderAmountUpdater,
+        private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater,
+        private readonly ContextStateManager $contextStateManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteCartRuleFromOrderCommand $command)
     {
         $order = $this->getOrder($command->getOrderId());
         $orderCartRule = new OrderCartRule($command->getOrderCartRuleId());
-        if (!Validate::isLoadedObject($orderCartRule) || $orderCartRule->id_order != $order->id) {
+        if (! Validate::isLoadedObject($orderCartRule) || $orderCartRule->id_order !== $order->id) {
             throw new OrderException('Invalid order cart rule provided.');
         }
 
         $cart = Cart::getCartByOrderId($order->id);
-        if (!Validate::isLoadedObject($cart) || $order->id_cart != $cart->id) {
+        if (! Validate::isLoadedObject($cart) || $order->id_cart !== $cart->id) {
             throw new OrderException('Invalid cart provided.');
         }
 
@@ -116,12 +112,6 @@ final class DeleteCartRuleFromOrderHandler extends AbstractOrderHandler implemen
         }
     }
 
-    /**
-     * @param Order $order
-     * @param CartRule $cartRule
-     *
-     * @return OrderDetail|null
-     */
     private function getGiftOrderDetail(Order $order, CartRule $cartRule): ?OrderDetail
     {
         $productId = (int) $cartRule->gift_product;
@@ -145,6 +135,6 @@ final class DeleteCartRuleFromOrderHandler extends AbstractOrderHandler implemen
             $fallbackOrderDetailId ??= $orderDetail['id_order_detail'];
         }
 
-        return (null === $fallbackOrderDetailId) ? null : new OrderDetail($fallbackOrderDetailId);
+        return ($fallbackOrderDetailId === null) ? null : new OrderDetail($fallbackOrderDetailId);
     }
 }

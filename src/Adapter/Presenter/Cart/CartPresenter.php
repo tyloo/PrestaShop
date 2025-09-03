@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -75,9 +76,6 @@ class CartPresenter implements PresenterInterface
     }
 
     /**
-     * @param array $products
-     * @param Cart $cart
-     *
      * @return array
      */
     public function addCustomizedData(array $products, Cart $cart)
@@ -87,14 +85,14 @@ class CartPresenter implements PresenterInterface
 
             $data = Product::getAllCustomizedDatas($cart->id, null, true, null, (int) $product['id_customization']);
 
-            if (!$data) {
+            if (! $data) {
                 $data = [];
             }
 
             $id_product = (int) $product['id_product'];
             $id_product_attribute = (int) $product['id_product_attribute'];
-            if (array_key_exists($id_product, $data)) {
-                if (array_key_exists($id_product_attribute, $data[$id_product])) {
+            if (\array_key_exists($id_product, $data)) {
+                if (\array_key_exists($id_product_attribute, $data[$id_product])) {
                     foreach ($data[$id_product] as $byAddress) {
                         foreach ($byAddress as $byAddressCustomizations) {
                             foreach ($byAddressCustomizations as $customization) {
@@ -182,13 +180,13 @@ class CartPresenter implements PresenterInterface
             usort($customizations, function (array $a, array $b) {
                 if (
                     $a['quantity'] > $b['quantity']
-                    || count($a['fields']) > count($b['fields'])
+                    || \count($a['fields']) > \count($b['fields'])
                     || $a['id_customization'] > $b['id_customization']
                 ) {
                     return -1;
-                } else {
-                    return 1;
                 }
+
+                return 1;
             });
 
             $product['customizations'] = $customizations;
@@ -233,7 +231,7 @@ class CartPresenter implements PresenterInterface
         $pattern = '/(?>(?P<attribute>[^:]+:[^:]+)' . $separator . '+(?!' . $separator . '([^:' . $separator . '])+:))/';
         $attributesArray = [];
         $matches = [];
-        if (!preg_match_all($pattern, $attributes . $separator, $matches)) {
+        if (! preg_match_all($pattern, $attributes . $separator, $matches)) {
             return $attributesArray;
         }
 

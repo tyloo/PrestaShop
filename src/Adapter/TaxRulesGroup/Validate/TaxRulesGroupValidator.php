@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use TaxRulesGroup;
  */
 class TaxRulesGroupValidator extends AbstractObjectModelValidator
 {
-    /**
-     * @param TaxRulesGroup $taxRulesGroup
-     */
     public function validate(TaxRulesGroup $taxRulesGroup): void
     {
         $this->validateTaxRulesGroupProperty(
@@ -70,16 +68,12 @@ class TaxRulesGroupValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param TaxRulesGroup $taxRulesGroup
-     * @param string $propertyName
-     * @param int $errorCode
-     *
      * @throws TaxRulesGroupConstraintException
      */
     private function validateTaxRulesGroupProperty(
         TaxRulesGroup $taxRulesGroup,
         string $propertyName,
-        int $errorCode = 0
+        int $errorCode = 0,
     ): void {
         $this->validateObjectModelProperty(
             $taxRulesGroup,

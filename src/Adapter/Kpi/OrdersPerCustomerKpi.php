@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,13 @@ final class OrdersPerCustomerKpi implements KpiInterface
     /**
      * @param string $sourceUrl
      */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $kpiConfiguration, private $sourceUrl)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurationInterface $kpiConfiguration,
+        private $sourceUrl,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $helper = new HelperKpi();
@@ -56,7 +57,7 @@ final class OrdersPerCustomerKpi implements KpiInterface
         $helper->title = $this->translator->trans('Orders per Customer', [], 'Admin.Orderscustomers.Feature');
         $helper->subtitle = $this->translator->trans('All time', [], 'Admin.Global');
 
-        if (false !== $this->kpiConfiguration->get('ORDERS_PER_CUSTOMER')) {
+        if ($this->kpiConfiguration->get('ORDERS_PER_CUSTOMER') !== false) {
             $helper->value = $this->kpiConfiguration->get('ORDERS_PER_CUSTOMER');
         }
 

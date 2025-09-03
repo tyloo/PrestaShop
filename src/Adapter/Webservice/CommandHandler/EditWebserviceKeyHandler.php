@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ use WebserviceKey;
 #[AsCommandHandler]
 final class EditWebserviceKeyHandler extends AbstractWebserviceKeyHandler implements EditWebserviceKeyHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditWebserviceKeyCommand $command)
     {
         $webserviceKey = $this->getLegacyWebserviceKey($command->getWebserviceKeyId());
@@ -54,8 +52,6 @@ final class EditWebserviceKeyHandler extends AbstractWebserviceKeyHandler implem
     }
 
     /**
-     * @param WebserviceKeyId $webserviceKeyId
-     *
      * @return WebserviceKey
      */
     private function getLegacyWebserviceKey(WebserviceKeyId $webserviceKeyId)
@@ -63,45 +59,41 @@ final class EditWebserviceKeyHandler extends AbstractWebserviceKeyHandler implem
         $webserviceKey = new WebserviceKey($webserviceKeyId->getValue());
 
         if ($webserviceKeyId->getValue() !== $webserviceKey->id) {
-            throw new WebserviceKeyNotFoundException(sprintf('Webservice key with id "%s was not found', $webserviceKeyId->getValue()));
+            throw new WebserviceKeyNotFoundException(\sprintf('Webservice key with id "%s was not found', $webserviceKeyId->getValue()));
         }
 
         return $webserviceKey;
     }
 
-    /**
-     * @param WebserviceKey $webserviceKey
-     * @param EditWebserviceKeyCommand $command
-     */
     private function updateLegacyWebserviceKeyWithCommandData(
         WebserviceKey $webserviceKey,
-        EditWebserviceKeyCommand $command
+        EditWebserviceKeyCommand $command,
     ) {
-        if (null !== $command->getKey()) {
+        if ($command->getKey() !== null) {
             $webserviceKey->key = $command->getKey()->getValue();
         }
 
-        if (null !== $command->getDescription()) {
+        if ($command->getDescription() !== null) {
             $webserviceKey->description = $command->getDescription();
         }
 
-        if (null !== $command->getStatus()) {
+        if ($command->getStatus() !== null) {
             $webserviceKey->active = $command->getStatus();
         }
 
-        if (false === $webserviceKey->validateFields(false)) {
+        if ($webserviceKey->validateFields(false) === false) {
             throw new WebserviceConstraintException('One or more fields are invalid in WebserviceKey');
         }
 
-        if (false === $webserviceKey->update()) {
-            throw new WebserviceException(sprintf('Failed to update WebserviceKey with id "%s"', $webserviceKey->id));
+        if ($webserviceKey->update() === false) {
+            throw new WebserviceException(\sprintf('Failed to update WebserviceKey with id "%s"', $webserviceKey->id));
         }
 
-        if (null !== $command->getShopAssociation()) {
+        if ($command->getShopAssociation() !== null) {
             $this->associateWithShops($webserviceKey, $command->getShopAssociation());
         }
 
-        if (null !== $command->getPermissions()) {
+        if ($command->getPermissions() !== null) {
             $this->setPermissionsForWebserviceKey($webserviceKey, $command->getPermissions());
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,10 +41,6 @@ class OrderReturnStateRepository extends AbstractObjectModelRepository
     /**
      * Gets legacy OrderReturnState
      *
-     * @param OrderReturnStateId $orderReturnStateId
-     *
-     * @return OrderReturnState
-     *
      * @throws CoreException
      * @throws OrderReturnStateNotFoundException
      */
@@ -53,19 +50,10 @@ class OrderReturnStateRepository extends AbstractObjectModelRepository
             $orderReturnState = new OrderReturnState($orderReturnStateId->getValue());
 
             if ((int) $orderReturnState->id !== $orderReturnStateId->getValue()) {
-                throw new OrderReturnStateNotFoundException($orderReturnStateId, sprintf('%s #%d was not found', OrderReturnState::class, $orderReturnStateId->getValue()));
+                throw new OrderReturnStateNotFoundException($orderReturnStateId, \sprintf('%s #%d was not found', OrderReturnState::class, $orderReturnStateId->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to get %s #%d [%s]',
-                    OrderReturnState::class,
-                    $orderReturnStateId->getValue(),
-                    $prestaShopException->getMessage()
-                ),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to get %s #%d [%s]', OrderReturnState::class, $orderReturnStateId->getValue(), $prestaShopException->getMessage()), 0, $prestaShopException);
         }
 
         return $orderReturnState;

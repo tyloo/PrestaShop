@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,9 +35,6 @@ use PrestaShop\PrestaShop\Core\Employee\EmployeeDataProviderInterface;
  */
 final class EmployeeDataProvider implements EmployeeDataProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getEmployeeHashedPassword($employeeId)
     {
         $employee = new Employee($employeeId);
@@ -44,9 +42,6 @@ final class EmployeeDataProvider implements EmployeeDataProviderInterface
         return (string) $employee->passwd;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSuperAdmin($employeeId)
     {
         $employee = new Employee($employeeId);

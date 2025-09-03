@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,26 +40,17 @@ use PrestaShop\PrestaShop\Core\Domain\OrderState\Exception\DeleteOrderStateExcep
 #[AsCommandHandler]
 class DeleteOrderStateHandler extends AbstractOrderStateHandler implements DeleteOrderStateHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteOrderStateCommand $command): void
     {
         $orderStateId = $command->getOrderStateId();
         $orderState = $this->getOrderState($orderStateId);
 
-        if (!$orderState->isRemovable()) {
-            throw new DeleteOrderStateException(
-                sprintf('Cannot delete unremovable OrderState object with id "%d".', $orderStateId->getValue()),
-                DeleteOrderStateException::FAILED_DELETE
-            );
+        if (! $orderState->isRemovable()) {
+            throw new DeleteOrderStateException(\sprintf('Cannot delete unremovable OrderState object with id "%d".', $orderStateId->getValue()), DeleteOrderStateException::FAILED_DELETE);
         }
 
-        if (!$this->deleteOrderState($orderState)) {
-            throw new DeleteOrderStateException(
-                sprintf('Cannot delete OrderState object with id "%d".', $orderStateId->getValue()),
-                DeleteOrderStateException::FAILED_DELETE
-            );
+        if (! $this->deleteOrderState($orderState)) {
+            throw new DeleteOrderStateException(\sprintf('Cannot delete OrderState object with id "%d".', $orderStateId->getValue()), DeleteOrderStateException::FAILED_DELETE);
         }
     }
 }

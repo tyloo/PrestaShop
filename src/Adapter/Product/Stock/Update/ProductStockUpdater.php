@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,14 +56,16 @@ use StockAvailable;
  */
 class ProductStockUpdater
 {
-    public function __construct(private readonly StockManager $stockManager, private readonly ProductRepository $productRepository, private readonly StockAvailableRepository $stockAvailableRepository, private readonly MovementReasonRepository $movementReasonRepository, private readonly ShopConfigurationInterface $configuration, private readonly HookManager $hookManager)
-    {
+    public function __construct(
+        private readonly StockManager $stockManager,
+        private readonly ProductRepository $productRepository,
+        private readonly StockAvailableRepository $stockAvailableRepository,
+        private readonly MovementReasonRepository $movementReasonRepository,
+        private readonly ShopConfigurationInterface $configuration,
+        private readonly HookManager $hookManager,
+    ) {
     }
 
-    /**
-     * @param ProductId $productId
-     * @param ProductStockProperties $properties
-     */
     public function update(ProductId $productId, ProductStockProperties $properties, ShopConstraint $shopConstraint): void
     {
         $product = $this->productRepository->getByShopConstraint($productId, $shopConstraint);
@@ -70,7 +73,7 @@ class ProductStockUpdater
         $stockAvailable = $this->stockAvailableRepository->getForProduct($productId, new ShopId($product->getShopId()));
 
         $productUpdates = $this->fillUpdatableProperties($product, $stockAvailable, $properties);
-        if (!empty($productUpdates)) {
+        if (! empty($productUpdates)) {
             $this->productRepository->partialUpdate(
                 $product,
                 $productUpdates,
@@ -85,9 +88,6 @@ class ProductStockUpdater
     /**
      * Resets product stock to zero, both Product and associated StockAvailable are reset, and a stock movement linked to
      * the employee from context is generated.
-     *
-     * @param ProductId $productId
-     * @param ShopConstraint $shopConstraint
      *
      * @throws CoreException
      * @throws ProductStockException
@@ -146,29 +146,26 @@ class ProductStockUpdater
     }
 
     /**
-     * @param Product $product
-     * @param ProductStockProperties $properties
-     *
      * @return string[]|array<string, int[]>
      */
     private function fillUpdatableProperties(
         Product $product,
         StockAvailable $stockAvailable,
-        ProductStockProperties $properties
+        ProductStockProperties $properties,
     ): array {
         $updatableProperties = [];
 
-        if (null !== $properties->getLocation()) {
+        if ($properties->getLocation() !== null) {
             $product->location = $properties->getLocation();
             $updatableProperties[] = 'location';
         }
 
-        if (null !== $properties->getOutOfStockType()) {
+        if ($properties->getOutOfStockType() !== null) {
             $product->out_of_stock = $properties->getOutOfStockType()->getValue();
             $updatableProperties[] = 'out_of_stock';
         }
 
-        if (null !== $properties->getStockModification()) {
+        if ($properties->getStockModification() !== null) {
             $product->quantity = $properties->getStockModification()->getDeltaQuantity() !== null ?
                 $stockAvailable->quantity + $properties->getStockModification()->getDeltaQuantity() :
                 $properties->getStockModification()->getFixedQuantity()
@@ -210,12 +207,12 @@ class ProductStockUpdater
         $stockUpdateRequired = false;
         $previousQuantity = (int) $stockAvailable->quantity;
 
-        if (null !== $properties->getOutOfStockType()) {
+        if ($properties->getOutOfStockType() !== null) {
             $stockAvailable->out_of_stock = $properties->getOutOfStockType()->getValue();
             $stockUpdateRequired = true;
         }
 
-        if (null !== $properties->getLocation()) {
+        if ($properties->getLocation() !== null) {
             $stockAvailable->location = $properties->getLocation();
             $stockUpdateRequired = true;
         }
@@ -228,7 +225,7 @@ class ProductStockUpdater
             $stockUpdateRequired = true;
         }
 
-        if (!$stockUpdateRequired) {
+        if (! $stockUpdateRequired) {
             return;
         }
 
@@ -249,12 +246,6 @@ class ProductStockUpdater
         }
     }
 
-    /**
-     * @param StockAvailable $stockAvailable
-     * @param StockModification $stockModification
-     * @param int $previousQuantity
-     * @param int $affectedShopId
-     */
     private function saveMovement(StockAvailable $stockAvailable, StockModification $stockModification, int $previousQuantity, int $affectedShopId): void
     {
         if ($stockModification->getDeltaQuantity()) {

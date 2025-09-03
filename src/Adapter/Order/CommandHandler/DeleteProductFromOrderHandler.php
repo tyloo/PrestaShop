@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,17 +51,12 @@ use Validate;
 #[AsCommandHandler]
 final class DeleteProductFromOrderHandler extends AbstractOrderCommandHandler implements DeleteProductFromOrderHandlerInterface
 {
-    /**
-     * @param ContextStateManager $contextStateManager
-     * @param OrderProductQuantityUpdater $orderProductQuantityUpdater
-     */
-    public function __construct(private readonly ContextStateManager $contextStateManager, private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater)
-    {
+    public function __construct(
+        private readonly ContextStateManager $contextStateManager,
+        private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteProductFromOrderCommand $command)
     {
         $orderDetail = new OrderDetail($command->getOrderDetailId());
@@ -82,7 +78,7 @@ final class DeleteProductFromOrderHandler extends AbstractOrderCommandHandler im
                 $order,
                 $orderDetail,
                 0,
-                $orderDetail->id_order_invoice != 0 ? new OrderInvoice($orderDetail->id_order_invoice) : null
+                $orderDetail->id_order_invoice !== 0 ? new OrderInvoice($orderDetail->id_order_invoice) : null
             );
 
             Hook::exec('actionOrderEdited', ['order' => $order]);
@@ -91,21 +87,17 @@ final class DeleteProductFromOrderHandler extends AbstractOrderCommandHandler im
         }
     }
 
-    /**
-     * @param Order $order
-     * @param OrderDetail $orderDetail
-     */
     private function assertProductCanBeDeleted(Order $order, OrderDetail $orderDetail)
     {
-        if (!Validate::isLoadedObject($orderDetail)) {
+        if (! Validate::isLoadedObject($orderDetail)) {
             throw new OrderException('Order detail could not be found.');
         }
 
-        if (!Validate::isLoadedObject($order)) {
+        if (! Validate::isLoadedObject($order)) {
             throw new OrderNotFoundException(new OrderId((int) $order->id), 'Order could not be found.');
         }
 
-        if ($orderDetail->id_order != $order->id) {
+        if ($orderDetail->id_order !== $order->id) {
             throw new OrderException('Order detail does not belong to order.');
         }
 

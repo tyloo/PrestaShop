@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,7 +51,7 @@ class BulkUninstallModuleHandler implements BulkUninstallModuleHandlerInterface
         foreach ($command->getModules() as $moduleName) {
             $module = $this->moduleRepository->getPresentModule($moduleName->getValue());
 
-            if (!$module->isInstalled()) {
+            if (! $module->isInstalled()) {
                 throw new ModuleNotInstalledException('Cannot uninstall module ' . $moduleName->getValue() . ' since it is not installed');
             }
         }
@@ -59,7 +60,7 @@ class BulkUninstallModuleHandler implements BulkUninstallModuleHandlerInterface
         foreach ($command->getModules() as $moduleName) {
             $result = $this->moduleManager->uninstall($moduleName->getValue(), $deleteFile);
 
-            if (!$result) {
+            if (! $result) {
                 throw new CannotUninstallModuleException('Technical error occurred while uninstalling module.');
             }
         }

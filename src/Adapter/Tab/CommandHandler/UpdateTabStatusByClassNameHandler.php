@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,8 +39,9 @@ use PrestaShopBundle\Entity\Tab;
 #[AsCommandHandler]
 class UpdateTabStatusByClassNameHandler implements UpdateTabStatusByClassNameHandlerInterface
 {
-    public function __construct(private readonly EntityManager $entityManager)
-    {
+    public function __construct(
+        private readonly EntityManager $entityManager,
+    ) {
     }
 
     public function handle(UpdateTabStatusByClassNameCommand $command): void

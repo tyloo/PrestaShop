@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ use PrestaShop\PrestaShop\Core\Domain\Tax\QueryResult\EditableTax;
 #[AsQueryHandler]
 final class GetTaxForEditingHandler extends AbstractTaxHandler implements GetTaxForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetTaxForEditing $query)
     {
         $tax = $this->getTax($query->getTaxId());

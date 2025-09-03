@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,15 +58,10 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtils;
 class GetCartRuleForEditingHandler implements GetCartRuleForEditingHandlerInterface
 {
     public function __construct(
-        protected readonly CartRuleRepository $cartRuleRepository
+        protected readonly CartRuleRepository $cartRuleRepository,
     ) {
     }
 
-    /**
-     * @param GetCartRuleForEditing $query
-     *
-     * @return CartRuleForEditing
-     */
     public function handle(GetCartRuleForEditing $query): CartRuleForEditing
     {
         $cartRuleId = $query->cartRuleId;
@@ -82,8 +78,8 @@ class GetCartRuleForEditingHandler implements GetCartRuleForEditingHandlerInterf
             $cartRuleInformation,
             $cartRuleConditions,
             $cartRuleActions,
-            !DateTimeUtils::isNull($dateAdd) ? new DateTime($dateAdd) : null,
-            !DateTimeUtils::isNull($dateUpd) ? new DateTime($dateUpd) : null
+            ! DateTimeUtils::isNull($dateAdd) ? new DateTime($dateAdd) : null,
+            ! DateTimeUtils::isNull($dateUpd) ? new DateTime($dateUpd) : null
         );
     }
 
@@ -107,9 +103,9 @@ class GetCartRuleForEditingHandler implements GetCartRuleForEditingHandlerInterf
         $dateTo = $cartRule->date_to;
 
         $cartRuleMinimum = null;
-        if (!empty($cartRule->minimum_amount)) {
+        if (! empty($cartRule->minimum_amount)) {
             $minimumAmount = new DecimalNumber($cartRule->minimum_amount);
-            if (!$minimumAmount->equalsZero()) {
+            if (! $minimumAmount->equalsZero()) {
                 $cartRuleMinimum = new CartRuleMinimumForEditing(
                     $minimumAmount,
                     (bool) $cartRule->minimum_amount_tax,
@@ -151,8 +147,8 @@ class GetCartRuleForEditingHandler implements GetCartRuleForEditingHandlerInterf
 
         return new CartRuleConditionsForEditing(
             $customerId,
-            !DateTimeUtils::isNull($dateFrom) ? new DateTime($dateFrom) : null,
-            !DateTimeUtils::isNull($dateTo) ? new DateTime($dateTo) : null,
+            ! DateTimeUtils::isNull($dateFrom) ? new DateTime($dateFrom) : null,
+            ! DateTimeUtils::isNull($dateTo) ? new DateTime($dateTo) : null,
             (int) $cartRule->quantity,
             (int) $cartRule->quantity_per_user,
             $cartRuleMinimum,
@@ -161,13 +157,11 @@ class GetCartRuleForEditingHandler implements GetCartRuleForEditingHandlerInterf
     }
 
     /**
-     * @param CartRule $cartRule
-     *
      * @return RestrictionRuleGroup[]
      */
     private function getRestrictionRuleGroups(CartRule $cartRule): array
     {
-        if (!$cartRule->product_restriction) {
+        if (! $cartRule->product_restriction) {
             return [];
         }
 
@@ -189,7 +183,7 @@ class GetCartRuleForEditingHandler implements GetCartRuleForEditingHandlerInterf
             (bool) $cartRule->reduction_tax,
             (int) $cartRule->reduction_currency ?: null,
             $discountProductId,
-            !$cartRule->reduction_exclude_special
+            ! $cartRule->reduction_exclude_special
         );
 
         return new CartRuleActionForEditing(
@@ -209,10 +203,10 @@ class GetCartRuleForEditingHandler implements GetCartRuleForEditingHandlerInterf
             LegacyDiscountApplicationType::SELECTED_PRODUCTS => DiscountApplicationType::SELECTED_PRODUCTS,
         ];
 
-        if (array_key_exists((int) $cartRule->reduction_product, $discountApplicationMap)) {
+        if (\array_key_exists((int) $cartRule->reduction_product, $discountApplicationMap)) {
             return $discountApplicationMap[$cartRule->reduction_product];
-        } else {
-            return DiscountApplicationType::SPECIFIC_PRODUCT;
         }
+
+        return DiscountApplicationType::SPECIFIC_PRODUCT;
     }
 }

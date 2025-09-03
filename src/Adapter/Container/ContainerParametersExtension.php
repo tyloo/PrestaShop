@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,16 +46,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class ContainerParametersExtension implements ContainerBuilderExtensionInterface
 {
-    /**
-     * @param EnvironmentInterface $environment
-     */
-    public function __construct(private readonly EnvironmentInterface $environment)
-    {
+    public function __construct(
+        private readonly EnvironmentInterface $environment,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $container)
     {
         // This script is used in config.yml to init the container parameters
@@ -83,7 +79,7 @@ class ContainerParametersExtension implements ContainerBuilderExtensionInterface
         $container->setParameter('prestashop.installed_modules', $moduleRepository->getInstalledModules());
         $container->setParameter('prestashop.module_dir', _PS_MODULE_DIR_);
 
-        if (!$container->hasParameter('kernel.project_dir')) {
+        if (! $container->hasParameter('kernel.project_dir')) {
             $container->setParameter('kernel.project_dir', _PS_ROOT_DIR_);
         }
     }

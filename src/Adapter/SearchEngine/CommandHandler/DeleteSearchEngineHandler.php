@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,8 +44,6 @@ use PrestaShopException;
 final class DeleteSearchEngineHandler extends AbstractSearchEngineHandler implements DeleteSearchEngineHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SearchEngineException
      */
     public function handle(DeleteSearchEngineCommand $command): void
@@ -52,11 +51,11 @@ final class DeleteSearchEngineHandler extends AbstractSearchEngineHandler implem
         $searchEngine = $this->getSearchEngine($command->getSearchEngineId());
 
         try {
-            if (!$searchEngine->delete()) {
-                throw new DeleteSearchEngineException(sprintf('Cannot delete Search Engine object with id "%d"', $command->getSearchEngineId()->getValue()), DeleteSearchEngineException::FAILED_DELETE);
+            if (! $searchEngine->delete()) {
+                throw new DeleteSearchEngineException(\sprintf('Cannot delete Search Engine object with id "%d"', $command->getSearchEngineId()->getValue()), DeleteSearchEngineException::FAILED_DELETE);
             }
         } catch (PrestaShopException) {
-            throw new SearchEngineException(sprintf('An error occurred when deleting Search Engine object with id "%d"', $command->getSearchEngineId()->getValue()));
+            throw new SearchEngineException(\sprintf('An error occurred when deleting Search Engine object with id "%d"', $command->getSearchEngineId()->getValue()));
         }
     }
 }

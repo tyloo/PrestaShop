@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,16 +43,12 @@ class OrderRepository extends AbstractObjectModelRepository
 {
     public function __construct(
         private readonly Connection $connection,
-        private readonly string $dbPrefix
+        private readonly string $dbPrefix,
     ) {
     }
 
     /**
      * Gets legacy Order
-     *
-     * @param OrderId $orderId
-     *
-     * @return Order
      *
      * @throws OrderException
      * @throws CoreException
@@ -62,19 +59,10 @@ class OrderRepository extends AbstractObjectModelRepository
             $order = new Order($orderId->getValue());
 
             if ($order->id !== $orderId->getValue()) {
-                throw new OrderNotFoundException($orderId, sprintf('%s #%d was not found', Order::class, $orderId->getValue()));
+                throw new OrderNotFoundException($orderId, \sprintf('%s #%d was not found', Order::class, $orderId->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to get %s #%d [%s]',
-                    Order::class,
-                    $orderId->getValue(),
-                    $prestaShopException->getMessage()
-                ),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to get %s #%d [%s]', Order::class, $orderId->getValue(), $prestaShopException->getMessage()), 0, $prestaShopException);
         }
 
         return $order;
@@ -82,10 +70,6 @@ class OrderRepository extends AbstractObjectModelRepository
 
     /**
      * Get Order by cartId
-     *
-     * @param CartId $cartId
-     *
-     * @return Order
      *
      * @throws CoreException
      * @throws OrderException
@@ -106,6 +90,6 @@ class OrderRepository extends AbstractObjectModelRepository
             return $this->get(new OrderId((int) $orderId));
         }
 
-        throw new OrderNotFoundException(message: sprintf('Order for cart #%d was not found', $cartId->getValue()));
+        throw new OrderNotFoundException(message: \sprintf('Order for cart #%d was not found', $cartId->getValue()));
     }
 }

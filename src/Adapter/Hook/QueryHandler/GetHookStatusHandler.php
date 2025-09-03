@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,16 +42,13 @@ use PrestaShop\PrestaShop\Core\Domain\Hook\QueryResult\HookStatus;
 #[AsQueryHandler]
 final class GetHookStatusHandler implements GetHookStatusHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetHookStatus $query)
     {
         $hookId = $query->getId()->getValue();
         $hook = new Hook($hookId);
 
         if ($hook->id !== $hookId) {
-            throw new HookNotFoundException(sprintf('Hook with id "%d" was not found.', $hookId));
+            throw new HookNotFoundException(\sprintf('Hook with id "%d" was not found.', $hookId));
         }
 
         return new HookStatus($hook->id, (bool) $hook->active);

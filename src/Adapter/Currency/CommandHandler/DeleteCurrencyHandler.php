@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,27 +62,25 @@ final class DeleteCurrencyHandler implements DeleteCurrencyHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CurrencyException
      */
     public function handle(DeleteCurrencyCommand $command)
     {
         $entity = new Currency($command->getCurrencyId()->getValue());
 
-        if (0 >= $entity->id) {
-            throw new CurrencyNotFoundException(sprintf('Currency object with id "%s" has not been found for deletion.', $command->getCurrencyId()->getValue()));
+        if ($entity->id <= 0) {
+            throw new CurrencyNotFoundException(\sprintf('Currency object with id "%s" has not been found for deletion.', $command->getCurrencyId()->getValue()));
         }
 
         $this->assertDefaultCurrencyIsNotBeingRemoved($command->getCurrencyId()->getValue());
         $this->assertDefaultCurrencyIsNotBeingRemovedFromAnyShop($entity);
 
         try {
-            if (false === $entity->delete()) {
-                throw new CannotDeleteCurrencyException(sprintf('Unable to delete currency object with id "%s"', $command->getCurrencyId()->getValue()));
+            if ($entity->delete() === false) {
+                throw new CannotDeleteCurrencyException(\sprintf('Unable to delete currency object with id "%s"', $command->getCurrencyId()->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CurrencyException(sprintf('An error occurred when  deleting Currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $prestaShopException);
+            throw new CurrencyException(\sprintf('An error occurred when  deleting Currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $prestaShopException);
         }
     }
 
@@ -93,14 +92,12 @@ final class DeleteCurrencyHandler implements DeleteCurrencyHandlerInterface
     private function assertDefaultCurrencyIsNotBeingRemoved($currencyId)
     {
         if ($currencyId === $this->defaultCurrencyId) {
-            throw new CannotDeleteDefaultCurrencyException(sprintf('Currency with id "%s" is the default currency and cannot be deleted.', $currencyId));
+            throw new CannotDeleteDefaultCurrencyException(\sprintf('Currency with id "%s" is the default currency and cannot be deleted.', $currencyId));
         }
     }
 
     /**
      * Prevents from removing the currency from any shop context.
-     *
-     * @param Currency $currency
      *
      * @throws DefaultCurrencyInMultiShopException
      */
@@ -121,7 +118,7 @@ final class DeleteCurrencyHandler implements DeleteCurrencyHandlerInterface
             }
 
             $shop = new Shop($shopId);
-            throw new DefaultCurrencyInMultiShopException($currency->name, $shop->name, sprintf('Currency with id %s cannot be removed from shop with id %s because its the default currency.', $currency->id, $shopId), DefaultCurrencyInMultiShopException::CANNOT_REMOVE_CURRENCY);
+            throw new DefaultCurrencyInMultiShopException($currency->name, $shop->name, \sprintf('Currency with id %s cannot be removed from shop with id %s because its the default currency.', $currency->id, $shopId), DefaultCurrencyInMultiShopException::CANNOT_REMOVE_CURRENCY);
         }
     }
 }

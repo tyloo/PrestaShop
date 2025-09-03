@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ class MaintenanceConfiguration extends AbstractMultistoreConfiguration
      */
     private const CONFIGURATION_FIELDS = ['enable_shop', 'maintenance_allow_admins', 'maintenance_ip', 'maintenance_text'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -54,9 +52,6 @@ class MaintenanceConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configurationInputValues)
     {
         if ($this->validateConfiguration($configurationInputValues)) {
@@ -71,9 +66,6 @@ class MaintenanceConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
         $resolver = new OptionsResolver();

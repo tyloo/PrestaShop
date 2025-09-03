@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,8 +56,6 @@ class CarrierRangeRepository
     }
 
     /**
-     * @param CarrierId $carrierId
-     *
      * @return array<int, array<int|string>>
      *
      * @throws CarrierException
@@ -89,11 +88,6 @@ class CarrierRangeRepository
         return $qb->executeQuery()->fetchAllAssociative();
     }
 
-    /**
-     * @param CarrierId $carrierId
-     * @param CarrierRangesCollection $rangesCollection
-     * @param ShopConstraint $shopConstraint
-     */
     public function set(CarrierId $carrierId, CarrierRangesCollection $rangesCollection, ShopConstraint $shopConstraint): void
     {
         // Check shop constraint
@@ -119,7 +113,7 @@ class CarrierRangeRepository
                 // To avoid duplicated content in database, we will use a unique key for each range based on from-to values
                 $rangeKey = $range->getFrom() . '-' . $range->getTo();
                 // Check if range already exist in database
-                if (!in_array($rangeKey, array_keys($rangesIds), true)) {
+                if (! \in_array($rangeKey, array_keys($rangesIds), true)) {
                     // Insert range
                     $this->connection->insert(
                         $this->dbPrefix . $rangeTable,
@@ -193,7 +187,7 @@ class CarrierRangeRepository
         return match ($calculatingMethod) {
             ShippingMethod::BY_WEIGHT => 'range_weight',
             ShippingMethod::BY_PRICE => 'range_price',
-            default => throw new CarrierException(sprintf('Unknown shipping method "%s"', $calculatingMethod)),
+            default => throw new CarrierException(\sprintf('Unknown shipping method "%s"', $calculatingMethod)),
         };
     }
 
@@ -225,11 +219,8 @@ class CarrierRangeRepository
 
     private function assertShopConstraint(ShopConstraint $shopConstraint): void
     {
-        if (!$shopConstraint->forAllShops()) {
-            throw new CarrierConstraintException(
-                "Shop constraint isn't supported yet.",
-                CarrierConstraintException::INVALID_SHOP_CONSTRAINT
-            );
+        if (! $shopConstraint->forAllShops()) {
+            throw new CarrierConstraintException("Shop constraint isn't supported yet.", CarrierConstraintException::INVALID_SHOP_CONSTRAINT);
         }
     }
 }

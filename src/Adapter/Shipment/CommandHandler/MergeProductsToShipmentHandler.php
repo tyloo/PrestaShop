@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ class MergeProductsToShipmentHandler implements MergeProductsToShipmentHandlerIn
     ) {
     }
 
-    /**
-     * @param MergeProductsToShipment $command
-     */
     public function handle(MergeProductsToShipment $command)
     {
         $sourceId = $command->getSourceShipmentId()->getValue();
@@ -56,11 +54,11 @@ class MergeProductsToShipmentHandler implements MergeProductsToShipmentHandlerIn
         $shipmentProducts = [];
 
         if ($sourceShipment === null) {
-            throw new ShipmentNotFoundException(sprintf('Shipment with id "%s" was not found', $sourceId));
+            throw new ShipmentNotFoundException(\sprintf('Shipment with id "%s" was not found', $sourceId));
         }
 
         if ($targetShipment === null) {
-            throw new ShipmentNotFoundException(sprintf('Shipment with id "%s" was not found', $targetId));
+            throw new ShipmentNotFoundException(\sprintf('Shipment with id "%s" was not found', $targetId));
         }
 
         $shipmentProducts = array_map(function ($product) {
@@ -74,7 +72,7 @@ class MergeProductsToShipmentHandler implements MergeProductsToShipmentHandlerIn
         try {
             $this->repository->mergeProductsToShipment($sourceShipment, $targetShipment, $shipmentProducts);
         } catch (Throwable $throwable) {
-            throw new CannotMergeProductToShipmentException(sprintf('Cannot merge products to shipment with id "%s"', $targetId), 0, $throwable);
+            throw new CannotMergeProductToShipmentException(\sprintf('Cannot merge products to shipment with id "%s"', $targetId), 0, $throwable);
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ModuleTabManagementSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly ModuleTabRegister $moduleTabRegister, private readonly ModuleTabUnregister $moduleTabUnregister)
-    {
+    public function __construct(
+        private readonly ModuleTabRegister $moduleTabRegister,
+        private readonly ModuleTabUnregister $moduleTabUnregister,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -52,33 +52,21 @@ class ModuleTabManagementSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ModuleManagementEvent $event
-     */
     public function onModuleInstall(ModuleManagementEvent $event)
     {
         $this->moduleTabRegister->registerTabs($event->getModule());
     }
 
-    /**
-     * @param ModuleManagementEvent $event
-     */
     public function onModuleUninstall(ModuleManagementEvent $event)
     {
         $this->moduleTabUnregister->unregisterTabs($event->getModule());
     }
 
-    /**
-     * @param ModuleManagementEvent $event
-     */
     public function onModuleEnable(ModuleManagementEvent $event)
     {
         $this->moduleTabRegister->enableTabs($event->getModule());
     }
 
-    /**
-     * @param ModuleManagementEvent $event
-     */
     public function onModuleDisable(ModuleManagementEvent $event)
     {
         $this->moduleTabUnregister->disableTabs($event->getModule());

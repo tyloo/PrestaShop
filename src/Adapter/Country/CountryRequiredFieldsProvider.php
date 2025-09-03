@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,31 +33,28 @@ use PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId;
 
 class CountryRequiredFieldsProvider implements CountryRequiredFieldsProviderInterface
 {
-    public function __construct(private readonly CountryDataProvider $countryDataProvider)
-    {
+    public function __construct(
+        private readonly CountryDataProvider $countryDataProvider,
+    ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CountryNotFoundException
      */
     public function isStatesRequired(CountryId $countryId): bool
     {
         $countries = $this->countryDataProvider->getCountriesIdWhichNeedState();
 
-        return in_array($countryId->getValue(), $countries);
+        return \in_array($countryId->getValue(), $countries, true);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CountryNotFoundException
      */
     public function isDniRequired(CountryId $countryId): bool
     {
         $countries = $this->countryDataProvider->getCountriesIdWhichNeedDni();
 
-        return in_array($countryId->getValue(), $countries);
+        return \in_array($countryId->getValue(), $countries, true);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\SetCarriersHandlerI
 #[AsCommandHandler]
 class SetCarriersHandler implements SetCarriersHandlerInterface
 {
-    /**
-     * @param ProductRepository $productRepository
-     */
-    public function __construct(private readonly ProductRepository $productRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(SetCarriersCommand $command): void
     {
         $this->productRepository->setCarrierReferences(

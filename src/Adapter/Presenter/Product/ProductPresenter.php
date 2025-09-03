@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -81,7 +82,7 @@ class ProductPresenter
         ProductColorsRetriever $productColorsRetriever,
         TranslatorInterface $translator,
         ?HookManager $hookManager = null,
-        ?Configuration $configuration = null
+        ?Configuration $configuration = null,
     ) {
         $this->imageRetriever = $imageRetriever;
         $this->link = $link;
@@ -95,7 +96,7 @@ class ProductPresenter
     public function present(
         ProductPresentationSettings $settings,
         array $product,
-        Language $language
+        Language $language,
     ) {
         $productLazyArray = new ProductLazyArray(
             $settings,

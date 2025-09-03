@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ use SplFileInfo;
 final class GetAttachmentForEditingHandler implements GetAttachmentForEditingHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws AttachmentNotFoundException
      */
     public function handle(GetAttachmentForEditing $query): EditableAttachment
@@ -55,11 +54,11 @@ final class GetAttachmentForEditingHandler implements GetAttachmentForEditingHan
         try {
             $attachment = new Attachment($attachmentIdValue);
         } catch (PrestaShopException) {
-            throw new AttachmentNotFoundException(sprintf('Attachment with id "%s" was not found.', $attachmentIdValue));
+            throw new AttachmentNotFoundException(\sprintf('Attachment with id "%s" was not found.', $attachmentIdValue));
         }
 
         if ($attachment->id !== $attachmentIdValue) {
-            throw new AttachmentNotFoundException(sprintf('Attachment with id "%s" was not found.', $attachmentIdValue));
+            throw new AttachmentNotFoundException(\sprintf('Attachment with id "%s" was not found.', $attachmentIdValue));
         }
 
         $filePath = _PS_DOWNLOAD_DIR_ . $attachment->file;
@@ -71,7 +70,7 @@ final class GetAttachmentForEditingHandler implements GetAttachmentForEditingHan
             $attachment->description
         );
 
-        if (null !== $file) {
+        if ($file !== null) {
             $editableAttachment->setFile($file);
         }
 

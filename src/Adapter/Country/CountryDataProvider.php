@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,10 +41,10 @@ class CountryDataProvider
     /**
      * Return available countries.
      *
-     * @param int $id_lang Language ID
-     * @param bool $active return only active coutries
+     * @param int  $id_lang        Language ID
+     * @param bool $active         return only active coutries
      * @param bool $contain_states return only country with states
-     * @param bool $list_states Include the states list with the returned list
+     * @param bool $list_states    Include the states list with the returned list
      *
      * @return array Countries and corresponding zones
      */
@@ -67,7 +68,7 @@ class CountryDataProvider
         ;
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return array_map(fn($country) => $country['id_country'], $result);
+        return array_map(fn ($country) => $country['id_country'], $result);
     }
 
     /**
@@ -87,7 +88,7 @@ class CountryDataProvider
         ;
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return array_map(fn($country) => $country['id_country'], $result);
+        return array_map(fn ($country) => $country['id_country'], $result);
     }
 
     /**
@@ -107,7 +108,7 @@ class CountryDataProvider
         ;
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return array_map(fn($country) => $country['id_country'], $result);
+        return array_map(fn ($country) => $country['id_country'], $result);
     }
 
     /**

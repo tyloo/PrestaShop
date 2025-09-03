@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,7 @@ class ManufacturerDataProvider
      * Get all Manufacturer.
      *
      * @param bool $get_nb_products
-     * @param int $id_lang
+     * @param int  $id_lang
      * @param bool $active
      * @param bool $p
      * @param bool $n

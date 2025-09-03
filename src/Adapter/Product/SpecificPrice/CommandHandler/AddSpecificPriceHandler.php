@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,16 +47,11 @@ use SpecificPrice;
 #[AsCommandHandler]
 class AddSpecificPriceHandler implements AddSpecificPriceHandlerInterface
 {
-    /**
-     * @param SpecificPriceRepository $specificPriceRepository
-     */
-    public function __construct(private readonly SpecificPriceRepository $specificPriceRepository)
-    {
+    public function __construct(
+        private readonly SpecificPriceRepository $specificPriceRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddSpecificPriceCommand $command): SpecificPriceId
     {
         $specificPrice = $this->createSpecificPriceFromCommand($command);
@@ -65,10 +61,6 @@ class AddSpecificPriceHandler implements AddSpecificPriceHandlerInterface
 
     /**
      * Creates legacy SpecificPrice object from command
-     *
-     * @param AddSpecificPriceCommand $command
-     *
-     * @return SpecificPrice
      *
      * @throws PrestaShopException
      * @throws SpecificPriceConstraintException

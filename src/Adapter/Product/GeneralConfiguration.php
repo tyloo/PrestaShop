@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class GeneralConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @param Configuration $configuration
-     * @param SpecificPricePriorityUpdater $specificPricePriorityUpdater
-     */
-    public function __construct(private readonly Configuration $configuration, private readonly SpecificPricePriorityUpdater $specificPricePriorityUpdater)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+        private readonly SpecificPricePriorityUpdater $specificPricePriorityUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -65,9 +61,6 @@ class GeneralConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $config)
     {
         $errors = [];
@@ -101,9 +94,6 @@ class GeneralConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         $resolver = new OptionsResolver();
@@ -130,7 +120,7 @@ class GeneralConfiguration implements DataConfigurationInterface
      */
     private function getPrioritiesData(): array
     {
-        if (!empty($this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'))) {
+        if (! empty($this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'))) {
             return explode(';', (string) $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
         }
 

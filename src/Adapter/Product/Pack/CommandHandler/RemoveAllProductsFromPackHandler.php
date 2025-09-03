@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Pack\CommandHandler\RemoveAllProdu
 #[AsCommandHandler]
 final class RemoveAllProductsFromPackHandler implements RemoveAllProductsFromPackHandlerInterface
 {
-    /**
-     * @param ProductPackUpdater $productPackUpdater
-     */
-    public function __construct(private readonly ProductPackUpdater $productPackUpdater)
-    {
+    public function __construct(
+        private readonly ProductPackUpdater $productPackUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(RemoveAllProductsFromPackCommand $command): void
     {
         $this->productPackUpdater->setPackProducts($command->getPackId(), []);

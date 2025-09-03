@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\CommandHandler\UpdateSearchTermAlias
 class UpdateSearchTermAliasesHandler implements UpdateSearchTermAliasesHandlerInterface
 {
     public function __construct(
-        protected AliasRepository $aliasRepository
+        protected AliasRepository $aliasRepository,
     ) {
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,42 +40,20 @@ use PrestaShopException;
 abstract class AbstractObjectModelValidator
 {
     /**
-     * @param ObjectModel $objectModel
-     * @param string $propertyName
-     * @param string $exceptionClass
-     * @param int $errorCode
-     *
      * @throws CoreException
      */
     protected function validateObjectModelProperty(ObjectModel $objectModel, string $propertyName, string $exceptionClass, int $errorCode = 0): void
     {
         try {
-            if (true !== $objectModel->validateField($propertyName, $objectModel->{$propertyName})) {
-                throw new $exceptionClass(
-                    sprintf(
-                        'Invalid %s %s. Got "%s"',
-                        $objectModel::class,
-                        $propertyName,
-                        $objectModel->{$propertyName}
-                    ),
-                    $errorCode
-                );
+            if ($objectModel->validateField($propertyName, $objectModel->{$propertyName}) !== true) {
+                throw new $exceptionClass(\sprintf('Invalid %s %s. Got "%s"', $objectModel::class, $propertyName, $objectModel->{$propertyName}), $errorCode);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when validating %s property "%s"', $objectModel::class, $propertyName),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when validating %s property "%s"', $objectModel::class, $propertyName), 0, $prestaShopException);
         }
     }
 
     /**
-     * @param ObjectModel $objectModel
-     * @param string $propertyName
-     * @param string $exceptionClass
-     * @param int $errorCode
-     *
      * @throws CoreException
      */
     protected function validateObjectModelLocalizedProperty(ObjectModel $objectModel, string $propertyName, string $exceptionClass, int $errorCode = 0)
@@ -83,30 +62,18 @@ abstract class AbstractObjectModelValidator
 
         try {
             $defaultLang = (int) Configuration::get('PS_LANG_DEFAULT');
-            if (!isset($localizedValues[$defaultLang])) {
+            if (! isset($localizedValues[$defaultLang])) {
                 // The value for the default must always be set, so we put an empty string if it does not exist
                 $localizedValues[$defaultLang] = '';
             }
 
             foreach ($localizedValues as $langId => $value) {
-                if (true !== $objectModel->validateField($propertyName, $value, $langId)) {
-                    throw new $exceptionClass(
-                        sprintf(
-                            'Invalid %s localized property "%s" for language with id "%d"',
-                            $objectModel::class,
-                            $propertyName,
-                            $langId
-                        ),
-                        $errorCode
-                    );
+                if ($objectModel->validateField($propertyName, $value, $langId) !== true) {
+                    throw new $exceptionClass(\sprintf('Invalid %s localized property "%s" for language with id "%d"', $objectModel::class, $propertyName, $langId), $errorCode);
                 }
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when trying to validate %s localized property "%s"', $objectModel::class, $propertyName),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to validate %s localized property "%s"', $objectModel::class, $propertyName), 0, $prestaShopException);
         }
     }
 }

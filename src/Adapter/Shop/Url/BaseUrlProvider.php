@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,16 +35,11 @@ use PrestaShop\PrestaShop\Core\Shop\Url\UrlProviderInterface;
  */
 final class BaseUrlProvider implements UrlProviderInterface
 {
-    /**
-     * @param Link $link
-     */
-    public function __construct(private readonly Link $link)
-    {
+    public function __construct(
+        private readonly Link $link,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUrl()
     {
         return $this->link->getBaseLink();

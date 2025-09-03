@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\Exception\TaxRulesGroupNotFo
 final class DeleteTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler implements DeleteTaxRulesGroupHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotDeleteTaxRulesGroupException
      * @throws TaxRulesGroupNotFoundException
      */
@@ -49,8 +48,8 @@ final class DeleteTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler impl
     {
         $taxRulesGroup = $this->getTaxRulesGroup($command->getTaxRulesGroupId());
 
-        if (!$this->deleteTaxRulesGroup($taxRulesGroup)) {
-            throw new CannotDeleteTaxRulesGroupException(sprintf('Cannot delete tax rules group object with id "%s".', $taxRulesGroup->id));
+        if (! $this->deleteTaxRulesGroup($taxRulesGroup)) {
+            throw new CannotDeleteTaxRulesGroupException(\sprintf('Cannot delete tax rules group object with id "%s".', $taxRulesGroup->id));
         }
     }
 }

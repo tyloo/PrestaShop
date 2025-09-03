@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -80,29 +81,24 @@ use Tag;
 #[AsQueryHandler]
 class GetProductForEditingHandler implements GetProductForEditingHandlerInterface
 {
-    /**
-     * @param NumberExtractor $numberExtractor
-     * @param ProductRepository $productRepository
-     * @param CategoryRepository $categoryRepository
-     * @param StockAvailableRepository $stockAvailableRepository
-     * @param VirtualProductFileRepository $virtualProductFileRepository
-     * @param ProductImageRepository $productImageRepository
-     * @param AttachmentRepository $attachmentRepository
-     * @param TaxComputer $taxComputer
-     * @param int $countryId
-     * @param RedirectTargetProvider $targetProvider
-     * @param ProductImagePathFactory $productImageUrlFactory
-     * @param SpecificPriceRepository $specificPriceRepository
-     * @param Configuration $configuration
-     * @param CategoryDisplayNameBuilder $categoryDisplayNameBuilder
-     */
-    public function __construct(private readonly NumberExtractor $numberExtractor, private readonly ProductRepository $productRepository, private readonly CategoryRepository $categoryRepository, private readonly StockAvailableRepository $stockAvailableRepository, private readonly VirtualProductFileRepository $virtualProductFileRepository, private readonly ProductImageRepository $productImageRepository, private readonly AttachmentRepository $attachmentRepository, private readonly TaxComputer $taxComputer, private readonly int $countryId, private readonly RedirectTargetProvider $targetProvider, private readonly ProductImagePathFactory $productImageUrlFactory, private readonly SpecificPriceRepository $specificPriceRepository, private readonly Configuration $configuration, private readonly CategoryDisplayNameBuilder $categoryDisplayNameBuilder)
-    {
+    public function __construct(
+        private readonly NumberExtractor $numberExtractor,
+        private readonly ProductRepository $productRepository,
+        private readonly CategoryRepository $categoryRepository,
+        private readonly StockAvailableRepository $stockAvailableRepository,
+        private readonly VirtualProductFileRepository $virtualProductFileRepository,
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly AttachmentRepository $attachmentRepository,
+        private readonly TaxComputer $taxComputer,
+        private readonly int $countryId,
+        private readonly RedirectTargetProvider $targetProvider,
+        private readonly ProductImagePathFactory $productImageUrlFactory,
+        private readonly SpecificPriceRepository $specificPriceRepository,
+        private readonly Configuration $configuration,
+        private readonly CategoryDisplayNameBuilder $categoryDisplayNameBuilder,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetProductForEditing $query): ProductForEditing
     {
         $product = $this->productRepository->getByShopConstraint(
@@ -131,8 +127,6 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return AttachmentInformation[]
      */
     private function getAttachments(ProductId $productId): array
@@ -154,11 +148,6 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
         return $attachmentsInfo;
     }
 
-    /**
-     * @param Product $product
-     *
-     * @return ProductBasicInformation
-     */
     private function getBasicInformation(Product $product): ProductBasicInformation
     {
         return new ProductBasicInformation(
@@ -169,12 +158,6 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
         );
     }
 
-    /**
-     * @param Product $product
-     * @param LanguageId $languageId
-     *
-     * @return CategoriesInformation
-     */
     private function getCategoriesInformation(Product $product, LanguageId $languageId): CategoriesInformation
     {
         $shopId = new ShopId($product->getShopId());
@@ -205,11 +188,6 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
     }
 
     /**
-     * @param Product $product
-     * @param ShopConstraint $shopConstraint
-     *
-     * @return ProductPricesInformation
-     *
      * @throws NumberExtractorException
      */
     private function getPricesInformation(Product $product, ShopConstraint $shopConstraint): ProductPricesInformation
@@ -266,11 +244,6 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
         );
     }
 
-    /**
-     * @param Product $product
-     *
-     * @return ProductOptions
-     */
     private function getOptions(Product $product): ProductOptions
     {
         return new ProductOptions(
@@ -284,11 +257,6 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
         );
     }
 
-    /**
-     * @param Product $product
-     *
-     * @return ProductDetails
-     */
     private function getDetails(Product $product): ProductDetails
     {
         return new ProductDetails(
@@ -301,15 +269,11 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
     }
 
     /**
-     * @param Product $product
-     *
-     * @return ProductShippingInformation
-     *
      * @throws NumberExtractorException
      */
     private function getShippingInformation(Product $product): ProductShippingInformation
     {
-        $carrierReferences = array_map(fn($carrier): int => (int) $carrier['id_reference'], $product->getCarriers());
+        $carrierReferences = array_map(fn ($carrier): int => (int) $carrier['id_reference'], $product->getCarriers());
 
         return new ProductShippingInformation(
             $this->numberExtractor->extract($product, 'width'),
@@ -325,15 +289,13 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
     }
 
     /**
-     * @param int $productId
-     *
      * @return LocalizedTags[]
      */
     private function getLocalizedTagsList(int $productId): array
     {
         $tags = Tag::getProductTags($productId);
 
-        if (!$tags) {
+        if (! $tags) {
             return [];
         }
 
@@ -346,34 +308,22 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
         return $localizedTagsList;
     }
 
-    /**
-     * @param Product $product
-     *
-     * @return ProductCustomizationOptions
-     */
     private function getCustomizationOptions(Product $product): ProductCustomizationOptions
     {
-        if (!Customization::isFeatureActive()) {
+        if (! Customization::isFeatureActive()) {
             return ProductCustomizationOptions::createNotCustomizable();
         }
 
         $textFieldsCount = (int) $product->text_fields;
         $fileFieldsCount = (int) $product->uploadable_files;
 
-        $options = match ((int) $product->customizable) {
+        return match ((int) $product->customizable) {
             ProductCustomizabilitySettings::ALLOWS_CUSTOMIZATION => ProductCustomizationOptions::createAllowsCustomization($textFieldsCount, $fileFieldsCount),
             ProductCustomizabilitySettings::REQUIRES_CUSTOMIZATION => ProductCustomizationOptions::createRequiresCustomization($textFieldsCount, $fileFieldsCount),
             default => ProductCustomizationOptions::createNotCustomizable(),
         };
-
-        return $options;
     }
 
-    /**
-     * @param Product $product
-     *
-     * @return ProductSeoOptions
-     */
     private function getSeoOptions(Product $product): ProductSeoOptions
     {
         $redirectTarget = $this->targetProvider->getRedirectTarget(
@@ -392,10 +342,6 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
 
     /**
      * Returns the product stock infos, it's important that the Product is fetched with stock data
-     *
-     * @param Product $product
-     *
-     * @return ProductStockInformation
      */
     private function getProductStockInformation(Product $product): ProductStockInformation
     {
@@ -420,12 +366,7 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
     }
 
     /**
-     * Get virtual product file
      * Legacy object ProductDownload is referred as VirtualProductFile in Core
-     *
-     * @param Product $product
-     *
-     * @return VirtualProductFileForEditing|null
      */
     private function getVirtualProductFile(Product $product): ?VirtualProductFileForEditing
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,10 @@ final class NetProfitPerVisitKpi implements KpiInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ConfigurationInterface $configuration,
-        private readonly LegacyContext $contextAdapter
+        private readonly LegacyContext $contextAdapter,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $helper = new HelperKpi();

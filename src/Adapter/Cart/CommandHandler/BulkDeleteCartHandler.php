@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,13 +51,11 @@ class BulkDeleteCartHandler extends AbstractBulkCommandHandler implements BulkDe
 {
     public function __construct(
         protected readonly CartRepository $cartRepository,
-        protected readonly OrderRepository $orderRepository
+        protected readonly OrderRepository $orderRepository,
     ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CartException
      * @throws CoreException
      */
@@ -75,15 +74,12 @@ class BulkDeleteCartHandler extends AbstractBulkCommandHandler implements BulkDe
 
     /**
      * @param CartId $id
-     * @param mixed $command
-     *
-     * @return void
      */
     protected function handleSingleAction(mixed $id, mixed $command): void
     {
         try {
             $this->orderRepository->getByCartId($id);
-            throw new CannotDeleteOrderedCartException(sprintf('Cart "%s" with order cannot be deleted.', $id->getValue()));
+            throw new CannotDeleteOrderedCartException(\sprintf('Cart "%s" with order cannot be deleted.', $id->getValue()));
         } catch (OrderNotFoundException) {
             // Cart is not linked to any order, we can safely delete it
             $this->cartRepository->delete($id);

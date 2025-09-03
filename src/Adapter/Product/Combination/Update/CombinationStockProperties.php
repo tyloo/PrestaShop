@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,25 +32,17 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\StockModificatio
 
 class CombinationStockProperties
 {
-    /**
-     * @param StockModification|null $stockModification
-     * @param string|null $location
-     */
-    public function __construct(private readonly ?StockModification $stockModification = null, private readonly ?string $location = null)
-    {
+    public function __construct(
+        private readonly ?StockModification $stockModification = null,
+        private readonly ?string $location = null,
+    ) {
     }
 
-    /**
-     * @return StockModification|null
-     */
     public function getStockModification(): ?StockModification
     {
         return $this->stockModification;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLocation(): ?string
     {
         return $this->location;

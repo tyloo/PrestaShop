@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ use PrestaShop\PrestaShop\Core\Domain\Title\Exception\CannotDeleteTitleException
 class DeleteTitleHandler extends AbstractTitleHandler implements DeleteTitleHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotDeleteTitleException
      */
     public function handle(DeleteTitleCommand $command): void

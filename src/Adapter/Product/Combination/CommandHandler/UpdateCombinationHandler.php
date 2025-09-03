@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,13 +43,13 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\Exception\CannotUpdate
 #[AsCommandHandler]
 class UpdateCombinationHandler implements UpdateCombinationHandlerInterface
 {
-    public function __construct(private readonly CombinationRepository $combinationRepository, private readonly CombinationFillerInterface $combinationFiller, private readonly DefaultCombinationUpdater $defaultCombinationUpdater)
-    {
+    public function __construct(
+        private readonly CombinationRepository $combinationRepository,
+        private readonly CombinationFillerInterface $combinationFiller,
+        private readonly DefaultCombinationUpdater $defaultCombinationUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateCombinationCommand $command): void
     {
         $combination = $this->combinationRepository->getByShopConstraint($command->getCombinationId(), $command->getShopConstraint());
@@ -62,7 +63,7 @@ class UpdateCombinationHandler implements UpdateCombinationHandlerInterface
         );
 
         // Only update default if the property is set AND is true
-        if (true === $command->isDefault()) {
+        if ($command->isDefault() === true) {
             $this->defaultCombinationUpdater->setDefaultCombination(
                 $command->getCombinationId(),
                 $command->getShopConstraint()

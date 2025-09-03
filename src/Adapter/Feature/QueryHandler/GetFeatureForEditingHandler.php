@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\QueryResult\EditableFeature;
 #[AsQueryHandler]
 final class GetFeatureForEditingHandler implements GetFeatureForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetFeatureForEditing $query)
     {
         $feature = new Feature($query->getFeatureId()->getValue());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 class CurrencyRepository extends AbstractObjectModelRepository
 {
     /**
-     * @param CurrencyId $currencyId
-     *
      * @throws CoreException
      * @throws CurrencyNotFoundException
      */
@@ -51,10 +50,6 @@ class CurrencyRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param CurrencyId $currencyId
-     *
-     * @return Currency
-     *
      * @throws CoreException
      * @throws CurrencyNotFoundException
      */
@@ -70,11 +65,6 @@ class CurrencyRepository extends AbstractObjectModelRepository
         return $currency;
     }
 
-    /**
-     * @param CurrencyId $currencyId
-     *
-     * @return string
-     */
     public function getIsoCode(CurrencyId $currencyId): string
     {
         return $this->get($currencyId)->iso_code;

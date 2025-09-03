@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\Exception\TaxRulesGroupExcep
 final class BulkDeleteTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler implements BulkDeleteTaxRulesGroupHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotBulkDeleteTaxRulesGroupException
      */
     public function handle(BulkDeleteTaxRulesGroupCommand $command): void
@@ -52,7 +51,7 @@ final class BulkDeleteTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler 
             try {
                 $taxRulesGroup = $this->getTaxRulesGroup($taxRulesGroupId);
 
-                if (!$this->deleteTaxRulesGroup($taxRulesGroup)) {
+                if (! $this->deleteTaxRulesGroup($taxRulesGroup)) {
                     $errors[] = $taxRulesGroup->id;
                 }
             } catch (TaxRulesGroupException) {
@@ -60,7 +59,7 @@ final class BulkDeleteTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler 
             }
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             throw new CannotBulkDeleteTaxRulesGroupException($errors, 'Failed to delete all tax rules groups without errors');
         }
     }

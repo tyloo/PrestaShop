@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShop\PrestaShop\Core\Domain\Address\Exception\BulkDeleteAddressExcepti
 final class BulkDeleteAddressHandler extends AbstractAddressHandler implements BulkDeleteAddressHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws BulkDeleteAddressException
      */
     public function handle(BulkDeleteAddressCommand $command)
@@ -52,7 +51,7 @@ final class BulkDeleteAddressHandler extends AbstractAddressHandler implements B
             try {
                 $address = $this->getAddress($addressId);
 
-                if (!$this->deleteAddress($address)) {
+                if (! $this->deleteAddress($address)) {
                     $errors[] = $address->id;
                 }
             } catch (AddressException) {
@@ -60,7 +59,7 @@ final class BulkDeleteAddressHandler extends AbstractAddressHandler implements B
             }
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             throw new BulkDeleteAddressException($errors, 'Failed to delete all of selected addresses');
         }
     }

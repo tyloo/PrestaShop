@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,15 +38,12 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\Exception\UpdateManufacturerE
 #[AsCommandHandler]
 final class ToggleManufacturerStatusHandler extends AbstractManufacturerCommandHandler implements ToggleManufacturerStatusHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ToggleManufacturerStatusCommand $command)
     {
         $manufacturer = $this->getManufacturer($command->getManufacturerId());
 
-        if (!$this->toggleManufacturerStatus($manufacturer, $command->getExpectedStatus())) {
-            throw new UpdateManufacturerException(sprintf('Unable to toggle manufacturer status with id "%s"', $manufacturer->id), UpdateManufacturerException::FAILED_UPDATE_STATUS);
+        if (! $this->toggleManufacturerStatus($manufacturer, $command->getExpectedStatus())) {
+            throw new UpdateManufacturerException(\sprintf('Unable to toggle manufacturer status with id "%s"', $manufacturer->id), UpdateManufacturerException::FAILED_UPDATE_STATUS);
         }
     }
 }

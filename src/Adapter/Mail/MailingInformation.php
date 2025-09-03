@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class MailingInformation
      */
     public function isNativeMailUsed()
     {
-        return Configuration::get('PS_MAIL_METHOD') == 1;
+        return Configuration::get('PS_MAIL_METHOD') === 1;
     }
 
     /**

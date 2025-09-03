@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,12 @@ use ReflectionException;
 class OrderReturnPresenter implements PresenterInterface
 {
     /**
-     * OrderReturnPresenter constructor.
-     *
      * @param string $prefix
-     * @param Link $link
      */
-    public function __construct(private $prefix, private readonly Link $link)
-    {
+    public function __construct(
+        private $prefix,
+        private readonly Link $link,
+    ) {
     }
 
     /**
@@ -53,7 +53,7 @@ class OrderReturnPresenter implements PresenterInterface
      */
     public function present($orderReturn)
     {
-        if (!is_array($orderReturn)) {
+        if (! \is_array($orderReturn)) {
             throw new Exception('orderReturnPresenter can only present order_return passed as array');
         }
 

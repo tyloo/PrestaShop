@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ final class RoundingMapper
             PS_ROUND_HALF_EVEN => Rounding::ROUND_HALF_EVEN,
             PS_ROUND_HALF_ODD => Rounding::ROUND_HALF_EVEN, // Rounding::ROUND_HALF_ODD does not exist (never used)
         ];
-        if (!array_key_exists((int) $legacyRoundingMode, $roundModes)) {
+        if (! \array_key_exists((int) $legacyRoundingMode, $roundModes)) {
             throw new InvalidArgumentException('Unknown legacy rounding mode : ' . (int) $legacyRoundingMode);
         }
 

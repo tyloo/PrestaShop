@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\CommandHandler\ToggleEmployeeStat
 #[AsCommandHandler]
 final class ToggleEmployeeStatusHandler extends AbstractEmployeeHandler implements ToggleEmployeeStatusHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ToggleEmployeeStatusCommand $command)
     {
         $employeeId = $command->getEmployeeId();

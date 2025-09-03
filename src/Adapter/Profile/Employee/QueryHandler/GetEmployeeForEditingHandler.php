@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,24 +51,18 @@ final class GetEmployeeForEditingHandler extends AbstractObjectModelHandler impl
      */
     private $imageTagSourceParser;
 
-    /**
-     * @param ImageTagSourceParserInterface|null $imageTagSourceParser
-     */
     public function __construct(?ImageTagSourceParserInterface $imageTagSourceParser = null)
     {
         $this->imageTagSourceParser = $imageTagSourceParser ?? new ImageTagSourceParser();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetEmployeeForEditing $query)
     {
         $employeeId = $query->getEmployeeId();
         $employee = new Employee($employeeId->getValue());
 
         if ($employee->id !== $employeeId->getValue()) {
-            throw new EmployeeNotFoundException($employeeId, sprintf('Employee with id "%s" was not found', $employeeId->getValue()));
+            throw new EmployeeNotFoundException($employeeId, \sprintf('Employee with id "%s" was not found', $employeeId->getValue()));
         }
 
         $avatarUrl = $this->getAvatarUrl($employeeId->getValue());
@@ -87,23 +82,18 @@ final class GetEmployeeForEditingHandler extends AbstractObjectModelHandler impl
         );
     }
 
-    /**
-     * @param int $imageId
-     *
-     * @return array|null
-     */
     private function getAvatarUrl(int $imageId): ?array
     {
         $imagePath = _PS_EMPLOYEE_IMG_DIR_ . $imageId . '.jpg';
         $imageTag = $this->getTmpImageTag($imagePath, $imageId, 'employee');
         $imageSize = $this->getImageSize($imagePath);
 
-        if (empty($imageTag) || null === $imageSize) {
+        if (empty($imageTag) || $imageSize === null) {
             return null;
         }
 
         return [
-            'size' => sprintf('%skB', $imageSize),
+            'size' => \sprintf('%skB', $imageSize),
             'path' => $this->imageTagSourceParser->parse($imageTag),
         ];
     }

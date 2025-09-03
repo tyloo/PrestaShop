@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,16 +35,11 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
  */
 final class GeolocationOptionsConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @param Configuration $configuration
-     */
-    public function __construct(private readonly Configuration $configuration)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -53,9 +49,6 @@ final class GeolocationOptionsConfiguration implements DataConfigurationInterfac
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $config)
     {
         if ($this->validateConfiguration($config)) {
@@ -67,9 +60,6 @@ final class GeolocationOptionsConfiguration implements DataConfigurationInterfac
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $config)
     {
         return isset(

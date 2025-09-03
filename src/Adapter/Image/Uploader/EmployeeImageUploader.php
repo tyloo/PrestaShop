@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,13 +42,12 @@ final class EmployeeImageUploader extends AbstractImageUploader implements Image
      * @param string $employeeImageDir
      * @param string $tmpImageDir
      */
-    public function __construct(private $employeeImageDir = _PS_EMPLOYEE_IMG_DIR_, private $tmpImageDir = _PS_TMP_IMG_DIR_)
-    {
+    public function __construct(
+        private $employeeImageDir = _PS_EMPLOYEE_IMG_DIR_,
+        private $tmpImageDir = _PS_TMP_IMG_DIR_,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function upload($employeeId, UploadedFile $image)
     {
         $this->checkImageIsAllowedForUpload($image);

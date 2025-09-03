@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,8 +47,6 @@ use RequestSql;
 final class GetSqlRequestExecutionResultHandler implements GetSqlRequestExecutionResultHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SqlRequestNotFoundException
      * @throws SqlRequestException
      */
@@ -57,8 +56,8 @@ final class GetSqlRequestExecutionResultHandler implements GetSqlRequestExecutio
             $id = $query->getSqlRequestId()->getValue();
             $entity = new RequestSql($id);
 
-            if (0 >= $entity->id) {
-                throw new SqlRequestNotFoundException(sprintf('SqlRequest with id %s was not found', $id));
+            if ($entity->id <= 0) {
+                throw new SqlRequestNotFoundException(\sprintf('SqlRequest with id %s was not found', $id));
             }
 
             $rows = Db::getInstance()->executeS($entity->sql);
@@ -81,11 +80,6 @@ final class GetSqlRequestExecutionResultHandler implements GetSqlRequestExecutio
 
     /**
      * Replaces sensitive data with placeholder values.
-     *
-     * @param array $records
-     * @param string $query
-     *
-     * @return array
      */
     private function hideSensitiveData(array $records, string $query): array
     {
@@ -105,10 +99,6 @@ final class GetSqlRequestExecutionResultHandler implements GetSqlRequestExecutio
     /**
      * Detect from list of sensitive attributes if function or alias are used in the sql query
      * then add alias in the list of sensitives attributes to hide.
-     *
-     * @param string $query
-     *
-     * @return array
      */
     private function getSensitiveAttributes(string $query): array
     {
@@ -116,14 +106,14 @@ final class GetSqlRequestExecutionResultHandler implements GetSqlRequestExecutio
         $parser = new PHPSQLParser();
         $parsed = $parser->parse($query);
         foreach ($parsed['SELECT'] as $selectField) {
-            if (is_array($selectField['alias'])) {
+            if (\is_array($selectField['alias'])) {
                 $alias = $selectField['alias']['name'];
-                while (is_array($selectField['sub_tree'])) {
+                while (\is_array($selectField['sub_tree'])) {
                     $selectField = $selectField['sub_tree'][0];
                 }
 
                 $field = end($selectField['no_quotes']['parts']);
-                if (array_key_exists($field, $sensitiveAttributes)) {
+                if (\array_key_exists($field, $sensitiveAttributes)) {
                     $alias = str_replace(['"', "'", '`'], '', $alias);
                     $sensitiveAttributes[$alias] = $sensitiveAttributes[$field];
                 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,13 @@ use PrestaShop\PrestaShop\Core\Domain\Category\QueryHandler\GetCategoryIsEnabled
 #[AsQueryHandler]
 final class GetCategoryIsEnabledHandler implements GetCategoryIsEnabledHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCategoryIsEnabled $query)
     {
         $categoryId = $query->getCategoryId()->getValue();
         $category = new Category($categoryId);
 
         if ($category->id !== $categoryId) {
-            throw new CategoryNotFoundException($query->getCategoryId(), sprintf('Category with id "%s" was not found.', $categoryId));
+            throw new CategoryNotFoundException($query->getCategoryId(), \sprintf('Category with id "%s" was not found.', $categoryId));
         }
 
         return (bool) $category->active;

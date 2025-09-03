@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ class AliasValidator extends AbstractObjectModelValidator
     /**
      * This method is specific for alias creation only.
      *
-     * @param Alias $alias
-     *
      * @throws CoreException
      */
     public function validate(Alias $alias): void
@@ -53,10 +52,6 @@ class AliasValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Alias $alias
-     * @param string $propertyName
-     * @param int $errorCode
-     *
      * @throws AliasConstraintException
      */
     private function validateAliasProperty(Alias $alias, string $propertyName, int $errorCode = 0): void

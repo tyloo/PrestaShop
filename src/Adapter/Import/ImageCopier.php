@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,23 +40,24 @@ use PrestaShop\PrestaShop\Core\Hook\HookDispatcherInterface;
 final class ImageCopier
 {
     /**
-     * @param ConfigurationInterface $configuration
-     * @param Tools $tools
      * @param int $contextShopId
-     * @param HookDispatcherInterface $hookDispatcher
      */
-    public function __construct(private readonly ConfigurationInterface $configuration, private readonly Tools $tools, private $contextShopId, private readonly HookDispatcherInterface $hookDispatcher)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly Tools $tools,
+        private $contextShopId,
+        private readonly HookDispatcherInterface $hookDispatcher,
+    ) {
     }
 
     /**
      * Copy an image located in $url and save it in a path.
      *
-     * @param int $entityId id of product or category (set in entity)
-     * @param int $imageId id of the image if watermark enabled (calls hook actionWatermark)
-     * @param string $url path or url to use
-     * @param string $entity 'products' or 'categories'
-     * @param bool $regenerate
+     * @param int    $entityId   id of product or category (set in entity)
+     * @param int    $imageId    id of the image if watermark enabled (calls hook actionWatermark)
+     * @param string $url        path or url to use
+     * @param string $entity     'products' or 'categories'
+     * @param bool   $regenerate
      *
      * @return bool
      */
@@ -110,7 +112,7 @@ final class ImageCopier
 
         if ($this->tools->copy($url, $tmpFile)) {
             // Evaluate the memory required to resize the image: if it's too much, you can't resize it.
-            if (!ImageManager::checkImageMemoryLimit($tmpFile)) {
+            if (! ImageManager::checkImageMemoryLimit($tmpFile)) {
                 @unlink($tmpFile);
 
                 return false;
@@ -163,7 +165,7 @@ final class ImageCopier
                             $pathInfos[] = [$targetWidth, $targetHeight, $path . '-' . stripslashes((string) $imageType['name']) . '.jpg'];
                         }
 
-                        if ($entity == 'products') {
+                        if ($entity === 'products') {
                             $file = $tmpDir . 'product_mini_' . (int) $entityId . '.jpg';
                             if (is_file($file)) {
                                 unlink($file);
@@ -199,8 +201,8 @@ final class ImageCopier
     /**
      * Find the best path, compared to given dimensions.
      *
-     * @param int $targetWidth
-     * @param int $targetHeight
+     * @param int   $targetWidth
+     * @param int   $targetHeight
      * @param array $pathInfos
      *
      * @return string

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,12 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\QueryResult\Attachment;
 #[AsQueryHandler]
 final class GetAttachmentHandler extends AbstractAttachmentHandler implements GetAttachmentHandlerInterface
 {
-    /**
-     * @param string $downloadDirectory
-     */
-    public function __construct(private readonly string $downloadDirectory)
-    {
+    public function __construct(
+        private readonly string $downloadDirectory,
+    ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws AttachmentNotFoundException
      */
     public function handle(GetAttachment $query): Attachment
@@ -56,8 +53,8 @@ final class GetAttachmentHandler extends AbstractAttachmentHandler implements Ge
         $attachment = $this->getAttachment($query->getAttachmentId());
         $path = $this->downloadDirectory . $attachment->file;
 
-        if (!file_exists($path)) {
-            throw new AttachmentNotFoundException(sprintf('Attachment file was not found at %s', $path));
+        if (! file_exists($path)) {
+            throw new AttachmentNotFoundException(\sprintf('Attachment file was not found at %s', $path));
         }
 
         return new Attachment(

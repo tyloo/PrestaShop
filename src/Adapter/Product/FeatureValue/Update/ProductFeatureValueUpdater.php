@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,19 +52,16 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
  */
 class ProductFeatureValueUpdater
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param ProductRepository $productRepository
-     * @param FeatureRepository $featureRepository
-     * @param FeatureValueRepository $featureValueRepository
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ProductRepository $productRepository, private readonly FeatureRepository $featureRepository, private readonly FeatureValueRepository $featureValueRepository)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly ProductRepository $productRepository,
+        private readonly FeatureRepository $featureRepository,
+        private readonly FeatureValueRepository $featureValueRepository,
+    ) {
     }
 
     /**
-     * @param ProductId $productId
      * @param ProductFeatureValue[] $productFeatureValues
      *
      * @return FeatureValueId[]
@@ -83,13 +81,13 @@ class ProductFeatureValueUpdater
         $previousFeatureIds = [];
         foreach ($productFeatureValues as $productFeatureValue) {
             $this->featureRepository->assertExists($productFeatureValue->getFeatureId());
-            if (null !== $productFeatureValue->getFeatureValueId()) {
+            if ($productFeatureValue->getFeatureValueId() !== null) {
                 $featureValue = $this->featureValueRepository->get($productFeatureValue->getFeatureValueId());
                 if ((int) $featureValue->id_feature !== $productFeatureValue->getFeatureId()->getValue()) {
                     throw new InvalidAssociatedFeatureException('You cannot associate a value to another feature.');
                 }
 
-                if (in_array($productFeatureValue->getFeatureValueId()->getValue(), $previousFeatureIds)) {
+                if (\in_array($productFeatureValue->getFeatureValueId()->getValue(), $previousFeatureIds, true)) {
                     throw new DuplicateFeatureValueAssociationException('You cannot associate the same feature value more than once.');
                 }
 
@@ -98,7 +96,7 @@ class ProductFeatureValueUpdater
         }
 
         foreach ($productFeatureValues as $productFeatureValue) {
-            if (null !== $productFeatureValue->getFeatureValueId()) {
+            if ($productFeatureValue->getFeatureValueId() !== null) {
                 $this->updateFeatureValue($productFeatureValue);
             } else {
                 $this->addFeatureValue($productFeatureValue);
@@ -109,9 +107,6 @@ class ProductFeatureValueUpdater
     }
 
     /**
-     * @param ProductId $productId
-     * @param array $productFeatureValues
-     *
      * @return FeatureValueId[]
      *
      * @throws DBALException
@@ -176,8 +171,6 @@ class ProductFeatureValueUpdater
     }
 
     /**
-     * @param ProductFeatureValue $productFeatureValue
-     *
      * @throws CannotUpdateFeatureValueException
      * @throws CoreException
      * @throws FeatureValueNotFoundException
@@ -185,18 +178,17 @@ class ProductFeatureValueUpdater
     private function updateFeatureValue(ProductFeatureValue $productFeatureValue): void
     {
         // Only custom values need to be updated
-        if (null === $productFeatureValue->getLocalizedCustomValues()) {
+        if ($productFeatureValue->getLocalizedCustomValues() === null) {
             return;
         }
 
         $featureValue = $this->featureValueRepository->get($productFeatureValue->getFeatureValueId());
         $featureValue->value = $productFeatureValue->getLocalizedCustomValues();
+
         $this->featureValueRepository->update($featureValue);
     }
 
     /**
-     * @param ProductFeatureValue $productFeatureValue
-     *
      * @throws CannotAddFeatureValueException
      * @throws CoreException
      */
@@ -204,8 +196,8 @@ class ProductFeatureValueUpdater
     {
         $featureValue = new FeatureValue();
         $featureValue->id_feature = $productFeatureValue->getFeatureId()->getValue();
-        $featureValue->custom = null !== $productFeatureValue->getLocalizedCustomValues();
-        if (null !== $productFeatureValue->getLocalizedCustomValues()) {
+        $featureValue->custom = $productFeatureValue->getLocalizedCustomValues() !== null;
+        if ($productFeatureValue->getLocalizedCustomValues() !== null) {
             $featureValue->value = $productFeatureValue->getLocalizedCustomValues();
         }
 

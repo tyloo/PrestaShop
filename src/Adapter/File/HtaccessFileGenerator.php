@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,14 +36,13 @@ use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerInterface;
 class HtaccessFileGenerator
 {
     /**
-     * HtaccessFileGenerator constructor.
-     *
-     * @param CacheClearerInterface $cacheClearer
-     * @param Tools $tools
      * @param bool $multipleViewsConfiguration
      */
-    public function __construct(private readonly CacheClearerInterface $cacheClearer, private readonly Tools $tools, private $multipleViewsConfiguration)
-    {
+    public function __construct(
+        private readonly CacheClearerInterface $cacheClearer,
+        private readonly Tools $tools,
+        private $multipleViewsConfiguration,
+    ) {
     }
 
     /**
@@ -54,7 +54,7 @@ class HtaccessFileGenerator
      */
     public function generateFile($disableMultiView = null)
     {
-        if (null === $disableMultiView) {
+        if ($disableMultiView === null) {
             $disableMultiView = $this->multipleViewsConfiguration;
         }
 

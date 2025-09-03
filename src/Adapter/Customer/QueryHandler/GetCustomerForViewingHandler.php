@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -68,21 +69,16 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     private $context;
 
     /**
-     * @param TranslatorInterface $translator
      * @param int $contextLangId
-     * @param Locale $locale
      */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private $contextLangId,
-        private readonly Locale $locale
+        private readonly Locale $locale,
     ) {
         $this->context = new LegacyContext();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCustomerForViewing $query)
     {
         $customerId = $query->getCustomerId();
@@ -109,8 +105,6 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     }
 
     /**
-     * @param Customer $customer
-     *
      * @return GeneralInformation
      */
     private function getGeneralInformation(Customer $customer)
@@ -122,8 +116,6 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     }
 
     /**
-     * @param Customer $customer
-     *
      * @return PersonalInformation
      */
     private function getPersonalInformation(Customer $customer)
@@ -133,8 +125,8 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
         $gender = new Gender($customer->id_gender, $this->contextLangId);
         $socialTitle = $gender->name ?: $this->translator->trans('Unknown', [], 'Admin.Orderscustomers.Feature');
 
-        if ($customer->birthday && '0000-00-00' !== $customer->birthday) {
-            $birthday = sprintf(
+        if ($customer->birthday && $customer->birthday !== '0000-00-00') {
+            $birthday = \sprintf(
                 $this->translator->trans('%1$d years old (birth date: %2$s)', [], 'Admin.Orderscustomers.Feature'),
                 $customerStats['age'],
                 Tools::displayDate($customer->birthday)
@@ -201,11 +193,6 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
         return null;
     }
 
-    /**
-     * @param Customer $customer
-     *
-     * @return OrdersInformation
-     */
     private function getCustomerOrders(Customer $customer): OrdersInformation
     {
         $validOrders = [];
@@ -245,8 +232,6 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     }
 
     /**
-     * @param Customer $customer
-     *
      * @return MessageInformation[]
      */
     private function getCustomerMessages(Customer $customer)
@@ -266,7 +251,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
 
             $customerMessages[] = new MessageInformation(
                 (int) $message['id_customer_thread'],
-                substr(strip_tags(html_entity_decode((string) $message['message'], ENT_NOQUOTES, 'UTF-8')), 0, 75),
+                substr(strip_tags(html_entity_decode((string) $message['message'], \ENT_NOQUOTES, 'UTF-8')), 0, 75),
                 $status,
                 Tools::displayDate($message['date_add'], true)
             );
@@ -276,8 +261,6 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     }
 
     /**
-     * @param Customer $customer
-     *
      * @return SentEmailInformation[]
      */
     private function getLastEmailsSentToCustomer(Customer $customer)
@@ -298,8 +281,6 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     }
 
     /**
-     * @param Customer $customer
-     *
      * @return LastConnectionInformation[]
      */
     private function getLastCustomerConnections(Customer $customer)
@@ -307,13 +288,13 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
         $connections = $customer->getLastConnections();
         $lastConnections = [];
 
-        if (!is_array($connections)) {
+        if (! \is_array($connections)) {
             $connections = [];
         }
 
         foreach ($connections as $connection) {
             $httpReferer = $connection['http_referer'] ?
-                preg_replace('/^www./', '', parse_url((string) $connection['http_referer'], PHP_URL_HOST)) :
+                preg_replace('/^www./', '', parse_url((string) $connection['http_referer'], \PHP_URL_HOST)) :
                 $this->translator->trans('Direct link', [], 'Admin.Orderscustomers.Notification');
 
             $lastConnections[] = new LastConnectionInformation(
@@ -330,8 +311,6 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     }
 
     /**
-     * @param Customer $customer
-     *
      * @return GroupInformation[]
      */
     private function getCustomerGroups(Customer $customer)
@@ -352,15 +331,12 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     }
 
     /**
-     * @param CustomerId $customerId
-     * @param Customer $customer
-     *
      * @throws CustomerNotFoundException
      */
     private function assertCustomerWasFound(CustomerId $customerId, Customer $customer)
     {
-        if (!$customer->id) {
-            throw new CustomerNotFoundException(sprintf('Customer with id "%d" was not found.', $customerId->getValue()));
+        if (! $customer->id) {
+            throw new CustomerNotFoundException(\sprintf('Customer with id "%d" was not found.', $customerId->getValue()));
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,7 +45,7 @@ class SupplierLazyArray extends AbstractLazyArray
         array $supplier,
         private readonly Language $language,
         private readonly ImageRetriever $imageRetriever,
-        private readonly Link $link
+        private readonly Link $link,
     ) {
         $this->supplier = $supplier;
 
@@ -79,8 +80,8 @@ class SupplierLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getNbProducts()
     {
-        if (!isset($this->supplier['nb_products'])) {
-            $this->supplier['nb_products'] = count(
+        if (! isset($this->supplier['nb_products'])) {
+            $this->supplier['nb_products'] = \count(
                 (new Supplier($this->supplier['id'], $this->language->getId()))
                     ->getProductsLite($this->language->getId())
             );

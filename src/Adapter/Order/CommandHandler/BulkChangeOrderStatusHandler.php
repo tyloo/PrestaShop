@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,15 +47,12 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
 #[AsCommandHandler]
 final class BulkChangeOrderStatusHandler implements BulkChangeOrderStatusHandlerInterface
 {
-    /**
-     * @param BulkChangeOrderStatusCommand $command
-     */
     public function handle(BulkChangeOrderStatusCommand $command)
     {
         $orderState = new OrderState($command->getNewOrderStatusId());
 
         if ($orderState->id !== $command->getNewOrderStatusId()) {
-            throw new OrderException(sprintf('Order state with ID "%s" was not found.', $command->getNewOrderStatusId()));
+            throw new OrderException(\sprintf('Order state with ID "%s" was not found.', $command->getNewOrderStatusId()));
         }
 
         $ordersWithFailedToUpdateStatus = [];
@@ -75,40 +73,38 @@ final class BulkChangeOrderStatusHandler implements BulkChangeOrderStatusHandler
             $history->id_order = $order->id;
             $history->id_employee = (int) Context::getContext()->employee->id;
 
-            $useExistingPayment = !$order->hasInvoice();
+            $useExistingPayment = ! $order->hasInvoice();
             $history->changeIdOrderState((int) $orderState->id, $order, $useExistingPayment);
 
             $carrier = new Carrier($order->id_carrier, (int) $order->getAssociatedLanguage()->getId());
             $templateVars = [];
 
-            if ($history->id_order_state == Configuration::get('PS_OS_SHIPPING') && $order->getShippingNumber()) {
+            if ($history->id_order_state === Configuration::get('PS_OS_SHIPPING') && $order->getShippingNumber()) {
                 $templateVars['{followup}'] = str_replace('@', $order->getShippingNumber(), $carrier->url);
             }
 
-            if (!$history->add()) {
+            if (! $history->add()) {
                 $ordersWithFailedToUpdateStatus[] = $orderId;
 
                 continue;
             }
 
-            if (!$history->sendEmail($order, $templateVars)) {
+            if (! $history->sendEmail($order, $templateVars)) {
                 $ordersWithFailedToSendEmail[] = $orderId;
 
                 continue;
             }
         }
 
-        if (!empty($ordersWithFailedToUpdateStatus)
-            || !empty($ordersWithFailedToSendEmail)
-            || !empty($ordersWithAssignedStatus)
+        if (! empty($ordersWithFailedToUpdateStatus)
+            || ! empty($ordersWithFailedToSendEmail)
+            || ! empty($ordersWithAssignedStatus)
         ) {
             throw new ChangeOrderStatusException($ordersWithFailedToUpdateStatus, $ordersWithFailedToSendEmail, $ordersWithAssignedStatus, 'Failed to update status or sent email when changing order status.');
         }
     }
 
     /**
-     * @param OrderId $orderId
-     *
      * @return Order
      */
     private function getOrderObject(OrderId $orderId)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,13 +39,11 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Attribute\QueryResult\Edita
 #[AsQueryHandler]
 final class GetAttributeForEditingHandler implements GetAttributeForEditingHandlerInterface
 {
-    public function __construct(private readonly AttributeRepository $attributeRepository)
-    {
+    public function __construct(
+        private readonly AttributeRepository $attributeRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetAttributeForEditing $query): EditableAttribute
     {
         $attributeId = $query->getAttributeId();

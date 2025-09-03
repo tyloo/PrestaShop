@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\Store\Repository\StoreRepository;
 #[AsCommandHandler]
 class BulkUpdateStoreStatusHandler implements BulkUpdateStoreStatusHandlerInterface
 {
-    public function __construct(private readonly StoreRepository $storeRepository)
-    {
+    public function __construct(
+        private readonly StoreRepository $storeRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkUpdateStoreStatusCommand $command): void
     {
         foreach ($command->getStoreIds() as $storeId) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,29 +37,21 @@ use PrestaShop\PrestaShop\Core\Employee\EmployeeDataProviderInterface;
  */
 final class EmployeeFormAccessChecker implements EmployeeFormAccessCheckerInterface
 {
-    /**
-     * @param ContextEmployeeProviderInterface $contextEmployeeProvider
-     * @param EmployeeDataProviderInterface $employeeDataProvider
-     */
-    public function __construct(private readonly ContextEmployeeProviderInterface $contextEmployeeProvider, private readonly EmployeeDataProviderInterface $employeeDataProvider)
-    {
+    public function __construct(
+        private readonly ContextEmployeeProviderInterface $contextEmployeeProvider,
+        private readonly EmployeeDataProviderInterface $employeeDataProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isRestrictedAccess(int $employeeId): bool
     {
-        if (!is_int($employeeId)) {
-            throw new InvalidArgumentException(sprintf('Employee ID must be an integer, %s given', gettype($employeeId)));
+        if (! \is_int($employeeId)) {
+            throw new InvalidArgumentException(\sprintf('Employee ID must be an integer, %s given', \gettype($employeeId)));
         }
 
         return $employeeId === $this->contextEmployeeProvider->getId();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function canAccessEditFormFor(int $employeeId): bool
     {
         // To access super admin edit form you must be a super admin.

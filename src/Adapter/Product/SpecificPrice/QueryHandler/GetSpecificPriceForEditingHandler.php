@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,17 +50,12 @@ use SpecificPrice;
 #[AsQueryHandler]
 class GetSpecificPriceForEditingHandler implements GetSpecificPriceForEditingHandlerInterface
 {
-    /**
-     * @param SpecificPriceRepository $specificPriceRepository
-     * @param CustomerRepository $customerRepository
-     */
-    public function __construct(private readonly SpecificPriceRepository $specificPriceRepository, private readonly CustomerRepository $customerRepository)
-    {
+    public function __construct(
+        private readonly SpecificPriceRepository $specificPriceRepository,
+        private readonly CustomerRepository $customerRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetSpecificPriceForEditing $query): SpecificPriceForEditing
     {
         $specificPrice = $this->specificPriceRepository->get($query->getSpecificPriceId());
@@ -93,16 +89,11 @@ class GetSpecificPriceForEditingHandler implements GetSpecificPriceForEditingHan
         );
     }
 
-    /**
-     * @param SpecificPrice $specificPrice
-     *
-     * @return CustomerInfo|null
-     */
     private function getCustomerInfo(SpecificPrice $specificPrice): ?CustomerInfo
     {
         $customerIdValue = (int) $specificPrice->id_customer;
 
-        if (!$customerIdValue) {
+        if (! $customerIdValue) {
             return null;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,15 +38,12 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\Exception\DeleteManufacturerE
 #[AsCommandHandler]
 final class DeleteManufacturerHandler extends AbstractManufacturerCommandHandler implements DeleteManufacturerHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteManufacturerCommand $command)
     {
         $manufacturer = $this->getManufacturer($command->getManufacturerId());
 
-        if (!$this->deleteManufacturer($manufacturer)) {
-            throw new DeleteManufacturerException(sprintf('Cannot delete Manufacturer object with id "%s".', $manufacturer->id), DeleteManufacturerException::FAILED_DELETE);
+        if (! $this->deleteManufacturer($manufacturer)) {
+            throw new DeleteManufacturerException(\sprintf('Cannot delete Manufacturer object with id "%s".', $manufacturer->id), DeleteManufacturerException::FAILED_DELETE);
         }
     }
 }

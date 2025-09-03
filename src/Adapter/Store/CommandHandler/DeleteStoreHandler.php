@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Store\Repository\StoreRepository;
 #[AsCommandHandler]
 class DeleteStoreHandler implements DeleteStoreHandlerInterface
 {
-    public function __construct(private readonly StoreRepository $storeRepository)
-    {
+    public function __construct(
+        private readonly StoreRepository $storeRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteStoreCommand $command): void
     {
         $this->storeRepository->delete($command->getStoreId());

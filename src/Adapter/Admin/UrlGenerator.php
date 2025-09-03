@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,22 +45,16 @@ use Symfony\Component\Routing\Router;
  */
 class UrlGenerator implements UrlGeneratorInterface
 {
-    /**
-     * Constructor.
-     *
-     * @param LegacyContext $legacyContext
-     * @param Router $router
-     */
-    public function __construct(private readonly LegacyContext $legacyContext, private readonly Router $router)
-    {
+    public function __construct(
+        private readonly LegacyContext $legacyContext,
+        private readonly Router $router,
+    ) {
     }
 
     /**
      * @param string $name
-     * @param array $parameters
-     * @param int $referenceType
-     *
-     * @return string
+     * @param array  $parameters
+     * @param int    $referenceType
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
     {
@@ -78,7 +73,7 @@ class UrlGenerator implements UrlGeneratorInterface
      *
      * If failed to find options, then return the input values.
      *
-     * @param string $routeName
+     * @param string   $routeName
      * @param string[] $parameters The route parameters to convert
      *
      * @return array{0: string, 1: array<string>} An array with: the legacy controller name, then the parameters array
@@ -104,17 +99,11 @@ class UrlGenerator implements UrlGeneratorInterface
         return [$legacyController, $legacyParameters];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setContext(RequestContext $context)
     {
         throw new LogicException('Cannot use this UrlGeneratorInterface implementation with a Symfony context. Please call AdminUrlGeneratorFactory::forLegacy() to reach the right instance.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContext(): RequestContext
     {
         throw new LogicException('Cannot use this UrlGeneratorInterface implementation with a Symfony context. Please call AdminUrlGeneratorFactory::forLegacy() to reach the right instance.');

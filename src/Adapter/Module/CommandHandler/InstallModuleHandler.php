@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class InstallModuleHandler implements InstallModuleHandlerInterface
 
         $result = $this->moduleManager->install($command->getTechnicalName()->getValue());
 
-        if (!$result) {
+        if (! $result) {
             throw new CannotInstallModuleException('Technical error occurred while installing module.');
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,20 +44,17 @@ class BestSalesProductSearchProvider implements ProductSearchProviderInterface
     private $sortOrdersCollection;
 
     public function __construct(
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
         $this->sortOrdersCollection = new SortOrdersCollection($this->translator);
     }
 
     /**
-     * @param ProductSearchContext $context
-     * @param ProductSearchQuery $query
-     *
      * @return ProductSearchResult
      */
     public function runQuery(
         ProductSearchContext $context,
-        ProductSearchQuery $query
+        ProductSearchQuery $query,
     ) {
         // If provided sort order is unsupported random, we set a fallback
         if ($query->getSortOrder()->isRandom()) {
@@ -65,7 +63,7 @@ class BestSalesProductSearchProvider implements ProductSearchProviderInterface
             ));
         }
 
-        if (!$products = ProductSale::getBestSales(
+        if (! $products = ProductSale::getBestSales(
             $context->getIdLang(),
             $query->getPage(),
             $query->getResultsPerPage(),
@@ -79,7 +77,7 @@ class BestSalesProductSearchProvider implements ProductSearchProviderInterface
 
         $result = new ProductSearchResult();
 
-        if (!empty($products)) {
+        if (! empty($products)) {
             $result
                 ->setProducts($products)
                 ->setTotalProductsCount($count);

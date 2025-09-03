@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,16 +43,11 @@ use SpecificPrice;
 #[AsCommandHandler]
 class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
 {
-    /**
-     * @param SpecificPriceRepository $specificPriceRepository
-     */
-    public function __construct(private readonly SpecificPriceRepository $specificPriceRepository)
-    {
+    public function __construct(
+        private readonly SpecificPriceRepository $specificPriceRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(EditSpecificPriceCommand $command): void
     {
         $specificPrice = $this->specificPriceRepository->get($command->getSpecificPriceId());
@@ -63,16 +59,13 @@ class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
     }
 
     /**
-     * @param EditSpecificPriceCommand $command
-     * @param SpecificPrice $specificPrice
-     *
      * @return string[]
      */
     protected function fillUpdatableProperties(EditSpecificPriceCommand $command, SpecificPrice $specificPrice): array
     {
         $updatableProperties = [];
 
-        if (null !== $command->getReduction()) {
+        if ($command->getReduction() !== null) {
             $specificPrice->reduction_type = $command->getReduction()->getType();
             $reductionValue = $command->getReduction()->getValue();
             // VO stores percent expressed based on 100, while the DB stored the float value (VO: 57.5 - DB: 0.575)
@@ -92,52 +85,52 @@ class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
             $updatableProperties[] = 'price';
         }
 
-        if (null !== $command->includesTax()) {
+        if ($command->includesTax() !== null) {
             $specificPrice->reduction_tax = $command->includesTax();
             $updatableProperties[] = 'reduction_tax';
         }
 
-        if (null !== $command->getFromQuantity()) {
+        if ($command->getFromQuantity() !== null) {
             $specificPrice->from_quantity = $command->getFromQuantity();
             $updatableProperties[] = 'from_quantity';
         }
 
-        if (null !== $command->getShopId()) {
+        if ($command->getShopId() !== null) {
             $specificPrice->id_shop = $command->getShopId()->getValue();
             $updatableProperties[] = 'id_shop';
         }
 
-        if (null !== $command->getCombinationId()) {
+        if ($command->getCombinationId() !== null) {
             $specificPrice->id_product_attribute = $command->getCombinationId()->getValue();
             $updatableProperties[] = 'id_product_attribute';
         }
 
-        if (null !== $command->getCurrencyId()) {
+        if ($command->getCurrencyId() !== null) {
             $specificPrice->id_currency = $command->getCurrencyId()->getValue();
             $updatableProperties[] = 'id_currency';
         }
 
-        if (null !== $command->getCountryId()) {
+        if ($command->getCountryId() !== null) {
             $specificPrice->id_country = $command->getCountryId();
             $updatableProperties[] = 'id_country';
         }
 
-        if (null !== $command->getGroupId()) {
+        if ($command->getGroupId() !== null) {
             $specificPrice->id_group = $command->getGroupId()->getValue();
             $updatableProperties[] = 'id_group';
         }
 
-        if (null !== $command->getCustomerId()) {
+        if ($command->getCustomerId() !== null) {
             $specificPrice->id_customer = $command->getCustomerId();
             $updatableProperties[] = 'id_customer';
         }
 
-        if (null !== $command->getDateTimeFrom()) {
+        if ($command->getDateTimeFrom() !== null) {
             $specificPrice->from = $command->getDateTimeFrom()->format(DateTime::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'from';
         }
 
-        if (null !== $command->getDateTimeTo()) {
+        if ($command->getDateTimeTo() !== null) {
             $specificPrice->to = $command->getDateTimeTo()->format(DateTime::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'to';
         }

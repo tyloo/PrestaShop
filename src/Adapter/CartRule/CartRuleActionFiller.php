@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,14 +39,11 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Money;
 class CartRuleActionFiller
 {
     /**
-     * @param CartRule $cartRule
-     * @param CartRuleAction $cartRuleAction
-     *
      * @return string[] list of updatable properties which were filled
      */
     public function fillUpdatableProperties(
         CartRule $cartRule,
-        CartRuleAction $cartRuleAction
+        CartRuleAction $cartRuleAction,
     ): array {
         $discount = $cartRuleAction->getDiscount();
 
@@ -54,7 +52,7 @@ class CartRuleActionFiller
         }
 
         $giftProduct = $cartRuleAction->getGiftProduct();
-        if (null !== $giftProduct) {
+        if ($giftProduct !== null) {
             $cartRule->gift_product = $giftProduct->getProductId()->getValue();
             $cartRule->gift_product_attribute = $giftProduct->getCombinationId() ? $giftProduct->getCombinationId()->getValue() : null;
         } else {
@@ -79,10 +77,6 @@ class CartRuleActionFiller
         ];
     }
 
-    /**
-     * @param CartRule $cartRule
-     * @param ?Discount $discount
-     */
     private function fillDiscount(CartRule $cartRule, ?Discount $discount): void
     {
         // when there is no discount action, we reset all the related properties to defaults
@@ -109,13 +103,9 @@ class CartRuleActionFiller
         $this->fillDiscountApplicationType($cartRule, $discount->getDiscountApplicationType());
     }
 
-    /**
-     * @param CartRule $cartRule
-     * @param DiscountApplicationType $discountApplicationType
-     */
     private function fillDiscountApplicationType(
         CartRule $cartRule,
-        DiscountApplicationType $discountApplicationType
+        DiscountApplicationType $discountApplicationType,
     ): void {
         $discountApplicationValue = match ($discountApplicationType->getType()) {
             DiscountApplicationType::SELECTED_PRODUCTS => LegacyDiscountApplicationType::SELECTED_PRODUCTS,
@@ -139,7 +129,7 @@ class CartRuleActionFiller
     private function fillPercentageDiscount(CartRule $cartRule, PercentageDiscount $percentageDiscount): void
     {
         $cartRule->reduction_percent = (float) (string) $percentageDiscount->getPercentage();
-        $cartRule->reduction_exclude_special = !$percentageDiscount->applyToDiscountedProducts();
+        $cartRule->reduction_exclude_special = ! $percentageDiscount->applyToDiscountedProducts();
         $cartRule->reduction_amount = 0;
         $cartRule->reduction_currency = 0;
         $cartRule->reduction_tax = false;

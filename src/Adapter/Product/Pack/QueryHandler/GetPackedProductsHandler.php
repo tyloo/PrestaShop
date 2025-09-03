@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -97,7 +98,7 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
         CombinationNameBuilder $combinationNameBuilder,
         ProductImageRepository $productImageRepository,
         TranslatorInterface $translator,
-        private readonly ProductImageProviderInterface $productImageProvider
+        private readonly ProductImageProviderInterface $productImageProvider,
     ) {
         $this->languageId = $defaultLangId;
         $this->productPackRepository = $productPackRepository;
@@ -108,9 +109,6 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetPackedProducts $query): array
     {
         $shopConstraint = $query->getShopConstraint();
@@ -154,7 +152,7 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
             }
 
             $reference = '';
-            if (!empty($packedItem['combination_reference']) || !empty($packedItem['product_reference'])) {
+            if (! empty($packedItem['combination_reference']) || ! empty($packedItem['product_reference'])) {
                 $reference = empty($packedItem['combination_reference']) ? $packedItem['product_reference'] : $packedItem['combination_reference'];
                 $reference = $this->translator->trans('Ref: %s', ['%s' => $reference], 'Admin.Catalog.Feature');
             }

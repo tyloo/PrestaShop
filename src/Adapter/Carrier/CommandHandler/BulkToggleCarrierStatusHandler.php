@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,13 +44,10 @@ use PrestaShopException;
 class BulkToggleCarrierStatusHandler implements BulkToggleCarrierStatusHandlerInterface
 {
     public function __construct(
-        private readonly CarrierRepository $carrierRepository
+        private readonly CarrierRepository $carrierRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkToggleCarrierStatusCommand $command)
     {
         foreach ($command->getCarrierIds() as $carrierId) {
@@ -57,11 +55,11 @@ class BulkToggleCarrierStatusHandler implements BulkToggleCarrierStatusHandlerIn
             $carrier->active = $command->getExpectedStatus();
 
             try {
-                if (!$carrier->save()) {
-                    throw new CannotToggleCarrierStatusException(sprintf('Cannot toggle status of carrier with id "%d"', $carrierId->getValue()), CannotToggleCarrierStatusException::BULK_TOGGLE);
+                if (! $carrier->save()) {
+                    throw new CannotToggleCarrierStatusException(\sprintf('Cannot toggle status of carrier with id "%d"', $carrierId->getValue()), CannotToggleCarrierStatusException::BULK_TOGGLE);
                 }
             } catch (PrestaShopException) {
-                throw new CarrierException(sprintf('An error occurred when updating status of carrier with id "%d"', $carrierId->getValue()));
+                throw new CarrierException(\sprintf('An error occurred when updating status of carrier with id "%d"', $carrierId->getValue()));
             }
         }
     }

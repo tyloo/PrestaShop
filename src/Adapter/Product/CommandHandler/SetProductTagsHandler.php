@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,12 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\UpdateProductTagsHa
 #[AsCommandHandler]
 final class SetProductTagsHandler implements UpdateProductTagsHandlerInterface
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param ProductTagUpdater $productTagUpdater
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductTagUpdater $productTagUpdater)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly ProductTagUpdater $productTagUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SetProductTagsCommand $command): void
     {
         $product = $this->productRepository->getProductByDefaultShop($command->getProductId());

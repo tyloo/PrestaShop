@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ class CategoryLazyArray extends AbstractLazyArray
         array $category,
         private readonly Language $language,
         private readonly ImageRetriever $imageRetriever,
-        private readonly Link $link
+        private readonly Link $link,
     ) {
         $this->category = $category;
 
@@ -86,7 +87,7 @@ class CategoryLazyArray extends AbstractLazyArray
     {
         // Get image identifier for the thumbnail and check if it exists
         $imageIdentifier = $this->category['id'];
-        if (!$this->doesCategoryImageExist($imageIdentifier)) {
+        if (! $this->doesCategoryImageExist($imageIdentifier)) {
             return null;
         }
 
@@ -107,7 +108,7 @@ class CategoryLazyArray extends AbstractLazyArray
     {
         // Get image identifier for the thumbnail and check if it exists
         $imageIdentifier = $this->category['id'] . '_thumb';
-        if (!$this->doesCategoryImageExist($imageIdentifier)) {
+        if (! $this->doesCategoryImageExist($imageIdentifier)) {
             return null;
         }
 

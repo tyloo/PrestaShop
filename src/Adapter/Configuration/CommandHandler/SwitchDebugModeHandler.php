@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,27 +40,22 @@ use PrestaShop\PrestaShop\Core\Domain\Configuration\CommandHandler\SwitchDebugMo
 #[AsCommandHandler]
 final class SwitchDebugModeHandler implements SwitchDebugModeHandlerInterface
 {
-    /**
-     * @param DebugMode $debugMode
-     */
-    public function __construct(private readonly DebugMode $debugMode)
-    {
+    public function __construct(
+        private readonly DebugMode $debugMode,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SwitchDebugModeCommand $command)
     {
         $isDebugModeEnabled = $this->debugMode->isDebugModeEnabled();
 
-        if (!$isDebugModeEnabled && $command->enableDebugMode()) {
+        if (! $isDebugModeEnabled && $command->enableDebugMode()) {
             $this->debugMode->enable();
 
             return;
         }
 
-        if ($isDebugModeEnabled && !$command->enableDebugMode()) {
+        if ($isDebugModeEnabled && ! $command->enableDebugMode()) {
             $this->debugMode->disable();
         }
     }

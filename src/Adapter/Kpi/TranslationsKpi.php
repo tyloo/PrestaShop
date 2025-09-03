@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class TranslationsKpi implements KpiInterface
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param ConfigurationInterface $configuration
      * @param string $sourceLink a link to refresh KPI
      */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $configuration, private $sourceLink)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurationInterface $configuration,
+        private $sourceLink,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $frontOfficeTranslations = $this->configuration->get('FRONTOFFICE_TRANSLATIONS');
@@ -59,7 +58,7 @@ final class TranslationsKpi implements KpiInterface
         $kpi->color = 'color3';
         $kpi->title = $this->translator->trans('Front office Translations', [], 'Admin.International.Feature');
 
-        if (false !== $frontOfficeTranslations) {
+        if ($frontOfficeTranslations !== false) {
             $kpi->value = $frontOfficeTranslations;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\CommandHandler\SetSp
 #[AsCommandHandler]
 class SetSpecificPricePriorityForProductHandler implements SetSpecificPricePriorityForProductHandlerInterface
 {
-    /**
-     * @param SpecificPricePriorityUpdater $specificPricePriorityUpdater
-     */
-    public function __construct(private readonly SpecificPricePriorityUpdater $specificPricePriorityUpdater)
-    {
+    public function __construct(
+        private readonly SpecificPricePriorityUpdater $specificPricePriorityUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SetSpecificPricePriorityForProductCommand $command): void
     {
         $this->specificPricePriorityUpdater->setPrioritiesForProduct(

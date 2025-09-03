@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,13 +43,12 @@ final class GetLogosPathsHandler implements GetLogosPathsHandlerInterface
      * @param string $imageBaseUrl
      * @param string $imageDirectory
      */
-    public function __construct(private $imageBaseUrl, private $imageDirectory)
-    {
+    public function __construct(
+        private $imageBaseUrl,
+        private $imageDirectory,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetLogosPaths $query)
     {
         return new LogosPaths(
@@ -76,13 +76,13 @@ final class GetLogosPathsHandler implements GetLogosPathsHandlerInterface
      */
     private function getMailLogoPath()
     {
-        if (!$mailLogo = Configuration::get('PS_LOGO_MAIL')) {
+        if (! $mailLogo = Configuration::get('PS_LOGO_MAIL')) {
             return $this->getHeaderLogoPath();
         }
 
         $mailLogoPath = $this->imageDirectory . $mailLogo;
 
-        if (!file_exists($mailLogoPath)) {
+        if (! file_exists($mailLogoPath)) {
             return $this->getHeaderLogoPath();
         }
 
@@ -96,13 +96,13 @@ final class GetLogosPathsHandler implements GetLogosPathsHandlerInterface
      */
     private function getInvoiceLogoPath()
     {
-        if (!$invoiceLogo = Configuration::get('PS_LOGO_INVOICE')) {
+        if (! $invoiceLogo = Configuration::get('PS_LOGO_INVOICE')) {
             return $this->getHeaderLogoPath();
         }
 
         $invoiceLogoPath = $this->imageDirectory . $invoiceLogo;
 
-        if (!file_exists($invoiceLogoPath)) {
+        if (! file_exists($invoiceLogoPath)) {
             return $this->getHeaderLogoPath();
         }
 

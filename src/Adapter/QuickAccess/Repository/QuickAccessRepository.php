@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,13 +38,10 @@ class QuickAccessRepository extends AbstractObjectModelRepository implements Qui
 {
     public function __construct(
         private readonly Connection $connection,
-        private readonly string $dbPrefix
+        private readonly string $dbPrefix,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fetchAll(LanguageId $languageId): array
     {
         $qb = $this->connection->createQueryBuilder();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,10 +45,6 @@ use PrestaShopException;
 final class AddCategoryHandler extends AbstractEditCategoryHandler implements AddCategoryHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @param AddCategoryCommand $command
-     *
      * @return CategoryId
      */
     public function handle(AddCategoryCommand $command)
@@ -66,8 +63,6 @@ final class AddCategoryHandler extends AbstractEditCategoryHandler implements Ad
     }
 
     /**
-     * @param AddCategoryCommand $command
-     *
      * @return Category
      *
      * @throws CannotAddCategoryException
@@ -80,47 +75,47 @@ final class AddCategoryHandler extends AbstractEditCategoryHandler implements Ad
         $category->id_parent = $command->getParentCategoryId();
         $category->active = $command->isActive();
 
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $category->name = $command->getLocalizedNames();
         }
 
-        if (null !== $command->getLocalizedLinkRewrites()) {
+        if ($command->getLocalizedLinkRewrites() !== null) {
             $category->link_rewrite = $command->getLocalizedLinkRewrites();
         }
 
-        if (null !== $command->getLocalizedDescriptions()) {
+        if ($command->getLocalizedDescriptions() !== null) {
             $category->description = $command->getLocalizedDescriptions();
         }
 
-        if (null !== $command->getLocalizedAdditionalDescriptions()) {
+        if ($command->getLocalizedAdditionalDescriptions() !== null) {
             $category->additional_description = $command->getLocalizedAdditionalDescriptions();
         }
 
-        if (null !== $command->getLocalizedMetaTitles()) {
+        if ($command->getLocalizedMetaTitles() !== null) {
             $category->meta_title = $command->getLocalizedMetaTitles();
         }
 
-        if (null !== $command->getLocalizedMetaDescriptions()) {
+        if ($command->getLocalizedMetaDescriptions() !== null) {
             $category->meta_description = $command->getLocalizedMetaDescriptions();
         }
 
-        if (null !== $command->getAssociatedGroupIds()) {
+        if ($command->getAssociatedGroupIds() !== null) {
             $category->groupBox = $command->getAssociatedGroupIds();
         }
 
-        if (false === $category->validateFields(false)) {
+        if ($category->validateFields(false) === false) {
             throw new CannotAddCategoryException('Invalid data for creating category.');
         }
 
-        if (false === $category->validateFieldsLang(false)) {
+        if ($category->validateFieldsLang(false) === false) {
             throw new CannotAddCategoryException('Invalid language data for creating category.');
         }
 
-        if (null !== $command->getRedirectOption()) {
+        if ($command->getRedirectOption() !== null) {
             $this->fillWithRedirectOption($category, $command->getRedirectOption());
         }
 
-        if (false === $category->add()) {
+        if ($category->add() === false) {
             throw new CannotAddCategoryException('Failed to add new category.');
         }
 

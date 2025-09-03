@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,10 +42,6 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractMultiShopObjectModelRepository
 class AddressRepository extends AbstractMultiShopObjectModelRepository
 {
     /**
-     * @param AddressId $addressId
-     *
-     * @return Address
-     *
      * @throws AttributeNotFoundException
      * @throws CoreException
      */

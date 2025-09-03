@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,19 +49,16 @@ use PrestaShop\PrestaShop\Core\Image\Exception\CannotUnlinkImageException;
 
 class ProductImageUpdater
 {
-    /**
-     * @param ProductImageUploader $productImageUploader
-     * @param PositionUpdateFactoryInterface $positionUpdateFactory
-     * @param PositionDefinition $positionDefinition
-     * @param GridPositionUpdaterInterface $positionUpdater
-     */
-    public function __construct(private readonly ProductImageUploader $productImageUploader, private readonly PositionUpdateFactoryInterface $positionUpdateFactory, private readonly PositionDefinition $positionDefinition, private readonly GridPositionUpdaterInterface $positionUpdater, private readonly ProductImageRepository $productImageRepository)
-    {
+    public function __construct(
+        private readonly ProductImageUploader $productImageUploader,
+        private readonly PositionUpdateFactoryInterface $positionUpdateFactory,
+        private readonly PositionDefinition $positionDefinition,
+        private readonly GridPositionUpdaterInterface $positionUpdater,
+        private readonly ProductImageRepository $productImageRepository,
+    ) {
     }
 
     /**
-     * @param ImageId $imageId
-     *
      * @throws CannotDeleteProductImageException
      * @throws CannotUnlinkImageException
      */
@@ -75,15 +73,15 @@ class ProductImageUpdater
     }
 
     /**
-     * @param Image $newCover
-     *
      * @throws CannotUpdateProductImageException
      */
     public function updateProductCover(Image $newCover, ShopConstraint $shopConstraint): void
     {
         if ($shopConstraint->getShopGroupId() !== null) {
             throw new InvalidShopConstraintException('Image has no features related with shop group use single shop and all shops constraints');
-        } elseif ($shopConstraint->forAllShops()) {
+        }
+
+        if ($shopConstraint->forAllShops()) {
             $shopIds = $this->productImageRepository->getAssociatedShopIds(new ImageId((int) $newCover->id));
         } elseif ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
             $shopIds = $shopConstraint->getShopIds();
@@ -109,9 +107,6 @@ class ProductImageUpdater
     }
 
     /**
-     * @param Image $image
-     * @param int $newPosition
-     *
      * @throws CannotUpdateProductImageException
      */
     public function updatePosition(Image $image, int $newPosition): void
@@ -141,18 +136,11 @@ class ProductImageUpdater
             $positionUpdate = $this->positionUpdateFactory->buildPositionUpdate($positionsData, $this->positionDefinition);
             $this->positionUpdater->update($positionUpdate);
         } catch (PositionDataException|PositionUpdateException $e) {
-            throw new CannotUpdateProductImageException(
-                'Cannot update image position',
-                CannotUpdateProductImageException::FAILED_UPDATE_POSITION,
-                $e
-            );
+            throw new CannotUpdateProductImageException('Cannot update image position', CannotUpdateProductImageException::FAILED_UPDATE_POSITION, $e);
         }
     }
 
     /**
-     * @param Image $image
-     * @param bool $isCover
-     *
      * @throws CannotUpdateProductImageException
      */
     private function updateCover(Image $image, bool $isCover, ShopId $shopId): void

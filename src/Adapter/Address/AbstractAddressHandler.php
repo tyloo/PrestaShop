@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,6 @@ use PrestaShopException;
 abstract class AbstractAddressHandler
 {
     /**
-     * @param AddressId $addressId
-     *
      * @return Address
      *
      * @throws AddressException
@@ -55,7 +54,7 @@ abstract class AbstractAddressHandler
         }
 
         if ($address->id !== $addressId->getValue()) {
-            throw new AddressNotFoundException(sprintf('Address with id "%s" was not found.', $addressId->getValue()));
+            throw new AddressNotFoundException(\sprintf('Address with id "%s" was not found.', $addressId->getValue()));
         }
 
         return $address;
@@ -64,10 +63,6 @@ abstract class AbstractAddressHandler
     /**
      * Deletes legacy Address
      *
-     * @param Address $address
-     *
-     * @return bool
-     *
      * @throws AddressException
      */
     protected function deleteAddress(Address $address): bool
@@ -75,13 +70,11 @@ abstract class AbstractAddressHandler
         try {
             return $address->delete();
         } catch (PrestaShopException) {
-            throw new AddressException(sprintf('An error occurred when deleting Address object with id "%s".', $address->id));
+            throw new AddressException(\sprintf('An error occurred when deleting Address object with id "%s".', $address->id));
         }
     }
 
     /**
-     * @param Address $address
-     *
      * @throws InvalidAddressFieldException
      * @throws PrestaShopException
      */
@@ -89,7 +82,7 @@ abstract class AbstractAddressHandler
     {
         if (true !== ($validateResult = $address->validateFields(false, true))
             || true !== ($validateResult = $address->validateFieldsLang(false, true))) {
-            throw new InvalidAddressFieldException(sprintf('Address fields contain invalid values: %s', $validateResult));
+            throw new InvalidAddressFieldException(\sprintf('Address fields contain invalid values: %s', $validateResult));
         }
     }
 }

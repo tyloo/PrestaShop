@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,25 +36,22 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /** One service that uploads all category images */
 class CategoryImageUploader
 {
-    public function __construct(private readonly ImageUploaderInterface $categoryCoverUploader, private readonly ImageUploaderInterface $categoryThumbnailUploader)
-    {
+    public function __construct(
+        private readonly ImageUploaderInterface $categoryCoverUploader,
+        private readonly ImageUploaderInterface $categoryThumbnailUploader,
+    ) {
     }
 
-    /**
-     * @param CategoryId $categoryId
-     * @param UploadedFile|null $coverImage
-     * @param UploadedFile|null $thumbnailImage
-     */
     public function uploadImages(
         CategoryId $categoryId,
         ?UploadedFile $coverImage = null,
-        ?UploadedFile $thumbnailImage = null
+        ?UploadedFile $thumbnailImage = null,
     ): void {
-        if (null !== $coverImage) {
+        if ($coverImage !== null) {
             $this->categoryCoverUploader->upload($categoryId->getValue(), $coverImage);
         }
 
-        if (null !== $thumbnailImage) {
+        if ($thumbnailImage !== null) {
             $this->categoryThumbnailUploader->upload($categoryId->getValue(), $thumbnailImage);
         }
     }

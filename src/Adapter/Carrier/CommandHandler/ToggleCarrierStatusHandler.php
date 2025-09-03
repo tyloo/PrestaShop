@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,23 +44,20 @@ use PrestaShopException;
 class ToggleCarrierStatusHandler implements ToggleCarrierStatusHandlerInterface
 {
     public function __construct(
-        private readonly CarrierRepository $carrierRepository
+        private readonly CarrierRepository $carrierRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ToggleCarrierStatusCommand $command)
     {
         $carrier = $this->carrierRepository->get($command->getCarrierId());
 
         try {
-            if (false === $carrier->toggleStatus()) {
-                throw new CannotToggleCarrierStatusException(sprintf('Unable to toggle status of carrier with id "%d"', $command->getCarrierId()->getValue()), CannotToggleCarrierStatusException::SINGLE_TOGGLE);
+            if ($carrier->toggleStatus() === false) {
+                throw new CannotToggleCarrierStatusException(\sprintf('Unable to toggle status of carrier with id "%d"', $command->getCarrierId()->getValue()), CannotToggleCarrierStatusException::SINGLE_TOGGLE);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CarrierException(sprintf('An error occurred when toggling status of carrier with id "%d"', $command->getCarrierId()->getValue()), 0, $prestaShopException);
+            throw new CarrierException(\sprintf('An error occurred when toggling status of carrier with id "%d"', $command->getCarrierId()->getValue()), 0, $prestaShopException);
         }
     }
 }

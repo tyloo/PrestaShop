@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ use State;
 class ToggleStateStatusHandler implements ToggleStateStatusHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws StateException
      */
     public function handle(ToggleStateStatusCommand $command): void
@@ -50,19 +49,15 @@ class ToggleStateStatusHandler implements ToggleStateStatusHandlerInterface
         try {
             $state = new State($command->getStateId()->getValue());
 
-            if (0 >= $state->id) {
-                throw new StateNotFoundException(sprintf('State object with id "%d" has been not found for status changing', $command->getStateId()->getValue()));
+            if ($state->id <= 0) {
+                throw new StateNotFoundException(\sprintf('State object with id "%d" has been not found for status changing', $command->getStateId()->getValue()));
             }
 
-            if (false === $state->toggleStatus()) {
-                throw new CannotToggleStateStatusException(sprintf('Unable to toggle status of state with id "%d"', $command->getStateId()->getValue()));
+            if ($state->toggleStatus() === false) {
+                throw new CannotToggleStateStatusException(\sprintf('Unable to toggle status of state with id "%d"', $command->getStateId()->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new StateException(
-                sprintf('An error occurred when toggling status for state with id "%d"', $command->getStateId()->getValue()),
-                0,
-                $prestaShopException
-            );
+            throw new StateException(\sprintf('An error occurred when toggling status for state with id "%d"', $command->getStateId()->getValue()), 0, $prestaShopException);
         }
     }
 }

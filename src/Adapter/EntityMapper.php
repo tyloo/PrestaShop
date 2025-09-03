@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,12 +40,12 @@ class EntityMapper
     /**
      * Load ObjectModel.
      *
-     * @param int $id
-     * @param int $id_lang
-     * @param ObjectModelCore $entity
+     * @param int                        $id
+     * @param int                        $id_lang
+     * @param ObjectModelCore            $entity
      * @param array<string,string|array> $entity_defs
-     * @param int $id_shop
-     * @param bool $should_cache_objects
+     * @param int                        $id_shop
+     * @param bool                       $should_cache_objects
      *
      * @throws PrestaShopDatabaseException
      */
@@ -52,7 +53,7 @@ class EntityMapper
     {
         // Load object from database if object id is present
         $cache_id = 'objectmodel_' . $entity_defs['classname'] . '_' . (int) $id . '_' . (int) $id_shop . '_' . (int) $id_lang;
-        if (!$should_cache_objects || !Cache::isStored($cache_id)) {
+        if (! $should_cache_objects || ! Cache::isStored($cache_id)) {
             $sql = new DbQuery();
             $sql->from($entity_defs['table'], 'a');
             $sql->where('a.`' . bqSQL($entity_defs['primary']) . '` = ' . (int) $id);
@@ -60,7 +61,7 @@ class EntityMapper
             // Get lang informations
             if ($id_lang && isset($entity_defs['multilang']) && $entity_defs['multilang']) {
                 $sql->leftJoin($entity_defs['table'] . '_lang', 'b', 'a.`' . bqSQL($entity_defs['primary']) . '` = b.`' . bqSQL($entity_defs['primary']) . '` AND b.`id_lang` = ' . (int) $id_lang);
-                if ($id_shop && !empty($entity_defs['multilang_shop'])) {
+                if ($id_shop && ! empty($entity_defs['multilang_shop'])) {
                     $sql->where('b.`id_shop` = ' . (int) $id_shop);
                 }
             }
@@ -72,7 +73,7 @@ class EntityMapper
 
             if ($object_datas = Db::getInstance()->getRow($sql)) {
                 $objectVars = get_object_vars($entity);
-                if (!$id_lang && isset($entity_defs['multilang']) && $entity_defs['multilang']) {
+                if (! $id_lang && isset($entity_defs['multilang']) && $entity_defs['multilang']) {
                     $sql = 'SELECT *
 							FROM `' . bqSQL(_DB_PREFIX_ . $entity_defs['table']) . '_lang`
 							WHERE `' . bqSQL($entity_defs['primary']) . '` = ' . (int) $id
@@ -81,8 +82,8 @@ class EntityMapper
                     if ($object_datas_lang = Db::getInstance()->executeS($sql)) {
                         foreach ($object_datas_lang as $row) {
                             foreach ($row as $key => $value) {
-                                if ($key != $entity_defs['primary'] && array_key_exists($key, $objectVars)) {
-                                    if (!isset($object_datas[$key]) || !is_array($object_datas[$key])) {
+                                if ($key !== $entity_defs['primary'] && \array_key_exists($key, $objectVars)) {
+                                    if (! isset($object_datas[$key]) || ! \is_array($object_datas[$key])) {
                                         $object_datas[$key] = [];
                                     }
 
@@ -95,16 +96,14 @@ class EntityMapper
 
                 $entity->id = (int) $id;
                 foreach ($object_datas as $key => $value) {
-                    if (array_key_exists($key, $entity_defs['fields'])
-                        || array_key_exists($key, $objectVars)) {
-                        if (isset($entity_defs['fields'][$key]['type']) && in_array($entity_defs['fields'][$key]['type'], [
-                            ObjectModel::TYPE_BOOL,
-                        ])) {
-                            if (is_array($value)) {
-                                array_walk($value, function (&$v): void { $v = strval($v); });
+                    if (\array_key_exists($key, $entity_defs['fields'])
+                        || \array_key_exists($key, $objectVars)) {
+                        if (isset($entity_defs['fields'][$key]['type']) && $entity_defs['fields'][$key]['type'] === ObjectModel::TYPE_BOOL) {
+                            if (\is_array($value)) {
+                                array_walk($value, function (&$v): void { $v = \strval($v); });
                                 $entity->{$key} = $value;
                             } else {
-                                $entity->{$key} = strval($value);
+                                $entity->{$key} = \strval($value);
                             }
                         } else {
                             $entity->{$key} = $value;

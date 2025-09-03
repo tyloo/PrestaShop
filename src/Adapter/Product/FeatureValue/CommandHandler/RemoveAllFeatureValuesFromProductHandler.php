@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\FeatureValue\CommandHandler\Remove
 #[AsCommandHandler]
 class RemoveAllFeatureValuesFromProductHandler implements RemoveAllFeatureValuesFromProductHandlerInterface
 {
-    public function __construct(private readonly ProductFeatureValueUpdater $productFeatureValueUpdater)
-    {
+    public function __construct(
+        private readonly ProductFeatureValueUpdater $productFeatureValueUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(RemoveAllFeatureValuesFromProductCommand $command): void
     {
         $this->productFeatureValueUpdater->setFeatureValues($command->getProductId(), []);

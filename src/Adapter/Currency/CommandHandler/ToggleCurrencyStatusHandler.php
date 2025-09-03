@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,16 +62,14 @@ final class ToggleCurrencyStatusHandler implements ToggleCurrencyStatusHandlerIn
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CurrencyException
      */
     public function handle(ToggleCurrencyStatusCommand $command)
     {
         $entity = new Currency($command->getCurrencyId()->getValue());
 
-        if (0 >= $entity->id) {
-            throw new CurrencyNotFoundException(sprintf('Currency object with id "%s" has not been found for toggling.', $command->getCurrencyId()->getValue()));
+        if ($entity->id <= 0) {
+            throw new CurrencyNotFoundException(\sprintf('Currency object with id "%s" has not been found for toggling.', $command->getCurrencyId()->getValue()));
         }
 
         if ($entity->active) {
@@ -79,29 +78,25 @@ final class ToggleCurrencyStatusHandler implements ToggleCurrencyStatusHandlerIn
         }
 
         try {
-            if (false === $entity->toggleStatus()) {
-                throw new CannotToggleCurrencyException(sprintf('Unable to toggle Currency with id "%s"', $command->getCurrencyId()->getValue()));
+            if ($entity->toggleStatus() === false) {
+                throw new CannotToggleCurrencyException(\sprintf('Unable to toggle Currency with id "%s"', $command->getCurrencyId()->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CurrencyException(sprintf('An error occurred when toggling status for Currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $prestaShopException);
+            throw new CurrencyException(\sprintf('An error occurred when toggling status for Currency object with id "%s"', $command->getCurrencyId()->getValue()), 0, $prestaShopException);
         }
     }
 
     /**
-     * @param Currency $currency
-     *
      * @throws CannotDisableDefaultCurrencyException
      */
     private function assertDefaultCurrencyIsNotBeingDisabled(Currency $currency)
     {
         if ((int) $currency->id === $this->defaultCurrencyId) {
-            throw new CannotDisableDefaultCurrencyException(sprintf('Currency with id "%s" is the default currency and cannot be disabled.', $currency->id));
+            throw new CannotDisableDefaultCurrencyException(\sprintf('Currency with id "%s" is the default currency and cannot be disabled.', $currency->id));
         }
     }
 
     /**
-     * @param Currency $currency
-     *
      * @throws DefaultCurrencyInMultiShopException
      */
     private function assertDefaultCurrencyIsNotBeingDisabledFromAnyShop(Currency $currency)
@@ -121,7 +116,7 @@ final class ToggleCurrencyStatusHandler implements ToggleCurrencyStatusHandlerIn
             }
 
             $shop = new Shop($shopId);
-            throw new DefaultCurrencyInMultiShopException($currency->name, $shop->name, sprintf('Currency with id %s cannot be disabled from shop with id %s because its the default currency.', $currency->id, $shopId), DefaultCurrencyInMultiShopException::CANNOT_DISABLE_CURRENCY);
+            throw new DefaultCurrencyInMultiShopException($currency->name, $shop->name, \sprintf('Currency with id %s cannot be disabled from shop with id %s because its the default currency.', $currency->id, $shopId), DefaultCurrencyInMultiShopException::CANNOT_DISABLE_CURRENCY);
         }
     }
 }

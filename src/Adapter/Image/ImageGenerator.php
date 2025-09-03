@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,16 +42,12 @@ use PrestaShopException;
 class ImageGenerator
 {
     public function __construct(
-        private readonly ImageFormatConfiguration $imageFormatConfiguration
+        private readonly ImageFormatConfiguration $imageFormatConfiguration,
     ) {
     }
 
     /**
-     * @param string $imagePath
      * @param ImageType[] $imageTypes
-     * @param int $imageId
-     *
-     * @return bool
      *
      * @throws ImageOptimizationException
      * @throws ImageUploadException
@@ -67,7 +64,7 @@ class ImageGenerator
             throw new ImageOptimizationException('Unable to resize one or more of your pictures.');
         }
 
-        if (!$resized) {
+        if (! $resized) {
             throw new ImageOptimizationException('Unable to resize one or more of your pictures.');
         }
 
@@ -76,17 +73,11 @@ class ImageGenerator
 
     /**
      * Resizes the image depending on its type
-     *
-     * @param string $filePath
-     * @param ImageType $imageType
-     * @param int $imageId
-     *
-     * @return bool
      */
     protected function resize(string $filePath, ImageType $imageType, int $imageId = 0): bool
     {
-        if (!is_file($filePath)) {
-            throw new ImageUploadException(sprintf('File "%s" does not exist', $filePath));
+        if (! is_file($filePath)) {
+            throw new ImageUploadException(\sprintf('File "%s" does not exist', $filePath));
         }
 
         /*
@@ -99,9 +90,9 @@ class ImageGenerator
         $result = true;
 
         foreach ($configuredImageFormats as $imageFormat) {
-            if (!ImageManager::resize(
+            if (! ImageManager::resize(
                 $filePath,
-                sprintf('%s-%s.%s', dirname($filePath) . DIRECTORY_SEPARATOR . $imageId, stripslashes($imageType->name), $imageFormat),
+                \sprintf('%s-%s.%s', \dirname($filePath) . \DIRECTORY_SEPARATOR . $imageId, stripslashes($imageType->name), $imageFormat),
                 $imageType->width,
                 $imageType->height,
                 $imageFormat

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,29 +52,21 @@ use PrestaShop\PrestaShop\Core\Search\Filters\ProductCombinationFilters;
 #[AsQueryHandler]
 final class GetEditableCombinationsListHandler implements GetEditableCombinationsListHandlerInterface
 {
-    /**
-     * @param DoctrineQueryBuilderInterface $combinationQueryBuilder
-     * @param AttributeRepository $attributeRepository
-     * @param ProductImageRepository $productImageRepository
-     * @param ProductImagePathFactory $productImagePathFactory
-     * @param CombinationNameBuilderInterface $combinationNameBuilder
-     */
-    public function __construct(private readonly DoctrineQueryBuilderInterface $combinationQueryBuilder, private readonly AttributeRepository $attributeRepository, private readonly ProductImageRepository $productImageRepository, private readonly ProductImagePathFactory $productImagePathFactory, private readonly CombinationNameBuilderInterface $combinationNameBuilder)
-    {
+    public function __construct(
+        private readonly DoctrineQueryBuilderInterface $combinationQueryBuilder,
+        private readonly AttributeRepository $attributeRepository,
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly ProductImagePathFactory $productImagePathFactory,
+        private readonly CombinationNameBuilderInterface $combinationNameBuilder,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetEditableCombinationsList $query): CombinationListForEditing
     {
         $shopId = $query->getShopConstraint()->getShopId();
 
         if ($shopId === null) {
-            throw new CombinationException(sprintf(
-                'Only single shop constraint is supported for query %s',
-                GetEditableCombinationsList::class
-            ));
+            throw new CombinationException(\sprintf('Only single shop constraint is supported for query %s', GetEditableCombinationsList::class));
         }
 
         $filters = $query->getFilters();
@@ -93,7 +86,7 @@ final class GetEditableCombinationsListHandler implements GetEditableCombination
         $combinations = $this->combinationQueryBuilder->getSearchQueryBuilder($searchCriteria)->executeQuery()->fetchAllAssociative();
         $total = (int) $this->combinationQueryBuilder->getCountQueryBuilder($searchCriteria)->executeQuery()->fetchOne();
 
-        $combinationIds = array_map(fn(array $combination): CombinationId => new CombinationId((int) $combination['id_product_attribute']), $combinations);
+        $combinationIds = array_map(fn (array $combination): CombinationId => new CombinationId((int) $combination['id_product_attribute']), $combinations);
 
         $attributesInformation = $this->attributeRepository->getAttributesInfoByCombinationIds(
             $combinationIds,
@@ -113,20 +106,14 @@ final class GetEditableCombinationsListHandler implements GetEditableCombination
     }
 
     /**
-     * @param array $combinations
      * @param array<int, CombinationAttributeInformation[]> $attributesInformationByCombinationId
-     * @param int $totalCombinationsCount
-     * @param array $imageIdsByCombinationIds
-     * @param array $defaultImageIds
-     *
-     * @return CombinationListForEditing
      */
     private function formatEditableCombinationsForListing(
         array $combinations,
         array $attributesInformationByCombinationId,
         int $totalCombinationsCount,
         array $imageIdsByCombinationIds,
-        array $defaultImageIds
+        array $defaultImageIds,
     ): CombinationListForEditing {
         $combinationsForEditing = [];
 
@@ -134,13 +121,13 @@ final class GetEditableCombinationsListHandler implements GetEditableCombination
             $combinationId = (int) $combination['id_product_attribute'];
 
             $imageId = null;
-            if (!empty($imageIdsByCombinationIds[$combinationId])) {
+            if (! empty($imageIdsByCombinationIds[$combinationId])) {
                 $imageId = reset($imageIdsByCombinationIds[$combinationId]);
-            } elseif (!empty($defaultImageIds)) {
+            } elseif (! empty($defaultImageIds)) {
                 $imageId = reset($defaultImageIds);
             }
 
-            if (null === $imageId) {
+            if ($imageId === null) {
                 $imagePath = $this->productImagePathFactory->getNoImagePath(ProductImagePathFactory::IMAGE_TYPE_SMALL_DEFAULT);
             } else {
                 $imagePath = $this->productImagePathFactory->getPathByType(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,9 +53,6 @@ class AddCarrierHandler implements AddCarrierHandlerInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddCarrierCommand $command): CarrierId
     {
         $carrier = new Carrier();
@@ -69,7 +67,7 @@ class AddCarrierHandler implements AddCarrierHandlerInterface
         $carrier->max_weight = $command->getMaxWeight();
         $carrier->max_depth = $command->getMaxDepth();
 
-        if (null !== $command->getPosition()) {
+        if ($command->getPosition() !== null) {
             $carrier->position = $command->getPosition();
         } else {
             $lastPosition = $this->carrierRepository->getLastPosition();

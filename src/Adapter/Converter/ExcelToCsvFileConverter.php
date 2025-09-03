@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,14 @@ use Symfony\Component\Filesystem\Filesystem;
 final class ExcelToCsvFileConverter implements FileConverterInterface
 {
     /**
-     * @param Filesystem $filesystem
      * @param string $excelDirectory path to excel files directory
      */
-    public function __construct(private readonly Filesystem $filesystem, private $excelDirectory)
-    {
+    public function __construct(
+        private readonly Filesystem $filesystem,
+        private $excelDirectory,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function convert(SplFileInfo $sourceFile)
     {
         if (preg_match('#(.*?)\.(csv)#is', $sourceFile->getFilename())) {
@@ -55,14 +54,14 @@ final class ExcelToCsvFileConverter implements FileConverterInterface
             return $sourceFile;
         }
 
-        if (!$this->filesystem->exists($this->excelDirectory)) {
+        if (! $this->filesystem->exists($this->excelDirectory)) {
             $this->filesystem->mkdir($this->excelDirectory);
         }
 
         $destinationFilename = basename($sourceFile->getFilename(), $sourceFile->getExtension()) . '.csv';
         $destinationFilePath = $this->excelDirectory . $destinationFilename;
 
-        if (!$this->filesystem->exists($destinationFilePath)) {
+        if (! $this->filesystem->exists($destinationFilePath)) {
             $excelReader = IOFactory::createReaderForFile($sourceFile->getFilename());
             $excelReader->setReadDataOnly(true);
             $excelFile = $excelReader->load($sourceFile->getFilename() . $destinationFilename);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\LanguageId;
 #[AsQueryHandler]
 final class GetLanguageForEditingHandler implements GetLanguageForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetLanguageForEditing $query)
     {
         $language = $this->getLegacyLanguageObject($query->getLanguageId());
@@ -59,21 +57,16 @@ final class GetLanguageForEditingHandler implements GetLanguageForEditingHandler
             $language->date_format_full,
             (bool) $language->is_rtl,
             (bool) $language->active,
-            array_map(fn($shopId) => (int) $shopId, $language->getAssociatedShops())
+            array_map(fn ($shopId) => (int) $shopId, $language->getAssociatedShops())
         );
     }
 
-    /**
-     * @param LanguageId $languageId
-     *
-     * @return Language
-     */
     private function getLegacyLanguageObject(LanguageId $languageId): Language
     {
         $language = new Language($languageId->getValue());
 
         if ($languageId->getValue() !== (int) $language->id) {
-            throw new LanguageNotFoundException($languageId, sprintf('Language with id "%s" was not found', $languageId->getValue()));
+            throw new LanguageNotFoundException($languageId, \sprintf('Language with id "%s" was not found', $languageId->getValue()));
         }
 
         return $language;

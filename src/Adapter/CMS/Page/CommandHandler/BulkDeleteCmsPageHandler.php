@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,6 @@ use PrestaShopException;
 final class BulkDeleteCmsPageHandler extends AbstractCmsPageHandler implements BulkDeleteCmsPageHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageException
      */
     public function handle(BulkDeleteCmsPageCommand $command)
@@ -50,8 +49,8 @@ final class BulkDeleteCmsPageHandler extends AbstractCmsPageHandler implements B
             foreach ($command->getCmsPages() as $cmsPageId) {
                 $cms = $this->getCmsPageIfExistsById($cmsPageId->getValue());
 
-                if (false === $cms->delete()) {
-                    throw new CannotDeleteCmsPageException(sprintf('An error occurred when deleting cms page with id %s', $cmsPageId->getValue()), CannotDeleteCmsPageException::FAILED_BULK_DELETE);
+                if ($cms->delete() === false) {
+                    throw new CannotDeleteCmsPageException(\sprintf('An error occurred when deleting cms page with id %s', $cmsPageId->getValue()), CannotDeleteCmsPageException::FAILED_BULK_DELETE);
                 }
             }
         } catch (PrestaShopException $prestaShopException) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,17 +51,17 @@ class UpgradeModuleHandler implements UpgradeModuleHandlerInterface
 
         $module = $this->moduleRepository->getModule($technical_name);
 
-        if (!$module->isInstalled()) {
+        if (! $module->isInstalled()) {
             throw new ModuleNotInstalledException('Module is not installed.');
         }
 
-        if (!$module->canBeUpgraded()) {
+        if (! $module->canBeUpgraded()) {
             throw new ModuleAlreadyUpToDateException('Module is already up to date.');
         }
 
         $result = $this->moduleManager->upgrade($technical_name);
 
-        if (!$result) {
+        if (! $result) {
             throw new CannotUpgradeModuleException('Technical error occurred while updating module.');
         }
     }

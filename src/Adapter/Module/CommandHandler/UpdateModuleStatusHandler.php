@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,7 +48,7 @@ class UpdateModuleStatusHandler implements UpdateModuleStatusHandlerInterface
     {
         $module = $this->moduleRepository->getPresentModule($command->getTechnicalName()->getValue());
 
-        if (!$module->isInstalled()) {
+        if (! $module->isInstalled()) {
             throw new ModuleNotInstalledException('Cannot toggle status for module ' . $command->getTechnicalName()->getValue() . ' since it is not installed');
         }
 
@@ -57,7 +58,7 @@ class UpdateModuleStatusHandler implements UpdateModuleStatusHandlerInterface
             $result = $this->moduleManager->disable($command->getTechnicalName()->getValue());
         }
 
-        if (!$result) {
+        if (! $result) {
             throw new CannotToggleModuleStatusException('Technical error occurred while toggling module status.');
         }
     }

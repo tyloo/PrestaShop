@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
     public function __construct(
         protected readonly Connection $connection,
         protected readonly string $dbPrefix,
-        protected readonly FeatureValidator $featureValidator
+        protected readonly FeatureValidator $featureValidator,
     ) {
     }
 
@@ -70,13 +71,11 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
 
     /**
      * @param array<int, string> $localizedNames
-     * @param ShopId[] $associatedShopIds
-     *
-     * @return Feature
+     * @param ShopId[]           $associatedShopIds
      */
     public function create(
         array $localizedNames,
-        array $associatedShopIds
+        array $associatedShopIds,
     ): Feature {
         $feature = new Feature();
         $feature->name = $localizedNames;
@@ -88,10 +87,6 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param Feature $feature
-     *
-     * @return void
-     *
      * @throws CoreException
      */
     public function update(Feature $feature): void
@@ -106,8 +101,6 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param FeatureId $featureId
-     *
      * @throws FeatureNotFoundException
      * @throws CoreException
      */
@@ -121,8 +114,6 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param int $langId
-     *
      * @return array<int, array<string, mixed>>
      */
     public function getFeaturesByLang(int $langId): array
@@ -138,11 +129,6 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param FeatureId $featureId
-     * @param LanguageId $languageId
-     *
-     * @return string
-     *
      * @throws FeatureNotFoundException
      */
     public function getFeatureName(FeatureId $featureId, LanguageId $languageId): string
@@ -167,18 +153,14 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
             ->fetchAssociative()
         ;
 
-        if (!isset($result['name'])) {
-            throw new FeatureNotFoundException(sprintf('Feature with id "%d" name was not found', $featureIdValue));
+        if (! isset($result['name'])) {
+            throw new FeatureNotFoundException(\sprintf('Feature with id "%d" name was not found', $featureIdValue));
         }
 
         return $result['name'];
     }
 
     /**
-     * @param int|null $limit
-     * @param int|null $offset
-     * @param array|null $filters
-     *
      * @return array<int, array<string, mixed>>
      */
     public function getFeatures(?int $limit = null, ?int $offset = null, ?array $filters = []): array
@@ -193,11 +175,6 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
         return $this->formatResult($qb->executeQuery()->fetchAllAssociative());
     }
 
-    /**
-     * @param array|null $filters
-     *
-     * @return int
-     */
     public function getFeaturesCount(?array $filters = []): int
     {
         $qb = $this->getFeaturesQueryBuilder()
@@ -234,8 +211,6 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ShopConstraint $shopConstraint
-     *
      * @return ShopId[]
      */
     public function getShopIdsByConstraint(ShopConstraint $shopConstraint): array
@@ -245,7 +220,7 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
         }
 
         if ($shopConstraint->forAllShops()) {
-            return array_map(static fn(array $result): ShopId => new ShopId((int) $result['id_shop']), $this->connection->createQueryBuilder()
+            return array_map(static fn (array $result): ShopId => new ShopId((int) $result['id_shop']), $this->connection->createQueryBuilder()
                 ->select('id_shop')
                 ->from($this->dbPrefix . 'feature_shop', 'fs')
                 ->executeQuery()
@@ -257,8 +232,6 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ShopGroupId $shopGroupId
-     *
      * @return ShopId[]
      */
     public function getAssociatedShopIdsFromGroup(ShopGroupId $shopGroupId): array
@@ -278,12 +251,9 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
             ->groupBy('id_shop')
         ;
 
-        return array_map(static fn(array $result): ShopId => new ShopId((int) $result['id_shop']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $result): ShopId => new ShopId((int) $result['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
-    /**
-     * @return QueryBuilder
-     */
     private function getFeaturesQueryBuilder(): QueryBuilder
     {
         // Filters not handled yet

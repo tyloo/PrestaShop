@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,19 +42,16 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class AddCmsPageHandler extends AbstractCmsPageHandler implements AddCmsPageHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddCmsPageCommand $command)
     {
         $cms = $this->createCmsFromCommand($command);
 
         try {
-            if (false === $cms->validateFields(false) || false === $cms->validateFieldsLang(false)) {
+            if ($cms->validateFields(false) === false || $cms->validateFieldsLang(false) === false) {
                 throw new CmsPageException('Cms page contains invalid field values');
             }
 
-            if (false === $cms->add()) {
+            if ($cms->add() === false) {
                 throw new CannotAddCmsPageException('Failed to add cms page');
             }
 
@@ -66,8 +64,6 @@ final class AddCmsPageHandler extends AbstractCmsPageHandler implements AddCmsPa
     }
 
     /**
-     * @param AddCmsPageCommand $command
-     *
      * @return CMS
      */
     protected function createCmsFromCommand(AddCmsPageCommand $command)

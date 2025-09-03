@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,10 +44,6 @@ class AbstractTitleHandler
      */
     protected $titleImageUploader;
 
-    /**
-     * @param TitleRepository $titleRepository
-     * @param TitleImageUploader $titleImageUploader
-     */
     public function __construct(TitleRepository $titleRepository, TitleImageUploader $titleImageUploader)
     {
         $this->titleRepository = $titleRepository;

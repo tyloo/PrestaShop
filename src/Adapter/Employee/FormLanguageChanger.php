@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,11 @@ use PrestaShop\PrestaShop\Core\Employee\FormLanguageChangerInterface;
  */
 final class FormLanguageChanger implements FormLanguageChangerInterface
 {
-    /**
-     * @param LegacyContext $legacyContext
-     */
-    public function __construct(private readonly LegacyContext $legacyContext)
-    {
+    public function __construct(
+        private readonly LegacyContext $legacyContext,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function changeLanguageInCookies(string $languageIsoCode): void
     {
         $this->legacyContext->getContext()->cookie->employee_form_lang = (int) Language::getIdByIso($languageIsoCode);

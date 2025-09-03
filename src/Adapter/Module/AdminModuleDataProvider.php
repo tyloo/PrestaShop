@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -103,9 +104,6 @@ class AdminModuleDataProvider implements ModuleInterface
         $this->apiClientContext = $apiClientContext ?? new ApiClientContext(null);
     }
 
-    /**
-     * @param Router $router
-     */
     public function setRouter(Router $router)
     {
         $this->router = $router;
@@ -127,8 +125,8 @@ class AdminModuleDataProvider implements ModuleInterface
     /**
      * Check the permissions of the current context (CLI or employee) for a module.
      *
-     * @param array $actions Actions to check
-     * @param string $name The module name
+     * @param array  $actions Actions to check
+     * @param string $name    The module name
      *
      * @return array of allowed actions
      */
@@ -148,7 +146,7 @@ class AdminModuleDataProvider implements ModuleInterface
      * Check the permissions of the current context (CLI or employee) for a specified action.
      *
      * @param string $action The action called in the module
-     * @param string $name (Optionnal for 'install') The module name to check
+     * @param string $name   (Optionnal for 'install') The module name to check
      *
      * @return bool
      */
@@ -169,15 +167,15 @@ class AdminModuleDataProvider implements ModuleInterface
             return false;
         }
 
-        if (in_array($action, ['install', 'upgrade', 'upload'])) {
+        if (\in_array($action, ['install', 'upgrade', 'upload'], true)) {
             return $this->employee->can('add', 'AdminModulessf');
         }
 
-        if ('delete' === $action) {
+        if ($action === 'delete') {
             return $this->employee->can('delete', 'AdminModulessf');
         }
 
-        if ('uninstall' === $action) {
+        if ($action === 'uninstall') {
             return $this->employee->can('delete', 'AdminModulessf') && $this->moduleProvider->can('uninstall', $name);
         }
 
@@ -187,11 +185,6 @@ class AdminModuleDataProvider implements ModuleInterface
     /**
      * Generates a list with actions and their respective URLs, depending on if the module is installed or not,
      * enabled, upgradable and other variables.
-     *
-     * @param ModuleCollection $modules
-     * @param string|null $specific_action
-     *
-     * @return ModuleCollection
      */
     public function setActionUrls(ModuleCollection $modules, ?string $specific_action = null): ModuleCollection
     {
@@ -222,9 +215,9 @@ class AdminModuleDataProvider implements ModuleInterface
 
             // Let's filter the actions depending on conditions the module is in
             if ($module->isInstalled()) {
-                unset($urls['install']);
-                unset($urls['delete']);
-                if (!$module->isActive()) {
+                unset($urls['install'], $urls['delete']);
+
+                if (! $module->isActive()) {
                     unset(
                         $urls['disable']
                     );
@@ -237,11 +230,11 @@ class AdminModuleDataProvider implements ModuleInterface
                     );
                 }
 
-                if (!$module->canBeUpgraded()) {
+                if (! $module->canBeUpgraded()) {
                     unset($urls['upgrade']);
                 }
 
-                if (!$module->isConfigurable()) {
+                if (! $module->isConfigurable()) {
                     unset($urls['configure']);
                 }
             } elseif ($module->isUninstalled()) {
@@ -257,7 +250,7 @@ class AdminModuleDataProvider implements ModuleInterface
             // doesn't have rights for.
             $filteredUrls = $this->filterAllowedActions($urls, $moduleAttributes->get('name'));
 
-            if ($specific_action && array_key_exists($specific_action, $filteredUrls)) {
+            if ($specific_action && \array_key_exists($specific_action, $filteredUrls)) {
                 $urlActive = $specific_action;
             } else {
                 $urlActive = key($filteredUrls);
@@ -272,14 +265,11 @@ class AdminModuleDataProvider implements ModuleInterface
     }
 
     /**
-     * @param array $modules
-     * @param array $filters
-     *
      * @return array
      */
     protected function applyModuleFilters(array $modules, array $filters)
     {
-        if (!count($filters)) {
+        if ($filters === []) {
             return $modules;
         }
 

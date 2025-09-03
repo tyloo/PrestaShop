@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,11 +47,11 @@ class ResetModuleHandler implements ResetModuleHandlerInterface
     public function handle(ResetModuleCommand $command): void
     {
         $module = $this->moduleRepository->getPresentModule($command->getTechnicalName()->getValue());
-        if (!$module->isInstalled()) {
+        if (! $module->isInstalled()) {
             throw new ModuleNotInstalledException('Cannot reset module ' . $command->getTechnicalName()->getValue() . ' since it is not installed');
         }
 
-        if (!$this->moduleManager->reset($command->getTechnicalName()->getValue(), $command->keepData())) {
+        if (! $this->moduleManager->reset($command->getTechnicalName()->getValue(), $command->keepData())) {
             throw new CannotResetModuleException('Technical error occurred while resetting module status.');
         }
     }

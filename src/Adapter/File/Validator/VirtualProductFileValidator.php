@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,18 +49,13 @@ class VirtualProductFileValidator
      */
     private $maxFileSizeInMegabytes;
 
-    /**
-     * @param string $maxFileSizeInMegabytes
-     */
     public function __construct(
-        string $maxFileSizeInMegabytes
+        string $maxFileSizeInMegabytes,
     ) {
         $this->maxFileSizeInMegabytes = new DecimalNumber($maxFileSizeInMegabytes);
     }
 
     /**
-     * @param string $filePath
-     *
      * @throws InvalidFileException
      */
     public function validate(string $filePath): void
@@ -71,26 +67,17 @@ class VirtualProductFileValidator
         $actualSizeInBytes = new DecimalNumber((string) filesize($filePath));
 
         if ($maxFileSizeInBytes->isLowerThan($actualSizeInBytes)) {
-            throw new InvalidFileException(
-                sprintf(
-                    'Maximum allowed file size "%s" exceeded. Given "%s"',
-                    (string) $maxFileSizeInBytes,
-                    (string) $actualSizeInBytes
-                ),
-                InvalidFileException::INVALID_SIZE
-            );
+            throw new InvalidFileException(\sprintf('Maximum allowed file size "%s" exceeded. Given "%s"', (string) $maxFileSizeInBytes, (string) $actualSizeInBytes), InvalidFileException::INVALID_SIZE);
         }
     }
 
     /**
-     * @param string $filePath
-     *
      * @throws InvalidFileException
      */
     private function assertIsFile(string $filePath): void
     {
-        if (!is_file($filePath)) {
-            throw new FileNotFoundException(sprintf('"%s" is not a file', $filePath));
+        if (! is_file($filePath)) {
+            throw new FileNotFoundException(\sprintf('"%s" is not a file', $filePath));
         }
     }
 }

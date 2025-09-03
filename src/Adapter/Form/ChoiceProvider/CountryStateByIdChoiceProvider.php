@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices(array $options)
     {
         $resolver = new OptionsResolver();
@@ -53,7 +51,7 @@ final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProv
         try {
             $countryHasStates = (new Country($countryId))->contains_states;
 
-            if (!$countryHasStates) {
+            if (! $countryHasStates) {
                 return [];
             }
 
@@ -63,7 +61,7 @@ final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProv
                 'name'
             );
         } catch (PrestaShopException) {
-            throw new CoreException(sprintf('An error occurred when getting states for country id "%s"', $countryId));
+            throw new CoreException(\sprintf('An error occurred when getting states for country id "%s"', $countryId));
         }
 
         return $choices;
@@ -71,8 +69,6 @@ final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProv
 
     /**
      * Configures array parameters and default values
-     *
-     * @param OptionsResolver $resolver
      */
     private function configureOptions(OptionsResolver $resolver)
     {
@@ -83,11 +79,8 @@ final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProv
         $this->allowIdCountryGreaterThanZero($resolver);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     private function allowIdCountryGreaterThanZero(OptionsResolver $resolver)
     {
-        $resolver->setAllowedValues('id_country', fn($value) => 0 < $value);
+        $resolver->setAllowedValues('id_country', fn ($value) => $value > 0);
     }
 }

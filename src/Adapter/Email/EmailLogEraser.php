@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,6 @@ use PrestaShop\PrestaShop\Core\Email\EmailLogEraserInterface;
  */
 final class EmailLogEraser implements EmailLogEraserInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function erase(array $mailLogIds): array
     {
         $errors = [];
@@ -59,7 +57,7 @@ final class EmailLogEraser implements EmailLogEraserInterface
 
         /** @var Mail $emailLog */
         foreach ($emailLogs->getResults() as $emailLog) {
-            if (!$emailLog->delete()) {
+            if (! $emailLog->delete()) {
                 $errors[] = [
                     'key' => "Can't delete #%id%",
                     'parameters' => [
@@ -75,9 +73,6 @@ final class EmailLogEraser implements EmailLogEraserInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function eraseAll(): bool
     {
         return Mail::eraseAllLogs();

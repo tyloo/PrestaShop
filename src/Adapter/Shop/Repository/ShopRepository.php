@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,15 +40,13 @@ use Shop;
  */
 class ShopRepository extends AbstractObjectModelRepository
 {
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     /**
-     * @param ShopId $shopId
-     *
-     * @return Shop
-     *
      * @throws ShopNotFoundException
      */
     public function get(ShopId $shopId): Shop
@@ -76,15 +75,13 @@ class ShopRepository extends AbstractObjectModelRepository
         ;
 
         if (empty($result['name'])) {
-            throw new ShopNotFoundException(sprintf('%s #%d was not found', Shop::class, $shopId->getValue()));
+            throw new ShopNotFoundException(\sprintf('%s #%d was not found', Shop::class, $shopId->getValue()));
         }
 
         return $result['name'];
     }
 
     /**
-     * @param ShopId $shopId
-     *
      * @throws ShopNotFoundException
      */
     public function assertShopExists(ShopId $shopId): void

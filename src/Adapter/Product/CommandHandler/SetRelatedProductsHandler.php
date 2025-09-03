@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\SetRelatedProductsH
 #[AsCommandHandler]
 final class SetRelatedProductsHandler implements SetRelatedProductsHandlerInterface
 {
-    /**
-     * @param RelatedProductsUpdater $relatedProductsUpdater
-     */
-    public function __construct(private readonly RelatedProductsUpdater $relatedProductsUpdater)
-    {
+    public function __construct(
+        private readonly RelatedProductsUpdater $relatedProductsUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SetRelatedProductsCommand $command): void
     {
         $this->relatedProductsUpdater->setRelatedProducts($command->getProductId(), $command->getRelatedProductIds());

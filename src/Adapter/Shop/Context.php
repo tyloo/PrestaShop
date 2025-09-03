@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,7 +65,7 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
 
     public function getContextShopIds(): array
     {
-        return array_map(static fn($shopId): int => (int) $shopId, $this->getContextListShopID());
+        return array_map(static fn ($shopId): int => (int) $shopId, $this->getContextListShopID());
     }
 
     /**
@@ -89,11 +90,11 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
     {
         $groupSettings = Shop::getGroupFromShop(Shop::getContextShopID(), false);
 
-        if (!empty($groupSettings['share_customer'])) {
+        if (! empty($groupSettings['share_customer'])) {
             return Shop::getContextListShopID(Shop::SHARE_CUSTOMER);
-        } else {
-            return Shop::getContextListShopID();
         }
+
+        return Shop::getContextListShopID();
     }
 
     /**
@@ -113,7 +114,7 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
      */
     public function isSingleShopContext()
     {
-        if (!Shop::isFeatureActive()) {
+        if (! Shop::isFeatureActive()) {
             return true;
         }
 
@@ -158,7 +159,7 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
     /**
      * Retrieve group ID of a shop.
      *
-     * @param int $shopId
+     * @param int  $shopId
      * @param bool $asId
      *
      * @return int
@@ -178,17 +179,11 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
         return new ShopGroup($shopGroupId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isAllShopContext()
     {
         return Shop::getContext() === Shop::CONTEXT_ALL;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isGroupShopContext()
     {
         return Shop::getContext() === Shop::CONTEXT_GROUP;
@@ -204,24 +199,18 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
         return Shop::getCompleteListOfShopsID();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getShopName()
     {
         return LegacyContext::getContext()->shop->name;
     }
 
-    /**
-     * @param bool $strict
-     *
-     * @return ShopConstraint
-     */
     public function getShopConstraint(bool $strict = false): ShopConstraint
     {
         if ($this->isShopContext()) {
             return ShopConstraint::shop((int) $this->getContextShopID(), $strict);
-        } elseif ($this->isGroupShopContext()) {
+        }
+
+        if ($this->isGroupShopContext()) {
             return ShopConstraint::shopGroup((int) $this->getContextShopGroup()->id, $strict);
         }
 

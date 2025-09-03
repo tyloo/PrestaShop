@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,20 +42,13 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Supplier\CommandHandler\UpdateProd
 #[AsCommandHandler]
 final class UpdateProductSuppliersHandler extends AbstractProductSupplierHandler implements UpdateProductSuppliersHandlerInterface
 {
-    /**
-     * @param ProductSupplierUpdater $productSupplierUpdater
-     * @param ProductSupplierRepository $productSupplierRepository
-     */
     public function __construct(
         private readonly ProductSupplierUpdater $productSupplierUpdater,
-        ProductSupplierRepository $productSupplierRepository
+        ProductSupplierRepository $productSupplierRepository,
     ) {
         parent::__construct($productSupplierRepository);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateProductSuppliersCommand $command): array
     {
         $productId = $command->getProductId();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,8 +48,6 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws MemoryLimitException
      * @throws ImageOptimizationException
      * @throws ImageUploadException
@@ -76,7 +75,6 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
 
     /**
      * @param int $id
-     * @param UploadedFile $image
      *
      * @throws ImageOptimizationException
      * @throws ImageUploadException
@@ -85,28 +83,28 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
     private function uploadImage($id, UploadedFile $image)
     {
         $temporaryImageName = tempnam(_PS_TMP_IMG_DIR_, 'PS');
-        if (!$temporaryImageName) {
+        if (! $temporaryImageName) {
             throw new ImageUploadException('Failed to create temporary category thumbnail image file');
         }
 
         // move_uploaded_file -  also checks that the given file is a file that was uploaded via the POST,
         // this prevents for example that a local file is moved
-        if (!move_uploaded_file($image->getPathname(), $temporaryImageName)) {
+        if (! move_uploaded_file($image->getPathname(), $temporaryImageName)) {
             throw new ImageUploadException('Failed to upload category thumbnail image');
         }
 
-        if (!ImageManager::checkImageMemoryLimit($temporaryImageName)) {
+        if (! ImageManager::checkImageMemoryLimit($temporaryImageName)) {
             throw new MemoryLimitException('Cannot upload category thumbnail image due to memory restrictions');
         }
 
         $optimizationSucceeded = ImageManager::resize(
             $temporaryImageName,
-            _PS_IMG_DIR_ . 'c' . DIRECTORY_SEPARATOR . $id . '_thumb.jpg',
+            _PS_IMG_DIR_ . 'c' . \DIRECTORY_SEPARATOR . $id . '_thumb.jpg',
             null,
             null
         );
 
-        if (!$optimizationSucceeded) {
+        if (! $optimizationSucceeded) {
             throw new ImageOptimizationException('Failed to optimize image after uploading');
         }
 
@@ -120,7 +118,7 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
      */
     private function generateDifferentTypes($id)
     {
-        if (!file_exists(_PS_CAT_IMG_DIR_ . $id . '_thumb.jpg')) {
+        if (! file_exists(_PS_CAT_IMG_DIR_ . $id . '_thumb.jpg')) {
             return;
         }
 
@@ -136,7 +134,7 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
                     $imageFormat
                 );
 
-                if (!$generated) {
+                if (! $generated) {
                     throw new ImageUploadException('Error occurred when uploading category thumbnail image');
                 }
             }

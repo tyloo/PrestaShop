@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,16 +42,12 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 #[AsCommandHandler]
 final class AddProductHandler implements AddProductHandlerInterface
 {
-    /**
-     * @param ProductRepository $productRepository
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly Tools $tools)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly Tools $tools,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddProductCommand $command): ProductId
     {
         $localizedNames = $command->getLocalizedNames();

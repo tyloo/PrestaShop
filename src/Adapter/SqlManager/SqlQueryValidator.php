@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,7 +54,7 @@ class SqlQueryValidator
             $parser = $requestSql->parsingSql($sql);
             $validate = $requestSql->validateParser($parser, false, $sql);
 
-            if (!$validate || count($requestSql->error_sql)) {
+            if (! $validate || \count($requestSql->error_sql)) {
                 $errors = $this->getErrors($requestSql->error_sql);
             }
         } catch (ErrorException|PrestaShopException|PrestaShopDatabaseException) {
@@ -79,25 +80,25 @@ class SqlQueryValidator
         $errors = [];
 
         foreach ($sqlErrors as $key => $sqlError) {
-            if ('checkedFrom' === $key) {
+            if ($key === 'checkedFrom') {
                 $errors[] = $this->getFromKeywordError($sqlError);
-            } elseif ('checkedSelect' === $key) {
+            } elseif ($key === 'checkedSelect') {
                 $errors[] = $this->getSelectKeywordError($sqlError);
-            } elseif ('checkedWhere' === $key) {
+            } elseif ($key === 'checkedWhere') {
                 $errors[] = $this->getWhereKeywordError($sqlError);
-            } elseif ('checkedHaving' === $key) {
+            } elseif ($key === 'checkedHaving') {
                 $errors[] = $this->getHavingKeywordError($sqlError);
-            } elseif ('checkedOrder' === $key) {
+            } elseif ($key === 'checkedOrder') {
                 $errors[] = $this->getOrderKeywordError($sqlError);
-            } elseif ('checkedGroupBy' === $key) {
+            } elseif ($key === 'checkedGroupBy') {
                 $errors[] = $this->getGroupKeywordError($sqlError);
-            } elseif ('checkedLimit' === $key) {
+            } elseif ($key === 'checkedLimit') {
                 $errors[] = $this->getLimitKeywordError();
-            } elseif ('returnNameTable' === $key) {
+            } elseif ($key === 'returnNameTable') {
                 $errors[] = $this->getReferenceError($sqlError);
-            } elseif ('testedRequired' === $key) {
+            } elseif ($key === 'testedRequired') {
                 $errors[] = $this->getRequiredKeyError($sqlError);
-            } elseif ('testedUnauthorized' === $key) {
+            } elseif ($key === 'testedUnauthorized') {
                 $errors[] = $this->getUnauthorizedKeyError($sqlError);
             }
         }
@@ -107,8 +108,6 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "FROM" keyword validation.
-     *
-     * @param array $legacyError
      *
      * @return array
      */
@@ -146,8 +145,6 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "SELECT" keyword validation.
-     *
-     * @param array $legacyError
      *
      * @return array
      */
@@ -202,8 +199,6 @@ class SqlQueryValidator
     /**
      * Get SQL error for "WHERE" keyword validation.
      *
-     * @param array $legacyError
-     *
      * @return array
      */
     private function getWhereKeywordError(array $legacyError)
@@ -240,8 +235,6 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "HAVING" keyword validation.
-     *
-     * @param array $legacyError
      *
      * @return array
      */
@@ -280,8 +273,6 @@ class SqlQueryValidator
     /**
      * Get SQL error for "ORDER" keyword validation.
      *
-     * @param array $legacyError
-     *
      * @return array
      */
     private function getOrderKeywordError(array $legacyError)
@@ -308,8 +299,6 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "GROUP" keyword validation.
-     *
-     * @param array $legacyError
      *
      * @return array
      */

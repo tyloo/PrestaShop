@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,7 +49,7 @@ class UninstallModuleHandler implements UninstallModuleHandlerInterface
         $module = $this->moduleRepository->getPresentModule($command->getTechnicalName()->getValue());
 
         // Cannot perform uninstall action of the module is not installed yet UNLESS the commands aims at removing files
-        if (!$module->isInstalled() && !$command->deleteFiles()) {
+        if (! $module->isInstalled() && ! $command->deleteFiles()) {
             throw new ModuleNotInstalledException('Cannot uninstall module ' . $command->getTechnicalName()->getValue() . ' since it is not installed');
         }
 
@@ -58,7 +59,7 @@ class UninstallModuleHandler implements UninstallModuleHandlerInterface
             $result = $this->moduleManager->delete($command->getTechnicalName()->getValue());
         }
 
-        if (!$result) {
+        if (! $result) {
             throw new CannotUninstallModuleException('Technical error occurred while uninstalling module.');
         }
     }

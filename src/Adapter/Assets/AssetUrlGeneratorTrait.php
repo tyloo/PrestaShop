@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,7 +65,7 @@ trait AssetUrlGeneratorTrait
      */
     protected function getFQDN()
     {
-        if (null === $this->fqdn) {
+        if ($this->fqdn === null) {
             if ($this->configuration->get('PS_SSL_ENABLED') && ToolsLegacy::usingSecureMode()) {
                 $this->fqdn = $this->configuration->get('_PS_BASE_URL_SSL_');
             } else {

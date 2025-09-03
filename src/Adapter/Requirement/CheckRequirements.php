@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,11 +35,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class CheckRequirements
 {
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     /**
@@ -52,13 +51,13 @@ class CheckRequirements
 
         $paramsOptionalResults = ConfigurationTest::check(ConfigurationTest::getDefaultTestsOp());
 
-        $failRequired = in_array('fail', $paramsRequiredResults);
+        $failRequired = \in_array('fail', $paramsRequiredResults, true);
 
         $testsErrors = $this->getErrorMessages();
 
-        if ($failRequired && 'ok' !== $paramsRequiredResults['files']) {
+        if ($failRequired && $paramsRequiredResults['files'] !== 'ok') {
             $tmp = ConfigurationTest::test_files(true);
-            if (is_array($tmp) && count($tmp)) {
+            if (\is_array($tmp) && \count($tmp)) {
                 $testsErrors['files'] = $testsErrors['files'] . '<br/>(' . implode(', ', $tmp) . ')';
             }
         }
@@ -68,15 +67,13 @@ class CheckRequirements
             $this->fillMissingDescriptions($testsErrors, $paramsOptionalResults)
         );
 
-        $results = [
+        return [
             'failRequired' => $failRequired,
             'testsErrors' => $testsErrors,
             'testsRequired' => $paramsRequiredResults,
-            'failOptional' => in_array('fail', $paramsOptionalResults),
+            'failOptional' => \in_array('fail', $paramsOptionalResults, true),
             'testsOptional' => $paramsOptionalResults,
         ];
-
-        return $results;
     }
 
     /**
@@ -118,7 +115,7 @@ class CheckRequirements
             'fopen' => $this->translator->trans('Allow the PHP fopen() function on your server.', [], 'Admin.Advparameters.Notification'),
             'gz' => $this->translator->trans('Enable GZIP compression on your server.', [], 'Admin.Advparameters.Notification'),
             'files' => $this->translator->trans('Some PrestaShop files are missing from your server.', [], 'Admin.Advparameters.Notification'),
-            'new_phpversion' => $this->translator->trans('You are using PHP %s version. Soon, the latest PHP version supported by PrestaShop will be PHP 5.6. To make sure you’re ready for the future, we recommend you to upgrade to PHP 5.6 now!', ['%s' => PHP_VERSION], 'Admin.Advparameters.Notification'),
+            'new_phpversion' => $this->translator->trans('You are using PHP %s version. Soon, the latest PHP version supported by PrestaShop will be PHP 5.6. To make sure you’re ready for the future, we recommend you to upgrade to PHP 5.6 now!', ['%s' => \PHP_VERSION], 'Admin.Advparameters.Notification'),
             'apache_mod_rewrite' => $this->translator->trans('Enable the Apache mod_rewrite module', [], 'Admin.Advparameters.Notification'),
         ];
     }

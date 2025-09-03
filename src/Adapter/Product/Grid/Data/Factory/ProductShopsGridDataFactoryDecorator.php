@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,13 @@ use Shop;
 class ProductShopsGridDataFactoryDecorator extends ProductGridDataFactoryDecorator
 {
     /**
-     * @param array $products
-     * @param ShopSearchCriteriaInterface $searchCriteria
-     *
      * @return array<int, array<string, mixed>>
      */
     protected function applyShopModifications(array $products, ShopSearchCriteriaInterface $searchCriteria): array
     {
         foreach ($products as $i => $product) {
             // Transform list of IDs into list of names
-            if (!empty($product['id_shop'])) {
+            if (! empty($product['id_shop'])) {
                 $shop = $this->shopRepository->get(new ShopId((int) $product['id_shop']));
                 $products[$i]['shop_name'] = $shop->name;
                 $products[$i]['shop_color'] = $shop->color;

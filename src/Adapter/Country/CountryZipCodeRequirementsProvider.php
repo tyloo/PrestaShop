@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,18 +43,14 @@ final class CountryZipCodeRequirementsProvider implements CountryZipCodeRequirem
      */
     private $langId;
 
-    /**
-     * @param LegacyContext $context
-     * @param ZipCodePatternResolver $patternResolver
-     */
-    public function __construct(LegacyContext $context, private readonly ZipCodePatternResolver $patternResolver)
-    {
+    public function __construct(
+        LegacyContext $context,
+        private readonly ZipCodePatternResolver $patternResolver,
+    ) {
         $this->langId = (int) $context->getLanguage()->id;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CountryNotFoundException
      */
     public function getCountryZipCodeRequirements(CountryId $countryId): CountryZipCodeRequirements
@@ -63,11 +60,11 @@ final class CountryZipCodeRequirementsProvider implements CountryZipCodeRequirem
         try {
             $country = new Country($countryIdValue);
         } catch (PrestaShopException) {
-            throw new CountryNotFoundException(sprintf('Country with id "%s" was not found.', $countryIdValue));
+            throw new CountryNotFoundException(\sprintf('Country with id "%s" was not found.', $countryIdValue));
         }
 
         if ($country->id !== $countryIdValue) {
-            throw new CountryNotFoundException(sprintf('Country with id "%s" was not found.', $countryIdValue));
+            throw new CountryNotFoundException(\sprintf('Country with id "%s" was not found.', $countryIdValue));
         }
 
         $requirements = new CountryZipCodeRequirements($country->need_zip_code);
@@ -76,7 +73,7 @@ final class CountryZipCodeRequirementsProvider implements CountryZipCodeRequirem
             $requirements->setCountryName($country->name[$this->langId]);
         }
 
-        if ($country->need_zip_code && !empty($country->zip_code_format)) {
+        if ($country->need_zip_code && ! empty($country->zip_code_format)) {
             $pattern = $this->patternResolver->getRegexPattern($country->zip_code_format, $country->iso_code);
             $humanReadablePattern = $this->patternResolver->getHumanReadablePattern(
                 $country->zip_code_format,

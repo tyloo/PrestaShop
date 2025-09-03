@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ use PrestaShop\PrestaShop\Core\Domain\Title\ValueObject\TitleId;
 class AddTitleHandler extends AbstractTitleHandler implements AddTitleHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws TitleException
      */
     public function handle(AddTitleCommand $command): TitleId
@@ -62,11 +61,6 @@ class AddTitleHandler extends AbstractTitleHandler implements AddTitleHandlerInt
     }
 
     /**
-     * @param TitleId $titleId
-     * @param AddTitleCommand $command
-     *
-     * @return void
-     *
      * @throws TitleImageUploadingException
      */
     protected function uploadTitleImage(TitleId $titleId, AddTitleCommand $command): void

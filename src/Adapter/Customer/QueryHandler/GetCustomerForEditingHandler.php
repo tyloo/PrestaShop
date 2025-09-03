@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,19 +46,16 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 #[AsQueryHandler]
 final class GetCustomerForEditingHandler implements GetCustomerForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCustomerForEditing $query)
     {
         $customerId = $query->getCustomerId();
         $customer = new Customer($customerId->getValue());
 
         if ($customer->id !== $customerId->getValue()) {
-            throw new CustomerNotFoundException(sprintf('Customer with id "%d" was not found', $customerId->getValue()));
+            throw new CustomerNotFoundException(\sprintf('Customer with id "%d" was not found', $customerId->getValue()));
         }
 
-        $birthday = null === $customer->birthday ?
+        $birthday = $customer->birthday === null ?
             Birthday::createEmpty() :
             new Birthday($customer->birthday)
         ;

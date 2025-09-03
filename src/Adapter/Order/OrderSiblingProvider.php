@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use PrestaShop\PrestaShop\Core\Order\OrderSiblingProviderInterface;
 
 class OrderSiblingProvider implements OrderSiblingProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getNextOrderId(int $orderId): int
     {
         $order = new Order($orderId);
@@ -43,9 +41,6 @@ class OrderSiblingProvider implements OrderSiblingProviderInterface
         return (int) $order->getNextOrderId();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPreviousOrderId(int $orderId): int
     {
         $order = new Order($orderId);

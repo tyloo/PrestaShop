@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -150,19 +151,10 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
     private $notices = [];
 
     /**
-     * @param ImportDataFormatter $dataFormatter
-     * @param array $allShopIds
-     * @param array $contextShopIds
-     * @param int $currentContextShopId
+     * @param int  $currentContextShopId
      * @param bool $isMultistoreEnabled
-     * @param int $contextLanguageId
-     * @param TranslatorInterface $translator
-     * @param LoggerInterface $logger
-     * @param int $employeeId
-     * @param Database $legacyDatabase
-     * @param CacheClearerInterface $cacheClearer
-     * @param Configuration $configuration
-     * @param Validate $validate
+     * @param int  $contextLanguageId
+     * @param int  $employeeId
      */
     public function __construct(
         ImportDataFormatter $dataFormatter,
@@ -177,7 +169,7 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         Database $legacyDatabase,
         private readonly CacheClearerInterface $cacheClearer,
         Configuration $configuration,
-        Validate $validate
+        Validate $validate,
     ) {
         $this->dataFormatter = $dataFormatter;
         $this->contextShopIds = $contextShopIds;
@@ -190,23 +182,20 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         $this->defaultLanguageId = $this->configuration->getInt('PS_LANG_DEFAULT');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUp(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig)
     {
         $languageIso = trim($importConfig->getLanguageIso());
         $locale = strtolower($languageIso) . '_' . strtoupper($languageIso) . '.UTF-8';
-        setlocale(LC_COLLATE, $locale);
-        setlocale(LC_CTYPE, $locale);
+        setlocale(\LC_COLLATE, $locale);
+        setlocale(\LC_CTYPE, $locale);
 
         $dataFormatter = $this->dataFormatter;
         $multipleValueSeparator = $importConfig->getMultipleValueSeparator();
 
-        $getBoolean = (fn($value) => $dataFormatter->getBoolean($value));
-        $getPrice = (fn($value) => $dataFormatter->getPrice($value));
-        $createMultilangField = (fn($value) => $dataFormatter->createMultiLangField($value));
-        $split = (fn($value) => $dataFormatter->split($value, $multipleValueSeparator));
+        $getBoolean = (fn ($value) => $dataFormatter->getBoolean($value));
+        $getPrice = (fn ($value) => $dataFormatter->getPrice($value));
+        $createMultilangField = (fn ($value) => $dataFormatter->createMultiLangField($value));
+        $split = (fn ($value) => $dataFormatter->split($value, $multipleValueSeparator));
         $this->callbacks = [
             'active' => $getBoolean,
             'tax_rate' => $getPrice,
@@ -235,13 +224,10 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         $this->legacyDatabase->disableCache();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function importRow(
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
-        DataRowInterface $dataRow
+        DataRowInterface $dataRow,
     ) {
         if ($dataRow->isEmpty()) {
             $this->warning(
@@ -254,29 +240,26 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
             throw new EmptyDataRowException();
         }
 
-        if (!$this->languageId) {
+        if (! $this->languageId) {
             $this->languageId = Language::getIdByIso($importConfig->getLanguageIso());
 
-            if (!$this->validate->isUnsignedInt($this->languageId)) {
+            if (! $this->validate->isUnsignedInt($this->languageId)) {
                 $this->languageId = $this->configuration->getInt('PS_LANG_DEFAULT');
             }
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function tearDown(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig)
     {
-        if (!$runtimeConfig->shouldValidateData()) {
+        if (! $runtimeConfig->shouldValidateData()) {
             $offset = $runtimeConfig->getOffset();
 
-            $logMessage = sprintf(
+            $logMessage = \sprintf(
                 $this->translator->trans('%s import', [], 'Admin.Advparameters.Notification'),
                 $this->importTypeLabel
             );
             $logMessage .= ' ';
-            $logMessage .= sprintf(
+            $logMessage .= \sprintf(
                 $this->translator->trans('(from %s to %s)', [], 'Admin.Advparameters.Notification'),
                 $offset,
                 $runtimeConfig->getNumberOfProcessedRows() + $offset
@@ -302,9 +285,6 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         $this->legacyDatabase->enableCache();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getWarnings()
     {
         return $this->warnings;
@@ -320,9 +300,6 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         $this->warnings[] = $message;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getErrors()
     {
         return $this->errors;
@@ -338,9 +315,6 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         $this->errors[] = $message;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNotices()
     {
         return $this->notices;
@@ -359,17 +333,16 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
     /**
      * Fetch a data value by given entity field name out of data row.
      *
-     * @param DataRowInterface $dataRow
-     * @param array $entityFields required to find the data cell index in data row
+     * @param array  $entityFields    required to find the data cell index in data row
      * @param string $entityFieldName
      *
      * @return string data value
      */
     protected function fetchDataValueByKey(DataRowInterface $dataRow, array $entityFields, $entityFieldName)
     {
-        $cellIndex = array_search($entityFieldName, $entityFields);
+        $cellIndex = array_search($entityFieldName, $entityFields, true);
 
-        if (false !== $cellIndex && $dataRow->offsetExists($cellIndex)) {
+        if ($cellIndex !== false && $dataRow->offsetExists($cellIndex)) {
             $dataCell = $dataRow->offsetGet($cellIndex);
 
             return trim($dataCell->getValue());
@@ -380,17 +353,15 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
 
     /**
      * Set default values for entity.
-     *
-     * @param ObjectModel $entity
      */
     protected function setDefaultValues(ObjectModel $entity)
     {
         $members = get_object_vars($entity);
 
         foreach ($this->defaultValues as $field => $defaultValue) {
-            $fieldExists = array_key_exists($field, $members);
-            if (!$fieldExists || $entity->$field === null) {
-                $entity->$field = $defaultValue;
+            $fieldExists = \array_key_exists($field, $members);
+            if (! $fieldExists || $entity->{$field} === null) {
+                $entity->{$field} = $defaultValue;
             }
         }
     }
@@ -398,16 +369,13 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
     /**
      * Fill entity data out of data row.
      *
-     * @param ObjectModel $entity
-     * @param array $entityFields
-     * @param DataRowInterface $dataRow
      * @param int $languageId
      */
     protected function fillEntityData(
         ObjectModel $entity,
         array $entityFields,
         DataRowInterface $dataRow,
-        $languageId
+        $languageId,
     ) {
         foreach ($entityFields as $field) {
             $value = $this->fetchDataValueByKey($dataRow, $entityFields, $field);
@@ -416,15 +384,15 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
                 $value = $this->callbacks[$field]($value);
             }
 
-            $canBeTranslated = in_array($field, $this->languageFields) && $languageId;
+            $canBeTranslated = \in_array($field, $this->languageFields, true) && $languageId;
 
             if ($canBeTranslated) {
                 foreach ($value as $langId => $formattedValue) {
-                    if (empty($entity->{$field}[$languageId]) || $langId == $languageId) {
+                    if (empty($entity->{$field}[$languageId]) || $langId === $languageId) {
                         $entity->{$field}[$langId] = $formattedValue;
                     }
                 }
-            } elseif (!empty($value) || $value == '0') {
+            } elseif (! empty($value) || $value === '0') {
                 $entity->{$field} = $value;
             }
         }
@@ -433,16 +401,16 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
     /**
      * Add a warning message with additional entity data.
      *
-     * @param string $message
-     * @param string $entityName
+     * @param string   $message
+     * @param string   $entityName
      * @param int|null $entityId
      */
     protected function addEntityWarning($message, $entityName, $entityId = null)
     {
-        $this->warning(sprintf(
+        $this->warning(\sprintf(
             '%s (ID %s) %s',
             (string) $entityName,
-            null !== $entityId ? (int) $entityId : '',
+            $entityId !== null ? (int) $entityId : '',
             $message
         ));
     }
@@ -450,7 +418,6 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
     /**
      * Checks if entity exists in the database.
      *
-     * @param ObjectModel $entity
      * @param string $table database table without prefix, e.g. "product".
      *
      * @return bool

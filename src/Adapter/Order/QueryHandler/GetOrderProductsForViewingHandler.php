@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,8 +59,11 @@ use StockAvailable;
 #[AsQueryHandler]
 final class GetOrderProductsForViewingHandler extends AbstractOrderHandler implements GetOrderProductsForViewingHandlerInterface
 {
-    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser, private readonly int $contextLanguageId, private readonly Locale $locale)
-    {
+    public function __construct(
+        private readonly ImageTagSourceParserInterface $imageTagSourceParser,
+        private readonly int $contextLanguageId,
+        private readonly Locale $locale,
+    ) {
     }
 
     public function handle(GetOrderProductsForViewing $query): OrderProductsForViewing
@@ -77,18 +81,14 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                 $name = 'product_mini_' . (int) $product['product_id'] . (isset($product['product_attribute_id']) ? '_' . (int) $product['product_attribute_id'] : '') . '.jpg';
                 // generate image cache, only for back office
                 $product['image_tag'] = ImageManager::thumbnail(_PS_IMG_DIR_ . 'p/' . $product['image']->getExistingImgPath() . '.jpg', $name, 45, 'jpg');
-                if (file_exists(_PS_TMP_IMG_DIR_ . $name)) {
-                    $product['image_size'] = getimagesize(_PS_TMP_IMG_DIR_ . $name);
-                } else {
-                    $product['image_size'] = false;
-                }
+                $product['image_size'] = file_exists(_PS_TMP_IMG_DIR_ . $name) ? getimagesize(_PS_TMP_IMG_DIR_ . $name) : false;
             }
 
             // Get total customized quantity for current product
             $customized_product_quantity = 0;
 
             $customizations = [];
-            if (is_array($product['customizedDatas'])) {
+            if (\is_array($product['customizedDatas'])) {
                 foreach ($product['customizedDatas'] as $customizationPerAddress) {
                     foreach ($customizationPerAddress as $customization) {
                         $customized_product_quantity += (int) $customization['quantity'];
@@ -105,7 +105,7 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                 }
             }
 
-            $product['customizations'] = !empty($customizations) ? new OrderProductCustomizationsForViewing($customizations) : null;
+            $product['customizations'] = ! empty($customizations) ? new OrderProductCustomizationsForViewing($customizations) : null;
             $product['customized_product_quantity'] = $customized_product_quantity;
             $product['current_stock'] = StockAvailable::getQuantityAvailableByProduct($product['product_id'], $product['product_attribute_id'], $product['id_shop']);
             $product['quantity_refundable'] = $product['product_quantity'] - $product['product_quantity_return'] - $product['product_quantity_refunded'];
@@ -125,11 +125,7 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                     $name = 'product_mini_' . (int) $pack_item['id_product'] . (isset($pack_item['id_product_attribute']) ? '_' . (int) $pack_item['id_product_attribute'] : '') . '.jpg';
                     // generate image cache, only for back office
                     $pack_item['image_tag'] = ImageManager::thumbnail(_PS_IMG_DIR_ . 'p/' . $pack_item['image']->getExistingImgPath() . '.jpg', $name, 45, 'jpg');
-                    if (file_exists(_PS_TMP_IMG_DIR_ . $name)) {
-                        $pack_item['image_size'] = getimagesize(_PS_TMP_IMG_DIR_ . $name);
-                    } else {
-                        $pack_item['image_size'] = false;
-                    }
+                    $pack_item['image_size'] = file_exists(_PS_TMP_IMG_DIR_ . $name) ? getimagesize(_PS_TMP_IMG_DIR_ . $name) : false;
                 }
             }
 
@@ -151,7 +147,7 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
 
         $productsForViewing = [];
 
-        $isOrderTaxExcluded = ($taxCalculationMethod == PS_TAX_EXC);
+        $isOrderTaxExcluded = ($taxCalculationMethod === PS_TAX_EXC);
         foreach ($products as $product) {
             $unitPrice = $isOrderTaxExcluded ?
                 $product['unit_price_tax_excl'] :
@@ -174,14 +170,14 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                 null;
             $product['product_quantity_refunded'] = $product['product_quantity_refunded'] ?: false;
 
-            $productType = !empty($product['pack_items']) ? OrderProductForViewing::TYPE_PACK :
+            $productType = ! empty($product['pack_items']) ? OrderProductForViewing::TYPE_PACK :
                 OrderProductForViewing::TYPE_PRODUCT_WITHOUT_COMBINATIONS;
 
             $orderInvoice = new OrderInvoice($product['id_order_invoice']);
 
             $packItems = [];
             foreach ($product['pack_items'] as $pack_item) {
-                $packItemType = !empty($pack_item['pack_items']) ? OrderProductForViewing::TYPE_PACK :
+                $packItemType = ! empty($pack_item['pack_items']) ? OrderProductForViewing::TYPE_PACK :
                     OrderProductForViewing::TYPE_PRODUCT_WITHOUT_COMBINATIONS;
                 $packItemImagePath = isset($pack_item['image_tag']) ?
                     $this->imageTagSourceParser->parse($pack_item['image_tag']) :
@@ -236,8 +232,8 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                 $this->locale->formatPrice($product['displayed_max_refundable'], $currency->iso_code),
                 (string) $product['displayed_max_refundable'],
                 $product['location'],
-                !empty($product['id_order_invoice']) ? $product['id_order_invoice'] : null,
-                !empty($product['id_order_invoice'])
+                ! empty($product['id_order_invoice']) ? $product['id_order_invoice'] : null,
+                ! empty($product['id_order_invoice'])
                     ? $orderInvoice->getInvoiceNumberFormatted((int) $order->getAssociatedLanguage()->getId())
                     : '',
                 $productType,
@@ -252,8 +248,8 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
         $limit = $query->getLimit();
 
         // @todo: its not really paginated, as all products are retrieved from legacy Order::getProducts(). But could be improved in future.
-        if (null !== $offset && $limit) {
-            $productsForViewing = array_slice($products, $offset, (int) $limit);
+        if ($offset !== null && $limit) {
+            $productsForViewing = \array_slice($products, $offset, (int) $limit);
         }
 
         return new OrderProductsForViewing($productsForViewing);
@@ -272,7 +268,7 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                 WHERE id_product_attribute = ' . (int) $pack_item['id_product_attribute']);
         }
 
-        if (!isset($id_image) || !$id_image) {
+        if (! isset($id_image) || ! $id_image) {
             $id_image = Db::getInstance()->getValue('
                 SELECT `image_shop`.id_image
                 FROM `' . _DB_PREFIX_ . 'image` i' .

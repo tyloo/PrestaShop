@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,16 +47,13 @@ class FeaturesChoiceProvider implements FormChoiceProviderInterface
     public function __construct(
         protected readonly FeatureRepository $featureRepository,
         protected readonly LegacyContext $legacyContext,
-        protected readonly ConfigurationInterface $configuration
+        protected readonly ConfigurationInterface $configuration,
     ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getChoices()
     {
-        if (!empty($this->cacheFeatureChoices)) {
+        if (! empty($this->cacheFeatureChoices)) {
             return $this->cacheFeatureChoices;
         }
 

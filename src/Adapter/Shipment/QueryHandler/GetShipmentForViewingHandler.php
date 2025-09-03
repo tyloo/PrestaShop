@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,13 +56,11 @@ class GetShipmentForViewingHandler implements GetShipmentForViewingHandlerInterf
         private readonly CarrierRepository $carrierRepository,
         private readonly CountryRepository $countryRepository,
         private readonly AddressRepository $addressRepository,
-        private readonly StateRepository $stateRepository
+        private readonly StateRepository $stateRepository,
     ) {
     }
 
     /**
-     * @param GetShipmentForViewing $query
-     *
      * @return ShipmentForViewing
      */
     public function handle(GetShipmentForViewing $query)
@@ -71,7 +70,7 @@ class GetShipmentForViewingHandler implements GetShipmentForViewingHandlerInterf
         $shipment = $this->shipmentRepository->find($id);
 
         if ($shipment === null) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment with id "%s"', $id));
+            throw new ShipmentNotFoundException(\sprintf('Could not find shipment with id "%s"', $id));
         }
 
         $order = $this->orderRepository->get(new OrderId($shipment->getOrderId()));

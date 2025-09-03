@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,15 +35,12 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class CustomerGroupValidator extends AbstractObjectModelValidator
 {
-    public function __construct(private readonly ShopRepository $shopRepository)
-    {
+    public function __construct(
+        private readonly ShopRepository $shopRepository,
+    ) {
     }
 
     /**
-     * @param CustomerGroup $customerGroup
-     *
-     * @return void
-     *
      * @throws GroupConstraintException
      */
     public function validate(CustomerGroup $customerGroup): void
@@ -54,27 +52,15 @@ class CustomerGroupValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param array $shopIds
-     *
-     * @return void
-     *
      * @throws GroupConstraintException
      */
     private function validateThereIsAtLeastOneShop(array $shopIds): void
     {
         if (empty($shopIds)) {
-            throw new GroupConstraintException(
-                'Customer group must be associated with at least one shop',
-                GroupConstraintException::EMPTY_SHOP_LIST
-            );
+            throw new GroupConstraintException('Customer group must be associated with at least one shop', GroupConstraintException::EMPTY_SHOP_LIST);
         }
     }
 
-    /**
-     * @param array $shopIds
-     *
-     * @return void
-     */
     private function validateShopsExists(array $shopIds): void
     {
         foreach ($shopIds as $shopId) {
@@ -83,10 +69,6 @@ class CustomerGroupValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param int $priceDisplayMethod
-     *
-     * @return void
-     *
      * @throws GroupConstraintException
      */
     private function validatePriceDisplayMethod(int $priceDisplayMethod): void
@@ -96,27 +78,19 @@ class CustomerGroupValidator extends AbstractObjectModelValidator
             case CustomerGroup::PRICE_DISPLAY_METHOD_TAX_EXCL:
                 return;
             default:
-                throw new GroupConstraintException(
-                    sprintf('Invalid price display method "%s"', $priceDisplayMethod),
-                    GroupConstraintException::INVALID_PRICE_DISPLAY_METHOD
-                );
+                throw new GroupConstraintException(\sprintf('Invalid price display method "%s"', $priceDisplayMethod), GroupConstraintException::INVALID_PRICE_DISPLAY_METHOD);
         }
     }
 
     /**
      * @param string[] $names
      *
-     * @return void
-     *
      * @throws GroupConstraintException
      */
     private function validateGroupNames(array $names): void
     {
         if (empty($names)) {
-            throw new GroupConstraintException(
-                'Customer group name cannot be empty',
-                GroupConstraintException::EMPTY_NAME
-            );
+            throw new GroupConstraintException('Customer group name cannot be empty', GroupConstraintException::EMPTY_NAME);
         }
 
         foreach ($names as $name) {
@@ -125,26 +99,16 @@ class CustomerGroupValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param string $name
-     *
-     * @return void
-     *
      * @throws GroupConstraintException
      */
     private function validateGroupName(string $name): void
     {
-        if (strlen($name) > 32) {
-            throw new GroupConstraintException(
-                sprintf('Customer group name cannot be longer than 32 characters. Got "%s"', $name),
-                GroupConstraintException::NAME_TOO_LONG
-            );
+        if (\strlen($name) > 32) {
+            throw new GroupConstraintException(\sprintf('Customer group name cannot be longer than 32 characters. Got "%s"', $name), GroupConstraintException::NAME_TOO_LONG);
         }
 
-        if (false === preg_match('/^[^<>{}]*$/u', $name)) {
-            throw new GroupConstraintException(
-                'Customer group name cannot contain these characters: < > = { }',
-                GroupConstraintException::INVALID_NAME
-            );
+        if (preg_match('/^[^<>{}]*$/u', $name) === false) {
+            throw new GroupConstraintException('Customer group name cannot contain these characters: < > = { }', GroupConstraintException::INVALID_NAME);
         }
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,10 @@ class SupplierOrderValidator
      */
     public function hasPendingOrders($supplierId)
     {
-        @trigger_error(sprintf(
+        @trigger_error(\sprintf(
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
-        ), E_USER_DEPRECATED);
+        ), \E_USER_DEPRECATED);
 
         return false;
     }

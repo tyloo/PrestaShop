@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,14 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Order\Invoice\CommandHandler\GenerateOrder
 #[AsCommandHandler]
 final class GenerateInvoiceHandler extends AbstractOrderHandler implements GenerateOrderInvoiceHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GenerateInvoiceCommand $command)
     {
         $order = $this->getOrder($command->getOrderId());
 
-        if (!Configuration::get('PS_INVOICE', null, null, $order->id_shop)) {
+        if (! Configuration::get('PS_INVOICE', null, null, $order->id_shop)) {
             throw new OrderException('Invoice management has been disabled.');
         }
 

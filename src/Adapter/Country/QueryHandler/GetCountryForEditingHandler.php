@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\Country\QueryResult\CountryForEditing;
 #[AsQueryHandler]
 class GetCountryForEditingHandler implements GetCountryForEditingHandlerInterface
 {
-    public function __construct(private readonly CountryRepository $countryRepository)
-    {
+    public function __construct(
+        private readonly CountryRepository $countryRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCountryForEditing $command): CountryForEditing
     {
         $countryId = $command->getCountryId();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,9 @@ use PrestaShopBundle\Entity\ShipmentProduct;
 
 class OrderShipmentCreator
 {
-    public function __construct(private readonly ShipmentRepository $shipmentRepository)
-    {
+    public function __construct(
+        private readonly ShipmentRepository $shipmentRepository,
+    ) {
     }
 
     public function addShipmentOrder(Order $order, array $productsHandledByCarrier): void
@@ -55,7 +57,7 @@ class OrderShipmentCreator
             $shipment->setShippedAt(null);
             $shipment->setCancelledAt(null);
 
-            $productWeight = array_map(fn($product) => $product['weight'] * $product['quantity'], $products['product_list']);
+            $productWeight = array_map(fn ($product) => $product['weight'] * $product['quantity'], $products['product_list']);
 
             // add OrderCarrier here for keep the compatibility for legacy
             $orderCarrier = new OrderCarrier();

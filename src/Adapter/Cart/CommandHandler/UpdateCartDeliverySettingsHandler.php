@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,22 +48,17 @@ use Validate;
 #[AsCommandHandler]
 final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implements UpdateCartDeliverySettingsHandlerInterface
 {
-    /**
-     * @param TranslatorInterface $translator
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateCartDeliverySettingsCommand $command): void
     {
         $cart = $this->getCart($command->getCartId());
 
-        if (($command->getGiftMessage() !== null) && (!Validate::isMessage($command->getGiftMessage()))) {
+        if (($command->getGiftMessage() !== null) && (! Validate::isMessage($command->getGiftMessage()))) {
             throw new InvalidGiftMessageException();
         }
 
@@ -77,11 +73,11 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
 
         if ($shouldSaveCart) {
             try {
-                if (false === $cart->update()) {
+                if ($cart->update() === false) {
                     throw new CartException('Failed to update cart delivery settings');
                 }
             } catch (PrestaShopException) {
-                throw new CartException(sprintf('An error occurred while trying to update delivery settings for cart with id "%d"', $cart->id));
+                throw new CartException(\sprintf('An error occurred while trying to update delivery settings for cart with id "%d"', $cart->id));
             }
         }
     }
@@ -93,27 +89,19 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
      *
      * @param string $code
      *
-     * @return CartRule|null
-     *
      * @throws PrestaShopException
      */
     private function getCartRuleForBackOfficeFreeShipping($code): ?CartRule
     {
         $cartRuleId = CartRule::getIdByCode($code);
 
-        if (!$cartRuleId) {
+        if (! $cartRuleId) {
             return null;
         }
 
         return new CartRule((int) $cartRuleId);
     }
 
-    /**
-     * @param Cart $cart
-     * @param string $backOfficeOrderCode
-     *
-     * @return CartRule
-     */
     private function createCartRule(Cart $cart, string $backOfficeOrderCode): CartRule
     {
         $freeShippingCartRule = new CartRule();
@@ -145,14 +133,11 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
      * 2. if free shipping should not be enabled and cart already does not have free shipping, do nothing
      * 3.if free shipping should not be enabled and cart has free shipping, disable it
      *
-     * @param Cart $cart
-     * @param UpdateCartDeliverySettingsCommand $command
-     *
      * @throws CannotDeleteCartRuleException
      */
     protected function handleFreeShippingOption(Cart $cart, UpdateCartDeliverySettingsCommand $command): void
     {
-        $backOfficeOrderCode = sprintf('%s%s', CartRule::BO_ORDER_CODE_PREFIX, $cart->id);
+        $backOfficeOrderCode = \sprintf('%s%s', CartRule::BO_ORDER_CODE_PREFIX, $cart->id);
 
         $freeShippingCartRule = $this->getCartRuleForBackOfficeFreeShipping($backOfficeOrderCode);
 
@@ -160,7 +145,7 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
 
         // Step 1
         if ($freeShippingShouldBeEnabled) {
-            if (null === $freeShippingCartRule) {
+            if ($freeShippingCartRule === null) {
                 // there is not yet a 'free shipping' cart rule available in the system so we create it
                 $freeShippingCartRule = $this->createCartRule($cart, $backOfficeOrderCode);
             }
@@ -170,25 +155,22 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
             return;
         }
 
-        if (null === $freeShippingCartRule) {
+        if ($freeShippingCartRule === null) {
             return;
         }
 
         $cart->removeCartRule((int) $freeShippingCartRule->id);
 
         try {
-            if (false === $freeShippingCartRule->delete()) {
-                throw new CannotDeleteCartRuleException(sprintf('Failed deleting cart rule #%s', $freeShippingCartRule->id));
+            if ($freeShippingCartRule->delete() === false) {
+                throw new CannotDeleteCartRuleException(\sprintf('Failed deleting cart rule #%s', $freeShippingCartRule->id));
             }
         } catch (PrestaShopException) {
-            throw new CartRuleException(sprintf('An error occurred when trying to delete cart rule #%s', $freeShippingCartRule->id));
+            throw new CartRuleException(\sprintf('An error occurred when trying to delete cart rule #%s', $freeShippingCartRule->id));
         }
     }
 
     /**
-     * @param Cart $cart
-     * @param UpdateCartDeliverySettingsCommand $command
-     *
      * @return bool should save the cart or not
      *
      * @throws CartException
@@ -206,9 +188,6 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
     }
 
     /**
-     * @param Cart $cart
-     * @param UpdateCartDeliverySettingsCommand $command
-     *
      * @return bool should save the cart or not
      */
     private function handleRecycledWrappingOption(Cart $cart, UpdateCartDeliverySettingsCommand $command): bool
@@ -223,9 +202,6 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
     }
 
     /**
-     * @param Cart $cart
-     * @param UpdateCartDeliverySettingsCommand $command
-     *
      * @return bool should save the cart or not
      */
     private function handleGiftMessageOption(Cart $cart, UpdateCartDeliverySettingsCommand $command): bool

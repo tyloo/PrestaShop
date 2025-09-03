@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,6 +43,6 @@ class ProductColorsRetriever
     {
         $attributesColorList = Product::getAttributesColorList([$id_product]);
 
-        return (is_array($attributesColorList)) ? current($attributesColorList) : null;
+        return (\is_array($attributesColorList)) ? current($attributesColorList) : null;
     }
 }

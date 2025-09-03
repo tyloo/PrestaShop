@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,14 +46,11 @@ class GetProductAttributeGroupsHandler extends AbstractAttributeGroupQueryHandle
     public function __construct(
         AttributeRepository $attributeRepository,
         AttributeGroupRepository $attributeGroupRepository,
-        private readonly ProductRepository $productRepository
+        private readonly ProductRepository $productRepository,
     ) {
         parent::__construct($attributeRepository, $attributeGroupRepository);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(GetProductAttributeGroups $query): array
     {
         $shopConstraint = $query->getShopConstraint();

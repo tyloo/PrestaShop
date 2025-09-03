@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,17 +47,13 @@ use Supplier;
 #[AsQueryHandler]
 final class GetSupplierForViewingHandler implements GetSupplierForViewingHandlerInterface
 {
-    /**
-     * @param Locale $locale
-     * @param int $defaultCurrencyId
-     */
-    public function __construct(private readonly Locale $locale, private readonly int $defaultCurrencyId)
-    {
+    public function __construct(
+        private readonly Locale $locale,
+        private readonly int $defaultCurrencyId,
+    ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws SupplierException
      * @throws LocalizationException
      */
@@ -71,8 +68,6 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
     }
 
     /**
-     * @param SupplierId $supplierId
-     *
      * @return Supplier
      *
      * @throws SupplierNotFoundException
@@ -82,18 +77,13 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
         $supplier = new Supplier($supplierId->getValue());
 
         if ($supplier->id !== $supplierId->getValue()) {
-            throw new SupplierNotFoundException(
-                sprintf('Supplier with id "%d" was not found.', $supplierId->getValue())
-            );
+            throw new SupplierNotFoundException(\sprintf('Supplier with id "%d" was not found.', $supplierId->getValue()));
         }
 
         return $supplier;
     }
 
     /**
-     * @param Supplier $supplier
-     * @param LanguageId $languageId
-     *
      * @return array
      *
      * @throws LocalizationException
@@ -125,9 +115,6 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
     }
 
     /**
-     * @param Product $product
-     * @param Supplier $supplier
-     *
      * @return array<string, mixed>
      *
      * @throws LocalizationException
@@ -137,8 +124,9 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
         $productInfo = Supplier::getProductInformationsBySupplier($supplier->id, $product->id);
         $product->wholesale_price = $productInfo['product_supplier_price_te'];
         $product->supplier_reference = $productInfo['product_supplier_reference'];
+
         $isoCode = Currency::getIsoCodeById((int) $productInfo['id_currency']) ?: Currency::getIsoCodeById($this->defaultCurrencyId);
-        $formattedWholesalePrice = null !== $product->wholesale_price
+        $formattedWholesalePrice = $product->wholesale_price !== null
             ? $this->locale->formatPrice($product->wholesale_price, $isoCode)
             : null;
 
@@ -156,10 +144,6 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
     }
 
     /**
-     * @param Product $product
-     * @param Supplier $supplier
-     * @param LanguageId $languageId
-     *
      * @return array<int, array<string, mixed>>
      *
      * @throws LocalizationException
@@ -174,19 +158,19 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
         $combinations = [];
         foreach ($productCombinations as $combination) {
             $attributeId = $combination['id_product_attribute'];
-            if (!isset($combinations[$attributeId])) {
+            if (! isset($combinations[$attributeId])) {
                 $combinationSupplierInfo = Supplier::getProductInformationsBySupplier(
                     $supplier->id,
                     $product->id,
                     $combination['id_product_attribute']
                 );
-                if (!$combinationSupplierInfo) {
+                if (! $combinationSupplierInfo) {
                     continue;
                 }
 
                 $isoCode = Currency::getIsoCodeById((int) $combinationSupplierInfo['id_currency'])
                     ?: Currency::getIsoCodeById($this->defaultCurrencyId);
-                $formattedWholesalePrice = null !== $combinationSupplierInfo['product_supplier_price_te']
+                $formattedWholesalePrice = $combinationSupplierInfo['product_supplier_price_te'] !== null
                     ? $this->locale->formatPrice($combinationSupplierInfo['product_supplier_price_te'], $isoCode)
                     : null;
                 $combinations[$attributeId] = [
@@ -202,7 +186,7 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
             }
 
             // if combination info already filled, we only append attributes to combination name
-            $combinations[$attributeId]['attributes'] .= sprintf(', %s', $this->buildCombinationName($combination));
+            $combinations[$attributeId]['attributes'] .= \sprintf(', %s', $this->buildCombinationName($combination));
         }
 
         return $combinations;
@@ -210,11 +194,9 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
 
     /**
      * @param array<string, mixed> $attributesInfo
-     *
-     * @return string
      */
     private function buildCombinationName(array $attributesInfo): string
     {
-        return sprintf('%s - %s', $attributesInfo['group_name'], $attributesInfo['attribute_name']);
+        return \sprintf('%s - %s', $attributesInfo['group_name'], $attributesInfo['attribute_name']);
     }
 }

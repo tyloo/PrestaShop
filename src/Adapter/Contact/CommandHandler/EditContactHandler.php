@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,16 +50,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[AsCommandHandler]
 final class EditContactHandler extends AbstractObjectModelHandler implements EditContactHandlerInterface
 {
-    /**
-     * @param ValidatorInterface $validator
-     */
-    public function __construct(private readonly ValidatorInterface $validator)
-    {
+    public function __construct(
+        private readonly ValidatorInterface $validator,
+    ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws ContactException
      */
     public function handle(EditContactCommand $command)
@@ -66,40 +63,38 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
         try {
             $entity = $this->getContactEntityIfFound($command->getContactId()->getValue());
 
-            if (null !== $command->getLocalisedTitles()) {
+            if ($command->getLocalisedTitles() !== null) {
                 $this->assertLocalisedTitleContainsDefaultLanguage($command->getLocalisedTitles());
                 $entity->name = $command->getLocalisedTitles();
             }
 
-            if (null !== $command->getLocalisedDescription()) {
+            if ($command->getLocalisedDescription() !== null) {
                 $this->assertDescriptionContainsCleanHtmlValues($command->getLocalisedDescription());
                 $entity->description = $command->getLocalisedDescription();
             }
 
-            if (null !== $command->getEmail()) {
+            if ($command->getEmail() !== null) {
                 $entity->email = $command->getEmail()->getValue();
             }
 
-            if (null !== $command->isMessagesSavingEnabled()) {
+            if ($command->isMessagesSavingEnabled() !== null) {
                 $entity->customer_service = $command->isMessagesSavingEnabled();
             }
 
-            if (false === $entity->update()) {
-                throw new CannotUpdateContactException(sprintf('Unable to update contact object with id %s', $command->getContactId()->getValue()));
+            if ($entity->update() === false) {
+                throw new CannotUpdateContactException(\sprintf('Unable to update contact object with id %s', $command->getContactId()->getValue()));
             }
 
-            if (null !== $command->getShopAssociation()) {
+            if ($command->getShopAssociation() !== null) {
                 $this->associateWithShops($entity, $command->getShopAssociation());
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new ContactException(sprintf('An unexpected error occurred when retrieving contact with id %s', var_export($command->getContactId()->getValue(), true)), 0, $prestaShopException);
+            throw new ContactException(\sprintf('An unexpected error occurred when retrieving contact with id %s', var_export($command->getContactId()->getValue(), true)), 0, $prestaShopException);
         }
     }
 
     /**
      * Validates that values does not contain script tags or javascript events.
-     *
-     * @param array $localisedDescriptions
      *
      * @throws ContactConstraintException
      */
@@ -108,8 +103,8 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
         foreach ($localisedDescriptions as $description) {
             $errors = $this->validator->validate($description, new CleanHtml());
 
-            if (0 !== count($errors)) {
-                throw new ContactConstraintException(sprintf('Given description "%s" contains javascript events or script tags', $description), ContactConstraintException::INVALID_DESCRIPTION);
+            if (\count($errors) !== 0) {
+                throw new ContactConstraintException(\sprintf('Given description "%s" contains javascript events or script tags', $description), ContactConstraintException::INVALID_DESCRIPTION);
             }
         }
     }
@@ -117,15 +112,13 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
     /**
      * Checks if the localised titles array contains value for the default language.
      *
-     * @param array $localisedTitle
-     *
      * @throws ContactConstraintException
      */
     private function assertLocalisedTitleContainsDefaultLanguage(array $localisedTitle)
     {
         $errors = $this->validator->validate($localisedTitle, new DefaultLanguage());
 
-        if (0 !== count($errors)) {
+        if (\count($errors) !== 0) {
             throw new ContactConstraintException('Title field is not found for default language', ContactConstraintException::MISSING_TITLE_FOR_DEFAULT_LANGUAGE);
         }
     }
@@ -145,8 +138,8 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
     {
         $entity = new Contact($contactId);
 
-        if (0 >= $entity->id) {
-            throw new ContactNotFoundException(sprintf('Contact object with id %s was not found', var_export($contactId, true)));
+        if ($entity->id <= 0) {
+            throw new ContactNotFoundException(\sprintf('Contact object with id %s was not found', var_export($contactId, true)));
         }
 
         return $entity;

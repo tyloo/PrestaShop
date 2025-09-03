@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,23 +44,20 @@ use PrestaShopException;
 class DeleteCarrierHandler implements DeleteCarrierHandlerInterface
 {
     public function __construct(
-        private readonly CarrierRepository $carrierRepository
+        private readonly CarrierRepository $carrierRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteCarrierCommand $command)
     {
         $carrier = $this->carrierRepository->get($command->getCarrierId());
 
         try {
-            if (!$carrier->delete()) {
-                throw new CannotDeleteCarrierException(sprintf('Cannot delete carrier object with id "%d"', $command->getCarrierId()->getValue()), CannotDeleteCarrierException::SINGLE_DELETE);
+            if (! $carrier->delete()) {
+                throw new CannotDeleteCarrierException(\sprintf('Cannot delete carrier object with id "%d"', $command->getCarrierId()->getValue()), CannotDeleteCarrierException::SINGLE_DELETE);
             }
         } catch (PrestaShopException) {
-            throw new CarrierException(sprintf('An error occurred when deleting carrier with id "%d"', $command->getCarrierId()->getValue()));
+            throw new CarrierException(\sprintf('An error occurred when deleting carrier with id "%d"', $command->getCarrierId()->getValue()));
         }
     }
 }

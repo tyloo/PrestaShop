@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,15 +39,14 @@ class KpiConfiguration extends Configuration
      * Changes configuration definition before calling it's methods.
      *
      * @param string $name
-     * @param mixed $arguments
      *
      * @return mixed|void
      */
     public function __call($name, $arguments)
     {
-        if (is_callable([$this, $name])) {
+        if (\is_callable([$this, $name])) {
             ConfigurationKPI::setKpiDefinition();
-            $result = call_user_func([$this, $name], $arguments);
+            $result = \call_user_func([$this, $name], $arguments);
             ConfigurationKPI::unsetKpiDefinition();
 
             return $result;

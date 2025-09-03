@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\CommandHandler\DeleteProduct
 #[AsCommandHandler]
 class DeleteProductImageHandler implements DeleteProductImageHandlerInterface
 {
-    public function __construct(private readonly ProductImageUpdater $productImageUpdater)
-    {
+    public function __construct(
+        private readonly ProductImageUpdater $productImageUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(DeleteProductImageCommand $command): void
     {
         $this->productImageUpdater->deleteImage($command->getImageId());

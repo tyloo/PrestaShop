@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,10 @@ use PrestaShop\PrestaShop\Core\ConfigurationInterface;
  */
 final class ImportDataFormatter
 {
-    public function __construct(private readonly ConfigurationInterface $configuration, private readonly Tools $tools)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private readonly Tools $tools,
+    ) {
     }
 
     /**
@@ -87,7 +90,7 @@ final class ImportDataFormatter
      * Split the field by separator.
      *
      * @param string|null $field
-     * @param string $separator
+     * @param string      $separator
      *
      * @return array
      */
@@ -97,7 +100,7 @@ final class ImportDataFormatter
             return [];
         }
 
-        if (trim($separator) == '') {
+        if (trim($separator) === '') {
             $separator = ',';
         }
 
@@ -124,7 +127,7 @@ final class ImportDataFormatter
             @unlink($uniqidPath);
         }
 
-        if (empty($content) || !is_array($content)) {
+        if (empty($content) || ! \is_array($content)) {
             return [];
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,16 +47,13 @@ use PrestaShopException;
  */
 class ProductPackUpdater
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param ProductPackRepository $productPackRepository
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductPackRepository $productPackRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly ProductPackRepository $productPackRepository,
+    ) {
     }
 
     /**
-     * @param PackId $packId
      * @param QuantifiedProduct[] $productsForPacking
      *
      * @throws CoreException
@@ -89,8 +87,6 @@ class ProductPackUpdater
     }
 
     /**
-     * @param int $productId
-     *
      * @throws CoreException
      * @throws ProductPackConstraintException
      */
@@ -98,17 +94,10 @@ class ProductPackUpdater
     {
         try {
             if (Pack::isPack($productId)) {
-                throw new ProductPackConstraintException(
-                    sprintf('Product #%d is a pack itself. It cannot be packed', $productId),
-                    ProductPackConstraintException::CANNOT_ADD_PACK_INTO_PACK
-                );
+                throw new ProductPackConstraintException(\sprintf('Product #%d is a pack itself. It cannot be packed', $productId), ProductPackConstraintException::CANNOT_ADD_PACK_INTO_PACK);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when asserting if product #%d is pack', $productId),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when asserting if product #%d is pack', $productId), 0, $prestaShopException);
         }
     }
 }

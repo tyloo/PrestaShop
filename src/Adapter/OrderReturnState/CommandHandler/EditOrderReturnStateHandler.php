@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,9 +42,6 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\Exception\OrderReturnStat
 #[AsCommandHandler]
 final class EditOrderReturnStateHandler extends AbstractOrderReturnStateHandler implements EditOrderReturnStateHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditOrderReturnStateCommand $command)
     {
         $orderReturnStateId = $command->getOrderReturnStateId();
@@ -55,22 +53,22 @@ final class EditOrderReturnStateHandler extends AbstractOrderReturnStateHandler 
 
         $this->assertRequiredFieldsAreNotMissing($orderReturnState);
 
-        if (false === $orderReturnState->validateFields(false)) {
+        if ($orderReturnState->validateFields(false) === false) {
             throw new OrderReturnStateException('OrderReturnState contains invalid field values');
         }
 
-        if (false === $orderReturnState->update()) {
+        if ($orderReturnState->update() === false) {
             throw new OrderReturnStateException('Failed to update order return state');
         }
     }
 
     private function updateOrderReturnStateWithCommandData(OrderReturnState $orderReturnState, EditOrderReturnStateCommand $command)
     {
-        if (null !== $command->getName()) {
+        if ($command->getName() !== null) {
             $orderReturnState->name = $command->getName();
         }
 
-        if (null !== $command->getColor()) {
+        if ($command->getColor() !== null) {
             $orderReturnState->color = $command->getColor();
         }
     }

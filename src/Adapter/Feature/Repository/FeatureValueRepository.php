@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,21 +48,14 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
  */
 class FeatureValueRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param FeatureValueValidator $featureValueValidator
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly FeatureValueValidator $featureValueValidator)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly FeatureValueValidator $featureValueValidator,
+    ) {
     }
 
     /**
-     * @param FeatureValue $featureValue
-     * @param int $errorCode
-     *
-     * @return FeatureValueId
-     *
      * @throws CannotAddFeatureValueException
      * @throws InvalidFeatureValueIdException
      * @throws CoreException
@@ -75,8 +69,6 @@ class FeatureValueRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param FeatureValue $featureValue
-     *
      * @throws CannotUpdateFeatureValueException
      * @throws CoreException
      */
@@ -90,10 +82,6 @@ class FeatureValueRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param FeatureValueId $featureValueId
-     *
-     * @return FeatureValue
-     *
      * @throws FeatureValueNotFoundException
      */
     public function get(FeatureValueId $featureValueId): FeatureValue
@@ -109,8 +97,6 @@ class FeatureValueRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param FeatureValueId $featureValueId
-     *
      * @throws FeatureValueNotFoundException
      * @throws CoreException
      */
@@ -124,11 +110,6 @@ class FeatureValueRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param int|null $limit
-     * @param int|null $offset
-     * @param array|null $filters
-     *
      * @return array<int, array<string, mixed>>
      */
     public function getProductFeatureValues(ProductId $productId, ?int $limit = null, ?int $offset = null, ?array $filters = []): array
@@ -151,7 +132,7 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         $featureValues = [];
         foreach ($result as $featureValue) {
             $featureValueId = (int) $featureValue['id_feature_value'];
-            if (!isset($featureValues[$featureValueId])) {
+            if (! isset($featureValues[$featureValueId])) {
                 $featureValues[$featureValueId] = [
                     'id_feature_value' => $featureValueId,
                     'id_feature' => (int) $featureValue['id_feature'],
@@ -165,12 +146,6 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         return array_values($featureValues);
     }
 
-    /**
-     * @param int $langId
-     * @param array $filters
-     *
-     * @return array
-     */
     public function getFeatureValuesByLang(int $langId, array $filters): array
     {
         $qb = $this->getFeatureValuesQueryBuilder(array_merge($filters, ['id_lang' => $langId]))
@@ -184,13 +159,6 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         return $qb->executeQuery()->fetchAllAssociative();
     }
 
-    /**
-     * @param int|null $limit
-     * @param int|null $offset
-     * @param array|null $filters
-     *
-     * @return array
-     */
     public function getFeatureValues(?int $limit = null, ?int $offset = null, ?array $filters = []): array
     {
         $qb = $this->getFeatureValuesQueryBuilder($filters)
@@ -216,22 +184,11 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         return array_values($indexedFeatureValues);
     }
 
-    /**
-     * @param ProductId $productId
-     * @param array|null $filters
-     *
-     * @return int
-     */
     public function getProductFeatureValuesCount(ProductId $productId, ?array $filters = []): int
     {
         return $this->getFeatureValuesCount(array_merge($filters, ['id_product' => $productId->getValue()]));
     }
 
-    /**
-     * @param array|null $filters
-     *
-     * @return int
-     */
     public function getFeatureValuesCount(?array $filters = []): int
     {
         $qb = $this->getFeatureValuesQueryBuilder($filters)
@@ -246,12 +203,6 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         $this->deleteObjectModel($this->get($featureValueId), CannotDeleteFeatureValueException::class);
     }
 
-    /**
-     * @param array $featureValuesIds
-     * @param array $filters
-     *
-     * @return array
-     */
     private function getFeatureValueLocalizedValues(array $featureValuesIds, array $filters): array
     {
         $qb = $this->connection->createQueryBuilder();
@@ -261,8 +212,8 @@ class FeatureValueRepository extends AbstractObjectModelRepository
             ->setParameter('featureValueIds', $featureValuesIds, Connection::PARAM_INT_ARRAY)
         ;
 
-        if (!empty($filters['id_lang'])) {
-            $languageIds = is_array($filters['id_lang']) ? $filters['id_lang'] : [$filters['id_lang']];
+        if (! empty($filters['id_lang'])) {
+            $languageIds = \is_array($filters['id_lang']) ? $filters['id_lang'] : [$filters['id_lang']];
             $qb
                 ->andWhere('fvl.id_lang IN (:languageIds)')
                 ->setParameter('languageIds', $languageIds, Connection::PARAM_INT_ARRAY)
@@ -272,11 +223,6 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         return $qb->executeQuery()->fetchAllAssociative();
     }
 
-    /**
-     * @param array|null $filters
-     *
-     * @return QueryBuilder
-     */
     private function getFeatureValuesQueryBuilder(?array $filters): QueryBuilder
     {
         $qb = $this->connection->createQueryBuilder();
@@ -285,7 +231,7 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         ;
 
         // Join only on specified feature if requested
-        if (!empty($filters['id_feature'])) {
+        if (! empty($filters['id_feature'])) {
             $qb
                 ->innerJoin('fv', $this->dbPrefix . 'feature', 'f', 'f.id_feature = fv.id_feature AND f.id_feature = :featureId')
                 ->setParameter('featureId', (int) $filters['id_feature'])
@@ -295,7 +241,7 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         }
 
         // Join only on specified product if requested
-        if (!empty($filters['id_product'])) {
+        if (! empty($filters['id_product'])) {
             $qb
                 ->innerJoin('fv', $this->dbPrefix . 'feature_product', 'fp', 'fp.id_feature_value = fv.id_feature_value AND fp.id_product = :productId')
                 ->setParameter('productId', (int) $filters['id_product'])
@@ -313,12 +259,12 @@ class FeatureValueRepository extends AbstractObjectModelRepository
         ];
 
         foreach ($filters as $key => $value) {
-            if (!in_array($key, $availableFilters)) {
+            if (! \in_array($key, $availableFilters, true)) {
                 continue;
             }
 
             $qb
-                ->andWhere(sprintf('fv.%s = :%s', $key, $key))
+                ->andWhere(\sprintf('fv.%s = :%s', $key, $key))
                 ->setParameter($key, $value)
             ;
         }

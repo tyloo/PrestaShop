@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,13 +48,12 @@ final class GetCmsPageCategoriesForBreadcrumbHandler implements GetCmsPageCatego
     /**
      * @param int $contextLanguageId
      */
-    public function __construct(private $contextLanguageId)
-    {
+    public function __construct(
+        private $contextLanguageId,
+    ) {
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageCategoryException
      */
     public function handle(GetCmsPageCategoriesForBreadcrumb $query)
@@ -64,8 +64,8 @@ final class GetCmsPageCategoriesForBreadcrumbHandler implements GetCmsPageCatego
                 $this->contextLanguageId
             );
 
-            if (0 >= $currentCategory->id) {
-                throw new CmsPageCategoryNotFoundException(sprintf('Cms category object with id "%s" has not been found for retrieving breadcrumbs', $query->getCurrentCategoryId()->getValue()));
+            if ($currentCategory->id <= 0) {
+                throw new CmsPageCategoryNotFoundException(\sprintf('Cms category object with id "%s" has not been found for retrieving breadcrumbs', $query->getCurrentCategoryId()->getValue()));
             }
 
             $rootCategory = new CMSCategory(
@@ -73,7 +73,7 @@ final class GetCmsPageCategoriesForBreadcrumbHandler implements GetCmsPageCatego
                 $this->contextLanguageId
             );
         } catch (PrestaShopException $prestaShopException) {
-            throw new CmsPageCategoryException(sprintf('An error occurred when finding cms category object with id "%s" or root category by id "%s"', $query->getCurrentCategoryId()->getValue(), CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID), 0, $prestaShopException);
+            throw new CmsPageCategoryException(\sprintf('An error occurred when finding cms category object with id "%s" or root category by id "%s"', $query->getCurrentCategoryId()->getValue(), CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID), 0, $prestaShopException);
         }
 
         $rootCategoryData = [
@@ -81,7 +81,7 @@ final class GetCmsPageCategoriesForBreadcrumbHandler implements GetCmsPageCatego
             'name' => $rootCategory->name,
         ];
 
-        if (CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID === $query->getCurrentCategoryId()->getValue()) {
+        if ($query->getCurrentCategoryId()->getValue() === CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID) {
             return new Breadcrumb([
                 new BreadcrumbItem(
                     $rootCategoryData['id_cms_category'],

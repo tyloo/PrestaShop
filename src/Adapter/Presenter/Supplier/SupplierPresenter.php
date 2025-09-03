@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,14 +53,13 @@ class SupplierPresenter
 
     /**
      * @param array|Supplier $supplier Supplier object or an array
-     * @param Language $language
      *
      * @return SupplierLazyArray
      */
     public function present(array|Supplier $supplier, Language $language)
     {
         // Convert to array if a Supplier object was passed
-        if (is_object($supplier)) {
+        if (\is_object($supplier)) {
             $supplier = (array) $supplier;
         }
 

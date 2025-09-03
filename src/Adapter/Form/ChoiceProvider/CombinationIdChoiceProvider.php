@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,17 +44,11 @@ class CombinationIdChoiceProvider implements ConfigurableFormChoiceProviderInter
      */
     private $languageId;
 
-    /**
-     * @param CombinationRepository $combinationRepository
-     * @param AttributeRepository $attributeRepository
-     * @param CombinationNameBuilderInterface $combinationNameBuilder
-     * @param int $languageId
-     */
     public function __construct(
         private readonly CombinationRepository $combinationRepository,
         private readonly AttributeRepository $attributeRepository,
         private readonly CombinationNameBuilderInterface $combinationNameBuilder,
-        int $languageId
+        int $languageId,
     ) {
         $this->languageId = new LanguageId($languageId);
     }

@@ -38,9 +38,10 @@ return RectorConfig::configure()
         // __DIR__ . '/controllers',
         // __DIR__ . '/install-dev',
         __DIR__ . '/src/Adapter',
-        __DIR__ . '/src/Core',
-        __DIR__ . '/src/PrestaShopBundle',
-        __DIR__ . '/tests',
+        //__DIR__ . '/src/Core',
+        //__DIR__ . '/src/PrestaShopBundle',
+        //__DIR__ . '/tests',
+        // __DIR__ . '/tools',
         // __DIR__ . '/webservice',
     ])
     ->withPhpSets(php81: true)
@@ -55,9 +56,9 @@ return RectorConfig::configure()
         doctrine: true,
     )
     ->withTypeCoverageLevel(0) // max = 53
-    ->withDeadCodeLevel(10) // max = 51
-    ->withCodeQualityLevel(10) // max = 74
-    ->withCodingStyleLevel(10) // max = 25
+    ->withDeadCodeLevel(20) // max = 51
+    ->withCodeQualityLevel(20) // max = 74
+    ->withCodingStyleLevel(20) // max = 25
     ->withSkip([
         UnwrapFutureCompatibleIfPhpVersionRector::class,
     ])

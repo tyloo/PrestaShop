@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,20 +46,13 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
  */
 class CustomerSessionRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param int $cookieLifetime
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly int $cookieLifetime)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly int $cookieLifetime,
+    ) {
     }
 
-    /**
-     * @param CustomerSessionId $sessionId
-     *
-     * @return CustomerSession
-     */
     public function get(CustomerSessionId $sessionId): CustomerSession
     {
         /** @var CustomerSession $session */
@@ -71,17 +65,12 @@ class CustomerSessionRepository extends AbstractObjectModelRepository
         return $session;
     }
 
-    /**
-     * @param CustomerSessionId $customerSessionId
-     */
     public function delete(CustomerSessionId $customerSessionId): void
     {
         $this->deleteObjectModel($this->get($customerSessionId), CannotDeleteCustomerSessionException::class);
     }
 
     /**
-     * @param array $customerSessionIds
-     *
      * @throws CannotBulkDeleteCustomerSessionException
      */
     public function bulkDelete(array $customerSessionIds): void
@@ -99,16 +88,11 @@ class CustomerSessionRepository extends AbstractObjectModelRepository
             return;
         }
 
-        throw new CannotBulkDeleteCustomerSessionException(
-            $failedIds,
-            sprintf('Failed to delete following customers sessions: "%s"', implode(', ', $failedIds))
-        );
+        throw new CannotBulkDeleteCustomerSessionException($failedIds, \sprintf('Failed to delete following customers sessions: "%s"', implode(', ', $failedIds)));
     }
 
     /**
      * Clear outdated customer sessions
-     *
-     * @return void
      *
      * @throws CannotClearCustomerSessionException
      */

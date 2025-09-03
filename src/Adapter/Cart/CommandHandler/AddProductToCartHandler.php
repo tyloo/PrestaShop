@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,31 +43,26 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\Exception\CartConstraintException;
 #[AsCommandHandler]
 final class AddProductToCartHandler extends AbstractCartHandler implements AddProductToCartHandlerInterface
 {
-    /**
-     * @param AddCustomizationHandlerInterface $addCustomizationHandler
-     * @param UpdateProductQuantityInCartHandlerInterface $updateProductQuantityInCartHandler
-     */
-    public function __construct(private readonly AddCustomizationHandlerInterface $addCustomizationHandler, private readonly UpdateProductQuantityInCartHandlerInterface $updateProductQuantityInCartHandler)
-    {
+    public function __construct(
+        private readonly AddCustomizationHandlerInterface $addCustomizationHandler,
+        private readonly UpdateProductQuantityInCartHandlerInterface $updateProductQuantityInCartHandler,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddProductToCartCommand $command): void
     {
         $cartIdValue = $command->getCartId()->getValue();
         $productIdValue = $command->getProductId()->getValue();
-        $combinationId = null !== $command->getCombinationId() ? $command->getCombinationId()->getValue() : null;
+        $combinationId = $command->getCombinationId() !== null ? $command->getCombinationId()->getValue() : null;
         $customizationId = null;
 
-        if (!empty($command->getCustomizationsByFieldIds())) {
+        if (! empty($command->getCustomizationsByFieldIds())) {
             $customizationIdVO = $this->addCustomizationHandler->handle(new AddCustomizationCommand(
                 $cartIdValue,
                 $command->getProductId()->getValue(),
                 $command->getCustomizationsByFieldIds()
             ));
-            if (null !== $customizationIdVO) {
+            if ($customizationIdVO !== null) {
                 $customizationId = $customizationIdVO->getValue();
             }
         }
@@ -87,17 +83,12 @@ final class AddProductToCartHandler extends AbstractCartHandler implements AddPr
     }
 
     /**
-     * @param int $quantity
-     *
      * @throws CartConstraintException
      */
     private function assertQuantityIsPositiveInt(int $quantity): void
     {
-        if (0 > $quantity) {
-            throw new CartConstraintException(
-                sprintf('Quantity must be positive integer, but %s given.', $quantity),
-                CartConstraintException::INVALID_QUANTITY
-            );
+        if ($quantity < 0) {
+            throw new CartConstraintException(\sprintf('Quantity must be positive integer, but %s given.', $quantity), CartConstraintException::INVALID_QUANTITY);
         }
     }
 }

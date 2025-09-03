@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,20 +46,16 @@ use Supplier;
  */
 abstract class AbstractDeleteSupplierHandler
 {
-    /**
-     * @param SupplierAddressProvider $supplierAddressProvider
-     * @param ProductSupplierUpdater $productSupplierUpdater
-     * @param string $dbPrefix
-     */
-    public function __construct(private readonly SupplierAddressProvider $supplierAddressProvider, private readonly ProductSupplierUpdater $productSupplierUpdater, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly SupplierAddressProvider $supplierAddressProvider,
+        private readonly ProductSupplierUpdater $productSupplierUpdater,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     /**
      * Removes supplier and all related content with it such as image, supplier and product relation
      * and supplier address.
-     *
-     * @param SupplierId $supplierId
      *
      * @throws SupplierException
      */
@@ -67,40 +64,28 @@ abstract class AbstractDeleteSupplierHandler
         try {
             $entity = new Supplier($supplierId->getValue());
 
-            if (0 >= $entity->id) {
-                throw new SupplierNotFoundException(sprintf('Supplier object with id "%s" was not found for deletion.', $supplierId->getValue()));
+            if ($entity->id <= 0) {
+                throw new SupplierNotFoundException(\sprintf('Supplier object with id "%s" was not found for deletion.', $supplierId->getValue()));
             }
 
-            if (false === $this->deleteProductSupplierRelation($supplierId)) {
-                throw new CannotDeleteSupplierProductRelationException(
-                    sprintf(
-                        'Unable to delete suppliers with id "%d" product relation from product_supplier table',
-                        $supplierId->getValue()
-                    )
-                );
+            if ($this->deleteProductSupplierRelation($supplierId) === false) {
+                throw new CannotDeleteSupplierProductRelationException(\sprintf('Unable to delete suppliers with id "%d" product relation from product_supplier table', $supplierId->getValue()));
             }
 
-            if (1 >= count($entity->getAssociatedShops()) && false === $this->deleteSupplierAddress($supplierId)) {
-                throw new CannotDeleteSupplierAddressException(
-                    sprintf(
-                        'Unable to set deleted flag for supplier with id "%d" address',
-                        $supplierId->getValue()
-                    )
-                );
+            if (\count($entity->getAssociatedShops()) <= 1 && $this->deleteSupplierAddress($supplierId) === false) {
+                throw new CannotDeleteSupplierAddressException(\sprintf('Unable to set deleted flag for supplier with id "%d" address', $supplierId->getValue()));
             }
 
-            if (false === $entity->delete()) {
-                throw new SupplierException(sprintf('Unable to delete supplier object with id "%s"', $supplierId->getValue()));
+            if ($entity->delete() === false) {
+                throw new SupplierException(\sprintf('Unable to delete supplier object with id "%s"', $supplierId->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new SupplierException(sprintf('An error occurred when deleting the supplier object with id "%s"', $supplierId->getValue()), 0, $prestaShopException);
+            throw new SupplierException(\sprintf('An error occurred when deleting the supplier object with id "%s"', $supplierId->getValue()), 0, $prestaShopException);
         }
     }
 
     /**
      * Deletes product supplier relation.
-     *
-     * @param SupplierId $supplierId
      *
      * @return bool
      */
@@ -112,7 +97,7 @@ abstract class AbstractDeleteSupplierHandler
         // Fetch all products which had this supplier as default
         $sql = 'SELECT id_product FROM `' . $this->dbPrefix . 'product` WHERE `id_supplier` = ' . $supplierId->getValue();
         $result = Db::getInstance()->executeS($sql);
-        if (!empty($result)) {
+        if (! empty($result)) {
             $orphanProductIds = [];
             foreach ($result as $product) {
                 $orphanProductIds[] = new ProductId((int) $product['id_product']);
@@ -126,8 +111,6 @@ abstract class AbstractDeleteSupplierHandler
 
     /**
      * Deletes supplier address.
-     *
-     * @param SupplierId $supplierId
      *
      * @return bool
      */

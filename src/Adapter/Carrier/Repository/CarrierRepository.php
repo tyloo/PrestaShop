@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,10 +59,6 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param CarrierId $carrierId
-     *
-     * @return Carrier
-     *
      * @throws AttributeNotFoundException
      * @throws CoreException
      */
@@ -101,9 +98,6 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
      * Returns a single shop ID when the constraint is a single shop, and the list of shops associated to the carrier
      * when the constraint is for all shops
      *
-     * @param CarrierId $carrierId
-     * @param ShopConstraint $shopConstraint
-     *
      * @return ShopId[]
      */
     public function getShopIdsByConstraint(CarrierId $carrierId, ShopConstraint $shopConstraint): array
@@ -120,21 +114,16 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param CarrierId $carrierId
-     *
      * @return ShopId[]
      */
     public function getAssociatedShopIds(CarrierId $carrierId): array
     {
         $shops = parent::getObjectModelAssociatedShopIds($carrierId->getValue(), 'carrier');
 
-        return array_map(static fn(int $shopId) => new ShopId($shopId), $shops);
+        return array_map(static fn (int $shopId) => new ShopId($shopId), $shops);
     }
 
     /**
-     * @param CarrierId $carrierId
-     * @param ShopGroupId $shopGroupId
-     *
      * @return ShopId[]
      */
     public function getAssociatedShopIdsFromGroup(CarrierId $carrierId, ShopGroupId $shopGroupId): array
@@ -155,15 +144,11 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('carrierId', $carrierId->getValue())
         ;
 
-        return array_map(static fn(array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**
      * Create a new version of the carrier, or return the carrier as is if it don't have order linked.
-     *
-     * @param CarrierId $carrierId
-     *
-     * @return Carrier
      */
     public function getEditableOrNewVersion(CarrierId $carrierId): Carrier
     {
@@ -190,10 +175,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param CarrierId $carrierId
      * @param int[] $shopIds
-     *
-     * @return void
      */
     public function updateAssociatedShops(CarrierId $carrierId, array $shopIds): void
     {
@@ -206,31 +188,23 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
 
     /**
      * Return all zones associated for the given carrier
-     *
-     * @param CarrierId $carrierId
-     *
-     * @return array
      */
     public function getAssociatedZones(CarrierId $carrierId): array
     {
         $qb = $this->connection->createQueryBuilder();
-        $result = $qb->select('id_zone')
+
+        return $qb->select('id_zone')
             ->from($this->prefix . 'carrier_zone')
             ->where('id_carrier = :carrierId')
             ->setParameter('carrierId', $carrierId->getValue())
             ->executeQuery()
             ->fetchFirstColumn();
-
-        return $result;
     }
 
     /**
      * We add the association between the carrier and the zone.
      *
-     * @param CarrierId $carrierId
      * @param int[] $zoneIds
-     *
-     * @return void
      */
     public function updateAssociatedZones(CarrierId $carrierId, array $zoneIds): void
     {
@@ -274,9 +248,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
             ;
         }
 
-        $id = (int) $qb->fetchOne();
-
-        return $id;
+        return (int) $qb->fetchOne();
     }
 
     public function setTaxRulesGroup(CarrierId $carrierId, TaxRulesGroupId $taxRulesGroupId, ShopConstraint $shopConstraint): void
@@ -307,10 +279,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param CarrierId $carrierId
      * @param int[] $shopIds
-     *
-     * @return void
      */
     private function deleteTaxRulesGroup(CarrierId $carrierId, array $shopIds): void
     {
@@ -330,14 +299,12 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $count = $qb->select('COUNT(*)')
+        return $qb->select('COUNT(*)')
             ->from($this->prefix . 'order_carrier', 'oc')
             ->where('oc.id_carrier = :carrierId')
             ->setParameter('carrierId', $carrierId->getValue())
             ->executeQuery()
             ->fetchOne();
-
-        return $count;
     }
 
     /**

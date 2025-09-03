@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,28 +39,22 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 abstract class AbstractCmsPageCategoryHandler extends AbstractObjectModelHandler
 {
-    /**
-     * @param ValidatorInterface $validator
-     */
-    public function __construct(private readonly ValidatorInterface $validator)
-    {
+    public function __construct(
+        private readonly ValidatorInterface $validator,
+    ) {
     }
 
     /**
-     * @param array $localisedTexts
-     *
      * @return bool
      */
     protected function assertHasDefaultLanguage(array $localisedTexts)
     {
         $errors = $this->validator->validate($localisedTexts, new DefaultLanguage());
 
-        return 0 === count($errors);
+        return \count($errors) === 0;
     }
 
     /**
-     * @param array $localisedUrls
-     *
      * @throws CmsPageCategoryConstraintException
      */
     protected function assertIsValidLinkRewrite(array $localisedUrls)
@@ -67,15 +62,13 @@ abstract class AbstractCmsPageCategoryHandler extends AbstractObjectModelHandler
         foreach ($localisedUrls as $localisedUrl) {
             $errors = $this->validator->validate($localisedUrl, new IsUrlRewrite());
 
-            if (0 !== count($errors)) {
-                throw new CmsPageCategoryConstraintException(sprintf('Given friendly url "%s" is not valid for link rewrite', $localisedUrl), CmsPageCategoryConstraintException::INVALID_LINK_REWRITE);
+            if (\count($errors) !== 0) {
+                throw new CmsPageCategoryConstraintException(\sprintf('Given friendly url "%s" is not valid for link rewrite', $localisedUrl), CmsPageCategoryConstraintException::INVALID_LINK_REWRITE);
             }
         }
     }
 
     /**
-     * @param array $localisedDescription
-     *
      * @throws CmsPageCategoryConstraintException
      */
     protected function assertDescriptionContainsCleanHtml(array $localisedDescription)
@@ -83,8 +76,8 @@ abstract class AbstractCmsPageCategoryHandler extends AbstractObjectModelHandler
         foreach ($localisedDescription as $description) {
             $errors = $this->validator->validate($description, new CleanHtml());
 
-            if (0 !== count($errors)) {
-                throw new CmsPageCategoryConstraintException(sprintf('Given description "%s" contains javascript events or script tags', $description), CmsPageCategoryConstraintException::INVALID_DESCRIPTION);
+            if (\count($errors) !== 0) {
+                throw new CmsPageCategoryConstraintException(\sprintf('Given description "%s" contains javascript events or script tags', $description), CmsPageCategoryConstraintException::INVALID_DESCRIPTION);
             }
         }
     }

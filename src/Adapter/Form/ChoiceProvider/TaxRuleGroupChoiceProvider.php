@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,13 +43,13 @@ use TaxRulesGroup;
  */
 final class TaxRuleGroupChoiceProvider implements FormChoiceProviderInterface, FormChoiceAttributeProviderInterface
 {
-    public function __construct(private readonly int $countryId, private readonly TaxRulesGroupRepository $taxRulesGroupRepository, private readonly TaxComputer $taxComputer)
-    {
+    public function __construct(
+        private readonly int $countryId,
+        private readonly TaxRulesGroupRepository $taxRulesGroupRepository,
+        private readonly TaxComputer $taxComputer,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
         return FormChoiceFormatter::formatFormChoices(
@@ -58,16 +59,13 @@ final class TaxRuleGroupChoiceProvider implements FormChoiceProviderInterface, F
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoicesAttributes(): array
     {
         $taxRates = [];
         foreach ($this->getRules() as $rule) {
             $taxRulesGroupId = new TaxRulesGroupId((int) $rule['id_tax_rules_group']);
             $stateId = $this->taxRulesGroupRepository->getTaxRulesGroupDefaultStateId($taxRulesGroupId, new CountryId($this->countryId));
-            if (!$stateId) {
+            if (! $stateId) {
                 $taxRate = $this->taxComputer->getTaxRate($taxRulesGroupId, new CountryId($this->countryId));
                 $stateIsoCode = '';
             } else {
@@ -85,9 +83,6 @@ final class TaxRuleGroupChoiceProvider implements FormChoiceProviderInterface, F
         return $taxRates;
     }
 
-    /**
-     * @return array
-     */
     private function getRules(): array
     {
         return TaxRulesGroup::getTaxRulesGroupsForOptions();

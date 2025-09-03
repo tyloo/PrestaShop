@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use PrestaShopException;
 final class DeleteCmsPageCategoryHandler implements DeleteCmsPageCategoryHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CmsPageCategoryException
      */
     public function handle(DeleteCmsPageCategoryCommand $command)
@@ -51,15 +50,15 @@ final class DeleteCmsPageCategoryHandler implements DeleteCmsPageCategoryHandler
         try {
             $entity = new CMSCategory($command->getCmsPageCategoryId()->getValue());
 
-            if (0 >= $entity->id) {
-                throw new CmsPageCategoryNotFoundException(sprintf('Cms category object with id "%s" has not been found for deletion.', $command->getCmsPageCategoryId()->getValue()));
+            if ($entity->id <= 0) {
+                throw new CmsPageCategoryNotFoundException(\sprintf('Cms category object with id "%s" has not been found for deletion.', $command->getCmsPageCategoryId()->getValue()));
             }
 
-            if (false === $entity->delete()) {
-                throw new CannotDeleteCmsPageCategoryException(sprintf('Unable to delete cms category object with id "%s"', $command->getCmsPageCategoryId()->getValue()), CannotDeleteCmsPageCategoryException::FAILED_DELETE);
+            if ($entity->delete() === false) {
+                throw new CannotDeleteCmsPageCategoryException(\sprintf('Unable to delete cms category object with id "%s"', $command->getCmsPageCategoryId()->getValue()), CannotDeleteCmsPageCategoryException::FAILED_DELETE);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CmsPageCategoryException(sprintf('An error occurred when deleting cms category object with id "%s"', $command->getCmsPageCategoryId()->getValue()), 0, $prestaShopException);
+            throw new CmsPageCategoryException(\sprintf('An error occurred when deleting cms category object with id "%s"', $command->getCmsPageCategoryId()->getValue()), 0, $prestaShopException);
         }
     }
 }

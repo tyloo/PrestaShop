@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,16 +44,11 @@ use PrestaShop\PrestaShop\Core\Domain\OrderState\ValueObject\OrderStateId;
 #[AsCommandHandler]
 final class AddOrderStateHandler extends AbstractOrderStateHandler implements AddOrderStateHandlerInterface
 {
-    /**
-     * @param OrderStateFileUploaderInterface $fileUploader
-     */
-    public function __construct(protected OrderStateFileUploaderInterface $fileUploader)
-    {
+    public function __construct(
+        protected OrderStateFileUploaderInterface $fileUploader,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddOrderStateCommand $command)
     {
         $orderState = new OrderState();
@@ -60,7 +56,7 @@ final class AddOrderStateHandler extends AbstractOrderStateHandler implements Ad
         $this->fillOrderStateWithCommandData($orderState, $command);
         $this->assertRequiredFieldsAreNotMissing($orderState);
 
-        if (false === $orderState->validateFields(false)) {
+        if ($orderState->validateFields(false) === false) {
             throw new OrderStateException('Order status contains invalid field values');
         }
 

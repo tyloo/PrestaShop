@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ abstract class AbstractManufacturerHandler extends AbstractObjectModelHandler
     /**
      * Gets legacy Manufacturer
      *
-     * @param ManufacturerId $manufacturerId
-     *
      * @return Manufacturer
      *
      * @throws ManufacturerException
@@ -56,7 +55,7 @@ abstract class AbstractManufacturerHandler extends AbstractObjectModelHandler
         }
 
         if ($manufacturer->id !== $manufacturerId->getValue()) {
-            throw new ManufacturerNotFoundException(sprintf('Manufacturer with id "%s" was not found.', $manufacturerId->getValue()));
+            throw new ManufacturerNotFoundException(\sprintf('Manufacturer with id "%s" was not found.', $manufacturerId->getValue()));
         }
 
         return $manufacturer;

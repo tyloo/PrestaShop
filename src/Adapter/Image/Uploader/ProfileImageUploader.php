@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,13 +42,12 @@ final class ProfileImageUploader extends AbstractImageUploader implements ImageU
      * @param string $profileImageDir
      * @param string $tmpImageDir
      */
-    public function __construct(private $profileImageDir = _PS_PROFILE_IMG_DIR_, private $tmpImageDir = _PS_TMP_IMG_DIR_)
-    {
+    public function __construct(
+        private $profileImageDir = _PS_PROFILE_IMG_DIR_,
+        private $tmpImageDir = _PS_TMP_IMG_DIR_,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function upload($profileId, UploadedFile $image)
     {
         $this->checkImageIsAllowedForUpload($image);

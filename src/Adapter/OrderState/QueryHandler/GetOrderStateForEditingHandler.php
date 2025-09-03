@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,16 +44,13 @@ use SplFileInfo;
 #[AsQueryHandler]
 final class GetOrderStateForEditingHandler implements GetOrderStateForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetOrderStateForEditing $query)
     {
         $orderStateId = $query->getOrderStateId();
         $orderState = new OrderState($orderStateId->getValue());
 
         if ($orderState->id !== $orderStateId->getValue()) {
-            throw new OrderStateNotFoundException($orderStateId, sprintf('OrderState with id "%s" was not found', $orderStateId->getValue()));
+            throw new OrderStateNotFoundException($orderStateId, \sprintf('OrderState with id "%s" was not found', $orderStateId->getValue()));
         }
 
         $filePath = _PS_ORDER_STATE_IMG_DIR_ . $orderState->id . '.gif';

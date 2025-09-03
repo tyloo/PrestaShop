@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,16 +36,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\CommandHandler\Remov
 #[AsCommandHandler]
 class RemoveSpecificPricePriorityForProductHandler implements RemoveSpecificPricePriorityForProductHandlerInterface
 {
-    /**
-     * @param SpecificPricePriorityUpdater $specificPricePriorityUpdater
-     */
-    public function __construct(private readonly SpecificPricePriorityUpdater $specificPricePriorityUpdater)
-    {
+    public function __construct(
+        private readonly SpecificPricePriorityUpdater $specificPricePriorityUpdater,
+    ) {
     }
 
-    /**
-     * @param RemoveSpecificPricePriorityForProductCommand $command
-     */
     public function handle(RemoveSpecificPricePriorityForProductCommand $command): void
     {
         $this->specificPricePriorityUpdater->removePrioritiesForProduct($command->getProductId());

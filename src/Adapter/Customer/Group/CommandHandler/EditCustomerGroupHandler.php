@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class EditCustomerGroupHandler implements EditCustomerGroupHandlerInterface
 {
     public function __construct(
         private readonly CustomerGroupValidator $customerGroupValidator,
-        private readonly GroupRepository $customerGroupRepository
+        private readonly GroupRepository $customerGroupRepository,
     ) {
     }
 
@@ -49,27 +50,27 @@ class EditCustomerGroupHandler implements EditCustomerGroupHandlerInterface
         $customerGroup = $this->customerGroupRepository->get($command->getCustomerGroupId());
 
         $propertiesToUpdate = [];
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $customerGroup->name = $command->getLocalizedNames();
             $propertiesToUpdate['name'] = array_keys($command->getLocalizedNames());
         }
 
-        if (null !== $command->getReductionPercent()) {
+        if ($command->getReductionPercent() !== null) {
             $customerGroup->reduction = (string) $command->getReductionPercent();
             $propertiesToUpdate[] = 'reduction';
         }
 
-        if (null !== $command->displayPriceTaxExcluded()) {
+        if ($command->displayPriceTaxExcluded() !== null) {
             $customerGroup->price_display_method = (int) $command->displayPriceTaxExcluded();
             $propertiesToUpdate[] = 'price_display_method';
         }
 
-        if (null !== $command->showPrice()) {
+        if ($command->showPrice() !== null) {
             $customerGroup->show_prices = $command->showPrice();
             $propertiesToUpdate[] = 'show_prices';
         }
 
-        if (null !== $command->getShopIds()) {
+        if ($command->getShopIds() !== null) {
             $customerGroup->id_shop_list = array_map(fn (ShopId $shopId) => $shopId->getValue(), $command->getShopIds());
         } else {
             // We force the id_shop_list with the currently associated values or the associations will be messed with whatever is in the legacy context

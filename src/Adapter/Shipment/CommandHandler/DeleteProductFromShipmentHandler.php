@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ use PrestaShopBundle\Entity\Repository\ShipmentRepository;
 class DeleteProductFromShipmentHandler implements DeleteProductFromShipmentHandlerInterface
 {
     public function __construct(
-        private readonly ShipmentRepository $shipmentRepository
+        private readonly ShipmentRepository $shipmentRepository,
     ) {
     }
 
@@ -49,8 +50,8 @@ class DeleteProductFromShipmentHandler implements DeleteProductFromShipmentHandl
         $shipmentId = $command->getShipmentId()->getValue();
         $shipment = $this->shipmentRepository->findOneBy(['id' => $shipmentId]);
 
-        if (null === $shipment) {
-            throw new ShipmentNotFoundException(sprintf('Shipment with id "%s" was not found', $shipmentId));
+        if ($shipment === null) {
+            throw new ShipmentNotFoundException(\sprintf('Shipment with id "%s" was not found', $shipmentId));
         }
 
         foreach ($shipment->getProducts() as $product) {
@@ -62,7 +63,7 @@ class DeleteProductFromShipmentHandler implements DeleteProductFromShipmentHandl
         try {
             $this->shipmentRepository->save($shipment);
         } catch (Exception $exception) {
-            throw new ShipmentException(sprintf('Failed to delete products from shipment with id "%s"', $shipmentId), 0, $exception);
+            throw new ShipmentException(\sprintf('Failed to delete products from shipment with id "%s"', $shipmentId), 0, $exception);
         }
     }
 }

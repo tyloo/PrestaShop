@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ use RequestSql;
 final class DeleteSqlRequestHandler implements DeleteSqlRequestHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotDeleteSqlRequestException
      * @throws SqlRequestNotFoundException
      * @throws SqlRequestException
@@ -57,15 +56,15 @@ final class DeleteSqlRequestHandler implements DeleteSqlRequestHandlerInterface
         try {
             $entity = new RequestSql($entityId);
 
-            if (0 >= $entity->id) {
-                throw new SqlRequestNotFoundException(sprintf('SqlRequest with id "%s" was not found for edit', var_export($entityId, true)));
+            if ($entity->id <= 0) {
+                throw new SqlRequestNotFoundException(\sprintf('SqlRequest with id "%s" was not found for edit', var_export($entityId, true)));
             }
 
-            if (false === $entity->delete()) {
-                throw new CannotDeleteSqlRequestException(sprintf('Could not delete SqlRequest with id %s', var_export($entityId, true)), CannotDeleteSqlRequestException::CANNOT_SINGLE_DELETE);
+            if ($entity->delete() === false) {
+                throw new CannotDeleteSqlRequestException(\sprintf('Could not delete SqlRequest with id %s', var_export($entityId, true)), CannotDeleteSqlRequestException::CANNOT_SINGLE_DELETE);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new SqlRequestException(sprintf('Unexpected error occurred when deleting SqlRequest with id %s', var_export($entityId, true)), 0, $prestaShopException);
+            throw new SqlRequestException(\sprintf('Unexpected error occurred when deleting SqlRequest with id %s', var_export($entityId, true)), 0, $prestaShopException);
         }
     }
 }

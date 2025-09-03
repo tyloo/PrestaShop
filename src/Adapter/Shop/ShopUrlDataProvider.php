@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,12 +37,11 @@ use Validate;
 class ShopUrlDataProvider
 {
     /**
-     * ShopUrlDataProvider constructor.
-     *
      * @param int $contextShopId
      */
-    public function __construct(private $contextShopId)
-    {
+    public function __construct(
+        private $contextShopId,
+    ) {
     }
 
     /**
@@ -56,7 +56,7 @@ class ShopUrlDataProvider
         /** @var ShopUrl $result */
         $result = ShopUrl::getShopUrls($this->contextShopId)->where('main', '=', 1)->getFirst();
 
-        if (!Validate::isLoadedObject($result)) {
+        if (! Validate::isLoadedObject($result)) {
             return new ShopUrl();
         }
 

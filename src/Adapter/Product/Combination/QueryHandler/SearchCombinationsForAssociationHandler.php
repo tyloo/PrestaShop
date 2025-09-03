@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,25 +55,16 @@ class SearchCombinationsForAssociationHandler implements SearchCombinationsForAs
      */
     protected $combinationNameBuilder;
 
-    /**
-     * @param ProductRepository $productRepository
-     * @param AttributeRepository $attributeRepository
-     * @param ProductImagePathFactory $productImagePathFactory
-     * @param CombinationNameBuilderInterface $combinationNameBuilder
-     */
     public function __construct(
         private readonly ProductRepository $productRepository,
         AttributeRepository $attributeRepository,
         private readonly ProductImagePathFactory $productImagePathFactory,
-        CombinationNameBuilderInterface $combinationNameBuilder
+        CombinationNameBuilderInterface $combinationNameBuilder,
     ) {
         $this->attributeRepository = $attributeRepository;
         $this->combinationNameBuilder = $combinationNameBuilder;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(SearchCombinationsForAssociation $query): array
     {
         $foundCombinations = $this->productRepository->searchCombinations(
@@ -91,19 +83,14 @@ class SearchCombinationsForAssociationHandler implements SearchCombinationsForAs
         return $productsForAssociation;
     }
 
-    /**
-     * @param array $foundCombination
-     *
-     * @return CombinationForAssociation
-     */
     protected function createResult(array $foundCombination, LanguageId $languageId): CombinationForAssociation
     {
-        if (!empty($foundCombination['combination_image_id'])) {
+        if (! empty($foundCombination['combination_image_id'])) {
             $imagePath = $this->productImagePathFactory->getPathByType(
                 new ImageId((int) $foundCombination['combination_image_id']),
                 ProductImagePathFactory::IMAGE_TYPE_HOME_DEFAULT
             );
-        } elseif (!empty($foundCombination['id_image'])) {
+        } elseif (! empty($foundCombination['id_image'])) {
             $imagePath = $this->productImagePathFactory->getPathByType(
                 new ImageId((int) $foundCombination['id_image']),
                 ProductImagePathFactory::IMAGE_TYPE_HOME_DEFAULT

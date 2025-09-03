@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,18 +40,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class EmptyCategoriesKpi implements KpiInterface
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param ConfigurationInterface $configuration
      * @param string $sourceUrl
      * @param string $hrefUrl
      */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $configuration, private $sourceUrl, private $hrefUrl)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurationInterface $configuration,
+        private $sourceUrl,
+        private $hrefUrl,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $helper = new HelperKpi();
@@ -60,7 +60,7 @@ final class EmptyCategoriesKpi implements KpiInterface
         $helper->href = $this->hrefUrl;
         $helper->title = $this->translator->trans('Empty Categories', [], 'Admin.Catalog.Feature');
 
-        if (false !== $this->configuration->get('EMPTY_CATEGORIES')) {
+        if ($this->configuration->get('EMPTY_CATEGORIES') !== false) {
             $helper->value = $this->configuration->get('EMPTY_CATEGORIES');
         }
 

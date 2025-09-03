@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,24 +64,20 @@ use SpecificPrice;
  */
 class SpecificPriceValidator extends AbstractObjectModelValidator
 {
-    /**
-     * @param ShopGroupRepository $shopGroupRepository
-     * @param ShopRepository $shopRepository
-     * @param CombinationRepository $combinationRepository
-     * @param CurrencyRepository $currencyRepository
-     * @param CountryRepository $countryRepository
-     * @param GroupRepository $groupRepository
-     * @param CustomerRepository $customerRepository
-     * @param ProductRepository $productRepository
-     * @param NumberExtractor $numberExtractor
-     */
-    public function __construct(private readonly ShopGroupRepository $shopGroupRepository, private readonly ShopRepository $shopRepository, private readonly CombinationRepository $combinationRepository, private readonly CurrencyRepository $currencyRepository, private readonly CountryRepository $countryRepository, private readonly GroupRepository $groupRepository, private readonly CustomerRepository $customerRepository, private readonly ProductRepository $productRepository, private readonly NumberExtractor $numberExtractor)
-    {
+    public function __construct(
+        private readonly ShopGroupRepository $shopGroupRepository,
+        private readonly ShopRepository $shopRepository,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly CurrencyRepository $currencyRepository,
+        private readonly CountryRepository $countryRepository,
+        private readonly GroupRepository $groupRepository,
+        private readonly CustomerRepository $customerRepository,
+        private readonly ProductRepository $productRepository,
+        private readonly NumberExtractor $numberExtractor,
+    ) {
     }
 
     /**
-     * @param SpecificPrice $specificPrice
-     *
      * @throws CoreException
      * @throws SpecificPriceConstraintException
      */
@@ -110,10 +107,6 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param SpecificPrice $specificPrice
-     * @param string $property
-     * @param int $errorCode
-     *
      * @throws CoreException
      * @throws SpecificPriceConstraintException
      */
@@ -124,8 +117,6 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
 
     /**
      * Checks if date range values are not inverse. (range from not bigger than range to)
-     *
-     * @param SpecificPrice $specificPrice
      *
      * @throws SpecificPriceConstraintException
      */
@@ -147,8 +138,6 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param SpecificPrice $specificPrice
-     *
      * @throws SpecificPriceConstraintException
      */
     private function assertReductionOrFixedPriceIsProvided(SpecificPrice $specificPrice): void
@@ -156,25 +145,19 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
         $reduction = new DecimalNumber('0');
         $price = new DecimalNumber('0');
 
-        if (null !== $specificPrice->reduction) {
+        if ($specificPrice->reduction !== null) {
             $reduction = $this->numberExtractor->extract($specificPrice, 'reduction');
         }
 
-        if (null !== $specificPrice->price) {
+        if ($specificPrice->price !== null) {
             $price = $this->numberExtractor->extract($specificPrice, 'price');
         }
 
         if ($reduction->equalsZero() && $price->equalsZero()) {
-            throw new SpecificPriceConstraintException(
-                'Specific price reduction or price must be set',
-                SpecificPriceConstraintException::REDUCTION_OR_PRICE_MUST_BE_SET
-            );
+            throw new SpecificPriceConstraintException('Specific price reduction or price must be set', SpecificPriceConstraintException::REDUCTION_OR_PRICE_MUST_BE_SET);
         }
     }
 
-    /**
-     * @param SpecificPrice $specificPrice
-     */
     private function assertRelatedEntitiesExist(SpecificPrice $specificPrice): void
     {
         $productId = (int) $specificPrice->id_product;

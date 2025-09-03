@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ abstract class AbstractTaxHandler
     /**
      * Gets legacy Tax
      *
-     * @param TaxId $taxId
-     *
      * @return Tax
      */
     protected function getTax(TaxId $taxId)
@@ -55,7 +54,7 @@ abstract class AbstractTaxHandler
         }
 
         if ($tax->id !== $taxId->getValue()) {
-            throw new TaxNotFoundException(sprintf('Tax with id "%s" was not found.', $taxId->getValue()));
+            throw new TaxNotFoundException(\sprintf('Tax with id "%s" was not found.', $taxId->getValue()));
         }
 
         return $tax;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,18 +43,13 @@ use PrestaShopException;
  */
 class ProductAttachmentUpdater
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param AttachmentRepository $attachmentRepository
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly AttachmentRepository $attachmentRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly AttachmentRepository $attachmentRepository,
+    ) {
     }
 
     /**
-     * @param ProductId $productId
-     * @param AttachmentId $attachmentId
-     *
      * @throws CannotUpdateProductException
      * @throws CoreException
      */
@@ -66,25 +62,17 @@ class ProductAttachmentUpdater
         $attachmentIdValue = $attachmentId->getValue();
 
         try {
-            if (!Attachment::associateProductAttachment($productIdValue, $attachmentIdValue)) {
-                throw new CannotUpdateProductException(
-                    sprintf('Failed to associate attachment #%d with product #%d', $attachmentIdValue, $productIdValue),
-                    CannotUpdateProductException::FAILED_UPDATE_ATTACHMENTS
-                );
+            if (! Attachment::associateProductAttachment($productIdValue, $attachmentIdValue)) {
+                throw new CannotUpdateProductException(\sprintf('Failed to associate attachment #%d with product #%d', $attachmentIdValue, $productIdValue), CannotUpdateProductException::FAILED_UPDATE_ATTACHMENTS);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when trying to associate attachment #%d with product #%d', $attachmentIdValue, $productIdValue),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to associate attachment #%d with product #%d', $attachmentIdValue, $productIdValue), 0, $prestaShopException);
         }
     }
 
     /**
      * Removes previous association and sets new one with provided attachments
      *
-     * @param ProductId $productId
      * @param AttachmentId[] $attachmentIds
      *
      * @throws CannotUpdateProductException
@@ -102,21 +90,11 @@ class ProductAttachmentUpdater
                 $attachmentIdValues[] = $attachmentId->getValue();
             }
 
-            if (!Attachment::attachToProduct($productIdValue, $attachmentIdValues)) {
-                throw new CannotUpdateProductException(
-                    sprintf('Failed to set product #%d attachments', $productIdValue),
-                    CannotUpdateProductException::FAILED_UPDATE_ATTACHMENTS
-                );
+            if (! Attachment::attachToProduct($productIdValue, $attachmentIdValues)) {
+                throw new CannotUpdateProductException(\sprintf('Failed to set product #%d attachments', $productIdValue), CannotUpdateProductException::FAILED_UPDATE_ATTACHMENTS);
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf(
-                    'Error occurred when trying to set product #%d attachments',
-                    $productIdValue
-                ),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to set product #%d attachments', $productIdValue), 0, $prestaShopException);
         }
     }
 }

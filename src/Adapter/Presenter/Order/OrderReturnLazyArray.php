@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,23 +37,19 @@ use Tools;
 class OrderReturnLazyArray extends AbstractLazyArray
 {
     /**
-     * OrderReturnLazyArray constructor.
-     *
      * @param string $prefix
-     * @param Link $link
-     * @param array $orderReturn
      *
      * @throws ReflectionException
      */
-    public function __construct(private $prefix, private readonly Link $link, private array $orderReturn)
-    {
+    public function __construct(
+        private $prefix,
+        private readonly Link $link,
+        private array $orderReturn,
+    ) {
         parent::__construct();
         $this->appendArray($this->orderReturn);
     }
 
-    /**
-     * @return mixed
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getId()
     {
@@ -93,7 +90,7 @@ class OrderReturnLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getReturnNumber()
     {
-        return $this->prefix . sprintf('%06d', $this->orderReturn['id_order_return']);
+        return $this->prefix . \sprintf('%06d', $this->orderReturn['id_order_return']);
     }
 
     /**
@@ -113,7 +110,7 @@ class OrderReturnLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getPrintUrl()
     {
-        return ($this->orderReturn['state'] == 2)
+        return ($this->orderReturn['state'] === 2)
             ? $this->link->getPageLink(
                 'pdf-order-return',
                 null,

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,6 @@ use PrestaShopException;
 final class BulkDisableCmsPageHandler extends AbstractCmsPageHandler implements BulkDisableCmsPageHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @param BulkDisableCmsPageCommand $command
-     *
      * @throws CannotDisableCmsPageException
      * @throws CmsPageException
      * @throws CmsPageNotFoundException
@@ -60,8 +57,6 @@ final class BulkDisableCmsPageHandler extends AbstractCmsPageHandler implements 
     }
 
     /**
-     * @param BulkDisableCmsPageCommand $command
-     *
      * @throws CannotDisableCmsPageException
      * @throws PrestaShopException
      * @throws PrestaShopDatabaseException
@@ -75,8 +70,8 @@ final class BulkDisableCmsPageHandler extends AbstractCmsPageHandler implements 
 
             $cms->active = false;
 
-            if (false === $cms->update()) {
-                throw new CannotDisableCmsPageException(sprintf('Failed to disable cms page with id %s', $cmsPage->getValue()));
+            if ($cms->update() === false) {
+                throw new CannotDisableCmsPageException(\sprintf('Failed to disable cms page with id %s', $cmsPage->getValue()));
             }
         }
     }

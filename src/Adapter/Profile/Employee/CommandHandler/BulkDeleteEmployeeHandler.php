@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,9 +39,6 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\Exception\CannotDeleteEmployeeExc
 #[AsCommandHandler]
 final class BulkDeleteEmployeeHandler extends AbstractEmployeeHandler implements BulkDeleteEmployeeHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteEmployeeCommand $command)
     {
         foreach ($command->getEmployeeIds() as $employeeId) {
@@ -50,8 +48,8 @@ final class BulkDeleteEmployeeHandler extends AbstractEmployeeHandler implements
             $this->assertLoggedInEmployeeIsNotTheSameAsBeingUpdatedEmployee($employee);
             $this->assertEmployeeIsNotTheOnlyAdminInShop($employee);
 
-            if (!$employee->delete()) {
-                throw new CannotDeleteEmployeeException($employeeId, sprintf('Cannot delete employee with id "%s".', $employeeId->getValue()));
+            if (! $employee->delete()) {
+                throw new CannotDeleteEmployeeException($employeeId, \sprintf('Cannot delete employee with id "%s".', $employeeId->getValue()));
             }
         }
     }

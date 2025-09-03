@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,16 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Attachment\CommandHandler\SetAssoc
 #[AsCommandHandler]
 final class SetAssociatedProductAttachmentsHandler implements SetAssociatedProductAttachmentsHandlerInterface
 {
-    /**
-     * @param ProductAttachmentUpdater $productAttachmentUpdater
-     */
-    public function __construct(private readonly ProductAttachmentUpdater $productAttachmentUpdater)
-    {
+    public function __construct(
+        private readonly ProductAttachmentUpdater $productAttachmentUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(SetAssociatedProductAttachmentsCommand $command): void
     {
         $this->productAttachmentUpdater->setAttachments($command->getProductId(), $command->getAttachmentIds());

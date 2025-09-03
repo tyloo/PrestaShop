@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,8 +51,8 @@ class PhpParameters
 
     public function __construct($filename)
     {
-        if (!is_readable($filename)) {
-            throw new InvalidArgumentException(sprintf('File %s is not readable for configuration', $filename));
+        if (! is_readable($filename)) {
+            throw new InvalidArgumentException(\sprintf('File %s is not readable for configuration', $filename));
         }
 
         $this->filename = $filename;
@@ -71,7 +72,6 @@ class PhpParameters
      * Insert a value into configuration at the specified path.
      *
      * @param string $propertyPath
-     * @param mixed $value
      */
     public function setProperty($propertyPath, $value)
     {
@@ -89,7 +89,7 @@ class PhpParameters
             $filesystem = new Filesystem();
             $filesystem->dumpFile($this->filename, '<?php return ' . VarExporter::export($this->configuration->get()) . ';' . "\n");
 
-            if (function_exists('opcache_invalidate')) {
+            if (\function_exists('opcache_invalidate')) {
                 @opcache_invalidate($this->filename);
             }
         } catch (IOException|ExceptionInterface) {

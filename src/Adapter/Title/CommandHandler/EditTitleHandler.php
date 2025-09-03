@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,19 +43,16 @@ use PrestaShop\PrestaShop\Core\Domain\Title\Exception\TitleImageUploadingExcepti
 #[AsCommandHandler]
 class EditTitleHandler extends AbstractTitleHandler implements EditTitleHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(EditTitleCommand $command): void
     {
         $title = $this->titleRepository->get($command->getTitleId());
         $updatableProperties = [];
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $title->name = $command->getLocalizedNames();
             $updatableProperties['name'] = array_keys($command->getLocalizedNames());
         }
 
-        if (null !== $command->getGender()) {
+        if ($command->getGender() !== null) {
             $title->type = $command->getGender()->getValue();
             $updatableProperties[] = 'type';
         }
@@ -70,9 +68,6 @@ class EditTitleHandler extends AbstractTitleHandler implements EditTitleHandlerI
 
     /**
      * Update title's flag image if it has changed
-     *
-     * @param Gender $title
-     * @param EditTitleCommand $command
      *
      * @throws TitleImageUploadingException
      */

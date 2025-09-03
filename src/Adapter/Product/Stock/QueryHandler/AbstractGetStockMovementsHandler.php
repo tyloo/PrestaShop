@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ abstract class AbstractGetStockMovementsHandler
     public function __construct(
         StockAvailableRepository $stockAvailableRepository,
         StockMovementRepository $stockMovementRepository,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->stockAvailableRepository = $stockAvailableRepository;
         $this->stockMovementRepository = $stockMovementRepository;
@@ -73,7 +74,7 @@ abstract class AbstractGetStockMovementsHandler
         );
 
         return array_map(
-            fn(array $historyRow): StockMovement => $historyRow['grouping_type'] === StockMovement::EDITION_TYPE
+            fn (array $historyRow): StockMovement => $historyRow['grouping_type'] === StockMovement::EDITION_TYPE
                 ? $this->createEditionStockMovement($historyRow)
                 : $this->createOrdersStockMovement($historyRow),
             $lastStockMovements
@@ -82,8 +83,6 @@ abstract class AbstractGetStockMovementsHandler
 
     /**
      * @param array<string, string|int|null> $historyRow
-     *
-     * @return StockMovement
      */
     protected function createEditionStockMovement(array $historyRow): StockMovement
     {
@@ -107,8 +106,6 @@ abstract class AbstractGetStockMovementsHandler
 
     /**
      * @param array<string, string|int|null> $historyRow
-     *
-     * @return StockMovement
      */
     protected function createOrdersStockMovement(array $historyRow): StockMovement
     {

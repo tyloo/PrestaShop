@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,7 +36,7 @@ trait LocalizedObjectModelTrait
     protected function fillLocalizedValues(ObjectModel $product, string $propertyName, array $localizedValues, array &$updatableProperties): void
     {
         foreach ($localizedValues as $langId => $localizedValue) {
-            $product->$propertyName[$langId] = $localizedValue;
+            $product->{$propertyName}[$langId] = $localizedValue;
         }
 
         $updatableProperties[$propertyName] = array_keys($localizedValues);

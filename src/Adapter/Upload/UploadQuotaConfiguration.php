@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,13 +36,11 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
  */
 class UploadQuotaConfiguration implements DataConfigurationInterface
 {
-    public function __construct(private readonly Configuration $configuration)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -51,9 +50,6 @@ class UploadQuotaConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         $errors = [];
@@ -74,16 +70,16 @@ class UploadQuotaConfiguration implements DataConfigurationInterface
      */
     private function updateFileUploadConfiguration(array $configuration)
     {
-        $uploadMaxSize = (int) str_replace('M', '', ini_get('upload_max_filesize'));
+        $uploadMaxSize = (int) str_replace('M', '', \ini_get('upload_max_filesize'));
         $sizes = [
             'max_size_attached_files' => $uploadMaxSize,
-            'max_size_downloadable_product' => (int) str_replace('M', '', ini_get('post_max_size')),
+            'max_size_downloadable_product' => (int) str_replace('M', '', \ini_get('post_max_size')),
             'max_size_product_image' => $uploadMaxSize,
         ];
 
         $errors = [];
         foreach ($configuration as $configurationKey => $configurationValue) {
-            if (array_key_exists($configurationKey, $this->getConfiguration())) {
+            if (\array_key_exists($configurationKey, $this->getConfiguration())) {
                 if ((int) $configurationValue > $sizes[$configurationKey]) {
                     $errors[] = [
                         'key' => "The limit chosen is larger than the server's maximum upload limit. Please increase the limits of your server.",
@@ -120,9 +116,6 @@ class UploadQuotaConfiguration implements DataConfigurationInterface
         return $properties[$key];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
         return isset(

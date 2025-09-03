@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,6 @@ use WebserviceKey;
 #[AsQueryHandler]
 final class GetWebserviceKeyForEditingHandler implements GetWebserviceKeyForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetWebserviceKeyForEditing $query)
     {
         $webserviceKey = $this->getLegacyWebserviceKeyObject($query->getWebserviceKeyId());
@@ -60,8 +58,6 @@ final class GetWebserviceKeyForEditingHandler implements GetWebserviceKeyForEdit
     }
 
     /**
-     * @param WebserviceKeyId $webserviceKeyId
-     *
      * @return WebserviceKey
      */
     private function getLegacyWebserviceKeyObject(WebserviceKeyId $webserviceKeyId)
@@ -69,9 +65,7 @@ final class GetWebserviceKeyForEditingHandler implements GetWebserviceKeyForEdit
         $webserviceKey = new WebserviceKey($webserviceKeyId->getValue());
 
         if ($webserviceKey->id !== $webserviceKeyId->getValue()) {
-            throw new WebserviceKeyNotFoundException(
-                sprintf('Webservice key with id "%d" was not found', $webserviceKeyId->getValue())
-            );
+            throw new WebserviceKeyNotFoundException(\sprintf('Webservice key with id "%d" was not found', $webserviceKeyId->getValue()));
         }
 
         return $webserviceKey;

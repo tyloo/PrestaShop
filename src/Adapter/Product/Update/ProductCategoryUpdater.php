@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,15 +48,13 @@ use SpecificPriceRule;
  */
 class ProductCategoryUpdater
 {
-    /**
-     * @param ProductRepository $productRepository
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly CategoryRepository $categoryRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly CategoryRepository $categoryRepository,
+    ) {
     }
 
     /**
-     * @param ProductId $productId
      * @param ShopConstraint $shopConstraint
      *
      * Warning: $categoryIds will replace current categories, erasing previous data
@@ -74,9 +73,7 @@ class ProductCategoryUpdater
     }
 
     /**
-     * @param ProductId $productId
-     * @param CategoryId[] $newCategoryIds
-     * @param CategoryId $defaultCategoryId
+     * @param CategoryId[]   $newCategoryIds
      * @param ShopConstraint $shopConstraint
      *
      * Warning: $categoryIds will replace current categories, erasing previous data, it will only impact the categories
@@ -100,9 +97,7 @@ class ProductCategoryUpdater
     }
 
     /**
-     * @param ProductId $productId
      * @param CategoryId[] $newCategories
-     * @param ShopConstraint $shopConstraint
      */
     private function deleteCategoriesAssociations(ProductId $productId, array $newCategories, ShopConstraint $shopConstraint): void
     {
@@ -118,16 +113,11 @@ class ProductCategoryUpdater
             return true;
         });
 
-        if (!empty($deletedCategories)) {
+        if (! empty($deletedCategories)) {
             $this->categoryRepository->removeProductAssociations($productId, $deletedCategories);
         }
     }
 
-    /**
-     * @param ProductId $productId
-     * @param CategoryId $defaultCategoryId
-     * @param ShopConstraint $shopConstraint
-     */
     private function updateDefaultCategory(ProductId $productId, CategoryId $defaultCategoryId, ShopConstraint $shopConstraint): void
     {
         $product = $this->productRepository->getByShopConstraint($productId, $shopConstraint);
@@ -150,7 +140,7 @@ class ProductCategoryUpdater
         $fallbackCategories = [];
         foreach ($this->productRepository->getAssociatedShopIds($productId) as $shopId) {
             $defaultCategoryId = $this->categoryRepository->getProductDefaultCategory($productId, $shopId);
-            if (null === $defaultCategoryId) {
+            if ($defaultCategoryId === null) {
                 $shopConstraint = ShopConstraint::shop($shopId->getValue());
                 $productCategories = $this->categoryRepository->getProductCategoryIds($productId, $shopConstraint);
                 if (empty($productCategories)) {
@@ -158,7 +148,7 @@ class ProductCategoryUpdater
                     $fallbackDefaultCategory = $this->categoryRepository->getShopDefaultCategory($shopId)->getValue();
                 } else {
                     // If product has still some categories we use the one with smallest ID as fallback
-                    $fallbackDefaultCategory = min(array_values(array_map(static fn(CategoryId $categoryId): int => $categoryId->getValue(), $productCategories)));
+                    $fallbackDefaultCategory = min(array_values(array_map(static fn (CategoryId $categoryId): int => $categoryId->getValue(), $productCategories)));
                 }
 
                 $fallbackCategories[$shopId->getValue()] = $fallbackDefaultCategory;
@@ -184,18 +174,17 @@ class ProductCategoryUpdater
      * Make sure default category ID is in the list and each ID is unique.
      *
      * @param CategoryId[] $categoryIds
-     * @param CategoryId $defaultCategoryId
      *
      * @return CategoryId[]
      */
     private function formatCategoryIdsList(array $categoryIds, CategoryId $defaultCategoryId): array
     {
-        $categoryIds = array_map(fn(CategoryId $categoryId) => $categoryId->getValue(), $categoryIds);
+        $categoryIds = array_map(fn (CategoryId $categoryId) => $categoryId->getValue(), $categoryIds);
 
         $categoryIds[] = $defaultCategoryId->getValue();
-        $categoryIds = array_unique($categoryIds, SORT_REGULAR);
+        $categoryIds = array_unique($categoryIds, \SORT_REGULAR);
 
-        return array_map(static fn(int $categoryId) => new CategoryId($categoryId), $categoryIds);
+        return array_map(static fn (int $categoryId) => new CategoryId($categoryId), $categoryIds);
     }
 
     /**
@@ -210,10 +199,7 @@ class ProductCategoryUpdater
                 $this->categoryRepository->assertCategoryExists($categoryId);
             }
         } catch (CategoryNotFoundException) {
-            throw new CannotUpdateProductException(
-                sprintf("Failed to update product categories. Some of categories doesn't exist."),
-                CannotUpdateProductException::FAILED_UPDATE_CATEGORIES
-            );
+            throw new CannotUpdateProductException(\sprintf("Failed to update product categories. Some of categories doesn't exist."), CannotUpdateProductException::FAILED_UPDATE_CATEGORIES);
         }
     }
 }

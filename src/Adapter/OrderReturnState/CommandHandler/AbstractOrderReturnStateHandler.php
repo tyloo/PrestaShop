@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,7 +48,7 @@ abstract class AbstractOrderReturnStateHandler
     protected function assertOrderReturnStateWasFound(OrderReturnStateId $orderReturnStateId, OrderReturnState $orderReturnState)
     {
         if ($orderReturnState->id !== $orderReturnStateId->getValue()) {
-            throw new OrderReturnStateNotFoundException($orderReturnStateId, sprintf('OrderReturnState with id "%s" was not found.', $orderReturnStateId->getValue()));
+            throw new OrderReturnStateNotFoundException($orderReturnStateId, \sprintf('OrderReturnState with id "%s" was not found.', $orderReturnStateId->getValue()));
         }
     }
 
@@ -58,18 +59,14 @@ abstract class AbstractOrderReturnStateHandler
     {
         $errors = $orderReturnState->validateFieldsRequiredDatabase();
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $missingFields = array_keys($errors);
 
-            throw new MissingOrderReturnStateRequiredFieldsException($missingFields, sprintf('One or more required fields for order return state are missing. Missing fields are: %s', implode(',', $missingFields)));
+            throw new MissingOrderReturnStateRequiredFieldsException($missingFields, \sprintf('One or more required fields for order return state are missing. Missing fields are: %s', implode(',', $missingFields)));
         }
     }
 
     /**
-     * @param OrderReturnStateId $orderReturnStateId
-     *
-     * @return OrderReturnState
-     *
      * @throws OrderReturnStateException
      * @throws OrderReturnStateNotFoundException
      */
@@ -91,10 +88,6 @@ abstract class AbstractOrderReturnStateHandler
     /**
      * Deletes legacy Address
      *
-     * @param OrderReturnState $orderReturnState
-     *
-     * @return bool
-     *
      * @throws OrderReturnStateException
      */
     protected function deleteOrderReturnState(OrderReturnState $orderReturnState): bool
@@ -102,10 +95,7 @@ abstract class AbstractOrderReturnStateHandler
         try {
             return (bool) $orderReturnState->delete();
         } catch (PrestaShopException) {
-            throw new OrderReturnStateException(sprintf(
-                'An error occurred when deleting OrderReturnState object with id "%s".',
-                $orderReturnState->id
-            ));
+            throw new OrderReturnStateException(\sprintf('An error occurred when deleting OrderReturnState object with id "%s".', $orderReturnState->id));
         }
     }
 }

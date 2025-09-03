@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\BulkDel
 #[AsCommandHandler]
 class BulkDeleteCombinationHandler implements BulkDeleteCombinationHandlerInterface
 {
-    /**
-     * @param CombinationDeleter $combinationDeleter
-     */
-    public function __construct(private readonly CombinationDeleter $combinationDeleter)
-    {
+    public function __construct(
+        private readonly CombinationDeleter $combinationDeleter,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(BulkDeleteCombinationCommand $command): void
     {
         $this->combinationDeleter->bulkDeleteProductCombinations(

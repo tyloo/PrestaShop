@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,10 +45,11 @@ final class CreditSlipPdfGenerator implements PDFGeneratorInterface
 {
     /**
      * @param string $dbPrefix
-     * @param Connection $connection
      */
-    public function __construct(private $dbPrefix, private readonly Connection $connection)
-    {
+    public function __construct(
+        private $dbPrefix,
+        private readonly Connection $connection,
+    ) {
     }
 
     /**
@@ -87,7 +89,7 @@ final class CreditSlipPdfGenerator implements PDFGeneratorInterface
      */
     private function getCreditSlipsList($creditSlipIds)
     {
-        if (!empty($creditSlipIds)) {
+        if (! empty($creditSlipIds)) {
             $qb = $this->connection->createQueryBuilder()
                 ->select('*')
                 ->from($this->dbPrefix . 'order_slip', 'os')
@@ -98,7 +100,7 @@ final class CreditSlipPdfGenerator implements PDFGeneratorInterface
             $slipsList = $qb->executeQuery()->fetchAll();
         }
 
-        if (!empty($slipsList)) {
+        if (! empty($slipsList)) {
             return $slipsList;
         }
 

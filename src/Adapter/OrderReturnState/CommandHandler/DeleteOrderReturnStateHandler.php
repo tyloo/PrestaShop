@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,19 +40,13 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\Exception\DeleteOrderRetu
 #[AsCommandHandler]
 class DeleteOrderReturnStateHandler extends AbstractOrderReturnStateHandler implements DeleteOrderReturnStateHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteOrderReturnStateCommand $command): void
     {
         $orderReturnStateId = $command->getOrderReturnStateId();
         $orderReturnState = $this->getOrderReturnState($orderReturnStateId);
 
-        if (!$this->deleteOrderReturnState($orderReturnState)) {
-            throw new DeleteOrderReturnStateException(
-                sprintf('Cannot delete OrderReturnState object with id "%d".', $orderReturnStateId->getValue()),
-                DeleteOrderReturnStateException::FAILED_DELETE
-            );
+        if (! $this->deleteOrderReturnState($orderReturnState)) {
+            throw new DeleteOrderReturnStateException(\sprintf('Cannot delete OrderReturnState object with id "%d".', $orderReturnStateId->getValue()), DeleteOrderReturnStateException::FAILED_DELETE);
         }
     }
 }

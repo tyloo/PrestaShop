@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,12 +39,10 @@ use PrestaShopBundle\Translation\TranslatorInterface;
  */
 class DataLangFactory
 {
-    /**
-     * @param string $dbPrefix
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(private readonly string $dbPrefix, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        private readonly string $dbPrefix,
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     /**
@@ -65,16 +64,14 @@ class DataLangFactory
      * Instantiates the appropriate DataLang class for the provided locale
      *
      * @param string $className Class name to instantiate
-     * @param string $locale IETF language tag
-     *
-     * @return DataLangCore
+     * @param string $locale    IETF language tag
      *
      * @throws DataLangClassNameNotFoundException
      */
     public function buildFromClassName(string $className, string $locale): DataLangCore
     {
-        if (!class_exists($className)) {
-            throw new DataLangClassNameNotFoundException(sprintf("Class name \"%s\" doesn't exist", $className));
+        if (! class_exists($className)) {
+            throw new DataLangClassNameNotFoundException(\sprintf("Class name \"%s\" doesn't exist", $className));
         }
 
         /** @var DataLangCore $classObject */
@@ -87,9 +84,7 @@ class DataLangFactory
      * Instantiates the appropriate DataLang class for the provided table name and locale code
      *
      * @param string $tableName Table name (accepts with and without db prefix and _lang suffix)
-     * @param string $locale IETF language tag
-     *
-     * @return DataLangCore
+     * @param string $locale    IETF language tag
      */
     public function buildFromTableName(string $tableName, string $locale): DataLangCore
     {
@@ -98,14 +93,10 @@ class DataLangFactory
 
     /**
      * Removes the db prefix from the table name if present
-     *
-     * @param string $tableName
-     *
-     * @return string
      */
     private function removeDbPrefixIfPresent(string $tableName): string
     {
-        $length = strlen($this->dbPrefix);
+        $length = \strlen($this->dbPrefix);
         if (substr($tableName, 0, $length) === $this->dbPrefix) {
             $tableName = substr($tableName, $length) ?: '';
         }
@@ -115,14 +106,10 @@ class DataLangFactory
 
     /**
      * Adds the _lang suffix if not present
-     *
-     * @param string $tableName
-     *
-     * @return string
      */
     private function ensureLangSuffix(string $tableName): string
     {
-        if (!str_ends_with($tableName, '_lang')) {
+        if (! str_ends_with($tableName, '_lang')) {
             $tableName .= '_lang';
         }
 

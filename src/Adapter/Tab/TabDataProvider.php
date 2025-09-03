@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,12 +37,10 @@ use Tab;
  */
 class TabDataProvider
 {
-    /**
-     * @param LegacyContext $legacyContext
-     * @param ConfigurationInterface $legacyConfiguration
-     */
-    public function __construct(private readonly LegacyContext $legacyContext, private readonly ConfigurationInterface $legacyConfiguration)
-    {
+    public function __construct(
+        private readonly LegacyContext $legacyContext,
+        private readonly ConfigurationInterface $legacyConfiguration,
+    ) {
     }
 
     /**
@@ -83,7 +82,7 @@ class TabDataProvider
                     if ($this->canAccessTab($profileId, $child['id_tab'])) {
                         $subChildren = Tab::getTabs($languageId, $child['id_tab']);
                         // If child has sub children (three level menu) we only add the sub children
-                        if (!empty($subChildren)) {
+                        if (! empty($subChildren)) {
                             foreach ($subChildren as $subChild) {
                                 if ($this->canAccessTab($profileId, $subChild['id_tab']) && $subChild['active']) {
                                     $viewableChildren[] = [
@@ -103,7 +102,7 @@ class TabDataProvider
                 }
 
                 // Inactive tabs are not shown unless they have active children. "AdminDashboard" is always shown if active
-                if ($tab['active'] && (!empty($viewableChildren) || $tab['class_name'] == 'AdminDashboard')) {
+                if ($tab['active'] && (! empty($viewableChildren) || $tab['class_name'] === 'AdminDashboard')) {
                     $viewableTabs[$tab['id_tab']] = [
                         'id_tab' => $tab['id_tab'],
                         'name' => $tab['name'],
@@ -119,15 +118,15 @@ class TabDataProvider
     /**
      * Check if given profile can access a tab.
      *
-     * @param int $profileId
-     * @param int $tabId
+     * @param int    $profileId
+     * @param int    $tabId
      * @param string $accessLevel view, add, edit or delete
      *
      * @return bool
      */
     private function canAccessTab($profileId, $tabId, $accessLevel = 'view')
     {
-        if (!in_array($accessLevel, ['view', 'add', 'edit', 'delete'])) {
+        if (! \in_array($accessLevel, ['view', 'add', 'edit', 'delete'], true)) {
             return false;
         }
 
@@ -146,8 +145,6 @@ class TabDataProvider
 
     /**
      * Reset static tab cache
-     *
-     * @return void
      */
     public function resetTabCache(): void
     {

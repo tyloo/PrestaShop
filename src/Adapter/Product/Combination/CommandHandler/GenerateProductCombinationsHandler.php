@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,12 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\Generat
 #[AsCommandHandler]
 final class GenerateProductCombinationsHandler implements GenerateProductCombinationsHandlerInterface
 {
-    /**
-     * @param CombinationCreator $combinationCreator
-     * @param ProductSupplierUpdater $productSupplierUpdater
-     */
-    public function __construct(private readonly CombinationCreator $combinationCreator, private readonly ProductSupplierUpdater $productSupplierUpdater)
-    {
+    public function __construct(
+        private readonly CombinationCreator $combinationCreator,
+        private readonly ProductSupplierUpdater $productSupplierUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GenerateProductCombinationsCommand $command): array
     {
         $combinationIds = $this->combinationCreator->createCombinations(

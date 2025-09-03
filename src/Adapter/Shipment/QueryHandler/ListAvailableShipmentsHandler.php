@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,8 +49,6 @@ class ListAvailableShipmentsHandler implements ListAvailableShipmentsHandlerInte
     }
 
     /**
-     * @param ListAvailableShipments $query
-     *
      * @return ShipmentsForMerge[]
      */
     public function handle(ListAvailableShipments $query)
@@ -61,7 +60,7 @@ class ListAvailableShipmentsHandler implements ListAvailableShipmentsHandlerInte
         try {
             $getShipmentsFromOrder = $this->repository->findByOrderId($orderId);
         } catch (Throwable $throwable) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment for order id "%s"', $orderId), 0, $throwable);
+            throw new ShipmentNotFoundException(\sprintf('Could not find shipment for order id "%s"', $orderId), 0, $throwable);
         }
 
         if (empty($getShipmentsFromOrder)) {
@@ -71,10 +70,10 @@ class ListAvailableShipmentsHandler implements ListAvailableShipmentsHandlerInte
         foreach ($getShipmentsFromOrder as $shipment) {
             foreach ($orderDetailsIds as $orderDetailId) {
                 $orderDetail = new OrderDetail($orderDetailId);
-                $carrierCompatibleWithProduct = array_map(fn($carrier) => $carrier['id_carrier'], (new Product($orderDetail->product_id))->getCarriers());
+                $carrierCompatibleWithProduct = array_map(fn ($carrier) => $carrier['id_carrier'], (new Product($orderDetail->product_id))->getCarriers());
 
                 if ($shipment->getDeliveredAt() === null) {
-                    $isCompatible = in_array($shipment->getCarrierId(), $carrierCompatibleWithProduct);
+                    $isCompatible = \in_array($shipment->getCarrierId(), $carrierCompatibleWithProduct, true);
                     $shipmentName = $this->translator->trans('Shipment ', [], 'Shop.Forms.Labels') . $shipment->getId() . ' ' . (new Carrier($shipment->getCarrierId()))->name;
                     $shipments[] = new ShipmentsForMerge($shipment->getId(), $shipmentName, $isCompatible);
                 }

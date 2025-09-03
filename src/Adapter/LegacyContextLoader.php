@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,64 +42,43 @@ use Shop;
  */
 class LegacyContextLoader
 {
-    /**
-     * @param Context $context
-     */
-    public function __construct(private readonly Context $context)
-    {
+    public function __construct(
+        private readonly Context $context,
+    ) {
     }
 
-    /**
-     * @param string|null $controllerClassName
-     * @param int|null $currencyId
-     * @param int|null $employeeId
-     * @param int|null $shopId
-     * @param int|null $shopGroupId
-     *
-     * @return self
-     */
     public function loadGenericContext(
         ?string $controllerClassName = null,
         ?int $currencyId = null,
         ?int $employeeId = null,
         ?int $shopId = null,
-        ?int $shopGroupId = null
+        ?int $shopGroupId = null,
     ): self {
         $this->loadCurrencyContext($currencyId);
         $this->loadEmployeeContext($employeeId);
         $this->loadControllerContext($controllerClassName);
 
-        if (null !== $shopId) {
+        if ($shopId !== null) {
             $this->loadShopContext($shopId);
         }
 
-        if (null !== $shopGroupId) {
+        if ($shopGroupId !== null) {
             $this->loadShopGroupId($shopGroupId);
         }
 
         return $this;
     }
 
-    /**
-     * @param string|null $controllerClassName
-     *
-     * @return self
-     */
     public function loadControllerContext(?string $controllerClassName = null): self
     {
-        if (null === $controllerClassName) {
+        if ($controllerClassName === null) {
             $this->context->controller = new DummyAdminController();
 
             return $this;
         }
 
-        if (!class_exists($controllerClassName)) {
-            throw new RuntimeException(
-                sprintf(
-                    'Cannot load controller context for classname %s',
-                    $controllerClassName
-                )
-            );
+        if (! class_exists($controllerClassName)) {
+            throw new RuntimeException(\sprintf('Cannot load controller context for classname %s', $controllerClassName));
         }
 
         $this->context->controller = new $controllerClassName();
@@ -106,14 +86,9 @@ class LegacyContextLoader
         return $this;
     }
 
-    /**
-     * @param int|null $currencyId
-     *
-     * @return self
-     */
     public function loadCurrencyContext(?int $currencyId = null): self
     {
-        if (null === $currencyId) {
+        if ($currencyId === null) {
             $currency = new Currency(Currency::getDefaultCurrencyId());
             $currency->precision = Precision::DEFAULT_PRECISION;
         } else {
@@ -125,11 +100,6 @@ class LegacyContextLoader
         return $this;
     }
 
-    /**
-     * @param int|null $employeeId
-     *
-     * @return self
-     */
     public function loadEmployeeContext(?int $employeeId = null): self
     {
         $this->context->employee = new Employee($employeeId);
@@ -137,11 +107,6 @@ class LegacyContextLoader
         return $this;
     }
 
-    /**
-     * @param int $shopId
-     *
-     * @return self
-     */
     public function loadShopContext(int $shopId = 1): self
     {
         $this->context->shop = new Shop($shopId);
@@ -150,11 +115,6 @@ class LegacyContextLoader
         return $this;
     }
 
-    /**
-     * @param int $shopGroupId
-     *
-     * @return self
-     */
     public function loadShopGroupId(int $shopGroupId): self
     {
         Shop::setContext(Shop::CONTEXT_GROUP, $shopGroupId);

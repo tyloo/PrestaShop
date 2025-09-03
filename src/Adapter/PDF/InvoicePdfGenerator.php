@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,22 +43,21 @@ use Validate;
  */
 final class InvoicePdfGenerator implements PDFGeneratorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function generatePDF(array $invoiceId): void
     {
-        if (count($invoiceId) !== 1) {
-            throw new CoreException(sprintf('"%s" supports generating PDF for single invoice only.', self::class));
+        if (\count($invoiceId) !== 1) {
+            throw new CoreException(\sprintf('"%s" supports generating PDF for single invoice only.', self::class));
         }
 
         $invoiceId = reset($invoiceId);
         $orderInvoice = new OrderInvoice((int) $invoiceId);
-        if (!Validate::isLoadedObject($orderInvoice)) {
+        if (! Validate::isLoadedObject($orderInvoice)) {
             throw new RuntimeException('The invoice cannot be found within your database.');
         }
 
-        Hook::exec('actionPDFInvoiceRender', ['order_invoice_list' => [$orderInvoice]]);
+        Hook::exec('actionPDFInvoiceRender', [
+            'order_invoice_list' => [$orderInvoice],
+        ]);
 
         $pdf = new PDF($orderInvoice, PDF::TEMPLATE_INVOICE, Context::getContext()->smarty);
         $pdf->render();

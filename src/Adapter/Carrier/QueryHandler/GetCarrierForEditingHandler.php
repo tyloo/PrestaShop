@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\QueryResult\EditableCarrier;
 final class GetCarrierForEditingHandler implements GetCarrierForEditingHandlerInterface
 {
     public function __construct(
-        private readonly CarrierRepository $carrierRepository
+        private readonly CarrierRepository $carrierRepository,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCarrierForEditing $query): EditableCarrier
     {
         $carrier = $this->carrierRepository->get($query->getCarrierId());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ abstract class AbstractBulkHandler
 {
     /**
      * @param ProductId[] $productIds
-     * @param mixed|null $command
+     * @param mixed|null  $command
      *
      * @return array<int, mixed>
      *
@@ -54,7 +55,7 @@ abstract class AbstractBulkHandler
             try {
                 $actionResults[$productId->getValue()] = $this->handleSingleAction($productId, $command);
             } catch (ProductException $e) {
-                if (null === $bulkException) {
+                if ($bulkException === null) {
                     $bulkException = $this->buildBulkException();
                 }
 
@@ -62,7 +63,7 @@ abstract class AbstractBulkHandler
             }
         }
 
-        if (null !== $bulkException) {
+        if ($bulkException !== null) {
             throw $bulkException;
         }
 
@@ -71,8 +72,6 @@ abstract class AbstractBulkHandler
 
     /**
      * This uses the base bulk exception class, but you can override this in your handler.
-     *
-     * @return BulkProductException
      */
     protected function buildBulkException(): BulkProductException
     {
@@ -80,10 +79,7 @@ abstract class AbstractBulkHandler
     }
 
     /**
-     * @param ProductId $productId
      * @param mixed|null $command
-     *
-     * @return mixed
      */
     abstract protected function handleSingleAction(ProductId $productId, $command = null);
 }

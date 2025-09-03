@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,16 +43,13 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\QueryResult\EditableOrder
 #[AsQueryHandler]
 final class GetOrderReturnStateForEditingHandler implements GetOrderReturnStateForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetOrderReturnStateForEditing $query)
     {
         $orderReturnStateId = $query->getOrderReturnStateId();
         $orderReturnState = new OrderReturnState($orderReturnStateId->getValue());
 
         if ($orderReturnState->id !== $orderReturnStateId->getValue()) {
-            throw new OrderReturnStateNotFoundException($orderReturnStateId, sprintf('OrderReturnState with id "%s" was not found', $orderReturnStateId->getValue()));
+            throw new OrderReturnStateNotFoundException($orderReturnStateId, \sprintf('OrderReturnState with id "%s" was not found', $orderReturnStateId->getValue()));
         }
 
         return new EditableOrderReturnState(

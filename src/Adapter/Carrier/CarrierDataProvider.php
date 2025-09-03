@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,24 +35,25 @@ use PrestaShop\PrestaShop\Adapter\Configuration;
  */
 class CarrierDataProvider
 {
-    public function __construct(private readonly Configuration $configuration)
-    {
+    public function __construct(
+        private readonly Configuration $configuration,
+    ) {
     }
 
     /**
      * Get all carriers in a given language.
      *
-     * @param int $id_lang Language id
-     * @param bool $active Returns only active carriers when true
-     * @param bool $delete
-     * @param bool|int $id_zone
+     * @param int         $id_lang         Language id
+     * @param bool        $active          Returns only active carriers when true
+     * @param bool        $delete
+     * @param bool|int    $id_zone
      * @param string|null $ids_group
-     * @param int $modules_filters Possible values:
-     *                             - PS_CARRIERS_ONLY
-     *                             - CARRIERS_MODULE
-     *                             - CARRIERS_MODULE_NEED_RANGE
-     *                             - PS_CARRIERS_AND_CARRIER_MODULES_NEED_RANGE
-     *                             - ALL_CARRIERS
+     * @param int         $modules_filters Possible values:
+     *                                     - PS_CARRIERS_ONLY
+     *                                     - CARRIERS_MODULE
+     *                                     - CARRIERS_MODULE_NEED_RANGE
+     *                                     - PS_CARRIERS_AND_CARRIER_MODULES_NEED_RANGE
+     *                                     - ALL_CARRIERS
      *
      * @return array Carriers
      */
@@ -69,7 +71,7 @@ class CarrierDataProvider
      */
     public function getActiveCarriersChoices($languageId = null)
     {
-        if (null === $languageId) {
+        if ($languageId === null) {
             $languageId = $this->configuration->getInt('PS_LANG_DEFAULT');
         }
 
@@ -78,7 +80,7 @@ class CarrierDataProvider
 
         foreach ($carriers as $carrier) {
             $choiceId = (int) $carrier['id_carrier'] . ' - ' . $carrier['name'];
-            if (!empty($carrier['delay'])) {
+            if (! empty($carrier['delay'])) {
                 $choiceId .= ' (' . $carrier['delay'] . ')';
             }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,14 +40,12 @@ class ProductImageFileValidator extends ImageValidator
 
     public function __construct(
         int $maxUploadSizeInBytes,
-        private readonly DataConfigurationInterface $uploadQuotaConfiguration
+        private readonly DataConfigurationInterface $uploadQuotaConfiguration,
     ) {
         parent::__construct($maxUploadSizeInBytes);
     }
 
     /**
-     * @param string $filePath
-     *
      * @throws UploadedImageSizeException
      */
     public function assertFileUploadLimits(string $filePath): void
@@ -65,7 +64,7 @@ class ProductImageFileValidator extends ImageValidator
             throw UploadedImageSizeException::build((int) (string) $maxUploadSizeBytes);
         }
 
-        if (!ImageManager::checkImageMemoryLimit($filePath)) {
+        if (! ImageManager::checkImageMemoryLimit($filePath)) {
             throw new MemoryLimitException('Cannot upload image due to memory restrictions');
         }
     }

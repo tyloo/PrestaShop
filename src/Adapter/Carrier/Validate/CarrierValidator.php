@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,8 +56,6 @@ class CarrierValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param Carrier $carrier
-     *
      * @throws CoreException
      */
     public function validate(Carrier $carrier): void
@@ -67,7 +66,7 @@ class CarrierValidator extends AbstractObjectModelValidator
 
     public function validateLogoUpload(string $filePath): void
     {
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             throw new ImageFileNotFoundException('The uploaded image does not exist.');
         }
 
@@ -76,15 +75,11 @@ class CarrierValidator extends AbstractObjectModelValidator
         }
 
         $extension = mime_content_type($filePath);
-        if (!in_array($extension, self::AVAILABLE_IMAGE_MIMETYPE, true)) {
-            throw new NotSupportedLogoImageExtensionException(sprintf(
-                'Not supported "%s" image logo mime type. Supported mime types are "%s"',
-                $extension,
-                implode(',', self::AVAILABLE_IMAGE_MIMETYPE
-                )));
+        if (! \in_array($extension, self::AVAILABLE_IMAGE_MIMETYPE, true)) {
+            throw new NotSupportedLogoImageExtensionException(\sprintf('Not supported "%s" image logo mime type. Supported mime types are "%s"', $extension, implode(',', self::AVAILABLE_IMAGE_MIMETYPE)));
         }
 
-        if (!ImageManager::checkImageMemoryLimit($filePath)) {
+        if (! ImageManager::checkImageMemoryLimit($filePath)) {
             throw new MemoryLimitException('Cannot upload image due to memory restrictions');
         }
     }
@@ -124,10 +119,7 @@ class CarrierValidator extends AbstractObjectModelValidator
 
         // A Carrier cannot be both shipping handling and free
         if ($carrier->shipping_handling && $carrier->is_free) {
-            throw new CarrierConstraintException(
-                'Carrier cannot be both shipping handling and free',
-                CarrierConstraintException::INVALID_HAS_ADDITIONAL_HANDLING_FEE_WITH_FREE_SHIPPING
-            );
+            throw new CarrierConstraintException('Carrier cannot be both shipping handling and free', CarrierConstraintException::INVALID_HAS_ADDITIONAL_HANDLING_FEE_WITH_FREE_SHIPPING);
         }
     }
 }

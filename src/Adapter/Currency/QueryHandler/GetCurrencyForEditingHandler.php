@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,16 +43,12 @@ use PrestaShop\PrestaShop\Core\Localization\Currency\PatternTransformer;
 #[AsQueryHandler]
 final class GetCurrencyForEditingHandler implements GetCurrencyForEditingHandlerInterface
 {
-    /**
-     * @param int $contextShopId
-     */
-    public function __construct(private readonly int $contextShopId, private readonly PatternTransformer $patternTransformer)
-    {
+    public function __construct(
+        private readonly int $contextShopId,
+        private readonly PatternTransformer $patternTransformer,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCurrencyForEditing $query)
     {
         $entity = new Currency(
@@ -60,13 +57,13 @@ final class GetCurrencyForEditingHandler implements GetCurrencyForEditingHandler
             $this->contextShopId
         );
 
-        if (0 >= $entity->id) {
-            throw new CurrencyNotFoundException(sprintf('Currency object with id "%s" was not found for editing', $query->getCurrencyId()->getValue()));
+        if ($entity->id <= 0) {
+            throw new CurrencyNotFoundException(\sprintf('Currency object with id "%s" was not found for editing', $query->getCurrencyId()->getValue()));
         }
 
         $transformations = [];
         foreach ($entity->getLocalizedPatterns() as $langId => $pattern) {
-            $transformations[$langId] = !empty($pattern) ? $this->patternTransformer->getTransformationType($pattern) : '';
+            $transformations[$langId] = ! empty($pattern) ? $this->patternTransformer->getTransformationType($pattern) : '';
         }
 
         return new EditableCurrency(

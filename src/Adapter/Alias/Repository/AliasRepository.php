@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,22 +46,16 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 
 class AliasRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param AliasValidator $aliasValidator
-     */
     public function __construct(
         protected Connection $connection,
         protected string $dbPrefix,
-        protected AliasValidator $aliasValidator
+        protected AliasValidator $aliasValidator,
     ) {
     }
 
     /**
      * Creates new Alias entity and saves to the database
      *
-     * @param string $searchTerm
      * @param array{
      *   array{
      *     alias: string,
@@ -79,11 +74,8 @@ class AliasRepository extends AbstractObjectModelRepository
         $aliasesAlreadyUsed = $this->getAliasesAlreadyInUseNotForSearchTerm($searchTerm, $aliasesToAdd);
 
         // If we have aliases already in use, we need to throw an exception
-        if (count($aliasesAlreadyUsed) > 0) {
-            throw new AliasConstraintException(
-                implode(', ', $aliasesAlreadyUsed),
-                AliasConstraintException::ALIAS_ALREADY_USED
-            );
+        if ($aliasesAlreadyUsed !== []) {
+            throw new AliasConstraintException(implode(', ', $aliasesAlreadyUsed), AliasConstraintException::ALIAS_ALREADY_USED);
         }
 
         $aliasIds = [];
@@ -112,11 +104,6 @@ class AliasRepository extends AbstractObjectModelRepository
         return $aliasIds;
     }
 
-    /**
-     * @param AliasId $aliasId
-     *
-     * @return Alias
-     */
     public function get(AliasId $aliasId): Alias
     {
         /** @var Alias $alias */
@@ -129,12 +116,6 @@ class AliasRepository extends AbstractObjectModelRepository
         return $alias;
     }
 
-    /**
-     * @param string $alias
-     * @param string $searchTerm
-     *
-     * @return Alias|null
-     */
     public function getAliasIfExists(string $alias, string $searchTerm): ?Alias
     {
         $qb = $this->connection->createQueryBuilder()
@@ -155,8 +136,6 @@ class AliasRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param string $searchTerm
-     *
      * @return array{
      *   array{
      *     alias: string,
@@ -183,11 +162,7 @@ class AliasRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param Alias $alias
      * @param string[] $propertiesToUpdate
-     * @param string $exceptionClass
-     *
-     * @return void
      */
     public function partialUpdate(Alias $alias, array $propertiesToUpdate, string $exceptionClass): void
     {
@@ -197,8 +172,6 @@ class AliasRepository extends AbstractObjectModelRepository
 
     /**
      * Deletes all related aliases
-     *
-     * @param SearchTerm $searchTerm
      */
     public function deleteAliasesBySearchTerm(SearchTerm $searchTerm): void
     {
@@ -225,19 +198,12 @@ class AliasRepository extends AbstractObjectModelRepository
             }
         }
 
-        if (!empty($exceptions)) {
-            throw new BulkAliasException(
-                $exceptions,
-                'Errors occurred during Alias bulk delete action',
-                BulkFeatureException::FAILED_BULK_DELETE
-            );
+        if (! empty($exceptions)) {
+            throw new BulkAliasException($exceptions, 'Errors occurred during Alias bulk delete action', BulkFeatureException::FAILED_BULK_DELETE);
         }
     }
 
     /**
-     * @param string $searchPhrase
-     * @param int|null $limit
-     *
      * @return array<int, array<string, string>>
      */
     public function searchSearchTerms(string $searchPhrase, ?int $limit = null): array
@@ -255,8 +221,6 @@ class AliasRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param array $searchTerms
-     *
      * @return array{
      *   array{
      *     id_alias: int,
@@ -281,7 +245,6 @@ class AliasRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param string $searchTerm
      * @param string[] $aliases
      *
      * @return string[]

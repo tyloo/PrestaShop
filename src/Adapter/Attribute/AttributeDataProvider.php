@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,7 +42,7 @@ class AttributeDataProvider
     /**
      * Get all attributes for a given language.
      *
-     * @param int $id_lang Language id
+     * @param int  $id_lang  Language id
      * @param bool $not_null Get only not null fields if true
      *
      * @return array Attributes
@@ -54,14 +55,14 @@ class AttributeDataProvider
     /**
      * Get all attributes ids for a given group.
      *
-     * @param int $id_group Attribute group id
+     * @param int  $id_group Attribute group id
      * @param bool $not_null Get only not null fields if true
      *
      * @return array Attributes
      */
     public static function getAttributeIdsByGroup($id_group, $not_null = false)
     {
-        if (!Combination::isFeatureActive()) {
+        if (! Combination::isFeatureActive()) {
             return [];
         }
 
@@ -77,7 +78,7 @@ class AttributeDataProvider
 			ORDER BY a.`position` ASC
 		');
 
-        return array_map(fn($a) => $a['id_attribute'], $result);
+        return array_map(fn ($a) => $a['id_attribute'], $result);
     }
 
     /**
@@ -93,12 +94,12 @@ class AttributeDataProvider
 
         // get product
         $product = new Product((int) $idProduct, false);
-        if (!is_object($product) || empty($product->id)) {
+        if (! \is_object($product) || empty($product->id)) {
             return false;
         }
 
         $allCombinations = $product->getAttributeCombinations(1, false);
-        $allCombinationsIds = array_map(fn($o) => $o['id_product_attribute'], $allCombinations);
+        $allCombinationsIds = array_map(fn ($o) => $o['id_product_attribute'], $allCombinations);
 
         $combinations = [];
         foreach ($allCombinationsIds as $combinationId) {

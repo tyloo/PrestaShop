@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,39 +37,36 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\Command\UpdateCombinat
  */
 class DetailsFiller implements CombinationFillerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function fillUpdatableProperties(Combination $combination, UpdateCombinationCommand $command): array
     {
         $updatableProperties = [];
 
-        if (null !== $command->getGtin()) {
+        if ($command->getGtin() !== null) {
             $combination->ean13 = $command->getGtin()->getValue();
             $updatableProperties[] = 'ean13';
         }
 
-        if (null !== $command->getIsbn()) {
+        if ($command->getIsbn() !== null) {
             $combination->isbn = $command->getIsbn()->getValue();
             $updatableProperties[] = 'isbn';
         }
 
-        if (null !== $command->getMpn()) {
+        if ($command->getMpn() !== null) {
             $combination->mpn = $command->getMpn();
             $updatableProperties[] = 'mpn';
         }
 
-        if (null !== $command->getReference()) {
+        if ($command->getReference() !== null) {
             $combination->reference = $command->getReference()->getValue();
             $updatableProperties[] = 'reference';
         }
 
-        if (null !== $command->getUpc()) {
+        if ($command->getUpc() !== null) {
             $combination->upc = $command->getUpc()->getValue();
             $updatableProperties[] = 'upc';
         }
 
-        if (null !== $command->getImpactOnWeight()) {
+        if ($command->getImpactOnWeight() !== null) {
             $combination->weight = (float) (string) $command->getImpactOnWeight();
             $updatableProperties[] = 'weight';
         }

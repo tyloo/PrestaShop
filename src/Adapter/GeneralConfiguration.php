@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ class GeneralConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         return [
@@ -56,15 +54,12 @@ class GeneralConfiguration implements DataConfigurationInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         $errors = [];
 
         if ($this->validateConfiguration($configuration)) {
-            if (!$this->validateSameSite($configuration['cookie_samesite'])) {
+            if (! $this->validateSameSite($configuration['cookie_samesite'])) {
                 $errors[] = [
                     'key' => 'The SameSite=None attribute is only available in secure mode.',
                     'domain' => 'Admin.Advparameters.Notification',
@@ -87,30 +82,21 @@ class GeneralConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validateConfiguration(array $configuration)
     {
-        $isValid = isset(
+        return isset(
             $configuration['check_ip_address'],
             $configuration['front_cookie_lifetime'],
             $configuration['back_cookie_lifetime']
-        ) && in_array(
+        ) && \in_array(
             $configuration['cookie_samesite'],
-            CookieOptions::SAMESITE_AVAILABLE_VALUES
+            CookieOptions::SAMESITE_AVAILABLE_VALUES, true
         );
-
-        return $isValid;
     }
 
     /**
      * Validate SameSite.
      * The SameSite=None is only working when Secure is settled
-     *
-     * @param string $sameSite
-     *
-     * @return bool
      */
     protected function validateSameSite(string $sameSite): bool
     {

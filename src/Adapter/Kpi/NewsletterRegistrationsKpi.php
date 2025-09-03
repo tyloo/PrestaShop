@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class NewsletterRegistrationsKpi implements KpiInterface
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param ConfigurationInterface $kpiConfiguration
      * @param string $sourceUrl
      */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $kpiConfiguration, private $sourceUrl)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurationInterface $kpiConfiguration,
+        private $sourceUrl,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $helper = new HelperKpi();
@@ -58,7 +57,7 @@ final class NewsletterRegistrationsKpi implements KpiInterface
         $helper->title = $this->translator->trans('Newsletter Registrations', [], 'Admin.Orderscustomers.Feature');
         $helper->subtitle = $this->translator->trans('All time', [], 'Admin.Global');
 
-        if (false !== $this->kpiConfiguration->get('NEWSLETTER_REGISTRATIONS')) {
+        if ($this->kpiConfiguration->get('NEWSLETTER_REGISTRATIONS') !== false) {
             $helper->value = $this->kpiConfiguration->get('NEWSLETTER_REGISTRATIONS');
         }
 

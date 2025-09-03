@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,9 +53,6 @@ final class UpdateOrderStatusHandler extends AbstractOrderHandler implements Upd
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateOrderStatusCommand $command)
     {
         $order = $this->getOrder($command->getOrderId());
@@ -65,7 +63,7 @@ final class UpdateOrderStatusHandler extends AbstractOrderHandler implements Upd
          * during order creation process. That's why we check for $currentOrderState validity.
          */
         $currentOrderState = $order->getCurrentOrderState();
-        if (!empty($currentOrderState) && $currentOrderState->id == $orderState->id) {
+        if (! empty($currentOrderState) && $currentOrderState->id === $orderState->id) {
             throw new OrderException('The order has already been assigned this status.');
         }
 
@@ -75,7 +73,7 @@ final class UpdateOrderStatusHandler extends AbstractOrderHandler implements Upd
         $history->id_employee = (int) $this->employeeContext->getEmployee()?->getId();
 
         $useExistingPayments = false;
-        if (!$order->hasInvoice()) {
+        if (! $order->hasInvoice()) {
             $useExistingPayments = true;
         }
 
@@ -83,7 +81,7 @@ final class UpdateOrderStatusHandler extends AbstractOrderHandler implements Upd
 
         $templateVars = [];
 
-        if ($history->id_order_state == Configuration::get('PS_OS_SHIPPING') && $order->getShippingNumber()) {
+        if ($history->id_order_state === Configuration::get('PS_OS_SHIPPING') && $order->getShippingNumber()) {
             $carrier = new Carrier($order->id_carrier, (int) $order->getAssociatedLanguage()->getId());
             $templateVars = [
                 '{followup}' => str_replace('@', $order->getShippingNumber(), $carrier->url),
@@ -110,7 +108,7 @@ final class UpdateOrderStatusHandler extends AbstractOrderHandler implements Upd
         $orderState = new OrderState($orderStatusId);
 
         if ($orderState->id !== $orderStatusId) {
-            throw new OrderException(sprintf('Order status with id "%s" was not found.', $orderStatusId));
+            throw new OrderException(\sprintf('Order status with id "%s" was not found.', $orderStatusId));
         }
 
         return $orderState;

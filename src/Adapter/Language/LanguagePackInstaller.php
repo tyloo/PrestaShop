@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,25 +37,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 final class LanguagePackInstaller implements LanguagePackInstallerInterface
 {
-    /**
-     * LanguagePackInstaller constructor.
-     *
-     * @param TranslatorInterface $translator
-     * @param Version $version
-     */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly Version $version)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly Version $version,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function downloadAndInstallLanguagePack($iso)
     {
         $freshInstall = empty(Language::getIdByIso($iso));
         $result = Language::downloadAndInstallLanguagePack($iso, $this->version->getSemVersion(), null, $freshInstall);
 
-        if (false === $result) {
+        if ($result === false) {
             return [
                 $this->translator->trans(
                     'Fatal error: ISO code is not correct',
@@ -64,7 +58,7 @@ final class LanguagePackInstaller implements LanguagePackInstallerInterface
             ];
         }
 
-        if (is_array($result) && !empty($result)) {
+        if (\is_array($result) && ! empty($result)) {
             return $result;
         }
 

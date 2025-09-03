@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,18 +47,12 @@ use ProductDownload as VirtualProductFile;
  */
 class VirtualProductFileRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param VirtualProductFileValidator $virtualProductFileValidator
-     */
-    public function __construct(private readonly VirtualProductFileValidator $virtualProductFileValidator)
-    {
+    public function __construct(
+        private readonly VirtualProductFileValidator $virtualProductFileValidator,
+    ) {
     }
 
     /**
-     * @param VirtualProductFileId $virtualProductFileId
-     *
-     * @return VirtualProductFile
-     *
      * @throws VirtualProductFileNotFoundException
      */
     public function get(VirtualProductFileId $virtualProductFileId): VirtualProductFile
@@ -72,9 +67,6 @@ class VirtualProductFileRepository extends AbstractObjectModelRepository
         return $virtualProductFile;
     }
 
-    /**
-     * @param VirtualProductFileId $virtualProductFileId
-     */
     public function delete(VirtualProductFileId $virtualProductFileId): void
     {
         $this->deleteObjectModel(
@@ -84,10 +76,6 @@ class VirtualProductFileRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     *
-     * @return VirtualProductFile
-     *
      * @throws VirtualProductFileNotFoundException
      */
     public function findByProductId(ProductId $productId): VirtualProductFile
@@ -95,28 +83,17 @@ class VirtualProductFileRepository extends AbstractObjectModelRepository
         try {
             $id = (int) VirtualProductFile::getIdFromIdProduct($productId->getValue());
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when trying to find VirtualProductFile by product id #%d', $productId->getValue()),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to find VirtualProductFile by product id #%d', $productId->getValue()), 0, $prestaShopException);
         }
 
-        if (!$id) {
-            throw new VirtualProductFileNotFoundException(sprintf(
-                'Cannot find VirtualProduct for product %d',
-                $productId->getValue()
-            ));
+        if (! $id) {
+            throw new VirtualProductFileNotFoundException(\sprintf('Cannot find VirtualProduct for product %d', $productId->getValue()));
         }
 
         return $this->get(new VirtualProductFileId($id));
     }
 
     /**
-     * @param VirtualProductFile $virtualProductFile
-     *
-     * @return VirtualProductFileId
-     *
      * @throws CannotAddVirtualProductFileException
      */
     public function add(VirtualProductFile $virtualProductFile): VirtualProductFileId
@@ -127,9 +104,6 @@ class VirtualProductFileRepository extends AbstractObjectModelRepository
         return new VirtualProductFileId($id);
     }
 
-    /**
-     * @param VirtualProductFile $virtualProductFile
-     */
     public function update(VirtualProductFile $virtualProductFile): void
     {
         $this->virtualProductFileValidator->validate($virtualProductFile);

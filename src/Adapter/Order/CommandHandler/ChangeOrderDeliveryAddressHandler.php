@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,19 +50,14 @@ use Validate;
 #[AsCommandHandler]
 final class ChangeOrderDeliveryAddressHandler extends AbstractOrderCommandHandler implements ChangeOrderDeliveryAddressHandlerInterface
 {
-    /**
-     * @param OrderAmountUpdater $orderAmountUpdater
-     * @param OrderDetailUpdater $orderDetailTaxUpdater
-     * @param ContextStateManager $contextStateManager
-     * @param OrderProductQuantityUpdater $orderProductQuantityUpdater
-     */
-    public function __construct(private readonly OrderAmountUpdater $orderAmountUpdater, private readonly OrderDetailUpdater $orderDetailTaxUpdater, private readonly ContextStateManager $contextStateManager, private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater)
-    {
+    public function __construct(
+        private readonly OrderAmountUpdater $orderAmountUpdater,
+        private readonly OrderDetailUpdater $orderDetailTaxUpdater,
+        private readonly ContextStateManager $contextStateManager,
+        private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(ChangeOrderDeliveryAddressCommand $command)
     {
         $order = $this->getOrder($command->getOrderId());
@@ -69,7 +65,7 @@ final class ChangeOrderDeliveryAddressHandler extends AbstractOrderCommandHandle
 
         $cart = Cart::getCartByOrderId($order->id);
 
-        if (!Validate::isLoadedObject($address)) {
+        if (! Validate::isLoadedObject($address)) {
             throw new OrderException('New delivery address is not valid');
         }
 
@@ -95,27 +91,22 @@ final class ChangeOrderDeliveryAddressHandler extends AbstractOrderCommandHandle
         }
     }
 
-    /**
-     * @param Order $order
-     * @param Cart $cart
-     * @param CartProductsComparator $productsComparator
-     */
     private function synchronizeOrderWithCart(
         Order $order,
         Cart $cart,
-        CartProductsComparator $productsComparator
+        CartProductsComparator $productsComparator,
     ): void {
         $modified = $productsComparator->getModifiedProducts();
         foreach ($modified as $productUpdate) {
             $orderDetail = $this->getOrderDetail($productUpdate, $order, $cart);
-            if (null === $orderDetail) {
+            if ($orderDetail === null) {
                 continue;
             }
 
             $quantity = $productUpdate->isCreated()
                 ? $productUpdate->getDeltaQuantity()
                 : $orderDetail->product_quantity + $productUpdate->getDeltaQuantity();
-            $orderInvoice = $orderDetail->id_order_invoice != 0 ? new OrderInvoice($orderDetail->id_order_invoice) : null;
+            $orderInvoice = $orderDetail->id_order_invoice !== 0 ? new OrderInvoice($orderDetail->id_order_invoice) : null;
 
             $this->orderProductQuantityUpdater->update(
                 $order,
@@ -127,13 +118,6 @@ final class ChangeOrderDeliveryAddressHandler extends AbstractOrderCommandHandle
         }
     }
 
-    /**
-     * @param CartProductUpdate $productUpdate
-     * @param Order $order
-     * @param Cart $cart
-     *
-     * @return OrderDetail|null
-     */
     private function getOrderDetail(CartProductUpdate $productUpdate, Order $order, Cart $cart): ?OrderDetail
     {
         $combinationId = $productUpdate->getCombinationId() ? $productUpdate->getCombinationId()->getValue() : 0;

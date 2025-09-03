@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,17 +38,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class MainCountryKpi implements KpiInterface
 {
     /**
-     * @param TranslatorInterface $translator
-     * @param ConfigurationInterface $configuration
      * @param string $sourceLink a link to refresh KPI
      */
-    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $configuration, private $sourceLink)
-    {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly ConfigurationInterface $configuration,
+        private $sourceLink,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $mainCountry = $this->configuration->get('MAIN_COUNTRY');
@@ -60,7 +59,7 @@ final class MainCountryKpi implements KpiInterface
         $kpi->title = $this->translator->trans('Main Country', [], 'Admin.International.Feature');
         $kpi->subtitle = $this->translator->trans('30 Days', [], 'Admin.Global');
 
-        if (false !== $mainCountry) {
+        if ($mainCountry !== false) {
             $kpi->value = $mainCountry;
         }
 

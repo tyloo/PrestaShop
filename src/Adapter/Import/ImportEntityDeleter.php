@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,18 +40,16 @@ use PrestaShop\PrestaShop\Core\Import\Exception\NotSupportedImportEntityExceptio
 final class ImportEntityDeleter implements ImportEntityDeleterInterface
 {
     /**
-     * @param Connection $connection
      * @param string $dbPrefix
-     * @param Configuration $configuration
-     * @param ImageFileDeleterInterface $imageFileDeleter
      */
-    public function __construct(private readonly Connection $connection, private $dbPrefix, private readonly Configuration $configuration, private readonly ImageFileDeleterInterface $imageFileDeleter)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private $dbPrefix,
+        private readonly Configuration $configuration,
+        private readonly ImageFileDeleterInterface $imageFileDeleter,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteAll($importEntity)
     {
         match ($importEntity) {
@@ -68,7 +67,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
             Entity::TYPE_ALIAS => $this->truncateTables([
                 'alias',
             ]),
-            default => throw new NotSupportedImportEntityException(sprintf('Import entity "%s" is not supported', $importEntity)),
+            default => throw new NotSupportedImportEntityException(\sprintf('Import entity "%s" is not supported', $importEntity)),
         };
 
         $this->imageFileDeleter->deleteAllImages($this->configuration->get('_PS_TMP_IMG_DIR_'));
@@ -113,24 +112,24 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
         ];
 
         $this->connection->executeQuery(
-            sprintf('DELETE FROM %scategory WHERE id_category NOT IN (?)', $this->dbPrefix),
+            \sprintf('DELETE FROM %scategory WHERE id_category NOT IN (?)', $this->dbPrefix),
             [$protectedCategoriesIds],
             [Connection::PARAM_INT_ARRAY]
         );
 
         $this->connection->executeQuery(
-            sprintf('DELETE FROM %scategory_lang WHERE id_category NOT IN (?)', $this->dbPrefix),
+            \sprintf('DELETE FROM %scategory_lang WHERE id_category NOT IN (?)', $this->dbPrefix),
             [$protectedCategoriesIds],
             [Connection::PARAM_INT_ARRAY]
         );
 
         $this->connection->executeQuery(
-            sprintf('DELETE FROM %scategory_shop WHERE id_category NOT IN (?)', $this->dbPrefix),
+            \sprintf('DELETE FROM %scategory_shop WHERE id_category NOT IN (?)', $this->dbPrefix),
             [$protectedCategoriesIds],
             [Connection::PARAM_INT_ARRAY]
         );
 
-        $this->connection->executeQuery(sprintf('ALTER TABLE %scategory AUTO_INCREMENT = 3', $this->dbPrefix));
+        $this->connection->executeQuery(\sprintf('ALTER TABLE %scategory AUTO_INCREMENT = 3', $this->dbPrefix));
 
         $this->imageFileDeleter->deleteFromPath($this->configuration->get('_PS_CAT_IMG_DIR_'));
     }
@@ -206,28 +205,24 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
 
         $this->truncateTables($truncateTables);
         $this->connection->executeQuery(
-            sprintf('DELETE FROM `%sstock_available` WHERE id_product_attribute != 0', $this->dbPrefix)
+            \sprintf('DELETE FROM `%sstock_available` WHERE id_product_attribute != 0', $this->dbPrefix)
         );
     }
 
     /**
      * Truncate multiple tables.
      *
-     * @param array $tables
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function truncateTables(array $tables)
     {
         foreach ($tables as $table) {
-            $this->connection->executeQuery(sprintf('TRUNCATE TABLE `%s%s`', $this->dbPrefix, $table));
+            $this->connection->executeQuery(\sprintf('TRUNCATE TABLE `%s%s`', $this->dbPrefix, $table));
         }
     }
 
     /**
      * Truncate tables if they exist. Truncates them one by one.
-     *
-     * @param array $tables
      *
      * @throws \Doctrine\DBAL\Exception
      */
@@ -241,7 +236,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
             );
 
             if ($tableExists) {
-                $this->connection->executeQuery(sprintf('TRUNCATE TABLE `%s%s`', $this->dbPrefix, $table));
+                $this->connection->executeQuery(\sprintf('TRUNCATE TABLE `%s%s`', $this->dbPrefix, $table));
             }
         }
     }

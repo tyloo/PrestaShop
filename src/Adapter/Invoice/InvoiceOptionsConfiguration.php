@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,26 +39,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class InvoiceOptionsConfiguration extends AbstractMultistoreConfiguration
 {
-    /**
-     * AbstractMultistoreConfiguration constructor.
-     *
-     * @param Configuration $configuration
-     * @param Context $shopContext
-     * @param FeatureInterface $multistoreFeature
-     * @param FormChoiceProviderInterface $invoiceModelByNameChoiceProvider
-     */
     public function __construct(
         Configuration $configuration,
         Context $shopContext,
         FeatureInterface $multistoreFeature,
-        private readonly FormChoiceProviderInterface $invoiceModelByNameChoiceProvider
+        private readonly FormChoiceProviderInterface $invoiceModelByNameChoiceProvider,
     ) {
         parent::__construct($configuration, $shopContext, $multistoreFeature);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -78,9 +68,6 @@ final class InvoiceOptionsConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -103,12 +90,9 @@ final class InvoiceOptionsConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
-        $resolver = (new OptionsResolver())
+        return (new OptionsResolver())
             ->setDefined(
                 [
                     'enable_invoices',
@@ -134,13 +118,11 @@ final class InvoiceOptionsConfiguration extends AbstractMultistoreConfiguration
             ->setAllowedTypes('year_position', ['integer'])
             ->setAllowedValues('year_position', [0, 1])
             ->setAllowedTypes('invoice_number', ['integer'])
-            ->setAllowedValues('invoice_number', fn(int $value) => $value >= 0)
+            ->setAllowedValues('invoice_number', fn (int $value) => $value >= 0)
             ->setAllowedTypes('legal_free_text', ['array'])
             ->setAllowedTypes('footer_text', ['array'])
             ->setAllowedTypes('invoice_model', ['string'])
             ->setAllowedValues('invoice_model', array_keys($this->invoiceModelByNameChoiceProvider->getChoices()))
             ->setAllowedTypes('use_disk_cache', ['bool']);
-
-        return $resolver;
     }
 }

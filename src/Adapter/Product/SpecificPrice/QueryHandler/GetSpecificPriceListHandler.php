@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,18 +53,13 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtil;
 #[AsQueryHandler]
 class GetSpecificPriceListHandler implements GetSpecificPriceListHandlerInterface
 {
-    /**
-     * @param SpecificPriceRepository $specificPriceRepository
-     * @param AttributeRepository $attributeRepository
-     * @param CombinationNameBuilderInterface $combinationNameBuilder
-     */
-    public function __construct(private readonly SpecificPriceRepository $specificPriceRepository, private readonly AttributeRepository $attributeRepository, private readonly CombinationNameBuilderInterface $combinationNameBuilder)
-    {
+    public function __construct(
+        private readonly SpecificPriceRepository $specificPriceRepository,
+        private readonly AttributeRepository $attributeRepository,
+        private readonly CombinationNameBuilderInterface $combinationNameBuilder,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetSpecificPriceList $query): SpecificPriceList
     {
         $specificPriceData = $this->specificPriceRepository->getProductSpecificPrices(
@@ -86,7 +82,6 @@ class GetSpecificPriceListHandler implements GetSpecificPriceListHandlerInterfac
 
     /**
      * @param array<int, array<string, string|null>> $specificPrices
-     * @param LanguageId $languageId
      *
      * @return SpecificPriceForListing[]
      */
@@ -97,8 +92,8 @@ class GetSpecificPriceListHandler implements GetSpecificPriceListHandlerInterfac
         $specificPricesForListing = [];
         foreach ($specificPrices as $specificPrice) {
             $combinationId = (int) $specificPrice['id_product_attribute'];
-            if ($combinationId && !isset($attributesInfo[$combinationId])) {
-                throw new CombinationException(sprintf('Failed to fetch combination "%d" info.', $combinationId));
+            if ($combinationId && ! isset($attributesInfo[$combinationId])) {
+                throw new CombinationException(\sprintf('Failed to fetch combination "%d" info.', $combinationId));
             }
 
             // VO stores percent expressed based on 100, while the DB stored the float value (VO: 57.5 - DB: 0.575)
@@ -131,14 +126,12 @@ class GetSpecificPriceListHandler implements GetSpecificPriceListHandlerInterfac
 
     /**
      * @param array<string, string|null> $specificPrice
-     *
-     * @return string|null
      */
     private function buildCustomerFullName(array $specificPrice): ?string
     {
         $customerName = null;
         if ((int) $specificPrice['id_customer']) {
-            $customerName = sprintf('%s %s', $specificPrice['customer_firstname'], $specificPrice['customer_lastname']);
+            $customerName = \sprintf('%s %s', $specificPrice['customer_firstname'], $specificPrice['customer_lastname']);
         }
 
         return $customerName;
@@ -146,7 +139,6 @@ class GetSpecificPriceListHandler implements GetSpecificPriceListHandlerInterfac
 
     /**
      * @param array<int, array<string, string|null>> $specificPrices
-     * @param LanguageId $languageId
      *
      * @return array<int, CombinationAttributeInformation[]>
      */

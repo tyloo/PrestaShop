@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,13 +40,13 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId;
  */
 class CombinationImagesUpdater
 {
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     /**
-     * @param CombinationId $combinationId
-     *
      * @throws DBALException
      * @throws InvalidArgumentException
      */
@@ -58,7 +59,6 @@ class CombinationImagesUpdater
     }
 
     /**
-     * @param CombinationId $combinationId
      * @param ImageId[] $imageIds
      *
      * @throws DBALException

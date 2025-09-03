@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,8 +44,6 @@ use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CategoryNotFoundExcepti
 final class EditCategoryHandler extends AbstractEditCategoryHandler implements EditCategoryHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CategoryNotFoundException
      * @throws CannotEditRootCategoryException
      */
@@ -52,8 +51,8 @@ final class EditCategoryHandler extends AbstractEditCategoryHandler implements E
     {
         $category = new Category($command->getCategoryId()->getValue());
 
-        if (!$category->id) {
-            throw new CategoryNotFoundException($command->getCategoryId(), sprintf('Category with id "%s" cannot be found.', $command->getCategoryId()->getValue()));
+        if (! $category->id) {
+            throw new CategoryNotFoundException($command->getCategoryId(), \sprintf('Category with id "%s" cannot be found.', $command->getCategoryId()->getValue()));
         }
 
         if ($category->isRootCategory()) {
@@ -72,63 +71,60 @@ final class EditCategoryHandler extends AbstractEditCategoryHandler implements E
     /**
      * Updates legacy object model with data from command
      *
-     * @param Category $category
-     * @param EditCategoryCommand $command
-     *
      * @throws CannotEditCategoryException
      */
     private function updateCategoryFromCommandData(Category $category, EditCategoryCommand $command)
     {
-        if (null !== $command->isActive()) {
+        if ($command->isActive() !== null) {
             $category->active = $command->isActive();
         }
 
-        if (null !== $command->getParentCategoryId()) {
+        if ($command->getParentCategoryId() !== null) {
             $category->id_parent = $command->getParentCategoryId();
         }
 
-        if (null !== $command->getLocalizedNames()) {
+        if ($command->getLocalizedNames() !== null) {
             $category->name = $command->getLocalizedNames();
         }
 
-        if (null !== $command->getLocalizedLinkRewrites()) {
+        if ($command->getLocalizedLinkRewrites() !== null) {
             $category->link_rewrite = $command->getLocalizedLinkRewrites();
         }
 
-        if (null !== $command->getLocalizedDescriptions()) {
+        if ($command->getLocalizedDescriptions() !== null) {
             $category->description = $command->getLocalizedDescriptions();
         }
 
-        if (null !== $command->getLocalizedAdditionalDescriptions()) {
+        if ($command->getLocalizedAdditionalDescriptions() !== null) {
             $category->additional_description = $command->getLocalizedAdditionalDescriptions();
         }
 
-        if (null !== $command->getLocalizedMetaTitles()) {
+        if ($command->getLocalizedMetaTitles() !== null) {
             $category->meta_title = $command->getLocalizedMetaTitles();
         }
 
-        if (null !== $command->getLocalizedMetaDescriptions()) {
+        if ($command->getLocalizedMetaDescriptions() !== null) {
             $category->meta_description = $command->getLocalizedMetaDescriptions();
         }
 
-        if (null !== $command->getAssociatedGroupIds()) {
+        if ($command->getAssociatedGroupIds() !== null) {
             $category->groupBox = $command->getAssociatedGroupIds();
         }
 
-        if (false === $category->validateFields(false)) {
+        if ($category->validateFields(false) === false) {
             throw new CannotEditCategoryException('Invalid data for updating category.');
         }
 
-        if (false === $category->validateFieldsLang(false)) {
+        if ($category->validateFieldsLang(false) === false) {
             throw new CannotEditCategoryException('Invalid language data for updating category.');
         }
 
-        if (null !== $command->getRedirectOption()) {
+        if ($command->getRedirectOption() !== null) {
             $this->fillWithRedirectOption($category, $command->getRedirectOption());
         }
 
-        if (false === $category->update()) {
-            throw new CannotEditCategoryException(sprintf('Failed to edit Category with id "%s".', $category->id));
+        if ($category->update() === false) {
+            throw new CannotEditCategoryException(\sprintf('Failed to edit Category with id "%s".', $category->id));
         }
 
         if ($command->getAssociatedShopIds()) {

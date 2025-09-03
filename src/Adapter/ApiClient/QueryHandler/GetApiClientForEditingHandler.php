@@ -40,8 +40,9 @@ use PrestaShopBundle\Entity\Repository\ApiClientRepository;
 #[AsQueryHandler]
 class GetApiClientForEditingHandler implements GetApiClientForEditingHandlerInterface
 {
-    public function __construct(private readonly ApiClientRepository $repository)
-    {
+    public function __construct(
+        private readonly ApiClientRepository $repository,
+    ) {
     }
 
     public function handle(GetApiClientForEditing $query): EditableApiClient
@@ -49,7 +50,7 @@ class GetApiClientForEditingHandler implements GetApiClientForEditingHandlerInte
         try {
             $apiClient = $this->repository->getById($query->getApiClientId()->getValue());
         } catch (NoResultException $noResultException) {
-            throw new ApiClientNotFoundException(sprintf('Could not find Api client %s', $query->getApiClientId()->getValue()), 0, $noResultException);
+            throw new ApiClientNotFoundException(\sprintf('Could not find Api client %s', $query->getApiClientId()->getValue()), 0, $noResultException);
         }
 
         return new EditableApiClient(

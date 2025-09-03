@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,13 +46,10 @@ final class AbandonedCartKpi implements KpiInterface
         private readonly TranslatorInterface $translator,
         private readonly ConfigurationInterface $configuration,
         private readonly LanguageContext $languageContext,
-        private readonly UrlGeneratorInterface $router
+        private readonly UrlGeneratorInterface $router,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $dateFormat = $this->languageContext->getDateFormat();

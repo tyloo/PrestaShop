@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,12 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 class DefaultCombinationUpdater
 {
-    /**
-     * @param CombinationRepository $combinationRepository
-     * @param ProductRepository $productRepository
-     */
-    public function __construct(private readonly CombinationRepository $combinationRepository, private readonly ProductRepository $productRepository)
-    {
+    public function __construct(
+        private readonly CombinationRepository $combinationRepository,
+        private readonly ProductRepository $productRepository,
+    ) {
     }
 
     /**
@@ -54,9 +53,6 @@ class DefaultCombinationUpdater
      * Notice: Product->cache_default_attribute is updated in Product add(), update(), delete() methods.
      *
      * @see Product::updateDefaultAttribute()
-     *
-     * @param CombinationId $defaultCombinationId
-     * @param ShopConstraint $shopConstraint
      */
     public function setDefaultCombination(CombinationId $defaultCombinationId, ShopConstraint $shopConstraint): void
     {

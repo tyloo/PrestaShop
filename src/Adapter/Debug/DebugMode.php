@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,7 +53,7 @@ class DebugMode
      */
     public function isDebugModeEnabled()
     {
-        return 'false' !== Tools::strtolower($this->getCurrentDebugMode());
+        return Tools::strtolower($this->getCurrentDebugMode()) !== 'false';
     }
 
     /**
@@ -70,9 +71,9 @@ class DebugMode
             $definesClean = php_strip_whitespace($customDefinesPath);
         }
 
-        if (!preg_match('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', $definesClean, $debugModeValue)) {
+        if (! preg_match('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', $definesClean, $debugModeValue)) {
             $definesClean = php_strip_whitespace($definesPath);
-            if (!preg_match('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', $definesClean, $debugModeValue)) {
+            if (! preg_match('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', $definesClean, $debugModeValue)) {
                 return null;
             }
         }
@@ -98,7 +99,7 @@ class DebugMode
      */
     public function createDebugModeFromConfiguration(array $configuration)
     {
-        if (!$configuration['debug_mode']) {
+        if (! $configuration['debug_mode']) {
             return 'false';
         }
 
@@ -109,12 +110,12 @@ class DebugMode
         $debug_cookie_name = stripslashes((string) $configuration['debug_cookie_name']);
 
         if (empty($configuration['debug_cookie_value'])) {
-            return sprintf("isset(\$_COOKIE['%s'])", $debug_cookie_name);
+            return \sprintf("isset(\$_COOKIE['%s'])", $debug_cookie_name);
         }
 
         $debug_cookie_value = stripslashes((string) $configuration['debug_cookie_value']);
 
-        return sprintf("isset(\$_COOKIE['%s']) && \$_COOKIE['%s'] === '%s'", $debug_cookie_name, $debug_cookie_name, $debug_cookie_value);
+        return \sprintf("isset(\$_COOKIE['%s']) && \$_COOKIE['%s'] === '%s'", $debug_cookie_name, $debug_cookie_name, $debug_cookie_value);
     }
 
     /**
@@ -170,16 +171,16 @@ class DebugMode
         $cleanedFileContent = php_strip_whitespace($filename);
         $fileContent = Tools::file_get_contents($filename);
 
-        if (!preg_match('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', $cleanedFileContent)) {
+        if (! preg_match('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', $cleanedFileContent)) {
             return self::DEBUG_MODE_ERROR_NO_DEFINITION_FOUND;
         }
 
         $fileContent = preg_replace('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', "define('_PS_MODE_DEV_', " . $value . ');', $fileContent);
-        if (!@file_put_contents($filename, $fileContent)) {
+        if (! @file_put_contents($filename, $fileContent)) {
             return self::DEBUG_MODE_ERROR_NO_WRITE_ACCESS;
         }
 
-        if (function_exists('opcache_invalidate')) {
+        if (\function_exists('opcache_invalidate')) {
             @opcache_invalidate($filename);
         }
 
@@ -199,17 +200,17 @@ class DebugMode
         $cleanedFileContent = php_strip_whitespace($customFileName);
         $fileContent = Tools::file_get_contents($customFileName);
 
-        if (!preg_match('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', $cleanedFileContent)) {
+        if (! preg_match('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', $cleanedFileContent)) {
             return self::DEBUG_MODE_ERROR_NO_DEFINITION_FOUND;
         }
 
         $fileContent = preg_replace('/define\(\'_PS_MODE_DEV_\', ([^;]+)\);/Ui', "define('_PS_MODE_DEV_', " . $value . ');', $fileContent);
 
-        if (!@file_put_contents($customFileName, $fileContent)) {
+        if (! @file_put_contents($customFileName, $fileContent)) {
             return self::DEBUG_MODE_ERROR_NO_WRITE_ACCESS_CUSTOM;
         }
 
-        if (function_exists('opcache_invalidate')) {
+        if (\function_exists('opcache_invalidate')) {
             @opcache_invalidate($customFileName);
         }
 

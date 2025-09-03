@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class StockManager
     /**
      * Gets available stock for a given product / combination / shop.
      *
-     * @param object $product
+     * @param object   $product
      * @param int|null $id_product_attribute
      * @param int|null $id_shop
      *
@@ -50,7 +51,7 @@ class StockManager
     {
         $stockAvailable = $this->newStockAvailable($this->getStockAvailableIdByProductId($product->id, $id_product_attribute, $id_shop));
 
-        if (!$stockAvailable->id) {
+        if (! $stockAvailable->id) {
             $shopAdapter = new ShopAdapter();
             $stockAvailable->id_product = (int) $product->id;
             $stockAvailable->id_product_attribute = (int) $id_product_attribute;
@@ -88,18 +89,18 @@ class StockManager
      */
     public function isAsmGloballyActivated()
     {
-        @trigger_error(sprintf(
+        @trigger_error(\sprintf(
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
-        ), E_USER_DEPRECATED);
+        ), \E_USER_DEPRECATED);
 
         return false;
     }
 
     /**
-     * @param int $shopId
-     * @param int $errorState
-     * @param int $cancellationState
+     * @param int      $shopId
+     * @param int      $errorState
+     * @param int      $cancellationState
      * @param int|null $idProduct
      * @param int|null $idOrder
      *
@@ -137,9 +138,9 @@ class StockManager
     }
 
     /**
-     * @param int $shopId
-     * @param int $errorState
-     * @param int $cancellationState
+     * @param int      $shopId
+     * @param int      $errorState
+     * @param int      $cancellationState
      * @param int|null $idProduct
      * @param int|null $idOrder
      *
@@ -209,7 +210,7 @@ class StockManager
      */
     public function newStockAvailable($stockAvailableId = null)
     {
-        if (is_int($stockAvailableId)) {
+        if (\is_int($stockAvailableId)) {
             return new StockAvailable($stockAvailableId);
         }
 
@@ -219,7 +220,7 @@ class StockManager
     /**
      * Use legacy getStockAvailableIdByProductId.
      *
-     * @param int $productId
+     * @param int      $productId
      * @param int|null $productAttributeId
      * @param int|null $shopId
      *
@@ -234,7 +235,7 @@ class StockManager
      * For a given product, get its "out of stock" flag.
      *
      * @param int $productId
-     * @param int $shopId Optional : gets context if null @see Context::getContext()
+     * @param int $shopId    Optional : gets context if null @see Context::getContext()
      *
      * @return bool True if product is orderable when out of stock
      */

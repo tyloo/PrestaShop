@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,9 +34,6 @@ use HelperKpi;
 use PrestaShop\PrestaShop\Core\Kpi\KpiInterface;
 use PrestaShop\PrestaShop\Core\Localization\Locale;
 
-/**
- * {@inheritdoc}
- */
 final class ShoppingCartTotalKpi implements KpiInterface
 {
     /**
@@ -43,16 +41,11 @@ final class ShoppingCartTotalKpi implements KpiInterface
      */
     private $options;
 
-    /**
-     * @param Locale $locale
-     */
-    public function __construct(private readonly Locale $locale)
-    {
+    public function __construct(
+        private readonly Locale $locale,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         $translator = Context::getContext()->getTranslator();
@@ -75,8 +68,6 @@ final class ShoppingCartTotalKpi implements KpiInterface
 
     /**
      * Sets options for Kpi
-     *
-     * @param array $options
      */
     public function setOptions(array $options)
     {

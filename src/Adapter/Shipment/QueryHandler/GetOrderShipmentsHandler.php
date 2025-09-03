@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -48,8 +49,6 @@ class GetOrderShipmentsHandler implements GetOrderShipmentsHandlerInterface
     }
 
     /**
-     * @param GetOrderShipments $query
-     *
      * @return OrderShipment[]
      */
     public function handle(GetOrderShipments $query)
@@ -60,14 +59,14 @@ class GetOrderShipmentsHandler implements GetOrderShipmentsHandlerInterface
         try {
             $result = $this->shipmentRepository->findByOrderId($orderId);
         } catch (Throwable $throwable) {
-            throw new ShipmentNotFoundException(sprintf('Could not find shipment for order with id "%s"', $orderId), 0, $throwable);
+            throw new ShipmentNotFoundException(\sprintf('Could not find shipment for order with id "%s"', $orderId), 0, $throwable);
         }
 
         foreach ($result as $shipment) {
             try {
                 $carrier = $this->carrierRepository->get(new CarrierId($shipment->getCarrierId()));
             } catch (Throwable $e) {
-                throw new ShipmentNotFoundException(sprintf('Could not find carrier with id "%s"', $shipment->getCarrierId()), 0, $e);
+                throw new ShipmentNotFoundException(\sprintf('Could not find carrier with id "%s"', $shipment->getCarrierId()), 0, $e);
             }
 
             $carrierSummary = new CarrierSummary($carrier->id, $carrier->name);

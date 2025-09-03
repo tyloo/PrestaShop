@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,18 +37,14 @@ use PrestaShop\PrestaShop\Core\Shop\Url\UrlProviderInterface;
  */
 class ImageFolderProvider implements UrlProviderInterface
 {
-    /**
-     * @param Link $link
-     * @param string $imagesRelativeFolder
-     */
-    public function __construct(private readonly Link $link, private readonly string $imagesRelativeFolder)
-    {
+    public function __construct(
+        private readonly Link $link,
+        private readonly string $imagesRelativeFolder,
+    ) {
     }
 
     /**
      * Create a link to product images base folder.
-     *
-     * @return string
      */
     public function getUrl(): string
     {

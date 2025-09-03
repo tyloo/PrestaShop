@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,17 +40,12 @@ use Product;
  */
 class PricesFiller implements ProductFillerInterface
 {
-    /**
-     * @param NumberExtractor $numberExtractor
-     * @param Configuration $configuration
-     */
-    public function __construct(private readonly NumberExtractor $numberExtractor, private readonly Configuration $configuration)
-    {
+    public function __construct(
+        private readonly NumberExtractor $numberExtractor,
+        private readonly Configuration $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function fillUpdatableProperties(Product $product, UpdateProductCommand $command): array
     {
         $updatableProperties = $this->fillWithPrices(
@@ -61,19 +57,19 @@ class PricesFiller implements ProductFillerInterface
             $command->getShopConstraint()
         );
 
-        if (null !== $command->getUnity()) {
+        if ($command->getUnity() !== null) {
             $product->unity = $command->getUnity();
             $updatableProperties[] = 'unity';
         }
 
         $taxRulesGroupId = $command->getTaxRulesGroupId();
 
-        if (null !== $taxRulesGroupId) {
+        if ($taxRulesGroupId !== null) {
             $product->id_tax_rules_group = $taxRulesGroupId;
             $updatableProperties[] = 'id_tax_rules_group';
         }
 
-        if (null !== $command->isOnSale()) {
+        if ($command->isOnSale() !== null) {
             $product->on_sale = $command->isOnSale();
             $updatableProperties[] = 'on_sale';
         }
@@ -85,12 +81,6 @@ class PricesFiller implements ProductFillerInterface
      * Wraps following properties filling: price, unit_price, unit_price_ratio, wholesale_price
      * as most of them (price, unit_price, unit_price_ratio) are highly coupled & depends on each other
      *
-     * @param Product $product
-     * @param DecimalNumber|null $price
-     * @param DecimalNumber|null $unitPrice
-     * @param DecimalNumber|null $wholesalePrice
-     * @param ShopConstraint $shopConstraint
-     *
      * @return string[] updatable properties
      */
     private function fillWithPrices(
@@ -99,20 +89,20 @@ class PricesFiller implements ProductFillerInterface
         ?DecimalNumber $unitPrice,
         ?DecimalNumber $wholesalePrice,
         ?DecimalNumber $ecotax,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ): array {
         $updatableProperties = [];
-        if (null !== $wholesalePrice) {
+        if ($wholesalePrice !== null) {
             $product->wholesale_price = (float) (string) $wholesalePrice;
             $updatableProperties[] = 'wholesale_price';
         }
 
-        if (null !== $price) {
+        if ($price !== null) {
             $product->price = (float) (string) $price;
             $updatableProperties[] = 'price';
         }
 
-        if (null !== $ecotax) {
+        if ($ecotax !== null) {
             $product->ecotax = (float) (string) $ecotax;
             $updatableProperties[] = 'ecotax';
         }
@@ -120,37 +110,29 @@ class PricesFiller implements ProductFillerInterface
         // When product price is zero we force unit price to zero
         $productPrice = $this->getProductFinalPrice($price, $ecotax, $product, $shopConstraint);
         $currentUnitPrice = $unitPrice ?: $this->numberExtractor->extract($product, 'unit_price');
-        if ($productPrice->equalsZero() && !$currentUnitPrice->equalsZero()) {
+        if ($productPrice->equalsZero() && ! $currentUnitPrice->equalsZero()) {
             $unitPrice = new DecimalNumber('0');
         }
 
-        if (null !== $unitPrice) {
+        if ($unitPrice !== null) {
             $product->unit_price = (float) (string) $unitPrice;
             $updatableProperties[] = 'unit_price';
         }
 
         // When price or unit price is changed the ratio must be updated, but only the object field
         // we don't ask to update this property since it will be updated via an SQL query by the Product class
-        if (null !== $unitPrice || null !== $price) {
+        if ($unitPrice !== null || $price !== null) {
             $this->fillUnitPriceRatio($product, $price, $unitPrice);
         }
 
         return $updatableProperties;
     }
 
-    /**
-     * @param DecimalNumber|null $price
-     * @param DecimalNumber|null $ecotax
-     * @param Product $product
-     * @param ShopConstraint $shopConstraint
-     *
-     * @return DecimalNumber
-     */
     private function getProductFinalPrice(
         ?DecimalNumber $price,
         ?DecimalNumber $ecotax,
         Product $product,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ): DecimalNumber {
         $price = $price ?: $this->numberExtractor->extract($product, 'price');
 
@@ -164,11 +146,6 @@ class PricesFiller implements ProductFillerInterface
         return $price->plus($ecotax);
     }
 
-    /**
-     * @param Product $product
-     * @param DecimalNumber|null $price
-     * @param DecimalNumber|null $unitPrice
-     */
     private function fillUnitPriceRatio(Product $product, ?DecimalNumber $price, ?DecimalNumber $unitPrice): void
     {
         $price = $price ?: $this->numberExtractor->extract($product, 'price');
@@ -179,11 +156,6 @@ class PricesFiller implements ProductFillerInterface
         $this->setUnitPriceRatio($product, $price, $unitPrice);
     }
 
-    /**
-     * @param Product $product
-     * @param DecimalNumber $price
-     * @param DecimalNumber $unitPrice
-     */
     private function setUnitPriceRatio(Product $product, DecimalNumber $price, DecimalNumber $unitPrice): void
     {
         // If unit price or price is zero, then reset ratio to zero too

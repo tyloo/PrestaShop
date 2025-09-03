@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,16 +35,11 @@ use PrestaShop\PrestaShop\Core\Employee\NavigationMenuTogglerInterface;
  */
 final class NavigationMenuToggler implements NavigationMenuTogglerInterface
 {
-    /**
-     * @param LegacyContext $legacyContext
-     */
-    public function __construct(private readonly LegacyContext $legacyContext)
-    {
+    public function __construct(
+        private readonly LegacyContext $legacyContext,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toggleNavigationMenuInCookies(bool $shouldCollapse): void
     {
         $this->legacyContext->getContext()->cookie->collapse_menu = (int) $shouldCollapse;

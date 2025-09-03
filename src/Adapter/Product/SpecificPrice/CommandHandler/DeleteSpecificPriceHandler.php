@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,11 +40,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\CommandHandler\Delet
 #[AsCommandHandler]
 class DeleteSpecificPriceHandler implements DeleteSpecificPriceHandlerInterface
 {
-    /**
-     * @param SpecificPriceRepository $specificPriceRepository
-     */
-    public function __construct(private readonly SpecificPriceRepository $specificPriceRepository)
-    {
+    public function __construct(
+        private readonly SpecificPriceRepository $specificPriceRepository,
+    ) {
     }
 
     public function handle(DeleteSpecificPriceCommand $command): void

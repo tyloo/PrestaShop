@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,6 @@ use PrestaShop\PrestaShop\Core\Domain\Category\Exception\FailedToDeleteCategoryE
 final class BulkDeleteCategoriesHandler extends AbstractDeleteCategoryHandler implements BulkDeleteCategoriesHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CategoryNotFoundException
      * @throws CannotDeleteRootCategoryForShopException
      * @throws FailedToDeleteCategoryException
@@ -53,16 +52,16 @@ final class BulkDeleteCategoriesHandler extends AbstractDeleteCategoryHandler im
         foreach ($command->getCategoryIds() as $categoryId) {
             $category = new Category($categoryId->getValue());
 
-            if (!$category->id) {
-                throw new CategoryNotFoundException($categoryId, sprintf('Category with id %s cannot be found.', var_export($categoryId->getValue(), true)));
+            if (! $category->id) {
+                throw new CategoryNotFoundException($categoryId, \sprintf('Category with id %s cannot be found.', var_export($categoryId->getValue(), true)));
             }
 
             if ($category->isRootCategoryForAShop()) {
-                throw new CannotDeleteRootCategoryForShopException(sprintf("Shop's root category with id %s cannot be deleted.", var_export($categoryId->getValue(), true)));
+                throw new CannotDeleteRootCategoryForShopException(\sprintf("Shop's root category with id %s cannot be deleted.", var_export($categoryId->getValue(), true)));
             }
 
-            if (!$category->delete()) {
-                throw new FailedToDeleteCategoryException(sprintf('Failed to delete category with id %s', var_export($categoryId->getValue(), true)));
+            if (! $category->delete()) {
+                throw new FailedToDeleteCategoryException(\sprintf('Failed to delete category with id %s', var_export($categoryId->getValue(), true)));
             }
 
             $deletedCategoryIdsByParent[(int) $category->id_parent][] = $categoryId->getValue();

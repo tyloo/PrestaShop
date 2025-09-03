@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -133,7 +134,7 @@ class DiscountValidator extends AbstractObjectModelValidator
 
                 break;
             default:
-                throw new DiscountConstraintException(sprintf("Invalid discount type '%s'.", $command->getDiscountType()->getValue()), DiscountConstraintException::INVALID_DISCOUNT_TYPE);
+                throw new DiscountConstraintException(\sprintf("Invalid discount type '%s'.", $command->getDiscountType()->getValue()), DiscountConstraintException::INVALID_DISCOUNT_TYPE);
         }
     }
 
@@ -168,10 +169,7 @@ class DiscountValidator extends AbstractObjectModelValidator
         }
 
         if ($duplicateCodeCartRuleId && $duplicateCodeCartRuleId !== (int) $cartRule->id) {
-            throw new DiscountConstraintException(
-                sprintf('This discount code "%s" is already used (conflict with discount %s)', $code, $duplicateCodeCartRuleId),
-                DiscountConstraintException::NON_UNIQUE_CODE
-            );
+            throw new DiscountConstraintException(\sprintf('This discount code "%s" is already used (conflict with discount %s)', $code, $duplicateCodeCartRuleId), DiscountConstraintException::NON_UNIQUE_CODE);
         }
     }
 

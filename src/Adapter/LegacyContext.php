@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,22 +43,27 @@ use Tab;
  */
 class LegacyContext
 {
-    /** @var Context */
+    /**
+     * @var Context
+     */
     protected static $instance;
 
-    /** @var Currency|null */
+    /**
+     * @var Currency|null
+     */
     private $employeeCurrency;
 
-    /** @var Tools */
+    /**
+     * @var Tools
+     */
     private $tools;
 
     /**
      * @param string|null $mailThemesUri
-     * @param Tools|null $tools
      */
     public function __construct(
         private $mailThemesUri = null,
-        ?Tools $tools = null
+        ?Tools $tools = null,
     ) {
         $this->tools = $tools ?? new Tools();
     }
@@ -72,7 +78,7 @@ class LegacyContext
      */
     public function getContext()
     {
-        if (null === static::$instance) {
+        if (static::$instance === null) {
             static::$instance = Context::getContext();
         }
 
@@ -107,9 +113,9 @@ class LegacyContext
     /**
      * Adapter to get Admin HTTP link.
      *
-     * @param string $controller the controller name
-     * @param bool $withToken
-     * @param array $extraParams
+     * @param string $controller  the controller name
+     * @param bool   $withToken
+     * @param array  $extraParams
      *
      * @return string
      */
@@ -122,8 +128,8 @@ class LegacyContext
      * Returns the controller link in its legacy form, without trying to convert it in symfony url.
      *
      * @param string $controller
-     * @param bool $withToken
-     * @param array $extraParams
+     * @param bool   $withToken
+     * @param array  $extraParams
      *
      * @return string
      */
@@ -191,9 +197,9 @@ class LegacyContext
     /**
      * Returns available languages. The first one is the employee default one.
      *
-     * @param bool $active Select only active languages
-     * @param int|bool $id_shop Shop ID
-     * @param bool $ids_only If true, returns an array of language IDs
+     * @param bool     $active   Select only active languages
+     * @param int|bool $id_shop  Shop ID
+     * @param bool     $ids_only If true, returns an array of language IDs
      *
      * @return array<int|array> Languages
      */
@@ -202,11 +208,11 @@ class LegacyContext
         $languages = $this->getLegacyLanguages($active, $id_shop, $ids_only);
         $defaultLanguageFirst = $this->getLanguage();
         usort($languages, function ($a, $b) use ($defaultLanguageFirst) {
-            if ($a['id_lang'] == $defaultLanguageFirst->id) {
+            if ($a['id_lang'] === $defaultLanguageFirst->id) {
                 return -1; // $a is the default one.
             }
 
-            if ($b['id_lang'] == $defaultLanguageFirst->id) {
+            if ($b['id_lang'] === $defaultLanguageFirst->id) {
                 return 1; // $b is the default one.
             }
 
@@ -233,7 +239,7 @@ class LegacyContext
      */
     public function getEmployeeCurrency()
     {
-        if (null === $this->employeeCurrency && $this->getContext()->currency) {
+        if ($this->employeeCurrency === null && $this->getContext()->currency) {
             $this->employeeCurrency = $this->getContext()->currency;
         }
 
@@ -265,7 +271,7 @@ class LegacyContext
     {
         $employee = $this->getContext()->employee;
 
-        if (!$employee instanceof Employee) {
+        if (! $employee instanceof Employee) {
             throw new RuntimeException('Cannot retrieve default employee tab. Employee does not exist in context!');
         }
 
@@ -292,11 +298,7 @@ class LegacyContext
     }
 
     /**
-     * @param bool $active
      * @param bool|int $id_shop
-     * @param bool $ids_only
-     *
-     * @return array
      */
     private function getLegacyLanguages(bool $active = true, $id_shop = false, bool $ids_only = false): array
     {

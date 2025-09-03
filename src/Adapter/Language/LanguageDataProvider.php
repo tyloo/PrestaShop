@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,9 +38,9 @@ class LanguageDataProvider
     /**
      * Returns languages data.
      *
-     * @param bool $active
+     * @param bool     $active
      * @param int|bool $shopId
-     * @param bool $onlyIds
+     * @param bool     $onlyIds
      *
      * @return array
      */
@@ -73,7 +74,7 @@ class LanguageDataProvider
     {
         $result = Language::getJsonLanguageDetails($locale);
 
-        if (false === $result) {
+        if ($result === false) {
             return [];
         }
 
@@ -94,7 +95,7 @@ class LanguageDataProvider
         $isoFrom,
         $themeFrom,
         $isoTo,
-        $themeTo
+        $themeTo,
     ) {
         return Language::getFilesList($isoFrom, $themeFrom, $isoTo, $themeTo, false, false, true);
     }

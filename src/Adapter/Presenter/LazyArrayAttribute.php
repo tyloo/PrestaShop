@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,7 +35,7 @@ class LazyArrayAttribute
     public function __construct(
         public bool $arrayAccess = false,
         public ?string $indexName = null,
-        public ?bool $isRewritable = null
+        public ?bool $isRewritable = null,
     ) {
     }
 }

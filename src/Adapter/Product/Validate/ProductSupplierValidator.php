@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,18 +45,14 @@ use ProductSupplier;
  */
 class ProductSupplierValidator extends AbstractObjectModelValidator
 {
-    /**
-     * @param ProductRepository $productRepository
-     * @param SupplierRepository $supplierRepository
-     * @param CurrencyRepository $currencyRepository
-     */
-    public function __construct(private readonly ProductRepository $productRepository, private readonly SupplierRepository $supplierRepository, private readonly CurrencyRepository $currencyRepository)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly SupplierRepository $supplierRepository,
+        private readonly CurrencyRepository $currencyRepository,
+    ) {
     }
 
     /**
-     * @param ProductSupplier $productSupplier
-     *
      * @throws CoreException
      */
     public function validate(ProductSupplier $productSupplier): void
@@ -77,9 +74,6 @@ class ProductSupplierValidator extends AbstractObjectModelValidator
         $this->assertRelatedEntitiesExists($productSupplier);
     }
 
-    /**
-     * @param ProductSupplier $productSupplier
-     */
     private function assertRelatedEntitiesExists(ProductSupplier $productSupplier): void
     {
         $this->productRepository->assertProductExists(new ProductId((int) $productSupplier->id_product));

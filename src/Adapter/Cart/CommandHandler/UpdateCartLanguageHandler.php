@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,9 +44,6 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class UpdateCartLanguageHandler extends AbstractCartHandler implements UpdateCartLanguageHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateCartLanguageCommand $command): void
     {
         $language = $this->getLanguageObject($command->getNewLanguageId());
@@ -56,19 +54,15 @@ final class UpdateCartLanguageHandler extends AbstractCartHandler implements Upd
         $cart->id_lang = (int) $language->id;
 
         try {
-            if (false === $cart->update()) {
+            if ($cart->update() === false) {
                 throw new CartException('Failed to update cart language');
             }
         } catch (PrestaShopException) {
-            throw new CartException(sprintf('An error occurred while trying to update language for cart with id "%s"', $cart->id));
+            throw new CartException(\sprintf('An error occurred while trying to update language for cart with id "%s"', $cart->id));
         }
     }
 
     /**
-     * @param LanguageId $languageId
-     *
-     * @return Language
-     *
      * @throws LanguageException
      * @throws LanguageNotFoundException
      */
@@ -77,28 +71,23 @@ final class UpdateCartLanguageHandler extends AbstractCartHandler implements Upd
         try {
             $lang = new Language($languageId->getValue());
         } catch (PrestaShopException) {
-            throw new LanguageException(
-                sprintf('An error occurred when fetching language object with id %d', $languageId->getValue()),
-                $languageId->getValue()
-            );
+            throw new LanguageException(\sprintf('An error occurred when fetching language object with id %d', $languageId->getValue()), $languageId->getValue());
         }
 
         if ($languageId->getValue() !== $lang->id) {
-            throw new LanguageNotFoundException($languageId, sprintf('Language with id "%s" was not found', $languageId->getValue()));
+            throw new LanguageNotFoundException($languageId, \sprintf('Language with id "%s" was not found', $languageId->getValue()));
         }
 
         return $lang;
     }
 
     /**
-     * @param Language $lang
-     *
      * @throws LanguageException
      */
     private function assertLanguageIsActive(Language $lang): void
     {
-        if (!$lang->active) {
-            throw new LanguageException(sprintf('Language with id "%s" is not active', $lang->id), LanguageException::NOT_ACTIVE);
+        if (! $lang->active) {
+            throw new LanguageException(\sprintf('Language with id "%s" is not active', $lang->id), LanguageException::NOT_ACTIVE);
         }
     }
 }

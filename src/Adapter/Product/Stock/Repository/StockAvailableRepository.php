@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,13 +53,15 @@ use StockAvailable;
 
 class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
 {
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly StockAvailableValidator $stockAvailableValidator, private readonly ShopGroupRepository $shopGroupRepository)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly StockAvailableValidator $stockAvailableValidator,
+        private readonly ShopGroupRepository $shopGroupRepository,
+    ) {
     }
 
     /**
-     * @param StockAvailable $stockAvailable
-     *
      * @throws CoreException
      */
     public function update(StockAvailable $stockAvailable, ShopId $shopId): void
@@ -75,10 +78,6 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
      * When group shares its stock, StockAvailable id_shop value is 0, but sometimes we still need a fallback shop
      * ID (because some code only accepts this as input even if they later update the group), so we return the first
      * shop ID from the StockAvailable group.
-     *
-     * @param StockAvailable $stockAvailable
-     *
-     * @return ShopId
      */
     public function getFallbackShopId(StockAvailable $stockAvailable): ShopId
     {
@@ -94,10 +93,6 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param StockId $stockId
-     *
-     * @return StockAvailable
-     *
      * @throws CoreException
      * @throws StockAvailableNotFoundException
      */
@@ -114,33 +109,19 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopId $shopId
-     *
-     * @return StockId
-     *
      * @throws StockAvailableNotFoundException
      */
     public function getStockIdByProduct(ProductId $productId, ShopId $shopId): StockId
     {
         $stockAvailableId = StockAvailable::getStockAvailableIdByProductId($productId->getValue(), null, $shopId->getValue());
         if ($stockAvailableId <= 0) {
-            throw new StockAvailableNotFoundException(sprintf(
-                'Cannot find StockAvailable for product #%d',
-                $productId->getValue()
-            )
-            );
+            throw new StockAvailableNotFoundException(\sprintf('Cannot find StockAvailable for product #%d', $productId->getValue()));
         }
 
         return new StockId($stockAvailableId);
     }
 
     /**
-     * @param ProductId $productId
-     * @param ShopId $shopId
-     *
-     * @return StockAvailable
-     *
      * @throws CoreException
      * @throws StockAvailableNotFoundException
      */
@@ -152,8 +133,6 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @throws CoreException
      */
     public function delete(ProductId $productId, ShopId $shopId): void
@@ -162,11 +141,6 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param CombinationId $combinationId
-     * @param ShopId $shopId
-     *
-     * @return StockId
-     *
      * @throws CoreException
      * @throws StockAvailableNotFoundException
      */
@@ -186,12 +160,7 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
 
         $row = $qb->executeQuery()->fetchAssociative();
         if (empty($row)) {
-            throw new StockAvailableNotFoundException(
-                sprintf(
-                    'Cannot find StockAvailable for combination #%d',
-                    $combinationId->getValue()
-                )
-            );
+            throw new StockAvailableNotFoundException(\sprintf('Cannot find StockAvailable for combination #%d', $combinationId->getValue()));
         }
 
         return new StockId((int) $row['id_stock_available']);
@@ -209,11 +178,11 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
         }
 
         foreach ($shopParams as $key => $value) {
-            if (!in_array($key, ['id_shop', 'id_shop_group'])) {
+            if (! \in_array($key, ['id_shop', 'id_shop_group'], true)) {
                 continue;
             }
 
-            $qb->andWhere(sprintf('%s = :%s', $key, $key))
+            $qb->andWhere(\sprintf('%s = :%s', $key, $key))
                 ->setParameter($key, $value, ParameterType::INTEGER)
             ;
         }
@@ -222,10 +191,6 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param CombinationId $combinationId
-     *
-     * @return StockAvailable
-     *
      * @throws CoreException
      * @throws StockAvailableNotFoundException
      */
@@ -237,11 +202,6 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param CombinationId|null $combinationId
-     *
-     * @return StockAvailable
-     *
      * @throws CoreException
      * @throws StockAvailableNotFoundException
      */
@@ -257,11 +217,7 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
         try {
             StockAvailable::addSqlShopParams($shopParams, $shopId->getValue());
         } catch (PrestaShopException $prestaShopException) {
-            throw new CoreException(
-                sprintf('Error occurred when trying to add StockAvailable shop params #%d', $productId->getValue()),
-                0,
-                $prestaShopException
-            );
+            throw new CoreException(\sprintf('Error occurred when trying to add StockAvailable shop params #%d', $productId->getValue()), 0, $prestaShopException);
         }
 
         if (empty($shopParams['id_shop']) && empty($shopParams['id_shop_group'])) {
@@ -276,9 +232,6 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     * @param CombinationIdInterface $combinationId
-     *
      * @return StockId[]
      */
     public function getAllShopsStockIds(ProductId $productId, CombinationIdInterface $combinationId): array
@@ -292,16 +245,12 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('combinationId', $combinationId->getValue())
         ;
 
-        return array_map(static fn(array $stock) => new StockId((int) $stock['id_stock_available']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $stock) => new StockId((int) $stock['id_stock_available']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**
      * Updates the physical_quantity and reserved_quantity columns for the specified Stock. Most of this function logic comes from
      * StockManager::updatePhysicalProductQuantity
-     *
-     * @param StockId $stockId
-     * @param OrderStateId $errorStateId
-     * @param OrderStateId $canceledStateId
      */
     public function updatePhysicalProductQuantity(StockId $stockId, OrderStateId $errorStateId, OrderStateId $canceledStateId): void
     {

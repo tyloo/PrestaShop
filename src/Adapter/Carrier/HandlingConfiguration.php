@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ class HandlingConfiguration extends AbstractMultistoreConfiguration
 {
     private const CONFIGURATION_FIELDS = ['shipping_handling_charges', 'free_shipping_price', 'free_shipping_weight'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -50,9 +48,6 @@ class HandlingConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -65,17 +60,12 @@ class HandlingConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
-        $resolver = (new OptionsResolver())
+        return (new OptionsResolver())
             ->setDefined(self::CONFIGURATION_FIELDS)
             ->setAllowedTypes('shipping_handling_charges', 'float')
             ->setAllowedTypes('free_shipping_price', 'float')
             ->setAllowedTypes('free_shipping_weight', 'float');
-
-        return $resolver;
     }
 }

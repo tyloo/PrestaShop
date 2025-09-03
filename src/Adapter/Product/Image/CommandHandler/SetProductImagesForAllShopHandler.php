@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,13 +44,12 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsCommandHandler]
 class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHandlerInterface
 {
-    public function __construct(private readonly ProductImageRepository $productImageRepository, private readonly ProductRepository $productRepository)
-    {
+    public function __construct(
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly ProductRepository $productRepository,
+    ) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function handle(SetProductImagesForAllShopCommand $command): void
     {
         $productId = $command->getProductId();
@@ -61,11 +61,11 @@ class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHan
             $shopsToRemoveImageFrom = $this->getShopsToRemoveImageFrom($shopIdsAssociatedToProduct, $shopsToAddImageTo, $image);
             $image->associateTo($shopsToAddImageTo, $productId->getValue());
 
-            if (!empty($shopsToRemoveImageFrom)) {
+            if (! empty($shopsToRemoveImageFrom)) {
                 $this->productImageRepository->deleteFromShops(
                     new ImageId((int) $image->id),
                     array_map(
-                        static fn(int $shopId): ShopId => new ShopId($shopId),
+                        static fn (int $shopId): ShopId => new ShopId($shopId),
                         $shopsToRemoveImageFrom
                     )
                 );
@@ -75,15 +75,12 @@ class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHan
 
     /**
      * @param ProductImageSetting[] $productImageSettings
-     * @param int $imageId
-     *
-     * @return ProductImageSetting|null
      */
     private function getProductImageSettingByImage(array $productImageSettings, int $imageId): ?ProductImageSetting
     {
         $productImageSettingsFiltered = array_filter(
             $productImageSettings,
-            fn(ProductImageSetting $productImageSetting): bool => $productImageSetting->getImageId()->getValue() === $imageId
+            fn (ProductImageSetting $productImageSetting): bool => $productImageSetting->getImageId()->getValue() === $imageId
         );
 
         return reset($productImageSettingsFiltered) ?: null;
@@ -91,9 +88,6 @@ class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHan
 
     /**
      * @param ProductImageSetting[] $productImageSettings
-     * @param int $imageId
-     *
-     * @return array
      */
     private function extractShopsToAddImageTo(array $productImageSettings, int $imageId): array
     {
@@ -109,7 +103,6 @@ class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHan
     /**
      * @param int[] $shopIdsAssociatedToProduct
      * @param int[] $shopsToAddImageTo
-     * @param Image $image
      *
      * @return int[]
      */
@@ -119,12 +112,12 @@ class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHan
         $shopIdsAssociatedToImage = $this->shopIdsToInt($this->productImageRepository->getAssociatedShopIds(new ImageId($image->id)));
         $shopsToRemoveImageFrom = array_filter(
             $shopsToRemoveImageFrom,
-            fn(int $shopToRemoveImageFrom): bool => in_array($shopToRemoveImageFrom, $shopIdsAssociatedToImage, true)
+            fn (int $shopToRemoveImageFrom): bool => \in_array($shopToRemoveImageFrom, $shopIdsAssociatedToImage, true)
         );
 
         $shopIdsCovered = $this->shopIdsToInt($this->productImageRepository->getShopIdsByCoverId(new ImageId($image->id)));
         $coverToRemove = array_intersect($shopIdsCovered, $shopsToRemoveImageFrom);
-        if (!empty($coverToRemove)) {
+        if (! empty($coverToRemove)) {
             throw new CannotRemoveCoverException();
         }
 
@@ -139,7 +132,7 @@ class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHan
     private function shopIdsToInt(array $shopIds): array
     {
         return array_map(
-            fn(ShopId $shopId): int => $shopId->getValue(),
+            fn (ShopId $shopId): int => $shopId->getValue(),
             $shopIds
         );
     }

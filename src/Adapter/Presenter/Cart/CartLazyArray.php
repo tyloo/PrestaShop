@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -81,8 +82,11 @@ class CartLazyArray extends AbstractLazyArray
 
     private readonly ImageRetriever $imageRetriever;
 
-    public function __construct(private readonly Cart $cart, private readonly CartPresenter $cartPresenter, private readonly bool $shouldSeparateGifts = false)
-    {
+    public function __construct(
+        private readonly Cart $cart,
+        private readonly CartPresenter $cartPresenter,
+        private readonly bool $shouldSeparateGifts = false,
+    ) {
         $context = Context::getContext();
         $this->translator = $context->getTranslator();
         $this->link = $context->link;
@@ -179,9 +183,7 @@ class CartLazyArray extends AbstractLazyArray
         }
 
         if ($this->cart->gift) {
-            $giftWrappingPrice = ($this->cart->getGiftWrappingPrice($this->cartPresenter->includeTaxes()) != 0)
-                ? $this->cart->getGiftWrappingPrice($this->cartPresenter->includeTaxes())
-                : 0;
+            $giftWrappingPrice = $this->cart->getGiftWrappingPrice($this->cartPresenter->includeTaxes());
 
             $subtotals['gift_wrapping'] = [
                 'type' => 'gift_wrapping',
@@ -193,7 +195,7 @@ class CartLazyArray extends AbstractLazyArray
             ];
         }
 
-        if (!$this->cart->isVirtualCart()) {
+        if (! $this->cart->isVirtualCart()) {
             $shippingCost = $this->cart->getTotalShippingCost(null, $this->cartPresenter->includeTaxes());
         } else {
             $shippingCost = 0;
@@ -230,7 +232,7 @@ class CartLazyArray extends AbstractLazyArray
     {
         // If product list is already available, no need to execute a new sql query
         if (isset($this->products)) {
-            $this->productsCount = array_reduce($this->products, fn($count, $product) => $count + $product['quantity'], 0);
+            $this->productsCount = array_reduce($this->products, fn ($count, $product) => $count + $product['quantity'], 0);
 
             return $this->productsCount;
         }
@@ -305,7 +307,7 @@ class CartLazyArray extends AbstractLazyArray
     {
         $vouchers = $this->getVouchers();
         $cartRulesIds = array_flip(array_map(
-            fn($voucher) => $voucher['id_cart_rule'],
+            fn ($voucher) => $voucher['id_cart_rule'],
             $vouchers['added']
         ));
 
@@ -319,7 +321,7 @@ class CartLazyArray extends AbstractLazyArray
                 return false;
             }
 
-            return !array_key_exists($discount['id_cart_rule'], $cartRulesIds);
+            return ! \array_key_exists($discount['id_cart_rule'], $cartRulesIds);
         });
 
         $this->discounts = $discounts;
@@ -365,8 +367,6 @@ class CartLazyArray extends AbstractLazyArray
      * simply because the system was unable to determine shipping cost at this point and thus send an empty string to hide the shipping line.
      *
      * @param float $shippingCost
-     *
-     * @return string
      */
     private function getShippingDisplayValue($shippingCost): string
     {
@@ -374,12 +374,12 @@ class CartLazyArray extends AbstractLazyArray
 
         // if one of the applied cart rules have free shipping, then the shipping display value is 'Free'
         foreach ($this->cart->getCartRules() as $rule) {
-            if ($rule['free_shipping'] && !$rule['carrier_restriction']) {
+            if ($rule['free_shipping'] && ! $rule['carrier_restriction']) {
                 return $this->translator->trans('Free', [], 'Shop.Theme.Checkout');
             }
         }
 
-        if ($shippingCost != 0) {
+        if ($shippingCost !== 0) {
             $shippingDisplayValue = $this->priceFormatter->format($shippingCost);
         } else {
             $defaultCountry = null;
@@ -390,7 +390,7 @@ class CartLazyArray extends AbstractLazyArray
 
             $deliveryOptionList = $this->cart->getDeliveryOptionList($defaultCountry);
 
-            if (count($deliveryOptionList) > 0) {
+            if (\count($deliveryOptionList) > 0) {
                 foreach ($deliveryOptionList as $option) {
                     foreach ($option as $currentCarrier) {
                         if (isset($currentCarrier['is_free']) && $currentCarrier['is_free'] > 0) {
@@ -410,7 +410,7 @@ class CartLazyArray extends AbstractLazyArray
         $cartVouchers = $this->cart->getCartRules();
         $vouchers = [];
 
-        $cartHasTax = null === $this->cart->id ? false : $this->cart->getAverageProductsTaxRate() * 100;
+        $cartHasTax = $this->cart->id === null ? false : $this->cart->getAverageProductsTaxRate() * 100;
         $freeShippingAlreadySet = false;
         /** @var array{id_cart_rule:int, name: string, code: string, reduction_percent: float, reduction_currency: int, free_shipping: bool, reduction_tax: bool, reduction_amount:float, value_real:float|int|string, value_tax_exc:float|int|string} $cartVoucher */
         foreach ($cartVouchers as $cartVoucher) {
@@ -423,7 +423,7 @@ class CartLazyArray extends AbstractLazyArray
 
             // Voucher reduction depending of the cart tax rule
             // if $cartHasTax & voucher is tax excluded, set amount voucher to tax included
-            if ($cartHasTax && $cartVoucher['reduction_tax'] == '0') {
+            if ($cartHasTax && $cartVoucher['reduction_tax'] === '0') {
                 $cartVoucher['reduction_amount'] *= 1 + $cartHasTax / 100;
             }
 
@@ -440,9 +440,9 @@ class CartLazyArray extends AbstractLazyArray
                 if ($freeShippingAlreadySet) {
                     unset($vouchers[$cartVoucher['id_cart_rule']]);
                     continue;
-                } else {
-                    $freeShippingAlreadySet = true;
                 }
+
+                $freeShippingAlreadySet = true;
             } else {
                 $freeShippingOnly = false;
                 $totalCartVoucherReduction = $this->cartPresenter->includeTaxes() ? $cartVoucher['value_real'] : $cartVoucher['value_tax_exc'];
@@ -479,21 +479,21 @@ class CartLazyArray extends AbstractLazyArray
 
     private function cartVoucherHasGiftProductReduction(array $cartVoucher): bool
     {
-        return !empty($cartVoucher['gift_product']);
+        return ! empty($cartVoucher['gift_product']);
     }
 
     private function cartVoucherHasFreeShippingOnly(array $cartVoucher): bool
     {
-        return !$this->cartVoucherHasPercentReduction($cartVoucher)
-            && !$this->cartVoucherHasAmountReduction($cartVoucher)
-            && !$this->cartVoucherHasGiftProductReduction($cartVoucher);
+        return ! $this->cartVoucherHasPercentReduction($cartVoucher)
+            && ! $this->cartVoucherHasAmountReduction($cartVoucher)
+            && ! $this->cartVoucherHasGiftProductReduction($cartVoucher);
     }
 
     private function cartVoucherHasPercentReduction(array $cartVoucher): bool
     {
         return isset($cartVoucher['reduction_percent'])
             && $cartVoucher['reduction_percent'] > 0
-            && $cartVoucher['reduction_amount'] == '0.00';
+            && $cartVoucher['reduction_amount'] === '0.00';
     }
 
     private function cartVoucherHasAmountReduction(array $cartVoucher): bool
@@ -502,13 +502,11 @@ class CartLazyArray extends AbstractLazyArray
     }
 
     /**
-     * @param array $rawProduct
-     *
      * @return ProductLazyArray|ProductListingLazyArray
      */
     private function presentProduct(array $rawProduct)
     {
-        if (isset($rawProduct['attributes']) && is_string($rawProduct['attributes'])) {
+        if (isset($rawProduct['attributes']) && \is_string($rawProduct['attributes'])) {
             $rawProduct['attributes'] = $this->cartPresenter->getAttributesArrayFromString($rawProduct['attributes']);
         }
 
@@ -544,7 +542,7 @@ class CartLazyArray extends AbstractLazyArray
             'pack',
         ];
         foreach ($resetFields as $field) {
-            if (!array_key_exists($field, $rawProduct)) {
+            if (! \array_key_exists($field, $rawProduct)) {
                 $rawProduct[$field] = '';
             }
         }

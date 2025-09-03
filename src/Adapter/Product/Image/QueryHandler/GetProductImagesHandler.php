@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,18 +48,13 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsQueryHandler]
 final class GetProductImagesHandler implements GetProductImagesHandlerInterface
 {
-    /**
-     * @param ProductImageRepository $productImageRepository
-     * @param ProductImagePathFactory $productImageUrlFactory
-     * @param ProductRepository $productRepository
-     */
-    public function __construct(private readonly ProductImageRepository $productImageRepository, private readonly ProductImagePathFactory $productImageUrlFactory, private readonly ProductRepository $productRepository)
-    {
+    public function __construct(
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly ProductImagePathFactory $productImageUrlFactory,
+        private readonly ProductRepository $productRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetProductImages $query): array
     {
         if ($query->getShopConstraint()->getShopId() === null) {
@@ -93,11 +89,6 @@ final class GetProductImagesHandler implements GetProductImagesHandlerInterface
         return $productImages;
     }
 
-    /**
-     * @param Image $image
-     *
-     * @return ProductImage
-     */
     private function formatImage(Image $image, array $shopIds, ImageId $coverId): ProductImage
     {
         $imageIdValue = (int) $image->id;
@@ -111,7 +102,7 @@ final class GetProductImagesHandler implements GetProductImagesHandlerInterface
             $this->productImageUrlFactory->getPath($imageId),
             $this->productImageUrlFactory->getPathByType($imageId, ProductImagePathFactory::IMAGE_TYPE_SMALL_DEFAULT),
             array_map(
-                static fn(ShopId $shopId): int => $shopId->getValue(),
+                static fn (ShopId $shopId): int => $shopId->getValue(),
                 $shopIds
             )
         );

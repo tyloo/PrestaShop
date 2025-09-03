@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,19 +42,13 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
  */
 class AttachmentRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+    ) {
     }
 
     /**
-     * @param AttachmentId $attachmentId
-     *
-     * @return Attachment
-     *
      * @throws CoreException
      * @throws AttachmentNotFoundException
      */
@@ -70,8 +65,6 @@ class AttachmentRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param ProductId $productId
-     *
      * @return array<int, array<string, string|array<int, string>>>
      */
     public function getProductAttachments(ProductId $productId): array
@@ -99,8 +92,6 @@ class AttachmentRepository extends AbstractObjectModelRepository
     }
 
     /**
-     * @param AttachmentId $attachmentId
-     *
      * @throws CoreException
      */
     public function assertAttachmentExists(AttachmentId $attachmentId): void
@@ -110,7 +101,7 @@ class AttachmentRepository extends AbstractObjectModelRepository
 
     public function search(string $searchPhrase): array
     {
-        $searchPhrase = sprintf('%%%s%%', strtolower($searchPhrase));
+        $searchPhrase = \sprintf('%%%s%%', strtolower($searchPhrase));
         $qb = $this->connection->createQueryBuilder();
         $qb->select('a.*')
             ->from($this->dbPrefix . 'attachment', 'a')
@@ -146,14 +137,9 @@ class AttachmentRepository extends AbstractObjectModelRepository
         return $this->addLocalizedValues($results);
     }
 
-    /**
-     * @param array $results
-     *
-     * @return array
-     */
     private function addLocalizedValues(array $results): array
     {
-        $attachmentIds = array_map(fn(array $result) => (int) $result['id_attachment'], $results);
+        $attachmentIds = array_map(fn (array $result) => (int) $result['id_attachment'], $results);
 
         $localizedValuesByAttachmentIds = $this->getAttachmentsLocalizedValues($attachmentIds);
 

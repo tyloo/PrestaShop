@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class GiftOptionsConfiguration extends AbstractMultistoreConfiguration
         'offer_recyclable_pack',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -59,9 +57,6 @@ class GiftOptionsConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
@@ -76,18 +71,13 @@ class GiftOptionsConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
-        $resolver = (new OptionsResolver())
+        return (new OptionsResolver())
             ->setDefined(self::CONFIGURATION_FIELDS)
             ->setAllowedTypes('enable_gift_wrapping', 'bool')
             ->setAllowedTypes('gift_wrapping_price', 'float')
             ->setAllowedTypes('gift_wrapping_tax_rules_group', 'int')
             ->setAllowedTypes('offer_recyclable_pack', 'bool');
-
-        return $resolver;
     }
 }

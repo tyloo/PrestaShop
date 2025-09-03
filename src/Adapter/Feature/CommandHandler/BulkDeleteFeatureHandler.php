@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,8 +41,9 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
 #[AsCommandHandler]
 class BulkDeleteFeatureHandler extends AbstractBulkCommandHandler implements BulkDeleteFeatureHandlerInterface
 {
-    public function __construct(private readonly FeatureRepository $featureRepository)
-    {
+    public function __construct(
+        private readonly FeatureRepository $featureRepository,
+    ) {
     }
 
     public function handle(BulkDeleteFeatureCommand $command): void
@@ -50,19 +52,14 @@ class BulkDeleteFeatureHandler extends AbstractBulkCommandHandler implements Bul
     }
 
     /**
-     * @param FeatureId $id
+     * @param FeatureId                $id
      * @param BulkDeleteFeatureCommand $command
-     *
-     * @return void
      */
     protected function handleSingleAction(mixed $id, mixed $command): void
     {
         $this->featureRepository->delete($id);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function buildBulkException(array $caughtExceptions): BulkCommandExceptionInterface
     {
         return new BulkFeatureException(
@@ -72,9 +69,6 @@ class BulkDeleteFeatureHandler extends AbstractBulkCommandHandler implements Bul
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function supports($id): bool
     {
         return $id instanceof FeatureId;

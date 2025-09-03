@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,6 @@ use PrestaShopDatabaseException;
 final class GetCustomerForAddressCreationHandler implements GetCustomerForAddressCreationHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @return AddressCreationCustomerInformation
-     *
      * @throws CustomerByEmailNotFoundException
      * @throws CustomerException
      */
@@ -56,11 +53,11 @@ final class GetCustomerForAddressCreationHandler implements GetCustomerForAddres
         try {
             $result = Customer::searchByName($email);
         } catch (PrestaShopDatabaseException) {
-            throw new CustomerException(sprintf('Failed to fetch results for customers with email %s', $email));
+            throw new CustomerException(\sprintf('Failed to fetch results for customers with email %s', $email));
         }
 
         if (empty($result)) {
-            throw new CustomerByEmailNotFoundException(sprintf('Failed to find customer with email %s', $email));
+            throw new CustomerByEmailNotFoundException(\sprintf('Failed to find customer with email %s', $email));
         }
 
         $customer = reset($result);
@@ -71,7 +68,7 @@ final class GetCustomerForAddressCreationHandler implements GetCustomerForAddres
             $customer['lastname']
         );
 
-        if (null !== $customer['company']) {
+        if ($customer['company'] !== null) {
             $customerInformation->setCompany($customer['company']);
         }
 

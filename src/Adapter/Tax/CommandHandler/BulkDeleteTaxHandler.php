@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,9 +41,6 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class BulkDeleteTaxHandler extends AbstractTaxHandler implements BulkDeleteTaxHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteTaxCommand $command)
     {
         foreach ($command->getTaxIds() as $taxId) {
@@ -50,11 +48,11 @@ final class BulkDeleteTaxHandler extends AbstractTaxHandler implements BulkDelet
             $tax = $this->getTax($taxId);
 
             try {
-                if (!$tax->delete()) {
-                    throw new DeleteTaxException(sprintf('Cannot delete Tax object with id "%s"', $taxIdValue), DeleteTaxException::FAILED_BULK_DELETE);
+                if (! $tax->delete()) {
+                    throw new DeleteTaxException(\sprintf('Cannot delete Tax object with id "%s"', $taxIdValue), DeleteTaxException::FAILED_BULK_DELETE);
                 }
             } catch (PrestaShopException) {
-                throw new TaxException(sprintf('An error occurred when deleting Tax object with id "%s"', $taxIdValue));
+                throw new TaxException(\sprintf('An error occurred when deleting Tax object with id "%s"', $taxIdValue));
             }
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -150,11 +151,6 @@ class Module implements ModuleInterface
         'date_upd' => null,
     ];
 
-    /**
-     * @param array $attributes
-     * @param array $disk
-     * @param array $database
-     */
     public function __construct(array $attributes = [], array $disk = [], array $database = [])
     {
         $this->attributes = new ParameterBag($this->attributes_default);
@@ -167,13 +163,13 @@ class Module implements ModuleInterface
 
         if ($this->isInstalled()) {
             $version = $this->database->get('version');
-        } elseif (null === $this->attributes->get('version') && $this->disk->get('is_valid')) {
+        } elseif ($this->attributes->get('version') === null && $this->disk->get('is_valid')) {
             $version = $this->disk->get('version');
         } else {
             $version = $this->attributes->get('version');
         }
 
-        if (!$this->attributes->has('version_available')) {
+        if (! $this->attributes->has('version_available')) {
             $this->attributes->set('version_available', $this->disk->get('version'));
         }
 
@@ -187,12 +183,9 @@ class Module implements ModuleInterface
         $this->attributes->set('price', (array) $this->attributes->get('price'));
     }
 
-    /**
-     * @return LegacyModule|null
-     */
     public function getInstance(): ?LegacyModule
     {
-        if (!$this->hasValidInstance()) {
+        if (! $this->hasValidInstance()) {
             return null;
         }
 
@@ -226,9 +219,6 @@ class Module implements ModuleInterface
         return $this->disk->get('is_valid');
     }
 
-    /**
-     * @return bool
-     */
     public function isActive(): bool
     {
         return (bool) $this->database->get('active');
@@ -241,7 +231,7 @@ class Module implements ModuleInterface
 
     public function isUninstalled(): bool
     {
-        return !$this->isInstalled() && $this->disk->get('is_present');
+        return ! $this->isInstalled() && $this->disk->get('is_present');
     }
 
     public function isConfigurable(): bool
@@ -249,12 +239,9 @@ class Module implements ModuleInterface
         return (bool) $this->attributes->get('is_configurable');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onInstall(): bool
     {
-        if (!$this->hasValidInstance()) {
+        if (! $this->hasValidInstance()) {
             return false;
         }
 
@@ -276,36 +263,27 @@ class Module implements ModuleInterface
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onPostInstall(): bool
     {
-        if (!$this->hasValidInstance()) {
+        if (! $this->hasValidInstance()) {
             return false;
         }
 
         return $this->instance->postInstall();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onUninstall(): bool
     {
-        if (!$this->hasValidInstance()) {
+        if (! $this->hasValidInstance()) {
             return false;
         }
 
         $result = $this->instance->uninstall();
-        $this->database->set('installed', !$result);
+        $this->database->set('installed', ! $result);
 
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onUpgrade(string $version): bool
     {
         $this->database->set('version', $this->attributes->get('version_available'));
@@ -313,12 +291,9 @@ class Module implements ModuleInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onEnable(): bool
     {
-        if (!$this->hasValidInstance()) {
+        if (! $this->hasValidInstance()) {
             return false;
         }
 
@@ -328,31 +303,25 @@ class Module implements ModuleInterface
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onDisable(): bool
     {
-        if (!$this->hasValidInstance()) {
+        if (! $this->hasValidInstance()) {
             return false;
         }
 
         $result = $this->instance->disable();
-        $this->database->set('active', !$result);
+        $this->database->set('active', ! $result);
 
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onReset(): bool
     {
-        if (!$this->hasValidInstance()) {
+        if (! $this->hasValidInstance()) {
             return false;
         }
 
-        return is_callable([$this->instance, 'reset']) ? $this->instance->reset() : true;
+        return \is_callable([$this->instance, 'reset']) ? $this->instance->reset() : true;
     }
 
     public function getAttributes(): ParameterBag
@@ -381,18 +350,16 @@ class Module implements ModuleInterface
          */
         $path = $this->disk->get('path', ''); // Variable needed for empty() test
         if (empty($path)) {
-            $this->disk->set('path', _PS_MODULE_DIR_ . DIRECTORY_SEPARATOR . $this->attributes->get('name'));
+            $this->disk->set('path', _PS_MODULE_DIR_ . \DIRECTORY_SEPARATOR . $this->attributes->get('name'));
         }
 
         // End of temporary content
-        require_once $this->disk->get('path') . DIRECTORY_SEPARATOR . $this->attributes->get('name') . '.php';
+        require_once $this->disk->get('path') . \DIRECTORY_SEPARATOR . $this->attributes->get('name') . '.php';
         $this->instance = LegacyModule::getInstanceByName($this->attributes->get('name'));
     }
 
     /**
      * @param string $attribute
-     *
-     * @return mixed
      */
     public function get($attribute)
     {
@@ -401,7 +368,6 @@ class Module implements ModuleInterface
 
     /**
      * @param string $attribute
-     * @param mixed $value
      */
     public function set($attribute, $value)
     {
@@ -436,7 +402,7 @@ class Module implements ModuleInterface
         $this->attributes->set('logo', __PS_BASE_URI__ . 'img/module/default.png');
 
         foreach (['logo.png', 'logo.gif'] as $logo) {
-            $logo_path = _PS_MODULE_DIR_ . $this->get('name') . DIRECTORY_SEPARATOR . $logo;
+            $logo_path = _PS_MODULE_DIR_ . $this->get('name') . \DIRECTORY_SEPARATOR . $logo;
             if (file_exists($logo_path)) {
                 $this->attributes->set('img', __PS_BASE_URI__ . basename(_PS_MODULE_DIR_) . '/' . $this->get('name') . '/' . $logo);
                 $this->attributes->set('logo', $logo);
@@ -453,7 +419,7 @@ class Module implements ModuleInterface
      */
     public function canBeUpgraded()
     {
-        if (!$this->isInstalled()) {
+        if (! $this->isInstalled()) {
             return false;
         }
 
@@ -468,8 +434,6 @@ class Module implements ModuleInterface
 
     /**
      * Only check if an upgrade is available
-     *
-     * @return bool
      */
     public function hasNewVersionAvailable(): bool
     {

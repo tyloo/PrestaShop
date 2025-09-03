@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,16 +35,11 @@ use PrestaShop\PrestaShop\Core\Employee\AvatarProviderInterface;
  */
 final class AvatarProvider implements AvatarProviderInterface
 {
-    /**
-     * @param Tools $tools
-     */
-    public function __construct(private readonly Tools $tools)
-    {
+    public function __construct(
+        private readonly Tools $tools,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultAvatarUrl()
     {
         return $this->tools->getAdminImageUrl('pr/default.jpg');

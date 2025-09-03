@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,15 +57,13 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
 
     /**
      * @param RequestStack|null $requestStack (nullable to preserve backward compatibility)
-     * @param iterable|null $hookSubscribers
      * @param HookRegistry|null $hookRegistry (nullable to preserve backward compatibility)
-     * @param bool $isDebug
      */
     public function __construct(
         private readonly ?RequestStack $requestStack = null,
         ?iterable $hookSubscribers = null,
         private readonly ?HookRegistry $hookRegistry = null,
-        private readonly bool $isDebug = false
+        private readonly bool $isDebug = false,
     ) {
         foreach ($hookSubscribers as $hookSubscriber) {
             $this->addSubscriber($hookSubscriber);
@@ -74,33 +73,30 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
     /**
      * This override will check if $event is an instance of HookEvent.
      *
-     * @param object $event
-     * @param string|null $eventName
-     *
      * @return Event|HookEvent
      *
      * @throws Exception if the Event is not HookEvent or a subclass
      */
     public function dispatch(object $event, ?string $eventName = null): object
     {
-        if (!$event instanceof HookEvent) {
+        if (! $event instanceof HookEvent) {
             throw new Exception('HookDispatcher must dispatch a HookEvent subclass only. ' . $event::class . ' given.');
         }
 
         if ($listeners = $this->getListeners(strtolower($eventName ?? ''))) {
             $this->doDispatch($listeners, $eventName, $event);
-        } elseif ($this->isDebug && null !== $this->hookRegistry) {
+        } elseif ($this->isDebug && $this->hookRegistry !== null) {
             // When a hook has no listeners it means it's not even in the database or no modules were attached, in the current case
             // Hook::exec will never be called meaning no stats will be registered for this hook So we handle the registry data collection
             // here so that we can still get some info in the Debug toolbar
-            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 5);
+            $backtrace = debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS, 5);
 
             // Try to find the initial backtrace that was not called from the dispatcher services
             $initialBackTrace = [];
-            for ($i = 0; $i < count($backtrace); ++$i) {
+            for ($i = 0; $i < \count($backtrace); ++$i) {
                 $initialBackTrace = $backtrace[$i];
                 $isCodeFromDispatcher = (bool) strpos($initialBackTrace['file'], 'HookDispatcher');
-                if (!$isCodeFromDispatcher) {
+                if (! $isCodeFromDispatcher) {
                     break;
                 }
             }
@@ -113,9 +109,6 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
         return $event;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatchHook(HookInterface $hook)
     {
         return $this->dispatchForParameters(
@@ -129,7 +122,7 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
      *
      * Each event is independent for each hook call. Parameter set is duplicated.
      *
-     * @param array $eventNames the hooks to dispatch to
+     * @param array $eventNames      the hooks to dispatch to
      * @param array $eventParameters the parameters set to insert in each HookEvent instance
      *
      * @throws Exception if the Event is not HookEvent or a subclass
@@ -173,8 +166,8 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
     /**
      * Creates a HookEvent, sets its parameters, and dispatches it.
      *
-     * @param string $eventName The hook name
-     * @param array $parameters Hook parameters
+     * @param string $eventName  The hook name
+     * @param array  $parameters Hook parameters
      *
      * @return Event the event that has been passed to each listener
      *
@@ -191,8 +184,8 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
     /**
      * Creates a RenderingHookEvent, sets its parameters, and dispatches it. Returns the event with the response(s).
      *
-     * @param string $eventName the hook name
-     * @param array $parameters Hook parameters
+     * @param string $eventName  the hook name
+     * @param array  $parameters Hook parameters
      *
      * @return RenderingHookEvent The event that has been passed to each listener. Contains the responses.
      *
@@ -209,17 +202,11 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
         return $eventDispatched;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatchWithParameters($hookName, array $hookParameters = [])
     {
         $this->dispatchForParameters($hookName, $hookParameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatchRendering(HookInterface $hook)
     {
         $event = $this->renderForParameters(
@@ -230,9 +217,6 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
         return new RenderedHook($hook, $event->getContent());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dispatchRenderingWithParameters($hookName, array $hookParameters = [])
     {
         return $this->dispatchRendering(new Hook($hookName, $hookParameters));
@@ -249,12 +233,12 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
     {
         $globalParameters = ['_ps_version' => Version::VERSION];
 
-        if (null === $this->requestStack) {
+        if ($this->requestStack === null) {
             return $globalParameters;
         }
 
         $request = $this->requestStack->getCurrentRequest();
-        if (null === $request) {
+        if ($request === null) {
             return $globalParameters;
         }
 

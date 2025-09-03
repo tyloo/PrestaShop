@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,8 +55,6 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws CategoryNotFoundException
      * @throws CannotEditRootCategoryException
      */
@@ -63,8 +62,8 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
     {
         $category = new Category($query->getCategoryId()->getValue());
 
-        if (!$category->id || (!$category->isAssociatedToShop() && Shop::getContext() == Shop::CONTEXT_SHOP)) {
-            throw new CategoryNotFoundException($query->getCategoryId(), sprintf('Category with id "%s" was not found', $query->getCategoryId()->getValue()));
+        if (! $category->id || (! $category->isAssociatedToShop() && Shop::getContext() === Shop::CONTEXT_SHOP)) {
+            throw new CategoryNotFoundException($query->getCategoryId(), \sprintf('Category with id "%s" was not found', $query->getCategoryId()->getValue()));
         }
 
         if ($category->isRootCategory()) {
@@ -90,7 +89,7 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
             $category->id_type_redirected,
         );
 
-        $editableCategory = new EditableCategory(
+        return new EditableCategory(
             $query->getCategoryId(),
             $category->name,
             (bool) $category->active,
@@ -109,13 +108,9 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
             $subcategories->fetchAll(PDO::FETCH_COLUMN),
             $category->additional_description
         );
-
-        return $editableCategory;
     }
 
     /**
-     * @param CategoryId $categoryId
-     *
      * @return array|null cover image data or null if category does not have cover
      */
     private function getCoverImage(CategoryId $categoryId)
@@ -139,14 +134,12 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
         }
 
         return [
-            'size' => sprintf('%skB', $imageSize),
+            'size' => \sprintf('%skB', $imageSize),
             'path' => $this->imageTagSourceParser->parse($imageTag),
         ];
     }
 
     /**
-     * @param CategoryId $categoryId
-     *
      * @return array|null
      */
     private function getThumbnailImage(CategoryId $categoryId)
@@ -170,7 +163,7 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
         }
 
         return [
-            'size' => sprintf('%skB', $imageSize),
+            'size' => \sprintf('%skB', $imageSize),
             'path' => $this->imageTagSourceParser->parse($imageTag),
         ];
     }

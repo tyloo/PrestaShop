@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,7 +41,7 @@ class CarrierLogoFileUploader implements CarrierLogoFileUploaderInterface
         try {
             move_uploaded_file($filePath, _PS_SHIP_IMG_DIR_ . $id . '.jpg');
         } catch (FileException) {
-            throw new CarrierLogoUploadFailedException(sprintf('Failed to copy the file %s.', $filePath));
+            throw new CarrierLogoUploadFailedException(\sprintf('Failed to copy the file %s.', $filePath));
         }
     }
 

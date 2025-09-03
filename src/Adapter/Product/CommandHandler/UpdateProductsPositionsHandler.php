@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,13 +46,13 @@ use PrestaShop\PrestaShop\Core\Grid\Position\PositionUpdateFactoryInterface;
 #[AsCommandHandler]
 class UpdateProductsPositionsHandler implements UpdateProductsPositionsHandlerInterface
 {
-    public function __construct(private readonly PositionDefinition $positionDefinition, private readonly PositionUpdateFactoryInterface $positionUpdateFactory, private readonly GridPositionUpdaterInterface $positionUpdater)
-    {
+    public function __construct(
+        private readonly PositionDefinition $positionDefinition,
+        private readonly PositionUpdateFactoryInterface $positionUpdateFactory,
+        private readonly GridPositionUpdaterInterface $positionUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateProductsPositionsCommand $command): void
     {
         $positionsData = [
@@ -69,7 +70,7 @@ class UpdateProductsPositionsHandler implements UpdateProductsPositionsHandlerIn
 
     private function convertPositions(array $positions): array
     {
-        return array_map(fn(RowPosition $rowPosition): array => [
+        return array_map(fn (RowPosition $rowPosition): array => [
             'rowId' => $rowPosition->getRowId(),
             'oldPosition' => $rowPosition->getOldPosition(),
             'newPosition' => $rowPosition->getNewPosition(),

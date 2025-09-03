@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,20 +46,13 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturn\QueryResult\OrderReturnForEdit
 #[AsQueryHandler]
 class GetOrderReturnForEditingHandler implements GetOrderReturnForEditingHandlerInterface
 {
-    /**
-     * GetOrderReturnForEditingHandler constructor.
-     *
-     * @param OrderReturnRepository $orderReturnRepository
-     * @param CustomerRepository $customerRepository
-     * @param OrderRepository $orderRepository
-     */
-    public function __construct(private readonly OrderReturnRepository $orderReturnRepository, private readonly CustomerRepository $customerRepository, private readonly OrderRepository $orderRepository)
-    {
+    public function __construct(
+        private readonly OrderReturnRepository $orderReturnRepository,
+        private readonly CustomerRepository $customerRepository,
+        private readonly OrderRepository $orderRepository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetOrderReturnForEditing $query): OrderReturnForEditing
     {
         $orderReturn = $this->orderReturnRepository->get($query->getOrderReturnId());

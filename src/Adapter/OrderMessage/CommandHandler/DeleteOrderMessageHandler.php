@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,19 +42,16 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class DeleteOrderMessageHandler extends AbstractOrderMessageHandler implements DeleteOrderMessageHandlerInterface
 {
-    /**
-     * @param DeleteOrderMessageCommand $command
-     */
     public function handle(DeleteOrderMessageCommand $command): void
     {
         $orderMessage = $this->getOrderMessage($command->getOrderMessageId());
 
         try {
-            if (false === $orderMessage->delete()) {
-                throw new OrderMessageException(sprintf('Failed to delete Order message with id "%d"', $orderMessage->id), OrderMessageException::FAILED_DELETE);
+            if ($orderMessage->delete() === false) {
+                throw new OrderMessageException(\sprintf('Failed to delete Order message with id "%d"', $orderMessage->id), OrderMessageException::FAILED_DELETE);
             }
         } catch (PrestaShopException) {
-            throw new OrderMessageException(sprintf('Failed to delete Order message with id "%s"', $orderMessage->id));
+            throw new OrderMessageException(\sprintf('Failed to delete Order message with id "%s"', $orderMessage->id));
         }
     }
 }

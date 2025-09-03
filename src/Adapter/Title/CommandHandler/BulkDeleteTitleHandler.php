@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,9 +40,6 @@ use PrestaShop\PrestaShop\Core\Domain\Title\CommandHandler\BulkDeleteTitleHandle
 #[AsCommandHandler]
 class BulkDeleteTitleHandler extends AbstractTitleHandler implements BulkDeleteTitleHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteTitleCommand $command): void
     {
         foreach ($command->getTitleIds() as $titleId) {

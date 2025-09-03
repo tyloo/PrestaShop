@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ class CarrierModuleAdviceAlertChecker
 {
     /**
      * Should this show modules advice alert on carriers page?
-     *
-     * @return bool
      */
     public function isAlertDisplayed(): bool
     {
@@ -46,6 +45,6 @@ class CarrierModuleAdviceAlertChecker
         // carriers and then don't show advice.
         $sql = 'SELECT COUNT(1) FROM `' . _DB_PREFIX_ . 'carrier` WHERE deleted = 0 AND id_reference > 2';
 
-        return Db::getInstance()->executeS($sql, false)->fetchColumn(0) == 0;
+        return Db::getInstance()->executeS($sql, false)->fetchColumn(0) === 0;
     }
 }

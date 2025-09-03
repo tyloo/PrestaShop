@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,16 +39,13 @@ use PrestaShop\PrestaShop\Core\Domain\CatalogPriceRule\Exception\CannotDeleteCat
 #[AsCommandHandler]
 final class DeleteCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler implements DeleteCatalogPriceRuleHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteCatalogPriceRuleCommand $command)
     {
         $catalogPriceRuleId = $command->getCatalogPriceRuleId();
         $specificPriceRule = $this->getSpecificPriceRule($catalogPriceRuleId);
 
-        if (!$this->deleteSpecificPriceRule($specificPriceRule)) {
-            throw new CannotDeleteCatalogPriceRuleException(sprintf('Cannot delete SpecificPriceRule object with id "%s".', $catalogPriceRuleId->getValue()), CannotDeleteCatalogPriceRuleException::FAILED_DELETE);
+        if (! $this->deleteSpecificPriceRule($specificPriceRule)) {
+            throw new CannotDeleteCatalogPriceRuleException(\sprintf('Cannot delete SpecificPriceRule object with id "%s".', $catalogPriceRuleId->getValue()), CannotDeleteCatalogPriceRuleException::FAILED_DELETE);
         }
     }
 }

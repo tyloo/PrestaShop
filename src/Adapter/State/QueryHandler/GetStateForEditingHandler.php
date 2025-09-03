@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,16 +46,13 @@ use State;
 #[AsQueryHandler]
 class GetStateForEditingHandler implements GetStateForEditingHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetStateForEditing $query): EditableState
     {
         $stateId = $query->getStateId();
         $state = new State($stateId->getValue());
 
         if ($state->id !== $stateId->getValue()) {
-            throw new StateNotFoundException(sprintf('State with id "%d" not found', $stateId->getValue()));
+            throw new StateNotFoundException(\sprintf('State with id "%d" not found', $stateId->getValue()));
         }
 
         return new EditableState(

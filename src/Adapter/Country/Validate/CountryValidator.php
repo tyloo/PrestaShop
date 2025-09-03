@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,7 +40,7 @@ class CountryValidator extends AbstractObjectModelValidator
 {
     public function validate(Country $country)
     {
-        if (!$country->validateFields(false) || !$country->validateFieldsLang(false)) {
+        if (! $country->validateFields(false) || ! $country->validateFieldsLang(false)) {
             throw new CountryConstraintException('Country contains invalid field values');
         }
     }

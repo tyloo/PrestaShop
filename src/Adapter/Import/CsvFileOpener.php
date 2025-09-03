@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,23 +37,18 @@ use SplFileInfo;
  */
 final class CsvFileOpener implements FileOpenerInterface
 {
-    /**
-     * @param FileConverterInterface $excelToCsvConverter
-     */
-    public function __construct(private readonly FileConverterInterface $excelToCsvConverter)
-    {
+    public function __construct(
+        private readonly FileConverterInterface $excelToCsvConverter,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function open(SplFileInfo $file)
     {
         $importFile = $this->excelToCsvConverter->convert($file);
         $filePath = $importFile->getPathname();
         $isReadableFile = is_file($filePath) && is_readable($filePath);
 
-        if (!$isReadableFile || !($handle = fopen($filePath, 'r'))) {
+        if (! $isReadableFile || ! ($handle = fopen($filePath, 'r'))) {
             throw new UnreadableFileException();
         }
 
@@ -68,13 +64,13 @@ final class CsvFileOpener implements FileOpenerInterface
      */
     private function rewindBomAware($handle)
     {
-        if (!is_resource($handle)) {
+        if (! \is_resource($handle)) {
             return;
         }
 
         rewind($handle);
 
-        if (($bom = fread($handle, 3)) != "\xEF\xBB\xBF") {
+        if (($bom = fread($handle, 3)) !== "\xEF\xBB\xBF") {
             rewind($handle);
         }
     }

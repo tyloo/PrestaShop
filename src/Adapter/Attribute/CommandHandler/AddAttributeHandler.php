@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,13 +47,10 @@ class AddAttributeHandler implements AddAttributeHandlerInterface
     public function __construct(
         private readonly AttributeRepository $attributeRepository,
         private readonly AttributeValidator $attributeValidator,
-        private readonly AttributeFileUploader $attributeFileUploader
+        private readonly AttributeFileUploader $attributeFileUploader,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(AddAttributeCommand $command): AttributeId
     {
         $attribute = new ProductAttribute();
@@ -60,7 +58,7 @@ class AddAttributeHandler implements AddAttributeHandlerInterface
         $attribute->name = $command->getLocalizedNames();
         $attribute->id_shop_list = $command->getAssociatedShopIds();
 
-        if (!empty($command->getColor())) {
+        if (! empty($command->getColor())) {
             $attribute->color = $command->getColor();
         }
 
@@ -70,7 +68,7 @@ class AddAttributeHandler implements AddAttributeHandlerInterface
 
         $id = $this->attributeRepository->add($attribute);
 
-        if (null !== $command->getTextureFilePath()) {
+        if ($command->getTextureFilePath() !== null) {
             $this->attributeFileUploader->upload(
                 $command->getTextureFilePath(),
                 $id->getValue()

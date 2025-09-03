@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,8 +45,6 @@ use SearchEngine;
 final class AddSearchEngineHandler extends AbstractSearchEngineHandler implements AddSearchEngineHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SearchEngineException
      */
     public function handle(AddSearchEngineCommand $command): SearchEngineId
@@ -56,15 +55,15 @@ final class AddSearchEngineHandler extends AbstractSearchEngineHandler implement
         $searchEngine->getvar = $command->getQueryKey();
 
         try {
-            if (false === $searchEngine->validateFields(false)) {
+            if ($searchEngine->validateFields(false) === false) {
                 throw new SearchEngineException('Search engine contain invalid field values');
             }
 
-            if (false === $searchEngine->add()) {
-                throw new SearchEngineException(sprintf('Failed to add new search engine "%s"', $command->getServer()));
+            if ($searchEngine->add() === false) {
+                throw new SearchEngineException(\sprintf('Failed to add new search engine "%s"', $command->getServer()));
             }
         } catch (PrestaShopException) {
-            throw new SearchEngineException(sprintf('Failed to add new search engine "%s"', $command->getServer()));
+            throw new SearchEngineException(\sprintf('Failed to add new search engine "%s"', $command->getServer()));
         }
 
         return new SearchEngineId((int) $searchEngine->id);

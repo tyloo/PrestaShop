@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,22 +42,17 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\QueryResult\ExchangeRate;
 #[AsQueryHandler]
 class GetCurrencyExchangeRateHandler implements GetCurrencyExchangeRateHandlerInterface
 {
-    /**
-     * @param ExchangeRateProvider $exchangeRateProvider
-     */
-    public function __construct(private readonly ExchangeRateProvider $exchangeRateProvider)
-    {
+    public function __construct(
+        private readonly ExchangeRateProvider $exchangeRateProvider,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCurrencyExchangeRate $query)
     {
         try {
             $currencyExchangeRate = $this->exchangeRateProvider->getExchangeRate($query->getIsoCode()->getValue());
         } catch (CurrencyFeedException $currencyFeedException) {
-            throw new ExchangeRateNotFoundException(sprintf('Exchange rate for Currency with iso code %s was not found', $query->getIsoCode()->getValue()), 0, $currencyFeedException);
+            throw new ExchangeRateNotFoundException(\sprintf('Exchange rate for Currency with iso code %s was not found', $query->getIsoCode()->getValue()), 0, $currencyFeedException);
         }
 
         return new ExchangeRate($currencyExchangeRate);

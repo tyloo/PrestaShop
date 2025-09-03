@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,27 +35,22 @@ use PrestaShop\PrestaShop\Core\Localization\LocaleInterface;
 
 final class OrderInvoiceByIdChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * @param LocaleInterface $locale
-     */
-    public function __construct(private readonly LocaleInterface $locale)
-    {
+    public function __construct(
+        private readonly LocaleInterface $locale,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices(array $options): array
     {
         $order = new Order($options['id_order']);
         $invoices = $order->getInvoicesCollection();
-        $labelFormat = isset($options['display_total']) && false !== $options['display_total'] ? '%s - %s' : '%s';
+        $labelFormat = isset($options['display_total']) && $options['display_total'] !== false ? '%s - %s' : '%s';
 
         $choices = [];
 
         /** @var OrderInvoice $invoice */
         foreach ($invoices as $invoice) {
-            $invoiceLabel = sprintf(
+            $invoiceLabel = \sprintf(
                 $labelFormat,
                 $invoice->getInvoiceNumberFormatted($options['id_lang'], $order->id_shop),
                 $this->locale->formatPrice($invoice->total_paid_tax_incl, Currency::getIsoCodeById($invoice->getOrder()->id_currency))

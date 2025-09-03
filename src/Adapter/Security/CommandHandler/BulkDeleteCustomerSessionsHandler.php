@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,16 +42,11 @@ use PrestaShop\PrestaShop\Core\Domain\Security\CommandHandler\BulkDeleteCustomer
 #[AsCommandHandler]
 final class BulkDeleteCustomerSessionsHandler implements BulkDeleteCustomerSessionsHandlerInterface
 {
-    /**
-     * @param CustomerSessionRepository $repository
-     */
-    public function __construct(private readonly CustomerSessionRepository $repository)
-    {
+    public function __construct(
+        private readonly CustomerSessionRepository $repository,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkDeleteCustomerSessionsCommand $command): void
     {
         $this->repository->bulkDelete($command->getCustomerSessionIds());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,22 +45,13 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject\SupplierId;
 #[AsQueryHandler]
 class GetProductSupplierOptionsHandler extends AbstractProductSupplierHandler implements GetProductSupplierOptionsHandlerInterface
 {
-    /**
-     * @param ProductSupplierRepository $productSupplierRepository
-     * @param ProductRepository $productRepository
-     */
     public function __construct(
         ProductSupplierRepository $productSupplierRepository,
-        private readonly ProductRepository $productRepository
+        private readonly ProductRepository $productRepository,
     ) {
         parent::__construct($productSupplierRepository);
     }
 
-    /**
-     * @param GetProductSupplierOptions $query
-     *
-     * @return ProductSupplierOptions
-     */
     public function handle(GetProductSupplierOptions $query): ProductSupplierOptions
     {
         $defaultSupplier = $this->productSupplierRepository->getDefaultSupplierId($query->getProductId());
@@ -70,10 +62,10 @@ class GetProductSupplierOptionsHandler extends AbstractProductSupplierHandler im
             $productSuppliers = $this->getProductSuppliersInfo($query->getProductId());
         }
 
-        $supplierIntIds = array_map(fn(SupplierId $supplierId) => $supplierId->getValue(), $supplierIds);
+        $supplierIntIds = array_map(fn (SupplierId $supplierId) => $supplierId->getValue(), $supplierIds);
 
         return new ProductSupplierOptions(
-            null !== $defaultSupplier ? $defaultSupplier->getValue() : 0,
+            $defaultSupplier !== null ? $defaultSupplier->getValue() : 0,
             $supplierIntIds,
             $productSuppliers
         );

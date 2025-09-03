@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,22 +42,17 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\StockModificatio
 #[AsCommandHandler]
 class UpdateCombinationStockAvailableHandler implements UpdateCombinationStockAvailableHandlerInterface
 {
-    /**
-     * @param CombinationStockUpdater $combinationStockUpdater
-     */
-    public function __construct(private readonly CombinationStockUpdater $combinationStockUpdater)
-    {
+    public function __construct(
+        private readonly CombinationStockUpdater $combinationStockUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(UpdateCombinationStockAvailableCommand $command): void
     {
         $stockModification = null;
         if ($command->getDeltaQuantity()) {
             $stockModification = StockModification::buildDeltaQuantity($command->getDeltaQuantity());
-        } elseif (null !== $command->getFixedQuantity()) {
+        } elseif ($command->getFixedQuantity() !== null) {
             $stockModification = StockModification::buildFixedQuantity($command->getFixedQuantity());
         }
 

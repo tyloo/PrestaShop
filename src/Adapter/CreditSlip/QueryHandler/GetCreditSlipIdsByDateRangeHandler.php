@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ final class GetCreditSlipIdsByDateRangeHandler implements GetCreditSlipIdsByDate
             $ids = OrderSlip::getSlipsIdByDate($from, $to);
 
             if (empty($ids)) {
-                throw new CreditSlipNotFoundException(sprintf('No credit slips found for date range "%s - %s"', $from, $to), CreditSlipNotFoundException::BY_DATE_RANGE);
+                throw new CreditSlipNotFoundException(\sprintf('No credit slips found for date range "%s - %s"', $from, $to), CreditSlipNotFoundException::BY_DATE_RANGE);
             }
 
             $creditSlipIds = [];

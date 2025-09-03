@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ use PrestaShop\PrestaShop\Core\Meta\MetaDataProviderInterface;
  */
 class MetaDataProvider implements MetaDataProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getIdByPage($pageName)
     {
         $query = new DbQuery();
@@ -64,9 +62,6 @@ class MetaDataProvider implements MetaDataProviderInterface
         return Meta::getPages(true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultMetaPageNameById($metaId)
     {
         $query = new DbQuery();
@@ -74,14 +69,12 @@ class MetaDataProvider implements MetaDataProviderInterface
         $query->from('meta');
         $query->where('`id_meta`=' . (int) $metaId);
         $query->where('`page` NOT LIKE "module-%"');
+
         $result = Db::getInstance()->getValue($query);
 
-        return is_string($result) ? $result : null;
+        return \is_string($result) ? $result : null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getModuleMetaPageNameById($metaId)
     {
         $query = new DbQuery();
@@ -92,19 +85,16 @@ class MetaDataProvider implements MetaDataProviderInterface
 
         $result = Db::getInstance()->getValue($query);
 
-        return is_string($result) ? $result : null;
+        return \is_string($result) ? $result : null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDefaultMetaPageNamesExcludingFilled()
     {
         $pages = Meta::getPages(true);
 
         $result = [];
         foreach ($pages as $pageName => $fileName) {
-            if (!$this->isModuleFile($fileName)) {
+            if (! $this->isModuleFile($fileName)) {
                 $result[$pageName] = $fileName;
             }
         }
@@ -112,9 +102,6 @@ class MetaDataProvider implements MetaDataProviderInterface
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNotConfiguredModuleMetaPageNames()
     {
         $pages = Meta::getPages(true);

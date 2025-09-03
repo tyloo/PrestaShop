@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use PrestaShopDatabaseException;
 final class SetRequiredFieldsForAddressHandler implements SetRequiredFieldsForAddressHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotSetRequiredFieldsForAddressException
      */
     public function handle(SetRequiredFieldsForAddressCommand $command)
@@ -57,6 +56,6 @@ final class SetRequiredFieldsForAddressHandler implements SetRequiredFieldsForAd
         } catch (PrestaShopDatabaseException) {
         }
 
-        throw new CannotSetRequiredFieldsForAddressException(sprintf('Cannot set "%s" required fields for customer', implode(',', $command->getRequiredFields())));
+        throw new CannotSetRequiredFieldsForAddressException(\sprintf('Cannot set "%s" required fields for customer', implode(',', $command->getRequiredFields())));
     }
 }

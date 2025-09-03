@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,8 +38,6 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
 class OrderReturnValidator extends AbstractObjectModelValidator
 {
     /**
-     * @param OrderReturn $orderReturn
-     *
      * @throws OrderReturnConstraintException
      */
     public function validate(OrderReturn $orderReturn): void
@@ -52,10 +51,6 @@ class OrderReturnValidator extends AbstractObjectModelValidator
     }
 
     /**
-     * @param OrderReturn $orderReturn
-     * @param string $propertyName
-     * @param int $errorCode
-     *
      * @throws CoreException
      */
     private function validateOrderReturnProperty(OrderReturn $orderReturn, string $propertyName, int $errorCode = 0): void

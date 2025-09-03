@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,23 +53,16 @@ final class SetUpUrlsDataConfiguration extends AbstractMultistoreConfiguration
         'disable_apache_mod_security',
     ];
 
-    /**
-     * SetUpUrlsDataConfiguration constructor.
-     *
-     * @param Configuration $configuration
-     * @param Context $shopContext
-     * @param FeatureInterface $multistoreFeature
-     * @param HtaccessFileGenerator $htaccessFileGenerator
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(Configuration $configuration, Context $shopContext, FeatureInterface $multistoreFeature, private readonly HtaccessFileGenerator $htaccessFileGenerator, private readonly TranslatorInterface $translator)
-    {
+    public function __construct(
+        Configuration $configuration,
+        Context $shopContext,
+        FeatureInterface $multistoreFeature,
+        private readonly HtaccessFileGenerator $htaccessFileGenerator,
+        private readonly TranslatorInterface $translator,
+    ) {
         parent::__construct($configuration, $shopContext, $multistoreFeature);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration()
     {
         $shopConstraint = $this->getShopConstraint();
@@ -83,9 +77,6 @@ final class SetUpUrlsDataConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateConfiguration(array $configuration)
     {
         $errors = [];
@@ -100,7 +91,7 @@ final class SetUpUrlsDataConfiguration extends AbstractMultistoreConfiguration
             $this->updateConfigurationValue('PS_HTACCESS_DISABLE_MULTIVIEWS', 'disable_apache_multiview', $configuration, $shopConstraint);
             $this->updateConfigurationValue('PS_HTACCESS_DISABLE_MODSEC', 'disable_apache_mod_security', $configuration, $shopConstraint);
 
-            if (!$this->htaccessFileGenerator->generateFile($configuration['disable_apache_multiview'])) {
+            if (! $this->htaccessFileGenerator->generateFile($configuration['disable_apache_multiview'])) {
                 $this->updateConfigurationValue('PS_REWRITING_SETTINGS', 'friendly_url', ['friendly_url' => false], $shopConstraint);
 
                 $errorMessage = $this->translator
@@ -133,12 +124,9 @@ final class SetUpUrlsDataConfiguration extends AbstractMultistoreConfiguration
         return $errors;
     }
 
-    /**
-     * @return OptionsResolver
-     */
     protected function buildResolver(): OptionsResolver
     {
-        $resolver = (new OptionsResolver())
+        return (new OptionsResolver())
             ->setDefined(self::CONFIGURATION_FIELDS)
             ->setAllowedTypes('friendly_url', 'bool')
             ->setAllowedTypes('default_language_url_prefix', 'bool')
@@ -146,7 +134,5 @@ final class SetUpUrlsDataConfiguration extends AbstractMultistoreConfiguration
             ->setAllowedTypes('canonical_url_redirection', 'int')
             ->setAllowedTypes('disable_apache_multiview', 'bool')
             ->setAllowedTypes('disable_apache_mod_security', 'bool');
-
-        return $resolver;
     }
 }

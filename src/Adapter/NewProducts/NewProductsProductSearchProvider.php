@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,14 +47,12 @@ class NewProductsProductSearchProvider implements ProductSearchProviderInterface
     private $sortOrdersCollection;
 
     public function __construct(
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
         $this->sortOrdersCollection = new SortOrdersCollection($this->translator);
     }
 
     /**
-     * @param ProductSearchContext $context
-     * @param ProductSearchQuery $query
      * @param string $type
      *
      * @return array|int
@@ -61,14 +60,14 @@ class NewProductsProductSearchProvider implements ProductSearchProviderInterface
     private function getProductsOrCount(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-        $type = 'products'
+        $type = 'products',
     ) {
         $isTypeProducts = $type === 'products';
         $result = Product::getNewProducts(
             $context->getIdLang(),
             $query->getPage(),
             $query->getResultsPerPage(),
-            !$isTypeProducts,
+            ! $isTypeProducts,
             $query->getSortOrder()->toLegacyOrderBy(),
             $query->getSortOrder()->toLegacyOrderWay()
         );
@@ -76,14 +75,11 @@ class NewProductsProductSearchProvider implements ProductSearchProviderInterface
         return $isTypeProducts ? $result : (int) $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function runQuery(
         ProductSearchContext $context,
-        ProductSearchQuery $query
+        ProductSearchQuery $query,
     ) {
-        if (!$products = $this->getProductsOrCount($context, $query, 'products')) {
+        if (! $products = $this->getProductsOrCount($context, $query, 'products')) {
             $products = [];
         }
 
@@ -91,7 +87,7 @@ class NewProductsProductSearchProvider implements ProductSearchProviderInterface
 
         $result = new ProductSearchResult();
 
-        if (!empty($products)) {
+        if (! empty($products)) {
             $result
                 ->setProducts($products)
                 ->setTotalProductsCount($count);

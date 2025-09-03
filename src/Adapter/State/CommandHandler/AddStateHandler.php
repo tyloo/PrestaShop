@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,8 +46,6 @@ use State;
 class AddStateHandler implements AddStateHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws CannotAddStateException
      * @throws StateConstraintException
      * @throws StateException
@@ -66,7 +65,7 @@ class AddStateHandler implements AddStateHandlerInterface
                 throw new StateException('State contains invalid field values');
             }
 
-            if (false === $state->add()) {
+            if ($state->add() === false) {
                 throw new CannotAddStateException('Failed to add state');
             }
         } catch (PrestaShopException $prestaShopException) {

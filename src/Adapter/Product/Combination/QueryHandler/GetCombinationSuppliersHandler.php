@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,20 +38,13 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\QueryHandler\GetCombin
 #[AsQueryHandler]
 class GetCombinationSuppliersHandler extends AbstractProductSupplierHandler implements GetCombinationSuppliersHandlerInterface
 {
-    /**
-     * @param ProductSupplierRepository $productSupplierRepository
-     * @param CombinationRepository $combinationRepository
-     */
     public function __construct(
         ProductSupplierRepository $productSupplierRepository,
-        private readonly CombinationRepository $combinationRepository
+        private readonly CombinationRepository $combinationRepository,
     ) {
         parent::__construct($productSupplierRepository);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCombinationSuppliers $query): array
     {
         $combinationId = $query->getCombinationId();

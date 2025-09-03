@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -76,16 +77,13 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
     protected $patternTransformer;
 
     /**
-     * @param LocaleRepository $localeRepoCLDR
      * @param LanguageInterface[] $languages
-     * @param CurrencyCommandValidator $validator
-     * @param PatternTransformer $patternTransformer
      */
     public function __construct(
         LocaleRepository $localeRepoCLDR,
         array $languages,
         CurrencyCommandValidator $validator,
-        PatternTransformer $patternTransformer
+        PatternTransformer $patternTransformer,
     ) {
         $this->localeRepoCLDR = $localeRepoCLDR;
         $this->languages = $languages;
@@ -95,9 +93,6 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
 
     /**
      * Associations conversion rate to given shop ids.
-     *
-     * @param Currency $entity
-     * @param array $shopIds
      */
     protected function associateConversionRateToShops(Currency $entity, array $shopIds)
     {
@@ -112,8 +107,6 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
     }
 
     /**
-     * @param Currency $entity
-     *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      * @throws LocalizationException
@@ -132,9 +125,6 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
     }
 
     /**
-     * @param Currency $entity
-     * @param array $localizedTransformations
-     *
      * @throws LanguageNotFoundException
      */
     protected function applyPatternTransformations(Currency $entity, array $localizedTransformations)
@@ -153,9 +143,6 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
     }
 
     /**
-     * @param Currency $entity
-     * @param AddCurrencyCommand|AddUnofficialCurrencyCommand $command
-     *
      * @throws CannotCreateCurrencyException
      * @throws LanguageNotFoundException
      * @throws LocalizationException
@@ -178,7 +165,7 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
         $this->validateCurrency($entity);
 
         // IMPORTANT: specify that we want to save null values
-        if (false === $entity->save(true, true)) {
+        if ($entity->save(true, true) === false) {
             throw new CannotCreateCurrencyException('Failed to create new currency');
         }
 
@@ -187,9 +174,6 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
     }
 
     /**
-     * @param Currency $entity
-     * @param EditCurrencyCommand|EditUnofficialCurrencyCommand $command
-     *
      * @throws CannotUpdateCurrencyException
      * @throws LanguageNotFoundException
      * @throws LocalizationException
@@ -198,25 +182,25 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
      */
     protected function updateEntity(Currency $entity, EditCurrencyCommand|EditUnofficialCurrencyCommand $command)
     {
-        if (null !== $command->getExchangeRate()) {
+        if ($command->getExchangeRate() !== null) {
             $entity->conversion_rate = $command->getExchangeRate()->getValue();
         }
 
-        if (null !== $command->getPrecision()) {
+        if ($command->getPrecision() !== null) {
             $entity->precision = $command->getPrecision()->getValue();
         }
 
         $entity->active = $command->isEnabled();
 
-        if (!empty($command->getLocalizedNames())) {
+        if (! empty($command->getLocalizedNames())) {
             $entity->setLocalizedNames($command->getLocalizedNames());
         }
 
-        if (!empty($command->getLocalizedSymbols())) {
+        if (! empty($command->getLocalizedSymbols())) {
             $entity->setLocalizedSymbols($command->getLocalizedSymbols());
         }
 
-        if (!empty($command->getLocalizedTransformations())) {
+        if (! empty($command->getLocalizedTransformations())) {
             $this->applyPatternTransformations($entity, $command->getLocalizedTransformations());
         }
 
@@ -224,24 +208,17 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
         $this->validateCurrency($entity);
 
         // IMPORTANT: specify that we want to save null values
-        if (false === $entity->update(true)) {
-            throw new CannotUpdateCurrencyException(
-                sprintf(
-                    'An error occurred when updating currency object with id "%s"',
-                    $command->getCurrencyId()->getValue()
-                )
-            );
+        if ($entity->update(true) === false) {
+            throw new CannotUpdateCurrencyException(\sprintf('An error occurred when updating currency object with id "%s"', $command->getCurrencyId()->getValue()));
         }
 
-        if (!empty($command->getShopIds())) {
+        if (! empty($command->getShopIds())) {
             $this->associateWithShops($entity, $command->getShopIds());
             $this->associateConversionRateToShops($entity, $command->getShopIds());
         }
     }
 
     /**
-     * @param Currency $currency
-     *
      * @throws CurrencyConstraintException
      * @throws PrestaShopException
      */
@@ -253,10 +230,6 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
     }
 
     /**
-     * @param Currency $currency
-     * @param string $propertyName
-     * @param int $errorCode
-     *
      * @throws CurrencyConstraintException
      * @throws PrestaShopException
      */
@@ -265,22 +238,13 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
         $localizedValues = $currency->{$propertyName};
 
         foreach ($localizedValues as $langId => $value) {
-            if (true !== $currency->validateField($propertyName, $value, $langId)) {
-                throw new CurrencyConstraintException(
-                    sprintf(
-                        'Invalid Currency localized property "%s" for language with id "%d"',
-                        $propertyName,
-                        $langId
-                    ),
-                    $errorCode
-                );
+            if ($currency->validateField($propertyName, $value, $langId) !== true) {
+                throw new CurrencyConstraintException(\sprintf('Invalid Currency localized property "%s" for language with id "%d"', $propertyName, $langId), $errorCode);
             }
         }
     }
 
     /**
-     * @param int $langId
-     *
      * @return string
      *
      * @throws LanguageNotFoundException
@@ -298,22 +262,17 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
     }
 
     /**
-     * @param int $currencyId
-     * @param int $defaultCurrencyId
-     *
      * @throws CannotDeleteDefaultCurrencyException
      */
     protected function assertDefaultCurrencyIsNotBeingRemovedOrDisabled(int $currencyId, int $defaultCurrencyId)
     {
         if ($currencyId === $defaultCurrencyId) {
-            throw new CannotDeleteDefaultCurrencyException(sprintf('Currency with id "%s" is the default currency and cannot be deleted or disabled.', $currencyId));
+            throw new CannotDeleteDefaultCurrencyException(\sprintf('Currency with id "%s" is the default currency and cannot be deleted or disabled.', $currencyId));
         }
     }
 
     /**
      * Prevents from removing the currency from any shop context.
-     *
-     * @param Currency $currency
      *
      * @throws DefaultCurrencyInMultiShopException
      */
@@ -334,7 +293,7 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
             }
 
             $shop = new Shop($shopId);
-            throw new DefaultCurrencyInMultiShopException($currency->name, $shop->name, sprintf('Currency with id %s cannot be removed or disabled from shop with id %s because its the default currency.', $currency->id, $shopId), DefaultCurrencyInMultiShopException::CANNOT_REMOVE_CURRENCY);
+            throw new DefaultCurrencyInMultiShopException($currency->name, $shop->name, \sprintf('Currency with id %s cannot be removed or disabled from shop with id %s because its the default currency.', $currency->id, $shopId), DefaultCurrencyInMultiShopException::CANNOT_REMOVE_CURRENCY);
         }
     }
 }

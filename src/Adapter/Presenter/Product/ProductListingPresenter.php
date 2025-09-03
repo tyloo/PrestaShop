@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,10 +35,6 @@ use ReflectionException;
 class ProductListingPresenter extends ProductPresenter
 {
     /**
-     * @param ProductPresentationSettings $settings
-     * @param array $product
-     * @param Language $language
-     *
      * @return ProductLazyArray|ProductListingLazyArray
      *
      * @throws ReflectionException
@@ -45,7 +42,7 @@ class ProductListingPresenter extends ProductPresenter
     public function present(
         ProductPresentationSettings $settings,
         array $product,
-        Language $language
+        Language $language,
     ) {
         $productListingLazyArray = new ProductListingLazyArray(
             $settings,

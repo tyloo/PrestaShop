@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,12 +36,9 @@ final class InstalledPaymentModulesChoiceProvider implements FormChoiceProviderI
 {
     private static $paymentModules;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices(): array
     {
-        if (!self::$paymentModules) {
+        if (! self::$paymentModules) {
             self::$paymentModules = [];
 
             foreach (PaymentModule::getInstalledPaymentModules() as $payment) {

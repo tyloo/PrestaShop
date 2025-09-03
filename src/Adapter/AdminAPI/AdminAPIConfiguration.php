@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -53,7 +54,7 @@ class AdminAPIConfiguration implements DataConfigurationInterface
     public function updateConfiguration(array $configuration)
     {
         $errors = $this->getConfigurationErrors($configuration);
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             return $errors;
         }
 
@@ -74,7 +75,7 @@ class AdminAPIConfiguration implements DataConfigurationInterface
     private function getConfigurationErrors(array $configuration): array
     {
         $errors = [];
-        if (!is_bool($configuration['enable_admin_api'])) {
+        if (! \is_bool($configuration['enable_admin_api'])) {
             $errors[] = $this->translator->trans(
                 'The %s field is invalid.',
                 [$this->translator->trans('Admin API', [], 'Admin.Advparameters.Feature')],

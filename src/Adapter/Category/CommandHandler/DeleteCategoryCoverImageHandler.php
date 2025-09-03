@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,17 +48,12 @@ use Symfony\Component\Filesystem\Filesystem;
 #[AsCommandHandler]
 final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageHandlerInterface
 {
-    /**
-     * @param Filesystem $filesystem
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct(private readonly Filesystem $filesystem, private readonly ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        private readonly Filesystem $filesystem,
+        private readonly ConfigurationInterface $configuration,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(DeleteCategoryCoverImageCommand $command)
     {
         $categoryId = $command->getCategoryId();
@@ -71,33 +67,26 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
     }
 
     /**
-     * @param CategoryId $categoryId
-     * @param Category $category
-     *
      * @throws CategoryNotFoundException
      */
     private function assertCategoryExists(CategoryId $categoryId, Category $category)
     {
         if ($category->id !== $categoryId->getValue()) {
-            throw new CategoryNotFoundException($categoryId, sprintf('Category with id "%s" was not found.', $categoryId->getValue()));
+            throw new CategoryNotFoundException($categoryId, \sprintf('Category with id "%s" was not found.', $categoryId->getValue()));
         }
     }
 
     /**
-     * @param Category $category
-     *
      * @throws CannotDeleteImageException
      */
     private function deleteCoverImage(Category $category)
     {
-        if (false === $category->deleteImage(true)) {
-            throw new CannotDeleteImageException(sprintf('Cannot delete cover image for category with id "%s"', $category->id), CannotDeleteImageException::COVER_IMAGE);
+        if ($category->deleteImage(true) === false) {
+            throw new CannotDeleteImageException(\sprintf('Cannot delete cover image for category with id "%s"', $category->id), CannotDeleteImageException::COVER_IMAGE);
         }
     }
 
     /**
-     * @param Category $category
-     *
      * @throws CannotDeleteImageException
      */
     private function deleteTemporaryThumbnailImage(Category $category)
@@ -109,13 +98,11 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
                 $this->filesystem->remove($temporaryThumbnailPath);
             }
         } catch (IOException $ioException) {
-            throw new CannotDeleteImageException(sprintf('Cannot delete thumbnail image for category with id "%s"', $category->id), CannotDeleteImageException::THUMBNAIL_IMAGE, $ioException);
+            throw new CannotDeleteImageException(\sprintf('Cannot delete thumbnail image for category with id "%s"', $category->id), CannotDeleteImageException::THUMBNAIL_IMAGE, $ioException);
         }
     }
 
     /**
-     * @param Category $category
-     *
      * @throws CannotDeleteImageException
      */
     private function deleteImagesForAllTypes(Category $category)
@@ -133,15 +120,7 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
                 }
             }
         } catch (IOException $ioException) {
-            throw new CannotDeleteImageException(
-                sprintf(
-                    'Cannot delete image with type "%s" for category with id "%s"',
-                    isset($imageType) ? $imageType['name'] : '',
-                    $category->id
-                ),
-                CannotDeleteImageException::COVER_IMAGE,
-                $ioException
-            );
+            throw new CannotDeleteImageException(\sprintf('Cannot delete image with type "%s" for category with id "%s"', isset($imageType) ? $imageType['name'] : '', $category->id), CannotDeleteImageException::COVER_IMAGE, $ioException);
         }
     }
 }

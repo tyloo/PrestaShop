@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,8 +43,6 @@ use Supplier;
 final class ToggleSupplierStatusHandler implements ToggleSupplierStatusHandlerInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @throws SupplierException
      */
     public function handle(ToggleSupplierStatusCommand $command)
@@ -51,15 +50,15 @@ final class ToggleSupplierStatusHandler implements ToggleSupplierStatusHandlerIn
         try {
             $entity = new Supplier($command->getSupplierId()->getValue());
 
-            if (0 >= $entity->id) {
-                throw new SupplierNotFoundException(sprintf('Supplier object with id "%s" has not been found for status changing.', $command->getSupplierId()->getValue()));
+            if ($entity->id <= 0) {
+                throw new SupplierNotFoundException(\sprintf('Supplier object with id "%s" has not been found for status changing.', $command->getSupplierId()->getValue()));
             }
 
-            if (false === $entity->toggleStatus()) {
-                throw new CannotToggleSupplierStatusException(sprintf('Unable to toggle supplier with id "%s"', $command->getSupplierId()->getValue()));
+            if ($entity->toggleStatus() === false) {
+                throw new CannotToggleSupplierStatusException(\sprintf('Unable to toggle supplier with id "%s"', $command->getSupplierId()->getValue()));
             }
         } catch (PrestaShopException $prestaShopException) {
-            throw new SupplierException(sprintf('An error occurred when toggling status for supplier object with id "%s"', $command->getSupplierId()->getValue()), 0, $prestaShopException);
+            throw new SupplierException(\sprintf('An error occurred when toggling status for supplier object with id "%s"', $command->getSupplierId()->getValue()), 0, $prestaShopException);
         }
     }
 }

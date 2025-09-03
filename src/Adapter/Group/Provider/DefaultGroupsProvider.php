@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,16 +41,14 @@ use PrestaShop\PrestaShop\Core\Group\Provider\DefaultGroupsProviderInterface;
 final class DefaultGroupsProvider implements DefaultGroupsProviderInterface
 {
     /**
-     * @param ConfigurationInterface $configuration
      * @param int $contextLangId
      */
-    public function __construct(private readonly ConfigurationInterface $configuration, private $contextLangId)
-    {
+    public function __construct(
+        private readonly ConfigurationInterface $configuration,
+        private $contextLangId,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getGroups()
     {
         $visitorsGroup = new Group($this->configuration->get('PS_UNIDENTIFIED_GROUP'));

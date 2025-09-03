@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,23 +46,19 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopCollection;
 #[AsCommandHandler]
 class BulkUpdateProductStatusHandler extends AbstractBulkHandler implements BulkUpdateProductStatusHandlerInterface
 {
-    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductIndexationUpdater $productIndexationUpdater)
-    {
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly ProductIndexationUpdater $productIndexationUpdater,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(BulkUpdateProductStatusCommand $command): void
     {
         $this->handleBulkAction($command->getProductIds(), $command);
     }
 
     /**
-     * @param ProductId $productId
      * @param BulkUpdateProductStatusCommand $command
-     *
-     * @return void
      */
     protected function handleSingleAction(ProductId $productId, $command = null)
     {

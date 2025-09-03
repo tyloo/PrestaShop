@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,34 +36,31 @@ use Product;
  */
 class DetailsFiller implements ProductFillerInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function fillUpdatableProperties(Product $product, UpdateProductCommand $command): array
     {
         $updatableProperties = [];
 
-        if (null !== $command->getGtin()) {
+        if ($command->getGtin() !== null) {
             $product->ean13 = $command->getGtin()->getValue();
             $updatableProperties[] = 'ean13';
         }
 
-        if (null !== $command->getIsbn()) {
+        if ($command->getIsbn() !== null) {
             $product->isbn = $command->getIsbn()->getValue();
             $updatableProperties[] = 'isbn';
         }
 
-        if (null !== $command->getMpn()) {
+        if ($command->getMpn() !== null) {
             $product->mpn = $command->getMpn();
             $updatableProperties[] = 'mpn';
         }
 
-        if (null !== $command->getReference()) {
+        if ($command->getReference() !== null) {
             $product->reference = $command->getReference()->getValue();
             $updatableProperties[] = 'reference';
         }
 
-        if (null !== $command->getUpc()) {
+        if ($command->getUpc() !== null) {
             $product->upc = $command->getUpc()->getValue();
             $updatableProperties[] = 'upc';
         }

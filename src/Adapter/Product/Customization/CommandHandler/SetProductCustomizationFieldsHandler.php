@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,12 +47,10 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsCommandHandler]
 class SetProductCustomizationFieldsHandler implements SetProductCustomizationFieldsHandlerInterface
 {
-    /**
-     * @param CustomizationFieldRepository $customizationFieldRepository,
-     * @param ProductCustomizationFieldUpdater $productCustomizationFieldUpdater
-     */
-    public function __construct(private readonly CustomizationFieldRepository $customizationFieldRepository, private readonly ProductCustomizationFieldUpdater $productCustomizationFieldUpdater)
-    {
+    public function __construct(
+        private readonly CustomizationFieldRepository $customizationFieldRepository,
+        private readonly ProductCustomizationFieldUpdater $productCustomizationFieldUpdater,
+    ) {
     }
 
     /**
@@ -82,13 +81,6 @@ class SetProductCustomizationFieldsHandler implements SetProductCustomizationFie
         return $this->customizationFieldRepository->getCustomizationFieldIds($productId);
     }
 
-    /**
-     * @param ProductId $productId
-     * @param CustomizationFieldDTO $customizationFieldDTO
-     * @param ShopId $shopId
-     *
-     * @return CustomizationField
-     */
     private function buildEntityFromDTO(ProductId $productId, CustomizationFieldDTO $customizationFieldDTO, ShopId $shopId): CustomizationField
     {
         // Fetch existing customization field or create a new one

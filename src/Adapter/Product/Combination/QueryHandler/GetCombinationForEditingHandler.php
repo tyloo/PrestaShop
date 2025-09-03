@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -64,26 +65,21 @@ use Product;
 #[AsQueryHandler]
 class GetCombinationForEditingHandler implements GetCombinationForEditingHandlerInterface
 {
-    /**
-     * @param CombinationRepository $combinationRepository
-     * @param CombinationNameBuilderInterface $combinationNameBuilder
-     * @param StockAvailableRepository $stockAvailableRepository
-     * @param AttributeRepository $attributeRepository
-     * @param ProductRepository $productRepository
-     * @param ProductImageRepository $productImageRepository
-     * @param NumberExtractor $numberExtractor
-     * @param TaxComputer $taxComputer
-     * @param int $contextLanguageId
-     * @param ShopConfigurationInterface $configuration
-     * @param ProductImagePathFactory $productImageUrlFactory
-     */
-    public function __construct(private readonly CombinationRepository $combinationRepository, private readonly CombinationNameBuilderInterface $combinationNameBuilder, private readonly StockAvailableRepository $stockAvailableRepository, private readonly AttributeRepository $attributeRepository, private readonly ProductRepository $productRepository, private readonly ProductImageRepository $productImageRepository, private readonly NumberExtractor $numberExtractor, private readonly TaxComputer $taxComputer, private readonly int $contextLanguageId, private readonly ShopConfigurationInterface $configuration, private readonly ProductImagePathFactory $productImageUrlFactory)
-    {
+    public function __construct(
+        private readonly CombinationRepository $combinationRepository,
+        private readonly CombinationNameBuilderInterface $combinationNameBuilder,
+        private readonly StockAvailableRepository $stockAvailableRepository,
+        private readonly AttributeRepository $attributeRepository,
+        private readonly ProductRepository $productRepository,
+        private readonly ProductImageRepository $productImageRepository,
+        private readonly NumberExtractor $numberExtractor,
+        private readonly TaxComputer $taxComputer,
+        private readonly int $contextLanguageId,
+        private readonly ShopConfigurationInterface $configuration,
+        private readonly ProductImagePathFactory $productImageUrlFactory,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCombinationForEditing $query): CombinationForEditing
     {
         $shopConstraint = $query->getShopConstraint();
@@ -105,11 +101,6 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
         );
     }
 
-    /**
-     * @param CombinationId $combinationId
-     *
-     * @return string
-     */
     private function getCombinationName(CombinationId $combinationId): string
     {
         $attributesInformation = $this->attributeRepository->getAttributesInfoByCombinationIds(
@@ -120,11 +111,6 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
         return $this->combinationNameBuilder->buildName($attributesInformation[$combinationId->getValue()]);
     }
 
-    /**
-     * @param Combination $combination
-     *
-     * @return CombinationDetails
-     */
     private function getDetails(Combination $combination): CombinationDetails
     {
         return new CombinationDetails(
@@ -137,12 +123,6 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
         );
     }
 
-    /**
-     * @param Combination $combination
-     * @param Product $product
-     *
-     * @return CombinationPrices
-     */
     private function getPrices(Combination $combination, Product $product): CombinationPrices
     {
         $taxEnabled = (bool) $this->configuration->get('PS_TAX', null, ShopConstraint::allShops());
@@ -196,11 +176,6 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
         );
     }
 
-    /**
-     * @param Combination $combination
-     *
-     * @return CombinationStock
-     */
     private function getStock(Combination $combination): CombinationStock
     {
         $stockAvailable = $this->stockAvailableRepository->getForCombination(
@@ -221,8 +196,6 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
     }
 
     /**
-     * @param Combination $combination
-     *
      * @return int[]
      */
     private function getImages(Combination $combination): array
@@ -235,23 +208,17 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
             return [];
         }
 
-        return array_map(fn(ImageId $imageId) => $imageId->getValue(), $combinationImageIds[$combinationIdValue]);
+        return array_map(fn (ImageId $imageId) => $imageId->getValue(), $combinationImageIds[$combinationIdValue]);
     }
 
-    /**
-     * @param array $imageIds
-     * @param ProductId $productId
-     *
-     * @return string
-     */
     private function getCoverUrl(array $imageIds, ProductId $productId, ShopConstraint $shopConstraint): string
     {
-        if (!empty($imageIds)) {
+        if (! empty($imageIds)) {
             return $this->productImageUrlFactory->getPathByType(new ImageId((int) $imageIds[0]), ProductImagePathFactory::IMAGE_TYPE_CART_DEFAULT);
         }
 
         $productImageIds = $this->productImageRepository->getImageIds($productId, $shopConstraint);
-        if (!empty($productImageIds)) {
+        if (! empty($productImageIds)) {
             return $this->productImageUrlFactory->getPathByType($productImageIds[0], ProductImagePathFactory::IMAGE_TYPE_CART_DEFAULT);
         }
 

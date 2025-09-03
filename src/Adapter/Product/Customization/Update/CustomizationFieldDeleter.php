@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,17 +50,12 @@ class CustomizationFieldDeleter
      */
     private $productsById = [];
 
-    /**
-     * @param CustomizationFieldRepository $customizationFieldRepository
-     * @param ProductRepository $productRepository
-     */
-    public function __construct(private readonly CustomizationFieldRepository $customizationFieldRepository, private readonly ProductRepository $productRepository)
-    {
+    public function __construct(
+        private readonly CustomizationFieldRepository $customizationFieldRepository,
+        private readonly ProductRepository $productRepository,
+    ) {
     }
 
-    /**
-     * @param CustomizationFieldId $customizationFieldId
-     */
     public function delete(CustomizationFieldId $customizationFieldId): void
     {
         $customizationField = $this->customizationFieldRepository->get($customizationFieldId);
@@ -67,8 +63,6 @@ class CustomizationFieldDeleter
     }
 
     /**
-     * @param array $customizationFieldIds
-     *
      * @throws CannotBulkDeleteCustomizationFieldException
      */
     public function bulkDelete(array $customizationFieldIds): void
@@ -88,22 +82,16 @@ class CustomizationFieldDeleter
             return;
         }
 
-        throw new CannotBulkDeleteCustomizationFieldException(
-            $failedIds,
-            sprintf('Failed deleting following customization fields: "%s"', implode(', ', $failedIds))
-        );
+        throw new CannotBulkDeleteCustomizationFieldException($failedIds, \sprintf('Failed deleting following customization fields: "%s"', implode(', ', $failedIds)));
     }
 
-    /**
-     * @param CustomizationField $customizationField
-     */
     private function performDeletion(CustomizationField $customizationField): void
     {
         $product = $this->getProduct((int) $customizationField->id_product);
         $usedFieldIds = array_map('intval', $product->getUsedCustomizationFieldsIds());
         $fieldId = (int) $customizationField->id;
 
-        if (in_array($fieldId, $usedFieldIds)) {
+        if (\in_array($fieldId, $usedFieldIds, true)) {
             $this->customizationFieldRepository->softDelete($customizationField);
         } else {
             $this->customizationFieldRepository->delete($customizationField);
@@ -111,16 +99,12 @@ class CustomizationFieldDeleter
     }
 
     /**
-     * @param int $productId
-     *
-     * @return Product
-     *
      * @throws ProductException
      * @throws ProductNotFoundException
      */
     private function getProduct(int $productId): Product
     {
-        if (!isset($this->productsById[$productId])) {
+        if (! isset($this->productsById[$productId])) {
             $this->productsById[$productId] = $this->productRepository->getProductByDefaultShop(new ProductId($productId));
         }
 

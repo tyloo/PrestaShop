@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,12 +39,9 @@ use Shop;
  */
 final class OrderCountriesChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getChoices()
     {
-        if (!Country::isCurrentlyUsed('country', true)) {
+        if (! Country::isCurrentlyUsed('country', true)) {
             return [];
         }
 

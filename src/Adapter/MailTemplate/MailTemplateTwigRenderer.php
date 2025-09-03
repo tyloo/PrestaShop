@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,30 +46,24 @@ use Twig\Error\LoaderError;
  */
 class MailTemplateTwigRenderer implements MailTemplateRendererInterface
 {
-    /** @var TransformationCollection */
+    /**
+     * @var TransformationCollection
+     */
     private $transformations;
 
     /**
-     * @param Environment $twig
-     * @param LayoutVariablesBuilderInterface $variablesBuilder
-     * @param HookDispatcherInterface $hookDispatcher
-     * @param bool $hasGiftWrapping
-     *
      * @throws TypeException
      */
     public function __construct(
         private readonly Environment $twig,
         private readonly LayoutVariablesBuilderInterface $variablesBuilder,
         private readonly HookDispatcherInterface $hookDispatcher,
-        private readonly bool $hasGiftWrapping
+        private readonly bool $hasGiftWrapping,
     ) {
         $this->transformations = new TransformationCollection();
     }
 
     /**
-     * @param LayoutInterface $layout
-     * @param LanguageInterface $language
-     *
      * @return string
      *
      * @throws TypeException
@@ -81,9 +76,6 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
     }
 
     /**
-     * @param LayoutInterface $layout
-     * @param LanguageInterface $language
-     *
      * @return string
      *
      * @throws FileNotFoundException
@@ -95,8 +87,6 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
     }
 
     /**
-     * @param LayoutInterface $layout
-     * @param LanguageInterface $language
      * @param string $templateType
      *
      * @return string
@@ -107,21 +97,21 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
     private function render(
         LayoutInterface $layout,
         LanguageInterface $language,
-        $templateType
+        $templateType,
     ) {
         $layoutVariables = $this->variablesBuilder->buildVariables($layout, $language);
         $layoutVariables['templateType'] = $templateType;
         $layoutVariables['giftWrapping'] = $this->hasGiftWrapping;
-        if (MailTemplateInterface::HTML_TYPE === $templateType) {
-            $layoutPath = !empty($layout->getHtmlPath()) ? $layout->getHtmlPath() : $layout->getTxtPath();
+        if ($templateType === MailTemplateInterface::HTML_TYPE) {
+            $layoutPath = ! empty($layout->getHtmlPath()) ? $layout->getHtmlPath() : $layout->getTxtPath();
         } else {
-            $layoutPath = !empty($layout->getTxtPath()) ? $layout->getTxtPath() : $layout->getHtmlPath();
+            $layoutPath = ! empty($layout->getTxtPath()) ? $layout->getTxtPath() : $layout->getHtmlPath();
         }
 
         try {
             $renderedTemplate = $this->twig->render($layoutPath, $layoutVariables);
         } catch (LoaderError) {
-            throw new FileNotFoundException(sprintf('Could not find layout file: %s', $layoutPath));
+            throw new FileNotFoundException(\sprintf('Could not find layout file: %s', $layoutPath));
         }
 
         $templateTransformations = $this->getMailLayoutTransformations($layout, $templateType);
@@ -137,7 +127,6 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
     }
 
     /**
-     * @param LayoutInterface $mailLayout
      * @param string $templateType
      *
      * @return TransformationCollection
@@ -155,7 +144,7 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
         $templateTransformations = new TransformationCollection();
         /** @var TransformationInterface $transformation */
         foreach ($this->transformations as $transformation) {
-            if ($transformation::class == \PrestaShop\PrestaShop\Core\MailTemplate\Transformation\CSSInlineTransformation::class && $themeName == 'modern') {
+            if ($transformation::class === \PrestaShop\PrestaShop\Core\MailTemplate\Transformation\CSSInlineTransformation::class && $themeName === 'modern') {
                 continue;
             }
 
@@ -179,9 +168,6 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
         return $templateTransformations;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addTransformation(TransformationInterface $transformation)
     {
         $this->transformations[] = $transformation;

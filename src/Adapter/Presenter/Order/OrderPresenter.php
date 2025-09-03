@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,7 +43,7 @@ class OrderPresenter implements PresenterInterface
      */
     public function present($order)
     {
-        if (!($order instanceof Order)) {
+        if (! ($order instanceof Order)) {
             throw new Exception('OrderPresenter can only present instance of Order');
         }
 

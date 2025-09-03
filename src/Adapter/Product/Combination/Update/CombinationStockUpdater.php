@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -49,18 +50,20 @@ use StockAvailable;
  */
 class CombinationStockUpdater
 {
-    public function __construct(private readonly StockAvailableRepository $stockAvailableRepository, private readonly CombinationRepository $combinationRepository, private readonly MovementReasonRepository $movementReasonRepository, private readonly StockManager $stockManager, private readonly ShopConfigurationInterface $configuration, private readonly HookDispatcherInterface $hookDispatcher)
-    {
+    public function __construct(
+        private readonly StockAvailableRepository $stockAvailableRepository,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly MovementReasonRepository $movementReasonRepository,
+        private readonly StockManager $stockManager,
+        private readonly ShopConfigurationInterface $configuration,
+        private readonly HookDispatcherInterface $hookDispatcher,
+    ) {
     }
 
-    /**
-     * @param CombinationId $combinationId
-     * @param CombinationStockProperties $properties
-     */
     public function update(
         CombinationId $combinationId,
         CombinationStockProperties $properties,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ): void {
         $combination = $this->combinationRepository->getByShopConstraint($combinationId, $shopConstraint);
         $this->updateStockByShopConstraint(
@@ -70,22 +73,18 @@ class CombinationStockUpdater
         );
     }
 
-    /**
-     * @param StockAvailable $stockAvailable
-     * @param CombinationStockProperties $properties
-     */
     private function updateStockAvailable(StockAvailable $stockAvailable, CombinationStockProperties $properties): void
     {
-        $updateLocation = null !== $properties->getLocation();
+        $updateLocation = $properties->getLocation() !== null;
         $stockModification = $properties->getStockModification();
 
-        if (!$stockModification && !$updateLocation) {
+        if (! $stockModification && ! $updateLocation) {
             return;
         }
 
         if ($stockModification !== null) {
             $previousQuantity = (int) $stockAvailable->quantity;
-            if (null !== $stockModification->getDeltaQuantity()) {
+            if ($stockModification->getDeltaQuantity() !== null) {
                 $stockAvailable->quantity += $stockModification->getDeltaQuantity();
             } else {
                 $stockAvailable->quantity = $stockModification->getFixedQuantity();
@@ -114,7 +113,7 @@ class CombinationStockUpdater
 
     private function saveMovement(StockAvailable $stockAvailable, StockModification $stockModification, int $previousQuantity, int $affectedShopId): void
     {
-        if (null !== $stockModification->getDeltaQuantity()) {
+        if ($stockModification->getDeltaQuantity() !== null) {
             $deltaQuantity = $stockModification->getDeltaQuantity();
         } else {
             $deltaQuantity = $stockModification->getFixedQuantity() - $previousQuantity;
@@ -145,7 +144,7 @@ class CombinationStockUpdater
     private function updateStockByShopConstraint(
         Combination $combination,
         CombinationStockProperties $properties,
-        ShopConstraint $shopConstraint
+        ShopConstraint $shopConstraint,
     ): void {
         $combinationId = new CombinationId((int) $combination->id);
         if ($shopConstraint->forAllShops() || ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds())) {

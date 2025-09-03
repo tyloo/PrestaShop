@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,24 +53,19 @@ use Validate;
 #[AsQueryHandler]
 final class GetCartForViewingHandler implements GetCartForViewingHandlerInterface
 {
-    /**
-     * @param ImageManager $imageManager
-     * @param Locale $locale
-     */
-    public function __construct(private readonly ImageManager $imageManager, private readonly Locale $locale)
-    {
+    public function __construct(
+        private readonly ImageManager $imageManager,
+        private readonly Locale $locale,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handle(GetCartForViewing $query)
     {
         $cartId = $query->getCartId()->getValue();
         $cart = new Cart($cartId);
 
         if ($cart->id !== $cartId) {
-            throw new CartNotFoundException(sprintf('Cart with id "%s" were not found', $cartId));
+            throw new CartNotFoundException(\sprintf('Cart with id "%s" were not found', $cartId));
         }
 
         $customer = new Customer($cart->id_customer);
@@ -94,7 +90,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
             $tax_calculation_method = Group::getPriceDisplayMethod(Group::getCurrent()->id);
         }
 
-        if ($tax_calculation_method == PS_TAX_EXC) {
+        if ($tax_calculation_method === PS_TAX_EXC) {
             $total_products = $summary['total_products'];
             $total_discounts = $summary['total_discounts_tax_exc'];
             $total_wrapping = $summary['total_wrapping_tax_exc'];
@@ -114,7 +110,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
 
         foreach ($products as &$product) {
             // Add proper prices depending on customer group price display style
-            if ($tax_calculation_method == PS_TAX_EXC) {
+            if ($tax_calculation_method === PS_TAX_EXC) {
                 $product['product_price'] = $product['price'];
                 $product['product_total'] = $product['total'];
             } else {
@@ -168,7 +164,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
 
         // Prepare link to share this cart, if it was not ordered yet
         $cartLink = null;
-        if (!Validate::isLoadedObject($order)) {
+        if (! Validate::isLoadedObject($order)) {
             $cartLink = $context->link->getPageLink(
                 'cart',
                 false,
@@ -193,7 +189,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
             'total_shipping_formatted' => $this->locale->formatPrice($total_shipping, $currency->iso_code),
             'total' => $total_price,
             'total_formatted' => $this->locale->formatPrice($total_price, $currency->iso_code),
-            'is_tax_included' => $tax_calculation_method == PS_TAX_INC,
+            'is_tax_included' => $tax_calculation_method === PS_TAX_INC,
             'cart_link' => $cartLink,
             'date_add' => (new DateTime($cart->date_add))->format($context->language->date_format_full),
             'date_upd' => (new DateTime($cart->date_upd))->format($context->language->date_format_full),
@@ -203,10 +199,6 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
     }
 
     /**
-     * @param array $products
-     * @param Currency $currency
-     * @param int $languageId
-     *
      * @return array
      */
     private function prepareProductForView(array $products, Currency $currency, int $languageId)
@@ -242,7 +234,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
                 foreach ($product['customizedDatas'] as $customizationPerAddress) {
                     foreach ($customizationPerAddress as $customization) {
                         if (((int) $customization['id_customization'] !== (int) $product['id_customization'])
-                            && count($customizationPerAddress) === 1
+                            && \count($customizationPerAddress) === 1
                         ) {
                             continue;
                         }
@@ -253,7 +245,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
                         ];
 
                         foreach ($customization['datas'] as $type => $data) {
-                            if (Product::CUSTOMIZE_FILE === $type) {
+                            if ($type === Product::CUSTOMIZE_FILE) {
                                 foreach ($data as $item) {
                                     $productCustomization['fields'][] = [
                                         'name' => $item['name'],
@@ -262,7 +254,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
                                         'image' => _THEME_PROD_PIC_DIR_ . $item['value'] . '_small',
                                     ];
                                 }
-                            } elseif (Product::CUSTOMIZE_TEXTFIELD === $type) {
+                            } elseif ($type === Product::CUSTOMIZE_TEXTFIELD) {
                                 foreach ($data as $item) {
                                     $productCustomization['fields'][] = [
                                         'name' => $item['name'],
@@ -285,8 +277,6 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
     }
 
     /**
-     * @param Cart $cart
-     *
      * @return array
      */
     private function getCartRulesForView(Cart $cart)
@@ -300,7 +290,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
             $cartRulesView[] = [
                 'id' => $cartRule['id_cart_rule'],
                 'name' => $cartRule['name'],
-                'is_free_shipping' => !$cartRule['value_real'] && $cartRule['free_shipping'],
+                'is_free_shipping' => ! $cartRule['value_real'] && $cartRule['free_shipping'],
                 'formatted_value' => $this->locale->formatPrice(
                     $cartRule['value_real'],
                     $cartCurrency->iso_code

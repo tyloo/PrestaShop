@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,21 +48,13 @@ use TaxRulesGroup;
  */
 class TaxRulesGroupRepository extends AbstractMultiShopObjectModelRepository
 {
-    /**
-     * @param Connection $connection
-     * @param string $dbPrefix
-     * @param TaxRulesGroupValidator $taxRulesGroupValidator
-     */
-    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly TaxRulesGroupValidator $taxRulesGroupValidator)
-    {
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
+        private readonly TaxRulesGroupValidator $taxRulesGroupValidator,
+    ) {
     }
 
-    /**
-     * @param TaxRulesGroupId $taxRulesGroupId
-     * @param CountryId $countryId
-     *
-     * @return int
-     */
     public function getTaxRulesGroupDefaultStateId(TaxRulesGroupId $taxRulesGroupId, CountryId $countryId): int
     {
         $qb = $this->connection->createQueryBuilder();
@@ -90,10 +83,6 @@ class TaxRulesGroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param TaxRulesGroupId $taxRulesGroupId
-     *
-     * @return TaxRulesGroup
-     *
      * @throws CoreException
      * @throws TaxRulesGroupNotFoundException
      */
@@ -110,8 +99,6 @@ class TaxRulesGroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param TaxRulesGroupId $taxRulesGroupId
-     *
      * @throws CoreException
      * @throws TaxRulesGroupNotFoundException
      */
@@ -125,11 +112,7 @@ class TaxRulesGroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param TaxRulesGroup $taxRulesGroup
      * @param ShopId[] $shopIds
-     * @param int $errorCode
-     *
-     * @return TaxRulesGroupId
      */
     public function add(TaxRulesGroup $taxRulesGroup, array $shopIds, int $errorCode = 0): TaxRulesGroupId
     {
@@ -145,7 +128,6 @@ class TaxRulesGroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param TaxRulesGroup $taxRulesGroup
      * @param ShopId[] $shopIds
      */
     public function update(TaxRulesGroup $taxRulesGroup, array $shopIds): void
@@ -159,16 +141,13 @@ class TaxRulesGroupRepository extends AbstractMultiShopObjectModelRepository
     }
 
     /**
-     * @param TaxRulesGroup $taxRulesGroup
-     * @param array $propertiesToUpdate
      * @param ShopId[] $shopIds
-     * @param int $errorCode
      */
     public function partialUpdate(
         TaxRulesGroup $taxRulesGroup,
         array $propertiesToUpdate,
         array $shopIds,
-        int $errorCode
+        int $errorCode,
     ): void {
         $this->partiallyUpdateObjectModelForShops(
             $taxRulesGroup,
