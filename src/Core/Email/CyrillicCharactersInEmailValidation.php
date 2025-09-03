@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Exception\NonASCIIInLocalPartException;
 
 class CyrillicCharactersInEmailValidation implements EmailValidation
 {
-    /**
-     * @var InvalidEmail|null
-     */
-    private $error;
+    private ?InvalidEmail $error = null;
 
     public function isValid(string $email, EmailLexer $emailLexer): bool
     {
@@ -48,7 +45,7 @@ class CyrillicCharactersInEmailValidation implements EmailValidation
             $this->error = new InvalidEmail(new ExceptionFound(new NonASCIIInLocalPartException()), '');
         }
 
-        return $this->error === null;
+        return ! $this->error instanceof InvalidEmail;
     }
 
     public function getError(): ?InvalidEmail

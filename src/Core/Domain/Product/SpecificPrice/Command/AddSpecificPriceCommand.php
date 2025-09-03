@@ -65,40 +65,19 @@ class AddSpecificPriceCommand
 
     private readonly Reduction $reduction;
 
-    /**
-     * @var FixedPriceInterface
-     */
-    private $fixedPrice;
+    private \PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\ValueObject\InitialPrice|FixedPrice $fixedPrice;
 
-    /**
-     * @var ShopIdInterface
-     */
-    private $shopId;
+    private \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\NoShopId|ShopId $shopId;
 
-    /**
-     * @var CombinationIdInterface
-     */
-    private $combinationId;
+    private \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\NoCombinationId|CombinationId $combinationId;
 
-    /**
-     * @var CurrencyIdInterface
-     */
-    private $currencyId;
+    private \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\NoCurrencyId|CurrencyId $currencyId;
 
-    /**
-     * @var CountryIdInterface
-     */
-    private $countryId;
+    private \PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\NoCountryId|CountryId $countryId;
 
-    /**
-     * @var GroupIdInterface
-     */
-    private $groupId;
+    private \PrestaShop\PrestaShop\Core\Domain\Customer\Group\ValueObject\NoGroupId|GroupId $groupId;
 
-    /**
-     * @var int
-     */
-    private $customerId = 0;
+    private int $customerId = 0;
 
     /**
      * @throws DomainConstraintException

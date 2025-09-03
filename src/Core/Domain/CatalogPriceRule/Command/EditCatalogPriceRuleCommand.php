@@ -54,22 +54,13 @@ class EditCatalogPriceRuleCommand
 
     private ?float $price = null;
 
-    /**
-     * @var DateTime|null
-     */
-    private $dateTimeFrom;
+    private ?DateTime $dateTimeFrom = null;
 
-    /**
-     * @var DateTime|null
-     */
-    private $dateTimeTo;
+    private ?DateTime $dateTimeTo = null;
 
     private ?bool $includeTax = null;
 
-    /**
-     * @var Reduction
-     */
-    private $reduction;
+    private ?Reduction $reduction = null;
 
     /**
      * @throws CatalogPriceRuleConstraintException

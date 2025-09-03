@@ -37,7 +37,7 @@ class BulkDeleteCustomerThreadCommand
     /**
      * @var CustomerThreadId[]
      */
-    private $customerThreadIds;
+    private ?array $customerThreadIds = null;
 
     /**
      * @param array<int, int> $customerThreadIds

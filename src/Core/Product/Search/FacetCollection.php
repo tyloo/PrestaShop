@@ -35,7 +35,7 @@ class FacetCollection
     /**
      * @var array the list of facets
      */
-    private $facets = [];
+    private array $facets = [];
 
     /**
      * @param Facet $facet the facet to add
@@ -67,7 +67,7 @@ class FacetCollection
     /**
      * @return array returns the list of facets
      */
-    public function getFacets()
+    public function getFacets(): array
     {
         return $this->facets;
     }

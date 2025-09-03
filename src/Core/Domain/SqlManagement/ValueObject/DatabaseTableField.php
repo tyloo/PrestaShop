@@ -34,15 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\SqlManagement\Exception\SqlManagementConst
  */
 class DatabaseTableField
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
-    private $type;
+    private string $type;
 
     /**
      * @param string $name
@@ -57,10 +51,7 @@ class DatabaseTableField
             ->setType($type);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -83,10 +74,7 @@ class DatabaseTableField
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }

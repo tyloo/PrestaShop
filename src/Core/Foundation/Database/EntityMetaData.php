@@ -34,10 +34,7 @@ class EntityMetaData
      */
     public $entityClassName;
 
-    /**
-     * @var array|null
-     */
-    private $primaryKeyFieldnames;
+    private ?array $primaryKeyFieldnames = null;
 
     /**
      * @var string|null
@@ -66,7 +63,7 @@ class EntityMetaData
         return $this;
     }
 
-    public function getPrimaryKeyFieldnames()
+    public function getPrimaryKeyFieldnames(): ?array
     {
         return $this->primaryKeyFieldnames;
     }

@@ -41,7 +41,7 @@ class BulkDuplicateProductCommand
     /**
      * @var ProductId[]
      */
-    private $productIds;
+    private ?array $productIds = null;
 
     /**
      * @param int[] $productIds

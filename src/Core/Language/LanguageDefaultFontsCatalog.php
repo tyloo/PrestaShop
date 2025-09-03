@@ -37,10 +37,8 @@ class LanguageDefaultFontsCatalog
     /**
      * This is a non exhaustive list of language which need a specific font
      * so that their characters are correctly displayed.
-     *
-     * @var array
      */
-    private $languageDefaultFonts = [
+    private array $languageDefaultFonts = [
         'fa' => 'Tahoma',
         'ar' => 'Tahoma',
     ];

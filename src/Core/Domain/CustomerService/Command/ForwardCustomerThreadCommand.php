@@ -36,20 +36,11 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
  */
 class ForwardCustomerThreadCommand
 {
-    /**
-     * @var EmployeeId|null
-     */
-    private $employeeId;
+    private ?EmployeeId $employeeId = null;
 
-    /**
-     * @var CustomerThreadId
-     */
-    private $customerThreadId;
+    private ?CustomerThreadId $customerThreadId = null;
 
-    /**
-     * @var Email|null
-     */
-    private $email;
+    private ?Email $email = null;
 
     /**
      * @var string
@@ -101,26 +92,17 @@ class ForwardCustomerThreadCommand
     {
     }
 
-    /**
-     * @return EmployeeId|null
-     */
-    public function getEmployeeId()
+    public function getEmployeeId(): ?EmployeeId
     {
         return $this->employeeId;
     }
 
-    /**
-     * @return CustomerThreadId
-     */
-    public function getCustomerThreadId()
+    public function getCustomerThreadId(): ?CustomerThreadId
     {
         return $this->customerThreadId;
     }
 
-    /**
-     * @return Email|null
-     */
-    public function getEmail()
+    public function getEmail(): ?Email
     {
         return $this->email;
     }
@@ -135,6 +117,6 @@ class ForwardCustomerThreadCommand
 
     public function forwardToEmployee(): bool
     {
-        return $this->employeeId !== null;
+        return $this->employeeId instanceof EmployeeId;
     }
 }

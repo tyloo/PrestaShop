@@ -36,14 +36,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 abstract class AbstractProductCommandBuilderTestCase extends AbstractMultiShopCommandsBuilderTestCase
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private ?ProductId $productId = null;
 
     protected function getProductId(): ProductId
     {
-        if ($this->productId === null) {
+        if (! $this->productId instanceof ProductId) {
             $this->productId = new ProductId(42);
         }
 

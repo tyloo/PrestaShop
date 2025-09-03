@@ -49,60 +49,27 @@ class EditOrderStateCommand
      */
     private $name;
 
-    /**
-     * @var string|null
-     */
-    private $color;
+    private ?string $color = null;
 
-    /**
-     * @var bool|null
-     */
-    private $loggable;
+    private ?bool $loggable = null;
 
-    /**
-     * @var bool|null
-     */
-    private $invoice;
+    private ?bool $invoice = null;
 
-    /**
-     * @var bool|null
-     */
-    private $hidden;
+    private ?bool $hidden = null;
 
-    /**
-     * @var bool|null
-     */
-    private $sendEmail;
+    private ?bool $sendEmail = null;
 
-    /**
-     * @var bool|null
-     */
-    private $pdfInvoice;
+    private ?bool $pdfInvoice = null;
 
-    /**
-     * @var bool|null
-     */
-    private $pdfDelivery;
+    private ?bool $pdfDelivery = null;
 
-    /**
-     * @var bool|null
-     */
-    private $shipped;
+    private ?bool $shipped = null;
 
-    /**
-     * @var bool|null
-     */
-    private $paid;
+    private ?bool $paid = null;
 
-    /**
-     * @var bool|null
-     */
-    private $delivery;
+    private ?bool $delivery = null;
 
-    /**
-     * @var array|null
-     */
-    private $template;
+    private ?array $template = null;
 
     /**
      * @var string|null
@@ -157,10 +124,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getColor()
+    public function getColor(): ?string
     {
         return $this->color;
     }
@@ -175,10 +139,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isLoggable()
+    public function isLoggable(): ?bool
     {
         return $this->loggable;
     }
@@ -193,10 +154,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isInvoice()
+    public function isInvoice(): ?bool
     {
         return $this->invoice;
     }
@@ -211,10 +169,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isHidden()
+    public function isHidden(): ?bool
     {
         return $this->hidden;
     }
@@ -229,10 +184,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isSendEmailEnabled()
+    public function isSendEmailEnabled(): ?bool
     {
         return $this->sendEmail;
     }
@@ -247,10 +199,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isPdfInvoice()
+    public function isPdfInvoice(): ?bool
     {
         return $this->pdfInvoice;
     }
@@ -265,10 +214,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isPdfDelivery()
+    public function isPdfDelivery(): ?bool
     {
         return $this->pdfDelivery;
     }
@@ -283,10 +229,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isShipped()
+    public function isShipped(): ?bool
     {
         return $this->shipped;
     }
@@ -301,10 +244,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isPaid()
+    public function isPaid(): ?bool
     {
         return $this->paid;
     }
@@ -319,10 +259,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
-    public function isDelivery()
+    public function isDelivery(): ?bool
     {
         return $this->delivery;
     }
@@ -337,10 +274,7 @@ class EditOrderStateCommand
         return $this;
     }
 
-    /**
-     * @return array|null
-     */
-    public function getTemplate()
+    public function getTemplate(): ?array
     {
         return $this->template;
     }

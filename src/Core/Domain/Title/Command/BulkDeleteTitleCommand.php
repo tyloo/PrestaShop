@@ -39,7 +39,7 @@ class BulkDeleteTitleCommand
     /**
      * @var array<int, TitleId>
      */
-    private $titleIds;
+    private ?array $titleIds = null;
 
     /**
      * @param array<int, int> $titleIds

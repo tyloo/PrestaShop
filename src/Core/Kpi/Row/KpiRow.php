@@ -42,7 +42,7 @@ final class KpiRow implements KpiRowInterface
     /**
      * @var array[KpiInterface]
      */
-    private $kpis = [];
+    private array $kpis = [];
 
     public function __construct(
         private readonly array $options = [],
@@ -62,7 +62,7 @@ final class KpiRow implements KpiRowInterface
     /**
      * @return array[KpiInterface]
      */
-    public function getKpis()
+    public function getKpis(): array
     {
         return $this->kpis;
     }

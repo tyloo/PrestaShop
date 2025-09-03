@@ -33,7 +33,7 @@ use PHPUnit\Framework\TestCase;
 
 class CacheTest extends TestCase
 {
-    private $cacheArray = [];
+    private array $cacheArray = [];
 
     protected function setUp(): void
     {

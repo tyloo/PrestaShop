@@ -63,7 +63,7 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
 {
     public const GRID_ID = 'category';
 
-    private $categoryId;
+    private ?int $categoryId = null;
 
     public function __construct(
         HookDispatcherInterface $hookDispatcher,

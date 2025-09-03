@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\SqlManagement\Exception\SqlRequestExceptio
  */
 class SqlRequestId
 {
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     /**
      * @param int $requestSqlId
@@ -53,10 +50,7 @@ class SqlRequestId
         $this->value = $requestSqlId;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }

@@ -59,7 +59,7 @@ class ProductSearchContext
     /**
      * @var bool if the sharing stock is enable
      */
-    private $stockSharingBetweenShopGroupEnabled = false;
+    private bool $stockSharingBetweenShopGroupEnabled = false;
 
     public function __construct(?Context $context = null)
     {

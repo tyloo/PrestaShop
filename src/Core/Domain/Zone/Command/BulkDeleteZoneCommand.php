@@ -39,7 +39,7 @@ class BulkDeleteZoneCommand
     /**
      * @var array<int, ZoneId>
      */
-    private $zoneIds;
+    private ?array $zoneIds = null;
 
     /**
      * @param array<int, int> $zoneIds

@@ -38,7 +38,7 @@ class BulkDeleteTaxCommand
     /**
      * @var array<TaxId>
      */
-    private $taxIds;
+    private ?array $taxIds = null;
 
     /**
      * @param array<int> $taxIds
@@ -53,7 +53,7 @@ class BulkDeleteTaxCommand
     /**
      * @return array<TaxId>
      */
-    public function getTaxIds()
+    public function getTaxIds(): ?array
     {
         return $this->taxIds;
     }

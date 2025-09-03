@@ -39,7 +39,7 @@ class BulkUpdateStoreStatusCommand
     /**
      * @var array<int, StoreId>
      */
-    private $storeIds;
+    private ?array $storeIds = null;
 
     /**
      * @param array<int, int> $storeIds

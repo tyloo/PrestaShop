@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
 class Ps_Banner extends Module implements WidgetInterface
 {
-    private $templateFile = 'module:ps_banner/ps_banner.tpl';
+    private string $templateFile = 'module:ps_banner/ps_banner.tpl';
 
     public function __construct()
     {

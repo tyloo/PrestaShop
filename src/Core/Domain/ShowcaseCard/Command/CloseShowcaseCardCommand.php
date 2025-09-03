@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\ShowcaseCard\ValueObject\ShowcaseCard;
  */
 class CloseShowcaseCardCommand
 {
-    /**
-     * @var int
-     */
-    private $employeeId;
+    private readonly int $employeeId;
 
     private readonly ShowcaseCard $showcaseCard;
 
@@ -60,10 +57,7 @@ class CloseShowcaseCardCommand
         $this->showcaseCard = new ShowcaseCard($showcaseCardName);
     }
 
-    /**
-     * @return int
-     */
-    public function getEmployeeId()
+    public function getEmployeeId(): int
     {
         return $this->employeeId;
     }

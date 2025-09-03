@@ -45,20 +45,11 @@ class ThemeExtractorTest extends KernelTestCase
      */
     private ?object $themeExtractor;
 
-    /**
-     * @var string
-     */
-    private static $rootDir;
+    private static string $rootDir;
 
-    /**
-     * @var string
-     */
-    private static $legacyFolder;
+    private static string $legacyFolder;
 
-    /**
-     * @var string
-     */
-    private static $xliffFolder;
+    private static string $xliffFolder;
 
     public static function setUpBeforeClass(): void
     {

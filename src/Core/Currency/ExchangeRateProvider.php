@@ -60,15 +60,9 @@ class ExchangeRateProvider
 
     public const CACHE_KEY_XML = 'currency_feed.xml';
 
-    /**
-     * @var string
-     */
-    private $sourceIsoCode;
+    private ?string $sourceIsoCode = null;
 
-    /**
-     * @var array
-     */
-    private $currencies = [];
+    private array $currencies = [];
 
     /**
      * @param string $currencyFeedUrl

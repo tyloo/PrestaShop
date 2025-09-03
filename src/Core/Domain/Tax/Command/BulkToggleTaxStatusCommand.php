@@ -44,7 +44,7 @@ class BulkToggleTaxStatusCommand
     /**
      * @var TaxId[]
      */
-    private $taxIds;
+    private ?array $taxIds = null;
 
     /**
      * @param int[] $taxIds
@@ -70,7 +70,7 @@ class BulkToggleTaxStatusCommand
     /**
      * @return TaxId[]
      */
-    public function getTaxIds()
+    public function getTaxIds(): ?array
     {
         return $this->taxIds;
     }

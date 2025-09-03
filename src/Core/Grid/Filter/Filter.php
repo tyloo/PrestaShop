@@ -35,7 +35,7 @@ final class Filter implements FilterInterface
     /**
      * @var array Filter type options
      */
-    private $typeOptions = [];
+    private array $typeOptions = [];
 
     /**
      * @var string|null Column ID if filter is associated with columns
@@ -64,7 +64,7 @@ final class Filter implements FilterInterface
         return $this;
     }
 
-    public function getTypeOptions()
+    public function getTypeOptions(): array
     {
         return $this->typeOptions;
     }

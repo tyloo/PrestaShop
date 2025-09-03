@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\Invoice\Exception\InvoiceException;
  */
 class OrderInvoiceId
 {
-    /**
-     * @var int
-     */
-    private $orderInvoiceId;
+    private readonly int $orderInvoiceId;
 
     /**
      * @param int $orderInvoiceId
@@ -51,10 +48,7 @@ class OrderInvoiceId
         $this->orderInvoiceId = $orderInvoiceId;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->orderInvoiceId;
     }

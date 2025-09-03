@@ -37,7 +37,7 @@ class DatabaseTablesList
     /**
      * @var string[]
      */
-    private $dbTables;
+    private array $dbTables;
 
     /**
      * @param string[] $dbTables
@@ -52,7 +52,7 @@ class DatabaseTablesList
     /**
      * @return string[]
      */
-    public function getTables()
+    public function getTables(): array
     {
         return $this->dbTables;
     }

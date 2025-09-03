@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\Exception\SpecificPr
 
 class FixedPrice implements FixedPriceInterface
 {
-    /**
-     * @var DecimalNumber
-     */
-    private $value;
+    private ?DecimalNumber $value = null;
 
     public function __construct(
         string $value,

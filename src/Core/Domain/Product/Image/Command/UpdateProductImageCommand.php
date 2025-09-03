@@ -36,25 +36,16 @@ class UpdateProductImageCommand
 {
     private readonly ImageId $imageId;
 
-    /**
-     * @var string|null
-     */
-    private $filePath;
+    private ?string $filePath = null;
 
-    /**
-     * @var bool|null
-     */
-    private $isCover;
+    private ?bool $isCover = null;
 
     /**
      * @var array<int, string>|null
      */
     private $localizedLegends;
 
-    /**
-     * @var int|null
-     */
-    private $position;
+    private ?int $position = null;
 
     public function __construct(
         int $imageId,

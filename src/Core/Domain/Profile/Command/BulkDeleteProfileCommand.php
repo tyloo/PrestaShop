@@ -37,7 +37,7 @@ class BulkDeleteProfileCommand
     /**
      * @var ProfileId[]
      */
-    private $profileIds = [];
+    private array $profileIds = [];
 
     public function __construct(array $profileIds)
     {
@@ -47,7 +47,7 @@ class BulkDeleteProfileCommand
     /**
      * @return ProfileId[]
      */
-    public function getProfileIds()
+    public function getProfileIds(): array
     {
         return $this->profileIds;
     }

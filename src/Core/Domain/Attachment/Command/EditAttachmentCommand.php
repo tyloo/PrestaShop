@@ -34,35 +34,23 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\ValueObject\AttachmentId;
  */
 class EditAttachmentCommand
 {
-    /**
-     * @var string
-     */
-    private $pathName;
+    private ?string $pathName = null;
 
-    /**
-     * @var string|null
-     */
-    private $originalFileName;
+    private ?string $originalFileName = null;
 
-    /**
-     * @var string|null
-     */
-    private $mimeType;
+    private ?string $mimeType = null;
 
     /**
      * @var string[]
      */
-    private $localizedNames;
+    private ?array $localizedNames = null;
 
     /**
      * @var string[]|null
      */
     private $localizedDescriptions;
 
-    /**
-     * @var int|null
-     */
-    private $fileSize;
+    private ?int $fileSize = null;
 
     public function __construct(
         private readonly AttachmentId $attachmentId,

@@ -38,12 +38,9 @@ class RemoteZipSourceHandler implements SourceHandlerInterface
 {
     private const ZIP_FILENAME_PATTERN = '/(\w+)\.zip\b/';
 
-    /**
-     * @var string|null
-     */
-    private $moduleName;
+    private ?string $moduleName = null;
 
-    private $handledSource;
+    private ?string $handledSource = null;
 
     public function __construct(
         private readonly ZipSourceHandler $zipSourceHandler,

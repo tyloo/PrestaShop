@@ -45,7 +45,7 @@ class TaxRulesTaxManagerTest extends TestCase
     /**
      * @var array<array<string, int|float>>
      */
-    private $tax_rows = [
+    private array $tax_rows = [
         [
             'id_tax' => 1,
             'behavior' => TaxCalculator::COMBINE_METHOD,

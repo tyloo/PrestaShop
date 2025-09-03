@@ -37,10 +37,7 @@ class EditWebserviceKeyCommand
 {
     private readonly WebserviceKeyId $webserviceKeyId;
 
-    /**
-     * @var Key|null
-     */
-    private $key;
+    private ?Key $key = null;
 
     /**
      * @var string|null
@@ -52,15 +49,12 @@ class EditWebserviceKeyCommand
      */
     private $status;
 
-    /**
-     * @var array|null
-     */
-    private $permissions;
+    private ?array $permissions = null;
 
     /**
      * @var int[]|null
      */
-    private $shopAssociation;
+    private ?array $shopAssociation = null;
 
     /**
      * @param int $webserviceKeyId
@@ -75,10 +69,7 @@ class EditWebserviceKeyCommand
         return $this->webserviceKeyId;
     }
 
-    /**
-     * @return Key|null
-     */
-    public function getKey()
+    public function getKey(): ?Key
     {
         return $this->key;
     }
@@ -135,10 +126,7 @@ class EditWebserviceKeyCommand
         return $this;
     }
 
-    /**
-     * @return array|null
-     */
-    public function getPermissions()
+    public function getPermissions(): ?array
     {
         return $this->permissions;
     }
@@ -156,7 +144,7 @@ class EditWebserviceKeyCommand
     /**
      * @return int[]|null
      */
-    public function getShopAssociation()
+    public function getShopAssociation(): ?array
     {
         return $this->shopAssociation;
     }

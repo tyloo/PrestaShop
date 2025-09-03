@@ -35,7 +35,7 @@ class Hashing
     /**
      * @var array should contain hashing methods
      */
-    private $hashMethods = [];
+    private array $hashMethods = [];
 
     /**
      * Check if it's the first function of the array that was used for hashing.
@@ -48,7 +48,7 @@ class Hashing
      */
     public function isFirstHash($passwd, $hash, $staticSalt = _COOKIE_KEY_)
     {
-        if (! \count($this->hashMethods)) {
+        if ($this->hashMethods === []) {
             $this->initHashMethods();
         }
 
@@ -68,7 +68,7 @@ class Hashing
      */
     public function checkHash($passwd, $hash, $staticSalt = _COOKIE_KEY_): bool
     {
-        if (! \count($this->hashMethods)) {
+        if ($this->hashMethods === []) {
             $this->initHashMethods();
         }
 
@@ -92,7 +92,7 @@ class Hashing
      */
     public function hash($plaintextPassword, $staticSalt = _COOKIE_KEY_)
     {
-        if (! \count($this->hashMethods)) {
+        if ($this->hashMethods === []) {
             $this->initHashMethods();
         }
 

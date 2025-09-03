@@ -32,7 +32,7 @@ class LinkedOrdersForViewing
     /**
      * @var LinkedOrderForViewing[]
      */
-    private $linkedOrders = [];
+    private array $linkedOrders = [];
 
     /**
      * @param LinkedOrderForViewing[] $linkedOrders

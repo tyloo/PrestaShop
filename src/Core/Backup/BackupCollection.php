@@ -32,7 +32,7 @@ final class BackupCollection implements BackupCollectionInterface
     /**
      * @var BackupInterface[]
      */
-    private $backups = [];
+    private array $backups = [];
 
     public function add(BackupInterface $backup)
     {
@@ -41,7 +41,7 @@ final class BackupCollection implements BackupCollectionInterface
         return $this;
     }
 
-    public function all()
+    public function all(): array
     {
         return $this->backups;
     }

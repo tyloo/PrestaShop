@@ -32,25 +32,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Attachment\Command;
  */
 class AddAttachmentCommand
 {
-    /**
-     * @var string|null
-     */
-    private $pathName;
+    private ?string $pathName = null;
 
-    /**
-     * @var int|null
-     */
-    private $fileSize;
+    private ?int $fileSize = null;
 
-    /**
-     * @var string|null
-     */
-    private $mimeType;
+    private ?string $mimeType = null;
 
-    /**
-     * @var string|null
-     */
-    private $originalName;
+    private ?string $originalName = null;
 
     public function __construct(
         /**

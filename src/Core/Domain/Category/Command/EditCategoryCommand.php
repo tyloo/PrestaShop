@@ -57,37 +57,34 @@ class EditCategoryCommand
     /**
      * @var string[]
      */
-    private $localizedDescriptions;
+    private ?array $localizedDescriptions = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedAdditionalDescriptions;
+    private ?array $localizedAdditionalDescriptions = null;
 
-    /**
-     * @var bool
-     */
-    private $isActive;
+    private ?bool $isActive = null;
 
     /**
      * @var string[]
      */
-    private $localizedMetaTitles;
+    private ?array $localizedMetaTitles = null;
 
     /**
      * @var string[]
      */
-    private $localizedMetaDescriptions;
+    private ?array $localizedMetaDescriptions = null;
 
     /**
      * @var int[]
      */
-    private $associatedGroupIds;
+    private ?array $associatedGroupIds = null;
 
     /**
      * @var int[]
      */
-    private $associatedShopIds;
+    private ?array $associatedShopIds = null;
 
     private ?UploadedFile $coverImage = null;
 
@@ -193,7 +190,7 @@ class EditCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalizedDescriptions()
+    public function getLocalizedDescriptions(): ?array
     {
         return $this->localizedDescriptions;
     }
@@ -230,10 +227,7 @@ class EditCategoryCommand
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isActive()
+    public function isActive(): ?bool
     {
         return $this->isActive;
     }
@@ -259,7 +253,7 @@ class EditCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalizedMetaTitles()
+    public function getLocalizedMetaTitles(): ?array
     {
         return $this->localizedMetaTitles;
     }
@@ -279,7 +273,7 @@ class EditCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalizedMetaDescriptions()
+    public function getLocalizedMetaDescriptions(): ?array
     {
         return $this->localizedMetaDescriptions;
     }
@@ -299,7 +293,7 @@ class EditCategoryCommand
     /**
      * @return int[]
      */
-    public function getAssociatedGroupIds()
+    public function getAssociatedGroupIds(): ?array
     {
         return $this->associatedGroupIds;
     }
@@ -319,7 +313,7 @@ class EditCategoryCommand
     /**
      * @return int[]
      */
-    public function getAssociatedShopIds()
+    public function getAssociatedShopIds(): ?array
     {
         return $this->associatedShopIds;
     }

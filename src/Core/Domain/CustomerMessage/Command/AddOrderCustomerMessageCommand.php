@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
  */
 class AddOrderCustomerMessageCommand
 {
-    /**
-     * @var string
-     */
-    private $message;
+    private string $message;
 
     private readonly OrderId $orderId;
 

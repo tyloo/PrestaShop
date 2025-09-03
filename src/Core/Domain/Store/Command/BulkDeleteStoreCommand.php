@@ -39,7 +39,7 @@ class BulkDeleteStoreCommand
     /**
      * @var array<int, StoreId>
      */
-    private $storeIds;
+    private array $storeIds;
 
     /**
      * @param array<int, int> $storeIds

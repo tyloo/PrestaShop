@@ -40,7 +40,7 @@ class BulkDeleteCartRuleCommand
     /**
      * @var CartRuleId[]
      */
-    private $cartRuleIds;
+    private ?array $cartRuleIds = null;
 
     /**
      * @param int[] $cartRuleIds

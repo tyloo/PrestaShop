@@ -39,10 +39,7 @@ class ExchangeRateProviderTest extends TestCase
 {
     private string $feedFilePath;
 
-    /**
-     * @var string
-     */
-    private $feedContent;
+    private string|bool $feedContent;
 
     /**
      * @var CacheInterface
@@ -298,7 +295,7 @@ class ExchangeRateProviderTest extends TestCase
      *
      * @return MockObject|CircuitBreakerInterface
      */
-    private function buildCircuitBreakerMock($feedContent, string $feedUrl): MockObject
+    private function buildCircuitBreakerMock(string|bool $feedContent, string $feedUrl): MockObject
     {
         $circuitBreakerMock = $this->getMockBuilder(CircuitBreakerInterface::class)
             ->disableOriginalConstructor()

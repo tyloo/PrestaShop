@@ -47,10 +47,7 @@ class SearchCombinationsForAssociation
 
     private readonly ShopId $shopId;
 
-    /**
-     * @var int|null
-     */
-    private $limit;
+    private ?int $limit = null;
 
     /**
      * @throws ProductConstraintException

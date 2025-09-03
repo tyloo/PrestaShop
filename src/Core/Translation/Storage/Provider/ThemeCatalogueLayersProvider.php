@@ -51,15 +51,9 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
 {
-    /**
-     * @var Theme
-     */
-    private $theme;
+    private ?Theme $theme = null;
 
-    /**
-     * @var MessageCatalogue|null
-     */
-    private $defaultCatalogue;
+    private ?MessageCatalogue $defaultCatalogue = null;
 
     public function __construct(
         private readonly ModuleCatalogueProviderFactory $moduleCatalogueProviderFactory,
@@ -82,7 +76,7 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
         bool $refreshCache = false,
     ): MessageCatalogue {
         // Extracts wordings from the theme's templates
-        if ($this->defaultCatalogue === null) {
+        if (! $this->defaultCatalogue instanceof MessageCatalogue) {
             $this->defaultCatalogue = $this->themeExtractor->extract($this->theme, $locale);
         }
 

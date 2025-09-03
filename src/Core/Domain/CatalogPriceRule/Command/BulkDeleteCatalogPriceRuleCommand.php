@@ -38,7 +38,7 @@ class BulkDeleteCatalogPriceRuleCommand
     /**
      * @var CatalogPriceRuleId[]
      */
-    private $catalogPriceRuleIds;
+    private ?array $catalogPriceRuleIds = null;
 
     /**
      * @param int[] $catalogPriceRuleIds
@@ -53,7 +53,7 @@ class BulkDeleteCatalogPriceRuleCommand
     /**
      * @return CatalogPriceRuleId[]
      */
-    public function getCatalogPriceRuleIds()
+    public function getCatalogPriceRuleIds(): ?array
     {
         return $this->catalogPriceRuleIds;
     }

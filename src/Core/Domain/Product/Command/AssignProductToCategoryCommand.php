@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 class AssignProductToCategoryCommand
 {
-    /**
-     * @var CategoryId
-     */
-    private $categoryId;
+    private CategoryId $categoryId;
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private ProductId $productId;
 
     /**
      * @throws CategoryConstraintException

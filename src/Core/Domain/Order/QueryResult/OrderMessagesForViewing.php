@@ -32,7 +32,7 @@ class OrderMessagesForViewing
     /**
      * @var OrderMessageForViewing[]
      */
-    private $messages = [];
+    private array $messages = [];
 
     /**
      * @param OrderMessageForViewing[] $messages

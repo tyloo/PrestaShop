@@ -40,20 +40,11 @@ class UpdateProductInOrderCommand
 {
     private readonly OrderId $orderId;
 
-    /**
-     * @var DecimalNumber
-     */
-    private $priceTaxIncluded;
+    private ?DecimalNumber $priceTaxIncluded = null;
 
-    /**
-     * @var DecimalNumber
-     */
-    private $priceTaxExcluded;
+    private ?DecimalNumber $priceTaxExcluded = null;
 
-    /**
-     * @var int
-     */
-    private $quantity;
+    private int $quantity;
 
     public function __construct(
         int $orderId,
@@ -84,26 +75,17 @@ class UpdateProductInOrderCommand
         return $this->orderDetailId;
     }
 
-    /**
-     * @return DecimalNumber
-     */
-    public function getPriceTaxIncluded()
+    public function getPriceTaxIncluded(): ?DecimalNumber
     {
         return $this->priceTaxIncluded;
     }
 
-    /**
-     * @return DecimalNumber
-     */
-    public function getPriceTaxExcluded()
+    public function getPriceTaxExcluded(): ?DecimalNumber
     {
         return $this->priceTaxExcluded;
     }
 
-    /**
-     * @return int
-     */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }

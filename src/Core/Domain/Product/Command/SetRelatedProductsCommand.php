@@ -42,7 +42,7 @@ class SetRelatedProductsCommand
     /**
      * @var ProductId[]
      */
-    private $relatedProductIds;
+    private ?array $relatedProductIds = null;
 
     /**
      * @param int[] $relatedProductIds

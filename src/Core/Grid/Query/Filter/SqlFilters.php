@@ -44,10 +44,7 @@ final class SqlFilters
 
     public const MIN_MAX = 5;
 
-    /**
-     * @var array
-     */
-    private $filters = [];
+    private array $filters = [];
 
     /**
      * @param string $filterName

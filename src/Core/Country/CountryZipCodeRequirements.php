@@ -32,20 +32,11 @@ namespace PrestaShop\PrestaShop\Core\Country;
  */
 class CountryZipCodeRequirements
 {
-    /**
-     * @var string|null
-     */
-    private $pattern;
+    private ?string $pattern = null;
 
-    /**
-     * @var string|null
-     */
-    private $humanReadablePattern;
+    private ?string $humanReadablePattern = null;
 
-    /**
-     * @var string|null
-     */
-    private $countryName;
+    private ?string $countryName = null;
 
     public function __construct(
         private readonly bool $isRequired,

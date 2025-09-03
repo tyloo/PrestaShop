@@ -56,7 +56,7 @@ final class OutstandingGridDefinitionFactory extends AbstractGridDefinitionFacto
     /**
      * @var array<string, int>
      */
-    private $risks;
+    private ?array $risks = null;
 
     public function __construct(
         HookDispatcherInterface $hookDispatcher,

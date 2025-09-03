@@ -34,7 +34,7 @@ class OrderDiscountsForViewing
     /**
      * @var OrderDiscountForViewing[]
      */
-    private $discounts = [];
+    private array $discounts = [];
 
     /**
      * @param OrderDiscountForViewing[] $discounts

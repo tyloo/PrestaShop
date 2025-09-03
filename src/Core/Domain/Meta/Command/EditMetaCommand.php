@@ -36,25 +36,22 @@ class EditMetaCommand extends AbstractMetaCommand
 {
     private readonly MetaId $metaId;
 
-    /**
-     * @var Name
-     */
-    private $pageName;
+    private ?Name $pageName = null;
 
     /**
      * @var string[]
      */
-    private $localisedPageTitles;
+    private ?array $localisedPageTitles = null;
 
     /**
      * @var string[]
      */
-    private $localisedMetaDescriptions;
+    private ?array $localisedMetaDescriptions = null;
 
     /**
      * @var string[]
      */
-    private $localisedRewriteUrls;
+    private ?array $localisedRewriteUrls = null;
 
     /**
      * @param int $metaId
@@ -71,10 +68,7 @@ class EditMetaCommand extends AbstractMetaCommand
         return $this->metaId;
     }
 
-    /**
-     * @return Name
-     */
-    public function getPageName()
+    public function getPageName(): ?Name
     {
         return $this->pageName;
     }
@@ -114,7 +108,7 @@ class EditMetaCommand extends AbstractMetaCommand
     /**
      * @return string[]
      */
-    public function getLocalisedPageTitles()
+    public function getLocalisedPageTitles(): ?array
     {
         return $this->localisedPageTitles;
     }
@@ -140,7 +134,7 @@ class EditMetaCommand extends AbstractMetaCommand
     /**
      * @return string[]
      */
-    public function getLocalisedMetaDescriptions()
+    public function getLocalisedMetaDescriptions(): ?array
     {
         return $this->localisedMetaDescriptions;
     }
@@ -148,7 +142,7 @@ class EditMetaCommand extends AbstractMetaCommand
     /**
      * @return string[]
      */
-    public function getLocalisedRewriteUrls()
+    public function getLocalisedRewriteUrls(): ?array
     {
         return $this->localisedRewriteUrls;
     }

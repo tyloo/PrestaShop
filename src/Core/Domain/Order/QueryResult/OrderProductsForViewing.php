@@ -32,7 +32,7 @@ class OrderProductsForViewing
     /**
      * @var OrderProductForViewing[]
      */
-    private $products = [];
+    private array $products = [];
 
     /**
      * @param OrderProductForViewing[] $products

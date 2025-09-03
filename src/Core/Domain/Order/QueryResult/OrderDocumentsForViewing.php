@@ -32,7 +32,7 @@ class OrderDocumentsForViewing
     /**
      * @var OrderDocumentForViewing[]
      */
-    private $documents = [];
+    private array $documents = [];
 
     /**
      * @param OrderDocumentForViewing[] $documents

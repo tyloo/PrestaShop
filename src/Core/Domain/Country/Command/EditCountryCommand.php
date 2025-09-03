@@ -42,67 +42,37 @@ class EditCountryCommand
     /**
      * @var string[]
      */
-    private $localizedNames;
+    private ?array $localizedNames = null;
 
     /**
      * @var string
      */
     private $isoCode;
 
-    /**
-     * @var int
-     */
-    private $callPrefix;
+    private ?int $callPrefix = null;
 
-    /**
-     * @var int
-     */
-    private $defaultCurrency;
+    private ?int $defaultCurrency = null;
 
-    /**
-     * @var int|null
-     */
-    private $zoneId;
+    private ?int $zoneId = null;
 
-    /**
-     * @var bool
-     */
-    private $needZipCode;
+    private ?bool $needZipCode = null;
 
-    /**
-     * @var ?CountryZipCodeFormat
-     */
-    private $zipCodeFormat;
+    private ?CountryZipCodeFormat $zipCodeFormat = null;
 
-    /**
-     * @var string
-     */
-    private $addressFormat;
+    private ?string $addressFormat = null;
 
-    /**
-     * @var bool
-     */
-    private $enabled;
+    private ?bool $enabled = null;
 
-    /**
-     * @var bool
-     */
-    private $containsStates;
+    private ?bool $containsStates = null;
 
-    /**
-     * @var bool
-     */
-    private $needIdNumber;
+    private ?bool $needIdNumber = null;
 
-    /**
-     * @var bool
-     */
-    private $displayTaxLabel;
+    private ?bool $displayTaxLabel = null;
 
     /**
      * @var int[]
      */
-    private $shopAssociation;
+    private ?array $shopAssociation = null;
 
     public function __construct(
         int $countryId,

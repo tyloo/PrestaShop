@@ -66,10 +66,7 @@ class DiscountApplicationType
 
     private readonly string $type;
 
-    /**
-     * @var ProductId|null
-     */
-    private $productId;
+    private ?ProductId $productId = null;
 
     /**
      * @param int|null $productId product id is required when application type is "specific_product"

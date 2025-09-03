@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Adapter\Entity\Product;
 
 class OrderProductCustomizationForViewing
 {
-    /**
-     * @var string
-     */
-    private $image;
+    private ?string $image = null;
 
     public function __construct(
         private readonly int $type,

@@ -45,17 +45,13 @@ class DatabaseDump
 {
     /**
      * Database host
-     *
-     * @var string
      */
-    private $host;
+    private ?string $host = null;
 
     /**
      * Database port
-     *
-     * @var int|string
      */
-    private $port;
+    private int|string|null $port = null;
 
     /**
      * Database user
@@ -245,7 +241,7 @@ class DatabaseDump
             $executable,
             '-u', escapeshellarg($this->user),
             '-P', escapeshellarg($this->port),
-            '-h', escapeshellarg($this->host),
+            '-h', escapeshellarg((string) $this->host),
         ];
 
         if ($this->password) {

@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\Exception\CustomerServiceE
  */
 class CustomerThreadId
 {
-    /**
-     * @var int
-     */
-    private $customerThreadId;
+    private readonly int $customerThreadId;
 
     /**
      * @param int $customerThreadId

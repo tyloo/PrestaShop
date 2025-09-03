@@ -38,7 +38,7 @@ class BulkDeleteCustomerCommand
     /**
      * @var CustomerId[]
      */
-    private $customerIds;
+    private ?array $customerIds = null;
 
     private readonly CustomerDeleteMethod $deleteMethod;
 
@@ -55,7 +55,7 @@ class BulkDeleteCustomerCommand
     /**
      * @return CustomerId[]
      */
-    public function getCustomerIds()
+    public function getCustomerIds(): ?array
     {
         return $this->customerIds;
     }

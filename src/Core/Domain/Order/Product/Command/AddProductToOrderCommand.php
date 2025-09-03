@@ -47,30 +47,21 @@ class AddProductToOrderCommand
 
     private readonly ?CombinationId $combinationId;
 
-    /**
-     * @var DecimalNumber
-     */
-    private $productPriceTaxIncluded;
+    private ?DecimalNumber $productPriceTaxIncluded = null;
 
-    /**
-     * @var DecimalNumber
-     */
-    private $productPriceTaxExcluded;
+    private ?DecimalNumber $productPriceTaxExcluded = null;
 
-    /**
-     * @var int
-     */
-    private $productQuantity;
+    private int $productQuantity;
 
     /**
      * @var int|null invoice id or null if new invoice should be created
      */
-    private $orderInvoiceId;
+    private ?int $orderInvoiceId = null;
 
     /**
      * @var bool|null bool if product is being added using new invoice
      */
-    private $hasFreeShipping;
+    private ?bool $hasFreeShipping = null;
 
     /**
      * Add product to an order with new invoice. It applies to orders that were already paid and waiting for payment.

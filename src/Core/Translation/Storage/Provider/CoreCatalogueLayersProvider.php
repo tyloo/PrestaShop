@@ -46,20 +46,11 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
 {
-    /**
-     * @var DefaultCatalogueFinder
-     */
-    private $defaultCatalogueFinder;
+    private ?DefaultCatalogueFinder $defaultCatalogueFinder = null;
 
-    /**
-     * @var FileTranslatedCatalogueFinder
-     */
-    private $fileTranslatedCatalogueFinder;
+    private ?FileTranslatedCatalogueFinder $fileTranslatedCatalogueFinder = null;
 
-    /**
-     * @var UserTranslatedCatalogueFinder
-     */
-    private $userTranslatedCatalogueFinder;
+    private ?UserTranslatedCatalogueFinder $userTranslatedCatalogueFinder = null;
 
     /**
      * @param array<int, string> $filenameFilters
@@ -104,7 +95,7 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
      */
     private function getDefaultCatalogueFinder(): DefaultCatalogueFinder
     {
-        if ($this->defaultCatalogueFinder === null) {
+        if (! $this->defaultCatalogueFinder instanceof DefaultCatalogueFinder) {
             $this->defaultCatalogueFinder = new DefaultCatalogueFinder(
                 $this->resourceDirectory . \DIRECTORY_SEPARATOR . 'default',
                 $this->filenameFilters
@@ -119,7 +110,7 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
      */
     private function getFileTranslatedCatalogueFinder(): FileTranslatedCatalogueFinder
     {
-        if ($this->fileTranslatedCatalogueFinder === null) {
+        if (! $this->fileTranslatedCatalogueFinder instanceof FileTranslatedCatalogueFinder) {
             $this->fileTranslatedCatalogueFinder = new FileTranslatedCatalogueFinder(
                 $this->resourceDirectory,
                 $this->filenameFilters
@@ -131,7 +122,7 @@ class CoreCatalogueLayersProvider implements CatalogueLayersProviderInterface
 
     private function getUserTranslatedCatalogueFinder(): UserTranslatedCatalogueFinder
     {
-        if ($this->userTranslatedCatalogueFinder === null) {
+        if (! $this->userTranslatedCatalogueFinder instanceof UserTranslatedCatalogueFinder) {
             $this->userTranslatedCatalogueFinder = new UserTranslatedCatalogueFinder(
                 $this->databaseTranslationLoader,
                 $this->translationDomains

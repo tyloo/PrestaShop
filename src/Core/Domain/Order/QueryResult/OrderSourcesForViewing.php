@@ -34,7 +34,7 @@ class OrderSourcesForViewing
     /**
      * @var OrderSourceForViewing[]
      */
-    private $sources = [];
+    private array $sources = [];
 
     /**
      * @param OrderSourceForViewing[] $sources

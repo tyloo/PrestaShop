@@ -44,17 +44,14 @@ class TypedFiltersBuilder extends AbstractFiltersBuilder
     /**
      * @var TypedFiltersBuilderInterface[]
      */
-    private $typedBuilders = [];
+    private array $typedBuilders = [];
 
     /**
      * @var string
      */
     private $filtersClass;
 
-    /**
-     * @var array|null
-     */
-    private $config;
+    private ?array $config = null;
 
     /**
      * @param iterable|TypedFiltersBuilderInterface[]|null $typedBuilders

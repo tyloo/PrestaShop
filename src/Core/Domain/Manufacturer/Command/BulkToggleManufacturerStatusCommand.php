@@ -43,7 +43,7 @@ class BulkToggleManufacturerStatusCommand
     /**
      * @var ManufacturerId[]
      */
-    private $manufacturerIds;
+    private ?array $manufacturerIds = null;
 
     /**
      * @param int[] $manufacturerIds
@@ -70,7 +70,7 @@ class BulkToggleManufacturerStatusCommand
     /**
      * @return ManufacturerId[]
      */
-    public function getManufacturerIds()
+    public function getManufacturerIds(): ?array
     {
         return $this->manufacturerIds;
     }

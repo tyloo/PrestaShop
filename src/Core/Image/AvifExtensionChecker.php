@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Image\Exception\AvifUnavailableException;
  */
 class AvifExtensionChecker
 {
-    private $isAvailable;
+    private ?bool $isAvailable = null;
 
     public function isAvailable(): bool
     {

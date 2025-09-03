@@ -35,25 +35,13 @@ use Tab;
 
 class AccessTest extends TestCase
 {
-    /**
-     * @var Tab|null
-     */
-    private $classNameTab;
+    private ?Tab $classNameTab = null;
 
-    /**
-     * @var Tab|null
-     */
-    private $classNameTabChild;
+    private ?Tab $classNameTabChild = null;
 
-    /**
-     * @var Tab|null
-     */
-    private $routeNameTab;
+    private ?Tab $routeNameTab = null;
 
-    /**
-     * @var Tab|null
-     */
-    private $routeNameTabChild;
+    private ?Tab $routeNameTabChild = null;
 
     protected function setUp(): void
     {

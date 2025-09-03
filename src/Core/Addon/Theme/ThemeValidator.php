@@ -32,7 +32,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ThemeValidator
 {
-    private $errors = [];
+    private array $errors = [];
 
     public function __construct(
         /**

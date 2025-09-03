@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Product\Search\Filter;
 
 class FacetTest extends TestCase
 {
-    /**
-     * @var Facet|null
-     */
-    private $facet;
+    private ?Facet $facet = null;
 
     protected function setUp(): void
     {

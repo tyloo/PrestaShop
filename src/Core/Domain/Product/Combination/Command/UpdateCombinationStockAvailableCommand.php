@@ -37,20 +37,11 @@ class UpdateCombinationStockAvailableCommand
 {
     private readonly CombinationId $combinationId;
 
-    /**
-     * @var int|null
-     */
-    private $deltaQuantity;
+    private ?int $deltaQuantity = null;
 
-    /**
-     * @var int|null
-     */
-    private $fixedQuantity;
+    private ?int $fixedQuantity = null;
 
-    /**
-     * @var string|null
-     */
-    private $location;
+    private ?string $location = null;
 
     public function __construct(
         int $combinationId,

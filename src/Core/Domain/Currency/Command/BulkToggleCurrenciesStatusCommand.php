@@ -40,7 +40,7 @@ class BulkToggleCurrenciesStatusCommand
     /**
      * @var CurrencyId[]
      */
-    private $currencyIds = [];
+    private array $currencyIds = [];
 
     /**
      * @param int[] $currencyIds
@@ -55,7 +55,7 @@ class BulkToggleCurrenciesStatusCommand
     /**
      * @return CurrencyId[]
      */
-    public function getCurrencyIds()
+    public function getCurrencyIds(): array
     {
         return $this->currencyIds;
     }

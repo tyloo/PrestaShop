@@ -43,15 +43,9 @@ class EditLanguageCommand
      */
     private $name;
 
-    /**
-     * @var IsoCode|null
-     */
-    private $isoCode;
+    private ?IsoCode $isoCode = null;
 
-    /**
-     * @var TagIETF|null
-     */
-    private $tagIETF;
+    private ?TagIETF $tagIETF = null;
 
     /**
      * @var string|null
@@ -86,7 +80,7 @@ class EditLanguageCommand
     /**
      * @var int[]|null
      */
-    private $shopAssociation;
+    private ?array $shopAssociation = null;
 
     /**
      * @param int $languageId
@@ -131,10 +125,7 @@ class EditLanguageCommand
         return $this;
     }
 
-    /**
-     * @return IsoCode|null
-     */
-    public function getIsoCode()
+    public function getIsoCode(): ?IsoCode
     {
         return $this->isoCode;
     }
@@ -151,10 +142,7 @@ class EditLanguageCommand
         return $this;
     }
 
-    /**
-     * @return TagIETF|null
-     */
-    public function getTagIETF()
+    public function getTagIETF(): ?TagIETF
     {
         return $this->tagIETF;
     }
@@ -294,7 +282,7 @@ class EditLanguageCommand
     /**
      * @return int[]|null
      */
-    public function getShopAssociation()
+    public function getShopAssociation(): ?array
     {
         return $this->shopAssociation;
     }

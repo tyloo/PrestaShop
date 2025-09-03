@@ -39,10 +39,7 @@ class ThemeRepositoryTest extends ContextStateTestCase
 {
     public const NOTICE = '[ThemeRepository] ';
 
-    /**
-     * @var ThemeRepository|null
-     */
-    private $repository;
+    private ?ThemeRepository $repository = null;
 
     protected function setUp(): void
     {

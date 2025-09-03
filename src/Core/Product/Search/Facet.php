@@ -55,7 +55,7 @@ class Facet
     /**
      * @var array the facet filters
      */
-    private $filters = [];
+    private array $filters = [];
 
     /**
      * @var bool if true, allows the multiple selection
@@ -165,7 +165,7 @@ class Facet
     /**
      * @return array the list of facet filters
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return $this->filters;
     }

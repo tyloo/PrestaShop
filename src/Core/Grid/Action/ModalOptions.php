@@ -34,10 +34,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ModalOptions
 {
-    /**
-     * @var array
-     */
-    private $options;
+    private array $options;
 
     public function __construct(array $options = [])
     {

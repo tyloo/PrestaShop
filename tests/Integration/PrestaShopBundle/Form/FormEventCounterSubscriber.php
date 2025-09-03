@@ -39,7 +39,7 @@ use Symfony\Component\Form\FormEvents;
  */
 class FormEventCounterSubscriber implements EventSubscriberInterface
 {
-    private $eventCalls = [];
+    private array $eventCalls = [];
 
     public static function getSubscribedEvents(): array
     {

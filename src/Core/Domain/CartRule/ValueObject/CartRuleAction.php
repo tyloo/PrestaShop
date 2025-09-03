@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\Exception\CartRuleConstraintExcep
 
 class CartRuleAction
 {
-    /**
-     * @var bool
-     */
-    private $freeShipping;
+    private ?bool $freeShipping = null;
 
     private ?GiftProduct $giftProduct;
 

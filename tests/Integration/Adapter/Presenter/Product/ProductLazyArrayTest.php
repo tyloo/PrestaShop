@@ -90,10 +90,7 @@ class ProductLazyArrayTest extends TestCase
      */
     private MockObject $mockTranslatorInterface;
 
-    /**
-     * @var array
-     */
-    private $baseProduct = [
+    private array $baseProduct = [
         'id_product' => 0,
         'id_product_attribute' => 0,
         'price_tax_exc' => 0,

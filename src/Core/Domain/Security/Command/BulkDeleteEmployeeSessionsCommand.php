@@ -39,7 +39,7 @@ class BulkDeleteEmployeeSessionsCommand
     /**
      * @var array<int, EmployeeSessionId>
      */
-    private $sessionIds;
+    private ?array $sessionIds = null;
 
     /**
      * @param array<int, int> $sessionIds

@@ -32,7 +32,7 @@ class OrderHistoryForViewing
     /**
      * @var OrderStatusForViewing[]
      */
-    private $statuses = [];
+    private array $statuses = [];
 
     /**
      * @param OrderStatusForViewing[] $statuses

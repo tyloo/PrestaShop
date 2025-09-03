@@ -42,7 +42,7 @@ class BulkDeleteCombinationCommand
     /**
      * @var CombinationId[]
      */
-    private $combinationIds;
+    private ?array $combinationIds = null;
 
     /**
      * @param int[] $combinationIds

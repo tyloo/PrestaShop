@@ -37,7 +37,7 @@ class BulkUpdateEmployeeStatusCommand
     /**
      * @var EmployeeId[]
      */
-    private $employeeIds;
+    private ?array $employeeIds = null;
 
     /**
      * @param int[] $employeeIds
@@ -61,7 +61,7 @@ class BulkUpdateEmployeeStatusCommand
     /**
      * @return EmployeeId[]
      */
-    public function getEmployeeIds()
+    public function getEmployeeIds(): ?array
     {
         return $this->employeeIds;
     }

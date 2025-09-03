@@ -38,12 +38,9 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 class DefaultCatalogueFinderTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private static $tempDir;
+    private static string $tempDir;
 
-    private static $wordings = [
+    private static array $wordings = [
         'ShopSomeDomain' => [
             'Some wording' => 'Some wording',
             'Some other wording' => 'Some other wording',
@@ -54,7 +51,7 @@ class DefaultCatalogueFinderTest extends TestCase
         ],
     ];
 
-    private static $emptyWordings = [
+    private static array $emptyWordings = [
         'ShopSomeDomain.en-US' => [
             'Some wording' => '',
             'Some other wording' => '',

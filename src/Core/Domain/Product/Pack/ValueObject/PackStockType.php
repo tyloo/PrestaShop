@@ -63,10 +63,7 @@ class PackStockType
         self::STOCK_TYPE_DEFAULT,
     ];
 
-    /**
-     * @var int
-     */
-    private $value;
+    private int $value;
 
     /**
      * @throws ProductPackConstraintException

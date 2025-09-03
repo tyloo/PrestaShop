@@ -41,10 +41,7 @@ abstract class AbstractGridAction implements GridActionInterface
      */
     private $icon;
 
-    /**
-     * @var array
-     */
-    private $options;
+    private ?array $options = null;
 
     /**
      * @param string $id

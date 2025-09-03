@@ -36,12 +36,12 @@ class OrderProductCustomizationsForViewing
     /**
      * @var OrderProductCustomizationForViewing[]
      */
-    private $textCustomizations = [];
+    private array $textCustomizations = [];
 
     /**
      * @var OrderProductCustomizationForViewing[]
      */
-    private $fileCustomizations = [];
+    private array $fileCustomizations = [];
 
     /**
      * @param OrderProductCustomizationForViewing[] $customizations

@@ -38,10 +38,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 class FileTranslatedCatalogueFinderTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private static $tempDir;
+    private static string $tempDir;
 
     public static function setUpBeforeClass(): void
     {

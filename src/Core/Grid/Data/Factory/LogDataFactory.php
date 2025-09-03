@@ -50,7 +50,7 @@ final class LogDataFactory implements GridDataFactoryInterface
     /**
      * @var array<int, string>
      */
-    private $avatars = [];
+    private array $avatars = [];
 
     public function __construct(
         private readonly GridDataFactoryInterface $dataFactory,

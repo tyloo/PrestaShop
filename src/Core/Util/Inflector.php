@@ -35,11 +35,11 @@ use Doctrine\Inflector\InflectorFactory;
  */
 class Inflector
 {
-    private static $inflector;
+    private static ?DoctrineInflector $inflector = null;
 
     public static function getInflector(): DoctrineInflector
     {
-        if (self::$inflector === null) {
+        if (! self::$inflector instanceof DoctrineInflector) {
             self::$inflector = InflectorFactory::create()->build();
         }
 

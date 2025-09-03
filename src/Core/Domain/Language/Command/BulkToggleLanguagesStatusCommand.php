@@ -38,7 +38,7 @@ class BulkToggleLanguagesStatusCommand implements ToggleLanguageStatusCommandInt
     /**
      * @var LanguageId[]
      */
-    private $languageIds = [];
+    private array $languageIds = [];
 
     /**
      * @var bool
@@ -60,7 +60,7 @@ class BulkToggleLanguagesStatusCommand implements ToggleLanguageStatusCommandInt
     /**
      * @return LanguageId[]
      */
-    public function getLanguageIds()
+    public function getLanguageIds(): array
     {
         return $this->languageIds;
     }

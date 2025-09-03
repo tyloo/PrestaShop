@@ -39,10 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderDetailRefund;
  */
 class IssuePartialRefundCommand extends AbstractRefundCommand
 {
-    /**
-     * @var DecimalNumber
-     */
-    private $shippingCostRefundAmount;
+    private ?DecimalNumber $shippingCostRefundAmount = null;
 
     /**
      * The expected format for $orderDetailRefunds is an associative array indexed

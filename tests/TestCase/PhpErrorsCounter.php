@@ -29,13 +29,13 @@ namespace Tests\TestCase;
 
 class PhpErrorsCounter
 {
-    private $notices = 0;
+    private int $notices = 0;
 
-    private $warnings = 0;
+    private int $warnings = 0;
 
-    private $errors = 0;
+    private int $errors = 0;
 
-    private $deprecations = 0;
+    private int $deprecations = 0;
 
     /**
      * This error handler allow us to count every errors
@@ -78,7 +78,7 @@ class PhpErrorsCounter
     /**
      * @return int the number of notices
      */
-    public function getNotices()
+    public function getNotices(): int
     {
         return $this->notices;
     }
@@ -86,7 +86,7 @@ class PhpErrorsCounter
     /**
      * @return int the number of warnings
      */
-    public function getWarnings()
+    public function getWarnings(): int
     {
         return $this->warnings;
     }
@@ -94,7 +94,7 @@ class PhpErrorsCounter
     /**
      * @return int the number of deprecations
      */
-    public function getDeprecations()
+    public function getDeprecations(): int
     {
         return $this->deprecations;
     }
@@ -102,7 +102,7 @@ class PhpErrorsCounter
     /**
      * @return int the number of errors
      */
-    public function getErrors()
+    public function getErrors(): int
     {
         return $this->errors;
     }

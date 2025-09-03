@@ -43,15 +43,9 @@ class AddCatalogPriceRuleCommand
 
     private readonly DecimalNumber $price;
 
-    /**
-     * @var DateTime|null
-     */
-    private $dateTimeFrom;
+    private ?DateTime $dateTimeFrom = null;
 
-    /**
-     * @var DateTime|null
-     */
-    private $dateTimeTo;
+    private ?DateTime $dateTimeTo = null;
 
     /**
      * @throws DomainConstraintException

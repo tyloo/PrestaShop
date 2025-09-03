@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\Exception\CartConstraintException;
  */
 class CartId
 {
-    /**
-     * @var int
-     */
-    private $cartId;
+    private readonly int $cartId;
 
     /**
      * @param int $cartId
@@ -53,10 +50,7 @@ class CartId
         $this->cartId = $cartId;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->cartId;
     }

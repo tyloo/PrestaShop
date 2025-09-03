@@ -40,7 +40,7 @@ class BulkDeleteCurrenciesCommand
     /**
      * @var CurrencyId[]
      */
-    private $currencyIds = [];
+    private array $currencyIds = [];
 
     /**
      * @param int[] $currencyIds
@@ -53,7 +53,7 @@ class BulkDeleteCurrenciesCommand
     /**
      * @return CurrencyId[]
      */
-    public function getCurrencyIds()
+    public function getCurrencyIds(): array
     {
         return $this->currencyIds;
     }

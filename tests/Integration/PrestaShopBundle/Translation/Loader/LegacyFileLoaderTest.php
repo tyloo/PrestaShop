@@ -38,10 +38,7 @@ use Tests\Integration\PrestaShopBundle\Translation\CatalogueVerifier;
  */
 class LegacyFileLoaderTest extends KernelTestCase
 {
-    /**
-     * @var string
-     */
-    private $translationsFolder = __DIR__ . '/../../../../Resources/modules/translationtest/translations/';
+    private string $translationsFolder = __DIR__ . '/../../../../Resources/modules/translationtest/translations/';
 
     private readonly CatalogueVerifier $catalogueVerifier;
 
@@ -68,10 +65,7 @@ class LegacyFileLoaderTest extends KernelTestCase
         $this->catalogueVerifier->assertCataloguesMatch($catalogue, $expected);
     }
 
-    /**
-     * @return string
-     */
-    private function getTranslationsFolder()
+    private function getTranslationsFolder(): string
     {
         return $this->translationsFolder;
     }

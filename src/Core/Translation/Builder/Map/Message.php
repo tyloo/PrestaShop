@@ -38,15 +38,9 @@ namespace PrestaShop\PrestaShop\Core\Translation\Builder\Map;
  */
 class Message
 {
-    /**
-     * @var string|null
-     */
-    private $fileTranslation;
+    private ?string $fileTranslation = null;
 
-    /**
-     * @var string|null
-     */
-    private $userTranslation;
+    private ?string $userTranslation = null;
 
     public function __construct(
         private readonly string $defaultTranslation,

@@ -58,10 +58,7 @@ class CategoryDeleteMode
         self::REMOVE_ASSOCIATED_PRODUCTS,
     ];
 
-    /**
-     * @var string
-     */
-    private $mode;
+    private string $mode;
 
     /**
      * @param string $mode

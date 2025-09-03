@@ -47,7 +47,7 @@ class UpdateCombinationSuppliersCommand
     /**
      * @var array<int, ProductSupplierUpdate>
      */
-    private $combinationSuppliers;
+    private ?array $combinationSuppliers = null;
 
     /**
      * @param array<int, array<string, string|int|null>> $combinationSuppliers

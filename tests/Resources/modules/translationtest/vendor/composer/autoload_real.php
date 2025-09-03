@@ -4,7 +4,7 @@
 
 class ComposerAutoloaderInit0947f7d635b230626d882d70fd7789ed
 {
-    private static $loader;
+    private static ?\Composer\Autoload\ClassLoader $loader = null;
 
     public static function loadClassLoader($class): void
     {
@@ -15,7 +15,7 @@ class ComposerAutoloaderInit0947f7d635b230626d882d70fd7789ed
 
     public static function getLoader()
     {
-        if (null !== self::$loader) {
+        if (self::$loader instanceof \Composer\Autoload\ClassLoader) {
             return self::$loader;
         }
 

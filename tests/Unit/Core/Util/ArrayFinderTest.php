@@ -33,15 +33,9 @@ use PrestaShop\PrestaShop\Core\Util\ArrayFinder;
 
 class ArrayFinderTest extends TestCase
 {
-    /**
-     * @var array
-     */
-    private $sampleArray;
+    private ?array $sampleArray = null;
 
-    /**
-     * @var ArrayFinder
-     */
-    private $arrayFinder;
+    private \PrestaShop\PrestaShop\Core\Util\ArrayFinder|array|null $arrayFinder = null;
 
     #[\PHPUnit\Framework\Attributes\Before]
     public function setupComplexArrayFinder(): void

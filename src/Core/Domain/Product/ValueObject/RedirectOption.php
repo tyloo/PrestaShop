@@ -38,10 +38,7 @@ class RedirectOption
 {
     private readonly RedirectType $redirectType;
 
-    /**
-     * @var RedirectTarget
-     */
-    private $redirectTarget;
+    private RedirectTarget $redirectTarget;
 
     public function __construct(string $redirectType, int $redirectTarget)
     {

@@ -37,7 +37,7 @@ class BulkDeleteEmployeeCommand
     /**
      * @var EmployeeId[]
      */
-    private $employeeIds;
+    private ?array $employeeIds = null;
 
     /**
      * @param int[] $employeeIds
@@ -50,7 +50,7 @@ class BulkDeleteEmployeeCommand
     /**
      * @return EmployeeId[]
      */
-    public function getEmployeeIds()
+    public function getEmployeeIds(): ?array
     {
         return $this->employeeIds;
     }

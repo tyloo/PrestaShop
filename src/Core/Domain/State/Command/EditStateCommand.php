@@ -41,30 +41,15 @@ class EditStateCommand
 {
     private readonly StateId $stateId;
 
-    /**
-     * @var CountryId|null
-     */
-    private $countryId;
+    private ?CountryId $countryId = null;
 
-    /**
-     * @var ZoneId|null
-     */
-    private $zoneId;
+    private ?ZoneId $zoneId = null;
 
-    /**
-     * @var string|null
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string|null
-     */
-    private $isoCode;
+    private ?string $isoCode = null;
 
-    /**
-     * @var bool|null
-     */
-    private $active;
+    private ?bool $active = null;
 
     /**
      * @throws StateConstraintException

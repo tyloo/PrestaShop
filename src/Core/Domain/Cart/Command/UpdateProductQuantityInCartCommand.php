@@ -46,15 +46,9 @@ class UpdateProductQuantityInCartCommand
 
     private readonly int $newQuantity;
 
-    /**
-     * @var CombinationId|null
-     */
-    private $combinationId;
+    private ?CombinationId $combinationId = null;
 
-    /**
-     * @var CustomizationId|null
-     */
-    private $customizationId;
+    private ?CustomizationId $customizationId = null;
 
     /**
      * @param int $cartId

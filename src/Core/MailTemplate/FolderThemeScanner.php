@@ -41,10 +41,7 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 final class FolderThemeScanner
 {
-    /**
-     * @var string
-     */
-    private $baseThemeFolder;
+    private ?string $baseThemeFolder = null;
 
     private $themeTwigNamespace;
 
@@ -199,7 +196,7 @@ final class FolderThemeScanner
 
     private function getTemplatePath(SplFileInfo $fileInfo): string
     {
-        $templateRelativePath = substr($fileInfo->getPathname(), \strlen($this->baseThemeFolder));
+        $templateRelativePath = substr($fileInfo->getPathname(), \strlen((string) $this->baseThemeFolder));
 
         return $this->themeTwigNamespace . $templateRelativePath;
     }

@@ -46,10 +46,7 @@ class SearchProductsForAssociation
 
     private readonly ShopId $shopId;
 
-    /**
-     * @var int|null
-     */
-    private $limit;
+    private ?int $limit = null;
 
     public function __construct(string $phrase, int $languageId, int $shopId, ?int $limit = null)
     {

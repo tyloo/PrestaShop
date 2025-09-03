@@ -66,7 +66,7 @@ class ModuleCatalogueLayersProviderTest extends KernelTestCase
     /**
      * @var array<int, string>
      */
-    private $moduleExtractorExcludedDirs = ['vendor', 'lib', 'tests'];
+    private array $moduleExtractorExcludedDirs = ['vendor', 'lib', 'tests'];
 
     protected function setUp(): void
     {

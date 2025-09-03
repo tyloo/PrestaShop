@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Tax\Exception\TaxConstraintException;
  */
 class TaxId
 {
-    /**
-     * @var int
-     */
-    private $taxId;
+    private readonly int $taxId;
 
     /**
      * @param int $taxId
@@ -53,10 +50,7 @@ class TaxId
         $this->taxId = $taxId;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->taxId;
     }

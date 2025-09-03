@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Exception\DomainConstraintException;
 
 class Dimension
 {
-    /**
-     * @var DecimalNumber
-     */
-    private $decimalValue;
+    private DecimalNumber $decimalValue;
 
     /**
      * @throws DomainConstraintException

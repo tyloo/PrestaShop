@@ -35,7 +35,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 class translationtest extends Module
 {
-    private $adminControllerName = 'AdminTranslationtestFoo';
+    private string $adminControllerName = 'AdminTranslationtestFoo';
 
     public function __construct()
     {

@@ -47,25 +47,13 @@ class EditCustomerCommand
 {
     private readonly CustomerId $customerId;
 
-    /**
-     * @var FirstName|null
-     */
-    private $firstName;
+    private ?FirstName $firstName = null;
 
-    /**
-     * @var LastName|null
-     */
-    private $lastName;
+    private ?LastName $lastName = null;
 
-    /**
-     * @var Email|null
-     */
-    private $email;
+    private ?Email $email = null;
 
-    /**
-     * @var Password|null
-     */
-    private $password;
+    private ?Password $password = null;
 
     /**
      * @var int|null
@@ -75,7 +63,7 @@ class EditCustomerCommand
     /**
      * @var int[]|null
      */
-    private $groupIds;
+    private ?array $groupIds = null;
 
     /**
      * @var int|null
@@ -97,10 +85,7 @@ class EditCustomerCommand
      */
     private $isPartnerOffersSubscribed;
 
-    /**
-     * @var Birthday|null
-     */
-    private $birthday;
+    private ?Birthday $birthday = null;
 
     /**
      * @var string|null
@@ -112,10 +97,7 @@ class EditCustomerCommand
      */
     private $siretCode;
 
-    /**
-     * @var ApeCode|null
-     */
-    private $apeCode;
+    private ?ApeCode $apeCode = null;
 
     /**
      * @var string|null
@@ -150,10 +132,7 @@ class EditCustomerCommand
         return $this->customerId;
     }
 
-    /**
-     * @return FirstName|null
-     */
-    public function getFirstName()
+    public function getFirstName(): ?FirstName
     {
         return $this->firstName;
     }
@@ -170,10 +149,7 @@ class EditCustomerCommand
         return $this;
     }
 
-    /**
-     * @return LastName|null
-     */
-    public function getLastName()
+    public function getLastName(): ?LastName
     {
         return $this->lastName;
     }
@@ -190,10 +166,7 @@ class EditCustomerCommand
         return $this;
     }
 
-    /**
-     * @return Email|null
-     */
-    public function getEmail()
+    public function getEmail(): ?Email
     {
         return $this->email;
     }
@@ -210,10 +183,7 @@ class EditCustomerCommand
         return $this;
     }
 
-    /**
-     * @return Password|null
-     */
-    public function getPassword()
+    public function getPassword(): ?Password
     {
         return $this->password;
     }
@@ -253,7 +223,7 @@ class EditCustomerCommand
     /**
      * @return int[]|null
      */
-    public function getGroupIds()
+    public function getGroupIds(): ?array
     {
         return $this->groupIds;
     }
@@ -346,10 +316,7 @@ class EditCustomerCommand
         return $this;
     }
 
-    /**
-     * @return Birthday|null
-     */
-    public function getBirthday()
+    public function getBirthday(): ?Birthday
     {
         return $this->birthday;
     }
@@ -406,10 +373,7 @@ class EditCustomerCommand
         return $this;
     }
 
-    /**
-     * @return ApeCode|null
-     */
-    public function getApeCode()
+    public function getApeCode(): ?ApeCode
     {
         return $this->apeCode;
     }

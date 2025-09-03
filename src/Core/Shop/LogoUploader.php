@@ -41,10 +41,7 @@ use Tools;
  */
 class LogoUploader
 {
-    /**
-     * @var array
-     */
-    private $errors = [];
+    private array $errors = [];
 
     public function __construct(
         private readonly Shop $shop,
@@ -170,7 +167,7 @@ class LogoUploader
             }
 
             // manage deleting old logo
-            if (! \count($this->errors) && @filemtime($this->imageDirection . Configuration::get($fieldName))) {
+            if ($this->errors === [] && @filemtime($this->imageDirection . Configuration::get($fieldName))) {
                 if (Shop::isFeatureActive()) {
                     $this->updateInMultiShopContext($idShop, $idShopGroup, $fieldName);
                 } else {
@@ -226,7 +223,7 @@ class LogoUploader
             }
         }
 
-        return ! \count($this->errors);
+        return $this->errors === [];
     }
 
     /**

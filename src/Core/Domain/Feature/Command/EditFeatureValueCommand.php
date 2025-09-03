@@ -40,15 +40,12 @@ class EditFeatureValueCommand
 {
     private readonly FeatureValueId $featureValueId;
 
-    /**
-     * @var FeatureId|null
-     */
-    private $featureId;
+    private ?FeatureId $featureId = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedValues;
+    private ?array $localizedValues = null;
 
     /**
      * @throws InvalidFeatureValueIdException

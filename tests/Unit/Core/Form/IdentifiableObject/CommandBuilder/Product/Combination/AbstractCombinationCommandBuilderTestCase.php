@@ -37,14 +37,11 @@ use Tests\Unit\Core\Form\IdentifiableObject\CommandBuilder\Product\AbstractMulti
  */
 abstract class AbstractCombinationCommandBuilderTestCase extends AbstractMultiShopCommandsBuilderTestCase
 {
-    /**
-     * @var CombinationId
-     */
-    private $combinationId;
+    private ?CombinationId $combinationId = null;
 
     protected function getCombinationId(): CombinationId
     {
-        if ($this->combinationId === null) {
+        if (! $this->combinationId instanceof CombinationId) {
             $this->combinationId = new CombinationId(43);
         }
 

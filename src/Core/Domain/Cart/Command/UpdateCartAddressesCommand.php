@@ -36,15 +36,9 @@ class UpdateCartAddressesCommand
 {
     private readonly CartId $cartId;
 
-    /**
-     * @var AddressId
-     */
-    private $newDeliveryAddressId;
+    private AddressId $newDeliveryAddressId;
 
-    /**
-     * @var AddressId
-     */
-    private $newInvoiceAddressId;
+    private AddressId $newInvoiceAddressId;
 
     /**
      * @throws AddressConstraintException

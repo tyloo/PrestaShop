@@ -42,10 +42,7 @@ class SearchProducts
 
     private readonly AlphaIsoCode $alphaIsoCode;
 
-    /**
-     * @var OrderId|null
-     */
-    private $orderId;
+    private ?OrderId $orderId = null;
 
     /**
      * @throws ProductSearchEmptyPhraseException

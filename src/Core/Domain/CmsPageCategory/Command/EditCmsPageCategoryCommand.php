@@ -38,20 +38,11 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
 {
     private readonly CmsPageCategoryId $cmsPageCategoryId;
 
-    /**
-     * @var array
-     */
-    private $localisedName;
+    private ?array $localisedName = null;
 
-    /**
-     * @var array
-     */
-    private $localisedFriendlyUrl;
+    private ?array $localisedFriendlyUrl = null;
 
-    /**
-     * @var CmsPageCategoryId
-     */
-    private $parentId;
+    private ?CmsPageCategoryId $parentId = null;
 
     /**
      * @var bool
@@ -61,22 +52,22 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @var string[]
      */
-    private $localisedDescription;
+    private ?array $localisedDescription = null;
 
     /**
      * @var string[]
      */
-    private $localisedMetaTitle;
+    private ?array $localisedMetaTitle = null;
 
     /**
      * @var string[]
      */
-    private $localisedMetaDescription;
+    private ?array $localisedMetaDescription = null;
 
     /**
      * @var int[]
      */
-    private $shopAssociation;
+    private ?array $shopAssociation = null;
 
     /**
      * @param int $cmsPageCategoryId
@@ -93,10 +84,7 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
         return $this->cmsPageCategoryId;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalisedName()
+    public function getLocalisedName(): ?array
     {
         return $this->localisedName;
     }
@@ -114,10 +102,7 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalisedFriendlyUrl()
+    public function getLocalisedFriendlyUrl(): ?array
     {
         return $this->localisedFriendlyUrl;
     }
@@ -132,10 +117,7 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
         return $this;
     }
 
-    /**
-     * @return CmsPageCategoryId
-     */
-    public function getParentId()
+    public function getParentId(): ?CmsPageCategoryId
     {
         return $this->parentId;
     }
@@ -177,7 +159,7 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalisedDescription()
+    public function getLocalisedDescription(): ?array
     {
         return $this->localisedDescription;
     }
@@ -197,7 +179,7 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalisedMetaTitle()
+    public function getLocalisedMetaTitle(): ?array
     {
         return $this->localisedMetaTitle;
     }
@@ -220,7 +202,7 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalisedMetaDescription()
+    public function getLocalisedMetaDescription(): ?array
     {
         return $this->localisedMetaDescription;
     }
@@ -243,7 +225,7 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @return int[]
      */
-    public function getShopAssociation()
+    public function getShopAssociation(): ?array
     {
         return $this->shopAssociation;
     }

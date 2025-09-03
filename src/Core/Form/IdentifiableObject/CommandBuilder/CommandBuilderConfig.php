@@ -65,7 +65,7 @@ class CommandBuilderConfig
     /**
      * @var array<int, CommandField>
      */
-    private $fields = [];
+    private array $fields = [];
 
     public function __construct(
         private readonly string $modifyAllNamePrefix = '',

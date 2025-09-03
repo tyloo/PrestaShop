@@ -50,7 +50,7 @@ class ProductPresenterTest extends KernelTestCase
     /**
      * @var array<string, mixed>
      */
-    private $product;
+    private array $product;
 
     protected function setUp(): void
     {

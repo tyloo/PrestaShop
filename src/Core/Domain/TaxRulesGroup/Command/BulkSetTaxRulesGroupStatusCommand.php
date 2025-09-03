@@ -38,7 +38,7 @@ class BulkSetTaxRulesGroupStatusCommand
     /**
      * @var TaxRulesGroupId[]
      */
-    private $taxRulesGroupIds = [];
+    private array $taxRulesGroupIds = [];
 
     /**
      * @throws TaxRulesGroupConstraintException

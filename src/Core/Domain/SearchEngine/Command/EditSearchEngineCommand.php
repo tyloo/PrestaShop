@@ -39,15 +39,9 @@ class EditSearchEngineCommand
 {
     private readonly SearchEngineId $searchEngineId;
 
-    /**
-     * @var string|null
-     */
-    private $server;
+    private ?string $server = null;
 
-    /**
-     * @var string|null
-     */
-    private $queryKey;
+    private ?string $queryKey = null;
 
     /**
      * @throws SearchEngineException

@@ -38,7 +38,7 @@ class DatabaseTableFields
     /**
      * @var DatabaseTableField[]
      */
-    private $fields;
+    private array $fields;
 
     /**
      * @param DatabaseTableField[] $fields
@@ -53,7 +53,7 @@ class DatabaseTableFields
     /**
      * @return DatabaseTableField[]
      */
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }

@@ -40,7 +40,7 @@ class BulkDeleteSearchEngineCommand
     /**
      * @var SearchEngineId[]
      */
-    private $searchEngineIds = [];
+    private array $searchEngineIds = [];
 
     /**
      * @param int[] $searchEngineIds

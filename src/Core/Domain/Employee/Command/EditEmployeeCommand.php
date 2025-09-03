@@ -40,20 +40,11 @@ class EditEmployeeCommand
 {
     private EmployeeId $employeeId;
 
-    /**
-     * @var FirstName
-     */
-    private $firstName;
+    private ?FirstName $firstName = null;
 
-    /**
-     * @var LastName
-     */
-    private $lastName;
+    private ?LastName $lastName = null;
 
-    /**
-     * @var Email
-     */
-    private $email;
+    private ?Email $email = null;
 
     /**
      * @var int
@@ -80,15 +71,9 @@ class EditEmployeeCommand
      */
     private $shopAssociation;
 
-    /**
-     * @var Password
-     */
-    private $plainPassword;
+    private ?Password $plainPassword = null;
 
-    /**
-     * @var bool
-     */
-    private $hasEnabledGravatar = false;
+    private bool $hasEnabledGravatar = false;
 
     /**
      * @param int $employeeId
@@ -113,10 +98,7 @@ class EditEmployeeCommand
         return $this;
     }
 
-    /**
-     * @return FirstName
-     */
-    public function getFirstName()
+    public function getFirstName(): ?FirstName
     {
         return $this->firstName;
     }
@@ -133,10 +115,7 @@ class EditEmployeeCommand
         return $this;
     }
 
-    /**
-     * @return LastName
-     */
-    public function getLastName()
+    public function getLastName(): ?LastName
     {
         return $this->lastName;
     }
@@ -153,10 +132,7 @@ class EditEmployeeCommand
         return $this;
     }
 
-    /**
-     * @return Email
-     */
-    public function getEmail()
+    public function getEmail(): ?Email
     {
         return $this->email;
     }
@@ -273,10 +249,7 @@ class EditEmployeeCommand
         return $this;
     }
 
-    /**
-     * @return Password
-     */
-    public function getPlainPassword()
+    public function getPlainPassword(): ?Password
     {
         return $this->plainPassword;
     }
@@ -293,10 +266,7 @@ class EditEmployeeCommand
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasEnabledGravatar()
+    public function hasEnabledGravatar(): bool
     {
         return $this->hasEnabledGravatar;
     }

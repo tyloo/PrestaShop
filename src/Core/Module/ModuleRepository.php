@@ -56,15 +56,12 @@ class ModuleRepository implements ModuleRepositoryInterface
         'confirmUninstall',
     ];
 
-    /**
-     * @var array|null
-     */
-    private $installedModules;
+    private ?array $installedModules = null;
 
     /**
      * @var Module[]
      */
-    private $modulesFromHook;
+    private ?array $modulesFromHook = null;
 
     public function __construct(
         private readonly ModuleDataProvider $moduleDataProvider,
@@ -267,10 +264,7 @@ class ModuleRepository implements ModuleRepositoryInterface
         return $this->installedModules[$moduleName] ?? [];
     }
 
-    /**
-     * @return array
-     */
-    private function getModulesFromHook()
+    private function getModulesFromHook(): array
     {
         if ($this->modulesFromHook === null) {
             // An array [module_name => module_output] will be returned

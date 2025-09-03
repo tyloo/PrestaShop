@@ -46,7 +46,7 @@ class SetAssociatedProductCategoriesCommand
     /**
      * @var CategoryId[]
      */
-    private $categoryIds;
+    private array $categoryIds;
 
     /**
      * @param int[] $categoryIds

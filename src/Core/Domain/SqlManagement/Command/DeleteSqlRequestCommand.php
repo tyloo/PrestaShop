@@ -34,20 +34,14 @@ use PrestaShop\PrestaShop\Core\Domain\SqlManagement\ValueObject\SqlRequestId;
  */
 class DeleteSqlRequestCommand
 {
-    /**
-     * @var SqlRequestId
-     */
-    private $sqlRequestId;
+    private SqlRequestId $sqlRequestId;
 
     public function __construct(SqlRequestId $sqlRequestId)
     {
         $this->setSqlRequestId($sqlRequestId);
     }
 
-    /**
-     * @return SqlRequestId
-     */
-    public function getSqlRequestId()
+    public function getSqlRequestId(): SqlRequestId
     {
         return $this->sqlRequestId;
     }

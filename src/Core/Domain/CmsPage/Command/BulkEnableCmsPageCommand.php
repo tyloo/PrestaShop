@@ -38,7 +38,7 @@ class BulkEnableCmsPageCommand
     /**
      * @var CmsPageId[]
      */
-    private $cmsPages;
+    private ?array $cmsPages = null;
 
     /**
      * @throws CmsPageException
@@ -51,7 +51,7 @@ class BulkEnableCmsPageCommand
     /**
      * @return CmsPageId[]
      */
-    public function getCmsPages()
+    public function getCmsPages(): ?array
     {
         return $this->cmsPages;
     }

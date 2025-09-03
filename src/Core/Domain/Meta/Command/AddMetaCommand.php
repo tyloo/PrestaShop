@@ -40,17 +40,17 @@ class AddMetaCommand extends AbstractMetaCommand
     /**
      * @var string[]
      */
-    private $localisedPageTitle;
+    private ?array $localisedPageTitle = null;
 
     /**
      * @var string[]
      */
-    private $localisedMetaDescription;
+    private ?array $localisedMetaDescription = null;
 
     /**
      * @var string[]
      */
-    private $LocalisedRewriteUrls;
+    private ?array $LocalisedRewriteUrls = null;
 
     /**
      * @param string $pageName
@@ -70,7 +70,7 @@ class AddMetaCommand extends AbstractMetaCommand
     /**
      * @return string[]
      */
-    public function getLocalisedPageTitles()
+    public function getLocalisedPageTitles(): ?array
     {
         return $this->localisedPageTitle;
     }
@@ -96,7 +96,7 @@ class AddMetaCommand extends AbstractMetaCommand
     /**
      * @return string[]
      */
-    public function getLocalisedMetaDescription()
+    public function getLocalisedMetaDescription(): ?array
     {
         return $this->localisedMetaDescription;
     }
@@ -122,7 +122,7 @@ class AddMetaCommand extends AbstractMetaCommand
     /**
      * @return string[]
      */
-    public function getLocalisedRewriteUrls()
+    public function getLocalisedRewriteUrls(): ?array
     {
         return $this->LocalisedRewriteUrls;
     }

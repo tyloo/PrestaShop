@@ -34,7 +34,7 @@ class OrderPaymentsForViewing
      *
      * @var OrderPaymentForViewing[]
      */
-    private $payments = [];
+    private array $payments = [];
 
     /**
      * @param OrderPaymentForViewing[] $payments

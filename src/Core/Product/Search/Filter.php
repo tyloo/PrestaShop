@@ -57,7 +57,7 @@ class Filter
     /**
      * @var int the filter magnitude
      */
-    private $magnitude = 0;
+    private int $magnitude = 0;
 
     /**
      * @var mixed the filter value
@@ -183,7 +183,7 @@ class Filter
     /**
      * @return int the filter magnitude
      */
-    public function getMagnitude()
+    public function getMagnitude(): int
     {
         return $this->magnitude;
     }

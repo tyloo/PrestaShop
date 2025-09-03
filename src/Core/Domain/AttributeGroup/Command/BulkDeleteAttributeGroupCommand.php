@@ -38,7 +38,7 @@ final class BulkDeleteAttributeGroupCommand
     /**
      * @var AttributeGroupId[]
      */
-    private $attributeGroupIds;
+    private ?array $attributeGroupIds = null;
 
     /**
      * @param int[] $attributeGroupIds
@@ -53,7 +53,7 @@ final class BulkDeleteAttributeGroupCommand
     /**
      * @return AttributeGroupId[]
      */
-    public function getAttributeGroupIds()
+    public function getAttributeGroupIds(): ?array
     {
         return $this->attributeGroupIds;
     }

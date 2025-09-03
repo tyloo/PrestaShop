@@ -43,10 +43,7 @@ class ThemeValidatorTest extends TestCase
 {
     private const NOTICE = '[ThemeValidator] ';
 
-    /**
-     * @var ThemeValidator|null
-     */
-    private $validator;
+    private ?ThemeValidator $validator = null;
 
     protected function setUp(): void
     {

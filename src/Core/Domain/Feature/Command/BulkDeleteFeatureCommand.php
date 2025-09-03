@@ -35,7 +35,7 @@ class BulkDeleteFeatureCommand
     /**
      * @var FeatureId[]
      */
-    private $featureIds;
+    private ?array $featureIds = null;
 
     /**
      * @param int[] $featureIds

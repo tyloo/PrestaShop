@@ -34,10 +34,7 @@ use SplFileInfo;
  */
 class EditableAttachment
 {
-    /**
-     * @var SplFileInfo|null
-     */
-    private $file;
+    private ?SplFileInfo $file = null;
 
     /**
      * @param string[] $name

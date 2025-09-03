@@ -39,7 +39,7 @@ class BulkDeleteCustomerSessionsCommand
     /**
      * @var array<int, CustomerSessionId>
      */
-    private $sessionIds;
+    private ?array $sessionIds = null;
 
     /**
      * @param array<int, int> $sessionIds

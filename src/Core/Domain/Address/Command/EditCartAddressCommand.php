@@ -46,10 +46,7 @@ class EditCartAddressCommand extends AbstractEditAddressCommand
 
     private readonly CartId $cartId;
 
-    /**
-     * @var string
-     */
-    private $addressType;
+    private string $addressType;
 
     /**
      * @throws InvalidAddressTypeException

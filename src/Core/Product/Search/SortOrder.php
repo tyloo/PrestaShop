@@ -48,7 +48,7 @@ class SortOrder
     /**
      * @var string the SortOrder direction
      */
-    private $direction;
+    private string $direction;
 
     /**
      * @var string string The SortOrder label
@@ -210,7 +210,7 @@ class SortOrder
     /**
      * @return string the Sort Order direction
      */
-    public function getDirection()
+    public function getDirection(): string
     {
         return $this->direction;
     }
@@ -266,7 +266,7 @@ class SortOrder
     /**
      * @return string the legacy order way
      */
-    public function toLegacyOrderWay()
+    public function toLegacyOrderWay(): string
     {
         return $this->getDirection();
     }

@@ -39,7 +39,7 @@ class BulkDeleteSupplierCommand extends AbstractBulkSupplierCommand
     /**
      * @var SupplierId[]
      */
-    private $supplierIds;
+    private ?array $supplierIds = null;
 
     /**
      * @param int[] $supplierIds
@@ -59,7 +59,7 @@ class BulkDeleteSupplierCommand extends AbstractBulkSupplierCommand
     /**
      * @return SupplierId[]
      */
-    public function getSupplierIds()
+    public function getSupplierIds(): ?array
     {
         return $this->supplierIds;
     }

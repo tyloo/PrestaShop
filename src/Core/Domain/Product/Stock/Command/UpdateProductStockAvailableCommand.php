@@ -43,20 +43,11 @@ class UpdateProductStockAvailableCommand
 {
     private readonly ProductId $productId;
 
-    /**
-     * @var int|null
-     */
-    private $deltaQuantity;
+    private ?int $deltaQuantity = null;
 
-    /**
-     * @var OutOfStockType|null
-     */
-    private $outOfStockType;
+    private ?OutOfStockType $outOfStockType = null;
 
-    /**
-     * @var string|null
-     */
-    private $location;
+    private ?string $location = null;
 
     public function __construct(
         int $productId,

@@ -53,75 +53,57 @@ class EditSpecificPriceCommand
 {
     private readonly SpecificPriceId $specificPriceId;
 
-    /**
-     * @var Reduction|null
-     */
-    private $reduction;
+    private ?Reduction $reduction = null;
 
-    /**
-     * @var bool|null
-     */
-    private $includesTax;
+    private ?bool $includesTax = null;
 
     /**
      * @var FixedPriceInterface|null
      */
-    private $fixedPrice;
+    private \PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\ValueObject\InitialPrice|\PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\ValueObject\FixedPrice|null $fixedPrice = null;
 
-    /**
-     * @var int|null
-     */
-    private $fromQuantity;
+    private ?int $fromQuantity = null;
 
     /**
      * @var ShopIdInterface|null
      */
-    private $shopId;
+    private \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\NoShopId|\PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId|null $shopId = null;
 
     /**
      * @var CombinationIdInterface|null
      */
-    private $combinationId;
+    private \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\NoCombinationId|\PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId|null $combinationId = null;
 
     /**
      * @var CurrencyIdInterface|null
      */
-    private $currencyId;
+    private \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\NoCurrencyId|\PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\CurrencyId|null $currencyId = null;
 
-    /**
-     * @var int|null
-     */
-    private $countryId;
+    private ?int $countryId = null;
 
     /**
      * @var GroupIdInterface|null
      */
-    private $groupId;
+    private \PrestaShop\PrestaShop\Core\Domain\Customer\Group\ValueObject\NoGroupId|\PrestaShop\PrestaShop\Core\Domain\Customer\Group\ValueObject\GroupId|null $groupId = null;
 
     /**
-     * @var int|null
-     *
      * @todo: countryId & customerId should also use the same convention of {Foo}IdInterface,
      *        but it requires some refactoring as it was already used in many places this primitive way
      *        related reminder issue https://github.com/PrestaShop/PrestaShop/issues/27205
      */
-    private $customerId;
+    private ?int $customerId = null;
 
     /**
-     * @var DateTimeInterface|null
-     *
      * @see DateTime
      * @see NullDateTime
      */
-    private $dateTimeFrom;
+    private ?DateTimeInterface $dateTimeFrom = null;
 
     /**
-     * @var DateTimeInterface|null
-     *
      * @see DateTime
      * @see NullDateTime
      */
-    private $dateTimeTo;
+    private ?DateTimeInterface $dateTimeTo = null;
 
     public function __construct(int $specificPriceId)
     {

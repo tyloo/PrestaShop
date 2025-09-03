@@ -36,7 +36,7 @@ class SetProductImagesForAllShopCommand
     /**
      * @var ProductImageSetting[]
      */
-    private $productImageSettings = [];
+    private array $productImageSettings = [];
 
     private readonly ProductId $productId;
 

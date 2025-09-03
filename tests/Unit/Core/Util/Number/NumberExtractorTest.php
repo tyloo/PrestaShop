@@ -144,7 +144,7 @@ class FakeClass
 
 class FakeClass2
 {
-    private $test2 = 19.5;
+    private float $test2 = 19.5;
 
     public function getTest2(): float
     {
@@ -154,9 +154,9 @@ class FakeClass2
 
 class FakeClass3
 {
-    private $test3 = '300.03';
+    private string $test3 = '300.03';
 
-    private $notNumeric = 'this string is not numeric';
+    private string $notNumeric = 'this string is not numeric';
 
     public function getTest3(): string
     {

@@ -38,12 +38,9 @@ class BulkChangeOrderStatusCommand
     /**
      * @var OrderId[]
      */
-    private $orderIds;
+    private ?array $orderIds = null;
 
-    /**
-     * @var int
-     */
-    private $newOrderStatusId;
+    private readonly int $newOrderStatusId;
 
     /**
      * @param int[] $orderIds
@@ -62,15 +59,12 @@ class BulkChangeOrderStatusCommand
     /**
      * @return OrderId[]
      */
-    public function getOrderIds()
+    public function getOrderIds(): ?array
     {
         return $this->orderIds;
     }
 
-    /**
-     * @return int
-     */
-    public function getNewOrderStatusId()
+    public function getNewOrderStatusId(): int
     {
         return $this->newOrderStatusId;
     }

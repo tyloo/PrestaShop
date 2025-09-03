@@ -39,7 +39,7 @@ class BulkDisableCmsPageCategoryCommand extends AbstractBulkCmsPageCategoryComma
     /**
      * @var CmsPageCategoryId[]
      */
-    private $cmsPageCategoryIds;
+    private ?array $cmsPageCategoryIds = null;
 
     /**
      * @param int[] $cmsPageCategoryIds
@@ -59,7 +59,7 @@ class BulkDisableCmsPageCategoryCommand extends AbstractBulkCmsPageCategoryComma
     /**
      * @return CmsPageCategoryId[]
      */
-    public function getCmsPageCategoryIds()
+    public function getCmsPageCategoryIds(): ?array
     {
         return $this->cmsPageCategoryIds;
     }

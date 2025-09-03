@@ -57,10 +57,7 @@ class OutOfStockType
         self::OUT_OF_STOCK_DEFAULT,
     ];
 
-    /**
-     * @var int
-     */
-    private $value;
+    private int $value;
 
     /**
      * @throws ProductStockConstraintException

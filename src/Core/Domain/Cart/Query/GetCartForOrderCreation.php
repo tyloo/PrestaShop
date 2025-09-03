@@ -37,10 +37,7 @@ class GetCartForOrderCreation
 {
     private readonly CartId $cartId;
 
-    /**
-     * @var bool
-     */
-    private $hideDiscounts = false;
+    private bool $hideDiscounts = false;
 
     /**
      * @throws CartConstraintException

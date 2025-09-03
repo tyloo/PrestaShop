@@ -38,25 +38,13 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\QuerySorting;
  */
 class GetOrderProductsForViewing
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private ?OrderId $orderId = null;
 
-    /**
-     * @var int|null
-     */
-    private $offset;
+    private ?int $offset = null;
 
-    /**
-     * @var int|null
-     */
-    private $limit;
+    private ?int $limit = null;
 
-    /**
-     * @var QuerySorting
-     */
-    private $productsSorting;
+    private ?QuerySorting $productsSorting = null;
 
     /**
      * Builds query for paginated results

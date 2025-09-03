@@ -41,20 +41,17 @@ class AddContactCommand extends AbstractContactCommand
      */
     private readonly array $localisedTitles;
 
-    /**
-     * @var Email
-     */
-    private $email;
+    private ?Email $email = null;
 
     /**
      * @var string[]
      */
-    private $localisedDescription;
+    private ?array $localisedDescription = null;
 
     /**
      * @var int[]
      */
-    private $shopAssociation;
+    private ?array $shopAssociation = null;
 
     /**
      * @param string[] $localisedTitles        - sample: [$langId => $title]
@@ -87,10 +84,7 @@ class AddContactCommand extends AbstractContactCommand
         return $this->isMessageSavingEnabled;
     }
 
-    /**
-     * @return Email
-     */
-    public function getEmail()
+    public function getEmail(): ?Email
     {
         return $this->email;
     }
@@ -112,7 +106,7 @@ class AddContactCommand extends AbstractContactCommand
     /**
      * @return string[]
      */
-    public function getLocalisedDescription()
+    public function getLocalisedDescription(): ?array
     {
         return $this->localisedDescription;
     }
@@ -132,7 +126,7 @@ class AddContactCommand extends AbstractContactCommand
     /**
      * @return int[]
      */
-    public function getShopAssociation()
+    public function getShopAssociation(): ?array
     {
         return $this->shopAssociation;
     }

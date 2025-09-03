@@ -32,12 +32,12 @@ class Pagination
     /**
      * @var int the total number of pages for this query
      */
-    private $pagesCount;
+    private ?int $pagesCount = null;
 
     /**
      * @var int the index of the returned page
      */
-    private $page;
+    private ?int $page = null;
 
     /**
      * @return $this
@@ -49,10 +49,7 @@ class Pagination
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPagesCount()
+    public function getPagesCount(): ?int
     {
         return $this->pagesCount;
     }
@@ -67,10 +64,7 @@ class Pagination
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
+    public function getPage(): ?int
     {
         return $this->page;
     }
@@ -141,7 +135,7 @@ class Pagination
         }
 
         for ($i = 0; $i < $boundaryContextLength; ++$i) {
-            $addPageLink($this->getPagesCount() - $boundaryContextLength + 1 + $i);
+            $addPageLink($this->getPagesCount() - $boundaryContextLength + 1);
         }
 
         $links[] = $this->buildPageLink(min($this->getPagesCount(), $this->getPage() + 1), 'next');

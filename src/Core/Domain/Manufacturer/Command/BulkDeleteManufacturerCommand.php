@@ -38,7 +38,7 @@ class BulkDeleteManufacturerCommand
     /**
      * @var ManufacturerId[]
      */
-    private $manufacturerIds;
+    private ?array $manufacturerIds = null;
 
     /**
      * @param int[] $manufacturerIds
@@ -53,7 +53,7 @@ class BulkDeleteManufacturerCommand
     /**
      * @return ManufacturerId[]
      */
-    public function getManufacturerIds()
+    public function getManufacturerIds(): ?array
     {
         return $this->manufacturerIds;
     }

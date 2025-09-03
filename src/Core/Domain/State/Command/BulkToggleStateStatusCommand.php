@@ -39,7 +39,7 @@ class BulkToggleStateStatusCommand
     /**
      * @var array<int, StateId>
      */
-    private $stateIds;
+    private ?array $stateIds = null;
 
     /**
      * @param array<int, int> $stateIds

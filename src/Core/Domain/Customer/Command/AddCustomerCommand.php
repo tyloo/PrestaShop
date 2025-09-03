@@ -62,7 +62,7 @@ class AddCustomerCommand
     /**
      * @var ApeCode|null Only for B2b customers
      */
-    private $apeCode;
+    private ?ApeCode $apeCode = null;
 
     /**
      * @var string|null Only for B2b customers
@@ -232,10 +232,7 @@ class AddCustomerCommand
         return $this;
     }
 
-    /**
-     * @return ApeCode|null
-     */
-    public function getApeCode()
+    public function getApeCode(): ?ApeCode
     {
         return $this->apeCode;
     }

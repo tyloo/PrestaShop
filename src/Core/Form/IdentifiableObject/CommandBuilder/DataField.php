@@ -62,10 +62,7 @@ class DataField
 
     private readonly string $type;
 
-    /**
-     * @var bool
-     */
-    private $hasDefaultValue = false;
+    private bool $hasDefaultValue = false;
 
     private $defaultValue;
 

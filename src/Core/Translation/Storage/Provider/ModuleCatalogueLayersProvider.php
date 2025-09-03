@@ -51,30 +51,18 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
 {
-    /**
-     * @var DefaultCatalogueFinder
-     */
-    private $defaultCatalogueFinder;
+    private ?DefaultCatalogueFinder $defaultCatalogueFinder = null;
 
-    /**
-     * @var FileTranslatedCatalogueFinder
-     */
-    private $fileTranslatedCatalogueFinder;
+    private ?FileTranslatedCatalogueFinder $fileTranslatedCatalogueFinder = null;
 
-    /**
-     * @var FileTranslatedCatalogueFinder
-     */
-    private $builtInFileTranslatedCatalogueFinder;
+    private ?FileTranslatedCatalogueFinder $builtInFileTranslatedCatalogueFinder = null;
 
-    /**
-     * @var UserTranslatedCatalogueFinder
-     */
-    private $userTranslatedCatalogueFinder;
+    private ?UserTranslatedCatalogueFinder $userTranslatedCatalogueFinder = null;
 
     /**
      * @var MessageCatalogue[]
      */
-    private $defaultCatalogueCache;
+    private ?array $defaultCatalogueCache = null;
 
     /**
      * @param array<int, string> $filenameFilters
@@ -147,7 +135,7 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
      */
     private function getDefaultCatalogueFinder(): DefaultCatalogueFinder
     {
-        if ($this->defaultCatalogueFinder === null) {
+        if (! $this->defaultCatalogueFinder instanceof DefaultCatalogueFinder) {
             $this->defaultCatalogueFinder = new DefaultCatalogueFinder(
                 $this->translationsDirectory . \DIRECTORY_SEPARATOR . 'default',
                 $this->filenameFilters
@@ -162,7 +150,7 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
      */
     private function getCoreFileTranslatedCatalogueFinder(): FileTranslatedCatalogueFinder
     {
-        if ($this->fileTranslatedCatalogueFinder === null) {
+        if (! $this->fileTranslatedCatalogueFinder instanceof FileTranslatedCatalogueFinder) {
             $this->fileTranslatedCatalogueFinder = new FileTranslatedCatalogueFinder(
                 $this->translationsDirectory,
                 $this->filenameFilters
@@ -174,7 +162,7 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
 
     private function getUserTranslatedCatalogueFinder(): UserTranslatedCatalogueFinder
     {
-        if ($this->userTranslatedCatalogueFinder === null) {
+        if (! $this->userTranslatedCatalogueFinder instanceof UserTranslatedCatalogueFinder) {
             $this->userTranslatedCatalogueFinder = new UserTranslatedCatalogueFinder(
                 $this->databaseTranslationLoader,
                 $this->translationDomains
@@ -189,7 +177,7 @@ class ModuleCatalogueLayersProvider implements CatalogueLayersProviderInterface
      */
     private function getModuleBuiltInFileTranslatedCatalogueFinder(): FileTranslatedCatalogueFinder
     {
-        if ($this->builtInFileTranslatedCatalogueFinder === null) {
+        if (! $this->builtInFileTranslatedCatalogueFinder instanceof FileTranslatedCatalogueFinder) {
             $this->builtInFileTranslatedCatalogueFinder = new FileTranslatedCatalogueFinder(
                 implode(\DIRECTORY_SEPARATOR, [
                     $this->modulesDirectory,

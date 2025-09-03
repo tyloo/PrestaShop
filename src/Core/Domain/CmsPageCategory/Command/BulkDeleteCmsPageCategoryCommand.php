@@ -39,7 +39,7 @@ class BulkDeleteCmsPageCategoryCommand extends AbstractBulkCmsPageCategoryComman
     /**
      * @var CmsPageCategoryId[]
      */
-    private $cmsPageCategoryIds;
+    private ?array $cmsPageCategoryIds = null;
 
     /**
      * @param int[] $cmsPageCategoryIds
@@ -58,7 +58,7 @@ class BulkDeleteCmsPageCategoryCommand extends AbstractBulkCmsPageCategoryComman
     /**
      * @return CmsPageCategoryId[]
      */
-    public function getCmsPageCategoryIds()
+    public function getCmsPageCategoryIds(): ?array
     {
         return $this->cmsPageCategoryIds;
     }

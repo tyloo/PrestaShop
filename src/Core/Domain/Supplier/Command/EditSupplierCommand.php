@@ -37,80 +37,44 @@ class EditSupplierCommand
 {
     private readonly SupplierId $supplierId;
 
-    /**
-     * @var string|null
-     */
-    private $name;
+    private ?string $name = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedDescriptions;
+    private ?array $localizedDescriptions = null;
 
-    /**
-     * @var string|null
-     */
-    private $address;
+    private ?string $address = null;
 
-    /**
-     * @var string|null
-     */
-    private $city;
+    private ?string $city = null;
 
-    /**
-     * @var string|null
-     */
-    private $address2;
+    private ?string $address2 = null;
 
-    /**
-     * @var int|null
-     */
-    private $countryId;
+    private ?int $countryId = null;
 
-    /**
-     * @var string|null
-     */
-    private $postCode;
+    private ?string $postCode = null;
 
-    /**
-     * @var int|null
-     */
-    private $stateId;
+    private ?int $stateId = null;
 
-    /**
-     * @var string|null
-     */
-    private $phone;
+    private ?string $phone = null;
 
-    /**
-     * @var string|null
-     */
-    private $mobilePhone;
+    private ?string $mobilePhone = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedMetaTitles;
+    private ?array $localizedMetaTitles = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedMetaDescriptions;
+    private ?array $localizedMetaDescriptions = null;
 
-    /**
-     * @var bool|null
-     */
-    private $enabled;
+    private ?bool $enabled = null;
 
-    /**
-     * @var array|null
-     */
-    private $associatedShops;
+    private ?array $associatedShops = null;
 
-    /**
-     * @var string|null
-     */
-    private $dni;
+    private ?string $dni = null;
 
     /**
      * @throws SupplierException

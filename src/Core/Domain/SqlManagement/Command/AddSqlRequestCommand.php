@@ -34,15 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\SqlManagement\Exception\SqlRequestConstrai
  */
 class AddSqlRequestCommand
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
-    private $sql;
+    private string $sql;
 
     /**
      * @param string $name
@@ -57,18 +51,12 @@ class AddSqlRequestCommand
             ->setSql($sql);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getSql()
+    public function getSql(): string
     {
         return $this->sql;
     }

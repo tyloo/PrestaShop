@@ -50,20 +50,11 @@ class FolderThemeCatalogTest extends TestCase
 
     private Filesystem $fs;
 
-    /**
-     * @var ThemeCollectionInterface
-     */
-    private $expectedThemes;
+    private ?ThemeCollection $expectedThemes = null;
 
-    /**
-     * @var array
-     */
-    private $coreLayouts;
+    private ?array $coreLayouts = null;
 
-    /**
-     * @var array
-     */
-    private $moduleLayouts;
+    private ?array $moduleLayouts = null;
 
     protected function setUp(): void
     {

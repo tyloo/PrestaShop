@@ -34,10 +34,7 @@ use PrestaShopBundle\Twig\Locator\ModuleTemplateLoader;
 
 class ModuleTemplateLoaderTest extends TestCase
 {
-    /**
-     * @var ModuleTemplateLoader|null
-     */
-    private $loader;
+    private ?ModuleTemplateLoader $loader = null;
 
     protected function setUp(): void
     {

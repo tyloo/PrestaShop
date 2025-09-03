@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Product\Search\Filter;
 
 class FilterTest extends TestCase
 {
-    /**
-     * @var Filter|null
-     */
-    private $filter;
+    private ?Filter $filter = null;
 
     protected function setUp(): void
     {

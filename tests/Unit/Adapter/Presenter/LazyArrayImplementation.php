@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Adapter\Presenter\AbstractLazyArray;
  */
 class LazyArrayImplementation extends AbstractLazyArray
 {
-    private $propertyOneWasCalled = false;
+    private bool $propertyOneWasCalled = false;
 
     /**
      * @arrayAccess
@@ -47,10 +47,7 @@ class LazyArrayImplementation extends AbstractLazyArray
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    public function wasPropertyOneCalled()
+    public function wasPropertyOneCalled(): bool
     {
         return $this->propertyOneWasCalled;
     }

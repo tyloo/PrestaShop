@@ -35,7 +35,7 @@ class CollectionFilter implements FilterInterface
     /**
      * @var FilterInterface[]
      */
-    private $filters = [];
+    private array $filters = [];
 
     /**
      * Sets process queue.
@@ -64,7 +64,7 @@ class CollectionFilter implements FilterInterface
      *
      * @return FilterInterface[]
      */
-    public function getQueue()
+    public function getQueue(): array
     {
         return $this->filters;
     }

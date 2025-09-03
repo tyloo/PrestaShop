@@ -39,10 +39,7 @@ abstract class AbstractRowAction implements RowActionInterface
      */
     private $name;
 
-    /**
-     * @var array|null
-     */
-    private $options;
+    private ?array $options = null;
 
     /**
      * @var string

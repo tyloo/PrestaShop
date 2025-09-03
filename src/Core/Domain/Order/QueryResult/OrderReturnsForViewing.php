@@ -32,7 +32,7 @@ class OrderReturnsForViewing
     /**
      * @var OrderReturnForViewing[]
      */
-    private $orderReturns = [];
+    private array $orderReturns = [];
 
     /**
      * @param OrderReturnForViewing[] $orderReturns

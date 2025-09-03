@@ -38,20 +38,11 @@ class EditZoneCommand
 {
     private readonly ZoneId $zoneId;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var bool
-     */
-    private $enabled;
+    private ?bool $enabled = null;
 
-    /**
-     * @var array|null
-     */
-    private $shopAssociation;
+    private ?array $shopAssociation = null;
 
     public function __construct(int $zoneId)
     {

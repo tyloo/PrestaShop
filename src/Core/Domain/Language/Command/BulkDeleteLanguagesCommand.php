@@ -38,7 +38,7 @@ class BulkDeleteLanguagesCommand
     /**
      * @var LanguageId[]
      */
-    private $languageIds = [];
+    private array $languageIds = [];
 
     /**
      * @param int[] $languageIds
@@ -51,7 +51,7 @@ class BulkDeleteLanguagesCommand
     /**
      * @return LanguageId[]
      */
-    public function getLanguageIds()
+    public function getLanguageIds(): array
     {
         return $this->languageIds;
     }

@@ -51,7 +51,7 @@ class CatalogueProviderFactory
     /**
      * @var CatalogueLayersProviderInterface[]
      */
-    private $providers = [];
+    private array $providers = [];
 
     private readonly ModuleCatalogueProviderFactory $moduleCatalogueProviderFactory;
 

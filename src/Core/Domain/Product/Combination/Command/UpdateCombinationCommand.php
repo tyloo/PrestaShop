@@ -52,85 +52,43 @@ class UpdateCombinationCommand
 {
     private readonly CombinationId $combinationId;
 
-    /**
-     * @var bool|null
-     */
-    private $isDefault;
+    private ?bool $isDefault = null;
 
-    /**
-     * @var Gtin|null
-     */
-    private $gtin;
+    private ?Gtin $gtin = null;
 
-    /**
-     * @var Isbn|null
-     */
-    private $isbn;
+    private ?Isbn $isbn = null;
 
-    /**
-     * @var string|null
-     */
-    private $mpn;
+    private ?string $mpn = null;
 
-    /**
-     * @var Reference|null
-     */
-    private $reference;
+    private ?Reference $reference = null;
 
-    /**
-     * @var Upc|null
-     */
-    private $upc;
+    private ?Upc $upc = null;
 
-    /**
-     * @var DecimalNumber|null
-     */
-    private $impactOnWeight;
+    private ?DecimalNumber $impactOnWeight = null;
 
-    /**
-     * @var DecimalNumber|null
-     */
-    private $impactOnPrice;
+    private ?DecimalNumber $impactOnPrice = null;
 
-    /**
-     * @var DecimalNumber|null
-     */
-    private $ecoTax;
+    private ?DecimalNumber $ecoTax = null;
 
-    /**
-     * @var DecimalNumber|null
-     */
-    private $impactOnUnitPrice;
+    private ?DecimalNumber $impactOnUnitPrice = null;
 
-    /**
-     * @var DecimalNumber|null
-     */
-    private $wholesalePrice;
+    private ?DecimalNumber $wholesalePrice = null;
 
-    /**
-     * @var int|null
-     */
-    private $minimalQuantity;
+    private ?int $minimalQuantity = null;
 
-    /**
-     * @var LowStockThreshold|null
-     */
-    private $lowStockThreshold;
+    private ?LowStockThreshold $lowStockThreshold = null;
 
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $availableDate;
+    private ?DateTimeInterface $availableDate = null;
 
     /**
      * @var string[]|null key value pairs where key is the id of language
      */
-    private $localizedAvailableNowLabels;
+    private ?array $localizedAvailableNowLabels = null;
 
     /**
      * @var string[]|null key value pairs where key is the id of language
      */
-    private $localizedAvailableLaterLabels;
+    private ?array $localizedAvailableLaterLabels = null;
 
     /**
      * @throws ProductConstraintException

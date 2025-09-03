@@ -29,20 +29,14 @@ namespace PrestaShop\PrestaShop\Core\Product\Search;
 
 class ProductSearchResult
 {
-    /**
-     * @var array
-     */
-    private $products = [];
+    private array $products = [];
 
     /**
      * @var int
      */
     private $totalProductsCount;
 
-    /**
-     * @var FacetCollection|null
-     */
-    private $facetCollection;
+    private ?FacetCollection $facetCollection = null;
 
     /**
      * @var string
@@ -52,12 +46,9 @@ class ProductSearchResult
     /**
      * @var SortOrder[]
      */
-    private $availableSortOrders = [];
+    private array $availableSortOrders = [];
 
-    /**
-     * @var SortOrder
-     */
-    private $currentSortOrder;
+    private ?SortOrder $currentSortOrder = null;
 
     /**
      * @return $this
@@ -69,10 +60,7 @@ class ProductSearchResult
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getProducts()
+    public function getProducts(): array
     {
         return $this->products;
     }
@@ -107,10 +95,7 @@ class ProductSearchResult
         return $this;
     }
 
-    /**
-     * @return FacetCollection|null
-     */
-    public function getFacetCollection()
+    public function getFacetCollection(): ?FacetCollection
     {
         return $this->facetCollection;
     }
@@ -145,10 +130,7 @@ class ProductSearchResult
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getAvailableSortOrders()
+    public function getAvailableSortOrders(): array
     {
         return $this->availableSortOrders;
     }
@@ -177,7 +159,7 @@ class ProductSearchResult
         return $this;
     }
 
-    public function getCurrentSortOrder()
+    public function getCurrentSortOrder(): ?SortOrder
     {
         return $this->currentSortOrder;
     }

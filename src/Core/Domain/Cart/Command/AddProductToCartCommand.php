@@ -43,10 +43,7 @@ class AddProductToCartCommand
 
     private readonly int $quantity;
 
-    /**
-     * @var CombinationId|null
-     */
-    private $combinationId;
+    private ?CombinationId $combinationId = null;
 
     /**
      * @throws CartConstraintException

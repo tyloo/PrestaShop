@@ -39,10 +39,7 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
  */
 final class ChainedFiltersBuilder extends AbstractFiltersBuilder
 {
-    /**
-     * @var FiltersBuilderCollection
-     */
-    private $builders;
+    private readonly FiltersBuilderCollection $builders;
 
     /**
      * @param array $builders Array of FiltersBuilderInterface

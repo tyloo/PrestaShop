@@ -46,9 +46,9 @@ class ModuleCollection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * @var ModuleInterface[]
      */
-    private $modules = [];
+    private array $modules = [];
 
-    private $errors = [];
+    private array $errors = [];
 
     public function __construct(array $modules = [])
     {

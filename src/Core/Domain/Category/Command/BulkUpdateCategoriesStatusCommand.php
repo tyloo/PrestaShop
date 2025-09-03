@@ -39,12 +39,9 @@ class BulkUpdateCategoriesStatusCommand
     /**
      * @var CategoryId[]
      */
-    private $categoryIds;
+    private ?array $categoryIds = null;
 
-    /**
-     * @var bool
-     */
-    private $newStatus;
+    private bool $newStatus;
 
     /**
      * @param int[] $categoryIds
@@ -64,15 +61,12 @@ class BulkUpdateCategoriesStatusCommand
     /**
      * @return CategoryId[]
      */
-    public function getCategoryIds()
+    public function getCategoryIds(): ?array
     {
         return $this->categoryIds;
     }
 
-    /**
-     * @return bool
-     */
-    public function getNewStatus()
+    public function getNewStatus(): bool
     {
         return $this->newStatus;
     }

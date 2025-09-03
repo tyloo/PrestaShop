@@ -37,17 +37,14 @@ use PrestaShop\PrestaShop\Core\MailTemplate\ThemeInterface;
  */
 class MailThemeChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $choices;
+    private ?array $choices = null;
 
     public function __construct(
         private readonly ThemeCatalogInterface $themeCatalog,
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         if ($this->choices === null) {
             $this->choices = [];

@@ -40,12 +40,9 @@ class BulkDeleteCategoriesCommand
     /**
      * @var CategoryId[]
      */
-    private $categoryIds;
+    private ?array $categoryIds = null;
 
-    /**
-     * @var CategoryDeleteMode
-     */
-    private $deleteMode;
+    private CategoryDeleteMode $deleteMode;
 
     /**
      * @param int[]  $categoryIds
@@ -65,15 +62,12 @@ class BulkDeleteCategoriesCommand
     /**
      * @return CategoryId[]
      */
-    public function getCategoryIds()
+    public function getCategoryIds(): ?array
     {
         return $this->categoryIds;
     }
 
-    /**
-     * @return CategoryDeleteMode
-     */
-    public function getDeleteMode()
+    public function getDeleteMode(): CategoryDeleteMode
     {
         return $this->deleteMode;
     }

@@ -37,7 +37,7 @@ class BulkDeleteOrderMessageCommand
     /**
      * @var OrderMessageId[]
      */
-    private $orderMessageIds;
+    private ?array $orderMessageIds = null;
 
     /**
      * @param int[] $orderMessageIds

@@ -48,70 +48,31 @@ class AddCartRuleCommand
      */
     private $localizedNames;
 
-    /**
-     * @var string
-     */
-    private $description = '';
+    private string $description = '';
 
-    /**
-     * @var string
-     */
-    private $code = '';
+    private string $code = '';
 
-    /**
-     * @var Money|null
-     */
-    private $minimumAmount;
+    private ?Money $minimumAmount = null;
 
-    /**
-     * @var bool|null
-     */
-    private $minimumAmountShippingIncluded;
+    private ?bool $minimumAmountShippingIncluded = null;
 
-    /**
-     * @var CustomerId|null
-     */
-    private $customerId;
+    private ?CustomerId $customerId = null;
 
-    /**
-     * @var bool
-     */
-    private $highlightInCart = false;
+    private bool $highlightInCart = false;
 
-    /**
-     * @var bool
-     */
-    private $allowPartialUse = true;
+    private bool $allowPartialUse = true;
 
-    /**
-     * @var int
-     */
-    private $priority = 1;
+    private int $priority = 1;
 
-    /**
-     * @var bool
-     */
-    private $active = true;
+    private bool $active = true;
 
-    /**
-     * @var DateTimeImmutable|null
-     */
-    private $validFrom;
+    private ?DateTimeImmutable $validFrom = null;
 
-    /**
-     * @var DateTimeImmutable|null
-     */
-    private $validTo;
+    private ?DateTimeImmutable $validTo = null;
 
-    /**
-     * @var int
-     */
-    private $totalQuantity = 1;
+    private int $totalQuantity = 1;
 
-    /**
-     * @var int
-     */
-    private $quantityPerUser = 1;
+    private int $quantityPerUser = 1;
 
     public function __construct(
         array $localizedNames,

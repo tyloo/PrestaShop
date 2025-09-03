@@ -48,10 +48,7 @@ class EditOrderReturnStateCommand
      */
     private $name;
 
-    /**
-     * @var string|null
-     */
-    private $color;
+    private ?string $color = null;
 
     /**
      * @param int $orderReturnStateId
@@ -86,10 +83,7 @@ class EditOrderReturnStateCommand
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getColor()
+    public function getColor(): ?string
     {
         return $this->color;
     }

@@ -38,10 +38,7 @@ final class ExecutedCommandRegistry
 {
     private const BACKTRACE_LIMIT = 15;
 
-    /**
-     * @var array
-     */
-    private $registry = [
+    private array $registry = [
         'commands' => [],
         'queries' => [],
     ];

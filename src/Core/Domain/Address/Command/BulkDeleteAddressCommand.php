@@ -38,7 +38,7 @@ class BulkDeleteAddressCommand
     /**
      * @var AddressId[]
      */
-    private $addressIds;
+    private ?array $addressIds = null;
 
     /**
      * @param int[] $addressIds
@@ -53,7 +53,7 @@ class BulkDeleteAddressCommand
     /**
      * @return AddressId[]
      */
-    public function getAdressIds()
+    public function getAdressIds(): ?array
     {
         return $this->addressIds;
     }

@@ -52,20 +52,11 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
      */
     private $totalNumberOfRows;
 
-    /**
-     * @var array
-     */
-    private $notices;
+    private ?array $notices = null;
 
-    /**
-     * @var array
-     */
-    private $warnings;
+    private ?array $warnings = null;
 
-    /**
-     * @var array
-     */
-    private $errors;
+    private ?array $errors = null;
 
     /**
      * @param bool $shouldValidateData

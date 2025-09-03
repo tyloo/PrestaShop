@@ -37,7 +37,7 @@ class BulkDisableCustomerCommand
     /**
      * @var CustomerId[]
      */
-    private $customerIds = [];
+    private array $customerIds = [];
 
     /**
      * @param int[] $customerIds
@@ -50,7 +50,7 @@ class BulkDisableCustomerCommand
     /**
      * @return CustomerId[]
      */
-    public function getCustomerIds()
+    public function getCustomerIds(): array
     {
         return $this->customerIds;
     }

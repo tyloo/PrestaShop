@@ -42,7 +42,7 @@ class ImageFormatConfiguration implements ImageFormatConfigurationInterface
 
     public const DEFAULT_IMAGE_FORMAT = 'jpg';
 
-    private $formatsToGenerate = [];
+    private array $formatsToGenerate = [];
 
     public function __construct(
         private readonly ConfigurationInterface $configuration,
@@ -52,7 +52,7 @@ class ImageFormatConfiguration implements ImageFormatConfigurationInterface
     public function getGenerationFormats(): array
     {
         // Return formats from cache
-        if (! empty($this->formatsToGenerate)) {
+        if ($this->formatsToGenerate !== []) {
             return $this->formatsToGenerate;
         }
 

@@ -54,7 +54,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
      * "When" steps perform actions, and some of them store the latest exception
      * in this variable so that "Then" action can check it
      */
-    private $latestException;
+    private ?Exception $latestException = null;
 
     /**
      * @When I add new CMS page :cmsPageReference with following properties:

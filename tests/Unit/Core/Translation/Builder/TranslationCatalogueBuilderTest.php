@@ -44,7 +44,7 @@ class TranslationCatalogueBuilderTest extends TestCase
 {
     private const LOCALE = 'fr-FR';
 
-    private static $defaultTranslations = [
+    private static array $defaultTranslations = [
         'AdminFirstDomain' => [
             'First Domain First Wording' => 'First Domain First Wording Default Translation',
             'First Domain Second Wording' => 'First Domain Second Wording Default Translation',
@@ -56,7 +56,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         'AdminThirdDomain' => [],
     ];
 
-    private static $fileTranslatedTranslations = [
+    private static array $fileTranslatedTranslations = [
         'AdminFirstDomain' => [
             'First Domain First Wording' => 'First Domain First Wording File Translation',
             'First Domain Second Wording' => 'First Domain Second Wording File Translation',
@@ -66,7 +66,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         ],
     ];
 
-    private static $userTranslatedTranslations = [
+    private static array $userTranslatedTranslations = [
         'AdminFirstDomain' => [
             'First Domain First Wording' => 'First Domain First Wording User Translation',
             'First Domain Second Wording' => 'First Domain Second Wording User Translation',

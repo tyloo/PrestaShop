@@ -42,10 +42,7 @@ final class CustomerThreadStatus
 
     public const PENDING_2 = 'pending2';
 
-    /**
-     * @var string
-     */
-    private $status;
+    private readonly string $status;
 
     /**
      * @param string $status
@@ -66,10 +63,7 @@ final class CustomerThreadStatus
         $this->status = $status;
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->status;
     }

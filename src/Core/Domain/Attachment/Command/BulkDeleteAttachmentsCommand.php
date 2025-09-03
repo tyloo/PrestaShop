@@ -37,7 +37,7 @@ class BulkDeleteAttachmentsCommand
     /**
      * @var AttachmentId[]
      */
-    private $attachmentIds;
+    private ?array $attachmentIds = null;
 
     /**
      * @param int[] $attachmentIds

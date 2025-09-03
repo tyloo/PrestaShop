@@ -39,35 +39,32 @@ class EditCmsPageCommand
 {
     private readonly CmsPageId $cmsPageId;
 
-    /**
-     * @var CmsPageCategoryId|null
-     */
-    private $cmsPageCategoryId;
+    private ?CmsPageCategoryId $cmsPageCategoryId = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedTitle;
+    private ?array $localizedTitle = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedMetaTitle;
+    private ?array $localizedMetaTitle = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedMetaDescription;
+    private ?array $localizedMetaDescription = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedFriendlyUrl;
+    private ?array $localizedFriendlyUrl = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedContent;
+    private ?array $localizedContent = null;
 
     /**
      * @var bool|null
@@ -79,10 +76,7 @@ class EditCmsPageCommand
      */
     private $isDisplayed;
 
-    /**
-     * @var array|null
-     */
-    private $shopAssociation;
+    private ?array $shopAssociation = null;
 
     /**
      * @param int $cmsPageId
@@ -99,10 +93,7 @@ class EditCmsPageCommand
         return $this->cmsPageId;
     }
 
-    /**
-     * @return CmsPageCategoryId|null
-     */
-    public function getCmsPageCategoryId()
+    public function getCmsPageCategoryId(): ?CmsPageCategoryId
     {
         return $this->cmsPageCategoryId;
     }
@@ -124,7 +115,7 @@ class EditCmsPageCommand
     /**
      * @return string[]|null
      */
-    public function getLocalizedTitle()
+    public function getLocalizedTitle(): ?array
     {
         return $this->localizedTitle;
     }
@@ -144,7 +135,7 @@ class EditCmsPageCommand
     /**
      * @return string[]|null
      */
-    public function getLocalizedMetaTitle()
+    public function getLocalizedMetaTitle(): ?array
     {
         return $this->localizedMetaTitle;
     }
@@ -164,7 +155,7 @@ class EditCmsPageCommand
     /**
      * @return string[]|null
      */
-    public function getLocalizedMetaDescription()
+    public function getLocalizedMetaDescription(): ?array
     {
         return $this->localizedMetaDescription;
     }
@@ -184,7 +175,7 @@ class EditCmsPageCommand
     /**
      * @return string[]|null
      */
-    public function getLocalizedFriendlyUrl()
+    public function getLocalizedFriendlyUrl(): ?array
     {
         return $this->localizedFriendlyUrl;
     }
@@ -204,7 +195,7 @@ class EditCmsPageCommand
     /**
      * @return string[]|null
      */
-    public function getLocalizedContent()
+    public function getLocalizedContent(): ?array
     {
         return $this->localizedContent;
     }
@@ -261,10 +252,7 @@ class EditCmsPageCommand
         return $this;
     }
 
-    /**
-     * @return array|null
-     */
-    public function getShopAssociation()
+    public function getShopAssociation(): ?array
     {
         return $this->shopAssociation;
     }

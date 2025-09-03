@@ -29,7 +29,7 @@ namespace Tests\Unit\Adapter\Presenter;
 
 class DummyLog
 {
-    private $pingCounter = 0;
+    private int $pingCounter = 0;
 
     public function ping(): void
     {

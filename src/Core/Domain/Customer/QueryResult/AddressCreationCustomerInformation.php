@@ -36,10 +36,7 @@ class AddressCreationCustomerInformation
 {
     private readonly CustomerId $customerId;
 
-    /**
-     * @var string|null
-     */
-    private $company;
+    private ?string $company = null;
 
     public function __construct(
         int $customerId,

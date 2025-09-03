@@ -44,7 +44,7 @@ class GroupedAttributeIds
     /**
      * @var AttributeId[]
      */
-    private $attributeIds = [];
+    private array $attributeIds = [];
 
     /**
      * @throws AttributeConstraintException

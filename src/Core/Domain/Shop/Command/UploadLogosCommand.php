@@ -39,30 +39,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class UploadLogosCommand
 {
-    /**
-     * @var UploadedFile|null
-     */
-    private $uploadedHeaderLogo;
+    private ?UploadedFile $uploadedHeaderLogo = null;
 
-    /**
-     * @var UploadedFile|null
-     */
-    private $uploadedInvoiceLogo;
+    private ?UploadedFile $uploadedInvoiceLogo = null;
 
-    /**
-     * @var UploadedFile|null
-     */
-    private $uploadedMailLogo;
+    private ?UploadedFile $uploadedMailLogo = null;
 
-    /**
-     * @var UploadedFile|null
-     */
-    private $uploadedFavicon;
+    private ?UploadedFile $uploadedFavicon = null;
 
-    /**
-     * @return UploadedFile|null
-     */
-    public function getUploadedHeaderLogo()
+    public function getUploadedHeaderLogo(): ?UploadedFile
     {
         return $this->uploadedHeaderLogo;
     }
@@ -79,10 +64,7 @@ class UploadLogosCommand
         $this->uploadedHeaderLogo = $uploadedHeaderLogo;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
-    public function getUploadedInvoiceLogo()
+    public function getUploadedInvoiceLogo(): ?UploadedFile
     {
         return $this->uploadedInvoiceLogo;
     }
@@ -99,10 +81,7 @@ class UploadLogosCommand
         $this->uploadedInvoiceLogo = $uploadedInvoiceLogo;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
-    public function getUploadedMailLogo()
+    public function getUploadedMailLogo(): ?UploadedFile
     {
         return $this->uploadedMailLogo;
     }
@@ -119,10 +98,7 @@ class UploadLogosCommand
         $this->uploadedMailLogo = $uploadedMailLogo;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
-    public function getUploadedFavicon()
+    public function getUploadedFavicon(): ?UploadedFile
     {
         return $this->uploadedFavicon;
     }

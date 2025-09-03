@@ -44,80 +44,41 @@ class EditCartRuleCommand
 {
     private readonly CartRuleId $cartRuleId;
 
-    /**
-     * @var string|null
-     */
-    private $description;
+    private ?string $description = null;
 
-    /**
-     * @var string|null
-     */
-    private $code;
+    private ?string $code = null;
 
-    /**
-     * @var Money|null
-     */
-    private $minimumAmount;
+    private ?Money $minimumAmount = null;
 
-    /**
-     * @var bool|null
-     */
-    private $minimumAmountShippingIncluded;
+    private ?bool $minimumAmountShippingIncluded = null;
 
     /**
      * @var CustomerIdInterface|null
      */
-    private $customerId;
+    private \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId|\PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\NoCustomerId|null $customerId = null;
 
     /**
      * @var array<int, string>|null
      */
-    private $localizedNames;
+    private ?array $localizedNames = null;
 
-    /**
-     * @var bool|null
-     */
-    private $highlightInCart;
+    private ?bool $highlightInCart = null;
 
-    /**
-     * @var bool|null
-     */
-    private $allowPartialUse;
+    private ?bool $allowPartialUse = null;
 
-    /**
-     * @var int|null
-     */
-    private $priority;
+    private ?int $priority = null;
 
-    /**
-     * @var bool|null
-     */
-    private $active;
+    private ?bool $active = null;
 
-    /**
-     * @var DateTimeImmutable|null
-     */
-    private $validFrom;
+    private ?DateTimeImmutable $validFrom = null;
 
-    /**
-     * @var DateTimeImmutable|null
-     */
-    private $validTo;
+    private ?DateTimeImmutable $validTo = null;
 
-    /**
-     * @var int|null
-     */
-    private $totalQuantity;
+    private ?int $totalQuantity = null;
 
-    /**
-     * @var int|null
-     */
-    private $quantityPerUser;
+    private ?int $quantityPerUser = null;
 
-    /**
-     * @var CartRuleAction|null
-     */
-    private $cartRuleAction;
+    private ?CartRuleAction $cartRuleAction = null;
 
     public function __construct(
         int $cartRuleId,

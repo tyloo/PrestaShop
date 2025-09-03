@@ -49,7 +49,7 @@ class SetSuppliersCommand
     /**
      * @var SupplierId[]
      */
-    private $supplierIds;
+    private array $supplierIds;
 
     public function __construct(int $productId, array $supplierIds)
     {

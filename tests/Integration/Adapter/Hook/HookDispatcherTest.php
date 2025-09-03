@@ -35,10 +35,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class HookDispatcherTest extends KernelTestCase
 {
-    /**
-     * @var bool
-     */
-    private $testedListenerCallbackCalled = false;
+    private bool $testedListenerCallbackCalled = false;
 
     private function getHookDispatcher(): HookDispatcher
     {

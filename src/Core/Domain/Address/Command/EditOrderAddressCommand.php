@@ -46,10 +46,7 @@ class EditOrderAddressCommand extends AbstractEditAddressCommand
 
     private readonly OrderId $orderId;
 
-    /**
-     * @var string
-     */
-    private $addressType;
+    private string $addressType;
 
     /**
      * @throws InvalidAddressTypeException
@@ -68,10 +65,7 @@ class EditOrderAddressCommand extends AbstractEditAddressCommand
         return $this->orderId;
     }
 
-    /**
-     * @return string
-     */
-    public function getAddressType()
+    public function getAddressType(): string
     {
         return $this->addressType;
     }
