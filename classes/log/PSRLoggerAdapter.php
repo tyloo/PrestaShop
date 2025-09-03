@@ -35,14 +35,9 @@ use Psr\Log\LogLevel;
  */
 class PSRLoggerAdapter implements LoggerInterface
 {
-    /**
-     * @var PrestaShopLoggerInterface
-     */
-    private $logger;
-
-    public function __construct(PrestaShopLoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    public function __construct(
+        private readonly PrestaShopLoggerInterface $logger,
+    ) {
     }
 
     public function emergency($message, array $context = []): void
@@ -87,25 +82,12 @@ class PSRLoggerAdapter implements LoggerInterface
 
     public function log($level, $message, array $context = []): void
     {
-        switch ($level) {
-            case LogLevel::EMERGENCY:
-            case LogLevel::CRITICAL:
-            case LogLevel::ALERT:
-            case LogLevel::ERROR:
-                $legacyLevel = PrestaShopLoggerInterface::ERROR;
-                break;
-            case LogLevel::WARNING:
-                $legacyLevel = PrestaShopLoggerInterface::WARNING;
-                break;
-            case LogLevel::NOTICE:
-            case LogLevel::INFO:
-                $legacyLevel = PrestaShopLoggerInterface::INFO;
-                break;
-            case LogLevel::DEBUG:
-            default:
-                $legacyLevel = PrestaShopLoggerInterface::DEBUG;
-                break;
-        }
+        $legacyLevel = match ($level) {
+            LogLevel::EMERGENCY, LogLevel::CRITICAL, LogLevel::ALERT, LogLevel::ERROR => PrestaShopLoggerInterface::ERROR,
+            LogLevel::WARNING => PrestaShopLoggerInterface::WARNING,
+            LogLevel::NOTICE, LogLevel::INFO => PrestaShopLoggerInterface::INFO,
+            default => PrestaShopLoggerInterface::DEBUG,
+        };
         $this->logger->log($message, $legacyLevel);
     }
 }

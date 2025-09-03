@@ -389,7 +389,7 @@ class StockAvailableCore extends ObjectModel
         );
 
         // And write it to the id_product = X, id_product_attribute = 0 entry
-        $this->setQuantity($this->id_product, 0, $total_quantity, $id_shop, false);
+        static::setQuantity($this->id_product, 0, $total_quantity, $id_shop, false);
 
         return true;
     }
@@ -415,7 +415,7 @@ class StockAvailableCore extends ObjectModel
             return false;
         }
 
-        $stockManager = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\Stock\\StockManager');
+        $stockManager = ServiceLocator::get(PrestaShop\PrestaShop\Core\Stock\StockManager::class);
         $stockManager->updateQuantity($product, $id_product_attribute, $delta_quantity, $id_shop, $add_movement, $params);
 
         return true;
@@ -444,7 +444,7 @@ class StockAvailableCore extends ObjectModel
         }
 
         // Try to set available quantity if product does not depend on physical stock
-        $stockManager = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\Stock\\StockManager');
+        $stockManager = ServiceLocator::get(PrestaShop\PrestaShop\Core\Stock\StockManager::class);
 
         $id_stock_available = (int) StockAvailable::getStockAvailableIdByProductId($id_product, $id_product_attribute, $id_shop);
         if ($id_stock_available) {

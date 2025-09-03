@@ -30,17 +30,15 @@
  */
 class TemplateFinderCore
 {
-    private $directories;
-    private $extension;
     private $productListEntities = ['category', 'manufacturer', 'supplier'];
     private $productListSearchEntities = ['search', 'price-drop', 'best-sale', 'prices-drop', 'best-sales', 'new-products'];
     private $productEntities = ['product'];
     private $brandListEntities = ['manufacturers', 'suppliers'];
 
-    public function __construct(array $directories, $extension)
-    {
-        $this->directories = $directories;
-        $this->extension = $extension;
+    public function __construct(
+        private readonly array $directories,
+        private $extension,
+    ) {
     }
 
     public function getTemplate($template, $entity, $id, $locale)
@@ -57,7 +55,7 @@ class TemplateFinderCore
                 if (is_file($dir . $tpl . $this->extension)) {
                     return $tpl . $this->extension;
                 }
-                if (is_file($dir . $tpl) && strpos($tpl, $this->extension) !== false) {
+                if (is_file($dir . $tpl) && str_contains((string) $tpl, (string) $this->extension)) {
                     return $tpl;
                 }
             }

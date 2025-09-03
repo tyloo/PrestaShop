@@ -104,8 +104,6 @@ class CookieCore
 
     protected $_salt;
 
-    protected $_standalone;
-
     /**
      * @var bool
      */
@@ -122,10 +120,15 @@ class CookieCore
      * @param string $name Cookie name before encrypting
      * @param string $path
      */
-    public function __construct($name, $path = '', $expire = null, $shared_urls = null, $standalone = false, $secure = false)
-    {
+    public function __construct(
+        $name,
+        $path = '',
+        $expire = null,
+        $shared_urls = null,
+        protected $_standalone = false,
+        $secure = false,
+    ) {
         $this->_content = [];
-        $this->_standalone = $standalone;
         $this->_expire = $expire === null ? time() + 1728000 : (int) $expire;
         $this->_path = trim(($this->_standalone ? '' : Context::getContext()->shop->physical_uri) . $path, '/\\') . '/';
         if ($this->_path[0] !== '/') {
@@ -221,7 +224,7 @@ class CookieCore
      */
     public function __get($key)
     {
-        return isset($this->_content[$key]) ? $this->_content[$key] : false;
+        return $this->_content[$key] ?? false;
     }
 
     /**
@@ -330,7 +333,7 @@ class CookieCore
             // printf("\$content = %s<br />", $content);
 
             /* Get cookie checksum */
-            $tmpTab = explode('¤', $content);
+            $tmpTab = explode('¤', (string) $content);
             // remove the checksum which is the last element
             array_pop($tmpTab);
             $content_for_checksum = implode('¤', $tmpTab) . '¤';
@@ -338,7 +341,7 @@ class CookieCore
             // printf("\$checksum = %s<br />", $checksum);
 
             /* Unserialize cookie content */
-            $tmpTab = explode('¤', $content);
+            $tmpTab = explode('¤', (string) $content);
             foreach ($tmpTab as $keyAndValue) {
                 $tmpTab2 = explode('|', $keyAndValue);
                 if (count($tmpTab2) === 2) {
@@ -399,7 +402,7 @@ class CookieCore
 
         return setcookie(
             $this->_name,
-            $content,
+            (string) $content,
             [
                 'expires' => $time,
                 'path' => $this->_path,
@@ -459,7 +462,7 @@ class CookieCore
             return $result;
         }
         foreach ($this->_content as $key => $value) {
-            if (strncmp($key, $origin, strlen($origin)) === 0) {
+            if (str_starts_with($key, (string) $origin)) {
                 $result[$key] = $value;
             }
         }

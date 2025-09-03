@@ -62,12 +62,12 @@ class PrestaShopExceptionCore extends Exception
             echo '<ul>';
             foreach ($this->getTrace() as $id => $trace) {
                 $relative_file = (isset($trace['file'])) ? ltrim(str_replace([_PS_ROOT_DIR_, '\\'], ['', '/'], $trace['file']), '/') : '';
-                $current_line = (isset($trace['line'])) ? $trace['line'] : '';
+                $current_line = $trace['line'] ?? '';
                 if (defined('_PS_ADMIN_DIR_')) {
-                    $relative_file = str_replace(basename(_PS_ADMIN_DIR_) . \DIRECTORY_SEPARATOR, 'admin' . \DIRECTORY_SEPARATOR, $relative_file);
+                    $relative_file = str_replace(basename((string) _PS_ADMIN_DIR_) . \DIRECTORY_SEPARATOR, 'admin' . \DIRECTORY_SEPARATOR, $relative_file);
                 }
                 echo '<li>';
-                echo '<b>' . ((isset($trace['class'])) ? $trace['class'] : '') . ((isset($trace['type'])) ? $trace['type'] : '') . $trace['function'] . '</b>';
+                echo '<b>' . ($trace['class'] ?? '') . ($trace['type'] ?? '') . $trace['function'] . '</b>';
                 echo ' - <a style="font-size: 12px; color: #000000; cursor:pointer; color: blue;" onclick="document.getElementById(\'psTrace_' . $id . '\').style.display = (document.getElementById(\'psTrace_' . $id . '\').style.display != \'block\') ? \'block\' : \'none\'; return false">[line ' . $current_line . ' - ' . $relative_file . ']</a>';
 
                 if (isset($trace['args']) && count($trace['args'])) {
@@ -121,7 +121,7 @@ class PrestaShopExceptionCore extends Exception
 
         echo '<div class="psTrace" id="psTrace_' . $id . '" ' . ($id === null ? 'style="display: block"' : '') . '><pre>';
         foreach ($lines as $k => $l) {
-            $string = ($offset + $k) . '. ' . htmlspecialchars($l);
+            $string = ($offset + $k) . '. ' . htmlspecialchars((string) $l);
             if ($offset + $k === $line) {
                 echo '<span class="selected">' . $string . '</span>';
             } else {
@@ -170,7 +170,7 @@ class PrestaShopExceptionCore extends Exception
                     $hiddenArgs[] = $args[$argIndex];
                 }
             }
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             // In worst case scenario there are some critical args we could't detect so we return an empty array
         }
 

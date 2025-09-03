@@ -216,9 +216,7 @@ class CustomerAddressFormCore extends AbstractForm
 
         $this->setValue('token', $this->persister->getToken());
         $formFields = array_map(
-            function (FormField $item) {
-                return $item->toArray();
-            },
+            fn (FormField $item) => $item->toArray(),
             $this->formFields
         );
 
@@ -231,7 +229,7 @@ class CustomerAddressFormCore extends AbstractForm
         }
 
         return [
-            'id_address' => (isset($this->address->id)) ? $this->address->id : 0,
+            'id_address' => $this->address->id ?? 0,
             'action' => $this->action,
             'errors' => $this->getErrors(),
             'formFields' => $formFields,

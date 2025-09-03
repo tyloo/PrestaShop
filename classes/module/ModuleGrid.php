@@ -183,7 +183,7 @@ abstract class ModuleGridCore extends Module
         $this->setLang(Context::getContext()->language->id);
         $this->getData();
 
-        $layers = isset($datas['layers']) ? $datas['layers'] : 1;
+        $layers = $datas['layers'] ?? 1;
 
         if (isset($datas['option'])) {
             $this->setOption($datas['option'], $layers);

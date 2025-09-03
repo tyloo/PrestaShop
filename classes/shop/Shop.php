@@ -413,7 +413,7 @@ class ShopCore extends ObjectModel
             $found_uri = '';
             $is_main_uri = false;
             $host = Tools::getHttpHost(false, false, true);
-            $request_uri = rawurldecode($_SERVER['REQUEST_URI']);
+            $request_uri = rawurldecode((string) $_SERVER['REQUEST_URI']);
 
             $result = self::findShopByHost($host);
 
@@ -426,7 +426,7 @@ class ShopCore extends ObjectModel
             $through = false;
             foreach ($result as $row) {
                 // An URL matching current shop was found
-                if (preg_match('#^' . preg_quote($row['uri'], '#') . '#i', $request_uri)) {
+                if (preg_match('#^' . preg_quote((string) $row['uri'], '#') . '#i', $request_uri)) {
                     $through = true;
                     $id_shop = $row['id_shop'];
                     $found_uri = $row['uri'];
@@ -442,7 +442,7 @@ class ShopCore extends ObjectModel
             if ($through && $id_shop && ! $is_main_uri) {
                 foreach ($result as $row) {
                     if ($row['id_shop'] === $id_shop && $row['main']) {
-                        $request_uri = substr($request_uri, strlen($found_uri));
+                        $request_uri = substr($request_uri, strlen((string) $found_uri));
                         $url = str_replace('//', '/', $row['domain'] . $row['uri'] . $request_uri);
                         $redirect_type = Configuration::get('PS_CANONICAL_REDIRECT');
                         $redirect_code = ($redirect_type === 1 ? '302' : '301');
@@ -508,7 +508,7 @@ class ShopCore extends ObjectModel
                     $url .= $default_shop->getBaseURI() . 'index.php?' . http_build_query($params);
                 } else {
                     // Catch url with subdomain "www"
-                    if (strpos($url, 'www.') === 0 && 'www.' . $_SERVER['HTTP_HOST'] === $url || $_SERVER['HTTP_HOST'] === 'www.' . $url) {
+                    if (str_starts_with($url, 'www.') && 'www.' . $_SERVER['HTTP_HOST'] === $url || $_SERVER['HTTP_HOST'] === 'www.' . $url) {
                         $url .= $_SERVER['REQUEST_URI'];
                     } else {
                         $url .= $default_shop->getBaseURI();
@@ -635,7 +635,7 @@ class ShopCore extends ObjectModel
      */
     public function getCategory()
     {
-        return (int) ($this->id_category ? $this->id_category : Configuration::get('PS_ROOT_CATEGORY'));
+        return (int) ($this->id_category ?: Configuration::get('PS_ROOT_CATEGORY'));
     }
 
     /**
@@ -864,7 +864,7 @@ class ShopCore extends ObjectModel
         $query->from('shop_url');
         $query->where('main = 1');
         $query->where('active = 1');
-        $query .= $this->addSqlRestriction(Shop::SHARE_ORDER);
+        $query .= static::addSqlRestriction(Shop::SHARE_ORDER);
         $domains = [];
         foreach (Db::getInstance()->executeS($query) as $row) {
             $domains[] = $row['domain'];
@@ -1207,8 +1207,8 @@ class ShopCore extends ObjectModel
     public static function addSqlAssociation($table, $alias, $inner_join = true, $on = null, $force_not_default = false)
     {
         $table_alias = $table . '_shop';
-        if (strpos($table, '.') !== false) {
-            list($table_alias, $table) = explode('.', $table);
+        if (str_contains($table, '.')) {
+            [$table_alias, $table] = explode('.', $table);
         }
 
         $asso_table = Shop::getAssoTable($table);
@@ -1365,7 +1365,7 @@ class ShopCore extends ObjectModel
         $modules_list = Hook::getHookModuleExecList('actionShopDataDuplication');
         if (is_array($modules_list) && count($modules_list) > 0) {
             foreach ($modules_list as $m) {
-                if (! $tables_import || isset($tables_import['Module' . ucfirst($m['module'])])) {
+                if (! $tables_import || isset($tables_import['Module' . ucfirst((string) $m['module'])])) {
                     // Hook called only for the module concerned
                     Hook::exec('actionShopDataDuplication', [
                         'old_id_shop' => (int) $old_id,

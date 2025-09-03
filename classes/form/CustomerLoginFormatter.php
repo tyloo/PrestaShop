@@ -28,11 +28,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CustomerLoginFormatterCore implements FormFormatterInterface
 {
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public function getFormat()

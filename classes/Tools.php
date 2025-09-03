@@ -103,7 +103,7 @@ class ToolsCore
     {
         try {
             return (new PasswordGenerator(new OpenSSL()))->generatePassword($length, $flag);
-        } catch (InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException) {
             return false;
         }
     }
@@ -143,17 +143,17 @@ class ToolsCore
         }
 
         if (! preg_match('@^https?://@i', $url) && $link) {
-            if (strpos($url, $base_uri) === 0) {
+            if (str_starts_with($url, $base_uri)) {
                 $url = substr($url, strlen($base_uri));
             }
-            if (strpos($url, 'index.php?controller=') === 0) {
+            if (str_starts_with($url, 'index.php?controller=')) {
                 $url = substr($url, strlen('index.php?controller='));
                 if (Configuration::get('PS_REWRITING_SETTINGS')) {
                     $url = Tools::strReplaceFirst('&', '?', $url);
                 }
             }
 
-            $explode = explode('?', $url);
+            $explode = explode('?', (string) $url);
             $url = $link->getPageLink($explode[0]);
             if (isset($explode[1])) {
                 $url .= '?' . $explode[1];
@@ -182,7 +182,7 @@ class ToolsCore
      *
      * @param string $url Desired URL
      */
-    public static function redirectAdmin($url)
+    public static function redirectAdmin($url): never
     {
         header('Location: ' . self::sanitizeAdminUrl($url));
         exit;
@@ -197,12 +197,12 @@ class ToolsCore
     {
         $link = Context::getContext()->link;
         if (! preg_match('@^https?://@i', $url) && $link) {
-            $baseUrl = rtrim($link->getAdminBaseLink(), '/');
+            $baseUrl = rtrim((string) $link->getAdminBaseLink(), '/');
 
             // Removes physical_uri from baseUrl to avoid duplicate admin path
             $physicalUri = Context::getContext()->shop->physical_uri;
-            if (str_starts_with($url, $physicalUri)) {
-                $url = substr($url, strlen($physicalUri));
+            if (str_starts_with($url, (string) $physicalUri)) {
+                $url = substr($url, strlen((string) $physicalUri));
             }
 
             if (! str_contains($url, basename(_PS_ADMIN_DIR_))) {
@@ -258,12 +258,12 @@ class ToolsCore
             $httpHost = $_SERVER['HTTP_HOST'];
         }
 
-        $host = (isset($_SERVER['HTTP_X_FORWARDED_HOST']) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : $httpHost);
-        if ($ignore_port && $pos = strpos($host, ':')) {
-            $host = substr($host, 0, $pos);
+        $host = ($_SERVER['HTTP_X_FORWARDED_HOST'] ?? $httpHost);
+        if ($ignore_port && $pos = strpos((string) $host, ':')) {
+            $host = substr((string) $host, 0, $pos);
         }
         if ($entities) {
-            $host = htmlspecialchars($host, \ENT_COMPAT, 'UTF-8');
+            $host = htmlspecialchars((string) $host, \ENT_COMPAT, 'UTF-8');
         }
         if ($http) {
             $host = static::getProtocol((bool) Configuration::get('PS_SSL_ENABLED')) . $host;
@@ -353,8 +353,8 @@ class ToolsCore
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] && (! isset($_SERVER['REMOTE_ADDR'])
             || preg_match('/^127\..*/i', trim($_SERVER['REMOTE_ADDR'])) || preg_match('/^172\.(1[6-9]|2\d|30|31)\..*/i', trim($_SERVER['REMOTE_ADDR']))
             || preg_match('/^192\.168\.*/i', trim($_SERVER['REMOTE_ADDR'])) || preg_match('/^10\..*/i', trim($_SERVER['REMOTE_ADDR'])))) {
-            if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',')) {
-                $ips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            if (strpos((string) $_SERVER['HTTP_X_FORWARDED_FOR'], ',')) {
+                $ips = explode(',', (string) $_SERVER['HTTP_X_FORWARDED_FOR']);
 
                 return $ips[0];
             }
@@ -486,7 +486,7 @@ class ToolsCore
         if (getenv('kernel.environment') === 'test' && self::$request instanceof Request) {
             $value = self::$request->request->get($key, self::$request->query->get($key, $default_value));
         } elseif (isset($_POST[$key]) || isset($_GET[$key])) {
-            $value = isset($_POST[$key]) ? $_POST[$key] : $_GET[$key];
+            $value = $_POST[$key] ?? $_GET[$key];
         } elseif (isset(static::$fallbackParameters[$key])) {
             $value = static::$fallbackParameters[$key];
         }
@@ -496,7 +496,7 @@ class ToolsCore
         }
 
         if (is_string($value)) {
-            return urldecode(preg_replace('/((\%5C0+)|(\%00+))/i', '', urlencode($value)));
+            return urldecode((string) preg_replace('/((\%5C0+)|(\%00+))/i', '', urlencode($value)));
         }
 
         return $value;
@@ -812,7 +812,7 @@ class ToolsCore
      */
     public static function dateFormat($params, &$smarty)
     {
-        return Tools::displayDate($params['date'], isset($params['full']) ? $params['full'] : false);
+        return Tools::displayDate($params['date'], $params['full'] ?? false);
     }
 
     /**
@@ -1058,7 +1058,7 @@ class ToolsCore
             $current_line = (isset($trace['line'])) ? ':' . $trace['line'] : '';
 
             echo '<li>
-                <b>' . ((isset($trace['class'])) ? $trace['class'] : '') . ((isset($trace['type'])) ? $trace['type'] : '') . $trace['function'] . '</b>
+                <b>' . ($trace['class'] ?? '') . ($trace['type'] ?? '') . $trace['function'] . '</b>
                 ' . $relative_file . $current_line . '
             </li>';
         }
@@ -1295,14 +1295,14 @@ class ToolsCore
         if (isset($html)) {
             /** @var bool $exact */
             /** @var bool $html */
-            if (Tools::strlen(preg_replace('/<.*?>/', '', $text)) <= $length) {
+            if (Tools::strlen(preg_replace('/<.*?>/', '', (string) $text)) <= $length) {
                 return $text;
             }
 
             $total_length = Tools::strlen(strip_tags($ellipsis ?? ''));
             $open_tags = [];
             $truncate = '';
-            preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $text, $tags, \PREG_SET_ORDER);
+            preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', (string) $text, $tags, \PREG_SET_ORDER);
 
             foreach ($tags as $tag) {
                 if (! preg_match('/img|br|input|hr|area|base|basefont|col|frame|isindex|link|meta|param/s', $tag[2])) {
@@ -1389,7 +1389,7 @@ class ToolsCore
         $truncate .= ($ellipsis ?? '');
 
         if (isset($html)) {
-            $open_tags = $open_tags ?? [];
+            $open_tags ??= [];
             foreach ($open_tags as $tag) {
                 $truncate .= '</' . $tag . '>';
             }
@@ -1400,7 +1400,7 @@ class ToolsCore
 
     public static function normalizeDirectory($directory)
     {
-        return rtrim($directory, '/\\') . \DIRECTORY_SEPARATOR;
+        return rtrim((string) $directory, '/\\') . \DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -1445,7 +1445,7 @@ class ToolsCore
 
     public static function dateFrom($date)
     {
-        $tab = explode(' ', $date);
+        $tab = explode(' ', (string) $date);
         if (! isset($tab[1])) {
             $date .= ' ' . Tools::hourGenerate(0, 0, 0);
         }
@@ -1455,7 +1455,7 @@ class ToolsCore
 
     public static function dateTo($date)
     {
-        $tab = explode(' ', $date);
+        $tab = explode(' ', (string) $date);
         if (! isset($tab[1])) {
             $date .= ' ' . Tools::hourGenerate(23, 59, 59);
         }
@@ -1469,7 +1469,7 @@ class ToolsCore
             return false;
         }
 
-        return mb_strtolower($str, 'UTF-8');
+        return mb_strtolower((string) $str, 'UTF-8');
     }
 
     public static function strlen($str, $encoding = 'UTF-8')
@@ -1478,7 +1478,7 @@ class ToolsCore
             return false;
         }
 
-        $str = html_entity_decode($str, \ENT_COMPAT, 'UTF-8');
+        $str = html_entity_decode((string) $str, \ENT_COMPAT, 'UTF-8');
 
         return mb_strlen($str, $encoding);
     }
@@ -1489,7 +1489,7 @@ class ToolsCore
             return false;
         }
 
-        return mb_strtoupper($str, 'utf-8');
+        return mb_strtoupper((string) $str, 'utf-8');
     }
 
     public static function substr($str, $start, $length = false, $encoding = 'UTF-8')
@@ -1498,17 +1498,17 @@ class ToolsCore
             return false;
         }
 
-        return mb_substr($str, (int) $start, $length === false ? null : (int) $length, $encoding);
+        return mb_substr((string) $str, (int) $start, $length === false ? null : (int) $length, $encoding);
     }
 
     public static function strpos($str, $find, $offset = 0, $encoding = 'UTF-8')
     {
-        return mb_strpos($str, $find, $offset, $encoding);
+        return mb_strpos((string) $str, (string) $find, $offset, $encoding);
     }
 
     public static function strrpos($str, $find, $offset = 0, $encoding = 'UTF-8')
     {
-        return mb_strrpos($str, $find, $offset, $encoding);
+        return mb_strrpos((string) $str, (string) $find, $offset, $encoding);
     }
 
     public static function ucfirst($str)
@@ -1518,7 +1518,7 @@ class ToolsCore
 
     public static function ucwords($str)
     {
-        return mb_convert_case($str, \MB_CASE_TITLE);
+        return mb_convert_case((string) $str, \MB_CASE_TITLE);
     }
 
     public static function orderbyPrice(&$array, $order_way)
@@ -1541,10 +1541,10 @@ class ToolsCore
     public static function iconv($from, $to, $string)
     {
         if (function_exists('iconv')) {
-            return iconv($from, $to . '//TRANSLIT', str_replace('¥', '&yen;', str_replace('£', '&pound;', str_replace('€', '&euro;', $string))));
+            return iconv((string) $from, $to . '//TRANSLIT', str_replace('¥', '&yen;', str_replace('£', '&pound;', str_replace('€', '&euro;', $string))));
         }
 
-        return html_entity_decode(htmlentities($string, \ENT_NOQUOTES, $from), \ENT_NOQUOTES, $to);
+        return html_entity_decode(htmlentities((string) $string, \ENT_NOQUOTES, $from), \ENT_NOQUOTES, $to);
     }
 
     public static function isEmpty($field)
@@ -1573,20 +1573,13 @@ class ToolsCore
             $round_mode = Tools::$round_mode;
         }
 
-        switch ($round_mode) {
-            case PS_ROUND_UP:
-                return Tools::ceilf($value, $precision);
-            case PS_ROUND_DOWN:
-                return Tools::floorf($value, $precision);
-            case PS_ROUND_HALF_DOWN:
-            case PS_ROUND_HALF_EVEN:
-            case PS_ROUND_HALF_ODD:
-            case PS_ROUND_HALF_UP:
-            default:
-                // PHP rounding mode is Prestashop rounding mode - 1, see config/defines.inc.php
-                /* @phpstan-ignore-next-line */
-                return round($value, $precision, $round_mode - 1);
-        }
+        return match ($round_mode) {
+            PS_ROUND_UP => Tools::ceilf($value, $precision),
+            PS_ROUND_DOWN => Tools::floorf($value, $precision),
+            // PHP rounding mode is Prestashop rounding mode - 1, see config/defines.inc.php
+            /* @phpstan-ignore-next-line */
+            default => round($value, $precision, $round_mode - 1),
+        };
     }
 
     /**
@@ -1656,7 +1649,7 @@ class ToolsCore
         $tmp = $value * $precision_factor;
         $tmp2 = (string) $tmp;
         // If the current value has already the desired precision
-        if (strpos($tmp2, '.') === false) {
+        if (! str_contains($tmp2, '.')) {
             return $value;
         }
         if ($tmp2[strlen($tmp2) - 1] === 0) {
@@ -1680,7 +1673,7 @@ class ToolsCore
         $tmp = $value * $precision_factor;
         $tmp2 = (string) $tmp;
         // If the current value has already the desired precision
-        if (strpos($tmp2, '.') === false) {
+        if (! str_contains($tmp2, '.')) {
             return $value;
         }
         if ($tmp2[strlen($tmp2) - 1] === 0) {
@@ -1742,7 +1735,7 @@ class ToolsCore
 
             if (
                 preg_match('/(.*-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----){50}$/Uims', $ca_cert_content)
-                && substr(rtrim($ca_cert_content), -1) === '-'
+                && str_ends_with(rtrim($ca_cert_content), '-')
             ) {
                 file_put_contents(_PS_CACHE_CA_CERT_FILE_, $ca_cert_content);
             }
@@ -1933,7 +1926,7 @@ class ToolsCore
 
     public static function copy($source, $destination, $stream_context = null)
     {
-        if ($stream_context === null && ! preg_match('/^https?:\/\//', $source)) {
+        if ($stream_context === null && ! preg_match('/^https?:\/\//', (string) $source)) {
             return @copy($source, $destination);
         }
 
@@ -1973,7 +1966,7 @@ class ToolsCore
      */
     public static function toUnderscoreCase($string)
     {
-        return Tools::strtolower(trim(preg_replace('/([A-Z][a-z])/', '_$1', $string), '_'));
+        return Tools::strtolower(trim((string) preg_replace('/([A-Z][a-z])/', '_$1', $string), '_'));
     }
 
     /**
@@ -1992,7 +1985,7 @@ class ToolsCore
 
     public static function parserSQL($sql)
     {
-        if (strlen($sql) > 0) {
+        if (strlen((string) $sql) > 0) {
             $parser = new PHPSQLParser($sql);
 
             return $parser->parsed;
@@ -2211,15 +2204,15 @@ class ToolsCore
                     if (! $rewrite_settings) {
                         fwrite($write_fd, $media_domains);
                         fwrite($write_fd, $domain_rewrite_cond);
-                        fwrite($write_fd, 'RewriteRule ^' . trim($uri['virtual'], '/') . '/?$ ' . $uri['physical'] . $uri['virtual'] . "index.php [L,R]\n");
+                        fwrite($write_fd, 'RewriteRule ^' . trim((string) $uri['virtual'], '/') . '/?$ ' . $uri['physical'] . $uri['virtual'] . "index.php [L,R]\n");
                     } else {
                         fwrite($write_fd, $media_domains);
                         fwrite($write_fd, $domain_rewrite_cond);
-                        fwrite($write_fd, 'RewriteRule ^' . trim($uri['virtual'], '/') . '$ ' . $uri['physical'] . $uri['virtual'] . " [L,R]\n");
+                        fwrite($write_fd, 'RewriteRule ^' . trim((string) $uri['virtual'], '/') . '$ ' . $uri['physical'] . $uri['virtual'] . " [L,R]\n");
                     }
                     fwrite($write_fd, $media_domains);
                     fwrite($write_fd, $domain_rewrite_cond);
-                    fwrite($write_fd, 'RewriteRule ^' . ltrim($uri['virtual'], '/') . '(.*) ' . $uri['physical'] . "$1 [L]\n\n");
+                    fwrite($write_fd, 'RewriteRule ^' . ltrim((string) $uri['virtual'], '/') . '(.*) ' . $uri['physical'] . "$1 [L]\n\n");
                 }
 
                 if ($rewrite_settings) {
@@ -2641,9 +2634,7 @@ exit;
             return [];
         }
 
-        $directoryList = array_map(function ($path) {
-            return substr($path, strrpos($path, '/') + 1);
-        }, $directoryList);
+        $directoryList = array_map(fn ($path) => substr((string) $path, strrpos((string) $path, '/') + 1), $directoryList);
 
         return $directoryList;
     }
@@ -2680,7 +2671,7 @@ exit;
     {
         $backtrace = debug_backtrace();
         $callee = next($backtrace);
-        $class = isset($callee['class']) ? $callee['class'] : null;
+        $class = $callee['class'] ?? null;
 
         if ($message === null) {
             $message = 'The function ' . $callee['function'] . ' (Line ' . $callee['line'] . ') is deprecated and will be removed in the next major version.';
@@ -2698,9 +2689,9 @@ exit;
     {
         $backtrace = debug_backtrace();
         $callee = next($backtrace);
-        $error = 'Parameter <b>' . $parameter . '</b> in function <b>' . (isset($callee['function']) ? $callee['function'] : '') . '()</b> is deprecated in <b>' . $callee['file'] . '</b> on line <b>' . (isset($callee['line']) ? $callee['line'] : '(undefined)') . '</b><br />';
-        $message = 'The parameter ' . $parameter . ' in function ' . $callee['function'] . ' (Line ' . (isset($callee['line']) ? $callee['line'] : 'undefined') . ') is deprecated and will be removed in the next major version.';
-        $class = isset($callee['class']) ? $callee['class'] : null;
+        $error = 'Parameter <b>' . $parameter . '</b> in function <b>' . ($callee['function'] ?? '') . '()</b> is deprecated in <b>' . $callee['file'] . '</b> on line <b>' . ($callee['line'] ?? '(undefined)') . '</b><br />';
+        $message = 'The parameter ' . $parameter . ' in function ' . $callee['function'] . ' (Line ' . ($callee['line'] ?? 'undefined') . ') is deprecated and will be removed in the next major version.';
+        $class = $callee['class'] ?? null;
 
         Tools::throwDeprecated($error, $message, $class);
     }
@@ -2711,7 +2702,7 @@ exit;
         $callee = current($backtrace);
         $error = 'File <b>' . $callee['file'] . '</b> is deprecated<br />';
         $message = 'The file ' . $callee['file'] . ' is deprecated and will be removed in the next major version.';
-        $class = isset($callee['class']) ? $callee['class'] : null;
+        $class = $callee['class'] ?? null;
 
         Tools::throwDeprecated($error, $message, $class);
     }
@@ -2778,13 +2769,13 @@ exit;
     {
         $pos = false;
         if ($needle) {
-            $pos = strpos($haystack, $needle);
+            $pos = strpos((string) $haystack, (string) $needle);
         }
         if ($pos === false) {
             return $haystack;
         }
 
-        return substr_replace($haystack, $replace, $pos, strlen($needle));
+        return substr_replace($haystack, $replace, $pos, strlen((string) $needle));
     }
 
     /**
@@ -2801,7 +2792,7 @@ exit;
         }
 
         // Specific ubuntu usecase: php version returns 5.2.4-2ubuntu5.2
-        if (strpos($version, '-') !== false) {
+        if (str_contains($version, '-')) {
             $version = substr($version, 0, strpos($version, '-'));
         }
 
@@ -2893,7 +2884,7 @@ exit;
             case 'by':
                 $list = [0 => 'name', 1 => 'price', 2 => 'date_add', 3 => 'date_upd', 4 => 'position', 5 => 'manufacturer_name', 6 => 'quantity', 7 => 'reference', 8 => 'sales'];
                 $value = ($value === null || $value === false || $value === '') ? (int) Configuration::get('PS_PRODUCTS_ORDER_BY') : $value;
-                $value = (isset($list[$value])) ? $list[$value] : ((in_array($value, $list, true)) ? $value : 'position');
+                $value = $list[$value] ?? (in_array($value, $list, true)) ? $value : 'position';
                 $order_by_prefix = '';
                 if ($prefix) {
                     if ($value === 'id_product' || $value === 'date_add' || $value === 'date_upd' || $value === 'price') {
@@ -2914,7 +2905,7 @@ exit;
                 $value = ($value === null || $value === false || $value === '') ? (int) Configuration::get('PS_PRODUCTS_ORDER_WAY') : $value;
                 $list = [0 => 'asc', 1 => 'desc'];
 
-                return (isset($list[$value])) ? $list[$value] : ((in_array($value, $list, true)) ? $value : 'asc');
+                return $list[$value] ?? (in_array($value, $list, true)) ? $value : 'asc';
         }
 
         return '';
@@ -2935,20 +2926,12 @@ exit;
         $value_length = strlen($value);
         $qty = (int) substr($value, 0, $value_length - 1);
         $unit = Tools::strtolower(substr($value, $value_length - 1));
-        switch ($unit) {
-            case 'k':
-                $qty *= 1024;
-
-                break;
-            case 'm':
-                $qty *= 1048576;
-
-                break;
-            case 'g':
-                $qty *= 1073741824;
-
-                break;
-        }
+        match ($unit) {
+            'k' => $qty *= 1024,
+            'm' => $qty *= 1048576,
+            'g' => $qty *= 1073741824,
+            default => $qty,
+        };
 
         return $qty;
     }
@@ -2963,7 +2946,7 @@ exit;
      */
     public static function url($begin, $end)
     {
-        return $begin . ((strpos($begin, '?') !== false) ? '&' : '?') . $end;
+        return $begin . ((str_contains($begin, '?')) ? '&' : '?') . $end;
     }
 
     /**
@@ -3171,7 +3154,7 @@ exit;
         }
 
         // get the first argument and parse it like a query string
-        parse_str($argv[1], $args);
+        parse_str((string) $argv[1], $args);
         if (! is_array($args) || ! count($args)) {
             return;
         }
@@ -3225,7 +3208,7 @@ exit;
 
             // we need strpos (example, evasive can be evasive20)
             foreach ($apache_module_list as $module) {
-                if (strpos($module, $name) !== false) {
+                if (str_contains((string) $module, $name)) {
                     return true;
                 }
             }
@@ -3461,7 +3444,7 @@ exit;
     {
         $file_attachment = null;
         if (isset($_FILES[$input]['name']) && ! empty($_FILES[$input]['name']) && ! empty($_FILES[$input]['tmp_name'])) {
-            $file_attachment['rename'] = uniqid() . Tools::strtolower(substr($_FILES[$input]['name'], -5));
+            $file_attachment['rename'] = uniqid() . Tools::strtolower(substr((string) $_FILES[$input]['name'], -5));
             if ($return_content) {
                 $file_attachment['content'] = file_get_contents($_FILES[$input]['tmp_name']);
             }
@@ -3557,11 +3540,11 @@ exit;
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
         self::$_user_plateform = 'unknown';
 
-        if (preg_match('/linux/i', $user_agent)) {
+        if (preg_match('/linux/i', (string) $user_agent)) {
             self::$_user_plateform = 'Linux';
-        } elseif (preg_match('/macintosh|mac os x/i', $user_agent)) {
+        } elseif (preg_match('/macintosh|mac os x/i', (string) $user_agent)) {
             self::$_user_plateform = 'Mac';
-        } elseif (preg_match('/windows|win32/i', $user_agent)) {
+        } elseif (preg_match('/windows|win32/i', (string) $user_agent)) {
             self::$_user_plateform = 'Windows';
         }
 
@@ -3577,17 +3560,17 @@ exit;
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
         self::$_user_browser = 'unknown';
 
-        if (preg_match('/MSIE/i', $user_agent) && ! preg_match('/Opera/i', $user_agent)) {
+        if (preg_match('/MSIE/i', (string) $user_agent) && ! preg_match('/Opera/i', (string) $user_agent)) {
             self::$_user_browser = 'Internet Explorer';
-        } elseif (preg_match('/Firefox/i', $user_agent)) {
+        } elseif (preg_match('/Firefox/i', (string) $user_agent)) {
             self::$_user_browser = 'Mozilla Firefox';
-        } elseif (preg_match('/Chrome/i', $user_agent)) {
+        } elseif (preg_match('/Chrome/i', (string) $user_agent)) {
             self::$_user_browser = 'Google Chrome';
-        } elseif (preg_match('/Safari/i', $user_agent)) {
+        } elseif (preg_match('/Safari/i', (string) $user_agent)) {
             self::$_user_browser = 'Apple Safari';
-        } elseif (preg_match('/Opera/i', $user_agent)) {
+        } elseif (preg_match('/Opera/i', (string) $user_agent)) {
             self::$_user_browser = 'Opera';
-        } elseif (preg_match('/Netscape/i', $user_agent)) {
+        } elseif (preg_match('/Netscape/i', (string) $user_agent)) {
             self::$_user_browser = 'Netscape';
         }
 
@@ -3705,9 +3688,7 @@ exit;
             return;
         }
 
-        $sort_function = function ($a, $b) use ($column) {
-            return $b[$column] > $a[$column] ? 1 : -1;
-        };
+        $sort_function = (fn ($a, $b) => $b[$column] > $a[$column] ? 1 : -1);
 
         uasort($rows, $sort_function);
 
@@ -3776,7 +3757,7 @@ exit;
                     $index_link = Context::getContext()->link->getAdminLink('AdminCategories', true, $link_params);
                     $edit = '<a href="' . Tools::safeOutput($edit_link) . '" title="' . ($category['id_category'] === Category::getRootCategory()->id_category ? 'Home' : 'Modify') . '"><i class="icon-' . (($category['id_category'] === Category::getRootCategory()->id_category || $home) ? 'home' : 'pencil') . '"></i></a> ';
                     $full_path .= $edit .
-                        ($n < $n_categories ? '<a href="' . Tools::safeOutput($index_link) . '" title="' . htmlentities($category['name'], \ENT_NOQUOTES, 'UTF-8') . '">' : '') .
+                        ($n < $n_categories ? '<a href="' . Tools::safeOutput($index_link) . '" title="' . htmlentities((string) $category['name'], \ENT_NOQUOTES, 'UTF-8') . '">' : '') .
                         (! empty($highlight) ? str_ireplace($highlight, '<span class="highlight">' . htmlentities($highlight, \ENT_NOQUOTES, 'UTF-8') . '</span>', $category['name']) : $category['name']) .
                         ($n < $n_categories ? '</a>' : '') .
                         (($n++ !== $n_categories || ! empty($path)) ? ' > ' : '');
@@ -3867,7 +3848,7 @@ exit;
             return null;
         }
 
-        preg_match(static::LANGUAGE_EXTRACTOR_REGEXP, $_SERVER['HTTP_ACCEPT_LANGUAGE'], $languages);
+        preg_match(static::LANGUAGE_EXTRACTOR_REGEXP, (string) $_SERVER['HTTP_ACCEPT_LANGUAGE'], $languages);
 
         return $languages[0] ?? null;
     }
@@ -3908,12 +3889,12 @@ exit;
      */
     public static function updateCurrentQueryString(?array $extraParams = null): string
     {
-        $uriWithoutParams = explode('?', $_SERVER['REQUEST_URI'])[0];
+        $uriWithoutParams = explode('?', (string) $_SERVER['REQUEST_URI'])[0];
         $url = Tools::getCurrentUrlProtocolPrefix() . $_SERVER['HTTP_HOST'] . $uriWithoutParams;
         $params = [];
         $paramsFromUri = '';
-        if (strpos($_SERVER['REQUEST_URI'], '?') !== false) {
-            $paramsFromUri = explode('?', $_SERVER['REQUEST_URI'])[1];
+        if (str_contains((string) $_SERVER['REQUEST_URI'], '?')) {
+            $paramsFromUri = explode('?', (string) $_SERVER['REQUEST_URI'])[1];
         }
         parse_str($paramsFromUri, $params);
 

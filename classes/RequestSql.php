@@ -449,7 +449,7 @@ class RequestSqlCore extends ObjectModel
 
                 return false;
             }
-            if ($table['ref_type'] === 'ON' && (trim($table['join_type']) === 'LEFT' || trim($table['join_type']) === 'JOIN')) {
+            if ($table['ref_type'] === 'ON' && (trim((string) $table['join_type']) === 'LEFT' || trim((string) $table['join_type']) === 'JOIN')) {
                 $attrs = $this->cutJoin($table['ref_clause'], $from);
                 foreach ($attrs as $attr) {
                     if (! $this->attributExistInTable($attr['attribut'], $attr['table'])) {
@@ -478,9 +478,9 @@ class RequestSqlCore extends ObjectModel
         $nb = count($select);
         for ($i = 0; $i < $nb; ++$i) {
             $attribut = $select[$i];
-            if ($attribut['base_expr'] !== '*' && ! preg_match('/\.\*$/', $attribut['base_expr'])) {
+            if ($attribut['base_expr'] !== '*' && ! preg_match('/\.\*$/', (string) $attribut['base_expr'])) {
                 if ($attribut['expr_type'] === 'colref') {
-                    if ($attr = $this->cutAttribute(trim($attribut['base_expr']), $from)) {
+                    if ($attr = $this->cutAttribute(trim((string) $attribut['base_expr']), $from)) {
                         if (! $this->attributExistInTable($attr['attribut'], $attr['table'])) {
                             $this->error_sql['checkedSelect']['attribut'] = [$attr['attribut'], implode(', ', $attr['table'])];
 
@@ -499,7 +499,7 @@ class RequestSqlCore extends ObjectModel
                 }
 
                 while (is_array($attribut['sub_tree'])) {
-                    if ($attribut['expr_type'] === 'function' && in_array(strtoupper($attribut['base_expr']), $this->tested['unauthorized'], true)) {
+                    if ($attribut['expr_type'] === 'function' && in_array(strtoupper((string) $attribut['base_expr']), $this->tested['unauthorized'], true)) {
                         $this->error_sql['checkedSelect']['function'] = $attribut['base_expr'];
 
                         return false;
@@ -531,7 +531,7 @@ class RequestSqlCore extends ObjectModel
         for ($i = 0; $i < $nb; ++$i) {
             $attribut = $where[$i];
             if ($attribut['expr_type'] === 'colref') {
-                if ($attr = $this->cutAttribute(trim($attribut['base_expr']), $from)) {
+                if ($attr = $this->cutAttribute(trim((string) $attribut['base_expr']), $from)) {
                     if (! $this->attributExistInTable($attr['attribut'], $attr['table'])) {
                         $this->error_sql['checkedWhere']['attribut'] = [$attr['attribut'], implode(', ', $attr['table'])];
 
@@ -549,7 +549,7 @@ class RequestSqlCore extends ObjectModel
                     return false;
                 }
             } elseif ($attribut['expr_type'] === 'operator') {
-                if (! in_array(strtoupper($attribut['base_expr']), $this->tested['operator'], true)) {
+                if (! in_array(strtoupper((string) $attribut['base_expr']), $this->tested['operator'], true)) {
                     $this->error_sql['checkedWhere']['operator'] = [$attribut['base_expr']];
 
                     return false;
@@ -578,7 +578,7 @@ class RequestSqlCore extends ObjectModel
         for ($i = 0; $i < $nb; ++$i) {
             $attribut = $having[$i];
             if ($attribut['expr_type'] === 'colref') {
-                if ($attr = $this->cutAttribute(trim($attribut['base_expr']), $from)) {
+                if ($attr = $this->cutAttribute(trim((string) $attribut['base_expr']), $from)) {
                     if (! $this->attributExistInTable($attr['attribut'], $attr['table'])) {
                         $this->error_sql['checkedHaving']['attribut'] = [$attr['attribut'], implode(', ', $attr['table'])];
 
@@ -597,7 +597,7 @@ class RequestSqlCore extends ObjectModel
             }
 
             if ($attribut['expr_type'] === 'operator') {
-                if (! in_array(strtoupper($attribut['base_expr']), $this->tested['operator'], true)) {
+                if (! in_array(strtoupper((string) $attribut['base_expr']), $this->tested['operator'], true)) {
                     $this->error_sql['checkedHaving']['operator'] = [$attribut['base_expr']];
 
                     return false;
@@ -620,7 +620,7 @@ class RequestSqlCore extends ObjectModel
     {
         $order = $order[0];
         if (array_key_exists('expression', $order) && $order['type'] === 'expression') {
-            if ($attr = $this->cutAttribute(trim($order['base_expr']), $from)) {
+            if ($attr = $this->cutAttribute(trim((string) $order['base_expr']), $from)) {
                 if (! $this->attributExistInTable($attr['attribut'], $attr['table'])) {
                     $this->error_sql['checkedOrder']['attribut'] = [$attr['attribut'], implode(', ', $attr['table'])];
 
@@ -653,7 +653,7 @@ class RequestSqlCore extends ObjectModel
     {
         $group = $group[0];
         if ($group['expr_type'] === 'colref') {
-            if ($attr = $this->cutAttribute(trim($group['base_expr']), $from)) {
+            if ($attr = $this->cutAttribute(trim((string) $group['base_expr']), $from)) {
                 if (! $this->attributExistInTable($attr['attribut'], $attr['table'])) {
                     $this->error_sql['checkedGroupBy']['attribut'] = [$attr['attribut'], implode(', ', $attr['table'])];
 
@@ -683,7 +683,7 @@ class RequestSqlCore extends ObjectModel
      */
     public function checkedLimit($limit)
     {
-        if (! preg_match('#^[0-9]+$#', trim($limit['offset'])) || ! preg_match('#^[0-9]+$#', trim($limit['rowcount']))) {
+        if (! preg_match('#^[0-9]+$#', trim((string) $limit['offset'])) || ! preg_match('#^[0-9]+$#', trim((string) $limit['rowcount']))) {
             $this->error_sql['checkedLimit'] = false;
 
             return false;

@@ -26,11 +26,9 @@
  */
 abstract class ModuleGraphEngineCore extends Module
 {
-    protected $_type;
-
-    public function __construct($type)
-    {
-        $this->_type = $type;
+    public function __construct(
+        protected $_type,
+    ) {
     }
 
     public function install()

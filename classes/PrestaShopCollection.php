@@ -35,16 +35,6 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
     public const LEFT_OUTER_JOIN = 3;
 
     /**
-     * @var string Object class name
-     */
-    protected $classname;
-
-    /**
-     * @var int
-     */
-    protected $id_lang;
-
-    /**
      * @var array Object definition
      */
     protected $definition = [];
@@ -96,11 +86,10 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
      * @param string $classname
      * @param int    $id_lang
      */
-    public function __construct($classname, $id_lang = null)
-    {
-        $this->classname = $classname;
-        $this->id_lang = $id_lang;
-
+    public function __construct(
+        protected $classname,
+        protected $id_lang = null,
+    ) {
         $this->definition = ObjectModel::getDefinition($this->classname);
         if (! isset($this->definition['table'])) {
             throw new PrestaShopException('Miss table in definition for class ' . $this->classname);
@@ -166,52 +155,19 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
 
         // Create WHERE clause with an array value (IN, NOT IN)
         if (is_array($value)) {
-            switch (strtolower($operator)) {
-                case '=':
-                case 'in':
-                    $this->query->{$method}($this->parseField($field) . ' IN(' . implode(', ', $this->formatValue($value, $field)) . ')');
-
-                    break;
-
-                case '!=':
-                case '<>':
-                case 'notin':
-                    $this->query->{$method}($this->parseField($field) . ' NOT IN(' . implode(', ', $this->formatValue($value, $field)) . ')');
-
-                    break;
-
-                default:
-                    throw new PrestaShopException('Operator not supported for array value');
-            }
+            match (strtolower($operator)) {
+                '=', 'in' => $this->query->{$method}($this->parseField($field) . ' IN(' . implode(', ', $this->formatValue($value, $field)) . ')'),
+                '!=', '<>', 'notin' => $this->query->{$method}($this->parseField($field) . ' NOT IN(' . implode(', ', $this->formatValue($value, $field)) . ')'),
+                default => throw new PrestaShopException('Operator not supported for array value'),
+            };
         } else {
             // Create WHERE clause
-            switch (strtolower($operator)) {
-                case '=':
-                case '!=':
-                case '<>':
-                case '>':
-                case '>=':
-                case '<':
-                case '<=':
-                case 'like':
-                case 'regexp':
-                    $this->query->{$method}($this->parseField($field) . ' ' . $operator . ' ' . $this->formatValue($value, $field));
-
-                    break;
-
-                case 'notlike':
-                    $this->query->{$method}($this->parseField($field) . ' NOT LIKE ' . $this->formatValue($value, $field));
-
-                    break;
-
-                case 'notregexp':
-                    $this->query->{$method}($this->parseField($field) . ' NOT REGEXP ' . $this->formatValue($value, $field));
-
-                    break;
-
-                default:
-                    throw new PrestaShopException('Operator not supported');
-            }
+            match (strtolower($operator)) {
+                '=', '!=', '<>', '>', '>=', '<', '<=', 'like', 'regexp' => $this->query->{$method}($this->parseField($field) . ' ' . $operator . ' ' . $this->formatValue($value, $field)),
+                'notlike' => $this->query->{$method}($this->parseField($field) . ' NOT LIKE ' . $this->formatValue($value, $field)),
+                'notregexp' => $this->query->{$method}($this->parseField($field) . ' NOT REGEXP ' . $this->formatValue($value, $field)),
+                default => throw new PrestaShopException('Operator not supported'),
+            };
         }
 
         return $this;
@@ -451,7 +407,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
     #[ReturnTypeWillChange]
     public function current()
     {
-        return isset($this->results[$this->iterator]) ? $this->results[$this->iterator] : null;
+        return $this->results[$this->iterator] ?? null;
     }
 
     /**
@@ -595,7 +551,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
                     break;
                 }
 
-                $classname = (isset($current_def['object'])) ? $current_def['object'] : Tools::toCamelCase($asso, true);
+                $classname = $current_def['object'] ?? Tools::toCamelCase($asso, true);
                 $definition = ObjectModel::getDefinition($classname);
             }
 

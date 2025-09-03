@@ -792,10 +792,10 @@ class CartRuleCore extends ObjectModel
             if (! $this->quantity) {
                 return (! $display_error) ? false : $this->trans('This voucher has already been used', [], 'Shop.Notifications.Error');
             }
-            if (strtotime($this->date_from) > time()) {
+            if (strtotime((string) $this->date_from) > time()) {
                 return (! $display_error) ? false : $this->trans('This voucher is not valid yet', [], 'Shop.Notifications.Error');
             }
-            if (strtotime($this->date_to) < time()) {
+            if (strtotime((string) $this->date_to) < time()) {
                 return (! $display_error) ? false : $this->trans('This voucher has expired', [], 'Shop.Notifications.Error');
             }
         }
@@ -1475,7 +1475,7 @@ class CartRuleCore extends ObjectModel
                     }
                 }
                 // set base price on which percentage reduction will be applied
-                $basePriceForPercentReduction = $basePriceForPercentReduction ?? $order_total;
+                $basePriceForPercentReduction ??= $order_total;
                 $reduction_value += $basePriceForPercentReduction * $this->reduction_percent / 100;
             }
 
@@ -2089,7 +2089,7 @@ class CartRuleCore extends ObjectModel
         // Attribute id is not important for this filter in the global list
         // so the ids are replaced by 0
         if (in_array($ruleType, ['products', 'categories', 'manufacturers', 'suppliers'], true)) {
-            $productsList = explode(':', preg_replace("#\-[0-9]+#", '-0', implode(':', $products)));
+            $productsList = explode(':', (string) preg_replace("#\-[0-9]+#", '-0', implode(':', $products)));
         } else {
             $productsList = $products;
         }

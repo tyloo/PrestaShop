@@ -146,7 +146,7 @@ class ConfigurationTestCore
     public static function test_apache_mod_rewrite()
     {
         if (isset($_SERVER['SERVER_SOFTWARE'])
-            && strpos(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache') === false || ! function_exists('apache_get_modules')) {
+            && ! str_contains(strtolower((string) $_SERVER['SERVER_SOFTWARE']), 'apache') || ! function_exists('apache_get_modules')) {
             return true;
         }
 
@@ -248,7 +248,7 @@ class ConfigurationTestCore
 
     public static function test_dir($relative_dir, $recursive = false, &$full_report = null)
     {
-        $dir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim($relative_dir, '\\/');
+        $dir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim((string) $relative_dir, '\\/');
         if (! file_exists($dir) || ! $dh = @opendir($dir)) {
             $full_report = sprintf('Directory %s does not exist or is not writable', $dir); // sprintf for future translation
 
@@ -357,7 +357,7 @@ class ConfigurationTestCore
 
     public static function test_theme_lang_dir($dir)
     {
-        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim($dir, '\\/');
+        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim((string) $dir, '\\/');
         if (! file_exists($absoluteDir)) {
             return true;
         }
@@ -367,7 +367,7 @@ class ConfigurationTestCore
 
     public static function test_theme_pdf_lang_dir($dir)
     {
-        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim($dir, '\\/');
+        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim((string) $dir, '\\/');
         if (! file_exists($absoluteDir)) {
             return true;
         }
@@ -377,7 +377,7 @@ class ConfigurationTestCore
 
     public static function test_theme_cache_dir($dir)
     {
-        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim($dir, '\\/');
+        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim((string) $dir, '\\/');
         if (! file_exists($absoluteDir)) {
             return true;
         }

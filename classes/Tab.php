@@ -209,7 +209,7 @@ class TabCore extends ObjectModel
         }
 
         /* Right management */
-        $slug = Permission::PREFIX_TAB . strtoupper(self::getClassNameById($idTab));
+        $slug = Permission::PREFIX_TAB . strtoupper((string) self::getClassNameById($idTab));
 
         foreach (['CREATE', 'READ', 'UPDATE', 'DELETE'] as $action) {
             /*
@@ -352,7 +352,7 @@ class TabCore extends ObjectModel
 
         if (is_array($result)) {
             foreach ($result as $detail) {
-                $list[strtolower($detail['class_name'])] = $detail;
+                $list[strtolower((string) $detail['class_name'])] = $detail;
             }
         }
 
@@ -397,7 +397,7 @@ class TabCore extends ObjectModel
             return $arrayAll;
         }
 
-        return isset(self::$_cache_tabs[$idLang][$idParent]) ? self::$_cache_tabs[$idLang][$idParent] : [];
+        return self::$_cache_tabs[$idLang][$idParent] ?? [];
     }
 
     /**
@@ -418,7 +418,7 @@ class TabCore extends ObjectModel
 
             if (is_array($result)) {
                 foreach ($result as $row) {
-                    self::$_getIdFromClassName[strtolower($row['class_name'])] = $row['id_tab'];
+                    self::$_getIdFromClassName[strtolower((string) $row['class_name'])] = $row['id_tab'];
                 }
             }
         }

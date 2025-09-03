@@ -38,7 +38,7 @@ abstract class TaxManagerModuleCore extends Module
         $class_file = _PS_MODULE_DIR_ . '/' . $this->name . '/' . $this->tax_manager_class . '.php';
 
         if (! isset($this->tax_manager_class) || ! file_exists($class_file)) {
-            exit($this->trans('Incorrect Tax Manager class [%s]', [htmlspecialchars($this->tax_manager_class)], 'Admin.International.Notification'));
+            exit($this->trans('Incorrect Tax Manager class [%s]', [htmlspecialchars((string) $this->tax_manager_class)], 'Admin.International.Notification'));
         }
 
         require_once $class_file;

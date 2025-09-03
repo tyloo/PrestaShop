@@ -128,7 +128,7 @@ class CMSCategoryCore extends ObjectModel
             }
         }
         $ret = parent::add($autodate, $null_values);
-        $this->cleanPositions($this->id_parent);
+        static::cleanPositions($this->id_parent);
 
         return $ret;
     }
@@ -244,7 +244,7 @@ class CMSCategoryCore extends ObjectModel
     {
         $html = '<option value="' . $id_cms_category . '"' . (($id_selected === $id_cms_category) ? ' selected="selected"' : '') . '>'
             . str_repeat('&nbsp;', $current['infos']['level_depth'] * 5)
-            . CMSCategory::hideCMSCategoryPosition(stripslashes($current['infos']['name'])) . '</option>';
+            . CMSCategory::hideCMSCategoryPosition(stripslashes((string) $current['infos']['name'])) . '</option>';
         if ($is_html === 0) {
             echo $html;
         }
@@ -564,7 +564,7 @@ class CMSCategoryCore extends ObjectModel
             }
         }
 
-        return isset($this->name[$id_lang]) ? $this->name[$id_lang] : '';
+        return $this->name[$id_lang] ?? '';
     }
 
     /**

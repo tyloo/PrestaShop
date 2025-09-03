@@ -140,12 +140,10 @@ class CheckoutProcessCore implements RenderableInterface
         );
 
         $params = [
-            'steps' => array_map(function (CheckoutStepInterface $step) {
-                return [
-                    'identifier' => $step->getIdentifier(),
-                    'ui' => new RenderableProxy($step),
-                ];
-            }, $this->getSteps()),
+            'steps' => array_map(fn (CheckoutStepInterface $step) => [
+                'identifier' => $step->getIdentifier(),
+                'ui' => new RenderableProxy($step),
+            ], $this->getSteps()),
         ];
 
         $scope->assign(array_merge($extraParams, $params));

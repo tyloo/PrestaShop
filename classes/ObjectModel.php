@@ -239,7 +239,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 
         if ($id) {
             /** @var PrestaShop\PrestaShop\Adapter\EntityMapper $entity_mapper */
-            $entity_mapper = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\EntityMapper');
+            $entity_mapper = ServiceLocator::get(PrestaShop\PrestaShop\Adapter\EntityMapper::class);
             $entity_mapper->load($id, $this->id_lang, $this, $this->def, $this->id_shop, self::$cache_objects);
         }
     }
@@ -1077,7 +1077,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             if (! in_array('required', $skip, true) && (! empty($data['required']) || in_array($field, $required_fields, true))) {
                 if (Tools::isEmpty($value)) {
                     if ($human_errors) {
-                        return $this->trans('The %s field is required.', [htmlspecialchars($this->displayFieldName($field, static::class))], 'Admin.Notifications.Error');
+                        return $this->trans('The %s field is required.', [htmlspecialchars(static::displayFieldName($field, static::class))], 'Admin.Notifications.Error');
                     }
 
                     return $this->trans('Property %s is empty.', [static::class . '->' . htmlspecialchars($field)], 'Admin.Notifications.Error');
@@ -1110,10 +1110,10 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                     if (isset($data['lang']) && $data['lang']) {
                         $language = new Language((int) $id_lang);
 
-                        return $this->trans('Your entry in field %1$s (language %2$s) exceeds max length %3$d chars (incl. html tags).', [$this->displayFieldName($field, static::class), $language->name, $size['max']], 'Admin.Notifications.Error');
+                        return $this->trans('Your entry in field %1$s (language %2$s) exceeds max length %3$d chars (incl. html tags).', [static::displayFieldName($field, static::class), $language->name, $size['max']], 'Admin.Notifications.Error');
                     }
 
-                    return $this->trans('The %1$s field is too long (%2$d chars max).', [$this->displayFieldName($field, static::class), $size['max']], 'Admin.Notifications.Error');
+                    return $this->trans('The %1$s field is too long (%2$d chars max).', [static::displayFieldName($field, static::class), $size['max']], 'Admin.Notifications.Error');
                 }
 
                 return $this->trans(
@@ -1137,7 +1137,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                     'The range of property %1$s is currently %2$d. It must be between %3$d and %4$d.',
                     [
                         static::class . '->' . htmlspecialchars($field),
-                        htmlspecialchars($value),
+                        htmlspecialchars((string) $value),
                         $range['min'],
                         $range['max'],
                     ],
@@ -1158,7 +1158,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                 $res = $this->callValidateMethod($data['validate'], $value, isset($id_lang) ? (int) $id_lang : null);
                 if (! $res) {
                     if ($human_errors) {
-                        return $this->trans('The %s field is invalid.', [$this->displayFieldName($field, static::class)], 'Admin.Notifications.Error');
+                        return $this->trans('The %s field is invalid.', [static::displayFieldName($field, static::class)], 'Admin.Notifications.Error');
                     }
 
                     return $this->trans('Property %s is not valid', [static::class . '->' . htmlspecialchars($field)], 'Admin.Notifications.Error');
@@ -1204,7 +1204,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
      *
      * @return string
      */
-    public static function displayFieldName($field, $class = __CLASS__, $htmlentities = true, ?Context $context = null)
+    public static function displayFieldName($field, $class = self::class, $htmlentities = true, ?Context $context = null)
     {
         if (! isset($context)) {
             $context = Context::getContext();
@@ -1222,7 +1222,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             $translated = $field;
         }
 
-        return $htmlentities ? htmlentities($translated, \ENT_QUOTES, 'utf-8') : $translated;
+        return $htmlentities ? htmlentities((string) $translated, \ENT_QUOTES, 'utf-8') : $translated;
     }
 
     /**
@@ -1277,7 +1277,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                     }
                     if ($field === 'passwd') {
                         /** @var PrestaShop\PrestaShop\Core\Crypto\Hashing $crypto */
-                        $crypto = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\Crypto\\Hashing');
+                        $crypto = ServiceLocator::get(PrestaShop\PrestaShop\Core\Crypto\Hashing::class);
                         if ($value = Tools::getValue($field)) {
                             $this->{$field} = $crypto->hash($value, _COOKIE_KEY_);
                         }
@@ -1853,18 +1853,18 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 
             $types = ImageType::getImagesTypes();
             foreach ($types as $image_type) {
-                if (file_exists($this->image_dir . $this->id . '-' . stripslashes($image_type['name']) . '.' . $this->image_format)
-                && ! unlink($this->image_dir . $this->id . '-' . stripslashes($image_type['name']) . '.' . $this->image_format)) {
+                if (file_exists($this->image_dir . $this->id . '-' . stripslashes((string) $image_type['name']) . '.' . $this->image_format)
+                && ! unlink($this->image_dir . $this->id . '-' . stripslashes((string) $image_type['name']) . '.' . $this->image_format)) {
                     return false;
                 }
 
                 foreach (ImageFormatConfiguration::SUPPORTED_FORMATS as $imageFormat) {
-                    $file = $this->image_dir . $this->id . '-' . stripslashes($image_type['name']) . '.' . $imageFormat;
+                    $file = $this->image_dir . $this->id . '-' . stripslashes((string) $image_type['name']) . '.' . $imageFormat;
                     if (file_exists($file)) {
                         unlink($file);
                     }
 
-                    $file = $this->image_dir . $this->id . '-' . stripslashes($image_type['name']) . '2x.' . $imageFormat;
+                    $file = $this->image_dir . $this->id . '-' . stripslashes((string) $image_type['name']) . '2x.' . $imageFormat;
                     if (file_exists($file)) {
                         unlink($file);
                     }
@@ -2025,7 +2025,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
     public static function getDefinition($class, $field = null)
     {
         if (is_object($class)) {
-            $class = get_class($class);
+            $class = $class::class;
         }
 
         if ($field === null) {
@@ -2047,7 +2047,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             }
 
             if ($field) {
-                return isset($definition['fields'][$field]) ? $definition['fields'][$field] : null;
+                return $definition['fields'][$field] ?? null;
             }
 
             if (isset($cache_id)) {
@@ -2078,7 +2078,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             // Is field multilang?
             if (isset($field['lang']) && $field['lang']) {
                 if (is_array($this->{$field_name})) {
-                    return $this->{$field_name}[$id_lang ? $id_lang : Context::getContext()->language->id];
+                    return $this->{$field_name}[$id_lang ?: Context::getContext()->language->id];
                 }
             }
 

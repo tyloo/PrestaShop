@@ -43,7 +43,7 @@ class PaymentOptionsFinderCore extends HookFinder
         $this->hookName = 'displayPaymentEU';
         $rawDisplayPaymentEUOptions = parent::find();
         $paymentOptions = array_map(
-            ['PrestaShop\PrestaShop\Core\Payment\PaymentOption', 'convertLegacyOption'],
+            PaymentOption::convertLegacyOption(...),
             $rawDisplayPaymentEUOptions
         );
 
@@ -53,7 +53,7 @@ class PaymentOptionsFinderCore extends HookFinder
 
         // Payment options coming from regular Advanced API
         $this->hookName = 'paymentOptions';
-        $this->expectedInstanceClasses = ['PrestaShop\PrestaShop\Core\Payment\PaymentOption'];
+        $this->expectedInstanceClasses = [PaymentOption::class];
         $paymentOptions = array_merge($paymentOptions, parent::find());
 
         // Safety check

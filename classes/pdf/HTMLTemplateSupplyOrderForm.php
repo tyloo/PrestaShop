@@ -174,7 +174,7 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
         $width = $height = 0;
 
         if (! empty($path_logo)) {
-            list($width, $height) = getimagesize($path_logo);
+            [$width, $height] = getimagesize($path_logo);
         }
 
         $this->smarty->assign([

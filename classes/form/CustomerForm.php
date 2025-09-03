@@ -42,7 +42,6 @@ class CustomerFormCore extends AbstractForm
     protected $formatter;
 
     private $context;
-    private $urls;
 
     private $customerPersister;
     private $guest_allowed;
@@ -56,7 +55,7 @@ class CustomerFormCore extends AbstractForm
         TranslatorInterface $translator,
         CustomerFormatter $formatter,
         CustomerPersister $customerPersister,
-        array $urls,
+        private readonly array $urls,
     ) {
         parent::__construct(
             $smarty,
@@ -65,7 +64,6 @@ class CustomerFormCore extends AbstractForm
         );
 
         $this->context = $context;
-        $this->urls = $urls;
         $this->customerPersister = $customerPersister;
         $this->IDNConverter = new InternationalizedDomainNameConverter();
     }
@@ -208,7 +206,7 @@ class CustomerFormCore extends AbstractForm
     protected function validateFieldLength($fieldName, $maximumLength, $violationMessage)
     {
         $field = $this->getField($fieldName);
-        if (strlen($field->getValue()) > $maximumLength) {
+        if (strlen((string) $field->getValue()) > $maximumLength) {
             $field->addError($violationMessage);
         }
     }
@@ -273,9 +271,7 @@ class CustomerFormCore extends AbstractForm
             'errors' => $this->getErrors(),
             'hook_create_account_form' => Hook::exec('displayCustomerAccountForm'),
             'formFields' => array_map(
-                function (FormField $field) {
-                    return $field->toArray();
-                },
+                fn (FormField $field) => $field->toArray(),
                 $this->formFields
             ),
         ];

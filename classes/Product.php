@@ -1354,7 +1354,7 @@ class ProductCore extends ObjectModel
                 "\n\r",
                 "\r\n",
             ];
-            $str = $value ? str_replace($replaceArray, [''], strip_tags($value)) : '';
+            $str = $value ? str_replace($replaceArray, [''], strip_tags((string) $value)) : '';
             $size_without_html = iconv_strlen($str);
             $size_with_html = Tools::strlen($value);
             $adaptedLimit = $limit + $size_with_html - $size_without_html;
@@ -1511,7 +1511,7 @@ class ProductCore extends ObjectModel
         $new_categ_pos = [];
         // The first position must be 1 instead of 0
         foreach ($categories as $id_category) {
-            $new_categ_pos[$id_category] = isset($new_categories[$id_category]) ? $new_categories[$id_category] : 1;
+            $new_categ_pos[$id_category] = $new_categories[$id_category] ?? 1;
         }
 
         $product_cats = [];
@@ -3958,7 +3958,7 @@ class ProductCore extends ObjectModel
             FROM `' . _DB_PREFIX_ . 'cart_product`
             WHERE `id_product` = ' . (int) $id_product . ' AND `id_cart` = ' . (int) $context->cart->id
         );
-        $quantity = $cart_quantity ? $cart_quantity : $quantity;
+        $quantity = $cart_quantity ?: $quantity;
 
         $id_currency = (int) $context->currency->id;
         $ids = Address::getCountryAndState((int) $context->cart->{Configuration::get('PS_TAX_ADDRESS_TYPE')});
@@ -4254,10 +4254,10 @@ class ProductCore extends ObjectModel
      */
     public function checkQty($qty)
     {
-        if ($this->isAvailableWhenOutOfStock(StockAvailable::outOfStock($this->id))) {
+        if (static::isAvailableWhenOutOfStock(StockAvailable::outOfStock($this->id))) {
             return true;
         }
-        $id_product_attribute = isset($this->id_product_attribute) ? $this->id_product_attribute : null;
+        $id_product_attribute = $this->id_product_attribute ?? null;
         $availableQuantity = StockAvailable::getQuantityAvailableByProduct($this->id, $id_product_attribute);
 
         return $qty <= $availableQuantity;
@@ -5607,7 +5607,7 @@ class ProductCore extends ObjectModel
         $row['quantity'] = Product::getQuantity(
             (int) $row['id_product'],
             0,
-            isset($row['cache_is_pack']) ? $row['cache_is_pack'] : null,
+            $row['cache_is_pack'] ?? null,
             $context->cart,
             false
         );
@@ -5619,7 +5619,7 @@ class ProductCore extends ObjectModel
             $row['quantity'] = Product::getQuantity(
                 (int) $row['id_product'],
                 $id_product_attribute,
-                isset($row['cache_is_pack']) ? $row['cache_is_pack'] : null,
+                $row['cache_is_pack'] ?? null,
                 $context->cart,
                 false
             );
@@ -5849,9 +5849,7 @@ class ProductCore extends ObjectModel
             return [];
         }
 
-        return array_map(function (array $result): int {
-            return (int) $result['id_attachment'];
-        }, $results);
+        return array_map(fn (array $result): int => (int) $result['id_attachment'], $results);
     }
 
     /**
@@ -5987,11 +5985,11 @@ class ProductCore extends ObjectModel
                 $product_attribute_id = isset($product_update['id_product_attribute']) ? (int) $product_update['id_product_attribute'] : (int) $product_update['product_attribute_id'];
                 $id_address_delivery = (int) $product_update['id_address_delivery'];
                 $product_quantity = isset($product_update['cart_quantity']) ? (int) $product_update['cart_quantity'] : (int) $product_update['product_quantity'];
-                $price = isset($product_update['price']) ? $product_update['price'] : $product_update['product_price'];
+                $price = $product_update['price'] ?? $product_update['product_price'];
                 if (isset($product_update['price_wt']) && $product_update['price_wt']) {
                     $price_wt = $product_update['price_wt'];
                 } else {
-                    $price_wt = $price * (1 + ((isset($product_update['tax_rate']) ? $product_update['tax_rate'] : $product_update['rate']) * 0.01));
+                    $price_wt = $price * (1 + (($product_update['tax_rate'] ?? $product_update['rate']) * 0.01));
                 }
 
                 if (! isset($customized_datas[$product_id][$product_attribute_id][$id_address_delivery])) {
@@ -6014,9 +6012,9 @@ class ProductCore extends ObjectModel
 
                 if ($customization_quantity) {
                     $product_update['total_wt'] = $price_wt * ($product_quantity - $customization_quantity);
-                    $product_update['total_customization_wt'] = isset($product_update['unit_price_tax_incl']) ? $product_update['unit_price_tax_incl'] : $product_update['price_with_reduction'] * $customization_quantity;
+                    $product_update['total_customization_wt'] = $product_update['unit_price_tax_incl'] ?? $product_update['price_with_reduction'] * $customization_quantity;
                     $product_update['total'] = $price * ($product_quantity - $customization_quantity);
-                    $product_update['total_customization'] = isset($product_update['unit_price_tax_excl']) ? $product_update['unit_price_tax_excl'] : $product_update['price_with_reduction_without_tax'] * $customization_quantity;
+                    $product_update['total_customization'] = $product_update['unit_price_tax_excl'] ?? $product_update['price_with_reduction_without_tax'] * $customization_quantity;
                 }
             }
         }
@@ -6219,7 +6217,7 @@ class ProductCore extends ObjectModel
         $has_required_fields = 0;
         foreach ($_POST as $field => $value) {
             /* Label update */
-            if (strncmp($field, 'label_', 6) === 0) {
+            if (str_starts_with($field, 'label_')) {
                 if (! $tmp = $this->_checkLabelField($field, $value)) {
                     return false;
                 }
@@ -6363,9 +6361,7 @@ class ProductCore extends ObjectModel
             AND `id_product` = ' . (int) $this->id
         );
 
-        return array_map(function ($result) {
-            return (int) $result['id_customization_field'];
-        }, $results);
+        return array_map(fn ($result) => (int) $result['id_customization_field'], $results);
     }
 
     /**
@@ -6999,7 +6995,7 @@ class ProductCore extends ObjectModel
      */
     public function getCoverWs()
     {
-        $result = $this->getCover($this->id);
+        $result = static::getCover($this->id);
 
         return $result ? $result['id_image'] : null;
     }
@@ -7931,17 +7927,11 @@ class ProductCore extends ObjectModel
      */
     public function getRedirectType()
     {
-        switch ($this->redirect_type) {
-            case RedirectType::TYPE_CATEGORY_PERMANENT:
-            case RedirectType::TYPE_CATEGORY_TEMPORARY:
-                return 'category';
-
-            case RedirectType::TYPE_PRODUCT_PERMANENT:
-            case RedirectType::TYPE_PRODUCT_TEMPORARY:
-                return 'product';
-        }
-
-        return false;
+        return match ($this->redirect_type) {
+            RedirectType::TYPE_CATEGORY_PERMANENT, RedirectType::TYPE_CATEGORY_TEMPORARY => 'category',
+            RedirectType::TYPE_PRODUCT_PERMANENT, RedirectType::TYPE_PRODUCT_TEMPORARY => 'product',
+            default => false,
+        };
     }
 
     /**
@@ -8053,7 +8043,7 @@ class ProductCore extends ObjectModel
     {
         $context = Context::getContext();
         $currency = $context->currency;
-        $precision = $precision ?? $currency->precision;
+        $precision ??= $currency->precision;
         $ecotax_rate = $include_tax ? (float) Tax::getProductEcotaxRate() : 0;
         $ecotax = Tools::ps_round(
             (float) $this->ecotax * (1 + $ecotax_rate / 100),

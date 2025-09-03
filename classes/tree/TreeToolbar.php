@@ -35,9 +35,9 @@ class TreeToolbarCore implements ITreeToolbarCore
     private $_template;
     private $_template_directory;
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->render();
+        return (string) $this->render();
     }
 
     public function setActions($actions)
@@ -128,7 +128,7 @@ class TreeToolbarCore implements ITreeToolbarCore
 
     public function getTemplateFile($template)
     {
-        if (preg_match_all('/((?:^|[A-Z])[a-z]+)/', get_class($this->getContext()->controller), $matches) !== false) {
+        if (preg_match_all('/((?:^|[A-Z])[a-z]+)/', $this->getContext()->controller::class, $matches) !== false) {
             $controllerName = strtolower($matches[0][1]);
         }
 
@@ -212,10 +212,10 @@ class TreeToolbarCore implements ITreeToolbarCore
 
     private function _normalizeDirectory($directory)
     {
-        $last = $directory[strlen($directory) - 1];
+        $last = $directory[strlen((string) $directory) - 1];
 
         if (in_array($last, ['/', '\\'], true)) {
-            $directory[strlen($directory) - 1] = \DIRECTORY_SEPARATOR;
+            $directory[strlen((string) $directory) - 1] = \DIRECTORY_SEPARATOR;
 
             return $directory;
         }

@@ -67,8 +67,8 @@ class ShopUrlCore extends ObjectModel
      */
     public function getFields()
     {
-        $this->domain = trim($this->domain);
-        $this->domain_ssl = trim($this->domain_ssl);
+        $this->domain = trim((string) $this->domain);
+        $this->domain_ssl = trim((string) $this->domain_ssl);
         $this->physical_uri = trim(str_replace(' ', '', $this->physical_uri), '/');
 
         if ($this->physical_uri) {
@@ -141,7 +141,7 @@ class ShopUrlCore extends ObjectModel
 
     public function canAddThisUrl($domain, $domain_ssl, $physical_uri, $virtual_uri)
     {
-        $physical_uri = trim($physical_uri, '/');
+        $physical_uri = trim((string) $physical_uri, '/');
 
         if ($physical_uri) {
             $physical_uri = preg_replace('#/+#', '/', '/' . $physical_uri . '/');
@@ -149,7 +149,7 @@ class ShopUrlCore extends ObjectModel
             $physical_uri = '/';
         }
 
-        $virtual_uri = trim($virtual_uri, '/');
+        $virtual_uri = trim((string) $virtual_uri, '/');
         if ($virtual_uri) {
             $virtual_uri = preg_replace('#/+#', '/', trim($virtual_uri, '/')) . '/';
         }

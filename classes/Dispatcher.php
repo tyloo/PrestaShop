@@ -603,9 +603,9 @@ class DispatcherCore
         // Set $_GET['isolang'] and remove the language part from the request URI
         if ($this->use_routes && $isMultiLanguageActivated) {
             // If we find a language in the URL, we assign it and remove it from the URL
-            if (preg_match('#^/([a-z]{2})(?:/.*)?$#', $requestUri, $matches)) {
+            if (preg_match('#^/([a-z]{2})(?:/.*)?$#', (string) $requestUri, $matches)) {
                 $_GET['isolang'] = $matches[1];
-                $requestUri = substr($requestUri, 3);
+                $requestUri = substr((string) $requestUri, 3);
             // Otherwise, we use the default language
             } else {
                 $defaultLanguage = new Language((int) Configuration::get('PS_LANG_DEFAULT'));
@@ -682,7 +682,7 @@ class DispatcherCore
                 $route['rule'],
                 $route['controller'],
                 $route['keywords'],
-                isset($route['params']) ? $route['params'] : []
+                $route['params'] ?? []
             );
             foreach ($language_ids as $id_lang) {
                 $this->routes[$id_shop][$id_lang][$id] = $route;
@@ -738,7 +738,7 @@ class DispatcherCore
                         $custom_route,
                         $route_data['controller'],
                         $route_data['keywords'],
-                        isset($route_data['params']) ? $route_data['params'] : []
+                        $route_data['params'] ?? []
                     );
                     foreach ($language_ids as $id_lang) {
                         $this->routes[$id_shop][$id_lang][$route_id] = $route;
@@ -818,7 +818,7 @@ class DispatcherCore
          * both slashed and non-slashed variant of the URL. The user will be automatically redirected
          * to the proper canonical variant in the controller, but he won't get a 404.
          */
-        if (substr($regexp, -1) === '/') {
+        if (str_ends_with($regexp, '/')) {
             // If the expression ends with a slash, we make it optional.
             $regexp .= '?';
         } else {
@@ -963,7 +963,7 @@ class DispatcherCore
         }
 
         return preg_match('#\{([^{}]*:)?' . preg_quote($keyword, '#') .
-            '(:[^{}]*)?\}#', $this->routes[$id_shop][$id_lang][$route_id]['rule']);
+            '(:[^{}]*)?\}#', (string) $this->routes[$id_shop][$id_lang][$route_id]['rule']);
     }
 
     /**
@@ -1046,7 +1046,7 @@ class DispatcherCore
         }
         $route = $this->routes[$id_shop][$id_lang][$route_id];
         // Check required fields
-        $query_params = isset($route['params']) ? $route['params'] : [];
+        $query_params = $route['params'] ?? [];
         foreach ($route['keywords'] as $key => $data) {
             if (! $data['required']) {
                 continue;
@@ -1085,10 +1085,10 @@ class DispatcherCore
                     } else {
                         $replace = '';
                     }
-                    $url = preg_replace('#\{([^{}]*:)?' . $key . '(:[^{}]*)?\}#', $replace, $url);
+                    $url = preg_replace('#\{([^{}]*:)?' . $key . '(:[^{}]*)?\}#', $replace, (string) $url);
                 }
             }
-            $url = preg_replace('#\{([^{}]*:)?[a-z0-9_]+?(:[^{}]*)?\}#', '', $url);
+            $url = preg_replace('#\{([^{}]*:)?[a-z0-9_]+?(:[^{}]*)?\}#', '', (string) $url);
             if (count($add_param)) {
                 $url .= '?' . http_build_query($add_param, '', '&');
             }
@@ -1174,8 +1174,8 @@ class DispatcherCore
             // then there is no need to check the routes, we keep
             // "controller_not_found" (a static file should not go through the dispatcher)
             if (
-                ! preg_match('/\.(gif|jpe?g|png|css|js|ico)$/i', parse_url($test_request_uri, \PHP_URL_PATH))
-                || preg_match('/^\/upload/', parse_url($test_request_uri, \PHP_URL_PATH))) {
+                ! preg_match('/\.(gif|jpe?g|png|css|js|ico)$/i', parse_url((string) $test_request_uri, \PHP_URL_PATH))
+                || preg_match('/^\/upload/', parse_url((string) $test_request_uri, \PHP_URL_PATH))) {
                 // Add empty route as last route to prevent this greedy regexp to match request uri before right time
                 if ($this->empty_route) {
                     $this->addRoute(
@@ -1189,7 +1189,7 @@ class DispatcherCore
                     );
                 }
 
-                list($uri) = explode('?', $this->request_uri);
+                [$uri] = explode('?', $this->request_uri);
 
                 if (isset($this->routes[$id_shop][Context::getContext()->language->id])) {
                     foreach ($this->routes[$id_shop][Context::getContext()->language->id] as $route) {
@@ -1201,7 +1201,7 @@ class DispatcherCore
                                 }
                             }
 
-                            $controller = $route['controller'] ? $route['controller'] : $_GET['controller'];
+                            $controller = $route['controller'] ?: $_GET['controller'];
                             if (! empty($route['params'])) {
                                 foreach ($route['params'] as $k => $v) {
                                     $_GET[$k] = $v;
@@ -1209,7 +1209,7 @@ class DispatcherCore
                             }
 
                             // A patch for module friendly urls
-                            if (preg_match('#module-([a-z0-9_-]+)-([a-z0-9_]+)$#i', $controller, $m)) {
+                            if (preg_match('#module-([a-z0-9_-]+)-([a-z0-9_]+)$#i', (string) $controller, $m)) {
                                 $_GET['module'] = $m[1];
                                 $_GET['fc'] = 'module';
                                 $controller = $m[2];
@@ -1280,11 +1280,11 @@ class DispatcherCore
         foreach ($modules as $mod) {
             foreach (Dispatcher::getControllersInDirectory(_PS_MODULE_DIR_ . $mod->name . '/controllers/') as $controller) {
                 if ($type === 'admin') {
-                    if (strpos($controller, 'Admin') !== false) {
+                    if (str_contains($controller, 'Admin')) {
                         $modules_controllers[$mod->name][] = $controller;
                     }
                 } elseif ($type === 'front') {
-                    if (strpos($controller, 'Admin') === false) {
+                    if (! str_contains($controller, 'Admin')) {
                         $modules_controllers[$mod->name][] = $controller;
                     }
                 } else {
@@ -1364,7 +1364,7 @@ class DispatcherCore
             $controllerPhpself = Dispatcher::getControllerPhpself($controllerClassName);
 
             if ($base_name_otherwise) {
-                $controllerPhpself = $controllerPhpself ?? $controllerBaseName;
+                $controllerPhpself ??= $controllerBaseName;
             }
 
             if ($controllerPhpself) {

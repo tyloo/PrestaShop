@@ -27,7 +27,6 @@
 class WebserviceOutputJSONCore implements WebserviceOutputInterface
 {
     public $docUrl = '';
-    public $languages = [];
     protected $wsUrl;
     protected $schemaToDisplay;
 
@@ -46,9 +45,9 @@ class WebserviceOutputJSONCore implements WebserviceOutputInterface
      */
     protected $content = [];
 
-    public function __construct($languages = [])
-    {
-        $this->languages = $languages;
+    public function __construct(
+        public $languages = [],
+    ) {
     }
 
     public function setSchemaToDisplay($schema)

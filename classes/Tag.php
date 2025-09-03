@@ -141,7 +141,7 @@ class TagCore extends ObjectModel
                     return false;
                 }
                 $tagMaxLength = self::$definition['fields']['name']['size'];
-                $tag = trim(Tools::substr(trim($tag), 0, $tagMaxLength));
+                $tag = trim(Tools::substr(trim((string) $tag), 0, $tagMaxLength));
                 $tagObj = new Tag(null, $tag, (int) $idLang);
 
                 /* Tag does not exist in database */
@@ -280,7 +280,7 @@ class TagCore extends ObjectModel
         if (! $context) {
             $context = Context::getContext();
         }
-        $idLang = $this->id_lang ? $this->id_lang : $context->language->id;
+        $idLang = $this->id_lang ?: $context->language->id;
 
         if (! $this->id && $associated) {
             return [];

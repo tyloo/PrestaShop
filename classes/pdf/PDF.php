@@ -37,11 +37,6 @@ class PDFCore
     public $pdf_renderer;
 
     /**
-     * @var PrestaShopCollection|ObjectModel|array
-     */
-    public $objects;
-
-    /**
      * @var string
      */
     public $template;
@@ -72,8 +67,12 @@ class PDFCore
      * @param Smarty                                 $smarty
      * @param string                                 $orientation
      */
-    public function __construct($objects, $template, $smarty, $orientation = 'P')
-    {
+    public function __construct(
+        public $objects,
+        $template,
+        $smarty,
+        $orientation = 'P',
+    ) {
         $pdfRendererFromModules = $this->getPdfRendererFromModules($template, $orientation);
 
         // if no module wants to provide a pdf renderer, then the core feature is used
@@ -115,10 +114,8 @@ class PDFCore
         smartyRegisterFunction($this->smarty, 'function', 'displayAddressDetail', ['AddressFormat', 'generateAddressSmarty'], true, $original_lazy_register);
         smartyRegisterFunction($this->smarty, 'function', 'getWidthSize', ['Image', 'getWidth'], true, $original_lazy_register);
         smartyRegisterFunction($this->smarty, 'function', 'getHeightSize', ['Image', 'getHeight'], true, $original_lazy_register);
-
-        $this->objects = $objects;
-        if (! ($objects instanceof Iterator) && ! is_array($objects)) {
-            $this->objects = [$objects];
+        if (! ($this->objects instanceof Iterator) && ! is_array($this->objects)) {
+            $this->objects = [$this->objects];
         }
 
         if (count($this->objects) > 1) { // when bulk mode only

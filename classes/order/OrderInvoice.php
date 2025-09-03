@@ -276,8 +276,8 @@ class OrderInvoiceCore extends ObjectModel
 
             // Use values from order_detail not from product because they are more accurate at the time the Order was made
             // and they contain the true value for combinations
-            $ecotax = isset($row['od_ecotax']) ? $row['od_ecotax'] : $row['ecotax'];
-            $ecotaxRate = isset($row['od_ecotax_tax_rate']) ? $row['od_ecotax_tax_rate'] : $row['ecotax_tax_rate'];
+            $ecotax = $row['od_ecotax'] ?? $row['ecotax'];
+            $ecotaxRate = $row['od_ecotax_tax_rate'] ?? $row['ecotax_tax_rate'];
 
             $row['ecotax_tax_excl'] = $ecotax; // alias for coherence
             $row['ecotax_tax_incl'] = $ecotax * (100 + $ecotaxRate) / 100;
@@ -834,14 +834,11 @@ class OrderInvoiceCore extends ObjectModel
 
         $row = Db::getInstance()->getRow($query);
 
-        switch ($mod) {
-            case OrderInvoice::TAX_EXCL:
-                return $row['total_paid_tax_excl'];
-            case OrderInvoice::TAX_INCL:
-                return $row['total_paid_tax_incl'];
-            default:
-                return $row;
-        }
+        return match ($mod) {
+            OrderInvoice::TAX_EXCL => $row['total_paid_tax_excl'],
+            OrderInvoice::TAX_INCL => $row['total_paid_tax_incl'],
+            default => $row,
+        };
     }
 
     /**

@@ -27,7 +27,6 @@
 class WebserviceOutputXMLCore implements WebserviceOutputInterface
 {
     public $docUrl = '';
-    public $languages = [];
     protected $wsUrl;
     protected $schemaToDisplay;
 
@@ -62,9 +61,9 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
         return 'text/xml';
     }
 
-    public function __construct($languages = [])
-    {
-        $this->languages = $languages;
+    public function __construct(
+        public $languages = [],
+    ) {
     }
 
     public function setLanguages($languages)

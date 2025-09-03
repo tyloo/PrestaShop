@@ -45,7 +45,7 @@ class ProductPresenterFactoryCore
     public function __construct(Context $context, ?TaxConfiguration $taxConfiguration = null)
     {
         $this->context = $context;
-        $this->taxConfiguration = ($taxConfiguration === null) ? new TaxConfiguration() : $taxConfiguration;
+        $this->taxConfiguration = $taxConfiguration ?? new TaxConfiguration();
     }
 
     /**

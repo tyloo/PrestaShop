@@ -31,11 +31,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ValidateConstraintTranslatorCore
 {
-    private $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     /**

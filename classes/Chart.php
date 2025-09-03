@@ -80,11 +80,11 @@ class ChartCore
         $this->granularity = $granularity;
 
         if (Validate::isDate($from)) {
-            $from = strtotime($from);
+            $from = strtotime((string) $from);
         }
         $this->from = $from;
         if (Validate::isDate($to)) {
-            $to = strtotime($to);
+            $to = strtotime((string) $to);
         }
         $this->to = $to;
 
@@ -124,7 +124,7 @@ class ChartCore
     public function fetch()
     {
         if ($this->timeMode) {
-            $options = 'xaxis:{mode:"time",timeformat:\'' . addslashes($this->format) . '\',min:' . $this->from . '000,max:' . $this->to . '000}';
+            $options = 'xaxis:{mode:"time",timeformat:\'' . addslashes((string) $this->format) . '\',min:' . $this->from . '000,max:' . $this->to . '000}';
             if ($this->granularity === 'd') {
                 foreach ($this->curves as $curve) {
                     /** @var Curve $curve */

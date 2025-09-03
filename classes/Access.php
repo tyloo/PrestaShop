@@ -266,7 +266,7 @@ class AccessCore extends ObjectModel
             'all' => ['CREATE', 'READ', 'UPDATE', 'DELETE'],
         ];
 
-        return isset($auth[$legacyAuth]) ? $auth[$legacyAuth] : false;
+        return $auth[$legacyAuth] ?? false;
     }
 
     /**

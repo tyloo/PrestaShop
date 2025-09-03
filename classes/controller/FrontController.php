@@ -325,7 +325,7 @@ class FrontControllerCore extends Controller
 
             if ((! $has_currency || $has_country) && ! $has_address_type) {
                 if ($has_country && Validate::isLanguageIsoCode($this->context->cookie->iso_code_country)) {
-                    $id_country = (int) Country::getByIso(strtoupper($this->context->cookie->iso_code_country));
+                    $id_country = (int) Country::getByIso(strtoupper((string) $this->context->cookie->iso_code_country));
                 } elseif (Tools::isCountryFromBrowserAvailable()) {
                     $id_country = (int) Country::getByIso(Tools::getCountryIsoCodeFromHeader(), true);
                 } else {
@@ -354,10 +354,10 @@ class FrontControllerCore extends Controller
         if (isset($_GET['logout']) || ($this->context->customer->logged && Customer::isBanned($this->context->customer->id))) {
             $this->context->customer->logout();
 
-            Tools::redirect(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null);
+            Tools::redirect($_SERVER['HTTP_REFERER'] ?? null);
         } elseif (isset($_GET['mylogout'])) {
             $this->context->customer->mylogout();
-            Tools::redirect(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null);
+            Tools::redirect($_SERVER['HTTP_REFERER'] ?? null);
         }
 
         /*
@@ -383,7 +383,7 @@ class FrontControllerCore extends Controller
              */
             } elseif (
                 (int) Configuration::get('PS_GEOLOCATION_ENABLED')
-                && ! in_array(strtoupper($this->context->cookie->iso_code_country), explode(';', Configuration::get('PS_ALLOWED_COUNTRIES')), true)
+                && ! in_array(strtoupper((string) $this->context->cookie->iso_code_country), explode(';', Configuration::get('PS_ALLOWED_COUNTRIES')), true)
                 && $cart->nbProducts()
                 && (int) Configuration::get('PS_GEOLOCATION_NA_BEHAVIOR') !== -1
                 && ! FrontController::isInWhitelistForGeolocation()
@@ -473,7 +473,7 @@ class FrontControllerCore extends Controller
         CartRule::autoRemoveFromCart($this->context);
         CartRule::autoAddToCart($this->context);
 
-        $this->context->smarty->assign('request_uri', Tools::safeOutput(urldecode($_SERVER['REQUEST_URI'])));
+        $this->context->smarty->assign('request_uri', Tools::safeOutput(urldecode((string) $_SERVER['REQUEST_URI'])));
 
         // Automatically redirect to the canonical URL if needed
         if (! empty($this->php_self) && ! Tools::getValue('ajax') && ! Tools::isPHPCLI()) {
@@ -736,7 +736,7 @@ class FrontControllerCore extends Controller
         }
 
         Hook::exec('actionOutputHTMLBefore', ['html' => &$html]);
-        echo trim($html);
+        echo trim((string) $html);
     }
 
     protected function prepareNotifications()
@@ -753,10 +753,10 @@ class FrontControllerCore extends Controller
         }
 
         if (session_status() === \PHP_SESSION_ACTIVE && isset($_SESSION['notifications'])) {
-            $notifications = array_merge_recursive($notifications, json_decode($_SESSION['notifications'], true));
+            $notifications = array_merge_recursive($notifications, json_decode((string) $_SESSION['notifications'], true));
             unset($_SESSION['notifications']);
         } elseif (isset($_COOKIE['notifications'])) {
-            $notifications = array_merge_recursive($notifications, json_decode($_COOKIE['notifications'], true));
+            $notifications = array_merge_recursive($notifications, json_decode((string) $_COOKIE['notifications'], true));
             unset($_COOKIE['notifications']);
         }
 
@@ -838,14 +838,14 @@ class FrontControllerCore extends Controller
      */
     protected function canonicalRedirection(string $canonical_url = '')
     {
-        if (! $canonical_url || ! Configuration::get('PS_CANONICAL_REDIRECT') || strtoupper($_SERVER['REQUEST_METHOD']) !== 'GET') {
+        if (! $canonical_url || ! Configuration::get('PS_CANONICAL_REDIRECT') || strtoupper((string) $_SERVER['REQUEST_METHOD']) !== 'GET') {
             return;
         }
 
         $canonical_url = preg_replace('/#.*$/', '', $canonical_url);
 
         $match_url = rawurldecode(Tools::getCurrentUrlProtocolPrefix() . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-        if (! preg_match('/^' . Tools::pRegexp(rawurldecode($canonical_url), '/') . '([&?].*)?$/', $match_url)) {
+        if (! preg_match('/^' . Tools::pRegexp(rawurldecode((string) $canonical_url), '/') . '([&?].*)?$/', $match_url)) {
             $final_url = $this->sanitizeUrl($canonical_url);
 
             // Don't send any cookie
@@ -878,21 +878,21 @@ class FrontControllerCore extends Controller
 
                     try {
                         $record = $reader->city(Tools::getRemoteAddr());
-                    } catch (GeoIp2\Exception\AddressNotFoundException $e) {
+                    } catch (GeoIp2\Exception\AddressNotFoundException) {
                         $record = null;
                     }
 
-                    if (is_object($record) && Validate::isLanguageIsoCode($record->country->isoCode) && (int) Country::getByIso(strtoupper($record->country->isoCode)) !== 0) {
-                        if (! in_array(strtoupper($record->country->isoCode), explode(';', Configuration::get('PS_ALLOWED_COUNTRIES')), true) && ! FrontController::isInWhitelistForGeolocation()) {
+                    if (is_object($record) && Validate::isLanguageIsoCode($record->country->isoCode) && (int) Country::getByIso(strtoupper((string) $record->country->isoCode)) !== 0) {
+                        if (! in_array(strtoupper((string) $record->country->isoCode), explode(';', Configuration::get('PS_ALLOWED_COUNTRIES')), true) && ! FrontController::isInWhitelistForGeolocation()) {
                             if (Configuration::get('PS_GEOLOCATION_BEHAVIOR') === _PS_GEOLOCATION_NO_CATALOG_) {
                                 $this->restrictedCountry = Country::GEOLOC_FORBIDDEN;
                             } elseif (Configuration::get('PS_GEOLOCATION_BEHAVIOR') === _PS_GEOLOCATION_NO_ORDER_) {
                                 $this->restrictedCountry = Country::GEOLOC_CATALOG_MODE;
-                                $this->warning[] = $this->trans('You cannot place a new order from your country (%s).', [htmlspecialchars($record->country->name)], 'Shop.Notifications.Warning');
+                                $this->warning[] = $this->trans('You cannot place a new order from your country (%s).', [htmlspecialchars((string) $record->country->name)], 'Shop.Notifications.Warning');
                             }
                         } else {
                             $hasBeenSet = ! isset($this->context->cookie->iso_code_country);
-                            $this->context->cookie->iso_code_country = strtoupper($record->country->isoCode);
+                            $this->context->cookie->iso_code_country = strtoupper((string) $record->country->isoCode);
                         }
                     }
                 }
@@ -1128,7 +1128,7 @@ class FrontControllerCore extends Controller
 
         foreach ($css_uri as $legacy_uri) {
             if ($uri = $this->getAssetUriFromLegacyDeprecatedMethod($legacy_uri)) {
-                $this->registerStylesheet(sha1($uri), $uri, ['media' => $css_media_type, 'priority' => 80]);
+                $this->registerStylesheet(sha1((string) $uri), $uri, ['media' => $css_media_type, 'priority' => 80]);
             }
         }
     }
@@ -1149,7 +1149,7 @@ class FrontControllerCore extends Controller
 
         foreach ($css_uri as $legacy_uri) {
             if ($uri = $this->getAssetUriFromLegacyDeprecatedMethod($legacy_uri)) {
-                $this->unregisterStylesheet(sha1($uri));
+                $this->unregisterStylesheet(sha1((string) $uri));
             }
         }
     }
@@ -1170,7 +1170,7 @@ class FrontControllerCore extends Controller
 
         foreach ($js_uri as $legacy_uri) {
             if ($uri = $this->getAssetUriFromLegacyDeprecatedMethod($legacy_uri)) {
-                $this->registerJavascript(sha1($uri), $uri, ['position' => 'bottom', 'priority' => 80]);
+                $this->registerJavascript(sha1((string) $uri), $uri, ['position' => 'bottom', 'priority' => 80]);
             }
         }
     }
@@ -1191,7 +1191,7 @@ class FrontControllerCore extends Controller
 
         foreach ($js_uri as $legacy_uri) {
             if ($uri = $this->getAssetUriFromLegacyDeprecatedMethod($legacy_uri)) {
-                $this->unregisterJavascript(sha1($uri));
+                $this->unregisterJavascript(sha1((string) $uri));
             }
         }
     }
@@ -1211,7 +1211,7 @@ class FrontControllerCore extends Controller
 
         foreach ($component as $ui) {
             // If the component does not start with ui. prefix, we need to add it
-            if (! str_starts_with($ui, 'ui.')) {
+            if (! str_starts_with((string) $ui, 'ui.')) {
                 $ui = 'ui.' . $ui;
             }
 
@@ -1663,7 +1663,7 @@ class FrontControllerCore extends Controller
             return [];
         }
 
-        list($logoWidth, $logoHeight) = getimagesize($logoFileDir);
+        [$logoWidth, $logoHeight] = getimagesize($logoFileDir);
 
         return [
             'src' => ($this->getTemplateVarUrls()['img_ps_url'] ?? _PS_IMG_) . $logoFileName,
@@ -1913,12 +1913,12 @@ class FrontControllerCore extends Controller
             $page_name = $this->php_self;
         } elseif (Tools::getValue('fc') === 'module' && $module_name !== '' && (Module::getInstanceByName($module_name) instanceof PaymentModule)) {
             $page_name = 'module-payment-submit';
-        } elseif (preg_match('#^' . preg_quote($this->context->shop->physical_uri, '#') . 'modules/([a-zA-Z0-9_-]+?)/(.*)$#', $_SERVER['REQUEST_URI'], $m)) {
+        } elseif (preg_match('#^' . preg_quote((string) $this->context->shop->physical_uri, '#') . 'modules/([a-zA-Z0-9_-]+?)/(.*)$#', (string) $_SERVER['REQUEST_URI'], $m)) {
             /** @retrocompatibility Are we in a module ? */
             $page_name = 'module-' . $m[1] . '-' . str_replace(['.php', '/'], ['', '-'], $m[2]);
         } else {
             $page_name = Dispatcher::getInstance()->getController();
-            $page_name = (preg_match('/^[0-9]/', $page_name) ? 'page_' . $page_name : $page_name);
+            $page_name = (preg_match('/^[0-9]/', (string) $page_name) ? 'page_' . $page_name : $page_name);
         }
 
         return $page_name;
@@ -2071,7 +2071,7 @@ class FrontControllerCore extends Controller
 
     public function getAssetUriFromLegacyDeprecatedMethod($legacy_uri)
     {
-        $success = preg_match('/modules\/.*/', $legacy_uri, $matches);
+        $success = preg_match('/modules\/.*/', (string) $legacy_uri, $matches);
         if (! $success) {
             Tools::displayAsDeprecated(
                 'Backward compatibility for this method couldn\'t be handled. Use $this->registerJavascript() instead'

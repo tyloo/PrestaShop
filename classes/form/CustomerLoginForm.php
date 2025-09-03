@@ -30,7 +30,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CustomerLoginFormCore extends AbstractForm
 {
     private $context;
-    private $urls;
 
     protected $template = 'customer/_partials/login-form.tpl';
 
@@ -44,7 +43,7 @@ class CustomerLoginFormCore extends AbstractForm
         Context $context,
         TranslatorInterface $translator,
         CustomerLoginFormatter $formatter,
-        array $urls,
+        private readonly array $urls,
     ) {
         parent::__construct(
             $smarty,
@@ -55,7 +54,6 @@ class CustomerLoginFormCore extends AbstractForm
         $this->context = $context;
         $this->translator = $translator;
         $this->formatter = $formatter;
-        $this->urls = $urls;
         $this->constraintTranslator = new ValidateConstraintTranslator(
             $this->translator
         );
@@ -112,9 +110,7 @@ class CustomerLoginFormCore extends AbstractForm
             'action' => $this->action,
             'urls' => $this->urls,
             'formFields' => array_map(
-                function (FormField $field) {
-                    return $field->toArray();
-                },
+                fn (FormField $field) => $field->toArray(),
                 $this->formFields
             ),
             'errors' => $this->getErrors(),

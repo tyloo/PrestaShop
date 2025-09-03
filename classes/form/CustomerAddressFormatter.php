@@ -30,18 +30,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CustomerAddressFormatterCore implements FormFormatterInterface
 {
     private $country;
-    private $translator;
-    private $availableCountries;
     private $definition;
 
     public function __construct(
         Country $country,
-        TranslatorInterface $translator,
-        array $availableCountries,
+        private readonly TranslatorInterface $translator,
+        private readonly array $availableCountries,
     ) {
         $this->country = $country;
-        $this->translator = $translator;
-        $this->availableCountries = $availableCountries;
         $this->definition = Address::$definition['fields'];
     }
 
@@ -93,7 +89,7 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
                     }
 
                     $formField->setMinLength(
-                        strlen($this->country->zip_code_format)
+                        strlen((string) $this->country->zip_code_format)
                     );
                 } elseif ($field === 'phone') {
                     $formField->setType('tel');
@@ -103,7 +99,7 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
                     }
                 }
             } elseif (count($fieldParts) === 2) {
-                list($entity, $entityField) = $fieldParts;
+                [$entity, $entityField] = $fieldParts;
 
                 // Fields specified using the Entity:field
                 // notation are actually references to other
@@ -204,41 +200,25 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
     {
         // Country:name => Country, Country:iso_code => Country,
         // same label regardless of which field is used for mapping.
-        $field = explode(':', $field)[0];
+        $field = explode(':', (string) $field)[0];
 
-        switch ($field) {
-            case 'alias':
-                return $this->translator->trans('Alias', [], 'Shop.Forms.Labels');
-            case 'firstname':
-                return $this->translator->trans('First name', [], 'Shop.Forms.Labels');
-            case 'lastname':
-                return $this->translator->trans('Last name', [], 'Shop.Forms.Labels');
-            case 'address1':
-                return $this->translator->trans('Address', [], 'Shop.Forms.Labels');
-            case 'address2':
-                return $this->translator->trans('Address Complement', [], 'Shop.Forms.Labels');
-            case 'postcode':
-                return $this->translator->trans('Zip/Postal Code', [], 'Shop.Forms.Labels');
-            case 'city':
-                return $this->translator->trans('City', [], 'Shop.Forms.Labels');
-            case 'Country':
-                return $this->translator->trans('Country', [], 'Shop.Forms.Labels');
-            case 'State':
-                return $this->translator->trans('State', [], 'Shop.Forms.Labels');
-            case 'phone':
-                return $this->translator->trans('Phone', [], 'Shop.Forms.Labels');
-            case 'phone_mobile':
-                return $this->translator->trans('Mobile phone', [], 'Shop.Forms.Labels');
-            case 'company':
-                return $this->translator->trans('Company', [], 'Shop.Forms.Labels');
-            case 'vat_number':
-                return $this->translator->trans('VAT number', [], 'Shop.Forms.Labels');
-            case 'dni':
-                return $this->translator->trans('Identification number', [], 'Shop.Forms.Labels');
-            case 'other':
-                return $this->translator->trans('Other', [], 'Shop.Forms.Labels');
-            default:
-                return $field;
-        }
+        return match ($field) {
+            'alias' => $this->translator->trans('Alias', [], 'Shop.Forms.Labels'),
+            'firstname' => $this->translator->trans('First name', [], 'Shop.Forms.Labels'),
+            'lastname' => $this->translator->trans('Last name', [], 'Shop.Forms.Labels'),
+            'address1' => $this->translator->trans('Address', [], 'Shop.Forms.Labels'),
+            'address2' => $this->translator->trans('Address Complement', [], 'Shop.Forms.Labels'),
+            'postcode' => $this->translator->trans('Zip/Postal Code', [], 'Shop.Forms.Labels'),
+            'city' => $this->translator->trans('City', [], 'Shop.Forms.Labels'),
+            'Country' => $this->translator->trans('Country', [], 'Shop.Forms.Labels'),
+            'State' => $this->translator->trans('State', [], 'Shop.Forms.Labels'),
+            'phone' => $this->translator->trans('Phone', [], 'Shop.Forms.Labels'),
+            'phone_mobile' => $this->translator->trans('Mobile phone', [], 'Shop.Forms.Labels'),
+            'company' => $this->translator->trans('Company', [], 'Shop.Forms.Labels'),
+            'vat_number' => $this->translator->trans('VAT number', [], 'Shop.Forms.Labels'),
+            'dni' => $this->translator->trans('Identification number', [], 'Shop.Forms.Labels'),
+            'other' => $this->translator->trans('Other', [], 'Shop.Forms.Labels'),
+            default => $field,
+        };
     }
 }

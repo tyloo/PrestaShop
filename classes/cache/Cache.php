@@ -292,7 +292,7 @@ abstract class CacheCore
         $keys = [];
         if ($key === '*') {
             $keys = $this->keys;
-        } elseif (strpos($key, '*') === false) {
+        } elseif (! str_contains($key, '*')) {
             $keys = [$key];
         } else {
             $pattern = str_replace('\\*', '.*', preg_quote($key));
@@ -485,13 +485,7 @@ abstract class CacheCore
             }
 
             // sort the array with the query with the lowest count first
-            uasort($this->sql_tables_cached[$table], function ($a, $b) {
-                if ($a['count'] === $b['count']) {
-                    return 0;
-                }
-
-                return ($a['count'] < $b['count']) ? -1 : 1;
-            });
+            uasort($this->sql_tables_cached[$table], fn ($a, $b) => $a['count'] <=> $b['count']);
             // reduce the size of the cache : delete the first entries (those with the lowest count)
             $tableBuffer = array_slice(
                 $this->sql_tables_cached[$table],
@@ -641,7 +635,7 @@ abstract class CacheCore
     protected function isBlacklist($query)
     {
         foreach ($this->blacklist as $find) {
-            if (strpos($query, _DB_PREFIX_ . $find) !== false) {
+            if (str_contains($query, _DB_PREFIX_ . $find)) {
                 return true;
             }
         }
@@ -675,7 +669,7 @@ abstract class CacheCore
      */
     public static function retrieve($key)
     {
-        return isset(Cache::$local[$key]) ? Cache::$local[$key] : null;
+        return Cache::$local[$key] ?? null;
     }
 
     /**
@@ -701,7 +695,7 @@ abstract class CacheCore
      */
     public static function clean($key)
     {
-        if (strpos($key, '*') !== false) {
+        if (str_contains($key, '*')) {
             $regexp = str_replace('\\*', '.*', preg_quote($key, '#'));
             foreach (array_keys(Cache::$local) as $key) {
                 if (preg_match('#^' . $regexp . '$#', $key)) {

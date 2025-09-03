@@ -197,12 +197,12 @@ class CacheMemcacheCore extends Cache
     {
         if ($key === '*') {
             $this->flush();
-        } elseif (strpos($key, '*') === false) {
+        } elseif (! str_contains($key, '*')) {
             $this->_delete($key);
         } else {
             // Get keys (this code comes from Doctrine 2 project)
             $pattern = str_replace('\\*', '.*', preg_quote($key));
-            $servers = $this->getMemcachedServers();
+            $servers = static::getMemcachedServers();
             if (is_array($servers) && count($servers) > 0 && method_exists('Memcache', 'getStats')) {
                 $all_slabs = $this->memcache->getStats('slabs');
             }
@@ -219,7 +219,7 @@ class CacheMemcacheCore extends Cache
                                     foreach ($dump as $entries) {
                                         if ($entries) {
                                             foreach ($entries as $key => $data) {
-                                                if (preg_match('#^' . $pattern . '$#', $key)) {
+                                                if (preg_match('#^' . $pattern . '$#', (string) $key)) {
                                                     $this->_delete($key);
                                                 }
                                             }

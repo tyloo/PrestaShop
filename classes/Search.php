@@ -162,7 +162,7 @@ class SearchCore
          * For this reason, if the original expression contained a dash, we will do the process once again,
          * but keeping the dashes.
          */
-        if (strpos($string, '-') !== false) {
+        if (str_contains($string, '-')) {
             // So, one more sanitization with different parameter, one more separation to get array.
             // We get an array ["prestashop", "test", "a-1000"]
             $sanitizedStringWithHyphens = Search::sanitize($string, $id_lang, $indexation, $iso_code, true);
@@ -170,7 +170,7 @@ class SearchCore
 
             // And we add all words to our final list, in both dashed and non dashed version.
             foreach ($wordsWithHyphens as $word) {
-                if (strpos($word, '-') === false) {
+                if (! str_contains($word, '-')) {
                     continue;
                 }
 
@@ -197,7 +197,7 @@ class SearchCore
         $string = Tools::strtolower(strip_tags($string));
         $string = html_entity_decode($string, \ENT_NOQUOTES, 'utf-8');
         $string = preg_replace('/([' . PREG_CLASS_NUMBERS . ']+)[' . PREG_CLASS_PUNCTUATION . ']+(?=[' . PREG_CLASS_NUMBERS . '])/u', '\1', $string);
-        $string = preg_replace('/[' . PREG_CLASS_SEARCH_EXCLUDE . ']+/u', ' ', $string);
+        $string = preg_replace('/[' . PREG_CLASS_SEARCH_EXCLUDE . ']+/u', ' ', (string) $string);
         // Now, our string looks something like "prestashop test a-1000".
 
         if ($indexation) {
@@ -231,17 +231,17 @@ class SearchCore
                 )
             );
 
-            $words = explode(' ', $string);
+            $words = explode(' ', (string) $string);
             $processed_words = [];
             foreach ($aliases as $alias) {
-                $processed_words = array_merge($processed_words, explode(' ', $alias['search']));
+                $processed_words = array_merge($processed_words, explode(' ', (string) $alias['search']));
                 // delete words that are being replaced with aliases
-                $words = array_diff($words, explode(' ', $alias['alias']));
+                $words = array_diff($words, explode(' ', (string) $alias['alias']));
             }
             $string = implode(' ', array_unique(array_merge($processed_words, $words)));
             $string = str_replace(['.', '_'], '', $string);
             if (! $keepHyphens) {
-                $string = ltrim(preg_replace('/([^ ])-/', '$1 ', ' ' . $string));
+                $string = ltrim((string) preg_replace('/([^ ])-/', '$1 ', ' ' . $string));
             }
         }
 
@@ -249,9 +249,9 @@ class SearchCore
         $blacklist = Tools::strtolower(Configuration::get('PS_SEARCH_BLACKLIST', $id_lang));
         if (! empty($blacklist)) {
             $string = preg_replace('/(?<=\s)(' . $blacklist . ')(?=\s)/Su', '', $string);
-            $string = preg_replace('/^(' . $blacklist . ')(?=\s)/Su', '', $string);
-            $string = preg_replace('/(?<=\s)(' . $blacklist . ')$/Su', '', $string);
-            $string = preg_replace('/^(' . $blacklist . ')$/Su', '', $string);
+            $string = preg_replace('/^(' . $blacklist . ')(?=\s)/Su', '', (string) $string);
+            $string = preg_replace('/(?<=\s)(' . $blacklist . ')$/Su', '', (string) $string);
+            $string = preg_replace('/^(' . $blacklist . ')$/Su', '', (string) $string);
         }
 
         // If the language is constituted with symbol and there is no "words", then split every chars.
@@ -260,7 +260,7 @@ class SearchCore
             // Cut symbols from letters
             $symbols = '';
             $letters = '';
-            foreach (explode(' ', $string) as $mb_word) {
+            foreach (explode(' ', (string) $string) as $mb_word) {
                 if (strlen(Tools::replaceAccentedChars($mb_word)) === mb_strlen(Tools::replaceAccentedChars($mb_word))) {
                     $letters .= $mb_word . ' ';
                 } else {
@@ -277,15 +277,15 @@ class SearchCore
             $minWordLen = (int) Configuration::get('PS_SEARCH_MINWORDLEN');
             if ($minWordLen > 1) {
                 --$minWordLen;
-                $string = preg_replace('/(?<=\s)[^\s]{1,' . $minWordLen . '}(?=\s)/Su', ' ', $string);
-                $string = preg_replace('/^[^\s]{1,' . $minWordLen . '}(?=\s)/Su', '', $string);
-                $string = preg_replace('/(?<=\s)[^\s]{1,' . $minWordLen . '}$/Su', '', $string);
-                $string = preg_replace('/^[^\s]{1,' . $minWordLen . '}$/Su', '', $string);
+                $string = preg_replace('/(?<=\s)[^\s]{1,' . $minWordLen . '}(?=\s)/Su', ' ', (string) $string);
+                $string = preg_replace('/^[^\s]{1,' . $minWordLen . '}(?=\s)/Su', '', (string) $string);
+                $string = preg_replace('/(?<=\s)[^\s]{1,' . $minWordLen . '}$/Su', '', (string) $string);
+                $string = preg_replace('/^[^\s]{1,' . $minWordLen . '}$/Su', '', (string) $string);
             }
         }
 
         // Do some more cleaning to the string and return it
-        $string = Tools::replaceAccentedChars(trim(preg_replace('/\s+/', ' ', $string)));
+        $string = Tools::replaceAccentedChars(trim((string) preg_replace('/\s+/', ' ', (string) $string)));
 
         return $string;
     }
@@ -524,8 +524,8 @@ class SearchCore
             return $db->executeS($sql, true, false);
         }
 
-        if (strpos($order_by, '.') > 0) {
-            $order_by = explode('.', $order_by);
+        if (strpos((string) $order_by, '.') > 0) {
+            $order_by = explode('.', (string) $order_by);
             $order_by = pSQL($order_by[0]) . '.`' . pSQL($order_by[1]) . '`';
         }
         $alias = '';
@@ -1073,7 +1073,7 @@ class SearchCore
         }
 
         $id = Context::getContext()->shop->id;
-        $id_shop = $id ? $id : Configuration::get('PS_SHOP_DEFAULT');
+        $id_shop = $id ?: Configuration::get('PS_SHOP_DEFAULT');
 
         $sqlGroups = '';
         if (Group::isFeatureActive()) {

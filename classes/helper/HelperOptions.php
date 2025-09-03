@@ -103,10 +103,10 @@ class HelperOptionsCore extends Helper
                 $field['is_disabled'] = $is_disabled;
                 $field['is_invisible'] = $is_invisible;
 
-                $field['required'] = isset($field['required']) ? $field['required'] : $this->required;
+                $field['required'] ??= $this->required;
 
                 if ($field['type'] === 'checkbox' && isset($field['value_multiple'])) {
-                    $multipleValues = is_array($field['value']) ? $field['value'] : explode(',', $field['value']);
+                    $multipleValues = is_array($field['value']) ? $field['value'] : explode(',', (string) $field['value']);
                     foreach ($multipleValues as $currentValue) {
                         $field['value_multiple'][$currentValue] = true;
                     }
@@ -134,12 +134,12 @@ class HelperOptionsCore extends Helper
 
                 if ($field['type'] === 'file') {
                     $uploader = new HelperUploader();
-                    $uploader->setId(isset($field['id']) ? $field['id'] : null);
+                    $uploader->setId($field['id'] ?? null);
                     $uploader->setName($field['name']);
-                    $uploader->setUrl(isset($field['url']) ? $field['url'] : null);
-                    $uploader->setMultiple(isset($field['multiple']) ? $field['multiple'] : false);
-                    $uploader->setUseAjax(isset($field['ajax']) ? $field['ajax'] : false);
-                    $uploader->setMaxFiles(isset($field['max_files']) ? $field['max_files'] : null);
+                    $uploader->setUrl($field['url'] ?? null);
+                    $uploader->setMultiple($field['multiple'] ?? false);
+                    $uploader->setUseAjax($field['ajax'] ?? false);
+                    $uploader->setMaxFiles($field['max_files'] ?? null);
 
                     if (isset($field['files']) && $field['files']) {
                         $uploader->setFiles($field['files']);
@@ -147,9 +147,9 @@ class HelperOptionsCore extends Helper
                         $uploader->setFiles([
                             0 => [
                                 'type' => HelperUploader::TYPE_IMAGE,
-                                'image' => isset($field['image']) ? $field['image'] : null,
-                                'size' => isset($field['size']) ? $field['size'] : null,
-                                'delete_url' => isset($field['delete_url']) ? $field['delete_url'] : null,
+                                'image' => $field['image'] ?? null,
+                                'size' => $field['size'] ?? null,
+                                'delete_url' => $field['delete_url'] ?? null,
                             ],
                         ]);
                     }
@@ -158,9 +158,9 @@ class HelperOptionsCore extends Helper
                         $uploader->setFiles([
                             0 => [
                                 'type' => HelperUploader::TYPE_FILE,
-                                'size' => isset($field['size']) ? $field['size'] : null,
-                                'delete_url' => isset($field['delete_url']) ? $field['delete_url'] : null,
-                                'download_url' => isset($field['file']) ? $field['file'] : null,
+                                'size' => $field['size'] ?? null,
+                                'delete_url' => $field['delete_url'] ?? null,
+                                'download_url' => $field['file'] ?? null,
                             ],
                         ]);
                     }
@@ -174,7 +174,7 @@ class HelperOptionsCore extends Helper
                         ]);
                     }
 
-                    $uploader->setTitle(isset($field['title']) ? $field['title'] : null);
+                    $uploader->setTitle($field['title'] ?? null);
                     $field['file'] = $uploader->render();
                 }
 
@@ -186,7 +186,7 @@ class HelperOptionsCore extends Helper
                 }
 
                 // Fill values for all languages for all lang fields
-                if (substr($field['type'], -4) === 'Lang') {
+                if (str_ends_with((string) $field['type'], 'Lang')) {
                     $field['value'] = [];
                     foreach ($languages as $language) {
                         if ($field['type'] === 'textLang') {
@@ -201,7 +201,7 @@ class HelperOptionsCore extends Helper
                         } else {
                             $field['languages'][$language['id_lang']] = '';
                         }
-                        $field['value'][$language['id_lang']] = $this->getOptionValue($key . '_' . strtoupper($language['iso_code']), $field);
+                        $field['value'][$language['id_lang']] = $this->getOptionValue($key . '_' . strtoupper((string) $language['iso_code']), $field);
                     }
                 }
 
@@ -252,7 +252,7 @@ class HelperOptionsCore extends Helper
             'current' => $this->currentIndex,
             'table' => $this->table,
             'token' => $this->token,
-            'tabs' => (isset($tabs)) ? $tabs : null,
+            'tabs' => $tabs ?? null,
             'option_list' => $option_list,
             'current_id_lang' => $this->context->language->id,
             'languages' => $languages,

@@ -573,8 +573,8 @@ class EmployeeCore extends ObjectModel
     {
         try {
             /** @var Hashing $crypto */
-            $crypto = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\Crypto\\Hashing');
-        } catch (CoreException $e) {
+            $crypto = ServiceLocator::get(Hashing::class);
+        } catch (CoreException) {
             return false;
         }
 
@@ -732,19 +732,19 @@ class EmployeeCore extends ObjectModel
 
         // Gravatar
         if ($this->has_enabled_gravatar) {
-            $imageUrl = $imageUrl ?? 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?d=' . urlencode($defaultSystem);
+            $imageUrl ??= 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?d=' . urlencode($defaultSystem);
         }
 
         // Local Image
         $imagePath = $this->image_dir . $this->id . '.jpg';
         if (file_exists($imagePath)) {
-            $imageUrl = $imageUrl ?? Context::getContext()->link->getMediaLink(
+            $imageUrl ??= Context::getContext()->link->getMediaLink(
                 str_replace($this->image_dir, _THEME_EMPLOYEE_DIR_, $imagePath)
             );
         }
 
         // Default from System
-        $imageUrl = $imageUrl ?? $defaultSystem;
+        $imageUrl ??= $defaultSystem;
 
         // Hooks
         Hook::exec(

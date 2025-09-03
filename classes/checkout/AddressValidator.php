@@ -55,7 +55,7 @@ class AddressValidatorCore
 
             try {
                 $address->validateFields();
-            } catch (PrestaShopException $e) {
+            } catch (PrestaShopException) {
                 $invalidAddressIds[] = (int) $idAddress;
             }
         }
@@ -85,7 +85,7 @@ class AddressValidatorCore
                 try {
                     $adressObject = new CustomerAddress((int) $address['id_address']);
                     $adressObject->validateFields();
-                } catch (PrestaShopException $e) {
+                } catch (PrestaShopException) {
                     $invalidAddresses[] = (int) $address['id_address'];
                 }
             }

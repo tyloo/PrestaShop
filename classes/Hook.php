@@ -191,7 +191,7 @@ class HookCore extends ObjectModel
             return false;
         }
 
-        return strpos($hook_name, 'display') === 0;
+        return str_starts_with($hook_name, 'display');
     }
 
     /**
@@ -217,12 +217,10 @@ class HookCore extends ObjectModel
         );
 
         if ($only_display_hooks) {
-            return array_filter($hooks, function ($hook) {
-                return static::isDisplayHookName($hook['name']);
-            });
-        } else {
-            return $hooks;
+            return array_filter($hooks, fn ($hook) => static::isDisplayHookName($hook['name']));
         }
+
+        return $hooks;
     }
 
     /**
@@ -318,7 +316,7 @@ class HookCore extends ObjectModel
             $hookAliases = [];
             if ($hookAliasList) {
                 foreach ($hookAliasList as $ha) {
-                    $hookAliases[strtolower($ha['name'])][] = $ha['alias'];
+                    $hookAliases[strtolower((string) $ha['name'])][] = $ha['alias'];
                 }
             }
             Cache::store($cacheId, $hookAliases);
@@ -370,7 +368,7 @@ class HookCore extends ObjectModel
             $hooksByAlias = [];
             if ($databaseResults) {
                 foreach ($databaseResults as $record) {
-                    $hooksByAlias[strtolower($record['alias'])] =
+                    $hooksByAlias[strtolower((string) $record['alias'])] =
                         $record['name'];
                 }
             }
@@ -454,7 +452,7 @@ class HookCore extends ObjectModel
             throw $e;
         } catch (Exception $e) {
             $environment = ServiceLocator::get(
-                '\\PrestaShop\\PrestaShop\\Adapter\\Environment'
+                PrestaShop\PrestaShop\Adapter\Environment::class
             );
             if ($environment->isDebug()) {
                 throw new CoreException($e->getMessage(), $e->getCode(), $e);
@@ -524,7 +522,7 @@ class HookCore extends ObjectModel
     public static function getModulesFromHook($id_hook, $id_module = null)
     {
         $hm_list = Hook::getHookModuleList();
-        $module_list = isset($hm_list[$id_hook]) ? $hm_list[$id_hook] : [];
+        $module_list = $hm_list[$id_hook] ?? [];
 
         if ($id_module) {
             return isset($module_list[$id_module])
@@ -596,7 +594,7 @@ class HookCore extends ObjectModel
                 $message = sprintf(
                     'Hook with the name %s has been registered by %s, but the corresponding method %s has not been defined in the Module class.',
                     $hook_name,
-                    get_class($module_instance),
+                    $module_instance::class,
                     self::getMethodName($hook_name)
                 );
                 if (_PS_MODE_DEV_) {
@@ -715,7 +713,7 @@ class HookCore extends ObjectModel
              */
             try {
                 $hook_name = Hook::getNameById((int) $hook_identifier);
-            } catch (PrestaShopObjectNotFoundException $e) {
+            } catch (PrestaShopObjectNotFoundException) {
             }
 
             // If getting the name failed or we got some malformed hook name
@@ -801,9 +799,7 @@ class HookCore extends ObjectModel
         }
 
         $normalizedHookName = strtolower($hookName);
-        $modulesToInvoke = isset($allHookRegistrations[$normalizedHookName])
-            ? $allHookRegistrations[$normalizedHookName]
-            : [];
+        $modulesToInvoke = $allHookRegistrations[$normalizedHookName] ?? [];
 
         // add modules that are registered to aliases of this hook
         $aliases = Hook::getHookAliasesFor($hookName);
@@ -1040,9 +1036,7 @@ class HookCore extends ObjectModel
                 if ($controller_obj === null) {
                     $controller = null;
                 } else {
-                    $controller = isset($controller_obj->controller_name)
-                        ? $controller_obj->controller_name
-                        : $controller_obj->php_self;
+                    $controller = $controller_obj->controller_name ?? $controller_obj->php_self;
                 }
 
                 // Check if current controller is a module controller and prefix it's name if needed
@@ -1232,7 +1226,7 @@ class HookCore extends ObjectModel
             return $module->renderWidget($hook_name, $params);
         } catch (Exception $e) {
             $environment = ServiceLocator::get(
-                '\\PrestaShop\\PrestaShop\\Adapter\\Environment'
+                PrestaShop\PrestaShop\Adapter\Environment::class
             );
             if ($environment->isDebug()) {
                 throw new CoreException($e->getMessage(), $e->getCode(), $e);
@@ -1549,7 +1543,7 @@ class HookCore extends ObjectModel
         $result = $db->executeS($sql, false);
 
         while ($row = $db->nextRow($result)) {
-            $hookIds[strtolower($row['name'])] = $row['id_hook'];
+            $hookIds[strtolower((string) $row['name'])] = $row['id_hook'];
         }
 
         Cache::store($cacheId, $hookIds);

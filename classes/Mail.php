@@ -204,9 +204,7 @@ class MailCore extends ObjectModel
         } else {
             $keepGoing = array_reduce(
                 $hookBeforeEmailResult,
-                function ($carry, $item) {
-                    return ($item === false) ? false : $carry;
-                },
+                fn ($carry, $item) => ($item === false) ? false : $carry,
                 true
             );
         }
@@ -545,7 +543,7 @@ class MailCore extends ObjectModel
 
             // Prepend shop name to subject if configured and add it to the message
             if (Configuration::get('PS_MAIL_SUBJECT_PREFIX')) {
-                $subject = '[' . strip_tags($configuration['PS_SHOP_NAME']) . '] ' . $subject;
+                $subject = '[' . strip_tags((string) $configuration['PS_SHOP_NAME']) . '] ' . $subject;
             }
             $email->subject($subject);
 

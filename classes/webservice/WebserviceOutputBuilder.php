@@ -35,8 +35,6 @@ class WebserviceOutputBuilderCore
      */
     public const VIEW_LIST = 1;
     public const VIEW_DETAILS = 2;
-
-    protected $wsUrl;
     protected $output;
 
     /**
@@ -67,11 +65,11 @@ class WebserviceOutputBuilderCore
      */
     protected $status;
 
-    public function __construct($ws_url)
-    {
+    public function __construct(
+        protected $wsUrl,
+    ) {
         $this->statusInt = 200;
         $this->status = $_SERVER['SERVER_PROTOCOL'] . ' 200 OK';
-        $this->wsUrl = $ws_url;
         $this->wsParamOverrides = [];
     }
 
@@ -138,7 +136,7 @@ class WebserviceOutputBuilderCore
         $return = [];
         $return[] = $this->status;
         foreach ($this->headerParams as $key => $param) {
-            $return[] = trim($key) . ': ' . $param;
+            $return[] = trim((string) $key) . ': ' . $param;
         }
 
         return $return;
@@ -392,7 +390,7 @@ class WebserviceOutputBuilderCore
             $type_of_view = self::VIEW_DETAILS;
         }
 
-        $class = get_class($objects['empty']);
+        $class = $objects['empty']::class;
         if (! isset(WebserviceOutputBuilder::$_cache_ws_parameters[$class])) {
             WebserviceOutputBuilder::$_cache_ws_parameters[$class] = $objects['empty']->getWebserviceParameters();
         }
@@ -444,7 +442,7 @@ class WebserviceOutputBuilderCore
      */
     public function renderEntityMinimum($object, $depth)
     {
-        $class = get_class($object);
+        $class = $object::class;
         if (! isset(WebserviceOutputBuilder::$_cache_ws_parameters[$class])) {
             WebserviceOutputBuilder::$_cache_ws_parameters[$class] = $object->getWebserviceParameters();
         }
@@ -492,7 +490,7 @@ class WebserviceOutputBuilderCore
     {
         $output = '';
 
-        $class = get_class($object);
+        $class = $object::class;
         if (! isset(WebserviceOutputBuilder::$_cache_ws_parameters[$class])) {
             WebserviceOutputBuilder::$_cache_ws_parameters[$class] = $object->getWebserviceParameters();
         }
@@ -588,7 +586,7 @@ class WebserviceOutputBuilderCore
         $field = $this->overrideSpecificField($ws_params['objectsNodeName'], $field_name, $field, $object, $ws_params);
 
         // don't display informations for a not existant id
-        if (substr($field['sqlId'], 0, 3) === 'id_' && ! $field['value']) {
+        if (str_starts_with((string) $field['sqlId'], 'id_') && ! $field['value']) {
             if ($field['value'] === null) {
                 $field['value'] = '';
             }
@@ -716,10 +714,10 @@ class WebserviceOutputBuilderCore
             if (! is_array($this->fieldsToDisplay) || in_array($field_name, $this->fieldsToDisplay[$assoc_name], true)) {
                 if (isset($field['id']) && ! isset($field['sqlId'])) {
                     $field['sqlId'] = 'id';
-                    $field['value'] = isset($object_assoc['id']) ? $object_assoc['id'] : null;
+                    $field['value'] = $object_assoc['id'] ?? null;
                 } elseif (! isset($field['sqlId'])) {
                     $field['sqlId'] = $field_name ?: 'id';
-                    $field['value'] = isset($object_assoc[$field_name]) ? $object_assoc[$field_name] : null;
+                    $field['value'] = $object_assoc[$field_name] ?? null;
                 }
                 $field['entities_name'] = $assoc_name;
                 $field['entity_name'] = $resource_name;

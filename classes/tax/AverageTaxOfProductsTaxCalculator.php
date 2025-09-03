@@ -27,15 +27,13 @@
 class AverageTaxOfProductsTaxCalculator
 {
     private $id_order;
-    private $configuration;
-    private $db;
 
     public $computation_method = 'average_tax_of_products';
 
-    public function __construct(PrestaShop\PrestaShop\Core\Foundation\Database\DatabaseInterface $db, PrestaShop\PrestaShop\Core\ConfigurationInterface $configuration)
-    {
-        $this->db = $db;
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly PrestaShop\PrestaShop\Core\Foundation\Database\DatabaseInterface $db,
+        private readonly PrestaShop\PrestaShop\Core\ConfigurationInterface $configuration,
+    ) {
     }
 
     private function getProductTaxes()

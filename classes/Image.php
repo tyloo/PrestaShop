@@ -172,7 +172,7 @@ class ImageCore extends ObjectModel
             return;
         }
 
-        $productId = $productId ?? $this->id_product;
+        $productId ??= $this->id_product;
         if (empty($productId)) {
             throw new InvalidArgumentException('You cannot associate an image to shop without specifying product ID');
         }
@@ -874,7 +874,7 @@ class ImageCore extends ObjectModel
 
                     // if there's already a file at the new image path, move it to a dump folder
                     // most likely the preexisting image is a demo image not linked to a product and it's ok to replace it
-                    $newPath = _PS_PRODUCT_IMG_DIR_ . $image->getImgPath() . (isset($matches[3]) ? $matches[3] : '') . '.jpg';
+                    $newPath = _PS_PRODUCT_IMG_DIR_ . $image->getImgPath() . ($matches[3] ?? '') . '.jpg';
                     if (file_exists($newPath)) {
                         if (! file_exists(_PS_PRODUCT_IMG_DIR_ . $tmpFolder)) {
                             @mkdir(_PS_PRODUCT_IMG_DIR_ . $tmpFolder, self::$access_rights);

@@ -139,7 +139,7 @@ class ProfileCore extends ObjectModel
         // getProfileAccesses is cached so there is no performance leak
         $accesses = Profile::getProfileAccesses($idProfile);
 
-        return isset($accesses[$idTab]) ? $accesses[$idTab] : false;
+        return $accesses[$idTab] ?? false;
     }
 
     /**
@@ -222,8 +222,8 @@ class ProfileCore extends ObjectModel
     {
         foreach (Tab::getTabs(Context::getContext()->language->id) as $tab) {
             $accessData = [];
-            if (isset($accesses[strtoupper($tab['class_name'])])) {
-                $accessData = $accesses[strtoupper($tab['class_name'])];
+            if (isset($accesses[strtoupper((string) $tab['class_name'])])) {
+                $accessData = $accesses[strtoupper((string) $tab['class_name'])];
             }
 
             foreach (self::ALLOWED_PROFILE_TYPE_CHECK as $type) {
@@ -253,7 +253,7 @@ class ProfileCore extends ObjectModel
         foreach ($rolesGiven as $role) {
             preg_match(
                 '/ROLE_MOD_[A-Z]+_(?P<classname>[A-Z][A-Z0-9]*)_[A-Z]+/',
-                $role['slug'],
+                (string) $role['slug'],
                 $matches
             );
             if (empty($matches['classname'])) {

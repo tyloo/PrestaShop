@@ -28,7 +28,7 @@
 /**
  * SQL query builder.
  */
-class DbQueryCore
+class DbQueryCore implements Stringable
 {
     /**
      * List of data to build the query.
@@ -329,10 +329,8 @@ class DbQueryCore
 
     /**
      * Converts object to string.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->build();
     }

@@ -201,7 +201,7 @@ abstract class ControllerCore
         );
 
         if (_PS_MODE_DEV_ && $this->controller_type === 'admin') {
-            set_error_handler([__CLASS__, 'myErrorHandler']);
+            set_error_handler(self::myErrorHandler(...));
         }
 
         if (! defined('_PS_BASE_URL_')) {
@@ -277,8 +277,8 @@ abstract class ControllerCore
         if (
             ! headers_sent()
             && isset($_SERVER['HTTP_USER_AGENT'])
-            && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false
-            || strpos($_SERVER['HTTP_USER_AGENT'], 'Trident') !== false)
+            && (str_contains((string) $_SERVER['HTTP_USER_AGENT'], 'MSIE')
+            || str_contains((string) $_SERVER['HTTP_USER_AGENT'], 'Trident'))
         ) {
             header('X-UA-Compatible: IE=edge,chrome=1');
         }
@@ -297,7 +297,7 @@ abstract class ControllerCore
         if (isset($_SERVER['HTTP_ACCEPT'])) {
             $isAjax = $isAjax || preg_match(
                 '#\bapplication/json\b#',
-                $_SERVER['HTTP_ACCEPT']
+                (string) $_SERVER['HTTP_ACCEPT']
             );
         }
 
@@ -531,7 +531,7 @@ abstract class ControllerCore
         }
 
         foreach ($js_uri as $js_file) {
-            $js_file = explode('?', $js_file);
+            $js_file = explode('?', (string) $js_file);
             $version = '';
             if (isset($js_file[1]) && $js_file[1]) {
                 $version = $js_file[1];
@@ -624,7 +624,7 @@ abstract class ControllerCore
     {
         return
             ! empty($_SERVER['HTTP_X_REQUESTED_WITH'])
-            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+            && strtolower((string) $_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
 
     public function getLayout()

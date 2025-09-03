@@ -206,7 +206,7 @@ class ImageManagerCore
             return false;
         }
 
-        list($tmpWidth, $tmpHeight, $sourceFileType) = getimagesize($sourceFile);
+        [$tmpWidth, $tmpHeight, $sourceFileType] = getimagesize($sourceFile);
         $rotate = 0;
         if (function_exists('exif_read_data')) {
             $exif = @exif_read_data($sourceFile);
@@ -457,7 +457,7 @@ class ImageManagerCore
 
         // For each allowed MIME type, we are looking for it inside the current MIME type
         foreach ($mimeTypeList as $type) {
-            if (strstr($mimeType, $type)) {
+            if (strstr($mimeType, (string) $type)) {
                 return true;
             }
         }
@@ -509,12 +509,12 @@ class ImageManagerCore
         }
         if (! ImageManager::isRealImage($file['tmp_name'], $file['type'], $mimeTypeList)
             || ! ImageManager::isCorrectImageFileExt($file['name'], $types)
-            || preg_match('/\%00/', $file['name'])
+            || preg_match('/\%00/', (string) $file['name'])
         ) {
             return Context::getContext()->getTranslator()->trans(
                 'Image format not recognized, allowed formats are: %s',
                 [
-                    implode(', ', $types === null ? static::EXTENSIONS_SUPPORTED : $types),
+                    implode(', ', $types ?? static::EXTENSIONS_SUPPORTED),
                 ],
                 'Admin.Notifications.Error'
             );
@@ -539,7 +539,7 @@ class ImageManagerCore
         if ((int) $maxFileSize > 0 && $file['size'] > $maxFileSize) {
             return Context::getContext()->getTranslator()->trans('Image is too large (%1$d kB). Maximum allowed: %2$d kB', [$file['size'] / 1000, $maxFileSize / 1000], 'Admin.Notifications.Error');
         }
-        if (substr($file['name'], -4) !== '.ico') {
+        if (! str_ends_with((string) $file['name'], '.ico')) {
             return Context::getContext()->getTranslator()->trans('Image format not recognized, allowed formats are: .ico', [], 'Admin.Notifications.Error');
         }
         if ($file['error']) {
@@ -580,8 +580,8 @@ class ImageManagerCore
         $dest = [];
         $dest['x'] = $dstX;
         $dest['y'] = $dstY;
-        $dest['width'] = $dstWidth !== null ? $dstWidth : $src['width'];
-        $dest['height'] = $dstHeight !== null ? $dstHeight : $src['height'];
+        $dest['width'] = $dstWidth ?? $src['width'];
+        $dest['height'] = $dstHeight ?? $src['height'];
         $dest['ressource'] = ImageManager::createWhiteImage($dest['width'], $dest['height']);
 
         $white = imagecolorallocate($dest['ressource'], 255, 255, 255);
@@ -606,17 +606,12 @@ class ImageManagerCore
      */
     public static function create($type, $filename)
     {
-        switch ($type) {
-            case \IMAGETYPE_GIF:
-                return imagecreatefromgif($filename);
-            case \IMAGETYPE_PNG:
-                return imagecreatefrompng($filename);
-            case \IMAGETYPE_WEBP:
-                return imagecreatefromwebp($filename);
-            case \IMAGETYPE_JPEG:
-            default:
-                return imagecreatefromjpeg($filename);
-        }
+        return match ($type) {
+            \IMAGETYPE_GIF => imagecreatefromgif($filename),
+            \IMAGETYPE_PNG => imagecreatefrompng($filename),
+            \IMAGETYPE_WEBP => imagecreatefromwebp($filename),
+            default => imagecreatefromjpeg($filename),
+        };
     }
 
     /**
@@ -846,7 +841,7 @@ class ImageManagerCore
 
                     if (ImageManager::resize(
                         $tmpfile,
-                        $path . '-' . stripslashes($image_type['name']) . '.jpg',
+                        $path . '-' . stripslashes((string) $image_type['name']) . '.jpg',
                         $image_type['width'],
                         $image_type['height'],
                         'jpg',
@@ -860,7 +855,7 @@ class ImageManagerCore
                     )) {
                         // the last image should not be added in the candidate list if it's bigger than the original image
                         if ($tgt_width <= $src_width && $tgt_height <= $src_height) {
-                            $path_infos[] = [$tgt_width, $tgt_height, $path . '-' . stripslashes($image_type['name']) . '.jpg'];
+                            $path_infos[] = [$tgt_width, $tgt_height, $path . '-' . stripslashes((string) $image_type['name']) . '.jpg'];
                         }
                         if ($entity === 'products') {
                             if (is_file(_PS_TMP_IMG_DIR_ . 'product_mini_' . (int) $id_entity . '.jpg')) {
@@ -890,7 +885,7 @@ class ImageManagerCore
         $path_infos = array_reverse($path_infos);
         $path = '';
         foreach ($path_infos as $path_info) {
-            list($width, $height, $path) = $path_info;
+            [$width, $height, $path] = $path_info;
             if ($width >= $tgt_width && $height >= $tgt_height) {
                 return $path;
             }

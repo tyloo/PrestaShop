@@ -199,7 +199,7 @@ class HelperUploaderCore extends Uploader
 
     public function getTemplateFile($template)
     {
-        if (preg_match_all('/((?:^|[A-Z])[a-z]+)/', get_class($this->getContext()->controller), $matches) !== false) {
+        if (preg_match_all('/((?:^|[A-Z])[a-z]+)/', $this->getContext()->controller::class, $matches) !== false) {
             $controller_name = strtolower($matches[0][1]);
         }
 

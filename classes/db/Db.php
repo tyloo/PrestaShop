@@ -50,26 +50,6 @@ abstract class DbCore
     public const ON_DUPLICATE_KEY = 4;
 
     /**
-     * @var string Server (eg. localhost)
-     */
-    protected $server;
-
-    /**
-     * @var string Database user (eg. root)
-     */
-    protected $user;
-
-    /**
-     * @var string Database password (eg. can be empty !)
-     */
-    protected $password;
-
-    /**
-     * @var string Database name
-     */
-    protected $database;
-
-    /**
      * @var bool
      */
     protected $is_cache_enabled;
@@ -344,12 +324,13 @@ abstract class DbCore
      * @param string $database Database name
      * @param bool   $connect  If false, don't connect in constructor (since 1.5.0.1)
      */
-    public function __construct($server, $user, $password, $database, $connect = true)
-    {
-        $this->server = $server;
-        $this->user = $user;
-        $this->password = $password;
-        $this->database = $database;
+    public function __construct(
+        protected $server,
+        protected $user,
+        protected $password,
+        protected $database,
+        $connect = true,
+    ) {
         $this->is_cache_enabled = (defined('_PS_CACHE_ENABLED_')) ? _PS_CACHE_ENABLED_ : false;
 
         if (! defined('_PS_DEBUG_SQL_')) {
@@ -633,9 +614,9 @@ abstract class DbCore
 
         // This method must be used only with queries which display results
         if (
-            ! preg_match('#^\s*\(?\s*(select|show|explain|describe|desc|checksum)\s#i', $sql)
-            || stripos($sql, 'outfile') !== false
-            || stripos($sql, 'dumpfile') !== false
+            ! preg_match('#^\s*\(?\s*(select|show|explain|describe|desc|checksum)\s#i', (string) $sql)
+            || stripos((string) $sql, 'outfile') !== false
+            || stripos((string) $sql, 'dumpfile') !== false
         ) {
             throw new PrestaShopDatabaseException('Db->executeS() must be used only with select, show, explain or describe queries');
         }
@@ -676,7 +657,7 @@ abstract class DbCore
             $sql = $sql->build();
         }
 
-        $sql = rtrim($sql, " \t\n\r\0\x0B;") . ' LIMIT 1';
+        $sql = rtrim((string) $sql, " \t\n\r\0\x0B;") . ' LIMIT 1';
         $this->result = false;
         $this->last_query = $sql;
 
@@ -797,7 +778,7 @@ abstract class DbCore
         $errno = $this->getNumberError();
         if ($webservice_call && $errno) {
             $dbg = debug_backtrace();
-            WebserviceRequest::getInstance()->setError(500, '[SQL Error] ' . $this->getMsgError() . '. From ' . (isset($dbg[3]['class']) ? $dbg[3]['class'] : '') . '->' . $dbg[3]['function'] . '() Query was : ' . $sql, 97);
+            WebserviceRequest::getInstance()->setError(500, '[SQL Error] ' . $this->getMsgError() . '. From ' . ($dbg[3]['class'] ?? '') . '->' . $dbg[3]['function'] . '() Query was : ' . $sql, 97);
         } elseif (_PS_DEBUG_SQL_ && $errno && ! defined('PS_INSTALLATION_IN_PROGRESS')) {
             if ($sql) {
                 throw new PrestaShopDatabaseException($this->getMsgError() . '<br /><br /><pre>' . $sql . '</pre>');

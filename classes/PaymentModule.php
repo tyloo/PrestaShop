@@ -234,7 +234,7 @@ abstract class PaymentModuleCore extends Module
         $this->context->cart->setTaxCalculationMethod();
 
         $this->context->language = $this->context->cart->getAssociatedLanguage();
-        $this->context->shop = ($shop ? $shop : new Shop((int) $this->context->cart->id_shop));
+        $this->context->shop = ($shop ?: new Shop((int) $this->context->cart->id_shop));
         ShopUrl::resetMainDomainCache();
         $id_currency = $currency_special ? (int) $currency_special : (int) $this->context->cart->id_currency;
         $this->context->currency = new Currency((int) $id_currency, null, (int) $this->context->shop->id);
@@ -327,8 +327,8 @@ abstract class PaymentModuleCore extends Module
                             ]
                         ));
                     } else {
-                        $rule_name = isset($rule->name[(int) $this->context->cart->id_lang]) ? $rule->name[(int) $this->context->cart->id_lang] : $rule->code;
-                        $error = $this->trans('The cart rule named "%1s" (ID %2s) used in this cart is not valid and has been withdrawn from cart', [htmlspecialchars($rule_name), (int) $rule->id], 'Admin.Payment.Notification');
+                        $rule_name = $rule->name[(int) $this->context->cart->id_lang] ?? $rule->code;
+                        $error = $this->trans('The cart rule named "%1s" (ID %2s) used in this cart is not valid and has been withdrawn from cart', [htmlspecialchars((string) $rule_name), (int) $rule->id], 'Admin.Payment.Notification');
                         PrestaShopLogger::addLog($error, 3, 2, 'Cart', (int) $this->context->cart->id);
                     }
                 }
@@ -365,7 +365,7 @@ abstract class PaymentModuleCore extends Module
                         self::DEBUG_MODE,
                         $order_status,
                         $id_order_state,
-                        isset($package['id_carrier']) ? $package['id_carrier'] : null
+                        $package['id_carrier'] ?? null
                     );
                     $order = $orderData['order'];
                     $order_list[] = $order;
@@ -701,7 +701,7 @@ abstract class PaymentModuleCore extends Module
                         '{delivery_postal_code}' => $delivery->postcode,
                         '{delivery_country}' => $delivery->country,
                         '{delivery_state}' => $delivery->id_state ? $delivery_state->name : '',
-                        '{delivery_phone}' => ($delivery->phone) ? $delivery->phone : $delivery->phone_mobile,
+                        '{delivery_phone}' => $delivery->phone ?: $delivery->phone_mobile,
                         '{delivery_other}' => $delivery->other,
                         '{invoice_company}' => $invoice->company,
                         '{invoice_vat_number}' => $invoice->vat_number,
@@ -713,7 +713,7 @@ abstract class PaymentModuleCore extends Module
                         '{invoice_postal_code}' => $invoice->postcode,
                         '{invoice_country}' => $invoice->country,
                         '{invoice_state}' => $invoice->id_state ? $invoice_state->name : '',
-                        '{invoice_phone}' => ($invoice->phone) ? $invoice->phone : $invoice->phone_mobile,
+                        '{invoice_phone}' => $invoice->phone ?: $invoice->phone_mobile,
                         '{invoice_other}' => $invoice->other,
                         '{order_name}' => $order->getUniqReference(),
                         '{id_order}' => $order->id,
@@ -1342,7 +1342,7 @@ abstract class PaymentModuleCore extends Module
         }
 
         /** @var OrderShipmentCreator $orderShipmentCreator */
-        $orderShipmentCreator = $this->get('PrestaShop\PrestaShop\Adapter\Shipment\OrderShipmentCreator');
+        $orderShipmentCreator = $this->get(OrderShipmentCreator::class);
 
         $orderShipmentCreator->addShipmentOrder($order, $productsByCarrier);
     }

@@ -27,14 +27,15 @@
 class CustomerAddressPersisterCore
 {
     private $customer;
-    private $token;
     private $cart;
 
-    public function __construct(Customer $customer, Cart $cart, $token)
-    {
+    public function __construct(
+        Customer $customer,
+        Cart $cart,
+        private $token,
+    ) {
         $this->customer = $customer;
         $this->cart = $cart;
-        $this->token = $token;
     }
 
     public function getToken()

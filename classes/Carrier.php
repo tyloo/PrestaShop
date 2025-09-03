@@ -1658,7 +1658,7 @@ class CarrierCore extends ObjectModel
             $carriers = Carrier::getCarriersForOrder($id_zone, $customer->getGroups(), $cart, $carrier_error);
             Cache::store($cache_id, [$carriers, $carrier_error]);
         } else {
-            list($carriers, $carrier_error) = Cache::retrieve($cache_id);
+            [$carriers, $carrier_error] = Cache::retrieve($cache_id);
         }
 
         $error = array_merge($error, $carrier_error);

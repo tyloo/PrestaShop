@@ -31,20 +31,14 @@ class CustomerPersisterCore
 {
     private $errors = [];
     private $context;
-    private $crypto;
-    private $translator;
-    private $guest_allowed;
 
     public function __construct(
         Context $context,
-        Crypto $crypto,
-        TranslatorInterface $translator,
-        $guest_allowed,
+        private readonly Crypto $crypto,
+        private readonly TranslatorInterface $translator,
+        private $guest_allowed,
     ) {
         $this->context = $context;
-        $this->crypto = $crypto;
-        $this->translator = $translator;
-        $this->guest_allowed = $guest_allowed;
     }
 
     public function getErrors()
@@ -90,7 +84,7 @@ class CustomerPersisterCore
 
         if (! $customer->is_guest) {
             $customer->passwd = $this->crypto->hash(
-                $newPlainTextPassword ? $newPlainTextPassword : $plainTextPassword,
+                $newPlainTextPassword ?: $plainTextPassword,
                 _COOKIE_KEY_
             );
         }

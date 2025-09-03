@@ -476,7 +476,7 @@ class WarehouseCore extends ObjectModel
 
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query);
 
-        return $res ? $res : 0;
+        return $res ?: 0;
     }
 
     /**

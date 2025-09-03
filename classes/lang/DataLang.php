@@ -44,11 +44,6 @@ class DataLangCore
     protected $translator;
 
     /**
-     * @var string Locale to translate to
-     */
-    protected $locale;
-
-    /**
      * @var string[] Table primary key
      */
     protected $keys;
@@ -67,10 +62,10 @@ class DataLangCore
      * @param string                   $locale
      * @param TranslatorInterface|null $translator If defined, use this translator
      */
-    public function __construct($locale, ?TranslatorInterface $translator = null)
-    {
-        $this->locale = $locale;
-
+    public function __construct(
+        protected $locale,
+        ?TranslatorInterface $translator = null,
+    ) {
         $this->translator = $translator instanceof TranslatorInterface
             ? $translator
             : SymfonyContainer::getInstance()->get(TranslatorInterface::class);

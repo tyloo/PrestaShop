@@ -36,15 +36,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SymfonyConsoleLogger extends AbstractLogger
 {
-    /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    public function __construct(OutputInterface $output, $level = self::INFO)
-    {
+    public function __construct(
+        private readonly OutputInterface $output,
+        $level = self::INFO,
+    ) {
         parent::__construct($level);
-        $this->output = $output;
     }
 
     protected function logMessage($message, $level)

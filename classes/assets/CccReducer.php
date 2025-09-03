@@ -32,10 +32,6 @@ class CccReducerCore
 {
     use PrestaShop\PrestaShop\Adapter\Assets\AssetUrlGeneratorTrait;
     /**
-     * @var string
-     */
-    private $cacheDir;
-    /**
      * @var Filesystem
      */
     protected $filesystem;
@@ -47,9 +43,11 @@ class CccReducerCore
     /**
      * @param string $cacheDir
      */
-    public function __construct($cacheDir, ConfigurationInterface $configuration, Filesystem $filesystem)
-    {
-        $this->cacheDir = $cacheDir;
+    public function __construct(
+        private $cacheDir,
+        ConfigurationInterface $configuration,
+        Filesystem $filesystem,
+    ) {
         $this->configuration = $configuration;
         $this->filesystem = $filesystem;
 

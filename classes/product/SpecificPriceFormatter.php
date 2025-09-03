@@ -36,35 +36,22 @@ use PrestaShop\PrestaShop\Adapter\Product\PriceFormatter;
 class SpecificPriceFormatterCore
 {
     /**
-     * Calculation method to be used (tax included or not?)
-     *
-     * @var bool
-     */
-    private $isTaxIncluded;
-
-    /**
-     * Specific price data array
-     *
-     * @var array
-     */
-    private $specificPrice;
-
-    /**
      * @var Currency
      */
     private $currency;
 
-    /**
-     * @var bool
+    public function __construct(
+        /**
+         * Specific price data array
+         */
+        private array $specificPrice, /**
+     * Calculation method to be used (tax included or not?)
      */
-    private $displayDiscountPrice;
-
-    public function __construct(array $specificPrice, bool $isTaxIncluded, Currency $currency, bool $displayDiscountPrice)
-    {
-        $this->specificPrice = $specificPrice;
-        $this->isTaxIncluded = $isTaxIncluded;
+        private readonly bool $isTaxIncluded,
+        Currency $currency,
+        private readonly bool $displayDiscountPrice,
+    ) {
         $this->currency = $currency;
-        $this->displayDiscountPrice = $displayDiscountPrice;
     }
 
     /**

@@ -71,9 +71,8 @@ class NotificationCore
     {
         global $cookie;
 
-        switch ($type) {
-            case 'order':
-                $sql = '
+        $sql = match ($type) {
+            'order' => '
 					SELECT SQL_CALC_FOUND_ROWS o.`id_order`, o.`id_customer`, o.`total_paid`, o.`id_currency`, o.`date_upd`, c.`firstname`, c.`lastname`, ca.`name`, co.`iso_code`
 					FROM `' . _DB_PREFIX_ . 'orders` as o
 					LEFT JOIN `' . _DB_PREFIX_ . 'customer` as c ON (c.`id_customer` = o.`id_customer`)
@@ -81,14 +80,10 @@ class NotificationCore
 					LEFT JOIN `' . _DB_PREFIX_ . 'address` as a ON (a.`id_address` = o.`id_address_delivery`)
 					LEFT JOIN `' . _DB_PREFIX_ . 'country` as co ON (co.`id_country` = a.`id_country`)
 					WHERE `id_order` > ' . (int) $idLastElement .
-                    Shop::addSqlRestriction(false, 'o') . '
+                Shop::addSqlRestriction(false, 'o') . '
 					ORDER BY `id_order` DESC
-					LIMIT 5';
-
-                break;
-
-            case 'customer_message':
-                $sql = '
+					LIMIT 5',
+            'customer_message' => '
 					SELECT SQL_CALC_FOUND_ROWS c.`id_customer_message`, ct.`id_customer`, ct.`id_customer_thread`, ct.`email`, ct.`status`, c.`date_add`, cu.`firstname`, cu.`lastname`
 					FROM `' . _DB_PREFIX_ . 'customer_message` as c
 					LEFT JOIN `' . _DB_PREFIX_ . 'customer_thread` as ct ON (c.`id_customer_thread` = ct.`id_customer_thread`)
@@ -97,20 +92,15 @@ class NotificationCore
 						AND c.`id_employee` = 0
 						AND ct.id_shop IN (' . implode(', ', Shop::getContextListShopID()) . ')
 					ORDER BY c.`id_customer_message` DESC
-					LIMIT 5';
-
-                break;
-            default:
-                $sql = '
+					LIMIT 5',
+            default => '
 					SELECT SQL_CALC_FOUND_ROWS t.`id_' . bqSQL($type) . '`, t.*
 					FROM `' . _DB_PREFIX_ . bqSQL($type) . '` t
 					WHERE t.`deleted` = 0 AND t.`id_' . bqSQL($type) . '` > ' . (int) $idLastElement .
-                    Shop::addSqlRestriction(false, 't') . '
+                Shop::addSqlRestriction(false, 't') . '
 					ORDER BY t.`id_' . bqSQL($type) . '` DESC
-					LIMIT 5';
-
-                break;
-        }
+					LIMIT 5',
+        };
 
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql, true, false);
         $total = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('SELECT FOUND_ROWS()', false);

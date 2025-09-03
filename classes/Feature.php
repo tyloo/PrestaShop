@@ -235,7 +235,7 @@ class FeatureCore extends ObjectModel
         }
 
         /* Reinitializing position */
-        $this->cleanPositions();
+        static::cleanPositions();
 
         return $return;
     }
@@ -326,7 +326,7 @@ class FeatureCore extends ObjectModel
             '
 			SELECT `position`, `id_feature`
 			FROM `' . _DB_PREFIX_ . 'feature`
-			WHERE `id_feature` = ' . (int) ($idFeature ? $idFeature : $this->id) . '
+			WHERE `id_feature` = ' . (int) ($idFeature ?: $this->id) . '
 			ORDER BY `position` ASC'
         )) {
             return false;

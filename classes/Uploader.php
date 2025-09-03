@@ -195,7 +195,7 @@ class UploaderCore
                 $bytes *= 1024;
         }
 
-        if ($bytes === '') {
+        if ($bytes === 0) {
             $bytes = null;
         }
 
@@ -239,7 +239,7 @@ class UploaderCore
      */
     public function process($dest = null)
     {
-        $upload = isset($_FILES[$this->getName()]) ? $_FILES[$this->getName()] : null;
+        $upload = $_FILES[$this->getName()] ?? null;
 
         if ($upload && is_array($upload['tmp_name'])) {
             $tmp = [];
@@ -271,7 +271,7 @@ class UploaderCore
             if (isset($dest) && is_dir($dest)) {
                 $filePath = $dest;
             } else {
-                $filePath = $this->getFilePath(isset($dest) ? $dest : $file['name']);
+                $filePath = $this->getFilePath($dest ?? $file['name']);
             }
 
             if ($file['tmp_name'] && is_uploaded_file($file['tmp_name'])) {
@@ -356,7 +356,7 @@ class UploaderCore
             return false;
         }
 
-        if (preg_match('/\%00/', $file['name'])) {
+        if (preg_match('/\%00/', (string) $file['name'])) {
             $file['error'] = Context::getContext()->getTranslator()->trans('Invalid file name', [], 'Admin.Notifications.Error');
 
             return false;
@@ -365,7 +365,7 @@ class UploaderCore
         $types = $this->getAcceptTypes();
 
         // TODO check mime type.
-        if (! empty($types) && ! in_array(Tools::strtolower(pathinfo($file['name'], \PATHINFO_EXTENSION)), $types, true)) {
+        if (! empty($types) && ! in_array(Tools::strtolower(pathinfo((string) $file['name'], \PATHINFO_EXTENSION)), $types, true)) {
             $file['error'] = Context::getContext()->getTranslator()->trans('Filetype not allowed', [], 'Admin.Notifications.Error');
 
             return false;
@@ -402,7 +402,7 @@ class UploaderCore
      */
     protected function getServerVars($var)
     {
-        return isset($_SERVER[$var]) ? $_SERVER[$var] : '';
+        return $_SERVER[$var] ?? '';
     }
 
     /**

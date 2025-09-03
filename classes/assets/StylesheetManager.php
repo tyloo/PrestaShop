@@ -145,13 +145,7 @@ class StylesheetManagerCore extends AbstractAssetManager
         foreach ($this->list as &$items) {
             Tools::uasort(
                 $items,
-                function ($a, $b) {
-                    if ($a['priority'] === $b['priority']) {
-                        return 0;
-                    }
-
-                    return ($a['priority'] < $b['priority']) ? -1 : 1;
-                }
+                fn ($a, $b) => $a['priority'] <=> $b['priority']
             );
         }
     }

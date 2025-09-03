@@ -896,7 +896,7 @@ class CurrencyCore extends ObjectModel
 
         $currencies = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
 
-        return $currencies ? $currencies : [];
+        return $currencies ?: [];
     }
 
     /**

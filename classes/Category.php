@@ -273,7 +273,7 @@ class CategoryCore extends ObjectModel
             Category::regenerateEntireNtree();
         }
         // if access group is not set, initialize it with all groups
-        $this->updateGroup(($this->groupBox !== null) ? $this->groupBox : []);
+        $this->updateGroup($this->groupBox ?? []);
         Hook::exec('actionCategoryAdd', ['category' => $this]);
 
         return $ret;
@@ -330,7 +330,7 @@ class CategoryCore extends ObjectModel
 
         $ret = parent::update($nullValues);
         if ($changed && ! $this->doNotRegenerateNTree) {
-            $this->cleanPositions((int) $this->id_parent);
+            static::cleanPositions((int) $this->id_parent);
             Category::regenerateEntireNtree();
             $this->recalculateLevelDepth($this->id);
         }
@@ -558,7 +558,7 @@ class CategoryCore extends ObjectModel
     public static function regenerateEntireNtree()
     {
         $id = Context::getContext()->shop->id;
-        $idShop = $id ? $id : Configuration::get('PS_SHOP_DEFAULT');
+        $idShop = $id ?: Configuration::get('PS_SHOP_DEFAULT');
         $sql = new DbQuery();
         $sql->select('c.`id_category`, c.`id_parent`');
         $sql->from('category', 'c');
@@ -577,7 +577,7 @@ class CategoryCore extends ObjectModel
             // update by batch of 5000 categories
             $chunks = array_chunk($queries, 5000);
             foreach ($chunks as $chunk) {
-                $sqlChunk = array_map(function ($value) { return '(' . rtrim(implode(',', $value)) . ')'; }, $chunk);
+                $sqlChunk = array_map(fn ($value) => '(' . rtrim(implode(',', $value)) . ')', $chunk);
                 Db::getInstance()->execute('INSERT INTO `' . _DB_PREFIX_ . 'category` (id_category, nleft, nright)
                 VALUES ' . rtrim(implode(',', $sqlChunk), ',') . '
                 ON DUPLICATE KEY UPDATE nleft=VALUES(nleft), nright=VALUES(nright)');
@@ -1479,7 +1479,7 @@ class CategoryCore extends ObjectModel
             }
         }
 
-        return isset($this->name[$idLang]) ? $this->name[$idLang] : '';
+        return $this->name[$idLang] ?? '';
     }
 
     public static function resetStaticCache(): void
@@ -2194,7 +2194,7 @@ class CategoryCore extends ObjectModel
     public function isParentCategoryAvailable()
     {
         $id = Context::getContext()->shop->id;
-        $idShop = $id ? $id : Configuration::get('PS_SHOP_DEFAULT');
+        $idShop = $id ?: Configuration::get('PS_SHOP_DEFAULT');
 
         return (bool) Db::getInstance()->getValue('
 		SELECT c.`id_category`
@@ -2337,7 +2337,7 @@ class CategoryCore extends ObjectModel
                 $shopIds = Shop::getContextListShopID();
             } else {
                 $id = Context::getContext()->shop->id;
-                $shopIds = [$id ? $id : Configuration::get('PS_SHOP_DEFAULT')];
+                $shopIds = [$id ?: Configuration::get('PS_SHOP_DEFAULT')];
             }
         }
 

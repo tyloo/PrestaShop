@@ -74,7 +74,7 @@ class AliasCore extends ObjectModel
         } elseif ($alias && Validate::isValidSearch($alias)) {
             if (! Alias::isFeatureActive()) {
                 $this->alias = trim($alias);
-                $this->search = trim($search);
+                $this->search = trim((string) $search);
             } else {
                 $row = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
 				SELECT a.id_alias, a.search, a.alias
@@ -87,7 +87,7 @@ class AliasCore extends ObjectModel
                     $this->alias = $row['alias'];
                 } else {
                     $this->alias = trim($alias);
-                    $this->search = trim($search);
+                    $this->search = trim((string) $search);
                 }
             }
         }

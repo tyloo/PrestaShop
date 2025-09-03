@@ -49,7 +49,7 @@ class AddressChecksumCore implements ChecksumInterface
 
         try {
             $fields = $address->getFields();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return sha1('Invalid address');
         }
 

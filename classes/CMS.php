@@ -140,7 +140,7 @@ class CMSCore extends ObjectModel
     public function update($nullValues = false)
     {
         if (parent::update($nullValues)) {
-            return $this->cleanPositions($this->id_cms_category);
+            return static::cleanPositions($this->id_cms_category);
         }
 
         return false;
@@ -156,7 +156,7 @@ class CMSCore extends ObjectModel
     public function delete()
     {
         if (parent::delete()) {
-            return $this->cleanPositions($this->id_cms_category);
+            return static::cleanPositions($this->id_cms_category);
         }
 
         return false;
@@ -380,6 +380,6 @@ class CMSCore extends ObjectModel
      */
     public static function getRepositoryClassName()
     {
-        return '\\PrestaShop\\PrestaShop\\Core\\CMS\\CMSRepository';
+        return PrestaShop\PrestaShop\Core\CMS\CMSRepository::class;
     }
 }

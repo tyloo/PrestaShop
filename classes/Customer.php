@@ -319,9 +319,9 @@ class CustomerCore extends ObjectModel
      */
     public function add($autoDate = true, $nullValues = true)
     {
-        $this->id_shop = ($this->id_shop) ? $this->id_shop : Context::getContext()->shop->id;
-        $this->id_shop_group = ($this->id_shop_group) ? $this->id_shop_group : Context::getContext()->shop->id_shop_group;
-        $this->id_lang = ($this->id_lang) ? $this->id_lang : Context::getContext()->language->id;
+        $this->id_shop = $this->id_shop ?: Context::getContext()->shop->id;
+        $this->id_shop_group = $this->id_shop_group ?: Context::getContext()->shop->id_shop_group;
+        $this->id_lang = $this->id_lang ?: Context::getContext()->language->id;
         $this->birthday = (empty($this->years) ? $this->birthday : (int) $this->years . '-' . (int) $this->months . '-' . (int) $this->days);
         $this->secure_key = md5(uniqid((string) mt_rand(0, mt_getrandmax()), true));
         $this->last_passwd_gen = date('Y-m-d H:i:s', strtotime('-' . Configuration::get('PS_PASSWD_TIME_FRONT') . 'minutes'));
@@ -542,8 +542,8 @@ class CustomerCore extends ObjectModel
 
         try {
             /** @var PrestaShop\PrestaShop\Core\Crypto\Hashing $crypto */
-            $crypto = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\Crypto\\Hashing');
-        } catch (CoreException $e) {
+            $crypto = ServiceLocator::get(PrestaShop\PrestaShop\Core\Crypto\Hashing::class);
+        } catch (CoreException) {
             return false;
         }
 
@@ -1283,7 +1283,7 @@ class CustomerCore extends ObjectModel
         $this->is_guest = false;
 
         /** @var PrestaShop\PrestaShop\Core\Crypto\Hashing $crypto */
-        $crypto = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\Crypto\\Hashing');
+        $crypto = ServiceLocator::get(PrestaShop\PrestaShop\Core\Crypto\Hashing::class);
 
         /*
         * If this is an anonymous conversion and we want the customer to set his own password,
@@ -1409,7 +1409,7 @@ class CustomerCore extends ObjectModel
     public function setWsPasswd($passwd)
     {
         /** @var PrestaShop\PrestaShop\Core\Crypto\Hashing $crypto */
-        $crypto = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\Crypto\\Hashing');
+        $crypto = ServiceLocator::get(PrestaShop\PrestaShop\Core\Crypto\Hashing::class);
         if ($this->id === 0 || $this->passwd !== $passwd) {
             $this->passwd = $crypto->hash($passwd);
         }

@@ -261,7 +261,7 @@ class AddressFormatCore extends ObjectModel
             if (! in_array($requiredField, $fieldList, true)) {
                 $this->_errorFormatList[] = $this->trans(
                     'The %s field (in tab %s) is required.',
-                    [htmlspecialchars($requiredField), htmlspecialchars($this->getFieldTabName($requiredField))],
+                    [htmlspecialchars((string) $requiredField), htmlspecialchars($this->getFieldTabName($requiredField))],
                     'Admin.Notifications.Error');
             }
         }
@@ -280,7 +280,7 @@ class AddressFormatCore extends ObjectModel
      */
     private function getFieldTabName($field)
     {
-        if (strpos($field, ':') === false) {
+        if (! str_contains($field, ':')) {
             // When there is no ':' separator, the field is in the Address tab
             return 'Address';
         }
@@ -310,7 +310,7 @@ class AddressFormatCore extends ObjectModel
     protected static function _setOriginalDisplayFormat(&$formattedValueList, $currentLine, $currentKeyList)
     {
         if ($currentKeyList && is_array($currentKeyList)) {
-            $originalFormattedPatternList = explode(' ', $currentLine);
+            $originalFormattedPatternList = explode(' ', (string) $currentLine);
             // Foreach the available pattern
             foreach ($originalFormattedPatternList as $patternNum => $pattern) {
                 // Var allows to modify the good formatted key value when multiple key exist into the same pattern
@@ -337,7 +337,7 @@ class AddressFormatCore extends ObjectModel
                     if (empty($formattedValueList[$key])) {
                         return;
                     }
-                    $formattedValue = preg_replace('/^' . $key . '$/', $formattedValueList[$key], $replacedValue, -1, $count);
+                    $formattedValue = preg_replace('/^' . $key . '$/', (string) $formattedValueList[$key], (string) $replacedValue, -1, $count);
                     if ($formattedValue) {
                         if ($count) {
                             // Allow to check multiple key in the same pattern,
@@ -365,7 +365,7 @@ class AddressFormatCore extends ObjectModel
     {
         foreach ($orderedAddressField as &$line) {
             $cleanedLine = '';
-            if ($keyList = preg_split(self::_CLEANING_REGEX_, $line, -1, \PREG_SPLIT_NO_EMPTY)) {
+            if ($keyList = preg_split(self::_CLEANING_REGEX_, (string) $line, -1, \PREG_SPLIT_NO_EMPTY)) {
                 foreach ($keyList as $key) {
                     $cleanedLine .= $key . ' ';
                 }
@@ -395,7 +395,7 @@ class AddressFormatCore extends ObjectModel
         // Check if $address exist and it's an instanciate object of Address
         if ($address instanceof Address) {
             foreach ($addressFormat as $line) {
-                if (($keyList = preg_split(self::_CLEANING_REGEX_, $line, -1, \PREG_SPLIT_NO_EMPTY)) && is_array($keyList)) {
+                if (($keyList = preg_split(self::_CLEANING_REGEX_, (string) $line, -1, \PREG_SPLIT_NO_EMPTY)) && is_array($keyList)) {
                     foreach ($keyList as $pattern) {
                         $associateName = explode(':', $pattern);
 
@@ -416,9 +416,7 @@ class AddressFormatCore extends ObjectModel
                                 }
                                 $tab[$pattern] = is_array($temporyObject[$associateName[0]]->{$associateName[1]}) ?
                                     (
-                                        isset($temporyObject[$associateName[0]]->{$associateName[1]}[$id_lang]) ?
-                                        $temporyObject[$associateName[0]]->{$associateName[1]}[$id_lang] :
-                                        ''
+                                        $temporyObject[$associateName[0]]->{$associateName[1]}[$id_lang] ?? ''
                                     ) :
                                     $temporyObject[$associateName[0]]->{$associateName[1]};
                             }
@@ -466,7 +464,7 @@ class AddressFormatCore extends ObjectModel
         }
 
         $addressText = preg_replace('/' . preg_quote($newLine, '/') . '$/i', '', $addressText);
-        $addressText = rtrim($addressText, $separator);
+        $addressText = rtrim((string) $addressText, $separator);
 
         return $addressText;
     }
@@ -483,10 +481,10 @@ class AddressFormatCore extends ObjectModel
     {
         return AddressFormat::generateAddress(
             $params['address'],
-            isset($params['patternRules']) ? $params['patternRules'] : [],
-            isset($params['newLine']) ? $params['newLine'] : self::FORMAT_NEW_LINE,
-            isset($params['separator']) ? $params['separator'] : ' ',
-            isset($params['style']) ? $params['style'] : []
+            $params['patternRules'] ?? [],
+            $params['newLine'] ?? self::FORMAT_NEW_LINE,
+            $params['separator'] ?? ' ',
+            $params['style'] ?? []
         );
     }
 
@@ -641,7 +639,7 @@ class AddressFormatCore extends ObjectModel
         if (empty($out)) {
             $out = $this->getFormatDB((int) Configuration::get('PS_COUNTRY_DEFAULT'));
         }
-        if (Country::isNeedDniByCountryId($idCountry) && strpos($out, 'dni') === false) {
+        if (Country::isNeedDniByCountryId($idCountry) && ! str_contains($out, 'dni')) {
             $out .= AddressFormat::FORMAT_NEW_LINE . 'dni';
         }
 
@@ -662,7 +660,7 @@ class AddressFormatCore extends ObjectModel
 			SELECT format
 			FROM `' . _DB_PREFIX_ . $this->def['table'] . '`
 			WHERE `id_country` = ' . (int) $idCountry);
-            $format = trim($format);
+            $format = trim((string) $format);
             Cache::store('AddressFormat::getFormatDB' . $idCountry, $format);
 
             return $format;

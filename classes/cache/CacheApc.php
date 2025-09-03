@@ -55,7 +55,7 @@ class CacheApcCore extends Cache
     {
         if ($key === '*') {
             $this->flush();
-        } elseif (strpos($key, '*') === false) {
+        } elseif (! str_contains($key, '*')) {
             $this->_delete($key);
         } else {
             $pattern = str_replace('\\*', '.*', preg_quote($key));
@@ -67,7 +67,7 @@ class CacheApcCore extends Cache
                 } else {
                     $key = $entry['info'];
                 }
-                if (preg_match('#^' . $pattern . '$#', $key)) {
+                if (preg_match('#^' . $pattern . '$#', (string) $key)) {
                     $this->_delete($key);
                 }
             }

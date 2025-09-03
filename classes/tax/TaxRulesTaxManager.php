@@ -29,7 +29,6 @@ use PrestaShop\PrestaShop\Adapter\ServiceLocator;
 class TaxRulesTaxManagerCore implements TaxManagerInterface
 {
     public $address;
-    public $type;
     public $tax_calculator;
 
     /**
@@ -40,17 +39,19 @@ class TaxRulesTaxManagerCore implements TaxManagerInterface
     /**
      * @param mixed $type An additional parameter for the tax manager (ex: tax rules id for TaxRuleTaxManager)
      */
-    public function __construct(Address $address, $type, ?PrestaShop\PrestaShop\Core\ConfigurationInterface $configurationManager = null)
-    {
+    public function __construct(
+        Address $address,
+        public $type,
+        ?PrestaShop\PrestaShop\Core\ConfigurationInterface $configurationManager = null,
+    ) {
         if ($configurationManager === null) {
-            $this->configurationManager = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\ConfigurationInterface');
+            $this->configurationManager = ServiceLocator::get(PrestaShop\PrestaShop\Core\ConfigurationInterface::class);
         } else {
             $this->configurationManager = $configurationManager;
         }
 
         // We clone the address so that the information use by this TaxManager never change (address can be modified somewhere else)
         $this->address = clone $address;
-        $this->type = $type;
     }
 
     /**

@@ -176,7 +176,7 @@ class TaxRuleCore extends ObjectModel
         $zip_codes = preg_split('/-/', $zip_codes);
 
         $from = $zip_codes[0];
-        $to = isset($zip_codes[1]) ? $zip_codes[1] : 0;
+        $to = $zip_codes[1] ?? 0;
         if (count($zip_codes) === 2) {
             $from = $zip_codes[0];
             $to = $zip_codes[1];

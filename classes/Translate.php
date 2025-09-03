@@ -47,7 +47,7 @@ class TranslateCore
         global $_LANG;
 
         $string = preg_replace("/\\\*'/", "\'", $string);
-        $key = $class . '_' . md5($string);
+        $key = $class . '_' . md5((string) $string);
 
         if (isset($_LANG[$key])) {
             $str = $_LANG[$key];
@@ -56,7 +56,7 @@ class TranslateCore
         }
 
         if ($htmlentities) {
-            $str = htmlspecialchars($str, \ENT_QUOTES, 'utf-8');
+            $str = htmlspecialchars((string) $str, \ENT_QUOTES, 'utf-8');
         }
         $str = str_replace('"', '&quot;', $str);
 
@@ -133,7 +133,7 @@ class TranslateCore
         }
 
         $string = preg_replace("/\\\*'/", "\'", $originalString);
-        $key = md5($string);
+        $key = md5((string) $string);
 
         $cacheKey = $name . '|' . $string . '|' . $source . '|' . (int) $js . '|' . $iso;
         if (isset($langCache[$cacheKey])) {
@@ -142,22 +142,22 @@ class TranslateCore
             $currentKey = strtolower('<{' . $name . '}' . _THEME_NAME_ . '>' . $source) . '_' . $key;
             $defaultKey = strtolower('<{' . $name . '}prestashop>' . $source) . '_' . $key;
 
-            if (substr($source, -10, 10) === 'controller') {
+            if (str_ends_with($source, 'controller')) {
                 $file = substr($source, 0, -10);
                 $currentKeyFile = strtolower('<{' . $name . '}' . _THEME_NAME_ . '>' . $file) . '_' . $key;
                 $defaultKeyFile = strtolower('<{' . $name . '}prestashop>' . $file) . '_' . $key;
             }
 
             if (isset($currentKeyFile) && ! empty($_MODULES[$currentKeyFile])) {
-                $ret = stripslashes($_MODULES[$currentKeyFile]);
+                $ret = stripslashes((string) $_MODULES[$currentKeyFile]);
             } elseif (isset($defaultKeyFile) && ! empty($_MODULES[$defaultKeyFile])) {
-                $ret = stripslashes($_MODULES[$defaultKeyFile]);
+                $ret = stripslashes((string) $_MODULES[$defaultKeyFile]);
             } elseif (! empty($_MODULES[$currentKey])) {
-                $ret = stripslashes($_MODULES[$currentKey]);
+                $ret = stripslashes((string) $_MODULES[$currentKey]);
             } elseif (! empty($_MODULES[$defaultKey])) {
-                $ret = stripslashes($_MODULES[$defaultKey]);
+                $ret = stripslashes((string) $_MODULES[$defaultKey]);
             } else {
-                $ret = stripslashes($string);
+                $ret = stripslashes((string) $string);
             }
 
             if (
@@ -225,7 +225,7 @@ class TranslateCore
         }
 
         $string = preg_replace("/\\\*'/", "\'", $string);
-        $key = md5($string);
+        $key = md5((string) $string);
 
         $str = (array_key_exists('PDF' . $key, $_LANGPDF) ? $_LANGPDF['PDF' . $key] : $string);
 
@@ -272,7 +272,7 @@ class TranslateCore
                 $position = $index + 1;
                 // extract tag name
                 $match = [];
-                if (preg_match('/^\s*<\s*(\w+)/', $tag, $match)) {
+                if (preg_match('/^\s*<\s*(\w+)/', (string) $tag, $match)) {
                     $opener = $tag;
                     $closer = '</' . $match[1] . '>';
 

@@ -30,10 +30,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 abstract class AbstractFormCore implements FormInterface
 {
     /**
-     * @var Smarty
-     */
-    private $smarty;
-    /**
      * @var TranslatorInterface
      */
     protected $translator;
@@ -60,11 +56,10 @@ abstract class AbstractFormCore implements FormInterface
     protected $errors = ['' => []];
 
     public function __construct(
-        Smarty $smarty,
+        private readonly Smarty $smarty,
         TranslatorInterface $translator,
         FormFormatterInterface $formatter,
     ) {
-        $this->smarty = $smarty;
         $this->translator = $translator;
         $this->formatter = $formatter;
         $this->constraintTranslator = new ValidateConstraintTranslator(

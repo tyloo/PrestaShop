@@ -44,9 +44,6 @@ class LinkCore
         'page' => [],
     ];
 
-    public $protocol_link;
-    public $protocol_content;
-
     protected $ssl_enable;
     protected $urlShopId;
 
@@ -56,15 +53,15 @@ class LinkCore
     /**
      * Constructor (initialization only).
      *
-     * @param string|null $protocolLink
-     * @param string|null $protocolContent
+     * @param string|null $protocol_link
+     * @param string|null $protocol_content
      */
-    public function __construct($protocolLink = null, $protocolContent = null)
-    {
+    public function __construct(
+        public $protocol_link = null,
+        public $protocol_content = null,
+    ) {
         $this->allow = (bool) Configuration::get('PS_REWRITING_SETTINGS');
         $this->url = $_SERVER['SCRIPT_NAME'];
-        $this->protocol_link = $protocolLink;
-        $this->protocol_content = $protocolContent;
 
         if (! defined('_PS_BASE_URL_')) {
             define('_PS_BASE_URL_', Tools::getShopDomain(true));
@@ -697,7 +694,7 @@ class LinkCore
 
         // Set available keywords
         $params['module'] = $module;
-        $params['controller'] = $controller ? $controller : 'default';
+        $params['controller'] = $controller ?: 'default';
 
         // If the module has its own route ... just use it !
         if (Dispatcher::getInstance()->hasRoute('module-' . $module . '-' . $controller, $idLang, $idShop)) {
@@ -805,14 +802,14 @@ class LinkCore
                 unset($conversionParameters['token']);
 
                 return $legacyUrlConverter->convertByParameters($conversionParameters);
-            } catch (CoreException $e) {
+            } catch (CoreException) {
                 // The url could not be converted so we fallback on legacy url
             }
         }
 
         $idLang = Context::getContext()->language->id;
 
-        return $this->getAdminBaseLink() . basename(_PS_ADMIN_DIR_) . '/' . Dispatcher::getInstance()->createUrl($controller, $idLang, $params);
+        return $this->getAdminBaseLink() . basename((string) _PS_ADMIN_DIR_) . '/' . Dispatcher::getInstance()->createUrl($controller, $idLang, $params);
     }
 
     /**
@@ -905,7 +902,7 @@ class LinkCore
     {
         if ($this->urlShopId === null) {
             $host = Tools::getHttpHost();
-            $request_uri = rawurldecode($_SERVER['REQUEST_URI']);
+            $request_uri = rawurldecode((string) $_SERVER['REQUEST_URI']);
 
             $sql = 'SELECT s.id_shop, CONCAT(su.physical_uri, su.virtual_uri) AS uri, su.domain, su.main
                     FROM ' . _DB_PREFIX_ . 'shop_url su
@@ -917,13 +914,13 @@ class LinkCore
 
             try {
                 $result = Db::getInstance()->executeS($sql);
-            } catch (PrestaShopDatabaseException $e) {
+            } catch (PrestaShopDatabaseException) {
                 return null;
             }
 
             foreach ($result as $row) {
                 // A shop matching current URL was found
-                if (preg_match('#^' . preg_quote($row['uri'], '#') . '#i', $request_uri)) {
+                if (preg_match('#^' . preg_quote((string) $row['uri'], '#') . '#i', $request_uri)) {
                     $this->urlShopId = $row['id_shop'];
 
                     break;
@@ -967,7 +964,7 @@ class LinkCore
         }
 
         // Default image like "fr-default"
-        if (strpos($idImage, 'default') !== false) {
+        if (str_contains($idImage, 'default')) {
             $theme = ((Shop::isFeatureActive() && file_exists(_PS_PRODUCT_IMG_DIR_ . $idImage . $type . '-' . Context::getContext()->shop->theme_name . '.jpg')) ? '-' . Context::getContext()->shop->theme_name : '');
             $uriPath = _THEME_PROD_DIR_ . $idImage . $type . $theme . '.' . $extension;
 
@@ -1157,7 +1154,7 @@ class LinkCore
 
         $uriPath = Dispatcher::getInstance()->createUrl($controller, $idLang, $request, false, '', $idShop);
 
-        return $this->getBaseLink($idShop, $ssl, $relativeProtocol) . $this->getLangLink($idLang, null, $idShop) . ltrim($uriPath, '/');
+        return $this->getBaseLink($idShop, $ssl, $relativeProtocol) . $this->getLangLink($idLang, null, $idShop) . ltrim((string) $uriPath, '/');
     }
 
     /**
@@ -1318,7 +1315,7 @@ class LinkCore
 
         if (! $array) {
             if (count($vars)) {
-                return $url . (! strstr($url, '?') && ($this->allow || $url === $this->url) ? '?' : '&') . http_build_query($vars, '', '&');
+                return $url . (! strstr((string) $url, '?') && ($this->allow || $url === $this->url) ? '?' : '&') . http_build_query($vars, '', '&');
             }
 
             return $url;
@@ -1448,7 +1445,7 @@ class LinkCore
         }
 
         $url = preg_replace($patterns, '', $url);
-        $url = trim($url, '?&/');
+        $url = trim((string) $url, '?&/');
 
         return 'index.php' . (! empty($legacyEnvironment) ? '?' : '/') . $url;
     }
@@ -1462,9 +1459,9 @@ class LinkCore
      */
     public function matchQuickLink($url)
     {
-        $quickLink = $this->getQuickLink($url);
+        $quickLink = static::getQuickLink($url);
 
-        return $quickLink === $this->getQuickLink($_SERVER['REQUEST_URI']);
+        return $quickLink === static::getQuickLink($_SERVER['REQUEST_URI']);
     }
 
     /**
@@ -1520,8 +1517,8 @@ class LinkCore
                 $link = $context->link->getProductLink(
                     $params['id'],
                     $params['alias'],
-                    isset($params['category']) ? $params['category'] : null,
-                    isset($params['ean13']) ? $params['ean13'] : null,
+                    $params['category'] ?? null,
+                    $params['ean13'] ?? null,
                     $params['id_lang'],
                     $params['id_shop'],
                     isset($params['ipa']) ? (int) $params['ipa'] : 0,
@@ -1550,7 +1547,7 @@ class LinkCore
                 $link = $context->link->getCatImageLink(
                     $params['name'],
                     $params['id'],
-                    $params['type'] = (isset($params['type']) ? $params['type'] : null)
+                    $params['type'] ??= null
                 );
 
                 break;
@@ -1566,14 +1563,14 @@ class LinkCore
             case 'manufacturerImage':
                 $link = $context->link->getManufacturerImageLink(
                     (int) $params['id'],
-                    $params['type'] = (isset($params['type']) ? $params['type'] : null)
+                    $params['type'] ??= null
                 );
 
                 break;
             case 'supplierImage':
                 $link = $context->link->getSupplierImageLink(
                     (int) $params['id'],
-                    $params['type'] = (isset($params['type']) ? $params['type'] : null)
+                    $params['type'] ??= null
                 );
 
                 break;

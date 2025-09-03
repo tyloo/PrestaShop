@@ -123,10 +123,10 @@ class MetaCore extends ObjectModel
                 $properties = $reflection ? $reflection->getDefaultProperties() : [];
                 if (isset($properties['php_self'])) {
                     $selectedPages[$properties['php_self']] = $properties['php_self'];
-                } elseif (preg_match('/^[a-z0-9_.-]*\.php$/i', $file)) {
+                } elseif (preg_match('/^[a-z0-9_.-]*\.php$/i', (string) $file)) {
                     $selectedPages[strtolower(str_replace('Controller.php', '', $file))] = strtolower(str_replace('Controller.php', '', $file));
-                } elseif (preg_match('/^([a-z0-9_.-]*\/)?[a-z0-9_.-]*\.php$/i', $file)) {
-                    $selectedPages[strtolower(Context::getContext()->getTranslator()->trans('File %2$s (in directory %1$s)', [dirname($file), str_replace('Controller.php', '', basename($file))], 'Admin.Notifications.Error'))] = strtolower(str_replace('Controller.php', '', basename($file)));
+                } elseif (preg_match('/^([a-z0-9_.-]*\/)?[a-z0-9_.-]*\.php$/i', (string) $file)) {
+                    $selectedPages[strtolower((string) Context::getContext()->getTranslator()->trans('File %2$s (in directory %1$s)', [dirname((string) $file), str_replace('Controller.php', '', basename((string) $file))], 'Admin.Notifications.Error'))] = strtolower(str_replace('Controller.php', '', basename((string) $file)));
                 }
             }
         }
@@ -138,7 +138,7 @@ class MetaCore extends ObjectModel
                 continue;
             }
 
-            $module = Tools::strtolower(basename(dirname(dirname(dirname($file)))));
+            $module = Tools::strtolower(basename(dirname($file, 3)));
             $selectedPages[$module . ' - ' . $filename] = 'module-' . $module . '-' . $filename;
         }
 
@@ -368,7 +368,7 @@ class MetaCore extends ObjectModel
         if (Validate::isLoadedObject($product) && $product->active) {
             $row = Meta::getPresentedObject($product);
             if (empty($row['meta_description'])) {
-                $row['meta_description'] = strip_tags($row['description_short']);
+                $row['meta_description'] = strip_tags((string) $row['description_short']);
             }
 
             return Meta::completeMetaTags($row, $row['name']);
@@ -395,7 +395,7 @@ class MetaCore extends ObjectModel
             if (Validate::isLoadedObject($category)) {
                 $row = Meta::getPresentedObject($category);
                 if (empty($row['meta_description'])) {
-                    $row['meta_description'] = strip_tags($row['description']);
+                    $row['meta_description'] = strip_tags((string) $row['description']);
                 }
 
                 if (is_string($title) && $title !== '') {
@@ -431,7 +431,7 @@ class MetaCore extends ObjectModel
         if (Validate::isLoadedObject($manufacturer)) {
             $row = Meta::getPresentedObject($manufacturer);
             if (! empty($row['meta_description'])) {
-                $row['meta_description'] = strip_tags($row['meta_description']);
+                $row['meta_description'] = strip_tags((string) $row['meta_description']);
             }
             $row['meta_title'] = $row['meta_title'] ?: $row['name'];
 
@@ -456,7 +456,7 @@ class MetaCore extends ObjectModel
         if (Validate::isLoadedObject($supplier)) {
             $row = Meta::getPresentedObject($supplier);
             if (! empty($row['meta_description'])) {
-                $row['meta_description'] = strip_tags($row['meta_description']);
+                $row['meta_description'] = strip_tags((string) $row['meta_description']);
             }
 
             return Meta::completeMetaTags($row, $row['name']);

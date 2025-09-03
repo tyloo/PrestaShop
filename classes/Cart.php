@@ -269,8 +269,8 @@ class CartCore extends ObjectModel
 
         $this->setTaxCalculationMethod();
 
-        $this->configuration = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\ConfigurationInterface');
-        $this->addressFactory = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\AddressFactory');
+        $this->configuration = ServiceLocator::get(PrestaShop\PrestaShop\Core\ConfigurationInterface::class);
+        $this->addressFactory = ServiceLocator::get(AddressFactory::class);
     }
 
     public static function resetStaticCache()
@@ -1132,7 +1132,7 @@ class CartCore extends ObjectModel
             $useReduction,
             $productQuantity,
             false,
-            (int) $this->id_customer ? (int) $this->id_customer : null,
+            (int) $this->id_customer ?: null,
             (int) $this->id,
             $addressId,
             $specificPriceOutput,
@@ -1267,12 +1267,12 @@ class CartCore extends ObjectModel
 
         foreach ($pa_implode as $id_product_attribute) {
             self::$_attributesLists[$id_product_attribute . '-' . $id_lang]['attributes'] = rtrim(
-                self::$_attributesLists[$id_product_attribute . '-' . $id_lang]['attributes'],
+                (string) self::$_attributesLists[$id_product_attribute . '-' . $id_lang]['attributes'],
                 $separator . ' '
             );
 
             self::$_attributesLists[$id_product_attribute . '-' . $id_lang]['attributes_small'] = rtrim(
-                self::$_attributesLists[$id_product_attribute . '-' . $id_lang]['attributes_small'],
+                (string) self::$_attributesLists[$id_product_attribute . '-' . $id_lang]['attributes_small'],
                 $separator . ' '
             );
         }
@@ -1863,9 +1863,7 @@ class CartCore extends ObjectModel
     {
         $id_product_attribute = (int) $id_product_attribute;
 
-        $gifts = array_filter($this->getProductsWithSeparatedGifts(), function ($product) {
-            return array_key_exists('is_gift', $product) && $product['is_gift'];
-        });
+        $gifts = array_filter($this->getProductsWithSeparatedGifts(), fn ($product) => array_key_exists('is_gift', $product) && $product['is_gift']);
 
         $preservedGifts = [$id_product . '-' . $id_product_attribute => 0];
 
@@ -2388,7 +2386,7 @@ class CartCore extends ObjectModel
 
                     try {
                         $address[$this->id] = Address::initialize($id_address);
-                    } catch (Exception $e) {
+                    } catch (Exception) {
                         $address[$this->id] = new Address();
                         $address[$this->id]->id_country = Configuration::get('PS_COUNTRY_DEFAULT');
                     }
@@ -3035,7 +3033,7 @@ class CartCore extends ObjectModel
      */
     public static function intifier($string, $delimiter = ',')
     {
-        $elm = explode($delimiter, $string);
+        $elm = explode($delimiter, (string) $string);
         $max = max($elm);
 
         return strlen($max) . implode(str_repeat('0', strlen($max) + 1), $elm);
@@ -3050,7 +3048,7 @@ class CartCore extends ObjectModel
     {
         /** @var positive-int $delimiter_len */
         $delimiter_len = intval($int[0]);
-        $int = strrev(substr($int, 1));
+        $int = strrev(substr((string) $int, 1));
         $elm = explode(str_repeat('0', $delimiter_len + 1), $int);
 
         return strrev(implode($delimiter, $elm));
@@ -3173,7 +3171,7 @@ class CartCore extends ObjectModel
 
         // The delivery option was selected
         if (isset($this->delivery_option) && $this->delivery_option !== '') {
-            $delivery_option = json_decode($this->delivery_option, true);
+            $delivery_option = json_decode((string) $this->delivery_option, true);
             $validated = true;
 
             if (is_array($delivery_option)) {
@@ -3217,10 +3215,8 @@ class CartCore extends ObjectModel
                     break;
                 }
             }
-
-            reset($options);
             if (! isset($delivery_option[$id_address])) {
-                $delivery_option[$id_address] = key($options);
+                $delivery_option[$id_address] = array_key_first($options);
             }
         }
 
@@ -4792,7 +4788,7 @@ class CartCore extends ObjectModel
         // The cart content is altered for display
         foreach ($cart_rules as &$cart_rule) {
             // If the cart rule is automatic (without any code) and include free shipping, it should not be displayed as a cart rule but only set the shipping cost to 0
-            if ($cart_rule['free_shipping'] && (empty($cart_rule['code']) || preg_match('/^' . CartRule::BO_ORDER_CODE_PREFIX . '[0-9]+/', $cart_rule['code']))) {
+            if ($cart_rule['free_shipping'] && (empty($cart_rule['code']) || preg_match('/^' . CartRule::BO_ORDER_CODE_PREFIX . '[0-9]+/', (string) $cart_rule['code']))) {
                 $cart_rule['value_real'] -= $total_shipping;
                 $cart_rule['value_tax_exc'] -= $total_shipping_tax_exc;
                 $cart_rule['value_real'] = Tools::ps_round($cart_rule['value_real'], (int) $context->currency->decimals * Context::getContext()->getComputingPrecision());

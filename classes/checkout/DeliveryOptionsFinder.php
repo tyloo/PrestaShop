@@ -31,20 +31,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class DeliveryOptionsFinderCore
 {
     private $context;
-    private $objectPresenter;
-    private $translator;
-    private $priceFormatter;
 
     public function __construct(
         Context $context,
-        TranslatorInterface $translator,
-        ObjectPresenter $objectPresenter,
-        PriceFormatter $priceFormatter,
+        private readonly TranslatorInterface $translator,
+        private readonly ObjectPresenter $objectPresenter,
+        private readonly PriceFormatter $priceFormatter,
     ) {
         $this->context = $context;
-        $this->objectPresenter = $objectPresenter;
-        $this->translator = $translator;
-        $this->priceFormatter = $priceFormatter;
     }
 
     private function isFreeShipping($cart, array $carrier)

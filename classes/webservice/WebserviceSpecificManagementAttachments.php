@@ -113,7 +113,7 @@ class WebserviceSpecificManagementAttachmentsCore implements WebserviceSpecificM
             // if displayFile is set, present the file (download)
             $this->getObjectOutput()->setHeaderParams('Content-Type', $this->displayFile['mime']);
             $this->getObjectOutput()->setHeaderParams('Content-Length', $this->displayFile['file_size']);
-            $this->getObjectOutput()->setHeaderParams('Content-Disposition', 'attachment; filename="' . utf8_decode($this->displayFile['file_name']) . '"');
+            $this->getObjectOutput()->setHeaderParams('Content-Disposition', 'attachment; filename="' . utf8_decode((string) $this->displayFile['file_name']) . '"');
 
             return file_get_contents($this->displayFile['file']);
         }
@@ -332,7 +332,7 @@ class WebserviceSpecificManagementAttachmentsCore implements WebserviceSpecificM
                 [$maximumSize, $e->getMessage()],
                 'Admin.Notifications.Error'
             );
-        } catch (FileUploadException $e) {
+        } catch (FileUploadException) {
             $this->getWsObject()->errors[] = $this->trans(
                 'Failed to copy the file.',
                 [],

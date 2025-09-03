@@ -91,9 +91,9 @@ class StockManagerCore implements StockManagerInterface
             'price_te' => $price_te,
             'last_wa' => null,
             'current_wa' => null,
-            'id_employee' => (int) $context->employee->id ? (int) $context->employee->id : $employee->id,
-            'employee_firstname' => $context->employee->firstname ? $context->employee->firstname : $employee->firstname,
-            'employee_lastname' => $context->employee->lastname ? $context->employee->lastname : $employee->lastname,
+            'id_employee' => (int) $context->employee->id ?: $employee->id,
+            'employee_firstname' => $context->employee->firstname ?: $employee->firstname,
+            'employee_lastname' => $context->employee->lastname ?: $employee->lastname,
             'sign' => 1,
         ];
 
@@ -300,9 +300,9 @@ class StockManagerCore implements StockManagerInterface
                         'price_te' => $stock->price_te,
                         'last_wa' => $stock->price_te,
                         'current_wa' => $stock->price_te,
-                        'id_employee' => (int) $context->employee->id ? (int) $context->employee->id : $employee->id,
-                        'employee_firstname' => $context->employee->firstname ? $context->employee->firstname : $employee->firstname,
-                        'employee_lastname' => $context->employee->lastname ? $context->employee->lastname : $employee->lastname,
+                        'id_employee' => (int) $context->employee->id ?: $employee->id,
+                        'employee_firstname' => $context->employee->firstname ?: $employee->firstname,
+                        'employee_lastname' => $context->employee->lastname ?: $employee->lastname,
                         'sign' => -1,
                     ];
                     $stock_params = [
@@ -414,7 +414,7 @@ class StockManagerCore implements StockManagerInterface
                                     'price_te' => $stock->price_te,
                                     'sign' => -1,
                                     'referer' => $id_mvt_referrer,
-                                    'id_employee' => (int) $context->employee->id ? (int) $context->employee->id : $employee->id,
+                                    'id_employee' => (int) $context->employee->id ?: $employee->id,
                                 ];
 
                                 // saves stock mvt
@@ -825,7 +825,7 @@ class StockManagerCore implements StockManagerInterface
 						FROM ' . _DB_PREFIX_ . 'stock s
 						LEFT JOIN ' . _DB_PREFIX_ . 'warehouse_carrier wc ON wc.`id_warehouse` = s.`id_warehouse`
 						LEFT JOIN ' . _DB_PREFIX_ . 'carrier c ON wc.`id_carrier` = c.`id_reference`
-						WHERE s.`id_product` = ' . (int) $id_product . ' AND s.`id_product_attribute` = ' . (int) $id_product_attribute . ' AND s.`id_warehouse` = ' . $result['id_warehouse'] . ' AND c.`id_carrier` IN (' . rtrim($delivery_option[(int) Context::getContext()->cart->id_address_delivery], ',') . ') GROUP BY s.`id_product`');
+						WHERE s.`id_product` = ' . (int) $id_product . ' AND s.`id_product_attribute` = ' . (int) $id_product_attribute . ' AND s.`id_warehouse` = ' . $result['id_warehouse'] . ' AND c.`id_carrier` IN (' . rtrim((string) $delivery_option[(int) Context::getContext()->cart->id_address_delivery], ',') . ') GROUP BY s.`id_product`');
                 } else {
                     $stock_quantity += Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('SELECT SUM(s.`usable_quantity`) as quantity
 						FROM ' . _DB_PREFIX_ . 'stock s

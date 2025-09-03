@@ -303,11 +303,8 @@ class CountryCore extends ObjectModel
 			FROM `' . _DB_PREFIX_ . 'country`
 			WHERE `id_country` = ' . (int) $idCountry);
         }
-        if (isset(Country::$cache_iso_by_id[$idCountry])) {
-            return Country::$cache_iso_by_id[$idCountry];
-        }
 
-        return false;
+        return Country::$cache_iso_by_id[$idCountry] ?? false;
     }
 
     /**

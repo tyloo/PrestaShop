@@ -97,10 +97,10 @@ class ValidateCore
     {
         if (! $url || $url === 'http://') {
             $errors[] = Context::getContext()->getTranslator()->trans('Please specify module URL', [], 'Admin.Modules.Notification');
-        } elseif (substr($url, -4) !== '.tar' && substr($url, -4) !== '.zip' && substr($url, -4) !== '.tgz' && substr($url, -7) !== '.tar.gz') {
+        } elseif (! str_ends_with($url, '.tar') && ! str_ends_with($url, '.zip') && ! str_ends_with($url, '.tgz') && ! str_ends_with($url, '.tar.gz')) {
             $errors[] = Context::getContext()->getTranslator()->trans('Unknown archive type.', [], 'Admin.Modules.Notification');
         } else {
-            if (strpos($url, 'http') === false) {
+            if (! str_contains($url, 'http')) {
                 $url = 'http://' . $url;
             }
             if (! is_array(@get_headers($url))) {
@@ -332,7 +332,7 @@ class ValidateCore
 
     public static function isLanguageCode($s)
     {
-        return preg_match('/^[a-zA-Z]{2}(-[a-zA-Z]{2})?$/', $s);
+        return preg_match('/^[a-zA-Z]{2}(-[a-zA-Z]{2})?$/', (string) $s);
     }
 
     /**
@@ -349,12 +349,12 @@ class ValidateCore
 
     public static function isStateIsoCode($iso_code)
     {
-        return preg_match('/^[a-zA-Z0-9]{1,4}((-)[a-zA-Z0-9]{1,4})?$/', $iso_code);
+        return preg_match('/^[a-zA-Z0-9]{1,4}((-)[a-zA-Z0-9]{1,4})?$/', (string) $iso_code);
     }
 
     public static function isNumericIsoCode($iso_code)
     {
-        return preg_match(NumericIsoCode::PATTERN, $iso_code);
+        return preg_match(NumericIsoCode::PATTERN, (string) $iso_code);
     }
 
     /**
@@ -521,7 +521,7 @@ class ValidateCore
         $rloCharacters = "\xE2\x80\xAE";
 
         // Check if the RLO character is in the string
-        if (strpos($html, $rloCharacters) !== false) {
+        if (str_contains($html, $rloCharacters)) {
             // RLO character found, potential RLO attack
             return false;
         }
@@ -691,7 +691,7 @@ class ValidateCore
      */
     public static function isBool($bool)
     {
-        return $bool === null || is_bool($bool) || preg_match('/^(0|1)$/', $bool);
+        return $bool === null || is_bool($bool) || preg_match('/^(0|1)$/', (string) $bool);
     }
 
     /**
@@ -723,7 +723,7 @@ class ValidateCore
      */
     public static function isGtin($gtin): bool
     {
-        return ! $gtin || preg_match(Gtin::VALID_PATTERN, $gtin);
+        return ! $gtin || preg_match(Gtin::VALID_PATTERN, (string) $gtin);
     }
 
     /**
@@ -1005,13 +1005,13 @@ class ValidateCore
 
     public static function isUnixName($data)
     {
-        return preg_match('/^[a-z0-9\._-]+$/ui', $data);
+        return preg_match('/^[a-z0-9\._-]+$/ui', (string) $data);
     }
 
     public static function isTablePrefix($data)
     {
         // Even if "-" is theorically allowed, it will be considered a syntax error if you do not add backquotes (`) around the table name
-        return preg_match('/^[a-z0-9_]+$/ui', $data);
+        return preg_match('/^[a-z0-9_]+$/ui', (string) $data);
     }
 
     /**
@@ -1062,12 +1062,12 @@ class ValidateCore
 
     public static function isSubDomainName($domain)
     {
-        return preg_match('/^[a-zA-Z0-9-_]*$/', $domain);
+        return preg_match('/^[a-zA-Z0-9-_]*$/', (string) $domain);
     }
 
     public static function isVoucherDescription($text)
     {
-        return preg_match('/^([^<>{}]|<br \/>)*$/i', $text);
+        return preg_match('/^([^<>{}]|<br \/>)*$/i', (string) $text);
     }
 
     /**
@@ -1125,7 +1125,7 @@ class ValidateCore
      */
     public static function isCookie($data)
     {
-        return is_object($data) && get_class($data) === 'Cookie';
+        return is_object($data) && $data::class === 'Cookie';
     }
 
     /**
@@ -1315,17 +1315,17 @@ class ValidateCore
 
     public static function isPrestaShopVersion($version)
     {
-        return preg_match('/^[0-1]\.[0-9]{1,2}(\.[0-9]{1,2}){0,2}$/', $version) && ip2long($version);
+        return preg_match('/^[0-1]\.[0-9]{1,2}(\.[0-9]{1,2}){0,2}$/', (string) $version) && ip2long($version);
     }
 
     public static function isOrderInvoiceNumber($id)
     {
-        return preg_match('/^(?:' . Configuration::get('PS_INVOICE_PREFIX', Context::getContext()->language->id) . ')\s*([0-9]+)$/i', $id);
+        return preg_match('/^(?:' . Configuration::get('PS_INVOICE_PREFIX', Context::getContext()->language->id) . ')\s*([0-9]+)$/i', (string) $id);
     }
 
     public static function isThemeName($theme_name)
     {
-        return (bool) preg_match('/^[\w-]{3,255}$/u', $theme_name);
+        return (bool) preg_match('/^[\w-]{3,255}$/u', (string) $theme_name);
     }
 
     public static function isRequiredWhenActive($value, ObjectModelCore $object): bool
@@ -1357,7 +1357,7 @@ class ValidateCore
     public static function isValidImapUrl($imapUrl)
     {
         if (ini_get('imap.enable_insecure_rsh') === false) {
-            return preg_match('~^((?!oProxyCommand).)*$~i', $imapUrl);
+            return preg_match('~^((?!oProxyCommand).)*$~i', (string) $imapUrl);
         }
 
         return true;

@@ -281,7 +281,7 @@ class PrestaShopBackupCore
             $table = current($table);
 
             // Skip tables which do not start with _DB_PREFIX_
-            if (strlen($table) < strlen(_DB_PREFIX_) || strncmp($table, _DB_PREFIX_, strlen(_DB_PREFIX_)) !== 0) {
+            if (strlen((string) $table) < strlen(_DB_PREFIX_) || ! str_starts_with((string) $table, _DB_PREFIX_)) {
                 continue;
             }
 

@@ -29,15 +29,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ConditionsToApproveFinderCore
 {
-    private $translator;
     private $context;
 
     public function __construct(
         Context $context,
-        TranslatorInterface $translator,
+        private readonly TranslatorInterface $translator,
     ) {
         $this->context = $context;
-        $this->translator = $translator;
     }
 
     /**
@@ -102,8 +100,6 @@ class ConditionsToApproveFinderCore
 
     public function getConditionsToApproveForTemplate()
     {
-        return array_map(function (TermsAndConditions $condition) {
-            return $condition->format();
-        }, $this->getConditionsToApprove());
+        return array_map(fn (TermsAndConditions $condition) => $condition->format(), $this->getConditionsToApprove());
     }
 }

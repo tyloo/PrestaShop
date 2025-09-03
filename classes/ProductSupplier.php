@@ -174,11 +174,8 @@ class ProductSupplierCore extends ObjectModel
         }
 
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
-        if (isset($res[0])) {
-            return $res[0];
-        }
 
-        return $res;
+        return $res[0] ?? $res;
     }
 
     /**
@@ -280,10 +277,7 @@ class ProductSupplierCore extends ObjectModel
         );
 
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
-        if (isset($res[0])) {
-            return $res[0];
-        }
 
-        return $res;
+        return $res[0] ?? $res;
     }
 }

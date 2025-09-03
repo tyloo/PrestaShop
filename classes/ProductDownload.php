@@ -272,7 +272,7 @@ class ProductDownloadCore extends ObjectModel
      */
     public function getTextLink($hash = false)
     {
-        $key = $this->filename . '-' . ($hash ? $hash : 'orderdetail');
+        $key = $this->filename . '-' . ($hash ?: 'orderdetail');
 
         return Context::getContext()->link->getPageLink('get-file&key=' . $key);
     }

@@ -515,7 +515,7 @@ class ContextCore
                 $containerFinder = new ContainerFinder($this);
                 $container = $containerFinder->getContainer();
                 $translatorLoader = $container->get('prestashop.translation.translator_language_loader');
-            } catch (ContainerNotFoundException|ServiceNotFoundException $exception) {
+            } catch (ContainerNotFoundException|ServiceNotFoundException) {
                 $translatorLoader = null;
             }
 

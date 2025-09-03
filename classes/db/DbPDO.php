@@ -98,7 +98,7 @@ class DbPDOCore extends Db
             if ($dropit && ($link->exec('DROP DATABASE `' . str_replace('`', '\\`', $dbname) . '`') !== false)) {
                 return true;
             }
-        } catch (PDOException $e) {
+        } catch (PDOException) {
             return false;
         }
 
@@ -117,7 +117,7 @@ class DbPDOCore extends Db
     public function connect()
     {
         try {
-            $this->link = $this->getPDO($this->server, $this->user, $this->password, $this->database, 5);
+            $this->link = static::getPDO($this->server, $this->user, $this->password, $this->database, 5);
         } catch (PDOException $e) {
             throw new PrestaShopException('Link to database cannot be established: ' . $e->getMessage());
         }
@@ -264,7 +264,7 @@ class DbPDOCore extends Db
     {
         $error = $this->link->errorInfo();
 
-        return isset($error[1]) ? $error[1] : 0;
+        return $error[1] ?? 0;
     }
 
     /**
@@ -331,7 +331,7 @@ class DbPDOCore extends Db
     {
         try {
             $link = DbPDO::getPDO($server, $user, $pwd, $db, 5);
-        } catch (PDOException $e) {
+        } catch (PDOException) {
             return false;
         }
 
@@ -357,7 +357,7 @@ class DbPDOCore extends Db
     {
         try {
             $link = DbPDO::getPDO($server, $user, $pwd, $db, 5);
-        } catch (PDOException $e) {
+        } catch (PDOException) {
             return false;
         }
 
@@ -400,7 +400,7 @@ class DbPDOCore extends Db
     {
         try {
             $link = DbPDO::getPDO($server, $user, $pwd, $db, 5);
-        } catch (PDOException $e) {
+        } catch (PDOException) {
             return false;
         }
 
@@ -472,7 +472,7 @@ class DbPDOCore extends Db
             $value = 'MyISAM';
         } else {
             $row = $result->fetch();
-            if (! $row || strtolower($row['Value']) !== 'yes') {
+            if (! $row || strtolower((string) $row['Value']) !== 'yes') {
                 $value = 'MyISAM';
             }
         }
@@ -508,7 +508,7 @@ class DbPDOCore extends Db
     {
         try {
             $link = DbPDO::getPDO($server, $user, $pwd, '', 5);
-        } catch (PDOException $e) {
+        } catch (PDOException) {
             return false;
         }
         $result = $link->exec('SET NAMES utf8mb4');

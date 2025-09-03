@@ -28,7 +28,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CustomerFormatterCore implements FormFormatterInterface
 {
-    private $translator;
     private $language;
 
     private $ask_for_birthdate = true;
@@ -39,10 +38,9 @@ class CustomerFormatterCore implements FormFormatterInterface
     private $ask_for_new_password = false;
 
     public function __construct(
-        TranslatorInterface $translator,
+        private readonly TranslatorInterface $translator,
         Language $language,
     ) {
-        $this->translator = $translator;
         $this->language = $language;
     }
 

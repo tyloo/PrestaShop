@@ -29,7 +29,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 abstract class AbstractCheckoutStepCore implements CheckoutStepInterface
 {
     private $smarty;
-    private $translator;
 
     /**
      * @var CheckoutProcess
@@ -46,11 +45,12 @@ abstract class AbstractCheckoutStepCore implements CheckoutStepInterface
     protected $template;
     protected $unreachableStepTemplate = 'checkout/_partials/steps/unreachable.tpl';
 
-    public function __construct(Context $context, TranslatorInterface $translator)
-    {
+    public function __construct(
+        Context $context,
+        private readonly TranslatorInterface $translator,
+    ) {
         $this->context = $context;
         $this->smarty = $context->smarty;
-        $this->translator = $translator;
     }
 
     public function setTemplate($templatePath)

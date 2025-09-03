@@ -73,8 +73,8 @@ abstract class ModuleGraphCore extends Module
     protected function setDateGraph($layers, $legend = false)
     {
         // Get dates in a manageable format
-        $from_array = getdate(strtotime($this->_employee->stats_date_from));
-        $to_array = getdate(strtotime($this->_employee->stats_date_to));
+        $from_array = getdate(strtotime((string) $this->_employee->stats_date_from));
+        $to_array = getdate(strtotime((string) $this->_employee->stats_date_to));
 
         // If the granularity is inferior to 1 day
         if ($this->_employee->stats_date_from === $this->_employee->stats_date_to) {
@@ -93,7 +93,7 @@ abstract class ModuleGraphCore extends Module
             if (is_callable([$this, 'setDayValues'])) {
                 $this->setDayValues($layers);
             }
-        } elseif (strtotime($this->_employee->stats_date_to) - strtotime($this->_employee->stats_date_from) <= 2678400) {
+        } elseif (strtotime((string) $this->_employee->stats_date_to) - strtotime((string) $this->_employee->stats_date_from) <= 2678400) {
             // If the granularity is inferior to 1 month
             // @TODO : change to manage 28 to 31 days
 
@@ -130,7 +130,7 @@ abstract class ModuleGraphCore extends Module
             if (is_callable([$this, 'setMonthValues'])) {
                 $this->setMonthValues($layers);
             }
-        } elseif (strtotime('-1 year', strtotime($this->_employee->stats_date_to)) < strtotime($this->_employee->stats_date_from)) {
+        } elseif (strtotime('-1 year', strtotime((string) $this->_employee->stats_date_to)) < strtotime((string) $this->_employee->stats_date_from)) {
             // If the granularity is less than 1 year
 
             if ($legend) {
@@ -195,7 +195,7 @@ abstract class ModuleGraphCore extends Module
         $this->setEmployee($context->employee->id);
         $this->setLang($context->language->id);
 
-        $layers = isset($datas['layers']) ? $datas['layers'] : 1;
+        $layers = $datas['layers'] ?? 1;
         if (isset($datas['option'])) {
             $this->setOption($datas['option'], $layers);
         }

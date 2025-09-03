@@ -392,20 +392,20 @@ abstract class ModuleCore implements ModuleInterface
             $this->ps_versions_compliancy['max'] = _PS_VERSION_;
         }
 
-        $minParts = explode('.', $this->ps_versions_compliancy['min']);
-        $maxParts = explode('.', $this->ps_versions_compliancy['max']);
+        $minParts = explode('.', (string) $this->ps_versions_compliancy['min']);
+        $maxParts = explode('.', (string) $this->ps_versions_compliancy['max']);
 
         // Since v8, we don't pad versions
         if ((int) current($minParts) < 8) {
-            $this->ps_versions_compliancy['min'] = str_pad($this->ps_versions_compliancy['min'], 7, '.0');
+            $this->ps_versions_compliancy['min'] = str_pad((string) $this->ps_versions_compliancy['min'], 7, '.0');
         }
         if ((int) current($maxParts) < 8) {
-            $padLength = strlen($this->ps_versions_compliancy['max']) + (4 - count($maxParts)) * 4;
-            $this->ps_versions_compliancy['max'] = str_pad($this->ps_versions_compliancy['max'], $padLength, '.999');
+            $padLength = strlen((string) $this->ps_versions_compliancy['max']) + (4 - count($maxParts)) * 4;
+            $this->ps_versions_compliancy['max'] = str_pad((string) $this->ps_versions_compliancy['max'], $padLength, '.999');
         }
 
         // Load context and smarty
-        $this->context = $context ? $context : Context::getContext();
+        $this->context = $context ?: Context::getContext();
         if (is_object($this->context->smarty)) {
             $this->smarty = $this->context->smarty->createData($this->context->smarty);
         }
@@ -1389,10 +1389,10 @@ abstract class ModuleCore implements ModuleInterface
             $reflection_class = new ReflectionClass($current_class);
             $file_path = realpath($reflection_class->getFileName());
             $realpath_module_dir = realpath(_PS_MODULE_DIR_);
-            if (substr(realpath($file_path), 0, strlen($realpath_module_dir)) === $realpath_module_dir) {
+            if (str_starts_with(realpath($file_path), $realpath_module_dir)) {
                 // For controllers in module/controllers path
-                if (basename(dirname(dirname($file_path))) === 'controllers') {
-                    static::$classInModule[$current_class] = basename(dirname(dirname(dirname($file_path))));
+                if (basename(dirname($file_path, 2)) === 'controllers') {
+                    static::$classInModule[$current_class] = basename(dirname($file_path, 3));
                 } else {
                     // For old AdminTab controllers
                     static::$classInModule[$current_class] = substr(dirname($file_path), strlen($realpath_module_dir) + 1);
@@ -1497,7 +1497,7 @@ abstract class ModuleCore implements ModuleInterface
     public static function loadModuleXMLConfig(string $technicalName, ?string $languageIsoCode = null): ?array
     {
         if (empty($languageIsoCode)) {
-            $languageIsoCode = substr(Context::getContext()->language->iso_code, 0, 2);
+            $languageIsoCode = substr((string) Context::getContext()->language->iso_code, 0, 2);
         }
 
         // Config file
@@ -1527,7 +1527,7 @@ abstract class ModuleCore implements ModuleInterface
 
     public static function getModuleName($module)
     {
-        $iso = substr(Context::getContext()->language->iso_code, 0, 2);
+        $iso = substr((string) Context::getContext()->language->iso_code, 0, 2);
 
         // Config file
         $config_file = _PS_MODULE_DIR_ . $module . '/config_' . $iso . '.xml';
@@ -1535,7 +1535,7 @@ abstract class ModuleCore implements ModuleInterface
         if ($iso === 'en' || ! file_exists($config_file)) {
             $config_file = _PS_MODULE_DIR_ . $module . '/config.xml';
             if (! file_exists($config_file)) {
-                return 'Module ' . ucfirst($module);
+                return 'Module ' . ucfirst((string) $module);
             }
         }
 
@@ -1543,12 +1543,12 @@ abstract class ModuleCore implements ModuleInterface
         libxml_use_internal_errors(true);
         $xml_module = @simplexml_load_file($config_file);
         if (! $xml_module) {
-            return 'Module ' . ucfirst($module);
+            return 'Module ' . ucfirst((string) $module);
         }
         foreach (libxml_get_errors() as $error) {
             libxml_clear_errors();
 
-            return 'Module ' . ucfirst($module);
+            return 'Module ' . ucfirst((string) $module);
         }
         libxml_clear_errors();
 
@@ -1621,7 +1621,7 @@ abstract class ModuleCore implements ModuleInterface
                 break;
             }
 
-            $iso = substr(Context::getContext()->language->iso_code, 0, 2);
+            $iso = substr((string) Context::getContext()->language->iso_code, 0, 2);
 
             // Check if config.xml module file exists and if it's not outdated
 
@@ -1704,14 +1704,14 @@ abstract class ModuleCore implements ModuleInterface
                         $parser = (new PhpParser\ParserFactory())->create(PhpParser\ParserFactory::ONLY_PHP7);
                         $parser->parse($file);
                         require_once $file_path;
-                    } catch (PhpParser\Error $e) {
+                    } catch (PhpParser\Error) {
                         $errors[] = Context::getContext()->getTranslator()->trans('%1$s (parse error in %2$s)', [$module, substr($file_path, strlen(_PS_ROOT_DIR_))], 'Admin.Modules.Notification');
                     }
 
                     preg_match('/\n[\s\t]*?namespace\s.*?;/', $file, $ns);
                     if (! empty($ns)) {
                         $ns = preg_replace('/\n[\s\t]*?namespace\s/', '', $ns[0]);
-                        $ns = rtrim($ns, ';');
+                        $ns = rtrim((string) $ns, ';');
                         $module = $ns . '\\' . $module;
                     }
                 }
@@ -1735,10 +1735,10 @@ abstract class ModuleCore implements ModuleInterface
                         $item->limited_countries = $tmp_module->limited_countries;
                         $item->parent_class = get_parent_class($module);
                         $item->is_configurable = $tmp_module->is_configurable = method_exists($tmp_module, 'getContent') ? 1 : 0;
-                        $item->need_instance = isset($tmp_module->need_instance) ? $tmp_module->need_instance : 0;
+                        $item->need_instance = $tmp_module->need_instance ?? 0;
                         $item->active = $tmp_module->active;
-                        $item->currencies = isset($tmp_module->currencies) ? $tmp_module->currencies : null;
-                        $item->currencies_mode = isset($tmp_module->currencies_mode) ? $tmp_module->currencies_mode : null;
+                        $item->currencies = $tmp_module->currencies ?? null;
+                        $item->currencies_mode = $tmp_module->currencies_mode ?? null;
                         $item->confirmUninstall = isset($tmp_module->confirmUninstall) ? html_entity_decode($tmp_module->confirmUninstall) : null;
                         $item->description_full = isset($tmp_module->description_full) ? stripslashes($tmp_module->description_full) : null;
                         $item->additional_description = isset($tmp_module->additional_description) ? stripslashes($tmp_module->additional_description) : null;
@@ -1746,7 +1746,7 @@ abstract class ModuleCore implements ModuleInterface
                         $item->nb_rates = isset($tmp_module->nb_rates) ? (array) $tmp_module->nb_rates : null;
                         $item->avg_rate = isset($tmp_module->avg_rate) ? (array) $tmp_module->avg_rate : null;
                         $item->badges = isset($tmp_module->badges) ? (array) $tmp_module->badges : null;
-                        $item->url = isset($tmp_module->url) ? $tmp_module->url : null;
+                        $item->url = $tmp_module->url ?? null;
                         $item->onclick_option = method_exists($module, 'onclickOption') ? true : false;
 
                         if ($item->onclick_option) {
@@ -1768,7 +1768,7 @@ abstract class ModuleCore implements ModuleInterface
                         }
 
                         unset($tmp_module);
-                    } catch (Exception $e) {
+                    } catch (Exception) {
                     }
                 } else {
                     $module_errors[] = Context::getContext()->getTranslator()->trans(
@@ -1818,9 +1818,7 @@ abstract class ModuleCore implements ModuleInterface
             }
         }
 
-        usort($module_list, function ($a, $b) {
-            return strnatcasecmp($a->displayName, $b->displayName);
-        });
+        usort($module_list, fn ($a, $b) => strnatcasecmp((string) $a->displayName, (string) $b->displayName));
         if ($errors) {
             if (! isset(Context::getContext()->controller) && ! Context::getContext()->controller->controller_name) {
                 echo '<div class="alert error"><h3>' . Context::getContext()->getTranslator()->trans('The following module(s) could not be loaded', [], 'Admin.Modules.Notification') . ':</h3><ol>';
@@ -1983,7 +1981,7 @@ abstract class ModuleCore implements ModuleInterface
         return Translate::getModuleTranslation(
             $this,
             $string,
-            ($specific) ? $specific : $this->name,
+            $specific ?: $this->name,
             null,
             false,
             $locale
@@ -2404,7 +2402,7 @@ abstract class ModuleCore implements ModuleInterface
     protected function getCacheId($name = null)
     {
         $cache_array = [];
-        $cache_array[] = $name !== null ? $name : $this->name;
+        $cache_array[] = $name ?? $this->name;
         if (Configuration::get('PS_SSL_ENABLED')) {
             $cache_array[] = (int) Tools::usingSecureMode();
         }
@@ -2430,12 +2428,12 @@ abstract class ModuleCore implements ModuleInterface
 
     public function display($file, $template, $cache_id = null, $compile_id = null)
     {
-        if (($overloaded = Module::_isTemplateOverloadedStatic(basename($file, '.php'), $template)) === null) {
-            return Context::getContext()->getTranslator()->trans('No template found for module', [], 'Admin.Modules.Notification') . ' ' . basename($file, '.php') . (_PS_MODE_DEV_ ? ' (' . $template . ')' : '');
+        if (($overloaded = Module::_isTemplateOverloadedStatic(basename((string) $file, '.php'), $template)) === null) {
+            return Context::getContext()->getTranslator()->trans('No template found for module', [], 'Admin.Modules.Notification') . ' ' . basename((string) $file, '.php') . (_PS_MODE_DEV_ ? ' (' . $template . ')' : '');
         }
         $this->smarty->assign([
-            'module_dir' => __PS_BASE_URI__ . 'modules/' . basename($file, '.php') . '/',
-            'module_template_dir' => ($overloaded ? _THEME_DIR_ : __PS_BASE_URI__) . 'modules/' . basename($file, '.php') . '/',
+            'module_dir' => __PS_BASE_URI__ . 'modules/' . basename((string) $file, '.php') . '/',
+            'module_template_dir' => ($overloaded ? _THEME_DIR_ : __PS_BASE_URI__) . 'modules/' . basename((string) $file, '.php') . '/',
             'allow_push' => false, // required by dashboard modules
         ]);
 
@@ -2503,7 +2501,7 @@ abstract class ModuleCore implements ModuleInterface
         }
 
         if (! isset($this->current_subtemplate[$template . '_' . $cache_id . '_' . $compile_id])) {
-            if (strpos($template, 'module:') === false
+            if (! str_contains($template, 'module:')
                 && ! file_exists(_PS_ROOT_DIR_ . '/' . $template)
                 && ! file_exists($template)
             ) {
@@ -2559,7 +2557,7 @@ abstract class ModuleCore implements ModuleInterface
     public function isCached($template, $cache_id = null, $compile_id = null)
     {
         Tools::enableCache();
-        if (strpos($template, 'module:') === false && ! file_exists(_PS_ROOT_DIR_ . '/' . $template)) {
+        if (! str_contains((string) $template, 'module:') && ! file_exists(_PS_ROOT_DIR_ . '/' . $template)) {
             $template = $this->getTemplatePath($template);
         }
         if ($compile_id === null) {
@@ -2660,7 +2658,7 @@ abstract class ModuleCore implements ModuleInterface
     <need_instance>' . (int) $this->need_instance . '</need_instance>' . (! empty($this->limited_countries) ? "\n\t" . '<limited_countries>' . (count($this->limited_countries) === 1 ? $this->limited_countries[0] : '') . '</limited_countries>' : '') . '
 </module>';
         if (is_writable(_PS_MODULE_DIR_ . $this->name . '/')) {
-            $iso = substr(Context::getContext()->language->iso_code, 0, 2);
+            $iso = substr((string) Context::getContext()->language->iso_code, 0, 2);
             $file = _PS_MODULE_DIR_ . $this->name . '/' . ($iso === 'en' ? 'config.xml' : 'config_' . $iso . '.xml');
             if (! @file_put_contents($file, $xml)) {
                 if (! is_writable($file)) {
@@ -2729,7 +2727,7 @@ abstract class ModuleCore implements ModuleInterface
             foreach ($profileRoles as $role) {
                 preg_match(
                     '/' . Permission::PREFIX_MODULE . '(?P<moduleName>[A-Z0-9_]+)_(?P<auth>[A-Z]+)/',
-                    $role['slug'],
+                    (string) $role['slug'],
                     $matches
                 );
 
@@ -2758,7 +2756,7 @@ abstract class ModuleCore implements ModuleInterface
         foreach ($result as $row) {
             preg_match(
                 '/' . Permission::PREFIX_MODULE . '(?P<moduleName>[A-Z0-9_]+)_(?P<auth>[A-Z]+)/',
-                $row['slug'],
+                (string) $row['slug'],
                 $matches
             );
 
@@ -3102,7 +3100,7 @@ abstract class ModuleCore implements ModuleInterface
             foreach ($module_class->getMethods() as $method) {
                 if ($override_class->hasMethod($method->getName())) {
                     $method_override = $override_class->getMethod($method->getName());
-                    if (preg_match('/module: (.*)/ism', $override_file[$method_override->getStartLine() - 5], $name) && preg_match('/date: (.*)/ism', $override_file[$method_override->getStartLine() - 4], $date) && preg_match('/version: ([0-9.]+)/ism', $override_file[$method_override->getStartLine() - 3], $version)) {
+                    if (preg_match('/module: (.*)/ism', (string) $override_file[$method_override->getStartLine() - 5], $name) && preg_match('/date: (.*)/ism', (string) $override_file[$method_override->getStartLine() - 4], $date) && preg_match('/version: ([0-9.]+)/ism', (string) $override_file[$method_override->getStartLine() - 3], $version)) {
                         throw new Exception(Context::getContext()->getTranslator()->trans('The method %1$s in the class %2$s is already overridden by the module %3$s version %4$s at %5$s.', [$method->getName(), $classname, $name[1], $version[1], $date[1]], 'Admin.Modules.Notification'));
                     }
 
@@ -3337,12 +3335,12 @@ abstract class ModuleCore implements ModuleInterface
                 $module_content = preg_replace('/\s/', '', implode('', array_splice($module_file, $module_method->getStartLine() - 1, $length, array_pad([], $length, '#--remove--#'))));
 
                 $replace = true;
-                if (preg_match('/\* module: (' . $this->name . ')/ism', $override_file[$method->getStartLine() - 5])) {
+                if (preg_match('/\* module: (' . $this->name . ')/ism', (string) $override_file[$method->getStartLine() - 5])) {
                     $override_file[$method->getStartLine() - 6] = $override_file[$method->getStartLine() - 5] = $override_file[$method->getStartLine() - 4] = $override_file[$method->getStartLine() - 3] = $override_file[$method->getStartLine() - 2] = '#--remove--#';
                     $replace = false;
                 }
 
-                if (md5($module_content) !== md5($orig_content) && $replace) {
+                if (md5((string) $module_content) !== md5((string) $orig_content) && $replace) {
                     $override_file = $override_file_orig;
                 }
             }
@@ -3356,7 +3354,7 @@ abstract class ModuleCore implements ModuleInterface
                 // Replace the declaration line by #--remove--#
                 foreach ($override_file as $line_number => &$line_content) {
                     if (preg_match('/(public|private|protected)\s+(static\s+)?\s*(\w+\s+)?(\$)?' . $property->getName() . '/i', $line_content)) {
-                        if (preg_match('/\* module: (' . $this->name . ')/ism', $override_file[$line_number - 4])) {
+                        if (preg_match('/\* module: (' . $this->name . ')/ism', (string) $override_file[$line_number - 4])) {
                             $override_file[$line_number - 5] = $override_file[$line_number - 4] = $override_file[$line_number - 3] = $override_file[$line_number - 2] = $override_file[$line_number - 1] = '#--remove--#';
                         }
                         $line_content = '#--remove--#';
@@ -3375,7 +3373,7 @@ abstract class ModuleCore implements ModuleInterface
                 // Replace the declaration line by #--remove--#
                 foreach ($override_file as $line_number => &$line_content) {
                     if (preg_match('/(const)\s+(static\s+)?(\$)?' . $constant . '/i', $line_content)) {
-                        if (preg_match('/\* module: (' . $this->name . ')/ism', $override_file[$line_number - 4])) {
+                        if (preg_match('/\* module: (' . $this->name . ')/ism', (string) $override_file[$line_number - 4])) {
                             $override_file[$line_number - 5] = $override_file[$line_number - 4] = $override_file[$line_number - 3] = $override_file[$line_number - 2] = $override_file[$line_number - 1] = '#--remove--#';
                         }
                         $line_content = '#--remove--#';
@@ -3387,14 +3385,14 @@ abstract class ModuleCore implements ModuleInterface
 
             $count = count($override_file);
             for ($i = 0; $i < $count; ++$i) {
-                if (preg_match('/(^\s*\/\/.*)/i', $override_file[$i])) {
+                if (preg_match('/(^\s*\/\/.*)/i', (string) $override_file[$i])) {
                     $override_file[$i] = '#--remove--#';
-                } elseif (preg_match('/(^\s*\/\*)/i', $override_file[$i])) {
-                    if (! preg_match('/(^\s*\* module:)/i', $override_file[$i + 1])
-                        && ! preg_match('/(^\s*\* date:)/i', $override_file[$i + 2])
-                        && ! preg_match('/(^\s*\* version:)/i', $override_file[$i + 3])
-                        && ! preg_match('/(^\s*\*\/)/i', $override_file[$i + 4])) {
-                        for (; $override_file[$i] && ! preg_match('/(.*?\*\/)/i', $override_file[$i]); ++$i) {
+                } elseif (preg_match('/(^\s*\/\*)/i', (string) $override_file[$i])) {
+                    if (! preg_match('/(^\s*\* module:)/i', (string) $override_file[$i + 1])
+                        && ! preg_match('/(^\s*\* date:)/i', (string) $override_file[$i + 2])
+                        && ! preg_match('/(^\s*\* version:)/i', (string) $override_file[$i + 3])
+                        && ! preg_match('/(^\s*\*\/)/i', (string) $override_file[$i + 4])) {
+                        for (; $override_file[$i] && ! preg_match('/(.*?\*\/)/i', (string) $override_file[$i]); ++$i) {
                             $override_file[$i] = '#--remove--#';
                         }
                         $override_file[$i] = '#--remove--#';

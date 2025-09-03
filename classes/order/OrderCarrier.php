@@ -178,7 +178,7 @@ class OrderCarrierCore extends ObjectModel
             $prod_url = $prod_obj->getLink();
 
             $metadata .= "\n" . '<div itemprop="itemShipped" itemscope itemtype="https://schema.org/Product">';
-            $metadata .= "\n" . '   <meta itemprop="name" content="' . htmlspecialchars($product['product_name']) . '"/>';
+            $metadata .= "\n" . '   <meta itemprop="name" content="' . htmlspecialchars((string) $product['product_name']) . '"/>';
             $metadata .= "\n" . '   <link itemprop="image" href="' . $img_url . '"/>';
             $metadata .= "\n" . '   <link itemprop="url" href="' . $prod_url . '"/>';
             $metadata .= "\n" . '</div>';

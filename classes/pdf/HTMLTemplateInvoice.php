@@ -312,24 +312,12 @@ class HTMLTemplateInvoiceCore extends HTMLTemplate
         /*
          * Need the $round_mode for the tests.
          */
-        switch ($this->order->round_type) {
-            case Order::ROUND_TOTAL:
-                $round_type = 'total';
-
-                break;
-            case Order::ROUND_LINE:
-                $round_type = 'line';
-
-                break;
-            case Order::ROUND_ITEM:
-                $round_type = 'item';
-
-                break;
-            default:
-                $round_type = 'line';
-
-                break;
-        }
+        $round_type = match ($this->order->round_type) {
+            Order::ROUND_TOTAL => 'total',
+            Order::ROUND_LINE => 'line',
+            Order::ROUND_ITEM => 'item',
+            default => 'line',
+        };
 
         $display_product_images = Configuration::get('PS_PDF_IMG_INVOICE');
         $tax_excluded_display = Group::getPriceDisplayMethod($customer->id_default_group);

@@ -61,7 +61,7 @@ class TreeToolbarSearchCategoriesCore extends TreeToolbarButtonCore implements I
             $this->getContext()->controller->addJs(__PS_BASE_URI__ . $admin_webpath . '/themes/' . $bo_theme . '/js/vendor/typeahead.min.js');
         }
 
-        return (isset($html) ? $html : '') . parent::render();
+        return ($html ?? '') . parent::render();
     }
 
     private function _renderData($data)

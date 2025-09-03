@@ -459,7 +459,7 @@ class OrderCore extends ObjectModel
             $product_id_list[] = $this->id_address_delivery . '_'
                 . $product['product_id'] . '_'
                 . $product['product_attribute_id'] . '_'
-                . (isset($product['id_customization']) ? $product['id_customization'] : '0');
+                . ($product['id_customization'] ?? '0');
         }
         unset($product);
 
@@ -467,8 +467,8 @@ class OrderCore extends ObjectModel
         foreach ($products as $product) {
             $key = $this->id_address_delivery . '_'
                 . $product['id_product'] . '_'
-                . (isset($product['id_product_attribute']) ? $product['id_product_attribute'] : '0') . '_'
-                . (isset($product['id_customization']) ? $product['id_customization'] : '0');
+                . ($product['id_product_attribute'] ?? '0') . '_'
+                . ($product['id_customization'] ?? '0');
 
             if (in_array($key, $product_id_list, true)) {
                 $product_list[] = $product;
@@ -1390,7 +1390,7 @@ class OrderCore extends ObjectModel
             $this->setInvoiceDetails($order_invoice);
 
             if (Configuration::get('PS_INVOICE')) {
-                $this->setLastInvoiceNumber($order_invoice->id, $this->id_shop);
+                static::setLastInvoiceNumber($order_invoice->id, $this->id_shop);
             }
 
             // Update order_carrier
@@ -1448,7 +1448,7 @@ class OrderCore extends ObjectModel
                 $this->invoice_number = $this->getInvoiceNumber($order_invoice->id);
                 $invoice_number = Hook::exec('actionSetInvoice', [
                     static::class => $this,
-                    get_class($order_invoice) => $order_invoice,
+                    $order_invoice::class => $order_invoice,
                     'use_existing_payment' => (bool) $use_existing_payment,
                 ]);
 
@@ -1903,11 +1903,11 @@ class OrderCore extends ObjectModel
         // we kept the currency rate for historization reasons
         $order_payment->conversion_rate = ($currency ? $currency->conversion_rate : 1);
         // if payment_method is define, we used this
-        $order_payment->payment_method = ($payment_method ? $payment_method : $this->payment);
+        $order_payment->payment_method = ($payment_method ?: $this->payment);
         $order_payment->transaction_id = $payment_transaction_id;
         $order_payment->amount = (float) $amount_paid;
         $order_payment->id_employee = $id_employee;
-        $order_payment->date_add = ($date ? $date : null);
+        $order_payment->date_add = ($date ?: null);
 
         // Add time to the date if needed
         if ($order_payment->date_add !== null && preg_match('/^[0-9]+-[0-9]+-[0-9]+$/', $order_payment->date_add)) {
@@ -2415,11 +2415,7 @@ class OrderCore extends ObjectModel
 
     public static function sortDocuments($a, $b)
     {
-        if ($a->date_add === $b->date_add) {
-            return 0;
-        }
-
-        return ($a->date_add < $b->date_add) ? -1 : 1;
+        return $a->date_add <=> $b->date_add;
     }
 
     public function getWsShippingNumber()
@@ -2521,7 +2517,7 @@ class OrderCore extends ObjectModel
         $breakdown = [];
 
         // Get order_details
-        $order_details = $limitToOrderDetails ? $limitToOrderDetails : $this->getOrderDetailList();
+        $order_details = $limitToOrderDetails ?: $this->getOrderDetailList();
 
         $order_ecotax_tax = 0;
 

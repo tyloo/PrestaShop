@@ -213,7 +213,7 @@ class ConfigurationCore extends ObjectModel
         $results = $db->executeS($sql);
         if ($results) {
             foreach ($results as $row) {
-                $lang = ($row['id_lang']) ? $row['id_lang'] : 0;
+                $lang = $row['id_lang'] ?: 0;
                 self::$types[$row['name']] = (bool) $lang;
 
                 if (! isset(self::$_cache[self::$definition['table']][$lang])) {
@@ -494,9 +494,7 @@ class ConfigurationCore extends ObjectModel
         }
 
         if ($html) {
-            $values = array_map(function ($v) {
-                return Tools::purifyHTML($v);
-            }, $values);
+            $values = array_map(fn ($v) => Tools::purifyHTML($v), $values);
         }
 
         $result = true;
@@ -643,7 +641,7 @@ class ConfigurationCore extends ObjectModel
             return;
         }
 
-        $idShopGroup = $idShopGroup ?? Shop::getContextShopGroupID(true);
+        $idShopGroup ??= Shop::getContextShopGroupID(true);
         if (! isset($idShop) && Shop::getContext() === Shop::CONTEXT_SHOP) {
             $idShop = Shop::getContextShopID(true);
         }

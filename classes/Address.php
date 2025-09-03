@@ -229,7 +229,7 @@ class AddressCore extends ObjectModel
 
         /* Get and cache address country name */
         if ($this->id) {
-            $this->country = Country::getNameById($id_lang ? $id_lang : Configuration::get('PS_LANG_DEFAULT'), $this->id_country);
+            $this->country = Country::getNameById($id_lang ?: Configuration::get('PS_LANG_DEFAULT'), $this->id_country);
         }
     }
 

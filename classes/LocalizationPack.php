@@ -340,7 +340,7 @@ class LocalizationPackCore
                 /** @var CurrencyId $currencyId */
                 try {
                     $currencyId = $commandBus->handle($command);
-                } catch (CurrencyException $e) {
+                } catch (CurrencyException) {
                     $this->_errors[] = null;
                     Context::getContext()->getTranslator()->trans(
                         'An error occurred while importing the currency: %s',

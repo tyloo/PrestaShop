@@ -663,7 +663,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
 
             foreach ($result as $row) {
                 // If we received empty table name for some reason or the language name does not end with _lang
-                if (empty($row[$tableNameKey]) || ! preg_match('/_lang$/', $row[$tableNameKey])) {
+                if (empty($row[$tableNameKey]) || ! preg_match('/_lang$/', (string) $row[$tableNameKey])) {
                     continue;
                 }
 
@@ -819,11 +819,8 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         if (! static::$_LANGUAGES) {
             Language::loadLanguages();
         }
-        if (isset(static::$_LANGUAGES[(int) $id_lang]['iso_code'])) {
-            return static::$_LANGUAGES[(int) $id_lang]['iso_code'];
-        }
 
-        return false;
+        return static::$_LANGUAGES[(int) $id_lang]['iso_code'] ?? false;
     }
 
     /**
@@ -862,7 +859,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
             }
         }
 
-        return isset(static::$_cache_all_language_json[$locale]) ? static::$_cache_all_language_json[$locale] : false;
+        return static::$_cache_all_language_json[$locale] ?? false;
     }
 
     /**
@@ -936,7 +933,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
 
         $allLanguages = self::loadAllLanguagesDetails();
 
-        return isset($allLanguages[$iso]) ? $allLanguages[$iso] : false;
+        return $allLanguages[$iso] ?? false;
     }
 
     /**
@@ -1072,7 +1069,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
     {
         $result = Db::getInstance()->executeS('SHOW TABLES FROM `' . _DB_NAME_ . '`');
         foreach ($result as $row) {
-            if (preg_match('/_lang/', $row['Tables_in_' . _DB_NAME_]) && $row['Tables_in_' . _DB_NAME_] !== _DB_PREFIX_ . 'lang') {
+            if (preg_match('/_lang/', (string) $row['Tables_in_' . _DB_NAME_]) && $row['Tables_in_' . _DB_NAME_] !== _DB_PREFIX_ . 'lang') {
                 $result2 = Db::getInstance()->executeS('SELECT * FROM `' . $row['Tables_in_' . _DB_NAME_] . '` WHERE `id_lang` = ' . (int) $from);
                 if (! count($result2)) {
                     continue;
@@ -1218,7 +1215,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
             }
         }
 
-        return isset(static::$_cache_language_installation[$iso_code]) ? static::$_cache_language_installation[$iso_code] : false;
+        return static::$_cache_language_installation[$iso_code] ?? false;
     }
 
     public static function isInstalledByLocale($locale)
@@ -1321,7 +1318,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
             $content = Tools::file_get_contents($url, false, null, static::PACK_DOWNLOAD_TIMEOUT);
 
             // If we managed to download the pack successfully and it's a valid zip file, we stop
-            if (! empty($content) && strpos($content, "\x50\x4b\x03\x04") !== false) {
+            if (! empty($content) && str_contains($content, "\x50\x4b\x03\x04")) {
                 break;
             }
 
@@ -1630,7 +1627,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         // Fetch all countries from Intl in specified locale
         $langCountries = (new self())->getCountries($lang->getLocale());
         foreach ($translatableCountries as $country) {
-            $isoCode = strtolower($country['iso_code']);
+            $isoCode = strtolower((string) $country['iso_code']);
             if (empty($langCountries[$isoCode])) {
                 continue;
             }
@@ -1659,7 +1656,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         try {
             $classObject = (new DataLangFactory(_DB_PREFIX_, $translator))
                 ->buildFromClassName($className, $lang->getLocale());
-        } catch (DataLangClassNameNotFoundException $e) {
+        } catch (DataLangClassNameNotFoundException) {
             return;
         }
 

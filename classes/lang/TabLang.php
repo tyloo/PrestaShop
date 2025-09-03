@@ -46,7 +46,7 @@ class TabLangCore extends DataLangCore
     {
         $domain = '';
         if (is_array($value)) {
-            list($message, $domain) = $value;
+            [$message, $domain] = $value;
         } else {
             $message = $value;
         }

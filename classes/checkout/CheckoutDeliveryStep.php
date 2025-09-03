@@ -129,10 +129,10 @@ class CheckoutDeliveryStepCore extends AbstractCheckoutStep
                 $requestParams['delivery_option']
             );
             $this->getCheckoutSession()->setRecyclable(
-                isset($requestParams['recyclable']) ? $requestParams['recyclable'] : false
+                $requestParams['recyclable'] ?? false
             );
 
-            $useGift = isset($requestParams['gift']) ? $requestParams['gift'] : false;
+            $useGift = $requestParams['gift'] ?? false;
             $this->getCheckoutSession()->setGift(
                 $useGift,
                 ($useGift && isset($requestParams['gift_message'])) ? $requestParams['gift_message'] : ''

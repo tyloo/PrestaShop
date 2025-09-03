@@ -36,14 +36,13 @@ class SmartyResourceModuleCore extends Smarty_Resource_Custom
     public $paths;
 
     /**
-     * @var bool
+     * @param bool $isAdmin
      */
-    public $isAdmin;
-
-    public function __construct(array $paths, $isAdmin = false)
-    {
+    public function __construct(
+        array $paths,
+        public $isAdmin = false,
+    ) {
         $this->paths = $paths;
-        $this->isAdmin = $isAdmin;
     }
 
     /**

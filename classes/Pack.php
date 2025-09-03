@@ -137,30 +137,20 @@ class PackCore extends Product
         $price_display_method = ! self::$_taxCalculationMethod;
         $items = Pack::getItems($id_product, Configuration::get('PS_LANG_DEFAULT'));
         foreach ($items as $item) {
-            $pricePerItem = $item->getPrice($price_display_method, $item->id_pack_product_attribute ? $item->id_pack_product_attribute : null);
+            $pricePerItem = $item->getPrice($price_display_method, $item->id_pack_product_attribute ?: null);
 
             // Different calculation depending on rounding type
-            switch (Configuration::get('PS_ROUND_TYPE')) {
-                case Order::ROUND_TOTAL:
-                    $sum += $pricePerItem * $item->pack_quantity;
-
-                    break;
-                case Order::ROUND_LINE:
-                    $sum += Tools::ps_round(
-                        $pricePerItem * $item->pack_quantity,
-                        Context::getContext()->getComputingPrecision()
-                    );
-
-                    break;
-                case Order::ROUND_ITEM:
-                default:
-                    $sum += Tools::ps_round(
-                        $pricePerItem,
-                        Context::getContext()->getComputingPrecision()
-                    ) * $item->pack_quantity;
-
-                    break;
-            }
+            match (Configuration::get('PS_ROUND_TYPE')) {
+                Order::ROUND_TOTAL => $sum += $pricePerItem * $item->pack_quantity,
+                Order::ROUND_LINE => $sum += Tools::ps_round(
+                    $pricePerItem * $item->pack_quantity,
+                    Context::getContext()->getComputingPrecision()
+                ),
+                default => $sum += Tools::ps_round(
+                    $pricePerItem,
+                    Context::getContext()->getComputingPrecision()
+                ) * $item->pack_quantity,
+            };
         }
 
         return $sum;
@@ -504,7 +494,7 @@ class PackCore extends Product
      */
     public static function addItem($id_product, $id_item, $qty, $id_attribute_item = 0)
     {
-        $id_attribute_item = (int) $id_attribute_item ? (int) $id_attribute_item : Product::getDefaultAttribute((int) $id_item);
+        $id_attribute_item = (int) $id_attribute_item ?: Product::getDefaultAttribute((int) $id_item);
 
         return Db::getInstance()->update('product', ['cache_is_pack' => 1, 'product_type' => ProductType::TYPE_PACK], 'id_product = ' . (int) $id_product)
             && Db::getInstance()->insert('pack', [

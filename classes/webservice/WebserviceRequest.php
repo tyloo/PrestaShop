@@ -397,19 +397,19 @@ class WebserviceRequestCore
         $arr_return = [];
         foreach ($parameters as $name => $value) {
             $id_shop = (int) Context::getContext()->shop->id;
-            $id_country = (int) (isset($value['country']) ? $value['country'] : (Configuration::get('PS_COUNTRY_DEFAULT')));
-            $id_state = (int) (isset($value['state']) ? $value['state'] : 0);
-            $id_currency = (int) (isset($value['currency']) ? $value['currency'] : Currency::getDefaultCurrencyId());
-            $id_group = (int) (isset($value['group']) ? $value['group'] : (int) Configuration::get('PS_CUSTOMER_GROUP'));
-            $quantity = (int) (isset($value['quantity']) ? $value['quantity'] : 1);
-            $use_tax = (bool) (isset($value['use_tax']) ? $value['use_tax'] : Configuration::get('PS_TAX'));
-            $decimals = (int) (isset($value['decimals']) ? $value['decimals'] : Configuration::get('PS_PRICE_ROUND_MODE'));
-            $id_product_attribute = (int) (isset($value['product_attribute']) ? $value['product_attribute'] : null);
-            $only_reduc = (bool) (isset($value['only_reduction']) ? $value['only_reduction'] : false);
-            $use_reduc = (bool) (isset($value['use_reduction']) ? $value['use_reduction'] : true);
-            $use_ecotax = (bool) (isset($value['use_ecotax']) ? $value['use_ecotax'] : Configuration::get('PS_USE_ECOTAX'));
+            $id_country = (int) ($value['country'] ?? Configuration::get('PS_COUNTRY_DEFAULT'));
+            $id_state = (int) ($value['state'] ?? 0);
+            $id_currency = (int) ($value['currency'] ?? Currency::getDefaultCurrencyId());
+            $id_group = (int) ($value['group'] ?? (int) Configuration::get('PS_CUSTOMER_GROUP'));
+            $quantity = (int) ($value['quantity'] ?? 1);
+            $use_tax = (bool) ($value['use_tax'] ?? Configuration::get('PS_TAX'));
+            $decimals = (int) ($value['decimals'] ?? Configuration::get('PS_PRICE_ROUND_MODE'));
+            $id_product_attribute = (int) ($value['product_attribute'] ?? null);
+            $only_reduc = (bool) ($value['only_reduction'] ?? false);
+            $use_reduc = (bool) ($value['use_reduction'] ?? true);
+            $use_ecotax = (bool) ($value['use_ecotax'] ?? Configuration::get('PS_USE_ECOTAX'));
             $specific_price_output = null;
-            $id_county = (string) (isset($value['county']) ? $value['county'] : 0);
+            $id_county = (string) ($value['county'] ?? 0);
             $return_value = Product::priceCalculation(
                 $id_shop,
                 $value['object_id'],
@@ -428,7 +428,7 @@ class WebserviceRequestCore
                 $specific_price_output,
                 false
             );
-            $arr_return[$name] = ['sqlId' => strtolower($name), 'value' => sprintf('%f', $return_value)];
+            $arr_return[$name] = ['sqlId' => strtolower((string) $name), 'value' => sprintf('%f', $return_value)];
         }
 
         return $arr_return;
@@ -478,7 +478,7 @@ class WebserviceRequestCore
         $this->objects = [];
 
         // Error handler
-        set_error_handler([$this, 'webserviceErrorHandler']);
+        set_error_handler($this->webserviceErrorHandler(...));
         ini_set('html_errors', 'off');
 
         // Two global vars, for compatibility with the PS core
@@ -728,62 +728,22 @@ class WebserviceRequestCore
         $type = $errortype[$errno] ?? 'Unknown error';
         error_log('[PHP ' . $type . ' #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')');
 
-        switch ($errno) {
-            case \E_ERROR:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Error #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 2);
-
-                break;
-            case \E_WARNING:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Warning #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 3);
-
-                break;
-            case \E_PARSE:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Parse #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 4);
-
-                break;
-            case \E_NOTICE:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Notice #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 5);
-
-                break;
-            case \E_CORE_ERROR:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Core #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 6);
-
-                break;
-            case \E_CORE_WARNING:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Core warning #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 7);
-
-                break;
-            case \E_COMPILE_ERROR:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Compile #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 8);
-
-                break;
-            case \E_COMPILE_WARNING:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Compile warning #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 9);
-
-                break;
-            case \E_USER_ERROR:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Error #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 10);
-
-                break;
-            case \E_USER_WARNING:
-                WebserviceRequest::getInstance()->setError(500, '[PHP User warning #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 11);
-
-                break;
-            case \E_USER_NOTICE:
-                WebserviceRequest::getInstance()->setError(500, '[PHP User notice #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 12);
-
-                break;
-            case \E_STRICT:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Strict #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 13);
-
-                break;
-            case \E_RECOVERABLE_ERROR:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Recoverable error #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 14);
-
-                break;
-            default:
-                WebserviceRequest::getInstance()->setError(500, '[PHP Unknown error #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 15);
-        }
+        match ($errno) {
+            \E_ERROR => WebserviceRequest::getInstance()->setError(500, '[PHP Error #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 2),
+            \E_WARNING => WebserviceRequest::getInstance()->setError(500, '[PHP Warning #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 3),
+            \E_PARSE => WebserviceRequest::getInstance()->setError(500, '[PHP Parse #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 4),
+            \E_NOTICE => WebserviceRequest::getInstance()->setError(500, '[PHP Notice #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 5),
+            \E_CORE_ERROR => WebserviceRequest::getInstance()->setError(500, '[PHP Core #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 6),
+            \E_CORE_WARNING => WebserviceRequest::getInstance()->setError(500, '[PHP Core warning #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 7),
+            \E_COMPILE_ERROR => WebserviceRequest::getInstance()->setError(500, '[PHP Compile #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 8),
+            \E_COMPILE_WARNING => WebserviceRequest::getInstance()->setError(500, '[PHP Compile warning #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 9),
+            \E_USER_ERROR => WebserviceRequest::getInstance()->setError(500, '[PHP Error #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 10),
+            \E_USER_WARNING => WebserviceRequest::getInstance()->setError(500, '[PHP User warning #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 11),
+            \E_USER_NOTICE => WebserviceRequest::getInstance()->setError(500, '[PHP User notice #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 12),
+            \E_STRICT => WebserviceRequest::getInstance()->setError(500, '[PHP Strict #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 13),
+            \E_RECOVERABLE_ERROR => WebserviceRequest::getInstance()->setError(500, '[PHP Recoverable error #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 14),
+            default => WebserviceRequest::getInstance()->setError(500, '[PHP Unknown error #' . $errno . '] ' . $errstr . ' (' . $errfile . ', line ' . $errline . ')', 15),
+        };
 
         return true;
     }
@@ -970,7 +930,7 @@ class WebserviceRequestCore
      */
     protected function checkResource()
     {
-        $this->resourceList = $this->getResources();
+        $this->resourceList = static::getResources();
         $resourceNames = array_keys($this->resourceList);
         if ($this->urlSegment[0] === '') {
             $this->resourceConfiguration['objectsNodeName'] = 'resources';
@@ -1024,7 +984,7 @@ class WebserviceRequestCore
         $bracket_level = 0;
         $part = [];
         $tmp = '';
-        $str_len = strlen($str);
+        $str_len = strlen((string) $str);
         for ($i = 0; $i < $str_len; ++$i) {
             if ($str[$i] === ',' && $bracket_level === 0) {
                 $part[] = $tmp;
@@ -1044,14 +1004,14 @@ class WebserviceRequestCore
         }
         $fields = [];
         foreach ($part as $str) {
-            $field_name = trim(substr($str, 0, strpos($str, '[') === false ? strlen($str) : strpos($str, '[')));
+            $field_name = trim(substr($str, 0, ! str_contains($str, '[') ? strlen($str) : strpos($str, '[')));
             if (! isset($fields[$field_name])) {
                 $fields[$field_name] = null;
             }
-            if (strpos($str, '[') !== false) {
+            if (str_contains($str, '[')) {
                 $sub_fields = substr($str, strpos($str, '[') + 1, strlen($str) - strpos($str, '[') - 2);
                 $tmp_array = [];
-                if (strpos($sub_fields, ',') !== false) {
+                if (str_contains($sub_fields, ',')) {
                     $tmp_array = explode(',', $sub_fields);
                 } else {
                     $tmp_array = [$sub_fields];
@@ -1069,7 +1029,7 @@ class WebserviceRequestCore
         if (isset($this->urlFragments['display'])) {
             $this->fieldsToDisplay = $this->urlFragments['display'];
             if ($this->fieldsToDisplay !== 'full' && $this->fieldsToDisplay !== 'minimum') {
-                preg_match('#^\[(.*)\]$#Ui', $this->fieldsToDisplay, $matches);
+                preg_match('#^\[(.*)\]$#Ui', (string) $this->fieldsToDisplay, $matches);
                 if (count($matches)) {
                     $error = false;
                     $fieldsToTest = $this->parseDisplayFields($matches[1]);
@@ -1725,21 +1685,21 @@ class WebserviceRequestCore
     public function filterLanguage()
     {
         $arr_languages = [];
-        $length_values = strlen($this->urlFragments['language']);
+        $length_values = strlen((string) $this->urlFragments['language']);
         // if just one language is asked
         if (is_numeric($this->urlFragments['language'])) {
             $arr_languages[] = (int) $this->urlFragments['language'];
-        } elseif (strpos($this->urlFragments['language'], '[') === 0
+        } elseif (str_starts_with((string) $this->urlFragments['language'], '[')
             // if a range or a list is asked
-            && strpos($this->urlFragments['language'], ']') === $length_values - 1) {
-            if (strpos($this->urlFragments['language'], '|') !== false
-                xor strpos($this->urlFragments['language'], ',') !== false) {
+            && strpos((string) $this->urlFragments['language'], ']') === $length_values - 1) {
+            if (str_contains((string) $this->urlFragments['language'], '|')
+                xor str_contains((string) $this->urlFragments['language'], ',')) {
                 $params_values = str_replace([']', '['], '', $this->urlFragments['language']);
                 // it's a list
-                if (strpos($params_values, '|') !== false) {
+                if (str_contains($params_values, '|')) {
                     $list_enabled_lang = explode('|', $params_values);
                     $arr_languages = $list_enabled_lang;
-                } elseif (strpos($params_values, ',') !== false) {
+                } elseif (str_contains($params_values, ',')) {
                     // it's a range
                     $range_enabled_lang = explode(',', $params_values);
                     if (count($range_enabled_lang) !== 2) {
@@ -1751,7 +1711,7 @@ class WebserviceRequestCore
                         $arr_languages[] = $i;
                     }
                 }
-            } elseif (preg_match('#\[(\d)+\]#Ui', $this->urlFragments['language'], $match_lang)) {
+            } elseif (preg_match('#\[(\d)+\]#Ui', (string) $this->urlFragments['language'], $match_lang)) {
                 $arr_languages[] = $match_lang[1];
             }
         } else {
@@ -1894,7 +1854,7 @@ class WebserviceRequestCore
             $headers = array_merge($_ENV, $_SERVER);
             foreach ($headers as $key => $val) {
                 // we need this header
-                if (strpos(strtolower($key), 'content-type') !== false) {
+                if (str_contains(strtolower($key), 'content-type')) {
                     continue;
                 }
                 if (strtoupper(substr($key, 0, 5)) !== 'HTTP_') {

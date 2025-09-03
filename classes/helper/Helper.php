@@ -203,7 +203,7 @@ class HelperCore
             $html .= '			var selectedCat = \'\';' . "\n";
         }
         $html .= '			var selectedLabel = \'' . $translations['selected'] . '\';
-            var home = \'' . addcslashes($root['name'], '\'') . '\';
+            var home = \'' . addcslashes((string) $root['name'], '\'') . '\';
             var use_radio = ' . (int) $use_radio . ';';
         $html .= '</script>';
 
