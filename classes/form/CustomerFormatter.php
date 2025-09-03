@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,7 +40,7 @@ class CustomerFormatterCore implements FormFormatterInterface
 
     public function __construct(
         TranslatorInterface $translator,
-        Language $language
+        Language $language,
     ) {
         $this->translator = $translator;
         $this->language = $language;
@@ -238,7 +239,7 @@ class CustomerFormatterCore implements FormFormatterInterface
 
         if (is_array($additionalCustomerFormFields)) {
             foreach ($additionalCustomerFormFields as $moduleName => $additionnalFormFields) {
-                if (!is_array($additionnalFormFields)) {
+                if (! is_array($additionnalFormFields)) {
                     continue;
                 }
 
@@ -259,7 +260,7 @@ class CustomerFormatterCore implements FormFormatterInterface
         $constraints = Customer::$definition['fields'];
 
         foreach ($format as $field) {
-            if (!empty($constraints[$field->getName()]['validate'])) {
+            if (! empty($constraints[$field->getName()]['validate'])) {
                 $field->addConstraint(
                     $constraints[$field->getName()]['validate']
                 );

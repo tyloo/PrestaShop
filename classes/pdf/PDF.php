@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -60,21 +61,23 @@ class PDFCore
     public const TEMPLATE_ORDER_SLIP = 'OrderSlip';
     public const TEMPLATE_DELIVERY_SLIP = 'DeliverySlip';
 
-    /** @deprecated since 9.0 and will be removed in 10.0 **/
+    /**
+     * @deprecated since 9.0 and will be removed in 10.0 *
+     */
     public const TEMPLATE_SUPPLY_ORDER_FORM = 'SupplyOrderForm';
 
     /**
      * @param PrestaShopCollection|ObjectModel|array $objects
-     * @param string $template
-     * @param Smarty $smarty
-     * @param string $orientation
+     * @param string                                 $template
+     * @param Smarty                                 $smarty
+     * @param string                                 $orientation
      */
     public function __construct($objects, $template, $smarty, $orientation = 'P')
     {
         $pdfRendererFromModules = $this->getPdfRendererFromModules($template, $orientation);
 
         // if no module wants to provide a pdf renderer, then the core feature is used
-        if (null === $pdfRendererFromModules) {
+        if ($pdfRendererFromModules === null) {
             $this->pdf_renderer = new PDFGenerator((bool) Configuration::get('PS_PDF_USE_CACHE'), $orientation);
         } else {
             $this->pdf_renderer = $pdfRendererFromModules;
@@ -114,7 +117,7 @@ class PDFCore
         smartyRegisterFunction($this->smarty, 'function', 'getHeightSize', ['Image', 'getHeight'], true, $original_lazy_register);
 
         $this->objects = $objects;
-        if (!($objects instanceof Iterator) && !is_array($objects)) {
+        if (! ($objects instanceof Iterator) && ! is_array($objects)) {
             $this->objects = [$objects];
         }
 
@@ -141,7 +144,7 @@ class PDFCore
         foreach ($this->objects as $object) {
             $this->pdf_renderer->startPageGroup();
             $template = $this->getTemplateObject($object);
-            if (!$template) {
+            if (! $template) {
                 continue;
             }
 
@@ -173,8 +176,6 @@ class PDFCore
     /**
      * Get correct PDF template classes.
      *
-     * @param mixed $object
-     *
      * @return HTMLTemplate|false
      *
      * @throws PrestaShopException
@@ -186,13 +187,13 @@ class PDFCore
 
         $templateObjectFromModule = $this->getTemplateObjectFromModules($object, $this->smarty, $this->send_bulk_flag, $this->template);
 
-        if (false === $templateObjectFromModule && class_exists($class_name)) {
+        if ($templateObjectFromModule === false && class_exists($class_name)) {
             // Some HTMLTemplateXYZ implementations won't use the third param but this is not a problem (no warning in PHP),
             // the third param is then ignored if not added to the method signature.
             $class = new $class_name($object, $this->smarty, $this->send_bulk_flag);
         }
 
-        if (!($class instanceof HTMLTemplate)) {
+        if (! ($class instanceof HTMLTemplate)) {
             throw new PrestaShopException('Invalid class. It should be an instance of HTMLTemplate');
         }
 
@@ -201,8 +202,6 @@ class PDFCore
 
     /**
      * Get the PDF filename based on the objects.
-     *
-     * @return string
      */
     public function getFilename(): string
     {
@@ -215,16 +214,14 @@ class PDFCore
 
     /**
      * Set the PDF filename based on the objects.
-     *
-     * @return bool
      */
     public function setFilename(): bool
     {
-        $bulk = (1 < count($this->objects));
+        $bulk = (count($this->objects) > 1);
 
         foreach ($this->objects as $object) {
             $template = $this->getTemplateObject($object);
-            if (!$template) {
+            if (! $template) {
                 continue;
             }
 
@@ -234,20 +231,19 @@ class PDFCore
                 $this->filename = $template->getFilename();
             }
 
-            if (!empty($this->filename)) {
+            if (! empty($this->filename)) {
                 break;
             }
         }
 
-        return !empty($this->filename);
+        return ! empty($this->filename);
     }
 
     /**
      * Get the template object from modules.
      *
-     * @param mixed $object
      * @param Smarty $smarty
-     * @param bool $send_bulk_flag
+     * @param bool   $send_bulk_flag
      * @param string $template
      *
      * @return HTMLTemplate|false
@@ -266,7 +262,7 @@ class PDFCore
             true
         );
 
-        if (!is_array($templateObjects)) {
+        if (! is_array($templateObjects)) {
             $templateObjects = [];
         }
 
@@ -299,7 +295,7 @@ class PDFCore
             true
         );
 
-        if (!is_array($renderers)) {
+        if (! is_array($renderers)) {
             $renderers = [];
         }
 

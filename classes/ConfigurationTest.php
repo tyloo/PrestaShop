@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -139,17 +140,17 @@ class ConfigurationTestCore
 
     public static function test_phpversion()
     {
-        return version_compare(PHP_VERSION, '7.1.3', '>=');
+        return version_compare(\PHP_VERSION, '7.1.3', '>=');
     }
 
     public static function test_apache_mod_rewrite()
     {
         if (isset($_SERVER['SERVER_SOFTWARE'])
-            && strpos(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache') === false || !function_exists('apache_get_modules')) {
+            && strpos(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache') === false || ! function_exists('apache_get_modules')) {
             return true;
         }
 
-        return in_array('mod_rewrite', apache_get_modules());
+        return in_array('mod_rewrite', apache_get_modules(), true);
     }
 
     public static function test_new_phpversion()
@@ -186,13 +187,13 @@ class ConfigurationTestCore
 
     public static function test_fopen()
     {
-        return in_array(ini_get('allow_url_fopen'), ['On', 'on', '1']);
+        return in_array(ini_get('allow_url_fopen'), ['On', 'on', '1'], true);
     }
 
     public static function test_system($funcs)
     {
         foreach ($funcs as $func) {
-            if (!function_exists($func)) {
+            if (! function_exists($func)) {
                 return false;
             }
         }
@@ -210,7 +211,7 @@ class ConfigurationTestCore
         if (function_exists('gd_info')) {
             $gd = gd_info();
 
-            return !empty($gd['JPEG Support']);
+            return ! empty($gd['JPEG Support']);
         }
 
         return false;
@@ -247,20 +248,20 @@ class ConfigurationTestCore
 
     public static function test_dir($relative_dir, $recursive = false, &$full_report = null)
     {
-        $dir = rtrim(_PS_ROOT_DIR_, '\\/') . DIRECTORY_SEPARATOR . trim($relative_dir, '\\/');
-        if (!file_exists($dir) || !$dh = @opendir($dir)) {
+        $dir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim($relative_dir, '\\/');
+        if (! file_exists($dir) || ! $dh = @opendir($dir)) {
             $full_report = sprintf('Directory %s does not exist or is not writable', $dir); // sprintf for future translation
 
             return false;
         }
         closedir($dh);
-        $dummy = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR . uniqid();
+        $dummy = rtrim($dir, '\\/') . \DIRECTORY_SEPARATOR . uniqid();
         if (@file_put_contents($dummy, 'test')) {
             @unlink($dummy);
-            if (!$recursive) {
+            if (! $recursive) {
                 return true;
             }
-        } elseif (!is_writable($dir)) {
+        } elseif (! is_writable($dir)) {
             $full_report = sprintf('Directory %s is not writable', $dir); // sprintf for future translation
 
             return false;
@@ -268,7 +269,7 @@ class ConfigurationTestCore
 
         if ($recursive) {
             foreach (Tools::getDirectories($dir) as $file) {
-                if (!ConfigurationTest::test_dir($relative_dir . DIRECTORY_SEPARATOR . $file, $recursive, $full_report)) {
+                if (! ConfigurationTest::test_dir($relative_dir . \DIRECTORY_SEPARATOR . $file, $recursive, $full_report)) {
                     return false;
                 }
             }
@@ -279,7 +280,7 @@ class ConfigurationTestCore
 
     public static function test_file($file_relative)
     {
-        $file = _PS_ROOT_DIR_ . DIRECTORY_SEPARATOR . $file_relative;
+        $file = _PS_ROOT_DIR_ . \DIRECTORY_SEPARATOR . $file_relative;
 
         return file_exists($file) && is_writable($file);
     }
@@ -356,8 +357,8 @@ class ConfigurationTestCore
 
     public static function test_theme_lang_dir($dir)
     {
-        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . DIRECTORY_SEPARATOR . trim($dir, '\\/');
-        if (!file_exists($absoluteDir)) {
+        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim($dir, '\\/');
+        if (! file_exists($absoluteDir)) {
             return true;
         }
 
@@ -366,8 +367,8 @@ class ConfigurationTestCore
 
     public static function test_theme_pdf_lang_dir($dir)
     {
-        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . DIRECTORY_SEPARATOR . trim($dir, '\\/');
-        if (!file_exists($absoluteDir)) {
+        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim($dir, '\\/');
+        if (! file_exists($absoluteDir)) {
             return true;
         }
 
@@ -376,8 +377,8 @@ class ConfigurationTestCore
 
     public static function test_theme_cache_dir($dir)
     {
-        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . DIRECTORY_SEPARATOR . trim($dir, '\\/');
-        if (!file_exists($absoluteDir)) {
+        $absoluteDir = rtrim(_PS_ROOT_DIR_, '\\/') . \DIRECTORY_SEPARATOR . trim($dir, '\\/');
+        if (! file_exists($absoluteDir)) {
             return true;
         }
 
@@ -408,7 +409,7 @@ class ConfigurationTestCore
     {
         $privateKey = openssl_pkey_new([
             'private_key_bits' => 2048,
-            'private_key_type' => OPENSSL_KEYTYPE_RSA,
+            'private_key_type' => \OPENSSL_KEYTYPE_RSA,
         ]);
 
         if ($privateKey === false) {
@@ -420,7 +421,7 @@ class ConfigurationTestCore
 
     public static function test_sessions()
     {
-        return in_array(session_status(), [PHP_SESSION_ACTIVE, PHP_SESSION_NONE], true);
+        return in_array(session_status(), [\PHP_SESSION_ACTIVE, \PHP_SESSION_NONE], true);
     }
 
     public static function test_dom()
@@ -432,7 +433,7 @@ class ConfigurationTestCore
     {
         $return = [];
         foreach (ConfigurationTest::$test_files as $file) {
-            if (!file_exists(rtrim(_PS_ROOT_DIR_, DIRECTORY_SEPARATOR) . str_replace('/', DIRECTORY_SEPARATOR, $file))) {
+            if (! file_exists(rtrim(_PS_ROOT_DIR_, \DIRECTORY_SEPARATOR) . str_replace('/', \DIRECTORY_SEPARATOR, $file))) {
                 if ($full) {
                     $return[] = $file;
                 } else {

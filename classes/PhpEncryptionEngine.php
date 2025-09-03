@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,8 +36,6 @@ class PhpEncryptionEngineCore
     protected $key;
 
     /**
-     * PhpEncryptionCore constructor.
-     *
      * @param string $hexString A string that only contains hexadecimal characters
      *                          Bother upper and lower case are allowed
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,21 @@ class GroupReductionCore extends ObjectModel
         'table' => 'group_reduction',
         'primary' => 'id_group_reduction',
         'fields' => [
-            'id_group' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_category' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'reduction' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
+            'id_group' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_category' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'reduction' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
         ],
     ];
 
@@ -138,11 +151,11 @@ class GroupReductionCore extends ObjectModel
 
     public static function getValueForProduct($id_product, $id_group)
     {
-        if (!Group::isFeatureActive()) {
+        if (! Group::isFeatureActive()) {
             return 0;
         }
 
-        if (!isset(self::$reduction_cache[$id_product . '-' . $id_group])) {
+        if (! isset(self::$reduction_cache[$id_product . '-' . $id_group])) {
             self::$reduction_cache[$id_product . '-' . $id_group] = Db::getInstance()->getValue('
 			SELECT `reduction`
 			FROM `' . _DB_PREFIX_ . 'product_group_reduction_cache`
@@ -190,7 +203,7 @@ class GroupReductionCore extends ObjectModel
 
         foreach ($categories as $category) {
             $reductions = GroupReduction::getGroupsByCategoryId((int) $category);
-            if (!$reductions) {
+            if (! $reductions) {
                 continue;
             }
             foreach ($reductions as $reduction) {
@@ -218,7 +231,7 @@ class GroupReductionCore extends ObjectModel
 			WHERE pgr.`id_product` = ' . (int) $id_product_old
         );
 
-        if (!$res) {
+        if (! $res) {
             return true;
         }
 

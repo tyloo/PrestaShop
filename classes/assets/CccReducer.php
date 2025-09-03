@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,17 +31,21 @@ use Symfony\Component\Filesystem\Filesystem;
 class CccReducerCore
 {
     use PrestaShop\PrestaShop\Adapter\Assets\AssetUrlGeneratorTrait;
-    /** @var string */
+    /**
+     * @var string
+     */
     private $cacheDir;
-    /** @var Filesystem */
+    /**
+     * @var Filesystem
+     */
     protected $filesystem;
-    /** @var ConfigurationInterface */
+    /**
+     * @var ConfigurationInterface
+     */
     public $configuration;
 
     /**
      * @param string $cacheDir
-     * @param ConfigurationInterface $configuration
-     * @param Filesystem $filesystem
      */
     public function __construct($cacheDir, ConfigurationInterface $configuration, Filesystem $filesystem)
     {
@@ -48,7 +53,7 @@ class CccReducerCore
         $this->configuration = $configuration;
         $this->filesystem = $filesystem;
 
-        if (!is_dir($this->cacheDir)) {
+        if (! is_dir($this->cacheDir)) {
             $this->filesystem->mkdir($this->cacheDir);
         }
     }
@@ -62,7 +67,7 @@ class CccReducerCore
     {
         $files = [];
         foreach ($cssFileList['external'] as $key => &$css) {
-            if ('all' === $css['media'] && 'local' === $css['server']) {
+            if ($css['media'] === 'all' && $css['server'] === 'local') {
                 $files[] = $this->getPathFromUri($css['path']);
                 unset($cssFileList['external'][$key]);
             }
@@ -72,7 +77,7 @@ class CccReducerCore
         $cccFilename = 'theme-' . $this->getFileNameIdentifierFromList($files) . $version . '.css';
         $destinationPath = $this->cacheDir . $cccFilename;
 
-        if (!$this->filesystem->exists($destinationPath)) {
+        if (! $this->filesystem->exists($destinationPath)) {
             CssMinifier::minify($files, $destinationPath);
         }
         if (Tools::hasMediaServer()) {
@@ -105,7 +110,7 @@ class CccReducerCore
             $files = [];
             foreach ($list['external'] as $key => $js) {
                 // We only CCC the file without 'refer' or 'async'
-                if ('' === $js['attribute'] && 'local' === $js['server']) {
+                if ($js['attribute'] === '' && $js['server'] === 'local') {
                     $files[] = $this->getPathFromUri($js['path']);
                     unset($list['external'][$key]);
                 }
@@ -120,7 +125,7 @@ class CccReducerCore
             $cccFilename = $position . '-' . $this->getFileNameIdentifierFromList($files) . $version . '.js';
             $destinationPath = $this->cacheDir . $cccFilename;
 
-            if (!$this->filesystem->exists($destinationPath)) {
+            if (! $this->filesystem->exists($destinationPath)) {
                 JsMinifier::minify($files, $destinationPath);
             }
             if (Tools::hasMediaServer()) {

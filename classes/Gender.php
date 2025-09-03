@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,12 +36,18 @@ class GenderCore extends ObjectModel
     public const TYPE_FEMALE = ValueObjectGender::TYPE_FEMALE;
     public const TYPE_OTHER = ValueObjectGender::TYPE_OTHER;
 
-    /** @var int|null Object ID */
+    /**
+     * @var int|null Object ID
+     */
     public $id;
     public $id_gender;
-    /** @var string|array<string> */
+    /**
+     * @var string|array<string>
+     */
     public $name;
-    /** @var int */
+    /**
+     * @var int
+     */
     public $type;
 
     /**
@@ -51,16 +58,23 @@ class GenderCore extends ObjectModel
         'primary' => 'id_gender',
         'multilang' => true,
         'fields' => [
-            'type' => ['type' => self::TYPE_INT, 'required' => true],
+            'type' => [
+                'type' => self::TYPE_INT,
+                'required' => true,
+            ],
 
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCatalogName', 'required' => true, 'size' => 20],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isCatalogName',
+                'required' => true,
+                'size' => 20,
+            ],
         ],
     ];
 
     /**
-     * GenderCore constructor.
-     *
      * @param int|null $id
      * @param int|null $idLang
      * @param int|null $idShop
@@ -81,7 +95,7 @@ class GenderCore extends ObjectModel
      */
     public static function getGenders($idLang = null)
     {
-        if (null === $idLang) {
+        if ($idLang === null) {
             $idLang = Context::getContext()->language->id;
         }
 
@@ -95,7 +109,7 @@ class GenderCore extends ObjectModel
      */
     public function getImage()
     {
-        if (!isset($this->id) || empty($this->id) || !file_exists(_PS_GENDERS_DIR_ . $this->id . '.jpg')) {
+        if (! isset($this->id) || empty($this->id) || ! file_exists(_PS_GENDERS_DIR_ . $this->id . '.jpg')) {
             return _THEME_GENDERS_DIR_ . 'Unknown.jpg';
         }
 

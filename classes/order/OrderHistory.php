@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,19 +30,29 @@ use PrestaShop\PrestaShop\Core\Stock\StockManager;
 
 class OrderHistoryCore extends ObjectModel
 {
-    /** @var int Order id */
+    /**
+     * @var int Order id
+     */
     public $id_order;
 
-    /** @var int Order status id */
+    /**
+     * @var int Order status id
+     */
     public $id_order_state;
 
-    /** @var int Employee id for this history entry */
+    /**
+     * @var int Employee id for this history entry
+     */
     public $id_employee;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
-    /** @var string Object last modification date */
+    /**
+     * @var string Object last modification date
+     */
     public $date_upd;
 
     /**
@@ -51,10 +62,24 @@ class OrderHistoryCore extends ObjectModel
         'table' => 'order_history',
         'primary' => 'id_order_history',
         'fields' => [
-            'id_order' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_order_state' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_employee' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'id_order' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_order_state' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_employee' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
         ],
     ];
 
@@ -64,9 +89,16 @@ class OrderHistoryCore extends ObjectModel
     protected $webserviceParameters = [
         'objectsNodeName' => 'order_histories',
         'fields' => [
-            'id_employee' => ['xlink_resource' => 'employees'],
-            'id_order_state' => ['required' => true, 'xlink_resource' => 'order_states'],
-            'id_order' => ['xlink_resource' => 'orders'],
+            'id_employee' => [
+                'xlink_resource' => 'employees',
+            ],
+            'id_order_state' => [
+                'required' => true,
+                'xlink_resource' => 'order_states',
+            ],
+            'id_order' => [
+                'xlink_resource' => 'orders',
+            ],
         ],
         'objectMethods' => [
             'add' => 'addWs',
@@ -76,17 +108,17 @@ class OrderHistoryCore extends ObjectModel
     /**
      * Sets the new state of the given order.
      *
-     * @param int $new_order_state
+     * @param int           $new_order_state
      * @param int|OrderCore $id_order
-     * @param bool $use_existing_payment
+     * @param bool          $use_existing_payment
      */
     public function changeIdOrderState($new_order_state, $id_order, $use_existing_payment = false)
     {
-        if (!$new_order_state || !$id_order) {
+        if (! $new_order_state || ! $id_order) {
             return;
         }
 
-        if (!is_object($id_order) && is_numeric($id_order)) {
+        if (! is_object($id_order) && is_numeric($id_order)) {
             $order = new Order((int) $id_order);
         } elseif (is_object($id_order)) {
             $order = $id_order;
@@ -100,7 +132,7 @@ class OrderHistoryCore extends ObjectModel
         $old_os = new OrderState((int) $order->current_state, $order->id_lang);
 
         // executes hook
-        if (in_array($new_os->id, [Configuration::get('PS_OS_PAYMENT'), Configuration::get('PS_OS_WS_PAYMENT')])) {
+        if (in_array($new_os->id, [Configuration::get('PS_OS_PAYMENT'), Configuration::get('PS_OS_WS_PAYMENT')], true)) {
             // Hook called only for the shop concerned
             Hook::exec('actionPaymentConfirmation', ['id_order' => (int) $order->id], null, false, true, false, $order->id_shop);
         }
@@ -118,22 +150,22 @@ class OrderHistoryCore extends ObjectModel
 
             // An email is sent the first time a virtual item is validated
             $virtual_products = $order->getVirtualProducts();
-            if ($virtual_products && !$old_os->logable && $new_os->logable) {
+            if ($virtual_products && ! $old_os->logable && $new_os->logable) {
                 $assign = [];
                 foreach ($virtual_products as $key => $virtual_product) {
                     $id_product_download = ProductDownload::getIdFromIdProduct($virtual_product['product_id']);
                     $product_download = new ProductDownload($id_product_download);
                     // If this virtual item has an associated file, we'll provide the link to download the file in the email
-                    if ($product_download->display_filename != '') {
+                    if ($product_download->display_filename !== '') {
                         $assign[$key]['name'] = $product_download->display_filename;
                         $dl_link = $product_download->getTextLink($virtual_product['download_hash'])
                             . '&id_order=' . (int) $order->id
                             . '&secure_key=' . $order->secure_key;
                         $assign[$key]['link'] = $dl_link;
-                        if (isset($virtual_product['download_deadline']) && $virtual_product['download_deadline'] != '0000-00-00 00:00:00') {
+                        if (isset($virtual_product['download_deadline']) && $virtual_product['download_deadline'] !== '0000-00-00 00:00:00') {
                             $assign[$key]['deadline'] = Tools::displayDate($virtual_product['download_deadline']);
                         }
-                        if ($product_download->nb_downloadable != 0) {
+                        if ($product_download->nb_downloadable !== 0) {
                             $assign[$key]['downloadable'] = (int) $product_download->nb_downloadable;
                         }
                     }
@@ -172,7 +204,7 @@ class OrderHistoryCore extends ObjectModel
                     '{virtualProductsTxt}' => $links_txt,
                 ];
                 // If there is at least one downloadable file
-                if (!empty($assign)) {
+                if (! empty($assign)) {
                     $orderLanguage = new Language((int) $order->id_lang);
                     Mail::Send(
                         (int) $order->id_lang,
@@ -200,8 +232,8 @@ class OrderHistoryCore extends ObjectModel
             $error_or_canceled_statuses = [Configuration::get('PS_OS_ERROR'), Configuration::get('PS_OS_CANCELED')];
 
             $employee = null;
-            if (!(int) $this->id_employee || !Validate::isLoadedObject($employee = new Employee((int) $this->id_employee))) {
-                if (!Validate::isLoadedObject($old_os) && $context != null) {
+            if (! (int) $this->id_employee || ! Validate::isLoadedObject($employee = new Employee((int) $this->id_employee))) {
+                if (! Validate::isLoadedObject($old_os) && $context !== null) {
                     // First OrderHistory, there is no $old_os, so $employee is null before here
                     $employee = $context->employee; // filled if from BO and order created (because no old_os)
                     if ($employee) {
@@ -216,28 +248,28 @@ class OrderHistoryCore extends ObjectModel
             foreach ($order->getProductsDetail() as $product) {
                 if (Validate::isLoadedObject($old_os)) {
                     // if becoming logable => adds sale
-                    if ($new_os->logable && !$old_os->logable) {
+                    if ($new_os->logable && ! $old_os->logable) {
                         ProductSale::addProductSale($product['product_id'], $product['product_quantity']);
-                        if (!Pack::isPack($product['product_id'])
-                            && in_array($old_os->id, $error_or_canceled_statuses)) {
+                        if (! Pack::isPack($product['product_id'])
+                            && in_array($old_os->id, $error_or_canceled_statuses, true)) {
                             StockAvailable::updateQuantity($product['product_id'], $product['product_attribute_id'], -(int) $product['product_quantity'], $order->id_shop);
                         }
-                    } elseif (!$new_os->logable && $old_os->logable) {
+                    } elseif (! $new_os->logable && $old_os->logable) {
                         // if becoming unlogable => removes sale
                         ProductSale::removeProductSale($product['product_id'], $product['product_quantity']);
-                        if (!Pack::isPack($product['product_id'])
-                            && in_array($new_os->id, $error_or_canceled_statuses)) {
+                        if (! Pack::isPack($product['product_id'])
+                            && in_array($new_os->id, $error_or_canceled_statuses, true)) {
                             StockAvailable::updateQuantity($product['product_id'], $product['product_attribute_id'], (int) $product['product_quantity'], $order->id_shop);
                         }
-                    } elseif (!$new_os->logable && !$old_os->logable
-                        && in_array($new_os->id, $error_or_canceled_statuses)
-                        && !in_array($old_os->id, $error_or_canceled_statuses)
+                    } elseif (! $new_os->logable && ! $old_os->logable
+                        && in_array($new_os->id, $error_or_canceled_statuses, true)
+                        && ! in_array($old_os->id, $error_or_canceled_statuses, true)
                     ) {
                         // Status is changed from not loggable status as Processing in progress etc. to Payment error/Canceled
                         StockAvailable::updateQuantity($product['product_id'], $product['product_attribute_id'], (int) $product['product_quantity'], $order->id_shop);
-                    } elseif (!$new_os->logable && !$old_os->logable
-                        && !in_array($new_os->id, $error_or_canceled_statuses)
-                        && in_array($old_os->id, $error_or_canceled_statuses)
+                    } elseif (! $new_os->logable && ! $old_os->logable
+                        && ! in_array($new_os->id, $error_or_canceled_statuses, true)
+                        && in_array($old_os->id, $error_or_canceled_statuses, true)
                     ) {
                         // Status is changed from Payment error/Canceled to not loggable status as Processing in progress etc.
                         StockAvailable::updateQuantity($product['product_id'], $product['product_attribute_id'], -(int) $product['product_quantity'], $order->id_shop);
@@ -248,7 +280,7 @@ class OrderHistoryCore extends ObjectModel
 
                 // Save movement if :
                 // new_os->shipped != old_os->shipped
-                if (Validate::isLoadedObject($old_os) && Validate::isLoadedObject($new_os) && $new_os->shipped != $old_os->shipped) {
+                if (Validate::isLoadedObject($old_os) && Validate::isLoadedObject($new_os) && $new_os->shipped !== $old_os->shipped) {
                     $product_quantity = (int) ($product['product_quantity'] - $product['product_quantity_refunded'] - $product['product_quantity_return']);
 
                     if ($product_quantity > 0) {
@@ -261,10 +293,10 @@ class OrderHistoryCore extends ObjectModel
                         (new StockManager())->saveMovement(
                             (int) $product['product_id'],
                             (int) $product['product_attribute_id'],
-                            (int) $product_quantity * ($new_os->shipped == 1 ? -1 : 1),
+                            (int) $product_quantity * ($new_os->shipped === 1 ? -1 : 1),
                             [
                                 'id_order' => $order->id,
-                                'id_stock_mvt_reason' => ($new_os->shipped == 1 ? Configuration::get('PS_STOCK_CUSTOMER_ORDER_REASON') : Configuration::get('PS_STOCK_CUSTOMER_ORDER_CANCEL_REASON')),
+                                'id_stock_mvt_reason' => ($new_os->shipped === 1 ? Configuration::get('PS_STOCK_CUSTOMER_ORDER_REASON') : Configuration::get('PS_STOCK_CUSTOMER_ORDER_CANCEL_REASON')),
                             ]
                         );
                         // back to current shop context
@@ -279,7 +311,7 @@ class OrderHistoryCore extends ObjectModel
         $this->id_order_state = (int) $new_order_state;
 
         // changes invoice number of order ?
-        if (!Validate::isLoadedObject($new_os) || !Validate::isLoadedObject($order)) {
+        if (! Validate::isLoadedObject($new_os) || ! Validate::isLoadedObject($order)) {
             throw new PrestaShopException($this->trans('Invalid new order status', [], 'Admin.Orderscustomers.Notification'));
         }
 
@@ -288,15 +320,15 @@ class OrderHistoryCore extends ObjectModel
         $order->valid = $new_os->logable;
         $order->update();
 
-        if ($new_os->invoice && !$order->invoice_number) {
+        if ($new_os->invoice && ! $order->invoice_number) {
             $order->setInvoice($use_existing_payment);
-        } elseif ($new_os->delivery && !$order->delivery_number) {
+        } elseif ($new_os->delivery && ! $order->delivery_number) {
             $order->setDeliverySlip();
         }
 
         // set orders as paid
-        if ($new_os->paid == 1) {
-            if ($order->total_paid != 0) {
+        if ($new_os->paid === 1) {
+            if ($order->total_paid !== 0) {
                 $payment_method = Module::getInstanceByName($order->module);
             }
 
@@ -355,9 +387,9 @@ class OrderHistoryCore extends ObjectModel
     }
 
     /**
-     * @param bool $autodate Optional
-     * @param array|bool $template_vars Optional
-     * @param Context|null $context Deprecated
+     * @param bool         $autodate      Optional
+     * @param array|bool   $template_vars Optional
+     * @param Context|null $context       Deprecated
      *
      * @return bool
      */
@@ -365,12 +397,12 @@ class OrderHistoryCore extends ObjectModel
     {
         $order = new Order($this->id_order);
 
-        if (!$this->add($autodate)) {
+        if (! $this->add($autodate)) {
             return false;
         }
         Order::cleanHistoryCache();
 
-        if (!$this->sendEmail($order, $template_vars)) {
+        if (! $this->sendEmail($order, $template_vars)) {
             return false;
         }
 
@@ -378,7 +410,7 @@ class OrderHistoryCore extends ObjectModel
     }
 
     /**
-     * @param Order $order
+     * @param Order       $order
      * @param array|false $template_vars
      *
      * @return bool
@@ -454,7 +486,7 @@ class OrderHistoryCore extends ObjectModel
                     $file_attachement = null;
                 }
 
-                if (!Mail::Send(
+                if (! Mail::Send(
                     (int) $order->id_lang,
                     $result['template'],
                     $topic,
@@ -481,7 +513,7 @@ class OrderHistoryCore extends ObjectModel
 
     public function add($autodate = true, $null_values = false)
     {
-        if (!parent::add($autodate)) {
+        if (! parent::add($autodate)) {
             return false;
         }
 
@@ -523,15 +555,15 @@ class OrderHistoryCore extends ObjectModel
         if ($sendemail) {
             // Mail::Send requires link object on context and is not set when getting here
             $context = Context::getContext();
-            if ($context->link == null) {
+            if ($context->link === null) {
                 $protocol_link = (Tools::usingSecureMode() && Configuration::get('PS_SSL_ENABLED')) ? 'https://' : 'http://';
                 $protocol_content = (Tools::usingSecureMode() && Configuration::get('PS_SSL_ENABLED')) ? 'https://' : 'http://';
                 $context->link = new Link($protocol_link, $protocol_content);
             }
 
             return $this->addWithemail();
-        } else {
-            return $this->add();
         }
+
+        return $this->add();
     }
 }

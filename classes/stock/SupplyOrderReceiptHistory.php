@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -73,13 +74,38 @@ class SupplyOrderReceiptHistoryCore extends ObjectModel
         'table' => 'supply_order_receipt_history',
         'primary' => 'id_supply_order_receipt_history',
         'fields' => [
-            'id_supply_order_detail' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_supply_order_state' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_employee' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'employee_firstname' => ['type' => self::TYPE_STRING, 'validate' => 'isName'],
-            'employee_lastname' => ['type' => self::TYPE_STRING, 'validate' => 'isName'],
-            'quantity' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'required' => true],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'id_supply_order_detail' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_supply_order_state' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_employee' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'employee_firstname' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isName',
+            ],
+            'employee_lastname' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isName',
+            ],
+            'quantity' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+                'required' => true,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
         ],
     ];
 
@@ -90,9 +116,15 @@ class SupplyOrderReceiptHistoryCore extends ObjectModel
         'objectsNodeName' => 'supply_order_receipt_histories',
         'objectNodeName' => 'supply_order_receipt_history',
         'fields' => [
-            'id_supply_order_detail' => ['xlink_resource' => 'supply_order_details'],
-            'id_employee' => ['xlink_resource' => 'employees'],
-            'id_supply_order_state' => ['xlink_resource' => 'supply_order_states'],
+            'id_supply_order_detail' => [
+                'xlink_resource' => 'supply_order_details',
+            ],
+            'id_employee' => [
+                'xlink_resource' => 'employees',
+            ],
+            'id_supply_order_state' => [
+                'xlink_resource' => 'supply_order_states',
+            ],
         ],
     ];
 }

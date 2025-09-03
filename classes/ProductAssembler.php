@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,11 +40,6 @@ class ProductAssemblerCore
     private $context;
     private $searchContext;
 
-    /**
-     * ProductAssemblerCore constructor.
-     *
-     * @param Context $context
-     */
     public function __construct(Context $context)
     {
         $this->context = $context;
@@ -52,10 +48,6 @@ class ProductAssemblerCore
 
     /**
      * Add missing product fields.
-     *
-     * @param array $rawProduct
-     *
-     * @return array
      *
      * @throws PrestaShopDatabaseException
      */
@@ -77,10 +69,6 @@ class ProductAssemblerCore
 
     /**
      * Add missing product fields to multiple products.
-     *
-     * @param array $rawProducts
-     *
-     * @return array
      *
      * @throws PrestaShopDatabaseException
      */
@@ -115,10 +103,6 @@ class ProductAssemblerCore
 
     /**
      * Return the SQL query to get all product fields.
-     *
-     * @param array $productIds
-     *
-     * @return string
      */
     private function getSqlQueryProductFields(array $productIds): string
     {
@@ -130,7 +114,7 @@ class ProductAssemblerCore
         $prefix = _DB_PREFIX_;
 
         $nbDaysNewProduct = (int) Configuration::get('PS_NB_DAYS_NEW_PRODUCT');
-        if (!Validate::isUnsignedInt($nbDaysNewProduct)) {
+        if (! Validate::isUnsignedInt($nbDaysNewProduct)) {
             $nbDaysNewProduct = 20;
         }
         $now = date('Y-m-d') . ' 00:00:00';
@@ -178,10 +162,6 @@ class ProductAssemblerCore
      * The only required property is id_product.
      * If some data were already provided in $rawProduct, it won't be overwritten.
      *
-     * @param array $rawProduct
-     *
-     * @return mixed
-     *
      * @throws PrestaShopDatabaseException
      */
     public function assembleProduct(array $rawProduct)
@@ -201,8 +181,6 @@ class ProductAssemblerCore
      * If some data were already provided in $rawProducts, it won't be overwritten.
      *
      * @param array $rawProducts Array with multiple products
-     *
-     * @return mixed
      *
      * @throws PrestaShopDatabaseException
      */

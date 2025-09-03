@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,15 +30,14 @@
  */
 class CacheApcCore extends Cache
 {
-    /** @var bool Whether APCu is enabled */
+    /**
+     * @var bool Whether APCu is enabled
+     */
     public $apcu;
 
-    /**
-     * CacheApcCore constructor.
-     */
     public function __construct()
     {
-        if (!extension_loaded('apc') && !extension_loaded('apcu')) {
+        if (! extension_loaded('apc') && ! extension_loaded('apcu')) {
             throw new PrestaShopException('APC cache has been enabled, but the APC or APCu extension is not available');
         }
         $this->apcu = extension_loaded('apcu');
@@ -53,7 +53,7 @@ class CacheApcCore extends Cache
      */
     public function delete($key)
     {
-        if ($key == '*') {
+        if ($key === '*') {
             $this->flush();
         } elseif (strpos($key, '*') === false) {
             $this->_delete($key);
@@ -102,12 +102,12 @@ class CacheApcCore extends Cache
      */
     protected function _exists($key)
     {
-        if (!function_exists('apc_exists') && !function_exists('apcu_exists')) {
+        if (! function_exists('apc_exists') && ! function_exists('apcu_exists')) {
             // We're dealing with APC < 3.1.4; use this boolean wrapper as a fallback:
             return (bool) apc_fetch($key);
-        } else {
-            return ($this->apcu) ? apcu_exists($key) : apc_exists($key);
         }
+
+        return ($this->apcu) ? apcu_exists($key) : apc_exists($key);
     }
 
     /**
@@ -136,10 +136,10 @@ class CacheApcCore extends Cache
     /**
      * Store data in the cache.
      *
-     * @param string $key Cache Key
-     * @param mixed $value Value
-     * @param int $ttl Time to live in the cache
-     *                 0 = unlimited
+     * @param string $key   Cache Key
+     * @param mixed  $value Value
+     * @param int    $ttl   Time to live in the cache
+     *                      0 = unlimited
      *
      * @return bool Whether the data was successfully stored
      */

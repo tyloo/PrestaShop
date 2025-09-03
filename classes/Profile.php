@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,7 +35,9 @@ class ProfileCore extends ObjectModel
         'class_name',
     ];
 
-    /** @var string|array<int, string> Name */
+    /**
+     * @var string|array<int, string> Name
+     */
     public $name;
 
     /**
@@ -52,9 +55,6 @@ class ProfileCore extends ObjectModel
 
     protected static $_cache_accesses = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct($id = null, $idLang = null, $idShop = null, $translator = null)
     {
         parent::__construct($id, $idLang, $idShop, $translator);
@@ -62,9 +62,6 @@ class ProfileCore extends ObjectModel
         $this->image_dir = _PS_PROFILE_IMG_DIR_;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProfileImage(): ?string
     {
         $path = $this->image_dir . $this->id . '.jpg';
@@ -93,14 +90,14 @@ class ProfileCore extends ObjectModel
     /**
      * Get the current profile name.
      *
-     * @param int $idProfile Profile ID
-     * @param int|null $idLang Language ID
+     * @param int      $idProfile Profile ID
+     * @param int|null $idLang    Language ID
      *
      * @return array Profile
      */
     public static function getProfile($idProfile, $idLang = null)
     {
-        if (!$idLang) {
+        if (! $idLang) {
             $idLang = Configuration::get('PS_LANG_DEFAULT');
         }
 
@@ -133,7 +130,7 @@ class ProfileCore extends ObjectModel
      * Get access profile.
      *
      * @param int $idProfile Profile ID
-     * @param int $idTab Tab ID
+     * @param int $idTab     Tab ID
      *
      * @return array|bool
      */
@@ -148,25 +145,25 @@ class ProfileCore extends ObjectModel
     /**
      * Get access profiles.
      *
-     * @param int $idProfile Profile ID
-     * @param string $type Type
+     * @param int    $idProfile Profile ID
+     * @param string $type      Type
      *
      * @return array|false
      */
     public static function getProfileAccesses($idProfile, $type = 'id_tab')
     {
-        if (!in_array($type, self::ALLOWED_PROFILE_TYPE_CHECK)) {
+        if (! in_array($type, self::ALLOWED_PROFILE_TYPE_CHECK, true)) {
             return false;
         }
 
-        if (!isset(self::$_cache_accesses[$idProfile])) {
+        if (! isset(self::$_cache_accesses[$idProfile])) {
             self::$_cache_accesses[$idProfile] = [];
         }
 
-        if (!isset(self::$_cache_accesses[$idProfile][$type])) {
+        if (! isset(self::$_cache_accesses[$idProfile][$type])) {
             self::$_cache_accesses[$idProfile][$type] = [];
             // Super admin profile has full auth
-            if ($idProfile == _PS_ADMIN_PROFILE_) {
+            if ($idProfile === _PS_ADMIN_PROFILE_) {
                 $defaultPermission = [
                     'id_profile' => _PS_ADMIN_PROFILE_,
                     'view' => '1',
@@ -217,9 +214,9 @@ class ProfileCore extends ObjectModel
     }
 
     /**
-     * @param int $idProfile Profile ID
+     * @param int   $idProfile   Profile ID
      * @param array $defaultData Cached data
-     * @param array $accesses Data loaded from the database
+     * @param array $accesses    Data loaded from the database
      */
     private static function fillCacheAccesses($idProfile, $defaultData = [], $accesses = [])
     {
@@ -262,7 +259,7 @@ class ProfileCore extends ObjectModel
             if (empty($matches['classname'])) {
                 continue;
             }
-            $accessPerTab[$matches['classname']][array_search('1', $role)] = '1';
+            $accessPerTab[$matches['classname']][array_search('1', $role, true)] = '1';
         }
 
         return $accessPerTab;

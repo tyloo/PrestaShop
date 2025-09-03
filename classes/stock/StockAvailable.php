@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,19 +33,29 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\StockSettings;
  */
 class StockAvailableCore extends ObjectModel
 {
-    /** @var int identifier of the current product */
+    /**
+     * @var int identifier of the current product
+     */
     public $id_product;
 
-    /** @var int identifier of product attribute if necessary */
+    /**
+     * @var int identifier of product attribute if necessary
+     */
     public $id_product_attribute;
 
-    /** @var int the shop associated to the current product and corresponding quantity */
+    /**
+     * @var int the shop associated to the current product and corresponding quantity
+     */
     public $id_shop;
 
-    /** @var int the group shop associated to the current product and corresponding quantity */
+    /**
+     * @var int the group shop associated to the current product and corresponding quantity
+     */
     public $id_shop_group;
 
-    /** @var int the quantity available for sale */
+    /**
+     * @var int the quantity available for sale
+     */
     public $quantity = 0;
 
     /**
@@ -65,7 +76,9 @@ class StockAvailableCore extends ObjectModel
      */
     public $out_of_stock = 0;
 
-    /** @var string the location of the stock for this product / combination */
+    /**
+     * @var string the location of the stock for this product / combination
+     */
     public $location = '';
 
     /**
@@ -75,14 +88,48 @@ class StockAvailableCore extends ObjectModel
         'table' => 'stock_available',
         'primary' => 'id_stock_available',
         'fields' => [
-            'id_product' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_product_attribute' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_shop' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'id_shop_group' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'quantity' => ['type' => self::TYPE_INT, 'validate' => 'isInt', 'required' => true, 'range' => ['min' => StockSettings::INT_32_MAX_NEGATIVE, 'max' => StockSettings::INT_32_MAX_POSITIVE]],
-            'depends_on_stock' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool', 'required' => true],
-            'out_of_stock' => ['type' => self::TYPE_INT, 'validate' => 'isInt', 'required' => true],
-            'location' => ['type' => self::TYPE_STRING, 'validate' => 'isString', 'size' => 255],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_product_attribute' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_shop' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'id_shop_group' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'quantity' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+                'required' => true,
+                'range' => [
+                    'min' => StockSettings::INT_32_MAX_NEGATIVE,
+                    'max' => StockSettings::INT_32_MAX_POSITIVE,
+                ],
+            ],
+            'depends_on_stock' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+                'required' => true,
+            ],
+            'out_of_stock' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+                'required' => true,
+            ],
+            'location' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isString',
+                'size' => 255,
+            ],
         ],
     ];
 
@@ -91,10 +138,18 @@ class StockAvailableCore extends ObjectModel
      */
     protected $webserviceParameters = [
         'fields' => [
-            'id_product' => ['xlink_resource' => 'products'],
-            'id_product_attribute' => ['xlink_resource' => 'combinations'],
-            'id_shop' => ['xlink_resource' => 'shops'],
-            'id_shop_group' => ['xlink_resource' => 'shop_groups'],
+            'id_product' => [
+                'xlink_resource' => 'products',
+            ],
+            'id_product_attribute' => [
+                'xlink_resource' => 'combinations',
+            ],
+            'id_shop' => [
+                'xlink_resource' => 'shops',
+            ],
+            'id_shop_group' => [
+                'xlink_resource' => 'shop_groups',
+            ],
         ],
         'hidden_fields' => [
         ],
@@ -114,7 +169,7 @@ class StockAvailableCore extends ObjectModel
 
     public static function getStockAvailableIdByProductId($id_product, $id_product_attribute = null, $id_shop = null)
     {
-        if (!Validate::isUnsignedId($id_product)) {
+        if (! Validate::isUnsignedId($id_product)) {
             return false;
         }
 
@@ -144,7 +199,7 @@ class StockAvailableCore extends ObjectModel
         @trigger_error(sprintf(
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
-        ), E_USER_DEPRECATED);
+        ), \E_USER_DEPRECATED);
 
         return true;
     }
@@ -152,14 +207,14 @@ class StockAvailableCore extends ObjectModel
     /**
      * For a given id_product, sets if product is available out of stocks.
      *
-     * @param int $id_product
-     * @param int|bool $out_of_stock Optional false by default
-     * @param int|null $id_shop Optional gets context by default
-     * @param int $id_product_attribute
+     * @param int      $id_product
+     * @param int|bool $out_of_stock         Optional false by default
+     * @param int|null $id_shop              Optional gets context by default
+     * @param int      $id_product_attribute
      */
     public static function setProductOutOfStock($id_product, $out_of_stock = false, $id_shop = null, $id_product_attribute = 0)
     {
-        if (!Validate::isUnsignedId($id_product)) {
+        if (! Validate::isUnsignedId($id_product)) {
             return false;
         }
 
@@ -186,22 +241,20 @@ class StockAvailableCore extends ObjectModel
     }
 
     /**
-     * @param int $id_product
+     * @param int    $id_product
      * @param string $location
-     * @param int $id_shop Optional
-     * @param int $id_product_attribute Optional
-     *
-     * @return void
+     * @param int    $id_shop              Optional
+     * @param int    $id_product_attribute Optional
      *
      * @throws PrestaShopDatabaseException
      */
     public static function setLocation($id_product, $location, $id_shop = null, $id_product_attribute = 0)
     {
         if (
-            false === Validate::isUnsignedId($id_product)
-            || ((false === Validate::isUnsignedId($id_shop)) && (null !== $id_shop))
-            || (false === Validate::isUnsignedId($id_product_attribute))
-            || (false === Validate::isString($location))
+            Validate::isUnsignedId($id_product) === false
+            || ((Validate::isUnsignedId($id_shop) === false) && ($id_shop !== null))
+            || (Validate::isUnsignedId($id_product_attribute) === false)
+            || (Validate::isString($location) === false)
         ) {
             $serializedInputData = [
                 'id_product' => $id_product,
@@ -240,7 +293,7 @@ class StockAvailableCore extends ObjectModel
      *
      * @param int $id_product
      * @param int $id_product_attribute Optional
-     * @param int $id_shop Optional : gets context by default
+     * @param int $id_shop              Optional : gets context by default
      *
      * @return int Quantity
      */
@@ -252,7 +305,7 @@ class StockAvailableCore extends ObjectModel
         }
 
         $key = 'StockAvailable::getQuantityAvailableByProduct_' . (int) $id_product . '-' . (int) $id_product_attribute . '-' . (int) $id_shop;
-        if (!Cache::isStored($key)) {
+        if (! Cache::isStored($key)) {
             $query = new DbQuery();
             $query->select('SUM(quantity)');
             $query->from('stock_available');
@@ -280,7 +333,7 @@ class StockAvailableCore extends ObjectModel
      */
     public function add($autodate = true, $null_values = false)
     {
-        if (!parent::add($autodate, $null_values)) {
+        if (! parent::add($autodate, $null_values)) {
             return false;
         }
 
@@ -294,7 +347,7 @@ class StockAvailableCore extends ObjectModel
      */
     public function update($null_values = false)
     {
-        if (!parent::update($null_values)) {
+        if (! parent::update($null_values)) {
             return false;
         }
 
@@ -314,7 +367,7 @@ class StockAvailableCore extends ObjectModel
     public function postSave()
     {
         // If there are no combinations, we can just consider it finished
-        if ($this->id_product_attribute == 0) {
+        if ($this->id_product_attribute === 0) {
             return true;
         }
 
@@ -322,7 +375,7 @@ class StockAvailableCore extends ObjectModel
         if (count($this->id_shop_list)) {
             $id_shop = reset($this->id_shop_list);
         } else {
-            $id_shop = (Shop::getContext() != Shop::CONTEXT_GROUP && $this->id_shop ? $this->id_shop : null);
+            $id_shop = (Shop::getContext() !== Shop::CONTEXT_GROUP && $this->id_shop ? $this->id_shop : null);
         }
 
         // Get the total quantity of all combinations
@@ -345,20 +398,20 @@ class StockAvailableCore extends ObjectModel
      * For a given id_product and id_product_attribute updates the quantity available
      * If $avoid_parent_pack_update is true, then packs containing the given product won't be updated.
      *
-     * @param int $id_product
+     * @param int      $id_product
      * @param int|null $id_product_attribute Optional
-     * @param int $delta_quantity The delta quantity to update
-     * @param int $id_shop Optional
-     * @param bool $add_movement Optional
-     * @param array $params Optional
+     * @param int      $delta_quantity       The delta quantity to update
+     * @param int      $id_shop              Optional
+     * @param bool     $add_movement         Optional
+     * @param array    $params               Optional
      */
     public static function updateQuantity($id_product, $id_product_attribute, $delta_quantity, $id_shop = null, $add_movement = false, $params = [])
     {
-        if (!Validate::isUnsignedId($id_product)) {
+        if (! Validate::isUnsignedId($id_product)) {
             return false;
         }
         $product = new Product((int) $id_product);
-        if (!Validate::isLoadedObject($product)) {
+        if (! Validate::isLoadedObject($product)) {
             return false;
         }
 
@@ -371,22 +424,22 @@ class StockAvailableCore extends ObjectModel
     /**
      * For a given id_product and id_product_attribute sets the quantity available.
      *
-     * @param int $id_product
-     * @param int $id_product_attribute
-     * @param int $quantity
+     * @param int      $id_product
+     * @param int      $id_product_attribute
+     * @param int      $quantity
      * @param int|null $id_shop
-     * @param bool $add_movement
+     * @param bool     $add_movement
      *
      * @return bool|void
      */
     public static function setQuantity($id_product, $id_product_attribute, $quantity, $id_shop = null, $add_movement = true)
     {
-        if (!Validate::isUnsignedId($id_product)) {
+        if (! Validate::isUnsignedId($id_product)) {
             return false;
         }
         $context = Context::getContext();
         // if there is no $id_shop, gets the context one
-        if ($id_shop === null && Shop::getContext() != Shop::CONTEXT_GROUP) {
+        if ($id_shop === null && Shop::getContext() !== Shop::CONTEXT_GROUP) {
             $id_shop = (int) $context->shop->id;
         }
 
@@ -402,7 +455,7 @@ class StockAvailableCore extends ObjectModel
             $stock_available->quantity = (int) $quantity;
             $stock_available->update();
 
-            if (true === $add_movement && 0 != $deltaQuantity) {
+            if ($add_movement === true && $deltaQuantity !== 0) {
                 $stockManager->saveMovement($id_product, $id_product_attribute, $deltaQuantity);
             }
         } else {
@@ -427,7 +480,7 @@ class StockAvailableCore extends ObjectModel
             }
             $stock_available->add();
 
-            if (true === $add_movement && 0 != $quantity) {
+            if ($add_movement === true && $quantity !== 0) {
                 $stockManager->saveMovement($id_product, $id_product_attribute, (int) $quantity);
             }
         }
@@ -448,25 +501,25 @@ class StockAvailableCore extends ObjectModel
     /**
      * Removes a given product from the stock available.
      *
-     * @param int $id_product
-     * @param int|null $id_product_attribute Optional
-     * @param Shop|int|null $shop Shop id or shop object Optional
+     * @param int           $id_product
+     * @param int|null      $id_product_attribute Optional
+     * @param Shop|int|null $shop                 Shop id or shop object Optional
      *
      * @return bool
      */
     public static function removeProductFromStockAvailable($id_product, $id_product_attribute = null, $shop = null)
     {
-        if (!Validate::isUnsignedId($id_product)) {
+        if (! Validate::isUnsignedId($id_product)) {
             return false;
         }
 
-        if (null !== $shop) {
-            if (!($shop instanceof Shop)) {
+        if ($shop !== null) {
+            if (! ($shop instanceof Shop)) {
                 $shop = new Shop($shop);
             }
             $groupSharedStock = (bool) $shop->getGroup()->share_stock;
         } else {
-            $groupSharedStock = Shop::getContext() == Shop::CONTEXT_SHOP && (bool) Shop::getContextShopGroup()->share_stock;
+            $groupSharedStock = Shop::getContext() === Shop::CONTEXT_SHOP && (bool) Shop::getContextShopGroup()->share_stock;
         }
 
         // If stock is shared by group and the product is still associated to some shops from the group no need to delete the stock
@@ -494,7 +547,7 @@ class StockAvailableCore extends ObjectModel
             StockAvailable::addSqlShopRestriction(null, $shop));
 
         if ($id_product_attribute) {
-            if ($shop === null || !Validate::isLoadedObject($shop)) {
+            if ($shop === null || ! Validate::isLoadedObject($shop)) {
                 $shop_datas = [];
                 StockAvailable::addSqlShopParams($shop_datas);
                 $id_shop = (int) $shop_datas['id_shop'];
@@ -537,14 +590,14 @@ class StockAvailableCore extends ObjectModel
     /**
      * For a given product, get its "out of stock" flag.
      *
-     * @param int $id_product
-     * @param int|null $id_shop Optional : gets context if null @see Context::getContext()
+     * @param int      $id_product
+     * @param int|null $id_shop    Optional : gets context if null @see Context::getContext()
      *
      * @return int|bool out_of_stock flag
      */
     public static function outOfStock($id_product, $id_shop = null)
     {
-        if (!Validate::isUnsignedId($id_product)) {
+        if (! Validate::isUnsignedId($id_product)) {
             return false;
         }
 
@@ -560,9 +613,9 @@ class StockAvailableCore extends ObjectModel
     }
 
     /**
-     * @param int $id_product
+     * @param int      $id_product
      * @param int|null $id_product_attribute Optional
-     * @param int|null $id_shop Optional
+     * @param int|null $id_shop              Optional
      *
      * @return bool|string
      */
@@ -570,7 +623,7 @@ class StockAvailableCore extends ObjectModel
     {
         $id_product = (int) $id_product;
 
-        if (null === $id_product_attribute) {
+        if ($id_product_attribute === null) {
             $id_product_attribute = 0;
         } else {
             $id_product_attribute = (int) $id_product_attribute;
@@ -590,9 +643,9 @@ class StockAvailableCore extends ObjectModel
     /**
      * Add an sql restriction for shops fields - specific to StockAvailable.
      *
-     * @param DbQuery|string|null $sql Reference to the query object
-     * @param Shop|int|null $shop Optional : The shop ID
-     * @param string|null $alias Optional : The current table alias
+     * @param DbQuery|string|null $sql   Reference to the query object
+     * @param Shop|int|null       $shop  Optional : The shop ID
+     * @param string|null         $alias Optional : The current table alias
      *
      * @return string|DbQuery DbQuery object or the sql restriction string
      */
@@ -600,14 +653,14 @@ class StockAvailableCore extends ObjectModel
     {
         $context = Context::getContext();
 
-        if (!empty($alias)) {
+        if (! empty($alias)) {
             $alias .= '.';
         }
 
         // if there is no $id_shop, gets the context one
         // get shop group too
         if ($shop === null || $shop === $context->shop->id) {
-            if (Shop::getContext() == Shop::CONTEXT_GROUP) {
+            if (Shop::getContext() === Shop::CONTEXT_GROUP) {
                 $shop_group = Shop::getContextShopGroup();
             } else {
                 $shop_group = $context->shop->getGroup();
@@ -646,8 +699,8 @@ class StockAvailableCore extends ObjectModel
     /**
      * Add sql params for shops fields - specific to StockAvailable.
      *
-     * @param array $params Reference to the params array
-     * @param int $id_shop Optional : The shop ID
+     * @param array $params  Reference to the params array
+     * @param int   $id_shop Optional : The shop ID
      */
     public static function addSqlShopParams(&$params, $id_shop = null)
     {
@@ -657,7 +710,7 @@ class StockAvailableCore extends ObjectModel
         // if there is no $id_shop, gets the context one
         // get shop group too
         if ($id_shop === null) {
-            if (Shop::getContext() == Shop::CONTEXT_GROUP) {
+            if (Shop::getContext() === Shop::CONTEXT_GROUP) {
                 $shop_group = Shop::getContextShopGroup();
             } else {
                 $shop_group = $context->shop->getGroup();
@@ -679,7 +732,7 @@ class StockAvailableCore extends ObjectModel
         }
 
         // if no group specific restriction, set simple shop restriction
-        if (!$group_ok) {
+        if (! $group_ok) {
             $params['id_shop'] = (int) $id_shop;
         }
     }
@@ -694,7 +747,7 @@ class StockAvailableCore extends ObjectModel
      */
     public static function copyStockAvailableFromShopToShop($src_shop_id, $dst_shop_id)
     {
-        if (!$src_shop_id || !$dst_shop_id) {
+        if (! $src_shop_id || ! $dst_shop_id) {
             return false;
         }
 

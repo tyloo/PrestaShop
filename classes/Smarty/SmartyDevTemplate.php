@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,12 +32,12 @@ class SmartyDevTemplateCore extends Smarty_Internal_Template
 {
     /**
      * @param SmartyDevTemplateCore|null $template
-     * @param null $cache_id
-     * @param null $compile_id
-     * @param object $parent
-     * @param false $display
-     * @param bool $merge_tpl_vars
-     * @param false $no_output_filter
+     * @param null                       $cache_id
+     * @param null                       $compile_id
+     * @param object                     $parent
+     * @param false                      $display
+     * @param bool                       $merge_tpl_vars
+     * @param false                      $no_output_filter
      *
      * @return string
      *
@@ -45,7 +46,7 @@ class SmartyDevTemplateCore extends Smarty_Internal_Template
     // @phpstan-ignore-next-line
     public function fetch($template = null, $cache_id = null, $compile_id = null, $parent = null, $display = false, $merge_tpl_vars = true, $no_output_filter = false)
     {
-        if (null !== $template) {
+        if ($template !== null) {
             $tpl = $template->template_resource;
         } else {
             $tpl = $this->template_resource;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,13 +30,13 @@ class FormFieldCore
     private $type = 'text';
     private $required = false;
     private $label = '';
-    private $value = null;
+    private $value;
     private $availableValues = [];
     /**
      * @var int|null
      */
-    private $minLength = null;
-    private $maxLength = null;
+    private $minLength;
+    private $maxLength;
     private $errors = [];
     private $constraints = [];
     private $attr = [];
@@ -48,7 +49,7 @@ class FormFieldCore
     /**
      * @var string|null
      */
-    public $moduleName = null;
+    public $moduleName;
 
     public function toArray()
     {
@@ -145,7 +146,7 @@ class FormFieldCore
 
     public function addAvailableValue($availableValue, $label = null)
     {
-        if (!$label) {
+        if (! $label) {
             $label = $availableValue;
         }
 
@@ -216,41 +217,25 @@ class FormFieldCore
         return $this->constraints;
     }
 
-    /**
-     * @param string $autocomplete
-     *
-     * @return FormFieldCore
-     */
-    public function setAutocompleteAttribute(string $autocomplete): FormFieldCore
+    public function setAutocompleteAttribute(string $autocomplete): self
     {
         $this->autocomplete = $autocomplete;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAutocompleteAttribute(): string
     {
         return $this->autocomplete;
     }
 
-    /**
-     * @param array $attr
-     *
-     * @return FormFieldCore
-     */
-    public function setAttr(array $attr): FormFieldCore
+    public function setAttr(array $attr): self
     {
         $this->attr = $attr;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getAttr(): array
     {
         return $this->attr;

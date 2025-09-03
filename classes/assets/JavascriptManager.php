@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,14 +48,13 @@ class JavascriptManagerCore extends AbstractAssetManager
     }
 
     /**
-     * @param string $id
-     * @param string $relativePath
-     * @param string $position
-     * @param int $priority
-     * @param bool $inline
+     * @param string      $id
+     * @param string      $relativePath
+     * @param string      $position
+     * @param int         $priority
+     * @param bool        $inline
      * @param string|null $attribute
-     * @param string $server
-     * @param string|null $version
+     * @param string      $server
      */
     public function register(
         $id,
@@ -64,9 +64,9 @@ class JavascriptManagerCore extends AbstractAssetManager
         $inline = false,
         $attribute = null,
         $server = 'local',
-        ?string $version = null
+        ?string $version = null,
     ) {
-        if ('remote' === $server) {
+        if ($server === 'remote') {
             $this->add($id, $relativePath, $position, $priority, $inline, $attribute, $server, $version);
         } elseif ($fullPath = $this->getFullPath($relativePath)) {
             $this->add($id, $fullPath, $position, $priority, $inline, $attribute, $server, $version);
@@ -90,11 +90,10 @@ class JavascriptManagerCore extends AbstractAssetManager
      * @param string $id
      * @param string $fullPath
      * @param string $position
-     * @param int $priority
-     * @param bool $inline
+     * @param int    $priority
+     * @param bool   $inline
      * @param string $attribute
      * @param string $server
-     * @param string|null $version
      */
     protected function add($id, $fullPath, $position, $priority, $inline, $attribute, $server, ?string $version)
     {
@@ -104,7 +103,7 @@ class JavascriptManagerCore extends AbstractAssetManager
         $srcPath = $fullPath;
         $fullPath = $version ? $fullPath . '?' . $version : $fullPath;
 
-        if ('remote' === $server) {
+        if ($server === 'remote') {
             $uri = $fullPath;
             $type = 'external';
         } else {

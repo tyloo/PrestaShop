@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,11 +52,11 @@ class TreeToolbarSearchCore extends TreeToolbarButtonCore implements ITreeToolba
         }
 
         $admin_webpath = str_ireplace(_PS_CORE_DIR_, '', _PS_ADMIN_DIR_);
-        $admin_webpath = preg_replace('/^' . preg_quote(DIRECTORY_SEPARATOR, '/') . '/', '', $admin_webpath);
+        $admin_webpath = preg_replace('/^' . preg_quote(\DIRECTORY_SEPARATOR, '/') . '/', '', $admin_webpath);
         $bo_theme = ((Validate::isLoadedObject($this->getContext()->employee)
             && $this->getContext()->employee->bo_theme) ? $this->getContext()->employee->bo_theme : 'default');
 
-        if (!file_exists(_PS_BO_ALL_THEMES_DIR_ . $bo_theme . DIRECTORY_SEPARATOR . 'template')) {
+        if (! file_exists(_PS_BO_ALL_THEMES_DIR_ . $bo_theme . \DIRECTORY_SEPARATOR . 'template')) {
             $bo_theme = 'default';
         }
 
@@ -70,7 +71,7 @@ class TreeToolbarSearchCore extends TreeToolbarButtonCore implements ITreeToolba
 
     private function _renderData($data)
     {
-        if (!is_array($data) && !$data instanceof Traversable) {
+        if (! is_array($data) && ! $data instanceof Traversable) {
             throw new PrestaShopException('Data value must be a traversable array');
         }
 
@@ -78,7 +79,7 @@ class TreeToolbarSearchCore extends TreeToolbarButtonCore implements ITreeToolba
 
         foreach ($data as $item) {
             $html .= json_encode($item) . ',';
-            if (array_key_exists('children', $item) && !empty($item['children'])) {
+            if (array_key_exists('children', $item) && ! empty($item['children'])) {
                 $html .= $this->_renderData($item['children']);
             }
         }

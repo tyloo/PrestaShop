@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,15 +46,21 @@ class TreeCore
     protected $_node_item_template;
     protected $_template;
 
-    /** @var string|array|null */
+    /**
+     * @var string|array|null
+     */
     private $_template_directory;
     private $_title;
     private $_no_js;
 
-    /** @var TreeToolbar|ITreeToolbarCore|null */
+    /**
+     * @var TreeToolbar|ITreeToolbarCore|null
+     */
     private $_toolbar;
 
-    /** @var TranslatorComponent */
+    /**
+     * @var TranslatorComponent
+     */
     public $translator;
 
     public function __construct($id, $data = null)
@@ -73,7 +80,7 @@ class TreeCore
 
     public function setActions($value)
     {
-        if (!isset($this->_toolbar)) {
+        if (! isset($this->_toolbar)) {
             $this->setToolbar(new TreeToolbarCore());
         }
 
@@ -84,7 +91,7 @@ class TreeCore
 
     public function getActions()
     {
-        if (!isset($this->_toolbar)) {
+        if (! isset($this->_toolbar)) {
             $this->setToolbar(new TreeToolbarCore());
         }
 
@@ -93,7 +100,7 @@ class TreeCore
 
     public function setAttribute($name, $value)
     {
-        if (!isset($this->_attributes)) {
+        if (! isset($this->_attributes)) {
             $this->_attributes = [];
         }
 
@@ -109,7 +116,7 @@ class TreeCore
 
     public function setAttributes($value)
     {
-        if (!is_array($value) && !$value instanceof Traversable) {
+        if (! is_array($value) && ! $value instanceof Traversable) {
             throw new PrestaShopException('Data value must be an traversable array');
         }
 
@@ -132,7 +139,7 @@ class TreeCore
 
     public function getAttributes()
     {
-        if (!isset($this->_attributes)) {
+        if (! isset($this->_attributes)) {
             $this->_attributes = [];
         }
 
@@ -148,7 +155,7 @@ class TreeCore
 
     public function getContext()
     {
-        if (!isset($this->_context)) {
+        if (! isset($this->_context)) {
             $this->_context = Context::getContext();
         }
 
@@ -157,7 +164,7 @@ class TreeCore
 
     public function setDataSearch($value)
     {
-        if (!is_array($value) && !$value instanceof Traversable) {
+        if (! is_array($value) && ! $value instanceof Traversable) {
             throw new PrestaShopException('Data value must be an traversable array');
         }
 
@@ -168,7 +175,7 @@ class TreeCore
 
     public function getDataSearch()
     {
-        if (!isset($this->_data_search)) {
+        if (! isset($this->_data_search)) {
             $this->_data_search = [];
         }
 
@@ -177,7 +184,7 @@ class TreeCore
 
     public function setData($value)
     {
-        if (!is_array($value) && !$value instanceof Traversable) {
+        if (! is_array($value) && ! $value instanceof Traversable) {
             throw new PrestaShopException('Data value must be an traversable array');
         }
 
@@ -188,7 +195,7 @@ class TreeCore
 
     public function getData()
     {
-        if (!isset($this->_data)) {
+        if (! isset($this->_data)) {
             $this->_data = [];
         }
 
@@ -204,7 +211,7 @@ class TreeCore
 
     public function getHeaderTemplate()
     {
-        if (!isset($this->_headerTemplate)) {
+        if (! isset($this->_headerTemplate)) {
             $this->setHeaderTemplate(self::DEFAULT_HEADER_TEMPLATE);
         }
 
@@ -232,7 +239,7 @@ class TreeCore
 
     public function getNodeFolderTemplate()
     {
-        if (!isset($this->_node_folder_template)) {
+        if (! isset($this->_node_folder_template)) {
             $this->setNodeFolderTemplate(self::DEFAULT_NODE_FOLDER_TEMPLATE);
         }
 
@@ -248,7 +255,7 @@ class TreeCore
 
     public function getNodeItemTemplate()
     {
-        if (!isset($this->_node_item_template)) {
+        if (! isset($this->_node_item_template)) {
             $this->setNodeItemTemplate(self::DEFAULT_NODE_ITEM_TEMPLATE);
         }
 
@@ -264,7 +271,7 @@ class TreeCore
 
     public function getTemplate()
     {
-        if (!isset($this->_template)) {
+        if (! isset($this->_template)) {
             $this->setTemplate(self::DEFAULT_TEMPLATE);
         }
 
@@ -288,7 +295,7 @@ class TreeCore
      */
     public function getTemplateDirectory()
     {
-        if (!isset($this->_template_directory)) {
+        if (! isset($this->_template_directory)) {
             $this->_template_directory = $this->_normalizeDirectory(
                 self::DEFAULT_TEMPLATE_DIRECTORY
             );
@@ -305,30 +312,34 @@ class TreeCore
 
         if ($this->getContext()->controller instanceof ModuleAdminController && isset($controller_name) && file_exists($this->_normalizeDirectory(
             $this->getContext()->controller->getTemplatePath()
-        ) . $controller_name . DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template)) {
+        ) . $controller_name . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->controller->getTemplatePath()) .
-                $controller_name . DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template;
-        } elseif ($this->getContext()->controller instanceof ModuleAdminController && file_exists($this->_normalizeDirectory(
+                $controller_name . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template;
+        }
+        if ($this->getContext()->controller instanceof ModuleAdminController && file_exists($this->_normalizeDirectory(
             $this->getContext()->controller->getTemplatePath()
         ) . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->controller->getTemplatePath())
                 . $this->getTemplateDirectory() . $template;
-        } elseif ($this->getContext()->controller instanceof AdminController && isset($controller_name)
+        }
+        if ($this->getContext()->controller instanceof AdminController && isset($controller_name)
             && file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
-                . DIRECTORY_SEPARATOR . $controller_name . DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template)) {
+                . \DIRECTORY_SEPARATOR . $controller_name . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
-                . DIRECTORY_SEPARATOR . $controller_name . DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template;
-        } elseif (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
+                . \DIRECTORY_SEPARATOR . $controller_name . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template;
+        }
+        if (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
             . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
                 . $this->getTemplateDirectory() . $template;
-        } elseif (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))
+        }
+        if (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))
             . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))
                 . $this->getTemplateDirectory() . $template;
-        } else {
-            return $this->getTemplateDirectory() . $template;
         }
+
+        return $this->getTemplateDirectory() . $template;
     }
 
     public function setNoJS($value)
@@ -352,13 +363,13 @@ class TreeCore
 
     public function setToolbar($value)
     {
-        if (!is_object($value)) {
+        if (! is_object($value)) {
             throw new PrestaShopException('Toolbar must be a class object');
         }
 
         $reflection = new ReflectionClass($value);
 
-        if (!$reflection->implementsInterface('ITreeToolbarCore')) {
+        if (! $reflection->implementsInterface('ITreeToolbarCore')) {
             throw new PrestaShopException('Toolbar class must implements ITreeToolbarCore interface');
         }
 
@@ -382,7 +393,7 @@ class TreeCore
 
     public function addAction($action)
     {
-        if (!isset($this->_toolbar)) {
+        if (! isset($this->_toolbar)) {
             $this->setToolbar(new TreeToolbarCore());
         }
 
@@ -393,7 +404,7 @@ class TreeCore
 
     public function removeActions()
     {
-        if (!isset($this->_toolbar)) {
+        if (! isset($this->_toolbar)) {
             $this->setToolbar(new TreeToolbarCore());
         }
 
@@ -406,17 +417,17 @@ class TreeCore
     {
         // Adding tree.js
         $admin_webpath = str_ireplace(_PS_CORE_DIR_, '', _PS_ADMIN_DIR_);
-        $admin_webpath = preg_replace('/^' . preg_quote(DIRECTORY_SEPARATOR, '/') . '/', '', $admin_webpath);
+        $admin_webpath = preg_replace('/^' . preg_quote(\DIRECTORY_SEPARATOR, '/') . '/', '', $admin_webpath);
         $bo_theme = ((Validate::isLoadedObject($this->getContext()->employee)
             && $this->getContext()->employee->bo_theme) ? $this->getContext()->employee->bo_theme : 'default');
 
-        if (!file_exists(_PS_BO_ALL_THEMES_DIR_ . $bo_theme . DIRECTORY_SEPARATOR . 'template')) {
+        if (! file_exists(_PS_BO_ALL_THEMES_DIR_ . $bo_theme . \DIRECTORY_SEPARATOR . 'template')) {
             $bo_theme = 'default';
         }
 
         $js_path = __PS_BASE_URI__ . $admin_webpath . '/themes/' . $bo_theme . '/js/tree.js';
         if ($this->getContext()->controller->ajax) {
-            if (!$this->_no_js) {
+            if (! $this->_no_js) {
                 $html = '<script type="text/javascript" src="' . $js_path . '"></script>';
             }
         } else {
@@ -429,7 +440,7 @@ class TreeCore
             $this->getContext()->smarty
         );
 
-        if ($this->getTitle() !== null && trim($this->getTitle()) != '' || $this->useToolbar()) {
+        if ($this->getTitle() !== null && trim($this->getTitle()) !== '' || $this->useToolbar()) {
             // Create Tree Header Template
             $headerTemplate = $this->getContext()->smarty->createTemplate(
                 $this->getTemplateFile($this->getHeaderTemplate()),
@@ -457,11 +468,11 @@ class TreeCore
 
     public function renderNodes($data = null)
     {
-        if (!isset($data)) {
+        if (! isset($data)) {
             $data = $this->getData();
         }
 
-        if (!is_array($data) && !$data instanceof Traversable) {
+        if (! is_array($data) && ! $data instanceof Traversable) {
             throw new PrestaShopException('Data value must be an traversable array');
         }
 
@@ -469,7 +480,7 @@ class TreeCore
 
         foreach ($data as $item) {
             if (array_key_exists('children', $item)
-                && !empty($item['children'])) {
+                && ! empty($item['children'])) {
                 $html .= $this->getContext()->smarty->createTemplate(
                     $this->getTemplateFile($this->getNodeFolderTemplate()),
                     $this->getContext()->smarty
@@ -505,7 +516,7 @@ class TreeCore
         @trigger_error(sprintf(
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
-        ), E_USER_DEPRECATED);
+        ), \E_USER_DEPRECATED);
 
         return false;
     }
@@ -524,13 +535,13 @@ class TreeCore
     {
         $last = $directory[strlen($directory) - 1];
 
-        if (in_array($last, ['/', '\\'])) {
-            $directory[strlen($directory) - 1] = DIRECTORY_SEPARATOR;
+        if (in_array($last, ['/', '\\'], true)) {
+            $directory[strlen($directory) - 1] = \DIRECTORY_SEPARATOR;
 
             return $directory;
         }
 
-        $directory .= DIRECTORY_SEPARATOR;
+        $directory .= \DIRECTORY_SEPARATOR;
 
         return $directory;
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,23 +35,27 @@ class CheckoutProcessCore implements RenderableInterface
      * @var CheckoutSession
      */
     private $checkoutSession;
-    /** @var array CheckoutStepInterface[] */
+    /**
+     * @var array CheckoutStepInterface[]
+     */
     private $steps = [];
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $has_errors;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $template = 'checkout/checkout-process.tpl';
-    /** @var Context */
+    /**
+     * @var Context
+     */
     protected $context;
 
-    /**
-     * @param Context $context
-     * @param CheckoutSession $checkoutSession
-     */
     public function __construct(
         Context $context,
-        CheckoutSession $checkoutSession
+        CheckoutSession $checkoutSession,
     ) {
         $this->context = $context;
         $this->smarty = $context->smarty;
@@ -66,8 +71,6 @@ class CheckoutProcessCore implements RenderableInterface
     }
 
     /**
-     * @param array $requestParameters
-     *
      * @return $this
      */
     public function handleRequest(array $requestParameters = [])
@@ -88,8 +91,6 @@ class CheckoutProcessCore implements RenderableInterface
     }
 
     /**
-     * @param CheckoutStepInterface $step
-     *
      * @return self
      */
     public function addStep(CheckoutStepInterface $step)
@@ -110,9 +111,6 @@ class CheckoutProcessCore implements RenderableInterface
         return $this->steps;
     }
 
-    /**
-     * @param array $steps
-     */
     public function setSteps(array $steps)
     {
         $this->steps = $steps;
@@ -131,8 +129,6 @@ class CheckoutProcessCore implements RenderableInterface
     }
 
     /**
-     * @param array $extraParams
-     *
      * @return string
      *
      * @throws SmartyException
@@ -221,13 +217,13 @@ class CheckoutProcessCore implements RenderableInterface
     public function setNextStepReachable()
     {
         foreach ($this->getSteps() as $step) {
-            if (!$step->isReachable()) {
+            if (! $step->isReachable()) {
                 $step->setReachable(true);
 
                 break;
             }
 
-            if (!$step->isComplete()) {
+            if (! $step->isComplete()) {
                 break;
             }
         }
@@ -254,7 +250,7 @@ class CheckoutProcessCore implements RenderableInterface
         foreach ($steps as $position => $step) {
             $nextStep = ($position < count($steps) - 1) ? $steps[$position + 1] : null;
 
-            if ($step->isReachable() && (!$step->isComplete() || ($nextStep && !$nextStep->isReachable()))) {
+            if ($step->isReachable() && (! $step->isComplete() || ($nextStep && ! $nextStep->isReachable()))) {
                 $step->setCurrent(true);
 
                 return $this;

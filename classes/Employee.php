@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,28 +34,44 @@ use PrestaShop\PrestaShop\Core\Crypto\Hashing;
  */
 class EmployeeCore extends ObjectModel
 {
-    /** @var int|null Employee ID */
+    /**
+     * @var int|null Employee ID
+     */
     public $id;
 
-    /** @var int Employee profile */
+    /**
+     * @var int Employee profile
+     */
     public $id_profile;
 
-    /** @var int Employee language */
+    /**
+     * @var int Employee language
+     */
     public $id_lang;
 
-    /** @var string Lastname */
+    /**
+     * @var string Lastname
+     */
     public $lastname;
 
-    /** @var string Firstname */
+    /**
+     * @var string Firstname
+     */
     public $firstname;
 
-    /** @var string e-mail */
+    /**
+     * @var string e-mail
+     */
     public $email;
 
-    /** @var string Password */
+    /**
+     * @var string Password
+     */
     public $passwd;
 
-    /** @var string Password */
+    /**
+     * @var string Password
+     */
     public $last_passwd_gen;
 
     public $stats_date_from;
@@ -66,24 +83,36 @@ class EmployeeCore extends ObjectModel
 
     public $preselect_date_range;
 
-    /** @var string Display back office background in the specified color */
+    /**
+     * @var string Display back office background in the specified color
+     */
     public $bo_color;
 
     public $default_tab;
 
-    /** @var string employee's chosen theme */
+    /**
+     * @var string employee's chosen theme
+     */
     public $bo_theme;
 
-    /** @var string employee's chosen css file */
+    /**
+     * @var string employee's chosen css file
+     */
     public $bo_css = 'theme.css';
 
-    /** @var int employee desired screen width */
+    /**
+     * @var int employee desired screen width
+     */
     public $bo_width;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     public $bo_menu = true;
 
-    /** @var bool Status */
+    /**
+     * @var bool Status
+     */
     public $active = true;
 
     public $remote_addr;
@@ -93,10 +122,14 @@ class EmployeeCore extends ObjectModel
     public $id_last_customer_message;
     public $id_last_customer;
 
-    /** @var string|null Unique token for forgot password feature */
+    /**
+     * @var string|null Unique token for forgot password feature
+     */
     public $reset_password_token;
 
-    /** @var string|null token validity date for forgot password feature */
+    /**
+     * @var string|null token validity date for forgot password feature
+     */
     public $reset_password_validity;
 
     /**
@@ -111,53 +144,158 @@ class EmployeeCore extends ObjectModel
         'table' => 'employee',
         'primary' => 'id_employee',
         'fields' => [
-            'lastname' => ['type' => self::TYPE_STRING, 'validate' => 'isName', 'required' => true, 'size' => 255],
-            'firstname' => ['type' => self::TYPE_STRING, 'validate' => 'isName', 'required' => true, 'size' => 255],
-            'email' => ['type' => self::TYPE_STRING, 'validate' => 'isEmail', 'required' => true, 'size' => 255],
-            'id_lang' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'required' => true],
-            'passwd' => ['type' => self::TYPE_STRING, 'validate' => 'isHashedPassword', 'required' => true, 'size' => 255],
-            'last_passwd_gen' => ['type' => self::TYPE_STRING],
-            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'id_profile' => ['type' => self::TYPE_INT, 'validate' => 'isInt', 'required' => true],
-            'bo_color' => ['type' => self::TYPE_STRING, 'validate' => 'isColor', 'size' => 32],
-            'default_tab' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
-            'bo_theme' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 32],
-            'bo_css' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 64],
-            'bo_width' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'bo_menu' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'stats_date_from' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'stats_date_to' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'stats_compare_from' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'stats_compare_to' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'stats_compare_option' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'preselect_date_range' => ['type' => self::TYPE_STRING, 'size' => 32],
-            'id_last_order' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'id_last_customer_message' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'id_last_customer' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'reset_password_token' => ['type' => self::TYPE_STRING, 'validate' => 'isSha1', 'size' => 40, 'copy_post' => false],
-            'reset_password_validity' => ['type' => self::TYPE_DATE, 'validate' => 'isDateOrNull', 'copy_post' => false],
-            'has_enabled_gravatar' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'lastname' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isName',
+                'required' => true,
+                'size' => 255,
+            ],
+            'firstname' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isName',
+                'required' => true,
+                'size' => 255,
+            ],
+            'email' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isEmail',
+                'required' => true,
+                'size' => 255,
+            ],
+            'id_lang' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+                'required' => true,
+            ],
+            'passwd' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isHashedPassword',
+                'required' => true,
+                'size' => 255,
+            ],
+            'last_passwd_gen' => [
+                'type' => self::TYPE_STRING,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'id_profile' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+                'required' => true,
+            ],
+            'bo_color' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isColor',
+                'size' => 32,
+            ],
+            'default_tab' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
+            'bo_theme' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'size' => 32,
+            ],
+            'bo_css' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'size' => 64,
+            ],
+            'bo_width' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'bo_menu' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'stats_date_from' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'stats_date_to' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'stats_compare_from' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'stats_compare_to' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'stats_compare_option' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'preselect_date_range' => [
+                'type' => self::TYPE_STRING,
+                'size' => 32,
+            ],
+            'id_last_order' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'id_last_customer_message' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'id_last_customer' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'reset_password_token' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isSha1',
+                'size' => 40,
+                'copy_post' => false,
+            ],
+            'reset_password_validity' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDateOrNull',
+                'copy_post' => false,
+            ],
+            'has_enabled_gravatar' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
         ],
     ];
 
     protected $webserviceParameters = [
         'fields' => [
-            'id_lang' => ['xlink_resource' => 'languages'],
-            'last_passwd_gen' => ['setter' => false],
-            'stats_date_from' => ['setter' => false],
-            'stats_date_to' => ['setter' => false],
-            'stats_compare_from' => ['setter' => false],
-            'stats_compare_to' => ['setter' => false],
-            'passwd' => ['setter' => 'setWsPasswd'],
+            'id_lang' => [
+                'xlink_resource' => 'languages',
+            ],
+            'last_passwd_gen' => [
+                'setter' => false,
+            ],
+            'stats_date_from' => [
+                'setter' => false,
+            ],
+            'stats_date_to' => [
+                'setter' => false,
+            ],
+            'stats_compare_from' => [
+                'setter' => false,
+            ],
+            'stats_compare_to' => [
+                'setter' => false,
+            ],
+            'passwd' => [
+                'setter' => 'setWsPasswd',
+            ],
         ],
     ];
 
     protected $associated_shops = [];
 
     /**
-     * EmployeeCore constructor.
-     *
-     * @param int|null $id Employee ID
+     * @param int|null $id     Employee ID
      * @param int|null $idLang Language ID
      * @param int|null $idShop Shop ID
      */
@@ -165,7 +303,7 @@ class EmployeeCore extends ObjectModel
     {
         parent::__construct($id, null, $idShop);
 
-        if (null !== $idLang) {
+        if ($idLang !== null) {
             $this->id_lang = (int) (Language::getLanguage($idLang) !== false) ? $idLang : Configuration::get('PS_LANG_DEFAULT');
         }
 
@@ -183,19 +321,19 @@ class EmployeeCore extends ObjectModel
      */
     public function getFields()
     {
-        if (empty($this->stats_date_from) || $this->stats_date_from == '0000-00-00') {
+        if (empty($this->stats_date_from) || $this->stats_date_from === '0000-00-00') {
             $this->stats_date_from = date('Y-m-d', strtotime('-1 month'));
         }
 
-        if (empty($this->stats_compare_from) || $this->stats_compare_from == '0000-00-00') {
+        if (empty($this->stats_compare_from) || $this->stats_compare_from === '0000-00-00') {
             $this->stats_compare_from = null;
         }
 
-        if (empty($this->stats_date_to) || $this->stats_date_to == '0000-00-00') {
+        if (empty($this->stats_date_to) || $this->stats_date_to === '0000-00-00') {
             $this->stats_date_to = date('Y-m-d');
         }
 
-        if (empty($this->stats_compare_to) || $this->stats_compare_to == '0000-00-00') {
+        if (empty($this->stats_compare_to) || $this->stats_compare_to === '0000-00-00') {
             $this->stats_compare_to = null;
         }
 
@@ -205,7 +343,7 @@ class EmployeeCore extends ObjectModel
     /**
      * Adds current Employee as a new Object to the database.
      *
-     * @param bool $autoDate Automatically set `date_upd` and `date_add` columns
+     * @param bool $autoDate   Automatically set `date_upd` and `date_add` columns
      * @param bool $nullValues Whether we want to use NULL values instead of empty quotes values
      *
      * @return bool Indicates whether the Employee has been successfully added
@@ -233,11 +371,11 @@ class EmployeeCore extends ObjectModel
      */
     public function update($nullValues = false)
     {
-        if (empty($this->stats_date_from) || $this->stats_date_from == '0000-00-00') {
+        if (empty($this->stats_date_from) || $this->stats_date_from === '0000-00-00') {
             $this->stats_date_from = date('Y-m-d');
         }
 
-        if (empty($this->stats_date_to) || $this->stats_date_to == '0000-00-00') {
+        if (empty($this->stats_date_to) || $this->stats_date_to === '0000-00-00') {
             $this->stats_date_to = date('Y-m-d');
         }
 
@@ -253,20 +391,20 @@ class EmployeeCore extends ObjectModel
      */
     protected function updateTextDirection()
     {
-        if (!defined('_PS_ADMIN_DIR_')) {
+        if (! defined('_PS_ADMIN_DIR_')) {
             return;
         }
 
-        $path = _PS_ADMIN_DIR_ . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->bo_theme . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR;
+        $path = _PS_ADMIN_DIR_ . \DIRECTORY_SEPARATOR . 'themes' . \DIRECTORY_SEPARATOR . $this->bo_theme . \DIRECTORY_SEPARATOR . 'css' . \DIRECTORY_SEPARATOR;
         $language = new Language($this->id_lang);
 
-        if ($language->is_rtl && !strpos($this->bo_css, '_rtl')) {
+        if ($language->is_rtl && ! strpos($this->bo_css, '_rtl')) {
             $boCss = preg_replace('/^(.*)\.css$/', '$1_rtl.css', $this->bo_css);
 
             if (file_exists($path . $boCss)) {
                 $this->bo_css = $boCss;
             }
-        } elseif (!$language->is_rtl && strpos($this->bo_css, '_rtl')) {
+        } elseif (! $language->is_rtl && strpos($this->bo_css, '_rtl')) {
             $boCss = preg_replace('/^(.*)_rtl\.css$/', '$1.css', $this->bo_css);
 
             if (file_exists($path . $boCss)) {
@@ -295,16 +433,16 @@ class EmployeeCore extends ObjectModel
     /**
      * Return employee instance from its e-mail (optionally check password).
      *
-     * @param string $email e-mail
+     * @param string $email             e-mail
      * @param string $plaintextPassword Password is also checked if specified
-     * @param bool $activeOnly Filter employee by active status
+     * @param bool   $activeOnly        Filter employee by active status
      *
      * @return bool|Employee|EmployeeCore Employee instance
      *                                    `false` if not found
      */
     public function getByEmail($email, $plaintextPassword = null, $activeOnly = true)
     {
-        if (!Validate::isEmail($email)) {
+        if (! Validate::isEmail($email)) {
             throw new PrestaShopException('Email address is invalid.');
         }
 
@@ -317,7 +455,7 @@ class EmployeeCore extends ObjectModel
         }
 
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
-        if (!$result) {
+        if (! $result) {
             // Create fake result to make sure computing time does not allow password enumeration
             $result = ['passwd' => '123456'];
         }
@@ -326,8 +464,8 @@ class EmployeeCore extends ObjectModel
         $crypto = ServiceLocator::get(Hashing::class);
 
         $passwordHash = $result['passwd'];
-        $shouldCheckPassword = null !== $plaintextPassword;
-        if ($shouldCheckPassword && !$crypto->checkHash($plaintextPassword, $passwordHash)) {
+        $shouldCheckPassword = $plaintextPassword !== null;
+        if ($shouldCheckPassword && ! $crypto->checkHash($plaintextPassword, $passwordHash)) {
             return false;
         }
 
@@ -339,7 +477,7 @@ class EmployeeCore extends ObjectModel
             }
         }
 
-        if ($shouldCheckPassword && !$crypto->isFirstHash($plaintextPassword, $passwordHash)) {
+        if ($shouldCheckPassword && ! $crypto->isFirstHash($plaintextPassword, $passwordHash)) {
             $this->passwd = $crypto->hash($plaintextPassword);
 
             $this->update();
@@ -357,7 +495,7 @@ class EmployeeCore extends ObjectModel
      */
     public static function employeeExists($email)
     {
-        if (!Validate::isEmail($email)) {
+        if (! Validate::isEmail($email)) {
             throw new PrestaShopException('Email address is invalid.');
         }
 
@@ -377,7 +515,7 @@ class EmployeeCore extends ObjectModel
      */
     public static function checkPassword($idEmployee, $passwordHash)
     {
-        if (!Validate::isUnsignedId($idEmployee)) {
+        if (! Validate::isUnsignedId($idEmployee)) {
             throw new PrestaShopException('Employee ID is invalid.');
         }
 
@@ -395,7 +533,7 @@ class EmployeeCore extends ObjectModel
     /**
      * Count amount of Employees with the given Profile ID.
      *
-     * @param int $idProfile Profile ID
+     * @param int  $idProfile  Profile ID
      * @param bool $activeOnly Only active Employees
      *
      * @return false|string|null
@@ -419,7 +557,7 @@ class EmployeeCore extends ObjectModel
     public function isLastAdmin()
     {
         return $this->isSuperAdmin()
-            && Employee::countProfile($this->id_profile, true) == 1
+            && Employee::countProfile($this->id_profile, true) === 1
             && $this->active;
     }
 
@@ -440,8 +578,8 @@ class EmployeeCore extends ObjectModel
             return false;
         }
 
-        if ($this->id != 0) {
-            if ($this->passwd != $passwd) {
+        if ($this->id !== 0) {
+            if ($this->passwd !== $passwd) {
                 $this->passwd = $crypto->hash($passwd);
             }
         } else {
@@ -459,7 +597,7 @@ class EmployeeCore extends ObjectModel
     public function isLoggedBack()
     {
         $container = SymfonyContainer::getInstance();
-        if (!$container) {
+        if (! $container) {
             return false;
         }
         $userProvider = $container->get('prestashop.user_provider');
@@ -509,7 +647,7 @@ class EmployeeCore extends ObjectModel
      */
     public function hasAuthOnShop($idShop)
     {
-        return $this->isSuperAdmin() || in_array($idShop, $this->associated_shops);
+        return $this->isSuperAdmin() || in_array($idShop, $this->associated_shops, true);
     }
 
     /**
@@ -528,7 +666,7 @@ class EmployeeCore extends ObjectModel
         foreach ($this->associated_shops as $idShop) {
             /** @var int $groupFromShop */
             $groupFromShop = Shop::getGroupFromShop($idShop, true);
-            if ($idShopGroup == $groupFromShop) {
+            if ($idShopGroup === $groupFromShop) {
                 return true;
             }
         }
@@ -543,7 +681,7 @@ class EmployeeCore extends ObjectModel
      */
     public function getDefaultShopID()
     {
-        if ($this->isSuperAdmin() || in_array(Configuration::get('PS_SHOP_DEFAULT'), $this->associated_shops)) {
+        if ($this->isSuperAdmin() || in_array(Configuration::get('PS_SHOP_DEFAULT'), $this->associated_shops, true)) {
             return (int) Configuration::get('PS_SHOP_DEFAULT');
         }
 
@@ -553,7 +691,7 @@ class EmployeeCore extends ObjectModel
     /**
      * Get Employees by Profile.
      *
-     * @param int $idProfile Profile ID
+     * @param int  $idProfile  Profile ID
      * @param bool $activeOnly Only active Employees
      *
      * @return array|false|mysqli_result|PDOStatement|resource|null
@@ -576,7 +714,7 @@ class EmployeeCore extends ObjectModel
      */
     public function isSuperAdmin()
     {
-        return $this->id_profile == _PS_ADMIN_PROFILE_;
+        return $this->id_profile === _PS_ADMIN_PROFILE_;
     }
 
     /**
@@ -632,7 +770,7 @@ class EmployeeCore extends ObjectModel
         $element = bqSQL($element);
         $max = Db::getInstance()->getValue('
 			SELECT MAX(`id_' . $element . '`) as `id_' . $element . '`
-			FROM `' . _DB_PREFIX_ . $element . ($element == 'order' ? 's' : '') . '`');
+			FROM `' . _DB_PREFIX_ . $element . ($element === 'order' ? 's' : '') . '`');
 
         // if no rows in table, set max to 0
         if ((int) $max < 1) {
@@ -676,12 +814,12 @@ class EmployeeCore extends ObjectModel
      */
     public function hasRecentResetPasswordToken()
     {
-        if (!$this->reset_password_token) {
+        if (! $this->reset_password_token) {
             return false;
         }
 
         // TODO maybe use another 'recent' value for this test. For instance, equals password validity value.
-        if (!$this->reset_password_validity || strtotime($this->reset_password_validity) < time()) {
+        if (! $this->reset_password_validity || strtotime($this->reset_password_validity) < time()) {
             return false;
         }
 
@@ -693,11 +831,11 @@ class EmployeeCore extends ObjectModel
      */
     public function getValidResetPasswordToken()
     {
-        if (!$this->reset_password_token) {
+        if (! $this->reset_password_token) {
             return false;
         }
 
-        if (!$this->reset_password_validity || strtotime($this->reset_password_validity) < time()) {
+        if (! $this->reset_password_validity || strtotime($this->reset_password_validity) < time()) {
             return false;
         }
 
@@ -725,7 +863,7 @@ class EmployeeCore extends ObjectModel
     {
         $access = Profile::getProfileAccess($this->id_profile, Tab::getIdFromClassName($tab));
 
-        return is_array($access) && $access[$action] == '1';
+        return is_array($access) && $access[$action] === '1';
     }
 
     /**
@@ -753,7 +891,7 @@ class EmployeeCore extends ObjectModel
         foreach ($this->associated_shops as $shopId) {
             /** @var int $groupFromShop */
             $groupFromShop = Shop::getGroupFromShop($shopId, true);
-            if (!empty($groupFromShop) && !in_array($groupFromShop, $associatedShopGroupIds)) {
+            if (! empty($groupFromShop) && ! in_array($groupFromShop, $associatedShopGroupIds, true)) {
                 $associatedShopGroupIds[] = (int) $groupFromShop;
             }
         }

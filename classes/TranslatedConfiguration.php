@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,7 +32,9 @@ use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
  */
 class TranslatedConfigurationCore extends Configuration
 {
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $webserviceParameters = [
         'objectNodeName' => 'translated_configuration',
         'objectsNodeName' => 'translated_configurations',
@@ -42,7 +45,9 @@ class TranslatedConfigurationCore extends Configuration
         ],
     ];
 
-    /** @var array */
+    /**
+     * @var array
+     */
     public static $definition = [
         'table' => 'configuration',
         'primary' => 'id_configuration',
@@ -58,8 +63,6 @@ class TranslatedConfigurationCore extends Configuration
     ];
 
     /**
-     * TranslatedConfigurationCore constructor.
-     *
      * @param int|null $id
      * @param int|null $idLang
      */
@@ -139,8 +142,8 @@ class TranslatedConfigurationCore extends Configuration
 		(	SELECT id_configuration
 			FROM ' . _DB_PREFIX_ . $this->def['table'] . '_lang
 		) ' . $sqlFilter . '
-		' . ($sqlSort != '' ? $sqlSort : '') . '
-		' . ($sqlLimit != '' ? $sqlLimit : '') . '
+		' . ($sqlSort !== '' ? $sqlSort : '') . '
+		' . ($sqlLimit !== '' ? $sqlLimit : '') . '
 		';
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);

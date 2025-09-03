@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,9 +43,9 @@ class SmartyResourceParentCore extends Smarty_Resource_Custom
     /**
      * Fetch a template.
      *
-     * @param string $name template name
+     * @param string $name   template name
      * @param string $source template source
-     * @param int $mtime template modification timestamp (epoch)
+     * @param int    $mtime  template modification timestamp (epoch)
      */
     protected function fetch($name, &$source, &$mtime)
     {

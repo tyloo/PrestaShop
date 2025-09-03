@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,34 +34,54 @@ class ManufacturerCore extends ObjectModel
 {
     public $id;
 
-    /** @var string Name */
+    /**
+     * @var string Name
+     */
     public $name;
 
-    /** @var string|array<int, string> Description */
+    /**
+     * @var string|array<int, string> Description
+     */
     public $description;
 
-    /** @var string|array<int, string> Short description */
+    /**
+     * @var string|array<int, string> Short description
+     */
     public $short_description;
 
-    /** @var int Address */
+    /**
+     * @var int Address
+     */
     public $id_address;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
-    /** @var string Object last modification date */
+    /**
+     * @var string Object last modification date
+     */
     public $date_upd;
 
-    /** @var string Friendly URL */
+    /**
+     * @var string Friendly URL
+     */
     public $link_rewrite;
 
-    /** @var string|array<int, string> Meta title */
+    /**
+     * @var string|array<int, string> Meta title
+     */
     public $meta_title;
 
-    /** @var string|array<int, string> Meta description */
+    /**
+     * @var string|array<int, string> Meta description
+     */
     public $meta_description;
 
-    /** @var bool active */
+    /**
+     * @var bool active
+     */
     public $active;
 
     /**
@@ -71,16 +92,47 @@ class ManufacturerCore extends ObjectModel
         'primary' => 'id_manufacturer',
         'multilang' => true,
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isCatalogName', 'required' => true, 'size' => 64],
-            'active' => ['type' => self::TYPE_BOOL],
-            'date_add' => ['type' => self::TYPE_DATE],
-            'date_upd' => ['type' => self::TYPE_DATE],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isCatalogName',
+                'required' => true,
+                'size' => 64,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+            ],
 
             /* Lang fields */
-            'description' => ['type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml', 'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4],
-            'short_description' => ['type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml', 'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4],
-            'meta_title' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 255],
-            'meta_description' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 512],
+            'description' => [
+                'type' => self::TYPE_HTML,
+                'lang' => true,
+                'validate' => 'isCleanHtml',
+                'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4,
+            ],
+            'short_description' => [
+                'type' => self::TYPE_HTML,
+                'lang' => true,
+                'validate' => 'isCleanHtml',
+                'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4,
+            ],
+            'meta_title' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'size' => 255,
+            ],
+            'meta_description' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'size' => 512,
+            ],
         ],
     ];
 
@@ -101,8 +153,6 @@ class ManufacturerCore extends ObjectModel
     ];
 
     /**
-     * ManufacturerCore constructor.
-     *
      * @param int|null $id
      * @param int|null $idLang
      */
@@ -125,7 +175,7 @@ class ManufacturerCore extends ObjectModel
     {
         $address = new Address($this->id_address);
 
-        if (Validate::isLoadedObject($address) && !$address->delete()) {
+        if (Validate::isLoadedObject($address) && ! $address->delete()) {
             return false;
         }
 
@@ -162,7 +212,7 @@ class ManufacturerCore extends ObjectModel
      */
     protected function getManufacturerAddress()
     {
-        if (!(int) $this->id) {
+        if (! (int) $this->id) {
             return false;
         }
 
@@ -174,21 +224,21 @@ class ManufacturerCore extends ObjectModel
     /**
      * Return manufacturers.
      *
-     * @param bool $getNbProducts [optional] return products numbers for each
-     * @param int $idLang Language ID
-     * @param bool $active
+     * @param bool     $getNbProducts [optional] return products numbers for each
+     * @param int      $idLang        Language ID
+     * @param bool     $active
      * @param int|bool $p
      * @param int|bool $n
-     * @param bool $allGroup
+     * @param bool     $allGroup
      *
      * @return array|bool Manufacturers
      */
     public static function getManufacturers($getNbProducts = false, $idLang = 0, $active = true, $p = false, $n = false, $allGroup = false, $group_by = false, $withProduct = false)
     {
-        if (!$idLang) {
+        if (! $idLang) {
             $idLang = (int) Configuration::get('PS_LANG_DEFAULT');
         }
-        if (!Group::isFeatureActive()) {
+        if (! Group::isFeatureActive()) {
             $allGroup = true;
         }
 
@@ -209,7 +259,7 @@ class ManufacturerCore extends ObjectModel
 
         if ($getNbProducts) {
             $sqlGroups = '';
-            if (!$allGroup) {
+            if (! $allGroup) {
                 $groups = FrontController::getCurrentCustomerGroups();
                 $sqlGroups = (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
             }
@@ -263,7 +313,7 @@ class ManufacturerCore extends ObjectModel
      */
     public static function getLiteManufacturersList($idLang = null, $format = 'default')
     {
-        $idLang = null === $idLang ? Context::getContext()->language->id : (int) $idLang;
+        $idLang = $idLang === null ? Context::getContext()->language->id : (int) $idLang;
 
         $manufacturersList = [];
         $manufacturers = Manufacturer::getManufacturers(false, $idLang);
@@ -294,7 +344,7 @@ class ManufacturerCore extends ObjectModel
     /**
      * Return name from id.
      *
-     * @param int $id_manufacturer Manufacturer ID
+     * @param int $idManufacturer Manufacturer ID
      *
      * @return string name
      */
@@ -302,7 +352,7 @@ class ManufacturerCore extends ObjectModel
 
     public static function getNameById($idManufacturer)
     {
-        if (!isset(self::$cacheName[$idManufacturer])) {
+        if (! isset(self::$cacheName[$idManufacturer])) {
             self::$cacheName[$idManufacturer] = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue(
                 '
 				SELECT `name`
@@ -351,16 +401,15 @@ class ManufacturerCore extends ObjectModel
     /**
      * Get Products by Manufacturer ID.
      *
-     * @param int $idManufacturer
-     * @param int $idLang
-     * @param int $p
-     * @param int $n
+     * @param int         $idManufacturer
+     * @param int         $idLang
+     * @param int         $p
+     * @param int         $n
      * @param string|null $orderBy
      * @param string|null $orderWay
-     * @param bool $getTotal
-     * @param bool $active
-     * @param bool $activeCategory
-     * @param Context|null $context
+     * @param bool        $getTotal
+     * @param bool        $active
+     * @param bool        $activeCategory
      *
      * @return array|bool|int
      */
@@ -374,14 +423,14 @@ class ManufacturerCore extends ObjectModel
         $getTotal = false,
         $active = true,
         $activeCategory = true,
-        ?Context $context = null
+        ?Context $context = null,
     ) {
-        if (!$context) {
+        if (! $context) {
             $context = Context::getContext();
         }
 
         $front = true;
-        if (!in_array($context->controller->controller_type, ['front', 'modulefront'])) {
+        if (! in_array($context->controller->controller_type, ['front', 'modulefront'], true)) {
             $front = false;
         }
 
@@ -389,7 +438,7 @@ class ManufacturerCore extends ObjectModel
             $p = 1;
         }
 
-        if (empty($orderBy) || $orderBy == 'position') {
+        if (empty($orderBy) || $orderBy === 'position') {
             $orderBy = 'name';
         }
 
@@ -397,7 +446,7 @@ class ManufacturerCore extends ObjectModel
             $orderWay = 'ASC';
         }
 
-        if (!Validate::isOrderBy($orderBy) || !Validate::isOrderWay($orderWay)) {
+        if (! Validate::isOrderBy($orderBy) || ! Validate::isOrderWay($orderWay)) {
             throw new PrestaShopException('Invalid sorting parameters provided.');
         }
 
@@ -430,16 +479,16 @@ class ManufacturerCore extends ObjectModel
             $orderBy = pSQL($orderBy[0]) . '.`' . pSQL($orderBy[1]) . '`';
         }
 
-        if ($orderBy == 'price') {
+        if ($orderBy === 'price') {
             $alias = 'product_shop.';
-        } elseif ($orderBy == 'name') {
+        } elseif ($orderBy === 'name') {
             $alias = 'pl.';
-        } elseif ($orderBy == 'manufacturer_name') {
+        } elseif ($orderBy === 'manufacturer_name') {
             $orderBy = 'name';
             $alias = 'm.';
-        } elseif ($orderBy == 'quantity') {
+        } elseif ($orderBy === 'quantity') {
             $alias = 'stock.';
-        } elseif ($orderBy == 'sales') {
+        } elseif ($orderBy === 'sales') {
             $alias = '';
         } else {
             $alias = 'p.';
@@ -496,7 +545,7 @@ class ManufacturerCore extends ObjectModel
 
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
 
-        if (!$result) {
+        if (! $result) {
             return false;
         }
 
@@ -520,7 +569,7 @@ class ManufacturerCore extends ObjectModel
     {
         $context = Context::getContext();
         $front = true;
-        if (!in_array($context->controller->controller_type, ['front', 'modulefront'])) {
+        if (! in_array($context->controller->controller_type, ['front', 'modulefront'], true)) {
             $front = false;
         }
 

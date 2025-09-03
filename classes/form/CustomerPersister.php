@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class CustomerPersisterCore
         Context $context,
         Crypto $crypto,
         TranslatorInterface $translator,
-        $guest_allowed
+        $guest_allowed,
     ) {
         $this->context = $context;
         $this->crypto = $crypto;
@@ -71,7 +72,7 @@ class CustomerPersisterCore
 
     private function update(Customer $customer, $plainTextPassword, $newPlainTextPassword, $passwordRequired = true)
     {
-        if (!$customer->is_guest && $passwordRequired && !$this->crypto->checkHash(
+        if (! $customer->is_guest && $passwordRequired && ! $this->crypto->checkHash(
             $plainTextPassword,
             $customer->passwd,
             _COOKIE_KEY_
@@ -87,16 +88,16 @@ class CustomerPersisterCore
             return false;
         }
 
-        if (!$customer->is_guest) {
+        if (! $customer->is_guest) {
             $customer->passwd = $this->crypto->hash(
                 $newPlainTextPassword ? $newPlainTextPassword : $plainTextPassword,
                 _COOKIE_KEY_
             );
         }
 
-        if ($customer->is_guest || !$passwordRequired) {
+        if ($customer->is_guest || ! $passwordRequired) {
             // TODO SECURITY: Audit requested
-            if ($customer->id != $this->context->customer->id) {
+            if ($customer->id !== $this->context->customer->id) {
                 // Since we're updating a customer without
                 // checking the password, we need to check that
                 // the customer being updated is the one from the
@@ -147,7 +148,7 @@ class CustomerPersisterCore
             return false;
         }
 
-        if ($customer->email != $this->context->customer->email) {
+        if ($customer->email !== $this->context->customer->email) {
             $customer->removeResetPasswordToken();
         }
 
@@ -182,9 +183,9 @@ class CustomerPersisterCore
         /*
          * If there is no password provided, we are registering a guest
          */
-        if (!$plainTextPassword) {
+        if (! $plainTextPassword) {
             // If ordering without registration is not enabled, we need to force it
-            if (!$this->guest_allowed) {
+            if (! $this->guest_allowed) {
                 $this->errors['password'][] = $this->translator->trans(
                     'Password is required',
                     [],
@@ -212,7 +213,7 @@ class CustomerPersisterCore
          * a customer registered with this email, we can't have two
          * registered customers with the same email.
          */
-        if (!$customer->isGuest() && Customer::customerExists($customer->email)) {
+        if (! $customer->isGuest() && Customer::customerExists($customer->email)) {
             $this->errors['email'][] = $this->translator->trans(
                 'The email is already used, please choose another one or sign in',
                 [],
@@ -238,7 +239,7 @@ class CustomerPersisterCore
             $this->context->cart->update();
 
             // Send a welcome information email, only for registered customers and if enabled
-            if (!$customer->is_guest && Configuration::get('PS_CUSTOMER_CREATION_EMAIL')) {
+            if (! $customer->is_guest && Configuration::get('PS_CUSTOMER_CREATION_EMAIL')) {
                 $customer->sendWelcomeEmail($this->context->language->id);
             }
 

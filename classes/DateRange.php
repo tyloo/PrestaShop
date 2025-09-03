@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,10 +30,14 @@
  */
 class DateRangeCore extends ObjectModel
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     public $time_start;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $time_end;
 
     /**
@@ -42,15 +47,21 @@ class DateRangeCore extends ObjectModel
         'table' => 'date_range',
         'primary' => 'id_date_range',
         'fields' => [
-            'time_start' => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'required' => true],
-            'time_end' => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'required' => true],
+            'time_start' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+                'required' => true,
+            ],
+            'time_end' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+                'required' => true,
+            ],
         ],
     ];
 
     /**
      * Get current range.
-     *
-     * @return mixed
      */
     public static function getCurrentRange()
     {
@@ -58,7 +69,7 @@ class DateRangeCore extends ObjectModel
 		SELECT `id_date_range`, `time_end`
 		FROM `' . _DB_PREFIX_ . 'date_range`
 		WHERE `time_end` = (SELECT MAX(`time_end`) FROM `' . _DB_PREFIX_ . 'date_range`)');
-        if (!isset($result['id_date_range']) || strtotime($result['time_end']) < strtotime(date('Y-m-d H:i:s'))) {
+        if (! isset($result['id_date_range']) || strtotime($result['time_end']) < strtotime(date('Y-m-d H:i:s'))) {
             // The default range is set to 1 day less 1 second (in seconds)
             $rangeSize = 86399;
             $dateRange = new DateRange();

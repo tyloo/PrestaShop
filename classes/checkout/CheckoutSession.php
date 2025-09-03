@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -25,15 +26,15 @@
  */
 class CheckoutSessionCore
 {
-    /** @var Context */
+    /**
+     * @var Context
+     */
     protected $context;
-    /** @var DeliveryOptionsFinder */
+    /**
+     * @var DeliveryOptionsFinder
+     */
     protected $deliveryOptionsFinder;
 
-    /**
-     * @param Context $context
-     * @param DeliveryOptionsFinder $deliveryOptionsFinder
-     */
     public function __construct(Context $context, DeliveryOptionsFinder $deliveryOptionsFinder)
     {
         $this->context = $context;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,7 +33,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\OutOfStockType;
  */
 class CombinationCore extends ObjectModel
 {
-    /** @var int Product ID */
+    /**
+     * @var int Product ID
+     */
     public $id_product;
 
     public $reference;
@@ -62,23 +65,33 @@ class CombinationCore extends ObjectModel
 
     public $minimal_quantity = 1;
 
-    /** @var int|null Low stock for mail alert */
-    public $low_stock_threshold = null;
+    /**
+     * @var int|null Low stock for mail alert
+     */
+    public $low_stock_threshold;
 
-    /** @var bool Low stock mail alert activated */
+    /**
+     * @var bool Low stock mail alert activated
+     */
     public $low_stock_alert = false;
 
     public $weight;
 
-    /** @var bool|null */
+    /**
+     * @var bool|null
+     */
     public $default_on;
 
     public $available_date = '0000-00-00';
 
-    /** @var string|array Text when in stock or array of text by id_lang */
+    /**
+     * @var string|array Text when in stock or array of text by id_lang
+     */
     public $available_now;
 
-    /** @var string|array Text when not in stock but available to order or array of text by id_lang */
+    /**
+     * @var string|array Text when not in stock but available to order or array of text by id_lang
+     */
     public $available_later;
 
     /**
@@ -89,29 +102,113 @@ class CombinationCore extends ObjectModel
         'primary' => 'id_product_attribute',
         'multilang' => true,
         'fields' => [
-            'id_product' => ['type' => self::TYPE_INT, 'shop' => 'both', 'validate' => 'isUnsignedId', 'required' => true],
-            'ean13' => ['type' => self::TYPE_STRING, 'validate' => 'isEan13', 'size' => 13],
-            'isbn' => ['type' => self::TYPE_STRING, 'validate' => 'isIsbn', 'size' => 32],
-            'upc' => ['type' => self::TYPE_STRING, 'validate' => 'isUpc', 'size' => 12],
-            'mpn' => ['type' => self::TYPE_STRING, 'validate' => 'isMpn', 'size' => 40],
-            'reference' => ['type' => self::TYPE_STRING, 'size' => 64],
-            'supplier_reference' => ['type' => self::TYPE_STRING, 'size' => 64],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'shop' => 'both',
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'ean13' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isEan13',
+                'size' => 13,
+            ],
+            'isbn' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isIsbn',
+                'size' => 32,
+            ],
+            'upc' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isUpc',
+                'size' => 12,
+            ],
+            'mpn' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isMpn',
+                'size' => 40,
+            ],
+            'reference' => [
+                'type' => self::TYPE_STRING,
+                'size' => 64,
+            ],
+            'supplier_reference' => [
+                'type' => self::TYPE_STRING,
+                'size' => 64,
+            ],
 
             /* Shop fields */
-            'wholesale_price' => ['type' => self::TYPE_FLOAT, 'shop' => true, 'validate' => 'isNegativePrice', 'size' => 27],
-            'price' => ['type' => self::TYPE_FLOAT, 'shop' => true, 'validate' => 'isNegativePrice', 'size' => 20],
-            'ecotax' => ['type' => self::TYPE_FLOAT, 'shop' => true, 'validate' => 'isPrice', 'size' => 20],
-            'weight' => ['type' => self::TYPE_FLOAT, 'shop' => true, 'validate' => 'isFloat'],
-            'unit_price_impact' => ['type' => self::TYPE_FLOAT, 'shop' => true, 'validate' => 'isNegativePrice', 'size' => 20],
-            'minimal_quantity' => ['type' => self::TYPE_INT, 'shop' => true, 'validate' => 'isPositiveInt', 'required' => true],
-            'low_stock_threshold' => ['type' => self::TYPE_INT, 'shop' => true, 'allow_null' => true, 'validate' => 'isInt'],
-            'low_stock_alert' => ['type' => self::TYPE_BOOL, 'shop' => true, 'validate' => 'isBool'],
-            'default_on' => ['type' => self::TYPE_BOOL, 'allow_null' => true, 'shop' => true, 'validate' => 'isBool'],
-            'available_date' => ['type' => self::TYPE_DATE, 'shop' => true, 'validate' => 'isDateFormat'],
+            'wholesale_price' => [
+                'type' => self::TYPE_FLOAT,
+                'shop' => true,
+                'validate' => 'isNegativePrice',
+                'size' => 27,
+            ],
+            'price' => [
+                'type' => self::TYPE_FLOAT,
+                'shop' => true,
+                'validate' => 'isNegativePrice',
+                'size' => 20,
+            ],
+            'ecotax' => [
+                'type' => self::TYPE_FLOAT,
+                'shop' => true,
+                'validate' => 'isPrice',
+                'size' => 20,
+            ],
+            'weight' => [
+                'type' => self::TYPE_FLOAT,
+                'shop' => true,
+                'validate' => 'isFloat',
+            ],
+            'unit_price_impact' => [
+                'type' => self::TYPE_FLOAT,
+                'shop' => true,
+                'validate' => 'isNegativePrice',
+                'size' => 20,
+            ],
+            'minimal_quantity' => [
+                'type' => self::TYPE_INT,
+                'shop' => true,
+                'validate' => 'isPositiveInt',
+                'required' => true,
+            ],
+            'low_stock_threshold' => [
+                'type' => self::TYPE_INT,
+                'shop' => true,
+                'allow_null' => true,
+                'validate' => 'isInt',
+            ],
+            'low_stock_alert' => [
+                'type' => self::TYPE_BOOL,
+                'shop' => true,
+                'validate' => 'isBool',
+            ],
+            'default_on' => [
+                'type' => self::TYPE_BOOL,
+                'allow_null' => true,
+                'shop' => true,
+                'validate' => 'isBool',
+            ],
+            'available_date' => [
+                'type' => self::TYPE_DATE,
+                'shop' => true,
+                'validate' => 'isDateFormat',
+            ],
 
             /* Lang fields */
-            'available_now' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => CombinationSettings::MAX_AVAILABLE_NOW_LABEL_LENGTH],
-            'available_later' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'IsGenericName', 'size' => CombinationSettings::MAX_AVAILABLE_LATER_LABEL_LENGTH],
+            'available_now' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'size' => CombinationSettings::MAX_AVAILABLE_NOW_LABEL_LENGTH,
+            ],
+            'available_later' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'IsGenericName',
+                'size' => CombinationSettings::MAX_AVAILABLE_LATER_LABEL_LENGTH,
+            ],
         ],
     ];
 
@@ -119,11 +216,19 @@ class CombinationCore extends ObjectModel
         'objectNodeName' => 'combination',
         'objectsNodeName' => 'combinations',
         'fields' => [
-            'id_product' => ['required' => true, 'xlink_resource' => 'products'],
+            'id_product' => [
+                'required' => true,
+                'xlink_resource' => 'products',
+            ],
         ],
         'associations' => [
-            'product_option_values' => ['resource' => 'product_option_value'],
-            'images' => ['resource' => 'image', 'api' => 'images/products'],
+            'product_option_values' => [
+                'resource' => 'product_option_value',
+            ],
+            'images' => [
+                'resource' => 'image',
+                'api' => 'images/products',
+            ],
         ],
     ];
 
@@ -136,14 +241,14 @@ class CombinationCore extends ObjectModel
      */
     public function delete()
     {
-        if (!parent::delete()) {
+        if (! parent::delete()) {
             return false;
         }
 
         $shopIdsList = $this->getShopIdsList();
 
         // Removes the product from StockAvailable for the related shops
-        if (!empty($shopIdsList)) {
+        if (! empty($shopIdsList)) {
             foreach ($shopIdsList as $shopId) {
                 StockAvailable::removeProductFromStockAvailable((int) $this->id_product, (int) $this->id, $shopId);
             }
@@ -158,11 +263,11 @@ class CombinationCore extends ObjectModel
             }
         }
 
-        if (!$this->hasMultishopEntries() && !$this->deleteAssociations()) {
+        if (! $this->hasMultishopEntries() && ! $this->deleteAssociations()) {
             return false;
         }
 
-        if (!$this->deleteCartProductCombination()) {
+        if (! $this->deleteCartProductCombination()) {
             return false;
         }
 
@@ -192,8 +297,6 @@ class CombinationCore extends ObjectModel
 
     /**
      * Delete association with Pack.
-     *
-     * @return bool
      */
     protected function deleteFromPack(): bool
     {
@@ -208,7 +311,7 @@ class CombinationCore extends ObjectModel
     /**
      * Adds current Combination as a new Object to the database.
      *
-     * @param bool $autoDate Automatically set `date_upd` and `date_add` columns
+     * @param bool $autoDate   Automatically set `date_upd` and `date_add` columns
      * @param bool $nullValues Whether we want to use NULL values instead of empty quotes values
      *
      * @return bool Indicates whether the Combination has been successfully added
@@ -224,20 +327,20 @@ class CombinationCore extends ObjectModel
             $this->default_on = null;
         }
 
-        if (!parent::add($autoDate, $nullValues)) {
+        if (! parent::add($autoDate, $nullValues)) {
             return false;
         }
 
         $product = new Product((int) $this->id_product);
         $shopIdsList = $this->getShopIdsList();
 
-        if ($product->getType() == Product::PTYPE_VIRTUAL) {
+        if ($product->getType() === Product::PTYPE_VIRTUAL) {
             $outOfStock = OutOfStockType::OUT_OF_STOCK_AVAILABLE;
         } else {
             $outOfStock = StockAvailable::outOfStock((int) $this->id_product);
         }
 
-        if (!empty($shopIdsList)) {
+        if (! empty($shopIdsList)) {
             foreach ($shopIdsList as $shopId) {
                 StockAvailable::setProductOutOfStock((int) $this->id_product, $outOfStock, $shopId, (int) $this->id);
             }
@@ -305,8 +408,6 @@ class CombinationCore extends ObjectModel
 
     /**
      * Delete product combination from cart.
-     *
-     * @return bool
      */
     protected function deleteCartProductCombination(): bool
     {
@@ -331,7 +432,7 @@ class CombinationCore extends ObjectModel
     public function setAttributes($idsAttribute)
     {
         $result = $this->deleteAssociations();
-        if ($result && !empty($idsAttribute)) {
+        if ($result && ! empty($idsAttribute)) {
             $sqlValues = [];
             foreach ($idsAttribute as $value) {
                 $sqlValues[] = '(' . (int) $value . ', ' . (int) $this->id . ')';
@@ -469,8 +570,8 @@ class CombinationCore extends ObjectModel
     /**
      * This method is allow to know if a Combination entity is currently used.
      *
-     * @param string|null $table Name of table linked to entity
-     * @param bool $hasActiveColumn True if the table has an active column
+     * @param string|null $table           Name of table linked to entity
+     * @param bool        $hasActiveColumn True if the table has an active column
      *
      * @return bool
      */
@@ -497,7 +598,7 @@ class CombinationCore extends ObjectModel
             return 0;
         }
 
-        if (!Validate::isGtin($gtin)) {
+        if (! Validate::isGtin($gtin)) {
             return 0;
         }
 
@@ -512,7 +613,7 @@ class CombinationCore extends ObjectModel
     /**
      * For a given product_attribute reference, returns the corresponding id.
      *
-     * @param int $idProduct
+     * @param int    $idProduct
      * @param string $reference
      *
      * @return int ID

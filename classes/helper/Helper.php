@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,19 +44,29 @@ class HelperCore
     public $multiple_fieldsets;
     public $position_group_identifier;
 
-    /** @var Module|null */
+    /**
+     * @var Module|null
+     */
     public $module;
 
-    /** @var string Helper tpl folder */
+    /**
+     * @var string Helper tpl folder
+     */
     public $base_folder;
 
-    /** @var string Controller tpl folder */
+    /**
+     * @var string Controller tpl folder
+     */
     public $override_folder;
 
-    /** @var Smarty_Internal_Template base template object */
+    /**
+     * @var Smarty_Internal_Template base template object
+     */
     protected $tpl;
 
-    /** @var string base template name */
+    /**
+     * @var string base template name
+     */
     public $base_tpl = 'content.tpl';
 
     public $tpl_vars = [];
@@ -92,8 +103,8 @@ class HelperCore
             } else {
                 if (file_exists($this->context->smarty->getTemplateDir(1) . $this->override_folder . $this->base_folder . $tpl_name)) {
                     $override_tpl_path = $this->context->smarty->getTemplateDir(1) . $this->override_folder . $this->base_folder . $tpl_name;
-                } elseif (file_exists($this->context->smarty->getTemplateDir(0) . 'controllers' . DIRECTORY_SEPARATOR . $this->override_folder . $this->base_folder . $tpl_name)) {
-                    $override_tpl_path = $this->context->smarty->getTemplateDir(0) . 'controllers' . DIRECTORY_SEPARATOR . $this->override_folder . $this->base_folder . $tpl_name;
+                } elseif (file_exists($this->context->smarty->getTemplateDir(0) . 'controllers' . \DIRECTORY_SEPARATOR . $this->override_folder . $this->base_folder . $tpl_name)) {
+                    $override_tpl_path = $this->context->smarty->getTemplateDir(0) . 'controllers' . \DIRECTORY_SEPARATOR . $this->override_folder . $this->base_folder . $tpl_name;
                 }
             }
         } elseif ($this->module) {
@@ -102,9 +113,9 @@ class HelperCore
 
         if (isset($override_tpl_path) && file_exists($override_tpl_path)) {
             return $this->context->smarty->createTemplate($override_tpl_path, $this->context->smarty);
-        } else {
-            return $this->context->smarty->createTemplate($this->base_folder . $tpl_name, $this->context->smarty);
         }
+
+        return $this->context->smarty->createTemplate($this->base_folder . $tpl_name, $this->context->smarty);
     }
 
     /**
@@ -120,7 +131,7 @@ class HelperCore
     }
 
     /**
-     * @param array $root array with the name and ID of the tree root category, if null the Shop's root category will be used
+     * @param array $root         array with the name and ID of the tree root category, if null the Shop's root category will be used
      * @param array $selected_cat array of selected categories
      *
      * @usage
@@ -129,10 +140,10 @@ class HelperCore
      * OR
      * Array([1] => Array([id_category] => 1, [name] => Home page))
      *
-     * @param string $input_name name of input
-     * @param bool $use_radio use radio tree or checkbox tree
-     * @param bool $use_search display a find category search box
-     * @param array $disabled_categories
+     * @param string $input_name          name of input
+     * @param bool   $use_radio           use radio tree or checkbox tree
+     * @param bool   $use_search          display a find category search box
+     * @param array  $disabled_categories
      *
      * @return string
      */
@@ -142,7 +153,7 @@ class HelperCore
         $input_name = 'categoryBox',
         $use_radio = false,
         $use_search = false,
-        $disabled_categories = []
+        $disabled_categories = [],
     ) {
         $translator = Context::getContext()->getTranslator();
 
@@ -159,7 +170,7 @@ class HelperCore
             $id_shop = Tools::getValue('id_shop');
         } elseif (Context::getContext()->shop->id) {
             $id_shop = Context::getContext()->shop->id;
-        } elseif (!Shop::isFeatureActive()) {
+        } elseif (! Shop::isFeatureActive()) {
             $id_shop = Configuration::get('PS_SHOP_DEFAULT');
         } else {
             $id_shop = 0;
@@ -167,11 +178,11 @@ class HelperCore
         $shop = new Shop($id_shop);
         $root_category = Category::getRootCategory(null, $shop);
         $disabled_categories[] = (int) Configuration::get('PS_ROOT_CATEGORY');
-        if (!$root) {
+        if (! $root) {
             $root = ['name' => $root_category->name, 'id_category' => $root_category->id];
         }
 
-        if (!$use_radio) {
+        if (! $use_radio) {
             $input_name = $input_name . '[]';
         }
 
@@ -200,7 +211,7 @@ class HelperCore
         <div class="category-filter">
             <a class="btn btn-link" href="#" id="collapse_all"><i class="icon-collapse"></i> ' . $translations['Collapse all'] . '</a>
             <a class="btn btn-link" href="#" id="expand_all"><i class="icon-expand"></i> ' . $translations['Expand all'] . '</a>
-            ' . (!$use_radio ? '
+            ' . (! $use_radio ? '
                 <a class="btn btn-link" href="#" id="check_all"><i class="icon-check"></i> ' . $translations['Check All'] . '</a>
                 <a class="btn btn-link" href="#" id="uncheck_all"><i class="icon-check-empty"></i> ' . $translations['Uncheck All'] . '</a>' : '')
             . ($use_search ? '
@@ -216,15 +227,15 @@ class HelperCore
         if (is_array($selected_cat)) {
             foreach ($selected_cat as $cat) {
                 if (is_array($cat)) {
-                    $disabled = in_array($cat['id_category'], $disabled_categories);
-                    if ($cat['id_category'] != $root['id_category']) {
+                    $disabled = in_array($cat['id_category'], $disabled_categories, true);
+                    if ($cat['id_category'] !== $root['id_category']) {
                         $html .= '<input ' . ($disabled ? 'disabled="disabled"' : '') . ' type="hidden" name="' . $input_name . '" value="' . $cat['id_category'] . '" >';
                     } else {
                         $home_is_selected = true;
                     }
                 } else {
-                    $disabled = in_array($cat, $disabled_categories);
-                    if ($cat != $root['id_category']) {
+                    $disabled = in_array($cat, $disabled_categories, true);
+                    if ($cat !== $root['id_category']) {
                         $html .= '<input ' . ($disabled ? 'disabled="disabled"' : '') . ' type="hidden" name="' . $input_name . '" value="' . $cat . '" >';
                     } else {
                         $home_is_selected = true;
@@ -234,10 +245,10 @@ class HelperCore
         }
 
         $root_input = '';
-        if ($root['id_category'] != (int) Configuration::get('PS_ROOT_CATEGORY') || (Tools::isSubmit('ajax') && Tools::getValue('action') == 'getCategoriesFromRootCategory')) {
+        if ($root['id_category'] !== (int) Configuration::get('PS_ROOT_CATEGORY') || (Tools::isSubmit('ajax') && Tools::getValue('action') === 'getCategoriesFromRootCategory')) {
             $root_input = '
                 <p class="checkbox"><i class="icon-folder-open"></i><label>
-                    <input type="' . (!$use_radio ? 'checkbox' : 'radio') . '" name="'
+                    <input type="' . (! $use_radio ? 'checkbox' : 'radio') . '" name="'
                         . $input_name . '" value="' . $root['id_category'] . '" '
                         . ($home_is_selected ? 'checked' : '') . ' onclick="clickOnCategoryBox($(this));" />'
                     . $root['name'] .
@@ -269,7 +280,7 @@ class HelperCore
      *
      * @param string $class_name
      * @param string $identifier
-     * @param array $table_fields
+     * @param array  $table_fields
      *
      * @return string
      */
@@ -277,9 +288,9 @@ class HelperCore
     {
         $required_class_fields = [$identifier];
         $definition = ObjectModel::getDefinition($class_name);
-        if (!empty($definition['fields'])) {
+        if (! empty($definition['fields'])) {
             foreach ($definition['fields'] as $fieldName => $data) {
-                if (!empty($data['required'])) {
+                if (! empty($data['required'])) {
                     $required_class_fields[] = $fieldName;
                 }
             }

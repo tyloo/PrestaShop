@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,16 +41,27 @@ class RiskCore extends ObjectModel
         'primary' => 'id_risk',
         'multilang' => true,
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isString', 'required' => true, 'size' => 20],
-            'color' => ['type' => self::TYPE_STRING, 'validate' => 'isColor', 'size' => 32],
-            'percent' => ['type' => self::TYPE_INT, 'validate' => 'isPercentage'],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isString',
+                'required' => true,
+                'size' => 20,
+            ],
+            'color' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isColor',
+                'size' => 32,
+            ],
+            'percent' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isPercentage',
+            ],
         ],
     ];
 
     /**
      * Get fields.
-     *
-     * @return mixed
      */
     public function getFields()
     {
@@ -70,7 +82,7 @@ class RiskCore extends ObjectModel
      */
     public static function getRisks($idLang = null)
     {
-        if (null === $idLang) {
+        if ($idLang === null) {
             $idLang = Context::getContext()->language->id;
         }
 

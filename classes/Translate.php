@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,10 +34,10 @@ class TranslateCore
     public static $regexClassicParams = '/%\w+%/';
 
     /**
-     * @param string $string
-     * @param string $class
-     * @param bool $addslashes
-     * @param bool $htmlentities
+     * @param string     $string
+     * @param string     $class
+     * @param bool       $addslashes
+     * @param bool       $htmlentities
      * @param array|null $sprintf
      *
      * @return string
@@ -55,14 +56,14 @@ class TranslateCore
         }
 
         if ($htmlentities) {
-            $str = htmlspecialchars($str, ENT_QUOTES, 'utf-8');
+            $str = htmlspecialchars($str, \ENT_QUOTES, 'utf-8');
         }
         $str = str_replace('"', '&quot;', $str);
 
         if (
             $sprintf !== null
-            && (!is_array($sprintf) || !empty($sprintf))
-            && !(count($sprintf) === 1 && isset($sprintf['legacy']))
+            && (! is_array($sprintf) || ! empty($sprintf))
+            && ! (count($sprintf) === 1 && isset($sprintf['legacy']))
         ) {
             $str = Translate::checkAndReplaceArgs($str, $sprintf);
         }
@@ -74,12 +75,12 @@ class TranslateCore
      * Get a translation for a module.
      *
      * @param string|ModuleCore $module
-     * @param string $originalString
-     * @param string $source
+     * @param string            $originalString
+     * @param string            $source
      * @param string|array|null $sprintf
-     * @param bool $js
-     * @param string|null $locale
-     * @param bool $fallback [default=true] If true, this method falls back to the new translation system if no translation is found
+     * @param bool              $js
+     * @param string|null       $locale
+     * @param bool              $fallback       [default=true] If true, this method falls back to the new translation system if no translation is found
      *
      * @return mixed|string
      *
@@ -93,7 +94,7 @@ class TranslateCore
         $js = false,
         $locale = null,
         $fallback = true,
-        $escape = true
+        $escape = true,
     ) {
         global $_MODULES, $_MODULE;
 
@@ -104,7 +105,7 @@ class TranslateCore
 
         $name = $module instanceof ModuleCore ? $module->name : $module;
 
-        if (null !== $locale) {
+        if ($locale !== null) {
             $iso = Language::getIsoByLocale($locale);
         }
 
@@ -112,7 +113,7 @@ class TranslateCore
             $iso = Context::getContext()->language->iso_code;
         }
 
-        if (!isset($translationsMerged[$name][$iso])) {
+        if (! isset($translationsMerged[$name][$iso])) {
             $filesByPriority = [
                 // PrestaShop 1.5 translations
                 _PS_MODULE_DIR_ . $name . '/translations/' . $iso . '.php',
@@ -125,7 +126,7 @@ class TranslateCore
             foreach ($filesByPriority as $file) {
                 if (file_exists($file)) {
                     include_once $file;
-                    $_MODULES = !empty($_MODULES) ? array_merge($_MODULES, $_MODULE) : $_MODULE;
+                    $_MODULES = ! empty($_MODULES) ? array_merge($_MODULES, $_MODULE) : $_MODULE;
                 }
             }
             $translationsMerged[$name][$iso] = true;
@@ -141,19 +142,19 @@ class TranslateCore
             $currentKey = strtolower('<{' . $name . '}' . _THEME_NAME_ . '>' . $source) . '_' . $key;
             $defaultKey = strtolower('<{' . $name . '}prestashop>' . $source) . '_' . $key;
 
-            if ('controller' == substr($source, -10, 10)) {
+            if (substr($source, -10, 10) === 'controller') {
                 $file = substr($source, 0, -10);
                 $currentKeyFile = strtolower('<{' . $name . '}' . _THEME_NAME_ . '>' . $file) . '_' . $key;
                 $defaultKeyFile = strtolower('<{' . $name . '}prestashop>' . $file) . '_' . $key;
             }
 
-            if (isset($currentKeyFile) && !empty($_MODULES[$currentKeyFile])) {
+            if (isset($currentKeyFile) && ! empty($_MODULES[$currentKeyFile])) {
                 $ret = stripslashes($_MODULES[$currentKeyFile]);
-            } elseif (isset($defaultKeyFile) && !empty($_MODULES[$defaultKeyFile])) {
+            } elseif (isset($defaultKeyFile) && ! empty($_MODULES[$defaultKeyFile])) {
                 $ret = stripslashes($_MODULES[$defaultKeyFile]);
-            } elseif (!empty($_MODULES[$currentKey])) {
+            } elseif (! empty($_MODULES[$currentKey])) {
                 $ret = stripslashes($_MODULES[$currentKey]);
-            } elseif (!empty($_MODULES[$defaultKey])) {
+            } elseif (! empty($_MODULES[$defaultKey])) {
                 $ret = stripslashes($_MODULES[$defaultKey]);
             } else {
                 $ret = stripslashes($string);
@@ -161,8 +162,8 @@ class TranslateCore
 
             if (
                 $sprintf !== null
-                && (!is_array($sprintf) || !empty($sprintf))
-                && !(count($sprintf) === 1 && isset($sprintf['legacy']))
+                && (! is_array($sprintf) || ! empty($sprintf))
+                && ! (count($sprintf) === 1 && isset($sprintf['legacy']))
             ) {
                 $ret = Translate::checkAndReplaceArgs($ret, $sprintf);
             }
@@ -170,7 +171,7 @@ class TranslateCore
             if ($js) {
                 $ret = addslashes($ret);
             } elseif ($escape) {
-                $ret = htmlspecialchars($ret, ENT_COMPAT, 'UTF-8');
+                $ret = htmlspecialchars($ret, \ENT_COMPAT, 'UTF-8');
             }
 
             if ($sprintf === null) {
@@ -178,9 +179,9 @@ class TranslateCore
             }
         }
 
-        if (!is_array($sprintf) && null !== $sprintf) {
+        if (! is_array($sprintf) && $sprintf !== null) {
             $sprintf_for_trans = [$sprintf];
-        } elseif (null === $sprintf) {
+        } elseif ($sprintf === null) {
             $sprintf_for_trans = [];
         } else {
             $sprintf_for_trans = $sprintf;
@@ -200,7 +201,7 @@ class TranslateCore
     /**
      * Get a translation for a PDF.
      *
-     * @param string $string
+     * @param string     $string
      * @param array|null $sprintf
      *
      * @return string
@@ -211,7 +212,7 @@ class TranslateCore
 
         $iso = Context::getContext()->language->iso_code;
 
-        if (!Validate::isLangIsoCode($iso)) {
+        if (! Validate::isLangIsoCode($iso)) {
             Context::getContext()->getTranslator()->trans(
                 'Invalid language ISO code (%s)',
                 [Tools::safeOutput($iso)],
@@ -219,7 +220,7 @@ class TranslateCore
             );
         }
 
-        if (!isset($_LANGPDF) || !is_array($_LANGPDF)) {
+        if (! isset($_LANGPDF) || ! is_array($_LANGPDF)) {
             return str_replace('"', '&quot;', Translate::checkAndReplaceArgs($string, $sprintf));
         }
 
@@ -230,8 +231,8 @@ class TranslateCore
 
         if (
             $sprintf !== null
-            && (!is_array($sprintf) || !empty($sprintf))
-            && !(count($sprintf) === 1 && isset($sprintf['legacy']))
+            && (! is_array($sprintf) || ! empty($sprintf))
+            && ! (count($sprintf) === 1 && isset($sprintf['legacy']))
         ) {
             $str = Translate::checkAndReplaceArgs($str, $sprintf);
         }
@@ -243,15 +244,16 @@ class TranslateCore
      * Check if string use a specif syntax for sprintf and replace arguments if use it.
      *
      * @param string $string
-     * @param array $args
+     * @param array  $args
      *
      * @return string
      */
     public static function checkAndReplaceArgs($string, $args)
     {
-        if (!empty($args) && self::isSprintfString($string)) {
+        if (! empty($args) && self::isSprintfString($string)) {
             return vsprintf($string, $args);
-        } elseif (!empty($args)) {
+        }
+        if (! empty($args)) {
             return strtr($string, $args);
         }
 
@@ -264,7 +266,7 @@ class TranslateCore
     public static function postProcessTranslation($string, $params)
     {
         // If tags were explicitely provided, we want to use them *after* the translation string is escaped.
-        if (!empty($params['tags'])) {
+        if (! empty($params['tags'])) {
             foreach ($params['tags'] as $index => $tag) {
                 // Make positions start at 1 so that it behaves similar to the %1$d etc. sprintf positional params
                 $position = $index + 1;
@@ -292,6 +294,6 @@ class TranslateCore
     private static function isSprintfString($string)
     {
         return (bool) preg_match_all(static::$regexSprintfParams, $string)
-            && !(bool) preg_match_all(static::$regexClassicParams, $string);
+            && ! (bool) preg_match_all(static::$regexClassicParams, $string);
     }
 }

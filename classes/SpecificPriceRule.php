@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,18 +48,67 @@ class SpecificPriceRuleCore extends ObjectModel
         'table' => 'specific_price_rule',
         'primary' => 'id_specific_price_rule',
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 255],
-            'id_shop' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_country' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_currency' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_group' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'from_quantity' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'required' => true],
-            'price' => ['type' => self::TYPE_FLOAT, 'validate' => 'isNegativePrice', 'required' => true],
-            'reduction' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
-            'reduction_tax' => ['type' => self::TYPE_INT, 'validate' => 'isBool', 'required' => true],
-            'reduction_type' => ['type' => self::TYPE_STRING, 'validate' => 'isReductionType', 'required' => true],
-            'from' => ['type' => self::TYPE_DATE, 'validate' => 'isDateFormat', 'required' => false],
-            'to' => ['type' => self::TYPE_DATE, 'validate' => 'isDateFormat', 'required' => false],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isCleanHtml',
+                'required' => true,
+                'size' => 255,
+            ],
+            'id_shop' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_country' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_currency' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_group' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'from_quantity' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+                'required' => true,
+            ],
+            'price' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isNegativePrice',
+                'required' => true,
+            ],
+            'reduction' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
+            'reduction_tax' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isBool',
+                'required' => true,
+            ],
+            'reduction_type' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isReductionType',
+                'required' => true,
+            ],
+            'from' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDateFormat',
+                'required' => false,
+            ],
+            'to' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDateFormat',
+                'required' => false,
+            ],
         ],
     ];
 
@@ -66,10 +116,22 @@ class SpecificPriceRuleCore extends ObjectModel
         'objectsNodeName' => 'specific_price_rules',
         'objectNodeName' => 'specific_price_rule',
         'fields' => [
-            'id_shop' => ['xlink_resource' => 'shops', 'required' => true],
-            'id_country' => ['xlink_resource' => 'countries', 'required' => true],
-            'id_currency' => ['xlink_resource' => 'currencies', 'required' => true],
-            'id_group' => ['xlink_resource' => 'groups', 'required' => true],
+            'id_shop' => [
+                'xlink_resource' => 'shops',
+                'required' => true,
+            ],
+            'id_country' => [
+                'xlink_resource' => 'countries',
+                'required' => true,
+            ],
+            'id_currency' => [
+                'xlink_resource' => 'currencies',
+                'required' => true,
+            ],
+            'id_group' => [
+                'xlink_resource' => 'groups',
+                'required' => true,
+            ],
         ],
     ];
 
@@ -111,14 +173,14 @@ class SpecificPriceRuleCore extends ObjectModel
 
     public function addConditions($conditions)
     {
-        if (!is_array($conditions)) {
+        if (! is_array($conditions)) {
             return;
         }
 
         $result = Db::getInstance()->insert('specific_price_rule_condition_group', [
             'id_specific_price_rule' => (int) $this->id,
         ]);
-        if (!$result) {
+        if (! $result) {
             return false;
         }
         $id_specific_price_rule_condition_group = (int) Db::getInstance()->Insert_ID();
@@ -128,7 +190,7 @@ class SpecificPriceRuleCore extends ObjectModel
                 'type' => pSQL($condition['type']),
                 'value' => (float) $condition['value'],
             ]);
-            if (!$result) {
+            if (! $result) {
                 return false;
             }
         }
@@ -138,7 +200,7 @@ class SpecificPriceRuleCore extends ObjectModel
 
     public function apply($products = false)
     {
-        if (!SpecificPriceRule::$rules_application_enable) {
+        if (! SpecificPriceRule::$rules_application_enable) {
             return;
         }
 
@@ -164,7 +226,7 @@ class SpecificPriceRuleCore extends ObjectModel
      */
     public static function applyAllRules($products = false)
     {
-        if (!SpecificPriceRule::$rules_application_enable) {
+        if (! SpecificPriceRule::$rules_application_enable) {
             return;
         }
 
@@ -188,11 +250,11 @@ class SpecificPriceRuleCore extends ObjectModel
         $conditions_group = [];
         if ($conditions) {
             foreach ($conditions as &$condition) {
-                if ($condition['type'] == 'attribute') {
+                if ($condition['type'] === 'attribute') {
                     $condition['id_attribute_group'] = Db::getInstance()->getValue('SELECT id_attribute_group
 																										FROM ' . _DB_PREFIX_ . 'attribute
 																										WHERE id_attribute=' . (int) $condition['value']);
-                } elseif ($condition['type'] == 'feature') {
+                } elseif ($condition['type'] === 'feature') {
                     $condition['id_feature'] = Db::getInstance()->getValue('SELECT id_feature
 																								FROM ' . _DB_PREFIX_ . 'feature_value
 																								WHERE id_feature_value=' . (int) $condition['value']);
@@ -233,8 +295,8 @@ class SpecificPriceRuleCore extends ObjectModel
 
                 // Add the conditions
                 foreach ($condition_group as $id_condition => $condition) {
-                    if ($condition['type'] == 'attribute') {
-                        if (!$attributes_join_added) {
+                    if ($condition['type'] === 'attribute') {
+                        if (! $attributes_join_added) {
                             $query->select('pa.`id_product_attribute`')
                                 ->leftJoin('product_attribute', 'pa', 'p.`id_product` = pa.`id_product`')
                                 ->join(Shop::addSqlAssociation('product_attribute', 'pa', false));
@@ -244,12 +306,12 @@ class SpecificPriceRuleCore extends ObjectModel
 
                         $query->leftJoin('product_attribute_combination', 'pac' . (int) $id_condition, 'pa.`id_product_attribute` = pac' . (int) $id_condition . '.`id_product_attribute`')
                             ->where('pac' . (int) $id_condition . '.`id_attribute` = ' . (int) $condition['value']);
-                    } elseif ($condition['type'] == 'manufacturer') {
+                    } elseif ($condition['type'] === 'manufacturer') {
                         $query->where('p.id_manufacturer = ' . (int) $condition['value']);
-                    } elseif ($condition['type'] == 'category') {
+                    } elseif ($condition['type'] === 'category') {
                         $query->leftJoin('category_product', 'cp' . (int) $id_condition, 'p.`id_product` = cp' . (int) $id_condition . '.`id_product`')
                             ->where('cp' . (int) $id_condition . '.id_category = ' . (int) $condition['value']);
-                    } elseif ($condition['type'] == 'supplier') {
+                    } elseif ($condition['type'] === 'supplier') {
                         $query->where('EXISTS(
 							SELECT
 								`ps' . (int) $id_condition . '`.`id_product`
@@ -259,7 +321,7 @@ class SpecificPriceRuleCore extends ObjectModel
 								`p`.`id_product` = `ps' . (int) $id_condition . '`.`id_product`
 								AND `ps' . (int) $id_condition . '`.`id_supplier` = ' . (int) $condition['value'] . '
 						)');
-                    } elseif ($condition['type'] == 'feature') {
+                    } elseif ($condition['type'] === 'feature') {
                         $query->leftJoin('feature_product', 'fp' . (int) $id_condition, 'p.`id_product` = fp' . (int) $id_condition . '.`id_product`')
                             ->where('fp' . (int) $id_condition . '.`id_feature_value` = ' . (int) $condition['value']);
                     }
@@ -271,7 +333,7 @@ class SpecificPriceRuleCore extends ObjectModel
                 }
 
                 // Force the column id_product_attribute if not requested
-                if (!$attributes_join_added) {
+                if (! $attributes_join_added) {
                     $query->select('NULL as `id_product_attribute`');
                 }
 
@@ -279,11 +341,11 @@ class SpecificPriceRuleCore extends ObjectModel
                 $result = array_merge($result, Db::getInstance()->executeS($query));
             }
             // Remove duplicate after the array_merge
-            $result = array_unique($result, SORT_REGULAR);
+            $result = array_unique($result, \SORT_REGULAR);
         } else {
             // All products without conditions
             if ($products && count($products)) {
-                if (!SpecificPrice::getByProductId(0, false, false, (int) $this->id)) {
+                if (! SpecificPrice::getByProductId(0, false, false, (int) $this->id)) {
                     $query = new DbQuery();
                     $query->select('p.`id_product`')
                         ->select('NULL as `id_product_attribute`')
@@ -304,7 +366,7 @@ class SpecificPriceRuleCore extends ObjectModel
     public static function applyRuleToProduct($id_rule, $id_product, $id_product_attribute = null)
     {
         $rule = new SpecificPriceRule((int) $id_rule);
-        if (!Validate::isLoadedObject($rule) || !Validate::isUnsignedInt($id_product)) {
+        if (! Validate::isLoadedObject($rule) || ! Validate::isUnsignedInt($id_product)) {
             return false;
         }
 
@@ -321,7 +383,7 @@ class SpecificPriceRuleCore extends ObjectModel
         $specific_price->price = (float) $rule->price;
         $specific_price->reduction_type = $rule->reduction_type;
         $specific_price->reduction_tax = $rule->reduction_tax;
-        $specific_price->reduction = ($rule->reduction_type == 'percentage' ? $rule->reduction / 100 : (float) $rule->reduction);
+        $specific_price->reduction = ($rule->reduction_type === 'percentage' ? $rule->reduction / 100 : (float) $rule->reduction);
         $specific_price->from = $rule->from;
         $specific_price->to = $rule->to;
 

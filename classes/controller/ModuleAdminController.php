@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -25,7 +26,9 @@
  */
 abstract class ModuleAdminControllerCore extends AdminController
 {
-    /** @var Module */
+    /**
+     * @var Module
+     */
     public $module;
 
     /**
@@ -38,12 +41,12 @@ abstract class ModuleAdminControllerCore extends AdminController
         $this->controller_type = 'moduleadmin';
 
         $tab = new Tab($this->id);
-        if (!$tab->module) {
-            throw new PrestaShopException('Admin tab ' . get_class($this) . ' is not a module tab');
+        if (! $tab->module) {
+            throw new PrestaShopException('Admin tab ' . static::class . ' is not a module tab');
         }
 
         $this->module = Module::getInstanceByName($tab->module);
-        if (!$this->module->id) {
+        if (! $this->module->id) {
             throw new PrestaShopException("Module {$tab->module} not found");
         }
     }

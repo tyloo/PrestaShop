@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,7 +35,7 @@ abstract class ModuleGraphEngineCore extends Module
 
     public function install()
     {
-        if (!parent::install()) {
+        if (! parent::install()) {
             return false;
         }
 
@@ -54,7 +55,7 @@ abstract class ModuleGraphEngineCore extends Module
         $array_engines = [];
         foreach ($result as $module) {
             $instance = Module::getInstanceByName($module['name']);
-            if (!$instance) {
+            if (! $instance) {
                 continue;
             }
             $array_engines[$module['name']] = [$instance->displayName, $instance->description];

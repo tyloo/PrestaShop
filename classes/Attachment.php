@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,9 @@ class AttachmentCore extends ObjectModel
     public $mime;
     public $description;
 
-    /** @var int position Position */
+    /**
+     * @var int position Position
+     */
     public $position;
 
     /**
@@ -49,17 +52,50 @@ class AttachmentCore extends ObjectModel
         'primary' => 'id_attachment',
         'multilang' => true,
         'fields' => [
-            'file' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 40],
-            'mime' => ['type' => self::TYPE_STRING, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 128],
-            'file_name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 255],
-            'file_size' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
+            'file' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 40,
+            ],
+            'mime' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isCleanHtml',
+                'required' => true,
+                'size' => 128,
+            ],
+            'file_name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'size' => 255,
+            ],
+            'file_size' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
 
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 255],
-            'description' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 255,
+            ],
+            'description' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isCleanHtml',
+                'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4,
+            ],
         ],
         'associations' => [
-            'products' => ['type' => self::HAS_MANY, 'field' => 'id_product', 'object' => 'Product', 'association' => 'product_attachment'],
+            'products' => [
+                'type' => self::HAS_MANY,
+                'field' => 'id_product',
+                'object' => 'Product',
+                'association' => 'product_attachment',
+            ],
         ],
     ];
 
@@ -157,9 +193,9 @@ class AttachmentCore extends ObjectModel
     /**
      * Get attachments.
      *
-     * @param int $idLang Language ID
-     * @param int $idProduct Product ID
-     * @param bool $include Whether the attachments are included or excluded from the Product ID
+     * @param int  $idLang    Language ID
+     * @param int  $idProduct Product ID
+     * @param bool $include   Whether the attachments are included or excluded from the Product ID
      *
      * @return array|false|mysqli_result|PDOStatement|resource|null Database query result
      */
@@ -188,7 +224,7 @@ class AttachmentCore extends ObjectModel
      */
     public function deleteAttachments(bool $updateAttachmentCache = true): bool
     {
-        if (0 >= (int) $this->id) {
+        if ((int) $this->id <= 0) {
             // Can not delete attachement without id
             return false;
         }
@@ -243,9 +279,6 @@ class AttachmentCore extends ObjectModel
     }
 
     /**
-     * @param int $productId
-     * @param int $attachmentId
-     *
      * @return bool true if success
      */
     public static function associateProductAttachment(int $productId, int $attachmentId): bool
@@ -264,8 +297,8 @@ class AttachmentCore extends ObjectModel
      * Associate an array of id_attachment $array to the product $id_product
      * and remove eventual previous association.
      *
-     * @param int $idProduct Product ID
-     * @param mixed $array Attachment IDs
+     * @param int   $idProduct Product ID
+     * @param mixed $array     Attachment IDs
      *
      * @return bool Whether the attachments have been successfully associated with the Product
      */
@@ -281,14 +314,14 @@ class AttachmentCore extends ObjectModel
                 }
             }
 
-            if (!empty($ids)) {
+            if (! empty($ids)) {
                 $result2 = Db::getInstance()->insert('product_attachment', $ids);
             }
         }
 
         Product::updateCacheAttachment((int) $idProduct);
         if (is_array($array)) {
-            return $result1 && (!isset($result2) || $result2);
+            return $result1 && (! isset($result2) || $result2);
         }
 
         return $result1;
@@ -297,14 +330,14 @@ class AttachmentCore extends ObjectModel
     /**
      * Get Attachment IDs for the given Product within the given range of attachment IDs.
      *
-     * @param int $idLang Language ID
-     * @param array $list List of attachment IDs in which to search
+     * @param int   $idLang Language ID
+     * @param array $list   List of attachment IDs in which to search
      *
      * @return array|bool List of attachment IDs found. False if nothing found.
      */
     public static function getProductAttached($idLang, $list)
     {
-        if (!is_array($list)) {
+        if (! is_array($list)) {
             return false;
         }
 
@@ -343,8 +376,6 @@ class AttachmentCore extends ObjectModel
      * Set products ids of current attachment for association.
      *
      * @param array<int, array{id: int|string }> $products Products ids
-     *
-     * @return bool
      */
     public function setWsProducts(array $products): bool
     {

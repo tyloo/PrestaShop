@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,11 +51,10 @@ class StylesheetManagerCore extends AbstractAssetManager
      * @param string $id
      * @param string $relativePath
      * @param string $media
-     * @param int $priority
-     * @param bool $inline
+     * @param int    $priority
+     * @param bool   $inline
      * @param string $server
-     * @param bool $needRtl
-     * @param string|null $version
+     * @param bool   $needRtl
      */
     public function register(
         $id,
@@ -64,13 +64,13 @@ class StylesheetManagerCore extends AbstractAssetManager
         $inline = false,
         $server = 'local',
         $needRtl = true,
-        ?string $version = null
+        ?string $version = null,
     ) {
         $fullPath = $this->getFullPath($relativePath);
         $rtlFullPath = $this->getFullPath(str_replace('.css', '_rtl.css', $relativePath));
         $context = Context::getContext();
         $isRTL = is_object($context->language) && $context->language->is_rtl;
-        if ('remote' === $server) {
+        if ($server === 'remote') {
             $this->add($id, $relativePath, $media, $priority, $inline, $server, $version);
         } elseif ($needRtl && $isRTL && $rtlFullPath) {
             $this->add($id, $rtlFullPath, $media, $priority, $inline, $server, $version);
@@ -105,10 +105,9 @@ class StylesheetManagerCore extends AbstractAssetManager
      * @param string $id
      * @param string $fullPath
      * @param string $media
-     * @param int $priority
-     * @param bool $inline
+     * @param int    $priority
+     * @param bool   $inline
      * @param string $server
-     * @param string|null $version
      */
     protected function add($id, $fullPath, $media, $priority, $inline, $server, ?string $version)
     {
@@ -117,7 +116,7 @@ class StylesheetManagerCore extends AbstractAssetManager
         $srcPath = $fullPath;
         $fullPath = $version ? $fullPath . '?' . $version : $fullPath;
 
-        if ('remote' === $server) {
+        if ($server === 'remote') {
             $uri = $fullPath;
             $type = 'external';
         } else {

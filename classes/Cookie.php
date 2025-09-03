@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,19 +30,19 @@ use PrestaShop\PrestaShop\Core\Http\CookieOptions;
 use PrestaShop\PrestaShop\Core\Session\SessionInterface;
 
 /**
- * @property bool $detect_language
- * @property int $id_customer
- * @property int $id_employee
- * @property int $id_lang
- * @property int $id_guest
+ * @property bool     $detect_language
+ * @property int      $id_customer
+ * @property int      $id_employee
+ * @property int      $id_lang
+ * @property int      $id_guest
  * @property int|null $id_connections
- * @property bool $is_guest
- * @property bool $logged
- * @property string $passwd
- * @property int $session_id
- * @property string $session_token
- * @property string $shopContext
- * @property int $last_activity
+ * @property bool     $is_guest
+ * @property bool     $logged
+ * @property string   $passwd
+ * @property int      $session_id
+ * @property string   $session_token
+ * @property string   $shopContext
+ * @property int      $last_activity
  */
 class CookieCore
 {
@@ -62,25 +63,39 @@ class CookieCore
      */
     public const SAMESITE_AVAILABLE_VALUES = CookieOptions::SAMESITE_AVAILABLE_VALUES;
 
-    /** @var array Contain cookie content in a key => value format */
+    /**
+     * @var array Contain cookie content in a key => value format
+     */
     protected $_content = [];
 
-    /** @var string Crypted cookie name for setcookie() */
+    /**
+     * @var string Crypted cookie name for setcookie()
+     */
     protected $_name;
 
-    /** @var int expiration date for setcookie() */
+    /**
+     * @var int expiration date for setcookie()
+     */
     protected $_expire;
 
-    /** @var bool|string Website domain for setcookie() */
+    /**
+     * @var bool|string Website domain for setcookie()
+     */
     protected $_domain;
 
-    /** @var string|bool SameSite for setcookie() */
+    /**
+     * @var string|bool SameSite for setcookie()
+     */
     protected $_sameSite;
 
-    /** @var string Path for setcookie() */
+    /**
+     * @var string Path for setcookie()
+     */
     protected $_path;
 
-    /** @var PhpEncryption cipher tool instance */
+    /**
+     * @var PhpEncryption cipher tool instance
+     */
     protected $cipherTool;
 
     protected $_modified = false;
@@ -91,11 +106,15 @@ class CookieCore
 
     protected $_standalone;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $_secure = false;
 
-    /** @var SessionInterface|null */
-    protected $session = null;
+    /**
+     * @var SessionInterface|null
+     */
+    protected $session;
 
     /**
      * Get data if the cookie exists and else initialize an new one.
@@ -107,9 +126,9 @@ class CookieCore
     {
         $this->_content = [];
         $this->_standalone = $standalone;
-        $this->_expire = null === $expire ? time() + 1728000 : (int) $expire;
+        $this->_expire = $expire === null ? time() + 1728000 : (int) $expire;
         $this->_path = trim(($this->_standalone ? '' : Context::getContext()->shop->physical_uri) . $path, '/\\') . '/';
-        if ($this->_path[0] != '/') {
+        if ($this->_path[0] !== '/') {
             $this->_path = '/' . $this->_path;
         }
         $this->_path = rawurlencode($this->_path);
@@ -145,12 +164,12 @@ class CookieCore
     protected function getDomain($shared_urls = null)
     {
         $httpHost = Tools::getHttpHost(false, false);
-        if (!$httpHost) {
+        if (! $httpHost) {
             return false;
         }
 
         $r = '!(?:(\w+)://)?(?:(\w+)\:(\w+)@)?([^/:]+)?(?:\:(\d*))?([^#?]+)?(?:\?([^#]+))?(?:#(.+$))?!i';
-        if (!preg_match($r, $httpHost, $out)) {
+        if (! preg_match($r, $httpHost, $out)) {
             return false;
         }
 
@@ -159,14 +178,14 @@ class CookieCore
             '{2}((25[0-5]|2[0-4][0-9]|[1]{1}[0-9]{2}|[1-9]{1}[0-9]|[0-9]){1}))$/', $out[4])) {
             return false;
         }
-        if (!strstr($httpHost, '.')) {
+        if (! strstr($httpHost, '.')) {
             return false;
         }
 
         $domain = false;
         if ($shared_urls !== null) {
             foreach ($shared_urls as $shared_url) {
-                if ($shared_url != $out[4]) {
+                if ($shared_url !== $out[4]) {
                     continue;
                 }
                 if (preg_match('/^(?:.*\.)?([^.]*(?:.{2,4})?\..{2,3})$/Ui', $shared_url, $res)) {
@@ -176,7 +195,7 @@ class CookieCore
                 }
             }
         }
-        if (!$domain) {
+        if (! $domain) {
             $domain = $out[4];
         }
 
@@ -220,8 +239,8 @@ class CookieCore
     /**
      * Magic method which adds data into _content array.
      *
-     * @param string $key Access key for the value
-     * @param mixed $value Value corresponding to the key
+     * @param string $key   Access key for the value
+     * @param mixed  $value Value corresponding to the key
      *
      * @throws Exception
      */
@@ -233,7 +252,7 @@ class CookieCore
         if (preg_match('/¤|\|/', $key . $value)) {
             throw new PrestaShopException('Forbidden chars in cookie');
         }
-        if (!$this->_modified && (!array_key_exists($key, $this->_content) || $this->_content[$key] != $value)) {
+        if (! $this->_modified && (! array_key_exists($key, $this->_content) || $this->_content[$key] !== $value)) {
             $this->_modified = true;
         }
         $this->_content[$key] = $value;
@@ -322,16 +341,16 @@ class CookieCore
             $tmpTab = explode('¤', $content);
             foreach ($tmpTab as $keyAndValue) {
                 $tmpTab2 = explode('|', $keyAndValue);
-                if (count($tmpTab2) == 2) {
+                if (count($tmpTab2) === 2) {
                     $this->_content[$tmpTab2[0]] = $tmpTab2[1];
                 }
             }
             /* Check if cookie has not been modified */
-            if (!isset($this->_content['checksum']) || $this->_content['checksum'] != $checksum) {
+            if (! isset($this->_content['checksum']) || $this->_content['checksum'] !== $checksum) {
                 $this->logout();
             }
 
-            if (!isset($this->_content['date_add'])) {
+            if (! isset($this->_content['date_add'])) {
                 $this->_content['date_add'] = date('Y-m-d H:i:s');
             }
         } else {
@@ -339,7 +358,7 @@ class CookieCore
         }
 
         // checks if the language exists, if not choose the default language
-        if (!$this->_standalone && !Language::getLanguage((int) $this->id_lang)) {
+        if (! $this->_standalone && ! Language::getLanguage((int) $this->id_lang)) {
             $this->id_lang = (int) Configuration::get('PS_LANG_DEFAULT');
             // set detect_language to force going through Tools::setCookieLanguage to figure out browser lang
             $this->detect_language = true;
@@ -387,7 +406,7 @@ class CookieCore
                 'domain' => (string) $this->_domain,
                 'secure' => $this->_secure,
                 'httponly' => true,
-                'samesite' => in_array((string) $this->_sameSite, CookieOptions::SAMESITE_AVAILABLE_VALUES) ? (string) $this->_sameSite : CookieOptions::SAMESITE_NONE,
+                'samesite' => in_array((string) $this->_sameSite, CookieOptions::SAMESITE_AVAILABLE_VALUES, true) ? (string) $this->_sameSite : CookieOptions::SAMESITE_NONE,
             ]
         );
     }
@@ -402,7 +421,7 @@ class CookieCore
      */
     public function write()
     {
-        if (!$this->_modified || headers_sent() || !$this->_allow_writing) {
+        if (! $this->_modified || headers_sent() || ! $this->_allow_writing) {
             return;
         }
 
@@ -436,11 +455,11 @@ class CookieCore
     public function getFamily($origin)
     {
         $result = [];
-        if (count($this->_content) == 0) {
+        if (count($this->_content) === 0) {
             return $result;
         }
         foreach ($this->_content as $key => $value) {
-            if (strncmp($key, $origin, strlen($origin)) == 0) {
+            if (strncmp($key, $origin, strlen($origin)) === 0) {
                 $result[$key] = $value;
             }
         }
@@ -452,7 +471,7 @@ class CookieCore
     {
         $family = $this->getFamily($origin);
         foreach (array_keys($family) as $member) {
-            unset($this->$member);
+            unset($this->{$member});
         }
     }
 
@@ -481,8 +500,6 @@ class CookieCore
 
     /**
      * Register a new session
-     *
-     * @param SessionInterface $session
      */
     public function registerSession(SessionInterface $session)
     {
@@ -502,13 +519,11 @@ class CookieCore
     }
 
     /**
-     * Delete session
-     *
      * @return bool
      */
     public function deleteSession()
     {
-        if (!isset($this->session_id)) {
+        if (! isset($this->session_id)) {
             return false;
         }
 
@@ -529,7 +544,7 @@ class CookieCore
      */
     public function isSessionAlive()
     {
-        if (!isset($this->session_id) || !isset($this->session_token)) {
+        if (! isset($this->session_id) || ! isset($this->session_token)) {
             return false;
         }
 

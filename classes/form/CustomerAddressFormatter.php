@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
     public function __construct(
         Country $country,
         TranslatorInterface $translator,
-        array $availableCountries
+        array $availableCountries,
     ) {
         $this->country = $country;
         $this->translator = $translator;
@@ -96,7 +97,7 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
                     );
                 } elseif ($field === 'phone') {
                     $formField->setType('tel');
-                } elseif ($field === 'dni' && null !== $this->country) {
+                } elseif ($field === 'dni' && $this->country !== null) {
                     if ($this->country->need_identification_number) {
                         $formField->setRequired(true);
                     }
@@ -136,7 +137,7 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
             }
 
             $formField->setLabel($this->getFieldLabel($field));
-            if (!$formField->isRequired()) {
+            if (! $formField->isRequired()) {
                 // Only trust the $required array for fields
                 // that are not marked as required.
                 // $required doesn't have all the info, and fields
@@ -155,7 +156,7 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
         $additionalAddressFormFields = Hook::exec('additionalCustomerAddressFields', ['fields' => &$format], null, true);
         if (is_array($additionalAddressFormFields)) {
             foreach ($additionalAddressFormFields as $moduleName => $additionnalFormFields) {
-                if (!is_array($additionnalFormFields)) {
+                if (! is_array($additionnalFormFields)) {
                     continue;
                 }
 
@@ -176,7 +177,7 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
     private function addConstraints(array $format)
     {
         foreach ($format as $field) {
-            if (!empty($this->definition[$field->getName()]['validate'])) {
+            if (! empty($this->definition[$field->getName()]['validate'])) {
                 $field->addConstraint(
                     $this->definition[$field->getName()]['validate']
                 );
@@ -189,7 +190,7 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
     private function addMaxLength(array $format)
     {
         foreach ($format as $field) {
-            if (!empty($this->definition[$field->getName()]['size'])) {
+            if (! empty($this->definition[$field->getName()]['size'])) {
                 $field->setMaxLength(
                     $this->definition[$field->getName()]['size']
                 );

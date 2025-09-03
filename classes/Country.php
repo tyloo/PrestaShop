@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,40 +30,64 @@
  */
 class CountryCore extends ObjectModel
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id;
 
-    /** @var int Zone id which country belongs */
+    /**
+     * @var int Zone id which country belongs
+     */
     public $id_zone;
 
-    /** @var int Currency id which country belongs */
+    /**
+     * @var int Currency id which country belongs
+     */
     public $id_currency;
 
-    /** @var string 2 letters iso code */
+    /**
+     * @var string 2 letters iso code
+     */
     public $iso_code;
 
-    /** @var int international call prefix */
+    /**
+     * @var int international call prefix
+     */
     public $call_prefix;
 
-    /** @var string[]|string Name */
+    /**
+     * @var string[]|string Name
+     */
     public $name;
 
-    /** @var bool Contain states */
+    /**
+     * @var bool Contain states
+     */
     public $contains_states;
 
-    /** @var bool Need identification number dni/nif/nie */
+    /**
+     * @var bool Need identification number dni/nif/nie
+     */
     public $need_identification_number;
 
-    /** @var bool Need Zip Code */
+    /**
+     * @var bool Need Zip Code
+     */
     public $need_zip_code;
 
-    /** @var string Zip Code Format */
+    /**
+     * @var string Zip Code Format
+     */
     public $zip_code_format;
 
-    /** @var bool Display or not the tax incl./tax excl. mention in the front office */
+    /**
+     * @var bool Display or not the tax incl./tax excl. mention in the front office
+     */
     public $display_tax_label = true;
 
-    /** @var bool Status for delivery */
+    /**
+     * @var bool Status for delivery
+     */
     public $active = true;
 
     protected static $_idZones = [];
@@ -124,7 +149,7 @@ class CountryCore extends ObjectModel
             throw new PrestaShopException(sprintf('Default country "%s" cannot be deleted.', $this->iso_code));
         }
 
-        if (!parent::delete()) {
+        if (! parent::delete()) {
             return false;
         }
 
@@ -134,10 +159,10 @@ class CountryCore extends ObjectModel
     /**
      * @brief Return available countries
      *
-     * @param int $idLang Language ID
-     * @param bool $active return only active coutries
+     * @param int  $idLang        Language ID
+     * @param bool $active        return only active coutries
      * @param bool $containStates return only country with states
-     * @param bool $listStates Include the states list with the returned list
+     * @param bool $listStates    Include the states list with the returned list
      *
      * @return array Countries and corresponding zones
      */
@@ -158,7 +183,7 @@ class CountryCore extends ObjectModel
         if ($listStates) {
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT * FROM `' . _DB_PREFIX_ . 'state` ORDER BY `name` ASC');
             foreach ($result as $row) {
-                if (isset($countries[$row['id_country']]) && $row['active'] == 1) { /* Does not keep the state if its country has been disabled and not selected */
+                if (isset($countries[$row['id_country']]) && $row['active'] === 1) { /* Does not keep the state if its country has been disabled and not selected */
                     $countries[$row['id_country']]['states'][] = $row;
                 }
             }
@@ -181,13 +206,13 @@ class CountryCore extends ObjectModel
      * Get a country ID with its iso code.
      *
      * @param string $isoCode Country iso code
-     * @param bool $active return only active countries
+     * @param bool   $active  return only active countries
      *
      * @return int|bool Country ID
      */
     public static function getByIso($isoCode, $active = false)
     {
-        if (!Validate::isLanguageIsoCode($isoCode)) {
+        if (! Validate::isLanguageIsoCode($isoCode)) {
             throw new PrestaShopException('Given iso code (' . $isoCode . ') is not valid.');
         }
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow(
@@ -214,7 +239,7 @@ class CountryCore extends ObjectModel
      */
     public static function getIdZone($idCountry)
     {
-        if (!Validate::isUnsignedId($idCountry)) {
+        if (! Validate::isUnsignedId($idCountry)) {
             throw new PrestaShopException('Country ID is invalid.');
         }
 
@@ -239,7 +264,7 @@ class CountryCore extends ObjectModel
     /**
      * Get a country name with its ID.
      *
-     * @param int $idLang Language ID
+     * @param int $idLang    Language ID
      * @param int $idCountry Country ID
      *
      * @return string Country name
@@ -247,7 +272,7 @@ class CountryCore extends ObjectModel
     public static function getNameById($idLang, $idCountry)
     {
         $key = 'country_getNameById_' . $idCountry . '_' . $idLang;
-        if (!Cache::isStored($key)) {
+        if (! Cache::isStored($key)) {
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue(
                 '
 							SELECT `name`
@@ -272,7 +297,7 @@ class CountryCore extends ObjectModel
      */
     public static function getIsoById($idCountry)
     {
-        if (!isset(Country::$cache_iso_by_id[$idCountry])) {
+        if (! isset(Country::$cache_iso_by_id[$idCountry])) {
             Country::$cache_iso_by_id[$idCountry] = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
 			SELECT `iso_code`
 			FROM `' . _DB_PREFIX_ . 'country`
@@ -288,8 +313,8 @@ class CountryCore extends ObjectModel
     /**
      * Get a country id with its name.
      *
-     * @param int|null $idLang Language ID
-     * @param string $country Country Name
+     * @param int|null $idLang  Language ID
+     * @param string   $country Country Name
      *
      * @return int|bool Country ID
      */
@@ -321,7 +346,7 @@ class CountryCore extends ObjectModel
      */
     public static function getNeedZipCode($idCountry)
     {
-        if (!(int) $idCountry) {
+        if (! (int) $idCountry) {
             return false;
         }
 
@@ -340,7 +365,7 @@ class CountryCore extends ObjectModel
      */
     public static function getZipCodeFormat($idCountry)
     {
-        if (!(int) $idCountry) {
+        if (! (int) $idCountry) {
             return false;
         }
 
@@ -428,7 +453,7 @@ class CountryCore extends ObjectModel
      * Apply Zone to selected Countries.
      *
      * @param array $idsCountries Country array
-     * @param int $idZone Zone ID
+     * @param int   $idZone       Zone ID
      *
      * @return bool Indicates whether the Zone was successfully applied
      */
@@ -466,20 +491,20 @@ class CountryCore extends ObjectModel
     /**
      * Add module restrictions.
      *
-     * @param array $shops Shops array
+     * @param array $shops     Shops array
      * @param array $countries Countries array
-     * @param array $modules Modules array
+     * @param array $modules   Modules array
      *
      * @return bool Indictes whether the restrictions were successfully applied
      */
     public static function addModuleRestrictions(array $shops = [], array $countries = [], array $modules = [])
     {
-        if (!count($shops)) {
+        if (! count($shops)) {
             $shops = Shop::getShops(true, null, true);
         }
 
-        if (!count($countries)) {
-            if (null !== Context::getContext()->cookie) {
+        if (! count($countries)) {
+            if (Context::getContext()->cookie !== null) {
                 $id_lang = (int) Context::getContext()->cookie->id_lang;
             } else {
                 $id_lang = (int) Context::getContext()->language->id;
@@ -487,7 +512,7 @@ class CountryCore extends ObjectModel
             $countries = Country::getCountries($id_lang);
         }
 
-        if (!count($modules)) {
+        if (! count($modules)) {
             $modules = Module::getPaymentModules();
         }
 
@@ -504,15 +529,15 @@ class CountryCore extends ObjectModel
             $sql = 'INSERT IGNORE INTO `' . _DB_PREFIX_ . 'module_country` (`id_module`, `id_shop`, `id_country`) VALUES ' . rtrim($sql, ',');
 
             return Db::getInstance()->execute($sql);
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
      * Adds current Country as a new Object to the database.
      *
-     * @param bool $autoDate Automatically set `date_upd` and `date_add` columns
+     * @param bool $autoDate   Automatically set `date_upd` and `date_add` columns
      * @param bool $nullValues Whether we want to use NULL values instead of empty quotes values
      *
      * @return bool Indicates whether the Country has been successfully added

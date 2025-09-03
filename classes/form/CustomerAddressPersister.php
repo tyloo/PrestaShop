@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,7 +59,7 @@ class CustomerAddressPersisterCore
 
     public function save(Address $address, $token)
     {
-        if (!$this->authorizeChange($address, $token)) {
+        if (! $this->authorizeChange($address, $token)) {
             return false;
         }
 
@@ -73,7 +74,7 @@ class CustomerAddressPersisterCore
 
     public function delete(Address $address, $token)
     {
-        if (!$this->authorizeChange($address, $token)) {
+        if (! $this->authorizeChange($address, $token)) {
             return false;
         }
 
@@ -89,10 +90,10 @@ class CustomerAddressPersisterCore
         if ($ok) {
             // Unsetting the addresses from the cart is probably not necessary, because
             // it's doing it again inside updateAddressId method.
-            if ($this->cart->id_address_invoice == $id) {
+            if ($this->cart->id_address_invoice === $id) {
                 unset($this->cart->id_address_invoice);
             }
-            if ($this->cart->id_address_delivery == $id) {
+            if ($this->cart->id_address_delivery === $id) {
                 unset($this->cart->id_address_delivery);
             }
             $this->cart->updateAddressId(
@@ -108,8 +109,6 @@ class CustomerAddressPersisterCore
      * When an address has already been used in a placed order, it is not edited directly,
      * instead it is set to "deleted" (but kept in database) and a new address
      * is created.
-     *
-     * @param Address $address
      *
      * @return bool
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,28 @@ class AliasCore extends ObjectModel
         'table' => 'alias',
         'primary' => 'id_alias',
         'fields' => [
-            'search' => ['type' => self::TYPE_STRING, 'validate' => 'isValidSearch', 'required' => true, 'size' => 255],
-            'alias' => ['type' => self::TYPE_STRING, 'validate' => 'isValidSearch', 'required' => true, 'size' => 191],
-            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'search' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isValidSearch',
+                'required' => true,
+                'size' => 255,
+            ],
+            'alias' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isValidSearch',
+                'required' => true,
+                'size' => 191,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
         ],
     ];
 
     /**
-     * AliasCore constructor.
-     *
-     * @param int|null $id Alias ID
-     * @param string|null $alias Alias
+     * @param int|null    $id     Alias ID
+     * @param string|null $alias  Alias
      * @param string|null $search Search string
      */
     public function __construct($id = null, $alias = null, $search = null)
@@ -60,7 +72,7 @@ class AliasCore extends ObjectModel
         if ($id) {
             parent::__construct($id);
         } elseif ($alias && Validate::isValidSearch($alias)) {
-            if (!Alias::isFeatureActive()) {
+            if (! Alias::isFeatureActive()) {
                 $this->alias = trim($alias);
                 $this->search = trim($search);
             } else {
@@ -121,7 +133,7 @@ class AliasCore extends ObjectModel
      */
     public function getAliases()
     {
-        if (!Alias::isFeatureActive()) {
+        if (! Alias::isFeatureActive()) {
             return '';
         }
 

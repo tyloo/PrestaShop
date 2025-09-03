@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,37 +34,59 @@ class CustomerMessageCore extends ObjectModel
 {
     public $id;
 
-    /** @var int CustomerThread ID */
+    /**
+     * @var int CustomerThread ID
+     */
     public $id_customer_thread;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_employee;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_product;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $message;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $file_name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $ip_address;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $user_agent;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     public $private;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $date_add;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $date_upd;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     public $read;
 
     /**
@@ -73,21 +96,58 @@ class CustomerMessageCore extends ObjectModel
         'table' => 'customer_message',
         'primary' => 'id_customer_message',
         'fields' => [
-            'id_employee' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'id_product' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'id_customer_thread' => ['type' => self::TYPE_INT],
-            'ip_address' => ['type' => self::TYPE_STRING, 'validate' => 'isIp2Long', 'size' => 16],
-            'message' => ['type' => self::TYPE_HTML, 'required' => true, 'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4, 'validate' => 'isCleanHtml'],
-            'file_name' => ['type' => self::TYPE_STRING, 'size' => 18],
-            'user_agent' => ['type' => self::TYPE_STRING, 'size' => 128],
-            'private' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'read' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'id_employee' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'id_customer_thread' => [
+                'type' => self::TYPE_INT,
+            ],
+            'ip_address' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isIp2Long',
+                'size' => 16,
+            ],
+            'message' => [
+                'type' => self::TYPE_HTML,
+                'required' => true,
+                'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4,
+                'validate' => 'isCleanHtml',
+            ],
+            'file_name' => [
+                'type' => self::TYPE_STRING,
+                'size' => 18,
+            ],
+            'user_agent' => [
+                'type' => self::TYPE_STRING,
+                'size' => 128,
+            ],
+            'private' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'read' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
         ],
     ];
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $webserviceParameters = [
         'fields' => [
             'id_employee' => [
@@ -105,7 +165,7 @@ class CustomerMessageCore extends ObjectModel
     /**
      * Get CustomerMessages by Order ID.
      *
-     * @param int $idOrder Order ID
+     * @param int  $idOrder Order ID
      * @param bool $private Private
      *
      * @return array|false|mysqli_result|PDOStatement|resource|null
@@ -127,7 +187,7 @@ class CustomerMessageCore extends ObjectModel
 			LEFT OUTER JOIN `' . _DB_PREFIX_ . 'employee` e
 				ON e.`id_employee` = cm.`id_employee`
 			WHERE ct.id_order = ' . (int) $idOrder . '
-			' . (!$private ? 'AND cm.`private` = 0' : '') . '
+			' . (! $private ? 'AND cm.`private` = 0' : '') . '
 			GROUP BY cm.id_customer_message
 			ORDER BY cm.date_add DESC
 		');
@@ -142,7 +202,7 @@ class CustomerMessageCore extends ObjectModel
      */
     public static function getTotalCustomerMessages($where = null)
     {
-        if (null === $where) {
+        if ($where === null) {
             return (int) Db::getInstance()->getValue(
                 '
 				SELECT COUNT(*)
@@ -150,15 +210,15 @@ class CustomerMessageCore extends ObjectModel
 				LEFT JOIN `' . _DB_PREFIX_ . 'customer_thread` ct ON (cm.`id_customer_thread` = ct.`id_customer_thread`)
 				WHERE 1' . Shop::addSqlRestriction()
             );
-        } else {
-            return (int) Db::getInstance()->getValue(
-                '
+        }
+
+        return (int) Db::getInstance()->getValue(
+            '
 				SELECT COUNT(*)
 				FROM ' . _DB_PREFIX_ . 'customer_message cm
 				LEFT JOIN `' . _DB_PREFIX_ . 'customer_thread` ct ON (cm.`id_customer_thread` = ct.`id_customer_thread`)
 				WHERE ' . $where . Shop::addSqlRestriction()
-            );
-        }
+        );
     }
 
     /**
@@ -170,7 +230,7 @@ class CustomerMessageCore extends ObjectModel
      */
     public function delete()
     {
-        if (!empty($this->file_name)) {
+        if (! empty($this->file_name)) {
             @unlink(_PS_UPLOAD_DIR_ . basename($this->file_name));
         }
 

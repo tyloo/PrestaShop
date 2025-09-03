@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,49 +29,75 @@
  */
 abstract class DbCore
 {
-    /** @var int Constant used by insert() method */
+    /**
+     * @var int Constant used by insert() method
+     */
     public const INSERT = 1;
 
-    /** @var int Constant used by insert() method */
+    /**
+     * @var int Constant used by insert() method
+     */
     public const INSERT_IGNORE = 2;
 
-    /** @var int Constant used by insert() method */
+    /**
+     * @var int Constant used by insert() method
+     */
     public const REPLACE = 3;
 
-    /** @var int Constant used by insert() method */
+    /**
+     * @var int Constant used by insert() method
+     */
     public const ON_DUPLICATE_KEY = 4;
 
-    /** @var string Server (eg. localhost) */
+    /**
+     * @var string Server (eg. localhost)
+     */
     protected $server;
 
-    /** @var string Database user (eg. root) */
+    /**
+     * @var string Database user (eg. root)
+     */
     protected $user;
 
-    /** @var string Database password (eg. can be empty !) */
+    /**
+     * @var string Database password (eg. can be empty !)
+     */
     protected $password;
 
-    /** @var string Database name */
+    /**
+     * @var string Database name
+     */
     protected $database;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $is_cache_enabled;
 
-    /** @var PDO|mysqli|resource|null Resource link */
+    /**
+     * @var PDO|mysqli|resource|null Resource link
+     */
     protected $link;
 
-    /** @var PDOStatement|mysqli_result|resource|bool SQL cached result */
+    /**
+     * @var PDOStatement|mysqli_result|resource|bool SQL cached result
+     */
     protected $result;
 
-    /** @var array List of DB instances */
+    /**
+     * @var array List of DB instances
+     */
     public static $instance = [];
 
-    /** @var array List of server settings */
+    /**
+     * @var array List of server settings
+     */
     public static $_servers = [];
 
     /** @var bool|null Flag used to load slave servers only once.
      * See loadSlaveServers() method
      */
-    public static $_slave_servers_loaded = null;
+    public static $_slave_servers_loaded;
 
     /**
      * Store last executed query.
@@ -116,8 +143,6 @@ abstract class DbCore
 
     /**
      * Get number of rows in a result.
-     *
-     * @param mixed $result
      *
      * @return int
      */
@@ -214,26 +239,26 @@ abstract class DbCore
         static $id = 0;
 
         // This MUST not be declared with the class members because some defines (like _DB_SERVER_) may not exist yet (the constructor can be called directly with params)
-        if (!self::$_servers && defined('_DB_SERVER_') && defined('_DB_USER_') && defined('_DB_PASSWD_') && defined('_DB_NAME_')) {
+        if (! self::$_servers && defined('_DB_SERVER_') && defined('_DB_USER_') && defined('_DB_PASSWD_') && defined('_DB_NAME_')) {
             self::$_servers = [
                 ['server' => _DB_SERVER_, 'user' => _DB_USER_, 'password' => _DB_PASSWD_, 'database' => _DB_NAME_], /* MySQL Master server */
             ];
         }
 
-        if (!$master) {
+        if (! $master) {
             Db::loadSlaveServers();
         }
 
         $total_servers = count(self::$_servers);
-        if ($master || $total_servers == 1) {
+        if ($master || $total_servers === 1) {
             $id_server = 0;
         } else {
             ++$id;
-            $id_server = ($total_servers > 2 && ($id % $total_servers) != 0) ? $id % $total_servers : 1;
+            $id_server = ($total_servers > 2 && ($id % $total_servers) !== 0) ? $id % $total_servers : 1;
         }
 
-        if (!isset(self::$instance[$id_server])) {
-            if (!isset(self::$_servers[$id_server])) {
+        if (! isset(self::$instance[$id_server])) {
+            if (! isset(self::$_servers[$id_server])) {
                 throw new PrestaShopException('Database server configuration not found');
             }
 
@@ -313,11 +338,11 @@ abstract class DbCore
     /**
      * Instantiates a database connection.
      *
-     * @param string $server Server address
-     * @param string $user User login
+     * @param string $server   Server address
+     * @param string $user     User login
      * @param string $password User password
      * @param string $database Database name
-     * @param bool $connect If false, don't connect in constructor (since 1.5.0.1)
+     * @param bool   $connect  If false, don't connect in constructor (since 1.5.0.1)
      */
     public function __construct($server, $user, $password, $database, $connect = true)
     {
@@ -327,7 +352,7 @@ abstract class DbCore
         $this->database = $database;
         $this->is_cache_enabled = (defined('_PS_CACHE_ENABLED_')) ? _PS_CACHE_ENABLED_ : false;
 
-        if (!defined('_PS_DEBUG_SQL_')) {
+        if (! defined('_PS_DEBUG_SQL_')) {
             define('_PS_DEBUG_SQL_', false);
         }
 
@@ -380,7 +405,7 @@ abstract class DbCore
 
         $this->result = $this->_query($sql);
 
-        if (!$this->result && $this->getNumberError() == 2006) {
+        if (! $this->result && $this->getNumberError() === 2006) {
             $this->connect();
             $this->result = $this->_query($sql);
         }
@@ -395,12 +420,12 @@ abstract class DbCore
     /**
      * Executes an INSERT query.
      *
-     * @param string $table Table name without prefix
-     * @param array $data Data to insert as associative array. If $data is a list of arrays, multiple insert will be done
-     * @param bool $null_values If we want to use NULL values instead of empty quotes
-     * @param bool $use_cache
-     * @param int $type Must be Db::INSERT or Db::INSERT_IGNORE or Db::REPLACE
-     * @param bool $add_prefix Add or not _DB_PREFIX_ before table name
+     * @param string $table       Table name without prefix
+     * @param array  $data        Data to insert as associative array. If $data is a list of arrays, multiple insert will be done
+     * @param bool   $null_values If we want to use NULL values instead of empty quotes
+     * @param bool   $use_cache
+     * @param int    $type        Must be Db::INSERT or Db::INSERT_IGNORE or Db::REPLACE
+     * @param bool   $add_prefix  Add or not _DB_PREFIX_ before table name
      *
      * @return bool
      *
@@ -408,7 +433,7 @@ abstract class DbCore
      */
     public function insert($table, $data, $null_values = false, $use_cache = true, $type = Db::INSERT, $add_prefix = true)
     {
-        if (!$data && !$null_values) {
+        if (! $data && ! $null_values) {
             return true;
         }
 
@@ -416,13 +441,13 @@ abstract class DbCore
             $table = _DB_PREFIX_ . $table;
         }
 
-        if ($type == Db::INSERT) {
+        if ($type === Db::INSERT) {
             $insert_keyword = 'INSERT';
-        } elseif ($type == Db::INSERT_IGNORE) {
+        } elseif ($type === Db::INSERT_IGNORE) {
             $insert_keyword = 'INSERT IGNORE';
-        } elseif ($type == Db::REPLACE) {
+        } elseif ($type === Db::REPLACE) {
             $insert_keyword = 'REPLACE';
-        } elseif ($type == Db::ON_DUPLICATE_KEY) {
+        } elseif ($type === Db::ON_DUPLICATE_KEY) {
             $insert_keyword = 'INSERT';
         } else {
             throw new PrestaShopDatabaseException('Bad keyword, must be Db::INSERT or Db::INSERT_IGNORE or Db::REPLACE or Db::ON_DUPLICATE_KEY');
@@ -430,7 +455,7 @@ abstract class DbCore
 
         // Check if $data is a list of row
         $current = current($data);
-        if (!is_array($current) || isset($current['type'])) {
+        if (! is_array($current) || isset($current['type'])) {
             $data = [$data];
         }
 
@@ -442,29 +467,29 @@ abstract class DbCore
         foreach ($data as $row_data) {
             $values = [];
             foreach ($row_data as $key => $value) {
-                if (!$first_loop) {
+                if (! $first_loop) {
                     // Check if row array mapping are the same
-                    if (!in_array("`$key`", $keys)) {
+                    if (! in_array("`$key`", $keys, true)) {
                         throw new PrestaShopDatabaseException('Keys form $data subarray don\'t match');
                     }
 
-                    if ($duplicate_key_stringified != '') {
+                    if ($duplicate_key_stringified !== '') {
                         throw new PrestaShopDatabaseException('On duplicate key cannot be used on insert with more than 1 VALUE group');
                     }
                 } else {
                     $keys[] = '`' . bqSQL($key) . '`';
                 }
 
-                if (!is_array($value)) {
+                if (! is_array($value)) {
                     $value = ['type' => 'text', 'value' => $value];
                 }
-                if ($value['type'] == 'sql') {
+                if ($value['type'] === 'sql') {
                     $values[] = $string_value = $value['value'];
                 } else {
-                    $values[] = $string_value = $null_values && ($value['value'] === '' || null === $value['value']) ? 'NULL' : "'{$value['value']}'";
+                    $values[] = $string_value = $null_values && ($value['value'] === '' || $value['value'] === null) ? 'NULL' : "'{$value['value']}'";
                 }
 
-                if ($type == Db::ON_DUPLICATE_KEY) {
+                if ($type === Db::ON_DUPLICATE_KEY) {
                     $duplicate_key_stringified .= '`' . bqSQL($key) . '` = ' . $string_value . ',';
                 }
             }
@@ -474,7 +499,7 @@ abstract class DbCore
         $keys_stringified = implode(', ', $keys);
 
         $sql = $insert_keyword . ' INTO `' . $table . '` (' . $keys_stringified . ') VALUES ' . implode(', ', $values_stringified);
-        if ($type == Db::ON_DUPLICATE_KEY) {
+        if ($type === Db::ON_DUPLICATE_KEY) {
             $sql .= ' ON DUPLICATE KEY UPDATE ' . substr($duplicate_key_stringified, 0, -1);
         }
 
@@ -484,19 +509,19 @@ abstract class DbCore
     /**
      * Executes an UPDATE query.
      *
-     * @param string $table Table name without prefix
-     * @param array $data Data to insert as associative array. If $data is a list of arrays, multiple insert will be done
-     * @param string $where WHERE condition
-     * @param int $limit
-     * @param bool $null_values If we want to use NULL values instead of empty quotes
-     * @param bool $use_cache
-     * @param bool $add_prefix Add or not _DB_PREFIX_ before table name
+     * @param string $table       Table name without prefix
+     * @param array  $data        Data to insert as associative array. If $data is a list of arrays, multiple insert will be done
+     * @param string $where       WHERE condition
+     * @param int    $limit
+     * @param bool   $null_values If we want to use NULL values instead of empty quotes
+     * @param bool   $use_cache
+     * @param bool   $add_prefix  Add or not _DB_PREFIX_ before table name
      *
      * @return bool
      */
     public function update($table, $data, $where = '', $limit = 0, $null_values = false, $use_cache = true, $add_prefix = true)
     {
-        if (!$data) {
+        if (! $data) {
             return true;
         }
 
@@ -506,13 +531,13 @@ abstract class DbCore
 
         $sql = 'UPDATE `' . bqSQL($table) . '` SET ';
         foreach ($data as $key => $value) {
-            if (!is_array($value)) {
+            if (! is_array($value)) {
                 $value = ['type' => 'text', 'value' => $value];
             }
-            if ($value['type'] == 'sql') {
+            if ($value['type'] === 'sql') {
                 $sql .= '`' . bqSQL($key) . "` = {$value['value']},";
             } else {
-                $sql .= ($null_values && ($value['value'] === '' || null === $value['value'])) ? '`' . bqSQL($key) . '` = NULL,' : '`' . bqSQL($key) . "` = '{$value['value']}',";
+                $sql .= ($null_values && ($value['value'] === '' || $value['value'] === null)) ? '`' . bqSQL($key) . '` = NULL,' : '`' . bqSQL($key) . "` = '{$value['value']}',";
             }
         }
 
@@ -530,11 +555,11 @@ abstract class DbCore
     /**
      * Executes a DELETE query.
      *
-     * @param string $table Name of the table to delete
-     * @param string $where WHERE clause on query
-     * @param int $limit Number max of rows to delete
-     * @param bool $use_cache Use cache or not
-     * @param bool $add_prefix Add or not _DB_PREFIX_ before table name
+     * @param string $table      Name of the table to delete
+     * @param string $where      WHERE clause on query
+     * @param int    $limit      Number max of rows to delete
+     * @param bool   $use_cache  Use cache or not
+     * @param bool   $add_prefix Add or not _DB_PREFIX_ before table name
      *
      * @return bool
      */
@@ -558,7 +583,7 @@ abstract class DbCore
      * Executes a query.
      *
      * @param string|DbQuery $sql
-     * @param bool $use_cache
+     * @param bool           $use_cache
      *
      * @return bool
      */
@@ -579,9 +604,9 @@ abstract class DbCore
     /**
      * Executes return the result of $sql as array.
      *
-     * @param string|DbQuery $sql Query to execute
-     * @param bool $array Return an array instead of a result object (deprecated since 1.5.0.1, use query method instead)
-     * @param bool $use_cache
+     * @param string|DbQuery $sql       Query to execute
+     * @param bool           $array     Return an array instead of a result object (deprecated since 1.5.0.1, use query method instead)
+     * @param bool           $use_cache
      *
      * @return array|bool|mysqli_result|PDOStatement|resource|null
      *
@@ -608,7 +633,7 @@ abstract class DbCore
 
         // This method must be used only with queries which display results
         if (
-            !preg_match('#^\s*\(?\s*(select|show|explain|describe|desc|checksum)\s#i', $sql)
+            ! preg_match('#^\s*\(?\s*(select|show|explain|describe|desc|checksum)\s#i', $sql)
             || stripos($sql, 'outfile') !== false
             || stripos($sql, 'dumpfile') !== false
         ) {
@@ -617,10 +642,10 @@ abstract class DbCore
 
         $this->result = $this->query($sql);
 
-        if (!$this->result) {
+        if (! $this->result) {
             $result = false;
         } else {
-            if (!$array) {
+            if (! $array) {
                 $use_cache = false;
                 $result = $this->result;
             } else {
@@ -640,8 +665,8 @@ abstract class DbCore
      * Returns an associative array containing the first row of the query
      * This function automatically adds "LIMIT 1" to the query.
      *
-     * @param string|DbQuery $sql the select query (without "LIMIT 1")
-     * @param bool $use_cache Find it in cache first
+     * @param string|DbQuery $sql       the select query (without "LIMIT 1")
+     * @param bool           $use_cache Find it in cache first
      *
      * @return array|bool|object|null
      */
@@ -666,7 +691,7 @@ abstract class DbCore
         }
 
         $this->result = $this->query($sql);
-        if (!$this->result) {
+        if (! $this->result) {
             $result = false;
         } else {
             $result = $this->nextRow($this->result);
@@ -674,7 +699,7 @@ abstract class DbCore
 
         $this->last_cached = false;
 
-        if (null === $result) {
+        if ($result === null) {
             $result = false;
         }
 
@@ -689,7 +714,7 @@ abstract class DbCore
      * Returns a value from the first row, first column of a SELECT query.
      *
      * @param string|DbQuery $sql
-     * @param bool $use_cache
+     * @param bool           $use_cache
      *
      * @return string|false|null Returns false if no results
      */
@@ -700,7 +725,7 @@ abstract class DbCore
         }
 
         $result = $this->getRow($sql, $use_cache);
-        if (false === $result) {
+        if ($result === false) {
             return false;
         }
 
@@ -714,14 +739,15 @@ abstract class DbCore
      */
     public function numRows()
     {
-        if (!$this->last_cached && $this->result) {
+        if (! $this->last_cached && $this->result) {
             $nrows = $this->_numRows($this->result);
             if ($this->is_cache_enabled) {
                 Cache::getInstance()->set($this->last_query_hash . '_nrows', $nrows);
             }
 
             return $nrows;
-        } elseif ($this->is_cache_enabled && $this->last_cached) {
+        }
+        if ($this->is_cache_enabled && $this->last_cached) {
             return Cache::getInstance()->get($this->last_query_hash . '_nrows');
         }
 
@@ -732,7 +758,7 @@ abstract class DbCore
      * Executes a query.
      *
      * @param string|DbQuery $sql
-     * @param bool $use_cache
+     * @param bool           $use_cache
      *
      * @return bool|mysqli_result|PDOStatement|resource
      *
@@ -772,7 +798,7 @@ abstract class DbCore
         if ($webservice_call && $errno) {
             $dbg = debug_backtrace();
             WebserviceRequest::getInstance()->setError(500, '[SQL Error] ' . $this->getMsgError() . '. From ' . (isset($dbg[3]['class']) ? $dbg[3]['class'] : '') . '->' . $dbg[3]['function'] . '() Query was : ' . $sql, 97);
-        } elseif (_PS_DEBUG_SQL_ && $errno && !defined('PS_INSTALLATION_IN_PROGRESS')) {
+        } elseif (_PS_DEBUG_SQL_ && $errno && ! defined('PS_INSTALLATION_IN_PROGRESS')) {
             if ($sql) {
                 throw new PrestaShopDatabaseException($this->getMsgError() . '<br /><br /><pre>' . $sql . '</pre>');
             }
@@ -784,18 +810,18 @@ abstract class DbCore
     /**
      * Sanitize data which will be injected into SQL query.
      *
-     * @param string $string SQL data which will be injected into SQL query
-     * @param bool $html_ok Does data contain HTML code ? (optional)
-     * @param bool $bq_sql Escape backticks
+     * @param string $string  SQL data which will be injected into SQL query
+     * @param bool   $html_ok Does data contain HTML code ? (optional)
+     * @param bool   $bq_sql  Escape backticks
      *
      * @return string Sanitized data
      */
     public function escape($string, $html_ok = false, $bq_sql = false)
     {
-        if (!is_numeric($string)) {
+        if (! is_numeric($string)) {
             $string = $this->_escape($string);
 
-            if (!$html_ok) {
+            if (! $html_ok) {
                 $string = strip_tags(Tools::nl2br($string));
             }
 
@@ -810,13 +836,13 @@ abstract class DbCore
     /**
      * Try a connection to the database.
      *
-     * @param string $server Server address
-     * @param string $user Login for database connection
-     * @param string $pwd Password for database connection
-     * @param string $db Database name
-     * @param bool $new_db_link
+     * @param string      $server      Server address
+     * @param string      $user        Login for database connection
+     * @param string      $pwd         Password for database connection
+     * @param string      $db          Database name
+     * @param bool        $new_db_link
      * @param string|bool $engine
-     * @param int $timeout
+     * @param int         $timeout
      *
      * @return int Error code or 0 if connection was successful
      */
@@ -829,8 +855,8 @@ abstract class DbCore
      * Try a connection to the database and set names to UTF-8.
      *
      * @param string $server Server address
-     * @param string $user Login for database connection
-     * @param string $pwd Password for database connection
+     * @param string $user   Login for database connection
+     * @param string $pwd    Password for database connection
      *
      * @return bool
      */
@@ -843,9 +869,9 @@ abstract class DbCore
      * Try a connection to the database and check if at least one table with same prefix exists.
      *
      * @param string $server Server address
-     * @param string $user Login for database connection
-     * @param string $pwd Password for database connection
-     * @param string $db Database name
+     * @param string $user   Login for database connection
+     * @param string $pwd    Password for database connection
+     * @param string $db     Database name
      * @param string $prefix Tables prefix
      *
      * @return bool
@@ -858,11 +884,11 @@ abstract class DbCore
     /**
      * Tries to connect to the database and create a table (checking creation privileges).
      *
-     * @param string $server
-     * @param string $user
-     * @param string $pwd
-     * @param string $db
-     * @param string $prefix
+     * @param string      $server
+     * @param string      $user
+     * @param string      $pwd
+     * @param string      $db
+     * @param string      $prefix
      * @param string|null $engine Table engine
      *
      * @return bool|string True, false or error
@@ -875,11 +901,11 @@ abstract class DbCore
     /**
      * Tries to connect to the database and select content (checking select privileges).
      *
-     * @param string $server
-     * @param string $user
-     * @param string $pwd
-     * @param string $db
-     * @param string $prefix
+     * @param string      $server
+     * @param string      $user
+     * @param string      $pwd
+     * @param string      $db
+     * @param string      $prefix
      * @param string|null $engine Table engine
      *
      * @return bool|string True, false or error

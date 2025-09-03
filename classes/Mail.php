@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,19 +41,29 @@ class MailCore extends ObjectModel
 {
     public $id;
 
-    /** @var string Recipient */
+    /**
+     * @var string Recipient
+     */
     public $recipient;
 
-    /** @var string Template */
+    /**
+     * @var string Template
+     */
     public $template;
 
-    /** @var string Subject */
+    /**
+     * @var string Subject
+     */
     public $subject;
 
-    /** @var int Language ID */
+    /**
+     * @var int Language ID
+     */
     public $id_lang;
 
-    /** @var int Timestamp */
+    /**
+     * @var int Timestamp
+     */
     public $date_add;
 
     /**
@@ -119,23 +130,23 @@ class MailCore extends ObjectModel
     /**
      * Send Email.
      *
-     * @param int $idLang Language ID of the email (to translate the template)
-     * @param string $template Template: the name of template not be a var but a string !
-     * @param string $subject Subject of the email
-     * @param array $templateVars Template variables for the email
-     * @param string|array<string> $to To email
-     * @param string|array<string> $toName To name
-     * @param string $from From email
-     * @param string $fromName To email
-     * @param array $fileAttachment array with three parameters (content, mime and name).
-     *                              You can use an array of array to attach multiple files
-     * @param bool $mode_smtp SMTP mode (deprecated)
-     * @param string $templatePath Template path
-     * @param bool $die Die after error
-     * @param int $idShop Shop ID
-     * @param string|array<string>|null $bcc Bcc recipient address. You can use an array of array to send to multiple recipients
-     * @param string|null $replyTo Reply-To recipient address
-     * @param string|null $replyToName Reply-To recipient name
+     * @param int                       $idLang         Language ID of the email (to translate the template)
+     * @param string                    $template       Template: the name of template not be a var but a string !
+     * @param string                    $subject        Subject of the email
+     * @param array                     $templateVars   Template variables for the email
+     * @param string|array<string>      $to             To email
+     * @param string|array<string>      $toName         To name
+     * @param string                    $from           From email
+     * @param string                    $fromName       To email
+     * @param array                     $fileAttachment array with three parameters (content, mime and name).
+     *                                                  You can use an array of array to attach multiple files
+     * @param bool                      $mode_smtp      SMTP mode (deprecated)
+     * @param string                    $templatePath   Template path
+     * @param bool                      $die            Die after error
+     * @param int                       $idShop         Shop ID
+     * @param string|array<string>|null $bcc            Bcc recipient address. You can use an array of array to send to multiple recipients
+     * @param string|null               $replyTo        Reply-To recipient address
+     * @param string|null               $replyToName    Reply-To recipient name
      *
      * @return bool|int Whether sending was successful. If not at all, false, otherwise amount of recipients succeeded.
      */
@@ -155,10 +166,10 @@ class MailCore extends ObjectModel
         $idShop = null,
         $bcc = null,
         $replyTo = null,
-        $replyToName = ''
+        $replyToName = '',
     ) {
         // If no ID shop was provided, we use the one from the context
-        if (!$idShop) {
+        if (! $idShop) {
             $idShop = Context::getContext()->shop->id;
         }
 
@@ -199,7 +210,7 @@ class MailCore extends ObjectModel
                 true
             );
         }
-        if (!$keepGoing) {
+        if (! $keepGoing) {
             return true;
         }
 
@@ -209,7 +220,7 @@ class MailCore extends ObjectModel
             $shop = new Shop((int) $idShop);
         }
 
-        if (!isset($shop)) {
+        if (! isset($shop)) {
             self::dieOrLog($die, 'Error: parameter "idShop" is corrupted');
 
             return false;
@@ -238,7 +249,7 @@ class MailCore extends ObjectModel
         );
 
         // If emails are completely disabled, we return true immediately
-        if ($configuration['PS_MAIL_METHOD'] == self::METHOD_DISABLE) {
+        if ($configuration['PS_MAIL_METHOD'] === self::METHOD_DISABLE) {
             return true;
         }
 
@@ -255,22 +266,22 @@ class MailCore extends ObjectModel
          * Sending an e-mail can be of vital importance for the merchant, when his password
          * is lost for example, so we must not die but do our best to send the e-mail.
          */
-        if (!isset($from) || !Validate::isEmail($from)) {
+        if (! isset($from) || ! Validate::isEmail($from)) {
             $from = $configuration['PS_SHOP_EMAIL'];
         }
 
         // Validate it again, PS_SHOP_EMAIL could be wrong or empty
-        if (!Validate::isEmail($from)) {
+        if (! Validate::isEmail($from)) {
             $from = null;
         }
 
         // $from_name is not that important, no need to die if it is not valid
-        if (!isset($fromName) || !Validate::isMailName($fromName)) {
+        if (! isset($fromName) || ! Validate::isMailName($fromName)) {
             $fromName = $configuration['PS_SHOP_NAME'];
         }
 
         // Validate it again, PS_SHOP_NAME could be wrong or empty
-        if (!Validate::isMailName($fromName)) {
+        if (! Validate::isMailName($fromName)) {
             $fromName = null;
         }
 
@@ -278,37 +289,37 @@ class MailCore extends ObjectModel
          * It would be difficult to send an e-mail if the e-mail is not valid,
          * so this time we can die if there is a problem.
          */
-        if (!is_array($to) && !Validate::isEmail($to)) {
+        if (! is_array($to) && ! Validate::isEmail($to)) {
             self::dieOrLog($die, 'Error: parameter "to" is corrupted');
 
             return false;
         }
 
         // If bcc is not null, make sure it's a valid e-mail
-        if (null !== $bcc && !is_array($bcc) && !Validate::isEmail($bcc)) {
+        if ($bcc !== null && ! is_array($bcc) && ! Validate::isEmail($bcc)) {
             self::dieOrLog($die, 'Error: parameter "bcc" is corrupted');
             $bcc = null;
         }
 
         // Make sure that templateVars is an array, it could be malfuctioned by modules from hooks
-        if (!is_array($templateVars)) {
+        if (! is_array($templateVars)) {
             $templateVars = [];
         }
 
         // Check if customer toName is valid, but do not fail because of it
-        if (is_string($toName) && !empty($toName) && !Validate::isMailName($toName)) {
+        if (is_string($toName) && ! empty($toName) && ! Validate::isMailName($toName)) {
             $toName = null;
         }
 
         // Check if proper template name (for example 'order_conf') is provided
-        if (!Validate::isTplName($template)) {
+        if (! Validate::isTplName($template)) {
             self::dieOrLog($die, 'Error: invalid e-mail template');
 
             return false;
         }
 
         // Check if proper email subject is provided
-        if (!Validate::isMailSubject($subject)) {
+        if (! Validate::isMailSubject($subject)) {
             self::dieOrLog($die, 'Error: invalid e-mail subject');
 
             return false;
@@ -323,7 +334,7 @@ class MailCore extends ObjectModel
         if (is_array($to)) {
             foreach ($to as $key => $addr) {
                 $addr = trim($addr);
-                if (!Validate::isEmail($addr)) {
+                if (! Validate::isEmail($addr)) {
                     self::dieOrLog($die, 'Error: invalid e-mail address');
 
                     return false;
@@ -335,7 +346,7 @@ class MailCore extends ObjectModel
                     $addrName = $toName;
                 }
 
-                $addrName = ($addrName == null || $addrName == $addr || !Validate::isGenericName($addrName)) ?
+                $addrName = ($addrName === null || $addrName === $addr || ! Validate::isGenericName($addrName)) ?
                           '' :
                           self::mimeEncode($addrName);
                 $email->addTo(new Address(self::toPunycode($addr), $addrName));
@@ -344,7 +355,7 @@ class MailCore extends ObjectModel
         } else {
             /* Simple recipient, one address */
             $toPlugin = $to;
-            $toName = (($toName == null || $toName == $to) ? '' : self::mimeEncode($toName));
+            $toName = (($toName === null || $toName === $to) ? '' : self::mimeEncode($toName));
             $email->addTo(new Address(self::toPunycode($to), $toName));
         }
 
@@ -355,7 +366,7 @@ class MailCore extends ObjectModel
         if (isset($bcc) && is_array($bcc)) {
             foreach ($bcc as $addr) {
                 $addr = trim($addr);
-                if (!Validate::isEmail($addr)) {
+                if (! Validate::isEmail($addr)) {
                     self::dieOrLog($die, 'Error: invalid e-mail address');
 
                     return false;
@@ -370,16 +381,16 @@ class MailCore extends ObjectModel
         // Initialization of the mail transport
         try {
             // Connect with the appropriate configuration, either SMTP or sendmail
-            if ($configuration['PS_MAIL_METHOD'] == self::METHOD_SMTP) {
+            if ($configuration['PS_MAIL_METHOD'] === self::METHOD_SMTP) {
                 // Setup TLS configuration
-                if (!isset($configuration['PS_MAIL_SMTP_ENCRYPTION']) || Tools::strtolower($configuration['PS_MAIL_SMTP_ENCRYPTION']) === 'off') {
+                if (! isset($configuration['PS_MAIL_SMTP_ENCRYPTION']) || Tools::strtolower($configuration['PS_MAIL_SMTP_ENCRYPTION']) === 'off') {
                     $isTls = false;
                 } else {
                     $isTls = true;
                 }
 
                 // Setup port configration
-                if (!isset($configuration['PS_MAIL_SMTP_PORT'])) {
+                if (! isset($configuration['PS_MAIL_SMTP_PORT'])) {
                     $configuration['PS_MAIL_SMTP_PORT'] = 'default';
                 }
 
@@ -422,7 +433,7 @@ class MailCore extends ObjectModel
             if ($isoDefault && $iso !== $isoDefault) {
                 $isoArray[] = $isoDefault;
             }
-            if (!in_array('en', $isoArray)) {
+            if (! in_array('en', $isoArray, true)) {
                 $isoArray[] = 'en';
             }
 
@@ -431,8 +442,8 @@ class MailCore extends ObjectModel
              * This is used later to help locate the correct path inside the module.
              */
             $moduleName = false;
-            if (preg_match('#' . $shop->physical_uri . 'modules/#', str_replace(DIRECTORY_SEPARATOR, '/', $templatePath))
-                && preg_match('#modules/([a-z0-9_-]+)/#ui', str_replace(DIRECTORY_SEPARATOR, '/', $templatePath), $res)
+            if (preg_match('#' . $shop->physical_uri . 'modules/#', str_replace(\DIRECTORY_SEPARATOR, '/', $templatePath))
+                && preg_match('#modules/([a-z0-9_-]+)/#ui', str_replace(\DIRECTORY_SEPARATOR, '/', $templatePath), $res)
             ) {
                 $moduleName = $res[1];
             }
@@ -447,10 +458,10 @@ class MailCore extends ObjectModel
                 $isoTemplate = $isoCode . '/' . $template;
                 $templatePath = self::getTemplateBasePath($isoTemplate, $moduleName, $shop->theme);
 
-                if (!file_exists($templatePath . $isoTemplate . '.txt')
+                if (! file_exists($templatePath . $isoTemplate . '.txt')
                     && (
-                        $configuration['PS_MAIL_TYPE'] == Mail::TYPE_BOTH
-                        || $configuration['PS_MAIL_TYPE'] == Mail::TYPE_TEXT
+                        $configuration['PS_MAIL_TYPE'] === Mail::TYPE_BOTH
+                        || $configuration['PS_MAIL_TYPE'] === Mail::TYPE_TEXT
                     )
                 ) {
                     PrestaShopLogger::addLog(
@@ -460,11 +471,11 @@ class MailCore extends ObjectModel
                             'Admin.Advparameters.Notification'
                         )
                     );
-                } elseif (!file_exists($templatePath . $isoTemplate . '.html')
+                } elseif (! file_exists($templatePath . $isoTemplate . '.html')
                           && (
-                              $configuration['PS_MAIL_TYPE'] == Mail::TYPE_BOTH
-                              || $configuration['PS_MAIL_TYPE'] == Mail::TYPE_BOTH_AUTOMATIC_TEXT
-                              || $configuration['PS_MAIL_TYPE'] == Mail::TYPE_HTML
+                              $configuration['PS_MAIL_TYPE'] === Mail::TYPE_BOTH
+                              || $configuration['PS_MAIL_TYPE'] === Mail::TYPE_BOTH_AUTOMATIC_TEXT
+                              || $configuration['PS_MAIL_TYPE'] === Mail::TYPE_HTML
                           )
                 ) {
                     PrestaShopLogger::addLog(
@@ -514,7 +525,7 @@ class MailCore extends ObjectModel
             $templateTxt .= strip_tags(
                 html_entity_decode(
                     Tools::file_get_contents($templatePath . $isoTemplate . '.txt'),
-                    ENT_COMPAT,
+                    \ENT_COMPAT,
                     'utf-8'
                 )
             );
@@ -545,10 +556,10 @@ class MailCore extends ObjectModel
             ;
 
             // Assign reply-to address, if set and valid
-            if (!($replyTo && Validate::isEmail($replyTo))) {
+            if (! ($replyTo && Validate::isEmail($replyTo))) {
                 $replyTo = $from;
             }
-            if (!empty($replyTo) && $replyTo != $toPlugin) {
+            if (! empty($replyTo) && $replyTo !== $toPlugin) {
                 $email->replyTo(new Address($replyTo, (string) $replyToName));
             }
 
@@ -556,7 +567,7 @@ class MailCore extends ObjectModel
              * Now we add common template variables. First, the logo. If we have a specific logo for emails,
              * we will use it, otherwise we will use the default logo.
              */
-            if (false !== Configuration::get('PS_LOGO_MAIL', null, null, $idShop)
+            if (Configuration::get('PS_LOGO_MAIL', null, null, $idShop) !== false
                 && file_exists(_PS_IMG_DIR_ . Configuration::get('PS_LOGO_MAIL', null, null, $idShop))
             ) {
                 $logo = _PS_IMG_DIR_ . Configuration::get('PS_LOGO_MAIL', null, null, $idShop);
@@ -568,13 +579,13 @@ class MailCore extends ObjectModel
                 }
             }
             ShopUrl::cacheMainDomainForShop((int) $idShop);
-            if (isset($logo) && $configuration['PS_MAIL_TYPE'] != Mail::TYPE_TEXT) {
+            if (isset($logo) && $configuration['PS_MAIL_TYPE'] !== Mail::TYPE_TEXT) {
                 $templateVars['{shop_logo}'] = 'cid:shop_logo';
                 $email->embedFromPath($logo, 'shop_logo');
             }
 
             // Now, we add common links that are available in every template
-            if (!(Context::getContext()->link instanceof Link)) {
+            if (! (Context::getContext()->link instanceof Link)) {
                 Context::getContext()->link = new Link();
             }
             $templateVars['{shop_name}'] = Tools::safeOutput($configuration['PS_SHOP_NAME']);
@@ -633,9 +644,9 @@ class MailCore extends ObjectModel
             }
 
             // Attach files to the email
-            if (!empty($fileAttachment)) {
+            if (! empty($fileAttachment)) {
                 // Multiple attachments?
-                if (!is_array(current($fileAttachment))) {
+                if (! is_array(current($fileAttachment))) {
                     $fileAttachment = [$fileAttachment];
                 }
 
@@ -656,9 +667,9 @@ class MailCore extends ObjectModel
 
             // Create new message and DKIM sign it, if enabled and all data for signature are provided
             if ((bool) $configuration['PS_MAIL_DKIM_ENABLE'] === true
-                && !empty($configuration['PS_MAIL_DKIM_DOMAIN'])
-                && !empty($configuration['PS_MAIL_DKIM_SELECTOR'])
-                && !empty($configuration['PS_MAIL_DKIM_KEY'])
+                && ! empty($configuration['PS_MAIL_DKIM_DOMAIN'])
+                && ! empty($configuration['PS_MAIL_DKIM_SELECTOR'])
+                && ! empty($configuration['PS_MAIL_DKIM_KEY'])
             ) {
                 $signer = new DkimSigner(
                     $configuration['PS_MAIL_DKIM_KEY'],
@@ -684,13 +695,13 @@ class MailCore extends ObjectModel
                 $recipientsCc = self::convertAdressesToArray($email->getCc());
                 $recipientsBcc = self::convertAdressesToArray($email->getBcc());
 
-                if (!is_array($recipientsTo)) {
+                if (! is_array($recipientsTo)) {
                     $recipientsTo = [];
                 }
-                if (!is_array($recipientsCc)) {
+                if (! is_array($recipientsCc)) {
                     $recipientsCc = [];
                 }
-                if (!is_array($recipientsBcc)) {
+                if (! is_array($recipientsBcc)) {
                     $recipientsBcc = [];
                 }
                 foreach (array_merge($recipientsTo, $recipientsCc, $recipientsBcc) as $emailAlias => $recipient_name) {
@@ -758,16 +769,16 @@ class MailCore extends ObjectModel
     /**
      * Send a test email.
      *
-     * @param bool $smtpChecked Is SMTP checked?
-     * @param string $smtpServer SMTP Server hostname
-     * @param string $content Content of the email
-     * @param string $subject Subject of the email
-     * @param bool $type Deprecated
-     * @param string $to To email address
-     * @param string $from From email address
-     * @param string $smtpLogin SMTP login name
-     * @param string $smtpPassword SMTP password
-     * @param int $smtpPort SMTP Port
+     * @param bool        $smtpChecked    Is SMTP checked?
+     * @param string      $smtpServer     SMTP Server hostname
+     * @param string      $content        Content of the email
+     * @param string      $subject        Subject of the email
+     * @param bool        $type           Deprecated
+     * @param string      $to             To email address
+     * @param string      $from           From email address
+     * @param string      $smtpLogin      SMTP login name
+     * @param string      $smtpPassword   SMTP password
+     * @param int         $smtpPort       SMTP Port
      * @param bool|string $smtpEncryption Encryption type. "off" or false disable encryption.
      *
      * @return bool|string True if succeeded, otherwise the error message
@@ -787,7 +798,7 @@ class MailCore extends ObjectModel
         bool $dkimEnable = false,
         string $dkimKey = '',
         string $dkimDomain = '',
-        string $dkimSelector = ''
+        string $dkimSelector = '',
     ) {
         $result = false;
 
@@ -821,9 +832,9 @@ class MailCore extends ObjectModel
 
             /* Create new message and DKIM sign it, if enabled and all data for signature are provided */
             if ($dkimEnable === true
-                && !empty($dkimKey)
-                && !empty($dkimDomain)
-                && !empty($dkimSelector)
+                && ! empty($dkimKey)
+                && ! empty($dkimDomain)
+                && ! empty($dkimSelector)
             ) {
                 $signer = new DkimSigner(
                     $dkimKey,
@@ -849,19 +860,17 @@ class MailCore extends ObjectModel
      * we have to return a sentence with accents.
      *
      * @param string $string raw sentence (write directly in file)
-     *
-     * @return mixed
      */
     public static function l($string, $idLang = null, ?Context $context = null)
     {
         global $_LANGMAIL;
 
-        if (!$context) {
+        if (! $context) {
             $context = Context::getContext();
         }
 
         if ($idLang === null) {
-            $idLang = (!isset($context->language) || !is_object($context->language)) ?
+            $idLang = (! isset($context->language) || ! is_object($context->language)) ?
                     (int) Configuration::get('PS_LANG_DEFAULT') :
                     (int) $context->language->id;
         }
@@ -878,7 +887,7 @@ class MailCore extends ObjectModel
             include $fileTheme;
         }
 
-        if (!is_array($_LANGMAIL)) {
+        if (! is_array($_LANGMAIL)) {
             return str_replace('"', '&quot;', $string);
         }
 
@@ -887,7 +896,7 @@ class MailCore extends ObjectModel
         return str_replace(
             '"',
             '&quot;',
-            (array_key_exists($key, $_LANGMAIL) && !empty($_LANGMAIL[$key])) ? $_LANGMAIL[$key] : $string
+            (array_key_exists($key, $_LANGMAIL) && ! empty($_LANGMAIL[$key])) ? $_LANGMAIL[$key] : $string
         );
     }
 
@@ -898,7 +907,7 @@ class MailCore extends ObjectModel
             'utctime' => date('YmdHis'),
             'randint' => mt_rand(),
             'customstr' => ($idstring !== null && preg_match('/^(?<!\\.)[a-z0-9\\.]+(?!\\.)$/iD', $idstring) ? $idstring : 'mailer'),
-            'hostname' => !empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : php_uname('n'),
+            'hostname' => ! empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : php_uname('n'),
         ];
 
         return vsprintf('%s.%d.%s@%s', $midparams);
@@ -926,7 +935,7 @@ class MailCore extends ObjectModel
     /**
      * MIME encode the string.
      *
-     * @param string $string The string to encode
+     * @param string $string  The string to encode
      * @param string $charset The character set to use
      * @param string $newline The newline character(s)
      *
@@ -934,7 +943,7 @@ class MailCore extends ObjectModel
      */
     public static function mimeEncode($string, $charset = 'UTF-8', $newline = "\r\n")
     {
-        if (!self::isMultibyte($string) && Tools::strlen($string) < 75) {
+        if (! self::isMultibyte($string) && Tools::strlen($string) < 75) {
             return $string;
         }
 
@@ -991,7 +1000,7 @@ class MailCore extends ObjectModel
         }
 
         if (defined('INTL_IDNA_VARIANT_UTS46')) {
-            return $address[0] . '@' . idn_to_ascii($address[1], 0, INTL_IDNA_VARIANT_UTS46);
+            return $address[0] . '@' . idn_to_ascii($address[1], 0, \INTL_IDNA_VARIANT_UTS46);
         }
 
         /*
@@ -1008,16 +1017,16 @@ class MailCore extends ObjectModel
     /**
      * Generic function to dieOrLog with translations.
      *
-     * @param bool $die Should die
-     * @param string $message Message
-     * @param array $templates Templates list
-     * @param string $domain Translation domain
+     * @param bool   $die       Should die
+     * @param string $message   Message
+     * @param array  $templates Templates list
+     * @param string $domain    Translation domain
      */
     protected static function dieOrLog(
         $die,
         $message,
         $templates = [],
-        $domain = 'Admin.Advparameters.Notification'
+        $domain = 'Admin.Advparameters.Notification',
     ) {
         Tools::dieOrLog(
             Context::getContext()->getTranslator()->trans(

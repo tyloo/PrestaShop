@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,7 +58,7 @@ class PaymentOptionsFinderCore extends HookFinder
 
         // Safety check
         foreach ($paymentOptions as $moduleName => $paymentOption) {
-            if (!is_array($paymentOption) || empty($paymentOption)) {
+            if (! is_array($paymentOption) || empty($paymentOption)) {
                 unset($paymentOptions[$moduleName]);
             }
         }

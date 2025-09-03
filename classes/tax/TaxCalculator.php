@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,14 +58,13 @@ class TaxCalculatorCore
     public $computation_method;
 
     /**
-     * @param array $taxes
      * @param int $computation_method (COMBINE_METHOD | ONE_AFTER_ANOTHER_METHOD)
      */
     public function __construct(array $taxes = [], $computation_method = TaxCalculator::COMBINE_METHOD)
     {
         // sanity check
         foreach ($taxes as $tax) {
-            if (!($tax instanceof Tax)) {
+            if (! ($tax instanceof Tax)) {
                 throw new Exception('Invalid Tax Object');
             }
         }
@@ -103,7 +103,7 @@ class TaxCalculatorCore
     public function getTotalRate()
     {
         $taxes = 0;
-        if ($this->computation_method == TaxCalculator::ONE_AFTER_ANOTHER_METHOD) {
+        if ($this->computation_method === TaxCalculator::ONE_AFTER_ANOTHER_METHOD) {
             $taxes = 1;
             foreach ($this->taxes as $tax) {
                 $taxes *= (1 + (abs($tax->rate) / 100));
@@ -139,14 +139,14 @@ class TaxCalculatorCore
      *
      * @param float $price_te
      *
-     * @return array $taxes_amount
+     * @return array
      */
     public function getTaxesAmount($price_te)
     {
         $taxes_amounts = [];
 
         foreach ($this->taxes as $tax) {
-            if ($this->computation_method == TaxCalculator::ONE_AFTER_ANOTHER_METHOD) {
+            if ($this->computation_method === TaxCalculator::ONE_AFTER_ANOTHER_METHOD) {
                 $taxes_amounts[$tax->id] = $price_te * (abs($tax->rate) / 100);
                 $price_te = $price_te + $taxes_amounts[$tax->id];
             } else {
@@ -162,7 +162,7 @@ class TaxCalculatorCore
      *
      * @param float $price_te
      *
-     * @return float $amount
+     * @return float
      */
     public function getTaxesTotalAmount($price_te)
     {

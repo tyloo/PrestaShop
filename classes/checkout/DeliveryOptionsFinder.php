@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,7 +39,7 @@ class DeliveryOptionsFinderCore
         Context $context,
         TranslatorInterface $translator,
         ObjectPresenter $objectPresenter,
-        PriceFormatter $priceFormatter
+        PriceFormatter $priceFormatter,
     ) {
         $this->context = $context;
         $this->objectPresenter = $objectPresenter;
@@ -54,7 +55,7 @@ class DeliveryOptionsFinderCore
             $free_shipping = true;
         } else {
             foreach ($cart->getCartRules() as $rule) {
-                if ($rule['free_shipping'] && !$rule['carrier_restriction']) {
+                if ($rule['free_shipping'] && ! $rule['carrier_restriction']) {
                     $free_shipping = true;
 
                     break;
@@ -73,7 +74,7 @@ class DeliveryOptionsFinderCore
     public function getDeliveryOptions()
     {
         $delivery_option_list = $this->context->cart->getDeliveryOptionList();
-        $include_taxes = !Product::getTaxCalculationMethod((int) $this->context->cart->id_customer) && (int) Configuration::get('PS_TAX');
+        $include_taxes = ! Product::getTaxCalculationMethod((int) $this->context->cart->id_customer) && (int) Configuration::get('PS_TAX');
         $display_taxes_label = (Configuration::get('PS_TAX') && $this->context->country->display_tax_label);
 
         $carriers_available = [];

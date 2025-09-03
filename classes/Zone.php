@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,10 +30,14 @@
  */
 class ZoneCore extends ObjectModel
 {
-    /** @var string Name */
+    /**
+     * @var string Name
+     */
     public $name;
 
-    /** @var bool Zone status */
+    /**
+     * @var bool Zone status
+     */
     public $active = true;
 
     /**
@@ -42,8 +47,16 @@ class ZoneCore extends ObjectModel
         'table' => 'zone',
         'primary' => 'id_zone',
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 64],
-            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 64,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
         ],
     ];
 
@@ -60,7 +73,7 @@ class ZoneCore extends ObjectModel
     public static function getZones($active = false, $activeFirst = false)
     {
         $cacheId = 'Zone::getZones_' . (bool) $active;
-        if (!Cache::isStored($cacheId)) {
+        if (! Cache::isStored($cacheId)) {
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
 				SELECT *
 				FROM `' . _DB_PREFIX_ . 'zone`

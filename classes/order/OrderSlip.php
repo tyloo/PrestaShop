@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -25,49 +26,79 @@
  */
 class OrderSlipCore extends ObjectModel
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_customer;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_order;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $conversion_rate;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $total_products_tax_excl;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $total_products_tax_incl;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $total_shipping_tax_excl;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $total_shipping_tax_incl;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $amount;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     public $shipping_cost;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $shipping_cost_amount;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $partial;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
-    /** @var string Object last modification date */
+    /**
+     * @var string Object last modification date
+     */
     public $date_upd;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $order_slip_type = 0;
 
     /**
@@ -77,20 +108,67 @@ class OrderSlipCore extends ObjectModel
         'table' => 'order_slip',
         'primary' => 'id_order_slip',
         'fields' => [
-            'id_customer' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_order' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'conversion_rate' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'total_products_tax_excl' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'total_products_tax_incl' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'total_shipping_tax_excl' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'total_shipping_tax_incl' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'amount' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat'],
-            'shipping_cost' => ['type' => self::TYPE_BOOL],
-            'shipping_cost_amount' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat'],
-            'partial' => ['type' => self::TYPE_INT],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'order_slip_type' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
+            'id_customer' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_order' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'conversion_rate' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'total_products_tax_excl' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'total_products_tax_incl' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'total_shipping_tax_excl' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'total_shipping_tax_incl' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'amount' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+            ],
+            'shipping_cost' => [
+                'type' => self::TYPE_BOOL,
+            ],
+            'shipping_cost_amount' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+            ],
+            'partial' => [
+                'type' => self::TYPE_INT,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'order_slip_type' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
         ],
     ];
 
@@ -98,18 +176,26 @@ class OrderSlipCore extends ObjectModel
         'objectNodeName' => 'order_slip',
         'objectsNodeName' => 'order_slips',
         'fields' => [
-            'id_customer' => ['xlink_resource' => 'customers'],
-            'id_order' => ['xlink_resource' => 'orders'],
+            'id_customer' => [
+                'xlink_resource' => 'customers',
+            ],
+            'id_order' => [
+                'xlink_resource' => 'orders',
+            ],
         ],
         'associations' => [
-            'order_slip_details' => ['resource' => 'order_slip_detail', 'setter' => false, 'virtual_entity' => true,
+            'order_slip_details' => [
+                'resource' => 'order_slip_detail',
+                'setter' => false,
+                'virtual_entity' => true,
                 'fields' => [
                     'id' => [],
                     'id_order_detail' => ['required' => true],
                     'product_quantity' => ['required' => true],
                     'amount_tax_excl' => ['required' => true],
                     'amount_tax_incl' => ['required' => true],
-                ], ],
+                ],
+            ],
         ],
     ];
 
@@ -153,7 +239,7 @@ class OrderSlipCore extends ObjectModel
     }
 
     /**
-     * @param int $orderSlipId
+     * @param int   $orderSlipId
      * @param Order $order
      *
      * @return array
@@ -196,8 +282,6 @@ class OrderSlipCore extends ObjectModel
 
     /**
      * Get resume of all shipping refund for one order.
-     *
-     * @param int $idOrder
      */
     public static function getShippingSlipResume(int $idOrder)
     {
@@ -312,11 +396,11 @@ class OrderSlipCore extends ObjectModel
                 $quantity = $order_detail->product_quantity - $order_slip_resume['product_quantity'];
             }
 
-            if ($quantity == 0) {
+            if ($quantity === 0) {
                 continue;
             }
 
-            if (!Tools::isSubmit('cancelProduct') && $order->hasBeenPaid()) {
+            if (! Tools::isSubmit('cancelProduct') && $order->hasBeenPaid()) {
                 $order_detail->product_quantity_refunded += $quantity;
             }
 
@@ -329,12 +413,12 @@ class OrderSlipCore extends ObjectModel
 
             $order_slip->{'total_products_tax_' . $inc_or_ex_1} += $price * $quantity;
 
-            if (in_array(Configuration::get('PS_ROUND_TYPE'), [Order::ROUND_ITEM, Order::ROUND_LINE])) {
-                if (!isset($total_products[$id_tax_rules_group])) {
+            if (in_array(Configuration::get('PS_ROUND_TYPE'), [Order::ROUND_ITEM, Order::ROUND_LINE], true)) {
+                if (! isset($total_products[$id_tax_rules_group])) {
                     $total_products[$id_tax_rules_group] = 0;
                 }
             } else {
-                if (!isset($total_products[$id_tax_rules_group . '_' . $id_address])) {
+                if (! isset($total_products[$id_tax_rules_group . '_' . $id_address])) {
                     $total_products[$id_tax_rules_group . '_' . $id_address] = 0;
                 }
             }
@@ -367,7 +451,7 @@ class OrderSlipCore extends ObjectModel
         unset($product);
 
         foreach ($total_products as $key => $price) {
-            if (Configuration::get('PS_ROUND_TYPE') == Order::ROUND_TOTAL) {
+            if (Configuration::get('PS_ROUND_TYPE') === Order::ROUND_TOTAL) {
                 $tmp = explode('_', $key);
                 $address = Address::initialize((int) $tmp[1], true);
                 $tax_calculator = TaxManagerFactory::getManager($address, (int) $tmp[0])->getTaxCalculator();
@@ -377,18 +461,18 @@ class OrderSlipCore extends ObjectModel
             }
         }
 
-        $order_slip->{'total_products_tax_' . $inc_or_ex_2} -= (float) $amount && !$amount_choosen ? (float) $amount : 0;
+        $order_slip->{'total_products_tax_' . $inc_or_ex_2} -= (float) $amount && ! $amount_choosen ? (float) $amount : 0;
         $order_slip->amount = $amount_choosen ? (float) $amount : $order_slip->{'total_products_tax_' . $inc_or_ex_1};
         $order_slip->shipping_cost_amount = $order_slip->total_shipping_tax_incl;
 
-        if ((float) $amount && !$amount_choosen) {
+        if ((float) $amount && ! $amount_choosen) {
             $order_slip->order_slip_type = 1;
         }
         if (((float) $amount && $amount_choosen) || $order_slip->shipping_cost_amount > 0) {
             $order_slip->order_slip_type = 2;
         }
 
-        if (!$order_slip->add()) {
+        if (! $order_slip->add()) {
             return false;
         }
 
@@ -427,7 +511,7 @@ class OrderSlipCore extends ObjectModel
         $orderSlip->shipping_cost_amount = (float) $shipping_cost_amount;
         $orderSlip->conversion_rate = $currency->conversion_rate;
         $orderSlip->partial = 1;
-        if (!$orderSlip->add()) {
+        if (! $orderSlip->add()) {
             return false;
         }
 
@@ -448,15 +532,15 @@ class OrderSlipCore extends ObjectModel
             $order_detail = new OrderDetail($id_order_detail);
             $order_slip_resume = OrderSlip::getProductSlipResume($id_order_detail);
 
-            if ($tab['amount'] + $order_slip_resume['amount_tax_incl'] > $order_detail->total_price_tax_incl) {
+            if ($order_detail->total_price_tax_incl < $tab['amount'] + $order_slip_resume['amount_tax_incl']) {
                 $tab['amount'] = $order_detail->total_price_tax_incl - $order_slip_resume['amount_tax_incl'];
             }
 
-            if ($tab['amount'] == 0) {
+            if ($tab['amount'] === 0) {
                 continue;
             }
 
-            if ($tab['quantity'] + $order_slip_resume['product_quantity'] > $order_detail->product_quantity) {
+            if ($order_detail->product_quantity < $tab['quantity'] + $order_slip_resume['product_quantity']) {
                 $tab['quantity'] = $order_detail->product_quantity - $order_slip_resume['product_quantity'];
             }
 
@@ -508,8 +592,8 @@ class OrderSlipCore extends ObjectModel
                 WHERE `id_order_detail` = ' . (int) $order_slip_details['id_order_detail']
             );
 
-            if (true === is_array($row)) {
-                if (!isset($ecotax_detail[$row['rate']])) {
+            if (is_array($row) === true) {
+                if (! isset($ecotax_detail[$row['rate']])) {
                     $ecotax_detail[$row['rate']] = ['ecotax_tax_incl' => 0, 'ecotax_tax_excl' => 0, 'rate' => $row['rate']];
                 }
 

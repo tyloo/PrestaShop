@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,7 +58,7 @@ class DbQueryCore
     {
         $types = ['SELECT', 'DELETE'];
 
-        if (!empty($type) && in_array($type, $types)) {
+        if (! empty($type) && in_array($type, $types, true)) {
             $this->query['type'] = $type;
         }
 
@@ -73,7 +74,7 @@ class DbQueryCore
      */
     public function select($fields)
     {
-        if (!empty($fields)) {
+        if (! empty($fields)) {
             $this->query['select'][] = $fields;
         }
 
@@ -84,13 +85,13 @@ class DbQueryCore
      * Sets table for FROM clause.
      *
      * @param string|DbQuery $table Table name
-     * @param string|null $alias Table alias
+     * @param string|null    $alias Table alias
      *
      * @return $this
      */
     public function from($table, $alias = null)
     {
-        if (!empty($table)) {
+        if (! empty($table)) {
             if ($table instanceof DbQuery) {
                 $query = '(' . $table->build() . ')';
             } else {
@@ -113,7 +114,7 @@ class DbQueryCore
      */
     public function join($join)
     {
-        if (!empty($join)) {
+        if (! empty($join)) {
             $this->query['join'][] = $join;
         }
 
@@ -123,9 +124,9 @@ class DbQueryCore
     /**
      * Adds a LEFT JOIN clause.
      *
-     * @param string $table Table name (without prefix)
+     * @param string      $table Table name (without prefix)
      * @param string|null $alias Table alias
-     * @param string|null $on ON clause
+     * @param string|null $on    ON clause
      *
      * @return $this
      */
@@ -138,9 +139,9 @@ class DbQueryCore
      * Adds an INNER JOIN clause
      * E.g. $this->innerJoin('product p ON ...').
      *
-     * @param string $table Table name (without prefix)
+     * @param string      $table Table name (without prefix)
      * @param string|null $alias Table alias
-     * @param string|null $on ON clause
+     * @param string|null $on    ON clause
      *
      * @return $this
      */
@@ -152,9 +153,9 @@ class DbQueryCore
     /**
      * Adds a LEFT OUTER JOIN clause.
      *
-     * @param string $table Table name (without prefix)
+     * @param string      $table Table name (without prefix)
      * @param string|null $alias Table alias
-     * @param string|null $on ON clause
+     * @param string|null $on    ON clause
      *
      * @return $this
      */
@@ -166,7 +167,7 @@ class DbQueryCore
     /**
      * Adds a NATURAL JOIN clause.
      *
-     * @param string $table Table name (without prefix)
+     * @param string      $table Table name (without prefix)
      * @param string|null $alias Table alias
      *
      * @return $this
@@ -179,9 +180,9 @@ class DbQueryCore
     /**
      * Adds a RIGHT JOIN clause.
      *
-     * @param string $table Table name (without prefix)
+     * @param string      $table Table name (without prefix)
      * @param string|null $alias Table alias
-     * @param string|null $on ON clause
+     * @param string|null $on    ON clause
      *
      * @return $this
      */
@@ -199,7 +200,7 @@ class DbQueryCore
      */
     public function where($restriction)
     {
-        if (!empty($restriction)) {
+        if (! empty($restriction)) {
             $this->query['where'][] = $restriction;
         }
 
@@ -215,7 +216,7 @@ class DbQueryCore
      */
     public function having($restriction)
     {
-        if (!empty($restriction)) {
+        if (! empty($restriction)) {
             $this->query['having'][] = $restriction;
         }
 
@@ -231,7 +232,7 @@ class DbQueryCore
      */
     public function orderBy($fields)
     {
-        if (!empty($fields)) {
+        if (! empty($fields)) {
             $this->query['order'][] = $fields;
         }
 
@@ -247,7 +248,7 @@ class DbQueryCore
      */
     public function groupBy($fields)
     {
-        if (!empty($fields)) {
+        if (! empty($fields)) {
             $this->query['group'][] = $fields;
         }
 
@@ -286,13 +287,13 @@ class DbQueryCore
      */
     public function build()
     {
-        if ($this->query['type'] == 'SELECT') {
+        if ($this->query['type'] === 'SELECT') {
             $sql = 'SELECT ' . (($this->query['select']) ? implode(",\n", $this->query['select']) : '*') . "\n";
         } else {
             $sql = $this->query['type'] . ' ';
         }
 
-        if (!$this->query['from']) {
+        if (! $this->query['from']) {
             throw new PrestaShopException('Table name not set in DbQuery object. Cannot build a valid SQL query.');
         }
 
@@ -338,8 +339,6 @@ class DbQueryCore
 
     /**
      * Get query.
-     *
-     * @return array
      */
     public function getQuery(): array
     {

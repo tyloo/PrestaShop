@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -42,10 +43,10 @@ class LocalizationPackCore
     /**
      * Loads localization pack.
      *
-     * @param SimpleXMLElement|string $pack Localization pack as SimpleXMLElement or plain XML string
-     * @param array $selection Content to import selection
-     * @param bool $install_mode Whether mode is installation or not
-     * @param string|null $iso_localization_pack Country Alpha-2 ISO code
+     * @param SimpleXMLElement|string $pack                  Localization pack as SimpleXMLElement or plain XML string
+     * @param array                   $selection             Content to import selection
+     * @param bool                    $install_mode          Whether mode is installation or not
+     * @param string|null             $iso_localization_pack Country Alpha-2 ISO code
      *
      * @return bool
      */
@@ -53,7 +54,7 @@ class LocalizationPackCore
     {
         if ($pack instanceof SimpleXMLElement) {
             $xml = $pack;
-        } elseif (!$xml = @simplexml_load_string($pack)) {
+        } elseif (! $xml = @simplexml_load_string($pack)) {
             return false;
         }
 
@@ -67,7 +68,7 @@ class LocalizationPackCore
             if ($id_country) {
                 $country = new Country($id_country);
             }
-            if (!$id_country || !Validate::isLoadedObject($country)) {
+            if (! $id_country || ! Validate::isLoadedObject($country)) {
                 $this->_errors[] = Context::getContext()->getTranslator()->trans(
                     'Cannot load country: %d',
                     [$id_country],
@@ -76,9 +77,9 @@ class LocalizationPackCore
 
                 return false;
             }
-            if (!$country->active) {
+            if (! $country->active) {
                 $country->active = true;
-                if (!$country->update()) {
+                if (! $country->update()) {
                     $this->_errors[] = Context::getContext()->getTranslator()->trans(
                         'Cannot enable the associated country: %s',
                         [$country->name],
@@ -99,17 +100,17 @@ class LocalizationPackCore
             $res = $res && $this->updateDefaultGroupDisplayMethod($xml);
 
             if (($res || $install_mode) && isset($this->iso_code_lang)) {
-                if (!($id_lang = (int) Language::getIdByIso($this->iso_code_lang, true))) {
+                if (! ($id_lang = (int) Language::getIdByIso($this->iso_code_lang, true))) {
                     $id_lang = 1;
                 }
-                if (!$install_mode) {
+                if (! $install_mode) {
                     Configuration::updateValue('PS_LANG_DEFAULT', $id_lang);
                 }
-            } elseif (!isset($this->iso_code_lang) && $install_mode) {
+            } elseif (! isset($this->iso_code_lang) && $install_mode) {
                 $id_lang = 1;
             }
 
-            if (!empty($id_lang) && !Language::isInstalled(Language::getIsoById($id_lang))) {
+            if (! empty($id_lang) && ! Language::isInstalled(Language::getIsoById($id_lang))) {
                 $res = $res && $this->_installLanguages($xml, $install_mode);
                 $res = $res && $this->_installUnits($xml);
             }
@@ -144,19 +145,19 @@ class LocalizationPackCore
                 $id_country = ($attributes['country']) ? (int) Country::getByIso((string) $attributes['country']) : false;
                 $id_state = ($id_country) ? State::getIdByIso($attributes['iso_code'], $id_country) : State::getIdByName($attributes['name']);
 
-                if (!$id_state) {
+                if (! $id_state) {
                     $state = new State();
                     $state->name = (string) $attributes['name'];
                     $state->iso_code = (string) $attributes['iso_code'];
                     $state->id_country = $id_country;
 
                     $id_zone = (int) Zone::getIdByName((string) $attributes['zone']);
-                    if (!$id_zone) {
+                    if (! $id_zone) {
                         $zone = new Zone();
                         $zone->name = (string) $attributes['zone'];
                         $zone->active = true;
 
-                        if (!$zone->add()) {
+                        if (! $zone->add()) {
                             $this->_errors[] = Context::getContext()->getTranslator()->trans('Invalid Zone name.', [], 'Admin.International.Notification');
 
                             return false;
@@ -167,28 +168,28 @@ class LocalizationPackCore
 
                     $state->id_zone = $id_zone;
 
-                    if (!$state->validateFields()) {
+                    if (! $state->validateFields()) {
                         $this->_errors[] = Context::getContext()->getTranslator()->trans('Invalid state properties.', [], 'Admin.International.Notification');
 
                         return false;
                     }
 
                     $country = new Country($state->id_country);
-                    if (!$country->contains_states) {
+                    if (! $country->contains_states) {
                         $country->contains_states = true;
-                        if (!$country->update()) {
+                        if (! $country->update()) {
                             $this->_errors[] = Context::getContext()->getTranslator()->trans('Cannot update the associated country: %s', [$country->name], 'Admin.International.Notification');
                         }
                     }
 
-                    if (!$state->add()) {
+                    if (! $state->add()) {
                         $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred while adding the state.', [], 'Admin.International.Notification');
 
                         return false;
                     }
                 } else {
                     $state = new State($id_state);
-                    if (!Validate::isLoadedObject($state)) {
+                    if (! Validate::isLoadedObject($state)) {
                         $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred while fetching the state.', [], 'Admin.International.Notification');
 
                         return false;
@@ -230,7 +231,7 @@ class LocalizationPackCore
                     return false;
                 }
 
-                if (!$tax->add()) {
+                if (! $tax->add()) {
                     $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred while importing the tax: %s', [(string) $attributes['name']], 'Admin.International.Notification');
 
                     return false;
@@ -242,7 +243,7 @@ class LocalizationPackCore
             foreach ($xml->taxes->taxRulesGroup as $group) {
                 /** @var SimpleXMLElement $group */
                 $group_attributes = $group->attributes();
-                if (!Validate::isGenericName($group_attributes['name'])) {
+                if (! Validate::isGenericName($group_attributes['name'])) {
                     continue;
                 }
 
@@ -254,7 +255,7 @@ class LocalizationPackCore
                 $trg->name = $group['name'];
                 $trg->active = true;
 
-                if (!$trg->save()) {
+                if (! $trg->save()) {
                     $this->_errors[] = Context::getContext()->getTranslator()->trans('This tax rule cannot be saved.', [], 'Admin.International.Notification');
 
                     return false;
@@ -265,16 +266,16 @@ class LocalizationPackCore
                     $rule_attributes = $rule->attributes();
 
                     // Validation
-                    if (!isset($rule_attributes['iso_code_country'])) {
+                    if (! isset($rule_attributes['iso_code_country'])) {
                         continue;
                     }
 
                     $id_country = (int) Country::getByIso(strtoupper($rule_attributes['iso_code_country']));
-                    if (!$id_country) {
+                    if (! $id_country) {
                         continue;
                     }
 
-                    if (!isset($rule_attributes['id_tax']) || !array_key_exists((int) $rule_attributes['id_tax'], $assoc_taxes)) {
+                    if (! isset($rule_attributes['id_tax']) || ! array_key_exists((int) $rule_attributes['id_tax'], $assoc_taxes)) {
                         continue;
                     }
 
@@ -311,7 +312,7 @@ class LocalizationPackCore
 
     /**
      * @param SimpleXMLElement $xml
-     * @param bool $install_mode
+     * @param bool             $install_mode
      *
      * @return bool
      *
@@ -336,7 +337,7 @@ class LocalizationPackCore
                     true
                 );
 
-                /* @var CurrencyId $currencyId */
+                /** @var CurrencyId $currencyId */
                 try {
                     $currencyId = $commandBus->handle($command);
                 } catch (CurrencyException $e) {
@@ -356,11 +357,11 @@ class LocalizationPackCore
             }
 
             $error = Currency::refreshCurrencies();
-            if (!empty($error)) {
+            if (! empty($error)) {
                 $this->_errors[] = $error;
             }
 
-            if (!count($this->_errors) && $install_mode && isset($attributes['iso_code']) && count($xml->currencies->currency) == 1) {
+            if (! count($this->_errors) && $install_mode && isset($attributes['iso_code']) && count($xml->currencies->currency) === 1) {
                 $this->iso_currency = $attributes['iso_code'];
             }
         }
@@ -377,7 +378,7 @@ class LocalizationPackCore
     {
         $context = Context::getContext();
         $container = isset($context->controller) ? $context->controller->getContainer() : null;
-        if (null === $container) {
+        if ($container === null) {
             $container = SymfonyContainer::getInstance();
         }
 
@@ -389,7 +390,7 @@ class LocalizationPackCore
 
     /**
      * @param SimpleXMLElement $xml
-     * @param bool $install_mode
+     * @param bool             $install_mode
      *
      * @return bool
      */
@@ -401,7 +402,7 @@ class LocalizationPackCore
                 /** @var SimpleXMLElement $data */
                 $attributes = $data->attributes();
                 // if we are not in an installation context or if the pack is not available in the local directory
-                if (Language::getIdByIso($attributes['iso_code']) && !$install_mode) {
+                if (Language::getIdByIso($attributes['iso_code']) && ! $install_mode) {
                     continue;
                 }
 
@@ -414,14 +415,14 @@ class LocalizationPackCore
         }
 
         // change the default language if there is only one language in the localization pack
-        if (!count($this->_errors) && $install_mode && isset($attributes['iso_code']) && count($xml->languages->language) == 1) {
+        if (! count($this->_errors) && $install_mode && isset($attributes['iso_code']) && count($xml->languages->language) === 1) {
             $this->iso_code_lang = $attributes['iso_code'];
         }
 
         // refreshed localized currency data
         $this->refreshLocalizedCurrenciesData();
 
-        return !count($this->_errors);
+        return ! count($this->_errors);
     }
 
     /**
@@ -457,12 +458,12 @@ class LocalizationPackCore
             foreach ($xml->units->unit as $data) {
                 /** @var SimpleXMLElement $data */
                 $attributes = $data->attributes();
-                if (!isset($varNames[(string) $attributes['type']])) {
+                if (! isset($varNames[(string) $attributes['type']])) {
                     $this->_errors[] = Context::getContext()->getTranslator()->trans('Localization pack corrupted: wrong unit type.', [], 'Admin.International.Notification');
 
                     return false;
                 }
-                if (!Configuration::updateValue($varNames[(string) $attributes['type']], (string) $attributes['value'])) {
+                if (! Configuration::updateValue($varNames[(string) $attributes['type']], (string) $attributes['value'])) {
                     $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred while setting the units.', [], 'Admin.International.Notification');
 
                     return false;
@@ -490,18 +491,18 @@ class LocalizationPackCore
                 $attributes = $data->attributes();
                 $name = (string) $attributes['name'];
                 if ($module = Module::getInstanceByName($name)) {
-                    $install = ($attributes['install'] == 1) ? true : false;
+                    $install = ($attributes['install'] === 1) ? true : false;
                     $moduleManagerBuilder = ModuleManagerBuilder::getInstance();
                     $moduleManager = $moduleManagerBuilder->build();
 
                     if ($install) {
-                        if (!$moduleManager->isInstalled($name)) {
-                            if (!$module->install()) {
+                        if (! $moduleManager->isInstalled($name)) {
+                            if (! $module->install()) {
                                 $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred while installing the module: %s', [$name], 'Admin.International.Notification');
                             }
                         }
                     } elseif ($moduleManager->isInstalled($name)) {
-                        if (!$module->uninstall()) {
+                        if (! $module->uninstall()) {
                             $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred while uninstalling the module: %s', [$name], 'Admin.International.Notification');
                         }
                     }
@@ -534,7 +535,7 @@ class LocalizationPackCore
                 $name = (string) $attributes['name'];
 
                 if (isset($attributes['value']) && Configuration::get($name) !== false) {
-                    if (!Configuration::updateValue($name, (string) $attributes['value'])) {
+                    if (! Configuration::updateValue($name, (string) $attributes['value'])) {
                         $this->_errors[] = Context::getContext()->getTranslator()->trans(
                             'An error occurred during the configuration setup: %1$s',
                             [$name],
@@ -567,13 +568,13 @@ class LocalizationPackCore
     {
         if (isset($xml->group_default)) {
             $attributes = $xml->group_default->attributes();
-            if (isset($attributes['price_display_method']) && in_array((int) $attributes['price_display_method'], [0, 1])) {
+            if (isset($attributes['price_display_method']) && in_array((int) $attributes['price_display_method'], [0, 1], true)) {
                 Configuration::updateValue('PRICE_DISPLAY_METHOD', (int) $attributes['price_display_method']);
 
                 foreach ([(int) Configuration::get('PS_CUSTOMER_GROUP'), (int) Configuration::get('PS_GUEST_GROUP'), (int) Configuration::get('PS_UNIDENTIFIED_GROUP')] as $id_group) {
                     $group = new Group((int) $id_group);
                     $group->price_display_method = (int) $attributes['price_display_method'];
-                    if (!$group->save()) {
+                    if (! $group->save()) {
                         $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred during the default group update', [], 'Admin.International.Notification');
                     }
                 }

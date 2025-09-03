@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,7 +30,9 @@
  */
 class CMSCore extends ObjectModel
 {
-    /** @var int|null */
+    /**
+     * @var int|null
+     */
     public $id;
     public $id_cms;
     public $head_seo_title;
@@ -51,17 +54,53 @@ class CMSCore extends ObjectModel
         'multilang' => true,
         'multilang_shop' => true,
         'fields' => [
-            'id_cms_category' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'position' => ['type' => self::TYPE_INT],
-            'indexation' => ['type' => self::TYPE_BOOL],
-            'active' => ['type' => self::TYPE_BOOL],
+            'id_cms_category' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'position' => [
+                'type' => self::TYPE_INT,
+            ],
+            'indexation' => [
+                'type' => self::TYPE_BOOL,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+            ],
 
             /* Lang fields */
-            'meta_description' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 512],
-            'meta_title' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 255],
-            'head_seo_title' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 255],
-            'link_rewrite' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isLinkRewrite', 'required' => true, 'size' => 128],
-            'content' => ['type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml', 'size' => 1073741823],
+            'meta_description' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'size' => 512,
+            ],
+            'meta_title' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 255,
+            ],
+            'head_seo_title' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'size' => 255,
+            ],
+            'link_rewrite' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isLinkRewrite',
+                'required' => true,
+                'size' => 128,
+            ],
+            'content' => [
+                'type' => self::TYPE_HTML,
+                'lang' => true,
+                'validate' => 'isCleanHtml',
+                'size' => 1073741823,
+            ],
         ],
     ];
 
@@ -73,7 +112,7 @@ class CMSCore extends ObjectModel
     /**
      * Adds current CMS as a new Object to the database.
      *
-     * @param bool $autoDate Automatically set `date_upd` and `date_add` columns
+     * @param bool $autoDate   Automatically set `date_upd` and `date_add` columns
      * @param bool $nullValues Whether we want to use NULL values instead of empty quotes values
      *
      * @return bool Indicates whether the CMS has been successfully added
@@ -126,16 +165,15 @@ class CMSCore extends ObjectModel
     /**
      * Get links.
      *
-     * @param int $idLang Language ID
+     * @param int        $idLang    Language ID
      * @param array|null $selection
-     * @param bool $active
-     * @param Link|null $link
+     * @param bool       $active
      *
      * @return array
      */
     public static function getLinks($idLang, $selection = null, $active = true, ?Link $link = null)
     {
-        if (!$link) {
+        if (! $link) {
             $link = Context::getContext()->link;
         }
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
@@ -162,8 +200,8 @@ class CMSCore extends ObjectModel
 
     /**
      * @param int|null $idLang
-     * @param bool $idBlock
-     * @param bool $active
+     * @param bool     $idBlock
+     * @param bool     $active
      *
      * @return array|false|mysqli_result|PDOStatement|resource|null
      */
@@ -192,7 +230,7 @@ class CMSCore extends ObjectModel
      */
     public function updatePosition($way, $position)
     {
-        if (!$res = Db::getInstance()->executeS(
+        if (! $res = Db::getInstance()->executeS(
             '
 			SELECT cp.`id_cms`, cp.`position`, cp.`id_cms_category`
 			FROM `' . _DB_PREFIX_ . 'cms` cp
@@ -203,12 +241,12 @@ class CMSCore extends ObjectModel
         }
 
         foreach ($res as $cms) {
-            if ((int) $cms['id_cms'] == (int) $this->id) {
+            if ((int) $cms['id_cms'] === (int) $this->id) {
                 $movedCms = $cms;
             }
         }
 
-        if (!isset($movedCms) || !isset($position)) {
+        if (! isset($movedCms) || ! isset($position)) {
             return false;
         }
 
@@ -275,7 +313,7 @@ class CMSCore extends ObjectModel
     /**
      * @param int|null $idLang
      * @param int|null $idCmsCategory
-     * @param bool $active
+     * @param bool     $active
      * @param int|null $idShop
      *
      * @return array|false|mysqli_result|PDOStatement|resource|null
@@ -312,7 +350,7 @@ class CMSCore extends ObjectModel
     }
 
     /**
-     * @param int $idCms
+     * @param int      $idCms
      * @param int|null $idLang
      * @param int|null $idShop
      *
@@ -320,10 +358,10 @@ class CMSCore extends ObjectModel
      */
     public static function getCMSContent($idCms, $idLang = null, $idShop = null)
     {
-        if (null === $idLang) {
+        if ($idLang === null) {
             $idLang = (int) Configuration::get('PS_LANG_DEFAULT');
         }
-        if (null === $idShop) {
+        if ($idShop === null) {
             $idShop = (int) Configuration::get('PS_SHOP_DEFAULT');
         }
 

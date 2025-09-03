@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,7 +38,6 @@ class TaxRulesTaxManagerCore implements TaxManagerInterface
     private $configurationManager;
 
     /**
-     * @param Address $address
      * @param mixed $type An additional parameter for the tax manager (ex: tax rules id for TaxRuleTaxManager)
      */
     public function __construct(Address $address, $type, ?PrestaShop\PrestaShop\Core\ConfigurationInterface $configurationManager = null)
@@ -80,20 +80,20 @@ class TaxRulesTaxManagerCore implements TaxManagerInterface
             $tax_enabled = $this->configurationManager->get('PS_TAX');
         }
 
-        if (!$tax_enabled) {
+        if (! $tax_enabled) {
             return new TaxCalculator([]);
         }
 
         $taxes = [];
         $postcode = 0;
 
-        if (!empty($this->address->postcode)) {
+        if (! empty($this->address->postcode)) {
             $postcode = $this->address->postcode;
         }
 
         $cache_id = (int) $this->address->id_country . '-' . (int) $this->address->id_state . '-' . $postcode . '-' . (int) $this->type;
 
-        if (!Cache::isStored($cache_id)) {
+        if (! Cache::isStored($cache_id)) {
             $rows = Db::getInstance()->executeS('
 				SELECT tr.*
 				FROM `' . _DB_PREFIX_ . 'tax_rule` tr
@@ -120,7 +120,7 @@ class TaxRulesTaxManagerCore implements TaxManagerInterface
                     $first_row = false;
                 }
 
-                if ($row['behavior'] == 0) {
+                if ($row['behavior'] === 0) {
                     break;
                 }
             }

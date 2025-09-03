@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,22 +42,58 @@ class TaxRuleCore extends ObjectModel
         'table' => 'tax_rule',
         'primary' => 'id_tax_rule',
         'fields' => [
-            'id_tax_rules_group' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_country' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_state' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'zipcode_from' => ['type' => self::TYPE_STRING, 'validate' => 'isPostCode', 'size' => 12],
-            'zipcode_to' => ['type' => self::TYPE_STRING, 'validate' => 'isPostCode', 'size' => 12],
-            'id_tax' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'behavior' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'description' => ['type' => self::TYPE_STRING, 'validate' => 'isString', 'size' => 100],
+            'id_tax_rules_group' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_country' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_state' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'zipcode_from' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isPostCode',
+                'size' => 12,
+            ],
+            'zipcode_to' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isPostCode',
+                'size' => 12,
+            ],
+            'id_tax' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'behavior' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'description' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isString',
+                'size' => 100,
+            ],
         ],
     ];
 
     protected $webserviceParameters = [
         'fields' => [
-            'id_tax_rules_group' => ['xlink_resource' => 'tax_rule_groups'],
-            'id_state' => ['xlink_resource' => 'states'],
-            'id_country' => ['xlink_resource' => 'countries'],
+            'id_tax_rules_group' => [
+                'xlink_resource' => 'tax_rule_groups',
+            ],
+            'id_state' => [
+                'xlink_resource' => 'states',
+            ],
+            'id_country' => [
+                'xlink_resource' => 'countries',
+            ],
         ],
     ];
 
@@ -119,7 +156,7 @@ class TaxRuleCore extends ObjectModel
     public static function isTaxInUse($id_tax)
     {
         $cache_id = 'TaxRule::isTaxInUse_' . (int) $id_tax;
-        if (!Cache::isStored($cache_id)) {
+        if (! Cache::isStored($cache_id)) {
             $result = (int) Db::getInstance()->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'tax_rule` WHERE `id_tax` = ' . (int) $id_tax);
             Cache::store($cache_id, $result);
 
@@ -140,17 +177,17 @@ class TaxRuleCore extends ObjectModel
 
         $from = $zip_codes[0];
         $to = isset($zip_codes[1]) ? $zip_codes[1] : 0;
-        if (count($zip_codes) == 2) {
+        if (count($zip_codes) === 2) {
             $from = $zip_codes[0];
             $to = $zip_codes[1];
             if ($zip_codes[0] > $zip_codes[1]) {
                 $from = $zip_codes[1];
                 $to = $zip_codes[0];
-            } elseif ($zip_codes[0] == $zip_codes[1]) {
+            } elseif ($zip_codes[0] === $zip_codes[1]) {
                 $from = $zip_codes[0];
                 $to = 0;
             }
-        } elseif (count($zip_codes) == 1) {
+        } elseif (count($zip_codes) === 1) {
             $from = $zip_codes[0];
             $to = 0;
         }

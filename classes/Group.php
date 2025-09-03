@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -27,22 +28,34 @@ class GroupCore extends ObjectModel
 {
     public $id;
 
-    /** @var string|array<int, string> */
+    /**
+     * @var string|array<int, string>
+     */
     public $name;
 
-    /** @var string Reduction */
+    /**
+     * @var string Reduction
+     */
     public $reduction;
 
-    /** @var int Price display method (tax inc/tax exc) */
+    /**
+     * @var int Price display method (tax inc/tax exc)
+     */
     public $price_display_method;
 
-    /** @var bool Show prices */
+    /**
+     * @var bool Show prices
+     */
     public $show_prices = true;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
-    /** @var string Object last modification date */
+    /**
+     * @var string Object last modification date
+     */
     public $date_upd;
 
     /**
@@ -53,23 +66,45 @@ class GroupCore extends ObjectModel
         'primary' => 'id_group',
         'multilang' => true,
         'fields' => [
-            'reduction' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat'],
-            'price_display_method' => ['type' => self::TYPE_INT, 'validate' => 'isPriceDisplayMethod', 'required' => true],
-            'show_prices' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'reduction' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+            ],
+            'price_display_method' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isPriceDisplayMethod',
+                'required' => true,
+            ],
+            'show_prices' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
 
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 32],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 32,
+            ],
         ],
     ];
 
     protected static $cache_reduction = [];
     protected static $group_price_display_method = [];
-    protected static $ps_group_feature_active = null;
+    protected static $ps_group_feature_active;
     protected static $groups = [];
-    protected static $ps_unidentified_group = null;
-    protected static $ps_customer_group = null;
+    protected static $ps_unidentified_group;
+    protected static $ps_customer_group;
 
     protected $webserviceParameters = [];
 
@@ -79,7 +114,7 @@ class GroupCore extends ObjectModel
     public function __construct($id = null, $id_lang = null, $id_shop = null)
     {
         parent::__construct($id, $id_lang, $id_shop);
-        if ($this->id && !isset(Group::$group_price_display_method[$this->id])) {
+        if ($this->id && ! isset(Group::$group_price_display_method[$this->id])) {
             self::$group_price_display_method[$this->id] = $this->price_display_method;
         }
     }
@@ -137,7 +172,7 @@ class GroupCore extends ObjectModel
 
     public static function getReduction($id_customer = null)
     {
-        if (!isset(self::$cache_reduction['customer'][(int) $id_customer])) {
+        if (! isset(self::$cache_reduction['customer'][(int) $id_customer])) {
             $id_group = $id_customer ? Customer::getDefaultGroupId((int) $id_customer) : (int) Group::getCurrent()->id;
             self::$cache_reduction['customer'][(int) $id_customer] = Group::getReductionByIdGroup($id_group);
         }
@@ -147,7 +182,7 @@ class GroupCore extends ObjectModel
 
     public static function getReductionByIdGroup($id_group)
     {
-        if (!isset(self::$cache_reduction['group'][$id_group])) {
+        if (! isset(self::$cache_reduction['group'][$id_group])) {
             self::$cache_reduction['group'][$id_group] = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
 			SELECT `reduction`
 			FROM `' . _DB_PREFIX_ . 'group`
@@ -166,7 +201,7 @@ class GroupCore extends ObjectModel
      */
     public static function getPriceDisplayMethod($id_group)
     {
-        if (!isset(Group::$group_price_display_method[$id_group])) {
+        if (! isset(Group::$group_price_display_method[$id_group])) {
             self::$group_price_display_method[$id_group] = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue(
                 '
                 SELECT `price_display_method`
@@ -205,7 +240,7 @@ class GroupCore extends ObjectModel
 
     public function update($autodate = true, $null_values = false)
     {
-        if (!Configuration::getGlobalValue('PS_GROUP_FEATURE_ACTIVE') && $this->reduction > 0) {
+        if (! Configuration::getGlobalValue('PS_GROUP_FEATURE_ACTIVE') && $this->reduction > 0) {
             Configuration::updateGlobalValue('PS_GROUP_FEATURE_ACTIVE', 1);
         }
 
@@ -214,7 +249,7 @@ class GroupCore extends ObjectModel
 
     public function delete()
     {
-        if ($this->id == (int) Configuration::get('PS_CUSTOMER_GROUP')) {
+        if ($this->id === (int) Configuration::get('PS_CUSTOMER_GROUP')) {
             return false;
         }
         if (parent::delete()) {
@@ -268,8 +303,8 @@ class GroupCore extends ObjectModel
     /**
      * This method is allow to know if there are other groups than the default ones.
      *
-     * @param string|null $table Name of table linked to entity
-     * @param bool $has_active_column True if the table has an active column
+     * @param string|null $table             Name of table linked to entity
+     * @param bool        $has_active_column True if the table has an active column
      *
      * @return bool
      */
@@ -309,7 +344,7 @@ class GroupCore extends ObjectModel
     /**
      * Adding restrictions modules to the group with id $id_group.
      *
-     * @param int $id_group
+     * @param int   $id_group
      * @param array $modules
      * @param array $shops
      *
@@ -317,7 +352,7 @@ class GroupCore extends ObjectModel
      */
     public static function addModulesRestrictions($id_group, $modules, $shops = [1])
     {
-        if (!is_array($modules) || !count($modules) || !is_array($shops) || !count($shops)) {
+        if (! is_array($modules) || ! count($modules) || ! is_array($shops) || ! count($shops)) {
             return false;
         }
 
@@ -345,14 +380,14 @@ class GroupCore extends ObjectModel
      * Add restrictions for a new module.
      * We authorize every groups to the new module.
      *
-     * @param int $id_module
+     * @param int   $id_module
      * @param array $shops
      *
      * @return bool
      */
     public static function addRestrictionsForModule($id_module, $shops = [1])
     {
-        if (!is_array($shops) || !count($shops)) {
+        if (! is_array($shops) || ! count($shops)) {
             return false;
         }
 
@@ -389,13 +424,13 @@ class GroupCore extends ObjectModel
             $id_group = (int) self::$ps_unidentified_group;
         }
 
-        if (!isset(self::$groups[$id_group])) {
+        if (! isset(self::$groups[$id_group])) {
             self::$groups[$id_group] = new Group($id_group);
         }
 
-        if (!self::$groups[$id_group]->isAssociatedToShop(Context::getContext()->shop->id)) {
+        if (! self::$groups[$id_group]->isAssociatedToShop(Context::getContext()->shop->id)) {
             $id_group = (int) self::$ps_customer_group;
-            if (!isset(self::$groups[$id_group])) {
+            if (! isset(self::$groups[$id_group])) {
                 self::$groups[$id_group] = new Group($id_group);
             }
         }

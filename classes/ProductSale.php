@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,7 +64,7 @@ class ProductSaleCore
     /**
      * Get required informations on best sales products.
      *
-     * @param int $idLang Language id
+     * @param int $idLang     Language id
      * @param int $pageNumber Start from (optional)
      * @param int $nbProducts Number of products to return (optional)
      *
@@ -81,18 +82,18 @@ class ProductSaleCore
         $finalOrderBy = $orderBy;
         $orderTable = '';
 
-        $invalidOrderBy = !Validate::isOrderBy($orderBy);
-        if ($invalidOrderBy || null === $orderBy) {
+        $invalidOrderBy = ! Validate::isOrderBy($orderBy);
+        if ($invalidOrderBy || $orderBy === null) {
             $orderBy = 'quantity';
             $orderTable = 'ps';
         }
 
-        if ($orderBy == 'date_add' || $orderBy == 'date_upd') {
+        if ($orderBy === 'date_add' || $orderBy === 'date_upd') {
             $orderTable = 'product_shop';
         }
 
-        $invalidOrderWay = !Validate::isOrderWay($orderWay);
-        if ($invalidOrderWay || null === $orderWay || $orderBy == 'sales') {
+        $invalidOrderWay = ! Validate::isOrderWay($orderWay);
+        if ($invalidOrderWay || $orderWay === null || $orderBy === 'sales') {
             $orderWay = 'DESC';
         }
 
@@ -141,19 +142,19 @@ class ProductSaleCore
             WHERE cp.`id_product` = p.`id_product`)';
         }
 
-        if ($finalOrderBy != 'price') {
+        if ($finalOrderBy !== 'price') {
             $sql .= '
-					ORDER BY ' . (!empty($orderTable) ? '`' . pSQL($orderTable) . '`.' : '') . '`' . pSQL($orderBy) . '` ' . pSQL($orderWay) . '
+					ORDER BY ' . (! empty($orderTable) ? '`' . pSQL($orderTable) . '`.' : '') . '`' . pSQL($orderBy) . '` ' . pSQL($orderWay) . '
 					LIMIT ' . (int) (($pageNumber - 1) * $nbProducts) . ', ' . (int) $nbProducts;
         }
 
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
 
-        if ($finalOrderBy == 'price') {
+        if ($finalOrderBy === 'price') {
             Tools::orderbyPrice($result, $orderWay);
             $result = array_slice($result, (int) (($pageNumber - 1) * $nbProducts), (int) $nbProducts);
         }
-        if (!$result) {
+        if (! $result) {
             return false;
         }
 
@@ -163,7 +164,7 @@ class ProductSaleCore
     /**
      * Get required informations on best sales products.
      *
-     * @param int $idLang Language id
+     * @param int $idLang     Language id
      * @param int $pageNumber Start from (optional)
      * @param int $nbProducts Number of products to return (optional)
      *
@@ -171,7 +172,7 @@ class ProductSaleCore
      */
     public static function getBestSalesLight($idLang, $pageNumber = 0, $nbProducts = 10, ?Context $context = null)
     {
-        if (!$context) {
+        if (! $context) {
             $context = Context::getContext();
         }
         if ($pageNumber < 0) {
@@ -222,7 +223,7 @@ class ProductSaleCore
 		ORDER BY ps.quantity DESC
 		LIMIT ' . (int) ($pageNumber * $nbProducts) . ', ' . (int) $nbProducts;
 
-        if (!$result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql)) {
+        if (! $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql)) {
             return false;
         }
 
@@ -233,7 +234,7 @@ class ProductSaleCore
      * Add Product sale.
      *
      * @param int $productId Product ID
-     * @param int $qty Quantity
+     * @param int $qty       Quantity
      *
      * @return bool Indicates whether the sale was successfully added
      */
@@ -256,7 +257,7 @@ class ProductSaleCore
     public static function getNbrSales($idProduct)
     {
         $result = Db::getInstance()->getRow('SELECT `sale_nbr` FROM ' . _DB_PREFIX_ . 'product_sale WHERE `id_product` = ' . (int) $idProduct);
-        if (empty($result) || !array_key_exists('sale_nbr', $result)) {
+        if (empty($result) || ! array_key_exists('sale_nbr', $result)) {
             return -1;
         }
 
@@ -267,7 +268,7 @@ class ProductSaleCore
      * Remove a Product sale.
      *
      * @param int $idProduct Product ID
-     * @param int $qty Quantity
+     * @param int $qty       Quantity
      *
      * @return bool Indicates whether the product sale has been successfully removed
      */
@@ -281,7 +282,8 @@ class ProductSaleCore
 				SET `quantity` = CAST(`quantity` AS SIGNED) - ' . (int) $qty . ', `sale_nbr` = CAST(`sale_nbr` AS SIGNED) - 1, `date_upd` = NOW()
 				WHERE `id_product` = ' . (int) $idProduct
             );
-        } elseif ($totalSales == 1) {
+        }
+        if ($totalSales === 1) {
             return Db::getInstance()->delete('product_sale', 'id_product = ' . (int) $idProduct);
         }
 

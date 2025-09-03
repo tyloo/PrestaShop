@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -90,21 +91,21 @@ class WebserviceOutputJSONCore implements WebserviceOutputInterface
 
     public function renderField($field)
     {
-        $is_association = (isset($field['is_association']) && $field['is_association'] == true);
+        $is_association = (isset($field['is_association']) && $field['is_association'] === true);
 
         if (is_array($field['value'])) {
             $tmp = [];
             foreach ($this->languages as $id_lang) {
                 $tmp[] = ['id' => $id_lang, 'value' => $field['value'][$id_lang]];
             }
-            if (count($tmp) == 1) {
+            if (count($tmp) === 1) {
                 $field['value'] = $tmp[0]['value'];
             } else {
                 $field['value'] = $tmp;
             }
         }
         // Case 1 : fields of the current entity (not an association)
-        if (!$is_association) {
+        if (! $is_association) {
             $this->currentEntity[$field['sqlId']] = $field['value'];
         } else { // Case 2 : fields of an associated entity to the current one
             $this->currentAssociatedEntity[] = ['name' => $field['entities_name'], 'key' => $field['sqlId'], 'value' => $field['value']];
@@ -117,10 +118,10 @@ class WebserviceOutputJSONCore implements WebserviceOutputInterface
     {
         // api ?
         static $isAPICall = false;
-        if ($node_name == 'api' && ($isAPICall == false)) {
+        if ($node_name === 'api' && ($isAPICall === false)) {
             $isAPICall = true;
         }
-        if ($isAPICall && !in_array($node_name, ['description', 'schema', 'api'])) {
+        if ($isAPICall && ! in_array($node_name, ['description', 'schema', 'api'], true)) {
             $this->content[] = $node_name;
         }
         if (isset($more_attr, $more_attr['id'])) {
@@ -142,7 +143,7 @@ class WebserviceOutputJSONCore implements WebserviceOutputInterface
 
     public function renderNodeFooter($node_name, $params)
     {
-        if (isset($params['objectNodeName']) && $params['objectNodeName'] == $node_name) {
+        if (isset($params['objectNodeName']) && $params['objectNodeName'] === $node_name) {
             if (array_key_exists('display', $_GET)) {
                 $this->content[$params['objectsNodeName']][] = $this->currentEntity;
             } else {
@@ -167,9 +168,9 @@ class WebserviceOutputJSONCore implements WebserviceOutputInterface
         array_walk($this->content, function (&$item) {
             $item = array_filter($item);
         });
-        $content = json_encode($this->content, JSON_UNESCAPED_UNICODE);
+        $content = json_encode($this->content, \JSON_UNESCAPED_UNICODE);
 
-        return (false !== $content) ? $content : '';
+        return ($content !== false) ? $content : '';
     }
 
     public function setLanguages($languages)

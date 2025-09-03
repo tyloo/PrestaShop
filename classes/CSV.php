@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,8 +39,8 @@ class CSVCore
      * Loads objects, filename and optionally a delimiter.
      *
      * @param array|Iterator $collection Collection of objects / arrays (of non-objects)
-     * @param string $filename used later to save the file
-     * @param string $delimiter delimiter used
+     * @param string         $filename   used later to save the file
+     * @param string         $delimiter  delimiter used
      */
     public function __construct($collection, $filename, $delimiter = ';')
     {
@@ -61,7 +62,7 @@ class CSVCore
 
         foreach ($this->collection as $object) {
             $vars = get_object_vars($object);
-            if (!$headerLine) {
+            if (! $headerLine) {
                 $this->output(array_keys($vars));
                 $headerLine = true;
             }
@@ -89,7 +90,7 @@ class CSVCore
      *
      * @param string $data
      *
-     * @return string $data
+     * @return string
      */
     public static function wrap($data)
     {

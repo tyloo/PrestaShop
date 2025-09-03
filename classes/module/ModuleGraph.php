@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -27,22 +28,34 @@ abstract class ModuleGraphCore extends Module
 {
     protected $_employee;
 
-    /** @var array of integers graph data */
+    /**
+     * @var array of integers graph data
+     */
     protected $_values = [];
 
-    /** @var array of strings graph legends (X axis) */
+    /**
+     * @var array of strings graph legends (X axis)
+     */
     protected $_legend = [];
 
-    /** @var array string graph titles */
+    /**
+     * @var array string graph titles
+     */
     protected $_titles = ['main' => null, 'x' => null, 'y' => null];
 
-    /** @var ModuleGraphEngine graph engine */
+    /**
+     * @var ModuleGraphEngine graph engine
+     */
     protected $_render;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $_id_lang;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $_csv;
 
     abstract protected function getData($layers);
@@ -64,10 +77,10 @@ abstract class ModuleGraphCore extends Module
         $to_array = getdate(strtotime($this->_employee->stats_date_to));
 
         // If the granularity is inferior to 1 day
-        if ($this->_employee->stats_date_from == $this->_employee->stats_date_to) {
+        if ($this->_employee->stats_date_from === $this->_employee->stats_date_to) {
             if ($legend) {
                 for ($i = 0; $i < 24; ++$i) {
-                    if ($layers == 1) {
+                    if ($layers === 1) {
                         $this->_values[$i] = 0;
                     } else {
                         for ($j = 0; $j < $layers; ++$j) {
@@ -86,7 +99,7 @@ abstract class ModuleGraphCore extends Module
 
             if ($legend) {
                 $days = [];
-                if ($from_array['mon'] == $to_array['mon']) {
+                if ($from_array['mon'] === $to_array['mon']) {
                     for ($i = $from_array['mday']; $i <= $to_array['mday']; ++$i) {
                         $days[] = $i;
                     }
@@ -102,7 +115,7 @@ abstract class ModuleGraphCore extends Module
                 }
 
                 foreach ($days as $i) {
-                    if ($layers == 1) {
+                    if ($layers === 1) {
                         $this->_values[$i] = 0;
                     } else {
                         for ($j = 0; $j < $layers; ++$j) {
@@ -122,7 +135,7 @@ abstract class ModuleGraphCore extends Module
 
             if ($legend) {
                 $months = [];
-                if ($from_array['year'] == $to_array['year']) {
+                if ($from_array['year'] === $to_array['year']) {
                     for ($i = $from_array['mon']; $i <= $to_array['mon']; ++$i) {
                         $months[] = $i;
                     }
@@ -135,7 +148,7 @@ abstract class ModuleGraphCore extends Module
                     }
                 }
                 foreach ($months as $i) {
-                    if ($layers == 1) {
+                    if ($layers === 1) {
                         $this->_values[$i] = 0;
                     } else {
                         for ($j = 0; $j < $layers; ++$j) {
@@ -158,7 +171,7 @@ abstract class ModuleGraphCore extends Module
                 }
 
                 foreach ($years as $i) {
-                    if ($layers == 1) {
+                    if ($layers === 1) {
                         $this->_values[$i] = 0;
                     } else {
                         for ($j = 0; $j < $layers; ++$j) {
@@ -208,7 +221,7 @@ abstract class ModuleGraphCore extends Module
         if (count($this->_legend)) {
             $total = 0;
 
-            if ($datas['type'] == 'pie') {
+            if ($datas['type'] === 'pie') {
                 foreach ($this->_legend as $key => $legend) {
                     for ($i = 0, $total_main = (is_array($this->_titles['main']) ? count($this->_values) : 1); $i < $total_main; ++$i) {
                         $total += (is_array($this->_values[$i]) ? $this->_values[$i][$key] : $this->_values[$key]);
@@ -219,11 +232,11 @@ abstract class ModuleGraphCore extends Module
             foreach ($this->_legend as $key => $legend) {
                 $this->_csv .= $this->escapeCell($legend) . ';';
                 for ($i = 0, $total_main = (is_array($this->_titles['main']) ? count($this->_values) : 1); $i < $total_main; ++$i) {
-                    if (!isset($this->_values[$i]) || !is_array($this->_values[$i])) {
+                    if (! isset($this->_values[$i]) || ! is_array($this->_values[$i])) {
                         if (isset($this->_values[$key])) {
                             // We don't want strings to be divided. Example: product name
                             if (is_numeric($this->_values[$key])) {
-                                $this->_csv .= $this->_values[$key] / (($datas['type'] == 'pie') ? $total : 1);
+                                $this->_csv .= $this->_values[$key] / (($datas['type'] === 'pie') ? $total : 1);
                             } else {
                                 $this->_csv .= $this->escapeCell($this->_values[$key]);
                             }
@@ -233,7 +246,7 @@ abstract class ModuleGraphCore extends Module
                     } else {
                         // We don't want strings to be divided. Example: product name
                         if (is_numeric($this->_values[$i][$key])) {
-                            $this->_csv .= $this->_values[$i][$key] / (($datas['type'] == 'pie') ? $total : 1);
+                            $this->_csv .= $this->_values[$i][$key] / (($datas['type'] === 'pie') ? $total : 1);
                         } else {
                             $this->_csv .= $this->escapeCell($this->_values[$i][$key]);
                         }
@@ -260,10 +273,10 @@ abstract class ModuleGraphCore extends Module
 
     public function create($render, $type, $width, $height, $layers)
     {
-        if (!Validate::isModuleName($render)) {
+        if (! Validate::isModuleName($render)) {
             throw new PrestaShopException('Invalid graph module name.');
         }
-        if (!Tools::file_exists_cache($file = _PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
+        if (! Tools::file_exists_cache($file = _PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
             throw new PrestaShopException('Main graph module file does not exist.');
         }
         require_once $file;
@@ -291,29 +304,29 @@ abstract class ModuleGraphCore extends Module
     public function engine($params)
     {
         $context = Context::getContext();
-        if (!($render = Configuration::get('PS_STATS_RENDER'))) {
+        if (! ($render = Configuration::get('PS_STATS_RENDER'))) {
             return Context::getContext()->getTranslator()->trans('No graph engine selected', [], 'Admin.Modules.Notification');
         }
-        if (!Validate::isModuleName($render)) {
+        if (! Validate::isModuleName($render)) {
             throw new PrestaShopException('Invalid graph module name.');
         }
-        if (!file_exists(_PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
+        if (! file_exists(_PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
             return Context::getContext()->getTranslator()->trans('Graph engine selected is unavailable.', [], 'Admin.Modules.Notification');
         }
 
         $id_employee = (int) $context->employee->id;
         $id_lang = (int) $context->language->id;
 
-        if (!isset($params['layers'])) {
+        if (! isset($params['layers'])) {
             $params['layers'] = 1;
         }
-        if (!isset($params['type'])) {
+        if (! isset($params['type'])) {
             $params['type'] = 'column';
         }
-        if (!isset($params['width'])) {
+        if (! isset($params['width'])) {
             $params['width'] = '100%';
         }
-        if (!isset($params['height'])) {
+        if (! isset($params['height'])) {
             $params['height'] = 270;
         }
 
@@ -333,22 +346,22 @@ abstract class ModuleGraphCore extends Module
 
     protected static function getEmployee($employee = null, ?Context $context = null)
     {
-        if (!Validate::isLoadedObject($employee)) {
-            if (!$context) {
+        if (! Validate::isLoadedObject($employee)) {
+            if (! $context) {
                 $context = Context::getContext();
             }
-            if (!Validate::isLoadedObject($context->employee)) {
+            if (! Validate::isLoadedObject($context->employee)) {
                 return false;
             }
             $employee = $context->employee;
         }
 
         if (empty($employee->stats_date_from) || empty($employee->stats_date_to)
-            || $employee->stats_date_from == '0000-00-00' || $employee->stats_date_to == '0000-00-00') {
-            if (empty($employee->stats_date_from) || $employee->stats_date_from == '0000-00-00') {
+            || $employee->stats_date_from === '0000-00-00' || $employee->stats_date_to === '0000-00-00') {
+            if (empty($employee->stats_date_from) || $employee->stats_date_from === '0000-00-00') {
                 $employee->stats_date_from = date('Y') . '-01-01';
             }
-            if (empty($employee->stats_date_to) || $employee->stats_date_to == '0000-00-00') {
+            if (empty($employee->stats_date_to) || $employee->stats_date_to === '0000-00-00') {
                 $employee->stats_date_to = date('Y') . '-12-31';
             }
             $employee->update();
@@ -381,10 +394,6 @@ abstract class ModuleGraphCore extends Module
      * If the content begins with =+-@ a quote is added at the beginning of
      * the string.
      * In all situation, add double quote to encapsulate the content.
-     *
-     * @param string $content
-     *
-     * @return string
      */
     public function escapeCell(string $content): string
     {

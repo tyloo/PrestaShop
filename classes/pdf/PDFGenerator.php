@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -91,7 +92,7 @@ class PDFGeneratorCore extends TCPDF
     ];
 
     /**
-     * @param bool $use_cache
+     * @param bool   $use_cache
      * @param string $orientation
      */
     public function __construct($use_cache = false, $orientation = 'P')
@@ -190,8 +191,8 @@ class PDFGeneratorCore extends TCPDF
     /**
      * Render HTML template.
      *
-     * @param string $filename
-     * @param bool|string $display true:display to user, false:save, 'I','D','S' as fpdf display
+     * @param string      $filename
+     * @param bool|string $display  true:display to user, false:save, 'I','D','S' as fpdf display
      *
      * @return string HTML rendered
      *
@@ -209,11 +210,11 @@ class PDFGeneratorCore extends TCPDF
             $output = 'D';
         } elseif ($display === false) {
             $output = 'S';
-        } elseif ($display == 'D') {
+        } elseif ($display === 'D') {
             $output = 'D';
-        } elseif ($display == 'S') {
+        } elseif ($display === 'S') {
             $output = 'S';
-        } elseif ($display == 'F') {
+        } elseif ($display === 'F') {
             $output = 'F';
         } else {
             $output = 'I';
@@ -245,7 +246,7 @@ class PDFGeneratorCore extends TCPDF
     {
         $seed .= microtime();
 
-        if (function_exists('openssl_random_pseudo_bytes') && (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN')) {
+        if (function_exists('openssl_random_pseudo_bytes') && (strtoupper(substr(\PHP_OS, 0, 3)) !== 'WIN')) {
             // this is not used on windows systems because it is very slow for a know bug
             $seed .= openssl_random_pseudo_bytes(512);
         } else {

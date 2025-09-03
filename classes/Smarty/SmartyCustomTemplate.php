@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,14 +36,14 @@ class SmartyCustomTemplateCore extends Smarty_Internal_Template
             $tpl = parent::fetch($template, $cache_id, $compile_id, $parent);
             if (property_exists($this, 'cached')) {
                 $filepath = str_replace($this->smarty->getCacheDir(), '', $this->cached->filepath);
-                if ($this->smarty->is_in_lazy_cache($this->template_resource, $this->cache_id, $this->compile_id) != $filepath) {
+                if ($this->smarty->is_in_lazy_cache($this->template_resource, $this->cache_id, $this->compile_id) !== $filepath) {
                     $this->smarty->update_filepath($filepath, $this->template_resource, $this->cache_id, $this->compile_id);
                 }
             }
 
             return $tpl;
-        } else {
-            return parent::fetch($template, $cache_id, $compile_id, $parent);
         }
+
+        return parent::fetch($template, $cache_id, $compile_id, $parent);
     }
 }

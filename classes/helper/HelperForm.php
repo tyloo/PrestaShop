@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,23 +29,31 @@ class HelperFormCore extends Helper
     public $id;
     public $first_call = true;
 
-    /** @var array of forms fields */
+    /**
+     * @var array of forms fields
+     */
     protected $fields_form = [];
 
-    /** @var array values of form fields */
+    /**
+     * @var array values of form fields
+     */
     public $fields_value = [];
     public $name_controller = '';
 
-    /** @var string if not null, a title will be added on that list */
-    public $title = null;
+    /**
+     * @var string if not null, a title will be added on that list
+     */
+    public $title;
 
-    /** @var string Used to override default 'submitAdd' parameter in form action attribute */
+    /**
+     * @var string Used to override default 'submitAdd' parameter in form action attribute
+     */
     public $submit_action;
 
     public $token;
-    public $languages = null;
-    public $default_form_language = null;
-    public $allow_employee_form_lang = null;
+    public $languages;
+    public $default_form_language;
+    public $allow_employee_form_lang;
     public $show_cancel_button = false;
     public $back_url = '#';
 
@@ -65,7 +74,7 @@ class HelperFormCore extends Helper
     public function generate()
     {
         $this->tpl = $this->createTemplate($this->base_tpl);
-        if (null === $this->submit_action) {
+        if ($this->submit_action === null) {
             $this->submit_action = 'submitAdd' . $this->table;
         }
 
@@ -103,15 +112,15 @@ class HelperFormCore extends Helper
             if (isset($fieldset['form']['input'])) {
                 foreach ($fieldset['form']['input'] as $key => &$params) {
                     // If the condition is not met, the field will not be displayed
-                    if (isset($params['condition']) && !$params['condition']) {
+                    if (isset($params['condition']) && ! $params['condition']) {
                         unset($this->fields_form[$fieldset_key]['form']['input'][$key]);
                     }
                     switch ($params['type']) {
                         case 'switch':
                             $switch_values = $params['values'];
-                            if (!empty($params['values'])) {
+                            if (! empty($params['values'])) {
                                 foreach ($switch_values as $k => $value) {
-                                    if (!isset($value['label'])) {
+                                    if (! isset($value['label'])) {
                                         $default_key = (int) $value['value'] ? 1 : 0;
                                         $defautl_label = $default_switch_labels[$value['id']] ?? $default_switch_values[$default_key]['label'];
                                         $this->fields_form[$fieldset_key]['form']['input'][$key]['values'][$k]['label'] = $defautl_label;
@@ -133,7 +142,7 @@ class HelperFormCore extends Helper
 
                         case 'categories':
                             if ($categories) {
-                                if (!isset($params['tree']['id'])) {
+                                if (! isset($params['tree']['id'])) {
                                     throw new PrestaShopException('Id must be filled for categories tree');
                                 }
 
@@ -261,8 +270,8 @@ class HelperFormCore extends Helper
                         case 'shop':
                             $disable_shops = isset($params['disable_shared']) ? $params['disable_shared'] : false;
                             $params['html'] = $this->renderAssoShop($disable_shops);
-                            if (Shop::getTotalShops(false) == 1) {
-                                if ((isset($this->fields_form[$fieldset_key]['form']['force']) && !$this->fields_form[$fieldset_key]['form']['force']) || !isset($this->fields_form[$fieldset_key]['form']['force'])) {
+                            if (Shop::getTotalShops(false) === 1) {
+                                if ((isset($this->fields_form[$fieldset_key]['form']['force']) && ! $this->fields_form[$fieldset_key]['form']['force']) || ! isset($this->fields_form[$fieldset_key]['form']['force'])) {
                                     unset($this->fields_form[$fieldset_key]['form']['input'][$key]);
                                 }
                             }
@@ -313,7 +322,7 @@ class HelperFormCore extends Helper
         foreach ($this->fields_form as $fieldset) {
             if (isset($fieldset['form']['input'])) {
                 foreach ($fieldset['form']['input'] as $input) {
-                    if (!empty($input['required']) && $input['type'] != 'radio') {
+                    if (! empty($input['required']) && $input['type'] !== 'radio') {
                         return true;
                     }
                 }
@@ -330,7 +339,7 @@ class HelperFormCore extends Helper
      */
     public function renderAssoShop($disable_shared = false, $template_directory = null)
     {
-        if (!Shop::isFeatureActive()) {
+        if (! Shop::isFeatureActive()) {
             return '';
         }
 

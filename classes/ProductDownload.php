@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,31 +32,49 @@ use PrestaShop\PrestaShop\Core\Domain\Product\VirtualProductFile\VirtualProductF
  */
 class ProductDownloadCore extends ObjectModel
 {
-    /** @var int Product id which download belongs */
+    /**
+     * @var int Product id which download belongs
+     */
     public $id_product;
 
-    /** @var string DisplayFilename the name which appear */
+    /**
+     * @var string DisplayFilename the name which appear
+     */
     public $display_filename;
 
-    /** @var string PhysicallyFilename the name of the file on hard disk */
+    /**
+     * @var string PhysicallyFilename the name of the file on hard disk
+     */
     public $filename;
 
-    /** @var string DateDeposit when the file is upload */
+    /**
+     * @var string DateDeposit when the file is upload
+     */
     public $date_add;
 
-    /** @var string DateExpiration deadline of the file */
+    /**
+     * @var string DateExpiration deadline of the file
+     */
     public $date_expiration;
 
-    /** @var int NbDaysAccessible how many days the customer can access to file */
+    /**
+     * @var int NbDaysAccessible how many days the customer can access to file
+     */
     public $nb_days_accessible;
 
-    /** @var int NbDownloadable how many time the customer can download the file */
+    /**
+     * @var int NbDownloadable how many time the customer can download the file
+     */
     public $nb_downloadable;
 
-    /** @var bool Active if file is accessible or not */
+    /**
+     * @var bool Active if file is accessible or not
+     */
     public $active = true;
 
-    /** @var bool is_shareable indicates whether the product can be shared */
+    /**
+     * @var bool is_shareable indicates whether the product can be shared
+     */
     public $is_shareable = false;
 
     protected static $_productIds = [];
@@ -98,7 +117,7 @@ class ProductDownloadCore extends ObjectModel
     public function getFields()
     {
         $fields = parent::getFields();
-        if (!$fields['date_expiration']) {
+        if (! $fields['date_expiration']) {
             $fields['date_expiration'] = '0000-00-00 00:00:00';
         }
 
@@ -140,7 +159,7 @@ class ProductDownloadCore extends ObjectModel
      */
     public function deleteFile($idProductDownload = null)
     {
-        if (!$this->checkFile()) {
+        if (! $this->checkFile()) {
             return false;
         }
 
@@ -155,7 +174,7 @@ class ProductDownloadCore extends ObjectModel
      */
     public function checkFile()
     {
-        if (!$this->filename) {
+        if (! $this->filename) {
             return false;
         }
 
@@ -175,14 +194,14 @@ class ProductDownloadCore extends ObjectModel
     /**
      * Return the id_product_download from an id_product.
      *
-     * @param int $idProduct Product the id
+     * @param int  $idProduct Product the id
      * @param bool $active
      *
      * @return bool|int Product the id for this virtual product
      */
     public static function getIdFromIdProduct($idProduct, $active = true)
     {
-        if (!ProductDownload::isFeatureActive()) {
+        if (! ProductDownload::isFeatureActive()) {
             return false;
         }
 
@@ -262,7 +281,7 @@ class ProductDownloadCore extends ObjectModel
      * Return html link.
      *
      * @param string|bool $class CSS selector
-     * @param string|bool $hash hash code in table order detail
+     * @param string|bool $hash  hash code in table order detail
      *
      * @return string Html all the code for print a link to the file
      */
@@ -285,7 +304,7 @@ class ProductDownloadCore extends ObjectModel
      */
     public function getDeadline()
     {
-        if (!(int) $this->nb_days_accessible) {
+        if (! (int) $this->nb_days_accessible) {
             return '0000-00-00 00:00:00';
         }
         $timestamp = strtotime('+' . (int) $this->nb_days_accessible . ' day');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,9 +56,6 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
     public $context;
 
     /**
-     * @param SupplyOrder $supply_order
-     * @param Smarty $smarty
-     *
      * @throws PrestaShopException
      */
     public function __construct(SupplyOrder $supply_order, Smarty $smarty)
@@ -77,9 +75,6 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
         $this->shop = Context::getContext()->shop;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContent()
     {
         $supply_order_details = $this->supply_order->getEntriesCollection();
@@ -121,26 +116,20 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
     {
         $logo = '';
 
-        if (Configuration::get('PS_LOGO_INVOICE', null, null, (int) Shop::getContextShopID()) != false && file_exists(_PS_IMG_DIR_ . Configuration::get('PS_LOGO_INVOICE', null, null, (int) Shop::getContextShopID()))) {
+        if (Configuration::get('PS_LOGO_INVOICE', null, null, (int) Shop::getContextShopID()) !== false && file_exists(_PS_IMG_DIR_ . Configuration::get('PS_LOGO_INVOICE', null, null, (int) Shop::getContextShopID()))) {
             $logo = _PS_IMG_DIR_ . Configuration::get('PS_LOGO_INVOICE', null, null, (int) Shop::getContextShopID());
-        } elseif (Configuration::get('PS_LOGO', null, null, (int) Shop::getContextShopID()) != false && file_exists(_PS_IMG_DIR_ . Configuration::get('PS_LOGO', null, null, (int) Shop::getContextShopID()))) {
+        } elseif (Configuration::get('PS_LOGO', null, null, (int) Shop::getContextShopID()) !== false && file_exists(_PS_IMG_DIR_ . Configuration::get('PS_LOGO', null, null, (int) Shop::getContextShopID()))) {
             $logo = _PS_IMG_DIR_ . Configuration::get('PS_LOGO', null, null, (int) Shop::getContextShopID());
         }
 
         return $logo;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBulkFilename()
     {
         return 'supply_order.pdf';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFilename()
     {
         return 'supply-order-form-' . sprintf('%06d', $this->supply_order->reference) . '.pdf';
@@ -178,16 +167,13 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
         return $results;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHeader()
     {
         $shop_name = Configuration::get('PS_SHOP_NAME');
         $path_logo = $this->getLogo();
         $width = $height = 0;
 
-        if (!empty($path_logo)) {
+        if (! empty($path_logo)) {
             list($width, $height) = getimagesize($path_logo);
         }
 
@@ -206,9 +192,6 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
         return $this->smarty->fetch($this->getTemplate('supply-order-header'));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFooter()
     {
         $free_text = [];
@@ -234,7 +217,7 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
     protected function roundSupplyOrderDetails(&$collection)
     {
         foreach ($collection as $supply_order_detail) {
-            /* @var SupplyOrderDetail $supply_order_detail */
+            /** @var SupplyOrderDetail $supply_order_detail */
             $supply_order_detail->unit_price_te = Tools::ps_round($supply_order_detail->unit_price_te, 2);
             $supply_order_detail->price_te = Tools::ps_round($supply_order_detail->price_te, 2);
             $supply_order_detail->discount_rate = Tools::ps_round($supply_order_detail->discount_rate, 2);
@@ -246,8 +229,6 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
 
     /**
      * Rounds values of a SupplyOrder object.
-     *
-     * @param SupplyOrder $supply_order
      */
     protected function roundSupplyOrder(SupplyOrder &$supply_order)
     {

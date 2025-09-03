@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -27,16 +28,24 @@ class TaxCore extends ObjectModel
 {
     public const TAX_DEFAULT_PRECISION = 3;
 
-    /** @var array<int,string>|string Name */
+    /**
+     * @var array<int,string>|string Name
+     */
     public $name;
 
-    /** @var float Rate (%) */
+    /**
+     * @var float Rate (%)
+     */
     public $rate;
 
-    /** @var bool active state */
+    /**
+     * @var bool active state
+     */
     public $active;
 
-    /** @var bool true if the tax has been historized */
+    /**
+     * @var bool true if the tax has been historized
+     */
     public $deleted = false;
 
     /**
@@ -47,11 +56,25 @@ class TaxCore extends ObjectModel
         'primary' => 'id_tax',
         'multilang' => true,
         'fields' => [
-            'rate' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'active' => ['type' => self::TYPE_BOOL],
-            'deleted' => ['type' => self::TYPE_BOOL],
+            'rate' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+            ],
+            'deleted' => [
+                'type' => self::TYPE_BOOL,
+            ],
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 32],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 32,
+            ],
         ],
     ];
 
@@ -69,9 +92,9 @@ class TaxCore extends ObjectModel
 
         if ($this->isUsed()) {
             return $this->historize();
-        } else {
-            return parent::delete();
         }
+
+        return parent::delete();
     }
 
     /**
@@ -86,7 +109,7 @@ class TaxCore extends ObjectModel
 
     public function update($null_values = false)
     {
-        if (!$this->deleted && $this->isUsed()) {
+        if (! $this->deleted && $this->isUsed()) {
             $historized_tax = new Tax($this->id);
             $historized_tax->historize();
 
@@ -98,7 +121,8 @@ class TaxCore extends ObjectModel
             $res = $res && TaxRule::swapTaxId($historized_tax->id, $this->id);
 
             return $res;
-        } elseif (parent::update($null_values)) {
+        }
+        if (parent::update($null_values)) {
             return true;
         }
 
@@ -124,7 +148,7 @@ class TaxCore extends ObjectModel
      * Get all available taxes.
      *
      * @param int|bool $id_lang
-     * @param bool $active_only (true by default)
+     * @param bool     $active_only (true by default)
      *
      * @return array Taxes
      */
@@ -157,14 +181,14 @@ class TaxCore extends ObjectModel
      */
     public static function excludeTaxeOption()
     {
-        return !Configuration::get('PS_TAX');
+        return ! Configuration::get('PS_TAX');
     }
 
     /**
      * Return the tax id associated to the specified name.
      *
-     * @param string $tax_name
-     * @param bool|int $active (true by default)
+     * @param string   $tax_name
+     * @param bool|int $active   (true by default)
      */
     public static function getTaxIdByName($tax_name, $active = 1)
     {
@@ -173,7 +197,7 @@ class TaxCore extends ObjectModel
 			FROM `' . _DB_PREFIX_ . 'tax` t
 			LEFT JOIN `' . _DB_PREFIX_ . 'tax_lang` tl ON (tl.id_tax = t.id_tax)
 			WHERE tl.`name` = \'' . pSQL($tax_name) . '\' ' .
-            ($active == 1 ? ' AND t.`active` = 1' : ''));
+            ($active === 1 ? ' AND t.`active` = 1' : ''));
 
         return $tax ? (int) $tax['id_tax'] : false;
     }
@@ -183,7 +207,7 @@ class TaxCore extends ObjectModel
      *
      * @param int $id_address
      *
-     * @return float $tax_rate
+     * @return float
      */
     public static function getProductEcotaxRate($id_address = null)
     {
@@ -201,7 +225,7 @@ class TaxCore extends ObjectModel
      * @param int $id_carrier
      * @param int $id_address
      *
-     * @return float $tax_rate
+     * @return float
      */
     public static function getCarrierTaxRate($id_carrier, $id_address = null)
     {
@@ -219,13 +243,12 @@ class TaxCore extends ObjectModel
      *
      * @param int $id_product
      * @param int $id_address
-     * @param Context $context
      *
      * @return float
      */
     public static function getProductTaxRate($id_product, $id_address = null, ?Context $context = null)
     {
-        if ($context == null) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 

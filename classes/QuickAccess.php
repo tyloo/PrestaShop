@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,13 +30,19 @@
  */
 class QuickAccessCore extends ObjectModel
 {
-    /** @var string Name */
+    /**
+     * @var string Name
+     */
     public $name;
 
-    /** @var string Link */
+    /**
+     * @var string Link
+     */
     public $link;
 
-    /** @var bool New windows or not */
+    /**
+     * @var bool New windows or not
+     */
     public $new_window;
 
     /**
@@ -46,11 +53,26 @@ class QuickAccessCore extends ObjectModel
         'primary' => 'id_quick_access',
         'multilang' => true,
         'fields' => [
-            'link' => ['type' => self::TYPE_STRING, 'validate' => 'isUrl', 'required' => true, 'size' => 255],
-            'new_window' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool', 'required' => true],
+            'link' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isUrl',
+                'required' => true,
+                'size' => 255,
+            ],
+            'new_window' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+                'required' => true,
+            ],
 
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'required' => true, 'size' => 32],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isCleanHtml',
+                'required' => true,
+                'size' => 32,
+            ],
         ],
     ];
 
@@ -82,7 +104,7 @@ class QuickAccessCore extends ObjectModel
         }
 
         $container = PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
-        if (!$container) {
+        if (! $container) {
             return false;
         }
 
@@ -100,13 +122,13 @@ class QuickAccessCore extends ObjectModel
      */
     public function toggleNewWindow()
     {
-        if (!array_key_exists('new_window', get_object_vars($this))) {
-            throw new PrestaShopException('property "new_window" is missing in object ' . get_class($this));
+        if (! array_key_exists('new_window', get_object_vars($this))) {
+            throw new PrestaShopException('property "new_window" is missing in object ' . static::class);
         }
 
         $this->setFieldsToUpdate(['new_window' => true]);
 
-        $this->new_window = !(int) $this->new_window;
+        $this->new_window = ! (int) $this->new_window;
 
         return $this->update(false);
     }

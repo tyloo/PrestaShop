@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,7 +31,11 @@
 class MediaCore
 {
     public static $jquery_ui_dependencies = [
-        'ui.core' => ['fileName' => 'jquery.ui.core.min.js', 'dependencies' => [], 'theme' => true],
+        'ui.core' => [
+            'fileName' => 'jquery.ui.core.min.js',
+            'dependencies' => [],
+            'theme' => true,
+        ],
         'ui.widget' => ['fileName' => 'jquery.ui.widget.min.js', 'dependencies' => [], 'theme' => false],
         'ui.mouse' => ['fileName' => 'jquery.ui.mouse.min.js', 'dependencies' => ['ui.core', 'ui.widget'], 'theme' => false],
         'ui.position' => ['fileName' => 'jquery.ui.position.min.js', 'dependencies' => [], 'theme' => false],
@@ -97,8 +102,6 @@ class MediaCore
     /**
      * addJS return javascript path.
      *
-     * @param mixed $jsUri
-     *
      * @return string
      */
     public static function getJSPath($jsUri)
@@ -109,9 +112,8 @@ class MediaCore
     /**
      * addCSS return stylesheet path.
      *
-     * @param mixed $cssUri
      * @param string $cssMediaType
-     * @param bool $needRtl
+     * @param bool   $needRtl
      *
      * @return bool|array<string, string>
      */
@@ -121,7 +123,7 @@ class MediaCore
         if ($needRtl && Context::getContext()->language->is_rtl) {
             $cssUriRtl = preg_replace('/(^[^.].*)(\.css)$/', '$1_rtl.css', $cssUri);
             $rtlMedia = Media::getMediaPath($cssUriRtl, $cssMediaType);
-            if ($rtlMedia != false) {
+            if ($rtlMedia !== false) {
                 return $rtlMedia;
             }
         }
@@ -134,7 +136,7 @@ class MediaCore
      * Get Media path.
      *
      * @param array|string|null $mediaUri
-     * @param string|null $cssMediaType
+     * @param string|null       $cssMediaType
      *
      * @return bool|string|array<string, string>
      */
@@ -145,15 +147,15 @@ class MediaCore
         }
 
         $urlData = parse_url($mediaUri);
-        if (!is_array($urlData) || !array_key_exists('path', $urlData)) {
+        if (! is_array($urlData) || ! array_key_exists('path', $urlData)) {
             return false;
         }
 
-        if (!array_key_exists('host', $urlData)) {
-            $mediaUri = '/' . ltrim(str_replace(str_replace(['/', '\\'], DIRECTORY_SEPARATOR, _PS_ROOT_DIR_), __PS_BASE_URI__, $urlData['path']), '/\\');
+        if (! array_key_exists('host', $urlData)) {
+            $mediaUri = '/' . ltrim(str_replace(str_replace(['/', '\\'], \DIRECTORY_SEPARATOR, _PS_ROOT_DIR_), __PS_BASE_URI__, $urlData['path']), '/\\');
             // remove PS_BASE_URI on _PS_ROOT_DIR_ for the following
-            $fileUri = _PS_ROOT_DIR_ . Tools::str_replace_once(__PS_BASE_URI__, DIRECTORY_SEPARATOR, $mediaUri);
-            if (!file_exists($fileUri) || !@filemtime($fileUri) || @filesize($fileUri) === 0) {
+            $fileUri = _PS_ROOT_DIR_ . Tools::str_replace_once(__PS_BASE_URI__, \DIRECTORY_SEPARATOR, $mediaUri);
+            if (! file_exists($fileUri) || ! @filemtime($fileUri) || @filesize($fileUri) === 0) {
                 return false;
             }
 
@@ -175,7 +177,7 @@ class MediaCore
      *
      * @param string $component
      * @param string $theme
-     * @param bool $checkDependencies
+     * @param bool   $checkDependencies
      *
      * @return array<string, array<string>>
      */
@@ -185,15 +187,15 @@ class MediaCore
         $folder = _PS_JS_DIR_ . 'jquery/ui/';
         $file = 'jquery.' . $component . '.min.js';
         $urlData = parse_url($folder . $file);
-        $fileUri = _PS_ROOT_DIR_ . Tools::str_replace_once(__PS_BASE_URI__, DIRECTORY_SEPARATOR, $urlData['path']);
+        $fileUri = _PS_ROOT_DIR_ . Tools::str_replace_once(__PS_BASE_URI__, \DIRECTORY_SEPARATOR, $urlData['path']);
         $uiTmp = [];
         if (isset(Media::$jquery_ui_dependencies[$component]) && Media::$jquery_ui_dependencies[$component]['theme'] && $checkDependencies) {
             $themeCss = Media::getCSSPath($folder . 'themes/' . $theme . '/jquery.ui.theme.css');
             $compCss = Media::getCSSPath($folder . 'themes/' . $theme . '/jquery.' . $component . '.css');
-            if (!empty($themeCss)) {
+            if (! empty($themeCss)) {
                 $uiPath['css'] = array_merge($uiPath['css'], $themeCss);
             }
-            if (!empty($compCss)) {
+            if (! empty($compCss)) {
                 $uiPath['css'] = array_merge($uiPath['css'], $compCss);
             }
         }
@@ -205,20 +207,20 @@ class MediaCore
                     $depCss = Media::getCSSPath($folder . 'themes/' . $theme . '/jquery.' . $dependency . '.css');
                 }
 
-                if (isset($depCss) && !empty($depCss)) {
+                if (isset($depCss) && ! empty($depCss)) {
                     $uiPath['css'] = array_merge($uiPath['css'], $depCss);
                 }
             }
         }
 
         if (@filemtime($fileUri)) {
-            if (!empty($uiTmp)) {
+            if (! empty($uiTmp)) {
                 foreach ($uiTmp as $ui) {
-                    if (!empty($ui['js'][0])) {
+                    if (! empty($ui['js'][0])) {
                         $uiPath['js'][] = $ui['js'][0];
                     }
 
-                    if (!empty($ui['css'][0])) {
+                    if (! empty($ui['css'][0])) {
                         $uiPath['css'][] = $ui['css'][0];
                     }
                 }
@@ -228,7 +230,7 @@ class MediaCore
         }
 
         // add i18n file for datepicker
-        if ($component == 'ui.datepicker') {
+        if ($component === 'ui.datepicker') {
             $datePickerIsoCode = Context::getContext()->language->iso_code;
             if (array_key_exists($datePickerIsoCode, self::$jquery_ui_datepicker_iso_code)) {
                 $datePickerIsoCode = self::$jquery_ui_datepicker_iso_code[$datePickerIsoCode];
@@ -242,7 +244,6 @@ class MediaCore
     /**
      * return jquery plugin path.
      *
-     * @param mixed $name
      * @param string|null $folder
      *
      * @return bool|array{js: string, css: array<string, string>}
@@ -256,7 +257,7 @@ class MediaCore
 
         $file = 'jquery.' . $name . '.js';
         $urlData = parse_url($folder);
-        $fileUri = _PS_ROOT_DIR_ . Tools::str_replace_once(__PS_BASE_URI__, DIRECTORY_SEPARATOR, $urlData['path']);
+        $fileUri = _PS_ROOT_DIR_ . Tools::str_replace_once(__PS_BASE_URI__, \DIRECTORY_SEPARATOR, $urlData['path']);
 
         if (@file_exists($fileUri . $file)) {
             $pluginPath['js'] = Media::getJSPath($folder . $file);
@@ -273,7 +274,6 @@ class MediaCore
     /**
      * return jquery plugin css path if exist.
      *
-     * @param mixed $name
      * @param string|null $folder
      *
      * @return bool|array<string, string>
@@ -285,15 +285,16 @@ class MediaCore
         } // set default folder
         $file = 'jquery.' . $name . '.css';
         $urlData = parse_url($folder);
-        $fileUri = _PS_ROOT_DIR_ . Tools::str_replace_once(__PS_BASE_URI__, DIRECTORY_SEPARATOR, $urlData['path']);
+        $fileUri = _PS_ROOT_DIR_ . Tools::str_replace_once(__PS_BASE_URI__, \DIRECTORY_SEPARATOR, $urlData['path']);
 
         if (@file_exists($fileUri . $file)) {
             return Media::getCSSPath($folder . $file);
-        } elseif (@file_exists($fileUri . $name . '/' . $file)) {
-            return Media::getCSSPath($folder . $name . '/' . $file);
-        } else {
-            return false;
         }
+        if (@file_exists($fileUri . $name . '/' . $file)) {
+            return Media::getCSSPath($folder . $name . '/' . $file);
+        }
+
+        return false;
     }
 
     /**
@@ -302,12 +303,12 @@ class MediaCore
     public static function clearCache()
     {
         $files = array_merge(
-            glob(_PS_THEME_DIR_ . 'assets/cache/*', GLOB_NOSORT),
-            glob(_PS_THEME_DIR_ . 'cache/*', GLOB_NOSORT)
+            glob(_PS_THEME_DIR_ . 'assets/cache/*', \GLOB_NOSORT),
+            glob(_PS_THEME_DIR_ . 'cache/*', \GLOB_NOSORT)
         );
 
         foreach ($files as $file) {
-            if ('index.php' !== basename($file)) {
+            if (basename($file) !== 'index.php') {
                 Tools::deleteFile($file);
             }
         }
@@ -317,7 +318,7 @@ class MediaCore
         $version = (int) Configuration::get('PS_CCCCSS_VERSION');
         Configuration::updateValue('PS_CCCCSS_VERSION', ++$version);
 
-        if (Shop::getContext() != Shop::CONTEXT_SHOP) {
+        if (Shop::getContext() !== Shop::CONTEXT_SHOP) {
             foreach (Shop::getShops() as $shop) {
                 if (Configuration::hasKey('PS_CCCJS_VERSION', null, null, (int) $shop['id_shop'])) {
                     $version = (int) Configuration::get('PS_CCCJS_VERSION', null, null, (int) $shop['id_shop']);
@@ -346,8 +347,6 @@ class MediaCore
 
     /**
      * Add a new javascript definition at bottom of page.
-     *
-     * @param mixed $jsDef
      */
     public static function addJsDef($jsDef)
     {
@@ -363,15 +362,14 @@ class MediaCore
     /**
      * Add a new javascript definition from a capture at bottom of page.
      *
-     * @param mixed $params
      * @param string $content
      * @param Smarty $smarty
-     * @param bool $repeat
+     * @param bool   $repeat
      */
     public static function addJsDefL($params, $content, $smarty = null, &$repeat = false)
     {
-        if (!$repeat && isset($params) && Tools::strlen($content)) {
-            if (!is_array($params)) {
+        if (! $repeat && isset($params) && Tools::strlen($content)) {
+            if (! is_array($params)) {
                 $params = (array) $params;
             }
 

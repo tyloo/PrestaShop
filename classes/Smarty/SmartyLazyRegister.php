@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -57,8 +58,8 @@ class SmartyLazyRegister
     /**
      * Dynamically call static function or method.
      *
-     * @param string $name function name
-     * @param mixed $arguments function argument
+     * @param string $name      function name
+     * @param mixed  $arguments function argument
      *
      * @return mixed function return
      */
@@ -71,7 +72,7 @@ class SmartyLazyRegister
         $args = [];
 
         foreach ($arguments as $a => $argument) {
-            if ($a == 0) {
+            if ($a === 0) {
                 $args[] = $arguments[0];
             } else {
                 $args[] = &$arguments[$a];
@@ -85,7 +86,7 @@ class SmartyLazyRegister
     {
         $hash = spl_object_hash($smarty);
 
-        if (!isset(self::$instances[$hash])) {
+        if (! isset(self::$instances[$hash])) {
             self::$instances[$hash] = new self();
         }
 

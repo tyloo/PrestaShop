@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -126,24 +127,88 @@ class SupplyOrderCore extends ObjectModel
         'table' => 'supply_order',
         'primary' => 'id_supply_order',
         'fields' => [
-            'id_supplier' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'supplier_name' => ['type' => self::TYPE_STRING, 'validate' => 'isCatalogName', 'required' => false],
-            'id_lang' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_warehouse' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_supply_order_state' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_currency' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_ref_currency' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'reference' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true],
-            'date_delivery_expected' => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'required' => true],
-            'total_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice'],
-            'total_with_discount_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice'],
-            'total_ti' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice'],
-            'total_tax' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice'],
-            'discount_rate' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => false],
-            'discount_value_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice'],
-            'is_template' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'id_supplier' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'supplier_name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isCatalogName',
+                'required' => false,
+            ],
+            'id_lang' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_warehouse' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_supply_order_state' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_currency' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_ref_currency' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'reference' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'required' => true,
+            ],
+            'date_delivery_expected' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+                'required' => true,
+            ],
+            'total_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+            ],
+            'total_with_discount_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+            ],
+            'total_ti' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+            ],
+            'total_tax' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+            ],
+            'discount_rate' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => false,
+            ],
+            'discount_value_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+            ],
+            'is_template' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
         ],
     ];
 
@@ -152,11 +217,21 @@ class SupplyOrderCore extends ObjectModel
      */
     protected $webserviceParameters = [
         'fields' => [
-            'id_supplier' => ['xlink_resource' => 'suppliers'],
-            'id_lang' => ['xlink_resource' => 'languages'],
-            'id_warehouse' => ['xlink_resource' => 'warehouses'],
-            'id_supply_order_state' => ['xlink_resource' => 'supply_order_states'],
-            'id_currency' => ['xlink_resource' => 'currencies'],
+            'id_supplier' => [
+                'xlink_resource' => 'suppliers',
+            ],
+            'id_lang' => [
+                'xlink_resource' => 'languages',
+            ],
+            'id_warehouse' => [
+                'xlink_resource' => 'warehouses',
+            ],
+            'id_supply_order_state' => [
+                'xlink_resource' => 'supply_order_states',
+            ],
+            'id_currency' => [
+                'xlink_resource' => 'currencies',
+            ],
         ],
         'hidden_fields' => [
             'id_ref_currency',
@@ -184,7 +259,7 @@ class SupplyOrderCore extends ObjectModel
 
         $res = parent::update($null_values);
 
-        if ($res && !$this->is_template) {
+        if ($res && ! $this->is_template) {
             $this->addHistory();
         }
 
@@ -200,7 +275,7 @@ class SupplyOrderCore extends ObjectModel
 
         $res = parent::add($autodate, $null_values);
 
-        if ($res && !$this->is_template) {
+        if ($res && ! $this->is_template) {
             $this->addHistory();
         }
 
@@ -255,7 +330,7 @@ class SupplyOrderCore extends ObjectModel
      */
     public function getEntries($id_lang = null)
     {
-        if ($id_lang == null) {
+        if ($id_lang === null) {
             $id_lang = Context::getContext()->language->id;
         }
 
@@ -323,7 +398,7 @@ class SupplyOrderCore extends ObjectModel
         $query->from('supply_order_state', 's');
         $query->where('s.id_supply_order_state = ' . (int) $this->id_supply_order_state);
 
-        return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query) == 1;
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query) === 1;
     }
 
     /**
@@ -338,7 +413,7 @@ class SupplyOrderCore extends ObjectModel
         $query->from('supply_order_state', 's');
         $query->where('s.id_supply_order_state = ' . (int) $this->id_supply_order_state);
 
-        return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query) == 1;
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query) === 1;
     }
 
     /**
@@ -353,7 +428,7 @@ class SupplyOrderCore extends ObjectModel
         $query->from('supply_order_state', 's');
         $query->where('s.id_supply_order_state = ' . (int) $this->id_supply_order_state);
 
-        return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query) == 1;
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query) === 1;
     }
 
     /**
@@ -393,7 +468,7 @@ class SupplyOrderCore extends ObjectModel
      */
     public static function warehouseHasPendingOrders($id_warehouse)
     {
-        if (!$id_warehouse) {
+        if (! $id_warehouse) {
             return false;
         }
 
@@ -418,7 +493,7 @@ class SupplyOrderCore extends ObjectModel
      */
     public static function supplierHasPendingOrders($id_supplier)
     {
-        if (!$id_supplier) {
+        if (! $id_supplier) {
             return false;
         }
 
@@ -443,7 +518,7 @@ class SupplyOrderCore extends ObjectModel
      */
     public static function exists($match)
     {
-        if (!$match) {
+        if (! $match) {
             return false;
         }
 
@@ -466,7 +541,7 @@ class SupplyOrderCore extends ObjectModel
      */
     public static function getSupplyOrderByReference($reference)
     {
-        if (!$reference) {
+        if (! $reference) {
             return false;
         }
 
@@ -476,7 +551,7 @@ class SupplyOrderCore extends ObjectModel
         $query->where('so.reference = "' . pSQL($reference) . '"');
         $id_supply_order = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query);
 
-        if (!$id_supply_order) {
+        if (! $id_supply_order) {
             return false;
         }
 
@@ -497,11 +572,11 @@ class SupplyOrderCore extends ObjectModel
         foreach ($data as $key => $value) {
             if (array_key_exists($key, get_object_vars($this))) {
                 // formats prices and floats
-                if ($this->def['fields'][$key]['validate'] == 'isFloat'
-                    || $this->def['fields'][$key]['validate'] == 'isPrice') {
+                if ($this->def['fields'][$key]['validate'] === 'isFloat'
+                    || $this->def['fields'][$key]['validate'] === 'isPrice') {
                     $value = Tools::ps_round($value, 6);
                 }
-                $this->$key = $value;
+                $this->{$key} = $value;
             }
         }
     }
@@ -515,7 +590,7 @@ class SupplyOrderCore extends ObjectModel
      */
     public static function getReferenceById($id_supply_order)
     {
-        if (!$id_supply_order) {
+        if (! $id_supply_order) {
             return false;
         }
 

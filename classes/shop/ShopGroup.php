@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,13 +41,37 @@ class ShopGroupCore extends ObjectModel
         'table' => 'shop_group',
         'primary' => 'id_shop_group',
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 64],
-            'color' => ['type' => self::TYPE_STRING, 'validate' => 'isColor', 'size' => 50],
-            'share_customer' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'share_order' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'share_stock' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'deleted' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 64,
+            ],
+            'color' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isColor',
+                'size' => 50,
+            ],
+            'share_customer' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'share_order' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'share_stock' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'deleted' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
         ],
     ];
 
@@ -57,7 +82,7 @@ class ShopGroupCore extends ObjectModel
      */
     public function getFields()
     {
-        if (!$this->share_customer || !$this->share_stock) {
+        if (! $this->share_customer || ! $this->share_stock) {
             $this->share_order = false;
         }
 
@@ -125,19 +150,19 @@ class ShopGroupCore extends ObjectModel
     /**
      * Detect dependency with customer or orders.
      *
-     * @param int $id_shop_group
-     * @param string $check all|customer|order
+     * @param int    $id_shop_group
+     * @param string $check         all|customer|order
      *
      * @return bool
      */
     public static function hasDependency($id_shop_group, $check = 'all')
     {
         $list_shops = Shop::getShops(false, $id_shop_group, true);
-        if (!$list_shops) {
+        if (! $list_shops) {
             return false;
         }
 
-        if ($check == 'all' || $check == 'customer') {
+        if ($check === 'all' || $check === 'customer') {
             $total_customer = (int) Db::getInstance()->getValue(
                 'SELECT count(*)
                 FROM `' . _DB_PREFIX_ . 'customer`
@@ -148,7 +173,7 @@ class ShopGroupCore extends ObjectModel
             }
         }
 
-        if ($check == 'all' || $check == 'order') {
+        if ($check === 'all' || $check === 'order') {
             $total_order = (int) Db::getInstance()->getValue(
                 'SELECT count(*)
                 FROM `' . _DB_PREFIX_ . 'orders`

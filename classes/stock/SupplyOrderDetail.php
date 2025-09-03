@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -160,30 +161,119 @@ class SupplyOrderDetailCore extends ObjectModel
         'table' => 'supply_order_detail',
         'primary' => 'id_supply_order_detail',
         'fields' => [
-            'id_supply_order' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_product' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_product_attribute' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'reference' => ['type' => self::TYPE_STRING, 'validate' => 'isReference'],
-            'supplier_reference' => ['type' => self::TYPE_STRING, 'validate' => 'isReference'],
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true],
-            'ean13' => ['type' => self::TYPE_STRING, 'validate' => 'isEan13'],
-            'isbn' => ['type' => self::TYPE_STRING, 'validate' => 'isIsbn'],
-            'upc' => ['type' => self::TYPE_STRING, 'validate' => 'isUpc'],
-            'mpn' => ['type' => self::TYPE_STRING, 'validate' => 'isMpn'],
-            'id_currency' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'exchange_rate' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'unit_price_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
-            'quantity_expected' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'required' => true],
-            'quantity_received' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'price_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
-            'discount_rate' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'discount_value_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
-            'price_with_discount_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
-            'tax_rate' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'tax_value' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
-            'price_ti' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
-            'tax_value_with_order_discount' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat', 'required' => true],
-            'price_with_order_discount_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
+            'id_supply_order' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_product_attribute' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'reference' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isReference',
+            ],
+            'supplier_reference' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isReference',
+            ],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'required' => true,
+            ],
+            'ean13' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isEan13',
+            ],
+            'isbn' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isIsbn',
+            ],
+            'upc' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isUpc',
+            ],
+            'mpn' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isMpn',
+            ],
+            'id_currency' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'exchange_rate' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'unit_price_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
+            'quantity_expected' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+                'required' => true,
+            ],
+            'quantity_received' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'price_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
+            'discount_rate' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'discount_value_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
+            'price_with_discount_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
+            'tax_rate' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'tax_value' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
+            'price_ti' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
+            'tax_value_with_order_discount' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+                'required' => true,
+            ],
+            'price_with_order_discount_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
         ],
     ];
 
@@ -194,9 +284,15 @@ class SupplyOrderDetailCore extends ObjectModel
         'objectsNodeName' => 'supply_order_details',
         'objectNodeName' => 'supply_order_detail',
         'fields' => [
-            'id_supply_order' => ['xlink_resource' => 'supply_orders'],
-            'id_product' => ['xlink_resource' => 'products'],
-            'id_product_attribute' => ['xlink_resource' => 'combinations'],
+            'id_supply_order' => [
+                'xlink_resource' => 'supply_orders',
+            ],
+            'id_product' => [
+                'xlink_resource' => 'products',
+            ],
+            'id_product_attribute' => [
+                'xlink_resource' => 'combinations',
+            ],
         ],
         'hidden_fields' => [
             'id_currency',
@@ -234,7 +330,7 @@ class SupplyOrderDetailCore extends ObjectModel
         $this->price_te = Tools::ps_round((float) $this->unit_price_te * (int) $this->quantity_expected, 6);
 
         // calculates entry discount value
-        if ($this->discount_rate != null && is_numeric($this->discount_rate) && $this->discount_rate > 0) {
+        if ($this->discount_rate !== null && is_numeric($this->discount_rate) && $this->discount_rate > 0) {
             $this->discount_value_te = Tools::ps_round((float) $this->price_te * ($this->discount_rate / 100), 6);
         }
 
@@ -258,7 +354,7 @@ class SupplyOrderDetailCore extends ObjectModel
      */
     public function applyGlobalDiscount($discount_rate)
     {
-        if ($discount_rate != null && is_numeric($discount_rate) && (float) $discount_rate > 0) {
+        if ($discount_rate !== null && is_numeric($discount_rate) && (float) $discount_rate > 0) {
             // calculates new price, with global order discount, tax ecluded
             $discount_value = $this->price_with_discount_te - (($this->price_with_discount_te * (float) $discount_rate) / 100);
 
@@ -283,11 +379,11 @@ class SupplyOrderDetailCore extends ObjectModel
         foreach ($data as $key => $value) {
             if (array_key_exists($key, get_object_vars($this))) {
                 // formats prices and floats
-                if ($this->def['fields'][$key]['validate'] == 'isFloat'
-                    || $this->def['fields'][$key]['validate'] == 'isPrice') {
+                if ($this->def['fields'][$key]['validate'] === 'isFloat'
+                    || $this->def['fields'][$key]['validate'] === 'isPrice') {
                     $value = Tools::ps_round($value, 6);
                 }
-                $this->$key = $value;
+                $this->{$key} = $value;
             }
         }
     }

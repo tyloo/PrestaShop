@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -52,18 +53,58 @@ class OrderPaymentCore extends ObjectModel
         'table' => 'order_payment',
         'primary' => 'id_order_payment',
         'fields' => [
-            'order_reference' => ['type' => self::TYPE_STRING, 'size' => 255],
-            'id_currency' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'amount' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
-            'payment_method' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 255],
-            'conversion_rate' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat'],
-            'transaction_id' => ['type' => self::TYPE_STRING, 'size' => 254],
-            'card_number' => ['type' => self::TYPE_STRING, 'size' => 254],
-            'card_brand' => ['type' => self::TYPE_STRING, 'size' => 254],
-            'card_expiration' => ['type' => self::TYPE_STRING, 'size' => 254],
-            'card_holder' => ['type' => self::TYPE_STRING, 'size' => 254],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'id_employee' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'allow_null' => true],
+            'order_reference' => [
+                'type' => self::TYPE_STRING,
+                'size' => 255,
+            ],
+            'id_currency' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'amount' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
+            'payment_method' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'size' => 255,
+            ],
+            'conversion_rate' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+            ],
+            'transaction_id' => [
+                'type' => self::TYPE_STRING,
+                'size' => 254,
+            ],
+            'card_number' => [
+                'type' => self::TYPE_STRING,
+                'size' => 254,
+            ],
+            'card_brand' => [
+                'type' => self::TYPE_STRING,
+                'size' => 254,
+            ],
+            'card_expiration' => [
+                'type' => self::TYPE_STRING,
+                'size' => 254,
+            ],
+            'card_holder' => [
+                'type' => self::TYPE_STRING,
+                'size' => 254,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'id_employee' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'allow_null' => true,
+            ],
         ],
     ];
 
@@ -107,7 +148,7 @@ class OrderPaymentCore extends ObjectModel
     public static function getByInvoiceId($id_invoice)
     {
         $payments = Db::getInstance()->executeS('SELECT id_order_payment FROM `' . _DB_PREFIX_ . 'order_invoice_payment` WHERE id_order_invoice = ' . (int) $id_invoice);
-        if (!$payments) {
+        if (! $payments) {
             return [];
         }
 
@@ -135,7 +176,7 @@ class OrderPaymentCore extends ObjectModel
 		WHERE id_order_payment = ' . (int) $this->id . '
 		AND id_order = ' . (int) $id_order);
 
-        if (!$res) {
+        if (! $res) {
             return false;
         }
 

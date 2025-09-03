@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -106,7 +107,7 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
                 $more_attr = '';
                 if (isset($field['synopsis_details']) || (isset($field['value']) && is_array($field['value']))) {
                     $more_attr .= ' xlink:href="' . $this->getWsUrl() . 'languages/' . $language . '"';
-                    if (isset($field['synopsis_details']) && $this->schemaToDisplay != 'blank') {
+                    if (isset($field['synopsis_details']) && $this->schemaToDisplay !== 'blank') {
                         $more_attr .= ' format="isUnsignedId" ';
                     }
                 }
@@ -120,8 +121,8 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
             }
         } else {
             // display not i18n fields value
-            if (array_key_exists('xlink_resource', $field) && $this->schemaToDisplay != 'blank') {
-                if (!is_array($field['xlink_resource'])) {
+            if (array_key_exists('xlink_resource', $field) && $this->schemaToDisplay !== 'blank') {
+                if (! is_array($field['xlink_resource'])) {
                     $ret .= ' xlink:href="' . $this->getWsUrl() . $field['xlink_resource'] . '/' . $field['value'] . '"';
                 } else {
                     $ret .= ' xlink:href="' . $this->getWsUrl() . $field['xlink_resource']['resourceName'] . '/' .
@@ -129,11 +130,11 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
                 }
             }
 
-            if (isset($field['getter']) && $this->schemaToDisplay != 'blank') {
+            if (isset($field['getter']) && $this->schemaToDisplay !== 'blank') {
                 $ret .= ' notFilterable="true"';
             }
 
-            if (isset($field['setter']) && $field['setter'] == false && $this->schemaToDisplay == 'synopsis') {
+            if (isset($field['setter']) && $field['setter'] === false && $this->schemaToDisplay === 'synopsis') {
                 $ret .= ' read_only="true"';
             }
 
@@ -146,7 +147,7 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
             $ret .= ' encode="' . $field['encode'] . '"';
         }
 
-        if (isset($field['synopsis_details']) && !empty($field['synopsis_details']) && $this->schemaToDisplay !== 'blank') {
+        if (isset($field['synopsis_details']) && ! empty($field['synopsis_details']) && $this->schemaToDisplay !== 'blank') {
             foreach ($field['synopsis_details'] as $name => $detail) {
                 $ret .= ' ' . $name . '="' . (is_array($detail) ? implode(' ', $detail) : $detail) . '"';
             }
@@ -170,7 +171,7 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
                 }
             }
         }
-        $end_tag = (!$has_child) ? '/>' : '>';
+        $end_tag = (! $has_child) ? '/>' : '>';
 
         return '<' . $node_name . $string_attr . $end_tag . "\n";
     }
@@ -214,8 +215,8 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
     {
         $end_tag = ($closed_tags) ? '/>' : '>';
         $more = '';
-        if ($this->schemaToDisplay != 'blank') {
-            if (array_key_exists('setter', $params['associations'][$assoc_name]) && !$params['associations'][$assoc_name]['setter']) {
+        if ($this->schemaToDisplay !== 'blank') {
+            if (array_key_exists('setter', $params['associations'][$assoc_name]) && ! $params['associations'][$assoc_name]['setter']) {
                 $more .= ' readOnly="true"';
             }
             $more .= ' nodeType="' . $params['associations'][$assoc_name]['resource'] . '"';

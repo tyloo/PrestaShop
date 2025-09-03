@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,17 +32,29 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Customization\CustomizationFieldSe
  */
 class CustomizationFieldCore extends ObjectModel
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_product;
-    /** @var int Customization type (0 File, 1 Textfield) (See Product class) */
+    /**
+     * @var int Customization type (0 File, 1 Textfield) (See Product class)
+     */
     public $type;
-    /** @var bool Field is required */
+    /**
+     * @var bool Field is required
+     */
     public $required;
-    /** @var bool Field was added by a module */
+    /**
+     * @var bool Field was added by a module
+     */
     public $is_module;
-    /** @var string[] Label for customized field */
+    /**
+     * @var string[] Label for customized field
+     */
     public $name;
-    /** @var bool Soft delete */
+    /**
+     * @var bool Soft delete
+     */
     public $is_deleted;
 
     /**
@@ -54,18 +67,45 @@ class CustomizationFieldCore extends ObjectModel
         'multilang_shop' => true,
         'fields' => [
             /* Classic fields */
-            'id_product' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'type' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'required' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool', 'required' => true],
-            'is_module' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool', 'required' => false],
-            'is_deleted' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool', 'required' => false],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'type' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'required' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+                'required' => true,
+            ],
+            'is_module' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+                'required' => false,
+            ],
+            'is_deleted' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+                'required' => false,
+            ],
 
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'required' => true, 'size' => CustomizationFieldSettings::MAX_NAME_LENGTH],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'required' => true,
+                'size' => CustomizationFieldSettings::MAX_NAME_LENGTH,
+            ],
         ],
     ];
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $webserviceParameters = [
         'fields' => [
             'id_product' => [

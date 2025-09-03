@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,13 +73,37 @@ class SupplyOrderStateCore extends ObjectModel
         'primary' => 'id_supply_order_state',
         'multilang' => true,
         'fields' => [
-            'delivery_note' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'editable' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'receipt_state' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'pending_receipt' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'enclosed' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'color' => ['type' => self::TYPE_STRING, 'validate' => 'isColor'],
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 128],
+            'delivery_note' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'editable' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'receipt_state' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'pending_receipt' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'enclosed' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'color' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isColor',
+            ],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 128,
+            ],
         ],
     ];
 
@@ -96,13 +121,13 @@ class SupplyOrderStateCore extends ObjectModel
      * Gets the list of supply order statuses.
      *
      * @param int $id_state_referrer Optional, used to know what state is available after this one
-     * @param int $id_lang Optional Id Language
+     * @param int $id_lang           Optional Id Language
      *
      * @return array States
      */
     public static function getSupplyOrderStates($id_state_referrer = null, $id_lang = null)
     {
-        if ($id_lang == null) {
+        if ($id_lang === null) {
             $id_lang = Context::getContext()->language->id;
         }
 
@@ -111,7 +136,7 @@ class SupplyOrderStateCore extends ObjectModel
         $query->from('supply_order_state', 's');
         $query->leftjoin('supply_order_state_lang', 'sl', 's.id_supply_order_state = sl.id_supply_order_state AND sl.id_lang=' . (int) $id_lang);
 
-        if (null !== $id_state_referrer) {
+        if ($id_state_referrer !== null) {
             $is_receipt_state = false;
             $is_editable = false;
             $is_delivery_note = false;
@@ -146,18 +171,18 @@ class SupplyOrderStateCore extends ObjectModel
     /**
      * Gets the list of supply order statuses.
      *
-     * @param array|null $ids Optional Do not include these ids in the result
-     * @param int $id_lang Optional
+     * @param array|null $ids     Optional Do not include these ids in the result
+     * @param int        $id_lang Optional
      *
      * @return array
      */
     public static function getStates($ids = null, $id_lang = null)
     {
-        if ($id_lang == null) {
+        if ($id_lang === null) {
             $id_lang = Context::getContext()->language->id;
         }
 
-        if (!is_array($ids)) {
+        if (! is_array($ids)) {
             $ids = [];
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,31 +34,49 @@ class SupplierCore extends ObjectModel
 {
     public $id;
 
-    /** @var int supplier ID */
+    /**
+     * @var int supplier ID
+     */
     public $id_supplier;
 
-    /** @var string Name */
+    /**
+     * @var string Name
+     */
     public $name;
 
-    /** @var string|array<int, string> A short description for the discount */
+    /**
+     * @var string|array<int, string> A short description for the discount
+     */
     public $description;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
-    /** @var string Object last modification date */
+    /**
+     * @var string Object last modification date
+     */
     public $date_upd;
 
-    /** @var string Friendly URL */
+    /**
+     * @var string Friendly URL
+     */
     public $link_rewrite;
 
-    /** @var string|array<int, string> Meta title */
+    /**
+     * @var string|array<int, string> Meta title
+     */
     public $meta_title;
 
-    /** @var string|array<int, string> Meta description */
+    /**
+     * @var string|array<int, string> Meta description
+     */
     public $meta_description;
 
-    /** @var bool active */
+    /**
+     * @var bool active
+     */
     public $active;
 
     /**
@@ -68,27 +87,55 @@ class SupplierCore extends ObjectModel
         'primary' => 'id_supplier',
         'multilang' => true,
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isCatalogName', 'required' => true, 'size' => 64],
-            'active' => ['type' => self::TYPE_BOOL],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isCatalogName',
+                'required' => true,
+                'size' => 64,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
 
             /* Lang fields */
-            'description' => ['type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isCleanHtml', 'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4],
-            'meta_title' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 255],
-            'meta_description' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 512],
+            'description' => [
+                'type' => self::TYPE_HTML,
+                'lang' => true,
+                'validate' => 'isCleanHtml',
+                'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4,
+            ],
+            'meta_title' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'size' => 255,
+            ],
+            'meta_description' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'size' => 512,
+            ],
         ],
     ];
 
     protected $webserviceParameters = [
         'fields' => [
-            'link_rewrite' => ['sqlId' => 'link_rewrite'],
+            'link_rewrite' => [
+                'sqlId' => 'link_rewrite',
+            ],
         ],
     ];
 
     /**
-     * SupplierCore constructor.
-     *
      * @param int|null $id
      * @param int|null $idLang
      */
@@ -112,10 +159,10 @@ class SupplierCore extends ObjectModel
      */
     public static function getSuppliers($getNbProducts = false, $idLang = 0, $active = true, $p = false, $n = false, $allGroups = false, $withProduct = false)
     {
-        if (!$idLang) {
+        if (! $idLang) {
             $idLang = Configuration::get('PS_LANG_DEFAULT');
         }
-        if (!Group::isFeatureActive()) {
+        if (! Group::isFeatureActive()) {
             $allGroups = true;
         }
 
@@ -140,7 +187,7 @@ class SupplierCore extends ObjectModel
         }
         if ($getNbProducts) {
             $sqlGroups = '';
-            if (!$allGroups) {
+            if (! $allGroups) {
                 $groups = FrontController::getCurrentCustomerGroups();
                 $sqlGroups = (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
             }
@@ -190,14 +237,14 @@ class SupplierCore extends ObjectModel
     /**
      * List of suppliers.
      *
-     * @param int $idLang Specify the id of the language used
+     * @param int    $idLang Specify the id of the language used
      * @param string $format
      *
      * @return array Suppliers lite tree
      */
     public static function getLiteSuppliersList($idLang = null, $format = 'default')
     {
-        $idLang = null === $idLang ? Context::getContext()->language->id : (int) $idLang;
+        $idLang = $idLang === null ? Context::getContext()->language->id : (int) $idLang;
 
         $suppliersList = [];
         $suppliers = Supplier::getSuppliers(false, $idLang, true);
@@ -228,7 +275,7 @@ class SupplierCore extends ObjectModel
     /**
      * Return name from id.
      *
-     * @param int $id_supplier Supplier ID
+     * @param int $idSupplier Supplier ID
      *
      * @return string name
      */
@@ -236,7 +283,7 @@ class SupplierCore extends ObjectModel
 
     public static function getNameById($idSupplier)
     {
-        if (!isset(self::$cache_name[$idSupplier])) {
+        if (! isset(self::$cache_name[$idSupplier])) {
             self::$cache_name[$idSupplier] = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
 			SELECT `name` FROM `' . _DB_PREFIX_ . 'supplier` WHERE `id_supplier` = ' . (int) $idSupplier);
         }
@@ -259,15 +306,15 @@ class SupplierCore extends ObjectModel
     }
 
     /**
-     * @param int $idSupplier
-     * @param int $idLang
-     * @param int $p
-     * @param int $n
+     * @param int         $idSupplier
+     * @param int         $idLang
+     * @param int         $p
+     * @param int         $n
      * @param string|null $orderBy
      * @param string|null $orderWay
-     * @param bool $getTotal
-     * @param bool $active
-     * @param bool $activeCategory
+     * @param bool        $getTotal
+     * @param bool        $active
+     * @param bool        $activeCategory
      *
      * @return int|array|bool
      */
@@ -280,25 +327,25 @@ class SupplierCore extends ObjectModel
         $orderWay = null,
         $getTotal = false,
         $active = true,
-        $activeCategory = true
+        $activeCategory = true,
     ) {
         $context = Context::getContext();
         $front = true;
-        if (!in_array($context->controller->controller_type, ['front', 'modulefront'])) {
+        if (! in_array($context->controller->controller_type, ['front', 'modulefront'], true)) {
             $front = false;
         }
 
         if ($p < 1) {
             $p = 1;
         }
-        if (empty($orderBy) || $orderBy == 'position') {
+        if (empty($orderBy) || $orderBy === 'position') {
             $orderBy = 'name';
         }
         if (empty($orderWay)) {
             $orderWay = 'ASC';
         }
 
-        if (!Validate::isOrderBy($orderBy) || !Validate::isOrderWay($orderWay)) {
+        if (! Validate::isOrderBy($orderBy) || ! Validate::isOrderWay($orderWay)) {
             throw new PrestaShopException('Invalid sorting parameters provided.');
         }
 
@@ -335,11 +382,11 @@ class SupplierCore extends ObjectModel
             $orderBy = pSQL($orderBy[0]) . '.`' . pSQL($orderBy[1]) . '`';
         }
         $alias = '';
-        if (in_array($orderBy, ['price', 'date_add', 'date_upd'])) {
+        if (in_array($orderBy, ['price', 'date_add', 'date_upd'], true)) {
             $alias = 'product_shop.';
-        } elseif ($orderBy == 'id_product') {
+        } elseif ($orderBy === 'id_product') {
             $alias = 'p.';
-        } elseif ($orderBy == 'manufacturer_name') {
+        } elseif ($orderBy === 'manufacturer_name') {
             $orderBy = 'name';
             $alias = 'm.';
         }
@@ -396,7 +443,7 @@ class SupplierCore extends ObjectModel
 
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql, true, false);
 
-        if (!$result) {
+        if (! $result) {
             return false;
         }
 
@@ -419,7 +466,7 @@ class SupplierCore extends ObjectModel
     {
         $context = Context::getContext();
         $front = true;
-        if (!in_array($context->controller->controller_type, ['front', 'modulefront'])) {
+        if (! in_array($context->controller->controller_type, ['front', 'modulefront'], true)) {
             $front = false;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class TabLangCore extends DataLangCore
     protected $fieldsToUpdate = ['name'];
 
     /**
-     * @param string $field
+     * @param string       $field
      * @param string|array $value
      *
      * @return string
@@ -53,7 +54,7 @@ class TabLangCore extends DataLangCore
         return $this->translator->trans(
             $message,
             [],
-            (!empty($domain)) ? $domain : $this->domain,
+            (! empty($domain)) ? $domain : $this->domain,
             $this->locale
         );
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ class HelperTreeCategoriesCore extends TreeCore
         $title = null,
         $root_category = null,
         $lang = null,
-        $use_shop_restriction = true
+        $use_shop_restriction = true,
     ) {
         parent::__construct($id);
 
@@ -82,7 +83,7 @@ class HelperTreeCategoriesCore extends TreeCore
                 foreach ($categoryChildren as $child) {
                     $childId = (int) $child['id_category'];
 
-                    if (!array_key_exists('children', $tree[$categoryId])) {
+                    if (! array_key_exists('children', $tree[$categoryId])) {
                         $tree[$categoryId]['children'] = [$childId => $child];
                     } else {
                         $tree[$categoryId]['children'][$childId] = $child;
@@ -106,7 +107,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getData()
     {
-        if (!isset($this->_data)) {
+        if (! isset($this->_data)) {
             $shop = $this->getShop();
             $lang = $this->getLang();
             $root_category = (int) $this->getRootCategory();
@@ -138,7 +139,7 @@ class HelperTreeCategoriesCore extends TreeCore
                 $new_selected_categories = array_unique($new_selected_categories);
                 foreach ($new_selected_categories as $selected_category) {
                     $current_category = Category::getChildren($selected_category, $lang, false, $shop->id);
-                    if (!empty($current_category)) {
+                    if (! empty($current_category)) {
                         $categories[$selected_category] = $current_category;
                     }
                 }
@@ -147,7 +148,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
                 $children = $this->fillTree($categories, $root_category);
 
-                if (!empty($children)) {
+                if (! empty($children)) {
                     $tree[$root_category]['children'] = $children;
                 }
 
@@ -199,7 +200,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getInputName()
     {
-        if (!isset($this->_input_name)) {
+        if (! isset($this->_input_name)) {
             $this->setInputName('categoryBox');
         }
 
@@ -215,7 +216,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getLang()
     {
-        if (!isset($this->_lang)) {
+        if (! isset($this->_lang)) {
             $this->setLang($this->getContext()->employee->id_lang);
         }
 
@@ -224,7 +225,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getNodeFolderTemplate()
     {
-        if (!isset($this->_node_folder_template)) {
+        if (! isset($this->_node_folder_template)) {
             $this->setNodeFolderTemplate(self::DEFAULT_NODE_FOLDER_TEMPLATE);
         }
 
@@ -233,7 +234,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getNodeItemTemplate()
     {
-        if (!isset($this->_node_item_template)) {
+        if (! isset($this->_node_item_template)) {
             $this->setNodeItemTemplate(self::DEFAULT_NODE_ITEM_TEMPLATE);
         }
 
@@ -242,7 +243,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function setRootCategory($value)
     {
-        if (!Validate::isInt($value)) {
+        if (! Validate::isInt($value)) {
             throw new PrestaShopException('Root category must be an integer value');
         }
 
@@ -265,7 +266,7 @@ class HelperTreeCategoriesCore extends TreeCore
      */
     public function setSelectedCategories($value)
     {
-        if (!is_array($value)) {
+        if (! is_array($value)) {
             throw new PrestaShopException('Selected categories value must be an array');
         }
 
@@ -276,7 +277,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getSelectedCategories()
     {
-        if (!isset($this->_selected_categories)) {
+        if (! isset($this->_selected_categories)) {
             $this->_selected_categories = [];
         }
 
@@ -292,12 +293,12 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getShop()
     {
-        if (!isset($this->_shop)) {
+        if (! isset($this->_shop)) {
             if (Tools::isSubmit('id_shop')) {
                 $this->setShop(new Shop(Tools::getValue('id_shop')));
             } elseif ($this->getContext()->shop->id) {
                 $this->setShop(new Shop($this->getContext()->shop->id));
-            } elseif (!Shop::isFeatureActive()) {
+            } elseif (! Shop::isFeatureActive()) {
                 $this->setShop(new Shop((int) Configuration::get('PS_SHOP_DEFAULT')));
             } else {
                 $this->setShop(new Shop(0));
@@ -309,7 +310,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getTemplate()
     {
-        if (!isset($this->_template)) {
+        if (! isset($this->_template)) {
             $this->setTemplate(self::DEFAULT_TEMPLATE);
         }
 
@@ -354,17 +355,17 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function render($data = null)
     {
-        if (!isset($data)) {
+        if (! isset($data)) {
             $data = $this->getData();
         }
 
         if (isset($this->_disabled_categories)
-            && !empty($this->_disabled_categories)) {
+            && ! empty($this->_disabled_categories)) {
             $this->_disableCategories($data, $this->getDisabledCategories());
         }
 
         if (isset($this->_selected_categories)
-            && !empty($this->_selected_categories)) {
+            && ! empty($this->_selected_categories)) {
             $this->_getSelectedChildNumbers($data, $this->getSelectedCategories());
         }
 
@@ -426,18 +427,18 @@ class HelperTreeCategoriesCore extends TreeCore
     /* Override */
     public function renderNodes($data = null)
     {
-        if (!isset($data)) {
+        if (! isset($data)) {
             $data = $this->getData();
         }
 
-        if (!is_array($data) && !$data instanceof Traversable) {
+        if (! is_array($data) && ! $data instanceof Traversable) {
             throw new PrestaShopException('Data value must be an traversable array');
         }
 
         $html = '';
         foreach ($data as $item) {
             if (is_array($item) && array_key_exists('children', $item)
-                && !empty($item['children'])) {
+                && ! empty($item['children'])) {
                 $html .= $this->getContext()->smarty->createTemplate(
                     $this->getTemplateFile($this->getNodeFolderTemplate()),
                     $this->getContext()->smarty
@@ -463,7 +464,7 @@ class HelperTreeCategoriesCore extends TreeCore
     private function _disableCategories(&$categories, $disabled_categories = null)
     {
         foreach ($categories as &$category) {
-            if (!isset($disabled_categories) || in_array($category['id_category'], $disabled_categories)) {
+            if (! isset($disabled_categories) || in_array($category['id_category'], $disabled_categories, true)) {
                 $category['disabled'] = true;
                 if (array_key_exists('children', $category) && is_array($category['children'])) {
                     self::_disableCategories($category['children']);
@@ -479,16 +480,16 @@ class HelperTreeCategoriesCore extends TreeCore
         $selected_childs = 0;
 
         foreach ($categories as $key => &$category) {
-            if (isset($parent) && in_array($category['id_category'], $selected)) {
+            if (isset($parent) && in_array($category['id_category'], $selected, true)) {
                 ++$selected_childs;
             }
 
-            if (isset($category['children']) && !empty($category['children'])) {
+            if (isset($category['children']) && ! empty($category['children'])) {
                 $selected_childs += $this->_getSelectedChildNumbers($category['children'], $selected, $category);
             }
         }
 
-        if (!isset($parent['selected_childs'])) {
+        if (! isset($parent['selected_childs'])) {
             $parent['selected_childs'] = 0;
         }
 

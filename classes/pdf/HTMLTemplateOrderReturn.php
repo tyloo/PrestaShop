@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,9 +37,6 @@ class HTMLTemplateOrderReturnCore extends HTMLTemplate
     public $order;
 
     /**
-     * @param OrderReturn $order_return
-     * @param Smarty $smarty
-     *
      * @throws PrestaShopException
      */
     public function __construct(OrderReturn $order_return, Smarty $smarty)
@@ -66,7 +64,7 @@ class HTMLTemplateOrderReturnCore extends HTMLTemplate
         $formatted_delivery_address = AddressFormat::generateAddress($delivery_address, [], '<br />', ' ');
         $formatted_invoice_address = '';
 
-        if ($this->order->id_address_delivery != $this->order->id_address_invoice) {
+        if ($this->order->id_address_delivery !== $this->order->id_address_invoice) {
             $invoice_address = new Address((int) $this->order->id_address_invoice);
             $formatted_invoice_address = AddressFormat::generateAddress($invoice_address, [], '<br />', ' ');
         }

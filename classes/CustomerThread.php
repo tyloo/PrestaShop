@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -134,7 +135,7 @@ class CustomerThreadCore extends ObjectModel
 
     public function delete()
     {
-        if (!Validate::isUnsignedId($this->id)) {
+        if (! Validate::isUnsignedId($this->id)) {
             return false;
         }
 
@@ -149,7 +150,7 @@ class CustomerThreadCore extends ObjectModel
         if (count($result)) {
             foreach ($result as $res) {
                 $message = new CustomerMessage((int) $res['id_customer_message']);
-                if (!Validate::isLoadedObject($message)) {
+                if (! Validate::isLoadedObject($message)) {
                     $return = false;
                 } else {
                     $return = $return && $message->delete();
@@ -214,21 +215,21 @@ class CustomerThreadCore extends ObjectModel
 
     public static function getTotalCustomerThreads($where = null)
     {
-        if (null === $where) {
+        if ($where === null) {
             return (int) Db::getInstance()->getValue(
                 '
 				SELECT COUNT(*)
 				FROM ' . _DB_PREFIX_ . 'customer_thread
 				WHERE 1 ' . Shop::addSqlRestriction()
             );
-        } else {
-            return (int) Db::getInstance()->getValue(
-                '
+        }
+
+        return (int) Db::getInstance()->getValue(
+            '
 				SELECT COUNT(*)
 				FROM ' . _DB_PREFIX_ . 'customer_thread
 				WHERE ' . $where . Shop::addSqlRestriction()
-            );
-        }
+        );
     }
 
     public static function getMessageCustomerThreads($id_customer_thread)

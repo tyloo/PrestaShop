@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,7 +37,7 @@ class PrestaShopExceptionCore extends Exception
 
         header('HTTP/1.1 500 Internal Server Error');
         if (ToolsCore::isPHPCLI()) {
-            echo get_class($this) . ' in ' . $this->getFile() . ' line ' . $this->getLine() . "\n";
+            echo static::class . ' in ' . $this->getFile() . ' line ' . $this->getLine() . "\n";
             echo $this->getTraceAsString() . "\n";
         } elseif (_PS_MODE_DEV_) {
             // Display error message
@@ -52,7 +53,7 @@ class PrestaShopExceptionCore extends Exception
                 #psException pre .selected{color: #F20000; font-weight: bold;}
             </style>';
             echo '<div id="psException">';
-            echo '<h2>[' . get_class($this) . ']</h2>';
+            echo '<h2>[' . static::class . ']</h2>';
             echo $this->getExtendedMessage();
 
             $this->displayFileDebug($this->getFile(), $this->getLine());
@@ -63,7 +64,7 @@ class PrestaShopExceptionCore extends Exception
                 $relative_file = (isset($trace['file'])) ? ltrim(str_replace([_PS_ROOT_DIR_, '\\'], ['', '/'], $trace['file']), '/') : '';
                 $current_line = (isset($trace['line'])) ? $trace['line'] : '';
                 if (defined('_PS_ADMIN_DIR_')) {
-                    $relative_file = str_replace(basename(_PS_ADMIN_DIR_) . DIRECTORY_SEPARATOR, 'admin' . DIRECTORY_SEPARATOR, $relative_file);
+                    $relative_file = str_replace(basename(_PS_ADMIN_DIR_) . \DIRECTORY_SEPARATOR, 'admin' . \DIRECTORY_SEPARATOR, $relative_file);
                 }
                 echo '<li>';
                 echo '<b>' . ((isset($trace['class'])) ? $trace['class'] : '') . ((isset($trace['type'])) ? $trace['type'] : '') . $trace['function'] . '</b>';
@@ -102,8 +103,8 @@ class PrestaShopExceptionCore extends Exception
     /**
      * Display lines around current line.
      *
-     * @param string $file
-     * @param int $line
+     * @param string   $file
+     * @param int      $line
      * @param int|null $id
      */
     protected function displayFileDebug($file, $line, $id = null)
@@ -118,10 +119,10 @@ class PrestaShopExceptionCore extends Exception
         $lines = array_slice($lines, $offset, $total);
         ++$offset;
 
-        echo '<div class="psTrace" id="psTrace_' . $id . '" ' . (null === $id ? 'style="display: block"' : '') . '><pre>';
+        echo '<div class="psTrace" id="psTrace_' . $id . '" ' . ($id === null ? 'style="display: block"' : '') . '><pre>';
         foreach ($lines as $k => $l) {
             $string = ($offset + $k) . '. ' . htmlspecialchars($l);
-            if ($offset + $k == $line) {
+            if ($offset + $k === $line) {
                 echo '<span class="selected">' . $string . '</span>';
             } else {
                 echo $string;
@@ -133,8 +134,6 @@ class PrestaShopExceptionCore extends Exception
     /**
      * Prevent critical arguments to be displayed in the debug trace page (e.g. database password)
      * Returns the array of args with critical arguments replaced by placeholders.
-     *
-     * @param array $trace
      *
      * @return array
      */
@@ -165,7 +164,7 @@ class PrestaShopExceptionCore extends Exception
                     break;
                 }
 
-                if (in_array(strtolower($parameter->getName()), $criticalParameters)) {
+                if (in_array(strtolower($parameter->getName()), $criticalParameters, true)) {
                     $hiddenArgs[] = '**hidden_' . $parameter->getName() . '**';
                 } else {
                     $hiddenArgs[] = $args[$argIndex];
@@ -182,7 +181,7 @@ class PrestaShopExceptionCore extends Exception
      * Display arguments list of traced function.
      *
      * @param array $args List of arguments
-     * @param int $id ID of argument
+     * @param int   $id   ID of argument
      */
     protected function displayArgsDebug($args, $id)
     {
@@ -220,7 +219,7 @@ class PrestaShopExceptionCore extends Exception
     protected function getExtendedMessage($html = true)
     {
         $format = '<p><b>%s</b><br /><i>at line </i><b>%d</b><i> in file </i><b>%s</b></p>';
-        if (!$html) {
+        if (! $html) {
             $format = strip_tags(str_replace('<br />', ' ', $format));
         }
 

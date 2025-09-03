@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,22 +30,34 @@
  */
 class StockMvtReasonCore extends ObjectModel
 {
-    /** @var int identifier of the movement reason */
+    /**
+     * @var int identifier of the movement reason
+     */
     public $id;
 
-    /** @var string the name of the movement reason */
+    /**
+     * @var string the name of the movement reason
+     */
     public $name;
 
-    /** @var int detrmine if the movement reason correspond to a positive or negative operation */
+    /**
+     * @var int detrmine if the movement reason correspond to a positive or negative operation
+     */
     public $sign;
 
-    /** @var string the creation date of the movement reason */
+    /**
+     * @var string the creation date of the movement reason
+     */
     public $date_add;
 
-    /** @var string the last update date of the movement reason */
+    /**
+     * @var string the last update date of the movement reason
+     */
     public $date_upd;
 
-    /** @var bool True if the movement reason has been deleted (staying in database as deleted) */
+    /**
+     * @var bool True if the movement reason has been deleted (staying in database as deleted)
+     */
     public $deleted = false;
 
     /**
@@ -55,11 +68,27 @@ class StockMvtReasonCore extends ObjectModel
         'primary' => 'id_stock_mvt_reason',
         'multilang' => true,
         'fields' => [
-            'sign' => ['type' => self::TYPE_INT],
-            'deleted' => ['type' => self::TYPE_BOOL],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 255],
+            'sign' => [
+                'type' => self::TYPE_INT,
+            ],
+            'deleted' => [
+                'type' => self::TYPE_BOOL,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 255,
+            ],
         ],
     ];
 
@@ -78,7 +107,7 @@ class StockMvtReasonCore extends ObjectModel
      * Gets Stock Mvt Reasons.
      *
      * @param int $id_lang
-     * @param int $sign Optionnal
+     * @param int $sign    Optionnal
      *
      * @return array
      */
@@ -90,7 +119,7 @@ class StockMvtReasonCore extends ObjectModel
         $query->leftjoin('stock_mvt_reason_lang', 'smrl', 'smr.id_stock_mvt_reason = smrl.id_stock_mvt_reason AND smrl.id_lang=' . (int) $id_lang);
         $query->where('smr.deleted = 0');
 
-        if ($sign != null) {
+        if ($sign !== null) {
             $query->where('smr.sign = ' . (int) $sign);
         }
 
@@ -100,9 +129,9 @@ class StockMvtReasonCore extends ObjectModel
     /**
      * Same as StockMvtReason::getStockMvtReasons(), ignoring a specific lists of ids.
      *
-     * @param int $id_lang
+     * @param int   $id_lang
      * @param array $ids_ignore
-     * @param int $sign optional
+     * @param int   $sign       optional
      */
     public static function getStockMvtReasonsWithFilter($id_lang, $ids_ignore, $sign = null)
     {
@@ -112,7 +141,7 @@ class StockMvtReasonCore extends ObjectModel
         $query->leftjoin('stock_mvt_reason_lang', 'smrl', 'smr.id_stock_mvt_reason = smrl.id_stock_mvt_reason AND smrl.id_lang=' . (int) $id_lang);
         $query->where('smr.deleted = 0');
 
-        if ($sign != null) {
+        if ($sign !== null) {
             $query->where('smr.sign = ' . (int) $sign);
         }
 

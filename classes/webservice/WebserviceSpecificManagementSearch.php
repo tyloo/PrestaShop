@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -25,18 +26,21 @@
  */
 class WebserviceSpecificManagementSearchCore implements WebserviceSpecificManagementInterface
 {
-    /** @var WebserviceOutputBuilder */
+    /**
+     * @var WebserviceOutputBuilder
+     */
     protected $objOutput;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $output;
 
-    /** @var WebserviceRequest */
+    /**
+     * @var WebserviceRequest
+     */
     protected $wsObject;
 
-    /**
-     * @var mixed
-     */
     public $urlSegment;
 
     /**
@@ -49,8 +53,6 @@ class WebserviceSpecificManagementSearchCore implements WebserviceSpecificManage
      * ------------------------------------------------ */
 
     /**
-     * @param WebserviceOutputBuilder $obj
-     *
      * @return WebserviceSpecificManagementInterface
      */
     public function setObjectOutput(WebserviceOutputBuilder $obj)
@@ -94,7 +96,7 @@ class WebserviceSpecificManagementSearchCore implements WebserviceSpecificManage
      */
     public function manage()
     {
-        if (!isset($this->wsObject->urlFragments['query']) || !isset($this->wsObject->urlFragments['language'])) {
+        if (! isset($this->wsObject->urlFragments['query']) || ! isset($this->wsObject->urlFragments['language'])) {
             throw new WebserviceException('You have to set both the \'language\' and \'query\' parameters to get a result', [100, 400]);
         }
         $objects_products = [];
@@ -104,7 +106,7 @@ class WebserviceSpecificManagementSearchCore implements WebserviceSpecificManage
 
         $this->_resourceConfiguration = $objects_products['empty']->getWebserviceParameters();
 
-        if (!$this->wsObject->setFieldsToDisplay()) {
+        if (! $this->wsObject->setFieldsToDisplay()) {
             return false;
         }
 

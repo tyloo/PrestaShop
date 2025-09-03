@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,8 +42,15 @@ class PageCore extends ObjectModel
         'table' => 'page',
         'primary' => 'id_page',
         'fields' => [
-            'id_page_type' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_object' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
+            'id_page_type' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_object' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
         ],
     ];
 
@@ -81,7 +89,7 @@ class PageCore extends ObjectModel
 				FROM `' . _DB_PREFIX_ . 'page`
 				WHERE `id_page_type` = ' . (int) $pageTypeId . $where;
         $result = Db::getInstance()->getRow($sql);
-        if (!empty($result['id_page'])) {
+        if (! empty($result['id_page'])) {
             return $result['id_page'];
         }
 
@@ -131,7 +139,7 @@ class PageCore extends ObjectModel
         Db::getInstance()->execute($sql);
 
         // If no one has seen the page in this date range, it is added
-        if (Db::getInstance()->Affected_Rows() == 0) {
+        if (Db::getInstance()->Affected_Rows() === 0) {
             Db::getInstance()->insert(
                 'page_viewed',
                 [

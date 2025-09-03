@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -97,7 +98,7 @@ class CheckoutDeliveryStepCore extends AbstractCheckoutStep
 
     public function getGiftCostForLabel()
     {
-        if ($this->getGiftCost() != 0) {
+        if ($this->getGiftCost() !== 0) {
             $taxLabel = '';
             $priceFormatter = new PriceFormatter();
 
@@ -152,7 +153,7 @@ class CheckoutDeliveryStepCore extends AbstractCheckoutStep
             $deliveryOptions = $this->getCheckoutSession()->getDeliveryOptions();
             $this->setNextStepAsCurrent();
             $this->setComplete(
-                !empty($deliveryOptions)
+                ! empty($deliveryOptions)
                 && $this->getCheckoutSession()->getSelectedDeliveryOption()
                 && $this->isModuleComplete($requestParams)
             );
@@ -195,7 +196,7 @@ class CheckoutDeliveryStepCore extends AbstractCheckoutStep
     {
         $deliveryOptions = $this->getCheckoutSession()->getDeliveryOptions();
         $currentDeliveryOption = $deliveryOptions[$this->getCheckoutSession()->getSelectedDeliveryOption()];
-        if (!$currentDeliveryOption['is_module']) {
+        if (! $currentDeliveryOption['is_module']) {
             return true;
         }
 

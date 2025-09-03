@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,12 +67,34 @@ class SupplyOrderHistoryCore extends ObjectModel
         'table' => 'supply_order_history',
         'primary' => 'id_supply_order_history',
         'fields' => [
-            'id_supply_order' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_employee' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'employee_firstname' => ['type' => self::TYPE_STRING, 'validate' => 'isName'],
-            'employee_lastname' => ['type' => self::TYPE_STRING, 'validate' => 'isName'],
-            'id_state' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'required' => true],
+            'id_supply_order' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_employee' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'employee_firstname' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isName',
+            ],
+            'employee_lastname' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isName',
+            ],
+            'id_state' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+                'required' => true,
+            ],
         ],
     ];
 
@@ -82,9 +105,15 @@ class SupplyOrderHistoryCore extends ObjectModel
         'objectsNodeName' => 'supply_order_histories',
         'objectNodeName' => 'supply_order_history',
         'fields' => [
-            'id_supply_order' => ['xlink_resource' => 'supply_orders'],
-            'id_employee' => ['xlink_resource' => 'employees'],
-            'id_state' => ['xlink_resource' => 'supply_order_states'],
+            'id_supply_order' => [
+                'xlink_resource' => 'supply_orders',
+            ],
+            'id_employee' => [
+                'xlink_resource' => 'employees',
+            ],
+            'id_state' => [
+                'xlink_resource' => 'supply_order_states',
+            ],
         ],
     ];
 }

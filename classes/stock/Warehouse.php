@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,25 +32,39 @@
  */
 class WarehouseCore extends ObjectModel
 {
-    /** @var int identifier of the warehouse */
+    /**
+     * @var int identifier of the warehouse
+     */
     public $id;
 
-    /** @var int Id of the address associated to the warehouse */
+    /**
+     * @var int Id of the address associated to the warehouse
+     */
     public $id_address;
 
-    /** @var string Reference of the warehouse */
+    /**
+     * @var string Reference of the warehouse
+     */
     public $reference;
 
-    /** @var string Name of the warehouse */
+    /**
+     * @var string Name of the warehouse
+     */
     public $name;
 
-    /** @var int Id of the employee who manages the warehouse */
+    /**
+     * @var int Id of the employee who manages the warehouse
+     */
     public $id_employee;
 
-    /** @var int Id of the valuation currency of the warehouse */
+    /**
+     * @var int Id of the valuation currency of the warehouse
+     */
     public $id_currency;
 
-    /** @var bool True if warehouse has been deleted (hence, no deletion in DB) */
+    /**
+     * @var bool True if warehouse has been deleted (hence, no deletion in DB)
+     */
     public $deleted = false;
 
     /**
@@ -66,13 +81,41 @@ class WarehouseCore extends ObjectModel
         'table' => 'warehouse',
         'primary' => 'id_warehouse',
         'fields' => [
-            'id_address' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'reference' => ['type' => self::TYPE_STRING, 'validate' => 'isString', 'required' => true, 'size' => 64],
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isString', 'required' => true, 'size' => 45],
-            'id_employee' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'management_type' => ['type' => self::TYPE_STRING, 'validate' => 'isStockManagement', 'required' => true],
-            'id_currency' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'deleted' => ['type' => self::TYPE_BOOL],
+            'id_address' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'reference' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isString',
+                'required' => true,
+                'size' => 64,
+            ],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isString',
+                'required' => true,
+                'size' => 45,
+            ],
+            'id_employee' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'management_type' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isStockManagement',
+                'required' => true,
+            ],
+            'id_currency' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'deleted' => [
+                'type' => self::TYPE_BOOL,
+            ],
         ],
     ];
 
@@ -81,10 +124,19 @@ class WarehouseCore extends ObjectModel
      */
     protected $webserviceParameters = [
         'fields' => [
-            'id_address' => ['xlink_resource' => 'addresses'],
-            'id_employee' => ['xlink_resource' => 'employees'],
-            'id_currency' => ['xlink_resource' => 'currencies'],
-            'valuation' => ['getter' => 'getWsStockValue', 'setter' => false],
+            'id_address' => [
+                'xlink_resource' => 'addresses',
+            ],
+            'id_employee' => [
+                'xlink_resource' => 'employees',
+            ],
+            'id_currency' => [
+                'xlink_resource' => 'currencies',
+            ],
+            'valuation' => [
+                'getter' => 'getWsStockValue',
+                'setter' => false,
+            ],
             'deleted' => [],
         ],
         'associations' => [
@@ -149,7 +201,7 @@ class WarehouseCore extends ObjectModel
         $query->where('c.deleted = 0');
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        if (!is_array($res)) {
+        if (! is_array($res)) {
             return $ids_carrier;
         }
 
@@ -169,7 +221,7 @@ class WarehouseCore extends ObjectModel
      */
     public function setCarriers($ids_carriers)
     {
-        if (!is_array($ids_carriers)) {
+        if (! is_array($ids_carriers)) {
             $ids_carriers = [];
         }
 
@@ -191,7 +243,7 @@ class WarehouseCore extends ObjectModel
      * For a given carrier, removes it from the warehouse/carrier association
      * If $id_warehouse is set, it only removes the carrier for this warehouse.
      *
-     * @param int $id_carrier Id of the carrier to remove
+     * @param int $id_carrier   Id of the carrier to remove
      * @param int $id_warehouse optional Id of the warehouse to filter
      */
     public static function removeCarrier($id_carrier, $id_warehouse = null)
@@ -214,7 +266,7 @@ class WarehouseCore extends ObjectModel
         $query->from('stock', 's');
         $query->where($this->def['primary'] . ' = ' . (int) $this->id);
 
-        return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query) == 0;
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query) === 0;
     }
 
     /**
@@ -239,10 +291,10 @@ class WarehouseCore extends ObjectModel
      * For a given {product, product attribute} sets its location in the given warehouse
      * First, for the given parameters, it cleans the database before updating.
      *
-     * @param int $id_product ID of the product
-     * @param int $id_product_attribute Use 0 if this product does not have attributes
-     * @param int $id_warehouse ID of the warehouse
-     * @param string $location Describes the location (no lang id required)
+     * @param int    $id_product           ID of the product
+     * @param int    $id_product_attribute Use 0 if this product does not have attributes
+     * @param int    $id_warehouse         ID of the warehouse
+     * @param string $location             Describes the location (no lang id required)
      *
      * @return bool Success/Failure
      */
@@ -277,9 +329,9 @@ class WarehouseCore extends ObjectModel
     /**
      * For a given {product, product attribute} gets its location in the given warehouse.
      *
-     * @param int $id_product ID of the product
+     * @param int $id_product           ID of the product
      * @param int $id_product_attribute Use 0 if this product does not have attributes
-     * @param int $id_warehouse ID of the warehouse
+     * @param int $id_warehouse         ID of the warehouse
      *
      * @return string Location of the product
      */
@@ -298,9 +350,9 @@ class WarehouseCore extends ObjectModel
     /**
      * For a given {product, product attribute} gets warehouse list.
      *
-     * @param int $id_product ID of the product
+     * @param int $id_product           ID of the product
      * @param int $id_product_attribute Optional, uses 0 if this product does not have attributes
-     * @param int $id_shop Optional, ID of the shop. Uses the context shop id (@see Context::shop)
+     * @param int $id_shop              Optional, ID of the shop. Uses the context shop id (@see Context::shop)
      *
      * @return array Warehouses (ID, reference/name concatenated)
      */
@@ -308,7 +360,7 @@ class WarehouseCore extends ObjectModel
     {
         // if it's a pack, returns warehouses if and only if some products use the advanced stock management
         if ($id_shop === null) {
-            if (Shop::getContext() == Shop::CONTEXT_GROUP) {
+            if (Shop::getContext() === Shop::CONTEXT_GROUP) {
                 $shop_group = Shop::getContextShopGroup();
                 $shop_group_id = (int) $shop_group->id;
             } else {
@@ -347,14 +399,14 @@ class WarehouseCore extends ObjectModel
      * It is possible via ignore_shop and id_shop to filter the list with shop id.
      *
      * @param bool $ignore_shop Optional, false by default - Allows to get only the warehouses that are associated to one/some shops (@see $id_shop)
-     * @param int $id_shop optional, Context::shop::Id by default - Allows to define a specific shop to filter
+     * @param int  $id_shop     optional, Context::shop::Id by default - Allows to define a specific shop to filter
      *
      * @return array Warehouses (ID, reference/name concatenated)
      */
     public static function getWarehouses($ignore_shop = false, $id_shop = null)
     {
-        if (!$ignore_shop) {
-            if (null === $id_shop) {
+        if (! $ignore_shop) {
+            if ($id_shop === null) {
                 $id_shop = Context::getContext()->shop->id;
             }
         }
@@ -364,7 +416,7 @@ class WarehouseCore extends ObjectModel
         $query->from('warehouse', 'w');
         $query->where('deleted = 0');
         $query->orderBy('reference ASC');
-        if (!$ignore_shop) {
+        if (! $ignore_shop) {
             $query->innerJoin('warehouse_shop', 'ws', 'ws.id_warehouse = w.id_warehouse AND ws.id_shop = ' . (int) $id_shop);
         }
 
@@ -462,14 +514,14 @@ class WarehouseCore extends ObjectModel
     /**
      * For a given product, returns the warehouses it is stored in.
      *
-     * @param int $id_product Product Id
+     * @param int $id_product           Product Id
      * @param int $id_product_attribute Optional, Product Attribute Id - 0 by default (no attribues)
      *
      * @return array Warehouses Ids and names
      */
     public static function getWarehousesByProductId($id_product, $id_product_attribute = 0)
     {
-        if (!$id_product && !$id_product_attribute) {
+        if (! $id_product && ! $id_product_attribute) {
             return [];
         }
 
@@ -514,11 +566,11 @@ class WarehouseCore extends ObjectModel
      */
     public static function getPackWarehouses($id_product, $id_shop = null)
     {
-        if (!Pack::isPack($id_product)) {
+        if (! Pack::isPack($id_product)) {
             return false;
         }
 
-        if (null === $id_shop) {
+        if ($id_shop === null) {
             $id_shop = Context::getContext()->shop->id;
         }
 
@@ -530,13 +582,13 @@ class WarehouseCore extends ObjectModel
 
         // fills $list
         foreach ($pack_warehouses as $pack_warehouse) {
-            /* @var WarehouseProductLocation $pack_warehouse */
+            /** @var WarehouseProductLocation $pack_warehouse */
             $list['pack_warehouses'][] = (int) $pack_warehouse->id_warehouse;
         }
 
         $res = false;
         // returns final list
-        if (!empty($list)) {
+        if (! empty($list)) {
             $res = call_user_func_array('array_intersect', $list);
         }
 
@@ -551,7 +603,7 @@ class WarehouseCore extends ObjectModel
         @trigger_error(sprintf(
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
-        ), E_USER_DEPRECATED);
+        ), \E_USER_DEPRECATED);
 
         return true;
     }
@@ -621,7 +673,7 @@ class WarehouseCore extends ObjectModel
 
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        if (!is_array($res)) {
+        if (! is_array($res)) {
             return $ids_carrier;
         }
 

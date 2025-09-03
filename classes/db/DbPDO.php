@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,10 +30,14 @@
  */
 class DbPDOCore extends Db
 {
-    /** @var PDO */
+    /**
+     * @var PDO
+     */
     protected $link;
 
-    /** @var PDOStatement */
+    /**
+     * @var PDOStatement
+     */
     protected $result;
 
     /**
@@ -42,7 +47,7 @@ class DbPDOCore extends Db
      * @param string $user
      * @param string $password
      * @param string $dbname
-     * @param int $timeout
+     * @param int    $timeout
      *
      * @return PDO
      */
@@ -81,7 +86,7 @@ class DbPDOCore extends Db
      * @param string $user
      * @param string $password
      * @param string $dbname
-     * @param bool $dropit if true, drops the created database
+     * @param bool   $dropit   if true, drops the created database
      *
      * @return bool|int
      */
@@ -161,11 +166,11 @@ class DbPDOCore extends Db
      */
     public function nextRow($result = false)
     {
-        if (!$result) {
+        if (! $result) {
             $result = $this->result;
         }
 
-        if (!is_object($result)) {
+        if (! is_object($result)) {
             return false;
         }
 
@@ -183,11 +188,11 @@ class DbPDOCore extends Db
      */
     protected function getAll($result = false)
     {
-        if (!$result) {
+        if (! $result) {
             $result = $this->result;
         }
 
-        if (!is_object($result)) {
+        if (! is_object($result)) {
             return false;
         }
 
@@ -245,7 +250,7 @@ class DbPDOCore extends Db
     {
         $error = $this->link->errorInfo();
 
-        return ($error[0] == '00000') ? '' : $error[2];
+        return ($error[0] === '00000') ? '' : $error[2];
     }
 
     /**
@@ -285,7 +290,7 @@ class DbPDOCore extends Db
      */
     public function _escape($str)
     {
-        if (null === $str) {
+        if ($str === null) {
             return '';
         }
 
@@ -315,9 +320,9 @@ class DbPDOCore extends Db
      * @see Db::hasTableWithSamePrefix()
      *
      * @param string $server Server address
-     * @param string $user Login for database connection
-     * @param string $pwd Password for database connection
-     * @param string $db Database name
+     * @param string $user   Login for database connection
+     * @param string $pwd    Password for database connection
+     * @param string $db     Database name
      * @param string $prefix Tables prefix
      *
      * @return bool
@@ -339,11 +344,11 @@ class DbPDOCore extends Db
     /**
      * Tries to connect to the database and create a table (checking creation privileges).
      *
-     * @param string $server
-     * @param string $user
-     * @param string $pwd
-     * @param string $db
-     * @param string $prefix
+     * @param string      $server
+     * @param string      $user
+     * @param string      $pwd
+     * @param string      $db
+     * @param string      $prefix
      * @param string|null $engine Table engine
      *
      * @return bool|string True, false or error
@@ -382,11 +387,11 @@ class DbPDOCore extends Db
     /**
      * Tries to connect to the database and select content (checking select privileges).
      *
-     * @param string $server
-     * @param string $user
-     * @param string $pwd
-     * @param string $db
-     * @param string $prefix
+     * @param string      $server
+     * @param string      $user
+     * @param string      $pwd
+     * @param string      $db
+     * @param string      $prefix
      * @param string|null $engine Table engine
      *
      * @return bool|string True, false or error
@@ -428,13 +433,13 @@ class DbPDOCore extends Db
      *
      * @see Db::checkConnection()
      *
-     * @param string $server Server address
-     * @param string $user Login for database connection
-     * @param string $pwd Password for database connection
-     * @param string $db Database name
-     * @param bool $new_db_link
+     * @param string      $server      Server address
+     * @param string      $user        Login for database connection
+     * @param string      $pwd         Password for database connection
+     * @param string      $db          Database name
+     * @param bool        $new_db_link
      * @param string|bool $engine
-     * @param int $timeout
+     * @param int         $timeout
      *
      * @return int Error code or 0 if connection was successful
      */
@@ -444,7 +449,7 @@ class DbPDOCore extends Db
             $link = DbPDO::getPDO($server, $user, $pwd, $db, $timeout);
         } catch (PDOException $e) {
             // hhvm wrongly reports error status 42000 when the database does not exist - might change in the future
-            return ($e->getCode() == 1049 || (defined('HHVM_VERSION') && $e->getCode() == 42000)) ? 2 : 1;
+            return ($e->getCode() === 1049 || (defined('HHVM_VERSION') && $e->getCode() === 42000)) ? 2 : 1;
         }
         unset($link);
 
@@ -463,11 +468,11 @@ class DbPDOCore extends Db
         $sql = 'SHOW VARIABLES WHERE Variable_name = \'have_innodb\'';
         $result = $this->link->query($sql);
 
-        if (!$result) {
+        if (! $result) {
             $value = 'MyISAM';
         } else {
             $row = $result->fetch();
-            if (!$row || strtolower($row['Value']) != 'yes') {
+            if (! $row || strtolower($row['Value']) !== 'yes') {
                 $value = 'MyISAM';
             }
         }
@@ -476,8 +481,8 @@ class DbPDOCore extends Db
         $sql = 'SHOW ENGINES';
         $result = $this->link->query($sql);
         while ($row = $result->fetch()) {
-            if ($row['Engine'] == 'InnoDB') {
-                if (in_array($row['Support'], ['DEFAULT', 'YES'])) {
+            if ($row['Engine'] === 'InnoDB') {
+                if (in_array($row['Support'], ['DEFAULT', 'YES'], true)) {
                     $value = 'InnoDB';
                 }
 
@@ -494,8 +499,8 @@ class DbPDOCore extends Db
      * @see Db::checkEncoding()
      *
      * @param string $server Server address
-     * @param string $user Login for database connection
-     * @param string $pwd Password for database connection
+     * @param string $user   Login for database connection
+     * @param string $pwd    Password for database connection
      *
      * @return bool
      */

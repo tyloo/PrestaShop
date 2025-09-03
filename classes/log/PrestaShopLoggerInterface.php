@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,37 +36,27 @@ interface PrestaShopLoggerInterface
 
     /**
      * @param string $message
-     * @param int $level
-     *
-     * @return void
+     * @param int    $level
      */
     public function log($message, $level = self::DEBUG);
 
     /**
      * @param string $message
-     *
-     * @return void
      */
     public function logDebug($message);
 
     /**
      * @param string $message
-     *
-     * @return void
      */
     public function logInfo($message);
 
     /**
      * @param string $message
-     *
-     * @return void
      */
     public function logWarning($message);
 
     /**
      * @param string $message
-     *
-     * @return void
      */
     public function logError($message);
 }

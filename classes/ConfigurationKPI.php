@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -56,9 +57,9 @@ class ConfigurationKPICore extends Configuration
     /**
      * Get ID by name.
      *
-     * @param string $key Configuration key
+     * @param string   $key         Configuration key
      * @param int|null $idShopGroup ShopGroup ID
-     * @param int|null $idShop Shop ID
+     * @param int|null $idShop      Shop ID
      *
      * @return int ConfigurationKPI ID
      */
@@ -84,11 +85,11 @@ class ConfigurationKPICore extends Configuration
     /**
      * Get value.
      *
-     * @param string $key Configuration key
-     * @param null $idLang Language ID
-     * @param null $idShopGroup ShopGroup ID
-     * @param null $idShop Shop ID
-     * @param bool $default Default value
+     * @param string $key         Configuration key
+     * @param null   $idLang      Language ID
+     * @param null   $idShopGroup ShopGroup ID
+     * @param null   $idShop      Shop ID
+     * @param bool   $default     Default value
      *
      * @return string
      */
@@ -104,7 +105,7 @@ class ConfigurationKPICore extends Configuration
     /**
      * Get global vlaue.
      *
-     * @param string $key Configuration key
+     * @param string   $key    Configuration key
      * @param int|null $idLang Language ID
      *
      * @return string Global value
@@ -121,9 +122,9 @@ class ConfigurationKPICore extends Configuration
     /**
      * Get value independent from language.
      *
-     * @param string $key Configuration key
-     * @param null $idShopGroup ShopGroup ID
-     * @param null $idShop Shop ID
+     * @param string $key         Configuration key
+     * @param null   $idShopGroup ShopGroup ID
+     * @param null   $idShop      Shop ID
      *
      * @return array Values for key for all available languages
      */
@@ -139,10 +140,10 @@ class ConfigurationKPICore extends Configuration
     /**
      * Get multiple keys.
      *
-     * @param array $keys Configuation keys
-     * @param int|null $idLang Language ID
+     * @param array    $keys        Configuation keys
+     * @param int|null $idLang      Language ID
      * @param int|null $idShopGroup ShopGroup ID
-     * @param int|null $idShop Shop ID
+     * @param int|null $idShop      Shop ID
      *
      * @return array Configuration values
      */
@@ -158,10 +159,10 @@ class ConfigurationKPICore extends Configuration
     /**
      * Has key.
      *
-     * @param string $key
-     * @param int|null $idLang Language ID
+     * @param string   $key
+     * @param int|null $idLang      Language ID
      * @param int|null $idShopGroup ShopGroup ID
-     * @param int|null $idShop Shop ID
+     * @param int|null $idShop      Shop ID
      *
      * @return bool
      */
@@ -177,10 +178,10 @@ class ConfigurationKPICore extends Configuration
     /**
      * Set key.
      *
-     * @param string $key Configuration key
-     * @param mixed $values Values
-     * @param null $idShopGroup ShopGroup ID
-     * @param null $idShop Shop ID
+     * @param string $key         Configuration key
+     * @param mixed  $values      Values
+     * @param null   $idShopGroup ShopGroup ID
+     * @param null   $idShop      Shop ID
      */
     public static function set($key, $values, $idShopGroup = null, $idShop = null)
     {
@@ -192,9 +193,9 @@ class ConfigurationKPICore extends Configuration
     /**
      * Update global value.
      *
-     * @param string $key Configuration key
-     * @param mixed $values Values
-     * @param bool $html Do the values contain HTML?
+     * @param string $key    Configuration key
+     * @param mixed  $values Values
+     * @param bool   $html   Do the values contain HTML?
      *
      * @return bool Indicates whether the key was successfully updated
      */
@@ -210,11 +211,11 @@ class ConfigurationKPICore extends Configuration
     /**
      * Update value.
      *
-     * @param string $key Configuration key
-     * @param mixed $values Values
-     * @param bool $html Do the values contain HTML?
-     * @param null $idShopGroup ShopGroup ID
-     * @param null $idShop Shop ID
+     * @param string $key         Configuration key
+     * @param mixed  $values      Values
+     * @param bool   $html        Do the values contain HTML?
+     * @param null   $idShopGroup ShopGroup ID
+     * @param null   $idShop      Shop ID
      *
      * @return bool Indicates whether the key was successfully updated
      */
@@ -243,8 +244,6 @@ class ConfigurationKPICore extends Configuration
 
     /**
      * @param string $key
-     * @param int|null $idShopGroup
-     * @param int|null $idShop
      *
      * @return bool
      */
@@ -259,8 +258,8 @@ class ConfigurationKPICore extends Configuration
 
     /**
      * @param string $key
-     * @param int $idLang
-     * @param int $context
+     * @param int    $idLang
+     * @param int    $context
      *
      * @return bool
      */

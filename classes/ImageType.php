@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,28 +32,44 @@ class ImageTypeCore extends ObjectModel
 {
     public $id;
 
-    /** @var string Name */
+    /**
+     * @var string Name
+     */
     public $name;
 
-    /** @var int Width */
+    /**
+     * @var int Width
+     */
     public $width;
 
-    /** @var int Height */
+    /**
+     * @var int Height
+     */
     public $height;
 
-    /** @var bool Apply to products */
+    /**
+     * @var bool Apply to products
+     */
     public $products;
 
-    /** @var bool Apply to categories */
+    /**
+     * @var bool Apply to categories
+     */
     public $categories;
 
-    /** @var bool Apply to manufacturers */
+    /**
+     * @var bool Apply to manufacturers
+     */
     public $manufacturers;
 
-    /** @var bool Apply to suppliers */
+    /**
+     * @var bool Apply to suppliers
+     */
     public $suppliers;
 
-    /** @var bool Apply to store */
+    /**
+     * @var bool Apply to store
+     */
     public $stores;
 
     /**
@@ -62,14 +79,42 @@ class ImageTypeCore extends ObjectModel
         'table' => 'image_type',
         'primary' => 'id_image_type',
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isImageTypeName', 'required' => true, 'size' => 64],
-            'width' => ['type' => self::TYPE_INT, 'validate' => 'isImageSize', 'required' => true],
-            'height' => ['type' => self::TYPE_INT, 'validate' => 'isImageSize', 'required' => true],
-            'categories' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'products' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'manufacturers' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'suppliers' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'stores' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isImageTypeName',
+                'required' => true,
+                'size' => 64,
+            ],
+            'width' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isImageSize',
+                'required' => true,
+            ],
+            'height' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isImageSize',
+                'required' => true,
+            ],
+            'categories' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'products' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'manufacturers' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'suppliers' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'stores' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
         ],
     ];
 
@@ -85,9 +130,9 @@ class ImageTypeCore extends ObjectModel
     /**
      * Returns image type definitions.
      *
-     * @param string|null $type Image type
-     * @param bool $orderBySize
-     * @param string|null $theme Theme name
+     * @param string|null $type        Image type
+     * @param bool        $orderBySize
+     * @param string|null $theme       Theme name
      *
      * @return array Image type definitions
      *
@@ -95,12 +140,12 @@ class ImageTypeCore extends ObjectModel
      */
     public static function getImagesTypes($type = null, $orderBySize = false, $theme = null)
     {
-        if (!isset(self::$images_types_cache[$type][$theme])) {
+        if (! isset(self::$images_types_cache[$type][$theme])) {
             $where = 'WHERE 1';
-            if (!empty($type)) {
+            if (! empty($type)) {
                 $where .= ' AND `' . bqSQL($type) . '` = 1 ';
             }
-            if (null !== $theme) {
+            if ($theme !== null) {
                 $where .= ' AND `theme_name` = \'' . pSQL($theme) . '\' OR `theme_name` IS NULL';
             }
 
@@ -139,7 +184,7 @@ class ImageTypeCore extends ObjectModel
      */
     public static function typeAlreadyExists($typeName)
     {
-        if (!Validate::isImageTypeName($typeName)) {
+        if (! Validate::isImageTypeName($typeName)) {
             throw new PrestaShopException(sprintf('"%s" is not valid image type name.', $typeName));
         }
 
@@ -161,7 +206,7 @@ class ImageTypeCore extends ObjectModel
     {
         static $is_passed = false;
 
-        if (!isset(self::$images_types_name_cache[$name . '_' . $type . '_' . $order]) && !$is_passed) {
+        if (! isset(self::$images_types_name_cache[$name . '_' . $type . '_' . $order]) && ! $is_passed) {
             $results = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ . 'image_type`');
 
             $types = ['products', 'categories', 'manufacturers', 'suppliers', 'stores'];

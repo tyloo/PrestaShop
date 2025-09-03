@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -81,18 +82,41 @@ class FeatureFlagCore extends ObjectModel
         'table' => 'feature_flag',
         'primary' => 'id_feature_flag',
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'required' => true, 'size' => 191],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'required' => true,
+                'size' => 191,
+            ],
             'type' => [
                 'type' => self::TYPE_STRING,
                 'required' => true,
                 'size' => 64,
                 'default' => FeatureFlagSettings::TYPE_DEFAULT,
             ],
-            'label_wording' => ['type' => self::TYPE_STRING, 'required' => true, 'size' => 191],
-            'label_domain' => ['type' => self::TYPE_STRING, 'required' => true, 'size' => 255],
-            'description_wording' => ['type' => self::TYPE_STRING, 'required' => true, 'size' => 191],
-            'description_domain' => ['type' => self::TYPE_STRING, 'required' => true, 'size' => 255],
-            'state' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'label_wording' => [
+                'type' => self::TYPE_STRING,
+                'required' => true,
+                'size' => 191,
+            ],
+            'label_domain' => [
+                'type' => self::TYPE_STRING,
+                'required' => true,
+                'size' => 255,
+            ],
+            'description_wording' => [
+                'type' => self::TYPE_STRING,
+                'required' => true,
+                'size' => 191,
+            ],
+            'description_domain' => [
+                'type' => self::TYPE_STRING,
+                'required' => true,
+                'size' => 255,
+            ],
+            'state' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
             'stability' => [
                 'type' => self::TYPE_STRING,
                 'size' => 64,

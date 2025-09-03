@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -58,27 +59,75 @@ class GuestCore extends ObjectModel
         'table' => 'guest',
         'primary' => 'id_guest',
         'fields' => [
-            'id_operating_system' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'id_web_browser' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'id_customer' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'javascript' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'screen_resolution_x' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
-            'screen_resolution_y' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
-            'screen_color' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
-            'sun_java' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'adobe_flash' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'adobe_director' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'apple_quicktime' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'real_player' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'windows_media' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'accept_language' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 8],
-            'mobile_theme' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'id_operating_system' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'id_web_browser' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'id_customer' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'javascript' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'screen_resolution_x' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
+            'screen_resolution_y' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
+            'screen_color' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
+            'sun_java' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'adobe_flash' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'adobe_director' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'apple_quicktime' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'real_player' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'windows_media' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'accept_language' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'size' => 8,
+            ],
+            'mobile_theme' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
         ],
     ];
 
     protected $webserviceParameters = [
         'fields' => [
-            'id_customer' => ['xlink_resource' => 'customers'],
+            'id_customer' => [
+                'xlink_resource' => 'customers',
+            ],
         ],
     ];
 
@@ -113,7 +162,7 @@ class GuestCore extends ObjectModel
                     $langsArray[$lang] = 1;
                 }
             }
-            arsort($langsArray, SORT_NUMERIC);
+            arsort($langsArray, \SORT_NUMERIC);
         }
 
         // Only the first language is returned
@@ -196,7 +245,7 @@ class GuestCore extends ObjectModel
      */
     public static function getFromCustomer($idCustomer)
     {
-        if (!Validate::isUnsignedId($idCustomer)) {
+        if (! Validate::isUnsignedId($idCustomer)) {
             return false;
         }
         $result = Db::getInstance()->getRow('
@@ -210,7 +259,7 @@ class GuestCore extends ObjectModel
     /**
      * Merge with Customer.
      *
-     * @param int $idGuest Guest ID
+     * @param int $idGuest    Guest ID
      * @param int $idCustomer Customer ID
      *
      * @return bool

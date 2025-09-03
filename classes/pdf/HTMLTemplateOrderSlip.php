@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -44,9 +45,6 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
     public $id_cart;
 
     /**
-     * @param OrderSlip $order_slip
-     * @param Smarty $smarty
-     *
      * @throws PrestaShopException
      */
     public function __construct(OrderSlip $order_slip, Smarty $smarty)
@@ -91,7 +89,7 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
         $formatted_invoice_address = AddressFormat::generateAddress($invoice_address, [], '<br />', ' ');
         $formatted_delivery_address = '';
 
-        if ($this->order->id_address_delivery != $this->order->id_address_invoice) {
+        if ($this->order->id_address_delivery !== $this->order->id_address_invoice) {
             $delivery_address = new Address((int) $this->order->id_address_delivery);
             $formatted_delivery_address = AddressFormat::generateAddress($delivery_address, [], '<br />', ' ');
         }
@@ -104,7 +102,7 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
                 $product['total_price_tax_excl'] = $product['unit_price_tax_excl'] * $product['product_quantity'];
                 $product['total_price_tax_incl'] = $product['unit_price_tax_incl'] * $product['product_quantity'];
 
-                if ($this->order_slip->partial == 1) {
+                if ($this->order_slip->partial === 1) {
                     $order_slip_detail = Db::getInstance()->getRow('
                         SELECT * FROM `' . _DB_PREFIX_ . 'order_slip_detail`
                         WHERE `id_order_slip` = ' . (int) $this->order_slip->id . '
@@ -124,7 +122,7 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
             $this->order->products = [];
         }
 
-        if ($this->order_slip->shipping_cost == 0) {
+        if ($this->order_slip->shipping_cost === 0) {
             $this->order->total_shipping_tax_incl = $this->order->total_shipping_tax_excl = 0;
         }
 
@@ -141,7 +139,7 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
         $this->order->total_paid_tax_excl += $this->order->total_shipping_tax_excl;
 
         $total_cart_rule = 0;
-        if ($this->order_slip->order_slip_type == 1 && is_array($cart_rules = $this->order->getCartRules())) {
+        if ($this->order_slip->order_slip_type === 1 && is_array($cart_rules = $this->order->getCartRules())) {
             foreach ($cart_rules as $cart_rule) {
                 if ($tax_excluded_display) {
                     $total_cart_rule += $cart_rule['value_tax_excl'];
@@ -160,8 +158,8 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
             'order' => $this->order,
             'order_slip' => $this->order_slip,
             'order_details' => $order_details,
-            'cart_rules' => $this->order_slip->order_slip_type == 1 ? $this->order->getCartRules() : false,
-            'amount_choosen' => $this->order_slip->order_slip_type == 2 ? true : false,
+            'cart_rules' => $this->order_slip->order_slip_type === 1 ? $this->order->getCartRules() : false,
+            'amount_choosen' => $this->order_slip->order_slip_type === 2 ? true : false,
             'delivery_address' => $formatted_delivery_address,
             'invoice_address' => $formatted_invoice_address,
             'addresses' => ['invoice' => $invoice_address, 'delivery' => $delivery_address],
@@ -212,8 +210,8 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
     {
         $address = new Address((int) $this->order->{Configuration::get('PS_TAX_ADDRESS_TYPE')});
         $tax_exempt = Configuration::get('VATNUMBER_MANAGEMENT')
-                            && !empty($address->vat_number)
-                            && $address->id_country != Configuration::get('VATNUMBER_COUNTRY');
+                            && ! empty($address->vat_number)
+                            && $address->id_country !== Configuration::get('VATNUMBER_COUNTRY');
 
         $this->smarty->assign([
             'tax_exempt' => $tax_exempt,
@@ -282,7 +280,7 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
 
         foreach ($details as $row) {
             $rate = sprintf('%.3f', $row['tax_rate']);
-            if (!isset($breakdown[$rate])) {
+            if (! isset($breakdown[$rate])) {
                 $breakdown[$rate] = [
                     'total_price_tax_excl' => 0,
                     'total_amount' => 0,

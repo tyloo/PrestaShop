@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -46,7 +47,7 @@ abstract class AbstractLoggerCore implements PrestaShopLoggerInterface
      * Log the message.
      *
      * @param string $message
-     * @param int $level
+     * @param int    $level
      */
     abstract protected function logMessage($message, $level);
 
@@ -54,7 +55,7 @@ abstract class AbstractLoggerCore implements PrestaShopLoggerInterface
      * Check the level and log the message if needed.
      *
      * @param string $message
-     * @param int $level
+     * @param int    $level
      */
     public function log($message, $level = self::DEBUG)
     {

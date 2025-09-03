@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,16 +30,26 @@
  */
 class ProductAttributeCore extends ObjectModel
 {
-    /** @var int Group id which attribute belongs */
+    /**
+     * @var int Group id which attribute belongs
+     */
     public $id_attribute_group;
 
-    /** @var string|string[] Name */
+    /**
+     * @var string|string[] Name
+     */
     public $name;
-    /** @var string */
+    /**
+     * @var string
+     */
     public $color;
-    /** @var int */
+    /**
+     * @var int
+     */
     public $position;
-    /** @todo Find type */
+    /**
+     * @todo Find type
+     */
     public $default;
 
     /**
@@ -49,31 +60,52 @@ class ProductAttributeCore extends ObjectModel
         'primary' => 'id_attribute',
         'multilang' => true,
         'fields' => [
-            'id_attribute_group' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'color' => ['type' => self::TYPE_STRING, 'validate' => 'isColor', 'size' => 32],
-            'position' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
+            'id_attribute_group' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'color' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isColor',
+                'size' => 32,
+            ],
+            'position' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
 
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 128],
-        ],
-    ];
-
-    /** @var string */
-    protected $image_dir = _PS_COL_IMG_DIR_;
-
-    /** @var array Web service parameters */
-    protected $webserviceParameters = [
-        'objectsNodeName' => 'product_option_values',
-        'objectNodeName' => 'product_option_value',
-        'fields' => [
-            'id_attribute_group' => ['xlink_resource' => 'product_options'],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 128,
+            ],
         ],
     ];
 
     /**
-     * AttributeCore constructor.
-     *
-     * @param int|null $id Attribute ID
+     * @var string
+     */
+    protected $image_dir = _PS_COL_IMG_DIR_;
+
+    /**
+     * @var array Web service parameters
+     */
+    protected $webserviceParameters = [
+        'objectsNodeName' => 'product_option_values',
+        'objectNodeName' => 'product_option_value',
+        'fields' => [
+            'id_attribute_group' => [
+                'xlink_resource' => 'product_options',
+            ],
+        ],
+    ];
+
+    /**
+     * @param int|null $id     Attribute ID
      * @param int|null $idLang Language ID
      * @param int|null $idShop Shop ID
      */
@@ -88,7 +120,7 @@ class ProductAttributeCore extends ObjectModel
      */
     public function delete()
     {
-        if (!$this->hasMultishopEntries() || Shop::getContext() == Shop::CONTEXT_ALL) {
+        if (! $this->hasMultishopEntries() || Shop::getContext() === Shop::CONTEXT_ALL) {
             $result = Db::getInstance()->executeS('SELECT id_product_attribute FROM ' . _DB_PREFIX_ . 'product_attribute_combination WHERE id_attribute = ' . (int) $this->id);
             $products = [];
 
@@ -96,7 +128,7 @@ class ProductAttributeCore extends ObjectModel
                 $combination = new Combination($row['id_product_attribute']);
                 $newRequest = Db::getInstance()->executeS('SELECT id_product, default_on FROM ' . _DB_PREFIX_ . 'product_attribute WHERE id_product_attribute = ' . (int) $row['id_product_attribute']);
                 foreach ($newRequest as $value) {
-                    if ($value['default_on'] == 1) {
+                    if ($value['default_on'] === 1) {
                         $products[] = $value['id_product'];
                     }
                 }
@@ -144,7 +176,7 @@ class ProductAttributeCore extends ObjectModel
     /**
      * Adds current ProductAttribute as a new Object to the database.
      *
-     * @param bool $autoDate Automatically set `date_upd` and `date_add` column
+     * @param bool $autoDate   Automatically set `date_upd` and `date_add` column
      * @param bool $nullValues Whether we want to use NULL values instead of empty quotes values
      *
      * @return bool Whether the ProductAttribute has been successfully added
@@ -170,14 +202,14 @@ class ProductAttributeCore extends ObjectModel
     /**
      * Get all attributes for a given language.
      *
-     * @param int $idLang Language ID
+     * @param int  $idLang  Language ID
      * @param bool $notNull Get only not null fields if true
      *
      * @return array Attributes
      */
     public static function getAttributes($idLang, $notNull = false)
     {
-        if (!Combination::isFeatureActive()) {
+        if (! Combination::isFeatureActive()) {
             return [];
         }
 
@@ -200,15 +232,15 @@ class ProductAttributeCore extends ObjectModel
     /**
      * Check if the given name is an Attribute within the given AttributeGroup.
      *
-     * @param int $idAttributeGroup AttributeGroup
-     * @param string $name Attribute name
-     * @param int $idLang Language ID
+     * @param int    $idAttributeGroup AttributeGroup
+     * @param string $name             Attribute name
+     * @param int    $idLang           Language ID
      *
      * @return array|bool
      */
     public static function isAttribute($idAttributeGroup, $name, $idLang)
     {
-        if (!Combination::isFeatureActive()) {
+        if (! Combination::isFeatureActive()) {
             return [];
         }
 
@@ -234,15 +266,15 @@ class ProductAttributeCore extends ObjectModel
      * Get quantity for a given attribute combination
      * Check if quantity is enough to serve the customer.
      *
-     * @param int $idProductAttribute Product attribute combination id
-     * @param int $qty Quantity needed
-     * @param Shop $shop Shop
+     * @param int  $idProductAttribute Product attribute combination id
+     * @param int  $qty                Quantity needed
+     * @param Shop $shop               Shop
      *
      * @return bool Quantity is available or not
      */
     public static function checkAttributeQty($idProductAttribute, $qty, ?Shop $shop = null)
     {
-        if (!$shop) {
+        if (! $shop) {
             $shop = Context::getContext()->shop;
         }
 
@@ -258,7 +290,7 @@ class ProductAttributeCore extends ObjectModel
      */
     public function isColorAttribute()
     {
-        if (!Db::getInstance()->getRow('
+        if (! Db::getInstance()->getRow('
 			SELECT `group_type`
 			FROM `' . _DB_PREFIX_ . 'attribute_group`
 			WHERE `id_attribute_group` = (
@@ -300,13 +332,13 @@ class ProductAttributeCore extends ObjectModel
      * Move an attribute inside its group.
      *
      * @param bool $direction Up (1) or Down (0)
-     * @param int $position Current position of the attribute
+     * @param int  $position  Current position of the attribute
      *
      * @return bool Update result
      */
     public function updatePosition($direction, $position)
     {
-        if (!$idAttributeGroup = (int) Tools::getValue('id_attribute_group')) {
+        if (! $idAttributeGroup = (int) Tools::getValue('id_attribute_group')) {
             $idAttributeGroup = (int) $this->id_attribute_group;
         }
 
@@ -316,17 +348,17 @@ class ProductAttributeCore extends ObjectModel
 			WHERE a.`id_attribute_group` = ' . (int) $idAttributeGroup . '
 			ORDER BY a.`position` ASC';
 
-        if (!$res = Db::getInstance()->executeS($sql)) {
+        if (! $res = Db::getInstance()->executeS($sql)) {
             return false;
         }
 
         foreach ($res as $attribute) {
-            if ((int) $attribute['id_attribute'] == (int) $this->id) {
+            if ((int) $attribute['id_attribute'] === (int) $this->id) {
                 $movedAttribute = $attribute;
             }
         }
 
-        if (!isset($movedAttribute)) {
+        if (! isset($movedAttribute)) {
             return false;
         }
 
@@ -359,7 +391,7 @@ class ProductAttributeCore extends ObjectModel
      * Reorder the attribute position within the Attribute group.
      * Call this method after deleting an attribute from a group.
      *
-     * @param int $idAttributeGroup Attribute group ID
+     * @param int  $idAttributeGroup Attribute group ID
      * @param bool $useLastAttribute
      *
      * @return bool Whether the result was successfully updated
@@ -385,7 +417,7 @@ class ProductAttributeCore extends ObjectModel
      *
      * @param int $idAttributeGroup AttributeGroup ID
      *
-     * @return int $position Position
+     * @return int Position
      *
      * @todo: Shouldn't this be called getHighestPosition instead?
      */

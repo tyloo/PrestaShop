@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,12 +34,12 @@ class HTMLTemplateDeliverySlipCore extends HTMLTemplate
      */
     public $order;
 
-    /** @var OrderInvoice Order invoice */
+    /**
+     * @var OrderInvoice Order invoice
+     */
     public $order_invoice;
 
     /**
-     * @param OrderInvoice $order_invoice
-     * @param Smarty $smarty
      * @param bool $bulk_mode
      *
      * @throws PrestaShopException
@@ -54,7 +55,7 @@ class HTMLTemplateDeliverySlipCore extends HTMLTemplate
         // (DB: bug fixed in 1.6.1.1 with upgrade SQL script to avoid null shop_address in old orderInvoices)
         if (empty($this->order_invoice->shop_address)) {
             $this->order_invoice->shop_address = OrderInvoice::getCurrentFormattedShopAddress((int) $this->order->id_shop);
-            if (!$bulk_mode) {
+            if (! $bulk_mode) {
                 OrderInvoice::fixAllShopAddresses();
             }
         }
@@ -94,24 +95,24 @@ class HTMLTemplateDeliverySlipCore extends HTMLTemplate
         $formatted_delivery_address = AddressFormat::generateAddress($delivery_address, [], '<br />', ' ');
         $formatted_invoice_address = '';
 
-        if ($this->order->id_address_delivery != $this->order->id_address_invoice) {
+        if ($this->order->id_address_delivery !== $this->order->id_address_invoice) {
             $invoice_address = new Address((int) $this->order->id_address_invoice);
             $formatted_invoice_address = AddressFormat::generateAddress($invoice_address, [], '<br />', ' ');
         }
 
         $carrier = new Carrier($this->order->id_carrier);
-        $carrier->name = ($carrier->name == '0' ? Configuration::get('PS_SHOP_NAME') : $carrier->name);
+        $carrier->name = ($carrier->name === '0' ? Configuration::get('PS_SHOP_NAME') : $carrier->name);
 
         $order_details = $this->order_invoice->getProducts();
         if (Configuration::get('PS_PDF_IMG_DELIVERY')) {
             foreach ($order_details as &$order_detail) {
-                if ($order_detail['image'] != null) {
+                if ($order_detail['image'] !== null) {
                     $name = 'product_mini_' . (int) $order_detail['product_id'] . (isset($order_detail['product_attribute_id']) ? '_' . (int) $order_detail['product_attribute_id'] : '') . '.jpg';
                     $path = _PS_PRODUCT_IMG_DIR_ . $order_detail['image']->getExistingImgPath() . '.jpg';
 
                     $order_detail['image_tag'] = preg_replace(
                         '/\.*' . preg_quote(__PS_BASE_URI__, '/') . '/',
-                        _PS_ROOT_DIR_ . DIRECTORY_SEPARATOR,
+                        _PS_ROOT_DIR_ . \DIRECTORY_SEPARATOR,
                         ImageManager::thumbnail($path, $name, 45, 'jpg', false),
                         1
                     );

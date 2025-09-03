@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,7 +56,7 @@ class CustomerFormCore extends AbstractForm
         TranslatorInterface $translator,
         CustomerFormatter $formatter,
         CustomerPersister $customerPersister,
-        array $urls
+        array $urls,
     ) {
         parent::__construct(
             $smarty,
@@ -71,8 +72,8 @@ class CustomerFormCore extends AbstractForm
 
     public function setGuestAllowed($guest_allowed = true)
     {
-        $this->formatter->setPasswordRequired(!$guest_allowed);
-        $this->setPasswordRequired(!$guest_allowed);
+        $this->formatter->setPasswordRequired(! $guest_allowed);
+        $this->setPasswordRequired(! $guest_allowed);
         $this->guest_allowed = $guest_allowed;
 
         return $this;
@@ -87,7 +88,7 @@ class CustomerFormCore extends AbstractForm
 
     public function fillWith(array $params = [])
     {
-        if (!empty($params['email'])) {
+        if (! empty($params['email'])) {
             // In some cases, browsers convert non ASCII chars (from input type="email") to "punycode",
             // we need to convert it back
             $params['email'] = $this->IDNConverter->emailToUtf8($params['email']);
@@ -114,7 +115,7 @@ class CustomerFormCore extends AbstractForm
         foreach ($this->formFields as $field) {
             $customerField = $field->getName();
             if (property_exists($customer, $customerField)) {
-                $customer->$customerField = $field->getValue();
+                $customer->{$customerField} = $field->getValue();
             }
         }
 
@@ -125,8 +126,8 @@ class CustomerFormCore extends AbstractForm
     {
         // check birthdayField against null case is mandatory.
         $birthdayField = $this->getField('birthday');
-        if (!empty($birthdayField)
-            && !empty($birthdayField->getValue())
+        if (! empty($birthdayField)
+            && ! empty($birthdayField->getValue())
             && Validate::isBirthDate($birthdayField->getValue(), $this->context->language->date_format_lite)
         ) {
             $dateBuilt = DateTime::createFromFormat(
@@ -137,10 +138,10 @@ class CustomerFormCore extends AbstractForm
         }
 
         if ($this->getField('new_password') === null
-            || !empty($this->getField('new_password')->getValue())
+            || ! empty($this->getField('new_password')->getValue())
         ) {
             $passwordField = $this->getField('new_password') ?? $this->getField('password');
-            if (!empty($passwordField->getValue()) || $this->passwordRequired) {
+            if (! empty($passwordField->getValue()) || $this->passwordRequired) {
                 if (Validate::isAcceptablePasswordLength($passwordField->getValue()) === false) {
                     $passwordField->addError($this->translator->trans(
                         'Password must be between %d and %d characters long',
@@ -170,7 +171,7 @@ class CustomerFormCore extends AbstractForm
                     if ($this->context->shop->theme->get('global_settings.new_password_policy_feature') !== true) {
                         $zxcvbn = new Zxcvbn();
                         $result = $zxcvbn->passwordStrength($passwordField->getValue());
-                        if (!empty($result['feedback']['warning'])) {
+                        if (! empty($result['feedback']['warning'])) {
                             $passwordField->addError($this->translator->trans(
                                 $result['feedback']['warning'], [], 'Shop.Theme.Global'
                             ));
@@ -201,7 +202,7 @@ class CustomerFormCore extends AbstractForm
 
     /**
      * @param string $fieldName
-     * @param int $maximumLength
+     * @param int    $maximumLength
      * @param string $violationMessage
      */
     protected function validateFieldLength($fieldName, $maximumLength, $violationMessage)
@@ -212,9 +213,6 @@ class CustomerFormCore extends AbstractForm
         }
     }
 
-    /**
-     * @return mixed
-     */
     protected function getEmailMaxLengthViolationMessage()
     {
         return $this->translator->trans(
@@ -255,7 +253,7 @@ class CustomerFormCore extends AbstractForm
                 $this->passwordRequired
             );
 
-            if (!$ok) {
+            if (! $ok) {
                 foreach ($this->customerPersister->getErrors() as $field => $errors) {
                     $this->formFields[$field]->setErrors($errors);
                 }
@@ -295,7 +293,7 @@ class CustomerFormCore extends AbstractForm
         $formFieldsAssociated = [];
         // Group FormField instances by module name
         foreach ($this->formFields as $formField) {
-            if (!empty($formField->moduleName)) {
+            if (! empty($formField->moduleName)) {
                 $formFieldsAssociated[$formField->moduleName][] = $formField;
             }
         }
@@ -308,7 +306,7 @@ class CustomerFormCore extends AbstractForm
                 // An array [module_name => module_output] will be returned
                 $validatedCustomerFormFields = Hook::exec('validateCustomerFormFields', ['fields' => $formFields], $moduleId, true);
 
-                if (!is_array($validatedCustomerFormFields)) {
+                if (! is_array($validatedCustomerFormFields)) {
                     continue;
                 }
 

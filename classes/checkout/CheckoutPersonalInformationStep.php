@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -38,17 +39,11 @@ class CheckoutPersonalInformationStepCore extends AbstractCheckoutStep
      */
     public $logged_in;
 
-    /**
-     * @param Context $context
-     * @param TranslatorInterface $translator
-     * @param CustomerLoginForm $loginForm
-     * @param CustomerForm $registerForm
-     */
     public function __construct(
         Context $context,
         TranslatorInterface $translator,
         CustomerLoginForm $loginForm,
-        CustomerForm $registerForm
+        CustomerForm $registerForm,
     ) {
         parent::__construct($context, $translator);
         $this->loginForm = $loginForm;
@@ -104,7 +99,7 @@ class CheckoutPersonalInformationStepCore extends AbstractCheckoutStep
             ->getCheckoutSession()
             ->customerHasLoggedIn();
 
-        if ($this->logged_in && !$this->getCheckoutSession()->getCustomer()->is_guest) {
+        if ($this->logged_in && ! $this->getCheckoutSession()->getCustomer()->is_guest) {
             $this->setComplete(true);
         }
 
@@ -127,7 +122,7 @@ class CheckoutPersonalInformationStepCore extends AbstractCheckoutStep
                 'login_form' => $this->loginForm->getProxy(),
                 'register_form' => $this->registerForm->getProxy(),
                 'guest_allowed' => $this->getCheckoutSession()->isGuestAllowed(),
-                'empty_cart_on_logout' => !Configuration::get('PS_CART_FOLLOWING'),
+                'empty_cart_on_logout' => ! Configuration::get('PS_CART_FOLLOWING'),
             ]
         );
     }

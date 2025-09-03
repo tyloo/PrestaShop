@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,9 +30,13 @@
  */
 class CMSRoleCore extends ObjectModel
 {
-    /** @var string name */
+    /**
+     * @var string name
+     */
     public $name;
-    /** @var int id_cms */
+    /**
+     * @var int id_cms
+     */
     public $id_cms;
 
     /**
@@ -41,8 +46,15 @@ class CMSRoleCore extends ObjectModel
         'table' => 'cms_role',
         'primary' => 'id_cms_role',
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 50],
-            'id_cms' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'size' => 50,
+            ],
+            'id_cms' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
         ],
     ];
 

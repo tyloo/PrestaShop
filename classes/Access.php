@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,11 +32,15 @@ use PrestaShop\PrestaShop\Core\Security\Permission;
  */
 class AccessCore extends ObjectModel
 {
-    /** @var int Profile id which address belongs to */
-    public $id_profile = null;
+    /**
+     * @var int Profile id which address belongs to
+     */
+    public $id_profile;
 
-    /** @var int AuthorizationRole id which address belongs to */
-    public $id_authorization_role = null;
+    /**
+     * @var int AuthorizationRole id which address belongs to
+     */
+    public $id_authorization_role;
 
     /**
      * @see ObjectModel::$definition
@@ -44,16 +49,24 @@ class AccessCore extends ObjectModel
         'table' => 'access',
         'primary' => 'id_profile',
         'fields' => [
-            'id_profile' => ['type' => self::TYPE_INT, 'validate' => 'isNullOrUnsignedId', 'copy_post' => false],
-            'id_authorization_role' => ['type' => self::TYPE_INT, 'validate' => 'isNullOrUnsignedId', 'copy_post' => false],
+            'id_profile' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isNullOrUnsignedId',
+                'copy_post' => false,
+            ],
+            'id_authorization_role' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isNullOrUnsignedId',
+                'copy_post' => false,
+            ],
         ],
     ];
 
     /**
      * Is access granted to this Role?
      *
-     * @param string|array<string> $role Role name ("Superadministrator", "sales", "translator", etc.)
-     * @param int $idProfile Profile ID
+     * @param string|array<string> $role      Role name ("Superadministrator", "sales", "translator", etc.)
+     * @param int                  $idProfile Profile ID
      *
      * @return bool Whether access is granted
      *
@@ -68,9 +81,9 @@ class AccessCore extends ObjectModel
                 $matches
             );
 
-            if (isset($matches['type']) && $matches['type'] == 'TAB') {
+            if (isset($matches['type']) && $matches['type'] === 'TAB') {
                 $joinTable = _DB_PREFIX_ . 'access';
-            } elseif (isset($matches['type']) && $matches['type'] == 'MODULE') {
+            } elseif (isset($matches['type']) && $matches['type'] === 'MODULE') {
                 $joinTable = _DB_PREFIX_ . 'module_access';
             } else {
                 throw new Exception('The slug ' . $currentRole . ' is invalid');
@@ -87,7 +100,7 @@ class AccessCore extends ObjectModel
                 AND j.`id_profile` = "' . (int) $idProfile . '"
             ');
 
-            if (!$isCurrentGranted) {
+            if (! $isCurrentGranted) {
                 return false;
             }
         }
@@ -210,7 +223,7 @@ class AccessCore extends ObjectModel
     /**
      * Sluggify tab.
      *
-     * @param array $tab Tab class name
+     * @param array  $tab           Tab class name
      * @param string $authorization 'CREATE'|'READ'|'UPDATE'|'DELETE'
      *
      * @return string Full slug for tab
@@ -223,7 +236,7 @@ class AccessCore extends ObjectModel
     /**
      * Sluggify module.
      *
-     * @param array $module Module name
+     * @param array  $module        Module name
      * @param string $authorization 'CREATE'|'READ'|'UPDATE'|'DELETE'
      *
      * @return string Full slug for module
@@ -260,7 +273,7 @@ class AccessCore extends ObjectModel
      * Add access.
      *
      * @param int $idProfile Profile ID
-     * @param int $idRole Role ID
+     * @param int $idRole    Role ID
      *
      * @return string Whether access has been successfully granted ("ok", "error")
      */
@@ -278,7 +291,7 @@ class AccessCore extends ObjectModel
      * Remove access.
      *
      * @param int $idProfile Profile ID
-     * @param int $idRole Role ID
+     * @param int $idRole    Role ID
      *
      * @return string Whether access has been successfully removed ("ok", "error")
      */
@@ -297,7 +310,7 @@ class AccessCore extends ObjectModel
      * Add module access.
      *
      * @param int $idProfile Profile ID
-     * @param int $idRole Role ID
+     * @param int $idRole    Role ID
      *
      * @return string Whether module access has been successfully granted ("ok", "error")
      */
@@ -331,11 +344,11 @@ class AccessCore extends ObjectModel
     /**
      * Update legacy access.
      *
-     * @param int $idProfile Profile ID
-     * @param int $idTab Tab ID
-     * @param string $lgcAuth Legacy authorization
-     * @param bool $enabled Whether access should be granted
-     * @param bool $addFromParent Child from parents
+     * @param int    $idProfile     Profile ID
+     * @param int    $idTab         Tab ID
+     * @param string $lgcAuth       Legacy authorization
+     * @param bool   $enabled       Whether access should be granted
+     * @param bool   $addFromParent Child from parents
      *
      * @return string Whether legacy access has been successfully updated ("ok", "error")
      *
@@ -346,7 +359,7 @@ class AccessCore extends ObjectModel
         $idProfile = (int) $idProfile;
         $idTab = (int) $idTab;
 
-        if ($idTab == -1) {
+        if ($idTab === -1) {
             $slug = Permission::PREFIX_TAB . '%_';
         } else {
             $slug = self::findSlugByIdTab($idTab);
@@ -388,16 +401,16 @@ class AccessCore extends ObjectModel
             }
         }
 
-        return in_array('error', $res) ? 'error' : 'ok';
+        return in_array('error', $res, true) ? 'error' : 'ok';
     }
 
     /**
      * Update (legacy) Module access.
      *
-     * @param int $idProfile Profile ID
-     * @param int $idModule Module ID
-     * @param string $lgcAuth Legacy authorization
-     * @param bool $enabled Whether module access should be granted
+     * @param int    $idProfile Profile ID
+     * @param int    $idModule  Module ID
+     * @param string $lgcAuth   Legacy authorization
+     * @param bool   $enabled   Whether module access should be granted
      *
      * @return string Whether module access has been succesfully changed ("ok", "error")
      */
@@ -406,7 +419,7 @@ class AccessCore extends ObjectModel
         $idProfile = (int) $idProfile;
         $idModule = (int) $idModule;
 
-        if ($idModule == -1) {
+        if ($idModule === -1) {
             $slug = Permission::PREFIX_MODULE . '%_';
         } else {
             $slug = self::findSlugByIdModule($idModule);
@@ -434,6 +447,6 @@ class AccessCore extends ObjectModel
             }
         }
 
-        return in_array('error', $res) ? 'error' : 'ok';
+        return in_array('error', $res, true) ? 'error' : 'ok';
     }
 }

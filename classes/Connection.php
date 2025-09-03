@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,25 +30,39 @@
  */
 class ConnectionCore extends ObjectModel
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_guest;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_page;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $ip_address;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $http_referer;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_shop;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_shop_group;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $date_add;
 
     /**
@@ -57,13 +72,37 @@ class ConnectionCore extends ObjectModel
         'table' => 'connections',
         'primary' => 'id_connections',
         'fields' => [
-            'id_guest' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_page' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'ip_address' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
-            'http_referer' => ['type' => self::TYPE_STRING, 'validate' => 'isAbsoluteUrl', 'size' => 255],
-            'id_shop' => ['type' => self::TYPE_INT, 'required' => true],
-            'id_shop_group' => ['type' => self::TYPE_INT, 'required' => true],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'id_guest' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_page' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'ip_address' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
+            'http_referer' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isAbsoluteUrl',
+                'size' => 255,
+            ],
+            'id_shop' => [
+                'type' => self::TYPE_INT,
+                'required' => true,
+            ],
+            'id_shop_group' => [
+                'type' => self::TYPE_INT,
+                'required' => true,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
         ],
     ];
 
@@ -74,7 +113,7 @@ class ConnectionCore extends ObjectModel
      */
     public function getFields()
     {
-        if (!$this->id_shop_group) {
+        if (! $this->id_shop_group) {
             $this->id_shop_group = Context::getContext()->shop->id_shop_group;
         }
 
@@ -85,7 +124,7 @@ class ConnectionCore extends ObjectModel
 
     /**
      * @param Cookie $cookie
-     * @param bool $full
+     * @param bool   $full
      *
      * @return array
      */
@@ -93,18 +132,18 @@ class ConnectionCore extends ObjectModel
     {
         $idPage = false;
         // The connection is created if it does not exist yet and we get the current page id
-        if (!isset($cookie->id_connections) || !isset($_SERVER['HTTP_REFERER']) || strstr($_SERVER['HTTP_REFERER'], Tools::getHttpHost(false, false) . '/') === false) {
+        if (! isset($cookie->id_connections) || ! isset($_SERVER['HTTP_REFERER']) || strstr($_SERVER['HTTP_REFERER'], Tools::getHttpHost(false, false) . '/') === false) {
             $idPage = Connection::setNewConnection($cookie);
         }
         // If we do not track the pages, no need to get the page id
-        if (!Configuration::get('PS_STATSDATA_PAGESVIEWS') && !Configuration::get('PS_STATSDATA_CUSTOMER_PAGESVIEWS')) {
+        if (! Configuration::get('PS_STATSDATA_PAGESVIEWS') && ! Configuration::get('PS_STATSDATA_CUSTOMER_PAGESVIEWS')) {
             return [];
         }
-        if (!$idPage) {
+        if (! $idPage) {
             $idPage = Page::getCurrentId();
         }
         // If we do not track the page views by customer, the id_page is the only information needed
-        if (!Configuration::get('PS_STATSDATA_CUSTOMER_PAGESVIEWS')) {
+        if (! Configuration::get('PS_STATSDATA_CUSTOMER_PAGESVIEWS')) {
             return ['id_page' => $idPage];
         }
 
@@ -172,7 +211,7 @@ class ConnectionCore extends ObjectModel
 
             $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
             $arrayUrl = parse_url($referer);
-            if (!isset($arrayUrl['host']) || preg_replace('/^www./', '', $arrayUrl['host']) == preg_replace('/^www./', '', Tools::getHttpHost(false, false))) {
+            if (! isset($arrayUrl['host']) || preg_replace('/^www./', '', $arrayUrl['host']) === preg_replace('/^www./', '', Tools::getHttpHost(false, false))) {
                 $referer = '';
             }
             $connection = new Connection();
@@ -195,16 +234,16 @@ class ConnectionCore extends ObjectModel
     }
 
     /**
-     * @param int $idConnections
-     * @param int $idPage
+     * @param int    $idConnections
+     * @param int    $idPage
      * @param string $timeStart
-     * @param int $time
+     * @param int    $time
      */
     public static function setPageTime($idConnections, $idPage, $timeStart, $time)
     {
-        if (!Validate::isUnsignedId($idConnections)
-            || !Validate::isUnsignedId($idPage)
-            || !Validate::isDate($timeStart)) {
+        if (! Validate::isUnsignedId($idConnections)
+            || ! Validate::isUnsignedId($idPage)
+            || ! Validate::isDate($timeStart)) {
             return;
         }
 
@@ -237,7 +276,7 @@ class ConnectionCore extends ObjectModel
             return;
         }
 
-        if ($interval != null) {
+        if ($interval !== null) {
             // Records of connections details older than the beginning of the  specified interval are deleted
             Db::getInstance()->execute('
 			DELETE FROM `' . _DB_PREFIX_ . 'connections_page`

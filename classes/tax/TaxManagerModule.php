@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -36,14 +37,14 @@ abstract class TaxManagerModuleCore extends Module
     {
         $class_file = _PS_MODULE_DIR_ . '/' . $this->name . '/' . $this->tax_manager_class . '.php';
 
-        if (!isset($this->tax_manager_class) || !file_exists($class_file)) {
-            die($this->trans('Incorrect Tax Manager class [%s]', [htmlspecialchars($this->tax_manager_class)], 'Admin.International.Notification'));
+        if (! isset($this->tax_manager_class) || ! file_exists($class_file)) {
+            exit($this->trans('Incorrect Tax Manager class [%s]', [htmlspecialchars($this->tax_manager_class)], 'Admin.International.Notification'));
         }
 
         require_once $class_file;
 
-        if (!class_exists($this->tax_manager_class)) {
-            die($this->trans('Tax Manager class not found [%s]', [htmlspecialchars($this->tax_manager_class)], 'Admin.International.Notification'));
+        if (! class_exists($this->tax_manager_class)) {
+            exit($this->trans('Tax Manager class not found [%s]', [htmlspecialchars($this->tax_manager_class)], 'Admin.International.Notification'));
         }
 
         $class = $this->tax_manager_class;

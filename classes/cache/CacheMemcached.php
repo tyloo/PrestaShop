@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -72,7 +73,7 @@ class CacheMemcachedCore extends Cache
 
         $servers = self::getMemcachedServers();
 
-        if (!$servers) {
+        if (! $servers) {
             return;
         }
         foreach ($servers as $server) {
@@ -82,12 +83,9 @@ class CacheMemcachedCore extends Cache
         $this->is_connected = in_array('255.255.255', $this->memcached->getVersion(), true) === false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _set($key, $value, $ttl = 0)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             return false;
         }
 
@@ -102,48 +100,36 @@ class CacheMemcachedCore extends Cache
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _get($key)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             return false;
         }
 
         return $this->memcached->get($key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _exists($key)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             return false;
         }
 
         return $this->memcached->get($key) !== false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _delete($key)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             return false;
         }
 
         return $this->memcached->delete($key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _deleteMulti(array $keyArray)
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             return false;
         }
 
@@ -155,44 +141,32 @@ class CacheMemcachedCore extends Cache
      */
     protected function _writeKeys()
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             return false;
         }
 
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flush()
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             return false;
         }
 
         return $this->memcached->flush();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set($key, $value, $ttl = 0)
     {
         return $this->_set($key, $value, $ttl);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get($key)
     {
         return $this->_get($key);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function exists($key)
     {
         return $this->_exists($key);
@@ -208,7 +182,7 @@ class CacheMemcachedCore extends Cache
      */
     public function delete($key)
     {
-        if ($key == '*') {
+        if ($key === '*') {
             $this->flush();
         } elseif (strpos($key, '*') === false) {
             $this->_delete($key);
@@ -232,7 +206,7 @@ class CacheMemcachedCore extends Cache
      */
     protected function close()
     {
-        if (!$this->isConnected()) {
+        if (! $this->isConnected()) {
             return false;
         }
 
@@ -243,8 +217,8 @@ class CacheMemcachedCore extends Cache
      * Add a memcached server.
      *
      * @param string $ip
-     * @param int $port
-     * @param int $weight
+     * @param int    $port
+     * @param int    $weight
      *
      * @return bool
      */

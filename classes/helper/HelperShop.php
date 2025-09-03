@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -32,7 +33,7 @@ class HelperShopCore extends Helper
      */
     public function getRenderedShopList()
     {
-        if (!Shop::isFeatureActive() || Shop::getTotalShops(false, null) < 2) {
+        if (! Shop::isFeatureActive() || Shop::getTotalShops(false, null) < 2) {
             return '';
         }
 
@@ -41,7 +42,7 @@ class HelperShopCore extends Helper
 
         if ($this->noShopSelection()) {
             $current_shop_value = '';
-        } elseif ($shop_context == Shop::CONTEXT_GROUP) {
+        } elseif ($shop_context === Shop::CONTEXT_GROUP) {
             $current_shop_value = 'g-' . Shop::getContextShopGroupID();
         } else {
             $current_shop_value = 's-' . Shop::getContextShopID();
@@ -73,12 +74,12 @@ class HelperShopCore extends Helper
         $current_shop_name = '';
         if ($this->noShopSelection()) {
             $current_shop_name = Context::getContext()->getTranslator()->trans('All stores');
-        } elseif ($shop_context == Shop::CONTEXT_GROUP) {
+        } elseif ($shop_context === Shop::CONTEXT_GROUP) {
             $current_shop_name = sprintf(Context::getContext()->getTranslator()->trans('%s group'), $tree[Shop::getContextShopGroupID()]['name']);
         } else {
             foreach ($tree as $group_data) {
                 foreach ($group_data['shops'] as $shop_id => $shop_data) {
-                    if ($shop_id == Shop::getContextShopID()) {
+                    if ($shop_id === Shop::getContextShopID()) {
                         $current_shop_name = $shop_data['name'];
 
                         break;
@@ -98,7 +99,7 @@ class HelperShopCore extends Helper
         $shop_context = Shop::getContext();
         $context = Context::getContext();
 
-        return $shop_context == Shop::CONTEXT_ALL
-        || ($context->controller->multishop_context_group == false && $shop_context == Shop::CONTEXT_GROUP);
+        return $shop_context === Shop::CONTEXT_ALL
+        || ($context->controller->multishop_context_group === false && $shop_context === Shop::CONTEXT_GROUP);
     }
 }

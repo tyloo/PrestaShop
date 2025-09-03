@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,7 +31,6 @@ class TaxManagerFactoryCore
     /**
      * Returns a tax manager able to handle this address.
      *
-     * @param Address $address
      * @param int $type
      *
      * @return TaxManagerInterface
@@ -38,9 +38,9 @@ class TaxManagerFactoryCore
     public static function getManager(Address $address, $type)
     {
         $cache_id = TaxManagerFactory::getCacheKey($address) . '-' . $type;
-        if (!isset(TaxManagerFactory::$cache_tax_manager[$cache_id])) {
+        if (! isset(TaxManagerFactory::$cache_tax_manager[$cache_id])) {
             $tax_manager = TaxManagerFactory::execHookTaxManagerFactory($address, $type);
-            if (!($tax_manager instanceof TaxManagerInterface)) {
+            if (! ($tax_manager instanceof TaxManagerInterface)) {
                 $tax_manager = new TaxRulesTaxManager($address, $type);
             }
 
@@ -53,7 +53,6 @@ class TaxManagerFactoryCore
     /**
      * Check for a tax manager able to handle this type of address in the module list.
      *
-     * @param Address $address
      * @param int $type
      *
      * @return TaxManagerInterface|false
@@ -90,8 +89,6 @@ class TaxManagerFactoryCore
 
     /**
      * Create a unique identifier for the address.
-     *
-     * @param Address $address
      *
      * @return string
      */

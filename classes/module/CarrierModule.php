@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,6 +30,8 @@ abstract class CarrierModuleCore extends Module
 
     abstract public function getOrderShippingCostExternal($params);
 
-    /** @var int|null */
+    /**
+     * @var int|null
+     */
     public $id_carrier;
 }

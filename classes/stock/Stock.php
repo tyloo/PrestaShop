@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,37 +32,59 @@
  */
 class StockCore extends ObjectModel
 {
-    /** @var int identifier of the warehouse */
+    /**
+     * @var int identifier of the warehouse
+     */
     public $id_warehouse;
 
-    /** @var int identifier of the product */
+    /**
+     * @var int identifier of the product
+     */
     public $id_product;
 
-    /** @var int identifier of the product attribute if necessary */
+    /**
+     * @var int identifier of the product attribute if necessary
+     */
     public $id_product_attribute;
 
-    /** @var string Product reference */
+    /**
+     * @var string Product reference
+     */
     public $reference;
 
-    /** @var string Product EAN13 */
+    /**
+     * @var string Product EAN13
+     */
     public $ean13;
 
-    /** @var string Product ISBN */
+    /**
+     * @var string Product ISBN
+     */
     public $isbn;
 
-    /** @var string UPC */
+    /**
+     * @var string UPC
+     */
     public $upc;
 
-    /** @var string MPN */
+    /**
+     * @var string MPN
+     */
     public $mpn;
 
-    /** @var int the physical quantity in stock for the current product in the current warehouse */
+    /**
+     * @var int the physical quantity in stock for the current product in the current warehouse
+     */
     public $physical_quantity;
 
-    /** @var int the usable quantity (for sale) of the current physical quantity */
+    /**
+     * @var int the usable quantity (for sale) of the current physical quantity
+     */
     public $usable_quantity;
 
-    /** @var float the unit price without tax forthe current product */
+    /**
+     * @var float the unit price without tax forthe current product
+     */
     public $price_te;
 
     /**
@@ -71,17 +94,61 @@ class StockCore extends ObjectModel
         'table' => 'stock',
         'primary' => 'id_stock',
         'fields' => [
-            'id_warehouse' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_product' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_product_attribute' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'reference' => ['type' => self::TYPE_STRING, 'validate' => 'isReference', 'size' => 64],
-            'ean13' => ['type' => self::TYPE_STRING, 'validate' => 'isEan13', 'size' => 13],
-            'isbn' => ['type' => self::TYPE_STRING, 'validate' => 'isIsbn', 'size' => 32],
-            'upc' => ['type' => self::TYPE_STRING, 'validate' => 'isUpc', 'size' => 12],
-            'mpn' => ['type' => self::TYPE_STRING, 'validate' => 'isMpn', 'size' => 40],
-            'physical_quantity' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'required' => true],
-            'usable_quantity' => ['type' => self::TYPE_INT, 'validate' => 'isInt', 'required' => true],
-            'price_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
+            'id_warehouse' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_product_attribute' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'reference' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isReference',
+                'size' => 64,
+            ],
+            'ean13' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isEan13',
+                'size' => 13,
+            ],
+            'isbn' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isIsbn',
+                'size' => 32,
+            ],
+            'upc' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isUpc',
+                'size' => 12,
+            ],
+            'mpn' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isMpn',
+                'size' => 40,
+            ],
+            'physical_quantity' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+                'required' => true,
+            ],
+            'usable_quantity' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+                'required' => true,
+            ],
+            'price_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
         ],
     ];
 
@@ -90,10 +157,19 @@ class StockCore extends ObjectModel
      */
     protected $webserviceParameters = [
         'fields' => [
-            'id_warehouse' => ['xlink_resource' => 'warehouses'],
-            'id_product' => ['xlink_resource' => 'products'],
-            'id_product_attribute' => ['xlink_resource' => 'combinations'],
-            'real_quantity' => ['getter' => 'getWsRealQuantity', 'setter' => false],
+            'id_warehouse' => [
+                'xlink_resource' => 'warehouses',
+            ],
+            'id_product' => [
+                'xlink_resource' => 'products',
+            ],
+            'id_product_attribute' => [
+                'xlink_resource' => 'combinations',
+            ],
+            'real_quantity' => [
+                'getter' => 'getWsRealQuantity',
+                'setter' => false,
+            ],
         ],
         'hidden_fields' => [
         ],
@@ -134,7 +210,7 @@ class StockCore extends ObjectModel
             $query->where('id_product_attribute = ' . (int) $this->id_product_attribute);
             $rows = Db::getInstance()->executeS($query);
 
-            if (!is_array($rows)) {
+            if (! is_array($rows)) {
                 return;
             }
 
@@ -172,7 +248,7 @@ class StockCore extends ObjectModel
 
     public static function deleteStockByIds($id_product = null, $id_product_attribute = null)
     {
-        if (!$id_product || !$id_product_attribute) {
+        if (! $id_product || ! $id_product_attribute) {
             return false;
         }
 
@@ -181,13 +257,13 @@ class StockCore extends ObjectModel
 
     public static function productIsPresentInStock($id_product = 0, $id_product_attribute = 0, $id_warehouse = 0)
     {
-        if (!(int) $id_product && !is_int($id_product_attribute) && !(int) $id_warehouse) {
+        if (! (int) $id_product && ! is_int($id_product_attribute) && ! (int) $id_warehouse) {
             return false;
         }
 
         $result = Db::getInstance()->executeS('SELECT `id_stock` FROM ' . _DB_PREFIX_ . 'stock
 			WHERE `id_warehouse` = ' . (int) $id_warehouse . ' AND `id_product` = ' . (int) $id_product . ((int) $id_product_attribute ? ' AND `id_product_attribute` = ' . $id_product_attribute : ''));
 
-        return is_array($result) && !empty($result) ? true : false;
+        return is_array($result) && ! empty($result) ? true : false;
     }
 }

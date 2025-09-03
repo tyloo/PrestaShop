@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,7 +48,7 @@ class HelperCalendarCore extends Helper
 
     public function setActions($value)
     {
-        if (!is_array($value) && !$value instanceof Traversable) {
+        if (! is_array($value) && ! $value instanceof Traversable) {
             throw new PrestaShopException('Actions value must be an traversable array');
         }
 
@@ -58,7 +59,7 @@ class HelperCalendarCore extends Helper
 
     public function getActions()
     {
-        if (!isset($this->_actions)) {
+        if (! isset($this->_actions)) {
             $this->_actions = [];
         }
 
@@ -67,7 +68,7 @@ class HelperCalendarCore extends Helper
 
     public function setCompareActions($value)
     {
-        if (!is_array($value) && !$value instanceof Traversable) {
+        if (! is_array($value) && ! $value instanceof Traversable) {
             throw new PrestaShopException('Actions value must be an traversable array');
         }
 
@@ -78,7 +79,7 @@ class HelperCalendarCore extends Helper
 
     public function getCompareActions()
     {
-        if (!isset($this->_compare_actions)) {
+        if (! isset($this->_compare_actions)) {
             $this->_compare_actions = [];
         }
 
@@ -118,7 +119,7 @@ class HelperCalendarCore extends Helper
 
     public function getCompareOption()
     {
-        if (!isset($this->_compare_date_option)) {
+        if (! isset($this->_compare_date_option)) {
             $this->_compare_date_option = self::DEFAULT_COMPARE_OPTION;
         }
 
@@ -127,7 +128,7 @@ class HelperCalendarCore extends Helper
 
     public function setDateFormat($value)
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             throw new PrestaShopException('Date format must be a string');
         }
 
@@ -138,7 +139,7 @@ class HelperCalendarCore extends Helper
 
     public function getDateFormat()
     {
-        if (!isset($this->_date_format)) {
+        if (! isset($this->_date_format)) {
             $this->_date_format = self::DEFAULT_DATE_FORMAT;
         }
 
@@ -151,7 +152,7 @@ class HelperCalendarCore extends Helper
             $value = strtotime('-31 days');
         }
 
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             throw new PrestaShopException('Date must be a string');
         }
 
@@ -162,7 +163,7 @@ class HelperCalendarCore extends Helper
 
     public function getDateFrom()
     {
-        if (!isset($this->_date_from)) {
+        if (! isset($this->_date_from)) {
             $this->setDateFrom();
         }
 
@@ -175,7 +176,7 @@ class HelperCalendarCore extends Helper
             $value = strtotime('-31 days');
         }
 
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             throw new PrestaShopException('Date must be a string');
         }
 
@@ -186,7 +187,7 @@ class HelperCalendarCore extends Helper
 
     public function getDateTo()
     {
-        if (!isset($this->_date_to)) {
+        if (! isset($this->_date_to)) {
             $this->setDateTo();
         }
 
@@ -202,7 +203,7 @@ class HelperCalendarCore extends Helper
 
     public function addAction($action)
     {
-        if (!isset($this->_actions)) {
+        if (! isset($this->_actions)) {
             $this->_actions = [];
         }
 
@@ -213,7 +214,7 @@ class HelperCalendarCore extends Helper
 
     public function addCompareAction($action)
     {
-        if (!isset($this->_compare_actions)) {
+        if (! isset($this->_compare_actions)) {
             $this->_compare_actions = [];
         }
 
@@ -226,11 +227,11 @@ class HelperCalendarCore extends Helper
     {
         $context = Context::getContext();
         $admin_webpath = str_ireplace(_PS_CORE_DIR_, '', _PS_ADMIN_DIR_);
-        $admin_webpath = preg_replace('/^' . preg_quote(DIRECTORY_SEPARATOR, '/') . '/', '', $admin_webpath);
+        $admin_webpath = preg_replace('/^' . preg_quote(\DIRECTORY_SEPARATOR, '/') . '/', '', $admin_webpath);
         $bo_theme = ((Validate::isLoadedObject($context->employee)
             && $context->employee->bo_theme) ? $context->employee->bo_theme : 'default');
 
-        if (!file_exists(_PS_BO_ALL_THEMES_DIR_ . $bo_theme . DIRECTORY_SEPARATOR
+        if (! file_exists(_PS_BO_ALL_THEMES_DIR_ . $bo_theme . \DIRECTORY_SEPARATOR
             . 'template')) {
             $bo_theme = 'default';
         }
@@ -268,7 +269,7 @@ class HelperCalendarCore extends Helper
 
     public function isRTL()
     {
-        if (!isset($this->_rtl)) {
+        if (! isset($this->_rtl)) {
             $this->_rtl = Context::getContext()->language->is_rtl;
         }
 

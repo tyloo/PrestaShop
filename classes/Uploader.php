@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,22 +32,32 @@ class UploaderCore
 {
     public const DEFAULT_MAX_SIZE = 10485760;
 
-    /** @var bool|null */
+    /**
+     * @var bool|null
+     */
     private $_check_file_size;
-    /** @var array<string> */
+    /**
+     * @var array<string>
+     */
     private $_accept_types = [];
-    /** @var array */
+    /**
+     * @var array
+     */
     private $_files = [];
-    /** @var int */
+    /**
+     * @var int
+     */
     private $_max_size;
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $_name;
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $_save_path;
 
     /**
-     * UploaderCore constructor.
-     *
      * @param string|null $name
      */
     public function __construct($name = null)
@@ -94,7 +105,7 @@ class UploaderCore
      */
     public function getFilePath($fileName = null)
     {
-        if (!isset($fileName)) {
+        if (! isset($fileName)) {
             return tempnam($this->getSavePath(), $this->getUniqueFileName());
         }
 
@@ -126,9 +137,6 @@ class UploaderCore
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getMaxSize()
     {
         if (empty($this->_max_size)) {
@@ -150,9 +158,6 @@ class UploaderCore
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getName()
     {
         return $this->_name;
@@ -190,7 +195,7 @@ class UploaderCore
                 $bytes *= 1024;
         }
 
-        if ($bytes == '') {
+        if ($bytes === '') {
             $bytes = null;
         }
 
@@ -202,7 +207,7 @@ class UploaderCore
      */
     public function getSavePath()
     {
-        if (!isset($this->_save_path)) {
+        if (! isset($this->_save_path)) {
             $this->setSavePath(_PS_UPLOAD_DIR_);
         }
 
@@ -258,9 +263,7 @@ class UploaderCore
 
     /**
      * @param array<string, string> $file
-     * @param string|null $dest
-     *
-     * @return mixed
+     * @param string|null           $dest
      */
     public function upload($file, $dest = null)
     {
@@ -362,7 +365,7 @@ class UploaderCore
         $types = $this->getAcceptTypes();
 
         // TODO check mime type.
-        if (!empty($types) && !in_array(Tools::strtolower(pathinfo($file['name'], PATHINFO_EXTENSION)), $types)) {
+        if (! empty($types) && ! in_array(Tools::strtolower(pathinfo($file['name'], \PATHINFO_EXTENSION)), $types, true)) {
             $file['error'] = Context::getContext()->getTranslator()->trans('Filetype not allowed', [], 'Admin.Notifications.Error');
 
             return false;
@@ -379,7 +382,7 @@ class UploaderCore
 
     /**
      * @param string $filePath
-     * @param bool $clearStatCache
+     * @param bool   $clearStatCache
      *
      * @return int
      */
@@ -411,13 +414,13 @@ class UploaderCore
     {
         $last = $directory[strlen($directory) - 1];
 
-        if (in_array($last, ['/', '\\'])) {
-            $directory[strlen($directory) - 1] = DIRECTORY_SEPARATOR;
+        if (in_array($last, ['/', '\\'], true)) {
+            $directory[strlen($directory) - 1] = \DIRECTORY_SEPARATOR;
 
             return $directory;
         }
 
-        $directory .= DIRECTORY_SEPARATOR;
+        $directory .= \DIRECTORY_SEPARATOR;
 
         return $directory;
     }

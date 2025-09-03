@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -135,7 +136,7 @@ abstract class HTMLTemplateCore
 
         $width = 0;
         $height = 0;
-        if (!empty($logo)) {
+        if (! empty($logo)) {
             list($width, $height) = getimagesize(_PS_IMG_DIR_ . $logo);
         }
 
@@ -167,7 +168,7 @@ abstract class HTMLTemplateCore
      */
     public function assignHookData($object)
     {
-        $template = ucfirst(str_replace('HTMLTemplate', '', get_class($this)));
+        $template = ucfirst(str_replace('HTMLTemplate', '', static::class));
         $hook_name = 'displayPDF' . $template;
 
         $this->smarty->assign([
@@ -214,8 +215,8 @@ abstract class HTMLTemplateCore
     protected function getTemplate($template_name)
     {
         $template = false;
-        $default_template = rtrim(_PS_PDF_DIR_, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $template_name . '.tpl';
-        $overridden_template = _PS_ALL_THEMES_DIR_ . $this->shop->theme->getName() . DIRECTORY_SEPARATOR . 'pdf' . DIRECTORY_SEPARATOR . $template_name . '.tpl';
+        $default_template = rtrim(_PS_PDF_DIR_, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR . $template_name . '.tpl';
+        $overridden_template = _PS_ALL_THEMES_DIR_ . $this->shop->theme->getName() . \DIRECTORY_SEPARATOR . 'pdf' . \DIRECTORY_SEPARATOR . $template_name . '.tpl';
         if (file_exists($overridden_template)) {
             $template = $overridden_template;
         } elseif (file_exists($default_template)) {

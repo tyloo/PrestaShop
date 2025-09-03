@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -27,34 +28,54 @@ abstract class ModuleGridCore extends Module
 {
     protected $_employee;
 
-    /** @var array of strings graph data */
+    /**
+     * @var array of strings graph data
+     */
     protected $_values = [];
 
-    /** @var int total number of values * */
+    /**
+     * @var int total number of values *
+     */
     protected $_totalCount = 0;
 
-    /** @var string graph titles */
+    /**
+     * @var string graph titles
+     */
     protected $_title;
 
-    /** @var int start */
+    /**
+     * @var int start
+     */
     protected $_start;
 
-    /** @var int limit */
+    /**
+     * @var int limit
+     */
     protected $_limit;
 
-    /** @var string column name on which to sort */
-    protected $_sort = null;
+    /**
+     * @var string column name on which to sort
+     */
+    protected $_sort;
 
-    /** @var string sort direction DESC/ASC */
-    protected $_direction = null;
+    /**
+     * @var string sort direction DESC/ASC
+     */
+    protected $_direction;
 
-    /** @var ModuleGridEngine grid engine */
+    /**
+     * @var ModuleGridEngine grid engine
+     */
     protected $_render;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $_id_lang;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $_csv;
 
     abstract protected function getData();
@@ -71,10 +92,10 @@ abstract class ModuleGridCore extends Module
 
     public function create($render, $type, $width, $height, $start, $limit, $sort, $dir)
     {
-        if (!Validate::isModuleName($render)) {
+        if (! Validate::isModuleName($render)) {
             throw new PrestaShopException('Invalid grid module name.');
         }
-        if (!Tools::file_exists_cache($file = _PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
+        if (! Tools::file_exists_cache($file = _PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
             throw new PrestaShopException('Main grid module file does not exist.');
         }
         require_once $file;
@@ -101,13 +122,13 @@ abstract class ModuleGridCore extends Module
 
     public function engine($params)
     {
-        if (!($render = Configuration::get('PS_STATS_GRID_RENDER'))) {
+        if (! ($render = Configuration::get('PS_STATS_GRID_RENDER'))) {
             return Context::getContext()->getTranslator()->trans('No grid engine selected', [], 'Admin.Modules.Notification');
         }
-        if (!Validate::isModuleName($render)) {
+        if (! Validate::isModuleName($render)) {
             throw new PrestaShopException('Invalid grid module name.');
         }
-        if (!file_exists(_PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
+        if (! file_exists(_PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
             return Context::getContext()->getTranslator()->trans('Grid engine selected is unavailable.', [], 'Admin.Modules.Notification');
         }
 
@@ -117,16 +138,16 @@ abstract class ModuleGridCore extends Module
         $grider .= '&id_employee=' . (int) $context->employee->id;
         $grider .= '&id_lang=' . (int) $context->language->id;
 
-        if (!isset($params['width']) || !Validate::IsUnsignedInt($params['width'])) {
+        if (! isset($params['width']) || ! Validate::IsUnsignedInt($params['width'])) {
             $params['width'] = 600;
         }
-        if (!isset($params['height']) || !Validate::IsUnsignedInt($params['height'])) {
+        if (! isset($params['height']) || ! Validate::IsUnsignedInt($params['height'])) {
             $params['height'] = 920;
         }
-        if (!isset($params['start']) || !Validate::IsUnsignedInt($params['start'])) {
+        if (! isset($params['start']) || ! Validate::IsUnsignedInt($params['start'])) {
             $params['start'] = 0;
         }
-        if (!isset($params['limit']) || !Validate::IsUnsignedInt($params['limit'])) {
+        if (! isset($params['limit']) || ! Validate::IsUnsignedInt($params['limit'])) {
             $params['limit'] = 40;
         }
 

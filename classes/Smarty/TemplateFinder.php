@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,13 +51,13 @@ class TemplateFinderCore
 
         foreach ($this->directories as $dir) {
             foreach ($templates as $tpl) {
-                if (!empty($locale) && is_file($dir . $locale . DIRECTORY_SEPARATOR . $tpl . $this->extension)) {
-                    return $locale . DIRECTORY_SEPARATOR . $tpl . $this->extension;
+                if (! empty($locale) && is_file($dir . $locale . \DIRECTORY_SEPARATOR . $tpl . $this->extension)) {
+                    return $locale . \DIRECTORY_SEPARATOR . $tpl . $this->extension;
                 }
                 if (is_file($dir . $tpl . $this->extension)) {
                     return $tpl . $this->extension;
                 }
-                if (is_file($dir . $tpl) && false !== strpos($tpl, $this->extension)) {
+                if (is_file($dir . $tpl) && strpos($tpl, $this->extension) !== false) {
                     return $tpl;
                 }
             }
@@ -70,37 +71,37 @@ class TemplateFinderCore
         $entity = basename($entity ?? '');
         $id = (int) $id;
 
-        if (in_array($entity, $this->getProductListEntities())) {
+        if (in_array($entity, $this->getProductListEntities(), true)) {
             $templates = [
                 'catalog/listing/' . $entity . '-' . $id,
                 'catalog/listing/' . $entity,
                 $template,
                 'catalog/listing/product-list',
             ];
-        } elseif (in_array($entity, $this->getProductListSearchEntities())) {
+        } elseif (in_array($entity, $this->getProductListSearchEntities(), true)) {
             $templates = [
                 'catalog/listing/' . $entity,
                 $template,
                 'catalog/listing/product-list',
             ];
-        } elseif (in_array($entity, $this->getProductEntities())) {
+        } elseif (in_array($entity, $this->getProductEntities(), true)) {
             $templates = [
                 'catalog/' . $entity . '-' . $id,
                 $template,
                 'catalog/product',
             ];
-        } elseif (in_array($entity, $this->getBrandListEntities())) {
+        } elseif (in_array($entity, $this->getBrandListEntities(), true)) {
             $templates = [
                 $template,
                 'catalog/brands',
             ];
-        } elseif ('cms' === $entity) {
+        } elseif ($entity === 'cms') {
             $templates = [
                 'cms/page-' . $id,
                 $template,
                 'cms/page',
             ];
-        } elseif ('cms_category' === $entity) {
+        } elseif ($entity === 'cms_category') {
             $templates = [
                 'cms/category-' . $id,
                 $template,

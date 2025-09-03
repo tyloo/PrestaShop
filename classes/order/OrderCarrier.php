@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -25,31 +26,49 @@
  */
 class OrderCarrierCore extends ObjectModel
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_order_carrier;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_order;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_carrier;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_order_invoice;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $weight;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $shipping_cost_tax_excl;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $shipping_cost_tax_incl;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $tracking_number;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
     /**
@@ -59,22 +78,55 @@ class OrderCarrierCore extends ObjectModel
         'table' => 'order_carrier',
         'primary' => 'id_order_carrier',
         'fields' => [
-            'id_order' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_carrier' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_order_invoice' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'weight' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat'],
-            'shipping_cost_tax_excl' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat'],
-            'shipping_cost_tax_incl' => ['type' => self::TYPE_FLOAT, 'validate' => 'isFloat'],
-            'tracking_number' => ['type' => self::TYPE_STRING, 'validate' => 'isTrackingNumber', 'size' => 64],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'id_order' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_carrier' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_order_invoice' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'weight' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+            ],
+            'shipping_cost_tax_excl' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+            ],
+            'shipping_cost_tax_incl' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isFloat',
+            ],
+            'tracking_number' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isTrackingNumber',
+                'size' => 64,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
         ],
     ];
 
     protected $webserviceParameters = [
-        'objectMethods' => ['update' => 'updateWs'],
+        'objectMethods' => [
+            'update' => 'updateWs',
+        ],
         'fields' => [
-            'id_order' => ['xlink_resource' => 'orders'],
-            'id_carrier' => ['xlink_resource' => 'carriers'],
+            'id_order' => [
+                'xlink_resource' => 'orders',
+            ],
+            'id_carrier' => [
+                'xlink_resource' => 'carriers',
+            ],
         ],
     ];
 
@@ -90,17 +142,17 @@ class OrderCarrierCore extends ObjectModel
         $carrier = new Carrier((int) $order->id_carrier, $orderLanguageId);
         $address = new Address((int) $order->id_address_delivery);
 
-        if (!Validate::isLoadedObject($customer)) {
+        if (! Validate::isLoadedObject($customer)) {
             throw new PrestaShopException('Can\'t load Customer object');
         }
-        if (!Validate::isLoadedObject($carrier)) {
+        if (! Validate::isLoadedObject($carrier)) {
             throw new PrestaShopException('Can\'t load Carrier object');
         }
-        if (!Validate::isLoadedObject($address)) {
+        if (! Validate::isLoadedObject($address)) {
             throw new PrestaShopException('Can\'t load Address object');
         }
 
-        if (!$carrier->url) {
+        if (! $carrier->url) {
             // the url field of the carrier is empty therefore the e-mail must not be sent
             return true;
         }
@@ -116,12 +168,12 @@ class OrderCarrierCore extends ObjectModel
             $img = $prod_obj->getCombinationImages($orderLanguageId);
             $link_rewrite = $prod_obj->link_rewrite[$orderLanguageId];
             $combination_img = $img[$product['product_attribute_id']][0]['id_image'] ?? null;
-            if ($combination_img != null) {
+            if ($combination_img !== null) {
                 $img_url = $link->getImageLink($link_rewrite, $combination_img, 'large_default');
             } else {
                 // if there is no combination image, then get the product cover instead
                 $img = $prod_obj->getCover($prod_obj->id);
-                $img_url = !empty($img['id_image']) ? $link->getImageLink($link_rewrite, $img['id_image']) : '';
+                $img_url = ! empty($img['id_image']) ? $link->getImageLink($link_rewrite, $img['id_image']) : '';
             }
             $prod_url = $prod_obj->getLink();
 
@@ -169,14 +221,14 @@ class OrderCarrierCore extends ObjectModel
             (int) $order->id_shop
         )) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public function updateWs()
     {
-        if (!parent::update()) {
+        if (! parent::update()) {
             return false;
         }
 
@@ -184,11 +236,11 @@ class OrderCarrierCore extends ObjectModel
 
         if ($sendemail) {
             $order = new Order((int) $this->id_order);
-            if (!Validate::isLoadedObject($order)) {
+            if (! Validate::isLoadedObject($order)) {
                 throw new PrestaShopException('Can\'t load Order object');
             }
 
-            if (!$this->sendInTransitEmail($order)) {
+            if (! $this->sendInTransitEmail($order)) {
                 return false;
             }
         }

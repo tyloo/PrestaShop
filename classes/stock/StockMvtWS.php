@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -71,7 +72,7 @@ class StockMvtWSCore extends ObjectModelCore
     /**
      * @var int Used when the movement is due to a customer order
      */
-    public $id_order = null;
+    public $id_order;
 
     /**
      * @var int detrmine if the movement is a positive or negative operation
@@ -81,17 +82,17 @@ class StockMvtWSCore extends ObjectModelCore
     /**
      * @var int Used when the movement is due to a supplier order
      */
-    public $id_supply_order = null;
+    public $id_supply_order;
 
     /**
      * @var float Last value of the weighted-average method
      */
-    public $last_wa = null;
+    public $last_wa;
 
     /**
      * @var float Current value of the weighted-average method
      */
-    public $current_wa = null;
+    public $current_wa;
 
     /**
      * @var float The unit price without tax of the product associated to the movement
@@ -160,20 +161,71 @@ class StockMvtWSCore extends ObjectModelCore
         'table' => 'stock_mvt',
         'primary' => 'id_stock_mvt',
         'fields' => [
-            'id_employee' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'employee_firstname' => ['type' => self::TYPE_STRING, 'validate' => 'isName', 'size' => 255],
-            'employee_lastname' => ['type' => self::TYPE_STRING, 'validate' => 'isName', 'size' => 255],
-            'id_stock' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'physical_quantity' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'required' => true],
-            'id_stock_mvt_reason' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_order' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'id_supply_order' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'sign' => ['type' => self::TYPE_INT, 'validate' => 'isInt', 'required' => true],
-            'last_wa' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice'],
-            'current_wa' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice'],
-            'price_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice', 'required' => true],
-            'referer' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'required' => true],
+            'id_employee' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'employee_firstname' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isName',
+                'size' => 255,
+            ],
+            'employee_lastname' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isName',
+                'size' => 255,
+            ],
+            'id_stock' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'physical_quantity' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+                'required' => true,
+            ],
+            'id_stock_mvt_reason' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_order' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'id_supply_order' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'sign' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+                'required' => true,
+            ],
+            'last_wa' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+            ],
+            'current_wa' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+            ],
+            'price_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+                'required' => true,
+            ],
+            'referer' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+                'required' => true,
+            ],
         ],
     ];
 
@@ -182,10 +234,18 @@ class StockMvtWSCore extends ObjectModelCore
      */
     protected $webserviceParameters = [
         'fields' => [
-            'id_product' => ['xlink_resource' => 'products'],
-            'id_product_attribute' => ['xlink_resource' => 'combinations'],
-            'id_warehouse' => ['xlink_resource' => 'warehouses'],
-            'id_currency' => ['xlink_resource' => 'currencies'],
+            'id_product' => [
+                'xlink_resource' => 'products',
+            ],
+            'id_product_attribute' => [
+                'xlink_resource' => 'combinations',
+            ],
+            'id_warehouse' => [
+                'xlink_resource' => 'warehouses',
+            ],
+            'id_currency' => [
+                'xlink_resource' => 'currencies',
+            ],
             'management_type' => [],
             'id_employee' => ['xlink_resource' => 'employees'],
             'id_stock' => ['xlink_resource' => 'stocks'],
@@ -230,7 +290,7 @@ class StockMvtWSCore extends ObjectModelCore
         // calls parent
         parent::__construct($id, $id_lang, $id_shop);
 
-        if ((int) $this->id != 0) {
+        if ((int) $this->id !== 0) {
             $res = $this->getWebserviceObjectList('', ' AND ' . $this->def['primary'] . ' = ' . (int) $this->id, '', '', true);
             if (isset($res[0])) {
                 foreach ($this->tables_assoc as $key => $param) {

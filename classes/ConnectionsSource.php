@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,25 +44,45 @@ class ConnectionsSourceCore extends ObjectModel
         'table' => 'connections_source',
         'primary' => 'id_connections_source',
         'fields' => [
-            'id_connections' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'http_referer' => ['type' => self::TYPE_STRING, 'validate' => 'isAbsoluteUrl', 'size' => 255],
-            'request_uri' => ['type' => self::TYPE_STRING, 'validate' => 'isUrl', 'size' => 255],
-            'keywords' => ['type' => self::TYPE_STRING, 'validate' => 'isMessage', 'size' => 255],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate', 'required' => true],
+            'id_connections' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'http_referer' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isAbsoluteUrl',
+                'size' => 255,
+            ],
+            'request_uri' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isUrl',
+                'size' => 255,
+            ],
+            'keywords' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isMessage',
+                'size' => 255,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+                'required' => true,
+            ],
         ],
     ];
 
     public static function logHttpReferer(?Cookie $cookie = null)
     {
-        if (!$cookie) {
+        if (! $cookie) {
             $cookie = Context::getContext()->cookie;
         }
-        if (!isset($cookie->id_connections) || !Validate::isUnsignedInt($cookie->id_connections)) {
+        if (! isset($cookie->id_connections) || ! Validate::isUnsignedInt($cookie->id_connections)) {
             return false;
         }
 
         // If the referrer is not correct, we drop the connection
-        if (isset($_SERVER['HTTP_REFERER']) && !Validate::isAbsoluteUrl($_SERVER['HTTP_REFERER'])) {
+        if (isset($_SERVER['HTTP_REFERER']) && ! Validate::isAbsoluteUrl($_SERVER['HTTP_REFERER'])) {
             return false;
         }
 
@@ -73,13 +94,13 @@ class ConnectionsSourceCore extends ObjectModel
             $parsed = parse_url($_SERVER['HTTP_REFERER']);
             $parsedHost = parse_url(Tools::getProtocol() . Tools::getHttpHost() . __PS_BASE_URI__);
 
-            if (!isset($parsed['host']) || (!isset($parsed['path']) || !isset($parsedHost['path']))) {
+            if (! isset($parsed['host']) || (! isset($parsed['path']) || ! isset($parsedHost['path']))) {
                 return false;
             }
 
             if (
-                preg_replace('/^www./', '', $parsed['host']) == preg_replace('/^www./', '', Tools::getHttpHost())
-                && !strncmp($parsed['path'], $parsedHost['path'], strlen(__PS_BASE_URI__))
+                preg_replace('/^www./', '', $parsed['host']) === preg_replace('/^www./', '', Tools::getHttpHost())
+                && ! strncmp($parsed['path'], $parsedHost['path'], strlen(__PS_BASE_URI__))
             ) {
                 return false;
             }
@@ -97,7 +118,7 @@ class ConnectionsSourceCore extends ObjectModel
             $source->request_uri .= $_SERVER['REDIRECT_URL'];
         }
 
-        if (!Validate::isUrl($source->request_uri)) {
+        if (! Validate::isUrl($source->request_uri)) {
             $source->request_uri = '';
         }
         $source->request_uri = substr($source->request_uri, 0, ConnectionsSource::$uri_max_size);

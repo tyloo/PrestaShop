@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -47,9 +48,21 @@ class RangePriceCore extends ObjectModel
         'table' => 'range_price',
         'primary' => 'id_range_price',
         'fields' => [
-            'id_carrier' => ['type' => self::TYPE_INT, 'validate' => 'isInt', 'required' => true],
-            'delimiter1' => ['type' => self::TYPE_FLOAT, 'validate' => 'isUnsignedFloat', 'required' => true],
-            'delimiter2' => ['type' => self::TYPE_FLOAT, 'validate' => 'isUnsignedFloat', 'required' => true],
+            'id_carrier' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+                'required' => true,
+            ],
+            'delimiter1' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isUnsignedFloat',
+                'required' => true,
+            ],
+            'delimiter2' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isUnsignedFloat',
+                'required' => true,
+            ],
         ],
     ];
 
@@ -57,7 +70,9 @@ class RangePriceCore extends ObjectModel
         'objectsNodeName' => 'price_ranges',
         'objectNodeName' => 'price_range',
         'fields' => [
-            'id_carrier' => ['xlink_resource' => 'carriers'],
+            'id_carrier' => [
+                'xlink_resource' => 'carriers',
+            ],
         ],
     ];
 
@@ -73,7 +88,7 @@ class RangePriceCore extends ObjectModel
      */
     public function add($autodate = true, $null_values = false)
     {
-        if (!parent::add($autodate, $null_values) || !Validate::isLoadedObject($this)) {
+        if (! parent::add($autodate, $null_values) || ! Validate::isLoadedObject($this)) {
             return false;
         }
         if (defined('PS_INSTALLATION_IN_PROGRESS')) {
@@ -114,9 +129,9 @@ class RangePriceCore extends ObjectModel
     /**
      * Check if a range exists for delimiter1 and delimiter2 by id_carrier or id_reference
      *
-     * @param int|null $id_carrier Carrier identifier
-     * @param float $delimiter1
-     * @param float $delimiter2
+     * @param int|null $id_carrier   Carrier identifier
+     * @param float    $delimiter1
+     * @param float    $delimiter2
      * @param int|null $id_reference Carrier reference is the initial Carrier identifier (optional)
      *
      * @return int|false Total of matching ranges, or false on error
@@ -126,21 +141,21 @@ class RangePriceCore extends ObjectModel
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
             SELECT count(*)
             FROM `' . _DB_PREFIX_ . 'range_price` rp' .
-            (null === $id_carrier && $id_reference ? '
+            ($id_carrier === null && $id_reference ? '
             INNER JOIN `' . _DB_PREFIX_ . 'carrier` c on (rp.`id_carrier` = c.`id_carrier`)' : '') . '
             WHERE' .
             ($id_carrier ? ' `id_carrier` = ' . (int) $id_carrier : '') .
-            (null === $id_carrier && $id_reference ? ' c.`id_reference` = ' . (int) $id_reference : '') . '
+            ($id_carrier === null && $id_reference ? ' c.`id_reference` = ' . (int) $id_reference : '') . '
             AND `delimiter1` = ' . (float) $delimiter1 . ' AND `delimiter2` = ' . (float) $delimiter2);
     }
 
     /**
      * Check if a range overlaps another range for this carrier
      *
-     * @param int $id_carrier Carrier identifier
-     * @param float $delimiter1
-     * @param float $delimiter2
-     * @param int|null $id_rang RangePrice identifier (optional)
+     * @param int      $id_carrier Carrier identifier
+     * @param float    $delimiter1
+     * @param float    $delimiter2
+     * @param int|null $id_rang    RangePrice identifier (optional)
      *
      * @return int|false Total of overlapping ranges, or false on error
      */
@@ -155,6 +170,6 @@ class RangePriceCore extends ObjectModel
                 OR (' . (float) $delimiter1 . ' > `delimiter1` AND ' . (float) $delimiter1 . ' < `delimiter2`)
                 OR (' . (float) $delimiter2 . ' < `delimiter1` AND ' . (float) $delimiter2 . ' > `delimiter2`)
             )
-            ' . (null !== $id_rang ? ' AND `id_range_price` != ' . (int) $id_rang : ''));
+            ' . ($id_rang !== null ? ' AND `id_range_price` != ' . (int) $id_rang : ''));
     }
 }

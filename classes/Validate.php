@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -87,26 +88,26 @@ class ValidateCore
     /**
      * Check for module URL validity.
      *
-     * @param string $url module URL to validate
-     * @param array $errors Reference array for catching errors
+     * @param string $url    module URL to validate
+     * @param array  $errors Reference array for catching errors
      *
      * @return bool Validity is ok or not
      */
     public static function isModuleUrl($url, &$errors)
     {
-        if (!$url || $url == 'http://') {
+        if (! $url || $url === 'http://') {
             $errors[] = Context::getContext()->getTranslator()->trans('Please specify module URL', [], 'Admin.Modules.Notification');
-        } elseif (substr($url, -4) != '.tar' && substr($url, -4) != '.zip' && substr($url, -4) != '.tgz' && substr($url, -7) != '.tar.gz') {
+        } elseif (substr($url, -4) !== '.tar' && substr($url, -4) !== '.zip' && substr($url, -4) !== '.tgz' && substr($url, -7) !== '.tar.gz') {
             $errors[] = Context::getContext()->getTranslator()->trans('Unknown archive type.', [], 'Admin.Modules.Notification');
         } else {
             if (strpos($url, 'http') === false) {
                 $url = 'http://' . $url;
             }
-            if (!is_array(@get_headers($url))) {
+            if (! is_array(@get_headers($url))) {
                 $errors[] = Context::getContext()->getTranslator()->trans('Invalid URL', [], 'Admin.Notifications.Error');
             }
         }
-        if (!count($errors)) {
+        if (! count($errors)) {
             return true;
         }
 
@@ -146,12 +147,12 @@ class ValidateCore
      */
     public static function isFloat($float)
     {
-        return (string) ((float) $float) == (string) $float;
+        return (string) ((float) $float) === (string) $float;
     }
 
     public static function isUnsignedFloat($float)
     {
-        return (string) ((float) $float) == (string) $float && $float >= 0;
+        return (string) ((float) $float) === (string) $float && $float >= 0;
     }
 
     /**
@@ -389,7 +390,7 @@ class ValidateCore
      */
     public static function isMessage($message)
     {
-        return !preg_match('/[<>{}]/i', $message);
+        return ! preg_match('/[<>{}]/i', $message);
     }
 
     /**
@@ -512,7 +513,7 @@ class ValidateCore
             return false;
         }
 
-        if (!$allow_iframe && preg_match('/<[\s]*(i?frame|form|input|embed|object)/ims', $html)) {
+        if (! $allow_iframe && preg_match('/<[\s]*(i?frame|form|input|embed|object)/ims', $html)) {
             return false;
         }
 
@@ -591,7 +592,7 @@ class ValidateCore
      */
     public static function isHashedPassword($hashedPasswd)
     {
-        return Tools::strlen($hashedPasswd) == 32 || Tools::strlen($hashedPasswd) == 60;
+        return Tools::strlen($hashedPasswd) === 32 || Tools::strlen($hashedPasswd) === 60;
     }
 
     /**
@@ -641,7 +642,7 @@ class ValidateCore
      */
     public static function isDate($date)
     {
-        if (!preg_match('/^([0-9]{4})-((?:0?[0-9])|(?:1[0-2]))-((?:0?[0-9])|(?:[1-2][0-9])|(?:3[01]))( [0-9]{2}:[0-9]{2}:[0-9]{2})?$/', $date, $matches)) {
+        if (! preg_match('/^([0-9]{4})-((?:0?[0-9])|(?:1[0-2]))-((?:0?[0-9])|(?:[1-2][0-9])|(?:3[01]))( [0-9]{2}:[0-9]{2}:[0-9]{2})?$/', $date, $matches)) {
             return false;
         }
 
@@ -650,7 +651,7 @@ class ValidateCore
 
     public static function isDateOrNull($date)
     {
-        if (null === $date || $date === '0000-00-00 00:00:00' || $date === '0000-00-00') {
+        if ($date === null || $date === '0000-00-00 00:00:00' || $date === '0000-00-00') {
             return true;
         }
 
@@ -660,19 +661,19 @@ class ValidateCore
     /**
      * Check for birthDate validity. To avoid year in two digits, disallow date < 120 years ago to match with BO rules
      *
-     * @param string $date birthdate to validate
+     * @param string $date   birthdate to validate
      * @param string $format optional format
      *
      * @return bool Validity is ok or not
      */
     public static function isBirthDate($date, $format = 'Y-m-d')
     {
-        if (empty($date) || $date == '0000-00-00') {
+        if (empty($date) || $date === '0000-00-00') {
             return true;
         }
 
         $d = DateTime::createFromFormat($format, $date);
-        if (!empty(DateTime::getLastErrors()['warning_count']) || false === $d) {
+        if (! empty(DateTime::getLastErrors()['warning_count']) || $d === false) {
             return false;
         }
         $oneHundredTwentyYearsAgo = new DateTime();
@@ -714,19 +715,15 @@ class ValidateCore
      */
     public static function isEan13($ean13)
     {
-        return !$ean13 || preg_match('/^[0-9]{0,13}$/', $ean13);
+        return ! $ean13 || preg_match('/^[0-9]{0,13}$/', $ean13);
     }
 
     /**
      * Check for barcode validity (GTIN)
-     *
-     * @param $gtin
-     *
-     * @return bool
      */
     public static function isGtin($gtin): bool
     {
-        return !$gtin || preg_match(Gtin::VALID_PATTERN, $gtin);
+        return ! $gtin || preg_match(Gtin::VALID_PATTERN, $gtin);
     }
 
     /**
@@ -738,7 +735,7 @@ class ValidateCore
      */
     public static function isIsbn($isbn)
     {
-        return !$isbn || preg_match(Isbn::VALID_PATTERN, $isbn);
+        return ! $isbn || preg_match(Isbn::VALID_PATTERN, $isbn);
     }
 
     /**
@@ -750,7 +747,7 @@ class ValidateCore
      */
     public static function isUpc($upc)
     {
-        return !$upc || preg_match('/^[0-9]{0,12}$/', $upc);
+        return ! $upc || preg_match('/^[0-9]{0,12}$/', $upc);
     }
 
     /**
@@ -786,7 +783,7 @@ class ValidateCore
      */
     public static function isZipCodeFormat($zip_code)
     {
-        if (!empty($zip_code)) {
+        if (! empty($zip_code)) {
             return preg_match('/^[NLCnlc 0-9-]+$/', $zip_code);
         }
 
@@ -803,7 +800,7 @@ class ValidateCore
      */
     public static function isOrderWay($way)
     {
-        return !empty($way) && in_array(strtolower($way), ['asc', 'desc', 'random']);
+        return ! empty($way) && in_array(strtolower($way), ['asc', 'desc', 'random'], true);
     }
 
     /**
@@ -816,7 +813,7 @@ class ValidateCore
      */
     public static function isOrderBy($order)
     {
-        return !empty($order) && preg_match(static::ORDER_BY_REGEXP, $order);
+        return ! empty($order) && preg_match(static::ORDER_BY_REGEXP, $order);
     }
 
     /**
@@ -994,7 +991,7 @@ class ValidateCore
      */
     public static function isAbsoluteUrl($url)
     {
-        if (!empty($url)) {
+        if (! empty($url)) {
             return preg_match('/^(https?:)?\/\/[$~:;#,%&_=\(\)\[\]\.\? \+\-@\/a-zA-Z0-9]+$/', $url);
         }
 
@@ -1003,7 +1000,7 @@ class ValidateCore
 
     public static function isMySQLEngine($engine)
     {
-        return in_array($engine, ['InnoDB', 'MyISAM']);
+        return in_array($engine, ['InnoDB', 'MyISAM'], true);
     }
 
     public static function isUnixName($data)
@@ -1106,7 +1103,7 @@ class ValidateCore
      */
     public static function isPriceDisplayMethod($data)
     {
-        return $data == PS_TAX_EXC || $data == PS_TAX_INC;
+        return $data === PS_TAX_EXC || $data === PS_TAX_INC;
     }
 
     /**
@@ -1128,7 +1125,7 @@ class ValidateCore
      */
     public static function isCookie($data)
     {
-        return is_object($data) && get_class($data) == 'Cookie';
+        return is_object($data) && get_class($data) === 'Cookie';
     }
 
     /**
@@ -1176,7 +1173,7 @@ class ValidateCore
      */
     public static function isLocalizationPackSelection($data)
     {
-        return in_array((string) $data, ['states', 'taxes', 'currencies', 'languages', 'units', 'groups']);
+        return in_array((string) $data, ['states', 'taxes', 'currencies', 'languages', 'units', 'groups'], true);
     }
 
     /**
@@ -1202,7 +1199,7 @@ class ValidateCore
     {
         json_decode($string);
 
-        return json_last_error() == JSON_ERROR_NONE;
+        return json_last_error() === \JSON_ERROR_NONE;
     }
 
     /**
@@ -1248,12 +1245,12 @@ class ValidateCore
      */
     public static function isArrayWithIds($ids)
     {
-        if (!is_array($ids) || count($ids) < 1) {
+        if (! is_array($ids) || count($ids) < 1) {
             return false;
         }
 
         foreach ($ids as $id) {
-            if ($id == 0 || !Validate::isUnsignedInt($id)) {
+            if ($id === 0 || ! Validate::isUnsignedInt($id)) {
                 return false;
             }
         }
@@ -1268,7 +1265,7 @@ class ValidateCore
      */
     public static function isStockManagement($stock_management)
     {
-        if (!in_array($stock_management, ['WA', 'FIFO', 'LIFO'])) {
+        if (! in_array($stock_management, ['WA', 'FIFO', 'LIFO'], true)) {
             return false;
         }
 
@@ -1284,11 +1281,11 @@ class ValidateCore
      */
     public static function isSiret($siret)
     {
-        if (Tools::strlen($siret) != 14) {
+        if (Tools::strlen($siret) !== 14) {
             return false;
         }
         $sum = 0;
-        for ($i = 0; $i != 14; ++$i) {
+        for ($i = 0; $i !== 14; ++$i) {
             $tmp = ((($i + 1) % 2) + 1) * (int) $siret[$i];
             if ($tmp >= 10) {
                 $tmp -= 9;
@@ -1335,19 +1332,19 @@ class ValidateCore
     {
         $isActive = property_exists($object, 'active') ? $object->active : true;
 
-        return !$isActive || !empty($value);
+        return ! $isActive || ! empty($value);
     }
 
     public static function defaultLanguageRequiredWhenActive($value, ?int $langId, ObjectModelCore $object): bool
     {
         static $defaultLangId = null;
-        if (null === $defaultLangId) {
+        if ($defaultLangId === null) {
             $defaultLangId = (int) Configuration::get('PS_LANG_DEFAULT');
         }
 
         $isActive = property_exists($object, 'active') ? $object->active : true;
 
-        return !$isActive || !empty($value) || $langId !== $defaultLangId;
+        return ! $isActive || ! empty($value) || $langId !== $defaultLangId;
     }
 
     /**
@@ -1359,7 +1356,7 @@ class ValidateCore
      */
     public static function isValidImapUrl($imapUrl)
     {
-        if (false === ini_get('imap.enable_insecure_rsh')) {
+        if (ini_get('imap.enable_insecure_rsh') === false) {
             return preg_match('~^((?!oProxyCommand).)*$~i', $imapUrl);
         }
 
@@ -1370,8 +1367,6 @@ class ValidateCore
      * Check the given string is a valid PHP class name
      *
      * @param string $objectClassName object class name
-     *
-     * @return bool
      */
     public static function isValidObjectClassName(string $objectClassName): bool
     {

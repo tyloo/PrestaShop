@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -25,15 +26,20 @@
  */
 
 /**
- * Class PaymentFree
  * Simple class to allow free order.
  */
 class PaymentFree extends PaymentModule
 {
-    /** @var bool Status */
+    /**
+     * @var bool Status
+     */
     public $active = true;
-    /** @var string */
+    /**
+     * @var string
+     */
     public $name = 'free_order';
-    /** @var string */
+    /**
+     * @var string
+     */
     public $displayName = 'Free order';
 }

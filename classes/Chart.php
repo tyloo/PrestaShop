@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -25,7 +26,9 @@
  */
 class ChartCore
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     protected static $poolId = 0;
 
     protected $width = 600;
@@ -40,30 +43,38 @@ class ChartCore
 
     protected $curves = [];
 
-    /** @prototype void public static function init(void) */
+    /**
+     * @prototype void public static function init(void)
+     */
     public static function init()
     {
-        if (!self::$poolId) {
+        if (! self::$poolId) {
             ++self::$poolId;
 
             return true;
         }
     }
 
-    /** @prototype void public function __construct() */
+    /**
+     * @prototype void public function __construct()
+     */
     public function __construct()
     {
         ++self::$poolId;
     }
 
-    /** @prototype void public function setSize(int $width, int $height) */
+    /**
+     * @prototype void public function setSize(int $width, int $height)
+     */
     public function setSize($width, $height)
     {
         $this->width = (int) $width;
         $this->height = (int) $height;
     }
 
-    /** @prototype void public function setTimeMode($from, $to, $granularity) */
+    /**
+     * @prototype void public function setTimeMode($from, $to, $granularity)
+     */
     public function setTimeMode($from, $to, $granularity)
     {
         $this->granularity = $granularity;
@@ -77,16 +88,16 @@ class ChartCore
         }
         $this->to = $to;
 
-        if ($granularity == 'd') {
+        if ($granularity === 'd') {
             $this->format = '%d/%m/%y';
         }
-        if ($granularity == 'w') {
+        if ($granularity === 'w') {
             $this->format = '%d/%m/%y';
         }
-        if ($granularity == 'm') {
+        if ($granularity === 'm') {
             $this->format = '%m/%y';
         }
-        if ($granularity == 'y') {
+        if ($granularity === 'y') {
             $this->format = '%y';
         }
 
@@ -95,14 +106,16 @@ class ChartCore
 
     public function getCurve($i)
     {
-        if (!array_key_exists($i, $this->curves)) {
+        if (! array_key_exists($i, $this->curves)) {
             $this->curves[$i] = new Curve();
         }
 
         return $this->curves[$i];
     }
 
-    /** @prototype void public function display() */
+    /**
+     * @prototype void public function display()
+     */
     public function display()
     {
         echo $this->fetch();
@@ -112,11 +125,11 @@ class ChartCore
     {
         if ($this->timeMode) {
             $options = 'xaxis:{mode:"time",timeformat:\'' . addslashes($this->format) . '\',min:' . $this->from . '000,max:' . $this->to . '000}';
-            if ($this->granularity == 'd') {
+            if ($this->granularity === 'd') {
                 foreach ($this->curves as $curve) {
-                    /* @var Curve $curve */
+                    /** @var Curve $curve */
                     for ($i = $this->from; $i <= $this->to; $i = strtotime('+1 day', $i)) {
-                        if (!$curve->getPoint($i)) {
+                        if (! $curve->getPoint($i)) {
                             $curve->setPoint($i, 0);
                         }
                     }

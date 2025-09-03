@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,8 +40,18 @@ class SearchEngineCore extends ObjectModel
         'table' => 'search_engine',
         'primary' => 'id_search_engine',
         'fields' => [
-            'server' => ['type' => self::TYPE_STRING, 'validate' => 'isUrl', 'required' => true, 'size' => 64],
-            'getvar' => ['type' => self::TYPE_STRING, 'validate' => 'isModuleName', 'required' => true, 'size' => 16],
+            'server' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isUrl',
+                'required' => true,
+                'size' => 64,
+            ],
+            'getvar' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isModuleName',
+                'required' => true,
+                'size' => 16,
+            ],
         ],
     ];
 
@@ -54,7 +65,7 @@ class SearchEngineCore extends ObjectModel
     public static function getKeywords($url)
     {
         $parsedUrl = @parse_url($url);
-        if (!isset($parsedUrl['host']) || !isset($parsedUrl['query'])) {
+        if (! isset($parsedUrl['host']) || ! isset($parsedUrl['query'])) {
             return false;
         }
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT `server`, `getvar` FROM `' . _DB_PREFIX_ . 'search_engine`');
@@ -71,7 +82,7 @@ class SearchEngineCore extends ObjectModel
                     return false;
                 }
                 $str = urldecode(str_replace('+', ' ', ltrim(substr(rtrim($array[0], '&'), strlen($varname) + 1), '=')));
-                if (!Validate::isMessage($str)) {
+                if (! Validate::isMessage($str)) {
                     return false;
                 }
 

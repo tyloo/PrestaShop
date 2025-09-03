@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -50,8 +51,6 @@ abstract class AbstractAssetManagerCore
     abstract protected function getList();
 
     /**
-     * @param string $relativePath
-     *
      * @return bool|string
      */
     public function getFullPath(string $relativePath)
@@ -70,9 +69,9 @@ abstract class AbstractAssetManagerCore
     {
         static $directories;
 
-        if (null === $directories) {
+        if ($directories === null) {
             foreach ($this->directories as $baseDir) {
-                if (!empty($baseDir)) {
+                if (! empty($baseDir)) {
                     $directories[] = $baseDir;
                 }
             }

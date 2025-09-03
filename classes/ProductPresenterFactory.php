@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -41,16 +42,10 @@ class ProductPresenterFactoryCore
     private $context;
     private $taxConfiguration;
 
-    /**
-     * ProductPresenterFactoryCore constructor.
-     *
-     * @param Context $context
-     * @param TaxConfiguration|null $taxConfiguration
-     */
     public function __construct(Context $context, ?TaxConfiguration $taxConfiguration = null)
     {
         $this->context = $context;
-        $this->taxConfiguration = (null === $taxConfiguration) ? new TaxConfiguration() : $taxConfiguration;
+        $this->taxConfiguration = ($taxConfiguration === null) ? new TaxConfiguration() : $taxConfiguration;
     }
 
     /**

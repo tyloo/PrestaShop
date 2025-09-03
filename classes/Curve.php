@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,13 +67,13 @@ class CurveCore
         }
 
         return '{data:[' . rtrim($string, ',') . ']'
-            . (!empty($this->label) ? ',label:"' . $this->label . '"' : '') . ''
-            . (!empty($this->type) ? ',' . $this->type : '') . '}';
+            . (! empty($this->label) ? ',label:"' . $this->label . '"' : '') . ''
+            . (! empty($this->type) ? ',' . $this->type : '') . '}';
     }
 
     /**
      * @param string $x
-     * @param float $y
+     * @param float  $y
      */
     public function setPoint($x, $y)
     {
@@ -93,10 +94,10 @@ class CurveCore
     public function setType($type)
     {
         $this->type = '';
-        if ($type == 'bars') {
+        if ($type === 'bars') {
             $this->type = 'bars:{show:true,lineWidth:10}';
         }
-        if ($type == 'steps') {
+        if ($type === 'steps') {
             $this->type = 'lines:{show:true,steps:true}';
         }
     }

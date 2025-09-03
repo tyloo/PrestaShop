@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,9 +32,6 @@ class NotificationCore
 {
     public $types;
 
-    /**
-     * NotificationCore constructor.
-     */
     public function __construct()
     {
         $this->types = ['order', 'customer_message', 'customer'];
@@ -64,8 +62,8 @@ class NotificationCore
      * getLastElementsIdsByType return all the element ids to show (order, customer registration, and customer message)
      * Get all the element ids.
      *
-     * @param string $type contains the field name of the Employee table
-     * @param int $idLastElement contains the id of the last seen element
+     * @param string $type          contains the field name of the Employee table
+     * @param int    $idLastElement contains the id of the last seen element
      *
      * @return array containing the notifications
      */
@@ -126,18 +124,18 @@ class NotificationCore
             }
 
             $json['results'][] = [
-                'id_order' => ((!empty($value['id_order'])) ? (int) $value['id_order'] : 0),
-                'id_customer' => ((!empty($value['id_customer'])) ? (int) $value['id_customer'] : 0),
-                'id_customer_message' => ((!empty($value['id_customer_message'])) ? (int) $value['id_customer_message'] : 0),
-                'id_customer_thread' => ((!empty($value['id_customer_thread'])) ? (int) $value['id_customer_thread'] : 0),
-                'total_paid' => ((!empty($value['total_paid'])) ? Tools::getContextLocale(Context::getContext())->formatPrice((float) $value['total_paid'], Currency::getIsoCodeById((int) $value['id_currency'])) : 0),
-                'carrier' => ((!empty($value['name'])) ? Tools::safeOutput($value['name']) : ''),
-                'iso_code' => ((!empty($value['iso_code'])) ? Tools::safeOutput($value['iso_code']) : ''),
-                'company' => ((!empty($value['company'])) ? Tools::safeOutput($value['company']) : ''),
-                'status' => ((!empty($value['status'])) ? Tools::safeOutput($value['status']) : ''),
+                'id_order' => ((! empty($value['id_order'])) ? (int) $value['id_order'] : 0),
+                'id_customer' => ((! empty($value['id_customer'])) ? (int) $value['id_customer'] : 0),
+                'id_customer_message' => ((! empty($value['id_customer_message'])) ? (int) $value['id_customer_message'] : 0),
+                'id_customer_thread' => ((! empty($value['id_customer_thread'])) ? (int) $value['id_customer_thread'] : 0),
+                'total_paid' => ((! empty($value['total_paid'])) ? Tools::getContextLocale(Context::getContext())->formatPrice((float) $value['total_paid'], Currency::getIsoCodeById((int) $value['id_currency'])) : 0),
+                'carrier' => ((! empty($value['name'])) ? Tools::safeOutput($value['name']) : ''),
+                'iso_code' => ((! empty($value['iso_code'])) ? Tools::safeOutput($value['iso_code']) : ''),
+                'company' => ((! empty($value['company'])) ? Tools::safeOutput($value['company']) : ''),
+                'status' => ((! empty($value['status'])) ? Tools::safeOutput($value['status']) : ''),
                 'customer_name' => $customerName,
                 'date_add' => isset($value['date_add']) ? Tools::displayDate($value['date_add']) : 0,
-                'order_view_url' => !empty($value['id_order'])
+                'order_view_url' => ! empty($value['id_order'])
                     ? Context::getContext()->link->getAdminLink(
                         'AdminOrders',
                         true,
@@ -155,7 +153,7 @@ class NotificationCore
                         'viewcustomer' => true,
                     ]
                 ),
-                'customer_thread_view_url' => !empty($value['id_customer_thread'])
+                'customer_thread_view_url' => ! empty($value['id_customer_thread'])
                     ? Context::getContext()->link->getAdminLink(
                         'AdminCustomerThreads',
                         true,
@@ -181,13 +179,13 @@ class NotificationCore
      */
     public function updateEmployeeLastElement($type)
     {
-        if (in_array($type, $this->types)) {
+        if (in_array($type, $this->types, true)) {
             // We update the last item viewed
             return Db::getInstance()->execute('
 			UPDATE `' . _DB_PREFIX_ . 'employee`
 			SET `id_last_' . bqSQL($type) . '` = (
 				SELECT IFNULL(MAX(`id_' . bqSQL($type) . '`), 0)
-				FROM `' . _DB_PREFIX_ . (($type == 'order') ? bqSQL($type) . 's' : bqSQL($type)) . '`
+				FROM `' . _DB_PREFIX_ . (($type === 'order') ? bqSQL($type) . 's' : bqSQL($type)) . '`
 			)
 			WHERE `id_employee` = ' . (int) Context::getContext()->employee->id);
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,13 +29,19 @@ use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 
 class WebserviceKeyCore extends ObjectModel
 {
-    /** @var string Key */
+    /**
+     * @var string Key
+     */
     public $key;
 
-    /** @var bool Webservice Account status */
+    /**
+     * @var bool Webservice Account status
+     */
     public $active = true;
 
-    /** @var string Webservice Account description */
+    /**
+     * @var string Webservice Account description
+     */
     public $description;
 
     /**
@@ -44,9 +51,19 @@ class WebserviceKeyCore extends ObjectModel
         'table' => 'webservice_account',
         'primary' => 'id_webservice_account',
         'fields' => [
-            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'key' => ['type' => self::TYPE_STRING, 'required' => true, 'size' => 32],
-            'description' => ['type' => self::TYPE_STRING, 'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'key' => [
+                'type' => self::TYPE_STRING,
+                'required' => true,
+                'size' => 32,
+            ],
+            'description' => [
+                'type' => self::TYPE_STRING,
+                'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4,
+            ],
         ],
     ];
 
@@ -161,8 +178,6 @@ class WebserviceKeyCore extends ObjectModel
     }
 
     /**
-     * @param string $auth_key
-     *
      * @return int
      */
     public static function getIdFromKey(string $auth_key)
@@ -177,7 +192,7 @@ class WebserviceKeyCore extends ObjectModel
     }
 
     /**
-     * @param int $id_account
+     * @param int   $id_account
      * @param array $permissions_to_set
      *
      * @return bool
@@ -186,7 +201,7 @@ class WebserviceKeyCore extends ObjectModel
     {
         $ok = true;
         $sql = 'DELETE FROM `' . _DB_PREFIX_ . 'webservice_permission` WHERE `id_webservice_account` = ' . (int) $id_account;
-        if (!Db::getInstance()->execute($sql)) {
+        if (! Db::getInstance()->execute($sql)) {
             $ok = false;
         }
         if (is_array($permissions_to_set)) {
@@ -194,9 +209,9 @@ class WebserviceKeyCore extends ObjectModel
             $resources = WebserviceRequest::getResources();
             $methods = ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD'];
             foreach ($permissions_to_set as $resource_name => $resource_methods) {
-                if (in_array($resource_name, array_keys($resources))) {
+                if (in_array($resource_name, array_keys($resources), true)) {
                     foreach (array_keys($resource_methods) as $method_name) {
-                        if (in_array($method_name, $methods)) {
+                        if (in_array($method_name, $methods, true)) {
                             $permissions[] = [$method_name, $resource_name];
                         }
                     }
@@ -209,7 +224,7 @@ class WebserviceKeyCore extends ObjectModel
                     $sql .= '(NULL , \'' . pSQL($permission[1]) . '\', \'' . pSQL($permission[0]) . '\', ' . (int) $id_account . '), ';
                 }
                 $sql = rtrim($sql, ', ');
-                if (!Db::getInstance()->execute($sql)) {
+                if (! Db::getInstance()->execute($sql)) {
                     $ok = false;
                 }
             }

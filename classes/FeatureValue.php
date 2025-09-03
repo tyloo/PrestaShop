@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,16 +32,24 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\FeatureValueSettings;
  */
 class FeatureValueCore extends ObjectModel
 {
-    /** @var int Group id which attribute belongs */
+    /**
+     * @var int Group id which attribute belongs
+     */
     public $id_feature;
 
-    /** @var string|array Name */
+    /**
+     * @var string|array Name
+     */
     public $value;
 
-    /** @var bool Custom */
+    /**
+     * @var bool Custom
+     */
     public $custom = false;
 
-    /** @var int Position */
+    /**
+     * @var int Position
+     */
     public $position;
 
     /**
@@ -51,12 +60,28 @@ class FeatureValueCore extends ObjectModel
         'primary' => 'id_feature_value',
         'multilang' => true,
         'fields' => [
-            'id_feature' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'custom' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'position' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
+            'id_feature' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'custom' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'position' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
 
             /* Lang fields */
-            'value' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => FeatureValueSettings::VALUE_MAX_LENGTH],
+            'value' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => FeatureValueSettings::VALUE_MAX_LENGTH,
+            ],
         ],
     ];
 
@@ -64,7 +89,9 @@ class FeatureValueCore extends ObjectModel
         'objectsNodeName' => 'product_feature_values',
         'objectNodeName' => 'product_feature_value',
         'fields' => [
-            'id_feature' => ['xlink_resource' => 'product_features'],
+            'id_feature' => [
+                'xlink_resource' => 'product_features',
+            ],
         ],
     ];
 
@@ -88,7 +115,7 @@ class FeatureValueCore extends ObjectModel
     /**
      * Get all values for a given feature and language.
      *
-     * @param int $idLang Language id
+     * @param int $idLang    Language id
      * @param int $idFeature Feature id
      *
      * @return array Array with feature's values
@@ -101,7 +128,7 @@ class FeatureValueCore extends ObjectModel
 			LEFT JOIN `' . _DB_PREFIX_ . 'feature_value_lang` vl
 				ON (v.`id_feature_value` = vl.`id_feature_value` AND vl.`id_lang` = ' . (int) $idLang . ')
 			WHERE v.`id_feature` = ' . (int) $idFeature . '
-				' . (!$custom ? 'AND (v.`custom` IS NULL OR v.`custom` = 0)' : '') . '
+				' . (! $custom ? 'AND (v.`custom` IS NULL OR v.`custom` = 0)' : '') . '
 			ORDER BY vl.`value` ASC
 		');
     }
@@ -126,15 +153,15 @@ class FeatureValueCore extends ObjectModel
     /**
      * Select the good lang in tab.
      *
-     * @param array $lang Array with all language
-     * @param int $idLang Language id
+     * @param array $lang   Array with all language
+     * @param int   $idLang Language id
      *
      * @return string String value name selected
      */
     public static function selectLang($lang, $idLang)
     {
         foreach ($lang as $tab) {
-            if ($tab['id_lang'] == $idLang) {
+            if ($tab['id_lang'] === $idLang) {
                 return $tab['value'];
             }
         }
@@ -145,18 +172,18 @@ class FeatureValueCore extends ObjectModel
     /**
      * Add FeatureValue from import.
      *
-     * @param int $idFeature
-     * @param string $value
+     * @param int      $idFeature
+     * @param string   $value
      * @param int|null $idProduct
      * @param int|null $idLang
-     * @param bool $custom
+     * @param bool     $custom
      *
      * @return int
      */
     public static function addFeatureValueImport($idFeature, $value, $idProduct = null, $idLang = null, $custom = false)
     {
         $idFeatureValue = false;
-        if (null !== $idProduct && $idProduct) {
+        if ($idProduct !== null && $idProduct) {
             $idFeatureValue = Db::getInstance()->getValue('
 				SELECT fp.`id_feature_value`
 				FROM ' . _DB_PREFIX_ . 'feature_product fp
@@ -165,7 +192,7 @@ class FeatureValueCore extends ObjectModel
 				AND fv.`custom` = ' . (int) $custom . '
 				AND fp.`id_product` = ' . (int) $idProduct);
 
-            if ($custom && $idFeatureValue && null !== $idLang && $idLang) {
+            if ($custom && $idFeatureValue && $idLang !== null && $idLang) {
                 Db::getInstance()->execute('
 				UPDATE ' . _DB_PREFIX_ . 'feature_value_lang
 				SET `value` = \'' . pSQL($value) . '\'
@@ -175,7 +202,7 @@ class FeatureValueCore extends ObjectModel
             }
         }
 
-        if (!$custom) {
+        if (! $custom) {
             $idFeatureValue = Db::getInstance()->getValue('
 				SELECT fv.`id_feature_value`
 				FROM ' . _DB_PREFIX_ . 'feature_value fv
@@ -203,7 +230,7 @@ class FeatureValueCore extends ObjectModel
     /**
      * Adds current FeatureValue as a new Object to the database.
      *
-     * @param bool $autoDate Automatically set `date_upd` and `date_add` columns
+     * @param bool $autoDate   Automatically set `date_upd` and `date_add` columns
      * @param bool $nullValues Whether we want to use NULL values instead of empty quotes values
      *
      * @return bool Indicates whether the FeatureValue has been successfully added
@@ -295,7 +322,7 @@ class FeatureValueCore extends ObjectModel
      * Reorder feature values within single feature.
      * Use it after deleting a feature value.
      *
-     * @param int $idFeature
+     * @param int  $idFeature
      * @param bool $includeCurrentFeatureValue
      *
      * @return bool Whether the result was successfully updated
@@ -305,7 +332,7 @@ class FeatureValueCore extends ObjectModel
         Db::getInstance()->execute('SET @i = -1', false);
         $sql = 'UPDATE `' . _DB_PREFIX_ . 'feature_value` SET `position` = @i:=@i+1 WHERE';
 
-        if (!$includeCurrentFeatureValue) {
+        if (! $includeCurrentFeatureValue) {
             $sql .= ' `id_feature_value` != ' . (int) $this->id . ' AND';
         }
 

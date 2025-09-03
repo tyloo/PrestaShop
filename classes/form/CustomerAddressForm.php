@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -54,7 +55,7 @@ class CustomerAddressFormCore extends AbstractForm
         Language $language,
         TranslatorInterface $translator,
         CustomerAddressPersister $persister,
-        CustomerAddressFormatter $formatter
+        CustomerAddressFormatter $formatter,
     ) {
         parent::__construct(
             $smarty,
@@ -76,11 +77,11 @@ class CustomerAddressFormCore extends AbstractForm
             return Tools::redirect('pagenotfound');
         }
 
-        if (!$context->customer->isLogged() && !$context->customer->isGuest()) {
+        if (! $context->customer->isLogged() && ! $context->customer->isGuest()) {
             return Tools::redirect($context->link->getPageLink('authentication'));
         }
 
-        if ($this->address->id_customer != $context->customer->id) {
+        if ($this->address->id_customer !== $context->customer->id) {
             return Tools::redirect('pagenotfound');
         }
 
@@ -127,7 +128,7 @@ class CustomerAddressFormCore extends AbstractForm
         $postcode = $this->getField('postcode');
         if ($postcode && $postcode->isRequired()) {
             $country = $this->formatter->getCountry();
-            if (!$country->checkZipCode($postcode->getValue())) {
+            if (! $country->checkZipCode($postcode->getValue())) {
                 $postcode->addError($this->translator->trans(
                     'Invalid postcode - should look like "%zipcode%"',
                     ['%zipcode%' => $country->zip_code_format],
@@ -146,7 +147,7 @@ class CustomerAddressFormCore extends AbstractForm
 
     public function submit()
     {
-        if (!$this->validate()) {
+        if (! $this->validate()) {
             return false;
         }
 
@@ -161,7 +162,7 @@ class CustomerAddressFormCore extends AbstractForm
             }
         }
 
-        if (!isset($this->formFields['id_state'])) {
+        if (! isset($this->formFields['id_state'])) {
             $address->id_state = 0;
         }
 
@@ -204,7 +205,7 @@ class CustomerAddressFormCore extends AbstractForm
     {
         $context = Context::getContext();
 
-        if (!$this->formFields) {
+        if (! $this->formFields) {
             // This is usually done by fillWith but the form may be
             // rendered before fillWith is called.
             // I don't want to assign formFields in the constructor

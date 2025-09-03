@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -37,23 +38,33 @@ use PrestaShopBundle\Translation\TranslatorInterface;
  */
 class DataLangCore
 {
-    /** @var TranslatorInterface */
+    /**
+     * @var TranslatorInterface
+     */
     protected $translator;
 
-    /** @var string Locale to translate to */
+    /**
+     * @var string Locale to translate to
+     */
     protected $locale;
 
-    /** @var string[] Table primary key */
+    /**
+     * @var string[] Table primary key
+     */
     protected $keys;
 
-    /** @var string[] Database fields to translate */
+    /**
+     * @var string[] Database fields to translate
+     */
     protected $fieldsToUpdate;
 
-    /** @var string Default translation domain */
+    /**
+     * @var string Default translation domain
+     */
     protected $domain;
 
     /**
-     * @param string $locale
+     * @param string                   $locale
      * @param TranslatorInterface|null $translator If defined, use this translator
      */
     public function __construct($locale, ?TranslatorInterface $translator = null)
@@ -66,7 +77,7 @@ class DataLangCore
 
         $isAdminContext = defined('_PS_ADMIN_DIR_');
 
-        if (!$this->translator->isLanguageLoaded($this->locale)) {
+        if (! $this->translator->isLanguageLoaded($this->locale)) {
             SymfonyContainer::getInstance()->get('prestashop.translation.translator_language_loader')
                 ->setIsAdminContext($isAdminContext)
                 ->loadLanguage($this->translator, $this->locale);
@@ -131,12 +142,10 @@ class DataLangCore
 
     /**
      * Returns the table name where the translations are to be performed
-     *
-     * @return string
      */
     public function getTableName(): string
     {
-        $shortClassName = substr(strrchr('\\' . get_class($this), '\\'), 1);
+        $shortClassName = substr(strrchr('\\' . static::class, '\\'), 1);
 
         return Inflector::getInflector()->tableize($shortClassName);
     }

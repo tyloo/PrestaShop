@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -63,7 +64,7 @@ class AverageTaxOfProductsTaxCalculator
         $total_base = 0;
 
         foreach ($this->getProductTaxes() as $row) {
-            if (!array_key_exists($row['id_tax'], $amounts_arr)) {
+            if (! array_key_exists($row['id_tax'], $amounts_arr)) {
                 $amounts_arr[$row['id_tax']] = [
                     'rate' => $row['rate'],
                     'base' => 0,

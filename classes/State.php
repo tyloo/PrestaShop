@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,19 +30,29 @@
  */
 class StateCore extends ObjectModel
 {
-    /** @var int Country id which state belongs */
+    /**
+     * @var int Country id which state belongs
+     */
     public $id_country;
 
-    /** @var int Zone id which state belongs */
+    /**
+     * @var int Zone id which state belongs
+     */
     public $id_zone;
 
-    /** @var string 2 letters iso code */
+    /**
+     * @var string 2 letters iso code
+     */
     public $iso_code;
 
-    /** @var string Name */
+    /**
+     * @var string Name
+     */
     public $name;
 
-    /** @var bool Status for delivery */
+    /**
+     * @var bool Status for delivery
+     */
     public $active = true;
 
     /**
@@ -51,18 +62,43 @@ class StateCore extends ObjectModel
         'table' => 'state',
         'primary' => 'id_state',
         'fields' => [
-            'id_country' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_zone' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'iso_code' => ['type' => self::TYPE_STRING, 'validate' => 'isStateIsoCode', 'required' => true, 'size' => 7],
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 80],
-            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
+            'id_country' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_zone' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'iso_code' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isStateIsoCode',
+                'required' => true,
+                'size' => 7,
+            ],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 80,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
         ],
     ];
 
     protected $webserviceParameters = [
         'fields' => [
-            'id_zone' => ['xlink_resource' => 'zones'],
-            'id_country' => ['xlink_resource' => 'countries'],
+            'id_zone' => [
+                'xlink_resource' => 'zones',
+            ],
+            'id_country' => [
+                'xlink_resource' => 'countries',
+            ],
         ],
     ];
 
@@ -84,11 +120,11 @@ class StateCore extends ObjectModel
      */
     public static function getNameById($idState)
     {
-        if (!$idState) {
+        if (! $idState) {
             return false;
         }
         $cacheId = 'State::getNameById_' . (int) $idState;
-        if (!Cache::isStored($cacheId)) {
+        if (! Cache::isStored($cacheId)) {
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue(
                 '
 				SELECT `name`
@@ -116,7 +152,7 @@ class StateCore extends ObjectModel
             return false;
         }
         $cacheId = 'State::getIdByName_' . pSQL($state);
-        if (!Cache::isStored($cacheId)) {
+        if (! Cache::isStored($cacheId)) {
             $result = (int) Db::getInstance()->getValue('
 				SELECT `id_state`
 				FROM `' . _DB_PREFIX_ . 'state`
@@ -133,7 +169,7 @@ class StateCore extends ObjectModel
     /**
      * Get a state id with its iso code.
      *
-     * @param string $isoCode Iso code
+     * @param string   $isoCode   Iso code
      * @param int|null $idCountry
      *
      * @return int state id
@@ -155,22 +191,22 @@ class StateCore extends ObjectModel
      */
     public function delete()
     {
-        if (!$this->isUsed()) {
+        if (! $this->isUsed()) {
             // Database deletion
             $result = Db::getInstance()->delete($this->def['table'], '`' . $this->def['primary'] . '` = ' . (int) $this->id);
-            if (!$result) {
+            if (! $result) {
                 return false;
             }
 
             // Database deletion for multilingual fields related to the object
-            if (!empty($this->def['multilang'])) {
+            if (! empty($this->def['multilang'])) {
                 Db::getInstance()->delete(bqSQL($this->def['table']) . '_lang', '`' . $this->def['primary'] . '` = ' . (int) $this->id);
             }
 
             return $result;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -200,10 +236,10 @@ class StateCore extends ObjectModel
     /**
      * Get states by Country ID.
      *
-     * @param int $idCountry Country ID
-     * @param bool $active true if the state must be active
-     * @param string $orderBy order by field
-     * @param string $sort sort key (ASC or DESC)
+     * @param int    $idCountry Country ID
+     * @param bool   $active    true if the state must be active
+     * @param string $orderBy   order by field
+     * @param string $sort      sort key (ASC or DESC)
      *
      * @return array|false|mysqli_result|PDOStatement|resource|null
      */
@@ -222,7 +258,7 @@ class StateCore extends ObjectModel
 
         if (array_key_exists($orderBy, static::$definition['fields'])) {
             $sort = trim($sort);
-            if (in_array($sort, $available_sort)) {
+            if (in_array($sort, $available_sort, true)) {
                 $orderBy = $orderBy . ' ' . $sort;
             }
             $sql->orderBy($orderBy);
@@ -240,7 +276,7 @@ class StateCore extends ObjectModel
      */
     public static function getIdZone($idState)
     {
-        if (!Validate::isUnsignedId($idState)) {
+        if (! Validate::isUnsignedId($idState)) {
             throw new PrestaShopException('State ID is invalid.');
         }
 
@@ -254,7 +290,7 @@ class StateCore extends ObjectModel
 
     /**
      * @param array $idsStates State IDs
-     * @param int $idZone Zone ID
+     * @param int   $idZone    Zone ID
      *
      * @return bool
      */

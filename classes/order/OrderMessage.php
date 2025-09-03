@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,13 +29,19 @@ use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 
 class OrderMessageCore extends ObjectModel
 {
-    /** @var string|array<int, string> Name */
+    /**
+     * @var string|array<int, string> Name
+     */
     public $name;
 
-    /** @var string|array<int, string> Message content */
+    /**
+     * @var string|array<int, string> Message content
+     */
     public $message;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
     /**
@@ -45,18 +52,38 @@ class OrderMessageCore extends ObjectModel
         'primary' => 'id_order_message',
         'multilang' => true,
         'fields' => [
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
 
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 128],
-            'message' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isMessage', 'required' => true, 'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 128,
+            ],
+            'message' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isMessage',
+                'required' => true,
+                'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4,
+            ],
         ],
     ];
 
     protected $webserviceParameters = [
         'fields' => [
-            'id' => ['sqlId' => 'id_discount_type', 'xlink_resource' => 'order_message_lang'],
-            'date_add' => ['sqlId' => 'date_add'],
+            'id' => [
+                'sqlId' => 'id_discount_type',
+                'xlink_resource' => 'order_message_lang',
+            ],
+            'date_add' => [
+                'sqlId' => 'date_add',
+            ],
         ],
     ];
 

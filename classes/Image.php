@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,31 +36,49 @@ class ImageCore extends ObjectModel
 {
     public $id;
 
-    /** @var int Image ID */
+    /**
+     * @var int Image ID
+     */
     public $id_image;
 
-    /** @var int Product ID */
+    /**
+     * @var int Product ID
+     */
     public $id_product;
 
-    /** @var int Position used to order images of the same product */
+    /**
+     * @var int Position used to order images of the same product
+     */
     public $position;
 
-    /** @var bool|null Image is cover */
+    /**
+     * @var bool|null Image is cover
+     */
     public $cover;
 
-    /** @var array<int,string> Legend */
+    /**
+     * @var array<int,string> Legend
+     */
     public $legend;
 
-    /** @var string image extension */
+    /**
+     * @var string image extension
+     */
     public $image_format = 'jpg';
 
-    /** @var string image folder */
+    /**
+     * @var string image folder
+     */
     protected $folder;
 
-    /** @var string image path without extension */
+    /**
+     * @var string image path without extension
+     */
     protected $existing_path;
 
-    /** @var int access rights of created folders (octal) */
+    /**
+     * @var int access rights of created folders (octal)
+     */
     protected static $access_rights = 0775;
 
     /**
@@ -70,10 +89,28 @@ class ImageCore extends ObjectModel
         'primary' => 'id_image',
         'multilang' => true,
         'fields' => [
-            'id_product' => ['type' => self::TYPE_INT, 'shop' => 'both', 'validate' => 'isUnsignedId', 'required' => true],
-            'position' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'cover' => ['type' => self::TYPE_BOOL, 'allow_null' => true, 'validate' => 'isBool', 'shop' => true],
-            'legend' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 128],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'shop' => 'both',
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'position' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'cover' => [
+                'type' => self::TYPE_BOOL,
+                'allow_null' => true,
+                'validate' => 'isBool',
+                'shop' => true,
+            ],
+            'legend' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'size' => 128,
+            ],
         ],
     ];
 
@@ -83,12 +120,10 @@ class ImageCore extends ObjectModel
     protected static $_cacheGetSize = [];
 
     /**
-     * ImageCore constructor.
-     *
      * @param int|null $id
      * @param int|null $idLang
-     * @param null $id_shop
-     * @param null $translator
+     * @param null     $id_shop
+     * @param null     $translator
      *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
@@ -102,7 +137,7 @@ class ImageCore extends ObjectModel
     /**
      * Adds current Image as a new Object to the database.
      *
-     * @param bool $autoDate Automatically set `date_upd` and `date_add` columns
+     * @param bool $autoDate   Automatically set `date_upd` and `date_add` columns
      * @param bool $nullValues Whether we want to use NULL values instead of empty quotes values
      *
      * @return bool Indicates whether the Image has been successfully added
@@ -133,7 +168,7 @@ class ImageCore extends ObjectModel
      */
     public function associateTo($id_shops, ?int $productId = null)
     {
-        if (!$this->id) {
+        if (! $this->id) {
             return;
         }
 
@@ -142,13 +177,13 @@ class ImageCore extends ObjectModel
             throw new InvalidArgumentException('You cannot associate an image to shop without specifying product ID');
         }
 
-        if (!is_array($id_shops)) {
+        if (! is_array($id_shops)) {
             $id_shops = [$id_shops];
         }
 
         $data = [];
         foreach ($id_shops as $id_shop) {
-            if (!$this->isAssociatedToShop($id_shop)) {
+            if (! $this->isAssociatedToShop($id_shop)) {
                 $data[] = [
                     $this->def['primary'] => (int) $this->id,
                     'id_shop' => (int) $id_shop,
@@ -194,7 +229,7 @@ class ImageCore extends ObjectModel
      */
     public function delete()
     {
-        if (!parent::delete()) {
+        if (! parent::delete()) {
             return false;
         }
 
@@ -202,7 +237,7 @@ class ImageCore extends ObjectModel
             return true;
         }
 
-        if (!$this->deleteProductAttributeImage() || !$this->deleteImage()) {
+        if (! $this->deleteProductAttributeImage() || ! $this->deleteImage()) {
             return false;
         }
 
@@ -217,9 +252,9 @@ class ImageCore extends ObjectModel
     /**
      * Return first image (by position) associated with a product attribute.
      *
-     * @param int $idShop Shop ID
-     * @param int $idLang Language ID
-     * @param int $idProduct Product ID
+     * @param int $idShop             Shop ID
+     * @param int $idLang             Language ID
+     * @param int $idProduct          Product ID
      * @param int $idProductAttribute Product Attribute ID
      *
      * @return array
@@ -228,7 +263,7 @@ class ImageCore extends ObjectModel
     {
         $cacheId = 'Image::getBestImageAttribute-' . (int) $idProduct . '-' . (int) $idProductAttribute . '-' . (int) $idLang . '-' . (int) $idShop;
 
-        if (!Cache::isStored($cacheId)) {
+        if (! Cache::isStored($cacheId)) {
             $row = Db::getInstance()->getRow('
 					SELECT image_shop.`id_image` id_image, il.`legend`
 					FROM `' . _DB_PREFIX_ . 'image` i
@@ -251,10 +286,10 @@ class ImageCore extends ObjectModel
     /**
      * Return available images for a product.
      *
-     * @param int $idLang Language ID
-     * @param int $idProduct Product ID
+     * @param int $idLang             Language ID
+     * @param int $idProduct          Product ID
      * @param int $idProductAttribute Product Attribute ID
-     * @param int $idShop Shop ID
+     * @param int $idShop             Shop ID
      *
      * @return array Images
      */
@@ -283,8 +318,8 @@ class ImageCore extends ObjectModel
     /**
      * Check if a product has an image available.
      *
-     * @param int $idLang Language ID
-     * @param int $idProduct Product ID
+     * @param int $idLang             Language ID
+     * @param int $idProduct          Product ID
      * @param int $idProductAttribute Product Attribute ID
      *
      * @return bool
@@ -361,7 +396,7 @@ class ImageCore extends ObjectModel
      */
     public static function deleteCover($idProduct)
     {
-        if (!Validate::isUnsignedId($idProduct)) {
+        if (! Validate::isUnsignedId($idProduct)) {
             throw new PrestaShopException('Product ID is invalid.');
         }
 
@@ -469,17 +504,17 @@ class ImageCore extends ObjectModel
 
     /**
      * @param array $combinationImages
-     * @param int $savedId
-     * @param int $idImage
+     * @param int   $savedId
+     * @param int   $idImage
      */
     protected static function replaceAttributeImageAssociationId(&$combinationImages, $savedId, $idImage)
     {
-        if (!isset($combinationImages['new']) || !is_array($combinationImages['new'])) {
+        if (! isset($combinationImages['new']) || ! is_array($combinationImages['new'])) {
             return;
         }
         foreach ($combinationImages['new'] as $id_product_attribute => $image_ids) {
             foreach ($image_ids as $key => $imageId) {
-                if ((int) $imageId == (int) $savedId) {
+                if ((int) $imageId === (int) $savedId) {
                     $combinationImages['new'][$id_product_attribute][$key] = (int) $idImage;
                 }
             }
@@ -495,7 +530,7 @@ class ImageCore extends ObjectModel
      */
     public static function duplicateAttributeImageAssociations($combinationImages)
     {
-        if (!isset($combinationImages['new']) || !is_array($combinationImages['new'])) {
+        if (! isset($combinationImages['new']) || ! is_array($combinationImages['new'])) {
             return true;
         }
         $query = 'INSERT INTO `' . _DB_PREFIX_ . 'product_attribute_image` (`id_product_attribute`, `id_image`) VALUES ';
@@ -512,14 +547,14 @@ class ImageCore extends ObjectModel
     /**
      * Change an image position and update relative positions.
      *
-     * @param int $way position is moved up if 0, moved down if 1
+     * @param int $way      position is moved up if 0, moved down if 1
      * @param int $position new position of the moved image
      *
      * @return bool success
      */
     public function updatePosition($way, $position)
     {
-        if (!isset($this->id) || !$position) {
+        if (! isset($this->id) || ! $position) {
             return false;
         }
 
@@ -545,12 +580,10 @@ class ImageCore extends ObjectModel
 
     /**
      * @param string $type
-     *
-     * @return mixed
      */
     public static function getSize($type)
     {
-        if (!isset(self::$_cacheGetSize[$type])) {
+        if (! isset(self::$_cacheGetSize[$type])) {
             self::$_cacheGetSize[$type] = Db::getInstance()->getRow('
 				SELECT `width`, `height`
 				FROM ' . _DB_PREFIX_ . 'image_type
@@ -563,8 +596,6 @@ class ImageCore extends ObjectModel
 
     /**
      * @param array $params
-     *
-     * @return mixed
      */
     public static function getWidth($params)
     {
@@ -575,8 +606,6 @@ class ImageCore extends ObjectModel
 
     /**
      * @param array $params
-     *
-     * @return mixed
      */
     public static function getHeight($params)
     {
@@ -590,7 +619,7 @@ class ImageCore extends ObjectModel
      */
     public static function clearTmpDir()
     {
-        foreach (scandir(_PS_TMP_IMG_DIR_, SCANDIR_SORT_NONE) as $d) {
+        foreach (scandir(_PS_TMP_IMG_DIR_, \SCANDIR_SORT_NONE) as $d) {
             if (preg_match('/(.*)\.jpg$/', $d)) {
                 unlink(_PS_TMP_IMG_DIR_ . $d);
             }
@@ -616,7 +645,7 @@ class ImageCore extends ObjectModel
      */
     public function deleteImage($forceDelete = false)
     {
-        if (!$this->id) {
+        if (! $this->id) {
             return false;
         }
 
@@ -654,14 +683,14 @@ class ImageCore extends ObjectModel
         $filesToDelete[] = _PS_TMP_IMG_DIR_ . 'product_mini_' . $this->id_product . '.' . $this->image_format;
 
         foreach ($filesToDelete as $file) {
-            if (file_exists($file) && !@unlink($file)) {
+            if (file_exists($file) && ! @unlink($file)) {
                 return false;
             }
         }
 
         // We need to delete old thumbnails (if exists) from variant images as well
         $old_thumbnails = glob(_PS_TMP_IMG_DIR_ . 'product_mini_' . $this->id_product . '_*.' . $this->image_format);
-        if (!empty($old_thumbnails)) {
+        if (! empty($old_thumbnails)) {
             foreach ($old_thumbnails as $file) {
                 // we don't care, if it exists, because glob will handle this
                 @unlink($file);
@@ -671,8 +700,8 @@ class ImageCore extends ObjectModel
         // Can we delete the image folder?
         if (is_dir($this->image_dir . $this->getImgFolder())) {
             $deleteFolder = true;
-            foreach (scandir($this->image_dir . $this->getImgFolder(), SCANDIR_SORT_NONE) as $file) {
-                if ($file != '.' && $file != '..') {
+            foreach (scandir($this->image_dir . $this->getImgFolder(), \SCANDIR_SORT_NONE) as $file) {
+                if ($file !== '.' && $file !== '..') {
                     $deleteFolder = false;
 
                     break;
@@ -689,17 +718,17 @@ class ImageCore extends ObjectModel
     /**
      * Recursively deletes all product images in the given folder tree and removes empty folders.
      *
-     * @param string $path folder containing the product images to delete
+     * @param string $path   folder containing the product images to delete
      * @param string $format image format
      *
      * @return bool success
      */
     public static function deleteAllImages($path, $format = 'jpg')
     {
-        if (!$path || !$format || !is_dir($path)) {
+        if (! $path || ! $format || ! is_dir($path)) {
             return false;
         }
-        foreach (scandir($path, SCANDIR_SORT_NONE) as $file) {
+        foreach (scandir($path, \SCANDIR_SORT_NONE) as $file) {
             if (preg_match('/^[0-9]+(\-(.*))?\.' . $format . '$/', $file)) {
                 unlink($path . $file);
             } elseif (is_dir($path . $file) && preg_match('/^[0-9]$/', $file)) {
@@ -710,8 +739,8 @@ class ImageCore extends ObjectModel
         // Can we remove the image folder?
         if (is_numeric(basename($path))) {
             $removeFolder = true;
-            foreach (scandir($path, SCANDIR_SORT_NONE) as $file) {
-                if ($file != '.' && $file != '..' && $file != 'index.php') {
+            foreach (scandir($path, \SCANDIR_SORT_NONE) as $file) {
+                if ($file !== '.' && $file !== '..' && $file !== 'index.php') {
                     $removeFolder = false;
 
                     break;
@@ -737,11 +766,11 @@ class ImageCore extends ObjectModel
      */
     public function getExistingImgPath()
     {
-        if (!$this->id) {
+        if (! $this->id) {
             return false;
         }
 
-        if (!$this->existing_path) {
+        if (! $this->existing_path) {
             $this->existing_path = $this->getImgPath();
         }
 
@@ -755,11 +784,11 @@ class ImageCore extends ObjectModel
      */
     public function getImgFolder()
     {
-        if (!$this->id) {
+        if (! $this->id) {
             return false;
         }
 
-        if (!$this->folder) {
+        if (! $this->folder) {
             $this->folder = Image::getImgFolderStatic($this->id);
         }
 
@@ -773,11 +802,11 @@ class ImageCore extends ObjectModel
      */
     public function createImgFolder()
     {
-        if (!$this->id) {
+        if (! $this->id) {
             return false;
         }
 
-        if (!file_exists(_PS_PRODUCT_IMG_DIR_ . $this->getImgFolder())) {
+        if (! file_exists(_PS_PRODUCT_IMG_DIR_ . $this->getImgFolder())) {
             // Apparently sometimes mkdir cannot set the rights, and sometimes chmod can't. Trying both.
             $success = @mkdir(_PS_PRODUCT_IMG_DIR_ . $this->getImgFolder(), self::$access_rights, true);
             $chmod = @chmod(_PS_PRODUCT_IMG_DIR_ . $this->getImgFolder(), self::$access_rights);
@@ -793,7 +822,7 @@ class ImageCore extends ObjectModel
      */
     public function getImgPath()
     {
-        if (!$this->id) {
+        if (! $this->id) {
             return false;
         }
 
@@ -803,13 +832,11 @@ class ImageCore extends ObjectModel
     /**
      * Returns the path to the folder containing the image in the new filesystem.
      *
-     * @param mixed $idImage
-     *
      * @return string|bool path to folder
      */
     public static function getImgFolderStatic($idImage)
     {
-        if (!is_numeric($idImage)) {
+        if (! is_numeric($idImage)) {
             return false;
         }
         $folders = str_split((string) $idImage);
@@ -831,17 +858,17 @@ class ImageCore extends ObjectModel
         $startTime = time();
         $image = null;
         $tmpFolder = 'duplicates/';
-        foreach (scandir(_PS_PRODUCT_IMG_DIR_, SCANDIR_SORT_NONE) as $file) {
+        foreach (scandir(_PS_PRODUCT_IMG_DIR_, \SCANDIR_SORT_NONE) as $file) {
             // matches the base product image or the thumbnails
             if (preg_match('/^([0-9]+\-)([0-9]+)(\-(.*))?\.jpg$/', $file, $matches)) {
                 // don't recreate an image object for each image type
-                if (!$image || $image->id !== (int) $matches[2]) {
+                if (! $image || $image->id !== (int) $matches[2]) {
                     $image = new Image((int) $matches[2]);
                 }
                 // image exists in DB and with the correct product?
-                if (Validate::isLoadedObject($image) && $image->id_product == (int) rtrim($matches[1], '-')) {
+                if (Validate::isLoadedObject($image) && $image->id_product === (int) rtrim($matches[1], '-')) {
                     // create the new folder if it does not exist
-                    if (!$image->createImgFolder()) {
+                    if (! $image->createImgFolder()) {
                         return false;
                     }
 
@@ -849,22 +876,22 @@ class ImageCore extends ObjectModel
                     // most likely the preexisting image is a demo image not linked to a product and it's ok to replace it
                     $newPath = _PS_PRODUCT_IMG_DIR_ . $image->getImgPath() . (isset($matches[3]) ? $matches[3] : '') . '.jpg';
                     if (file_exists($newPath)) {
-                        if (!file_exists(_PS_PRODUCT_IMG_DIR_ . $tmpFolder)) {
+                        if (! file_exists(_PS_PRODUCT_IMG_DIR_ . $tmpFolder)) {
                             @mkdir(_PS_PRODUCT_IMG_DIR_ . $tmpFolder, self::$access_rights);
                             @chmod(_PS_PRODUCT_IMG_DIR_ . $tmpFolder, self::$access_rights);
                         }
                         $tmpPath = _PS_PRODUCT_IMG_DIR_ . $tmpFolder . basename($file);
-                        if (!@rename($newPath, $tmpPath) || !file_exists($tmpPath)) {
+                        if (! @rename($newPath, $tmpPath) || ! file_exists($tmpPath)) {
                             return false;
                         }
                     }
                     // move the image
-                    if (!@rename(_PS_PRODUCT_IMG_DIR_ . $file, $newPath) || !file_exists($newPath)) {
+                    if (! @rename(_PS_PRODUCT_IMG_DIR_ . $file, $newPath) || ! file_exists($newPath)) {
                         return false;
                     }
                 }
             }
-            if ((int) $maxExecutionTime != 0 && (time() - $startTime > (int) $maxExecutionTime - 4)) {
+            if ((int) $maxExecutionTime !== 0 && (time() - $startTime > (int) $maxExecutionTime - 4)) {
                 return 'timeout';
             }
         }
@@ -892,7 +919,7 @@ class ImageCore extends ObjectModel
 
         @mkdir($testFolder, self::$access_rights, true);
         @chmod($testFolder, self::$access_rights);
-        if (!is_writable($testFolder)) {
+        if (! is_writable($testFolder)) {
             return false;
         }
         @rmdir($testFolder);
@@ -912,7 +939,7 @@ class ImageCore extends ObjectModel
      */
     public function getPathForCreation()
     {
-        if (!$this->id) {
+        if (! $this->id) {
             return false;
         }
         $path = $this->getImgPath();
@@ -921,13 +948,6 @@ class ImageCore extends ObjectModel
         return _PS_PRODUCT_IMG_DIR_ . $path;
     }
 
-    /**
-     * @param array $imageType
-     * @param string $imageFormat
-     * @param array $filesToDelete
-     *
-     * @return array
-     */
     private function deleteAutoGeneratedImage(array $imageType, string $imageFormat, array $filesToDelete): array
     {
         $configuration = SymfonyContainer::getInstance()->get('prestashop.adapter.legacy.configuration');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,16 +34,24 @@ class ContactCore extends ObjectModel
 {
     public $id;
 
-    /** @var string|array<int, string> Name */
+    /**
+     * @var string|array<int, string> Name
+     */
     public $name;
 
-    /** @var string E-mail */
+    /**
+     * @var string E-mail
+     */
     public $email;
 
-    /** @var string|array<int, string> Detailed description */
+    /**
+     * @var string|array<int, string> Detailed description
+     */
     public $description;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     public $customer_service;
 
     /**

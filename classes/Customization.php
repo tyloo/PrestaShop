@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,16 +30,24 @@
  */
 class CustomizationCore extends ObjectModel
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_product_attribute;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_address_delivery;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_cart;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_product;
 
     /**
@@ -48,13 +57,19 @@ class CustomizationCore extends ObjectModel
      */
     public $quantity;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $quantity_refunded;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $quantity_returned;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     public $in_cart;
 
     /**
@@ -65,14 +80,46 @@ class CustomizationCore extends ObjectModel
         'primary' => 'id_customization',
         'fields' => [
             /* Classic fields */
-            'id_product_attribute' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_address_delivery' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_cart' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_product' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'quantity' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'quantity_refunded' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'quantity_returned' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'in_cart' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool', 'required' => true],
+            'id_product_attribute' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_address_delivery' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_cart' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'quantity' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'quantity_refunded' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'quantity_returned' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'in_cart' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+                'required' => true,
+            ],
         ],
     ];
 
@@ -99,7 +146,10 @@ class CustomizationCore extends ObjectModel
                 'resource' => 'customized_data_text_field',
                 'virtual_entity' => true,
                 'fields' => [
-                    'id_customization_field' => ['required' => true, 'xlink_resource' => 'product_customization_fields'],
+                    'id_customization_field' => [
+                        'required' => true,
+                        'xlink_resource' => 'product_customization_fields',
+                    ],
                     'value' => [],
                 ],
             ],
@@ -149,7 +199,7 @@ class CustomizationCore extends ObjectModel
      */
     public static function getOrderedCustomizations($idCart)
     {
-        if (!$result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT `id_customization`, `quantity` FROM `' . _DB_PREFIX_ . 'customization` WHERE `id_cart` = ' . (int) $idCart)) {
+        if (! $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT `id_customization`, `quantity` FROM `' . _DB_PREFIX_ . 'customization` WHERE `id_cart` = ' . (int) $idCart)) {
             return false;
         }
         $customizations = [];
@@ -169,7 +219,7 @@ class CustomizationCore extends ObjectModel
      */
     public static function getCustomizationPrice($idCustomization)
     {
-        if (!(int) $idCustomization) {
+        if (! (int) $idCustomization) {
             return 0;
         }
 
@@ -190,7 +240,7 @@ class CustomizationCore extends ObjectModel
      */
     public static function getCustomizationWeight($idCustomization)
     {
-        if (!(int) $idCustomization) {
+        if (! (int) $idCustomization) {
             return 0;
         }
 
@@ -213,7 +263,7 @@ class CustomizationCore extends ObjectModel
     {
         $total = [];
         foreach ($customizations as $customization) {
-            $total[(int) $customization['id_order_detail']] = !isset($total[(int) $customization['id_order_detail']]) ? (int) $customization['quantity'] : $total[(int) $customization['id_order_detail']] + (int) $customization['quantity'];
+            $total[(int) $customization['id_order_detail']] = ! isset($total[(int) $customization['id_order_detail']]) ? (int) $customization['quantity'] : $total[(int) $customization['id_order_detail']] + (int) $customization['quantity'];
         }
 
         return $total;
@@ -222,18 +272,18 @@ class CustomizationCore extends ObjectModel
     /**
      * Get label.
      *
-     * @param int $idCustomization Customization ID
-     * @param int $idLang Language IOD
-     * @param int|null $idShop Shop ID
+     * @param int      $idCustomization Customization ID
+     * @param int      $idLang          Language IOD
+     * @param int|null $idShop          Shop ID
      *
      * @return bool|false|string|null
      */
     public static function getLabel($idCustomization, $idLang, $idShop = null)
     {
-        if (!(int) $idCustomization || !(int) $idLang) {
+        if (! (int) $idCustomization || ! (int) $idLang) {
             return false;
         }
-        if (Shop::isFeatureActive() && !(int) $idShop) {
+        if (Shop::isFeatureActive() && ! (int) $idShop) {
             $idShop = (int) Context::getContext()->shop->id;
         }
 
@@ -267,7 +317,7 @@ class CustomizationCore extends ObjectModel
             $inValues .= (int) $idCustomization;
         }
 
-        if (!empty($inValues)) {
+        if (! empty($inValues)) {
             $results = Db::getInstance()->executeS(
                 'SELECT `id_customization`, `id_product`, `quantity`, `quantity_refunded`, `quantity_returned`
 							 FROM `' . _DB_PREFIX_ . 'customization`
@@ -320,8 +370,8 @@ class CustomizationCore extends ObjectModel
     /**
      * This method is allow to know if a Customization entity is currently used.
      *
-     * @param string|null $table Name of table linked to entity
-     * @param bool $hasActiveColumn True if the table has an active column
+     * @param string|null $table           Name of table linked to entity
+     * @param bool        $hasActiveColumn True if the table has an active column
      *
      * @return bool
      */
@@ -341,7 +391,7 @@ class CustomizationCore extends ObjectModel
      */
     public function getWsCustomizedDataTextFields()
     {
-        if (!$results = Db::getInstance()->executeS('
+        if (! $results = Db::getInstance()->executeS('
 			SELECT id_customization_field, value
 			FROM `' . _DB_PREFIX_ . 'customization_field` cf
 			LEFT JOIN `' . _DB_PREFIX_ . 'customized_data` cd ON (cf.id_customization_field = cd.index)
@@ -362,7 +412,7 @@ class CustomizationCore extends ObjectModel
      */
     public function getWsCustomizedDataImages()
     {
-        if (!$results = Db::getInstance()->executeS('
+        if (! $results = Db::getInstance()->executeS('
 			SELECT id_customization_field, value
 			FROM `' . _DB_PREFIX_ . 'customization_field` cf
 			LEFT JOIN `' . _DB_PREFIX_ . 'customized_data` cd ON (cf.id_customization_field = cd.index)
@@ -386,7 +436,7 @@ class CustomizationCore extends ObjectModel
     public function setWsCustomizedDataTextFields($values)
     {
         $cart = new Cart($this->id_cart);
-        if (!Validate::isLoadedObject($cart)) {
+        if (! Validate::isLoadedObject($cart)) {
             WebserviceRequest::getInstance()->setError(500, $this->trans('Could not load cart id=%s', [$this->id_cart], 'Admin.Notifications.Error'), 137);
 
             return false;
@@ -399,7 +449,7 @@ class CustomizationCore extends ObjectModel
             $query = 'INSERT INTO `' . _DB_PREFIX_ . 'customized_data` (`id_customization`, `type`, `index`, `value`)
 				VALUES (' . (int) $this->id . ', ' . (int) Product::CUSTOMIZE_TEXTFIELD . ', ' . (int) $value['id_customization_field'] . ', \'' . pSQL($value['value']) . '\')';
 
-            if (!Db::getInstance()->execute($query)) {
+            if (! Db::getInstance()->execute($query)) {
                 return false;
             }
         }
@@ -410,7 +460,7 @@ class CustomizationCore extends ObjectModel
     /**
      * Delete the current context shops langs.
      *
-     * @param int $idCustomizationField
+     * @param int   $idCustomizationField
      * @param int[] $shopList
      *
      * @return bool
@@ -423,7 +473,7 @@ class CustomizationCore extends ObjectModel
                 WHERE `id_customization_field` = ' . (int) $idCustomizationField . '
                 AND `id_shop` IN (' . implode(',', $shopList) . ')');
 
-        if (!$return) {
+        if (! $return) {
             throw new PrestaShopDatabaseException('An error occurred while deletion the customization fields lang');
         }
 

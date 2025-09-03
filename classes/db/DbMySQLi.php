@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,10 +30,14 @@
  */
 class DbMySQLiCore extends Db
 {
-    /** @var mysqli */
+    /**
+     * @var mysqli
+     */
     protected $link;
 
-    /** @var mysqli_result */
+    /**
+     * @var mysqli_result
+     */
     protected $result;
 
     /**
@@ -69,23 +74,12 @@ class DbMySQLiCore extends Db
 
         // Do not use object way for error because this work bad before PHP 5.2.9
         if (mysqli_connect_error()) {
-            throw new PrestaShopDatabaseException(sprintf(
-                Context::getContext()->getTranslator()->trans(
-                    'Link to database cannot be established: %s',
-                    [],
-                    'Admin.Notifications.Error'
-                ),
-                mysqli_connect_error()
-            ));
+            throw new PrestaShopDatabaseException(sprintf(Context::getContext()->getTranslator()->trans('Link to database cannot be established: %s', [], 'Admin.Notifications.Error'), mysqli_connect_error()));
         }
 
         // UTF-8 support
-        if (!$this->link->query('SET NAMES utf8mb4')) {
-            throw new PrestaShopDatabaseException(Context::getContext()->getTranslator()->trans(
-                'PrestaShop Fatal error: no utf-8 support. Please check your server configuration.',
-                [],
-                'Admin.Notifications.Error'
-            ));
+        if (! $this->link->query('SET NAMES utf8mb4')) {
+            throw new PrestaShopDatabaseException(Context::getContext()->getTranslator()->trans('PrestaShop Fatal error: no utf-8 support. Please check your server configuration.', [], 'Admin.Notifications.Error'));
         }
 
         $this->link->query('SET SESSION sql_mode = \'\'');
@@ -96,11 +90,11 @@ class DbMySQLiCore extends Db
     /**
      * Tries to connect and create a new database.
      *
-     * @param string $host
+     * @param string      $host
      * @param string|null $user
      * @param string|null $password
      * @param string|null $database
-     * @param bool $dropit if true, drops the created database
+     * @param bool        $dropit   if true, drops the created database
      *
      * @return bool|mysqli_result
      */
@@ -155,11 +149,11 @@ class DbMySQLiCore extends Db
      */
     public function nextRow($result = false)
     {
-        if (!$result) {
+        if (! $result) {
             $result = $this->result;
         }
 
-        if (!is_object($result)) {
+        if (! is_object($result)) {
             return false;
         }
 
@@ -177,25 +171,24 @@ class DbMySQLiCore extends Db
      */
     protected function getAll($result = false)
     {
-        if (!$result) {
+        if (! $result) {
             $result = $this->result;
         }
 
-        if (!is_object($result)) {
+        if (! is_object($result)) {
             return false;
         }
 
         if (method_exists($result, 'fetch_all')) {
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            $ret = [];
-
-            while ($row = $this->nextRow($result)) {
-                $ret[] = $row;
-            }
-
-            return $ret;
+            return $result->fetch_all(\MYSQLI_ASSOC);
         }
+        $ret = [];
+
+        while ($row = $this->nextRow($result)) {
+            $ret[] = $row;
+        }
+
+        return $ret;
     }
 
     /**
@@ -308,9 +301,9 @@ class DbMySQLiCore extends Db
      * @see Db::hasTableWithSamePrefix()
      *
      * @param string $server Server address
-     * @param string $user Login for database connection
-     * @param string $pwd Password for database connection
-     * @param string $db Database name
+     * @param string $user   Login for database connection
+     * @param string $pwd    Password for database connection
+     * @param string $db     Database name
      * @param string $prefix Tables prefix
      *
      * @return bool
@@ -333,30 +326,30 @@ class DbMySQLiCore extends Db
      *
      * @see Db::checkConnection()
      *
-     * @param string $server Server address
-     * @param string $user Login for database connection
-     * @param string $pwd Password for database connection
-     * @param string $db Database name
-     * @param bool $new_db_link
+     * @param string      $server      Server address
+     * @param string      $user        Login for database connection
+     * @param string      $pwd         Password for database connection
+     * @param string      $db          Database name
+     * @param bool        $new_db_link
      * @param string|bool $engine
-     * @param int $timeout
+     * @param int         $timeout
      *
      * @return int Error code or 0 if connection was successful
      */
     public static function tryToConnect($server, $user, $pwd, $db, $new_db_link = true, $engine = null, $timeout = 5)
     {
         $link = mysqli_init();
-        if (!$link) {
+        if (! $link) {
             return -1;
         }
 
-        if (!$link->options(MYSQLI_OPT_CONNECT_TIMEOUT, $timeout)) {
+        if (! $link->options(\MYSQLI_OPT_CONNECT_TIMEOUT, $timeout)) {
             return 1;
         }
 
         // There is an @ because mysqli throw a warning when the database does not exists
-        if (!@$link->real_connect($server, $user, $pwd, $db)) {
-            return (mysqli_connect_errno() == 1049) ? 2 : 1;
+        if (! @$link->real_connect($server, $user, $pwd, $db)) {
+            return (mysqli_connect_errno() === 1049) ? 2 : 1;
         }
 
         $link->close();
@@ -375,11 +368,11 @@ class DbMySQLiCore extends Db
 
         $sql = 'SHOW VARIABLES WHERE Variable_name = \'have_innodb\'';
         $result = $this->link->query($sql);
-        if (!$result) {
+        if (! $result) {
             $value = 'MyISAM';
         }
         $row = $result->fetch_assoc();
-        if (!$row || strtolower($row['Value']) != 'yes') {
+        if (! $row || strtolower($row['Value']) !== 'yes') {
             $value = 'MyISAM';
         }
 
@@ -387,8 +380,8 @@ class DbMySQLiCore extends Db
         $sql = 'SHOW ENGINES';
         $result = $this->link->query($sql);
         while ($row = $result->fetch_assoc()) {
-            if ($row['Engine'] == 'InnoDB') {
-                if (in_array($row['Support'], ['DEFAULT', 'YES'])) {
+            if ($row['Engine'] === 'InnoDB') {
+                if (in_array($row['Support'], ['DEFAULT', 'YES'], true)) {
                     $value = 'InnoDB';
                 }
 
@@ -402,11 +395,11 @@ class DbMySQLiCore extends Db
     /**
      * Tries to connect to the database and create a table (checking creation privileges).
      *
-     * @param string $server
-     * @param string $user
-     * @param string $pwd
-     * @param string $db
-     * @param string $prefix
+     * @param string      $server
+     * @param string      $user
+     * @param string      $pwd
+     * @param string      $db
+     * @param string      $prefix
      * @param string|null $engine Table engine
      *
      * @return bool|string True, false or error
@@ -442,11 +435,11 @@ class DbMySQLiCore extends Db
     /**
      * Tries to connect to the database and select content (checking select privileges).
      *
-     * @param string $server
-     * @param string $user
-     * @param string $pwd
-     * @param string $db
-     * @param string $prefix
+     * @param string      $server
+     * @param string      $user
+     * @param string      $pwd
+     * @param string      $db
+     * @param string      $prefix
      * @param string|null $engine Table engine
      *
      * @return bool|string True, false or error
@@ -486,8 +479,8 @@ class DbMySQLiCore extends Db
      * @see Db::checkEncoding()
      *
      * @param string $server Server address
-     * @param string $user Login for database connection
-     * @param string $pwd Password for database connection
+     * @param string $user   Login for database connection
+     * @param string $pwd    Password for database connection
      *
      * @return bool
      */

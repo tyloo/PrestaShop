@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -25,7 +26,7 @@
  */
 class CartChecksumCore implements ChecksumInterface
 {
-    public $addressChecksum = null;
+    public $addressChecksum;
     private $separator = '_';
     private $subseparator = '-';
 

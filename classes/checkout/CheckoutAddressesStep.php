@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -35,15 +36,10 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
     private $show_invoice_address_form = false;
     private $form_has_continue_button = false;
 
-    /**
-     * @param Context $context
-     * @param TranslatorInterface $translator
-     * @param CustomerAddressForm $addressForm
-     */
     public function __construct(
         Context $context,
         TranslatorInterface $translator,
-        CustomerAddressForm $addressForm
+        CustomerAddressForm $addressForm,
     ) {
         parent::__construct($context, $translator);
         $this->addressForm = $addressForm;
@@ -71,7 +67,7 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
 
         if (array_key_exists('use_same_address', $requestParams)) {
             $this->use_same_address = (bool) $requestParams['use_same_address'];
-            if (!$this->use_same_address) {
+            if (! $this->use_same_address) {
                 $this->setCurrent(true);
             }
         }
@@ -93,7 +89,7 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
 
         if (isset($requestParams['saveAddress'])) {
             $saved = $this->addressForm->fillWith($requestParams)->submit();
-            if (!$saved) {
+            if (! $saved) {
                 $this->setCurrent(true);
                 $this->getCheckoutProcess()->setHasErrors(true);
                 if ($requestParams['saveAddress'] === 'delivery') {
@@ -167,10 +163,10 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
             if (isset($requestParams['id_address_delivery'])) {
                 $id_address = $requestParams['id_address_delivery'];
 
-                if (!Customer::customerHasAddress($this->getCheckoutSession()->getCustomer()->id, $id_address)) {
+                if (! Customer::customerHasAddress($this->getCheckoutSession()->getCustomer()->id, $id_address)) {
                     $this->getCheckoutProcess()->setHasErrors(true);
                 } else {
-                    if ($this->getCheckoutSession()->getIdAddressDelivery() != $id_address) {
+                    if ($this->getCheckoutSession()->getIdAddressDelivery() !== $id_address) {
                         $this->setCurrent(true);
                         $this->getCheckoutProcess()->invalidateAllStepsAfterCurrent();
                     }
@@ -184,14 +180,14 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
 
             if (isset($requestParams['id_address_invoice'])) {
                 $id_address = $requestParams['id_address_invoice'];
-                if (!Customer::customerHasAddress($this->getCheckoutSession()->getCustomer()->id, $id_address)) {
+                if (! Customer::customerHasAddress($this->getCheckoutSession()->getCustomer()->id, $id_address)) {
                     $this->getCheckoutProcess()->setHasErrors(true);
                 } else {
                     $this->getCheckoutSession()->setIdAddressInvoice($id_address);
                 }
             }
 
-            if (!$this->getCheckoutProcess()->hasErrors()) {
+            if (! $this->getCheckoutProcess()->hasErrors()) {
                 $this->setNextStepAsCurrent();
                 $this->setComplete(
                     $this->getCheckoutSession()->getIdAddressInvoice()
@@ -210,7 +206,7 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
 
         if ($addresses_count === 0) {
             $this->show_delivery_address_form = true;
-        } elseif ($addresses_count < 2 && !$this->use_same_address) {
+        } elseif ($addresses_count < 2 && ! $this->use_same_address) {
             $this->show_invoice_address_form = true;
             $this->setComplete(false);
         }
@@ -272,17 +268,17 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
             $invalidAddresses = $warnings['invalid_addresses'] ?? [];
 
             $errors = [];
-            if (in_array($idAddressDelivery, $invalidAddresses)) {
+            if (in_array($idAddressDelivery, $invalidAddresses, true)) {
                 $errors['delivery_address_error'] = $addressWarning;
             }
 
-            if (in_array($idAddressInvoice, $invalidAddresses)) {
+            if (in_array($idAddressInvoice, $invalidAddresses, true)) {
                 $errors['invoice_address_error'] = $addressWarning;
             }
 
             if ($this->show_invoice_address_form
-                || $idAddressInvoice != $idAddressDelivery
-                || !empty($errors['invoice_address_error'])
+                || $idAddressInvoice !== $idAddressDelivery
+                || ! empty($errors['invoice_address_error'])
             ) {
                 $this->use_same_address = false;
             }

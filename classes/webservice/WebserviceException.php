@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -86,7 +87,7 @@ class WebserviceExceptionCore extends Exception
 
     /**
      * @param string $wrong_value
-     * @param array $available_values
+     * @param array  $available_values
      *
      * @return self
      */

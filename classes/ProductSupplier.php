@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -66,12 +67,34 @@ class ProductSupplierCore extends ObjectModel
         'table' => 'product_supplier',
         'primary' => 'id_product_supplier',
         'fields' => [
-            'product_supplier_reference' => ['type' => self::TYPE_STRING, 'validate' => 'isReference', 'size' => 64],
-            'id_product' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_product_attribute' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_supplier' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'product_supplier_price_te' => ['type' => self::TYPE_FLOAT, 'validate' => 'isPrice'],
-            'id_currency' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId'],
+            'product_supplier_reference' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isReference',
+                'size' => 64,
+            ],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_product_attribute' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_supplier' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'product_supplier_price_te' => [
+                'type' => self::TYPE_FLOAT,
+                'validate' => 'isPrice',
+            ],
+            'id_currency' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+            ],
         ],
     ];
 
@@ -82,19 +105,27 @@ class ProductSupplierCore extends ObjectModel
         'objectsNodeName' => 'product_suppliers',
         'objectNodeName' => 'product_supplier',
         'fields' => [
-            'id_product' => ['xlink_resource' => 'products'],
-            'id_product_attribute' => ['xlink_resource' => 'combinations'],
-            'id_supplier' => ['xlink_resource' => 'suppliers'],
-            'id_currency' => ['xlink_resource' => 'currencies'],
+            'id_product' => [
+                'xlink_resource' => 'products',
+            ],
+            'id_product_attribute' => [
+                'xlink_resource' => 'combinations',
+            ],
+            'id_supplier' => [
+                'xlink_resource' => 'suppliers',
+            ],
+            'id_currency' => [
+                'xlink_resource' => 'currencies',
+            ],
         ],
     ];
 
     /**
      * For a given product and supplier, gets the product supplier reference.
      *
-     * @param int $idProduct Product ID
+     * @param int $idProduct          Product ID
      * @param int $idProductAttribute Product Attribute ID
-     * @param int $idSupplier Supplier ID
+     * @param int $idSupplier         Supplier ID
      *
      * @return string|false Product Supplier reference
      */
@@ -116,10 +147,10 @@ class ProductSupplierCore extends ObjectModel
     /**
      * For a given product and supplier, gets the product supplier unit price.
      *
-     * @param int $idProduct Product ID
-     * @param int $idProductAttribute Product Attribute ID
-     * @param int $idSupplier Supplier ID
-     * @param bool $withCurrency Optional With currency
+     * @param int  $idProduct          Product ID
+     * @param int  $idProductAttribute Product Attribute ID
+     * @param int  $idSupplier         Supplier ID
+     * @param bool $withCurrency       Optional With currency
      *
      * @return string|array
      */
@@ -138,7 +169,7 @@ class ProductSupplierCore extends ObjectModel
 			AND ps.id_supplier = ' . (int) $idSupplier
         );
 
-        if (!$withCurrency) {
+        if (! $withCurrency) {
             return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query);
         }
 
@@ -176,7 +207,7 @@ class ProductSupplierCore extends ObjectModel
     /**
      * For a given product, retrieves its suppliers.
      *
-     * @param int $idProduct
+     * @param int  $idProduct
      * @param bool $groupBySupplier
      *
      * @return PrestaShopCollection Collection of ProductSupplier
@@ -198,14 +229,14 @@ class ProductSupplierCore extends ObjectModel
      *
      * @param int|null $idSupplier
      * @param int|null $idProduct
-     * @param int $idProductAttribute Optional
-     * @param bool $convertedPrice Optional
+     * @param int      $idProductAttribute Optional
+     * @param bool     $convertedPrice     Optional
      *
      * @return float|null
      */
     public static function getProductPrice($idSupplier, $idProduct, $idProductAttribute = 0, $convertedPrice = false)
     {
-        if (null === $idSupplier || null === $idProduct) {
+        if ($idSupplier === null || $idProduct === null) {
             return null;
         }
 
@@ -230,9 +261,9 @@ class ProductSupplierCore extends ObjectModel
     /**
      * For a given product and supplier, gets the product supplier datas.
      *
-     * @param int $idProduct Product ID
+     * @param int $idProduct          Product ID
      * @param int $idProductAttribute Product Attribute ID
-     * @param int $idSupplier Supplier ID
+     * @param int $idSupplier         Supplier ID
      *
      * @return array
      */

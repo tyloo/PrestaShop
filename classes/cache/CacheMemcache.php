@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -61,7 +62,7 @@ class CacheMemcacheCore extends Cache
         }
 
         $servers = self::getMemcachedServers();
-        if (!$servers) {
+        if (! $servers) {
             return;
         }
         foreach ($servers as $server) {
@@ -76,7 +77,7 @@ class CacheMemcacheCore extends Cache
      */
     protected function _set($key, $value, $ttl = 0)
     {
-        if (!$this->is_connected) {
+        if (! $this->is_connected) {
             return false;
         }
 
@@ -94,7 +95,7 @@ class CacheMemcacheCore extends Cache
      */
     protected function _get($key)
     {
-        if (!$this->is_connected) {
+        if (! $this->is_connected) {
             return false;
         }
 
@@ -106,7 +107,7 @@ class CacheMemcacheCore extends Cache
      */
     protected function _exists($key)
     {
-        if (!$this->is_connected) {
+        if (! $this->is_connected) {
             return false;
         }
 
@@ -118,7 +119,7 @@ class CacheMemcacheCore extends Cache
      */
     protected function _delete($key)
     {
-        if (!$this->is_connected) {
+        if (! $this->is_connected) {
             return false;
         }
 
@@ -130,7 +131,7 @@ class CacheMemcacheCore extends Cache
      */
     protected function _writeKeys()
     {
-        if (!$this->is_connected) {
+        if (! $this->is_connected) {
             return false;
         }
 
@@ -142,7 +143,7 @@ class CacheMemcacheCore extends Cache
      */
     public function flush()
     {
-        if (!$this->is_connected) {
+        if (! $this->is_connected) {
             return false;
         }
 
@@ -153,8 +154,7 @@ class CacheMemcacheCore extends Cache
      * Store a data in cache.
      *
      * @param string $key
-     * @param mixed $value
-     * @param int $ttl
+     * @param int    $ttl
      *
      * @return bool
      */
@@ -167,8 +167,6 @@ class CacheMemcacheCore extends Cache
      * Retrieve a data from cache.
      *
      * @param string $key
-     *
-     * @return mixed
      */
     public function get($key)
     {
@@ -197,7 +195,7 @@ class CacheMemcacheCore extends Cache
      */
     public function delete($key)
     {
-        if ($key == '*') {
+        if ($key === '*') {
             $this->flush();
         } elseif (strpos($key, '*') === false) {
             $this->_delete($key);
@@ -245,7 +243,7 @@ class CacheMemcacheCore extends Cache
      */
     protected function close()
     {
-        if (!$this->is_connected) {
+        if (! $this->is_connected) {
             return false;
         }
 
@@ -256,8 +254,8 @@ class CacheMemcacheCore extends Cache
      * Add a memcache server.
      *
      * @param string $ip
-     * @param int $port
-     * @param int $weight
+     * @param int    $port
+     * @param int    $weight
      */
     public static function addServer($ip, $port, $weight)
     {

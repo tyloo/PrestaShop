@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -45,10 +46,6 @@ abstract class AbstractCheckoutStepCore implements CheckoutStepInterface
     protected $template;
     protected $unreachableStepTemplate = 'checkout/_partials/steps/unreachable.tpl';
 
-    /**
-     * @param Context $context
-     * @param TranslatorInterface $translator
-     */
     public function __construct(Context $context, TranslatorInterface $translator)
     {
         $this->context = $context;
@@ -67,9 +64,9 @@ abstract class AbstractCheckoutStepCore implements CheckoutStepInterface
     {
         if ($this->isReachable()) {
             return $this->template;
-        } else {
-            return $this->unreachableStepTemplate;
         }
+
+        return $this->unreachableStepTemplate;
     }
 
     protected function getTranslator()
@@ -180,7 +177,7 @@ abstract class AbstractCheckoutStepCore implements CheckoutStepInterface
     public function getIdentifier()
     {
         // SomeClassNameLikeThis => some-class-name-like-this
-        return Tools::camelCaseToKebabCase(get_class($this));
+        return Tools::camelCaseToKebabCase(static::class);
     }
 
     public function getDataToPersist()

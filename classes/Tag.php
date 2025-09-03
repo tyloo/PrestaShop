@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,10 +30,14 @@
  */
 class TagCore extends ObjectModel
 {
-    /** @var int Language id */
+    /**
+     * @var int Language id
+     */
     public $id_lang;
 
-    /** @var string Name */
+    /**
+     * @var string Name
+     */
     public $name;
 
     /**
@@ -42,14 +47,25 @@ class TagCore extends ObjectModel
         'table' => 'tag',
         'primary' => 'id_tag',
         'fields' => [
-            'id_lang' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 32],
+            'id_lang' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 32,
+            ],
         ],
     ];
 
     protected $webserviceParameters = [
         'fields' => [
-            'id_lang' => ['xlink_resource' => 'languages'],
+            'id_lang' => [
+                'xlink_resource' => 'languages',
+            ],
         ],
     ];
 
@@ -75,9 +91,10 @@ class TagCore extends ObjectModel
 
     public function add($autoDate = true, $nullValues = false)
     {
-        if (!parent::add($autoDate, $nullValues)) {
+        if (! parent::add($autoDate, $nullValues)) {
             return false;
-        } elseif (isset($_POST['products'])) {
+        }
+        if (isset($_POST['products'])) {
             return $this->setProducts(Tools::getValue('products'));
         }
 
@@ -89,7 +106,7 @@ class TagCore extends ObjectModel
      */
     public function delete()
     {
-        if (!parent::delete()) {
+        if (! parent::delete()) {
             return false;
         }
 
@@ -101,26 +118,26 @@ class TagCore extends ObjectModel
     /**
      * Add several tags in database and link it to a product.
      *
-     * @param int $idLang Language id
-     * @param int $idProduct Product id to link tags with
-     * @param string|array $tagList List of tags, as array or as a string with comas
+     * @param int          $idLang    Language id
+     * @param int          $idProduct Product id to link tags with
+     * @param string|array $tagList   List of tags, as array or as a string with comas
      *
      * @return bool Operation success
      */
     public static function addTags($idLang, $idProduct, $tagList, $separator = ',')
     {
-        if (!Validate::isUnsignedId($idLang)) {
+        if (! Validate::isUnsignedId($idLang)) {
             return false;
         }
 
-        if (!is_array($tagList)) {
-            $tagList = array_filter(array_unique(array_map('trim', preg_split('#\\' . $separator . '#', $tagList, 0, PREG_SPLIT_NO_EMPTY))));
+        if (! is_array($tagList)) {
+            $tagList = array_filter(array_unique(array_map('trim', preg_split('#\\' . $separator . '#', $tagList, 0, \PREG_SPLIT_NO_EMPTY))));
         }
 
         $list = [];
         if (is_array($tagList)) {
             foreach ($tagList as $tag) {
-                if (!Validate::isGenericName($tag)) {
+                if (! Validate::isGenericName($tag)) {
                     return false;
                 }
                 $tagMaxLength = self::$definition['fields']['name']['size'];
@@ -128,12 +145,12 @@ class TagCore extends ObjectModel
                 $tagObj = new Tag(null, $tag, (int) $idLang);
 
                 /* Tag does not exist in database */
-                if (!Validate::isLoadedObject($tagObj)) {
+                if (! Validate::isLoadedObject($tagObj)) {
                     $tagObj->name = $tag;
                     $tagObj->id_lang = (int) $idLang;
                     $tagObj->add();
                 }
-                if (!in_array($tagObj->id, $list)) {
+                if (! in_array($tagObj->id, $list, true)) {
                     $list[] = $tagObj->id;
                 }
             }
@@ -149,7 +166,7 @@ class TagCore extends ObjectModel
         }
         $result = Db::getInstance()->insert('product_tag', $data);
 
-        if ($list != []) {
+        if ($list !== []) {
             self::updateTagCount($list);
         }
 
@@ -163,8 +180,8 @@ class TagCore extends ObjectModel
      */
     public static function updateTagCount($tagList = null)
     {
-        if (!Module::getBatchMode()) {
-            if ($tagList != null) {
+        if (! Module::getBatchMode()) {
+            if ($tagList !== null) {
                 $tagListQuery = ' AND pt.id_tag IN (' . implode(',', array_map('intval', $tagList)) . ')';
                 Db::getInstance()->execute('DELETE pt FROM `' . _DB_PREFIX_ . 'tag_count` pt WHERE 1=1 ' . $tagListQuery);
             } else {
@@ -198,7 +215,7 @@ class TagCore extends ObjectModel
      * Get main tags.
      *
      * @param int $idLang Language ID
-     * @param int $nb number
+     * @param int $nb     number
      *
      * @return array|false|mysqli_result|PDOStatement|resource|null
      */
@@ -216,15 +233,15 @@ class TagCore extends ObjectModel
             AND pt.`id_lang` = ' . (int) $idLang . ' AND pt.`id_shop` = ' . (int) $context->shop->id . '
             ORDER BY times DESC
             LIMIT ' . (int) $nb);
-        } else {
-            return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
+        }
+
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
             SELECT t.name, counter AS times
             FROM `' . _DB_PREFIX_ . 'tag_count` pt
             LEFT JOIN `' . _DB_PREFIX_ . 'tag` t ON (t.id_tag = pt.id_tag)
             WHERE pt.id_group = 0 AND pt.`id_lang` = ' . (int) $idLang . ' AND pt.`id_shop` = ' . (int) $context->shop->id . '
             ORDER BY times DESC
             LIMIT ' . (int) $nb);
-        }
     }
 
     /**
@@ -236,7 +253,7 @@ class TagCore extends ObjectModel
      */
     public static function getProductTags($idProduct)
     {
-        if (!$tmp = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
+        if (! $tmp = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
         SELECT t.`id_lang`, t.`name`
         FROM ' . _DB_PREFIX_ . 'tag t
         LEFT JOIN ' . _DB_PREFIX_ . 'product_tag pt ON (pt.id_tag = t.id_tag)
@@ -255,18 +272,17 @@ class TagCore extends ObjectModel
      * Get Products.
      *
      * @param bool $associated
-     * @param Context|null $context
      *
      * @return array|false|mysqli_result|PDOStatement|resource|null
      */
     public function getProducts($associated = true, ?Context $context = null)
     {
-        if (!$context) {
+        if (! $context) {
             $context = Context::getContext();
         }
         $idLang = $this->id_lang ? $this->id_lang : $context->language->id;
 
-        if (!$this->id && $associated) {
+        if (! $this->id && $associated) {
             return [];
         }
 
@@ -333,9 +349,6 @@ class TagCore extends ObjectModel
     /**
      * Delete tags for product in specific language
      *
-     * @param int $productId
-     * @param int $langId
-     *
      * @return bool
      */
     public static function deleteProductTagsInLang(int $productId, int $langId)
@@ -346,8 +359,8 @@ class TagCore extends ObjectModel
     /**
      * Deletes product tags.
      *
-     * @param int $idProduct
-     * @param int|null $langId if provided, only deletes tags in specific language
+     * @param int      $idProduct
+     * @param int|null $langId    if provided, only deletes tags in specific language
      *
      * @return bool
      *
@@ -373,7 +386,7 @@ class TagCore extends ObjectModel
         foreach ($tagsRemoved as $tagRemoved) {
             $tagList[] = $tagRemoved['id_tag'];
         }
-        if ($tagList != []) {
+        if ($tagList !== []) {
             self::updateTagCount($tagList);
         }
 

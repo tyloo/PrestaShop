@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -40,17 +41,11 @@ class CheckoutPaymentStepCore extends AbstractCheckoutStep
      */
     public $paymentOptionsFinder;
 
-    /**
-     * @param Context $context
-     * @param TranslatorInterface $translator
-     * @param PaymentOptionsFinder $paymentOptionsFinder
-     * @param ConditionsToApproveFinder $conditionsToApproveFinder
-     */
     public function __construct(
         Context $context,
         TranslatorInterface $translator,
         PaymentOptionsFinder $paymentOptionsFinder,
-        ConditionsToApproveFinder $conditionsToApproveFinder
+        ConditionsToApproveFinder $conditionsToApproveFinder,
     ) {
         parent::__construct($context, $translator);
         $this->paymentOptionsFinder = $paymentOptionsFinder;
@@ -73,13 +68,11 @@ class CheckoutPaymentStepCore extends AbstractCheckoutStep
     }
 
     /**
-     * @param array $extraParams
-     *
      * @return string
      */
     public function render(array $extraParams = [])
     {
-        $isFree = 0 == (float) $this->getCheckoutSession()->getCart()->getOrderTotal(true, Cart::BOTH);
+        $isFree = (float) $this->getCheckoutSession()->getCart()->getOrderTotal(true, Cart::BOTH) === 0;
         $paymentOptions = $this->paymentOptionsFinder->present($isFree);
         $conditionsToApprove = $this->conditionsToApproveFinder->getConditionsToApproveForTemplate();
         $deliveryOptions = $this->getCheckoutSession()->getDeliveryOptions();
@@ -91,7 +84,7 @@ class CheckoutPaymentStepCore extends AbstractCheckoutStep
             $selectedDeliveryOption = 0;
         }
 
-        if (true === is_array($selectedDeliveryOption) && isset($selectedDeliveryOption['product_list'])) {
+        if (is_array($selectedDeliveryOption) === true && isset($selectedDeliveryOption['product_list'])) {
             unset($selectedDeliveryOption['product_list']);
         }
 

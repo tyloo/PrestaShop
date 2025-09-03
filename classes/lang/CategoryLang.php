@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -34,7 +35,7 @@ class CategoryLangCore extends DataLangCore
 
     public function getFieldValue($field, $value)
     {
-        if ($field == 'link_rewrite') {
+        if ($field === 'link_rewrite') {
             $replacements = [
                 'home' => 'Home',
                 'root' => 'Root',
@@ -44,7 +45,7 @@ class CategoryLangCore extends DataLangCore
 
         $value = parent::getFieldValue($field, $value);
 
-        if ($field == 'link_rewrite') {
+        if ($field === 'link_rewrite') {
             $value = $this->slugify($value);
         }
 

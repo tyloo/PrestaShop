@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -28,25 +29,39 @@ use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 
 class OrderReturnCore extends ObjectModel
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_customer;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id_order;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $state;
 
-    /** @var string message content */
+    /**
+     * @var string message content
+     */
     public $question;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
-    /** @var string Object last modification date */
+    /**
+     * @var string Object last modification date
+     */
     public $date_upd;
 
     /**
@@ -56,20 +71,38 @@ class OrderReturnCore extends ObjectModel
         'table' => 'order_return',
         'primary' => 'id_order_return',
         'fields' => [
-            'id_customer' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_order' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'question' => ['type' => self::TYPE_HTML, 'validate' => 'isCleanHtml', 'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4],
-            'state' => ['type' => self::TYPE_STRING],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'id_customer' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_order' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'question' => [
+                'type' => self::TYPE_HTML,
+                'validate' => 'isCleanHtml',
+                'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4,
+            ],
+            'state' => [
+                'type' => self::TYPE_STRING,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
         ],
     ];
 
     /**
      * @param int[] $order_detail_list
      * @param int[] $product_qty_list
-     *
-     * @return void
      */
     public function addReturnDetail($order_detail_list, $product_qty_list)
     {
@@ -79,7 +112,12 @@ class OrderReturnCore extends ObjectModel
                 if ($qty = (int) $product_qty_list[$key]) {
                     $orderdetail = new OrderDetail((int) $order_detail);
                     $id_customization = $orderdetail->id_customization;
-                    Db::getInstance()->insert('order_return_detail', ['id_order_return' => (int) $this->id, 'id_order_detail' => (int) $order_detail, 'product_quantity' => $qty, 'id_customization' => (int) $id_customization]);
+                    Db::getInstance()->insert('order_return_detail', [
+                        'id_order_return' => (int) $this->id,
+                        'id_order_detail' => (int) $order_detail,
+                        'product_quantity' => $qty,
+                        'id_customization' => (int) $id_customization,
+                    ]);
                 }
             }
         }
@@ -94,7 +132,7 @@ class OrderReturnCore extends ObjectModel
     public function checkEnoughProduct($order_detail_list, $product_qty_list)
     {
         $order = new Order((int) $this->id_order);
-        if (!Validate::isLoadedObject($order)) {
+        if (! Validate::isLoadedObject($order)) {
             throw new PrestaShopException(sprintf('Order with ID "%s" could not be loaded.', $this->id_order));
         }
         $products = $order->getProducts();
@@ -109,7 +147,7 @@ class OrderReturnCore extends ObjectModel
         /* Quantity check */
         if ($order_detail_list) {
             foreach (array_keys($order_detail_list) as $key) {
-                if (!isset($product_qty_list[$key])) {
+                if (! isset($product_qty_list[$key])) {
                     return false;
                 }
                 if ($qty = (int) $product_qty_list[$key]) {
@@ -125,7 +163,7 @@ class OrderReturnCore extends ObjectModel
 
     public function countProduct()
     {
-        if (!$data = Db::getInstance()->getRow('
+        if (! $data = Db::getInstance()->getRow('
 		SELECT COUNT(`id_order_return`) AS total
 		FROM `' . _DB_PREFIX_ . 'order_return_detail`
 		WHERE `id_order_return` = ' . (int) $this->id)) {
@@ -137,7 +175,7 @@ class OrderReturnCore extends ObjectModel
 
     public static function getOrdersReturn($customer_id, $order_id = false, $no_denied = false, ?Context $context = null, ?int $idOrderReturn = null)
     {
-        if (!$context) {
+        if (! $context) {
             $context = Context::getContext();
         }
         $data = Db::getInstance()->executeS('
@@ -169,7 +207,7 @@ class OrderReturnCore extends ObjectModel
     }
 
     /**
-     * @param int $order_return_id
+     * @param int   $order_return_id
      * @param Order $order
      *
      * @return array
@@ -199,7 +237,7 @@ class OrderReturnCore extends ObjectModel
     {
         $returns = Customization::getReturnedCustomizations($id_order);
         $order = new Order((int) $id_order);
-        if (!Validate::isLoadedObject($order)) {
+        if (! Validate::isLoadedObject($order)) {
             throw new PrestaShopException(sprintf('Order with ID "%s" could not be loaded.', $id_order));
         }
         $products = $order->getProducts();
@@ -242,7 +280,7 @@ class OrderReturnCore extends ObjectModel
      * Add returned quantity to products list.
      *
      * @param array $products
-     * @param int $id_order
+     * @param int   $id_order
      */
     public static function addReturnedQuantity(&$products, $id_order)
     {
@@ -254,7 +292,7 @@ class OrderReturnCore extends ObjectModel
 			WHERE od.id_order = ' . (int) $id_order . '
 			GROUP BY od.id_order_detail'
         );
-        if (!$details) {
+        if (! $details) {
             return;
         }
 

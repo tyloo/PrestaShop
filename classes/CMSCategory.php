@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -30,40 +31,64 @@ class CMSCategoryCore extends ObjectModel
 {
     public $id;
 
-    /** @var int CMSCategory ID */
+    /**
+     * @var int CMSCategory ID
+     */
     public $id_cms_category;
 
-    /** @var string|array<int, string> Name */
+    /**
+     * @var string|array<int, string> Name
+     */
     public $name;
 
-    /** @var bool Status for display */
+    /**
+     * @var bool Status for display
+     */
     public $active = true;
 
-    /** @var string|array<int, string> Description */
+    /**
+     * @var string|array<int, string> Description
+     */
     public $description;
 
-    /** @var int Parent CMSCategory ID */
+    /**
+     * @var int Parent CMSCategory ID
+     */
     public $id_parent;
 
-    /** @var int category position */
+    /**
+     * @var int category position
+     */
     public $position;
 
-    /** @var int Parents number */
+    /**
+     * @var int Parents number
+     */
     public $level_depth;
 
-    /** @var string|array<int, string> string used in rewrited URL */
+    /**
+     * @var string|array<int, string> string used in rewrited URL
+     */
     public $link_rewrite;
 
-    /** @var string|array<int, string> Meta title */
+    /**
+     * @var string|array<int, string> Meta title
+     */
     public $meta_title;
 
-    /** @var string|array<int, string> Meta description */
+    /**
+     * @var string|array<int, string> Meta description
+     */
     public $meta_description;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
-    /** @var string Object last modification date */
+    /**
+     * @var string Object last modification date
+     */
     public $date_upd;
 
     protected static $_links = [];
@@ -123,32 +148,32 @@ class CMSCategoryCore extends ObjectModel
     /**
      * Recursive scan of subcategories.
      *
-     * @param int $max_depth Maximum depth of the tree (i.e. 2 => 3 levels depth)
-     * @param int $currentDepth specify the current depth in the tree (don't use it, only for rucursivity!)
-     * @param int|null $id_lang Specify the id of the language used
+     * @param int        $max_depth          Maximum depth of the tree (i.e. 2 => 3 levels depth)
+     * @param int        $currentDepth       specify the current depth in the tree (don't use it, only for rucursivity!)
+     * @param int|null   $id_lang            Specify the id of the language used
      * @param array|null $excluded_ids_array specify a list of ids to exclude of results
-     * @param Link|null $link
      *
      * @return array Subcategories lite tree
      */
     public function recurseLiteCategTree($max_depth = 3, $currentDepth = 0, $id_lang = null, $excluded_ids_array = null, ?Link $link = null)
     {
-        if (!$link) {
+        if (! $link) {
             $link = Context::getContext()->link;
         }
 
-        if (null === $id_lang) {
+        if ($id_lang === null) {
             $id_lang = Context::getContext()->language->id;
         }
 
         // recursivity for subcategories
         $children = [];
         $subcats = $this->getSubCategories($id_lang, true);
-        if (($max_depth == 0 || $currentDepth < $max_depth) && count($subcats)) {
+        if (($max_depth === 0 || $currentDepth < $max_depth) && count($subcats)) {
             foreach ($subcats as $subcat) {
-                if (!$subcat['id_cms_category']) {
+                if (! $subcat['id_cms_category']) {
                     break;
-                } elseif (!is_array($excluded_ids_array) || !in_array($subcat['id_cms_category'], $excluded_ids_array)) {
+                }
+                if (! is_array($excluded_ids_array) || ! in_array($subcat['id_cms_category'], $excluded_ids_array, true)) {
                     $categ = new CMSCategory($subcat['id_cms_category'], $id_lang);
                     $categ->name = CMSCategory::hideCMSCategoryPosition($categ->name);
                     $children[] = $categ->recurseLiteCategTree($max_depth, $currentDepth + 1, $id_lang, $excluded_ids_array);
@@ -167,10 +192,10 @@ class CMSCategoryCore extends ObjectModel
 
     public static function getRecurseCategory($id_lang = null, $current = 1, $active = 1, $links = 0, ?Link $link = null)
     {
-        if (!$link) {
+        if (! $link) {
             $link = Context::getContext()->link;
         }
-        if (null === $id_lang) {
+        if ($id_lang === null) {
             $id_lang = Context::getContext()->language->id;
         }
 
@@ -205,7 +230,7 @@ class CMSCategoryCore extends ObjectModel
 				ORDER BY c.`position`';
 
         $category['cms'] = Db::getInstance()->executeS($sql);
-        if ($links == 1) {
+        if ($links === 1) {
             $category['link'] = $link->getCMSCategoryLink($current, $category['link_rewrite']);
             foreach ($category['cms'] as $key => $cms) {
                 $category['cms'][$key]['link'] = $link->getCMSLink($cms['id_cms'], $cms['link_rewrite']);
@@ -217,10 +242,10 @@ class CMSCategoryCore extends ObjectModel
 
     public static function recurseCMSCategory($categories, $current, $id_cms_category = 1, $id_selected = 1, $is_html = 0)
     {
-        $html = '<option value="' . $id_cms_category . '"' . (($id_selected == $id_cms_category) ? ' selected="selected"' : '') . '>'
+        $html = '<option value="' . $id_cms_category . '"' . (($id_selected === $id_cms_category) ? ' selected="selected"' : '') . '>'
             . str_repeat('&nbsp;', $current['infos']['level_depth'] * 5)
             . CMSCategory::hideCMSCategoryPosition(stripslashes($current['infos']['name'])) . '</option>';
-        if ($is_html == 0) {
+        if ($is_html === 0) {
             echo $html;
         }
         if (isset($categories[$id_cms_category])) {
@@ -235,12 +260,12 @@ class CMSCategoryCore extends ObjectModel
     /**
      * Recursively add specified CMSCategory childs to $toDelete array.
      *
-     * @param array $to_delete Array reference where categories ID will be saved
+     * @param array     $to_delete       Array reference where categories ID will be saved
      * @param array|int $id_cms_category Parent CMSCategory ID
      */
     protected function recursiveDelete(array &$to_delete, $id_cms_category)
     {
-        if (!$id_cms_category) {
+        if (! $id_cms_category) {
             throw new PrestaShopException('Parameter "id_cms_category" is invalid.');
         }
 
@@ -332,8 +357,8 @@ class CMSCategoryCore extends ObjectModel
     /**
      * Return available categories.
      *
-     * @param int $id_lang Language ID
-     * @param bool $active return only active categories
+     * @param int  $id_lang Language ID
+     * @param bool $active  return only active categories
      *
      * @return array Categories
      */
@@ -347,7 +372,7 @@ class CMSCategoryCore extends ObjectModel
 		' . ($active ? 'AND `active` = 1' : '') . '
 		ORDER BY `name` ASC');
 
-        if (!$order) {
+        if (! $order) {
             return $result;
         }
 
@@ -372,8 +397,8 @@ class CMSCategoryCore extends ObjectModel
     /**
      * Return current CMSCategory childs.
      *
-     * @param int $id_lang Language ID
-     * @param bool $active return only active categories
+     * @param int  $id_lang Language ID
+     * @param bool $active  return only active categories
      *
      * @return array Categories
      */
@@ -411,8 +436,8 @@ class CMSCategoryCore extends ObjectModel
     /**
      * Return main categories.
      *
-     * @param int $id_lang Language ID
-     * @param bool $active return only active categories
+     * @param int  $id_lang Language ID
+     * @param bool $active  return only active categories
      *
      * @return array categories
      */
@@ -475,23 +500,23 @@ class CMSCategoryCore extends ObjectModel
      */
     public static function checkBeforeMove($id_cms_category, $id_parent)
     {
-        if ($id_cms_category == $id_parent) {
+        if ($id_cms_category === $id_parent) {
             return false;
         }
-        if ($id_parent == 1) {
+        if ($id_parent === 1) {
             return true;
         }
         $i = (int) $id_parent;
 
         while (42) {
             $result = Db::getInstance()->getRow('SELECT `id_parent` FROM `' . _DB_PREFIX_ . 'cms_category` WHERE `id_cms_category` = ' . (int) $i);
-            if (!isset($result['id_parent'])) {
+            if (! isset($result['id_parent'])) {
                 return false;
             }
-            if ($result['id_parent'] == $id_cms_category) {
+            if ($result['id_parent'] === $id_cms_category) {
                 return false;
             }
-            if ($result['id_parent'] == 1) {
+            if ($result['id_parent'] === 1) {
                 return true;
             }
             $i = $result['id_parent'];
@@ -500,7 +525,7 @@ class CMSCategoryCore extends ObjectModel
 
     public static function getLinkRewrite($id_cms_category, $id_lang)
     {
-        if (!Validate::isUnsignedId($id_cms_category) || !Validate::isUnsignedId($id_lang)) {
+        if (! Validate::isUnsignedId($id_cms_category) || ! Validate::isUnsignedId($id_lang)) {
             return false;
         }
 
@@ -521,7 +546,7 @@ class CMSCategoryCore extends ObjectModel
 
     public function getLink(?Link $link = null)
     {
-        if (!$link) {
+        if (! $link) {
             $link = Context::getContext()->link;
         }
 
@@ -531,7 +556,7 @@ class CMSCategoryCore extends ObjectModel
     public function getName($id_lang = null)
     {
         $context = Context::getContext();
-        if (!$id_lang) {
+        if (! $id_lang) {
             if (isset($this->name[$context->language->id])) {
                 $id_lang = $context->language->id;
             } else {
@@ -545,9 +570,9 @@ class CMSCategoryCore extends ObjectModel
     /**
      * Light back office search for categories.
      *
-     * @param int $id_lang Language ID
-     * @param string $query Searched string
-     * @param bool $unrestricted allows search without lang and includes first CMSCategory and exact match
+     * @param int    $id_lang      Language ID
+     * @param string $query        Searched string
+     * @param bool   $unrestricted allows search without lang and includes first CMSCategory and exact match
      *
      * @return array Corresponding categories
      */
@@ -559,13 +584,13 @@ class CMSCategoryCore extends ObjectModel
 			FROM `' . _DB_PREFIX_ . 'cms_category` c
 			LEFT JOIN `' . _DB_PREFIX_ . 'cms_category_lang` cl ON (c.`id_cms_category` = cl.`id_cms_category`)
 			WHERE `name` = \'' . pSQL($query) . '\'');
-        } else {
-            return Db::getInstance()->executeS('
+        }
+
+        return Db::getInstance()->executeS('
 			SELECT c.*, cl.*
 			FROM `' . _DB_PREFIX_ . 'cms_category` c
 			LEFT JOIN `' . _DB_PREFIX_ . 'cms_category_lang` cl ON (c.`id_cms_category` = cl.`id_cms_category` AND `id_lang` = ' . (int) $id_lang . ')
 			WHERE `name` LIKE \'%' . pSQL($query) . '%\' AND c.`id_cms_category` != 1');
-        }
     }
 
     /**
@@ -577,7 +602,7 @@ class CMSCategoryCore extends ObjectModel
      */
     public function getParentsCategories($id_lang = null)
     {
-        if (null === $id_lang) {
+        if ($id_lang === null) {
             $id_lang = Context::getContext()->language->id;
         }
 
@@ -593,7 +618,7 @@ class CMSCategoryCore extends ObjectModel
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
             $categories[] = $result[0];
-            if (!$result || $result[0]['id_parent'] == 1) {
+            if (! $result || $result[0]['id_parent'] === 1) {
                 return $categories;
             }
             $id_current = $result[0]['id_parent'];
@@ -602,7 +627,7 @@ class CMSCategoryCore extends ObjectModel
 
     public function updatePosition($way, $position)
     {
-        if (!$res = Db::getInstance()->executeS(
+        if (! $res = Db::getInstance()->executeS(
             '
 			SELECT cp.`id_cms_category`, cp.`position`, cp.`id_parent`
 			FROM `' . _DB_PREFIX_ . 'cms_category` cp
@@ -612,12 +637,12 @@ class CMSCategoryCore extends ObjectModel
             return false;
         }
         foreach ($res as $category) {
-            if ((int) $category['id_cms_category'] == (int) $this->id) {
+            if ((int) $category['id_cms_category'] === (int) $this->id) {
                 $moved_category = $category;
             }
         }
 
-        if (!isset($moved_category) || !isset($position)) {
+        if (! isset($moved_category) || ! isset($position)) {
             return false;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -27,15 +28,21 @@ class TaxRulesGroupCore extends ObjectModel
 {
     public $name;
 
-    /** @var bool active state */
+    /**
+     * @var bool active state
+     */
     public $active;
 
     public $deleted = 0;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
-    /** @var string Object last modification date */
+    /**
+     * @var string Object last modification date
+     */
     public $date_upd;
 
     /**
@@ -45,11 +52,28 @@ class TaxRulesGroupCore extends ObjectModel
         'table' => 'tax_rules_group',
         'primary' => 'id_tax_rules_group',
         'fields' => [
-            'name' => ['type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'required' => true, 'size' => 64],
-            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'deleted' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 64,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'deleted' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
         ],
     ];
 
@@ -72,11 +96,11 @@ class TaxRulesGroupCore extends ObjectModel
      */
     public function update($null_values = false)
     {
-        if (!$this->deleted && $this->isUsed()) {
+        if (! $this->deleted && $this->isUsed()) {
             $current_tax_rules_group = new TaxRulesGroup((int) $this->id);
             /** @var TaxRulesGroup|false $new_tax_rules_group */
             $new_tax_rules_group = $current_tax_rules_group->duplicateObject();
-            if (!$new_tax_rules_group || !$current_tax_rules_group->historize($new_tax_rules_group)) {
+            if (! $new_tax_rules_group || ! $current_tax_rules_group->historize($new_tax_rules_group)) {
                 return false;
             }
 
@@ -167,7 +191,7 @@ class TaxRulesGroupCore extends ObjectModel
     }
 
     /**
-     * @param bool $onlyActive Filter active tax rules group only
+     * @param bool $onlyActive   Filter active tax rules group only
      * @param bool $includeRates Include tax rate amount in returned data
      *
      * @return array|false
@@ -252,7 +276,7 @@ class TaxRulesGroupCore extends ObjectModel
     {
         $rules = TaxRule::getTaxRulesByGroupId((int) Context::getContext()->language->id, (int) $this->id);
         foreach ($rules as $rule) {
-            if ($rule['id_country'] == $id_country && $id_state == $rule['id_state'] && !$rule['behavior'] && (int) $id_tax_rule != $rule['id_tax_rule']) {
+            if ($rule['id_country'] === $id_country && $id_state === $rule['id_state'] && ! $rule['behavior'] && (int) $id_tax_rule !== $rule['id_tax_rule']) {
                 return true;
             }
         }

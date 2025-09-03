@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -29,10 +30,14 @@
  */
 class FeatureCore extends ObjectModel
 {
-    /** @var string|array<int, string> Name */
+    /**
+     * @var string|array<int, string> Name
+     */
     public $name;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $position;
 
     /**
@@ -43,10 +48,19 @@ class FeatureCore extends ObjectModel
         'primary' => 'id_feature',
         'multilang' => true,
         'fields' => [
-            'position' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
+            'position' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
 
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 128],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'validate' => 'isGenericName',
+                'required' => true,
+                'size' => 128,
+            ],
         ],
     ];
 
@@ -59,7 +73,7 @@ class FeatureCore extends ObjectModel
     /**
      * Get a feature data for a given id_feature and id_lang.
      *
-     * @param int $idLang Language ID
+     * @param int $idLang    Language ID
      * @param int $idFeature Feature ID
      *
      * @return array Array with feature's data
@@ -105,7 +119,7 @@ class FeatureCore extends ObjectModel
         /* Also delete Attributes */
         foreach ($selection as $value) {
             $obj = new Feature($value);
-            if (!$obj->delete()) {
+            if (! $obj->delete()) {
                 return false;
             }
         }
@@ -116,7 +130,7 @@ class FeatureCore extends ObjectModel
     /**
      * Adds current Feature as a new Object to the database.
      *
-     * @param bool $autoDate Automatically set `date_upd` and `date_add` columns
+     * @param bool $autoDate   Automatically set `date_upd` and `date_add` columns
      * @param bool $nullValues Whether we want to use NULL values instead of empty quotes values
      *
      * @return bool Indicates whether the Feature has been successfully added
@@ -154,7 +168,7 @@ class FeatureCore extends ObjectModel
         $fields = $this->getFieldsLang();
         foreach ($fields as $field) {
             foreach (array_keys($field) as $key) {
-                if (!Validate::isTableOrIdentifier($key)) {
+                if (! Validate::isTableOrIdentifier($key)) {
                     throw new PrestaShopException('Invalid column name in feature_lang table.');
                 }
             }
@@ -164,7 +178,7 @@ class FeatureCore extends ObjectModel
 						AND `id_lang` = ' . (int) $field['id_lang'];
             $mode = Db::getInstance()->getRow($sql);
             $result = $result
-                && (!$mode
+                && (! $mode
                     ? Db::getInstance()->insert($this->def['table'] . '_lang', $field)
                     : Db::getInstance()->update(
                         $this->def['table'] . '_lang',
@@ -246,7 +260,7 @@ class FeatureCore extends ObjectModel
     /**
      * Create a feature from import.
      *
-     * @param string $name Feature name
+     * @param string   $name     Feature name
      * @param bool|int $position Feature position
      *
      * @return int Feature ID
@@ -271,7 +285,8 @@ class FeatureCore extends ObjectModel
             $feature->add();
 
             return $feature->id;
-        } elseif (isset($rq['id_feature']) && $rq['id_feature']) {
+        }
+        if (isset($rq['id_feature']) && $rq['id_feature']) {
             if (is_numeric($position)) {
                 $feature = new Feature((int) $rq['id_feature']);
                 $feature->position = (int) $position;
@@ -299,7 +314,7 @@ class FeatureCore extends ObjectModel
     /**
      * Move a feature.
      *
-     * @param bool $way Up (1)  or Down (0)
+     * @param bool     $way       Up (1)  or Down (0)
      * @param int|null $position
      * @param int|null $idFeature
      *
@@ -307,7 +322,7 @@ class FeatureCore extends ObjectModel
      */
     public function updatePosition($way, $position, $idFeature = null)
     {
-        if (!$res = Db::getInstance()->executeS(
+        if (! $res = Db::getInstance()->executeS(
             '
 			SELECT `position`, `id_feature`
 			FROM `' . _DB_PREFIX_ . 'feature`
@@ -318,12 +333,12 @@ class FeatureCore extends ObjectModel
         }
 
         foreach ($res as $feature) {
-            if ((int) $feature['id_feature'] == (int) $this->id) {
+            if ((int) $feature['id_feature'] === (int) $this->id) {
                 $moved_feature = $feature;
             }
         }
 
-        if (!isset($moved_feature) || !isset($position)) {
+        if (! isset($moved_feature) || ! isset($position)) {
             return false;
         }
 
@@ -346,7 +361,7 @@ class FeatureCore extends ObjectModel
      * Reorder feature position
      * Call it after deleting a feature.
      *
-     * @return bool $return
+     * @return bool
      */
     public static function cleanPositions()
     {
@@ -361,7 +376,7 @@ class FeatureCore extends ObjectModel
      *
      * Get the higher feature position
      *
-     * @return int $position
+     * @return int
      */
     public static function getHigherPosition()
     {

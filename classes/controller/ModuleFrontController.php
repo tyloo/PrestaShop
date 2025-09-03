@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -25,13 +26,15 @@
  */
 class ModuleFrontControllerCore extends FrontController
 {
-    /** @var Module */
+    /**
+     * @var Module
+     */
     public $module;
 
     public function __construct()
     {
         $this->module = Module::getInstanceByName(Tools::getValue('module'));
-        if (!($this->module instanceof Module) || !$this->module->active) {
+        if (! ($this->module instanceof Module) || ! $this->module->active) {
             Tools::redirect('index');
 
             return;
@@ -67,7 +70,7 @@ class ModuleFrontControllerCore extends FrontController
      */
     public function initContent()
     {
-        if (Tools::isSubmit('module') && Tools::getValue('controller') == 'payment') {
+        if (Tools::isSubmit('module') && Tools::getValue('controller') === 'payment') {
             $currency = Currency::getCurrency((int) $this->context->cart->id_currency);
             $minimalPurchase = Tools::convertPrice((float) Configuration::get('PS_PURCHASE_MINIMUM'), $currency);
             Hook::exec('overrideMinimalPurchasePrice', [
@@ -90,11 +93,11 @@ class ModuleFrontControllerCore extends FrontController
      *
      * @deprecated use Context::getContext()->getTranslator()->trans($id, $parameters, $domain, $locale); instead
      *
-     * @param string $string Term or expression in english
-     * @param false|string $specific Specific name, only for ModuleFrontController
-     * @param string|null $class Name of the class
-     * @param bool $addslashes If set to true, the return value will pass through addslashes(). Otherwise, stripslashes()
-     * @param bool $htmlentities If set to true(default), the return value will pass through htmlentities($string, ENT_QUOTES, 'utf-8')
+     * @param string       $string       Term or expression in english
+     * @param false|string $specific     Specific name, only for ModuleFrontController
+     * @param string|null  $class        Name of the class
+     * @param bool         $addslashes   If set to true, the return value will pass through addslashes(). Otherwise, stripslashes()
+     * @param bool         $htmlentities If set to true(default), the return value will pass through htmlentities($string, ENT_QUOTES, 'utf-8')
      *
      * @return string The translation if available, or the english default text
      */

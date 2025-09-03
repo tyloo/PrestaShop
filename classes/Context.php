@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -51,40 +52,64 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class ContextCore
 {
-    /** @var Context|null */
+    /**
+     * @var Context|null
+     */
     protected static $instance;
 
-    /** @var Cart|null */
+    /**
+     * @var Cart|null
+     */
     public $cart;
 
-    /** @var Customer|null */
+    /**
+     * @var Customer|null
+     */
     public $customer;
 
-    /** @var Cookie|null */
+    /**
+     * @var Cookie|null
+     */
     public $cookie;
 
-    /** @var SessionInterface|null */
+    /**
+     * @var SessionInterface|null
+     */
     public $session;
 
-    /** @var Link|null */
+    /**
+     * @var Link|null
+     */
     public $link;
 
-    /** @var Country|null */
+    /**
+     * @var Country|null
+     */
     public $country;
 
-    /** @var Employee|null */
+    /**
+     * @var Employee|null
+     */
     public $employee;
 
-    /** @var AdminController|FrontController|LegacyControllerContext|null */
+    /**
+     * @var AdminController|FrontController|LegacyControllerContext|null
+     */
     public $controller;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $override_controller_name_for_translations;
 
-    /** @var Language|InstallLanguage|null */
+    /**
+     * @var Language|InstallLanguage|null
+     */
     public $language;
 
-    /** @var Currency|null */
+    /**
+     * @var Currency|null
+     */
     public $currency;
 
     /**
@@ -94,67 +119,105 @@ class ContextCore
      */
     public $currentLocale;
 
-    /** @var Tab */
+    /**
+     * @var Tab
+     */
     public $tab;
 
-    /** @var Shop|null */
+    /**
+     * @var Shop|null
+     */
     public $shop;
 
-    /** @var Shop */
+    /**
+     * @var Shop
+     */
     public $tmpOldShop;
 
-    /** @var Smarty|null */
+    /**
+     * @var Smarty|null
+     */
     public $smarty;
 
     public ?MobileDetect $mobile_detect = null;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $mode;
 
-    /** @var ContainerBuilder|ContainerInterface|null */
+    /**
+     * @var ContainerBuilder|ContainerInterface|null
+     */
     public $container;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $virtualTotalTaxExcluded = 0;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $virtualTotalTaxIncluded = 0;
 
-    /** @var Translator */
-    protected $translator = null;
+    /**
+     * @var Translator
+     */
+    protected $translator;
 
-    /** @var int */
-    protected $priceComputingPrecision = null;
+    /**
+     * @var int
+     */
+    protected $priceComputingPrecision;
 
-    /** Mobile device of the customer. */
+    /**
+     * Mobile device of the customer.
+     */
     protected ?bool $mobile_device = null;
 
     protected ?bool $is_mobile = null;
 
     protected ?bool $is_tablet = null;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public const DEVICE_COMPUTER = 1;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public const DEVICE_TABLET = 2;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public const DEVICE_MOBILE = 4;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public const MODE_STD = 1;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public const MODE_STD_CONTRIB = 2;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public const MODE_HOST_CONTRIB = 4;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public const MODE_HOST = 8;
 
-    /** Sets MobileDetect tool object. */
+    /**
+     * Sets MobileDetect tool object.
+     */
     public function getMobileDetect(): MobileDetect
     {
         if ($this->mobile_detect === null) {
@@ -164,7 +227,9 @@ class ContextCore
         return $this->mobile_detect;
     }
 
-    /** Checks if visitor's device is a mobile device. */
+    /**
+     * Checks if visitor's device is a mobile device.
+     */
     public function isMobile(): bool
     {
         if ($this->is_mobile === null) {
@@ -175,7 +240,9 @@ class ContextCore
         return $this->is_mobile;
     }
 
-    /** Checks if visitor's device is a tablet device. */
+    /**
+     * Checks if visitor's device is a tablet device.
+     */
     public function isTablet(): bool
     {
         if ($this->is_tablet === null) {
@@ -199,13 +266,15 @@ class ContextCore
                 '%s is deprecated since version 9.0.0. There is no replacement.',
                 __METHOD__
             ),
-            E_USER_DEPRECATED
+            \E_USER_DEPRECATED
         );
 
         return false;
     }
 
-    /** Returns mobile device type. */
+    /**
+     * Returns mobile device type.
+     */
     public function getDevice(): int
     {
         static $device = null;
@@ -246,7 +315,7 @@ class ContextCore
                 '%s is deprecated since version 9.0.0. There is no replacement.',
                 __METHOD__
             ),
-            E_USER_DEPRECATED
+            \E_USER_DEPRECATED
         );
 
         return false;
@@ -259,7 +328,7 @@ class ContextCore
      */
     public static function getContext()
     {
-        if (!isset(self::$instance)) {
+        if (! isset(self::$instance)) {
             self::$instance = new Context();
         }
 
@@ -322,7 +391,7 @@ class ContextCore
          * We don't want to flush his cart, if he made it when logged out.
          */
         if (Configuration::get('PS_CART_FOLLOWING')
-            && (empty($this->cookie->id_cart) || Cart::getNbProducts((int) $this->cookie->id_cart) == 0)
+            && (empty($this->cookie->id_cart) || Cart::getNbProducts((int) $this->cookie->id_cart) === 0)
             && $idCart = (int) Cart::lastNoneOrderedCart($this->customer->id)
         ) {
             $this->cart = new Cart($idCart);
@@ -334,7 +403,7 @@ class ContextCore
         */
         } else {
             // Initialize new visit only if there is no visit identifier yet
-            if (!$this->cookie->id_guest) {
+            if (! $this->cookie->id_guest) {
                 Guest::setNewGuest($this->cookie);
             }
 
@@ -347,7 +416,7 @@ class ContextCore
                 // Update and revalidate the selected delivery option
                 $idCarrier = (int) $this->cart->id_carrier;
                 $this->cart->id_carrier = 0;
-                if (!empty($idCarrier)) {
+                if (! empty($idCarrier)) {
                     $deliveryOption = [$this->cart->id_address_delivery => $idCarrier . ','];
                     $this->cart->setDeliveryOption($deliveryOption);
                 } else {
@@ -385,13 +454,13 @@ class ContextCore
      */
     public function getTranslator($isInstaller = false)
     {
-        if (null !== $this->translator && $this->language->locale === $this->translator->getLocale()) {
+        if ($this->translator !== null && $this->language->locale === $this->translator->getLocale()) {
             return $this->translator;
         }
 
         $sfContainer = SymfonyContainer::getInstance();
 
-        if ($isInstaller || null === $sfContainer) {
+        if ($isInstaller || $sfContainer === null) {
             // symfony's container isn't available in front office, so we load and configure the translator component
             $this->translator = $this->getTranslatorFromLocale($this->language->locale);
         } else {
@@ -438,7 +507,7 @@ class ContextCore
         $adminContext = defined('_PS_ADMIN_DIR_');
         // Do not load DB translations when $this->language is InstallLanguage
         // because it means that we're looking for the installer translations, so we're not yet connected to the DB
-        $withDB = !$this->language instanceof InstallLanguage;
+        $withDB = ! $this->language instanceof InstallLanguage;
         $theme = $this->shop !== null ? $this->shop->theme : null;
 
         if ($this instanceof Context) {
@@ -450,7 +519,7 @@ class ContextCore
                 $translatorLoader = null;
             }
 
-            if (null === $translatorLoader) {
+            if ($translatorLoader === null) {
                 // If a container is still not found, instantiate manually the translator loader
                 // This will happen in the Front as we have legacy controllers, the Sf container won't be available.
                 // As we get the translator in the controller's constructor and the container is built in the init method, we won't find it here
@@ -477,7 +546,7 @@ class ContextCore
         $locations = [_PS_ROOT_DIR_ . '/translations'];
 
         // Translations for currently selected theme
-        if (null !== $this->shop) {
+        if ($this->shop !== null) {
             $activeThemeLocation = _PS_ROOT_DIR_ . '/themes/' . $this->shop->theme_name . '/translations';
             if (is_dir($activeThemeLocation)) {
                 $locations[] = $activeThemeLocation;

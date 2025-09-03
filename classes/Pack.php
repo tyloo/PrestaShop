@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -77,15 +78,15 @@ class PackCore extends Product
      */
     public static function isPack($id_product)
     {
-        if (!Pack::isFeatureActive()) {
+        if (! Pack::isFeatureActive()) {
             return false;
         }
 
-        if (!$id_product) {
+        if (! $id_product) {
             return false;
         }
 
-        if (!array_key_exists($id_product, self::$cacheIsPack)) {
+        if (! array_key_exists($id_product, self::$cacheIsPack)) {
             // This is not very efficient, isn't an entry in pack table a proof that it's a pack?
             // Moreover, we already have cache_is_pack column, product_type is just a duplicate.
             $result = Db::getInstance()->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'pack` WHERE id_product_pack = ' . (int) $id_product);
@@ -101,40 +102,39 @@ class PackCore extends Product
      * If $id_product_attribute specified, then will restrict search on the given combination,
      * else this method will match a product if at least one of all its combination is in a pack.
      *
-     * @param int $id_product
+     * @param int      $id_product
      * @param int|bool $id_product_attribute Optional combination of the product
      *
      * @return bool
      */
     public static function isPacked($id_product, $id_product_attribute = false)
     {
-        if (!Pack::isFeatureActive()) {
+        if (! Pack::isFeatureActive()) {
             return false;
         }
         if ($id_product_attribute === false) {
             $cache_key = $id_product . '-0';
-            if (!array_key_exists($cache_key, self::$cacheIsPacked)) {
+            if (! array_key_exists($cache_key, self::$cacheIsPacked)) {
                 $result = Db::getInstance()->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'pack` WHERE id_product_item = ' . (int) $id_product);
                 self::$cacheIsPacked[$cache_key] = ($result > 0);
             }
 
             return self::$cacheIsPacked[$cache_key];
-        } else {
-            $cache_key = $id_product . '-' . $id_product_attribute;
-            if (!array_key_exists($cache_key, self::$cacheIsPacked)) {
-                $result = Db::getInstance()->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'pack` WHERE id_product_item = ' . ((int) $id_product) . ' AND
-					id_product_attribute_item = ' . ((int) $id_product_attribute));
-                self::$cacheIsPacked[$cache_key] = ($result > 0);
-            }
-
-            return self::$cacheIsPacked[$cache_key];
         }
+        $cache_key = $id_product . '-' . $id_product_attribute;
+        if (! array_key_exists($cache_key, self::$cacheIsPacked)) {
+            $result = Db::getInstance()->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'pack` WHERE id_product_item = ' . ((int) $id_product) . ' AND
+					id_product_attribute_item = ' . ((int) $id_product_attribute));
+            self::$cacheIsPacked[$cache_key] = ($result > 0);
+        }
+
+        return self::$cacheIsPacked[$cache_key];
     }
 
     public static function noPackPrice($id_product)
     {
         $sum = 0;
-        $price_display_method = !self::$_taxCalculationMethod;
+        $price_display_method = ! self::$_taxCalculationMethod;
         $items = Pack::getItems($id_product, Configuration::get('PS_LANG_DEFAULT'));
         foreach ($items as $item) {
             $pricePerItem = $item->getPrice($price_display_method, $item->id_pack_product_attribute ? $item->id_pack_product_attribute : null);
@@ -179,7 +179,7 @@ class PackCore extends Product
 
     public static function getItems($id_product, $id_lang)
     {
-        if (!Pack::isFeatureActive()) {
+        if (! Pack::isFeatureActive()) {
             return [];
         }
 
@@ -229,7 +229,6 @@ class PackCore extends Product
      *
      * @param int $idProduct
      * @param int $wantedQuantity
-     * @param Cart|null $cart
      *
      * @return bool
      *
@@ -237,7 +236,7 @@ class PackCore extends Product
      */
     public static function isInStock($idProduct, $wantedQuantity = 1, ?Cart $cart = null)
     {
-        if (!Pack::isFeatureActive()) {
+        if (! Pack::isFeatureActive()) {
             return true;
         }
         $idProduct = (int) $idProduct;
@@ -247,7 +246,8 @@ class PackCore extends Product
 
         if ($product->isAvailableWhenOutOfStock($product->out_of_stock)) {
             return true;
-        } elseif ($wantedQuantity > $packQuantity) {
+        }
+        if ($wantedQuantity > $packQuantity) {
             return false;
         }
 
@@ -260,11 +260,11 @@ class PackCore extends Product
      * By default, it returns the TRUE quantity in stock. If you want to, you can pass a $cart parameter
      * and the quantity in stock will be reduced by the quantity there is in the cart.
      *
-     * @param int $idProduct Product id
-     * @param int|null $idProductAttribute Product attribute id (optional)
-     * @param bool|null $cacheIsPack (unused, you can pass null)
-     * @param CartCore|null $cart Pass if you want to reduce the quantity by amount in cart
-     * @param int|bool|null $idCustomization Product customization id (optional)
+     * @param int           $idProduct          Product id
+     * @param int|null      $idProductAttribute Product attribute id (optional)
+     * @param bool|null     $cacheIsPack        (unused, you can pass null)
+     * @param CartCore|null $cart               Pass if you want to reduce the quantity by amount in cart
+     * @param int|bool|null $idCustomization    Product customization id (optional)
      *
      * @return int
      *
@@ -275,12 +275,12 @@ class PackCore extends Product
         $idProductAttribute = null,
         $cacheIsPack = null,
         ?CartCore $cart = null,
-        $idCustomization = null
+        $idCustomization = null,
     ) {
         $idProduct = (int) $idProduct;
         $idProductAttribute = (int) $idProductAttribute;
 
-        if (!self::isPack($idProduct)) {
+        if (! self::isPack($idProduct)) {
             throw new PrestaShopException("Product with id $idProduct is not a pack");
         }
 
@@ -297,7 +297,7 @@ class PackCore extends Product
             self::STOCK_TYPE_DEFAULT,
         ];
 
-        if (!in_array($packStockType, $allPackStockType)) {
+        if (! in_array($packStockType, $allPackStockType, true)) {
             throw new PrestaShopException('Unknown pack stock type');
         }
 
@@ -310,13 +310,13 @@ class PackCore extends Product
          */
 
         // If no pack stock or shop default, set it from configuration
-        if (empty($packStockType) || $packStockType == self::STOCK_TYPE_DEFAULT) {
+        if (empty($packStockType) || $packStockType === self::STOCK_TYPE_DEFAULT) {
             $packStockType = Configuration::get('PS_PACK_STOCK_TYPE');
         }
 
         // If the quantity of the pack depends only on the pack or both packs and products,
         // we need to load the quantity of the pack from stock_available table.
-        if (in_array($packStockType, [self::STOCK_TYPE_PACK_ONLY, self::STOCK_TYPE_PACK_BOTH])) {
+        if (in_array($packStockType, [self::STOCK_TYPE_PACK_ONLY, self::STOCK_TYPE_PACK_BOTH], true)) {
             $packQuantity = StockAvailable::getQuantityAvailableByProduct(
                 $idProduct,
                 $idProductAttribute
@@ -325,7 +325,7 @@ class PackCore extends Product
 
         // If the quantity of the pack depends on the products inside, or both pack and products,
         // we need to set the pack quantity to the lowest quantity of products inside.
-        if (in_array($packStockType, [self::STOCK_TYPE_PACK_BOTH, self::STOCK_TYPE_PRODUCTS_ONLY])) {
+        if (in_array($packStockType, [self::STOCK_TYPE_PACK_BOTH, self::STOCK_TYPE_PRODUCTS_ONLY], true)) {
             $items = array_values(Pack::getItems($idProduct, Configuration::get('PS_LANG_DEFAULT')));
 
             foreach ($items as $index => $item) {
@@ -336,7 +336,7 @@ class PackCore extends Product
                 // if pack decrement stock type is products only
                 // @todo This is probably not needed because $packQuantity is always initialized to zero.
                 if ($index === 0
-                    && $packStockType == self::STOCK_TYPE_PRODUCTS_ONLY
+                    && $packStockType === self::STOCK_TYPE_PRODUCTS_ONLY
                 ) {
                     $packQuantity = $nbPackAvailableForItem;
 
@@ -348,10 +348,10 @@ class PackCore extends Product
                     $packQuantity = $nbPackAvailableForItem;
                 }
             }
-        } elseif (!empty($cart)) {
+        } elseif (! empty($cart)) {
             $cartProduct = $cart->getProductQuantity($idProduct, $idProductAttribute, $idCustomization);
 
-            if (!empty($cartProduct['deep_quantity'])) {
+            if (! empty($cartProduct['deep_quantity'])) {
                 $packQuantity -= $cartProduct['deep_quantity'];
             }
         }
@@ -361,7 +361,7 @@ class PackCore extends Product
 
     public static function getItemTable($id_product, $id_lang, $full = false)
     {
-        if (!Pack::isFeatureActive()) {
+        if (! Pack::isFeatureActive()) {
             return [];
         }
 
@@ -421,7 +421,7 @@ class PackCore extends Product
         }
 
         foreach ($result as $k => $v) {
-            if (!Pack::isPack($v['id_product'])) {
+            if (! Pack::isPack($v['id_product'])) {
                 $result[$k]['id_product_attribute'] = (int) $v['id_product_attribute_item'];
             }
         }
@@ -431,7 +431,7 @@ class PackCore extends Product
 
     public static function getPacksTable($id_product, $id_lang, $full = false, $limit = null)
     {
-        if (!Pack::isFeatureActive()) {
+        if (! Pack::isFeatureActive()) {
             return [];
         }
 
@@ -440,7 +440,7 @@ class PackCore extends Product
 		FROM `' . _DB_PREFIX_ . 'pack` a
 		WHERE a.`id_product_item` = ' . (int) $id_product);
 
-        if (!(int) $packs) {
+        if (! (int) $packs) {
             return [];
         }
 
@@ -464,13 +464,13 @@ class PackCore extends Product
             $sql .= ' LIMIT ' . (int) $limit;
         }
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
-        if (!$full) {
+        if (! $full) {
             return $result;
         }
 
         $array_result = [];
         foreach ($result as $row) {
-            if (!Pack::isPacked($row['id_product'])) {
+            if (! Pack::isPacked($row['id_product'])) {
                 $array_result[] = $row;
             }
         }
@@ -538,8 +538,8 @@ class PackCore extends Product
     /**
      * This method is allow to know if a Pack entity is currently used.
      *
-     * @param string|null $table Name of table linked to entity
-     * @param bool $has_active_column True if the table has an active column
+     * @param string|null $table             Name of table linked to entity
+     * @param bool        $has_active_column True if the table has an active column
      *
      * @return bool
      */
@@ -566,7 +566,7 @@ class PackCore extends Product
         @trigger_error(sprintf(
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
-        ), E_USER_DEPRECATED);
+        ), \E_USER_DEPRECATED);
 
         return false;
     }
@@ -585,7 +585,7 @@ class PackCore extends Product
         @trigger_error(sprintf(
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
-        ), E_USER_DEPRECATED);
+        ), \E_USER_DEPRECATED);
 
         return false;
     }
@@ -593,7 +593,7 @@ class PackCore extends Product
     /**
      * Returns Packs that contains the given product in the right combination.
      *
-     * @param int $id_item Product item id that could be contained in a|many pack(s)
+     * @param int $id_item           Product item id that could be contained in a|many pack(s)
      * @param int $id_attribute_item The combination of the product
      * @param int $id_lang
      *
@@ -601,7 +601,7 @@ class PackCore extends Product
      */
     public static function getPacksContainingItem($id_item, $id_attribute_item, $id_lang)
     {
-        if (!Pack::isFeatureActive() || !$id_item) {
+        if (! Pack::isFeatureActive() || ! $id_item) {
             return [];
         }
 

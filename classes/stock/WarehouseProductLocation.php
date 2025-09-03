@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -55,10 +56,26 @@ class WarehouseProductLocationCore extends ObjectModel
         'table' => 'warehouse_product_location',
         'primary' => 'id_warehouse_product_location',
         'fields' => [
-            'location' => ['type' => self::TYPE_STRING, 'validate' => 'isReference', 'size' => 64],
-            'id_product' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_product_attribute' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
-            'id_warehouse' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true],
+            'location' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isReference',
+                'size' => 64,
+            ],
+            'id_product' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_product_attribute' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
+            'id_warehouse' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedId',
+                'required' => true,
+            ],
         ],
     ];
 
@@ -67,9 +84,15 @@ class WarehouseProductLocationCore extends ObjectModel
      */
     protected $webserviceParameters = [
         'fields' => [
-            'id_product' => ['xlink_resource' => 'products'],
-            'id_product_attribute' => ['xlink_resource' => 'combinations'],
-            'id_warehouse' => ['xlink_resource' => 'warehouses'],
+            'id_product' => [
+                'xlink_resource' => 'products',
+            ],
+            'id_product_attribute' => [
+                'xlink_resource' => 'combinations',
+            ],
+            'id_warehouse' => [
+                'xlink_resource' => 'warehouses',
+            ],
         ],
         'hidden_fields' => [
         ],
@@ -78,11 +101,11 @@ class WarehouseProductLocationCore extends ObjectModel
     /**
      * For a given product and warehouse, gets the location.
      *
-     * @param int $id_product product ID
+     * @param int $id_product           product ID
      * @param int $id_product_attribute product attribute ID
-     * @param int $id_warehouse warehouse ID
+     * @param int $id_warehouse         warehouse ID
      *
-     * @return string|false $location Location of the product
+     * @return string|false Location of the product
      */
     public static function getProductLocation($id_product, $id_product_attribute, $id_warehouse)
     {
@@ -106,7 +129,7 @@ class WarehouseProductLocationCore extends ObjectModel
      * @param int $id_product_attribute
      * @param int $id_warehouse
      *
-     * @return int $id_warehouse_product_location ID of the WarehouseProductLocation
+     * @return int ID of the WarehouseProductLocation
      */
     public static function getIdByProductAndWarehouse($id_product, $id_product_attribute, $id_warehouse)
     {

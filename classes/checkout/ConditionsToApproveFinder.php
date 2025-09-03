@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -33,7 +34,7 @@ class ConditionsToApproveFinderCore
 
     public function __construct(
         Context $context,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         $this->context = $context;
         $this->translator = $translator;
@@ -64,7 +65,7 @@ class ConditionsToApproveFinderCore
 
         // An array [module_name => module_output] will be returned
         $hookedConditions = Hook::exec('termsAndConditions', [], null, true);
-        if (!is_array($hookedConditions)) {
+        if (! is_array($hookedConditions)) {
             $hookedConditions = [];
         }
         foreach ($hookedConditions as $hookedCondition) {

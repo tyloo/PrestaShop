@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -91,7 +92,7 @@ class ShopUrlCore extends ObjectModel
 
     public function getURL($ssl = false)
     {
-        if (!$this->id) {
+        if (! $this->id) {
             return;
         }
 
@@ -165,10 +166,10 @@ class ShopUrlCore extends ObjectModel
 
     public static function cacheMainDomainForShop($id_shop)
     {
-        if (!isset(self::$main_domain_ssl[(int) $id_shop]) || !isset(self::$main_domain[(int) $id_shop])) {
+        if (! isset(self::$main_domain_ssl[(int) $id_shop]) || ! isset(self::$main_domain[(int) $id_shop])) {
             // May be called while the context is not instanciated yet
             // For instance in first step of the installer
-            if ($id_shop === null && !isset(Context::getContext()->shop)) {
+            if ($id_shop === null && ! isset(Context::getContext()->shop)) {
                 self::$main_domain[(int) $id_shop] = null;
                 self::$main_domain_ssl[(int) $id_shop] = null;
 
@@ -180,7 +181,7 @@ class ShopUrlCore extends ObjectModel
             FROM ' . _DB_PREFIX_ . 'shop_url
             WHERE main = 1
             AND id_shop = ' . ($id_shop !== null ? (int) $id_shop : (int) Context::getContext()->shop->id));
-            if (!empty($row)) {
+            if (! empty($row)) {
                 self::$main_domain[(int) $id_shop] = $row['domain'];
                 self::$main_domain_ssl[(int) $id_shop] = $row['domain_ssl'];
             }

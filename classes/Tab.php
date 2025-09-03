@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -31,36 +32,56 @@ use PrestaShop\PrestaShop\Core\Security\Permission;
  */
 class TabCore extends ObjectModel
 {
-    /** @var string|array<int, string> Displayed name */
+    /**
+     * @var string|array<int, string> Displayed name
+     */
     public $name;
 
-    /** @var string Class and file name */
+    /**
+     * @var string Class and file name
+     */
     public $class_name;
 
-    /** @var string Route name for Symfony */
+    /**
+     * @var string Route name for Symfony
+     */
     public $route_name;
 
     public $module;
 
-    /** @var int parent ID */
+    /**
+     * @var int parent ID
+     */
     public $id_parent;
 
-    /** @var int position */
+    /**
+     * @var int position
+     */
     public $position;
 
-    /** @var bool active */
+    /**
+     * @var bool active
+     */
     public $active = true;
 
-    /** @var bool enabled */
+    /**
+     * @var bool enabled
+     */
     public $enabled = true;
 
-    /** @var string Icon font */
+    /**
+     * @var string Icon font
+     */
     public $icon;
 
-    /** @var string|null Wording to use for the display name */
+    /**
+     * @var string|null Wording to use for the display name
+     */
     public $wording;
 
-    /** @var string|null Wording domain to use for the display name */
+    /**
+     * @var string|null Wording domain to use for the display name
+     */
     public $wording_domain;
 
     /**
@@ -71,22 +92,65 @@ class TabCore extends ObjectModel
         'primary' => 'id_tab',
         'multilang' => true,
         'fields' => [
-            'id_parent' => ['type' => self::TYPE_INT, 'validate' => 'isInt'],
-            'position' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'module' => ['type' => self::TYPE_STRING, 'validate' => 'isTabName', 'size' => 64],
-            'class_name' => ['type' => self::TYPE_STRING, 'required' => true, 'size' => 64],
-            'route_name' => ['type' => self::TYPE_STRING, 'required' => false, 'size' => 256],
-            'active' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'enabled' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'icon' => ['type' => self::TYPE_STRING, 'size' => 64],
-            'wording' => ['type' => self::TYPE_STRING, 'validate' => 'isString', 'allow_null' => true, 'size' => 255],
-            'wording_domain' => ['type' => self::TYPE_STRING, 'validate' => 'isString', 'allow_null' => true, 'size' => 255],
+            'id_parent' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+            ],
+            'position' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'module' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isTabName',
+                'size' => 64,
+            ],
+            'class_name' => [
+                'type' => self::TYPE_STRING,
+                'required' => true,
+                'size' => 64,
+            ],
+            'route_name' => [
+                'type' => self::TYPE_STRING,
+                'required' => false,
+                'size' => 256,
+            ],
+            'active' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'enabled' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'icon' => [
+                'type' => self::TYPE_STRING,
+                'size' => 64,
+            ],
+            'wording' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isString',
+                'allow_null' => true,
+                'size' => 255,
+            ],
+            'wording_domain' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isString',
+                'allow_null' => true,
+                'size' => 255,
+            ],
             /* Lang fields */
-            'name' => ['type' => self::TYPE_STRING, 'lang' => true, 'required' => true, 'validate' => 'isTabName', 'size' => 128],
+            'name' => [
+                'type' => self::TYPE_STRING,
+                'lang' => true,
+                'required' => true,
+                'validate' => 'isTabName',
+                'size' => 128,
+            ],
         ],
     ];
 
-    protected static $_getIdFromClassName = null;
+    protected static $_getIdFromClassName;
 
     /**
      * Additional treatments for Tab when creating new one:
@@ -135,13 +199,12 @@ class TabCore extends ObjectModel
      * @todo this should not be public static but protected
      *
      * @param int $idTab
-     * @param Context $context
      *
      * @return bool true if succeed
      */
     public static function initAccess($idTab, ?Context $context = null)
     {
-        if (!$context) {
+        if (! $context) {
             $context = Context::getContext();
         }
 
@@ -233,12 +296,12 @@ class TabCore extends ObjectModel
     public static function getCurrentParentId()
     {
         $cacheId = 'getCurrentParentId_' . Tools::strtolower(Tools::getValue('controller'));
-        if (!Cache::isStored($cacheId)) {
+        if (! Cache::isStored($cacheId)) {
             $value = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
 			SELECT `id_parent`
 			FROM `' . _DB_PREFIX_ . 'tab`
 			WHERE LOWER(class_name) = \'' . pSQL(Tools::strtolower(Tools::getValue('controller'))) . '\'');
-            if (!$value) {
+            if (! $value) {
                 $value = -1;
             }
             Cache::store($cacheId, $value);
@@ -257,7 +320,7 @@ class TabCore extends ObjectModel
     public static function getTab($idLang, $idTab)
     {
         $cacheId = 'Tab::getTab_' . (int) $idLang . '-' . (int) $idTab;
-        if (!Cache::isStored($cacheId)) {
+        if (! Cache::isStored($cacheId)) {
             /* Tabs selection */
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow(
                 'SELECT *
@@ -305,7 +368,7 @@ class TabCore extends ObjectModel
 
     public static function getTabs($idLang, $idParent = null)
     {
-        if (!isset(self::$_cache_tabs[$idLang])) {
+        if (! isset(self::$_cache_tabs[$idLang])) {
             self::$_cache_tabs[$idLang] = [];
             // Keep t.*, tl.name instead of only * because if translations are missing, the join on tab_lang will overwrite the id_tab in the results
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
@@ -318,7 +381,7 @@ class TabCore extends ObjectModel
 
             if (is_array($result)) {
                 foreach ($result as $row) {
-                    if (!isset(self::$_cache_tabs[$idLang][$row['id_parent']])) {
+                    if (! isset(self::$_cache_tabs[$idLang][$row['id_parent']])) {
                         self::$_cache_tabs[$idLang][$row['id_parent']] = [];
                     }
                     self::$_cache_tabs[$idLang][$row['id_parent']][] = $row;
@@ -366,18 +429,18 @@ class TabCore extends ObjectModel
     /**
      * Get collection from module name.
      *
-     * @param string $module Module name
+     * @param string   $module Module name
      * @param int|null $idLang integer Language ID
      *
      * @return array|PrestaShopCollection Collection of tabs (or empty array)
      */
     public static function getCollectionFromModule($module, $idLang = null)
     {
-        if (null === $idLang) {
+        if ($idLang === null) {
             $idLang = Context::getContext()->language->id;
         }
 
-        if (!Validate::isModuleName($module)) {
+        if (! Validate::isModuleName($module)) {
             return [];
         }
 
@@ -397,7 +460,7 @@ class TabCore extends ObjectModel
     public static function enablingForModule($module)
     {
         $tabs = Tab::getCollectionFromModule($module);
-        if (!empty($tabs)) {
+        if (! empty($tabs)) {
             foreach ($tabs as $tab) {
                 $tab->active = 1;
                 $tab->save();
@@ -419,7 +482,7 @@ class TabCore extends ObjectModel
     public static function disablingForModule($module)
     {
         $tabs = Tab::getCollectionFromModule($module);
-        if (!empty($tabs)) {
+        if (! empty($tabs)) {
             foreach ($tabs as $tab) {
                 $tab->active = 0;
                 $tab->save();
@@ -434,8 +497,8 @@ class TabCore extends ObjectModel
     /**
      * Get Instance from tab class name.
      *
-     * @param string $className Name of tab class
-     * @param int|null $idLang id_lang
+     * @param string   $className Name of tab class
+     * @param int|null $idLang    id_lang
      *
      * @return Tab Tab object (empty if bad id or class name)
      */
@@ -452,14 +515,12 @@ class TabCore extends ObjectModel
             '
 			SELECT COUNT(*)
 			FROM `' . _DB_PREFIX_ . 'tab` t
-			' . (null !== $idParent ? 'WHERE t.`id_parent` = ' . (int) $idParent : '')
+			' . ($idParent !== null ? 'WHERE t.`id_parent` = ' . (int) $idParent : '')
         );
     }
 
     /**
      * return an available position in subtab for parent $id_parent.
-     *
-     * @param mixed $idParent
      *
      * @return int
      */
@@ -475,20 +536,20 @@ class TabCore extends ObjectModel
     public function move($direction)
     {
         $nbTabs = Tab::getNbTabs($this->id_parent);
-        if ($direction != 'l' && $direction != 'r') {
+        if ($direction !== 'l' && $direction !== 'r') {
             return false;
         }
         if ($nbTabs <= 1) {
             return false;
         }
-        if ($direction == 'l' && $this->position <= 1) {
+        if ($direction === 'l' && $this->position <= 1) {
             return false;
         }
-        if ($direction == 'r' && $this->position >= $nbTabs) {
+        if ($direction === 'r' && $this->position >= $nbTabs) {
             return false;
         }
 
-        $newPosition = ($direction == 'l') ? $this->position - 1 : $this->position + 1;
+        $newPosition = ($direction === 'l') ? $this->position - 1 : $this->position + 1;
         Db::getInstance()->execute(
             '
 			UPDATE `' . _DB_PREFIX_ . 'tab` t
@@ -533,13 +594,13 @@ class TabCore extends ObjectModel
      * Update position.
      *
      * @param bool $way
-     * @param int $position
+     * @param int  $position
      *
      * @return bool
      */
     public function updatePosition($way, $position)
     {
-        if (!$res = Db::getInstance()->executeS(
+        if (! $res = Db::getInstance()->executeS(
             '
 			SELECT t.`id_tab`, t.`position`, t.`id_parent`
 			FROM `' . _DB_PREFIX_ . 'tab` t
@@ -550,12 +611,12 @@ class TabCore extends ObjectModel
         }
 
         foreach ($res as $tab) {
-            if ((int) $tab['id_tab'] == (int) $this->id) {
+            if ((int) $tab['id_tab'] === (int) $this->id) {
                 $movedTab = $tab;
             }
         }
 
-        if (!isset($movedTab)) {
+        if (! isset($movedTab)) {
             return false;
         }
         // < and > statements rather than BETWEEN operator
@@ -588,7 +649,7 @@ class TabCore extends ObjectModel
     {
         static $tabAccesses = null;
 
-        if (Context::getContext()->employee->id_profile == _PS_ADMIN_PROFILE_) {
+        if (Context::getContext()->employee->id_profile === _PS_ADMIN_PROFILE_) {
             return true;
         }
 
@@ -607,7 +668,7 @@ class TabCore extends ObjectModel
     {
         $adminTab = Tab::getTab((int) Context::getContext()->language->id, $idTab);
         $tabs[] = $adminTab;
-        if (!empty($adminTab['id_parent'])) {
+        if (! empty($adminTab['id_parent'])) {
             $tabs = Tab::recursiveTab($adminTab['id_parent'], $tabs);
         }
 
@@ -626,7 +687,7 @@ class TabCore extends ObjectModel
     public function update($nullValues = false)
     {
         $current_tab = new Tab($this->id);
-        if ($current_tab->id_parent != $this->id_parent) {
+        if ($current_tab->id_parent !== $this->id_parent) {
             $this->position = Tab::getNewLastPosition($this->id_parent);
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -39,46 +40,74 @@ class PrestaShopLoggerCore extends ObjectModel
     public const LOG_SEVERITY_LEVEL_ERROR = 3;
     public const LOG_SEVERITY_LEVEL_MAJOR = 4;
 
-    /** @var int Log id */
+    /**
+     * @var int Log id
+     */
     public $id_log;
 
-    /** @var int Log severity */
+    /**
+     * @var int Log severity
+     */
     public $severity;
 
-    /** @var int Error code */
+    /**
+     * @var int Error code
+     */
     public $error_code;
 
-    /** @var string Message */
+    /**
+     * @var string Message
+     */
     public $message;
 
-    /** @var string Object type (eg. Order, Customer...) */
+    /**
+     * @var string Object type (eg. Order, Customer...)
+     */
     public $object_type;
 
-    /** @var int Object ID */
+    /**
+     * @var int Object ID
+     */
     public $object_id;
 
-    /** @var int Employee ID */
+    /**
+     * @var int Employee ID
+     */
     public $id_employee;
 
-    /** @var string Object creation date */
+    /**
+     * @var string Object creation date
+     */
     public $date_add;
 
-    /** @var string Object last modification date */
+    /**
+     * @var string Object last modification date
+     */
     public $date_upd;
 
-    /** @var int|null Shop ID */
+    /**
+     * @var int|null Shop ID
+     */
     public $id_shop;
 
-    /** @var int|null Shop group ID */
+    /**
+     * @var int|null Shop group ID
+     */
     public $id_shop_group;
 
-    /** @var int|null Language ID */
+    /**
+     * @var int|null Language ID
+     */
     public $id_lang;
 
-    /** @var bool In all shops */
+    /**
+     * @var bool In all shops
+     */
     public $in_all_shops;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     public $hash;
 
     /**
@@ -88,18 +117,61 @@ class PrestaShopLoggerCore extends ObjectModel
         'table' => 'log',
         'primary' => 'id_log',
         'fields' => [
-            'severity' => ['type' => self::TYPE_INT, 'validate' => 'isInt', 'required' => true],
-            'error_code' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'message' => ['type' => self::TYPE_STRING, 'validate' => 'isString', 'required' => true, 'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4],
-            'object_id' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'id_shop' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'allow_null' => true],
-            'id_shop_group' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'allow_null' => true],
-            'id_lang' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt', 'allow_null' => true],
-            'in_all_shops' => ['type' => self::TYPE_BOOL, 'validate' => 'isBool'],
-            'id_employee' => ['type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'],
-            'object_type' => ['type' => self::TYPE_STRING, 'validate' => 'isValidObjectClassName', 'size' => 32],
-            'date_add' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
-            'date_upd' => ['type' => self::TYPE_DATE, 'validate' => 'isDate'],
+            'severity' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isInt',
+                'required' => true,
+            ],
+            'error_code' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'message' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isString',
+                'required' => true,
+                'size' => FormattedTextareaType::LIMIT_MEDIUMTEXT_UTF8_MB4,
+            ],
+            'object_id' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'id_shop' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+                'allow_null' => true,
+            ],
+            'id_shop_group' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+                'allow_null' => true,
+            ],
+            'id_lang' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+                'allow_null' => true,
+            ],
+            'in_all_shops' => [
+                'type' => self::TYPE_BOOL,
+                'validate' => 'isBool',
+            ],
+            'id_employee' => [
+                'type' => self::TYPE_INT,
+                'validate' => 'isUnsignedInt',
+            ],
+            'object_type' => [
+                'type' => self::TYPE_STRING,
+                'validate' => 'isValidObjectClassName',
+                'size' => 32,
+            ],
+            'date_add' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
+            'date_upd' => [
+                'type' => self::TYPE_DATE,
+                'validate' => 'isDate',
+            ],
         ],
     ];
 
@@ -113,7 +185,7 @@ class PrestaShopLoggerCore extends ObjectModel
     public static function sendByMail($log)
     {
         $config_severity = (int) Configuration::get('PS_LOGS_BY_EMAIL');
-        if (!empty($config_severity) && $config_severity <= (int) $log->severity) {
+        if (! empty($config_severity) && $config_severity <= (int) $log->severity) {
             $to = array_map('trim', explode(',', Configuration::get('PS_LOGS_EMAIL_RECEIVERS')));
             $language = new Language((int) Configuration::get('PS_LANG_DEFAULT'));
             Mail::Send(
@@ -134,12 +206,12 @@ class PrestaShopLoggerCore extends ObjectModel
     /**
      * add a log item to the database and send a mail if configured for this $severity.
      *
-     * @param string $message the log message
-     * @param int $severity
-     * @param int $errorCode
+     * @param string $message        the log message
+     * @param int    $severity
+     * @param int    $errorCode
      * @param string $objectType
-     * @param int $objectId
-     * @param bool $allowDuplicate if set to true, can log several time the same information (not recommended)
+     * @param int    $objectId
+     * @param bool   $allowDuplicate if set to true, can log several time the same information (not recommended)
      *
      * @return bool true if succeed
      */
@@ -162,23 +234,23 @@ class PrestaShopLoggerCore extends ObjectModel
             $log->id_employee = (int) $idEmployee;
         }
 
-        if (!empty($objectType)) {
+        if (! empty($objectType)) {
             $log->object_type = $objectType;
-            if (!empty($objectId)) {
+            if (! empty($objectId)) {
                 $log->object_id = (int) $objectId;
             }
         }
 
         $log->id_lang = $context->language ? (int) $context->language->id : null;
-        $log->in_all_shops = Shop::getContext() == Shop::CONTEXT_ALL;
-        $log->id_shop = Shop::getContext() == Shop::CONTEXT_SHOP ? (int) $context->shop->getContextualShopId() : null;
-        $log->id_shop_group = Shop::getContext() == Shop::CONTEXT_GROUP ? (int) $context->shop->getContextShopGroupID() : null;
+        $log->in_all_shops = Shop::getContext() === Shop::CONTEXT_ALL;
+        $log->id_shop = Shop::getContext() === Shop::CONTEXT_SHOP ? (int) $context->shop->getContextualShopId() : null;
+        $log->id_shop_group = Shop::getContext() === Shop::CONTEXT_GROUP ? (int) $context->shop->getContextShopGroupID() : null;
 
-        if ($objectType != 'MailerMessage') {
+        if ($objectType !== 'MailerMessage') {
             PrestaShopLogger::sendByMail($log);
         }
 
-        if ($allowDuplicate || !$log->isPresent()) {
+        if ($allowDuplicate || ! $log->isPresent()) {
             $res = $log->add();
             if ($res) {
                 self::$is_present[$log->getHash()] = isset(self::$is_present[$log->getHash()]) ? self::$is_present[$log->getHash()] + 1 : 1;
@@ -224,7 +296,7 @@ class PrestaShopLoggerCore extends ObjectModel
      */
     protected function isPresent()
     {
-        if (!isset(self::$is_present[md5($this->message)])) {
+        if (! isset(self::$is_present[md5($this->message)])) {
             self::$is_present[$this->getHash()] = Db::getInstance()->getValue(
                 (new DbQuery())
                     ->select('COUNT(*)')

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright since 2007 PrestaShop SA and Contributors
  * PrestaShop is an International Registered Trademark & Property of PrestaShop SA
@@ -43,7 +44,7 @@ class CustomerLoginFormCore extends AbstractForm
         Context $context,
         TranslatorInterface $translator,
         CustomerLoginFormatter $formatter,
-        array $urls
+        array $urls,
     ) {
         parent::__construct(
             $smarty,
@@ -72,9 +73,9 @@ class CustomerLoginFormCore extends AbstractForm
                 $this->getValue('password')
             );
 
-            if (isset($authentication->active) && !$authentication->active) {
+            if (isset($authentication->active) && ! $authentication->active) {
                 $this->errors[''][] = $this->translator->trans('Your account isn\'t available at this time, please contact us', [], 'Shop.Notifications.Error');
-            } elseif (!$authentication || !$customer->id || $customer->is_guest) {
+            } elseif (! $authentication || ! $customer->id || $customer->is_guest) {
                 $this->errors[''][] = $this->translator->trans('Authentication failed.', [], 'Shop.Notifications.Error');
             } else {
                 $this->context->updateCustomer($customer);
@@ -87,12 +88,12 @@ class CustomerLoginFormCore extends AbstractForm
             }
         }
 
-        return !$this->hasErrors();
+        return ! $this->hasErrors();
     }
 
     public function fillWith(array $params = [])
     {
-        if (!empty($params['email'])) {
+        if (! empty($params['email'])) {
             // In some cases, browsers convert non ASCII chars (from input type="email") to "punycode",
             // we need to convert it back
             $params['email'] = $this->IDNConverter->emailToUtf8($params['email']);
@@ -103,7 +104,7 @@ class CustomerLoginFormCore extends AbstractForm
 
     public function getTemplateVariables()
     {
-        if (!$this->formFields) {
+        if (! $this->formFields) {
             $this->formFields = $this->formatter->getFormat();
         }
 
