@@ -89,9 +89,8 @@ class FrameworkBundleAdminController extends AbstractController
      * @return ContainerInterface|null
      *
      * Note: this annotation is a MUST-HAVE, we have to keep it
-     *
-     * @required
      */
+    #[\Symfony\Contracts\Service\Attribute\Required]
     public function setContainer(ContainerInterface $container): ?ContainerInterface
     {
         $return = parent::setContainer($container);

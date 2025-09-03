@@ -29,25 +29,17 @@ namespace PrestaShopBundle\Entity\Employee;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="slug", columns={"slug"})})
- */
+#[ORM\Table]
+#[ORM\UniqueConstraint(name: 'slug', columns: ['slug'])]
+#[ORM\Entity]
 class AuthorizationRole
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_authorization_role", type="integer", options={"unsigned": true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_authorization_role', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="slug", type="string", nullable=false, unique=true, length=191)
-     */
+    #[ORM\Column(name: 'slug', type: 'string', nullable: false, unique: true, length: 191)]
     private string $slug;
 
     public function getId(): int

@@ -36,79 +36,60 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\ApiClientRepository")
- *
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="api_client_client_id_idx", fields={"clientId", "externalIssuer"}), @ORM\UniqueConstraint(name="api_client_client_name_idx", fields={"clientName", "externalIssuer"})})
- */
 #[UniqueEntity(fields: ['clientId', 'externalIssuer'], ignoreNull: false)]
 #[UniqueEntity(fields: ['clientName', 'externalIssuer'], ignoreNull: false)]
+#[ORM\Table]
+#[ORM\UniqueConstraint(name: 'api_client_client_id_idx', fields: ['clientId', 'externalIssuer'])]
+#[ORM\UniqueConstraint(name: 'api_client_client_name_idx', fields: ['clientName', 'externalIssuer'])]
+#[ORM\Entity(repositoryClass: Repository\ApiClientRepository::class)]
 class ApiClient implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_api_client", type="integer", options={"unsigned": true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
     #[Assert\Positive]
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_api_client', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\Column(name="client_id", type="string", length=255)
-     */
     #[Assert\Length(max: 255)]
     #[Assert\NotBlank]
+    #[ORM\Column(name: 'client_id', type: 'string', length: 255)]
     private string $clientId;
 
-    /**
-     * @ORM\Column(name="client_name", type="string", length=255)
-     */
     #[Assert\Length(max: 255)]
     #[Assert\NotBlank]
+    #[ORM\Column(name: 'client_name', type: 'string', length: 255)]
     private string $clientName;
 
     /**
      * We make the secret nullable for the moment because it prevents the first step of the feature to be implemented.
-     *
-     * @ORM\Column(name="client_secret", type="string", length=255, nullable=true)
      */
     #[Assert\Length(max: 255)]
+    #[ORM\Column(name: 'client_secret', type: 'string', length: 255, nullable: true)]
     private ?string $clientSecret = null;
 
-    /**
-     * @ORM\Column(name="enabled", type="boolean")
-     */
     #[Assert\NotNull]
+    #[ORM\Column(name: 'enabled', type: 'boolean')]
     private bool $enabled;
 
-    /**
-     * @ORM\Column(name="scopes", type="json")
-     */
     #[Assert\NotNull]
     #[InstalledApiResourceScope]
+    #[ORM\Column(name: 'scopes', type: 'json')]
     private array $scopes = [];
 
-    /**
-     * @ORM\Column(name="description", type="string", options={"default": ""})
-     */
     #[Assert\Length(max: 21844)]
+    #[ORM\Column(name: 'description', type: 'string', options: ['default' => ''])]
     private string $description = '';
 
-    /**
-     * @ORM\Column(name="external_issuer", type="string", nullable=true)
-     */
     #[Assert\Length(max: 255)]
+    #[ORM\Column(name: 'external_issuer', type: 'string', nullable: true)]
     private ?string $externalIssuer = null;
 
     /**
      * Lifetime is in milliseconds. Default value is 3600 ms.
-     *
-     * @ORM\Column(name="lifetime", type="integer", options={"default": "3600"})
      */
     #[Assert\NotNull]
     #[Assert\Positive]
+    #[ORM\Column(name: 'lifetime', type: 'integer', options: ['default' => '3600'])]
     private int $lifetime;
 
     public function getId(): int

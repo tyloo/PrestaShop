@@ -29,36 +29,21 @@ namespace PrestaShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * AttributeLang.
- *
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\AttributeLangRepository")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: Repository\AttributeLangRepository::class)]
 class AttributeLang
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\Attribute", inversedBy="attributeLangs")
-     *
-     * @ORM\JoinColumn(name="id_attribute", referencedColumnName="id_attribute", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'id_attribute', referencedColumnName: 'id_attribute', nullable: false)]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Attribute::class, inversedBy: 'attributeLangs')]
     private Attribute $attribute;
 
-    /**
-     * @ORM\Id
-     *
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\Lang")
-     *
-     * @ORM\JoinColumn(name="id_lang", referencedColumnName="id_lang", nullable=false, onDelete="CASCADE")
-     */
+    #[ORM\JoinColumn(name: 'id_lang', referencedColumnName: 'id_lang', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Lang::class)]
     private Lang $lang;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=128)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 128)]
     private string $name;
 
     public function setName(string $name): static

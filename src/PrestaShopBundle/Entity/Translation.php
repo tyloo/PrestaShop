@@ -30,53 +30,31 @@ namespace PrestaShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use PrestaShopBundle\Translation\Constraints\PassVsprintf;
 
-/**
- * Translation.
- *
- * @ORM\Table(
- *     indexes={@ORM\Index(name="key", columns={"domain"})},
- * )
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\TranslationRepository")
- *
- * @PassVsprintf
- */
+#[ORM\Table]
+#[ORM\Index(columns: ['domain'], name: 'key')]
+#[ORM\Entity(repositoryClass: Repository\TranslationRepository::class)]
+#[PassVsprintf]
 class Translation
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_translation", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_translation', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Lang", inversedBy="translations")
-     *
-     * @ORM\JoinColumn(name="id_lang", referencedColumnName="id_lang", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'id_lang', referencedColumnName: 'id_lang', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Lang::class, inversedBy: 'translations')]
     private Lang $lang;
 
-    /**
-     * @ORM\Column(name="`key`", type="text", length=8000)
-     */
+    #[ORM\Column(name: '`key`', type: 'text', length: 8000)]
     private string $key;
 
-    /**
-     * @ORM\Column(name="translation", type="text", length=65500)
-     */
+    #[ORM\Column(name: 'translation', type: 'text', length: 65500)]
     private string $translation;
 
-    /**
-     * @ORM\Column(name="domain", type="string", length=80)
-     */
+    #[ORM\Column(name: 'domain', type: 'string', length: 80)]
     private string $domain;
 
-    /**
-     * @ORM\Column(name="theme", type="string", length=32, nullable=true)
-     */
+    #[ORM\Column(name: 'theme', type: 'string', length: 32, nullable: true)]
     private ?string $theme = null;
 
     public function getId(): int

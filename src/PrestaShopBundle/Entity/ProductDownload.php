@@ -30,68 +30,42 @@ namespace PrestaShopBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(
- *     indexes={@ORM\Index(name="product_active", columns={"id_product", "active"})},
- *     uniqueConstraints={@ORM\UniqueConstraint(name="id_product", columns={"id_product"})}
- * )
- */
+#[ORM\Table]
+#[ORM\Index(columns: ['id_product', 'active'], name: 'product_active')]
+#[ORM\UniqueConstraint(name: 'id_product', columns: ['id_product'])]
+#[ORM\Entity]
 class ProductDownload
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_product_download", type="integer", options={"unsigned"=true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_product_download', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="id_product", type="integer", options={"unsigned"=true})
-     */
+    #[ORM\Column(name: 'id_product', type: 'integer', options: ['unsigned' => true])]
     private int $idProduct;
 
-    /**
-     * @ORM\Column(name="display_filename", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'display_filename', type: 'string', length: 255, nullable: true)]
     private ?string $displayFilename = null;
 
-    /**
-     * @ORM\Column(name="filename", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'filename', type: 'string', length: 255, nullable: true)]
     private ?string $filename = null;
 
-    /**
-     * @ORM\Column(name="date_add", type="datetime")
-     */
+    #[ORM\Column(name: 'date_add', type: 'datetime')]
     private DateTime $dateAdd;
 
-    /**
-     * @ORM\Column(name="date_expiration", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'date_expiration', type: 'datetime', nullable: true)]
     private ?DateTime $dateExpiration = null;
 
-    /**
-     * @ORM\Column(name="nb_days_accessible", type="integer", nullable=true, options={"unsigned"=true})
-     */
+    #[ORM\Column(name: 'nb_days_accessible', type: 'integer', nullable: true, options: ['unsigned' => true])]
     private ?int $nbDaysAccessible = null;
 
-    /**
-     * @ORM\Column(name="nb_downloadable", type="integer", nullable=true, options={"default":1, "unsigned"=true})
-     */
+    #[ORM\Column(name: 'nb_downloadable', type: 'integer', nullable: true, options: ['default' => 1, 'unsigned' => true])]
     private ?int $nbDownloadable = null;
 
-    /**
-     * @ORM\Column(name="active", type="boolean", options={"default":1, "unsigned"=true})
-     */
+    #[ORM\Column(name: 'active', type: 'boolean', options: ['default' => 1, 'unsigned' => true])]
     private bool $active;
 
-    /**
-     * @ORM\Column(name="is_shareable", type="boolean", options={"default":0, "unsigned"=true})
-     */
+    #[ORM\Column(name: 'is_shareable', type: 'boolean', options: ['default' => 0, 'unsigned' => true])]
     private bool $isShareable;
 
     /**
@@ -233,11 +207,9 @@ class ProductDownload
 
     /**
      * Now we tell doctrine that before we persist or update we call the updateTimestamps() function.
-     *
-     * @ORM\PrePersist
-     *
-     * @ORM\PreUpdate
      */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updateTimestamps(): void
     {
         if (! isset($this->dateAdd)) {

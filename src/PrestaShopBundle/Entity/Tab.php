@@ -31,79 +31,49 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Tab.
- *
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\TabRepository")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: Repository\TabRepository::class)]
 class Tab
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_tab", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_tab', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="id_parent", type="integer")
-     */
+    #[ORM\Column(name: 'id_parent', type: 'integer')]
     private int $idParent;
 
-    /**
-     * @ORM\Column(name="position", type="integer")
-     */
+    #[ORM\Column(name: 'position', type: 'integer')]
     private int $position;
 
-    /**
-     * @ORM\Column(name="module", type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(name: 'module', type: 'string', length: 64, nullable: true)]
     private ?string $module = null;
 
-    /**
-     * @ORM\Column(name="class_name", type="string", length=64)
-     */
+    #[ORM\Column(name: 'class_name', type: 'string', length: 64)]
     private string $className;
 
-    /**
-     * @ORM\Column(name="route_name", type="string", length=256, nullable=true)
-     */
+    #[ORM\Column(name: 'route_name', type: 'string', length: 256, nullable: true)]
     private ?string $routeName = null;
 
-    /**
-     * @ORM\Column(name="active", type="boolean")
-     */
+    #[ORM\Column(name: 'active', type: 'boolean')]
     private bool $active;
 
-    /**
-     * @ORM\Column(name="enabled", type="boolean")
-     */
+    #[ORM\Column(name: 'enabled', type: 'boolean')]
     private bool $enabled = true;
 
-    /**
-     * @ORM\Column(name="icon", type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(name: 'icon', type: 'string', length: 64, nullable: true)]
     private ?string $icon = null;
 
-    /**
-     * @ORM\Column(name="wording", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'wording', type: 'string', length: 255, nullable: true)]
     private ?string $wording = null;
 
-    /**
-     * @ORM\Column(name="wording_domain", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'wording_domain', type: 'string', length: 255, nullable: true)]
     private ?string $wordingDomain = null;
 
     /**
      * @var Collection<TabLang>
-     *
-     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\TabLang", mappedBy="tab")
      */
+    #[ORM\OneToMany(mappedBy: 'tab', targetEntity: TabLang::class)]
     private Collection $tabLangs;
 
     public function __construct()

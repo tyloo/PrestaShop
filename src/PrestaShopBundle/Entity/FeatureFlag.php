@@ -34,62 +34,38 @@ use InvalidArgumentException;
 use PrestaShop\PrestaShop\Core\FeatureFlag\FeatureFlagSettings;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\FeatureFlagRepository")
- *
- * @ORM\Table()
- *
- * @UniqueEntity("name")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: Repository\FeatureFlagRepository::class)]
+#[UniqueEntity('name')]
 class FeatureFlag
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_feature_flag", type="integer", options={"unsigned":true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_feature_flag', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=191, unique=true)
-     */
-    private string $name;
+    #[ORM\Column(name: 'name', type: 'string', length: 191, unique: true)]
+    private readonly string $name;
 
-    /**
-     * @ORM\Column(name="type", type="string", length=64, options={"default": FeatureFlagSettings::TYPE_DEFAULT})
-     */
+    #[ORM\Column(name: 'type', type: 'string', length: 64, options: ['default' => FeatureFlagSettings::TYPE_DEFAULT])]
     private string $type;
 
-    /**
-     * @ORM\Column(name="state", type="boolean", options={"default":0, "unsigned":true})
-     */
+    #[ORM\Column(name: 'state', type: 'boolean', options: ['default' => 0, 'unsigned' => true])]
     private bool $state;
 
-    /**
-     * @ORM\Column(name="label_wording", type="string", length=191, options={"default":""})
-     */
+    #[ORM\Column(name: 'label_wording', type: 'string', length: 191, options: ['default' => ''])]
     private string $labelWording;
 
-    /**
-     * @ORM\Column(name="label_domain", type="string", length=255, options={"default":""})
-     */
+    #[ORM\Column(name: 'label_domain', type: 'string', length: 255, options: ['default' => ''])]
     private string $labelDomain;
 
-    /**
-     * @ORM\Column(name="description_wording", type="string", length=191, options={"default":""})
-     */
+    #[ORM\Column(name: 'description_wording', type: 'string', length: 191, options: ['default' => ''])]
     private string $descriptionWording;
 
-    /**
-     * @ORM\Column(name="description_domain", type="string", length=255, options={"default":""})
-     */
+    #[ORM\Column(name: 'description_domain', type: 'string', length: 255, options: ['default' => ''])]
     private string $descriptionDomain;
 
-    /**
-     * @ORM\Column(name="stability", type="string", length=64, options={"default":"beta"})
-     */
+    #[ORM\Column(name: 'stability', type: 'string', length: 64, options: ['default' => 'beta'])]
     private string $stability;
 
     public function __construct(string $name)

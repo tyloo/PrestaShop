@@ -37,180 +37,110 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\EmployeeRepository")
- *
- * @ORM\Table(
- *     indexes={
- *
- *         @ORM\Index(name="employee_login", columns={"email", "passwd"}),
- *         @ORM\Index(name="id_employee_passwd", columns={"id_employee", "passwd"}),
- *         @ORM\Index(name="id_profile", columns={"id_profile"}),
- *     },
- *  )
- */
+#[ORM\Table]
+#[ORM\Index(name: 'employee_login', columns: ['email', 'passwd'])]
+#[ORM\Index(name: 'id_employee_passwd', columns: ['id_employee', 'passwd'])]
+#[ORM\Index(name: 'id_profile', columns: ['id_profile'])]
+#[ORM\Entity(repositoryClass: \PrestaShopBundle\Entity\Repository\EmployeeRepository::class)]
 class Employee implements UserInterface, PasswordAuthenticatedUserInterface, EquatableInterface, SessionEmployeeInterface
 {
     public const ROLE_EMPLOYEE = 'ROLE_EMPLOYEE';
 
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_employee", type="integer", options={"unsigned": true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_employee', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\Employee\Profile")
-     *
-     * @ORM\JoinColumn(name="id_profile", referencedColumnName="id_profile", nullable=false, options={"unsigned": true})
-     */
+    #[ORM\JoinColumn(name: 'id_profile', referencedColumnName: 'id_profile', nullable: false, options: ['unsigned' => true])]
+    #[ORM\ManyToOne(targetEntity: Profile::class)]
     private Profile $profile;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\Lang")
-     *
-     * @ORM\JoinColumn(name="id_lang", referencedColumnName="id_lang", nullable=false, options={"default": 0, "unsigned": true})
-     */
+    #[ORM\JoinColumn(name: 'id_lang', referencedColumnName: 'id_lang', nullable: false, options: ['default' => 0, 'unsigned' => true])]
+    #[ORM\ManyToOne(targetEntity: Lang::class)]
     private Lang $defaultLanguage;
 
     /**
      * @var Collection<EmployeeSession>
-     *
-     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\Employee\EmployeeSession", mappedBy="employee", orphanRemoval=true, cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: EmployeeSession::class, mappedBy: 'employee', orphanRemoval: true, cascade: ['persist'])]
     private Collection $sessions;
 
-    /**
-     * @ORM\Column(name="firstname", type="string")
-     */
+    #[ORM\Column(name: 'firstname', type: 'string')]
     private string $firstName;
 
-    /**
-     * @ORM\Column(name="lastname", type="string")
-     */
+    #[ORM\Column(name: 'lastname', type: 'string')]
     private string $lastName;
 
-    /**
-     * @ORM\Column(name="email", type="string")
-     */
+    #[ORM\Column(name: 'email', type: 'string')]
     private string $email;
 
-    /**
-     * @ORM\Column(name="passwd", type="string")
-     */
+    #[ORM\Column(name: 'passwd', type: 'string')]
     private string $password;
 
-    /**
-     * @ORM\Column(name="last_passwd_gen", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
-     */
+    #[ORM\Column(name: 'last_passwd_gen', type: 'datetime', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private DateTime $passwordLastGeneration;
 
-    /**
-     * @ORM\Column(name="reset_password_token", type="string", length=40, nullable=true)
-     */
+    #[ORM\Column(name: 'reset_password_token', type: 'string', length: 40, nullable: true)]
     private ?string $resetPasswordToken = null;
 
-    /**
-     * @ORM\Column(name="reset_password_validity", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'reset_password_validity', type: 'datetime', nullable: true)]
     private ?DateTime $resetPasswordValidity = null;
 
-    /**
-     * @ORM\Column(name="default_tab", type="integer", options={"default": 0, "unsigned": true})
-     */
+    #[ORM\Column(name: 'default_tab', type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $defaultTabId;
 
-    /**
-     * @ORM\Column(name="active", type="boolean", options={"default": 0})
-     */
+    #[ORM\Column(name: 'active', type: 'boolean', options: ['default' => 0])]
     private bool $active;
 
-    /**
-     * @ORM\Column(name="last_connection_date", type="date", nullable=true)
-     */
+    #[ORM\Column(name: 'last_connection_date', type: 'date', nullable: true)]
     private ?DateTime $lastConnectionDate = null;
 
-    /**
-     * @ORM\Column(name="has_enabled_gravatar", type="boolean", options={"default": 0})
-     */
+    #[ORM\Column(name: 'has_enabled_gravatar', type: 'boolean', options: ['default' => 0])]
     private bool $hasEnabledGravatar;
 
-    /**
-     * @ORM\Column(name="stats_date_from", type="date", nullable=true)
-     */
+    #[ORM\Column(name: 'stats_date_from', type: 'date', nullable: true)]
     private ?DateTime $statsDateFrom = null;
 
-    /**
-     * @ORM\Column(name="stats_date_to", type="date", nullable=true)
-     */
+    #[ORM\Column(name: 'stats_date_to', type: 'date', nullable: true)]
     private ?DateTime $statsDateTo = null;
 
-    /**
-     * @ORM\Column(name="stats_compare_from", type="date", nullable=true)
-     */
+    #[ORM\Column(name: 'stats_compare_from', type: 'date', nullable: true)]
     private ?DateTime $statsCompareFrom = null;
 
-    /**
-     * @ORM\Column(name="stats_compare_to", type="date", nullable=true)
-     */
+    #[ORM\Column(name: 'stats_compare_to', type: 'date', nullable: true)]
     private ?DateTime $statsCompareTo = null;
 
-    /**
-     * @ORM\Column(name="stats_compare_option", type="integer", options={"default": 1, "unsigned": true})
-     */
+    #[ORM\Column(name: 'stats_compare_option', type: 'integer', options: ['default' => 1, 'unsigned' => true])]
     private int $statsCompareOption;
 
-    /**
-     * @ORM\Column(name="preselect_date_range", type="string", length=32, nullable=true)
-     */
+    #[ORM\Column(name: 'preselect_date_range', type: 'string', length: 32, nullable: true)]
     private ?string $preselectDateRange = null;
 
-    /**
-     * @ORM\Column(name="bo_color", type="string", length=32, nullable=true)
-     */
+    #[ORM\Column(name: 'bo_color', type: 'string', length: 32, nullable: true)]
     private ?string $boColor = null;
 
-    /**
-     * @ORM\Column(name="bo_theme", type="string", length=32, nullable=true)
-     */
+    #[ORM\Column(name: 'bo_theme', type: 'string', length: 32, nullable: true)]
     private ?string $boTheme = null;
 
-    /**
-     * @ORM\Column(name="bo_css", type="string", length=64, nullable=true)
-     */
+    #[ORM\Column(name: 'bo_css', type: 'string', length: 64, nullable: true)]
     private ?string $boCss = null;
 
-    /**
-     * @ORM\Column(name="bo_width", type="integer", options={"default": 0, "unsigned": true})
-     */
+    #[ORM\Column(name: 'bo_width', type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $boWidth;
 
-    /**
-     * @ORM\Column(name="bo_menu", type="boolean", options={"default": 1})
-     */
+    #[ORM\Column(name: 'bo_menu', type: 'boolean', options: ['default' => 1])]
     private bool $boMenu;
 
-    /**
-     * @ORM\Column(name="optin", type="boolean", nullable=true)
-     */
+    #[ORM\Column(name: 'optin', type: 'boolean', nullable: true)]
     private ?bool $optIn = null;
 
-    /**
-     * @ORM\Column(name="id_last_order", type="integer", options={"default": 0, "unsigned": true})
-     */
+    #[ORM\Column(name: 'id_last_order', type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $lastOrderId;
 
-    /**
-     * @ORM\Column(name="id_last_customer_message", type="integer", options={"default": 0, "unsigned": true})
-     */
+    #[ORM\Column(name: 'id_last_customer_message', type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $lastCustomerMessageId;
 
-    /**
-     * @ORM\Column(name="id_last_customer", type="integer", options={"default": 0, "unsigned": true})
-     */
+    #[ORM\Column(name: 'id_last_customer', type: 'integer', options: ['default' => 0, 'unsigned' => true])]
     private int $lastCustomerId;
 
     public function __construct()

@@ -31,67 +31,42 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Shop.
- *
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\ShopRepository")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: Repository\ShopRepository::class)]
 class Shop
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_shop", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_shop', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\ShopGroup", inversedBy="shops")
-     *
-     * @ORM\JoinColumn(name="id_shop_group", referencedColumnName="id_shop_group", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'id_shop_group', referencedColumnName: 'id_shop_group', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: ShopGroup::class, inversedBy: 'shops')]
     private ShopGroup $shopGroup;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=64)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 64)]
     private string $name;
 
-    /**
-     *  @ORM\Column(name="color", type="string", length=50)
-     */
+    #[ORM\Column(name: 'color', type: 'string', length: 50)]
     private string $color;
 
-    /**
-     * @ORM\Column(name="id_category", type="integer")
-     */
+    #[ORM\Column(name: 'id_category', type: 'integer')]
     private int $idCategory;
 
-    /**
-     * @ORM\Column(name="theme_name", type="string", length=255)
-     */
+    #[ORM\Column(name: 'theme_name', type: 'string', length: 255)]
     private string $themeName;
 
-    /**
-     * @ORM\Column(name="active", type="boolean")
-     */
+    #[ORM\Column(name: 'active', type: 'boolean')]
     private bool $active;
 
-    /**
-     * @ORM\Column(name="deleted", type="boolean")
-     */
+    #[ORM\Column(name: 'deleted', type: 'boolean')]
     private bool $deleted;
 
     /**
      * One group shop has many shops. This is the inverse side.
-     *
-     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\ShopUrl", mappedBy="shop")
      */
-    private Collection $shopUrls;
+    #[ORM\OneToMany(mappedBy: 'shop', targetEntity: ShopUrl::class)]
+    private readonly Collection $shopUrls;
 
     public function __construct()
     {

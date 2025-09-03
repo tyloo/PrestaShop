@@ -29,36 +29,21 @@ namespace PrestaShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * TabLang.
- *
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\TabLangRepository")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: Repository\TabLangRepository::class)]
 class TabLang
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\Tab", inversedBy="tabLangs")
-     *
-     * @ORM\JoinColumn(name="id_tab", referencedColumnName="id_tab", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'id_tab', referencedColumnName: 'id_tab', nullable: false)]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Tab::class, inversedBy: 'tabLangs')]
     private Tab $tab;
 
-    /**
-     * @ORM\Id
-     *
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\Lang")
-     *
-     * @ORM\JoinColumn(name="id_lang", referencedColumnName="id_lang", nullable=false, onDelete="CASCADE")
-     */
+    #[ORM\JoinColumn(name: 'id_lang', referencedColumnName: 'id_lang', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Lang::class)]
     private Lang $lang;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=128)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 128)]
     private string $name;
 
     public function getTab(): Tab

@@ -31,64 +31,38 @@ namespace PrestaShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(
- *     indexes={@ORM\Index(name="id_shop", columns={"id_shop", "main"})},
- *     uniqueConstraints={
- *
- *         @ORM\UniqueConstraint(name="full_shop_url", columns={"domain", "physical_uri", "virtual_uri"}),
- *         @ORM\UniqueConstraint(name="full_shop_url_ssl", columns={"domain_ssl", "physical_uri", "virtual_uri"}),
- *     }
- * )
- *
- * @ORM\Entity
- */
+#[ORM\Table]
+#[ORM\Index(columns: ['id_shop', 'main'], name: 'id_shop')]
+#[ORM\UniqueConstraint(name: 'full_shop_url', columns: ['domain', 'physical_uri', 'virtual_uri'])]
+#[ORM\UniqueConstraint(name: 'full_shop_url_ssl', columns: ['domain_ssl', 'physical_uri', 'virtual_uri'])]
+#[ORM\Entity]
 class ShopUrl
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_shop_url", type="integer", options={"unsigned": true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_shop_url', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\Shop", inversedBy="shopUrls")
-     *
-     * @ORM\JoinColumn(name="id_shop", referencedColumnName="id_shop", nullable=false, options={"unsigned": true})
-     */
+    #[ORM\JoinColumn(name: 'id_shop', referencedColumnName: 'id_shop', nullable: false, options: ['unsigned' => true])]
+    #[ORM\ManyToOne(targetEntity: Shop::class, inversedBy: 'shopUrls')]
     private Shop $shop;
 
-    /**
-     * @ORM\Column(name="domain", type="string", length=150)
-     */
+    #[ORM\Column(name: 'domain', type: 'string', length: 150)]
     private string $domain;
 
-    /**
-     * @ORM\Column(name="domain_ssl", type="string", length=150)
-     */
+    #[ORM\Column(name: 'domain_ssl', type: 'string', length: 150)]
     private string $domainSsl;
 
-    /**
-     * @ORM\Column(name="physical_uri", type="string", length=64)
-     */
+    #[ORM\Column(name: 'physical_uri', type: 'string', length: 64)]
     private string $physicalUri;
 
-    /**
-     * @ORM\Column(name="virtual_uri", type="string", length=64)
-     */
+    #[ORM\Column(name: 'virtual_uri', type: 'string', length: 64)]
     private string $virtualUri;
 
-    /**
-     * @ORM\Column(name="main", type="boolean")
-     */
+    #[ORM\Column(name: 'main', type: 'boolean')]
     private bool $main;
 
-    /**
-     * @ORM\Column(name="active", type="boolean")
-     */
+    #[ORM\Column(name: 'active', type: 'boolean')]
     private bool $active;
 
     public function getId(): int

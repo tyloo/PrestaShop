@@ -30,52 +30,32 @@ namespace PrestaShopBundle\Entity;
 use Closure;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * AdminFilter.
- *
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="admin_filter_search_id_idx", columns={"employee", "shop", "controller", "action", "filter_id"})})
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\AdminFilterRepository")
- */
+#[ORM\Table]
+#[ORM\UniqueConstraint(name: 'admin_filter_search_id_idx', columns: ['employee', 'shop', 'controller', 'action', 'filter_id'])]
+#[ORM\Entity(repositoryClass: Repository\AdminFilterRepository::class)]
 class AdminFilter
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="employee", type="integer")
-     */
+    #[ORM\Column(name: 'employee', type: 'integer')]
     private int $employee;
 
-    /**
-     * @ORM\Column(name="shop", type="integer")
-     */
+    #[ORM\Column(name: 'shop', type: 'integer')]
     private int $shop;
 
-    /**
-     * @ORM\Column(name="controller", type="string", length=60)
-     */
+    #[ORM\Column(name: 'controller', type: 'string', length: 60)]
     private string $controller;
 
-    /**
-     * @ORM\Column(name="action", type="string", length=100)
-     */
+    #[ORM\Column(name: 'action', type: 'string', length: 100)]
     private string $action;
 
-    /**
-     * @ORM\Column(name="filter", type="text")
-     */
+    #[ORM\Column(name: 'filter', type: 'text')]
     private string $filter;
 
-    /**
-     * @ORM\Column(name="filter_id", type="string", length=191)
-     */
+    #[ORM\Column(name: 'filter_id', type: 'string', length: 191)]
     private string $filterId = '';
 
     public function getId(): int

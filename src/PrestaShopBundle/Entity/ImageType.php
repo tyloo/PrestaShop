@@ -32,67 +32,42 @@ namespace PrestaShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\ImageTypeRepository")
- *
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"name","theme_name"})})
- *
- * @UniqueEntity({"name", "theme_name"})
- */
+#[ORM\Table]
+#[ORM\UniqueConstraint(columns: ['name', 'theme_name'])]
+#[ORM\Entity(repositoryClass: Repository\ImageTypeRepository::class)]
+#[UniqueEntity(['name', 'theme_name'])]
 class ImageType
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_image_type", type="integer", options={"unsigned": true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_image_type', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=64, unique=true)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 64, unique: true)]
     private string $name;
 
-    /**
-     * @ORM\Column(name="width", type="integer", options={"unsigned": true})
-     */
+    #[ORM\Column(name: 'width', type: 'integer', options: ['unsigned' => true])]
     private int $width;
 
-    /**
-     * @ORM\Column(name="height", type="integer", options={"unsigned": true})
-     */
+    #[ORM\Column(name: 'height', type: 'integer', options: ['unsigned' => true])]
     private int $height;
 
-    /**
-     * @ORM\Column(name="products", type="boolean", options={"default": 1})
-     */
+    #[ORM\Column(name: 'products', type: 'boolean', options: ['default' => 1])]
     private bool $products;
 
-    /**
-     * @ORM\Column(name="categories", type="boolean", options={"default": 1})
-     */
+    #[ORM\Column(name: 'categories', type: 'boolean', options: ['default' => 1])]
     private bool $categories;
 
-    /**
-     * @ORM\Column(name="manufacturers", type="boolean", options={"default": 1})
-     */
+    #[ORM\Column(name: 'manufacturers', type: 'boolean', options: ['default' => 1])]
     private bool $manufacturers;
 
-    /**
-     * @ORM\Column(name="suppliers", type="boolean", options={"default": 1})
-     */
+    #[ORM\Column(name: 'suppliers', type: 'boolean', options: ['default' => 1])]
     private bool $suppliers;
 
-    /**
-     * @ORM\Column(name="stores", type="boolean", options={"default": 1})
-     */
+    #[ORM\Column(name: 'stores', type: 'boolean', options: ['default' => 1])]
     private bool $stores;
 
-    /**
-     * @ORM\Column(name="theme_name", type="string", length=255)
-     */
+    #[ORM\Column(name: 'theme_name', type: 'string', length: 255)]
     private ?string $themeName = null;
 
     public function getId(): int

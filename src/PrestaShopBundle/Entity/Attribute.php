@@ -31,56 +31,33 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Attribute.
- *
- * @ORM\Table(
- *     indexes={@ORM\Index(name="attribute_group", columns={"id_attribute_group"})}
- * )
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\AttributeRepository")
- */
+#[ORM\Table]
+#[ORM\Index(columns: ['id_attribute_group'], name: 'attribute_group')]
+#[ORM\Entity(repositoryClass: Repository\AttributeRepository::class)]
 class Attribute
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_attribute", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_attribute', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\AttributeGroup", inversedBy="attributes")
-     *
-     * @ORM\JoinColumn(name="id_attribute_group", referencedColumnName="id_attribute_group", nullable=false)
-     */
+    #[ORM\JoinColumn(name: 'id_attribute_group', referencedColumnName: 'id_attribute_group', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: AttributeGroup::class, inversedBy: 'attributes')]
     private AttributeGroup $attributeGroup;
 
-    /**
-     * @ORM\Column(name="color", type="string", length=32)
-     */
+    #[ORM\Column(name: 'color', type: 'string', length: 32)]
     private string $color;
 
-    /**
-     * @ORM\Column(name="position", type="integer")
-     */
+    #[ORM\Column(name: 'position', type: 'integer')]
     private int $position;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="PrestaShopBundle\Entity\Shop", cascade={"persist"})
-     *
-     * @ORM\JoinTable(
-     *      joinColumns={@ORM\JoinColumn(name="id_attribute", referencedColumnName="id_attribute")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id_shop", referencedColumnName="id_shop", onDelete="CASCADE")}
-     * )
-     */
+    #[ORM\JoinTable]
+    #[ORM\JoinColumn(name: 'id_attribute', referencedColumnName: 'id_attribute')]
+    #[ORM\InverseJoinColumn(name: 'id_shop', referencedColumnName: 'id_shop', onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: Shop::class, cascade: ['persist'])]
     private Collection $shops;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\AttributeLang", mappedBy="attribute")
-     */
+    #[ORM\OneToMany(mappedBy: 'attribute', targetEntity: AttributeLang::class)]
     private Collection $attributeLangs;
 
     public function __construct()

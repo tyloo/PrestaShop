@@ -30,44 +30,27 @@ namespace PrestaShopBundle\Entity\Employee;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table
- *
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table]
+#[ORM\Entity]
+#[ORM\HasLifecycleCallbacks]
 class EmployeeSession
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_employee_session", type="integer", options={"unsigned": true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_employee_session', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\Employee\Employee", inversedBy="sessions")
-     *
-     * @ORM\JoinColumn(name="id_employee", referencedColumnName="id_employee", nullable=true, options={"unsigned": true}, onDelete="CASCADE")
-     */
+    #[ORM\JoinColumn(name: 'id_employee', referencedColumnName: 'id_employee', nullable: true, options: ['unsigned' => true], onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Employee::class, inversedBy: 'sessions')]
     private ?Employee $employee = null;
 
-    /**
-     * @ORM\Column(name="token", type="string", length=40, nullable=true)
-     */
+    #[ORM\Column(name: 'token', type: 'string', length: 40, nullable: true)]
     private string $token;
 
-    /**
-     * @ORM\Column(name="date_add", type="datetime")
-     */
+    #[ORM\Column(name: 'date_add', type: 'datetime')]
     private DateTime $dateAdd;
 
-    /**
-     * @ORM\Column(name="date_upd", type="datetime")
-     */
+    #[ORM\Column(name: 'date_upd', type: 'datetime')]
     private DateTime $dateUpd;
 
     public function __serialize(): array
@@ -125,11 +108,9 @@ class EmployeeSession
 
     /**
      * Now we tell doctrine that before we persist or update we call the updatedTimestamps() function.
-     *
-     * @ORM\PrePersist
-     *
-     * @ORM\PreUpdate
      */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updatedTimestamps(): void
     {
         $this->dateUpd = new DateTime();

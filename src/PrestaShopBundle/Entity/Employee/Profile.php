@@ -31,35 +31,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table
- */
+#[ORM\Table]
+#[ORM\Entity]
 class Profile
 {
     public const ADMIN_PROFILE_ID = 1;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="PrestaShopBundle\Entity\Employee\AuthorizationRole")
-     *
-     * @ORM\JoinTable(
-     *     options={"ps_table"="access"},
-     *     joinColumns={@ORM\JoinColumn(name="id_profile", referencedColumnName="id_profile")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="id_authorization_role", referencedColumnName="id_authorization_role")}
-     *  )
-     */
-    private Collection $authorizationRoles;
+    #[ORM\JoinTable(options: ['ps_table' => 'access'])]
+    #[ORM\JoinColumn(name: 'id_profile', referencedColumnName: 'id_profile')]
+    #[ORM\InverseJoinColumn(name: 'id_authorization_role', referencedColumnName: 'id_authorization_role')]
+    #[ORM\ManyToMany(targetEntity: AuthorizationRole::class)]
+    private readonly Collection $authorizationRoles;
 
     public function __construct(
-        /**
-         * @ORM\Id
-         *
-         * @ORM\Column(name="id_profile", type="integer", options={"unsigned": true})
-         *
-         * @ORM\GeneratedValue(strategy="AUTO")
-         */
-        private ?int $id = null,
+        #[ORM\Id]
+        #[ORM\Column(name: 'id_profile', type: 'integer', options: ['unsigned' => true])]
+        #[ORM\GeneratedValue(strategy: 'AUTO')]
+        private readonly ?int $id = null,
     ) {
         $this->authorizationRoles = new ArrayCollection();
     }

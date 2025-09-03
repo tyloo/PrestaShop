@@ -31,92 +31,57 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use PrestaShop\PrestaShop\Adapter\Configuration;
 
-/**
- * StockMvt.
- *
- * @ORM\Table(indexes={@ORM\Index(name="id_stock", columns={"id_stock"}), @ORM\Index(name="id_stock_mvt_reason", columns={"id_stock_mvt_reason"})})
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\StockMovementRepository")
- */
+#[ORM\Table]
+#[ORM\Index(columns: ['id_stock'], name: 'id_stock')]
+#[ORM\Index(columns: ['id_stock_mvt_reason'], name: 'id_stock_mvt_reason')]
+#[ORM\Entity(repositoryClass: Repository\StockMovementRepository::class)]
 class StockMvt
 {
-    /**
-     * @ORM\Column(name="id_stock_mvt", type="bigint")
-     *
-     * @ORM\Id
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $idStockMvt;
+    #[ORM\Column(name: 'id_stock_mvt', type: 'bigint')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $idStockMvt;
 
-    /**
-     * @ORM\Column(name="id_stock", type="integer", nullable=false)
-     */
+    #[ORM\Column(name: 'id_stock', type: 'integer', nullable: false)]
     private int $idStock;
 
-    /**
-     * @ORM\Column(name="id_order", type="integer", nullable=true)
-     */
+    #[ORM\Column(name: 'id_order', type: 'integer', nullable: true)]
     private ?int $idOrder = null;
 
-    /**
-     * @ORM\Column(name="id_supply_order", type="integer", nullable=true, options={"default":0})
-     */
+    #[ORM\Column(name: 'id_supply_order', type: 'integer', nullable: true, options: ['default' => 0])]
     private ?int $idSupplyOrder = 0;
 
-    /**
-     * @ORM\Column(name="id_stock_mvt_reason", type="integer", nullable=false)
-     */
+    #[ORM\Column(name: 'id_stock_mvt_reason', type: 'integer', nullable: false)]
     private int $idStockMvtReason;
 
-    /**
-     * @ORM\Column(name="id_employee", type="integer", nullable=false)
-     */
+    #[ORM\Column(name: 'id_employee', type: 'integer', nullable: false)]
     private int $idEmployee = 0;
 
-    /**
-     * @ORM\Column(name="employee_lastname", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'employee_lastname', type: 'string', length: 255, nullable: true)]
     private ?string $employeeLastname = '';
 
-    /**
-     * @ORM\Column(name="employee_firstname", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'employee_firstname', type: 'string', length: 255, nullable: true)]
     private ?string $employeeFirstname = '';
 
-    /**
-     * @ORM\Column(name="physical_quantity", type="integer", nullable=false, options={"unsigned":true})
-     */
+    #[ORM\Column(name: 'physical_quantity', type: 'integer', nullable: false, options: ['unsigned' => true])]
     private int $physicalQuantity;
 
-    /**
-     * @ORM\Column(name="date_add", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'date_add', type: 'datetime', nullable: false)]
     private DateTime $dateAdd;
 
-    /**
-     * @ORM\Column(name="sign", type="smallint", nullable=false, options={"default":1})
-     */
+    #[ORM\Column(name: 'sign', type: 'smallint', nullable: false, options: ['default' => 1])]
     private int $sign = 1;
 
-    /**
-     * @ORM\Column(name="price_te", type="decimal", precision=20, scale=6, nullable=true, options={"default":"0.000000"})
-     */
+    #[ORM\Column(name: 'price_te', type: 'decimal', precision: 20, scale: 6, nullable: true, options: ['default' => '0.000000'])]
     private ?string $priceTe = '0.000000';
 
-    /**
-     * @ORM\Column(name="last_wa", type="decimal", precision=20, scale=6, nullable=true, options={"default":"0.000000"})
-     */
+    #[ORM\Column(name: 'last_wa', type: 'decimal', precision: 20, scale: 6, nullable: true, options: ['default' => '0.000000'])]
     private ?string $lastWa = '0.000000';
 
-    /**
-     * @ORM\Column(name="current_wa", type="decimal", precision=20, scale=6, nullable=true, options={"default":"0.000000"})
-     */
+    #[ORM\Column(name: 'current_wa', type: 'decimal', precision: 20, scale: 6, nullable: true, options: ['default' => '0.000000'])]
     private ?string $currentWa = '0.000000';
 
-    /**
-     * @ORM\Column(name="referer", type="bigint", nullable=true)
-     */
+    #[ORM\Column(name: 'referer', type: 'bigint', nullable: true)]
     private ?int $referer = null;
 
     public function __construct()

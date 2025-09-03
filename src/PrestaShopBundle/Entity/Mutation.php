@@ -42,57 +42,36 @@ use Doctrine\ORM\Mapping as ORM;
  * - action performed (create, update, delete) identified by an enum to remain small in DB
  * - mutator type: Employee, ApiClient or Module
  * - mutator identifier: Identifier of associated mutator (usually an int matching the row, but can be a technical name for a module)
- *
- * @ORM\Table
- *
- * @ORM\HasLifecycleCallbacks
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\MutationRepository")
  */
+#[ORM\Table]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\Entity(repositoryClass: Repository\MutationRepository::class)]
 class Mutation
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_mutation", type="integer", options={"unsigned": true})
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_mutation', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="mutation_table", type="string", length=255)
-     */
+    #[ORM\Column(name: 'mutation_table', type: 'string', length: 255)]
     private string $mutationTable;
 
-    /**
-     * @ORM\Column(name="mutation_row_id", type="bigint")
-     */
+    #[ORM\Column(name: 'mutation_row_id', type: 'bigint')]
     private int $mutationRowId;
 
-    /**
-     * @ORM\Column(name="mutation_action", enumType="PrestaShopBundle\Entity\MutationAction", columnDefinition="ENUM('create', 'update', 'delete')"), options={"default": "create"}, nullable=false)
-     */
+    #[ORM\Column(name: 'mutation_action', enumType: MutationAction::class, columnDefinition: "ENUM('create', 'update', 'delete')")] // , options={"default": "create"}, nullable=false)
     private MutationAction $action;
 
-    /**
-     * @ORM\Column(name="mutator_type", enumType="PrestaShopBundle\Entity\MutatorType", columnDefinition="ENUM('employee', 'api_client', 'module')", nullable=false)
-     */
+    #[ORM\Column(name: 'mutator_type', nullable: false, enumType: MutatorType::class, columnDefinition: "ENUM('employee', 'api_client', 'module')")]
     private MutatorType $mutatorType;
 
-    /**
-     * @ORM\Column(name="mutator_identifier", type="string", length=255)
-     */
+    #[ORM\Column(name: 'mutator_identifier', type: 'string', length: 255)]
     private string $mutatorIdentifier;
 
-    /**
-     * @ORM\Column(name="mutation_details", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'mutation_details', type: 'string', length: 255, nullable: true)]
     private ?string $mutationDetails = null;
 
-    /**
-     * @ORM\Column(name="date_add", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'date_add', type: 'datetime', nullable: false)]
     private DateTime $dateAdd;
 
     public function getId(): int
@@ -179,11 +158,9 @@ class Mutation
 
     /**
      * Now we tell doctrine that before we persist or update we call the updateTimestamps() function.
-     *
-     * @ORM\PrePersist
-     *
-     * @ORM\PreUpdate
      */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updateTimestamps(): void
     {
         $this->dateAdd = new DateTime();

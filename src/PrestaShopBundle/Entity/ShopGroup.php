@@ -31,67 +31,43 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * ShopGroup.
- *
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\ShopGroupRepository")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: Repository\ShopGroupRepository::class)]
 class ShopGroup
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_shop_group", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_shop_group', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=64)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 64)]
     private string $name;
 
-    /**
-     * @ORM\Column(name="color", type="string", length=50)
-     */
+    #[ORM\Column(name: 'color', type: 'string', length: 50)]
     private string $color;
 
-    /**
-     * @ORM\Column(name="share_customer", type="boolean")
-     */
+    #[ORM\Column(name: 'share_customer', type: 'boolean')]
     private bool $shareCustomer;
 
-    /**
-     * @ORM\Column(name="share_order", type="boolean")
-     */
+    #[ORM\Column(name: 'share_order', type: 'boolean')]
     private bool $shareOrder;
 
-    /**
-     * @ORM\Column(name="share_stock", type="boolean")
-     */
+    #[ORM\Column(name: 'share_stock', type: 'boolean')]
     private bool $shareStock;
 
-    /**
-     * @ORM\Column(name="active", type="boolean")
-     */
+    #[ORM\Column(name: 'active', type: 'boolean')]
     private bool $active;
 
-    /**
-     * @ORM\Column(name="deleted", type="boolean")
-     */
+    #[ORM\Column(name: 'deleted', type: 'boolean')]
     private bool $deleted;
 
     /**
      * @var Collection<Shop>
      *
      * One group shop has many shops. This is the inverse side.
-     *
-     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\Shop", mappedBy="shopGroup")
      */
-    private Collection $shops;
+    #[ORM\OneToMany(mappedBy: 'shopGroup', targetEntity: Shop::class)]
+    private readonly Collection $shops;
 
     public function __construct()
     {

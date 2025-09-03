@@ -33,89 +33,56 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use PrestaShop\PrestaShop\Core\Domain\Shipment\Exception\ShipmentException;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\ShipmentRepository"))
- *
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: Repository\ShipmentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Shipment
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_shipment", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_shipment', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="id_order", type="integer")
-     */
+    #[ORM\Column(name: 'id_order', type: 'integer')]
     private int $orderId;
 
-    /**
-     * @ORM\Column(name="id_carrier", type="integer")
-     */
+    #[ORM\Column(name: 'id_carrier', type: 'integer')]
     private int $carrierId;
 
-    /**
-     * @ORM\Column(name="id_delivery_address", type="integer")
-     */
+    #[ORM\Column(name: 'id_delivery_address', type: 'integer')]
     private int $addressId;
 
-    /**
-     * @ORM\Column(name="shipping_cost_tax_excl", type="float")
-     */
+    #[ORM\Column(name: 'shipping_cost_tax_excl', type: 'float')]
     private float $shippingCostTaxExcluded;
 
-    /**
-     * @ORM\Column(name="shipping_cost_tax_incl", type="float")
-     */
+    #[ORM\Column(name: 'shipping_cost_tax_incl', type: 'float')]
     private float $shippingCostTaxIncluded;
 
-    /**
-     * @ORM\Column(name="packed_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'packed_at', type: 'datetime', nullable: true)]
     private ?DateTime $packedAt = null;
 
-    /**
-     * @ORM\Column(name="shipped_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'shipped_at', type: 'datetime', nullable: true)]
     private ?DateTime $shippedAt = null;
 
-    /**
-     * @ORM\Column(name="delivered_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'delivered_at', type: 'datetime', nullable: true)]
     private ?DateTime $deliveredAt = null;
 
-    /**
-     * @ORM\Column(name="cancelled_at", type="datetime", nullable=true)
-     */
+    #[ORM\Column(name: 'cancelled_at', type: 'datetime', nullable: true)]
     private ?DateTime $cancelledAt = null;
 
-    /**
-     * @ORM\Column(name="tracking_number", type="string", nullable=true)
-     */
+    #[ORM\Column(name: 'tracking_number', type: 'string', nullable: true)]
     private ?string $trackingNumber = null;
 
-    /**
-     * @ORM\Column(name="date_add", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'date_add', type: 'datetime', nullable: false)]
     private DateTime $createdAt;
 
-    /**
-     * @ORM\Column(name="date_upd", type="datetime", nullable=false)
-     */
+    #[ORM\Column(name: 'date_upd', type: 'datetime', nullable: false)]
     private DateTime $updatedAt;
 
     /**
      * @var Collection<ShipmentProduct>
-     *
-     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\ShipmentProduct", mappedBy="shipment", cascade={"all"}, orphanRemoval=true)
      */
+    #[ORM\OneToMany(mappedBy: 'shipment', targetEntity: ShipmentProduct::class, cascade: ['all'], orphanRemoval: true)]
     private Collection $products;
 
     public function __construct()
@@ -286,11 +253,8 @@ class Shipment
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-     *
-     * @ORM\PreUpdate
-     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updatedTimestamps(): void
     {
         $this->updatedAt = new DateTime();

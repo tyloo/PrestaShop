@@ -29,37 +29,23 @@ namespace PrestaShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity()
- */
+#[ORM\Table]
+#[ORM\Entity]
 class ShipmentProduct
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_shipment_product", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_shipment_product', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="PrestaShopBundle\Entity\Shipment", inversedBy="products", cascade={"all"})
-     *
-     * @ORM\JoinColumn(name="id_shipment", referencedColumnName="id_shipment", nullable=false, onDelete="CASCADE")
-     */
+    #[ORM\JoinColumn(name: 'id_shipment', referencedColumnName: 'id_shipment', nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Shipment::class, cascade: ['all'], inversedBy: 'products')]
     private ?Shipment $shipment = null;
 
-    /**
-     * @ORM\Column(name="id_order_detail", type="integer")
-     */
+    #[ORM\Column(name: 'id_order_detail', type: 'integer')]
     private int $orderDetailId;
 
-    /**
-     * @ORM\Column(name="quantity", type="integer")
-     */
+    #[ORM\Column(name: 'quantity', type: 'integer')]
     private int $quantity;
 
     public function getId(): int

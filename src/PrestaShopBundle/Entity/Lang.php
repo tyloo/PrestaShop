@@ -32,79 +32,52 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use PrestaShop\PrestaShop\Core\Language\LanguageInterface;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\LangRepository")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: Repository\LangRepository::class)]
 class Lang implements LanguageInterface
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_lang", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_lang', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=32)
-     */
+    #[ORM\Column(name: 'name', type: 'string', length: 32)]
     private string $name;
 
-    /**
-     * @ORM\Column(name="active", type="boolean")
-     */
+    #[ORM\Column(name: 'active', type: 'boolean')]
     private bool $active;
 
-    /**
-     * @ORM\Column(name="iso_code", type="string", length=2)
-     */
+    #[ORM\Column(name: 'iso_code', type: 'string', length: 2)]
     private string $isoCode;
 
-    /**
-     * @ORM\Column(name="language_code", type="string", length=5)
-     */
+    #[ORM\Column(name: 'language_code', type: 'string', length: 5)]
     private string $languageCode;
 
-    /**
-     * @ORM\Column(name="locale", type="string", length=5)
-     */
+    #[ORM\Column(name: 'locale', type: 'string', length: 5)]
     private string $locale;
 
     /**
      * Badly named, it's not really light. It's just the format for a date only.
-     *
-     * @ORM\Column(name="date_format_lite", type="string", length=32)
      */
+    #[ORM\Column(name: 'date_format_lite', type: 'string', length: 32)]
     private string $dateFormatLite;
 
     /**
      * Badly named, it's not full. It's just the format for a date AND time.
-     *
-     * @ORM\Column(name="date_format_full", type="string", length=32)
      */
+    #[ORM\Column(name: 'date_format_full', type: 'string', length: 32)]
     private string $dateFormatFull;
 
-    /**
-     * @ORM\Column(name="is_rtl", type="boolean")
-     */
+    #[ORM\Column(name: 'is_rtl', type: 'boolean')]
     private bool $isRtl;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Translation", mappedBy="lang")
-     */
-    private Collection $translations;
+    #[ORM\OneToMany(mappedBy: 'lang', targetEntity: Translation::class)]
+    private readonly Collection $translations;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="PrestaShopBundle\Entity\Shop", cascade={"remove", "persist"})
-     *
-     * @ORM\JoinTable(
-     *      joinColumns={@ORM\JoinColumn(name="id_lang", referencedColumnName="id_lang", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id_shop", referencedColumnName="id_shop", onDelete="CASCADE")}
-     * )
-     */
+    #[ORM\JoinTable]
+    #[ORM\JoinColumn(name: 'id_lang', referencedColumnName: 'id_lang', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'id_shop', referencedColumnName: 'id_shop', onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: Shop::class, cascade: ['remove', 'persist'])]
     private Collection $shops;
 
     public function __construct()

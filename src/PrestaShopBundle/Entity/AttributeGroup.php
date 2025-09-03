@@ -32,59 +32,37 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 
-/**
- * AttributeGroup.
- *
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="PrestaShopBundle\Entity\Repository\AttributeGroupRepository")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: Repository\AttributeGroupRepository::class)]
 class AttributeGroup
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id_attribute_group", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id_attribute_group', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="is_color_group", type="boolean")
-     */
+    #[ORM\Column(name: 'is_color_group', type: 'boolean')]
     private bool $isColorGroup;
 
-    /**
-     * @ORM\Column(name="group_type", type="string", length=255)
-     */
+    #[ORM\Column(name: 'group_type', type: 'string', length: 255)]
     private string $groupType = 'select';
 
-    /**
-     * @ORM\Column(name="position", type="integer")
-     */
+    #[ORM\Column(name: 'position', type: 'integer')]
     private int $position;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\Attribute", mappedBy="attributeGroup", orphanRemoval=true)
-     */
-    private Collection $attributes;
+    #[ORM\OneToMany(mappedBy: 'attributeGroup', targetEntity: Attribute::class, orphanRemoval: true)]
+    private readonly Collection $attributes;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="PrestaShopBundle\Entity\Shop", cascade={"persist"})
-     *
-     * @ORM\JoinTable(
-     *      joinColumns={@ORM\JoinColumn(name="id_attribute_group", referencedColumnName="id_attribute_group")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id_shop", referencedColumnName="id_shop", onDelete="CASCADE")}
-     * )
-     */
+    #[ORM\JoinTable]
+    #[ORM\JoinColumn(name: 'id_attribute_group', referencedColumnName: 'id_attribute_group')]
+    #[ORM\InverseJoinColumn(name: 'id_shop', referencedColumnName: 'id_shop', onDelete: 'CASCADE')]
+    #[ORM\ManyToMany(targetEntity: Shop::class, cascade: ['persist'])]
     private Collection $shops;
 
     /**
      * @var Collection<AttributeGroupLang>
-     *
-     * @ORM\OneToMany(targetEntity="PrestaShopBundle\Entity\AttributeGroupLang", mappedBy="attributeGroup", orphanRemoval=true)
      */
+    #[ORM\OneToMany(mappedBy: 'attributeGroup', targetEntity: AttributeGroupLang::class, orphanRemoval: true)]
     private Collection $attributeGroupLangs;
 
     private array $groupTypeAvailable = [

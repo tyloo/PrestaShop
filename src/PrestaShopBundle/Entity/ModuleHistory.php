@@ -30,44 +30,26 @@ namespace PrestaShopBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * ModuleHistory.
- *
- * @ORM\Table
- *
- * @ORM\Entity
- *
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Table]
+#[ORM\Entity]
+#[ORM\HasLifecycleCallbacks]
 class ModuleHistory
 {
-    /**
-     * @ORM\Id
-     *
-     * @ORM\Column(name="id", type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private int $id;
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private readonly int $id;
 
-    /**
-     * @ORM\Column(name="id_employee", type="integer")
-     */
+    #[ORM\Column(name: 'id_employee', type: 'integer')]
     private int $idEmployee;
 
-    /**
-     * @ORM\Column(name="id_module", type="integer")
-     */
+    #[ORM\Column(name: 'id_module', type: 'integer')]
     private int $idModule;
 
-    /**
-     * @ORM\Column(name="date_add", type="datetime")
-     */
+    #[ORM\Column(name: 'date_add', type: 'datetime')]
     private DateTime $dateAdd;
 
-    /**
-     * @ORM\Column(name="date_upd", type="datetime")
-     */
+    #[ORM\Column(name: 'date_upd', type: 'datetime')]
     private DateTime $dateUpd;
 
     public function getId(): int
@@ -125,11 +107,9 @@ class ModuleHistory
 
     /**
      * Now we tell doctrine that before we persist or update we call the updatedTimestamps() function.
-     *
-     * @ORM\PrePersist
-     *
-     * @ORM\PreUpdate
      */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updatedTimestamps(): void
     {
         $this->dateUpd = new DateTime();

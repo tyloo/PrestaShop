@@ -27,12 +27,10 @@
 
 namespace PrestaShopBundle\Translation\Constraints;
 
+use Attribute;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- * @Target({"CLASS", "ANNOTATION"})
- */
+#[Attribute(Attribute::TARGET_CLASS)]
 class PassVsprintf extends Constraint
 {
     public $message = 'You must specify as many arguments (%d, %s ...) as the original string.';
