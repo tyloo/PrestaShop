@@ -183,10 +183,8 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
     /**
      * Get currency choices with specific addtional choices.
-     *
-     * @return array
      */
-    private function getCurrencyChoices()
+    private function getCurrencyChoices(): array
     {
         return array_merge(
             $this->currencyChoicesProvider->getChoices(),

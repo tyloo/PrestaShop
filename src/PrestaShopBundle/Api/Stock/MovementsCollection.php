@@ -62,10 +62,7 @@ class MovementsCollection
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function map(callable $callback)
+    public function map(callable $callback): array
     {
         return array_map($callback, $this->movements);
     }

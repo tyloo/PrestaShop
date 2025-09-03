@@ -55,7 +55,7 @@ class System extends AbstractInstall
     }
 
     // get symfony recommendations
-    public function checkSf2Recommendations()
+    public function checkSf2Recommendations(): array
     {
         $symfonyRequirements = new SymfonyRequirements();
 

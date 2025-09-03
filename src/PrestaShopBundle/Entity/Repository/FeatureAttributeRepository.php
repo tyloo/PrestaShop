@@ -176,10 +176,8 @@ class FeatureAttributeRepository
 
     /**
      * @param array $rows
-     *
-     * @return array
      */
-    private function explodeCollections($rows)
+    private function explodeCollections($rows): array
     {
         return array_map(function ($row) {
             $row['values'] = explode(',', (string) $row['values']);

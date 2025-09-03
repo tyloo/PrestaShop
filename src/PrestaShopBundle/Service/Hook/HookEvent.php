@@ -77,10 +77,8 @@ class HookEvent extends Event
 
     /**
      * Returns Hook parameters and context parameters
-     *
-     * @return array
      */
-    public function getHookParameters()
+    public function getHookParameters(): array
     {
         return array_merge($this->contextParameters, $this->hookParameters);
     }

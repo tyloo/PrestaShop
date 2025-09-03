@@ -149,7 +149,7 @@ class AppendConfigurationFileHooksListCommand extends Command
      *
      * @return string[]
      */
-    private function getHookNames()
+    private function getHookNames(): array
     {
         $gridDefinitionHookNames = $this->gridDefinitionHookByServiceIdsProvider->getHookNames($this->serviceIds);
 

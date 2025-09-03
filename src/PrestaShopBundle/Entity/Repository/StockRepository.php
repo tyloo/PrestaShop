@@ -81,10 +81,7 @@ class StockRepository extends StockManagementRepository
         $this->orderStates['cancellation'] = (int) $configuration->get('PS_OS_CANCELED');
     }
 
-    /**
-     * @return array
-     */
-    public function bulkUpdateStock(MovementsCollection $movements)
+    public function bulkUpdateStock(MovementsCollection $movements): array
     {
         $products = $movements->map(fn (Movement $movement) => $this->updateStock($movement));
 
