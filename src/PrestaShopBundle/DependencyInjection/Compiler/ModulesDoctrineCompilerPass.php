@@ -118,10 +118,7 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
         return '';
     }
 
-    /**
-     * @return Finder
-     */
-    private function getModulesFolders()
+    private function getModulesFolders(): Finder
     {
         return Finder::create()->directories()->in(_PS_MODULE_DIR_)->depth(0);
     }

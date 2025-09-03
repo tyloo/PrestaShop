@@ -108,15 +108,13 @@ class CatalogPriceRuleController extends PrestaShopAdminController
 
     /**
      * Provides filters functionality.
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchAction(
         Request $request,
         #[Autowire(service: 'prestashop.core.grid.definition.factory.catalog_price_rule')]
         GridDefinitionFactoryInterface $gridDefinitionFactory,
-    ) {
+    ): RedirectResponse {
         return $this->buildSearchResponse(
             $gridDefinitionFactory,
             $request,
@@ -129,12 +127,10 @@ class CatalogPriceRuleController extends PrestaShopAdminController
      * Deletes catalog price rule
      *
      * @param int|string $catalogPriceRuleId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_catalog_price_rules_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_catalog_price_rules_index')]
-    public function deleteAction($catalogPriceRuleId)
+    public function deleteAction($catalogPriceRuleId): RedirectResponse
     {
         try {
             $this->dispatchCommand(new DeleteCatalogPriceRuleCommand((int) $catalogPriceRuleId));
@@ -151,12 +147,10 @@ class CatalogPriceRuleController extends PrestaShopAdminController
 
     /**
      * Deletes catalogPriceRules on bulk action
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_catalog_price_rules_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_catalog_price_rules_index')]
-    public function bulkDeleteAction(Request $request)
+    public function bulkDeleteAction(Request $request): RedirectResponse
     {
         $catalogPriceRuleIds = $this->getBulkCatalogPriceRulesFromRequest($request);
 

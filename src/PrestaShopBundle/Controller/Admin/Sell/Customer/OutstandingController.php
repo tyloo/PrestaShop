@@ -54,7 +54,7 @@ class OutstandingController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.grid.factory.outstanding')]
         GridFactoryInterface $gridFactory,
         OutstandingFilters $filters,
-    ) {
+    ): \Symfony\Component\HttpFoundation\Response {
         $grid = $gridFactory->getGrid($filters);
 
         return $this->render(
@@ -69,9 +69,6 @@ class OutstandingController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_outstanding_index')]
     public function searchAction(
         Request $request,
@@ -79,7 +76,7 @@ class OutstandingController extends PrestaShopAdminController
         GridDefinitionFactoryInterface $definitionFactory,
         #[Autowire(service: 'prestashop.bundle.grid.response_builder')]
         ResponseBuilder $responseBuilder,
-    ) {
+    ): RedirectResponse {
         return $responseBuilder->buildSearchResponse(
             $definitionFactory,
             $request,

@@ -70,15 +70,13 @@ class InvoicesController extends PrestaShopAdminController
 
     /**
      * Action that generates invoices PDF by date interval.
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function generatePdfByDateAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.order.invoices.by_date.form_handler')]
         FormHandlerInterface $formHandler,
-    ) {
+    ): RedirectResponse {
         $this->processForm($formHandler, $request);
 
         return $this->redirectToRoute('admin_order_invoices');
@@ -86,15 +84,13 @@ class InvoicesController extends PrestaShopAdminController
 
     /**
      * Action that generates invoices PDF by order status.
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function generatePdfByStatusAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.order.invoices.by_status.form_handler')]
         FormHandlerInterface $formHandler,
-    ) {
+    ): RedirectResponse {
         $this->processForm($formHandler, $request);
 
         return $this->redirectToRoute('admin_order_invoices');
@@ -102,15 +98,13 @@ class InvoicesController extends PrestaShopAdminController
 
     /**
      * Process the Invoice Options configuration form.
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'Access denied.', redirectRoute: 'admin_order_invoices')]
     public function processAction(
         Request $request,
         #[Autowire(service: 'prestashop.admin.order.invoices.options.form_handler')]
         FormHandlerInterface $formHandler,
-    ) {
+    ): RedirectResponse {
         if ($this->processForm($formHandler, $request)) {
             $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
         }

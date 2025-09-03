@@ -213,11 +213,9 @@ class AttributeGroupController extends PrestaShopAdminController
      * Deletes attribute group
      *
      * @param int $attributeGroupId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_attribute_groups_index')]
-    public function deleteAction($attributeGroupId)
+    public function deleteAction($attributeGroupId): RedirectResponse
     {
         try {
             $this->dispatchCommand(new DeleteAttributeGroupCommand((int) $attributeGroupId));
@@ -234,11 +232,9 @@ class AttributeGroupController extends PrestaShopAdminController
 
     /**
      * Deletes multiple attribute groups by provided ids from request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_attribute_groups_index')]
-    public function bulkDeleteAction(Request $request)
+    public function bulkDeleteAction(Request $request): RedirectResponse
     {
         try {
             $this->dispatchCommand(

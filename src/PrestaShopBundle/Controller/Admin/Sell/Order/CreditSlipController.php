@@ -63,7 +63,7 @@ class CreditSlipController extends PrestaShopAdminController
         GridFactory $creditSlipGridFactory,
         #[Autowire(service: 'prestashop.admin.credit_slip_options.form_handler')]
         FormHandlerInterface $creditSlipOptionsFormHandler,
-    ) {
+    ): \Symfony\Component\HttpFoundation\RedirectResponse|Response {
         $creditSlipGrid = $creditSlipGridFactory->getGrid($creditSlipFilters);
 
         $creditSlipOptionsForm = $creditSlipOptionsFormHandler->getForm();

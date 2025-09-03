@@ -37,7 +37,7 @@ use PrestaShopBundle\Security\Attribute\AdminSecurity;
 class StockController extends PrestaShopAdminController
 {
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
-    public function overviewAction()
+    public function overviewAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Stock/overview.html.twig', [
             'is_shop_context' => (new Context())->isShopContext(),

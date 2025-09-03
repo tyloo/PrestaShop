@@ -47,7 +47,7 @@ final class MessengerCommandBus implements CommandBusInterface
         $this->messageBus = $messageBus;
     }
 
-    public function handle($command)
+    public function handle($command): mixed
     {
         try {
             return $this->process($command);

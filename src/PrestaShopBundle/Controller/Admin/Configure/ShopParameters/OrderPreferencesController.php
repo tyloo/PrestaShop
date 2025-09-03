@@ -46,7 +46,7 @@ class OrderPreferencesController extends PrestaShopAdminController
         FormHandlerInterface $generalFormHandler,
         #[Autowire(service: 'prestashop.admin.order_preferences.gift_options.form_handler')]
         FormHandlerInterface $giftOptionsFormHandler,
-    ) {
+    ): \Symfony\Component\HttpFoundation\Response {
         $legacyController = $request->attributes->get('_legacy_controller');
 
         $generalForm = $generalFormHandler->getForm();

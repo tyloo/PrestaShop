@@ -49,7 +49,7 @@ class LogRepository implements RepositoryInterface
         $this->logTable = $this->databasePrefix . 'log';
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         $result = $this->connection->executeQuery("SELECT l.* FROM $this->logTable l");
 
@@ -84,7 +84,7 @@ class LogRepository implements RepositoryInterface
      *
      * @return array the list of logs
      */
-    public function findAllWithEmployeeInformation($filters)
+    public function findAllWithEmployeeInformation($filters): array
     {
         $queryBuilder = $this->getAllWithEmployeeInformationQuery($filters);
         $statement = $queryBuilder->executeQuery();

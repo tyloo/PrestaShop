@@ -236,11 +236,9 @@ class AttributeController extends PrestaShopAdminController
 
     /**
      * Deletes multiple attributes by provided ids from request
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_attributes_index', redirectQueryParamsToKeep: ['attributeGroupId'])]
-    public function bulkDeleteAction(int $attributeGroupId, Request $request)
+    public function bulkDeleteAction(int $attributeGroupId, Request $request): RedirectResponse
     {
         try {
             $this->dispatchCommand(

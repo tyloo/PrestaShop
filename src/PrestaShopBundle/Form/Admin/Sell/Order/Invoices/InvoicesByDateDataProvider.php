@@ -52,7 +52,7 @@ final class InvoicesByDateDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function setData(array $data)
+    public function setData(array $data): array
     {
         // This form doesn't need to save any data, so it only validates the data
         return $this->validate($data);

@@ -54,7 +54,7 @@ class ModuleRepository
      *
      * @return int[] Array of country IDs
      */
-    public function findRestrictedCountryIds($moduleId, $shopId)
+    public function findRestrictedCountryIds($moduleId, $shopId): array
     {
         $qb = $this->connection->createQueryBuilder()
             ->select('mc.id_country')
@@ -75,7 +75,7 @@ class ModuleRepository
      *
      * @return int[] Array of currency IDs
      */
-    public function findRestrictedCurrencyIds($moduleId, $shopId)
+    public function findRestrictedCurrencyIds($moduleId, $shopId): array
     {
         $qb = $this->connection->createQueryBuilder()
             ->select('mc.id_currency')
@@ -96,7 +96,7 @@ class ModuleRepository
      *
      * @return int[] Array of group IDs
      */
-    public function findRestrictedGroupIds($moduleId, $shopId)
+    public function findRestrictedGroupIds($moduleId, $shopId): array
     {
         $qb = $this->connection->createQueryBuilder()
             ->select('mg.id_group')
@@ -117,7 +117,7 @@ class ModuleRepository
      *
      * @return int[] Array of carrier references
      */
-    public function findRestrictedCarrierReferenceIds($moduleId, $shopId)
+    public function findRestrictedCarrierReferenceIds($moduleId, $shopId): array
     {
         $qb = $this->connection->createQueryBuilder()
             ->select('mc.id_reference')

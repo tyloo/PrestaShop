@@ -90,8 +90,6 @@ class DeliveryController extends PrestaShopAdminController
 
     /**
      * Delivery slips PDF generator.
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('update', request.get('_legacy_controller')) || is_granted('create', request.get('_legacy_controller')) || is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function generatePdfAction(
@@ -99,7 +97,7 @@ class DeliveryController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.adapter.order.delivery.slip.pdf.form_handler')]
         FormHandlerInterface $formHandler,
         LegacyContext $legacyContext,
-    ) {
+    ): RedirectResponse {
         /** @var Form $form */
         $form = $formHandler->getForm();
 

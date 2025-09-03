@@ -80,15 +80,13 @@ class CustomerThreadController extends PrestaShopAdminController
 
     /**
      * View customer thread
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", message: 'You do not have permission to view this.', redirectRoute: 'admin_customer_threads_index')]
     public function viewAction(
         Request $request,
         EmployeeContext $employeeContext,
         int $customerThreadId,
-    ) {
+    ): Response {
         /** @var CustomerThreadView $customerThreadView */
         $customerThreadView = $this->dispatchQuery(
             new GetCustomerThreadForViewing($customerThreadId)
@@ -121,11 +119,9 @@ class CustomerThreadController extends PrestaShopAdminController
      * Reply to customer thread
      *
      * @param int $customerThreadId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_customer_threads_index')]
-    public function replyAction(Request $request, $customerThreadId)
+    public function replyAction(Request $request, $customerThreadId): RedirectResponse
     {
         $replyToCustomerThreadForm = $this->createForm(ReplyToCustomerThreadType::class);
         $replyToCustomerThreadForm->handleRequest($request);
@@ -174,11 +170,9 @@ class CustomerThreadController extends PrestaShopAdminController
 
     /**
      * Update customer thread status
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_customer_threads_index')]
-    public function updateStatusFromViewAction(int $customerThreadId, Request $request)
+    public function updateStatusFromViewAction(int $customerThreadId, Request $request): RedirectResponse
     {
         $this->handleCustomerThreadStatusUpdate($customerThreadId, $request->request->get('newStatus'));
 
@@ -202,11 +196,9 @@ class CustomerThreadController extends PrestaShopAdminController
      * Forward customer thread to another employee
      *
      * @param int $customerThreadId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('create', request.get('_legacy_controller')) && is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_customer_threads_index')]
-    public function forwardAction(Request $request, $customerThreadId)
+    public function forwardAction(Request $request, $customerThreadId): RedirectResponse
     {
         $forwardCustomerThreadForm = $this->createForm(ForwardCustomerThreadType::class);
         $forwardCustomerThreadForm->handleRequest($request);

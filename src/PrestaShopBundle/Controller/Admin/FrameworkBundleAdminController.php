@@ -401,10 +401,8 @@ class FrameworkBundleAdminController extends AbstractController
 
     /**
      * Redirect employee to default page.
-     *
-     * @return RedirectResponse
      */
-    protected function redirectToDefaultPage()
+    protected function redirectToDefaultPage(): RedirectResponse
     {
         $legacyContext = $this->get('prestashop.adapter.legacy.context');
         $defaultTab = $legacyContext->getDefaultEmployeeTab();
@@ -520,7 +518,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @return \PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface
      */
-    protected function getCommandBus()
+    protected function getCommandBus(): object
     {
         return $this->get('prestashop.core.command_bus');
     }
@@ -530,7 +528,7 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @return \PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface
      */
-    protected function getQueryBus()
+    protected function getQueryBus(): object
     {
         return $this->get('prestashop.core.query_bus');
     }

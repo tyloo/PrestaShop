@@ -68,7 +68,7 @@ class TranslationsFactory implements TranslationsFactoryInterface
         $locale = self::DEFAULT_LOCALE,
         $theme = null,
         $search = null,
-    ) {
+    ): array {
         foreach ($this->providers as $provider) {
             if ($domainIdentifier === $provider->getIdentifier()) {
                 $treeBuilder = new TreeBuilder($locale, $theme);

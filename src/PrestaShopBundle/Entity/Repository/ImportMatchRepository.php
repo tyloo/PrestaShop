@@ -88,7 +88,7 @@ class ImportMatchRepository implements RepositoryInterface
         return $queryBuilder->executeQuery()->fetchAssociative();
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         $queryBuilder = $this->connection
             ->createQueryBuilder()

@@ -87,7 +87,7 @@ class DiscountController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.discount_form_handler')]
         FormHandlerInterface $formHandler,
         ?string $discountType = null,
-    ) {
+    ): RedirectResponse|Response {
         // The first call to the create page doesn't contain the discountType in the url, but the POST data does
         // So we can redirect to the proper page, accessed via a GET method and a proper CSRF token
         if (empty($discountType) && $request->request->has('discount_type_selector')) {
@@ -132,7 +132,7 @@ class DiscountController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.discount_form_handler')]
         FormHandlerInterface $formHandler,
         int $discountId,
-    ) {
+    ): RedirectResponse|Response {
         try {
             $form = $formBuilder->getFormFor($discountId);
         } catch (DiscountNotFoundException $e) {

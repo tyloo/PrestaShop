@@ -41,7 +41,7 @@ final class TranslationsSettingsFormHandler implements FormHandlerInterface
     ) {
     }
 
-    public function getForm()
+    public function getForm(): \Symfony\Component\Form\FormInterface
     {
         $formBuilder = $this->formFactory->createNamedBuilder('form', $this->form);
 

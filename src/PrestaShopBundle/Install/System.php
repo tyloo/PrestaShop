@@ -35,12 +35,12 @@ require_once __DIR__ . '/../../../var/SymfonyRequirements.php';
 
 class System extends AbstractInstall
 {
-    public function checkRequiredTests()
+    public function checkRequiredTests(): array
     {
         return self::checkTests(ConfigurationTest::getDefaultTests(), 'required');
     }
 
-    public function checkOptionalTests()
+    public function checkOptionalTests(): array
     {
         return self::checkTests(ConfigurationTest::getDefaultTestsOp(), 'optional');
     }

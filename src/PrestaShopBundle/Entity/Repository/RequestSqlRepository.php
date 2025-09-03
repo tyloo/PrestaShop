@@ -47,7 +47,7 @@ class RequestSqlRepository implements RepositoryInterface
         $this->requestSqlTable = $dbPrefix . 'request_sql';
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         $statement = $this->connection->query("SELECT rs.* FROM $this->requestSqlTable rs");
 

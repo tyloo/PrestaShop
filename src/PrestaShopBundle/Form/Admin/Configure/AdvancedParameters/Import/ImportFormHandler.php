@@ -53,7 +53,7 @@ class ImportFormHandler implements ImportFormHandlerInterface
     ) {
     }
 
-    public function getForm(ImportConfigInterface $importConfig)
+    public function getForm(ImportConfigInterface $importConfig): \Symfony\Component\Form\FormInterface
     {
         $this->formBuilder->setData($this->formDataProvider->getData($importConfig));
         $this->hookDispatcher->dispatchWithParameters(

@@ -89,16 +89,13 @@ class LogsController extends PrestaShopAdminController
         );
     }
 
-    /**
-     * @return RedirectResponse
-     */
     #[DemoRestricted(redirectRoute: 'admin_logs_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", message: 'You do not have permission to update this.', redirectRoute: 'admin_logs_index')]
     public function saveSettingsAction(
         Request $request,
         #[Autowire(service: 'prestashop.adapter.logs.form_handler')]
         FormHandlerInterface $formHandler,
-    ) {
+    ): RedirectResponse {
         $logsByEmailForm = $formHandler->getForm();
         $logsByEmailForm->handleRequest($request);
 

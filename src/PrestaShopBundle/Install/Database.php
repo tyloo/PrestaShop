@@ -128,7 +128,7 @@ class Database extends AbstractInstall
         return $errors;
     }
 
-    public function createDatabase($server, $database, $login, $password, $dropit = false)
+    public function createDatabase($server, $database, $login, $password, $dropit = false): mixed
     {
         $this->getLogger()->log(\sprintf('Creating database %s', $database));
         $class = '\\' . Db::getClass();

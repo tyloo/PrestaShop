@@ -44,7 +44,7 @@ final class SecurityAttributeLinter implements RouteLinterInterface
      * @throws ReflectionException
      * @throws LinterException
      */
-    public function getRouteSecurityAttributes(Route $route)
+    public function getRouteSecurityAttributes(Route $route): array
     {
         $controllerAndMethod = $this->extractControllerAndMethodNamesFromRoute($route);
 

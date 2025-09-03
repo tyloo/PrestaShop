@@ -81,8 +81,6 @@ class ManufacturerController extends PrestaShopAdminController
 {
     /**
      * Show manufacturers listing page.
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(
@@ -93,7 +91,7 @@ class ManufacturerController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.grid.grid_factory.manufacturer_address')]
         GridFactoryInterface $manufacturerAddressFactory,
         ManufacturerAddressFilters $manufacturerAddressFilters,
-    ) {
+    ): Response {
         $manufacturerGrid = $manufacturerGridFactory->getGrid($manufacturerFilters);
         $manufacturerAddressGrid = $manufacturerAddressFactory->getGrid($manufacturerAddressFilters);
 
@@ -109,8 +107,6 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Provides filters functionality
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchAction(
@@ -120,7 +116,7 @@ class ManufacturerController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.grid.definition.factory.manufacturer_address')]
         GridDefinitionFactoryInterface $manufacturerAddressGridDefinitionFactory,
         ResponseBuilder $responseBuilder,
-    ) {
+    ): RedirectResponse {
         $gridDefinitionFactory = $manufacturerGridDefinitionFactory;
         $filterId = ManufacturerGridDefinitionFactory::GRID_ID;
         if ($request->request->has(ManufacturerAddressGridDefinitionFactory::GRID_ID)) {
@@ -265,12 +261,10 @@ class ManufacturerController extends PrestaShopAdminController
      * Deletes manufacturer
      *
      * @param int|string $manufacturerId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_manufacturers_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
-    public function deleteAction($manufacturerId)
+    public function deleteAction($manufacturerId): RedirectResponse
     {
         try {
             $this->dispatchCommand(new DeleteManufacturerCommand((int) $manufacturerId));
@@ -287,12 +281,10 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Deletes manufacturers on bulk action
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_manufacturers_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
-    public function bulkDeleteAction(Request $request)
+    public function bulkDeleteAction(Request $request): RedirectResponse
     {
         $manufacturerIds = $this->getBulkManufacturersFromRequest($request);
 
@@ -311,12 +303,10 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Enables manufacturers on bulk action
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_manufacturers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
-    public function bulkEnableAction(Request $request)
+    public function bulkEnableAction(Request $request): RedirectResponse
     {
         $manufacturerIds = $this->getBulkManufacturersFromRequest($request);
 
@@ -336,12 +326,10 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Disables manufacturers on bulk action
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_manufacturers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
-    public function bulkDisableAction(Request $request)
+    public function bulkDisableAction(Request $request): RedirectResponse
     {
         $manufacturerIds = $this->getBulkManufacturersFromRequest($request);
 
@@ -363,12 +351,10 @@ class ManufacturerController extends PrestaShopAdminController
      * Toggles manufacturer status
      *
      * @param int $manufacturerId
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_manufacturers_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
-    public function toggleStatusAction($manufacturerId)
+    public function toggleStatusAction($manufacturerId): RedirectResponse
     {
         try {
             /** @var EditableManufacturer $editableManufacturer */
@@ -452,12 +438,10 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Deletes address
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_manufacturers_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
-    public function deleteAddressAction(int $addressId)
+    public function deleteAddressAction(int $addressId): RedirectResponse
     {
         try {
             $this->dispatchCommand(new DeleteAddressCommand((int) $addressId));
@@ -519,12 +503,10 @@ class ManufacturerController extends PrestaShopAdminController
 
     /**
      * Deletes adresses in bulk action
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_manufacturers_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_manufacturers_index')]
-    public function bulkDeleteAddressAction(Request $request)
+    public function bulkDeleteAddressAction(Request $request): RedirectResponse
     {
         $addressIds = $this->getBulkAddressesFromRequest($request);
 

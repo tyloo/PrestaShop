@@ -204,7 +204,7 @@ class CartController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.kpi_row.factory.cart')]
         HookableKpiRowFactory $kpiRowFactory,
         IniConfiguration $iniConfiguration,
-    ) {
+    ): RedirectResponse|Response {
         try {
             $cartView = $this->dispatchQuery(new GetCartForViewing($cartId));
         } catch (Exception $e) {

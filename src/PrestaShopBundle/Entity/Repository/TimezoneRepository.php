@@ -49,10 +49,8 @@ class TimezoneRepository implements RepositoryInterface
 
     /**
      * Final all timezones from database.
-     *
-     * @return array
      */
-    public function findAll()
+    public function findAll(): array
     {
         $statement = $this->connection->query("SELECT t.* FROM $this->timezoneTable t");
 

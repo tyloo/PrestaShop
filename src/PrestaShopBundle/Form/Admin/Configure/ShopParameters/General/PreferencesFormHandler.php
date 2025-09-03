@@ -44,7 +44,7 @@ final class PreferencesFormHandler implements FormHandlerInterface
     ) {
     }
 
-    public function getForm()
+    public function getForm(): \Symfony\Component\Form\FormInterface
     {
         return $this->formFactory->createBuilder()
             ->add('general', PreferencesType::class, [

@@ -255,8 +255,6 @@ class CommonController extends PrestaShopAdminController
 
     /**
      * Process Grid search.
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function searchGridAction(
@@ -265,7 +263,7 @@ class CommonController extends PrestaShopAdminController
         string $gridDefinitionFactoryServiceId,
         string $redirectRoute,
         array $redirectQueryParamsToKeep = [],
-    ) {
+    ): RedirectResponse {
         $definitionFactory = $gridDefinitionFactoryCollection->getFactory($gridDefinitionFactoryServiceId);
 
         $filterId = null;

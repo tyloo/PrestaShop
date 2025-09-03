@@ -393,11 +393,9 @@ class CategoryController extends PrestaShopAdminController
      * Deletes category cover image.
      *
      * @param int $categoryId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_categories_edit', redirectQueryParamsToKeep: ['categoryId'])]
-    public function deleteCoverImageAction(Request $request, $categoryId)
+    public function deleteCoverImageAction(Request $request, $categoryId): RedirectResponse
     {
         try {
             $this->dispatchCommand(new DeleteCategoryCoverImageCommand((int) $categoryId));
@@ -419,11 +417,9 @@ class CategoryController extends PrestaShopAdminController
      * Deletes category thumbnail image.
      *
      * @param int $categoryId
-     *
-     * @return RedirectResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to edit this.', redirectRoute: 'admin_categories_edit', redirectQueryParamsToKeep: ['categoryId'])]
-    public function deleteThumbnailImageAction(Request $request, $categoryId)
+    public function deleteThumbnailImageAction(Request $request, $categoryId): RedirectResponse
     {
         try {
             $this->dispatchCommand(new DeleteCategoryThumbnailImageCommand((int) $categoryId));
@@ -445,11 +441,9 @@ class CategoryController extends PrestaShopAdminController
      * Toggle category status.
      *
      * @param int $categoryId
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", message: 'You do not have permission to update this.')]
-    public function toggleStatusAction($categoryId)
+    public function toggleStatusAction($categoryId): JsonResponse
     {
         if ($this->isDemoModeEnabled()) {
             return $this->json([
@@ -481,12 +475,10 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Process bulk action for categories status enabling.
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_categories_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_categories_index', message: 'You do not have permission to update this.')]
-    public function bulkEnableStatusAction(Request $request)
+    public function bulkEnableStatusAction(Request $request): RedirectResponse
     {
         try {
             $categoryIds = $this->getBulkCategoriesFromRequest($request);
@@ -508,12 +500,10 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Process bulk action for categories status disabling.
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_categories_index')]
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) && is_granted('create', request.get('_legacy_controller')) && is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_categories_index', message: 'You do not have permission to update this.')]
-    public function bulkDisableStatusAction(Request $request)
+    public function bulkDisableStatusAction(Request $request): RedirectResponse
     {
         try {
             $categoryIds = $this->getBulkCategoriesFromRequest($request);
@@ -535,12 +525,10 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Processes bulk categories deleting.
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_categories_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_categories_index', message: 'You do not have permission to delete this.')]
-    public function bulkDeleteAction(Request $request)
+    public function bulkDeleteAction(Request $request): RedirectResponse
     {
         $deleteCategoriesForm = $this->createForm(DeleteCategoriesType::class);
         $deleteCategoriesForm->handleRequest($request);
@@ -573,12 +561,10 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Process single category deleting.
-     *
-     * @return RedirectResponse
      */
     #[DemoRestricted(redirectRoute: 'admin_categories_index')]
     #[AdminSecurity("is_granted('delete', request.get('_legacy_controller'))", redirectRoute: 'admin_categories_index', message: 'You do not have permission to delete this.')]
-    public function deleteAction(Request $request)
+    public function deleteAction(Request $request): RedirectResponse
     {
         $deleteCategoriesForm = $this->createForm(DeleteCategoriesType::class);
         $deleteCategoriesForm->handleRequest($request);
@@ -646,11 +632,9 @@ class CategoryController extends PrestaShopAdminController
 
     /**
      * Updates category position
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller'))", redirectRoute: 'admin_categories_index')]
-    public function updatePositionAction(Request $request)
+    public function updatePositionAction(Request $request): JsonResponse
     {
         try {
             $this->dispatchCommand(new UpdateCategoryPositionCommand(

@@ -233,11 +233,9 @@ class PositionsController extends PrestaShopAdminController
 
     /**
      * Toggle hook status
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')~'_')", message: 'Access denied.')]
-    public function toggleStatusAction(Request $request)
+    public function toggleStatusAction(Request $request): JsonResponse
     {
         $hookId = (int) $request->request->get('hookId');
         $hookStatus = false;
