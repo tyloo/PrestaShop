@@ -70,7 +70,7 @@ class LanguageList
         foreach ((new Finder())->files()->name('language.xml')->in(_PS_INSTALL_LANGS_PATH_) as $langFile) {
             $this->languages[$langFile->getRelativePath()] = new Language($langFile->getRelativePath());
         }
-        uasort($this->languages, function ($a, $b) {
+        uasort($this->languages, function ($a, $b): int {
             $aname = $a->getName();
             $bname = $b->getName();
 

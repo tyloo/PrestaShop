@@ -192,7 +192,7 @@ class ConfigCommand extends Command
         }
         $languages = $this->languageDataProvider->getLanguages($onlyActive, $onlyShopId);
 
-        $found = current(array_filter($languages, function (array $item) use ($inputlang) {
+        $found = current(array_filter($languages, function (array $item) use ($inputlang): bool {
             $key = is_numeric($inputlang) ? 'id_lang' : 'iso_code';
 
             return isset($item[$key]) && $inputlang === $item[$key];

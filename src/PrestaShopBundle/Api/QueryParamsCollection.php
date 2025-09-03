@@ -663,7 +663,7 @@ abstract class QueryParamsCollection
             $this->queryParams['filter']['keywords'] = (array) $this->queryParams['filter']['keywords'];
         }
 
-        $parts = array_map(function ($index) {
+        $parts = array_map(function ($index): string {
             $fields = [
                 '{supplier_name}',
                 '{product_reference}',

@@ -1249,7 +1249,7 @@ class Install extends AbstractInstall
     {
         uasort(
             $themes,
-            function ($a, $b) {
+            function ($a, $b): int {
                 $a = ! isset($a['display_name']) ? 0 : $a['display_name'];
                 $b = ! isset($b['display_name']) ? 0 : $b['display_name'];
 

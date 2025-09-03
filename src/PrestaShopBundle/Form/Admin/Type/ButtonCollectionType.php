@@ -95,7 +95,7 @@ class ButtonCollectionType extends AbstractType
             ])
             ->setAllowedTypes('buttons', 'array')
             ->setAllowedTypes('inline_buttons_limit', ['int', 'null'])
-            ->setNormalizer('buttons', function (Options $options, $buttons) {
+            ->setNormalizer('buttons', function (Options $options, $buttons): array {
                 $resolver = $this->getButtonOptionsResolver();
                 $normalizedOptions = [];
 
@@ -127,7 +127,7 @@ class ButtonCollectionType extends AbstractType
             ->setAllowedTypes('name', 'string')
             ->setAllowedTypes('type', 'string')
             ->setAllowedTypes('group', 'string')
-            ->setNormalizer('type', function (Options $options, $value) {
+            ->setNormalizer('type', function (Options $options, $value): string {
                 if (! class_exists($value)) {
                     throw new InvalidArgumentException('Invalid button type provided, expected a FQCN string.');
                 }

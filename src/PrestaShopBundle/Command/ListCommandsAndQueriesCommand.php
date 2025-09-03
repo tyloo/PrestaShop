@@ -139,7 +139,7 @@ class ListCommandsAndQueriesCommand extends Command
      */
     private function filterCQRS(array $filters): void
     {
-        $this->commandAndQueries = array_filter($this->commandAndQueries, function (string $currentCQRS) use ($filters) {
+        $this->commandAndQueries = array_filter($this->commandAndQueries, function (string $currentCQRS) use ($filters): bool {
             foreach ($filters as $filter) {
                 // We append a backslash behind the filter to find only exact matches
                 if (str_contains($currentCQRS, $filter . '\\') !== false) {

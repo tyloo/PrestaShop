@@ -179,7 +179,7 @@ class FeatureAttributeRepository
         return array_map(function ($row) {
             $row['values'] = explode(',', (string) $row['values']);
 
-            $row['values'] = array_map(function ($value) {
+            $row['values'] = array_map(function ($value): string|array {
                 if (! str_contains($value, ':')) {
                     return $value;
                 }

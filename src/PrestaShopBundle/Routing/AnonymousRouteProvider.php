@@ -47,7 +47,7 @@ class AnonymousRouteProvider implements CacheWarmerInterface
 
     public function getAnonymousRoutes(): array
     {
-        return $this->cache->get('anonymous_routes', function () {
+        return $this->cache->get('anonymous_routes', function (): array {
             $anonymousRoutes = [];
             $routeCollection = $this->router->getRouteCollection();
             foreach ($routeCollection as $name => $route) {

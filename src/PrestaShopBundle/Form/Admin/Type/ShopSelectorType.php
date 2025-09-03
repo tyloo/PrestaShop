@@ -88,7 +88,7 @@ class ShopSelectorType extends AbstractType
     {
         parent::buildForm($builder, $options);
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($selection) {
+            function ($selection): ?array {
                 if (\is_array($selection)) {
                     return array_map(fn (int $shopId) => $this->shopRepository->find($shopId), $selection);
                 }
@@ -98,7 +98,7 @@ class ShopSelectorType extends AbstractType
 
                 return null;
             },
-            function ($selection) {
+            function ($selection): array|int|null {
                 if (\is_array($selection)) {
                     return array_map(fn (Shop $shop): int => $shop->getId(), $selection);
                 }

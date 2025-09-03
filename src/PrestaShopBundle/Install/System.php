@@ -61,7 +61,7 @@ class System extends AbstractInstall
 
         $failedRecommendations = $symfonyRequirements->getFailedRecommendations();
 
-        return array_filter($failedRecommendations, function (Requirement $requirement) {
+        return array_filter($failedRecommendations, function (Requirement $requirement): bool {
             if ($requirement->getTestMessage() === 'Requirements file should be up-to-date') {
                 // this warning is not relevant
                 return false;

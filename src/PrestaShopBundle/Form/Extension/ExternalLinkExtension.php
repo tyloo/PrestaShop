@@ -57,7 +57,7 @@ class ExternalLinkExtension extends AbstractTypeExtension
                 'external_link' => null,
             ])
             ->setAllowedTypes('external_link', ['null', 'array'])
-            ->setNormalizer('external_link', function (Options $options, $value) {
+            ->setNormalizer('external_link', function (Options $options, $value): ?array {
                 if ($value === null) {
                     return null;
                 }

@@ -146,7 +146,7 @@ class AttributeType extends TranslatorAwareType
         $shopConstraint = ShopConstraint::shop($shopId->getValue());
 
         $groups = $this->attributeGroupRepository->getAttributeGroups($shopConstraint);
-        usort($groups, static function (AttributeGroup $a, AttributeGroup $b) use ($languageId) {
+        usort($groups, static function (AttributeGroup $a, AttributeGroup $b) use ($languageId): int {
             $nameA = $a->name[$languageId->getValue()];
             $nameB = $b->name[$languageId->getValue()];
             if ($nameA === $nameB) {

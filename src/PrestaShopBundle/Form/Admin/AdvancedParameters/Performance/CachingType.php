@@ -71,7 +71,7 @@ class CachingType extends TranslatorAwareType
 
                     return $disabled === true ? $this->getErrorsMessages()[$index] : $value;
                 },
-                'choice_attr' => function ($value, $key, $index) {
+                'choice_attr' => function ($value, $key, $index): array {
                     $disabled = false;
                     foreach ($this->extensionsList[$index] as $extensionName) {
                         if (\extension_loaded($extensionName)) {

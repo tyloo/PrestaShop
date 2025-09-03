@@ -214,7 +214,7 @@ class AdminFilter
      */
     public static function sanitizeFilterParameters(array $filter): mixed
     {
-        $filterMinMax = (fn ($filter): Closure => function ($subject) use ($filter) {
+        $filterMinMax = (fn ($filter): Closure => function ($subject) use ($filter): string {
             $operator = null;
 
             if (str_contains($subject, '<=')) {

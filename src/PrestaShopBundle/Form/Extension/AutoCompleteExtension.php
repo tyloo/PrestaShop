@@ -56,7 +56,7 @@ class AutoCompleteExtension extends AbstractTypeExtension
         $resolver->setAllowedTypes('autocomplete', 'bool');
         $resolver->setAllowedTypes('autocomplete_minimum_choices', 'int');
 
-        $resolver->setNormalizer('attr', function (Options $options, ?array $attr) {
+        $resolver->setNormalizer('attr', function (Options $options, ?array $attr): ?array {
             if (isset($options['autocomplete']) && $options['autocomplete']) {
                 $attr['data-toggle'] = 'select2';
                 $attr['data-minimumResultsForSearch'] = $options['autocomplete_minimum_choices'] ?? self::DEFAULT_MINIMUM_INPUT_LENGTH;
