@@ -138,7 +138,7 @@ class ModuleCommand extends Command
 
         // Check if validation passed and exit in case of errors
         $errors = $this->moduleSelfConfigurator->validate();
-        if (! empty($errors)) {
+        if ($errors !== []) {
             // Display errors as a list
             $errors = array_map(fn ($val): string => '- ' . $val, $errors);
             // And add a default message at the top

@@ -349,7 +349,7 @@ class StockManager
         }
 
         $sfContainer = SymfonyContainer::getInstance();
-        if ($sfContainer === null) {
+        if (!$sfContainer instanceof \Symfony\Component\DependencyInjection\ContainerInterface) {
             return false;
         }
 

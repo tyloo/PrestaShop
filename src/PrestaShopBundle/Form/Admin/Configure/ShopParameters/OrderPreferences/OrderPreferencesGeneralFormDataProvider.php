@@ -46,7 +46,7 @@ class OrderPreferencesGeneralFormDataProvider implements FormDataProviderInterfa
     ) {
     }
 
-    public function getData()
+    public function getData(): array
     {
         return $this->generalConfiguration->getConfiguration();
     }

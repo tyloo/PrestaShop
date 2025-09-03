@@ -114,7 +114,7 @@ class ModuleManagerBuilder
     {
         if (self::$moduleManager === null) {
             $sfContainer = SymfonyContainer::getInstance();
-            if ($sfContainer !== null) {
+            if ($sfContainer instanceof \Symfony\Component\DependencyInjection\ContainerInterface) {
                 self::$moduleManager = $sfContainer->get(ModuleManager::class);
             } else {
                 self::$moduleManager = new ModuleManager(
@@ -144,7 +144,7 @@ class ModuleManagerBuilder
     {
         if (self::$modulesRepository === null) {
             $sfContainer = SymfonyContainer::getInstance();
-            if ($sfContainer !== null) {
+            if ($sfContainer instanceof \Symfony\Component\DependencyInjection\ContainerInterface) {
                 self::$modulesRepository = $sfContainer->get(ModuleRepository::class);
             } else {
                 self::$modulesRepository = new ModuleRepository(
@@ -169,7 +169,7 @@ class ModuleManagerBuilder
          * build & buildRepository. No need to init manually all the dependancies.
          */
         $sfContainer = SymfonyContainer::getInstance();
-        if ($sfContainer !== null) {
+        if ($sfContainer instanceof \Symfony\Component\DependencyInjection\ContainerInterface) {
             return;
         }
 

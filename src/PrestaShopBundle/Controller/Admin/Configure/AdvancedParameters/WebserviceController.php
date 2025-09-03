@@ -168,7 +168,7 @@ class WebserviceController extends PrestaShopAdminController
     ): RedirectResponse {
         $errors = $webserviceEraser->erase([$webserviceKeyId]);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -192,7 +192,7 @@ class WebserviceController extends PrestaShopAdminController
         $webserviceToDelete = $request->request->all('webservice_key_bulk_action');
         $errors = $webserviceEraser->erase($webserviceToDelete);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -257,7 +257,7 @@ class WebserviceController extends PrestaShopAdminController
     ): RedirectResponse {
         $errors = $statusModifier->toggleStatus($webserviceKeyId);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(

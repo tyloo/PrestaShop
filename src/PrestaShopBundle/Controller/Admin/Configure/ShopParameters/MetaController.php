@@ -198,7 +198,7 @@ class MetaController extends PrestaShopAdminController
     ): RedirectResponse {
         $errors = $metaEraser->erase([$metaId]);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -219,7 +219,7 @@ class MetaController extends PrestaShopAdminController
         $metaToDelete = $request->request->all('meta_bulk');
         $errors = $metaEraser->erase($metaToDelete);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(

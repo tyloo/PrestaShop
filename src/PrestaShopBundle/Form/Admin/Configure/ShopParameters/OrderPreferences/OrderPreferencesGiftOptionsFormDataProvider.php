@@ -44,7 +44,7 @@ class OrderPreferencesGiftOptionsFormDataProvider implements FormDataProviderInt
     ) {
     }
 
-    public function getData()
+    public function getData(): array
     {
         return $this->giftOptionsConfiguration->getConfiguration();
     }

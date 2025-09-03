@@ -41,12 +41,12 @@ final class PreferencesFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData()
+    public function getData(): array
     {
         return $this->preferencesConfiguration->getConfiguration();
     }
 
-    public function setData(array $data)
+    public function setData(array $data): array
     {
         return $this->preferencesConfiguration->updateConfiguration($data);
     }

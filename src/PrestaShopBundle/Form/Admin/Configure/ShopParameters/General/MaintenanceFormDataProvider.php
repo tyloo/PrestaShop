@@ -41,12 +41,12 @@ final class MaintenanceFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData()
+    public function getData(): array
     {
         return $this->maintenanceConfiguration->getConfiguration();
     }
 
-    public function setData(array $data)
+    public function setData(array $data): array
     {
         return $this->maintenanceConfiguration->updateConfiguration($data);
     }

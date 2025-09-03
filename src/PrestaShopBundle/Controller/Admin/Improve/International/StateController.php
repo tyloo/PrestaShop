@@ -105,7 +105,7 @@ class StateController extends PrestaShopAdminController
                 'id_country' => $countryId,
             ]);
 
-            if (! empty($states)) {
+            if ($states !== []) {
                 $htmlResponse = '';
                 if ($request->query->get('no_empty')) {
                     $emptyValue = $request->get('empty_value') ?: '-';
