@@ -27,21 +27,37 @@
 class HelperCore
 {
     public $currentIndex;
+
     public $table = 'configuration';
+
     public $identifier;
+
     public $token;
+
     public $toolbar_btn;
+
     public $ps_help_context;
+
     public $title;
+
     public $show_toolbar = true;
+
     public $context;
+
     public $toolbar_scroll = false;
+
     public $bootstrap = false;
+
     public $className;
+
     public $name_controller;
+
     public $shopLink;
+
     public $allow_employee_form_lang;
+
     public $multiple_fieldsets;
+
     public $position_group_identifier;
 
     /**
@@ -175,6 +191,7 @@ class HelperCore
         } else {
             $id_shop = 0;
         }
+
         $shop = new Shop($id_shop);
         $root_category = Category::getRootCategory(null, $shop);
         $disabled_categories[] = (int) Configuration::get('PS_ROOT_CATEGORY');
@@ -192,7 +209,7 @@ class HelperCore
 
         $html = '
         <script type="text/javascript">
-            var inputName = \'' . addcslashes($input_name, '\'') . '\';' . "\n";
+            var inputName = \'' . addcslashes($input_name, "'") . "';\n";
         if (count($selected_cat) > 0) {
             if (isset($selected_cat[0])) {
                 $html .= '			var selectedCat = "' . implode(',', array_map('intval', $selected_cat)) . '";' . "\n";
@@ -202,8 +219,9 @@ class HelperCore
         } else {
             $html .= '			var selectedCat = \'\';' . "\n";
         }
+
         $html .= '			var selectedLabel = \'' . $translations['selected'] . '\';
-            var home = \'' . addcslashes((string) $root['name'], '\'') . '\';
+            var home = \'' . addcslashes((string) $root['name'], "'") . '\';
             var use_radio = ' . (int) $use_radio . ';';
         $html .= '</script>';
 
@@ -254,6 +272,7 @@ class HelperCore
                     . $root['name'] .
                 '</label></p>';
         }
+
         $html .= '
             <div class="container">
                 <div class="well">

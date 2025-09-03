@@ -153,7 +153,7 @@ class MessageCore extends ObjectModel
      */
     public static function getMessagesByOrderId($idOrder, bool $private = false, ?Context $context = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -164,7 +164,7 @@ class MessageCore extends ObjectModel
 			LEFT JOIN `' . _DB_PREFIX_ . 'customer` c ON m.`id_customer` = c.`id_customer`
 			LEFT JOIN `' . _DB_PREFIX_ . 'message_readed` mr
 				ON mr.`id_message` = m.`id_message`
-				AND mr.`id_employee` = ' . (isset($context->employee) ? (int) $context->employee->id : '\'\'') . '
+				AND mr.`id_employee` = ' . (isset($context->employee) ? (int) $context->employee->id : "''") . '
 			LEFT OUTER JOIN `' . _DB_PREFIX_ . 'employee` e ON e.`id_employee` = m.`id_employee`
 			WHERE id_order = ' . (int) $idOrder . '
 			' . (! $private ? ' AND m.`private` = 0' : '') . '
@@ -183,7 +183,7 @@ class MessageCore extends ObjectModel
      */
     public static function getMessagesByCartId($idCart, bool $private = false, ?Context $context = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -214,6 +214,7 @@ class MessageCore extends ObjectModel
         if (! Validate::isUnsignedId($idMessage)) {
             throw new PrestaShopException('Message ID is invalid.');
         }
+
         if (! Validate::isUnsignedId($idEmployee)) {
             throw new PrestaShopException('Employee ID is invalid.');
         }

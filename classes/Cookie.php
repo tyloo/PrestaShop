@@ -50,14 +50,17 @@ class CookieCore
      * @deprecated since 9.0 use CookieOptions constants instead.
      */
     public const SAMESITE_NONE = CookieOptions::SAMESITE_NONE;
+
     /**
      * @deprecated since 9.0 use CookieOptions constants instead.
      */
     public const SAMESITE_LAX = CookieOptions::SAMESITE_LAX;
+
     /**
      * @deprecated since 9.0 use CookieOptions constants instead.
      */
     public const SAMESITE_STRICT = CookieOptions::SAMESITE_STRICT;
+
     /**
      * @deprecated since 9.0 use CookieOptions constants instead.
      */
@@ -134,6 +137,7 @@ class CookieCore
         if ($this->_path[0] !== '/') {
             $this->_path = '/' . $this->_path;
         }
+
         $this->_path = rawurlencode($this->_path);
         $this->_path = str_replace(['%2F', '%7E', '%2B', '%26'], ['/', '~', '+', '&'], $this->_path);
         $this->_domain = $this->getDomain($shared_urls);
@@ -181,6 +185,7 @@ class CookieCore
             '{2}((25[0-5]|2[0-4][0-9]|[1]{1}[0-9]{2}|[1-9]{1}[0-9]|[0-9]){1}))$/', $out[4])) {
             return false;
         }
+
         if (! strstr($httpHost, '.')) {
             return false;
         }
@@ -191,6 +196,7 @@ class CookieCore
                 if ($shared_url !== $out[4]) {
                     continue;
                 }
+
                 if (preg_match('/^(?:.*\.)?([^.]*(?:.{2,4})?\..{2,3})$/Ui', $shared_url, $res)) {
                     $domain = '.' . $res[1];
 
@@ -198,6 +204,7 @@ class CookieCore
                 }
             }
         }
+
         if (! $domain) {
             $domain = $out[4];
         }
@@ -250,14 +257,17 @@ class CookieCore
     public function __set($key, $value)
     {
         if (is_array($value)) {
-            throw new PrestaShopException('Cookie value can\'t be an array.');
+            throw new PrestaShopException("Cookie value can't be an array.");
         }
+
         if (preg_match('/¤|\|/', $key . $value)) {
             throw new PrestaShopException('Forbidden chars in cookie');
         }
+
         if (! $this->_modified && (! array_key_exists($key, $this->_content) || $this->_content[$key] !== $value)) {
             $this->_modified = true;
         }
+
         $this->_content[$key] = $value;
     }
 
@@ -271,6 +281,7 @@ class CookieCore
         if (isset($this->_content[$key])) {
             $this->_modified = true;
         }
+
         unset($this->_content[$key]);
     }
 
@@ -348,6 +359,7 @@ class CookieCore
                     $this->_content[$tmpTab2[0]] = $tmpTab2[1];
                 }
             }
+
             /* Check if cookie has not been modified */
             if (! isset($this->_content['checksum']) || $this->_content['checksum'] !== $checksum) {
                 $this->logout();
@@ -428,13 +440,15 @@ class CookieCore
             return;
         }
 
-        $previousChecksum = $cookie = '';
+        $previousChecksum = '';
+        $cookie = '';
 
         /* Serialize cookie content */
         if (isset($this->_content['checksum'])) {
             $previousChecksum = $this->_content['checksum'];
             unset($this->_content['checksum']);
         }
+
         foreach ($this->_content as $key => $value) {
             $cookie .= $key . '|' . $value . '¤';
         }
@@ -445,6 +459,7 @@ class CookieCore
         if ($previousChecksum === $newChecksum) {
             return;
         }
+
         $cookie .= 'checksum|' . $newChecksum;
         $this->_modified = false;
 
@@ -461,6 +476,7 @@ class CookieCore
         if (count($this->_content) === 0) {
             return $result;
         }
+
         foreach ($this->_content as $key => $value) {
             if (str_starts_with($key, (string) $origin)) {
                 $result[$key] = $value;

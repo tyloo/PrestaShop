@@ -31,8 +31,11 @@
 class TemplateFinderCore
 {
     private $productListEntities = ['category', 'manufacturer', 'supplier'];
+
     private $productListSearchEntities = ['search', 'price-drop', 'best-sale', 'prices-drop', 'best-sales', 'new-products'];
+
     private $productEntities = ['product'];
+
     private $brandListEntities = ['manufacturers', 'suppliers'];
 
     public function __construct(
@@ -52,9 +55,11 @@ class TemplateFinderCore
                 if (! empty($locale) && is_file($dir . $locale . \DIRECTORY_SEPARATOR . $tpl . $this->extension)) {
                     return $locale . \DIRECTORY_SEPARATOR . $tpl . $this->extension;
                 }
+
                 if (is_file($dir . $tpl . $this->extension)) {
                     return $tpl . $this->extension;
                 }
+
                 if (is_file($dir . $tpl) && str_contains((string) $tpl, (string) $this->extension)) {
                     return $tpl;
                 }

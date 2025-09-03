@@ -192,6 +192,7 @@ class ProfileCore extends ObjectModel
                         WHERE j.`id_profile` = ' . (int) $idProfile)
                 );
             }
+
             self::fillCacheAccesses(
                 $idProfile,
                 $defaultPermission,
@@ -259,6 +260,7 @@ class ProfileCore extends ObjectModel
             if (empty($matches['classname'])) {
                 continue;
             }
+
             $accessPerTab[$matches['classname']][array_search('1', $role, true)] = '1';
         }
 

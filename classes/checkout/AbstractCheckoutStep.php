@@ -38,11 +38,15 @@ abstract class AbstractCheckoutStepCore implements CheckoutStepInterface
     private $title;
 
     protected $step_is_reachable = false;
+
     protected $step_is_complete = false;
+
     protected $step_is_current = false;
+
     protected $context;
 
     protected $template;
+
     protected $unreachableStepTemplate = 'checkout/_partials/steps/unreachable.tpl';
 
     public function __construct(

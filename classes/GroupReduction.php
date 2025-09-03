@@ -27,7 +27,9 @@
 class GroupReductionCore extends ObjectModel
 {
     public $id_group;
+
     public $id_category;
+
     public $reduction;
 
     /**
@@ -206,6 +208,7 @@ class GroupReductionCore extends ObjectModel
             if (! $reductions) {
                 continue;
             }
+
             foreach ($reductions as $reduction) {
                 $current_group_reduction = new GroupReduction((int) $reduction['id_group_reduction']);
                 $res &= $current_group_reduction->_setCache();

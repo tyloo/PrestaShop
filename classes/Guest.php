@@ -31,18 +31,31 @@
 class GuestCore extends ObjectModel
 {
     public $id_operating_system;
+
     public $id_web_browser;
+
     public $id_customer;
+
     public $javascript;
+
     public $screen_resolution_x;
+
     public $screen_resolution_y;
+
     public $screen_color;
+
     public $sun_java;
+
     public $adobe_flash;
+
     public $adobe_director;
+
     public $apple_quicktime;
+
     public $real_player;
+
     public $windows_media;
+
     public $accept_language;
 
     /**
@@ -162,6 +175,7 @@ class GuestCore extends ObjectModel
                     $langsArray[$lang] = 1;
                 }
             }
+
             arsort($langsArray, \SORT_NUMERIC);
         }
 
@@ -194,7 +208,7 @@ class GuestCore extends ObjectModel
                 $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
 				SELECT `id_web_browser`
 				FROM `' . _DB_PREFIX_ . 'web_browser` wb
-				WHERE wb.`name` = \'' . pSQL($k) . '\'');
+				WHERE wb.`name` = \'' . pSQL($k) . "'");
 
                 return $result['id_web_browser'] ?? null;
             }
@@ -227,7 +241,7 @@ class GuestCore extends ObjectModel
                 $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
 				SELECT `id_operating_system`
 				FROM `' . _DB_PREFIX_ . 'operating_system` os
-				WHERE os.`name` = \'' . pSQL($k) . '\'');
+				WHERE os.`name` = \'' . pSQL($k) . "'");
 
                 return $result['id_operating_system'] ?? null;
             }
@@ -248,6 +262,7 @@ class GuestCore extends ObjectModel
         if (! Validate::isUnsignedId($idCustomer)) {
             return false;
         }
+
         $result = Db::getInstance()->getRow('
 		SELECT `id_guest`
 		FROM `' . _DB_PREFIX_ . 'guest`

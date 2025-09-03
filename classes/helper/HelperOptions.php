@@ -91,7 +91,8 @@ class HelperOptionsCore extends Helper
                 }
 
                 // Check if var is invisible (can't edit it in current shop context), or disable (use default value for multishop)
-                $is_disabled = $is_invisible = false;
+                $is_disabled = false;
+                $is_invisible = false;
                 if (Shop::isFeatureActive()) {
                     if (isset($field['visibility']) && $field['visibility'] > Shop::getContext()) {
                         $is_disabled = true;
@@ -100,6 +101,7 @@ class HelperOptionsCore extends Helper
                         $is_disabled = true;
                     }
                 }
+
                 $field['is_disabled'] = $is_disabled;
                 $field['is_invisible'] = $is_invisible;
 
@@ -196,11 +198,13 @@ class HelperOptionsCore extends Helper
                         } elseif ($field['type'] === 'selectLang') {
                             $value = Configuration::get($key, $language['id_lang']);
                         }
+
                         if (isset($value)) {
                             $field['languages'][$language['id_lang']] = $value;
                         } else {
                             $field['languages'][$language['id_lang']] = '';
                         }
+
                         $field['value'][$language['id_lang']] = $this->getOptionValue($key . '_' . strtoupper((string) $language['iso_code']), $field);
                     }
                 }
@@ -240,6 +244,7 @@ class HelperOptionsCore extends Helper
                     $category_data['required_fields'] = true;
                 }
             }
+
             // Assign the modifications back to parent array
             $option_list[$category] = $category_data;
         }
@@ -287,8 +292,10 @@ class HelperOptionsCore extends Helper
             if (isset($field['max']) && ($i + 1) % $field['max'] === 0) {
                 echo '</tr><tr>';
             }
+
             ++$i;
         }
+
         echo '</tr>';
         echo '</table>';
     }
@@ -302,6 +309,7 @@ class HelperOptionsCore extends Helper
         if (method_exists($this, 'displayOptionTypeText')) {
             $this->displayOptionTypeText($key, $field, $value);
         }
+
         echo $this->context->currency->getSign('right') . ' ' . Context::getContext()->getTranslator()->trans('(tax excl.)', [], 'Admin.Global');
     }
 

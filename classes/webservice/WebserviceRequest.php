@@ -27,11 +27,15 @@
 class WebserviceRequestCore
 {
     public const HTTP_GET = 1;
+
     public const HTTP_POST = 2;
+
     public const HTTP_PUT = 4;
+
     public const HTTP_PATCH = 8;
 
     protected $_available_languages;
+
     /**
      * Errors triggered at execution.
      *
@@ -255,6 +259,7 @@ class WebserviceRequestCore
         } elseif (isset($_GET['io_format'])) {
             $type = $_GET['io_format'];
         }
+
         $this->outputFormat = $type;
         switch ($type) {
             case 'JSON':
@@ -278,7 +283,7 @@ class WebserviceRequestCore
             'addresses' => ['description' => 'The Customer, Brand and Customer addresses', 'class' => 'Address'],
             'attachments' => ['description' => 'The product Attachments', 'class' => 'Attachment', 'specific_management' => true],
             'carriers' => ['description' => 'The Carriers', 'class' => 'Carrier'],
-            'carts' => ['description' => 'Customer\'s carts', 'class' => 'Cart'],
+            'carts' => ['description' => "Customer's carts", 'class' => 'Cart'],
             'cart_rules' => ['description' => 'Cart rules management', 'class' => 'CartRule'],
             'categories' => ['description' => 'The product categories', 'class' => 'Category'],
             'combinations' => ['description' => 'The product combinations', 'class' => 'Combination'],
@@ -286,11 +291,11 @@ class WebserviceRequestCore
             'contacts' => ['description' => 'Shop contacts', 'class' => 'Contact'],
             'countries' => ['description' => 'The countries', 'class' => 'Country'],
             'currencies' => ['description' => 'The currencies', 'class' => 'Currency'],
-            'customers' => ['description' => 'The e-shop\'s customers', 'class' => 'Customer'],
+            'customers' => ['description' => "The e-shop's customers", 'class' => 'Customer'],
             'customer_threads' => ['description' => 'Customer services threads', 'class' => 'CustomerThread'],
             'customer_messages' => ['description' => 'Customer services messages', 'class' => 'CustomerMessage'],
             'deliveries' => ['description' => 'Product delivery', 'class' => 'Delivery'],
-            'groups' => ['description' => 'The customer\'s groups', 'class' => 'Group'],
+            'groups' => ['description' => "The customer's groups", 'class' => 'Group'],
             'guests' => ['description' => 'The guests', 'class' => 'Guest'],
             'images' => ['description' => 'The images', 'specific_management' => true],
             'image_types' => ['description' => 'The image types', 'class' => 'ImageType'],
@@ -351,6 +356,7 @@ class WebserviceRequestCore
                 }
             }
         }
+
         ksort($resources);
 
         return $resources;
@@ -387,6 +393,7 @@ class WebserviceRequestCore
         foreach (array_keys($parameters) as $name) {
             $parameters[$name]['object_id'] = $entity_object->id;
         }
+
         $arr_return = $this->specificPriceCalculation($parameters);
 
         return $arr_return;
@@ -448,6 +455,7 @@ class WebserviceRequestCore
             $parameters[$name]['object_id'] = $entity_object->id_product;
             $parameters[$name]['product_attribute'] = $entity_object->id;
         }
+
         $arr_return = $this->specificPriceCalculation($parameters);
 
         return $arr_return;
@@ -495,6 +503,7 @@ class WebserviceRequestCore
         if (isset($params['output_format'])) {
             $this->outputFormat = $params['output_format'];
         }
+
         // Set the render object to build the output on the asked format (XML, JSON, CSV, ...)
         $this->objOutput->setObjectRender($this->getOutputObject($this->outputFormat));
         $this->params = $params;
@@ -503,6 +512,7 @@ class WebserviceRequestCore
             if ($bad_class_name) {
                 $this->setError(500, 'Class "' . htmlspecialchars($bad_class_name) . '" not found. Please update the class_name field in the webservice_account table.', 126);
             }
+
             // parse request url
             $this->method = $method;
             $this->urlSegment = explode('/', $url);
@@ -555,6 +565,7 @@ class WebserviceRequestCore
                             $this->resourceConfiguration = $object->getWebserviceParameters();
                         }
                     }
+
                     $success = false;
                     // execute the action
                     switch ($this->method) {
@@ -588,6 +599,7 @@ class WebserviceRequestCore
 
                             break;
                     }
+
                     // Need to set an object for the WebserviceOutputBuilder object in any case
                     // because schema need to get webserviceParameters of this object
                     if (isset($object)) {
@@ -618,6 +630,7 @@ class WebserviceRequestCore
                 }
             }
         }
+
         $return = $this->returnOutput();
         unset(
             $webservice_call,
@@ -645,9 +658,11 @@ class WebserviceRequestCore
         if (! isset($display_errors)) {
             $display_errors = strtolower(ini_get('display_errors')) !== 'off';
         }
+
         if (isset($this->objOutput)) {
             $this->objOutput->setStatus($status);
         }
+
         $this->errors[] = [$code, $label];
     }
 
@@ -685,6 +700,7 @@ class WebserviceRequestCore
 
                 break;
             }
+
             if ($lev <= $shortest || $shortest < 0) {
                 $closest = $word;
                 $shortest = $lev;
@@ -788,12 +804,14 @@ class WebserviceRequestCore
                 }
             }
         }
+
         if ($this->hasErrors()) {
             header('WWW-Authenticate: Basic realm="Welcome to PrestaShop Webservice, please enter the authentication key as the login. No password required."');
             $this->objOutput->setStatus(401);
 
             return false;
         }
+
         // only now we can say the access is authenticated
         $this->_authenticated = true;
 
@@ -825,11 +843,12 @@ class WebserviceRequestCore
     {
         $sql = 'SELECT 1
 				FROM ' . _DB_PREFIX_ . 'webservice_account wsa LEFT JOIN ' . _DB_PREFIX_ . 'webservice_account_shop wsas ON (wsa.id_webservice_account = wsas.id_webservice_account)
-				WHERE wsa.key = \'' . pSQL($key) . '\'';
+				WHERE wsa.key = \'' . pSQL($key) . "'";
         $OR = [];
         foreach (self::$shopIDs as $id_shop) {
             $OR[] = ' wsas.id_shop = ' . (int) $id_shop . ' ';
         }
+
         $sql .= ' AND (' . implode('OR', $OR) . ') ';
         if (! Db::getInstance()->getValue($sql)) {
             $this->setError(403, 'No permission for this key on this shop', 132);
@@ -858,6 +877,7 @@ class WebserviceRequestCore
 
                 return true;
             }
+
             if ($params['id_shop'] === 'all') {
                 Shop::setContext(Shop::CONTEXT_ALL);
                 self::$shopIDs = Shop::getShops(true, null, true);
@@ -869,6 +889,7 @@ class WebserviceRequestCore
 
             return true;
         }
+
         $this->setError(404, 'This shop id does not exist', 999);
 
         return false;
@@ -893,7 +914,7 @@ class WebserviceRequestCore
             self::$shopIDs = Shop::getShops(true, $idShopGroup, true);
             if (! is_countable(self::$shopIDs) || count(self::$shopIDs) === 0) {
                 // @FIXME Set ErrorCode !
-                $this->setError(500, 'This shop group doesn\'t have shops', 999);
+                $this->setError(500, "This shop group doesn't have shops", 999);
 
                 return false;
             }
@@ -962,14 +983,13 @@ class WebserviceRequestCore
         } else {
             $ids[] = (int) $this->urlSegment[1];
         }
-        if (! empty($ids)) {
-            foreach ($ids as $id) {
-                $object = new $this->resourceConfiguration['retrieveData']['className']((int) $id);
-                if (! $object->id) {
-                    $arr_avoid_id[] = $id;
-                } else {
-                    $objects[] = $object;
-                }
+
+        foreach ($ids as $id) {
+            $object = new $this->resourceConfiguration['retrieveData']['className']((int) $id);
+            if (! $object->id) {
+                $arr_avoid_id[] = $id;
+            } else {
+                $objects[] = $object;
             }
         }
 
@@ -992,22 +1012,27 @@ class WebserviceRequestCore
             } else {
                 $tmp .= $str[$i];
             }
+
             if ($str[$i] === '[') {
                 ++$bracket_level;
             }
+
             if ($str[$i] === ']') {
                 --$bracket_level;
             }
         }
+
         if ($tmp !== '') {
             $part[] = $tmp;
         }
+
         $fields = [];
         foreach ($part as $str) {
             $field_name = trim(substr($str, 0, ! str_contains($str, '[') ? strlen($str) : strpos($str, '[')));
             if (! isset($fields[$field_name])) {
                 $fields[$field_name] = null;
             }
+
             if (str_contains($str, '[')) {
                 $sub_fields = substr($str, strpos($str, '[') + 1, strlen($str) - strpos($str, '[') - 2);
                 $tmp_array = [];
@@ -1016,6 +1041,7 @@ class WebserviceRequestCore
                 } else {
                     $tmp_array = [$sub_fields];
                 }
+
                 $fields[$field_name] = (is_array($fields[$field_name])) ? array_merge($fields[$field_name], $tmp_array) : $tmp_array;
             }
         }
@@ -1052,15 +1078,17 @@ class WebserviceRequestCore
                                 }
                             }
                         }
+
                         if ($error) {
                             $this->setError(400, 'Unable to display this field "' . $field_name . (is_array($part) ? ' (details : ' . var_export($part, true) . ')' : '') . '". However, these are available: ' . implode(', ', array_keys($this->resourceConfiguration['fields'])), 35);
 
                             return false;
                         }
                     }
+
                     $this->fieldsToDisplay = $fieldsToTest;
                 } else {
-                    $this->setError(400, 'The \'display\' syntax is wrong. You can set \'full\' or \'[field_1,field_2,field_3,...]\'. These are available: ' . implode(', ', array_keys($this->resourceConfiguration['fields'])), 36);
+                    $this->setError(400, "The 'display' syntax is wrong. You can set 'full' or '[field_1,field_2,field_3,...]'. These are available: " . implode(', ', array_keys($this->resourceConfiguration['fields'])), 36);
 
                     return false;
                 }
@@ -1092,12 +1120,15 @@ class WebserviceRequestCore
             if (! in_array('date_add', $available_filters, true)) {
                 $available_filters[] = 'date_add';
             }
+
             if (! in_array('date_upd', $available_filters, true)) {
                 $available_filters[] = 'date_upd';
             }
+
             if (! array_key_exists('date_add', $this->resourceConfiguration['fields'])) {
                 $this->resourceConfiguration['fields']['date_add'] = ['sqlId' => 'date_add'];
             }
+
             if (! array_key_exists('date_upd', $this->resourceConfiguration['fields'])) {
                 $this->resourceConfiguration['fields']['date_upd'] = ['sqlId' => 'date_upd'];
             }
@@ -1121,10 +1152,12 @@ class WebserviceRequestCore
 
                     return true;
                 }
-                $this->setError(400, 'Please select a schema of type \'synopsis\' to get the whole schema informations (which fields are required, which kind of content...) or \'blank\' to get an empty schema to fill before using POST request', 28);
+
+                $this->setError(400, "Please select a schema of type 'synopsis' to get the whole schema informations (which fields are required, which kind of content...) or 'blank' to get an empty schema to fill before using POST request", 28);
 
                 return false;
             }
+
             // if there are filters
             if (isset($this->urlFragments['filter'])) {
                 foreach ($this->urlFragments['filter'] as $field => $url_param) {
@@ -1151,6 +1184,7 @@ class WebserviceRequestCore
                                 if (! is_array($url_param)) {
                                     $url_param = [$url_param];
                                 }
+
                                 $sql_join .= 'LEFT JOIN `' . bqSQL(_DB_PREFIX_ . $this->resourceConfiguration['retrieveData']['table']) . '_lang` AS main_i18n ON (main.`' . bqSQL($this->resourceConfiguration['fields']['id']['sqlId']) . '` = main_i18n.`' . bqSQL($this->resourceConfiguration['fields']['id']['sqlId']) . '`)' . "\n";
                                 foreach ($url_param as $value) {
                                     $linked_field = $this->resourceConfiguration['fields'][$field];
@@ -1182,6 +1216,7 @@ class WebserviceRequestCore
 
                                 return false;
                             }
+
                             if (isset($this->resourceConfiguration['retrieveData']['tableAlias'])) {
                                 $sql_filter .= $this->getSQLRetrieveFilter($this->resourceConfiguration['fields'][$field]['sqlId'], $url_param, $this->resourceConfiguration['retrieveData']['tableAlias'] . '.');
                             } else {
@@ -1196,6 +1231,7 @@ class WebserviceRequestCore
         if (! $this->setFieldsToDisplay()) {
             return false;
         }
+
         // construct SQL Sort
         $sql_sort = '';
         if (isset($this->urlFragments['sort'])) {
@@ -1210,26 +1246,31 @@ class WebserviceRequestCore
 
             foreach ($sorts as $sort) {
                 $delimiterPosition = strrpos($sort, '_');
-                $fieldName = $direction = '';
+                $fieldName = '';
+                $direction = '';
                 if ($delimiterPosition !== false) {
                     $fieldName = substr($sort, 0, $delimiterPosition);
                     $direction = strtoupper(substr($sort, $delimiterPosition + 1));
                 }
+
                 if ($delimiterPosition === false || ! in_array($direction, ['ASC', 'DESC'], true)) {
                     $this->setError(400, 'The "sort" value has to be formed as this example: "field_ASC" or \'[field_1_DESC,field_2_ASC,field_3_ASC,...]\' ("field" has to be an available field)', 37);
 
                     return false;
                 }
+
                 if (! in_array($fieldName, $available_filters, true) && ! in_array($fieldName, $i18n_available_filters, true)) {
                     $this->setError(400, 'Unable to filter by this field. However, these are available: ' . implode(', ', $available_filters) . ', for i18n fields:' . implode(', ', $i18n_available_filters), 38);
 
                     return false;
                 }
+
                 if (in_array($fieldName, $i18n_available_filters, true)) {
                     // for sort on i18n field
                     if (! preg_match('#main_i18n#', $sql_join)) {
                         $sql_join .= 'LEFT JOIN `' . _DB_PREFIX_ . bqSQL($this->resourceConfiguration['retrieveData']['table']) . '_lang` AS main_i18n ON (main.`' . bqSQL($this->resourceConfiguration['fields']['id']['sqlId']) . '` = main_i18n.`' . bqSQL($this->resourceConfiguration['fields']['id']['sqlId']) . '`)' . "\n";
                     }
+
                     $sql_sort .= 'main_i18n.`' . bqSQL($this->resourceConfiguration['fields'][$fieldName]['sqlId']) . '` ' . $direction . ', '; // ORDER BY main_i18n.`field` ASC|DESC
                 } else {
                     /** @var ObjectModel $object */
@@ -1240,9 +1281,11 @@ class WebserviceRequestCore
                     } else {
                         $table_alias = '';
                     }
+
                     $sql_sort .= (isset($this->resourceConfiguration['retrieveData']['tableAlias']) ? '`' . bqSQL($this->resourceConfiguration['retrieveData']['tableAlias']) . '`.' : '`' . bqSQL($table_alias) . '`.') . '`' . pSQL($this->resourceConfiguration['fields'][$fieldName]['sqlId']) . '` ' . $direction . ', '; // ORDER BY `field` ASC|DESC
                 }
             }
+
             $sql_sort = rtrim($sql_sort, ', ') . "\n";
         }
 
@@ -1255,8 +1298,10 @@ class WebserviceRequestCore
 
                 return false;
             }
+
             $sql_limit .= ' LIMIT ' . (int) $limitArgs[0] . (isset($limitArgs[1]) ? ', ' . (int) ($limitArgs[1]) : '') . "\n"; // LIMIT X|X, Y
         }
+
         $filters['sql_join'] = $sql_join;
         $filters['sql_filter'] = $sql_filter;
         $filters['sql_sort'] = $sql_sort;
@@ -1328,6 +1373,7 @@ class WebserviceRequestCore
                         $check_shop_group = true;
                     }
                 }
+
                 $sql .= '`';
 
                 $OR = [];
@@ -1343,6 +1389,7 @@ class WebserviceRequestCore
 
             return $objects;
         }
+
         if (! count($this->errors)) {
             $this->objOutput->setStatus(404);
             $this->_outputEnabled = false;
@@ -1373,6 +1420,7 @@ class WebserviceRequestCore
             if (! $return) {
                 return false;
             }
+
             $this->_outputEnabled = true;
             $this->objects = $return;
         }
@@ -1424,14 +1472,13 @@ class WebserviceRequestCore
         } else {
             $ids[] = (int) $this->urlSegment[1];
         }
-        if (! empty($ids)) {
-            foreach ($ids as $id) {
-                $object = new $this->resourceConfiguration['retrieveData']['className']((int) $id);
-                if (! $object->id) {
-                    $arr_avoid_id[] = $id;
-                } else {
-                    $objects[] = $object;
-                }
+
+        foreach ($ids as $id) {
+            $object = new $this->resourceConfiguration['retrieveData']['className']((int) $id);
+            if (! $object->id) {
+                $arr_avoid_id[] = $id;
+            } else {
+                $objects[] = $object;
             }
         }
 
@@ -1458,8 +1505,9 @@ class WebserviceRequestCore
                     $arr_avoid_id[] = $object->id;
                 }
             }
+
             if (! empty($arr_avoid_id)) {
-                $this->setError(500, 'Id(s) wasn\'t deleted: ' . implode(', ', $arr_avoid_id), 88);
+                $this->setError(500, "Id(s) wasn't deleted: " . implode(', ', $arr_avoid_id), 88);
                 $this->_outputEnabled = true;
             } else {
                 $this->_outputEnabled = false;
@@ -1482,8 +1530,8 @@ class WebserviceRequestCore
     {
         try {
             $xml = new SimpleXMLElement($this->_inputXml);
-        } catch (Exception $error) {
-            $this->setError(500, 'XML error : ' . $error->getMessage() . "\n" . 'XML length : ' . strlen($this->_inputXml) . "\n" . 'Original XML : ' . $this->_inputXml, 127);
+        } catch (Exception $exception) {
+            $this->setError(500, 'XML error : ' . $exception->getMessage() . "\n" . 'XML length : ' . strlen($this->_inputXml) . "\n" . 'Original XML : ' . $this->_inputXml, 127);
 
             return false;
         }
@@ -1498,6 +1546,7 @@ class WebserviceRequestCore
                 $ids[] = (int) $entity->id;
             }
         }
+
         if ($this->method === 'PUT' || $this->method === 'PATCH') {
             $ids2 = array_unique($ids);
             if (count($ids2) !== count($ids)) {
@@ -1505,6 +1554,7 @@ class WebserviceRequestCore
 
                 return false;
             }
+
             if (count($xmlEntities) !== count($ids)) {
                 $this->setError(400, 'id is required when modifying a resource', 90);
 
@@ -1546,10 +1596,12 @@ class WebserviceRequestCore
                 if ($this->method === 'PATCH' && ! isset($attributes->{$fieldName})) {
                     continue;
                 }
+
                 $sqlId = $fieldProperties['sqlId'];
                 if ($fieldName === 'id') {
                     $sqlId = $fieldName;
                 }
+
                 if (isset($attributes->{$fieldName}, $fieldProperties['sqlId']) && (! isset($fieldProperties['i18n']) || ! $fieldProperties['i18n'])) {
                     if (isset($fieldProperties['setter'])) {
                         // if we have to use a specific setter
@@ -1559,6 +1611,7 @@ class WebserviceRequestCore
 
                             return false;
                         }
+
                         $object->{$fieldProperties['setter']}((string) $attributes->{$fieldName});
                     } elseif (property_exists($object, $sqlId)) {
                         $object->{$sqlId} = (string) $attributes->{$fieldName};
@@ -1572,6 +1625,7 @@ class WebserviceRequestCore
                 } elseif ((! isset($fieldProperties['required']) || ! $fieldProperties['required']) && property_exists($object, $sqlId)) {
                     $object->{$sqlId} = null;
                 }
+
                 if (isset($fieldProperties['i18n']) && $fieldProperties['i18n']) {
                     $i18n = true;
                     if (isset($attributes->{$fieldName}, $attributes->{$fieldName}->language)) {
@@ -1598,16 +1652,19 @@ class WebserviceRequestCore
 
                     return false;
                 }
+
                 if (($retValidateFields = $object->validateFields(false, true)) !== true) {
                     $this->setError(400, 'Validation error: "' . $retValidateFields . '"', 85);
 
                     return false;
                 }
+
                 // Call alternative method for add/update
                 $objectMethod = ($this->method === 'POST' ? 'add' : 'update');
                 if (isset($this->resourceConfiguration['objectMethods']) && array_key_exists($objectMethod, $this->resourceConfiguration['objectMethods'])) {
                     $objectMethod = $this->resourceConfiguration['objectMethods'][$objectMethod];
                 }
+
                 $result = $object->{$objectMethod}();
                 if ($result) {
                     if (isset($attributes->associations)) {
@@ -1624,8 +1681,10 @@ class WebserviceRequestCore
                                     foreach ($fields as $fieldName => $fieldValue) {
                                         $entry[$fieldName] = (string) $fieldValue;
                                     }
+
                                     $values[] = $entry;
                                 }
+
                                 $setter = $this->resourceConfiguration['associations'][$association->getName()]['setter'];
                                 if ($setter !== null && $setter && method_exists($object, $setter) && ! $object->{$setter}($values)) {
                                     $this->setError(500, 'Error occurred while setting the ' . $association->getName() . ' value', 85);
@@ -1639,6 +1698,7 @@ class WebserviceRequestCore
                             }
                         }
                     }
+
                     $assoc = Shop::getAssoTable($this->resourceConfiguration['retrieveData']['table']);
                     if ($assoc !== false && $assoc['type'] !== 'fk_shop') {
                         // PUT nor POST is destructive, no deletion
@@ -1649,6 +1709,7 @@ class WebserviceRequestCore
                                 $sql .= ', ';
                             }
                         }
+
                         Db::getInstance()->execute($sql);
                     }
                 } else {
@@ -1707,6 +1768,7 @@ class WebserviceRequestCore
 
                         return false;
                     }
+
                     for ($i = $range_enabled_lang[0]; $i <= $range_enabled_lang[1]; ++$i) {
                         $arr_languages[] = $i;
                     }
@@ -1857,17 +1919,20 @@ class WebserviceRequestCore
                 if (str_contains(strtolower($key), 'content-type')) {
                     continue;
                 }
+
                 if (strtoupper(substr($key, 0, 5)) !== 'HTTP_') {
                     unset($headers[$key]);
                 }
             }
         }
+
         // Normalize this array to Cased-Like-This structure.
         foreach ($headers as $key => $value) {
             $key = preg_replace('/^HTTP_/i', '', $key);
             $key = str_replace(' ', '-', ucwords(strtolower(str_replace(['-', '_'], ' ', $key))));
             $retarr[$key] = $value;
         }
+
         ksort($retarr);
 
         return $retarr;

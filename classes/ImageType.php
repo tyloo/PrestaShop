@@ -145,8 +145,9 @@ class ImageTypeCore extends ObjectModel
             if (! empty($type)) {
                 $where .= ' AND `' . bqSQL($type) . '` = 1 ';
             }
+
             if ($theme !== null) {
-                $where .= ' AND `theme_name` = \'' . pSQL($theme) . '\' OR `theme_name` IS NULL';
+                $where .= " AND `theme_name` = '" . pSQL($theme) . "' OR `theme_name` IS NULL";
             }
 
             if ($orderBySize) {
@@ -191,7 +192,7 @@ class ImageTypeCore extends ObjectModel
         Db::getInstance()->executeS('
 			SELECT `id_image_type`
 			FROM `' . _DB_PREFIX_ . 'image_type`
-			WHERE `name` = \'' . pSQL($typeName) . '\'', false);
+			WHERE `name` = \'' . pSQL($typeName) . "'", false);
 
         return Db::getInstance()->numRows();
     }

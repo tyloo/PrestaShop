@@ -333,7 +333,7 @@ class OrderSlipCore extends ObjectModel
         SELECT `id_order_slip`
         FROM `' . _DB_PREFIX_ . 'order_slip` os
         LEFT JOIN `' . _DB_PREFIX_ . 'orders` o ON (o.`id_order` = os.`id_order`)
-        WHERE os.`date_add` BETWEEN \'' . pSQL($dateFrom) . ' 00:00:00\' AND \'' . pSQL($dateTo) . ' 23:59:59\'
+        WHERE os.`date_add` BETWEEN \'' . pSQL($dateFrom) . " 00:00:00' AND '" . pSQL($dateTo) . ' 23:59:59\'
         ' . Shop::addSqlRestriction(Shop::SHARE_ORDER, 'o') . '
         ORDER BY os.`date_add` ASC');
 
@@ -448,6 +448,7 @@ class OrderSlipCore extends ObjectModel
             $product['total_price_tax_' . $inc_or_ex_1] = Tools::ps_round($price * $quantity, Context::getContext()->getComputingPrecision());
             $product['total_price_tax_' . $inc_or_ex_2] = Tools::ps_round($product_tax_incl ?? 0, Context::getContext()->getComputingPrecision());
         }
+
         unset($product);
 
         foreach ($total_products as $key => $price) {
@@ -468,6 +469,7 @@ class OrderSlipCore extends ObjectModel
         if ((float) $amount && ! $amount_choosen) {
             $order_slip->order_slip_type = 1;
         }
+
         if (((float) $amount && $amount_choosen) || $order_slip->shipping_cost_amount > 0) {
             $order_slip->order_slip_type = 2;
         }
@@ -556,7 +558,7 @@ class OrderSlipCore extends ObjectModel
                 $rate = (float) Db::getInstance()->getValue(
                     'SELECT `rate`
                     FROM `' . _DB_PREFIX_ . 'tax`
-                    WHERE `id_tax` = ' . (int) $id_tax
+                    WHERE `id_tax` = ' . $id_tax
                 );
 
                 if ($rate > 0) {
@@ -632,6 +634,7 @@ class OrderSlipCore extends ObjectModel
                     (isset($value['amount_tax_incl']) ? (float) $value['amount_tax_incl'] : 'NULL') .
                     '),';
             }
+
             $query = rtrim($query, ',');
             Db::getInstance()->execute($query);
         }

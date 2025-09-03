@@ -406,6 +406,7 @@ class FrontControllerCore extends Controller
                 if ($this->context->cookie->id_customer) {
                     $cart->id_customer = (int) $this->context->cookie->id_customer;
                 }
+
                 $cart->id_lang = (int) $this->context->cookie->id_lang;
                 $cart->id_currency = (int) $currency->id;
                 $cart->update();
@@ -427,10 +428,12 @@ class FrontControllerCore extends Controller
                     $to_update = true;
                     $cart->id_address_delivery = (int) Address::getFirstCustomerAddressId($cart->id_customer);
                 }
+
                 if ($this->automaticallyAllocateInvoiceAddress && (! isset($cart->id_address_invoice) || $cart->id_address_invoice === 0)) {
                     $to_update = true;
                     $cart->id_address_invoice = (int) Address::getFirstCustomerAddressId($cart->id_customer);
                 }
+
                 if ($to_update) {
                     $cart->update();
                 }
@@ -459,6 +462,7 @@ class FrontControllerCore extends Controller
                 $cart->id_address_delivery = 0;
                 $cart->id_address_invoice = 0;
             }
+
             $this->context->cart = $cart;
         } else {
             $this->context->cart = $cart;
@@ -829,6 +833,7 @@ class FrontControllerCore extends Controller
             } else {
                 header('Location: ' . Tools::getShopDomain(true) . $_SERVER['REQUEST_URI']);
             }
+
             exit;
         }
     }
@@ -906,12 +911,14 @@ class FrontControllerCore extends Controller
                     if ($defaultCountry->iso_code !== $this->context->cookie->iso_code_country) {
                         $defaultCountry = new Country($idCountry);
                     }
+
                     if (isset($hasBeenSet) && $hasBeenSet) {
                         $this->context->cookie->id_currency = (int) ($defaultCountry->id_currency ? (int) $defaultCountry->id_currency : Currency::getDefaultCurrencyId());
                     }
 
                     return $defaultCountry;
                 }
+
                 if (Configuration::get('PS_GEOLOCATION_NA_BEHAVIOR') === _PS_GEOLOCATION_NO_CATALOG_ && ! FrontController::isInWhitelistForGeolocation()) {
                     $this->restrictedCountry = Country::GEOLOC_FORBIDDEN;
                 } elseif (Configuration::get('PS_GEOLOCATION_NA_BEHAVIOR') === _PS_GEOLOCATION_NO_ORDER_ && ! FrontController::isInWhitelistForGeolocation()) {
@@ -920,6 +927,7 @@ class FrontControllerCore extends Controller
                     if (isset($record->country->name) && $record->country->name) {
                         $countryName = $record->country->name;
                     }
+
                     $this->warning[] = $this->trans(
                         'You cannot place a new order from your country (%s).',
                         [htmlspecialchars($countryName)],
@@ -949,6 +957,7 @@ class FrontControllerCore extends Controller
         if ($this->context->shop->theme->requiresCoreScripts()) {
             $this->registerJavascript('corejs', '/themes/core.js', ['position' => 'bottom', 'priority' => 0]);
         }
+
         $this->registerJavascript('theme-main', '/assets/js/theme.js', ['position' => 'bottom', 'priority' => 50]);
         $this->registerJavascript('theme-custom', '/assets/js/custom.js', ['position' => 'bottom', 'priority' => 1000]);
 
@@ -957,6 +966,7 @@ class FrontControllerCore extends Controller
             foreach ($assets['css'] as $css) {
                 $this->registerStylesheet($css['id'], $css['path'], $css);
             }
+
             foreach ($assets['js'] as $js) {
                 $this->registerJavascript($js['id'], $js['path'], $js);
             }
@@ -1104,6 +1114,7 @@ class FrontControllerCore extends Controller
                 . ($this->javascriptManager->getFullPath($relativePath) ?? $relativePath);
             $params['server'] = 'remote';
         }
+
         $this->javascriptManager->register($id, $relativePath, $params['position'], $params['priority'], $params['inline'], $params['attributes'], $params['server'], $params['version']);
     }
 
@@ -1223,6 +1234,7 @@ class FrontControllerCore extends Controller
                     ['media' => $uiMediaCss, 'priority' => 95]
                 );
             }
+
             foreach ($ui_path['js'] as $uiPathJs) {
                 $this->registerJavascript(
                     str_replace(_PS_JS_DIR_ . 'jquery/ui/', '', $uiPathJs),
@@ -1270,6 +1282,7 @@ class FrontControllerCore extends Controller
                     ['position' => 'bottom', 'priority' => 100]
                 );
             }
+
             if ($css && ! empty($plugin_path['css'])) {
                 $this->registerStylesheet(
                     str_replace(_PS_JS_DIR_ . 'jquery/plugins/', '', key($plugin_path['css'])),
@@ -1429,6 +1442,7 @@ class FrontControllerCore extends Controller
         if (! isset($params['entity'])) {
             $params['entity'] = null;
         }
+
         if (! isset($params['id'])) {
             $params['id'] = null;
         }
@@ -1523,6 +1537,7 @@ class FrontControllerCore extends Controller
                 $index = str_replace('-', '_', $page_name);
                 $pages[$index] = $this->context->link->getPageLink($page_name);
             }
+
             $pages['brands'] = $pages['manufacturer'];
             $pages['register'] = $this->context->link->getPageLink('registration');
             $pages['order_login'] = $this->context->link->getPageLink('order', null, null, ['login' => '1']);
@@ -1640,6 +1655,7 @@ class FrontControllerCore extends Controller
         foreach ($addresses as &$a) {
             $a['formatted'] = AddressFormat::generateAddress(new Address($a['id']), [], '<br>');
         }
+
         $cust['addresses'] = $addresses;
 
         return $cust;
@@ -1804,10 +1820,10 @@ class FrontControllerCore extends Controller
                     'Avoid recent years' => $this->getTranslator()->trans('Avoid recent years', [], 'Shop.Theme.Global'),
                     'Avoid years that are associated with you' => $this->getTranslator()->trans('Avoid years that are associated with you', [], 'Shop.Theme.Global'),
                     'Avoid dates and years that are associated with you' => $this->getTranslator()->trans('Avoid dates and years that are associated with you', [], 'Shop.Theme.Global'),
-                    'Capitalization doesn\'t help very much' => $this->getTranslator()->trans('Capitalization doesn\'t help very much', [], 'Shop.Theme.Global'),
+                    "Capitalization doesn't help very much" => $this->getTranslator()->trans("Capitalization doesn't help very much", [], 'Shop.Theme.Global'),
                     'All-uppercase is almost as easy to guess as all-lowercase' => $this->getTranslator()->trans('All-uppercase is almost as easy to guess as all-lowercase', [], 'Shop.Theme.Global'),
-                    'Reversed words aren\'t much harder to guess' => $this->getTranslator()->trans('Reversed words aren\'t much harder to guess', [], 'Shop.Theme.Global'),
-                    'Predictable substitutions like \'@\' instead of \'a\' don\'t help very much' => $this->getTranslator()->trans('Predictable substitutions like "@" instead of "a" don\'t help very much', [], 'Shop.Theme.Global'),
+                    "Reversed words aren't much harder to guess" => $this->getTranslator()->trans("Reversed words aren't much harder to guess", [], 'Shop.Theme.Global'),
+                    "Predictable substitutions like '@' instead of 'a' don't help very much" => $this->getTranslator()->trans('Predictable substitutions like "@" instead of "a" don\'t help very much', [], 'Shop.Theme.Global'),
                     'Add another word or two. Uncommon words are better.' => $this->getTranslator()->trans('Add another word or two. Uncommon words are better.', [], 'Shop.Theme.Global'),
                 ],
             ],
@@ -1940,11 +1956,11 @@ class FrontControllerCore extends Controller
             );
 
             $templateContent = $tpl->fetch();
-        } catch (PrestaShopException $e) {
-            PrestaShopLogger::addLog($e->getMessage());
+        } catch (PrestaShopException $prestaShopException) {
+            PrestaShopLogger::addLog($prestaShopException->getMessage());
 
             if (defined('_PS_MODE_DEV_') && _PS_MODE_DEV_) {
-                $this->warning[] = $e->getMessage();
+                $this->warning[] = $prestaShopException->getMessage();
                 $scope->assign(['notifications' => $this->prepareNotifications()]);
 
                 $tpl = $this->context->smarty->createTemplate(

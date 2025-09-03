@@ -56,6 +56,7 @@ abstract class ProductListingFrontControllerCore extends ProductPresentingFrontC
         } else {
             $params = [];
         }
+
         $page = (int) Tools::getValue('page');
         if ($page > 1) {
             $params['page'] = $page;
@@ -160,6 +161,7 @@ abstract class ProductListingFrontControllerCore extends ProductPresentingFrontC
                 ]);
             }
         }
+
         unset($filter);
 
         return $facetsArray;
@@ -446,15 +448,17 @@ abstract class ProductListingFrontControllerCore extends ProductPresentingFrontC
      */
     protected function disablePriceControls(ProductSearchResult $result)
     {
-        if ($result->getFacetCollection()) {
+        if ($result->getFacetCollection() !== null) {
             $filteredFacets = [];
             /** @var Facet $facet */
             foreach ($result->getFacetCollection()->getFacets() as $facet) {
                 if ($facet->getType() === 'price') {
                     continue;
                 }
+
                 $filteredFacets[] = $facet;
             }
+
             $result->getFacetCollection()->setFacets($filteredFacets);
         }
 
@@ -465,8 +469,10 @@ abstract class ProductListingFrontControllerCore extends ProductPresentingFrontC
                 if ($sortOrder->getField() === 'price') {
                     continue;
                 }
+
                 $filteredOrders[] = $sortOrder;
             }
+
             $result->setAvailableSortOrders($filteredOrders);
         }
     }
@@ -509,6 +515,7 @@ abstract class ProductListingFrontControllerCore extends ProductPresentingFrontC
             if ($page['type'] === 'previous' && $pagination->getPage() === 1) {
                 return false;
             }
+
             if ($page['type'] === 'next' && $pagination->getPagesCount() === $pagination->getPage()) {
                 return false;
             }
@@ -637,6 +644,7 @@ abstract class ProductListingFrontControllerCore extends ProductPresentingFrontC
 
             return;
         }
+
         $variables = $this->getProductSearchVariables();
         $this->context->smarty->assign([
             'listing' => $variables,

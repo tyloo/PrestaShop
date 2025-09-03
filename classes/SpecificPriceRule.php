@@ -27,16 +27,27 @@
 class SpecificPriceRuleCore extends ObjectModel
 {
     public $name;
+
     public $id_shop;
+
     public $id_currency;
+
     public $id_country;
+
     public $id_group;
+
     public $from_quantity;
+
     public $price;
+
     public $reduction;
+
     public $reduction_tax;
+
     public $reduction_type;
+
     public $from;
+
     public $to;
 
     protected static $rules_application_enable = true;
@@ -183,10 +194,11 @@ class SpecificPriceRuleCore extends ObjectModel
         if (! $result) {
             return false;
         }
+
         $id_specific_price_rule_condition_group = (int) Db::getInstance()->Insert_ID();
         foreach ($conditions as $condition) {
             $result = Db::getInstance()->insert('specific_price_rule_condition', [
-                'id_specific_price_rule_condition_group' => (int) $id_specific_price_rule_condition_group,
+                'id_specific_price_rule_condition_group' => $id_specific_price_rule_condition_group,
                 'type' => pSQL($condition['type']),
                 'value' => (float) $condition['value'],
             ]);
@@ -259,6 +271,7 @@ class SpecificPriceRuleCore extends ObjectModel
 																								FROM ' . _DB_PREFIX_ . 'feature_value
 																								WHERE id_feature_value=' . (int) $condition['value']);
                 }
+
                 $conditions_group[(int) $condition['id_specific_price_rule_condition_group']][] = $condition;
             }
         }
@@ -340,6 +353,7 @@ class SpecificPriceRuleCore extends ObjectModel
                 // Merge previous result to current results
                 $result = array_merge($result, Db::getInstance()->executeS($query));
             }
+
             // Remove duplicate after the array_merge
             $result = array_unique($result, \SORT_REGULAR);
         } else {

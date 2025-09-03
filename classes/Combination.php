@@ -390,6 +390,7 @@ class CombinationCore extends ObjectModel
         if ((int) $this->id === 0) {
             return false;
         }
+
         $result = Db::getInstance()->delete(
             'product_attribute_combination',
             '`id_product_attribute` = ' . (int) $this->id
@@ -605,7 +606,7 @@ class CombinationCore extends ObjectModel
         $query = new DbQuery();
         $query->select('pa.id_product_attribute');
         $query->from('product_attribute', 'pa');
-        $query->where('pa.ean13 = \'' . pSQL($gtin) . '\'');
+        $query->where("pa.ean13 = '" . pSQL($gtin) . "'");
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query);
     }
@@ -627,7 +628,7 @@ class CombinationCore extends ObjectModel
         $query = new DbQuery();
         $query->select('pa.id_product_attribute');
         $query->from('product_attribute', 'pa');
-        $query->where('pa.reference = \'' . pSQL($reference) . '\'');
+        $query->where("pa.reference = '" . pSQL($reference) . "'");
         $query->where('pa.id_product = ' . (int) $idProduct);
 
         return (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query);

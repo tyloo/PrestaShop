@@ -57,6 +57,7 @@ class ShopCore extends ObjectModel
     public $color;
 
     public $active = true;
+
     public $deleted;
 
     /**
@@ -142,7 +143,9 @@ class ShopCore extends ObjectModel
     protected static $shopGroupIds;
 
     protected static $asso_tables = [];
+
     protected static $id_shop_default_tables = [];
+
     protected static $initialized = false;
 
     protected $webserviceParameters = [
@@ -186,14 +189,18 @@ class ShopCore extends ObjectModel
      * There are 3 kinds of shop context : shop, group shop and general.
      */
     public const CONTEXT_SHOP = ShopConstraint::SHOP;
+
     public const CONTEXT_GROUP = ShopConstraint::SHOP_GROUP;
+
     public const CONTEXT_ALL = ShopConstraint::ALL_SHOPS;
 
     /**
      * Some data can be shared between shops, like customers or orders.
      */
     public const SHARE_CUSTOMER = 'share_customer';
+
     public const SHARE_ORDER = 'share_order';
+
     public const SHARE_STOCK = 'share_stock';
 
     /**
@@ -284,6 +291,7 @@ class ShopCore extends ObjectModel
         } else {
             $row = Cache::retrieve($cache_id);
         }
+
         if (! $row) {
             return false;
         }
@@ -340,6 +348,7 @@ class ShopCore extends ObjectModel
             } else {
                 $table_name .= '_' . $row['type'];
             }
+
             $res &= Db::getInstance()->execute(
                 'DELETE FROM `' . bqSQL(_DB_PREFIX_ . $table_name) . '`
                 WHERE `' . bqSQL($id) . '`=' . (int) $this->id
@@ -483,9 +492,11 @@ class ShopCore extends ObjectModel
                 if (! isset($_SERVER['HTTP_HOST']) || empty($_SERVER['HTTP_HOST'])) {
                     $_SERVER['HTTP_HOST'] = $shop->domain;
                 }
+
                 if (! isset($_SERVER['SERVER_NAME']) || empty($_SERVER['SERVER_NAME'])) {
                     $_SERVER['SERVER_NAME'] = $shop->domain;
                 }
+
                 if (! isset($_SERVER['REMOTE_ADDR']) || empty($_SERVER['REMOTE_ADDR'])) {
                     $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
                 }
@@ -526,6 +537,7 @@ class ShopCore extends ObjectModel
                 header('Location: ' . Tools::getShopProtocol() . $url);
                 exit;
             }
+
             if (defined('_PS_ADMIN_DIR_') && empty($shop->physical_uri)) {
                 $shop_default = new Shop((int) Configuration::get('PS_SHOP_DEFAULT'));
                 $shop->physical_uri = $shop_default->physical_uri;
@@ -572,6 +584,7 @@ class ShopCore extends ObjectModel
         if (empty($this->theme_name)) {
             $this->theme_name = 'classic';
         }
+
         $this->theme = $themeRepository->getInstanceByName($this->theme_name);
     }
 
@@ -599,11 +612,13 @@ class ShopCore extends ObjectModel
             if (! $this->domain_ssl) {
                 return false;
             }
+
             $url = 'https://' . $this->domain_ssl;
         } else {
             if (! $this->domain) {
                 return false;
             }
+
             $url = 'http://' . $this->domain;
         }
 
@@ -985,7 +1000,7 @@ class ShopCore extends ObjectModel
             }
         }
 
-        return self::$shopGroupIds[(int) $shopId] ?? null;
+        return self::$shopGroupIds[$shopId] ?? null;
     }
 
     /**
@@ -1077,6 +1092,7 @@ class ShopCore extends ObjectModel
             default:
                 throw new PrestaShopException('Unknown context for shop');
         }
+
         static::$context_shop_group = null;
         self::$context = $type;
     }
@@ -1215,6 +1231,7 @@ class ShopCore extends ObjectModel
         if ($asso_table === false || $asso_table['type'] !== 'shop') {
             return '';
         }
+
         $sql = (($inner_join) ? ' INNER' : ' LEFT') . ' JOIN ' . _DB_PREFIX_ . $table . '_shop ' . $table_alias . '
         ON (' . $table_alias . '.id_' . $table . ' = ' . $alias . '.id_' . $table;
         if ((int) self::$context_id_shop) {
@@ -1224,6 +1241,7 @@ class ShopCore extends ObjectModel
         } else {
             $sql .= ' AND ' . $table_alias . '.id_shop IN (' . implode(', ', Shop::getContextListShopID()) . ')';
         }
+
         $sql .= (($on) ? ' AND ' . $on : '') . ')';
 
         return $sql;
@@ -1242,6 +1260,7 @@ class ShopCore extends ObjectModel
         if (isset(Context::getContext()->shop) && $id_shop === null) {
             $id_shop = (int) Context::getContext()->shop->id;
         }
+
         if (! $id_shop) {
             $id_shop = (int) Configuration::get('PS_SHOP_DEFAULT');
         }
@@ -1356,6 +1375,7 @@ class ShopCore extends ObjectModel
                                 (SELECT `' . $keys . '`, ' . (int) $this->id . ' FROM ' . _DB_PREFIX_ . $table_name . '
                                 WHERE `' . $id . '` = ' . (int) $old_id . ')';
                     }
+
                     Db::getInstance()->execute($sql);
                 }
             }
@@ -1390,6 +1410,7 @@ class ShopCore extends ObjectModel
         } else {
             $query->select('DISTINCT cs.`id_category`, cl.`name`, cl.`link_rewrite`');
         }
+
         $query->from('category_shop', 'cs');
         $query->leftJoin('category_lang', 'cl', 'cl.`id_category` = cs.`id_category` AND cl.`id_lang` = ' . (int) Context::getContext()->language->id);
         $query->where('cs.`id_shop` = ' . (int) $id);
@@ -1400,6 +1421,7 @@ class ShopCore extends ObjectModel
             foreach ($result as $row) {
                 $array[] = $row['id_category'];
             }
+
             $array = array_unique($array);
         } else {
             return $result;
@@ -1443,7 +1465,7 @@ class ShopCore extends ObjectModel
         $sql = 'SELECT s.id_shop, CONCAT(su.physical_uri, su.virtual_uri) AS uri, su.domain, su.main
                     FROM ' . _DB_PREFIX_ . 'shop_url su
                     LEFT JOIN ' . _DB_PREFIX_ . 'shop s ON (s.id_shop = su.id_shop)
-                    WHERE (su.domain = \'' . pSQL($host) . '\' OR su.domain_ssl = \'' . pSQL($host) . '\')
+                    WHERE (su.domain = \'' . pSQL($host) . "' OR su.domain_ssl = '" . pSQL($host) . '\')
                         AND s.active = 1
                         AND s.deleted = 0
                     ORDER BY LENGTH(CONCAT(su.physical_uri, su.virtual_uri)) DESC';

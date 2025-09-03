@@ -55,6 +55,6 @@ class SmartyDevTemplateCore extends Smarty_Internal_Template
         // @phpstan-ignore-next-line
         $fetch = parent::fetch($template, $cache_id, $compile_id, $parent);
 
-        return "\n<!-- begin $tpl -->\n" . $fetch . "\n<!-- end $tpl -->\n";
+        return "\n<!-- begin {$tpl} -->\n" . $fetch . "\n<!-- end {$tpl} -->\n";
     }
 }

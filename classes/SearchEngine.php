@@ -31,6 +31,7 @@
 class SearchEngineCore extends ObjectModel
 {
     public $server;
+
     public $getvar;
 
     /**
@@ -68,6 +69,7 @@ class SearchEngineCore extends ObjectModel
         if (! isset($parsedUrl['host']) || ! isset($parsedUrl['query'])) {
             return false;
         }
+
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT `server`, `getvar` FROM `' . _DB_PREFIX_ . 'search_engine`');
         foreach ($result as $row) {
             $host = &$row['server'];
@@ -78,9 +80,11 @@ class SearchEngineCore extends ObjectModel
                 if (empty($array[0])) {
                     preg_match('/[^a-z]' . $varname . '=.+$/', $parsedUrl['query'], $array);
                 }
+
                 if (empty($array[0])) {
                     return false;
                 }
+
                 $str = urldecode(str_replace('+', ' ', ltrim(substr(rtrim($array[0], '&'), strlen((string) $varname) + 1), '=')));
                 if (! Validate::isMessage($str)) {
                     return false;

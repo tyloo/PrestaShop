@@ -60,6 +60,7 @@ class LegacyCompilerPass implements CompilerPassInterface
             } else {
                 $definition = new Definition($class);
             }
+
             $definition->setPublic(true);
             $container->setDefinition($key, $definition);
         }

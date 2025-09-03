@@ -319,6 +319,7 @@ class HookCore extends ObjectModel
                     $hookAliases[strtolower((string) $ha['name'])][] = $ha['alias'];
                 }
             }
+
             Cache::store($cacheId, $hookAliases);
 
             return $hookAliases;
@@ -372,6 +373,7 @@ class HookCore extends ObjectModel
                         $record['name'];
                 }
             }
+
             Cache::store($cacheId, $hooksByAlias);
 
             return $hooksByAlias;
@@ -506,6 +508,7 @@ class HookCore extends ObjectModel
                 'active' => $result['active'],
             ];
         }
+
         Cache::store($cache_id, $list);
 
         return $list;
@@ -578,6 +581,7 @@ class HookCore extends ObjectModel
             if (! Validate::isHookName($hook_name)) {
                 throw new PrestaShopException('Invalid hook name');
             }
+
             if (
                 ! ($module_instance instanceof Module)
                 || ! isset($module_instance->id)
@@ -600,6 +604,7 @@ class HookCore extends ObjectModel
                 if (_PS_MODE_DEV_) {
                     throw new PrestaShopModuleException($message);
                 }
+
                 $logger = new LegacyLogger();
                 $logger->warning($message);
             }
@@ -954,6 +959,7 @@ class HookCore extends ObjectModel
         if (! isset($hook_args['cookie']) || ! $hook_args['cookie']) {
             $hook_args['cookie'] = $context->cookie;
         }
+
         if (! isset($hook_args['cart']) || ! $hook_args['cart']) {
             $hook_args['cart'] = $context->cart;
         }
@@ -1197,6 +1203,7 @@ class HookCore extends ObjectModel
             if (isset($output['cookie'])) {
                 unset($output['cookie']);
             }
+
             if (isset($output['cart'])) {
                 unset($output['cart']);
             }
@@ -1224,12 +1231,12 @@ class HookCore extends ObjectModel
 
         try {
             return $module->renderWidget($hook_name, $params);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $environment = ServiceLocator::get(
                 PrestaShop\PrestaShop\Adapter\Environment::class
             );
             if ($environment->isDebug()) {
-                throw new CoreException($e->getMessage(), $e->getCode(), $e);
+                throw new CoreException($exception->getMessage(), $exception->getCode(), $exception);
             }
         }
 
@@ -1355,6 +1362,7 @@ class HookCore extends ObjectModel
                 'module_shop.`id_module` = m.`id_module`'
             );
         }
+
         $sql->innerJoin('hook_module', 'hm', 'hm.`id_module` = m.`id_module`');
         $sql->innerJoin('hook', 'h', 'hm.`id_hook` = h.`id_hook`');
         if ($hookName !== 'paymentOptions') {
@@ -1383,6 +1391,7 @@ class HookCore extends ObjectModel
                         ')'
                 );
             }
+
             if (Validate::isLoadedObject($context->currency)) {
                 $sql->where(
                     '(
@@ -1402,6 +1411,7 @@ class HookCore extends ObjectModel
                         ', -1, -2))'
                 );
             }
+
             if (Validate::isLoadedObject($context->cart)) {
                 $carrier = new Carrier($context->cart->id_carrier);
                 if (Validate::isLoadedObject($carrier)) {
@@ -1428,6 +1438,7 @@ class HookCore extends ObjectModel
                 }
             }
         }
+
         if (
             Validate::isLoadedObject($shop)
             && $hookName !== 'displayAdminLogin'

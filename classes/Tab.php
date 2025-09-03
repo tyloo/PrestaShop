@@ -204,7 +204,7 @@ class TabCore extends ObjectModel
      */
     public static function initAccess($idTab, ?Context $context = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -300,10 +300,11 @@ class TabCore extends ObjectModel
             $value = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
 			SELECT `id_parent`
 			FROM `' . _DB_PREFIX_ . 'tab`
-			WHERE LOWER(class_name) = \'' . pSQL(Tools::strtolower(Tools::getValue('controller'))) . '\'');
+			WHERE LOWER(class_name) = \'' . pSQL(Tools::strtolower(Tools::getValue('controller'))) . "'");
             if (! $value) {
                 $value = -1;
             }
+
             Cache::store($cacheId, $value);
 
             return $value;
@@ -384,10 +385,12 @@ class TabCore extends ObjectModel
                     if (! isset(self::$_cache_tabs[$idLang][$row['id_parent']])) {
                         self::$_cache_tabs[$idLang][$row['id_parent']] = [];
                     }
+
                     self::$_cache_tabs[$idLang][$row['id_parent']][] = $row;
                 }
             }
         }
+
         if ($idParent === null) {
             $arrayAll = [];
             foreach (self::$_cache_tabs[$idLang] as $arrayParent) {
@@ -539,12 +542,15 @@ class TabCore extends ObjectModel
         if ($direction !== 'l' && $direction !== 'r') {
             return false;
         }
+
         if ($nbTabs <= 1) {
             return false;
         }
+
         if ($direction === 'l' && $this->position <= 1) {
             return false;
         }
+
         if ($direction === 'r' && $this->position >= $nbTabs) {
             return false;
         }
@@ -619,6 +625,7 @@ class TabCore extends ObjectModel
         if (! isset($movedTab)) {
             return false;
         }
+
         // < and > statements rather than BETWEEN operator
         // since BETWEEN is treated differently according to databases
         $result = (Db::getInstance()->execute('

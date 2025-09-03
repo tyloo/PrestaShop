@@ -165,6 +165,7 @@ class OrderHistoryCore extends ObjectModel
                         if (isset($virtual_product['download_deadline']) && $virtual_product['download_deadline'] !== '0000-00-00 00:00:00') {
                             $assign[$key]['deadline'] = Tools::displayDate($virtual_product['download_deadline']);
                         }
+
                         if ($product_download->nb_downloadable !== 0) {
                             $assign[$key]['downloadable'] = (int) $product_download->nb_downloadable;
                         }
@@ -178,9 +179,11 @@ class OrderHistoryCore extends ObjectModel
                     if (isset($product['deadline'])) {
                         $complementaryText[] = $this->trans('expires on %s.', [htmlspecialchars($product['deadline'])], 'Admin.Orderscustomers.Notification');
                     }
+
                     if (isset($product['downloadable'])) {
-                        $complementaryText[] = $this->trans('downloadable %d time(s)', [(int) $product['downloadable']], 'Admin.Orderscustomers.Notification');
+                        $complementaryText[] = $this->trans('downloadable %d time(s)', [$product['downloadable']], 'Admin.Orderscustomers.Notification');
                     }
+
                     $links[] = [
                         'text' => Tools::htmlentitiesUTF8($product['name']),
                         'url' => $product['link'],
@@ -275,6 +278,7 @@ class OrderHistoryCore extends ObjectModel
                         StockAvailable::updateQuantity($product['product_id'], $product['product_attribute_id'], -(int) $product['product_quantity'], $order->id_shop);
                     }
                 }
+
                 // From here, there is 2 cases : $old_os exists, and we can test shipped state evolution,
                 // Or old_os does not exists, and we should consider that initial shipped state is 0 (to allow decrease of stocks)
 
@@ -290,10 +294,11 @@ class OrderHistoryCore extends ObjectModel
                             $current_shop_group_id = Context::getContext()->shop->getContextShopGroupID();
                             Context::getContext()->shop->setContext(Shop::CONTEXT_SHOP, $order->id_shop);
                         }
+
                         (new StockManager())->saveMovement(
                             (int) $product['product_id'],
                             (int) $product['product_attribute_id'],
-                            (int) $product_quantity * ($new_os->shipped === 1 ? -1 : 1),
+                            $product_quantity * ($new_os->shipped === 1 ? -1 : 1),
                             [
                                 'id_order' => $order->id,
                                 'id_stock_mvt_reason' => ($new_os->shipped === 1 ? Configuration::get('PS_STOCK_CUSTOMER_ORDER_REASON') : Configuration::get('PS_STOCK_CUSTOMER_ORDER_CANCEL_REASON')),
@@ -400,6 +405,7 @@ class OrderHistoryCore extends ObjectModel
         if (! $this->add($autodate)) {
             return false;
         }
+
         Order::cleanHistoryCache();
 
         if (! $this->sendEmail($order, $template_vars)) {
@@ -433,6 +439,7 @@ class OrderHistoryCore extends ObjectModel
             if (Validate::isLoadedObject($carrier = new Carrier((int) $order->id_carrier, $order->id_lang))) {
                 $carrierUrl = $carrier->url;
             }
+
             $data = [
                 '{lastname}' => $result['lastname'],
                 '{firstname}' => $result['firstname'],
@@ -473,6 +480,7 @@ class OrderHistoryCore extends ObjectModel
                         $file_attachement['invoice']['name'] = $pdf->getFilename();
                         $file_attachement['invoice']['mime'] = 'application/pdf';
                     }
+
                     if ($result['pdf_delivery'] && $order->delivery_number) {
                         $pdf = new PDF($invoice, PDF::TEMPLATE_DELIVERY_SLIP, $context->smarty);
                         $file_attachement['delivery']['content'] = $pdf->render(false);

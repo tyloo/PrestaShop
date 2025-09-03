@@ -208,6 +208,7 @@ class HTMLTemplateInvoiceCore extends HTMLTemplate
             $order_detail['order_detail_tax'] = $taxes;
             $order_detail['order_detail_tax_label'] = implode(', ', $tax_temp);
         }
+
         unset(
             $tax_temp,
             $order_detail
@@ -233,6 +234,7 @@ class HTMLTemplateInvoiceCore extends HTMLTemplate
                     }
                 }
             }
+
             unset($order_detail); // don't overwrite the last order_detail later
         }
 

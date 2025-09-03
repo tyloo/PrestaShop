@@ -30,6 +30,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CustomerAddressFormatterCore implements FormFormatterInterface
 {
     private $country;
+
     private $definition;
 
     public function __construct(
@@ -127,6 +128,7 @@ class CustomerAddressFormatterCore implements FormFormatterInterface
                                 $state[$entityField]
                             );
                         }
+
                         $formField->setRequired(true);
                     }
                 }

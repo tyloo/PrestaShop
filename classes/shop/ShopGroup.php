@@ -27,11 +27,17 @@
 class ShopGroupCore extends ObjectModel
 {
     public $name;
+
     public $color;
+
     public $active = true;
+
     public $share_customer;
+
     public $share_stock;
+
     public $share_order;
+
     public $deleted;
 
     /**
@@ -142,7 +148,7 @@ class ShopGroupCore extends ObjectModel
     {
         $sql = 'SELECT id_shop_group
                 FROM ' . _DB_PREFIX_ . 'shop_group
-                WHERE name = \'' . pSQL($name) . '\'';
+                WHERE name = \'' . pSQL($name) . "'";
 
         return (int) Db::getInstance()->getValue($sql);
     }

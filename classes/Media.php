@@ -195,6 +195,7 @@ class MediaCore
             if (! empty($themeCss)) {
                 $uiPath['css'] = array_merge($uiPath['css'], $themeCss);
             }
+
             if (! empty($compCss)) {
                 $uiPath['css'] = array_merge($uiPath['css'], $compCss);
             }
@@ -214,15 +215,13 @@ class MediaCore
         }
 
         if (@filemtime($fileUri)) {
-            if (! empty($uiTmp)) {
-                foreach ($uiTmp as $ui) {
-                    if (! empty($ui['js'][0])) {
-                        $uiPath['js'][] = $ui['js'][0];
-                    }
+            foreach ($uiTmp as $ui) {
+                if (! empty($ui['js'][0])) {
+                    $uiPath['js'][] = $ui['js'][0];
+                }
 
-                    if (! empty($ui['css'][0])) {
-                        $uiPath['css'][] = $ui['css'][0];
-                    }
+                if (! empty($ui['css'][0])) {
+                    $uiPath['css'][] = $ui['css'][0];
                 }
             }
 
@@ -235,6 +234,7 @@ class MediaCore
             if (array_key_exists($datePickerIsoCode, self::$jquery_ui_datepicker_iso_code)) {
                 $datePickerIsoCode = self::$jquery_ui_datepicker_iso_code[$datePickerIsoCode];
             }
+
             $uiPath['js'][] = Media::getJSPath($folder . 'i18n/jquery.ui.datepicker-' . $datePickerIsoCode . '.js');
         }
 
@@ -266,6 +266,7 @@ class MediaCore
         } else {
             return false;
         }
+
         $pluginPath['css'] = Media::getJqueryPluginCSSPath($name, $folder);
 
         return $pluginPath;
@@ -282,7 +283,9 @@ class MediaCore
     {
         if ($folder === null) {
             $folder = _PS_JS_DIR_ . 'jquery/plugins/';
-        } // set default folder
+        }
+
+        // set default folder
         $file = 'jquery.' . $name . '.css';
         $urlData = parse_url($folder);
         $fileUri = _PS_ROOT_DIR_ . Tools::str_replace_once(__PS_BASE_URI__, \DIRECTORY_SEPARATOR, $urlData['path']);
@@ -290,6 +293,7 @@ class MediaCore
         if (@file_exists($fileUri . $file)) {
             return Media::getCSSPath($folder . $file);
         }
+
         if (@file_exists($fileUri . $name . '/' . $file)) {
             return Media::getCSSPath($folder . $name . '/' . $file);
         }

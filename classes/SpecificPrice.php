@@ -27,24 +27,41 @@
 class SpecificPriceCore extends ObjectModel
 {
     public const ORDER_DEFAULT_FROM_QUANTITY = 1;
+
     public const ORDER_DEFAULT_DATE = '0000-00-00 00:00:00';
 
     public $id_product;
+
     public $id_specific_price_rule = 0;
+
     public $id_cart = 0;
+
     public $id_product_attribute;
+
     public $id_shop;
+
     public $id_shop_group;
+
     public $id_currency;
+
     public $id_country;
+
     public $id_group;
+
     public $id_customer;
+
     public $price;
+
     public $from_quantity;
+
     public $reduction;
+
     public $reduction_tax = 1;
+
     public $reduction_type;
+
     public $from;
+
     public $to;
 
     /**
@@ -354,6 +371,7 @@ class SpecificPriceCore extends ObjectModel
         if (! $priority) {
             $priority = Configuration::get('PS_SPECIFIC_PRICE_PRIORITIES');
         }
+
         $priority = 'id_customer;' . $priority;
 
         return explode(';', $priority);
@@ -377,6 +395,7 @@ class SpecificPriceCore extends ObjectModel
         if ($field_value === 0 || array_key_exists($field_name, self::$_no_specific_values)) {
             return $query_extra;
         }
+
         $key_cache = __FUNCTION__ . '-' . $field_name . '-' . $threshold;
         $specific_list = [];
         if (! array_key_exists($key_cache, self::$_filterOutCache)) {
@@ -388,6 +407,7 @@ class SpecificPriceCore extends ObjectModel
 
                 return $query_extra;
             }
+
             // Fetch the approximate count of specific price. explain can be 100x faster than count.
             $query_count = 'EXPLAIN SELECT COUNT(DISTINCT `' . $name . '`) FROM `' . _DB_PREFIX_ . 'specific_price` WHERE `' . $name . '` != 0';
             $specific_count_result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($query_count);
@@ -400,6 +420,7 @@ class SpecificPriceCore extends ObjectModel
                     $specific_list[] = $value[$field_name];
                 }
             }
+
             self::$_filterOutCache[$key_cache] = $specific_list;
         } else {
             $specific_list = self::$_filterOutCache[$key_cache];
@@ -436,9 +457,11 @@ class SpecificPriceCore extends ObjectModel
         if ($beginning === null) {
             $beginning = $now;
         }
+
         if ($ending === null) {
             $ending = $now;
         }
+
         $id_customer = (int) $id_customer;
         $id_cart = (int) $id_cart;
 
@@ -461,10 +484,10 @@ class SpecificPriceCore extends ObjectModel
         if ($ending === $now && $beginning === $now) {
             $key = __FUNCTION__ . '-' . $first_date . '-' . $last_date;
             if (! array_key_exists($key, self::$_filterOutCache)) {
-                $query_from_count = 'SELECT 1 FROM `' . _DB_PREFIX_ . 'specific_price` WHERE `from` BETWEEN \'' . $first_date . '\' AND \'' . $last_date . '\'';
+                $query_from_count = 'SELECT 1 FROM `' . _DB_PREFIX_ . "specific_price` WHERE `from` BETWEEN '" . $first_date . "' AND '" . $last_date . "'";
                 $from_specific_count = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query_from_count);
 
-                $query_to_count = 'SELECT 1 FROM `' . _DB_PREFIX_ . 'specific_price` WHERE `to` BETWEEN \'' . $first_date . '\' AND \'' . $last_date . '\'';
+                $query_to_count = 'SELECT 1 FROM `' . _DB_PREFIX_ . "specific_price` WHERE `to` BETWEEN '" . $first_date . "' AND '" . $last_date . "'";
 
                 $to_specific_count = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query_to_count);
                 self::$_filterOutCache[$key] = [$from_specific_count, $to_specific_count];
@@ -472,19 +495,22 @@ class SpecificPriceCore extends ObjectModel
                 [$from_specific_count, $to_specific_count] = self::$_filterOutCache[$key];
             }
         } else {
-            $from_specific_count = $to_specific_count = 1;
+            $from_specific_count = 1;
+            $to_specific_count = 1;
         }
 
         // if the from and to is not reached during the current day, just change $ending & $beginning to any date of the day to improve the cache
         if (! $from_specific_count && ! $to_specific_count) {
-            $ending = $beginning = $first_date;
+            $ending = $first_date;
+            $beginning = $first_date;
         }
+
         $db = Db::getInstance();
         $beginning = $db->escape($beginning);
         $ending = $db->escape($ending);
 
-        $query_extra .= ' AND (`from` = \'0000-00-00 00:00:00\' OR \'' . $beginning . '\' >= `from`)'
-                       . ' AND (`to` = \'0000-00-00 00:00:00\' OR \'' . $ending . '\' <= `to`)';
+        $query_extra .= " AND (`from` = '0000-00-00 00:00:00' OR '" . $beginning . "' >= `from`)"
+                       . " AND (`to` = '0000-00-00 00:00:00' OR '" . $ending . "' <= `to`)";
 
         return $query_extra;
     }
@@ -514,6 +540,7 @@ class SpecificPriceCore extends ObjectModel
             $row = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($queryHasGlobalRule);
             self::$_hasGlobalProductRules = ! empty($row);
         }
+
         if (self::$_hasGlobalProductRules) {
             return true;
         }
@@ -602,6 +629,7 @@ class SpecificPriceCore extends ObjectModel
         if (! SpecificPrice::isFeatureActive()) {
             return [];
         }
+
         /*
          * The date is not taken into account for the cache, but this is for the better because it keeps the consistency
          * for the whole script.
@@ -649,6 +677,7 @@ class SpecificPriceCore extends ObjectModel
                     $real_quantity
                 );
             }
+
             $query = '
 			SELECT *, ' . SpecificPrice::_getScoreQuery($id_product, $id_shop, $id_currency, $id_country, $id_group, $id_customer) . '
 				FROM `' . _DB_PREFIX_ . 'specific_price`
@@ -688,7 +717,7 @@ class SpecificPriceCore extends ObjectModel
 
         return Db::getInstance()->execute('
 		INSERT INTO `' . _DB_PREFIX_ . 'specific_price_priority` (`id_product`, `priority`)
-		VALUES (' . (int) $id_product . ',\'' . pSQL(rtrim($value, ';')) . '\')
+		VALUES (' . (int) $id_product . ",'" . pSQL(rtrim($value, ';')) . '\')
 		ON DUPLICATE KEY UPDATE `priority` = \'' . pSQL(rtrim($value, ';')) . '\'
 		');
     }
@@ -812,9 +841,11 @@ class SpecificPriceCore extends ObjectModel
         if ($id_product) {
             $this->id_product = (int) $id_product;
         }
+
         if ($this->id_product_attribute && isset($combination_associations[$this->id_product_attribute])) {
             $this->id_product_attribute = (int) $combination_associations[$this->id_product_attribute];
         }
+
         unset($this->id);
         // specific price row may already have been created for catalog specific price rule
         if (static::exists(
@@ -882,6 +913,6 @@ class SpecificPriceCore extends ObjectModel
 													`id_customer`=' . (int) $id_customer . ' AND
 													`from_quantity`=' . (int) $from_quantity . ' AND
 													`from` >= \'' . pSQL($from) . '\' AND
-													`to` <= \'' . pSQL($to) . '\'' . $rule);
+													`to` <= \'' . pSQL($to) . "'" . $rule);
     }
 }

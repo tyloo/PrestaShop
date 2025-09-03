@@ -66,6 +66,7 @@ class ConditionsToApproveFinderCore
         if (! is_array($hookedConditions)) {
             $hookedConditions = [];
         }
+
         foreach ($hookedConditions as $hookedCondition) {
             if ($hookedCondition instanceof TermsAndConditions) {
                 $allConditions[] = $hookedCondition;

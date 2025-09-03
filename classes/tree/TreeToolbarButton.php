@@ -29,8 +29,11 @@ abstract class TreeToolbarButtonCore implements Stringable
     public const DEFAULT_TEMPLATE_DIRECTORY = 'helpers/tree';
 
     protected $_attributes;
+
     private $_context;
+
     protected $_template;
+
     protected $_template_directory;
 
     public function __construct($label, $id = null, $name = null, $class = null)
@@ -178,17 +181,20 @@ abstract class TreeToolbarButtonCore implements Stringable
             return $this->_normalizeDirectory($this->getContext()->controller->getTemplatePath())
                 . $this->getTemplateDirectory() . $template;
         }
+
         if ($this->getContext()->controller instanceof AdminController && isset($controllerName)
             && file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
                 . \DIRECTORY_SEPARATOR . $controllerName . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
                 . \DIRECTORY_SEPARATOR . $controllerName . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template;
         }
+
         if (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
                 . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
                     . $this->getTemplateDirectory() . $template;
         }
+
         if (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))
                 . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))

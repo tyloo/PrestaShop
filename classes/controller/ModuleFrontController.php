@@ -85,6 +85,7 @@ class ModuleFrontControllerCore extends FrontController
                 ));
             }
         }
+
         parent::initContent();
     }
 

@@ -31,10 +31,15 @@
 class ConnectionsSourceCore extends ObjectModel
 {
     public $id_connections;
+
     public $http_referer;
+
     public $request_uri;
+
     public $keywords;
+
     public $date_add;
+
     public static $uri_max_size = 255;
 
     /**
@@ -74,9 +79,10 @@ class ConnectionsSourceCore extends ObjectModel
 
     public static function logHttpReferer(?Cookie $cookie = null)
     {
-        if (! $cookie) {
+        if ($cookie === null) {
             $cookie = Context::getContext()->cookie;
         }
+
         if (! isset($cookie->id_connections) || ! Validate::isUnsignedInt($cookie->id_connections)) {
             return false;
         }
@@ -121,6 +127,7 @@ class ConnectionsSourceCore extends ObjectModel
         if (! Validate::isUrl($source->request_uri)) {
             $source->request_uri = '';
         }
+
         $source->request_uri = substr($source->request_uri, 0, ConnectionsSource::$uri_max_size);
 
         return $source->add();

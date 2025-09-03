@@ -79,7 +79,7 @@ class TagCore extends ObjectModel
             $row = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
             SELECT *
             FROM `' . _DB_PREFIX_ . 'tag` t
-            WHERE `name` = \'' . pSQL($name) . '\' AND `id_lang` = ' . (int) $idLang);
+            WHERE `name` = \'' . pSQL($name) . "' AND `id_lang` = " . (int) $idLang);
 
             if ($row) {
                 $this->id = (int) $row['id_tag'];
@@ -94,6 +94,7 @@ class TagCore extends ObjectModel
         if (! parent::add($autoDate, $nullValues)) {
             return false;
         }
+
         if (isset($_POST['products'])) {
             return $this->setProducts(Tools::getValue('products'));
         }
@@ -140,6 +141,7 @@ class TagCore extends ObjectModel
                 if (! Validate::isGenericName($tag)) {
                     return false;
                 }
+
                 $tagMaxLength = self::$definition['fields']['name']['size'];
                 $tag = trim(Tools::substr(trim((string) $tag), 0, $tagMaxLength));
                 $tagObj = new Tag(null, $tag, (int) $idLang);
@@ -150,6 +152,7 @@ class TagCore extends ObjectModel
                     $tagObj->id_lang = (int) $idLang;
                     $tagObj->add();
                 }
+
                 if (! in_array($tagObj->id, $list, true)) {
                     $list[] = $tagObj->id;
                 }
@@ -164,6 +167,7 @@ class TagCore extends ObjectModel
                 'id_lang' => (int) $idLang,
             ];
         }
+
         $result = Db::getInstance()->insert('product_tag', $data);
 
         if ($list !== []) {
@@ -260,6 +264,7 @@ class TagCore extends ObjectModel
         WHERE pt.`id_product`=' . (int) $idProduct)) {
             return false;
         }
+
         $result = [];
         foreach ($tmp as $tag) {
             $result[$tag['id_lang']][] = $tag['name'];
@@ -277,9 +282,10 @@ class TagCore extends ObjectModel
      */
     public function getProducts($associated = true, ?Context $context = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
+
         $idLang = $this->id_lang ?: $context->language->id;
 
         if (! $this->id && $associated) {
@@ -321,12 +327,14 @@ class TagCore extends ObjectModel
                 foreach ($array as $idProduct) {
                     $ids[] = '(' . (int) $idProduct . ',' . (int) $this->id . ',' . (int) $this->id_lang . ')';
                 }
+
                 $result = Db::getInstance()->execute('INSERT INTO ' . _DB_PREFIX_ . 'product_tag (id_product, id_tag, id_lang) VALUES ' . implode(',', $ids));
                 if (Configuration::get('PS_SEARCH_INDEXATION')) {
                     $result = $result && Search::indexation(false);
                 }
             }
         }
+
         self::updateTagCount([(int) $this->id]);
 
         return $result;
@@ -386,6 +394,7 @@ class TagCore extends ObjectModel
         foreach ($tagsRemoved as $tagRemoved) {
             $tagList[] = $tagRemoved['id_tag'];
         }
+
         if ($tagList !== []) {
             self::updateTagCount($tagList);
         }

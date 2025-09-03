@@ -95,9 +95,11 @@ abstract class ModuleGridCore extends Module
         if (! Validate::isModuleName($render)) {
             throw new PrestaShopException('Invalid grid module name.');
         }
+
         if (! Tools::file_exists_cache($file = _PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
             throw new PrestaShopException('Main grid module file does not exist.');
         }
+
         require_once $file;
         $this->_render = new $render($type);
 
@@ -125,9 +127,11 @@ abstract class ModuleGridCore extends Module
         if (! ($render = Configuration::get('PS_STATS_GRID_RENDER'))) {
             return Context::getContext()->getTranslator()->trans('No grid engine selected', [], 'Admin.Modules.Notification');
         }
+
         if (! Validate::isModuleName($render)) {
             throw new PrestaShopException('Invalid grid module name.');
         }
+
         if (! file_exists(_PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
             return Context::getContext()->getTranslator()->trans('Grid engine selected is unavailable.', [], 'Admin.Modules.Notification');
         }
@@ -141,12 +145,15 @@ abstract class ModuleGridCore extends Module
         if (! isset($params['width']) || ! Validate::IsUnsignedInt($params['width'])) {
             $params['width'] = 600;
         }
+
         if (! isset($params['height']) || ! Validate::IsUnsignedInt($params['height'])) {
             $params['height'] = 920;
         }
+
         if (! isset($params['start']) || ! Validate::IsUnsignedInt($params['start'])) {
             $params['start'] = 0;
         }
+
         if (! isset($params['limit']) || ! Validate::IsUnsignedInt($params['limit'])) {
             $params['limit'] = 40;
         }
@@ -156,18 +163,23 @@ abstract class ModuleGridCore extends Module
         if (isset($params['start']) && Validate::IsUnsignedInt($params['start'])) {
             $grider .= '&start=' . $params['start'];
         }
+
         if (isset($params['limit']) && Validate::IsUnsignedInt($params['limit'])) {
             $grider .= '&limit=' . $params['limit'];
         }
+
         if (isset($params['type']) && Validate::IsName($params['type'])) {
             $grider .= '&type=' . $params['type'];
         }
+
         if (isset($params['option']) && Validate::IsGenericName($params['option'])) {
             $grider .= '&option=' . $params['option'];
         }
+
         if (isset($params['sort']) && Validate::IsName($params['sort'])) {
             $grider .= '&sort=' . $params['sort'];
         }
+
         if (isset($params['dir']) && Validate::isSortDirection($params['dir'])) {
             $grider .= '&dir=' . $params['dir'];
         }
@@ -193,15 +205,18 @@ abstract class ModuleGridCore extends Module
             foreach ($datas['columns'] as $column) {
                 $this->_csv .= $column['header'] . ';';
             }
+
             $this->_csv = rtrim($this->_csv, ';') . "\n";
 
             foreach ($this->_values as $value) {
                 foreach ($datas['columns'] as $column) {
                     $this->_csv .= $value[$column['dataIndex']] . ';';
                 }
+
                 $this->_csv = rtrim($this->_csv, ';') . "\n";
             }
         }
+
         $this->_displayCsv();
     }
 
@@ -210,6 +225,7 @@ abstract class ModuleGridCore extends Module
         if (ob_get_level() && ob_get_length() > 0) {
             ob_end_clean();
         }
+
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="' . $this->displayName . ' - ' . time() . '.csv"');
         echo $this->_csv;

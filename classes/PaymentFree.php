@@ -34,10 +34,12 @@ class PaymentFree extends PaymentModule
      * @var bool Status
      */
     public $active = true;
+
     /**
      * @var string
      */
     public $name = 'free_order';
+
     /**
      * @var string
      */

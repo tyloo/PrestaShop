@@ -27,18 +27,28 @@
 class FormFieldCore
 {
     private $name = '';
+
     private $type = 'text';
+
     private $required = false;
+
     private $label = '';
+
     private $value;
+
     private $availableValues = [];
+
     /**
      * @var int|null
      */
     private $minLength;
+
     private $maxLength;
+
     private $errors = [];
+
     private $constraints = [];
+
     private $attr = [];
 
     /**

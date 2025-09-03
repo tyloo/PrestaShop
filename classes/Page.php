@@ -31,6 +31,7 @@
 class PageCore extends ObjectModel
 {
     public $id_page_type;
+
     public $id_object;
 
     public $name;
@@ -109,7 +110,7 @@ class PageCore extends ObjectModel
             '
 				SELECT id_page_type
 				FROM ' . _DB_PREFIX_ . 'page_type
-				WHERE name = \'' . pSQL($name) . '\''
+				WHERE name = \'' . pSQL($name) . "'"
         )
         ) {
             return $value;

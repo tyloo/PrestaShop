@@ -227,7 +227,7 @@ class ProductDownloadCore extends ObjectModel
         return (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue(
             'SELECT `id_product_download`
             FROM `' . _DB_PREFIX_ . 'product_download`
-            WHERE `filename` = \'' . pSQL($filename) . '\''
+            WHERE `filename` = \'' . pSQL($filename) . "'"
         );
     }
 
@@ -260,7 +260,7 @@ class ProductDownloadCore extends ObjectModel
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
 		SELECT `display_filename`
 		FROM `' . _DB_PREFIX_ . 'product_download`
-		WHERE `filename` = \'' . pSQL($filename) . '\'');
+		WHERE `filename` = \'' . pSQL($filename) . "'");
     }
 
     /**
@@ -292,6 +292,7 @@ class ProductDownloadCore extends ObjectModel
         if ($class) {
             $html .= ' class="' . $class . '"';
         }
+
         $html .= '>' . $this->display_filename . '</a>';
 
         return $html;
@@ -307,6 +308,7 @@ class ProductDownloadCore extends ObjectModel
         if (! (int) $this->nb_days_accessible) {
             return '0000-00-00 00:00:00';
         }
+
         $timestamp = strtotime('+' . (int) $this->nb_days_accessible . ' day');
 
         return date('Y-m-d H:i:s', $timestamp);

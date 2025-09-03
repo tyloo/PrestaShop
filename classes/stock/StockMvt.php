@@ -243,6 +243,7 @@ class StockMvtCore extends ObjectModel
             if ($quantity_total >= $quantity) {
                 break;
             }
+
             $quantity_total += (int) $row['physical_quantity'];
             $movements[] = $row;
         }
@@ -271,6 +272,7 @@ class StockMvtCore extends ObjectModel
         } else {
             $query->where('s.id_product = ' . (int) $id_product);
         }
+
         $query->orderBy('date_add DESC');
 
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);

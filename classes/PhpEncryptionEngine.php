@@ -70,12 +70,12 @@ class PhpEncryptionEngineCore
     {
         try {
             $plaintext = Crypto::decrypt($cipherText, $this->key);
-        } catch (Exception $e) {
-            if ($e instanceof Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException) {
+        } catch (Exception $exception) {
+            if ($exception instanceof Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException) {
                 return false;
             }
 
-            throw $e;
+            throw $exception;
         }
 
         return $plaintext;

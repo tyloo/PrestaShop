@@ -123,6 +123,7 @@ class StateCore extends ObjectModel
         if (! $idState) {
             return false;
         }
+
         $cacheId = 'State::getNameById_' . (int) $idState;
         if (! Cache::isStored($cacheId)) {
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue(
@@ -151,6 +152,7 @@ class StateCore extends ObjectModel
         if (empty($state)) {
             return false;
         }
+
         $cacheId = 'State::getIdByName_' . pSQL($state);
         if (! Cache::isStored($cacheId)) {
             $result = (int) Db::getInstance()->getValue('
@@ -261,6 +263,7 @@ class StateCore extends ObjectModel
             if (in_array($sort, $available_sort, true)) {
                 $orderBy = $orderBy . ' ' . $sort;
             }
+
             $sql->orderBy($orderBy);
         }
 

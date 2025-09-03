@@ -79,6 +79,7 @@ class TaxCore extends ObjectModel
     ];
 
     protected static $_product_country_tax = [];
+
     protected static $_product_tax_via_rules = [];
 
     protected $webserviceParameters = [
@@ -122,6 +123,7 @@ class TaxCore extends ObjectModel
 
             return $res;
         }
+
         if (parent::update($null_values)) {
             return true;
         }
@@ -196,7 +198,7 @@ class TaxCore extends ObjectModel
 			SELECT t.`id_tax`
 			FROM `' . _DB_PREFIX_ . 'tax` t
 			LEFT JOIN `' . _DB_PREFIX_ . 'tax_lang` tl ON (tl.id_tax = t.id_tax)
-			WHERE tl.`name` = \'' . pSQL($tax_name) . '\' ' .
+			WHERE tl.`name` = \'' . pSQL($tax_name) . "' " .
             ($active === 1 ? ' AND t.`active` = 1' : ''));
 
         return $tax ? (int) $tax['id_tax'] : false;

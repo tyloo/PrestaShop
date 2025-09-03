@@ -39,14 +39,17 @@ class ProductAttributeCore extends ObjectModel
      * @var string|string[] Name
      */
     public $name;
+
     /**
      * @var string
      */
     public $color;
+
     /**
      * @var int
      */
     public $position;
+
     /**
      * @todo Find type
      */
@@ -132,6 +135,7 @@ class ProductAttributeCore extends ObjectModel
                         $products[] = $value['id_product'];
                     }
                 }
+
                 $combination->delete();
             }
 
@@ -151,6 +155,7 @@ class ProductAttributeCore extends ObjectModel
             /* Reinitializing position */
             $this->cleanPositions((int) $this->id_attribute_group);
         }
+
         $return = parent::delete();
         if ($return) {
             Hook::exec('actionAttributeDelete', ['id_attribute' => $this->id]);
@@ -255,7 +260,7 @@ class ProductAttributeCore extends ObjectModel
 				ON (a.`id_attribute` = al.`id_attribute` AND al.`id_lang` = ' . (int) $idLang . ')
 			' . Shop::addSqlAssociation('attribute_group', 'ag') . '
 			' . Shop::addSqlAssociation('attribute', 'a') . '
-			WHERE al.`name` = \'' . pSQL($name) . '\' AND ag.`id_attribute_group` = ' . (int) $idAttributeGroup . '
+			WHERE al.`name` = \'' . pSQL($name) . "' AND ag.`id_attribute_group` = " . (int) $idAttributeGroup . '
 			ORDER BY agl.`name` ASC, a.`position` ASC
 		');
 
@@ -274,7 +279,7 @@ class ProductAttributeCore extends ObjectModel
      */
     public static function checkAttributeQty($idProductAttribute, $qty, ?Shop $shop = null)
     {
-        if (! $shop) {
+        if ($shop === null) {
             $shop = Context::getContext()->shop;
         }
 
@@ -345,7 +350,7 @@ class ProductAttributeCore extends ObjectModel
         $sql = '
 			SELECT a.`id_attribute`, a.`position`, a.`id_attribute_group`
 			FROM `' . _DB_PREFIX_ . 'attribute` a
-			WHERE a.`id_attribute_group` = ' . (int) $idAttributeGroup . '
+			WHERE a.`id_attribute_group` = ' . $idAttributeGroup . '
 			ORDER BY a.`position` ASC';
 
         if (! $res = Db::getInstance()->executeS($sql)) {

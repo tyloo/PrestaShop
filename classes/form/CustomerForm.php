@@ -44,7 +44,9 @@ class CustomerFormCore extends AbstractForm
     private $context;
 
     private $customerPersister;
+
     private $guest_allowed;
+
     private $passwordRequired = true;
 
     private $IDNConverter;
@@ -176,6 +178,7 @@ class CustomerFormCore extends AbstractForm
                         } else {
                             $passwordField->addError($globalErrorMessage);
                         }
+
                         foreach ($result['feedback']['suggestions'] as $suggestion) {
                             $passwordField->addError($this->translator->trans($suggestion, [], 'Shop.Theme.Global'));
                         }
@@ -185,6 +188,7 @@ class CustomerFormCore extends AbstractForm
                 }
             }
         }
+
         $this->validateFieldsLengths();
         $this->validateByModules();
 
@@ -293,6 +297,7 @@ class CustomerFormCore extends AbstractForm
                 $formFieldsAssociated[$formField->moduleName][] = $formField;
             }
         }
+
         // Because of security reasons (i.e password), we don't send all
         // the values to the module but only the ones it created
         foreach ($formFieldsAssociated as $moduleName => $formFields) {

@@ -143,13 +143,15 @@ class OrderCarrierCore extends ObjectModel
         $address = new Address((int) $order->id_address_delivery);
 
         if (! Validate::isLoadedObject($customer)) {
-            throw new PrestaShopException('Can\'t load Customer object');
+            throw new PrestaShopException("Can't load Customer object");
         }
+
         if (! Validate::isLoadedObject($carrier)) {
-            throw new PrestaShopException('Can\'t load Carrier object');
+            throw new PrestaShopException("Can't load Carrier object");
         }
+
         if (! Validate::isLoadedObject($address)) {
-            throw new PrestaShopException('Can\'t load Address object');
+            throw new PrestaShopException("Can't load Address object");
         }
 
         if (! $carrier->url) {
@@ -175,6 +177,7 @@ class OrderCarrierCore extends ObjectModel
                 $img = $prod_obj->getCover($prod_obj->id);
                 $img_url = ! empty($img['id_image']) ? $link->getImageLink($link_rewrite, $img['id_image']) : '';
             }
+
             $prod_url = $prod_obj->getLink();
 
             $metadata .= "\n" . '<div itemprop="itemShipped" itemscope itemtype="https://schema.org/Product">';
@@ -184,7 +187,7 @@ class OrderCarrierCore extends ObjectModel
             $metadata .= "\n" . '</div>';
         }
 
-        $orderLanguage = new Language((int) $orderLanguageId);
+        $orderLanguage = new Language($orderLanguageId);
         $templateVars = [
             '{followup}' => str_replace('@', $this->tracking_number, $carrier->url),
             '{firstname}' => $customer->firstname,
@@ -237,7 +240,7 @@ class OrderCarrierCore extends ObjectModel
         if ($sendemail) {
             $order = new Order((int) $this->id_order);
             if (! Validate::isLoadedObject($order)) {
-                throw new PrestaShopException('Can\'t load Order object');
+                throw new PrestaShopException("Can't load Order object");
             }
 
             if (! $this->sendInTransitEmail($order)) {

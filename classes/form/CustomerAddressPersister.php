@@ -27,6 +27,7 @@
 class CustomerAddressPersisterCore
 {
     private $customer;
+
     private $cart;
 
     public function __construct(
@@ -94,9 +95,11 @@ class CustomerAddressPersisterCore
             if ($this->cart->id_address_invoice === $id) {
                 unset($this->cart->id_address_invoice);
             }
+
             if ($this->cart->id_address_delivery === $id) {
                 unset($this->cart->id_address_delivery);
             }
+
             $this->cart->updateAddressId(
                 $id,
                 Address::getFirstCustomerAddressId($this->customer->id)
@@ -116,7 +119,8 @@ class CustomerAddressPersisterCore
     private function updateUsedAddress(Address $address)
     {
         $old_address = new Address($address->id);
-        $address->id = $address->id_address = null;
+        $address->id = null;
+        $address->id_address = null;
 
         if ($address->save() && $old_address->delete()) {
             /*

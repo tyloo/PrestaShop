@@ -34,10 +34,13 @@ use PrestaShop\PrestaShop\Core\Localization\CLDR\LocaleRepository;
 class LocalizationPackCore
 {
     public $name;
+
     public $version;
 
     protected $iso_code_lang;
+
     protected $iso_currency;
+
     protected $_errors = [];
 
     /**
@@ -68,6 +71,7 @@ class LocalizationPackCore
             if ($id_country) {
                 $country = new Country($id_country);
             }
+
             if (! $id_country || ! Validate::isLoadedObject($country)) {
                 $this->_errors[] = Context::getContext()->getTranslator()->trans(
                     'Cannot load country: %d',
@@ -77,6 +81,7 @@ class LocalizationPackCore
 
                 return false;
             }
+
             if (! $country->active) {
                 $country->active = true;
                 if (! $country->update()) {
@@ -103,6 +108,7 @@ class LocalizationPackCore
                 if (! ($id_lang = (int) Language::getIdByIso($this->iso_code_lang, true))) {
                     $id_lang = 1;
                 }
+
                 if (! $install_mode) {
                     Configuration::updateValue('PS_LANG_DEFAULT', $id_lang);
                 }
@@ -220,6 +226,7 @@ class LocalizationPackCore
 
                     continue;
                 }
+
                 $tax = new Tax();
                 $tax->name[(int) Configuration::get('PS_LANG_DEFAULT')] = (string) $attributes['name'];
                 $tax->rate = (float) $attributes['rate'];
@@ -463,6 +470,7 @@ class LocalizationPackCore
 
                     return false;
                 }
+
                 if (! Configuration::updateValue($varNames[(string) $attributes['type']], (string) $attributes['value'])) {
                     $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred while setting the units.', [], 'Admin.International.Notification');
 
@@ -572,7 +580,7 @@ class LocalizationPackCore
                 Configuration::updateValue('PRICE_DISPLAY_METHOD', (int) $attributes['price_display_method']);
 
                 foreach ([(int) Configuration::get('PS_CUSTOMER_GROUP'), (int) Configuration::get('PS_GUEST_GROUP'), (int) Configuration::get('PS_UNIDENTIFIED_GROUP')] as $id_group) {
-                    $group = new Group((int) $id_group);
+                    $group = new Group($id_group);
                     $group->price_display_method = (int) $attributes['price_display_method'];
                     if (! $group->save()) {
                         $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred during the default group update', [], 'Admin.International.Notification');

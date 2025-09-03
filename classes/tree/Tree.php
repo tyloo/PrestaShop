@@ -30,27 +30,42 @@ use PrestaShopBundle\Translation\TranslatorComponent;
 class TreeCore implements Stringable
 {
     public const DEFAULT_TEMPLATE_DIRECTORY = 'helpers/tree';
+
     public const DEFAULT_TEMPLATE = 'tree.tpl';
+
     public const DEFAULT_HEADER_TEMPLATE = 'tree_header.tpl';
+
     public const DEFAULT_NODE_FOLDER_TEMPLATE = 'tree_node_folder.tpl';
+
     public const DEFAULT_NODE_ITEM_TEMPLATE = 'tree_node_item.tpl';
 
     protected $_attributes;
+
     private $_context;
+
     protected $_data;
+
     protected $_data_search;
+
     protected $_headerTemplate;
+
     protected $_id_tree;
+
     private $_id;
+
     protected $_node_folder_template;
+
     protected $_node_item_template;
+
     protected $_template;
 
     /**
      * @var string|array|null
      */
     private $_template_directory;
+
     private $_title;
+
     private $_no_js;
 
     /**
@@ -316,23 +331,27 @@ class TreeCore implements Stringable
             return $this->_normalizeDirectory($this->getContext()->controller->getTemplatePath()) .
                 $controller_name . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template;
         }
+
         if ($this->getContext()->controller instanceof ModuleAdminController && file_exists($this->_normalizeDirectory(
             $this->getContext()->controller->getTemplatePath()
         ) . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->controller->getTemplatePath())
                 . $this->getTemplateDirectory() . $template;
         }
+
         if ($this->getContext()->controller instanceof AdminController && isset($controller_name)
             && file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
                 . \DIRECTORY_SEPARATOR . $controller_name . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
                 . \DIRECTORY_SEPARATOR . $controller_name . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template;
         }
+
         if (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
             . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
                 . $this->getTemplateDirectory() . $template;
         }
+
         if (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))
             . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))

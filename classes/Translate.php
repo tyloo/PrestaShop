@@ -31,6 +31,7 @@
 class TranslateCore
 {
     public static $regexSprintfParams = '#(?:%%|%(?:[0-9]+\$)?[+-]?(?:[ 0]|\'.)?-?[0-9]*(?:\.[0-9]+)?[bcdeufFosxX])#';
+
     public static $regexClassicParams = '/%\w+%/';
 
     /**
@@ -58,6 +59,7 @@ class TranslateCore
         if ($htmlentities) {
             $str = htmlspecialchars((string) $str, \ENT_QUOTES, 'utf-8');
         }
+
         $str = str_replace('"', '&quot;', $str);
 
         if (
@@ -129,6 +131,7 @@ class TranslateCore
                     $_MODULES = ! empty($_MODULES) ? array_merge($_MODULES, $_MODULE) : $_MODULE;
                 }
             }
+
             $translationsMerged[$name][$iso] = true;
         }
 
@@ -253,6 +256,7 @@ class TranslateCore
         if (! empty($args) && self::isSprintfString($string)) {
             return vsprintf($string, $args);
         }
+
         if (! empty($args)) {
             return strtr($string, $args);
         }

@@ -271,6 +271,7 @@ class AddressCore extends ObjectModel
         if (isset(self::$_idCountries[$this->id])) {
             unset(self::$_idCountries[$this->id]);
         }
+
         if (isset(self::$_idZones[$this->id])) {
             unset(self::$_idZones[$this->id]);
         }
@@ -479,7 +480,7 @@ class AddressCore extends ObjectModel
 		WHERE `id_address_delivery` = ' . (int) $this->id . '
 		OR `id_address_invoice` = ' . (int) $this->id);
 
-        return $result > 0 ? (int) $result : false;
+        return $result > 0 ? $result : false;
     }
 
     /**
@@ -494,6 +495,7 @@ class AddressCore extends ObjectModel
         if (isset(self::$_idCountries[$id_address])) {
             return self::$_idCountries[$id_address];
         }
+
         if ($id_address) {
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
 			SELECT `id_country`, `id_state`, `vat_number`, `postcode` FROM `' . _DB_PREFIX_ . 'address`
@@ -501,6 +503,7 @@ class AddressCore extends ObjectModel
         } else {
             $result = false;
         }
+
         self::$_idCountries[$id_address] = $result;
 
         return $result;
@@ -566,6 +569,7 @@ class AddressCore extends ObjectModel
         if (! $id_customer) {
             return false;
         }
+
         $cache_id = 'Address::getFirstCustomerAddressId_' . (int) $id_customer . '-' . (bool) $active;
         if (! Cache::isStored($cache_id)) {
             $result = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue(
@@ -639,6 +643,7 @@ class AddressCore extends ObjectModel
                 $address->id_state = 0;
                 $address->postcode = '0';
             }
+
             Cache::store($cache_id, $address);
 
             return $address;
@@ -683,7 +688,7 @@ class AddressCore extends ObjectModel
         $query = new DbQuery();
         $query->select('count(*)');
         $query->from('address');
-        $query->where('alias = \'' . pSQL($alias) . '\'');
+        $query->where("alias = '" . pSQL($alias) . "'");
         $query->where('id_address != ' . (int) $id_address);
         $query->where('id_customer = ' . (int) $id_customer);
         $query->where('deleted = 0');

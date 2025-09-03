@@ -254,6 +254,7 @@ class ConfigurationTestCore
 
             return false;
         }
+
         closedir($dh);
         $dummy = rtrim($dir, '\\/') . \DIRECTORY_SEPARATOR . uniqid();
         if (@file_put_contents($dummy, 'test')) {

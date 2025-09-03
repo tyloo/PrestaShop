@@ -135,6 +135,7 @@ class OrderReturnCore extends ObjectModel
         if (! Validate::isLoadedObject($order)) {
             throw new PrestaShopException(sprintf('Order with ID "%s" could not be loaded.', $this->id_order));
         }
+
         $products = $order->getProducts();
         /* Products already returned */
         $order_return = OrderReturn::getOrdersReturn($order->id_customer, $order->id, true);
@@ -144,12 +145,14 @@ class OrderReturnCore extends ObjectModel
                 $products[$key]['product_quantity'] -= (int) $orp['product_quantity'];
             }
         }
+
         /* Quantity check */
         if ($order_detail_list) {
             foreach (array_keys($order_detail_list) as $key) {
                 if (! isset($product_qty_list[$key])) {
                     return false;
                 }
+
                 if ($qty = (int) $product_qty_list[$key]) {
                     if ($products[$key]['product_quantity'] - $qty < 0) {
                         return false;
@@ -175,9 +178,10 @@ class OrderReturnCore extends ObjectModel
 
     public static function getOrdersReturn($customer_id, $order_id = false, $no_denied = false, ?Context $context = null, ?int $idOrderReturn = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
+
         $data = Db::getInstance()->executeS('
 		SELECT *
 		FROM `' . _DB_PREFIX_ . 'order_return`
@@ -221,6 +225,7 @@ class OrderReturnCore extends ObjectModel
             $tmp[$return_detail['id_order_detail']]['quantity'] = isset($tmp[$return_detail['id_order_detail']]['quantity']) ? $tmp[$return_detail['id_order_detail']]['quantity'] + (int) $return_detail['product_quantity'] : (int) $return_detail['product_quantity'];
             $tmp[$return_detail['id_order_detail']]['customizations'] = (int) $return_detail['id_customization'];
         }
+
         $res_tab = [];
         foreach ($products as $key => $product) {
             if (isset($tmp[$product['id_order_detail']])) {
@@ -240,6 +245,7 @@ class OrderReturnCore extends ObjectModel
         if (! Validate::isLoadedObject($order)) {
             throw new PrestaShopException(sprintf('Order with ID "%s" could not be loaded.', $id_order));
         }
+
         $products = $order->getProducts();
 
         /** @var array{id_order_detail: int} $return */

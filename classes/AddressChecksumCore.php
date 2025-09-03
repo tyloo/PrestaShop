@@ -56,6 +56,7 @@ class AddressChecksumCore implements ChecksumInterface
         foreach ($fields as $value) {
             $uniqId .= $value . self::SEPARATOR;
         }
+
         $uniqId = rtrim($uniqId, self::SEPARATOR);
 
         return sha1($uniqId);

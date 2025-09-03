@@ -87,9 +87,11 @@ abstract class ModuleGraphCore extends Module
                             $this->_values[$j][$i] = 0;
                         }
                     }
+
                     $this->_legend[$i] = ($i % 2) ? '' : sprintf('%02dh', $i);
                 }
             }
+
             if (is_callable([$this, 'setDayValues'])) {
                 $this->setDayValues($layers);
             }
@@ -143,10 +145,12 @@ abstract class ModuleGraphCore extends Module
                     for ($i = $from_array['mon']; $i <= 12; ++$i) {
                         $months[] = $i;
                     }
+
                     for ($i = 1; $i <= $to_array['mon']; ++$i) {
                         $months[] = $i;
                     }
                 }
+
                 foreach ($months as $i) {
                     if ($layers === 1) {
                         $this->_values[$i] = 0;
@@ -155,9 +159,11 @@ abstract class ModuleGraphCore extends Module
                             $this->_values[$j][$i] = 0;
                         }
                     }
+
                     $this->_legend[$i] = sprintf('%02d', $i);
                 }
             }
+
             if (is_callable([$this, 'setYearValues'])) {
                 $this->setYearValues($layers);
             }
@@ -178,6 +184,7 @@ abstract class ModuleGraphCore extends Module
                             $this->_values[$j][$i] = 0;
                         }
                     }
+
                     $this->_legend[$i] = sprintf('%04d', $i);
                 }
             }
@@ -209,6 +216,7 @@ abstract class ModuleGraphCore extends Module
                 if ($i > 0) {
                     $this->_csv .= ';';
                 }
+
                 if (isset($this->_titles['main'][$i])) {
                     $this->_csv .= $this->escapeCell($this->_titles['main'][$i]);
                 }
@@ -251,8 +259,10 @@ abstract class ModuleGraphCore extends Module
                             $this->_csv .= $this->escapeCell($this->_values[$i][$key]);
                         }
                     }
+
                     $this->_csv .= ';';
                 }
+
                 $this->_csv .= "\n";
             }
         }
@@ -265,6 +275,7 @@ abstract class ModuleGraphCore extends Module
         if (ob_get_level() && ob_get_length() > 0) {
             ob_end_clean();
         }
+
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="' . $this->displayName . ' - ' . time() . '.csv"');
         echo $this->_csv;
@@ -276,9 +287,11 @@ abstract class ModuleGraphCore extends Module
         if (! Validate::isModuleName($render)) {
             throw new PrestaShopException('Invalid graph module name.');
         }
+
         if (! Tools::file_exists_cache($file = _PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
             throw new PrestaShopException('Main graph module file does not exist.');
         }
+
         require_once $file;
         $this->_render = new $render($type);
 
@@ -307,9 +320,11 @@ abstract class ModuleGraphCore extends Module
         if (! ($render = Configuration::get('PS_STATS_RENDER'))) {
             return Context::getContext()->getTranslator()->trans('No graph engine selected', [], 'Admin.Modules.Notification');
         }
+
         if (! Validate::isModuleName($render)) {
             throw new PrestaShopException('Invalid graph module name.');
         }
+
         if (! file_exists(_PS_ROOT_DIR_ . '/modules/' . $render . '/' . $render . '.php')) {
             return Context::getContext()->getTranslator()->trans('Graph engine selected is unavailable.', [], 'Admin.Modules.Notification');
         }
@@ -320,12 +335,15 @@ abstract class ModuleGraphCore extends Module
         if (! isset($params['layers'])) {
             $params['layers'] = 1;
         }
+
         if (! isset($params['type'])) {
             $params['type'] = 'column';
         }
+
         if (! isset($params['width'])) {
             $params['width'] = '100%';
         }
+
         if (! isset($params['height'])) {
             $params['height'] = 270;
         }
@@ -347,12 +365,14 @@ abstract class ModuleGraphCore extends Module
     protected static function getEmployee($employee = null, ?Context $context = null)
     {
         if (! Validate::isLoadedObject($employee)) {
-            if (! $context) {
+            if ($context === null) {
                 $context = Context::getContext();
             }
+
             if (! Validate::isLoadedObject($context->employee)) {
                 return false;
             }
+
             $employee = $context->employee;
         }
 
@@ -361,9 +381,11 @@ abstract class ModuleGraphCore extends Module
             if (empty($employee->stats_date_from) || $employee->stats_date_from === '0000-00-00') {
                 $employee->stats_date_from = date('Y') . '-01-01';
             }
+
             if (empty($employee->stats_date_to) || $employee->stats_date_to === '0000-00-00') {
                 $employee->stats_date_to = date('Y') . '-12-31';
             }
+
             $employee->update();
         }
 
@@ -378,10 +400,10 @@ abstract class ModuleGraphCore extends Module
     public static function getDateBetween($employee = null)
     {
         if ($employee = static::getEmployee($employee)) {
-            return ' \'' . pSQL($employee->stats_date_from) . ' 00:00:00\' AND \'' . pSQL($employee->stats_date_to) . ' 23:59:59\' ';
+            return " '" . pSQL($employee->stats_date_from) . " 00:00:00' AND '" . pSQL($employee->stats_date_to) . " 23:59:59' ";
         }
 
-        return ' \'' . date('Y-m') . '-01 00:00:00\' AND \'' . date('Y-m-t') . ' 23:59:59\' ';
+        return " '" . date('Y-m') . "-01 00:00:00' AND '" . date('Y-m-t') . " 23:59:59' ";
     }
 
     public function getLang()
@@ -399,7 +421,7 @@ abstract class ModuleGraphCore extends Module
     {
         $escaped = '"';
         if (preg_match('~^[=+\-@]~', $content)) {
-            $content = '\'' . $content;
+            $content = "'" . $content;
         }
 
         $escaped .= str_replace('"', '""', $content);

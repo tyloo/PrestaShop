@@ -181,6 +181,7 @@ class CustomizationCore extends ObjectModel
 			WHERE ore.`id_order` = ' . (int) $idOrder . ' AND ord.`id_customization` != 0')) === false) {
             return false;
         }
+
         $customizations = [];
         foreach ($result as $row) {
             $customizations[(int) $row['id_customization']] = $row;
@@ -202,6 +203,7 @@ class CustomizationCore extends ObjectModel
         if (! $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT `id_customization`, `quantity` FROM `' . _DB_PREFIX_ . 'customization` WHERE `id_cart` = ' . (int) $idCart)) {
             return false;
         }
+
         $customizations = [];
         foreach ($result as $row) {
             $customizations[(int) $row['id_customization']] = $row;
@@ -283,6 +285,7 @@ class CustomizationCore extends ObjectModel
         if (! (int) $idCustomization || ! (int) $idLang) {
             return false;
         }
+
         if (Shop::isFeatureActive() && ! (int) $idShop) {
             $idShop = (int) Context::getContext()->shop->id;
         }
@@ -314,6 +317,7 @@ class CustomizationCore extends ObjectModel
             if ($key > 0) {
                 $inValues .= ',';
             }
+
             $inValues .= (int) $idCustomization;
         }
 
@@ -441,13 +445,14 @@ class CustomizationCore extends ObjectModel
 
             return false;
         }
+
         Db::getInstance()->execute('
 		DELETE FROM `' . _DB_PREFIX_ . 'customized_data`
 		WHERE id_customization = ' . (int) $this->id . '
 		AND type = ' . (int) Product::CUSTOMIZE_TEXTFIELD);
         foreach ($values as $value) {
             $query = 'INSERT INTO `' . _DB_PREFIX_ . 'customized_data` (`id_customization`, `type`, `index`, `value`)
-				VALUES (' . (int) $this->id . ', ' . (int) Product::CUSTOMIZE_TEXTFIELD . ', ' . (int) $value['id_customization_field'] . ', \'' . pSQL($value['value']) . '\')';
+				VALUES (' . (int) $this->id . ', ' . (int) Product::CUSTOMIZE_TEXTFIELD . ', ' . (int) $value['id_customization_field'] . ", '" . pSQL($value['value']) . "')";
 
             if (! Db::getInstance()->execute($query)) {
                 return false;

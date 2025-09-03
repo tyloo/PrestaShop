@@ -324,6 +324,7 @@ class WebserviceSpecificManagementAttachmentsCore implements WebserviceSpecificM
             } else {
                 $attachment->add();
             }
+
             // Remember affected entity
             $this->attachmentId = $attachment->id;
         } catch (MaximumSizeExceededException $e) {

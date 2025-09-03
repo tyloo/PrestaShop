@@ -187,6 +187,7 @@ class FeatureCore extends ObjectModel
                     )
                 );
         }
+
         if ($result) {
             $result = parent::update($nullValues);
             if ($result) {
@@ -282,10 +283,12 @@ class FeatureCore extends ObjectModel
             } else {
                 $feature->position = Feature::getHigherPosition() + 1;
             }
+
             $feature->add();
 
             return $feature->id;
         }
+
         if (isset($rq['id_feature']) && $rq['id_feature']) {
             if (is_numeric($position)) {
                 $feature = new Feature((int) $rq['id_feature']);

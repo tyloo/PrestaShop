@@ -27,10 +27,13 @@
 class HelperTreeShopsCore extends TreeCore
 {
     public const DEFAULT_TEMPLATE = 'tree_shops.tpl';
+
     public const DEFAULT_NODE_FOLDER_TEMPLATE = 'tree_node_folder_checkbox_shops.tpl';
+
     public const DEFAULT_NODE_ITEM_TEMPLATE = 'tree_node_item_checkbox_shops.tpl';
 
     private $_lang;
+
     private $_selected_shops;
 
     public function __construct($id, $title = null, $lang = null)
@@ -127,25 +130,25 @@ class HelperTreeShopsCore extends TreeCore
                 new TreeToolbarLink(
                     $this->translator->trans('Collapse all', [], 'Admin.Actions'),
                     '#',
-                    '$(\'#' . $this->getId() . '\').tree(\'collapseAll\'); return false;',
+                    '$(\'#' . $this->getId() . "').tree('collapseAll'); return false;",
                     'icon-collapse-alt'
                 ),
                 new TreeToolbarLink(
                     $this->translator->trans('Expand all', [], 'Admin.Actions'),
                     '#',
-                    '$(\'#' . $this->getId() . '\').tree(\'expandAll\'); return false;',
+                    '$(\'#' . $this->getId() . "').tree('expandAll'); return false;",
                     'icon-expand-alt'
                 ),
                 new TreeToolbarLink(
                     $this->translator->trans('Check all', [], 'Admin.Actions'),
                     '#',
-                    'checkAllAssociatedShops($(\'#' . $this->getId() . '\')); return false;',
+                    'checkAllAssociatedShops($(\'#' . $this->getId() . "')); return false;",
                     'icon-check-sign'
                 ),
                 new TreeToolbarLink(
                     $this->translator->trans('Uncheck all', [], 'Admin.Actions'),
                     '#',
-                    'uncheckAllAssociatedShops($(\'#' . $this->getId() . '\')); return false;',
+                    'uncheckAllAssociatedShops($(\'#' . $this->getId() . "')); return false;",
                     'icon-check-empty'
                 ),
             ]);

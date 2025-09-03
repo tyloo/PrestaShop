@@ -154,9 +154,13 @@ class HelperListCore extends Helper
     public $list_skip_actions = [];
 
     public $bulk_actions = false;
+
     public $force_show_bulk_actions = false;
+
     public $force_hide_bulk_actions_btn = false;
+
     public $specificConfirmDelete;
+
     public $colorOnBackground;
 
     /**
@@ -339,6 +343,7 @@ class HelperListCore extends Helper
             if (isset($tr[$this->identifier])) {
                 $id = $tr[$this->identifier];
             }
+
             $name = $tr['name'] ?? null;
 
             if ($this->shopLinkType) {
@@ -401,6 +406,7 @@ class HelperListCore extends Helper
                     if (! isset($params['ajax'])) {
                         $params['ajax'] = false;
                     }
+
                     $this->_list[$index][$key] = $calling_obj->displayEnableLink(
                         $this->token,
                         $id,
@@ -432,6 +438,7 @@ class HelperListCore extends Helper
                     } else {
                         $path_to_image = _PS_IMG_DIR_ . $params['image'] . '/' . Image::getImgFolderStatic($tr['id_image']) . (int) $tr['id_image'] . '.' . $this->imageType;
                     }
+
                     $this->_list[$index][$key] = ImageManager::thumbnail($path_to_image, $this->table . '_mini_' . $item_id . '_' . $this->context->shop->id . '.' . $this->imageType, self::LIST_THUMBNAIL_SIZE, $this->imageType);
                 } elseif (isset($params['icon'], $tr[$key]) && (isset($params['icon'][$tr[$key]]) || isset($params['icon']['default']))) {
                     if (! $this->bootstrap) {
@@ -643,7 +650,7 @@ class HelperListCore extends Helper
         }
 
         if ($name !== null) {
-            $name = addcslashes('\n\n' . self::$cache_lang['Name'] . ' ' . $name, '\'');
+            $name = addcslashes('\n\n' . self::$cache_lang['Name'] . ' ' . $name, "'");
         }
 
         $href = $this->currentIndex . '&' . $this->identifier . '=' . $id . '&delete' . $this->table . '&token=' . ($token ?? $this->token);
@@ -751,6 +758,7 @@ class HelperListCore extends Helper
                 $keys = explode('!', (string) $params['filter_key']);
                 $value_key = $keys[1];
             }
+
             $value = Context::getContext()->cookie->{$value_key};
             if (! $value && Tools::getIsset($value_key)) {
                 $value = Tools::getValue($value_key);
@@ -818,6 +826,7 @@ class HelperListCore extends Helper
 
                 break;
             }
+
             if (! (isset($field['search']) && $field['search'] === false)) {
                 $has_search_field = true;
             }
@@ -839,7 +848,7 @@ class HelperListCore extends Helper
             'toolbar_btn' => $this->toolbar_btn,
             'has_bulk_actions' => $this->hasBulkActions($has_value),
             'hide_bulk_actions_btn' => $this->force_hide_bulk_actions_btn,
-            'filters_has_value' => (bool) $has_value,
+            'filters_has_value' => $has_value,
         ]);
 
         if ($this->title_icon !== null) {

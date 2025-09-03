@@ -31,9 +31,13 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
     protected $template = 'checkout/_partials/steps/addresses.tpl';
 
     private $addressForm;
+
     private $use_same_address = true;
+
     private $show_delivery_address_form = false;
+
     private $show_invoice_address_form = false;
+
     private $form_has_continue_button = false;
 
     public function __construct(
@@ -78,6 +82,7 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
                     $this->use_same_address = true;
                 }
             }
+
             $this->setCurrent(true);
         }
 
@@ -101,6 +106,7 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
                 if ($requestParams['saveAddress'] === 'delivery') {
                     $this->use_same_address = isset($requestParams['use_same_address']);
                 }
+
                 $id_address = $this->addressForm->getAddress()->id;
                 if ($requestParams['saveAddress'] === 'delivery') {
                     $this->getCheckoutSession()->setIdAddressDelivery($id_address);
@@ -118,6 +124,7 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
             } else {
                 $this->show_invoice_address_form = true;
             }
+
             $this->addressForm->fillWith($requestParams);
             $this->form_has_continue_button = $this->use_same_address;
         } elseif (isset($requestParams['editAddress'])) {
@@ -128,6 +135,7 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
             } else {
                 $this->show_invoice_address_form = true;
             }
+
             $this->addressForm->loadAddressById($requestParams['id_address']);
         } elseif (isset($requestParams['deleteAddress'])) {
             $addressPersister = new CustomerAddressPersister(

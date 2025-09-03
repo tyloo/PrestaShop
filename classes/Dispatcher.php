@@ -32,7 +32,9 @@ class DispatcherCore
      * List of available front controllers types.
      */
     public const FC_FRONT = 1;
+
     public const FC_ADMIN = 2;
+
     public const FC_MODULE = 3;
 
     public const REWRITE_PATTERN = '[_a-zA-Z0-9\x{0600}-\x{06FF}\pL\pS-]*?';
@@ -239,6 +241,7 @@ class DispatcherCore
      * @var string Set default controller, which will be used if http parameter 'controller' is empty
      */
     protected $default_controller;
+
     protected $use_default_controller = false;
 
     /**
@@ -264,6 +267,7 @@ class DispatcherCore
             if ($request === null) {
                 $request = SymfonyRequest::createFromGlobals();
             }
+
             self::$instance = new Dispatcher($request);
         }
 
@@ -409,6 +413,7 @@ class DispatcherCore
         if (! $this->controller) {
             $this->controller = $this->useDefaultController();
         }
+
         // Execute hook dispatcher before
         Hook::exec('actionDispatcherBefore', ['controller_type' => $this->front_controller]);
 
@@ -424,6 +429,7 @@ class DispatcherCore
                 if (isset($controllers['auth'])) {
                     $controllers['authentication'] = $controllers['auth'];
                 }
+
                 if (isset($controllers['contact'])) {
                     $controllers['contactform'] = $controllers['contact'];
                 }
@@ -431,6 +437,7 @@ class DispatcherCore
                 if (! isset($controllers[strtolower($this->controller)])) {
                     $this->controller = $this->controller_not_found;
                 }
+
                 $controller_class = $controllers[strtolower($this->controller)];
                 $params_hook_action_dispatcher = [
                     'controller_type' => self::FC_FRONT,
@@ -446,19 +453,20 @@ class DispatcherCore
                 $module = Module::getInstanceByName($module_name);
                 $controller_class = 'PageNotFoundController';
                 if (Validate::isLoadedObject($module) && $module->active) {
-                    $controllers = Dispatcher::getControllers(_PS_MODULE_DIR_ . "$module_name/controllers/front/");
+                    $controllers = Dispatcher::getControllers(_PS_MODULE_DIR_ . ($module_name . '/controllers/front/'));
                     if (isset($controllers[strtolower($this->controller)])) {
-                        include_once _PS_MODULE_DIR_ . "$module_name/controllers/front/{$this->controller}.php";
+                        include_once _PS_MODULE_DIR_ . sprintf('%s/controllers/front/%s.php', $module_name, $this->controller);
                         if (file_exists(
-                            _PS_OVERRIDE_DIR_ . "modules/$module_name/controllers/front/{$this->controller}.php"
+                            _PS_OVERRIDE_DIR_ . sprintf('modules/%s/controllers/front/%s.php', $module_name, $this->controller)
                         )) {
-                            include_once _PS_OVERRIDE_DIR_ . "modules/$module_name/controllers/front/{$this->controller}.php";
+                            include_once _PS_OVERRIDE_DIR_ . sprintf('modules/%s/controllers/front/%s.php', $module_name, $this->controller);
                             $controller_class = $module_name . $this->controller . 'ModuleFrontControllerOverride';
                         } else {
                             $controller_class = $module_name . $this->controller . 'ModuleFrontController';
                         }
                     }
                 }
+
                 $params_hook_action_dispatcher = [
                     'controller_type' => self::FC_FRONT,
                     'controller_class' => $controller_class,
@@ -475,7 +483,7 @@ class DispatcherCore
                     && Context::getContext()->employee->isLoggedBack()
                 ) {
                     Tools::redirectAdmin(
-                        "index.php?controller={$this->controller}&token=" . Tools::getAdminTokenLite($this->controller)
+                        sprintf('index.php?controller=%s&token=', $this->controller) . Tools::getAdminTokenLite($this->controller)
                     );
                 }
 
@@ -489,11 +497,11 @@ class DispatcherCore
                     } else {
                         $controller_name = $controllers[strtolower($this->controller)];
                         // Controllers in modules can be named AdminXXX.php or AdminXXXController.php
-                        include_once _PS_MODULE_DIR_ . "{$tab->module}/controllers/admin/$controller_name.php";
+                        include_once _PS_MODULE_DIR_ . sprintf('%s/controllers/admin/%s.php', $tab->module, $controller_name);
                         if (file_exists(
-                            _PS_OVERRIDE_DIR_ . "modules/{$tab->module}/controllers/admin/$controller_name.php"
+                            _PS_OVERRIDE_DIR_ . sprintf('modules/%s/controllers/admin/%s.php', $tab->module, $controller_name)
                         )) {
-                            include_once _PS_OVERRIDE_DIR_ . "modules/{$tab->module}/controllers/admin/$controller_name.php";
+                            include_once _PS_OVERRIDE_DIR_ . sprintf('modules/%s/controllers/admin/%s.php', $tab->module, $controller_name);
                             $controller_class = $controller_name . (
                                 strpos($controller_name, 'Controller') ? 'Override' : 'ControllerOverride'
                             );
@@ -525,6 +533,7 @@ class DispatcherCore
                         ) {
                             Tools::redirectAdmin(Context::getContext()->link->getAdminLink($tabs[0]['class_name']));
                         }
+
                         $this->controller = $this->controller_not_found;
                     }
 
@@ -555,8 +564,8 @@ class DispatcherCore
 
             // Execute hook dispatcher after
             Hook::exec('actionDispatcherAfter', $params_hook_action_dispatcher);
-        } catch (PrestaShopException $e) {
-            $e->displayMessage();
+        } catch (PrestaShopException $prestaShopException) {
+            $prestaShopException->displayMessage();
         }
     }
 
@@ -663,6 +672,7 @@ class DispatcherCore
                             if (! isset($this->default_routes[$route])) {
                                 $this->default_routes[$route] = [];
                             }
+
                             $this->default_routes[$route] = array_merge($this->default_routes[$route], $route_details);
                         }
                     }
@@ -785,8 +795,8 @@ class DispatcherCore
                     'prepend' => stripslashes($prepend),
                     'append' => stripslashes($append),
                 ];
-
-                $prepend_regexp = $append_regexp = '';
+                $prepend_regexp = '';
+                $append_regexp = '';
                 if ($prepend || $append) {
                     $prepend_regexp = '(' . $prepend;
                     $append_regexp = $append . ')?';
@@ -810,6 +820,7 @@ class DispatcherCore
                     );
                 }
             }
+
             $keywords = $transform_keywords;
         }
 
@@ -871,6 +882,7 @@ class DispatcherCore
         if (! isset($this->routes[$id_shop])) {
             $this->routes[$id_shop] = [];
         }
+
         if (! isset($this->routes[$id_shop][$id_lang])) {
             $this->routes[$id_shop][$id_lang] = [];
         }
@@ -926,6 +938,7 @@ class DispatcherCore
         if (isset(Context::getContext()->language) && $id_lang === null) {
             $id_lang = (int) Context::getContext()->language->id;
         }
+
         if (isset(Context::getContext()->shop) && $id_shop === null) {
             $id_shop = (int) Context::getContext()->shop->id;
         }
@@ -1029,6 +1042,7 @@ class DispatcherCore
         if ($id_lang === null) {
             $id_lang = (int) Context::getContext()->language->id;
         }
+
         if ($id_shop === null) {
             $id_shop = (int) Context::getContext()->shop->id;
         }
@@ -1044,6 +1058,7 @@ class DispatcherCore
             return ($route_id === 'index') ? $index_link . (($query) ? '?' . $query : '') :
                 ((trim($route_id) === '') ? '' : $index_link . '?controller=' . $route_id) . (($query) ? '&' . $query : '') . $anchor;
         }
+
         $route = $this->routes[$id_shop][$id_lang][$route_id];
         // Check required fields
         $query_params = $route['params'] ?? [];
@@ -1055,6 +1070,7 @@ class DispatcherCore
             if (! array_key_exists($key, $params)) {
                 throw new PrestaShopException('Dispatcher::createUrl() miss required parameter "' . $key . '" for route "' . $route_id . '"');
             }
+
             if (isset($this->default_routes[$route_id])) {
                 $query_params[$this->default_routes[$route_id]['keywords'][$key]['param']] = $params[$key];
             }
@@ -1081,13 +1097,16 @@ class DispatcherCore
                                 $parameter = reset($parameter);
                             }
                         }
+
                         $replace = $route['keywords'][$key]['prepend'] . $parameter . $route['keywords'][$key]['append'];
                     } else {
                         $replace = '';
                     }
+
                     $url = preg_replace('#\{([^{}]*:)?' . $key . '(:[^{}]*)?\}#', $replace, (string) $url);
                 }
             }
+
             $url = preg_replace('#\{([^{}]*:)?[a-z0-9_]+?(:[^{}]*)?\}#', '', (string) $url);
             if (count($add_param)) {
                 $url .= '?' . http_build_query($add_param, '', '&');
@@ -1134,6 +1153,7 @@ class DispatcherCore
         if (defined('_PS_ADMIN_DIR_')) {
             $_GET['controllerUri'] = Tools::getValue('controller');
         }
+
         if ($this->controller) {
             $_GET['controller'] = $this->controller;
 
@@ -1167,6 +1187,7 @@ class DispatcherCore
             if (! $this->request_uri) {
                 return strtolower($this->controller_not_found);
             }
+
             $controller = $this->controller_not_found;
             $test_request_uri = preg_replace('/(=http:\/\/)/', '=', $this->request_uri);
 

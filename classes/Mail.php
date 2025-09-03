@@ -113,8 +113,11 @@ class MailCore extends ObjectModel
      * Mail content type.
      */
     public const TYPE_HTML = 1;
+
     public const TYPE_TEXT = 2;
+
     public const TYPE_BOTH = 3;
+
     public const TYPE_BOTH_AUTOMATIC_TEXT = 4;
 
     /**
@@ -208,6 +211,7 @@ class MailCore extends ObjectModel
                 true
             );
         }
+
         if (! $keepGoing) {
             return true;
         }
@@ -349,6 +353,7 @@ class MailCore extends ObjectModel
                           self::mimeEncode($addrName);
                 $email->addTo(new Address(self::toPunycode($addr), $addrName));
             }
+
             $toPlugin = $to[0];
         } else {
             /* Simple recipient, one address */
@@ -427,10 +432,12 @@ class MailCore extends ObjectModel
             if ($iso) {
                 $isoArray[] = $iso;
             }
+
             $isoDefault = Language::getIsoById((int) Configuration::get('PS_LANG_DEFAULT'));
             if ($isoDefault && $iso !== $isoDefault) {
                 $isoArray[] = $isoDefault;
             }
+
             if (! in_array('en', $isoArray, true)) {
                 $isoArray[] = 'en';
             }
@@ -545,6 +552,7 @@ class MailCore extends ObjectModel
             if (Configuration::get('PS_MAIL_SUBJECT_PREFIX')) {
                 $subject = '[' . strip_tags((string) $configuration['PS_SHOP_NAME']) . '] ' . $subject;
             }
+
             $email->subject($subject);
 
             // Set Message-ID - getmypid() is blocked on some hosting
@@ -557,6 +565,7 @@ class MailCore extends ObjectModel
             if (! ($replyTo && Validate::isEmail($replyTo))) {
                 $replyTo = $from;
             }
+
             if (! empty($replyTo) && $replyTo !== $toPlugin) {
                 $email->replyTo(new Address($replyTo, (string) $replyToName));
             }
@@ -576,6 +585,7 @@ class MailCore extends ObjectModel
                     $templateVars['{shop_logo}'] = '';
                 }
             }
+
             ShopUrl::cacheMainDomainForShop((int) $idShop);
             if (isset($logo) && $configuration['PS_MAIL_TYPE'] !== Mail::TYPE_TEXT) {
                 $templateVars['{shop_logo}'] = 'cid:shop_logo';
@@ -586,6 +596,7 @@ class MailCore extends ObjectModel
             if (! (Context::getContext()->link instanceof Link)) {
                 Context::getContext()->link = new Link();
             }
+
             $templateVars['{shop_name}'] = Tools::safeOutput($configuration['PS_SHOP_NAME']);
             $templateVars['{shop_url}'] = Context::getContext()->link->getPageLink('index', null, $idLang, null, false, $idShop);
             $templateVars['{my_account_url}'] = Context::getContext()->link->getPageLink('my-account', null, $idLang, null, false, $idShop);
@@ -696,12 +707,15 @@ class MailCore extends ObjectModel
                 if (! is_array($recipientsTo)) {
                     $recipientsTo = [];
                 }
+
                 if (! is_array($recipientsCc)) {
                     $recipientsCc = [];
                 }
+
                 if (! is_array($recipientsBcc)) {
                     $recipientsBcc = [];
                 }
+
                 foreach (array_merge($recipientsTo, $recipientsCc, $recipientsBcc) as $emailAlias => $recipient_name) {
                     $mail->id = null;
                     $mail->recipient = Tools::substr($emailAlias, 0, 255);
@@ -710,9 +724,9 @@ class MailCore extends ObjectModel
             }
 
             return true;
-        } catch (ExceptionInterface $e) {
+        } catch (ExceptionInterface $exception) {
             PrestaShopLogger::addLog(
-                'Mailer Error: ' . $e->getMessage(),
+                'Mailer Error: ' . $exception->getMessage(),
                 3,
                 null,
                 'MailerMessage'
@@ -807,6 +821,7 @@ class MailCore extends ObjectModel
                 } else {
                     $isTls = true;
                 }
+
                 $transport = (new EsmtpTransport(
                     $smtpServer,
                     $smtpPort,
@@ -845,8 +860,8 @@ class MailCore extends ObjectModel
 
             $mailer->send($signedEmail ?? $email);
             $result = true;
-        } catch (ExceptionInterface $e) {
-            $result = $e->getMessage();
+        } catch (ExceptionInterface $exception) {
+            $result = $exception->getMessage();
         }
 
         return $result;
@@ -863,7 +878,7 @@ class MailCore extends ObjectModel
     {
         global $_LANGMAIL;
 
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -889,7 +904,7 @@ class MailCore extends ObjectModel
             return str_replace('"', '&quot;', $string);
         }
 
-        $key = str_replace('\'', '\\\'', $string);
+        $key = str_replace("'", '\\\'', $string);
 
         return str_replace(
             '"',

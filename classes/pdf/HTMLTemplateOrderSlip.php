@@ -85,7 +85,8 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
      */
     public function getContent()
     {
-        $delivery_address = $invoice_address = new Address((int) $this->order->id_address_invoice);
+        $delivery_address = new Address((int) $this->order->id_address_invoice);
+        $invoice_address = $delivery_address;
         $formatted_invoice_address = AddressFormat::generateAddress($invoice_address, [], '<br />', ' ');
         $formatted_delivery_address = '';
 
@@ -95,7 +96,10 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
         }
 
         $customer = new Customer((int) $this->order->id_customer);
-        $this->order->total_paid_tax_excl = $this->order->total_paid_tax_incl = $this->order->total_products = $this->order->total_products_wt = 0;
+        $this->order->total_paid_tax_excl = 0;
+        $this->order->total_paid_tax_incl = 0;
+        $this->order->total_products = 0;
+        $this->order->total_products_wt = 0;
 
         if ($this->order_slip->amount > 0) {
             foreach ($this->order->products as &$product) {
@@ -117,13 +121,15 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
                 $this->order->total_paid_tax_excl = $this->order->total_products;
                 $this->order->total_paid_tax_incl = $this->order->total_products_wt;
             }
+
             unset($product);
         } else {
             $this->order->products = [];
         }
 
         if ($this->order_slip->shipping_cost === 0) {
-            $this->order->total_shipping_tax_incl = $this->order->total_shipping_tax_excl = 0;
+            $this->order->total_shipping_tax_incl = 0;
+            $this->order->total_shipping_tax_excl = 0;
         }
 
         $tax = new Tax();

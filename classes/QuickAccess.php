@@ -104,7 +104,7 @@ class QuickAccessCore extends ObjectModel
         }
 
         $container = PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
-        if (! $container) {
+        if ($container === null) {
             return false;
         }
 

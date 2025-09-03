@@ -32,9 +32,13 @@ use PrestaShop\PrestaShop\Adapter\Presenter\Object\ObjectPresenter;
 class MetaCore extends ObjectModel
 {
     public $page;
+
     public $configurable = 1;
+
     public $title;
+
     public $description;
+
     public $url_rewrite;
 
     /**
@@ -151,12 +155,14 @@ class MetaCore extends ObjectModel
                 }
             }
         }
+
         // Add selected page
         if ($addPage) {
             $name = $addPage;
             if (preg_match('#module-([a-z0-9_-]+)-([a-z0-9]+)$#i', $addPage, $m)) {
                 $addPage = $m[1] . ' - ' . $m[2];
             }
+
             $selectedPages[$addPage] = $name;
             asort($selectedPages);
         }
@@ -299,7 +305,7 @@ class MetaCore extends ObjectModel
 		WHERE id_meta = (
 			SELECT id_meta
 			FROM `' . _DB_PREFIX_ . 'meta_lang`
-			WHERE url_rewrite = \'' . pSQL($urlRewrite) . '\' AND id_lang = ' . (int) $idLang . '
+			WHERE url_rewrite = \'' . pSQL($urlRewrite) . "' AND id_lang = " . (int) $idLang . '
 			AND id_shop = ' . Context::getContext()->shop->id . '
 		)
 		AND id_lang = ' . (int) $newIdLang . '
@@ -315,18 +321,23 @@ class MetaCore extends ObjectModel
             if ($pageName === 'product' && ($idProduct = Tools::getValue('id_product'))) {
                 return Meta::getProductMetas($idProduct, $idLang, $pageName);
             }
+
             if ($pageName === 'category' && ($idCategory = Tools::getValue('id_category'))) {
                 return Meta::getCategoryMetas($idCategory, $idLang, $pageName, $title);
             }
+
             if ($pageName === 'manufacturer' && ($idManufacturer = Tools::getValue('id_manufacturer'))) {
                 return Meta::getManufacturerMetas($idManufacturer, $idLang, $pageName);
             }
+
             if ($pageName === 'supplier' && ($idSupplier = Tools::getValue('id_supplier'))) {
                 return Meta::getSupplierMetas($idSupplier, $idLang, $pageName);
             }
+
             if ($pageName === 'cms' && ($idCms = Tools::getValue('id_cms'))) {
                 return Meta::getCmsMetas($idCms, $idLang, $pageName);
             }
+
             if ($pageName === 'cms' && ($idCmsCategory = Tools::getValue('id_cms_category'))) {
                 return Meta::getCmsCategoryMetas($idCmsCategory, $idLang, $pageName);
             }
@@ -408,6 +419,7 @@ class MetaCore extends ObjectModel
             } else {
                 $result = Meta::getHomeMetas($idLang, $pageName);
             }
+
             Cache::store($cacheId, $result);
 
             return $result;
@@ -433,6 +445,7 @@ class MetaCore extends ObjectModel
             if (! empty($row['meta_description'])) {
                 $row['meta_description'] = strip_tags((string) $row['meta_description']);
             }
+
             $row['meta_title'] = $row['meta_title'] ?: $row['name'];
 
             return Meta::completeMetaTags($row, $row['meta_title']);
@@ -511,7 +524,7 @@ class MetaCore extends ObjectModel
 
     public static function completeMetaTags($metaTags, $defaultValue, ?Context $context = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 

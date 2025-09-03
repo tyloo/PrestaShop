@@ -162,6 +162,7 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
             $result['tax_rate'] = Tools::ps_round($result['tax_rate'], 2);
             $result['total_tax_value'] = Tools::ps_round($result['total_tax_value'], 2);
         }
+
         unset($result);
 
         return $results;
@@ -171,7 +172,8 @@ class HTMLTemplateSupplyOrderFormCore extends HTMLTemplate
     {
         $shop_name = Configuration::get('PS_SHOP_NAME');
         $path_logo = $this->getLogo();
-        $width = $height = 0;
+        $width = 0;
+        $height = 0;
 
         if (! empty($path_logo)) {
             [$width, $height] = getimagesize($path_logo);

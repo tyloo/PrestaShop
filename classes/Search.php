@@ -123,12 +123,20 @@ class SearchCore
      */
     public static $targetLengthMax;
 
-    public const PS_SEARCH_MAX_WORDS_IN_TABLE = 100000; /* Max numer of words in ps_search_word, above which $coefs for target length will be everytime equal to 1 */
-    public const PS_DEFAULT_SEARCH_MAX_WORD_LENGTH = 30; /* default max word length, for when we are not in fuzzy search mode */
+    public const PS_SEARCH_MAX_WORDS_IN_TABLE = 100000;
+
+    /* Max numer of words in ps_search_word, above which $coefs for target length will be everytime equal to 1 */
+    public const PS_DEFAULT_SEARCH_MAX_WORD_LENGTH = 30;
+
+    /* default max word length, for when we are not in fuzzy search mode */
     public const PS_SEARCH_ORDINATE_MIN = 0.5;
+
     public const PS_SEARCH_ORDINATE_MAX = -1;
+
     public const PS_SEARCH_ABSCISSA_MIN = 0.5;
+
     public const PS_SEARCH_ABSCISSA_MAX = 2;
+
     public const PS_DISTANCE_MAX = 5;
 
     /**
@@ -238,6 +246,7 @@ class SearchCore
                 // delete words that are being replaced with aliases
                 $words = array_diff($words, explode(' ', (string) $alias['alias']));
             }
+
             $string = implode(' ', array_unique(array_merge($processed_words, $words)));
             $string = str_replace(['.', '_'], '', $string);
             if (! $keepHyphens) {
@@ -314,7 +323,7 @@ class SearchCore
         $use_cookie = true,
         ?Context $context = null,
     ) {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -325,6 +334,7 @@ class SearchCore
         if (empty($page_number)) {
             $page_number = 1;
         }
+
         if (empty($page_size)) {
             $page_size = 1;
         }
@@ -425,8 +435,9 @@ class SearchCore
                 }
 
                 // Add the expresion to our score array, so we can later calculate the relevance
-                $scoreArray[] = 'sw.word LIKE \'' . $sql_param_search . '\'';
+                $scoreArray[] = "sw.word LIKE '" . $sql_param_search . "'";
             }
+
             $wordCnt += count($words);
             if ($productIdsFoundForCurrentExpression) {
                 $foundProductIds = array_merge($foundProductIds, $productIdsFoundForCurrentExpression);
@@ -528,12 +539,14 @@ class SearchCore
             $order_by = explode('.', (string) $order_by);
             $order_by = pSQL($order_by[0]) . '.`' . pSQL($order_by[1]) . '`';
         }
+
         $alias = '';
         if ($order_by === 'price') {
             $alias = 'product_shop.';
         } elseif (in_array($order_by, ['date_upd', 'date_add'], true)) {
             $alias = 'p.';
         }
+
         $sql = 'SELECT p.*, product_shop.*, stock.out_of_stock, IFNULL(stock.quantity, 0) as quantity,
 				pl.`description_short`, pl.`available_now`, pl.`available_later`, pl.`link_rewrite`, pl.`name`,
 			 image_shop.`id_image` id_image, il.`legend`, m.`name` manufacturer_name ' . $sqlScore . ',
@@ -831,6 +844,7 @@ class SearchCore
                     if (! isset($product_array[$word])) {
                         $product_array[$word] = 0;
                     }
+
                     $product_array[$word] += $weight_array[$key];
                 }
             }
@@ -918,12 +932,15 @@ class SearchCore
                 if ((int) $weight_array['tags']) {
                     $product['tags'] = Search::getTags($db, (int) $product['id_product'], (int) $product['id_lang']);
                 }
+
                 if ((int) $weight_array['attributes']) {
                     $product['attributes'] = Search::getAttributes($db, (int) $product['id_product'], (int) $product['id_lang']);
                 }
+
                 if ((int) $weight_array['features']) {
                     $product['features'] = Search::getFeatures($db, (int) $product['id_product'], (int) $product['id_lang']);
                 }
+
                 if ($sql_attribute) {
                     $attribute_fields = Search::getAttributesFields($db, (int) $product['id_product'], $sql_attribute);
                     if ($attribute_fields) {
@@ -947,11 +964,12 @@ class SearchCore
 
                 // If we find words that need to be indexed, they're added to the word table in the database
                 if (is_array($product_array) && ! empty($product_array)) {
-                    $query_array = $query_array2 = [];
+                    $query_array = [];
+                    $query_array2 = [];
                     foreach ($product_array as $word => $weight) {
                         if ($weight) {
-                            $query_array[$word] = '(' . (int) $product['id_lang'] . ', ' . (int) $product['id_shop'] . ', \'' . pSQL($word) . '\')';
-                            $query_array2[] = '\'' . pSQL($word) . '\'';
+                            $query_array[$word] = '(' . (int) $product['id_lang'] . ', ' . (int) $product['id_shop'] . ", '" . pSQL($word) . "')";
+                            $query_array2[] = "'" . pSQL($word) . "'";
                         }
                     }
 
@@ -961,6 +979,7 @@ class SearchCore
 						INSERT IGNORE INTO ' . _DB_PREFIX_ . 'search_word (id_lang, id_shop, word)
 						VALUES ' . implode(',', $query_array), false);
                     }
+
                     $word_ids_by_word = [];
                     if (is_array($query_array2) && ! empty($query_array2)) {
                         // ...then their IDs are retrieved
@@ -980,13 +999,16 @@ class SearchCore
                     if (! $weight) {
                         continue;
                     }
+
                     if (! isset($word_ids_by_word['_' . $word])) {
                         continue;
                     }
+
                     $id_word = $word_ids_by_word['_' . $word];
                     if (! $id_word) {
                         continue;
                     }
+
                     $query_array3[] = '(' . (int) $product['id_product'] . ',' .
                         (int) $id_word . ',' . (int) $weight . ')';
                     // Force save every 200 words in order to avoid overloading MySQL
@@ -997,6 +1019,7 @@ class SearchCore
 
                 $products_array[] = (int) $product['id_product'];
             }
+
             $products_array = array_unique($products_array);
             Search::setProductsAsIndexed($products_array);
 
@@ -1034,6 +1057,7 @@ class SearchCore
 
             Db::getInstance()->execute($query, false);
         }
+
         $queryArray3 = [];
     }
 
@@ -1048,7 +1072,7 @@ class SearchCore
         $useCookie = true,
         ?Context $context = null,
     ) {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -1068,6 +1092,7 @@ class SearchCore
         if ($pageNumber < 1) {
             $pageNumber = 1;
         }
+
         if ($pageSize < 1) {
             $pageSize = 10;
         }
@@ -1093,10 +1118,10 @@ class SearchCore
                 'LEFT JOIN `' . _DB_PREFIX_ . 'category_shop` cs ON (cp.`id_category` = cs.`id_category` AND cs.`id_shop` = ' . (int) $id_shop . ') ' .
                 (Group::isFeatureActive() ? 'LEFT JOIN `' . _DB_PREFIX_ . 'category_group` cg ON (cg.`id_category` = cp.`id_category`)' : '') . ' ' .
                 'WHERE product_shop.`active` = 1 ' .
-                'AND product_shop.`visibility` IN (\'both\', \'search\') ' .
+                "AND product_shop.`visibility` IN ('both', 'search') " .
                 'AND cs.`id_shop` = ' . (int) Context::getContext()->shop->id . ' ' .
                 $sqlGroups . ' ' .
-                'AND t.`name` LIKE \'%' . pSQL($tag) . '%\''
+                "AND t.`name` LIKE '%" . pSQL($tag) . "%'"
             );
         }
 
@@ -1189,7 +1214,8 @@ class SearchCore
          * we will get $coefMax < 1 following by $coefMax < $coefMin, this is a non-sense.
          * So, we test it before and assign a right value for both target lengths */
         if (self::$totalWordInSearchWordTable > static::PS_SEARCH_MAX_WORDS_IN_TABLE) {
-            self::$targetLengthMin = self::$targetLengthMax = (int) strlen($queryString);
+            self::$targetLengthMin = strlen($queryString);
+            self::$targetLengthMax = strlen($queryString);
         } else {
             /* This part of code can be considered like an auto-scale mechanism.
             *  The table ps_search_word can grow huge, and exceed server resources.
@@ -1220,6 +1246,7 @@ class SearchCore
                     * self::$totalWordInSearchWordTable
                 ) + static::PS_SEARCH_ABSCISSA_MAX; // y = ax + b
             }
+
             // self::$targetLengthMin depends of the length of the $queryString, need to calculate for every word
             self::$targetLengthMin = (int) (strlen($queryString) * self::$coefMin);
             self::$targetLengthMax = (int) (strlen($queryString) * self::$coefMax);
@@ -1227,9 +1254,11 @@ class SearchCore
             if (self::$targetLengthMin < $searchMinWordLength) {
                 self::$targetLengthMin = $searchMinWordLength;
             }
+
             if (self::$targetLengthMax > $psSearchMaxWordLength) {
                 self::$targetLengthMax = $psSearchMaxWordLength;
             }
+
             // Could happen when $queryString length * $coefMin > $psSearchMaxWordLength
             if (self::$targetLengthMax < self::$targetLengthMin) {
                 return '';

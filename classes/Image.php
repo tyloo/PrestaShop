@@ -512,6 +512,7 @@ class ImageCore extends ObjectModel
         if (! isset($combinationImages['new']) || ! is_array($combinationImages['new'])) {
             return;
         }
+
         foreach ($combinationImages['new'] as $id_product_attribute => $image_ids) {
             foreach ($image_ids as $key => $imageId) {
                 if ((int) $imageId === (int) $savedId) {
@@ -533,12 +534,14 @@ class ImageCore extends ObjectModel
         if (! isset($combinationImages['new']) || ! is_array($combinationImages['new'])) {
             return true;
         }
+
         $query = 'INSERT INTO `' . _DB_PREFIX_ . 'product_attribute_image` (`id_product_attribute`, `id_image`) VALUES ';
         foreach ($combinationImages['new'] as $idProductAttribute => $imageIds) {
             foreach ($imageIds as $imageId) {
                 $query .= '(' . (int) $idProductAttribute . ', ' . (int) $imageId . '), ';
             }
         }
+
         $query = rtrim($query, ', ');
 
         return Db::getInstance()->execute($query);
@@ -708,6 +711,7 @@ class ImageCore extends ObjectModel
                 }
             }
         }
+
         if (isset($deleteFolder) && $deleteFolder) {
             @rmdir($this->image_dir . $this->getImgFolder());
         }
@@ -728,6 +732,7 @@ class ImageCore extends ObjectModel
         if (! $path || ! $format || ! is_dir($path)) {
             return false;
         }
+
         foreach (scandir($path, \SCANDIR_SORT_NONE) as $file) {
             if (preg_match('/^[0-9]+(\-(.*))?\.' . $format . '$/', $file)) {
                 unlink($path . $file);
@@ -752,6 +757,7 @@ class ImageCore extends ObjectModel
                 if (file_exists($path . 'index.php')) {
                     @unlink($path . 'index.php');
                 }
+
                 @rmdir($path);
             }
         }
@@ -839,6 +845,7 @@ class ImageCore extends ObjectModel
         if (! is_numeric($idImage)) {
             return false;
         }
+
         $folders = str_split((string) $idImage);
 
         return implode('/', $folders) . '/';
@@ -865,6 +872,7 @@ class ImageCore extends ObjectModel
                 if (! $image || $image->id !== (int) $matches[2]) {
                     $image = new Image((int) $matches[2]);
                 }
+
                 // image exists in DB and with the correct product?
                 if (Validate::isLoadedObject($image) && $image->id_product === (int) rtrim($matches[1], '-')) {
                     // create the new folder if it does not exist
@@ -880,17 +888,20 @@ class ImageCore extends ObjectModel
                             @mkdir(_PS_PRODUCT_IMG_DIR_ . $tmpFolder, self::$access_rights);
                             @chmod(_PS_PRODUCT_IMG_DIR_ . $tmpFolder, self::$access_rights);
                         }
+
                         $tmpPath = _PS_PRODUCT_IMG_DIR_ . $tmpFolder . basename($file);
                         if (! @rename($newPath, $tmpPath) || ! file_exists($tmpPath)) {
                             return false;
                         }
                     }
+
                     // move the image
                     if (! @rename(_PS_PRODUCT_IMG_DIR_ . $file, $newPath) || ! file_exists($newPath)) {
                         return false;
                     }
                 }
             }
+
             if ((int) $maxExecutionTime !== 0 && (time() - $startTime > (int) $maxExecutionTime - 4)) {
                 return 'timeout';
             }
@@ -913,6 +924,7 @@ class ImageCore extends ObjectModel
             @rmdir($testFolder);
             @rmdir($folder1);
         }
+
         if (file_exists($testFolder)) {
             return false;
         }
@@ -922,6 +934,7 @@ class ImageCore extends ObjectModel
         if (! is_writable($testFolder)) {
             return false;
         }
+
         @rmdir($testFolder);
         @rmdir($folder1);
 
@@ -942,6 +955,7 @@ class ImageCore extends ObjectModel
         if (! $this->id) {
             return false;
         }
+
         $path = $this->getImgPath();
         $this->createImgFolder();
 

@@ -195,6 +195,7 @@ class WarehouseCore extends ObjectModel
         } else {
             $query->select('c.id_carrier');
         }
+
         $query->from('warehouse_carrier', 'wc');
         $query->innerJoin('carrier', 'c', 'c.id_reference = wc.id_carrier');
         $query->where($this->def['primary'] . ' = ' . (int) $this->id);
@@ -368,6 +369,7 @@ class WarehouseCore extends ObjectModel
                 $shop_group_id = (int) $shop_group->id;
                 $id_shop = (int) Context::getContext()->shop->id;
             }
+
             $share_stock = $shop_group->share_stock;
         } else {
             $shop_group = Shop::getGroupFromShop($id_shop, false);
@@ -412,7 +414,7 @@ class WarehouseCore extends ObjectModel
         }
 
         $query = new DbQuery();
-        $query->select('w.id_warehouse, CONCAT(reference, \' - \', name) as name');
+        $query->select("w.id_warehouse, CONCAT(reference, ' - ', name) as name");
         $query->from('warehouse', 'w');
         $query->where('deleted = 0');
         $query->orderBy('reference ASC');
@@ -532,9 +534,11 @@ class WarehouseCore extends ObjectModel
         if ($id_product) {
             $query->where('wpl.id_product = ' . (int) $id_product);
         }
+
         if ($id_product_attribute) {
             $query->where('wpl.id_product_attribute = ' . (int) $id_product_attribute);
         }
+
         $query->orderBy('w.reference ASC');
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);

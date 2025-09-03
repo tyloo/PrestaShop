@@ -33,6 +33,7 @@ use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 class RequestSqlCore extends ObjectModel
 {
     public $name;
+
     public $sql;
 
     /**
@@ -152,6 +153,7 @@ class RequestSqlCore extends ObjectModel
         if (! $tab) {
             return false;
         }
+
         if (isset($tab['UNION'])) {
             $union = $tab['UNION'];
             foreach ($union as $tab) {
@@ -180,15 +182,19 @@ class RequestSqlCore extends ObjectModel
         if (! $this->testedRequired($tab)) {
             return false;
         }
+
         if (! $this->testedUnauthorized($tab)) {
             return false;
         }
+
         if (! $this->checkedFrom($tab['FROM'])) {
             return false;
         }
+
         if (! $this->checkedSelect($tab['SELECT'], $tab['FROM'], $in)) {
             return false;
         }
+
         if (isset($tab['WHERE'])) {
             if (! $this->checkedWhere($tab['WHERE'], $tab['FROM'], $sql)) {
                 return false;
@@ -269,6 +275,7 @@ class RequestSqlCore extends ObjectModel
                     if ($treeItem['expr_type'] !== 'colref') {
                         continue;
                     }
+
                     if ($attribut = $this->cutAttribute($treeItem['base_expr'], $from)) {
                         $tab[] = $attribut;
                     }
@@ -333,6 +340,7 @@ class RequestSqlCore extends ObjectModel
                 if (! isset($table['alias']) || ! isset($table['table'])) {
                     continue;
                 }
+
                 /** @var string|array{'parts': array<int, bool>} $tableAlias */
                 $tableAlias = $table['alias']['no_quotes'];
                 if ($tableAlias === $alias || $tableAlias['parts'][0] === $alias) {
@@ -347,6 +355,7 @@ class RequestSqlCore extends ObjectModel
                         $tab[] = $table['table'];
                     }
                 }
+
                 if (count($tab) === 1) {
                     return $tab;
                 }
@@ -378,9 +387,11 @@ class RequestSqlCore extends ObjectModel
         if (! $attr) {
             return true;
         }
+
         if (is_array($table) && (count($table) === 1)) {
             $table = $table[0];
         }
+
         $attributs = $this->getAttributesByTable($table);
         foreach ($attributs as $attribut) {
             if ($attribut['Field'] === trim($attr, ' `')) {
@@ -449,6 +460,7 @@ class RequestSqlCore extends ObjectModel
 
                 return false;
             }
+
             if ($table['ref_type'] === 'ON' && (trim((string) $table['join_type']) === 'LEFT' || trim((string) $table['join_type']) === 'JOIN')) {
                 $attrs = $this->cutJoin($table['ref_clause'], $from);
                 foreach ($attrs as $attr) {
@@ -492,6 +504,7 @@ class RequestSqlCore extends ObjectModel
 
                             return false;
                         }
+
                         $this->error_sql['checkedSelect'] = false;
 
                         return false;
@@ -504,6 +517,7 @@ class RequestSqlCore extends ObjectModel
 
                         return false;
                     }
+
                     $attribut = $attribut['sub_tree'][0];
                 }
             } elseif ($in) {
@@ -590,6 +604,7 @@ class RequestSqlCore extends ObjectModel
 
                         return false;
                     }
+
                     $this->error_sql['checkedHaving'] = false;
 
                     return false;
@@ -632,6 +647,7 @@ class RequestSqlCore extends ObjectModel
 
                     return false;
                 }
+
                 $this->error_sql['checkedOrder'] = false;
 
                 return false;
@@ -665,6 +681,7 @@ class RequestSqlCore extends ObjectModel
 
                     return false;
                 }
+
                 $this->error_sql['checkedGroupBy'] = false;
 
                 return false;

@@ -33,18 +33,23 @@ use PrestaShop\PrestaShop\Core\Domain\Title\ValueObject\Gender as ValueObjectGen
 class GenderCore extends ObjectModel
 {
     public const TYPE_MALE = ValueObjectGender::TYPE_MALE;
+
     public const TYPE_FEMALE = ValueObjectGender::TYPE_FEMALE;
+
     public const TYPE_OTHER = ValueObjectGender::TYPE_OTHER;
 
     /**
      * @var int|null Object ID
      */
     public $id;
+
     public $id_gender;
+
     /**
      * @var string|array<string>
      */
     public $name;
+
     /**
      * @var int
      */

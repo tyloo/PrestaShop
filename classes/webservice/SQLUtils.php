@@ -55,6 +55,7 @@ class SQLUtils
                     foreach ($values as $value) {
                         $temp .= $tableAlias . '`' . bqSQL($sqlId) . '` = "' . bqSQL($value) . '" OR ';
                     }
+
                     $ret .= rtrim($temp, 'OR ') . ')' . "\n";
                 } elseif (preg_match('/^([\d\.:\-\s]+),([\d\.:\-\s]+)$/', $matches[2], $matches3)) {
                     unset($matches3[0]);

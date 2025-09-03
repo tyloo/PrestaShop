@@ -65,6 +65,7 @@ class CacheMemcacheCore extends Cache
         if (! $servers) {
             return;
         }
+
         foreach ($servers as $server) {
             $this->memcache->addServer($server['ip'], $server['port'], true, (int) $server['weight']);
         }
@@ -214,7 +215,7 @@ class CacheMemcacheCore extends Cache
                             // $slab_id is not an int but a string, using the key instead ?
 
                             if (is_int($i)) {
-                                $dump = $this->memcache->getStats('cachedump', (int) $i);
+                                $dump = $this->memcache->getStats('cachedump', $i);
                                 if ($dump) {
                                     foreach ($dump as $entries) {
                                         if ($entries) {
@@ -259,7 +260,7 @@ class CacheMemcacheCore extends Cache
      */
     public static function addServer($ip, $port, $weight)
     {
-        return Db::getInstance()->execute('INSERT INTO ' . _DB_PREFIX_ . 'memcached_servers (ip, port, weight) VALUES(\'' . pSQL($ip) . '\', ' . (int) $port . ', ' . (int) $weight . ')', false);
+        return Db::getInstance()->execute('INSERT INTO ' . _DB_PREFIX_ . "memcached_servers (ip, port, weight) VALUES('" . pSQL($ip) . "', " . (int) $port . ', ' . (int) $weight . ')', false);
     }
 
     /**

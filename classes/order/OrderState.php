@@ -210,12 +210,23 @@ class OrderStateCore extends ObjectModel
         ],
     ];
 
-    public const FLAG_NO_HIDDEN = 1;  /* 00001 */
-    public const FLAG_LOGABLE = 2;  /* 00010 */
-    public const FLAG_DELIVERY = 4;  /* 00100 */
-    public const FLAG_SHIPPED = 8;  /* 01000 */
-    public const FLAG_PAID = 16; /* 10000 */
-    public const FLAG_EMAIL = 32; /* 100000 */
+    // 000001
+    public const FLAG_NO_HIDDEN = 1;
+
+    // 000010
+    public const FLAG_LOGABLE = 2;
+
+    // 000100
+    public const FLAG_DELIVERY = 4;
+
+    // 001000
+    public const FLAG_SHIPPED = 8;
+
+    // 010000
+    public const FLAG_PAID = 16;
+
+    // 100000
+    public const FLAG_EMAIL = 32;
 
     /**
      * Get all available order statuses.
@@ -282,7 +293,7 @@ class OrderStateCore extends ObjectModel
             ' FROM ' . _DB_PREFIX_ . 'order_state_lang osl' .
             ' INNER JOIN ' . _DB_PREFIX_ . 'order_state os ON (os.`id_order_state` = osl.`id_order_state` AND osl.`id_lang` = ' . $idLang . ')' .
             ' WHERE osl.id_lang = ' . $idLang .
-            ' AND osl.name =  \'' . pSQL($name) . '\'' .
+            " AND osl.name =  '" . pSQL($name) . "'" .
             ' AND os.deleted = 0' .
             ($excludeIdOrderState ? ' AND osl.id_order_state != ' . $excludeIdOrderState : '')
         );

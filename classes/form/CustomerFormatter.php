@@ -31,10 +31,15 @@ class CustomerFormatterCore implements FormFormatterInterface
     private $language;
 
     private $ask_for_birthdate = true;
+
     private $ask_for_partner_optin = true;
+
     private $partner_optin_is_required = true;
+
     private $ask_for_password = true;
+
     private $password_is_required = true;
+
     private $ask_for_new_password = false;
 
     public function __construct(
@@ -105,6 +110,7 @@ class CustomerFormatterCore implements FormFormatterInterface
             foreach ($genders as $gender) {
                 $genderField->addAvailableValue($gender->id, $gender->name);
             }
+
             $format[$genderField->getName()] = $genderField;
         }
 

@@ -36,22 +36,27 @@ class UploaderCore
      * @var bool|null
      */
     private $_check_file_size;
+
     /**
      * @var array<string>
      */
     private $_accept_types = [];
+
     /**
      * @var array
      */
     private $_files = [];
+
     /**
      * @var int
      */
     private $_max_size;
+
     /**
      * @var string|null
      */
     private $_name;
+
     /**
      * @var string|null
      */

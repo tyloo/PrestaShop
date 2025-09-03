@@ -27,7 +27,9 @@
 class WebserviceOutputJSONCore implements WebserviceOutputInterface
 {
     public $docUrl = '';
+
     protected $wsUrl;
+
     protected $schemaToDisplay;
 
     /**
@@ -97,12 +99,14 @@ class WebserviceOutputJSONCore implements WebserviceOutputInterface
             foreach ($this->languages as $id_lang) {
                 $tmp[] = ['id' => $id_lang, 'value' => $field['value'][$id_lang]];
             }
+
             if (count($tmp) === 1) {
                 $field['value'] = $tmp[0]['value'];
             } else {
                 $field['value'] = $tmp;
             }
         }
+
         // Case 1 : fields of the current entity (not an association)
         if (! $is_association) {
             $this->currentEntity[$field['sqlId']] = $field['value'];
@@ -120,9 +124,11 @@ class WebserviceOutputJSONCore implements WebserviceOutputInterface
         if ($node_name === 'api' && ($isAPICall === false)) {
             $isAPICall = true;
         }
+
         if ($isAPICall && ! in_array($node_name, ['description', 'schema', 'api'], true)) {
             $this->content[] = $node_name;
         }
+
         if (isset($more_attr, $more_attr['id'])) {
             $this->content[$params['objectsNodeName']][] = ['id' => $more_attr['id']];
         }
@@ -148,16 +154,20 @@ class WebserviceOutputJSONCore implements WebserviceOutputInterface
             } else {
                 $this->content[$params['objectNodeName']] = $this->currentEntity;
             }
+
             $this->currentEntity = [];
         }
+
         if (is_countable($this->currentAssociatedEntity) && count($this->currentAssociatedEntity)) {
             $current = [];
             foreach ($this->currentAssociatedEntity as $element) {
                 $current[$element['key']] = $element['value'];
             }
+
             if (isset($element, $element['name'])) {
                 $this->currentEntity['associations'][$element['name']][] = $current;
             }
+
             $this->currentAssociatedEntity = [];
         }
     }

@@ -52,8 +52,11 @@ class PDFCore
     protected $smarty;
 
     public const TEMPLATE_INVOICE = 'Invoice';
+
     public const TEMPLATE_ORDER_RETURN = 'OrderReturn';
+
     public const TEMPLATE_ORDER_SLIP = 'OrderSlip';
+
     public const TEMPLATE_DELIVERY_SLIP = 'DeliverySlip';
 
     /**

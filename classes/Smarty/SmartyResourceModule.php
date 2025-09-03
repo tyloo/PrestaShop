@@ -65,6 +65,7 @@ class SmartyResourceModuleCore extends Smarty_Resource_Custom
                 } else {
                     $source = file_get_contents($file);
                 }
+
                 $mtime = filemtime($file);
 
                 return;

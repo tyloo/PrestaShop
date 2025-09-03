@@ -31,7 +31,9 @@
 class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
 {
     public const LEFT_JOIN = 1;
+
     public const INNER_JOIN = 2;
+
     public const LEFT_OUTER_JOIN = 3;
 
     /**
@@ -75,9 +77,13 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
     protected $page_size = 0;
 
     protected $fields = [];
+
     protected $alias = [];
+
     protected $alias_iterator = 0;
+
     protected $join_list = [];
+
     protected $association_definition = [];
 
     public const LANG_ALIAS = 'l';
@@ -94,6 +100,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
         if (! isset($this->definition['table'])) {
             throw new PrestaShopException('Miss table in definition for class ' . $this->classname);
         }
+
         if (! isset($this->definition['primary'])) {
             throw new PrestaShopException('Miss primary in definition for class ' . $this->classname);
         }
@@ -228,6 +235,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
         if ($order !== 'asc' && $order !== 'desc') {
             throw new PrestaShopException('Order must be asc or desc');
         }
+
         $this->query->orderBy($this->parseField($field) . ' ' . $order);
 
         return $this;
@@ -287,6 +295,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
         if ($this->is_hydrated) {
             return $this;
         }
+
         $this->is_hydrated = true;
 
         $alias = $this->generateAlias();
@@ -298,6 +307,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
             if ($this->id_lang) {
                 $this->where(self::LANG_ALIAS . '.id_lang', '=', $this->id_lang);
             }
+
             if (! empty($this->definition['multilang_shop'])) {
                 $this->sqlWhere($this->join_list[self::LANG_ALIAS]['alias'] . '.`id_shop` = ' . (int) Context::getContext()->shop->id);
             }
@@ -542,6 +552,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
                 if (! isset($definition['associations'][$asso])) {
                     throw new PrestaShopException('Association ' . $asso . ' not found for class ' . $this->definition['classname']);
                 }
+
                 $current_def = $definition['associations'][$asso];
 
                 // Special case for lang alias
@@ -560,18 +571,22 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
             if (! isset($current_def['object'])) {
                 $current_def['object'] = Tools::toCamelCase($asso, true);
             }
+
             if (! isset($current_def['field'])) {
                 $current_def['field'] = 'id_' . $asso;
             }
+
             if (! isset($current_def['foreign_field'])) {
                 $current_def['foreign_field'] = 'id_' . $asso;
             }
+
             if ($total_association > 1) {
                 unset($split[$total_association - 1]);
                 $current_def['complete_field'] = implode('.', $split) . '.' . $current_def['field'];
             } else {
                 $current_def['complete_field'] = $current_def['field'];
             }
+
             $current_def['complete_foreign_field'] = $association . '.' . $current_def['foreign_field'];
 
             $definition['is_lang'] = $is_lang;
@@ -673,6 +688,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
                 if (empty($definition['is_lang']) && ! empty($definition['fields'][$fieldname]['lang'])) {
                     throw new PrestaShopException('Field ' . $fieldname . ' is declared as lang field but is used in non multilang context');
                 }
+
                 if (! empty($definition['is_lang']) && empty($definition['fields'][$fieldname]['lang'])) {
                     throw new PrestaShopException('Field ' . $fieldname . ' is not declared as lang field but is used in multilang context');
                 }

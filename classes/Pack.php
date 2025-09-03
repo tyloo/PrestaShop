@@ -59,7 +59,9 @@ class PackCore extends Product
     public const STOCK_TYPE_DEFAULT = PackStockType::STOCK_TYPE_DEFAULT;
 
     protected static $cachePackItems = [];
+
     protected static $cacheIsPack = [];
+
     protected static $cacheIsPacked = [];
 
     public static function resetStaticCache()
@@ -112,6 +114,7 @@ class PackCore extends Product
         if (! Pack::isFeatureActive()) {
             return false;
         }
+
         if ($id_product_attribute === false) {
             $cache_key = $id_product . '-0';
             if (! array_key_exists($cache_key, self::$cacheIsPacked)) {
@@ -121,6 +124,7 @@ class PackCore extends Product
 
             return self::$cacheIsPacked[$cache_key];
         }
+
         $cache_key = $id_product . '-' . $id_product_attribute;
         if (! array_key_exists($cache_key, self::$cacheIsPacked)) {
             $result = Db::getInstance()->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'pack` WHERE id_product_item = ' . ((int) $id_product) . ' AND
@@ -176,6 +180,7 @@ class PackCore extends Product
         if (array_key_exists($id_product, self::$cachePackItems)) {
             return self::$cachePackItems[$id_product];
         }
+
         $result = Db::getInstance()->executeS('SELECT id_product_item, id_product_attribute_item, quantity FROM `' . _DB_PREFIX_ . 'pack` where id_product_pack = ' . (int) $id_product);
         $array_result = [];
         foreach ($result as $row) {
@@ -202,8 +207,10 @@ class PackCore extends Product
                     $p->reference = $combination['attribute_reference'];
                 }
             }
+
             $array_result[] = $p;
         }
+
         self::$cachePackItems[$id_product] = $array_result;
 
         return self::$cachePackItems[$id_product];
@@ -229,6 +236,7 @@ class PackCore extends Product
         if (! Pack::isFeatureActive()) {
             return true;
         }
+
         $idProduct = (int) $idProduct;
         $wantedQuantity = (int) $wantedQuantity;
         $product = new Product($idProduct, false);
@@ -237,6 +245,7 @@ class PackCore extends Product
         if ($product->isAvailableWhenOutOfStock($product->out_of_stock)) {
             return true;
         }
+
         if ($wantedQuantity > $packQuantity) {
             return false;
         }
@@ -271,7 +280,7 @@ class PackCore extends Product
         $idProductAttribute = (int) $idProductAttribute;
 
         if (! self::isPack($idProduct)) {
-            throw new PrestaShopException("Product with id $idProduct is not a pack");
+            throw new PrestaShopException(sprintf('Product with id %d is not a pack', $idProduct));
         }
 
         // Initialize
@@ -390,7 +399,7 @@ class PackCore extends Product
 				LEFT JOIN `' . _DB_PREFIX_ . 'attribute_lang` al ON (a.`id_attribute` = al.`id_attribute` AND al.`id_lang` = ' . (int) Context::getContext()->language->id . ')
 				LEFT JOIN `' . _DB_PREFIX_ . 'attribute_group_lang` agl ON (ag.`id_attribute_group` = agl.`id_attribute_group` AND agl.`id_lang` = ' . (int) Context::getContext()->language->id . ')
 				LEFT JOIN `' . _DB_PREFIX_ . 'product_attribute_image` pai ON (' . $line['id_product_attribute_item'] . ' = pai.`id_product_attribute`)
-				WHERE pa.`id_product` = ' . (int) $line['id_product'] . ' AND pa.`id_product_attribute` = ' . $line['id_product_attribute_item'] . '
+				WHERE pa.`id_product` = ' . $line['id_product'] . ' AND pa.`id_product_attribute` = ' . $line['id_product_attribute_item'] . '
 				GROUP BY pa.`id_product_attribute`, ag.`id_attribute_group`
 				ORDER BY pa.`id_product_attribute`';
 
@@ -407,6 +416,7 @@ class PackCore extends Product
                     $line['name'] .= ' ' . $value['group_name'] . '-' . $value['attribute_name'];
                 }
             }
+
             $line = Product::getTaxesInformations($line);
         }
 
@@ -453,6 +463,7 @@ class PackCore extends Product
         if ($limit) {
             $sql .= ' LIMIT ' . (int) $limit;
         }
+
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
         if (! $full) {
             return $result;
@@ -600,6 +611,7 @@ class PackCore extends Product
         if (Combination::isFeatureActive()) {
             $query .= ' AND `id_product_attribute_item` = ' . ((int) $id_attribute_item);
         }
+
         $result = Db::getInstance()->executeS($query);
         $array_result = [];
         foreach ($result as $row) {

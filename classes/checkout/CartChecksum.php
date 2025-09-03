@@ -27,7 +27,9 @@
 class CartChecksumCore implements ChecksumInterface
 {
     public $addressChecksum;
+
     private $separator = '_';
+
     private $subseparator = '-';
 
     public function __construct(AddressChecksum $addressChecksum)

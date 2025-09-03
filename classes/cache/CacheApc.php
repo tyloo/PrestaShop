@@ -40,6 +40,7 @@ class CacheApcCore extends Cache
         if (! extension_loaded('apc') && ! extension_loaded('apcu')) {
             throw new PrestaShopException('APC cache has been enabled, but the APC or APCu extension is not available');
         }
+
         $this->apcu = extension_loaded('apcu');
     }
 
@@ -67,6 +68,7 @@ class CacheApcCore extends Cache
                 } else {
                     $key = $entry['info'];
                 }
+
                 if (preg_match('#^' . $pattern . '$#', (string) $key)) {
                     $this->_delete($key);
                 }

@@ -27,14 +27,21 @@
 class ShopUrlCore extends ObjectModel
 {
     public $id_shop;
+
     public $domain;
+
     public $domain_ssl;
+
     public $physical_uri;
+
     public $virtual_uri;
+
     public $main;
+
     public $active;
 
     protected static $main_domain = [];
+
     protected static $main_domain_ssl = [];
 
     /**
@@ -158,7 +165,7 @@ class ShopUrlCore extends ObjectModel
                 FROM ' . _DB_PREFIX_ . 'shop_url
                 WHERE physical_uri = \'' . pSQL($physical_uri) . '\'
                     AND virtual_uri = \'' . pSQL($virtual_uri) . '\'
-                    AND (domain = \'' . pSQL($domain) . '\' ' . (($domain_ssl) ? ' OR domain_ssl = \'' . pSQL($domain_ssl) . '\'' : '') . ')'
+                    AND (domain = \'' . pSQL($domain) . "' " . (($domain_ssl) ? " OR domain_ssl = '" . pSQL($domain_ssl) . "'" : '') . ')'
                     . ($this->id ? ' AND id_shop_url != ' . (int) $this->id : '');
 
         return Db::getInstance()->getValue($sql);

@@ -57,6 +57,7 @@ class DbPDOCore extends Db
         if ($dbname) {
             $dsn .= 'dbname=' . $dbname . ';';
         }
+
         if (preg_match('/^(.*):([0-9]+)$/', $host, $matches)) {
             $dsn .= 'host=' . $matches[1] . ';port=' . $matches[2];
         } elseif (preg_match('#^.*:(/.*)$#', $host, $matches)) {
@@ -64,6 +65,7 @@ class DbPDOCore extends Db
         } else {
             $dsn .= 'host=' . $host;
         }
+
         $dsn .= ';charset=utf8mb4';
 
         return new PDO(
@@ -118,11 +120,11 @@ class DbPDOCore extends Db
     {
         try {
             $this->link = static::getPDO($this->server, $this->user, $this->password, $this->database, 5);
-        } catch (PDOException $e) {
-            throw new PrestaShopException('Link to database cannot be established: ' . $e->getMessage());
+        } catch (PDOException $pdoException) {
+            throw new PrestaShopException('Link to database cannot be established: ' . $pdoException->getMessage());
         }
 
-        $this->link->exec('SET SESSION sql_mode = \'\'');
+        $this->link->exec("SET SESSION sql_mode = ''");
 
         return $this->link;
     }
@@ -150,8 +152,8 @@ class DbPDOCore extends Db
     {
         try {
             return $this->link->query($sql);
-        } catch (PDOException $exception) {
-            throw new PrestaShopException($exception->getMessage(), (int) $exception->getCode(), $exception);
+        } catch (PDOException $pdoException) {
+            throw new PrestaShopException($pdoException->getMessage(), (int) $pdoException->getCode(), $pdoException);
         }
     }
 
@@ -335,7 +337,7 @@ class DbPDOCore extends Db
             return false;
         }
 
-        $sql = 'SHOW TABLES LIKE \'' . $prefix . '%\'';
+        $sql = "SHOW TABLES LIKE '" . $prefix . "%'";
         $result = $link->query($sql);
 
         return (bool) $result->fetch();
@@ -447,10 +449,11 @@ class DbPDOCore extends Db
     {
         try {
             $link = DbPDO::getPDO($server, $user, $pwd, $db, $timeout);
-        } catch (PDOException $e) {
+        } catch (PDOException $pdoException) {
             // hhvm wrongly reports error status 42000 when the database does not exist - might change in the future
-            return ($e->getCode() === 1049 || (defined('HHVM_VERSION') && $e->getCode() === 42000)) ? 2 : 1;
+            return ($pdoException->getCode() === 1049 || (defined('HHVM_VERSION') && $pdoException->getCode() === 42000)) ? 2 : 1;
         }
+
         unset($link);
 
         return 0;
@@ -465,7 +468,7 @@ class DbPDOCore extends Db
     {
         $value = 'InnoDB';
 
-        $sql = 'SHOW VARIABLES WHERE Variable_name = \'have_innodb\'';
+        $sql = "SHOW VARIABLES WHERE Variable_name = 'have_innodb'";
         $result = $this->link->query($sql);
 
         if (! $result) {
@@ -511,6 +514,7 @@ class DbPDOCore extends Db
         } catch (PDOException) {
             return false;
         }
+
         $result = $link->exec('SET NAMES utf8mb4');
         unset($link);
 

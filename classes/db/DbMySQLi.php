@@ -51,7 +51,8 @@ class DbMySQLiCore extends Db
      */
     public function connect()
     {
-        $socket = $port = false;
+        $socket = false;
+        $port = false;
         $server = '';
         if (Tools::strpos($this->server, ':') !== false) {
             [$server, $port] = explode(':', $this->server);
@@ -82,7 +83,7 @@ class DbMySQLiCore extends Db
             throw new PrestaShopDatabaseException(Context::getContext()->getTranslator()->trans('PrestaShop Fatal error: no utf-8 support. Please check your server configuration.', [], 'Admin.Notifications.Error'));
         }
 
-        $this->link->query('SET SESSION sql_mode = \'\'');
+        $this->link->query("SET SESSION sql_mode = ''");
 
         return $this->link;
     }
@@ -106,6 +107,7 @@ class DbMySQLiCore extends Db
         } else {
             $link = @new mysqli($host, $user, $password);
         }
+
         $success = $link->query('CREATE DATABASE `' . str_replace('`', '\\`', $database) . '`');
         if ($dropit && ($link->query('DROP DATABASE `' . str_replace('`', '\\`', $database) . '`') !== false)) {
             return true;
@@ -182,6 +184,7 @@ class DbMySQLiCore extends Db
         if (method_exists($result, 'fetch_all')) {
             return $result->fetch_all(\MYSQLI_ASSOC);
         }
+
         $ret = [];
 
         while ($row = $this->nextRow($result)) {
@@ -315,7 +318,7 @@ class DbMySQLiCore extends Db
             return false;
         }
 
-        $sql = 'SHOW TABLES LIKE \'' . $prefix . '%\'';
+        $sql = "SHOW TABLES LIKE '" . $prefix . "%'";
         $result = $link->query($sql);
 
         return (bool) $result->fetch_assoc();
@@ -366,11 +369,12 @@ class DbMySQLiCore extends Db
     {
         $value = 'InnoDB';
 
-        $sql = 'SHOW VARIABLES WHERE Variable_name = \'have_innodb\'';
+        $sql = "SHOW VARIABLES WHERE Variable_name = 'have_innodb'";
         $result = $this->link->query($sql);
         if (! $result) {
             $value = 'MyISAM';
         }
+
         $row = $result->fetch_assoc();
         if (! $row || strtolower($row['Value']) !== 'yes') {
             $value = 'MyISAM';

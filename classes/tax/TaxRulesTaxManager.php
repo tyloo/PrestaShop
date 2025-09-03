@@ -29,6 +29,7 @@ use PrestaShop\PrestaShop\Adapter\ServiceLocator;
 class TaxRulesTaxManagerCore implements TaxManagerInterface
 {
     public $address;
+
     public $tax_calculator;
 
     /**
@@ -125,6 +126,7 @@ class TaxRulesTaxManagerCore implements TaxManagerInterface
                     break;
                 }
             }
+
             $result = new TaxCalculator($taxes, $behavior);
             Cache::store($cache_id, $result);
 

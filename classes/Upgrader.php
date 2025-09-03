@@ -31,28 +31,43 @@
 class UpgraderCore
 {
     public const DEFAULT_CHECK_VERSION_DELAY_HOURS = 24;
+
     public $rss_version_link;
+
     public $rss_md5file_link_dir;
+
     /**
      * @var bool contains true if last version is not installed
      */
     protected $need_upgrade = false;
+
     protected $changed_files = [];
+
     protected $missing_files = [];
 
     public $version_name;
+
     public $version_num;
+
     public $version_is_modified;
+
     /**
      * @var string contains hte url where to download the file
      */
     public $link;
+
     public $autoupgrade;
+
     public $autoupgrade_module;
+
     public $autoupgrade_last_version;
+
     public $autoupgrade_module_link;
+
     public $desc;
+
     public $changelog;
+
     public $md5;
 
     /**
@@ -123,6 +138,7 @@ class UpgraderCore
         } else {
             $lastCheck = 0;
         }
+
         // if we use the autoupgrade process, we will never refresh it
         // except if no check has been done before
         if ($force || ($lastCheck < time() - (3600 * Upgrader::DEFAULT_CHECK_VERSION_DELAY_HOURS))) {
@@ -158,6 +174,7 @@ class UpgraderCore
         } else {
             $this->loadFromConfig();
         }
+
         // retro-compatibility :
         // return array(name,link) if you don't use the last version
         // false otherwise
@@ -182,30 +199,39 @@ class UpgraderCore
             if (isset($lastVersionCheck['name'])) {
                 $this->version_name = $lastVersionCheck['name'];
             }
+
             if (isset($lastVersionCheck['num'])) {
                 $this->version_num = $lastVersionCheck['num'];
             }
+
             if (isset($lastVersionCheck['link'])) {
                 $this->link = $lastVersionCheck['link'];
             }
+
             if (isset($lastVersionCheck['autoupgrade'])) {
                 $this->autoupgrade = $lastVersionCheck['autoupgrade'];
             }
+
             if (isset($lastVersionCheck['autoupgrade_module'])) {
                 $this->autoupgrade_module = $lastVersionCheck['autoupgrade_module'];
             }
+
             if (isset($lastVersionCheck['autoupgrade_last_version'])) {
                 $this->autoupgrade_last_version = $lastVersionCheck['autoupgrade_last_version'];
             }
+
             if (isset($lastVersionCheck['autoupgrade_module_link'])) {
                 $this->autoupgrade_module_link = $lastVersionCheck['autoupgrade_module_link'];
             }
+
             if (isset($lastVersionCheck['md5'])) {
                 $this->md5 = $lastVersionCheck['md5'];
             }
+
             if (isset($lastVersionCheck['desc'])) {
                 $this->desc = $lastVersionCheck['desc'];
             }
+
             if (isset($lastVersionCheck['changelog'])) {
                 $this->changelog = $lastVersionCheck['changelog'];
             }
@@ -289,6 +315,7 @@ class UpgraderCore
                 for ($i = 1; $i < $level; ++$i) {
                     $relativePath .= $currentPath[$i] . '/';
                 }
+
                 $relativePath .= (string) $child['name'];
                 $fullpath = _PS_ROOT_DIR_ . \DIRECTORY_SEPARATOR . $relativePath;
 
@@ -301,6 +328,7 @@ class UpgraderCore
                 } elseif (! $this->compareChecksum($fullpath, (string) $child)) {
                     $this->addChangedFile($relativePath);
                 }
+
                 // else, file is original (and ok)
             }
         }

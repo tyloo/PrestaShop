@@ -35,10 +35,12 @@ class CheckoutProcessCore implements RenderableInterface
      * @var CheckoutSession
      */
     private $checkoutSession;
+
     /**
      * @var array CheckoutStepInterface[]
      */
     private $steps = [];
+
     /**
      * @var bool
      */
@@ -48,6 +50,7 @@ class CheckoutProcessCore implements RenderableInterface
      * @var string
      */
     private $template = 'checkout/checkout-process.tpl';
+
     /**
      * @var Context
      */

@@ -33,7 +33,9 @@
 class ImageManagerCore
 {
     public const ERROR_FILE_NOT_EXIST = 1;
+
     public const ERROR_FILE_WIDTH = 2;
+
     public const ERROR_MEMORY_LIMIT = 3;
 
     public const MIME_TYPE_SUPPORTED = [
@@ -268,9 +270,11 @@ class ImageManagerCore
 
             return false;
         }
+
         if (! $destinationWidth) {
             $destinationWidth = $sourceWidth;
         }
+
         if (! $destinationHeight) {
             $destinationHeight = $sourceHeight;
         }
@@ -313,6 +317,7 @@ class ImageManagerCore
             } else {
                 imagealphablending($destImage, false);
             }
+
             imagesavealpha($destImage, true);
             $transparent = imagecolorallocatealpha($destImage, 255, 255, 255, 127);
             imagefilledrectangle($destImage, 0, 0, $destinationWidth, $destinationHeight, $transparent);
@@ -332,6 +337,7 @@ class ImageManagerCore
         } else {
             ImageManager::imagecopyresampled($destImage, $srcImage, (int) (($destinationWidth - $nextWidth) / 2), (int) (($destinationHeight - $nextHeight) / 2), 0, 0, $nextWidth, $nextHeight, $sourceWidth, $sourceHeight, $quality);
         }
+
         $writeFile = ImageManager::write($destinationFileType, $destImage, $destinationFile);
         Hook::exec('actionOnImageResizeAfter', ['dst_file' => $destinationFile, 'file_type' => $destinationFileType]);
         @imagedestroy($srcImage);
@@ -385,6 +391,7 @@ class ImageManagerCore
         if ($quality <= 0) {
             return false;
         }
+
         if ($quality < 5 && (($dstW * $quality) < $srcW || ($dstH * $quality) < $srcH)) {
             $temp = imagecreatetruecolor($dstW * $quality + 1, $dstH * $quality + 1);
             imagecopyresized($temp, $srcImage, 0, 0, $srcX, $srcY, $dstW * $quality + 1, $dstH * $quality + 1, $srcW, $srcH);
@@ -410,22 +417,26 @@ class ImageManagerCore
                 $mimeType = $imageInfo['mime'];
             }
         }
+
         // Try with FileInfo
         if (! $mimeType && function_exists('finfo_open')) {
             $finfo = finfo_open(\FILEINFO_MIME_TYPE);
             $mimeType = finfo_file($finfo, $filename);
             finfo_close($finfo);
         }
+
         // Try with Mime
         if (! $mimeType && function_exists('mime_content_type')) {
             $mimeType = mime_content_type($filename);
         }
+
         // Try with exec command and file binary
         if (! $mimeType && function_exists('exec')) {
             $mimeType = trim(exec('file -b --mime-type ' . escapeshellarg($filename)));
             if (! $mimeType) {
                 $mimeType = trim(exec('file --mime ' . escapeshellarg($filename)));
             }
+
             if (! $mimeType) {
                 $mimeType = trim(exec('file -bi ' . escapeshellarg($filename)));
             }
@@ -479,6 +490,7 @@ class ImageManagerCore
         if (empty($authorizedExtensions)) {
             $authorizedExtensions = static::EXTENSIONS_SUPPORTED;
         }
+
         $nameExplode = explode('.', $filename);
         if (count($nameExplode) >= 2) {
             $currentExtension = strtolower($nameExplode[count($nameExplode) - 1]);
@@ -507,6 +519,7 @@ class ImageManagerCore
         if ((int) $maxFileSize > 0 && $file['size'] > (int) $maxFileSize) {
             return Context::getContext()->getTranslator()->trans('Image is too large (%1$d kB). Maximum allowed: %2$d kB', [$file['size'] / 1024, $maxFileSize / 1024], 'Admin.Notifications.Error');
         }
+
         if (! ImageManager::isRealImage($file['tmp_name'], $file['type'], $mimeTypeList)
             || ! ImageManager::isCorrectImageFileExt($file['name'], $types)
             || preg_match('/\%00/', (string) $file['name'])
@@ -519,8 +532,9 @@ class ImageManagerCore
                 'Admin.Notifications.Error'
             );
         }
+
         if ($file['error']) {
-            return Context::getContext()->getTranslator()->trans('Error while uploading image; please change your server\'s settings. (Error code: %s)', [$file['error']], 'Admin.Notifications.Error');
+            return Context::getContext()->getTranslator()->trans("Error while uploading image; please change your server's settings. (Error code: %s)", [$file['error']], 'Admin.Notifications.Error');
         }
 
         return false;
@@ -539,11 +553,13 @@ class ImageManagerCore
         if ((int) $maxFileSize > 0 && $file['size'] > $maxFileSize) {
             return Context::getContext()->getTranslator()->trans('Image is too large (%1$d kB). Maximum allowed: %2$d kB', [$file['size'] / 1000, $maxFileSize / 1000], 'Admin.Notifications.Error');
         }
+
         if (! str_ends_with((string) $file['name'], '.ico')) {
             return Context::getContext()->getTranslator()->trans('Image format not recognized, allowed formats are: .ico', [], 'Admin.Notifications.Error');
         }
+
         if ($file['error']) {
-            return Context::getContext()->getTranslator()->trans('Error while uploading image; please change your server\'s settings.', [], 'Admin.Notifications.Error');
+            return Context::getContext()->getTranslator()->trans("Error while uploading image; please change your server's settings.", [], 'Admin.Notifications.Error');
         }
 
         return false;
@@ -706,6 +722,7 @@ class ImageManagerCore
 
                 break;
         }
+
         // @phpstan-ignore-next-line
         imagedestroy($resource);
         @chmod($filename, 0664);
@@ -805,6 +822,7 @@ class ImageManagerCore
             foreach ($parts as &$part) {
                 $part = rawurlencode($part);
             }
+
             unset($part);
             $parced_url['path'] = '/' . implode('/', $parts);
         }
@@ -827,8 +845,10 @@ class ImageManagerCore
                 return false;
             }
 
-            $tgt_width = $tgt_height = 0;
-            $src_width = $src_height = 0;
+            $tgt_width = 0;
+            $tgt_height = 0;
+            $src_width = 0;
+            $src_height = 0;
             $error = 0;
             ImageManager::resize($tmpfile, $path . '.jpg', null, null, 'jpg', false, $error, $tgt_width, $tgt_height, 5, $src_width, $src_height);
             $images_types = ImageType::getImagesTypes($entity, true);
@@ -857,10 +877,12 @@ class ImageManagerCore
                         if ($tgt_width <= $src_width && $tgt_height <= $src_height) {
                             $path_infos[] = [$tgt_width, $tgt_height, $path . '-' . stripslashes((string) $image_type['name']) . '.jpg'];
                         }
+
                         if ($entity === 'products') {
                             if (is_file(_PS_TMP_IMG_DIR_ . 'product_mini_' . (int) $id_entity . '.jpg')) {
                                 unlink(_PS_TMP_IMG_DIR_ . 'product_mini_' . (int) $id_entity . '.jpg');
                             }
+
                             if (is_file(_PS_TMP_IMG_DIR_ . 'product_mini_' . (int) $id_entity . '_' . (int) Context::getContext()->shop->id . '.jpg')) {
                                 unlink(_PS_TMP_IMG_DIR_ . 'product_mini_' . (int) $id_entity . '_' . (int) Context::getContext()->shop->id . '.jpg');
                             }
@@ -875,6 +897,7 @@ class ImageManagerCore
 
             return false;
         }
+
         unlink($orig_tmpfile);
 
         return true;

@@ -27,27 +27,42 @@
 class HelperUploaderCore extends Uploader
 {
     public const DEFAULT_TEMPLATE_DIRECTORY = 'helpers/uploader';
+
     public const DEFAULT_TEMPLATE = 'simple.tpl';
+
     public const DEFAULT_AJAX_TEMPLATE = 'ajax.tpl';
 
     public const TYPE_IMAGE = 'image';
+
     public const TYPE_FILE = 'file';
 
     private $_context;
+
     private $_drop_zone;
+
     private $_id;
+
     private $_files;
+
     private $_name;
+
     private $_max_files;
+
     private $_multiple;
+
     /**
      * @var int|null
      */
     private $_post_max_size;
+
     protected $_template;
+
     private $_template_directory;
+
     private $_title;
+
     private $_url;
+
     private $_use_ajax;
 
     public function setContext($value)
@@ -209,17 +224,20 @@ class HelperUploaderCore extends Uploader
             return $this->normalizeDirectory($this->getContext()->controller->getTemplatePath())
                 . $this->getTemplateDirectory() . $template;
         }
+
         if ($this->getContext()->controller instanceof AdminController && isset($controller_name)
             && file_exists($this->normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
                 . \DIRECTORY_SEPARATOR . $controller_name . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template)) {
             return $this->normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
                 . \DIRECTORY_SEPARATOR . $controller_name . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template;
         }
+
         if (file_exists($this->normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
                 . $this->getTemplateDirectory() . $template)) {
             return $this->normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
                     . $this->getTemplateDirectory() . $template;
         }
+
         if (file_exists($this->normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))
                 . $this->getTemplateDirectory() . $template)) {
             return $this->normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))

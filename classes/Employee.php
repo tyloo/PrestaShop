@@ -75,10 +75,13 @@ class EmployeeCore extends ObjectModel
     public $last_passwd_gen;
 
     public $stats_date_from;
+
     public $stats_date_to;
 
     public $stats_compare_from;
+
     public $stats_compare_to;
+
     public $stats_compare_option = 1;
 
     public $preselect_date_range;
@@ -119,7 +122,9 @@ class EmployeeCore extends ObjectModel
 
     /* employee notifications */
     public $id_last_order;
+
     public $id_last_customer_message;
+
     public $id_last_customer;
 
     /**
@@ -449,7 +454,7 @@ class EmployeeCore extends ObjectModel
         $sql = new DbQuery();
         $sql->select('e.*');
         $sql->from('employee', 'e');
-        $sql->where('e.`email` = \'' . pSQL($email) . '\'');
+        $sql->where("e.`email` = '" . pSQL($email) . "'");
         if ($activeOnly) {
             $sql->where('e.`active` = 1');
         }
@@ -523,7 +528,7 @@ class EmployeeCore extends ObjectModel
         $sql->select('e.`id_employee`');
         $sql->from('employee', 'e');
         $sql->where('e.`id_employee` = ' . (int) $idEmployee);
-        $sql->where('e.`passwd` = \'' . pSQL($passwordHash) . '\'');
+        $sql->where("e.`passwd` = '" . pSQL($passwordHash) . "'");
         $sql->where('e.`active` = 1');
 
         // Get result from DB
@@ -597,9 +602,10 @@ class EmployeeCore extends ObjectModel
     public function isLoggedBack()
     {
         $container = SymfonyContainer::getInstance();
-        if (! $container) {
+        if ($container === null) {
             return false;
         }
+
         $userProvider = $container->get('prestashop.user_provider');
 
         return $userProvider->getUser() !== null;

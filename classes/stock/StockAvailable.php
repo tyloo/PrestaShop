@@ -410,6 +410,7 @@ class StockAvailableCore extends ObjectModel
         if (! Validate::isUnsignedId($id_product)) {
             return false;
         }
+
         $product = new Product((int) $id_product);
         if (! Validate::isLoadedObject($product)) {
             return false;
@@ -437,6 +438,7 @@ class StockAvailableCore extends ObjectModel
         if (! Validate::isUnsignedId($id_product)) {
             return false;
         }
+
         $context = Context::getContext();
         // if there is no $id_shop, gets the context one
         if ($id_shop === null && Shop::getContext() !== Shop::CONTEXT_GROUP) {
@@ -470,6 +472,7 @@ class StockAvailableCore extends ObjectModel
             } else {
                 $shop_group = new ShopGroup((int) Shop::getGroupFromShop((int) $id_shop));
             }
+
             // if quantities are shared between shops of the group
             if ($shop_group->share_stock) {
                 $stock_available->id_shop = 0;
@@ -478,6 +481,7 @@ class StockAvailableCore extends ObjectModel
                 $stock_available->id_shop = (int) $id_shop;
                 $stock_available->id_shop_group = 0;
             }
+
             $stock_available->add();
 
             if ($add_movement === true && $quantity !== 0) {
@@ -517,6 +521,7 @@ class StockAvailableCore extends ObjectModel
             if (! ($shop instanceof Shop)) {
                 $shop = new Shop($shop);
             }
+
             $groupSharedStock = (bool) $shop->getGroup()->share_stock;
         } else {
             $groupSharedStock = Shop::getContext() === Shop::CONTEXT_SHOP && (bool) Shop::getContextShopGroup()->share_stock;
@@ -558,7 +563,7 @@ class StockAvailableCore extends ObjectModel
             $stock_available = new StockAvailable();
             $stock_available->id_product = (int) $id_product;
             $stock_available->id_product_attribute = (int) $id_product_attribute;
-            $stock_available->id_shop = (int) $id_shop;
+            $stock_available->id_shop = $id_shop;
             $stock_available->postSave();
         }
 
@@ -665,6 +670,7 @@ class StockAvailableCore extends ObjectModel
             } else {
                 $shop_group = $context->shop->getGroup();
             }
+
             $shop = $context->shop;
         } elseif (is_object($shop)) {
             /** @var Shop $shop */

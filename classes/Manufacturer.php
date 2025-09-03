@@ -238,6 +238,7 @@ class ManufacturerCore extends ObjectModel
         if (! $idLang) {
             $idLang = (int) Configuration::get('PS_LANG_DEFAULT');
         }
+
         if (! Group::isFeatureActive()) {
             $allGroup = true;
         }
@@ -378,7 +379,7 @@ class ManufacturerCore extends ObjectModel
             '
 			SELECT `id_manufacturer`
 			FROM `' . _DB_PREFIX_ . 'manufacturer`
-			WHERE `name` = \'' . pSQL($name) . '\''
+			WHERE `name` = \'' . pSQL($name) . "'"
         );
 
         if (isset($result['id_manufacturer'])) {
@@ -425,7 +426,7 @@ class ManufacturerCore extends ObjectModel
         $activeCategory = true,
         ?Context $context = null,
     ) {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -472,8 +473,9 @@ class ManufacturerCore extends ObjectModel
 
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
 
-            return (int) count($result);
+            return count($result);
         }
+
         if (strpos($orderBy, '.') > 0) {
             $orderBy = explode('.', $orderBy);
             $orderBy = pSQL($orderBy[0]) . '.`' . pSQL($orderBy[1]) . '`';
@@ -526,6 +528,7 @@ class ManufacturerCore extends ObjectModel
             if (Group::isFeatureActive()) {
                 $sql .= 'JOIN `' . _DB_PREFIX_ . 'category_group` cg ON (cp.`id_category` = cg.`id_category` AND cg.`id_group` ' . $sqlGroups . ')';
             }
+
             if ($activeCategory) {
                 $sql .= 'JOIN `' . _DB_PREFIX_ . 'category` ca ON cp.`id_category` = ca.`id_category` AND ca.`active` = 1';
             }

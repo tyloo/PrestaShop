@@ -40,6 +40,7 @@ class ConfigurationCore extends ObjectModel
     public $name;
 
     public $id_shop_group;
+
     public $id_shop;
 
     /**
@@ -103,8 +104,11 @@ class ConfigurationCore extends ObjectModel
      * @var array|null Configuration cache with optimised key order
      */
     protected static $_new_cache_shop;
+
     protected static $_new_cache_group;
+
     protected static $_new_cache_global;
+
     protected static $_initialized = false;
 
     /**
@@ -146,6 +150,7 @@ class ConfigurationCore extends ObjectModel
         if ($idShop === null) {
             $idShop = Shop::getContextShopID(true);
         }
+
         if ($idShopGroup === null) {
             $idShopGroup = Shop::getContextShopGroupID(true);
         }
@@ -239,6 +244,7 @@ class ConfigurationCore extends ObjectModel
                     self::$_new_cache_global[$row['name']][$lang] = $row['value'];
                 }
             }
+
             self::$_initialized = true;
         }
     }
@@ -278,9 +284,11 @@ class ConfigurationCore extends ObjectModel
         if ($idShop && Configuration::hasKey($key, $idLang, null, $idShop)) {
             return self::$_new_cache_shop[$key][$idLang][$idShop];
         }
+
         if ($idShopGroup && Configuration::hasKey($key, $idLang, $idShopGroup)) {
             return self::$_new_cache_group[$key][$idLang][$idShopGroup];
         }
+
         if (Configuration::hasKey($key, $idLang)) {
             return self::$_new_cache_global[$key][$idLang];
         }
@@ -361,6 +369,7 @@ class ConfigurationCore extends ObjectModel
         if ($idShop === null) {
             $idShop = Shop::getContextShopID(true);
         }
+
         if ($idShopGroup === null) {
             $idShopGroup = Shop::getContextShopGroupID(true);
         }
@@ -393,6 +402,7 @@ class ConfigurationCore extends ObjectModel
         if ($idShop) {
             return isset(self::$_new_cache_shop[$key][$idLang][$idShop]);
         }
+
         if ($idShopGroup) {
             return isset(self::$_new_cache_group[$key][$idLang][$idShopGroup]);
         }
@@ -417,6 +427,7 @@ class ConfigurationCore extends ObjectModel
         if ($idShop === null) {
             $idShop = (int) Shop::getContextShopID(true);
         }
+
         if ($idShopGroup === null) {
             $idShopGroup = (int) Shop::getContextShopGroupID(true);
         }
@@ -485,6 +496,7 @@ class ConfigurationCore extends ObjectModel
         if ($idShop === null || ! Shop::isFeatureActive()) {
             $idShop = Shop::getContextShopID(true);
         }
+
         if ($idShopGroup === null || ! Shop::isFeatureActive()) {
             $idShopGroup = Shop::getContextShopGroupID(true);
         }
@@ -515,7 +527,7 @@ class ConfigurationCore extends ObjectModel
                     $result &= Db::getInstance()->update(self::$definition['table'], [
                         'value' => pSQL($value, $html),
                         'date_upd' => date('Y-m-d H:i:s'),
-                    ], '`name` = \'' . pSQL($key) . '\'' . Configuration::sqlRestriction($idShopGroup, $idShop), 1, true);
+                    ], "`name` = '" . pSQL($key) . "'" . Configuration::sqlRestriction($idShopGroup, $idShop), 1, true);
                 } else {
                     // Update multi lang
                     $sql = 'UPDATE `' . _DB_PREFIX_ . bqSQL(self::$definition['table']) . '_lang` cl
@@ -525,7 +537,7 @@ class ConfigurationCore extends ObjectModel
                                 AND cl.`' . bqSQL(self::$definition['primary']) . '` = (
                                     SELECT c.`' . bqSQL(self::$definition['primary']) . '`
                                     FROM `' . _DB_PREFIX_ . bqSQL(self::$definition['table']) . '` c
-                                    WHERE c.name = \'' . pSQL($key) . '\''
+                                    WHERE c.name = \'' . pSQL($key) . "'"
                                         . Configuration::sqlRestriction($idShopGroup, $idShop)
                                 . ')';
                     $result &= Db::getInstance()->execute($sql);
@@ -757,6 +769,7 @@ class ConfigurationCore extends ObjectModel
         if ($idShop) {
             return ' AND id_shop = ' . (int) $idShop;
         }
+
         if ($idShopGroup) {
             return ' AND id_shop_group = ' . (int) $idShopGroup . ' AND (id_shop IS NULL OR id_shop = 0)';
         }

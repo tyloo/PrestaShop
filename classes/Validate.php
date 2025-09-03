@@ -42,7 +42,9 @@ use ZxcvbnPhp\Zxcvbn;
 class ValidateCore
 {
     public const ORDER_BY_REGEXP = '/^(?:(`?)[\w!_-]+\1\.)?(?:(`?)[\w!_-]+\2)$/';
+
     public const OBJECT_CLASS_NAME_REGEXP = '/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*(\\\\[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)*$/';
+
     /**
      * Maximal 32 bits value: (2^32)-1
      *
@@ -103,10 +105,12 @@ class ValidateCore
             if (! str_contains($url, 'http')) {
                 $url = 'http://' . $url;
             }
+
             if (! is_array(@get_headers($url))) {
                 $errors[] = Context::getContext()->getTranslator()->trans('Invalid URL', [], 'Admin.Notifications.Error');
             }
         }
+
         if (! count($errors)) {
             return true;
         }
@@ -676,6 +680,7 @@ class ValidateCore
         if (! empty(DateTime::getLastErrors()['warning_count']) || $d === false) {
             return false;
         }
+
         $oneHundredTwentyYearsAgo = new DateTime();
         $oneHundredTwentyYearsAgo->sub(new DateInterval('P120Y'));
 
@@ -1284,12 +1289,14 @@ class ValidateCore
         if (Tools::strlen($siret) !== 14) {
             return false;
         }
+
         $sum = 0;
         for ($i = 0; $i !== 14; ++$i) {
             $tmp = ((($i + 1) % 2) + 1) * (int) $siret[$i];
             if ($tmp >= 10) {
                 $tmp -= 9;
             }
+
             $sum += $tmp;
         }
 
@@ -1310,7 +1317,7 @@ class ValidateCore
 
     public static function isControllerName($name)
     {
-        return (bool) (is_string($name) && preg_match('/^[0-9a-zA-Z-_]*$/u', $name));
+        return is_string($name) && preg_match('/^[0-9a-zA-Z-_]*$/u', $name);
     }
 
     public static function isPrestaShopVersion($version)

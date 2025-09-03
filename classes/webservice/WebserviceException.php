@@ -27,17 +27,21 @@
 class WebserviceExceptionCore extends Exception
 {
     protected $status;
+
     /**
      * @var string
      */
     protected $wrong_value;
+
     /**
      * @var array
      */
     protected $available_values;
+
     protected $type;
 
     public const SIMPLE = 0;
+
     public const DID_YOU_MEAN = 1;
 
     public function __construct($message, $code)
@@ -47,6 +51,7 @@ class WebserviceExceptionCore extends Exception
             $exception_code = $code[0];
             $this->setStatus($code[1]);
         }
+
         parent::__construct($message, $exception_code);
         $this->type = self::SIMPLE;
     }

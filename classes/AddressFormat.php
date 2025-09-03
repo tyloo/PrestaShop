@@ -244,6 +244,7 @@ class AddressFormatCore extends ObjectModel
                 }
             }
         }
+
         $this->checkRequiredFields($usedKeyList);
 
         return ! count($this->_errorFormatList);
@@ -320,8 +321,9 @@ class AddressFormatCore extends ObjectModel
                 foreach ($currentKeyList as $key) {
                     // Check if we need to use an older modified pattern if a key has already be matched before
                     $replacedValue = empty($mainFormattedKey) ? $pattern : $formattedValueList[$mainFormattedKey];
-
-                    $chars = $start = $end = str_replace($key, '', $replacedValue);
+                    $chars = str_replace($key, '', $replacedValue);
+                    $start = $chars;
+                    $end = $chars;
                     if (preg_match(self::_CLEANING_REGEX_, $chars)) {
                         if (Tools::substr($replacedValue, 0, Tools::strlen($chars)) === $chars) {
                             $end = '';
@@ -337,6 +339,7 @@ class AddressFormatCore extends ObjectModel
                     if (empty($formattedValueList[$key])) {
                         return;
                     }
+
                     $formattedValue = preg_replace('/^' . $key . '$/', (string) $formattedValueList[$key], (string) $replacedValue, -1, $count);
                     if ($formattedValue) {
                         if ($count) {
@@ -344,10 +347,12 @@ class AddressFormatCore extends ObjectModel
                             if (empty($mainFormattedKey)) {
                                 $mainFormattedKey = $key;
                             }
+
                             // Set the pattern value to an empty string if an older key has already been matched before
                             if ($mainFormattedKey !== $key) {
                                 $formattedValueList[$key] = '';
                             }
+
                             // Store the new pattern value
                             $formattedValueList[$mainFormattedKey] = $start . $formattedValue . $end;
                             unset($originalFormattedPatternList[$patternNum]);
@@ -369,6 +374,7 @@ class AddressFormatCore extends ObjectModel
                 foreach ($keyList as $key) {
                     $cleanedLine .= $key . ' ';
                 }
+
                 $cleanedLine = trim($cleanedLine);
                 $line = $cleanedLine;
             }
@@ -389,6 +395,7 @@ class AddressFormatCore extends ObjectModel
         if (! $id_lang) {
             $id_lang = Context::getContext()->language->id;
         }
+
         $tab = [];
         $temporyObject = [];
 
@@ -414,6 +421,7 @@ class AddressFormatCore extends ObjectModel
                                 if (! isset($temporyObject[$associateName[0]])) {
                                     $temporyObject[$associateName[0]] = new $associateName[0]($address->{$idFieldName});
                                 }
+
                                 $tab[$pattern] = is_array($temporyObject[$associateName[0]]->{$associateName[1]}) ?
                                     (
                                         $temporyObject[$associateName[0]]->{$associateName[1]}[$id_lang] ?? ''
@@ -422,10 +430,12 @@ class AddressFormatCore extends ObjectModel
                             }
                         }
                     }
+
                     AddressFormat::_setOriginalDisplayFormat($tab, $line, $keyList);
                 }
             }
         }
+
         AddressFormat::cleanOrderedAddress($addressFormat);
 
         return $tab;
@@ -458,6 +468,7 @@ class AddressFormatCore extends ObjectModel
                                     $addressFormatedValues[$pattern]) . $separator) : '';
                     }
                 }
+
                 $tmpText = trim($tmpText);
                 $addressText .= (! empty($tmpText)) ? $tmpText . $newLine : '';
             }
@@ -510,6 +521,7 @@ class AddressFormatCore extends ObjectModel
                     $propertyList[] = $propertyName;
                 }
             }
+
             unset(
                 $object,
                 $reflect
@@ -546,6 +558,7 @@ class AddressFormatCore extends ObjectModel
                     }
                 }
             }
+
             unset(
                 $object,
                 $reflect
@@ -639,6 +652,7 @@ class AddressFormatCore extends ObjectModel
         if (empty($out)) {
             $out = $this->getFormatDB((int) Configuration::get('PS_COUNTRY_DEFAULT'));
         }
+
         if (Country::isNeedDniByCountryId($idCountry) && ! str_contains($out, 'dni')) {
             $out .= AddressFormat::FORMAT_NEW_LINE . 'dni';
         }

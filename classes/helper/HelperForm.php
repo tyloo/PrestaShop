@@ -27,6 +27,7 @@
 class HelperFormCore extends Helper
 {
     public $id;
+
     public $first_call = true;
 
     /**
@@ -38,6 +39,7 @@ class HelperFormCore extends Helper
      * @var array values of form fields
      */
     public $fields_value = [];
+
     public $name_controller = '';
 
     /**
@@ -51,10 +53,15 @@ class HelperFormCore extends Helper
     public $submit_action;
 
     public $token;
+
     public $languages;
+
     public $default_form_language;
+
     public $allow_employee_form_lang;
+
     public $show_cancel_button = false;
+
     public $back_url = '#';
 
     public function __construct()
@@ -115,6 +122,7 @@ class HelperFormCore extends Helper
                     if (isset($params['condition']) && ! $params['condition']) {
                         unset($this->fields_form[$fieldset_key]['form']['input'][$key]);
                     }
+
                     switch ($params['type']) {
                         case 'switch':
                             $switch_values = $params['values'];
@@ -129,6 +137,7 @@ class HelperFormCore extends Helper
                             } else {
                                 $this->fields_form[$fieldset_key]['form']['input'][$key]['values'] = $default_switch_values;
                             }
+
                             break;
 
                         case 'select':
@@ -379,6 +388,7 @@ class HelperFormCore extends Helper
         if (isset($template_directory)) {
             $tree->setTemplateDirectory($template_directory);
         }
+
         $tree->setSelectedShops($assos);
         $tree->setAttribute('table', $this->table);
 

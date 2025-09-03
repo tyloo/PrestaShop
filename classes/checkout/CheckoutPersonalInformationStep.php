@@ -29,7 +29,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CheckoutPersonalInformationStepCore extends AbstractCheckoutStep
 {
     protected $template = 'checkout/_partials/steps/personal-information.tpl';
+
     private $loginForm;
+
     private $registerForm;
 
     private $show_login_form = false;

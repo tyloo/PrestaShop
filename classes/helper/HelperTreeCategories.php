@@ -27,19 +27,31 @@
 class HelperTreeCategoriesCore extends TreeCore
 {
     public const DEFAULT_TEMPLATE = 'tree_categories.tpl';
+
     public const DEFAULT_NODE_FOLDER_TEMPLATE = 'tree_node_folder_radio.tpl';
+
     public const DEFAULT_NODE_ITEM_TEMPLATE = 'tree_node_item_radio.tpl';
 
     private $_disabled_categories;
+
     private $_input_name;
+
     private $_lang;
+
     private $_root_category;
+
     private $_selected_categories;
+
     private $_full_tree = false;
+
     private $_shop;
+
     private $_use_checkbox;
+
     private $_use_search;
+
     private $_use_shop_restriction;
+
     private $_children_only = false;
 
     public function __construct(
@@ -118,6 +130,7 @@ class HelperTreeCategoriesCore extends TreeCore
                 if (empty($root_category)) {
                     $root_category = Category::getRootCategory()->id;
                 }
+
                 $categories[$root_category] = Category::getChildren($root_category, $lang, false, $shop->id);
                 $children = $this->fillTree($categories, $root_category);
                 $this->setData($children);
@@ -125,6 +138,7 @@ class HelperTreeCategoriesCore extends TreeCore
                 if (empty($root_category)) {
                     $root_category = Category::getRootCategory()->id;
                 }
+
                 $new_selected_categories = [];
                 $selected_categories = $this->getSelectedCategories();
                 $categories[$root_category] = Category::getChildren($root_category, $lang, false, $shop->id);
@@ -136,6 +150,7 @@ class HelperTreeCategoriesCore extends TreeCore
                         $new_selected_categories[] = $value['id_category'];
                     }
                 }
+
                 $new_selected_categories = array_unique($new_selected_categories);
                 foreach ($new_selected_categories as $selected_category) {
                     $current_category = Category::getChildren($selected_category, $lang, false, $shop->id);
@@ -381,14 +396,14 @@ class HelperTreeCategoriesCore extends TreeCore
         $collapse_all = new TreeToolbarLink(
             $this->translator->trans('Collapse all', [], 'Admin.Actions'),
             '#',
-            '$(\'#' . $this->getId() . '\').tree(\'collapseAll\');$(\'#collapse-all-' . $this->getId() . '\').hide();$(\'#expand-all-' . $this->getId() . '\').show(); return false;',
+            '$(\'#' . $this->getId() . '\').tree(\'collapseAll\');$(\'#collapse-all-' . $this->getId() . '\').hide();$(\'#expand-all-' . $this->getId() . "').show(); return false;",
             'icon-collapse-alt'
         );
         $collapse_all->setAttribute('id', 'collapse-all-' . $this->getId());
         $expand_all = new TreeToolbarLink(
             $this->translator->trans('Expand all', [], 'Admin.Actions'),
             '#',
-            '$(\'#' . $this->getId() . '\').tree(\'expandAll\');$(\'#collapse-all-' . $this->getId() . '\').show();$(\'#expand-all-' . $this->getId() . '\').hide(); return false;',
+            '$(\'#' . $this->getId() . '\').tree(\'expandAll\');$(\'#collapse-all-' . $this->getId() . '\').show();$(\'#expand-all-' . $this->getId() . "').hide(); return false;",
             'icon-expand-alt'
         );
         $expand_all->setAttribute('id', 'expand-all-' . $this->getId());
@@ -399,14 +414,14 @@ class HelperTreeCategoriesCore extends TreeCore
             $check_all = new TreeToolbarLink(
                 $this->translator->trans('Check all', [], 'Admin.Actions'),
                 '#',
-                'checkAllAssociatedCategories($(\'#' . $this->getId() . '\')); return false;',
+                'checkAllAssociatedCategories($(\'#' . $this->getId() . "')); return false;",
                 'icon-check-sign'
             );
             $check_all->setAttribute('id', 'check-all-' . $this->getId());
             $uncheck_all = new TreeToolbarLink(
                 $this->translator->trans('Uncheck all', [], 'Admin.Actions'),
                 '#',
-                'uncheckAllAssociatedCategories($(\'#' . $this->getId() . '\')); return false;',
+                'uncheckAllAssociatedCategories($(\'#' . $this->getId() . "')); return false;",
                 'icon-check-empty'
             );
             $uncheck_all->setAttribute('id', 'uncheck-all-' . $this->getId());

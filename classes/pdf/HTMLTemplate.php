@@ -155,7 +155,7 @@ abstract class HTMLTemplateCore
             'date' => $this->date,
             'title' => $this->title,
             'shop_name' => $shop_name,
-            'shop_details' => Configuration::get('PS_SHOP_DETAILS', null, null, (int) $id_shop),
+            'shop_details' => Configuration::get('PS_SHOP_DETAILS', null, null, $id_shop),
             'width_logo' => $width,
             'height_logo' => $height,
         ]);

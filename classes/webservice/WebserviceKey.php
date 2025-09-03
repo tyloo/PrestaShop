@@ -204,6 +204,7 @@ class WebserviceKeyCore extends ObjectModel
         if (! Db::getInstance()->execute($sql)) {
             $ok = false;
         }
+
         if (is_array($permissions_to_set)) {
             $permissions = [];
             $resources = WebserviceRequest::getResources();
@@ -217,12 +218,14 @@ class WebserviceKeyCore extends ObjectModel
                     }
                 }
             }
+
             $account = new WebserviceKey($id_account);
             if ($account->deleteAssociations() && $permissions) {
                 $sql = 'INSERT INTO `' . _DB_PREFIX_ . 'webservice_permission` (`id_webservice_permission` ,`resource` ,`method` ,`id_webservice_account`) VALUES ';
                 foreach ($permissions as $permission) {
-                    $sql .= '(NULL , \'' . pSQL($permission[1]) . '\', \'' . pSQL($permission[0]) . '\', ' . (int) $id_account . '), ';
+                    $sql .= "(NULL , '" . pSQL($permission[1]) . "', '" . pSQL($permission[0]) . "', " . (int) $id_account . '), ';
                 }
+
                 $sql = rtrim($sql, ', ');
                 if (! Db::getInstance()->execute($sql)) {
                     $ok = false;

@@ -91,9 +91,11 @@ class RangePriceCore extends ObjectModel
         if (! parent::add($autodate, $null_values) || ! Validate::isLoadedObject($this)) {
             return false;
         }
+
         if (defined('PS_INSTALLATION_IN_PROGRESS')) {
             return true;
         }
+
         $carrier = new Carrier((int) $this->id_carrier);
         $price_list = [];
         foreach ($carrier->getZones() as $zone) {
@@ -105,6 +107,7 @@ class RangePriceCore extends ObjectModel
                 'price' => 0,
             ];
         }
+
         $carrier->addDeliveryPrice($price_list);
 
         return true;

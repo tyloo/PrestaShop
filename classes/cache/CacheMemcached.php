@@ -76,6 +76,7 @@ class CacheMemcachedCore extends Cache
         if (! $servers) {
             return;
         }
+
         foreach ($servers as $server) {
             $this->memcached->addServer($server['ip'], $server['port'], (int) $server['weight']);
         }
@@ -224,7 +225,7 @@ class CacheMemcachedCore extends Cache
      */
     public static function addServer($ip, $port, $weight)
     {
-        return Db::getInstance()->execute('INSERT INTO ' . _DB_PREFIX_ . 'memcached_servers (ip, port, weight) VALUES(\'' . pSQL($ip) . '\', ' . (int) $port . ', ' . (int) $weight . ')', false);
+        return Db::getInstance()->execute('INSERT INTO ' . _DB_PREFIX_ . "memcached_servers (ip, port, weight) VALUES('" . pSQL($ip) . "', " . (int) $port . ', ' . (int) $weight . ')', false);
     }
 
     /**

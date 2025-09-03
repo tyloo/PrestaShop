@@ -81,6 +81,7 @@ class TranslatedConfigurationCore extends Configuration
                 $id = null;
             }
         }
+
         parent::__construct($id, $idLang);
     }
 
@@ -112,12 +113,13 @@ class TranslatedConfigurationCore extends Configuration
                 }
             }
         }
+
         Configuration::updateValue($this->name, $this->value, $ishtml);
 
         $lastInsert = Db::getInstance()->getRow('
 			SELECT `id_configuration` AS id
 			FROM `' . _DB_PREFIX_ . 'configuration`
-			WHERE `name` = \'' . pSQL($this->name) . '\'');
+			WHERE `name` = \'' . pSQL($this->name) . "'");
         if ($lastInsert) {
             $this->id = $lastInsert['id'];
         }

@@ -135,13 +135,16 @@ class ConnectionCore extends ObjectModel
         if (! isset($cookie->id_connections) || ! isset($_SERVER['HTTP_REFERER']) || ! str_contains((string) $_SERVER['HTTP_REFERER'], Tools::getHttpHost(false, false) . '/')) {
             $idPage = Connection::setNewConnection($cookie);
         }
+
         // If we do not track the pages, no need to get the page id
         if (! Configuration::get('PS_STATSDATA_PAGESVIEWS') && ! Configuration::get('PS_STATSDATA_CUSTOMER_PAGESVIEWS')) {
             return [];
         }
+
         if (! $idPage) {
             $idPage = Page::getCurrentId();
         }
+
         // If we do not track the page views by customer, the id_page is the only information needed
         if (! Configuration::get('PS_STATSDATA_CUSTOMER_PAGESVIEWS')) {
             return ['id_page' => $idPage];
@@ -214,6 +217,7 @@ class ConnectionCore extends ObjectModel
             if (! isset($arrayUrl['host']) || preg_replace('/^www./', '', $arrayUrl['host']) === preg_replace('/^www./', '', Tools::getHttpHost(false, false))) {
                 $referer = '';
             }
+
             $connection = new Connection();
             $connection->id_guest = (int) $cookie->id_guest;
             $connection->id_page = Page::getCurrentId();
@@ -224,6 +228,7 @@ class ConnectionCore extends ObjectModel
             if (Validate::isAbsoluteUrl($referer)) {
                 $connection->http_referer = substr((string) $referer, 0, 254);
             }
+
             $connection->add();
             $cookie->id_connections = (int) $connection->id;
 
@@ -251,12 +256,13 @@ class ConnectionCore extends ObjectModel
         if ($time > 300000) {
             $time = 300000;
         }
+
         Db::getInstance()->execute('
 		UPDATE `' . _DB_PREFIX_ . 'connections_page`
 		SET `time_end` = `time_start` + INTERVAL ' . (int) ($time / 1000) . ' SECOND
 		WHERE `id_connections` = ' . (int) $idConnections . '
 		AND `id_page` = ' . (int) $idPage . '
-		AND `time_start` = \'' . pSQL($timeStart) . '\'');
+		AND `time_start` = \'' . pSQL($timeStart) . "'");
     }
 
     /**

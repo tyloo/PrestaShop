@@ -49,6 +49,7 @@ class StockManagerFactoryCore
             if (! ($stock_manager instanceof StockManagerInterface)) {
                 $stock_manager = new StockManager();
             }
+
             StockManagerFactory::$stock_manager = $stock_manager;
         }
 

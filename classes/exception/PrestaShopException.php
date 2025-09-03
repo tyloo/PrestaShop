@@ -66,23 +66,27 @@ class PrestaShopExceptionCore extends Exception
                 if (defined('_PS_ADMIN_DIR_')) {
                     $relative_file = str_replace(basename((string) _PS_ADMIN_DIR_) . \DIRECTORY_SEPARATOR, 'admin' . \DIRECTORY_SEPARATOR, $relative_file);
                 }
+
                 echo '<li>';
                 echo '<b>' . ($trace['class'] ?? '') . ($trace['type'] ?? '') . $trace['function'] . '</b>';
-                echo ' - <a style="font-size: 12px; color: #000000; cursor:pointer; color: blue;" onclick="document.getElementById(\'psTrace_' . $id . '\').style.display = (document.getElementById(\'psTrace_' . $id . '\').style.display != \'block\') ? \'block\' : \'none\'; return false">[line ' . $current_line . ' - ' . $relative_file . ']</a>';
+                echo ' - <a style="font-size: 12px; color: #000000; cursor:pointer; color: blue;" onclick="document.getElementById(\'psTrace_' . $id . "').style.display = (document.getElementById('psTrace_" . $id . '\').style.display != \'block\') ? \'block\' : \'none\'; return false">[line ' . $current_line . ' - ' . $relative_file . ']</a>';
 
                 if (isset($trace['args']) && count($trace['args'])) {
-                    echo ' - <a style="font-size: 12px; color: #000000; cursor:pointer; color: blue;" onclick="document.getElementById(\'psArgs_' . $id . '\').style.display = (document.getElementById(\'psArgs_' . $id . '\').style.display != \'block\') ? \'block\' : \'none\'; return false">[' . count($trace['args']) . ' Arguments]</a>';
+                    echo ' - <a style="font-size: 12px; color: #000000; cursor:pointer; color: blue;" onclick="document.getElementById(\'psArgs_' . $id . "').style.display = (document.getElementById('psArgs_" . $id . '\').style.display != \'block\') ? \'block\' : \'none\'; return false">[' . count($trace['args']) . ' Arguments]</a>';
                 }
 
                 if ($relative_file) {
                     $this->displayFileDebug($trace['file'], $trace['line'], $id);
                 }
+
                 if (isset($trace['args']) && count($trace['args'])) {
                     $args = $this->hideCriticalArgs($trace);
                     $this->displayArgsDebug($args, $id);
                 }
+
                 echo '</li>';
             }
+
             echo '</ul>';
             echo '</div>';
         } else {
@@ -91,6 +95,7 @@ class PrestaShopExceptionCore extends Exception
                 echo file_get_contents(_PS_ROOT_DIR_ . '/error500.html');
             }
         }
+
         // Log the error in the disk
         $this->logError();
 
@@ -116,6 +121,7 @@ class PrestaShopExceptionCore extends Exception
             $total += $offset;
             $offset = 0;
         }
+
         $lines = array_slice($lines, $offset, $total);
         ++$offset;
 
@@ -128,6 +134,7 @@ class PrestaShopExceptionCore extends Exception
                 echo $string;
             }
         }
+
         echo '</pre></div>';
     }
 
@@ -191,6 +198,7 @@ class PrestaShopExceptionCore extends Exception
             echo Tools::safeOutput(print_r($value, true));
             echo "\n";
         }
+
         echo '</pre>';
     }
 

@@ -27,16 +27,25 @@
 class HelperCalendarCore extends Helper
 {
     public const DEFAULT_DATE_FORMAT = 'Y-mm-dd';
+
     public const DEFAULT_COMPARE_OPTION = 1;
 
     private $_actions;
+
     private $_compare_actions;
+
     private $_compare_date_from;
+
     private $_compare_date_to;
+
     private $_compare_date_option;
+
     private $_date_format;
+
     private $_date_from;
+
     private $_date_to;
+
     private $_rtl;
 
     public function __construct()

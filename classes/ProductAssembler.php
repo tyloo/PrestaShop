@@ -38,6 +38,7 @@ use PrestaShop\PrestaShop\Core\Product\Search\ProductSearchContext;
 class ProductAssemblerCore
 {
     private $context;
+
     private $searchContext;
 
     public function __construct(Context $context)
@@ -117,6 +118,7 @@ class ProductAssemblerCore
         if (! Validate::isUnsignedInt($nbDaysNewProduct)) {
             $nbDaysNewProduct = 20;
         }
+
         $now = date('Y-m-d') . ' 00:00:00';
 
         $sql = "SELECT
@@ -128,30 +130,31 @@ class ProductAssemblerCore
                     (DATEDIFF(
                         p.`date_add`,
                         DATE_SUB(
-                            '$now',
-                            INTERVAL $nbDaysNewProduct DAY
+                            '{$now}',
+                            INTERVAL {$nbDaysNewProduct} DAY
                         )
                     ) > 0) as new
                 FROM {$prefix}product p
                 LEFT JOIN {$prefix}product_lang pl
                     ON pl.id_product = p.id_product
-                    AND pl.id_shop = $idShop
-                    AND pl.id_lang = $idLang
+                    AND pl.id_shop = {$idShop}
+                    AND pl.id_lang = {$idLang}
                 LEFT JOIN {$prefix}stock_available sa ";
 
         if ($isStockSharingBetweenShopGroupEnabled) {
             $sql .= "  ON sa.id_product = p.id_product
 			        AND sa.id_shop = 0
                     AND sa.id_product_attribute = 0
-			        AND sa.id_shop_group = $idShopGroup ";
+			        AND sa.id_shop_group = {$idShopGroup} ";
         } else {
             $sql .= "  ON sa.id_product = p.id_product
                     AND sa.id_product_attribute = 0
-			        AND sa.id_shop = $idShop ";
+			        AND sa.id_shop = {$idShop} ";
         }
+
         $sql .= "LEFT JOIN {$prefix}product_shop ps
 			        ON ps.id_product = p.id_product
-			        AND ps.id_shop = $idShop
+			        AND ps.id_shop = {$idShop}
                 WHERE p.id_product IN (" . implode(',', $productIds) . ')';
 
         return $sql;

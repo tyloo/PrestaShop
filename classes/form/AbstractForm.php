@@ -33,6 +33,7 @@ abstract class AbstractFormCore implements FormInterface
      * @var TranslatorInterface
      */
     protected $translator;
+
     /**
      * @var ValidateConstraintTranslator
      */
@@ -44,12 +45,14 @@ abstract class AbstractFormCore implements FormInterface
     protected $formatter;
 
     protected $action;
+
     protected $template;
 
     /**
      * @var array
      */
     protected $formFields = [];
+
     /**
      * @var array[]
      */
@@ -155,6 +158,7 @@ abstract class AbstractFormCore implements FormInterface
 
                     continue;
                 }
+
                 if (! $this->checkFieldMaxLength($field)) {
                     $field->addError(
                         $this->translator->trans(
@@ -176,6 +180,7 @@ abstract class AbstractFormCore implements FormInterface
                 if (! $field->getValue()) {
                     continue;
                 }
+
                 if (! $this->checkFieldMaxLength($field)) {
                     $field->addError(
                         $this->translator->trans(

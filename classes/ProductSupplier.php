@@ -162,6 +162,7 @@ class ProductSupplierCore extends ObjectModel
         if ($withCurrency) {
             $query->select('ps.id_currency');
         }
+
         $query->from('product_supplier', 'ps');
         $query->where(
             'ps.id_product = ' . (int) $idProduct . '

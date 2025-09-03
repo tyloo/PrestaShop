@@ -35,6 +35,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 abstract class ControllerCore
 {
     public const SERVICE_LOCALE_REPOSITORY = 'prestashop.core.localization.locale.repository';
+
     public const SERVICE_MULTISTORE_FEATURE = 'prestashop.adapter.multistore_feature';
 
     /**
@@ -263,12 +264,15 @@ abstract class ControllerCore
         if ($this->display_header === null) {
             $this->display_header = true;
         }
+
         if ($this->display_header_javascript === null) {
             $this->display_header_javascript = true;
         }
+
         if ($this->display_footer === null) {
             $this->display_footer = true;
         }
+
         $this->context = Context::getContext();
         $this->context->controller = $this;
         $this->translator = Context::getContext()->getTranslator();
@@ -536,7 +540,9 @@ abstract class ControllerCore
             if (isset($js_file[1]) && $js_file[1]) {
                 $version = $js_file[1];
             }
-            $js_path = $js_file = $js_file[0];
+
+            $js_path = $js_file[0];
+            $js_file = $js_file[0];
             if ($check_path) {
                 $js_path = Media::getJSPath($js_file);
             }
@@ -609,6 +615,7 @@ abstract class ControllerCore
             if (! empty($plugin_path['js'])) {
                 $this->addJS($plugin_path['js'], false);
             }
+
             if ($css && ! empty($plugin_path['css'])) {
                 $this->addCSS(key($plugin_path['css']), 'all', null, false);
             }

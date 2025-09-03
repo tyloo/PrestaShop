@@ -27,12 +27,17 @@
 class TreeToolbarCore implements ITreeToolbarCore
 {
     public const DEFAULT_TEMPLATE_DIRECTORY = 'helpers/tree';
+
     public const DEFAULT_TEMPLATE = 'tree_toolbar.tpl';
 
     private $_actions;
+
     private $_context;
+
     private $_data;
+
     private $_template;
+
     private $_template_directory;
 
     public function __toString(): string
@@ -138,17 +143,20 @@ class TreeToolbarCore implements ITreeToolbarCore
             return $this->_normalizeDirectory($this->getContext()->controller->getTemplatePath())
                 . $this->getTemplateDirectory() . $template;
         }
+
         if ($this->getContext()->controller instanceof AdminController && isset($controllerName)
             && file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
                 . \DIRECTORY_SEPARATOR . $controllerName . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0)) . 'controllers'
                 . \DIRECTORY_SEPARATOR . $controllerName . \DIRECTORY_SEPARATOR . $this->getTemplateDirectory() . $template;
         }
+
         if (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
                 . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(1))
                     . $this->getTemplateDirectory() . $template;
         }
+
         if (file_exists($this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))
                 . $this->getTemplateDirectory() . $template)) {
             return $this->_normalizeDirectory($this->getContext()->smarty->getTemplateDir(0))

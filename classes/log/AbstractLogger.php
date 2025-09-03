@@ -27,6 +27,7 @@
 abstract class AbstractLoggerCore implements PrestaShopLoggerInterface
 {
     public $level;
+
     protected $level_value = [
         0 => 'DEBUG',
         1 => 'INFO',

@@ -54,6 +54,7 @@ class PrestaShopBackupCore
      * @var bool|string
      */
     public $psBackupAll = true;
+
     /**
      * @var bool|string
      */
@@ -270,9 +271,9 @@ class PrestaShopBackupCore
         $this->id = realpath($backupfile);
 
         fwrite($fp, '/* Backup for ' . Tools::getHttpHost(false, false) . __PS_BASE_URI__ . "\n *  at " . date('Y-m-d H:i:s', $date) . "\n */\n");
-        fwrite($fp, "\n" . 'SET NAMES \'utf8mb4\';');
+        fwrite($fp, "\nSET NAMES 'utf8mb4';");
         fwrite($fp, "\n" . 'SET FOREIGN_KEY_CHECKS = 0;');
-        fwrite($fp, "\n" . 'SET SESSION sql_mode = \'\';' . "\n\n");
+        fwrite($fp, "\nSET SESSION sql_mode = '';\n\n");
 
         // Find all tables
         $tables = Db::getInstance()->executeS('SHOW TABLES');
@@ -324,6 +325,7 @@ class PrestaShopBackupCore
                                 $s .= "'" . pSQL($value, true) . "',";
                             }
                         }
+
                         $s = rtrim($s, ',');
 
                         if ($i % 200 === 0 && $i < $sizeof) {
@@ -339,6 +341,7 @@ class PrestaShopBackupCore
                     }
                 }
             }
+
             ++$found;
         }
 

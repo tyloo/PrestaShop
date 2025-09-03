@@ -35,6 +35,7 @@ class CccReducerCore
      * @var Filesystem
      */
     protected $filesystem;
+
     /**
      * @var ConfigurationInterface
      */
@@ -78,6 +79,7 @@ class CccReducerCore
         if (! $this->filesystem->exists($destinationPath)) {
             CssMinifier::minify($files, $destinationPath);
         }
+
         if (Tools::hasMediaServer()) {
             $relativePath = _THEMES_DIR_ . _THEME_NAME_ . '/assets/cache/' . $cccFilename;
             $destinationUri = Tools::getCurrentUrlProtocolPrefix() . Tools::getMediaServer($relativePath) . $relativePath;
@@ -126,6 +128,7 @@ class CccReducerCore
             if (! $this->filesystem->exists($destinationPath)) {
                 JsMinifier::minify($files, $destinationPath);
             }
+
             if (Tools::hasMediaServer()) {
                 $relativePath = _THEMES_DIR_ . _THEME_NAME_ . '/assets/cache/' . $cccFilename;
                 $destinationUri = Tools::getCurrentUrlProtocolPrefix() . Tools::getMediaServer($relativePath) . $relativePath;

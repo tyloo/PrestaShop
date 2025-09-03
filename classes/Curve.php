@@ -34,10 +34,12 @@ class CurveCore
      * @var float[] indexed by string
      */
     protected $values = [];
+
     /**
      * @var string
      */
     protected $label;
+
     /**
      * Can be: bars, steps
      *
@@ -97,6 +99,7 @@ class CurveCore
         if ($type === 'bars') {
             $this->type = 'bars:{show:true,lineWidth:10}';
         }
+
         if ($type === 'steps') {
             $this->type = 'lines:{show:true,steps:true}';
         }

@@ -27,18 +27,28 @@
 class OrderPaymentCore extends ObjectModel
 {
     public $order_reference;
+
     public $id_currency;
+
     /**
      * @var float
      */
     public $amount;
+
     public $payment_method;
+
     public $conversion_rate;
+
     public $transaction_id;
+
     public $card_number;
+
     public $card_brand;
+
     public $card_expiration;
+
     public $card_holder;
+
     public $date_add;
 
     /**
@@ -133,7 +143,7 @@ class OrderPaymentCore extends ObjectModel
             Db::getInstance()->executeS(
                 'SELECT *
 			    FROM `' . _DB_PREFIX_ . 'order_payment`
-			    WHERE `order_reference` = \'' . pSQL($order_reference) . '\''
+			    WHERE `order_reference` = \'' . pSQL($order_reference) . "'"
             )
         );
     }

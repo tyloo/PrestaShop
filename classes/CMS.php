@@ -34,15 +34,25 @@ class CMSCore extends ObjectModel
      * @var int|null
      */
     public $id;
+
     public $id_cms;
+
     public $head_seo_title;
+
     public $meta_title;
+
     public $meta_description;
+
     public $content;
+
     public $link_rewrite;
+
     public $id_cms_category;
+
     public $position;
+
     public $indexation;
+
     public $active;
 
     /**
@@ -173,9 +183,10 @@ class CMSCore extends ObjectModel
      */
     public static function getLinks($idLang, $selection = null, $active = true, ?Link $link = null)
     {
-        if (! $link) {
+        if ($link === null) {
             $link = Context::getContext()->link;
         }
+
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
 		SELECT c.id_cms, cl.link_rewrite, cl.meta_title
 		FROM ' . _DB_PREFIX_ . 'cms c
@@ -284,7 +295,7 @@ class CMSCore extends ObjectModel
 
         for ($i = 0, $total = count($result); $i < $total; ++$i) {
             $sql = 'UPDATE `' . _DB_PREFIX_ . 'cms`
-					SET `position` = ' . (int) $i . '
+					SET `position` = ' . $i . '
 					WHERE `id_cms_category` = ' . (int) $idCategory . '
 						AND `id_cms` = ' . (int) $result[$i]['id_cms'];
             Db::getInstance()->execute($sql);
@@ -361,6 +372,7 @@ class CMSCore extends ObjectModel
         if ($idLang === null) {
             $idLang = (int) Configuration::get('PS_LANG_DEFAULT');
         }
+
         if ($idShop === null) {
             $idShop = (int) Configuration::get('PS_SHOP_DEFAULT');
         }

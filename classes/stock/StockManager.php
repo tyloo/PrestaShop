@@ -446,7 +446,7 @@ class StockManagerCore implements StockManagerInterface
                 $packs = Pack::getPacksContainingItem($id_product, $id_product_attribute, (int) Configuration::get('PS_LANG_DEFAULT'));
                 foreach ($packs as $pack) {
                     // Decrease stocks of the pack only if pack is in linked stock mode (option called 'Decrement both')
-                    if (! ((int) $pack->pack_stock_type === Pack::STOCK_TYPE_PACK_BOTH)
+                    if ((int) $pack->pack_stock_type !== Pack::STOCK_TYPE_PACK_BOTH
                         && ! ((int) $pack->pack_stock_type === Pack::STOCK_TYPE_DEFAULT
                             && (int) Configuration::get('PS_PACK_STOCK_TYPE') === Pack::STOCK_TYPE_PACK_BOTH)
                     ) {
@@ -555,6 +555,7 @@ class StockManagerCore implements StockManagerInterface
                     if (count($ids_warehouse)) {
                         $query->where('od.id_warehouse IN(' . implode(', ', $ids_warehouse) . ')');
                     }
+
                     $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
                     if (count($res)) {
                         foreach ($res as $row) {
@@ -589,6 +590,7 @@ class StockManagerCore implements StockManagerInterface
             if ($id_product_attribute !== 0) {
                 $query->where('od.product_attribute_id = ' . (int) $id_product_attribute);
             }
+
             $query->leftJoin('order_history', 'oh', 'oh.id_order = o.id_order AND oh.id_order_state = o.current_state');
             $query->leftJoin('order_state', 'os', 'os.id_order_state = oh.id_order_state');
             $query->where('os.shipped != 1');
@@ -598,6 +600,7 @@ class StockManagerCore implements StockManagerInterface
             if (count($ids_warehouse)) {
                 $query->where('od.id_warehouse IN(' . implode(', ', $ids_warehouse) . ')');
             }
+
             $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
             if (count($res)) {
                 foreach ($res as $row) {
@@ -605,6 +608,7 @@ class StockManagerCore implements StockManagerInterface
                 }
             }
         }
+
         // Gets supply_orders_qty
         $query = new DbQuery();
 
@@ -790,6 +794,7 @@ class StockManagerCore implements StockManagerInterface
         if ($id_warehouse) {
             $stocks->where('id_warehouse', '=', $id_warehouse);
         }
+
         if ($price_te) {
             $stocks->where('price_te', '=', $price_te);
         }
@@ -825,11 +830,11 @@ class StockManagerCore implements StockManagerInterface
 						FROM ' . _DB_PREFIX_ . 'stock s
 						LEFT JOIN ' . _DB_PREFIX_ . 'warehouse_carrier wc ON wc.`id_warehouse` = s.`id_warehouse`
 						LEFT JOIN ' . _DB_PREFIX_ . 'carrier c ON wc.`id_carrier` = c.`id_reference`
-						WHERE s.`id_product` = ' . (int) $id_product . ' AND s.`id_product_attribute` = ' . (int) $id_product_attribute . ' AND s.`id_warehouse` = ' . $result['id_warehouse'] . ' AND c.`id_carrier` IN (' . rtrim((string) $delivery_option[(int) Context::getContext()->cart->id_address_delivery], ',') . ') GROUP BY s.`id_product`');
+						WHERE s.`id_product` = ' . (int) $id_product . ' AND s.`id_product_attribute` = ' . $id_product_attribute . ' AND s.`id_warehouse` = ' . $result['id_warehouse'] . ' AND c.`id_carrier` IN (' . rtrim((string) $delivery_option[(int) Context::getContext()->cart->id_address_delivery], ',') . ') GROUP BY s.`id_product`');
                 } else {
                     $stock_quantity += Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('SELECT SUM(s.`usable_quantity`) as quantity
 						FROM ' . _DB_PREFIX_ . 'stock s
-						WHERE s.`id_product` = ' . (int) $id_product . ' AND s.`id_product_attribute` = ' . (int) $id_product_attribute . ' AND s.`id_warehouse` = ' . $result['id_warehouse'] . ' GROUP BY s.`id_product`');
+						WHERE s.`id_product` = ' . (int) $id_product . ' AND s.`id_product_attribute` = ' . $id_product_attribute . ' AND s.`id_warehouse` = ' . $result['id_warehouse'] . ' GROUP BY s.`id_product`');
                 }
             }
         }

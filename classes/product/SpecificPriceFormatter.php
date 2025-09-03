@@ -86,6 +86,7 @@ class SpecificPriceFormatterCore
                 if (! $this->specificPrice['reduction_tax'] && $this->isTaxIncluded) {
                     $this->specificPrice['reduction'] *= 1 + $tax_rate / 100;
                 }
+
                 if ($this->isTaxIncluded) {
                     $currentPriceCurrentCurrency -= $this->specificPrice['reduction'];
                     $this->specificPrice['reduction_with_tax'] = $this->specificPrice['reduction'];
@@ -96,6 +97,7 @@ class SpecificPriceFormatterCore
             } else {
                 $currentPriceCurrentCurrency *= 1 - $this->specificPrice['reduction'];
             }
+
             $this->specificPrice['real_value'] = $initialPrice > 0 ? $initialPrice - $currentPriceCurrentCurrency : $currentPriceCurrentCurrency;
             $discountPrice = $initialPrice - $this->specificPrice['real_value'];
 
@@ -115,6 +117,7 @@ class SpecificPriceFormatterCore
                 } else {
                     $this->specificPrice['real_value'] = $this->specificPrice['reduction_tax'] === 0 ? $this->specificPrice['reduction'] : $this->specificPrice['reduction'] / (1 + $tax_rate / 100);
                 }
+
                 $this->specificPrice['reduction_with_tax'] = $this->specificPrice['reduction_tax'] ? $this->specificPrice['reduction'] : $this->specificPrice['reduction'] + ($this->specificPrice['reduction'] * $tax_rate) / 100;
                 $discountPrice = $initialPrice - $this->specificPrice['real_value'];
                 if ($this->displayDiscountPrice) {

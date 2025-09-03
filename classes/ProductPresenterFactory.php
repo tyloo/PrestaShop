@@ -40,6 +40,7 @@ use PrestaShop\PrestaShop\Core\Product\ProductPresentationSettings;
 class ProductPresenterFactoryCore
 {
     private $context;
+
     private $taxConfiguration;
 
     public function __construct(Context $context, ?TaxConfiguration $taxConfiguration = null)

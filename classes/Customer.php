@@ -188,17 +188,21 @@ class CustomerCore extends ObjectModel
     public $date_upd;
 
     public $years;
+
     public $days;
+
     public $months;
 
     /**
      * @var int customer id_country as determined by geolocation
      */
     public $geoloc_id_country;
+
     /**
      * @var int customer id_state as determined by geolocation
      */
     public $geoloc_id_state;
+
     /**
      * @var string customer postcode as determined by geolocation
      */
@@ -293,7 +297,9 @@ class CustomerCore extends ObjectModel
     ];
 
     protected static $_defaultGroupId = [];
+
     protected static $_customerHasAddress = [];
+
     protected static $_customer_groups = [];
 
     /**
@@ -343,6 +349,7 @@ class CustomerCore extends ObjectModel
         if ($this->is_guest && ! Configuration::get('PS_GUEST_CHECKOUT_ENABLED')) {
             return false;
         }
+
         $success = parent::add($autoDate, $nullValues);
 
         // Update the group assignments themselves
@@ -460,6 +467,7 @@ class CustomerCore extends ObjectModel
                 $obj->delete();
             }
         }
+
         Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'customer_group` WHERE `id_customer` = ' . (int) $this->id);
         Db::getInstance()->execute('DELETE FROM ' . _DB_PREFIX_ . 'message WHERE id_customer=' . (int) $this->id);
         Db::getInstance()->execute('DELETE FROM ' . _DB_PREFIX_ . 'specific_price WHERE id_customer=' . (int) $this->id);
@@ -526,7 +534,7 @@ class CustomerCore extends ObjectModel
         $sql = new DbQuery();
         $sql->select('c.`passwd`');
         $sql->from('customer', 'c');
-        $sql->where('c.`email` = \'' . pSQL($email) . '\'');
+        $sql->where("c.`email` = '" . pSQL($email) . "'");
         if (Shop::getContext() === Shop::CONTEXT_SHOP && $shopGroup['share_customer']) {
             $sql->where('c.`id_shop_group` = ' . (int) Shop::getContextShopGroupID());
         } else {
@@ -536,6 +544,7 @@ class CustomerCore extends ObjectModel
         if ($ignoreGuest) {
             $sql->where('c.`is_guest` = 0');
         }
+
         $sql->where('c.`deleted` = 0');
 
         $passwordHash = Db::getInstance()->getValue($sql);
@@ -555,15 +564,17 @@ class CustomerCore extends ObjectModel
         $sql = new DbQuery();
         $sql->select('c.*');
         $sql->from('customer', 'c');
-        $sql->where('c.`email` = \'' . pSQL($email) . '\'');
+        $sql->where("c.`email` = '" . pSQL($email) . "'");
         if (Shop::getContext() === Shop::CONTEXT_SHOP && $shopGroup['share_customer']) {
             $sql->where('c.`id_shop_group` = ' . (int) Shop::getContextShopGroupID());
         } else {
             $sql->where('c.`id_shop` IN (' . implode(', ', Shop::getContextListShopID(Shop::SHARE_CUSTOMER)) . ')');
         }
+
         if ($ignoreGuest) {
             $sql->where('c.`is_guest` = 0');
         }
+
         $sql->where('c.`deleted` = 0');
 
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
@@ -616,9 +627,10 @@ class CustomerCore extends ObjectModel
         if (! Validate::isUnsignedId($idCustomer)) {
             return true;
         }
+
         $cacheId = 'Customer::isBanned_' . (int) $idCustomer;
         if (! Cache::isStored($cacheId)) {
-            $result = (bool) ! Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
+            $result = ! Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
             SELECT `id_customer`
             FROM `' . _DB_PREFIX_ . 'customer`
             WHERE `id_customer` = \'' . (int) $idCustomer . '\'
@@ -701,6 +713,7 @@ class CustomerCore extends ObjectModel
             self::$_customer_groups = [];
             self::$_defaultGroupId = [];
         }
+
         $key = (int) $idCustomer . '-' . (int) $idAddress;
         if (array_key_exists($key, self::$_customerHasAddress)) {
             unset(self::$_customerHasAddress[$key]);
@@ -824,6 +837,7 @@ class CustomerCore extends ObjectModel
         if ($idLang === null) {
             $idLang = Context::getContext()->language->id;
         }
+
         $shareOrder = (bool) Context::getContext()->shop->getGroup()->share_order;
 
         $sql = 'SELECT DISTINCT
@@ -910,7 +924,7 @@ class CustomerCore extends ObjectModel
             $sql->select('c.`id_customer`');
             $sql->from('customer', 'c');
             $sql->where('c.`id_customer` = ' . (int) $idCustomer);
-            $sql->where('c.`passwd` = \'' . pSQL($passwordHash) . '\'');
+            $sql->where("c.`passwd` = '" . pSQL($passwordHash) . "'");
 
             $result = (bool) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($sql);
 
@@ -941,12 +955,12 @@ class CustomerCore extends ObjectModel
                 LEFT JOIN `' . _DB_PREFIX_ . 'customer_group` cg ON c.id_customer = cg.id_customer
                 WHERE 1';
 
-        if ($shopConstraint) {
-            if ($shopConstraint->getShopGroupId()) {
+        if ($shopConstraint !== null) {
+            if ($shopConstraint->getShopGroupId() !== null) {
                 throw new InvalidShopConstraintException('Shop group constraint is not supported');
             }
 
-            if ($shopConstraint->getShopId()) {
+            if ($shopConstraint->getShopId() !== null) {
                 // filter by shop_id if its not all shops constraint
                 $sql .= sprintf(' AND c.id_shop = %d', $shopConstraint->getShopId()->getValue());
             }
@@ -961,7 +975,7 @@ class CustomerCore extends ObjectModel
         $items = [];
         foreach ($research_fields as $field) {
             foreach ($search_items as $item) {
-                $items[$item][] = $field . ' LIKE \'%' . pSQL($item) . '%\' ';
+                $items[$item][] = $field . " LIKE '%" . pSQL($item) . "%' ";
             }
         }
 
@@ -969,7 +983,7 @@ class CustomerCore extends ObjectModel
             $sql .= ' AND (' . implode(' OR ', $likes) . ') ';
         }
 
-        if (! $shopConstraint) {
+        if ($shopConstraint === null) {
             // this is for backwards compatibility, it uses shop context if specific shopConstraint is not provided
             $sql .= Shop::addSqlRestriction(Shop::SHARE_CUSTOMER);
         }
@@ -997,7 +1011,7 @@ class CustomerCore extends ObjectModel
         FROM `' . _DB_PREFIX_ . 'customer` c
         LEFT JOIN `' . _DB_PREFIX_ . 'guest` g ON g.id_customer = c.id_customer
         LEFT JOIN `' . _DB_PREFIX_ . 'connections` co ON g.id_guest = co.id_guest
-        WHERE co.`ip_address` = \'' . (int) ip2long(trim($ip)) . '\'');
+        WHERE co.`ip_address` = \'' . (int) ip2long(trim($ip)) . "'");
     }
 
     /**
@@ -1233,9 +1247,10 @@ class CustomerCore extends ObjectModel
      */
     public static function getCurrentCountry($idCustomer, ?Cart $cart = null)
     {
-        if (! $cart) {
+        if ($cart === null) {
             $cart = Context::getContext()->cart;
         }
+
         if (! $cart->{Configuration::get('PS_TAX_ADDRESS_TYPE')}) {
             $idAddress = (int) Db::getInstance()->getValue(sprintf(
                 'SELECT `id_address` FROM `%saddress` WHERE `id_customer` = %d AND `deleted` = 0 ORDER BY `id_address`',
@@ -1245,6 +1260,7 @@ class CustomerCore extends ObjectModel
         } else {
             $idAddress = $cart->{Configuration::get('PS_TAX_ADDRESS_TYPE')};
         }
+
         $ids = Address::getCountryAndState($idAddress);
 
         return (int) ($ids['id_country'] ?? Configuration::get('PS_COUNTRY_DEFAULT'));
@@ -1295,6 +1311,7 @@ class CustomerCore extends ObjectModel
             if (! Validate::isAcceptablePasswordLength($password) || ! Validate::isAcceptablePasswordScore($password)) {
                 return false;
             }
+
             $this->passwd = $crypto->hash($password);
         }
 
@@ -1382,7 +1399,7 @@ class CustomerCore extends ObjectModel
         }
 
         return Mail::Send(
-            (int) $idLang,
+            $idLang,
             $template,
             $subject,
             $vars,
@@ -1488,6 +1505,7 @@ class CustomerCore extends ObjectModel
         if (! count($carts)) {
             return false;
         }
+
         $cart = array_shift($carts);
         $cart = new Cart((int) $cart['id_cart']);
 
@@ -1552,6 +1570,7 @@ class CustomerCore extends ObjectModel
         foreach ($result as $row) {
             $groups[] = $row['id'];
         }
+
         $this->cleanGroups();
         $this->addGroups($groups);
 

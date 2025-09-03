@@ -47,7 +47,7 @@ abstract class ModuleAdminControllerCore extends AdminController
 
         $this->module = Module::getInstanceByName($tab->module);
         if (! $this->module->id) {
-            throw new PrestaShopException("Module {$tab->module} not found");
+            throw new PrestaShopException(sprintf('Module %s not found', $tab->module));
         }
     }
 

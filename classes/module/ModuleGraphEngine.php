@@ -56,6 +56,7 @@ abstract class ModuleGraphEngineCore extends Module
             if (! $instance) {
                 continue;
             }
+
             $array_engines[$module['name']] = [$instance->displayName, $instance->description];
         }
 

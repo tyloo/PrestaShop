@@ -215,11 +215,12 @@ class CountryCore extends ObjectModel
         if (! Validate::isLanguageIsoCode($isoCode)) {
             throw new PrestaShopException('Given iso code (' . $isoCode . ') is not valid.');
         }
+
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow(
             '
 			SELECT `id_country`
 			FROM `' . _DB_PREFIX_ . 'country`
-			WHERE `iso_code` = \'' . pSQL(strtoupper($isoCode)) . '\''
+			WHERE `iso_code` = \'' . pSQL(strtoupper($isoCode)) . "'"
             . ($active ? ' AND active = 1' : '')
         );
 
@@ -320,7 +321,7 @@ class CountryCore extends ObjectModel
         $sql = '
 		SELECT `id_country`
 		FROM `' . _DB_PREFIX_ . 'country_lang`
-		WHERE `name` = \'' . pSQL($country) . '\'';
+		WHERE `name` = \'' . pSQL($country) . "'";
         if ($idLang) {
             $sql .= ' AND `id_lang` = ' . (int) $idLang;
         }
@@ -391,6 +392,7 @@ class CountryCore extends ObjectModel
         if (empty($idZone)) {
             throw new PrestaShopException('Zone ID is invalid.');
         }
+
         if (empty($idLang)) {
             throw new PrestaShopException('Lang ID is invalid.');
         }
@@ -506,6 +508,7 @@ class CountryCore extends ObjectModel
             } else {
                 $id_lang = (int) Context::getContext()->language->id;
             }
+
             $countries = Country::getCountries($id_lang);
         }
 

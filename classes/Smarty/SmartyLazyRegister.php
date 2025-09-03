@@ -30,6 +30,7 @@
 class SmartyLazyRegister
 {
     protected $registry = [];
+
     protected static $instances = [];
 
     /**

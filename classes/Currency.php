@@ -238,6 +238,7 @@ class CurrencyCore extends ObjectModel
      * @var array Currency cache
      */
     protected static $currencies = [];
+
     protected static $countActiveCurrencies = [];
 
     protected $webserviceParameters = [
@@ -306,7 +307,8 @@ class CurrencyCore extends ObjectModel
              */
             if (is_array($this->symbol)) {
                 $this->localizedSymbols = $this->symbol;
-                $this->sign = $this->symbol = $this->symbol[$idLang];
+                $this->sign = $this->symbol[$idLang];
+                $this->symbol = $this->symbol[$idLang];
             } else {
                 $this->localizedSymbols = [$idLang => $this->symbol];
                 $this->sign = $this->symbol;
@@ -397,15 +399,18 @@ class CurrencyCore extends ObjectModel
                 $this->numeric_iso_code = $currency->getNumericIsoCode();
                 $this->iso_code_num = $this->numeric_iso_code;
             }
+
             if (empty($this->precision)) {
                 $this->precision = (int) $currency->getDecimalDigits();
             }
         }
+
         if (empty($this->symbol)) {
             $name = $this->name;
             $this->refreshLocalizedCurrencyData($languages, $localeCldr);
             $this->name = $name;
         }
+
         if (is_array($this->symbol)) {
             $this->localizedSymbols = $this->symbol;
         } else {
@@ -633,7 +638,8 @@ class CurrencyCore extends ObjectModel
      */
     public function setLocalizedNames(array $localizedNames)
     {
-        $this->localizedNames = $this->name = $localizedNames;
+        $this->localizedNames = $localizedNames;
+        $this->name = $localizedNames;
 
         return $this;
     }
@@ -659,7 +665,8 @@ class CurrencyCore extends ObjectModel
      */
     public function setLocalizedSymbols(array $localizedSymbols)
     {
-        $this->localizedSymbols = $this->symbol = $localizedSymbols;
+        $this->localizedSymbols = $localizedSymbols;
+        $this->symbol = $localizedSymbols;
 
         return $this;
     }
@@ -693,7 +700,8 @@ class CurrencyCore extends ObjectModel
      */
     public function setLocalizedPatterns(array $localizedPatterns)
     {
-        $this->localizedPatterns = $this->pattern = $localizedPatterns;
+        $this->localizedPatterns = $localizedPatterns;
+        $this->pattern = $localizedPatterns;
 
         return $this;
     }
@@ -932,7 +940,7 @@ class CurrencyCore extends ObjectModel
         $cacheId = 'Currency::getIdByIsoCode_' . pSQL($isoCode) . '-' . (int) $idShop . ($includeDeleted ? '-deleted' : '');
         if ($forceRefreshCache || ! Cache::isStored($cacheId)) {
             $query = Currency::getIdByQuery($idShop, $includeDeleted);
-            $query->where('iso_code = \'' . pSQL($isoCode) . '\'');
+            $query->where("iso_code = '" . pSQL($isoCode) . "'");
 
             $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query->build());
             if (empty($result)) {
@@ -956,7 +964,7 @@ class CurrencyCore extends ObjectModel
     {
         $cacheId = 'Currency::getIsoCodeById' . pSQL((string) $id);
         if ($forceRefreshCache || ! Cache::isStored($cacheId)) {
-            $resultIsoCode = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('SELECT `iso_code` FROM ' . _DB_PREFIX_ . 'currency WHERE `id_currency` = ' . (int) $id);
+            $resultIsoCode = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('SELECT `iso_code` FROM ' . _DB_PREFIX_ . 'currency WHERE `id_currency` = ' . $id);
             Cache::store($cacheId, $resultIsoCode);
 
             return $resultIsoCode;
@@ -978,7 +986,7 @@ class CurrencyCore extends ObjectModel
         $cacheId = 'Currency::getIdByNumericIsoCode_' . pSQL((string) $numericIsoCode) . '-' . (int) $idShop;
         if (! Cache::isStored($cacheId)) {
             $query = Currency::getIdByQuery($idShop);
-            $query->where('numeric_iso_code = \'' . pSQL((string) $numericIsoCode) . '\'');
+            $query->where("numeric_iso_code = '" . pSQL((string) $numericIsoCode) . "'");
 
             $result = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query->build());
             Cache::store($cacheId, $result);
@@ -1190,7 +1198,8 @@ class CurrencyCore extends ObjectModel
         $this->modified = false;
         $originalNames = $this->localizedNames;
         $originalSymbols = $this->localizedSymbols;
-        $symbolsByLang = $namesByLang = [];
+        $symbolsByLang = [];
+        $namesByLang = [];
         foreach ($languages as $languageData) {
             $language = new Language($languageData['id_lang']);
 
@@ -1214,6 +1223,7 @@ class CurrencyCore extends ObjectModel
                 $symbol = $originalSymbols[$language->id];
                 $this->modified = true;
             }
+
             $symbolsByLang[$language->id] = $symbol;
 
             // Name is localized, we check if it was manually modified
@@ -1222,6 +1232,7 @@ class CurrencyCore extends ObjectModel
                 $name = $originalNames[$language->id];
                 $this->modified = true;
             }
+
             $namesByLang[$language->id] = $name;
         }
 

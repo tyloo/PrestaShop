@@ -76,9 +76,11 @@ class ProductSaleCore
         if ($pageNumber < 1) {
             $pageNumber = 1;
         }
+
         if ($nbProducts < 1) {
             $nbProducts = 10;
         }
+
         $finalOrderBy = $orderBy;
         $orderTable = '';
 
@@ -154,6 +156,7 @@ class ProductSaleCore
             Tools::orderbyPrice($result, $orderWay);
             $result = array_slice($result, (int) (($pageNumber - 1) * $nbProducts), (int) $nbProducts);
         }
+
         if (! $result) {
             return false;
         }
@@ -172,12 +175,14 @@ class ProductSaleCore
      */
     public static function getBestSalesLight($idLang, $pageNumber = 0, $nbProducts = 10, ?Context $context = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
+
         if ($pageNumber < 0) {
             $pageNumber = 0;
         }
+
         if ($nbProducts < 1) {
             $nbProducts = 10;
         }
@@ -283,6 +288,7 @@ class ProductSaleCore
 				WHERE `id_product` = ' . (int) $idProduct
             );
         }
+
         if ($totalSales === 1) {
             return Db::getInstance()->delete('product_sale', 'id_product = ' . (int) $idProduct);
         }

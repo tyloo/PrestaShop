@@ -498,12 +498,14 @@ abstract class CacheCore
                 $invalidKeys[] = $fs_key . '_nrows';
                 unset($this->sql_tables_cached[$table][$fs_key]);
             }
+
             $this->_deleteMulti($invalidKeys);
 
             if ($keyToKeep) {
                 $this->sql_tables_cached[$table][$keyToKeep] = $toKeep ?? null;
             }
         }
+
         $this->adjustTableCacheSize = false;
     }
 
@@ -559,11 +561,13 @@ abstract class CacheCore
                             }
                         }
                     }
+
                     unset($this->sql_tables_cached[$table]);
                     $this->deleteMulti($invalidKeys);
                     $this->delete($cacheKey);
                 }
             }
+
             $this->flushUpdatedTableKeyEntries($tableKeysToUpdate);
         }
     }
@@ -654,6 +658,7 @@ abstract class CacheCore
         if (count(Cache::$local) > 1000) {
             Cache::$local = [];
         }
+
         Cache::$local[$key] = $value;
     }
 

@@ -30,6 +30,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CustomerPersisterCore
 {
     private $errors = [];
+
     private $context;
 
     public function __construct(

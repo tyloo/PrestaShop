@@ -560,11 +560,13 @@ class OrderDetailCore extends ObjectModel
         if ($this->context !== null && isset($this->context->shop)) {
             $id_shop = $this->context->shop->id;
         }
+
         parent::__construct($id, $id_lang, $id_shop);
 
         if ($context === null) {
             $context = Context::getContext();
         }
+
         $this->context = $context->cloneContext();
     }
 
@@ -591,6 +593,7 @@ class OrderDetailCore extends ObjectModel
         if ($hash === '') {
             return false;
         }
+
         $sql = 'SELECT *
         FROM `' . _DB_PREFIX_ . 'order_detail` od
         LEFT JOIN `' . _DB_PREFIX_ . 'product_download` pd ON (od.`product_id`=pd.`id_product`)
@@ -686,7 +689,8 @@ class OrderDetailCore extends ObjectModel
 
         $values = '';
         foreach ($this->tax_calculator->getTaxesAmount($discounted_price_tax_excl) as $id_tax => $amount) {
-            $unit_amount = $total_amount = 0;
+            $unit_amount = 0;
+            $total_amount = 0;
             switch (Configuration::get('PS_ROUND_TYPE')) {
                 case Order::ROUND_ITEM:
                     $unit_amount = (float) Tools::ps_round($amount, Context::getContext()->getComputingPrecision());
@@ -808,6 +812,7 @@ class OrderDetailCore extends ObjectModel
         if (in_array($orderStateId, $dismissOrderStateIds, true)) {
             return;
         }
+
         $orderState = new OrderState($orderStateId, $this->id_lang);
         $isQuantityUpdated = StockAvailable::updateQuantity(
             $product['id_product'],
@@ -825,9 +830,11 @@ class OrderDetailCore extends ObjectModel
         if ($isQuantityUpdated === true) {
             $product['stock_quantity'] -= $product['cart_quantity'];
         }
+
         if ($product['stock_quantity'] < 0 && Configuration::get('PS_STOCK_MANAGEMENT')) {
             $this->outOfStock = true;
         }
+
         Product::updateDefaultAttribute($product['id_product']);
     }
 
@@ -882,6 +889,7 @@ class OrderDetailCore extends ObjectModel
                     if ($product !== null) {
                         $this->setContext((int) $product['id_shop']);
                     }
+
                     $id_tax_rules = (int) Product::getIdTaxRulesGroupByIdProduct((int) $this->specificPrice['id_product'], $this->context);
                     $tax_manager = TaxManagerFactory::getManager($this->vat_address, $id_tax_rules);
                     $this->tax_calculator = $tax_manager->getTaxCalculator();
@@ -932,7 +940,8 @@ class OrderDetailCore extends ObjectModel
             $product['id_customization']
         );
         $this->unit_price_tax_incl = (float) $product['price_wt'];
-        $this->product_price = $this->unit_price_tax_excl = (float) $product['price'];
+        $this->product_price = (float) $product['price'];
+        $this->unit_price_tax_excl = (float) $product['price'];
         $this->total_price_tax_incl = (float) $product['total_wt'];
         $this->total_price_tax_excl = (float) $product['total'];
 
@@ -1041,6 +1050,7 @@ class OrderDetailCore extends ObjectModel
         if ($use_taxes) {
             $this->setProductTax($order, $product);
         }
+
         $this->setShippingCost($order, $product);
         $this->setDetailProductPrice($order, $cart, $product);
 
@@ -1056,6 +1066,7 @@ class OrderDetailCore extends ObjectModel
         if ($use_taxes) {
             $this->saveTaxCalculator($order);
         }
+
         unset($this->tax_calculator);
     }
 
@@ -1111,7 +1122,7 @@ class OrderDetailCore extends ObjectModel
         }
 
         $this->total_shipping_price_tax_excl = (float) $product['additional_shipping_cost'];
-        $this->total_shipping_price_tax_incl = (float) ($this->total_shipping_price_tax_excl * (1 + ($tax_rate / 100)));
+        $this->total_shipping_price_tax_incl = $this->total_shipping_price_tax_excl * (1 + ($tax_rate / 100));
         $this->total_shipping_price_tax_incl = Tools::ps_round($this->total_shipping_price_tax_incl, Context::getContext()->getComputingPrecision());
     }
 
@@ -1148,6 +1159,7 @@ class OrderDetailCore extends ObjectModel
             foreach ($orders as $order) {
                 $list .= (int) $order['id_order'] . ',';
             }
+
             $list = rtrim($list, ',');
 
             $order_products = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
@@ -1204,6 +1216,7 @@ class OrderDetailCore extends ObjectModel
             if (! empty($data['required']) || ! empty($data['lang'])) {
                 continue;
             }
+
             if ($this->validateField($field, $this->{$field}) !== true) {
                 $this->{$field} = '';
             }

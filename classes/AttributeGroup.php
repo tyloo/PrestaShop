@@ -34,18 +34,22 @@ class AttributeGroupCore extends ObjectModel
      * @var string|string[] Name
      */
     public $name;
+
     /**
      * @var bool Whether the attribute group is a color group
      */
     public $is_color_group;
+
     /**
      * @var int Position
      */
     public $position;
+
     /**
      * @var string Group type
      */
     public $group_type;
+
     /**
      * @var string|string[] Public Name
      */
@@ -184,12 +188,11 @@ class AttributeGroupCore extends ObjectModel
                 $toRemove[] = (int) $attributeCombination['id_product_attribute'];
             }
         }
+
         $return = true;
-        if (! empty($toRemove)) {
-            foreach ($toRemove as $remove) {
-                $combination = new Combination($remove);
-                $return &= $combination->delete();
-            }
+        foreach ($toRemove as $remove) {
+            $combination = new Combination($remove);
+            $return &= $combination->delete();
         }
 
         return $return;
@@ -215,21 +218,25 @@ class AttributeGroupCore extends ObjectModel
             if ($attributeIds === false) {
                 return false;
             }
+
             /* Removing attributes to the found combinations */
             $toRemove = [];
             foreach ($attributeIds as $attribute) {
                 $toRemove[] = (int) $attribute['id_attribute'];
             }
+
             if (! empty($toRemove) && Db::getInstance()->execute('
 				DELETE FROM `' . _DB_PREFIX_ . 'product_attribute_combination`
 				WHERE `id_attribute`
 					IN (' . implode(', ', $toRemove) . ')') === false) {
                 return false;
             }
+
             /* Remove combinations if they do not possess attributes anymore */
             if (! AttributeGroup::cleanDeadCombinations()) {
                 return false;
             }
+
             /* Also delete related attributes */
             if (count($toRemove)) {
                 if (! Db::getInstance()->execute('
@@ -242,8 +249,10 @@ class AttributeGroupCore extends ObjectModel
                     return false;
                 }
             }
+
             static::cleanPositions();
         }
+
         $return = parent::delete();
         if ($return) {
             Hook::exec('actionAttributeGroupDelete', ['id_attribute_group' => $this->id]);
@@ -333,6 +342,7 @@ class AttributeGroupCore extends ObjectModel
         foreach ($values as $value) {
             $ids[] = (int) $value['id'];
         }
+
         if (! empty($ids)) {
             Db::getInstance()->execute(
                 '
@@ -341,6 +351,7 @@ class AttributeGroupCore extends ObjectModel
                 AND `id_attribute` NOT IN (' . implode(',', $ids) . ')'
             );
         }
+
         $ok = true;
         foreach ($values as $value) {
             $result = Db::getInstance()->execute(

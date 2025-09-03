@@ -100,15 +100,21 @@ class GroupCore extends ObjectModel
     ];
 
     protected static $cache_reduction = [];
+
     protected static $group_price_display_method = [];
+
     protected static $ps_group_feature_active;
+
     protected static $groups = [];
+
     protected static $ps_unidentified_group;
+
     protected static $ps_customer_group;
 
     protected $webserviceParameters = [];
 
     public const PRICE_DISPLAY_METHOD_TAX_INCL = 0;
+
     public const PRICE_DISPLAY_METHOD_TAX_EXCL = 1;
 
     public function __construct($id = null, $id_lang = null, $id_shop = null)
@@ -252,6 +258,7 @@ class GroupCore extends ObjectModel
         if ($this->id === (int) Configuration::get('PS_CUSTOMER_GROUP')) {
             return false;
         }
+
         if (parent::delete()) {
             Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'cart_rule_group` WHERE `id_group` = ' . (int) $this->id);
             Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'customer_group` WHERE `id_group` = ' . (int) $this->id);
@@ -310,7 +317,7 @@ class GroupCore extends ObjectModel
      */
     public static function isCurrentlyUsed($table = null, $has_active_column = false)
     {
-        return (bool) (Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'group`') > 3);
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . 'group`') > 3;
     }
 
     /**
@@ -371,6 +378,7 @@ class GroupCore extends ObjectModel
                 $sql .= '("' . (int) $module . '", "' . (int) $shop . '", "' . (int) $id_group . '"),';
             }
         }
+
         $sql = rtrim($sql, ',');
 
         return (bool) Db::getInstance()->execute($sql);

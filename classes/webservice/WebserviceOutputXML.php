@@ -27,7 +27,9 @@
 class WebserviceOutputXMLCore implements WebserviceOutputInterface
 {
     public $docUrl = '';
+
     protected $wsUrl;
+
     protected $schemaToDisplay;
 
     public function setSchemaToDisplay($schema)
@@ -89,6 +91,7 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
         if ($code !== null) {
             $str_output .= '<code><![CDATA[' . $code . ']]></code>' . "\n";
         }
+
         $str_output .= '<message><![CDATA[' . $message . ']]></message>' . "\n";
         $str_output .= '</error>' . "\n";
 
@@ -110,11 +113,13 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
                         $more_attr .= ' format="isUnsignedId" ';
                     }
                 }
+
                 $node_content .= '<language id="' . $language . '"' . $more_attr . '>';
                 $node_content .= '<![CDATA[';
                 if (isset($field['value'][$language])) {
                     $node_content .= $field['value'][$language];
                 }
+
                 $node_content .= ']]>';
                 $node_content .= '</language>';
             }
@@ -151,6 +156,7 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
                 $ret .= ' ' . $name . '="' . (is_array($detail) ? implode(' ', $detail) : $detail) . '"';
             }
         }
+
         $ret .= '>';
         $ret .= $node_content;
         $ret .= '</' . $field['sqlId'] . '>' . "\n";
@@ -170,6 +176,7 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
                 }
             }
         }
+
         $end_tag = (! $has_child) ? '/>' : '>';
 
         return '<' . $node_name . $string_attr . $end_tag . "\n";
@@ -218,6 +225,7 @@ class WebserviceOutputXMLCore implements WebserviceOutputInterface
             if (array_key_exists('setter', $params['associations'][$assoc_name]) && ! $params['associations'][$assoc_name]['setter']) {
                 $more .= ' readOnly="true"';
             }
+
             $more .= ' nodeType="' . $params['associations'][$assoc_name]['resource'] . '"';
             if (isset($params['associations'][$assoc_name]['virtual_entity']) && $params['associations'][$assoc_name]['virtual_entity']) {
                 $more .= ' virtualEntity="true"';

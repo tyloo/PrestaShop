@@ -39,12 +39,15 @@ class LinkCore
      * @var bool Rewriting activation
      */
     protected $allow;
+
     protected $url;
+
     public static $cache = [
         'page' => [],
     ];
 
     protected $ssl_enable;
+
     protected $urlShopId;
 
     // Categories that will not be used for URL rewriting
@@ -66,6 +69,7 @@ class LinkCore
         if (! defined('_PS_BASE_URL_')) {
             define('_PS_BASE_URL_', Tools::getShopDomain(true));
         }
+
         if (! defined('_PS_BASE_URL_SSL_')) {
             define('_PS_BASE_URL_SSL_', Tools::getShopDomainSsl(true));
         }
@@ -182,14 +186,17 @@ class LinkCore
         if (empty($idProductAttribute)) {
             $idProductAttribute = null;
         }
+
         $params['id_product_attribute'] = $idProductAttribute;
         if (! $alias) {
             $product = $this->getProductObject($product, $idLang, $idShop);
         }
+
         $params['rewrite'] = (! $alias) ? $product->getFieldByLang('link_rewrite') : $alias;
         if (! $ean13) {
             $product = $this->getProductObject($product, $idLang, $idShop);
         }
+
         $params['ean13'] = (! $ean13) ? $product->ean13 : $ean13;
         if ($dispatcher->hasKeyword('product_rule', $idLang, 'meta_title', $idShop)) {
             $product = $this->getProductObject($product, $idLang, $idShop);
@@ -220,6 +227,7 @@ class LinkCore
             if (! $category) {
                 $product = $this->getProductObject($product, $idLang, $idShop);
             }
+
             $params['category'] = (! $category) ? $product->category : $category;
         }
 
@@ -241,8 +249,10 @@ class LinkCore
                     $cats[] = $cat['link_rewrite'];
                 }
             }
+
             $params['categories'] = implode('/', $cats);
         }
+
         if ($idProductAttribute) {
             $product = $this->getProductObject($product, $idLang, $idShop);
         }
@@ -458,11 +468,13 @@ class LinkCore
         if (! $alias) {
             $category = $this->getCategoryObject($category, $idLang);
         }
+
         $params['rewrite'] = (! $alias) ? $category->link_rewrite : $alias;
         if ($dispatcher->hasKeyword($rule, $idLang, 'meta_title', $idShop)) {
             $category = $this->getCategoryObject($category, $idLang);
             $params['meta_title'] = Tools::str2url($category->getFieldByLang('meta_title'));
         }
+
         if ($dispatcher->hasKeyword($rule, $idLang, 'categories', $idShop)) {
             $category = $this->getCategoryObject($category, $idLang);
             $cats = [];
@@ -470,10 +482,12 @@ class LinkCore
                 if ($cat['id_category'] === $category->id) {
                     continue;
                 }
+
                 if (! in_array($cat['id_category'], Link::$category_disable_rewrite, true)) {
                     $cats[] = $cat['link_rewrite'];
                 }
             }
+
             $params['categories'] = implode('/', $cats);
         }
 
@@ -509,11 +523,14 @@ class LinkCore
             if ($alias !== null && ! $dispatcher->hasKeyword('cms_category_rule', $idLang, 'meta_title', $idShop)) {
                 return $url . $dispatcher->createUrl('cms_category_rule', $idLang, ['id' => (int) $cmsCategory, 'rewrite' => (string) $alias], $this->allow, '', $idShop);
             }
+
             $cmsCategory = new CMSCategory($cmsCategory, $idLang);
         }
+
         if (is_array($cmsCategory->link_rewrite) && isset($cmsCategory->link_rewrite[(int) $idLang])) {
             $cmsCategory->link_rewrite = $cmsCategory->link_rewrite[(int) $idLang];
         }
+
         if (is_array($cmsCategory->meta_title) && isset($cmsCategory->meta_title[(int) $idLang])) {
             $cmsCategory->meta_title = $cmsCategory->meta_title[(int) $idLang];
         }
@@ -558,6 +575,7 @@ class LinkCore
             if ($alias !== null && ! $dispatcher->hasKeyword('cms_rule', $idLang, 'meta_title', $idShop)) {
                 return $url . $dispatcher->createUrl('cms_rule', $idLang, ['id' => (int) $cms, 'rewrite' => (string) $alias], $this->allow, '', $idShop);
             }
+
             $cms = new CMS($cms, $idLang);
         }
 
@@ -612,6 +630,7 @@ class LinkCore
                     $idShop
                 );
             }
+
             $supplier = new Supplier($supplier, $idLang);
         }
 
@@ -653,6 +672,7 @@ class LinkCore
             if ($alias !== null && ! $dispatcher->hasKeyword('manufacturer_rule', $idLang, 'meta_title', $idShop)) {
                 return $url . $dispatcher->createUrl('manufacturer_rule', $idLang, ['id' => (int) $manufacturer, 'rewrite' => (string) $alias], $this->allow, '', $idShop);
             }
+
             $manufacturer = new Manufacturer($manufacturer, $idLang);
         }
 
@@ -907,7 +927,7 @@ class LinkCore
             $sql = 'SELECT s.id_shop, CONCAT(su.physical_uri, su.virtual_uri) AS uri, su.domain, su.main
                     FROM ' . _DB_PREFIX_ . 'shop_url su
                     LEFT JOIN ' . _DB_PREFIX_ . 'shop s ON (s.id_shop = su.id_shop)
-                    WHERE (su.domain = \'' . pSQL($host) . '\' OR su.domain_ssl = \'' . pSQL($host) . '\')
+                    WHERE (su.domain = \'' . pSQL($host) . "' OR su.domain_ssl = '" . pSQL($host) . '\')
                         AND s.active = 1
                         AND s.deleted = 0
                     ORDER BY LENGTH(CONCAT(su.physical_uri, su.virtual_uri)) DESC';
@@ -1136,6 +1156,7 @@ class LinkCore
             if (isset($request['module'])) {
                 unset($request['module']);
             }
+
             if (isset($request['controller'])) {
                 unset($request['controller']);
             }
@@ -1145,6 +1166,7 @@ class LinkCore
             if ($requestUrlEncode) {
                 $request = urlencode($request);
             }
+
             parse_str($request, $request);
         }
 
@@ -1186,7 +1208,7 @@ class LinkCore
      */
     public function getLanguageLink($idLang, ?Context $context = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -1208,21 +1230,27 @@ class LinkCore
         if ($controller === 'product' && isset($params['id_product'])) {
             return $this->getProductLink((int) $params['id_product'], null, null, null, (int) $idLang);
         }
+
         if ($controller === 'category' && isset($params['id_category'])) {
             return $this->getCategoryLink((int) $params['id_category'], null, (int) $idLang);
         }
+
         if ($controller === 'supplier' && isset($params['id_supplier'])) {
             return $this->getSupplierLink((int) $params['id_supplier'], null, (int) $idLang);
         }
+
         if ($controller === 'manufacturer' && isset($params['id_manufacturer'])) {
             return $this->getManufacturerLink((int) $params['id_manufacturer'], null, (int) $idLang);
         }
+
         if ($controller === 'cms' && isset($params['id_cms'])) {
             return $this->getCMSLink(new CMS((int) $params['id_cms']), null, null, (int) $idLang);
         }
+
         if ($controller === 'cms' && isset($params['id_cms_category'])) {
             return $this->getCMSCategoryLink(new CMSCategory((int) $params['id_cms_category']), null, (int) $idLang);
         }
+
         if (isset($params['fc']) && $params['fc'] === 'module') {
             $module = Validate::isModuleName(Tools::getValue('module')) ? Tools::getValue('module') : '';
             if (! empty($module)) {
@@ -1284,6 +1312,7 @@ class LinkCore
             } else {
                 $name = Dispatcher::getInstance()->getController();
             }
+
             $url = $this->getPageLink($name);
         }
 
@@ -1297,6 +1326,7 @@ class LinkCore
                 if (Configuration::get('PS_REWRITING_SETTINGS') && ($k === 'isolang' || $k === 'id_lang')) {
                     continue;
                 }
+
                 $ifNb = (! $nb || ! in_array($k, $varsNb, true));
                 $ifSort = (! $sort || ! in_array($k, $varsSort, true));
                 $ifPagination = (! $pagination || ! in_array($k, $varsPagination, true));
@@ -1357,7 +1387,7 @@ class LinkCore
     protected function getLangLink($idLang = null, ?Context $context = null, $idShop = null)
     {
         // Get context if none was passed
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -1615,9 +1645,10 @@ class LinkCore
                     if (array_key_exists('sf-params', $params)) {
                         return $sfRouter->generate($params['route'], $params['sf-params'], UrlGeneratorInterface::ABSOLUTE_URL);
                     }
+
                     $link = $sfRouter->generate($params['route'], [], UrlGeneratorInterface::ABSOLUTE_URL);
                 } else {
-                    throw new InvalidArgumentException('You can\'t use Symfony router in legacy context.');
+                    throw new InvalidArgumentException("You can't use Symfony router in legacy context.");
                 }
 
                 break;

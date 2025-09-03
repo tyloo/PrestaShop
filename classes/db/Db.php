@@ -450,7 +450,7 @@ abstract class DbCore
             foreach ($row_data as $key => $value) {
                 if (! $first_loop) {
                     // Check if row array mapping are the same
-                    if (! in_array("`$key`", $keys, true)) {
+                    if (! in_array(sprintf('`%s`', $key), $keys, true)) {
                         throw new PrestaShopDatabaseException('Keys form $data subarray don\'t match');
                     }
 
@@ -464,19 +464,22 @@ abstract class DbCore
                 if (! is_array($value)) {
                     $value = ['type' => 'text', 'value' => $value];
                 }
+
                 if ($value['type'] === 'sql') {
                     $values[] = $string_value = $value['value'];
                 } else {
-                    $values[] = $string_value = $null_values && ($value['value'] === '' || $value['value'] === null) ? 'NULL' : "'{$value['value']}'";
+                    $values[] = $string_value = $null_values && ($value['value'] === '' || $value['value'] === null) ? 'NULL' : sprintf("'%s'", $value['value']);
                 }
 
                 if ($type === Db::ON_DUPLICATE_KEY) {
                     $duplicate_key_stringified .= '`' . bqSQL($key) . '` = ' . $string_value . ',';
                 }
             }
+
             $first_loop = false;
             $values_stringified[] = '(' . implode(', ', $values) . ')';
         }
+
         $keys_stringified = implode(', ', $keys);
 
         $sql = $insert_keyword . ' INTO `' . $table . '` (' . $keys_stringified . ') VALUES ' . implode(', ', $values_stringified);
@@ -515,10 +518,11 @@ abstract class DbCore
             if (! is_array($value)) {
                 $value = ['type' => 'text', 'value' => $value];
             }
+
             if ($value['type'] === 'sql') {
-                $sql .= '`' . bqSQL($key) . "` = {$value['value']},";
+                $sql .= '`' . bqSQL($key) . sprintf('` = %s,', $value['value']);
             } else {
-                $sql .= ($null_values && ($value['value'] === '' || $value['value'] === null)) ? '`' . bqSQL($key) . '` = NULL,' : '`' . bqSQL($key) . "` = '{$value['value']}',";
+                $sql .= ($null_values && ($value['value'] === '' || $value['value'] === null)) ? '`' . bqSQL($key) . '` = NULL,' : '`' . bqSQL($key) . sprintf("` = '%s',", $value['value']);
             }
         }
 
@@ -526,6 +530,7 @@ abstract class DbCore
         if ($where) {
             $sql .= ' WHERE ' . $where;
         }
+
         if ($limit) {
             $sql .= ' LIMIT ' . (int) $limit;
         }
@@ -728,6 +733,7 @@ abstract class DbCore
 
             return $nrows;
         }
+
         if ($this->is_cache_enabled && $this->last_cached) {
             return Cache::getInstance()->get($this->last_query_hash . '_nrows');
         }

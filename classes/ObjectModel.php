@@ -34,25 +34,35 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
      * List of field types.
      */
     public const TYPE_INT = 1;
+
     public const TYPE_BOOL = 2;
+
     public const TYPE_STRING = 3;
+
     public const TYPE_FLOAT = 4;
+
     public const TYPE_DATE = 5;
+
     public const TYPE_HTML = 6;
+
     public const TYPE_NOTHING = 7;
+
     public const TYPE_SQL = 8;
 
     /**
      * List of data to format.
      */
     public const FORMAT_COMMON = 1;
+
     public const FORMAT_LANG = 2;
+
     public const FORMAT_SHOP = 3;
 
     /**
      * List of association types.
      */
     public const HAS_ONE = 1;
+
     public const HAS_MANY = 2;
 
     /**
@@ -342,6 +352,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         if ($this->lang_associated !== null) {
             return $this->lang_associated;
         }
+
         $this->lang_associated = new Language($this->id_lang);
         if ($this->lang_associated->id === null) {
             $this->lang_associated = new Language((int) Configuration::get('PS_LANG_DEFAULT'));
@@ -389,6 +400,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                     // Regular fields updates (multi shop or not) are identified by their field name
                     continue;
                 }
+
                 if ($type === self::FORMAT_LANG && empty($this->update_fields[$field][$id_lang])) {
                     // Multi lang updates are identified by associated language ID
                     continue;
@@ -445,7 +457,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                 }
 
                 if ($with_quotes) {
-                    return '\'' . pSQL($value) . '\'';
+                    return "'" . pSQL($value) . "'";
                 }
 
                 return pSQL($value);
@@ -454,15 +466,16 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                 if ($purify) {
                     $value = Tools::purifyHTML($value);
                 }
+
                 if ($with_quotes) {
-                    return '\'' . pSQL($value, true) . '\'';
+                    return "'" . pSQL($value, true) . "'";
                 }
 
                 return pSQL($value, true);
 
             case self::TYPE_SQL:
                 if ($with_quotes) {
-                    return '\'' . pSQL($value, true) . '\'';
+                    return "'" . pSQL($value, true) . "'";
                 }
 
                 return pSQL($value, true);
@@ -473,7 +486,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             case self::TYPE_STRING:
             default:
                 if ($with_quotes) {
-                    return '\'' . pSQL($value) . '\'';
+                    return "'" . pSQL($value) . "'";
                 }
 
                 return pSQL($value);
@@ -535,6 +548,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         if ($auto_date && property_exists($this, 'date_add')) {
             $this->date_add = date('Y-m-d H:i:s');
         }
+
         if ($auto_date && property_exists($this, 'date_upd')) {
             $this->date_upd = date('Y-m-d H:i:s');
         }
@@ -596,6 +610,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                         throw new PrestaShopException('key ' . $key . ' is not table or identifier');
                     }
                 }
+
                 $field[$this->def['primary']] = (int) $this->id;
 
                 if ($asso !== false && $asso['type'] === 'fk_shop') {
@@ -807,6 +822,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                         if (count($this->id_shop_list)) {
                             $id_shop_list = $this->id_shop_list;
                         }
+
                         foreach ($id_shop_list as $id_shop) {
                             $field['id_shop'] = (int) $id_shop;
                             $where = pSQL($this->def['primary']) . ' = ' . (int) $this->id
@@ -862,6 +878,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         } else {
             $shopIdsList = Shop::getContextListShopID();
         }
+
         $shopIdsList = array_map('intval', $shopIdsList);
 
         if (Shop::isTableAssociated($this->def['table'])) {
@@ -931,9 +948,11 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         if (empty($definitions['fields']['deleted'])) {
             throw new PrestaShopException('Field "deleted" is missing from definition in object model ' . static::class);
         }
+
         if (! array_key_exists('deleted', get_object_vars($this))) {
             throw new PrestaShopException('Property "deleted" is missing in object model ' . static::class);
         }
+
         /* @phpstan-ignore-next-line */
         $this->deleted = true;
 
@@ -1184,9 +1203,11 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 
             return Validate::isCleanHtml($value, $ps_allow_html_iframe);
         }
+
         if (Tools::strtolower($validateMethod) === 'isrequiredwhenactive') {
             return Validate::isRequiredWhenActive($value, $this);
         }
+
         if (Tools::strtolower($validateMethod) === 'defaultlanguagerequiredwhenactive') {
             return Validate::defaultLanguageRequiredWhenActive($value, $langId, $this);
         }
@@ -1275,6 +1296,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                     if (isset($data['copy_post']) && ! $data['copy_post']) {
                         continue;
                     }
+
                     if ($field === 'passwd') {
                         /** @var PrestaShop\PrestaShop\Core\Crypto\Hashing $crypto */
                         $crypto = ServiceLocator::get(PrestaShop\PrestaShop\Core\Crypto\Hashing::class);
@@ -1321,6 +1343,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         if (! isset($this->{$ws_params_attribute_name}['objectNodeName'])) {
             $default_resource_parameters['objectNodeName'] = $this->def['table'];
         }
+
         if (! isset($this->{$ws_params_attribute_name}['objectsNodeName'])) {
             $default_resource_parameters['objectsNodeName'] = $this->def['table'] . 's';
         }
@@ -1330,6 +1353,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                 if (! array_key_exists('setter', $association) || (isset($association['setter']) && ! $association['setter'])) {
                     $association['setter'] = Tools::toCamelCase('set_ws_' . $assoc_name);
                 }
+
                 if (! array_key_exists('getter', $association)) {
                     $association['getter'] = Tools::toCamelCase('get_ws_' . $assoc_name);
                 }
@@ -1347,21 +1371,25 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             if (! isset($resource_parameters['fields'][$field_name])) {
                 $resource_parameters['fields'][$field_name] = [];
             }
+
             $current_field = [];
             $current_field['sqlId'] = $field_name;
             if (isset($details['size'])) {
                 $current_field['maxSize'] = $details['size'];
             }
+
             if (isset($details['lang'])) {
                 $current_field['i18n'] = $details['lang'];
             } else {
                 $current_field['i18n'] = false;
             }
+
             if ((isset($details['required']) && $details['required'] === true) || in_array($field_name, $required_fields, true)) {
                 $current_field['required'] = true;
             } else {
                 $current_field['required'] = false;
             }
+
             if (isset($details['validate'])) {
                 $current_field['validateMethod'] = (
                     array_key_exists('validateMethod', $resource_parameters['fields'][$field_name]) ?
@@ -1369,18 +1397,22 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                     [$details['validate']]
                 );
             }
+
             $resource_parameters['fields'][$field_name] = array_merge($resource_parameters['fields'][$field_name], $current_field);
 
             if (isset($details['ws_modifier'])) {
                 $resource_parameters['fields'][$field_name]['modifier'] = $details['ws_modifier'];
             }
         }
+
         if (isset($this->date_add)) {
             $resource_parameters['fields']['date_add']['setter'] = false;
         }
+
         if (isset($this->date_upd)) {
             $resource_parameters['fields']['date_upd']['setter'] = false;
         }
+
         foreach ($resource_parameters['fields'] as $key => $resource_parameters_field) {
             if (! isset($resource_parameters_field['sqlId'])) {
                 $resource_parameters['fields'][$key]['sqlId'] = $key;
@@ -1425,9 +1457,11 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                 if (count($or)) {
                     $prepend = 'AND (' . implode('OR', $or) . ')';
                 }
+
                 $sql_filter = $prepend . ' ' . $sql_filter;
             }
         }
+
         $query = '
 		SELECT DISTINCT main.`' . bqSQL($this->def['primary']) . '` FROM `' . _DB_PREFIX_ . bqSQL($this->def['table']) . '` AS main
 		' . $sql_join . '
@@ -1486,7 +1520,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         return Db::getInstance()->executeS('
 		SELECT id_required_field, object_name, field_name
 		FROM ' . _DB_PREFIX_ . 'required_field
-		' . (! $all ? 'WHERE object_name = \'' . pSQL($this->getObjectName()) . '\'' : ''));
+		' . (! $all ? "WHERE object_name = '" . pSQL($this->getObjectName()) . "'" : ''));
     }
 
     /**
@@ -1507,7 +1541,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             SELECT id_required_field
             FROM ' . _DB_PREFIX_ . 'required_field
             WHERE field_name = "' . Db::getInstance()->escape($field_name) . '"
-            ' . (! $all ? ' AND object_name = \'' . pSQL($this->getObjectName()) . '\'' : ''));
+            ' . (! $all ? " AND object_name = '" . pSQL($this->getObjectName()) . "'" : ''));
     }
 
     /**
@@ -1790,17 +1824,17 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 
             if (! empty($def['fields'][$field]['shop'])) {
                 if ($value === null && ! empty($def['fields'][$field]['allow_null'])) {
-                    $update_data[] = "a.$field = NULL";
-                    $update_data[] = "{$def['table']}_shop.$field = NULL";
+                    $update_data[] = sprintf('a.%s = NULL', $field);
+                    $update_data[] = sprintf('%s_shop.%s = NULL', $def['table'], $field);
                 } else {
-                    $update_data[] = "a.$field = '$value'";
-                    $update_data[] = "{$def['table']}_shop.$field = '$value'";
+                    $update_data[] = sprintf("a.%s = '%s'", $field, $value);
+                    $update_data[] = sprintf("%s_shop.%s = '%s'", $def['table'], $field, $value);
                 }
             } else {
                 if ($value === null && ! empty($def['fields'][$field]['allow_null'])) {
-                    $update_data[] = "a.$field = NULL";
+                    $update_data[] = sprintf('a.%s = NULL', $field);
                 } else {
-                    $update_data[] = "a.$field = '$value'";
+                    $update_data[] = sprintf("a.%s = '%s'", $field, $value);
                 }
             }
         }
@@ -1842,10 +1876,12 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                     return false;
                 }
             }
+
             if (file_exists(_PS_TMP_IMG_DIR_ . $this->def['table'] . '_' . $this->id . '.' . $this->image_format)
                 && ! unlink(_PS_TMP_IMG_DIR_ . $this->def['table'] . '_' . $this->id . '.' . $this->image_format)) {
                 return false;
             }
+
             if (file_exists(_PS_TMP_IMG_DIR_ . $this->def['table'] . '_mini_' . $this->id . '.' . $this->image_format)
                 && ! unlink(_PS_TMP_IMG_DIR_ . $this->def['table'] . '_mini_' . $this->id . '.' . $this->image_format)) {
                 return false;
@@ -1971,7 +2007,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
     public static function hydrateCollection($class, array $datas, $id_lang = null)
     {
         if (! class_exists($class)) {
-            throw new PrestaShopException("Class '$class' not found");
+            throw new PrestaShopException(sprintf("Class '%s' not found", $class));
         }
 
         $collection = [];
@@ -1979,7 +2015,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         if ($datas) {
             $definition = ObjectModel::getDefinition($class);
             if (! array_key_exists($definition['primary'], $datas[0])) {
-                throw new PrestaShopException("Identifier '{$definition['primary']}' not found for class '$class'");
+                throw new PrestaShopException(sprintf("Identifier '%s' not found for class '%s'", $definition['primary'], $class));
             }
 
             foreach ($datas as $row) {
@@ -1996,6 +2032,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                             if (! is_array($rows[$id][$field])) {
                                 $rows[$id][$field] = [];
                             }
+
                             $rows[$id][$field][$row['id_lang']] = $row[$field];
                         }
                     }
@@ -2084,6 +2121,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 
             return $this->{$field_name};
         }
+
         throw new PrestaShopException('Could not load field from definition.');
     }
 

@@ -162,6 +162,7 @@ class SupplierCore extends ObjectModel
         if (! $idLang) {
             $idLang = Configuration::get('PS_LANG_DEFAULT');
         }
+
         if (! Group::isFeatureActive()) {
             $allGroups = true;
         }
@@ -174,9 +175,11 @@ class SupplierCore extends ObjectModel
         if ($active) {
             $query->where('s.`active` = 1');
         }
+
         if ($withProduct) {
             $query->where('s.`id_supplier` IN (SELECT `id_supplier` FROM `' . _DB_PREFIX_ . 'product_supplier`)');
         }
+
         $query->orderBy(' s.`name` ASC');
         $query->limit($n, ($p - 1) * $n);
         $query->groupBy('s.id_supplier');
@@ -185,6 +188,7 @@ class SupplierCore extends ObjectModel
         if ($suppliers === false) {
             return false;
         }
+
         if ($getNbProducts) {
             $sqlGroups = '';
             if (! $allGroups) {
@@ -296,7 +300,7 @@ class SupplierCore extends ObjectModel
         $result = Db::getInstance()->getRow('
 		SELECT `id_supplier`
 		FROM `' . _DB_PREFIX_ . 'supplier`
-		WHERE `name` = \'' . pSQL($name) . '\'');
+		WHERE `name` = \'' . pSQL($name) . "'");
 
         if (isset($result['id_supplier'])) {
             return (int) $result['id_supplier'];
@@ -338,9 +342,11 @@ class SupplierCore extends ObjectModel
         if ($p < 1) {
             $p = 1;
         }
+
         if (empty($orderBy) || $orderBy === 'position') {
             $orderBy = 'name';
         }
+
         if (empty($orderWay)) {
             $orderWay = 'ASC';
         }
@@ -381,6 +387,7 @@ class SupplierCore extends ObjectModel
             $orderBy = explode('.', $orderBy);
             $orderBy = pSQL($orderBy[0]) . '.`' . pSQL($orderBy[1]) . '`';
         }
+
         $alias = '';
         if (in_array($orderBy, ['price', 'date_add', 'date_upd'], true)) {
             $alias = 'product_shop.';
@@ -424,6 +431,7 @@ class SupplierCore extends ObjectModel
             if (Group::isFeatureActive()) {
                 $sql .= 'JOIN `' . _DB_PREFIX_ . 'category_group` cg ON (cp.`id_category` = cg.`id_category` AND cg.`id_group` ' . (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '= 1') . ')';
             }
+
             if ($activeCategory) {
                 $sql .= 'JOIN `' . _DB_PREFIX_ . 'category` ca ON cp.`id_category` = ca.`id_category` AND ca.`active` = 1';
             }

@@ -31,7 +31,9 @@ use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 class OrderCore extends ObjectModel
 {
     public const ROUND_ITEM = 1;
+
     public const ROUND_LINE = 2;
+
     public const ROUND_TOTAL = 3;
 
     /**
@@ -127,6 +129,7 @@ class OrderCore extends ObjectModel
     public $total_discounts;
 
     public $total_discounts_tax_incl;
+
     public $total_discounts_tax_excl;
 
     /**
@@ -430,10 +433,12 @@ class OrderCore extends ObjectModel
             if (! Configuration::get('PS_ORDER_RETURN', null, null, $this->id_shop)) {
                 throw new PrestaShopException('PS_ORDER_RETURN is not defined in table configuration');
             }
+
             $order_detail->product_quantity_return += (int) $quantity;
 
             return $order_detail->update();
         }
+
         if ($this->hasBeenPaid()) {
             $order_detail->product_quantity_refunded += (int) $quantity;
 
@@ -461,6 +466,7 @@ class OrderCore extends ObjectModel
                 . $product['product_attribute_id'] . '_'
                 . ($product['id_customization'] ?? '0');
         }
+
         unset($product);
 
         $product_list = [];
@@ -538,6 +544,7 @@ class OrderCore extends ObjectModel
             if (! $order_detail->delete()) {
                 return false;
             }
+
             if (count($this->getProductsDetail()) === 0) {
                 $history = new OrderHistory();
                 $history->id_order = (int) $this->id;
@@ -552,6 +559,7 @@ class OrderCore extends ObjectModel
 
             return $this->update();
         }
+
         $order_detail->total_price_tax_incl -= $product_price_tax_incl;
         $order_detail->total_price_tax_excl -= $product_price_tax_excl;
         $order_detail->total_shipping_price_tax_incl -= $shipping_diff_tax_incl;
@@ -599,18 +607,23 @@ class OrderCore extends ObjectModel
             if ($filters & OrderState::FLAG_NO_HIDDEN) {
                 $no_hidden = true;
             }
+
             if ($filters & OrderState::FLAG_DELIVERY) {
                 $delivery = true;
             }
+
             if ($filters & OrderState::FLAG_LOGABLE) {
                 $logable = true;
             }
+
             if ($filters & OrderState::FLAG_PAID) {
                 $paid = true;
             }
+
             if ($filters & OrderState::FLAG_SHIPPED) {
                 $shipped = true;
             }
+
             if ($filters & OrderState::FLAG_EMAIL) {
                 $email = true;
             }
@@ -639,6 +652,7 @@ class OrderCore extends ObjectModel
             if ($no_hidden) {
                 return $result;
             }
+
             self::$_historyCache[$this->id . '_' . $id_order_state . '_' . $filters] = $result;
         }
 
@@ -737,6 +751,7 @@ class OrderCore extends ObjectModel
                         }
                     }
                 }
+
                 if (! $row['product_quantity']) {
                     continue;
                 }
@@ -1062,7 +1077,7 @@ class OrderCore extends ObjectModel
      */
     public static function getCustomerOrders($id_customer, $show_hidden_status = false, ?Context $context = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -1105,7 +1120,7 @@ class OrderCore extends ObjectModel
     {
         $sql = 'SELECT `id_order`
                 FROM `' . _DB_PREFIX_ . 'orders`
-                WHERE DATE_ADD(date_upd, INTERVAL -1 DAY) <= \'' . pSQL($date_to) . '\' AND date_upd >= \'' . pSQL($date_from) . '\'
+                WHERE DATE_ADD(date_upd, INTERVAL -1 DAY) <= \'' . pSQL($date_to) . "' AND date_upd >= '" . pSQL($date_from) . '\'
                     ' . Shop::addSqlRestriction()
                     . ($type ? ' AND `' . bqSQL($type) . '_number` != 0' : '')
                     . ($id_customer ? ' AND id_customer = ' . (int) $id_customer : '');
@@ -1121,7 +1136,7 @@ class OrderCore extends ObjectModel
 
     public static function getOrdersWithInformations($limit = null, ?Context $context = null)
     {
-        if (! $context) {
+        if ($context === null) {
             $context = Context::getContext();
         }
 
@@ -1162,6 +1177,7 @@ class OrderCore extends ObjectModel
         if ($this->total_products_wt !== '0.00' && ! $products) {
             return $this->total_products_wt;
         }
+
         /* Retro-compatibility (now set directly on the validateOrder() method) */
 
         if (! $products) {
@@ -1281,6 +1297,7 @@ class OrderCore extends ObjectModel
             $cart_rule = new CartRule($id_cart_rule);
             $free_shipping = $cart_rule->free_shipping;
         }
+
         $order_cart_rule->free_shipping = (bool) $free_shipping;
 
         return $order_cart_rule->add();
@@ -1292,6 +1309,7 @@ class OrderCore extends ObjectModel
         if (! $nb_return_days) {
             return true;
         }
+
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
         SELECT TO_DAYS("' . date('Y-m-d') . ' 00:00:00") - TO_DAYS(`delivery_date`)  AS days FROM `' . _DB_PREFIX_ . 'orders`
         WHERE `id_order` = ' . (int) $this->id);
@@ -1380,6 +1398,7 @@ class OrderCore extends ObjectModel
             } else {
                 $order_invoice = new OrderInvoice();
             }
+
             $order_invoice->id_order = $this->id;
             if (! $id) {
                 $order_invoice->number = 0;
@@ -1430,6 +1449,7 @@ class OrderCore extends ObjectModel
                                 `id_order_payment` = ' . (int) $order_payment['id_order_payment'] . ',
                                 `id_order` = ' . (int) $order_invoice->id_order);
                     }
+
                     // Clear cache
                     Cache::clean('order_invoice_paid_*');
                 }
@@ -1638,7 +1658,7 @@ class OrderCore extends ObjectModel
           SELECT id_order
             FROM `' . _DB_PREFIX_ . 'orders` o
             LEFT JOIN `' . _DB_PREFIX_ . 'customer` c ON (o.`id_customer` = c.`id_customer`)
-                WHERE o.`reference` = \'' . pSQL($reference) . '\' AND c.`email` = \'' . pSQL($email) . '\'
+                WHERE o.`reference` = \'' . pSQL($reference) . "' AND c.`email` = '" . pSQL($email) . '\'
         ';
 
         $id = (int) Db::getInstance()->getValue($sql);
@@ -1661,6 +1681,7 @@ class OrderCore extends ObjectModel
         if (! $email) {
             return false;
         }
+
         $sql = 'SELECT COUNT(*)
                 FROM `' . _DB_PREFIX_ . 'orders` o
                 LEFT JOIN `' . _DB_PREFIX_ . 'customer` c ON (c.`id_customer` = o.`id_customer`)
@@ -1721,6 +1742,7 @@ class OrderCore extends ObjectModel
         if (empty($id_order_state) || (int) $id_order_state === (int) $this->current_state) {
             return false;
         }
+
         $history = new OrderHistory();
         $history->id_order = (int) $this->id;
         $history->id_employee = (int) $id_employee;
@@ -1985,6 +2007,7 @@ class OrderCore extends ObjectModel
                 unset($invoices[$key]);
             }
         }
+
         $delivery_slips = $this->getDeliverySlipsCollection()->getResults();
         // @TODO review
         foreach ($delivery_slips as $key => $delivery) {
@@ -1994,6 +2017,7 @@ class OrderCore extends ObjectModel
                 unset($delivery_slips[$key]);
             }
         }
+
         $order_slips = $this->getOrderSlipsCollection()->getResults();
 
         $documents = array_merge($invoices, $order_slips, $delivery_slips);
@@ -2553,7 +2577,8 @@ class OrderCore extends ObjectModel
             }
 
             foreach ($tax_calculator->getTaxesAmount($discounted_price_tax_excl) as $id_tax => $unit_amount) {
-                $total_tax_base = $total_amount = 0;
+                $total_tax_base = 0;
+                $total_amount = 0;
                 switch ($round_type) {
                     case Order::ROUND_ITEM:
                         $total_tax_base = $quantity * Tools::ps_round($discounted_price_tax_excl, Context::getContext()->getComputingPrecision(), $this->round_mode);

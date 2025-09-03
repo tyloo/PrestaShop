@@ -30,7 +30,9 @@ use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 class OrderInvoiceCore extends ObjectModel
 {
     public const TAX_EXCL = 0;
+
     public const TAX_INCL = 1;
+
     public const DETAIL = 2;
 
     /**
@@ -215,6 +217,7 @@ class OrderInvoiceCore extends ObjectModel
                 $invoiceNumber = $matches[1];
             }
         }
+
         if (! $invoiceNumber) {
             return false;
         }
@@ -251,6 +254,7 @@ class OrderInvoiceCore extends ObjectModel
                         $row['product_quantity'] = (int) $selected_qty[$key];
                     }
                 }
+
                 if (! $row['product_quantity']) {
                     continue;
                 }
@@ -422,6 +426,7 @@ class OrderInvoiceCore extends ObjectModel
                 if ($this->id !== (int) $row['id_order_invoice']) {
                     continue;
                 }
+
                 if (! isset($grouped_details[$row['id_order_detail']])) {
                     $grouped_details[$row['id_order_detail']] = [
                         'tax_rate' => 0,
@@ -509,6 +514,7 @@ class OrderInvoiceCore extends ObjectModel
                 $row['total_amount'] = Tools::ps_round($row['total_amount'], Context::getContext()->getComputingPrecision(), $this->getOrder()->round_mode);
                 $sum_of_split_taxes += $row['total_amount'];
             }
+
             unset($row);
 
             $delta_amount = $shipping_tax_amount - $sum_of_split_taxes;
@@ -572,6 +578,7 @@ class OrderInvoiceCore extends ObjectModel
             $sum_of_split_taxes += $row['total_amount'];
             $total_tax_rate += (float) $row['rate'];
         }
+
         unset($row);
 
         $delta_amount = $wrapping_tax_amount - $sum_of_split_taxes;
@@ -728,7 +735,7 @@ class OrderInvoiceCore extends ObjectModel
     {
         $order_invoice = new OrderInvoice($id);
         if (! Validate::isLoadedObject($order_invoice)) {
-            throw new PrestaShopException('Can\'t load Order Invoice object for id: ' . $id);
+            throw new PrestaShopException("Can't load Order Invoice object for id: " . $id);
         }
 
         return $order_invoice;
@@ -749,6 +756,7 @@ class OrderInvoiceCore extends ObjectModel
                 /** @var OrderPayment $payment */
                 $amount += $payment->amount;
             }
+
             Cache::store($cache_id, $amount);
 
             return $amount;
@@ -922,7 +930,7 @@ class OrderInvoiceCore extends ObjectModel
         $is_correct = true;
         foreach ($taxes_amount as $id_tax => $amount) {
             $sql = 'INSERT INTO `' . _DB_PREFIX_ . 'order_invoice_tax` (`id_order_invoice`, `type`, `id_tax`, `amount`)
-                    VALUES (' . (int) $this->id . ', \'shipping\', ' . (int) $id_tax . ', ' . (float) $amount . ')';
+                    VALUES (' . (int) $this->id . ", 'shipping', " . (int) $id_tax . ', ' . (float) $amount . ')';
 
             $is_correct &= Db::getInstance()->execute($sql);
         }
@@ -935,7 +943,7 @@ class OrderInvoiceCore extends ObjectModel
         $is_correct = true;
         foreach ($taxes_amount as $id_tax => $amount) {
             $sql = 'INSERT INTO `' . _DB_PREFIX_ . 'order_invoice_tax` (`id_order_invoice`, `type`, `id_tax`, `amount`)
-                    VALUES (' . (int) $this->id . ', \'wrapping\', ' . (int) $id_tax . ', ' . (float) $amount . ')';
+                    VALUES (' . (int) $this->id . ", 'wrapping', " . (int) $id_tax . ', ' . (float) $amount . ')';
 
             $is_correct &= Db::getInstance()->execute($sql);
         }
@@ -972,7 +980,7 @@ class OrderInvoiceCore extends ObjectModel
             $escaped_address = $db->escape($address, true, true);
 
             $db->execute('UPDATE `' . _DB_PREFIX_ . 'order_invoice` INNER JOIN `' . _DB_PREFIX_ . 'orders` USING (`id_order`)
-                SET `shop_address` = \'' . $escaped_address . '\' WHERE `shop_address` IS NULL AND `id_shop` = ' . $id_shop);
+                SET `shop_address` = \'' . $escaped_address . "' WHERE `shop_address` IS NULL AND `id_shop` = " . $id_shop);
         }
     }
 }

@@ -27,8 +27,11 @@
 class HelperViewCore extends Helper
 {
     public $id;
+
     public $toolbar = true;
+
     public $table;
+
     public $token;
 
     /**
