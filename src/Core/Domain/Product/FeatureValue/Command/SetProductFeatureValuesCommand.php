@@ -93,8 +93,8 @@ class SetProductFeatureValuesCommand
             $this->assertFeatureValueFormat($featureValue);
             $this->featureValues[] = new ProductFeatureValue(
                 $featureValue['feature_id'],
-                ! empty($featureValue['feature_value_id']) ? (int) $featureValue['feature_value_id'] : null,
-                ! empty($featureValue['custom_values']) ? $featureValue['custom_values'] : null
+                empty($featureValue['feature_value_id']) ? null : (int) $featureValue['feature_value_id'],
+                empty($featureValue['custom_values']) ? null : $featureValue['custom_values']
             );
         }
     }

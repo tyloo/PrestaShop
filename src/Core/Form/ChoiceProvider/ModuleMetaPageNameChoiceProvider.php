@@ -66,7 +66,7 @@ final class ModuleMetaPageNameChoiceProvider implements FormChoiceProviderInterf
         $currentRequest = $this->requestStack->getCurrentRequest();
 
         $metaId = null;
-        if ($currentRequest !== null) {
+        if ($currentRequest instanceof \Symfony\Component\HttpFoundation\Request) {
             $metaId = $currentRequest->attributes->get('metaId');
         }
 

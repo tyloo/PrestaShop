@@ -59,7 +59,7 @@ final class FormBuilder implements FormBuilderInterface
             $data = array_merge($defaultData, $data);
         }
 
-        if ($this->optionsProvider !== null) {
+        if ($this->optionsProvider instanceof FormOptionsProviderInterface) {
             $options = array_merge($this->optionsProvider->getDefaultOptions($data), $options);
         }
 
@@ -83,7 +83,7 @@ final class FormBuilder implements FormBuilderInterface
     {
         $data = array_merge($this->dataProvider->getData($id), $data);
 
-        if ($this->optionsProvider !== null) {
+        if ($this->optionsProvider instanceof FormOptionsProviderInterface) {
             $options = array_merge($this->optionsProvider->getOptions($id, $data), $options);
         }
 

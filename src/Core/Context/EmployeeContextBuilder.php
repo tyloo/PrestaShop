@@ -56,7 +56,7 @@ class EmployeeContextBuilder implements LegacyContextBuilderInterface
     {
         $employee = null;
         $legacyEmployee = $this->getLegacyEmployee();
-        if ($legacyEmployee !== null) {
+        if ($legacyEmployee instanceof LegacyEmployee) {
             $employee = new Employee(
                 id: (int) $legacyEmployee->id,
                 profileId: (int) $legacyEmployee->id_profile,

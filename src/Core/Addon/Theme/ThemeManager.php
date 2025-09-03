@@ -118,7 +118,7 @@ class ThemeManager implements AddonManagerInterface
      */
     public function uninstall($name): bool
     {
-        $apiClientHasPermission = $this->apiClientContext->getApiClient() !== null && $this->apiClientContext->getApiClient()->hasScope('theme_write');
+        $apiClientHasPermission = $this->apiClientContext->getApiClient() instanceof \PrestaShop\PrestaShop\Core\Context\ApiClient && $this->apiClientContext->getApiClient()->hasScope('theme_write');
         if (! $this->employee->can('delete', 'AdminThemes') && ! $apiClientHasPermission) {
             return false;
         }
@@ -160,7 +160,7 @@ class ThemeManager implements AddonManagerInterface
      */
     public function enable($name, $force = false): bool
     {
-        $apiClientHasPermission = $this->apiClientContext->getApiClient() !== null && $this->apiClientContext->getApiClient()->hasScope('theme_write');
+        $apiClientHasPermission = $this->apiClientContext->getApiClient() instanceof \PrestaShop\PrestaShop\Core\Context\ApiClient && $this->apiClientContext->getApiClient()->hasScope('theme_write');
         if (! $force && ! $this->employee->can('edit', 'AdminThemes') && ! $apiClientHasPermission) {
             return false;
         }

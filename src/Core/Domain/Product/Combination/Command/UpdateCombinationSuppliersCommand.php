@@ -90,7 +90,7 @@ class UpdateCombinationSuppliersCommand
                 new CombinationSupplierAssociation(
                     $this->combinationId->getValue(),
                     $productSupplier['supplier_id'],
-                    ! empty($productSupplier['product_supplier_id']) ? $productSupplier['product_supplier_id'] : null
+                    empty($productSupplier['product_supplier_id']) ? null : $productSupplier['product_supplier_id']
                 ),
                 $productSupplier['currency_id'],
                 $productSupplier['reference'],

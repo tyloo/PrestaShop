@@ -128,7 +128,7 @@ class ShopContextBuilder implements LegacyContextBuilderInterface
 
     private function assertArguments(): void
     {
-        if ($this->shopConstraint === null) {
+        if (! $this->shopConstraint instanceof ShopConstraint) {
             throw new InvalidArgumentException(\sprintf('Cannot build shop context as no shopConstraint has been defined you need to call %s::setShopConstraint to define it before building the shop context', self::class));
         }
 

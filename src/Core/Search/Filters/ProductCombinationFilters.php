@@ -56,7 +56,7 @@ class ProductCombinationFilters extends ShopFilters
 
         $this->productId = (int) $filters['filters']['product_id'];
 
-        if ($shopConstraint->getShopId() === null) {
+        if (! $shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             throw new InvalidArgumentException(\sprintf('%s filters supports only single shopConstraint', static::class));
         }
 

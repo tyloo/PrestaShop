@@ -208,7 +208,7 @@ class ExchangeRateProvider
 
         $feedContent = $cacheItem->get();
 
-        return ! empty($feedContent) ? $feedContent : '';
+        return empty($feedContent) ? '' : $feedContent;
     }
 
     private function isValidXMLFeed(SimpleXMLElement $xmlFeed): bool

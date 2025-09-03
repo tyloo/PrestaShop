@@ -103,9 +103,9 @@ class SeoAssertionFeatureContext extends AbstractProductFeatureContext
             unset($dataRows['redirect_type']);
         }
 
-        $expectedRedirectTarget = ! empty($dataRows['redirect_target']) ?
-            $this->getSharedStorage()->get($dataRows['redirect_target']) :
-            RedirectTarget::NO_TARGET
+        $expectedRedirectTarget = empty($dataRows['redirect_target']) ?
+            RedirectTarget::NO_TARGET :
+            $this->getSharedStorage()->get($dataRows['redirect_target'])
         ;
 
         Assert::assertEquals(

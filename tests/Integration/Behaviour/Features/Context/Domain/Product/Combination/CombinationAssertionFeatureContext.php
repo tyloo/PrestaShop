@@ -31,6 +31,7 @@ namespace Tests\Integration\Behaviour\Features\Context\Domain\Product\Combinatio
 
 use Behat\Gherkin\Node\TableNode;
 use DateTime;
+use DateTimeInterface;
 use Language;
 use PHPUnit\Framework\Assert;
 use PrestaShop\Decimal\DecimalNumber;
@@ -200,8 +201,8 @@ class CombinationAssertionFeatureContext extends AbstractCombinationFeatureConte
             PrimitiveUtils::castStringBooleanIntoBoolean($dataRows['low stock alert is enabled']),
             $dataRows['location'],
             $dataRows['available date'] === '' ? null : new DateTime($dataRows['available date']),
-            ! empty($dataRows['available now labels']) ? $dataRows['available now labels'] : [],
-            ! empty($dataRows['available later labels']) ? $dataRows['available later labels'] : []
+            empty($dataRows['available now labels']) ? [] : $dataRows['available now labels'],
+            empty($dataRows['available later labels']) ? [] : $dataRows['available later labels']
         );
     }
 
@@ -428,7 +429,7 @@ class CombinationAssertionFeatureContext extends AbstractCombinationFeatureConte
                 $actualStock->getLocation(),
                 \sprintf('Unexpected combination "%s" location for shop %d', $combinationReference, $shopId)
             );
-            if ($expectedStock->getAvailableDate() === null) {
+            if (! $expectedStock->getAvailableDate() instanceof DateTimeInterface) {
                 Assert::assertSame(
                     $expectedStock->getAvailableDate(),
                     $actualStock->getAvailableDate(),

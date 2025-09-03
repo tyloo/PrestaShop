@@ -412,7 +412,7 @@ class RouterProviderTest extends TestCase
                 function ($routeName) use ($routeCollection) {
                     $route = $routeCollection->get($routeName);
 
-                    return $route !== null ? $route->getPath() : null;
+                    return $route instanceof Route ? $route->getPath() : null;
                 }
             ));
 

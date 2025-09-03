@@ -55,7 +55,7 @@ class FeatureFlagManager implements FeatureFlagStateCheckerInterface, ResetInter
     private function getLayer(string $featureFlagName): TypeLayerInterface
     {
         $featureFlag = $this->featureFlagRepository->getByName($featureFlagName);
-        if ($featureFlag !== null) {
+        if ($featureFlag instanceof \PrestaShopBundle\Entity\FeatureFlag) {
             foreach ($featureFlag->getOrderedTypes() as $type) {
                 if ($this->locator->has($type)) {
                     $handler = $this->locator->get($type);

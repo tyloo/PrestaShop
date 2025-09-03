@@ -240,7 +240,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         );
 
         // Check the initial state of the token attribute
-        if ($originalTokenShopConstraint !== null) {
+        if ($originalTokenShopConstraint instanceof ShopConstraint) {
             $this->assertEquals($originalTokenShopConstraint, $security->getToken()->getAttribute(TokenAttributes::SHOP_CONSTRAINT));
         } else {
             $this->assertFalse($security->getToken()->hasAttribute(TokenAttributes::SHOP_CONSTRAINT));
@@ -493,7 +493,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         $token = $this->createMock(TokenInterface::class);
 
         // The test occurs here, the mock validates that the subscriber correctly sets the appropriate attribute on the token
-        if ($expectedShopConstraint !== null) {
+        if ($expectedShopConstraint instanceof ShopConstraint) {
             $token->expects($this->atLeastOnce())->method('setAttribute')->with(TokenAttributes::SHOP_CONSTRAINT, $expectedShopConstraint);
         } else {
             $token->expects($this->never())->method('setAttribute');
@@ -573,7 +573,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         $securityMock = $this->createMock(Security::class);
         $userMock = $this->createMock(UserInterface::class);
         $token = new UsernamePasswordToken($userMock, 'main', []);
-        if ($shopConstraint !== null) {
+        if ($shopConstraint instanceof ShopConstraint) {
             $token->setAttribute(TokenAttributes::SHOP_CONSTRAINT, $shopConstraint);
         }
 

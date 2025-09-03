@@ -151,14 +151,14 @@ class TypedFiltersBuilderTest extends TestCase
         ;
 
         $builtFilters = null;
-        if ($filters !== null) {
+        if ($filters instanceof Filters) {
             $builtFilters = new SampleWithoutConstraintFilters(
                 array_replace(SampleWithoutConstraintFilters::getDefaults(), $filters->all())
             );
         }
 
         $builderMock
-            ->expects($filters !== null ? $this->once() : $this->never())
+            ->expects($filters instanceof Filters ? $this->once() : $this->never())
             ->method('buildFilters')
             ->willReturn($builtFilters)
         ;

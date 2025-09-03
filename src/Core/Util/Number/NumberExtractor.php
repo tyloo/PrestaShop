@@ -75,7 +75,7 @@ class NumberExtractor
         if (\is_object($resource)) {
             $numberFromPublicProperty = $this->extractPublicPropertyFirst($resource, $propertyPath);
 
-            if ($numberFromPublicProperty !== null) {
+            if ($numberFromPublicProperty instanceof DecimalNumber) {
                 return $numberFromPublicProperty;
             }
         }

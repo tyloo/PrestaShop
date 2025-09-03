@@ -89,7 +89,7 @@ class UpdateProductSuppliersCommand
                     $productId,
                     NoCombinationId::NO_COMBINATION_ID,
                     $productSupplier['supplier_id'],
-                    ! empty($productSupplier['product_supplier_id']) ? $productSupplier['product_supplier_id'] : null
+                    empty($productSupplier['product_supplier_id']) ? null : $productSupplier['product_supplier_id']
                 ),
                 $productSupplier['currency_id'],
                 $productSupplier['reference'],

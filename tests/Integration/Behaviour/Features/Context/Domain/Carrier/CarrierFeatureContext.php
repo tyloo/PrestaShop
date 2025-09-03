@@ -79,7 +79,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
                 $associatedShops = [$this->getDefaultShopId()];
             }
 
-            $delay = ! empty($properties['delay']) ? $properties['delay'] : [$this->getDefaultLangId() => 'Shipping delay'];
+            $delay = empty($properties['delay']) ? [$this->getDefaultLangId() => 'Shipping delay'] : $properties['delay'];
 
             if (isset($properties['zones'])) {
                 $zones = $this->referencesToIds($properties['zones']);

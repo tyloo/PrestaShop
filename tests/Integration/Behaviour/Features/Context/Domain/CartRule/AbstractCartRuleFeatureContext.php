@@ -156,7 +156,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
 
         if (isset($expectedData['customer'])) {
             Assert::assertSame(
-                ! empty($expectedData['customer']) ? $this->getSharedStorage()->get($expectedData['customer']) : 0,
+                empty($expectedData['customer']) ? 0 : $this->getSharedStorage()->get($expectedData['customer']),
                 $conditions->getCustomerId()->getValue(),
                 'Unexpected customer id'
             );
@@ -229,7 +229,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
             );
 
             Assert::assertSame(
-                ! empty($expectedData['discount_product']) ? $this->getSharedStorage()->get($expectedData['discount_product']) : null,
+                empty($expectedData['discount_product']) ? null : $this->getSharedStorage()->get($expectedData['discount_product']),
                 $actions->getReduction()->getProductId(),
                 'Unexpected discount_product'
             );
@@ -298,7 +298,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
 
         if (isset($expectedData['gift_combination'])) {
             Assert::assertSame(
-                ! empty($expectedData['gift_combination']) ? $this->getSharedStorage()->get($expectedData['gift_combination']) : null,
+                empty($expectedData['gift_combination']) ? null : $this->getSharedStorage()->get($expectedData['gift_combination']),
                 $actions->getGiftCombinationId(),
                 'Unexpected gift_combination'
             );

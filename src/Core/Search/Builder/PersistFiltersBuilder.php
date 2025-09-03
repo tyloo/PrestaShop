@@ -42,7 +42,7 @@ final class PersistFiltersBuilder extends AbstractRepositoryFiltersBuilder
      */
     public function buildFilters(?Filters $filters = null)
     {
-        if ($filters === null || ! $this->employeeProvider->getId() || ! $this->shopId || ! $filters->needsToBePersisted()) {
+        if (! $filters instanceof Filters || ! $this->employeeProvider->getId() || ! $this->shopId || ! $filters->needsToBePersisted()) {
             return $filters;
         }
 

@@ -44,7 +44,7 @@ class CarrierTaxRuleGroupFeatureContext extends AbstractDomainFeatureContext
     {
         $initialCarrierId = $this->getSharedStorage()->get($reference);
         $carrierId = $this->editCarrierTaxRule($reference, null, $taxRulesGroupReference);
-        if ($carrierId !== null) {
+        if ($carrierId instanceof CarrierId) {
             Assert::assertEquals($initialCarrierId, $carrierId->getValue(), 'Carrier ID was expected the remain the same');
         }
     }
@@ -56,7 +56,7 @@ class CarrierTaxRuleGroupFeatureContext extends AbstractDomainFeatureContext
     {
         $initialCarrierId = $this->getSharedStorage()->get($reference);
         $carrierId = $this->editCarrierTaxRule($reference, null, null);
-        if ($carrierId !== null) {
+        if ($carrierId instanceof CarrierId) {
             Assert::assertEquals($initialCarrierId, $carrierId->getValue(), 'Carrier ID was expected the remain the same');
         }
     }
@@ -68,7 +68,7 @@ class CarrierTaxRuleGroupFeatureContext extends AbstractDomainFeatureContext
     {
         $initialCarrierId = $this->getSharedStorage()->get($reference);
         $carrierId = $this->editCarrierTaxRule($reference, $newReference, $taxRulesGroupReference);
-        if ($carrierId !== null) {
+        if ($carrierId instanceof CarrierId) {
             Assert::assertNotEquals($initialCarrierId, $carrierId->getValue(), 'Carrier ID was expected to be updated');
         }
     }

@@ -178,7 +178,7 @@ final class FolderThemeScanner
 
     private function getTemplateType(SplFileInfo $fileInfo): string
     {
-        $ext = ! empty($fileInfo->getExtension()) ? '.' . $fileInfo->getExtension() : '';
+        $ext = empty($fileInfo->getExtension()) ? '' : '.' . $fileInfo->getExtension();
         $htmlTypeRegexp = \sprintf('/.+\.%s%s/', MailTemplateInterface::HTML_TYPE, $ext);
         if (preg_match($htmlTypeRegexp, $fileInfo->getFilename())) {
             return MailTemplateInterface::HTML_TYPE;

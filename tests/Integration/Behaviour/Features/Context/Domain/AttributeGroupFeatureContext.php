@@ -473,7 +473,7 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
             throw new RuntimeException(\sprintf('Could no find attribute group %s', $attributeGroupReference));
         }
 
-        if ($tableNode === null) {
+        if (! $tableNode instanceof TableNode) {
             // if tableNode is null we expect that desired group attributes are empty
             Assert::assertEmpty(
                 $checkAttributeGroup->getAttributes(),

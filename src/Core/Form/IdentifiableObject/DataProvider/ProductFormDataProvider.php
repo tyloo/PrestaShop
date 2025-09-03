@@ -207,7 +207,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
         ];
         $virtualProductFile = $productForEditing->getVirtualProductFile();
 
-        if ($virtualProductFile !== null) {
+        if ($virtualProductFile instanceof \PrestaShop\PrestaShop\Core\Domain\Product\VirtualProductFile\QueryResult\VirtualProductFileForEditing) {
             $data = [
                 'has_file' => true,
                 'virtual_product_file_id' => $virtualProductFile->getId(),
@@ -414,7 +414,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
     {
         $priorities = $productForEditing->getPricesInformation()->getSpecificPricePriorities();
 
-        if ($priorities === null) {
+        if (! $priorities instanceof PriorityList) {
             return [
                 'use_custom_priority' => false,
                 'priorities' => $this->getDefaultPrioritiesData(),
@@ -450,7 +450,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
         // It is important to return null when nothing is selected this way the transformer and therefore
         // the form field have no value to try and display
         $redirectTarget = null;
-        if ($seoOptions->getRedirectTarget() !== null) {
+        if ($seoOptions->getRedirectTarget() instanceof \PrestaShop\PrestaShop\Core\Domain\QueryResult\RedirectTargetInformation) {
             $redirectTarget = [
                 'id' => $seoOptions->getRedirectTarget()->getId(),
                 'name' => $seoOptions->getRedirectTarget()->getName(),

@@ -79,7 +79,7 @@ final class RequestFiltersBuilder extends AbstractFiltersBuilder
             }
         }
 
-        if ($filters !== null) {
+        if ($filters instanceof Filters) {
             $filters->add($parameters);
         } else {
             $filters = new Filters($parameters, $filterId);

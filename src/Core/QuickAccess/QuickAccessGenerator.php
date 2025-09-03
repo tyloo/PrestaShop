@@ -90,7 +90,7 @@ class QuickAccessGenerator
         $url = preg_replace($patterns, '', $savedUrl);
         $url = trim((string) $url, '?&/');
 
-        return 'index.php' . (! empty($legacyEnvironment) ? '?' : '/') . $url;
+        return 'index.php' . (empty($legacyEnvironment) ? '/' : '?') . $url;
     }
 
     public function getTokenizedQuickAccesses(): array

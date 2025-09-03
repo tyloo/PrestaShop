@@ -124,7 +124,7 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
         $rules = [];
 
         try {
-            if ($table !== null) {
+            if ($table instanceof TableNode) {
                 foreach ($table->getColumnsHash() as $row) {
                     $rules[] = new RestrictionRule($row['type'], $this->referencesToIds($row['references']));
                 }

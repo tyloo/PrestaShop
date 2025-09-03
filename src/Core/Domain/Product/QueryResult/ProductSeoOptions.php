@@ -82,7 +82,7 @@ class ProductSeoOptions
 
     public function getRedirectTargetId(): int
     {
-        return $this->redirectTarget !== null ? $this->redirectTarget->getId() : RedirectTarget::NO_TARGET;
+        return $this->redirectTarget instanceof RedirectTargetInformation ? $this->redirectTarget->getId() : RedirectTarget::NO_TARGET;
     }
 
     public function getRedirectTarget(): ?RedirectTargetInformation

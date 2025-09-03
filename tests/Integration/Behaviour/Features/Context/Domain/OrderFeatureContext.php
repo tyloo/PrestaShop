@@ -406,7 +406,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $discount = $this->getOrderDiscountByName($orderId, $cartRuleName);
-        if ($discount === null) {
+        if (! $discount instanceof OrderDiscountForViewing) {
             throw new RuntimeException(\sprintf('Cannot delete cart rule "%s" from Order "%s" because it does not have it', $cartRuleName, $orderReference));
         }
 
@@ -423,7 +423,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
         $discount = $this->getOrderDiscountByName($orderId, $cartRuleName);
-        if ($discount === null) {
+        if (! $discount instanceof OrderDiscountForViewing) {
             throw new RuntimeException(\sprintf('Order "%s" should have cart rule "%s".', $orderReference, $cartRuleName));
         }
 
@@ -742,7 +742,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         $orderId = SharedStorage::getStorage()->get($reference);
 
         $discount = $this->getOrderDiscountByName($orderId, self::ORDER_CART_RULE_FREE_SHIPPING);
-        if ($discount === null) {
+        if (! $discount instanceof OrderDiscountForViewing) {
             throw new RuntimeException('Order should have free shipping.');
         }
     }
@@ -757,7 +757,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         $orderId = SharedStorage::getStorage()->get($reference);
 
         $discount = $this->getOrderDiscountByName($orderId, $cartRuleName);
-        if ($discount === null) {
+        if (! $discount instanceof OrderDiscountForViewing) {
             throw new RuntimeException(\sprintf('Order should have a cart rule with name "%s"', $cartRuleName));
         }
     }

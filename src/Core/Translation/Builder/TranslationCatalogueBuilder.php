@@ -91,7 +91,7 @@ class TranslationCatalogueBuilder
             $catalogueDomain
         )->getDomain($catalogueDomain);
 
-        if ($domainTranslation === null) {
+        if (! $domainTranslation instanceof Domain) {
             $domainTranslation = new Domain($catalogueDomain);
         }
 

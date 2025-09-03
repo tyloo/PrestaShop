@@ -296,7 +296,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
             $caughtException = $exception;
         }
 
-        if ($caughtException === null) {
+        if (! $caughtException instanceof Exception) {
             throw new Exception(\sprintf('The customer "%s" exists.', $this->customerRegistry[$customerReference]));
         }
     }

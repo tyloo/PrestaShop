@@ -176,7 +176,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
                 $content .= \sprintf(
                     '%s <span class="badge badge-primary rounded">%s</span><br/>',
                     $this->translator->trans('Message to:', [], 'Admin.Catalog.Feature'),
-                    ! $message['id_employee'] ? $message['subject'] : $message['customer_name']
+                    $message['id_employee'] ? $message['customer_name'] : $message['subject']
                 );
             }
 

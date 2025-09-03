@@ -58,7 +58,7 @@ class ProductCombinationFiltersBuilder extends AbstractFiltersBuilder implements
     public function buildFilters(?Filters $filters = null): ProductCombinationFilters
     {
         $filterParameters = ProductCombinationFilters::getDefaults();
-        if ($filters !== null) {
+        if ($filters instanceof Filters) {
             $filterParameters = array_replace($filterParameters, $filters->all());
         }
 

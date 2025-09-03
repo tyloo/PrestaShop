@@ -48,7 +48,7 @@ trait MockConfigurationTrait
             $configuration
                 ->method('get')
                 ->will($this->returnCallback(function ($configurationName, $default, $shopConstraint) use ($configurationValues, $expectedShopConstraint) {
-                    if ($expectedShopConstraint !== null) {
+                    if ($expectedShopConstraint instanceof ShopConstraint) {
                         self::assertEquals($shopConstraint, $expectedShopConstraint);
                     }
 

@@ -56,7 +56,7 @@ class MutationTracker
      */
     public function addMutationForEmployee(string $mutationTable, int $mutationRowId, MutationAction $action, string $mutationDetails = ''): void
     {
-        if ($this->employeeContext->getEmployee() !== null) {
+        if ($this->employeeContext->getEmployee() instanceof \PrestaShop\PrestaShop\Core\Context\Employee) {
             $this->persistMutation(
                 $mutationTable,
                 $mutationRowId,
@@ -73,7 +73,7 @@ class MutationTracker
      */
     public function addMutationForApiClient(string $mutationTable, int $mutationRowId, MutationAction $action, string $mutationDetails = ''): void
     {
-        if ($this->apiClientContext->getApiClient() !== null) {
+        if ($this->apiClientContext->getApiClient() instanceof \PrestaShop\PrestaShop\Core\Context\ApiClient) {
             $this->persistMutation(
                 $mutationTable,
                 $mutationRowId,

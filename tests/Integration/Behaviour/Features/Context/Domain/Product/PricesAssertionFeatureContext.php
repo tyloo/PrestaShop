@@ -75,7 +75,7 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
 
     protected function assertPricesInfos(ProductPricesInformation $pricesInfo, array $data, ?string $shopReference = null): void
     {
-        $shopErrorMessage = ! empty($shopReference) ? \sprintf(' for shop %s', $shopReference) : '';
+        $shopErrorMessage = empty($shopReference) ? '' : \sprintf(' for shop %s', $shopReference);
         if (isset($data['on_sale'])) {
             $expectedOnSale = PrimitiveUtils::castStringBooleanIntoBoolean($data['on_sale']);
             $onSaleInWords = $expectedOnSale ? 'to be on sale' : 'not to be on sale';

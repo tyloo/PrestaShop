@@ -112,7 +112,7 @@ class ConfigurableFiltersBuilder extends AbstractFiltersBuilder
             return $filters;
         }
 
-        if ($filters === null) {
+        if (! $filters instanceof Filters) {
             $filters = new Filters($this->parameters);
         } else {
             $filters->add($this->parameters);

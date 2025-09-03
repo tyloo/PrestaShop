@@ -129,7 +129,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
      */
     public function testUndefinedOptionsException(ShopConstraint $shopConstraint): void
     {
-        $isAllShopContext = ($shopConstraint->getShopGroupId() === null && $shopConstraint->getShopId() === null);
+        $isAllShopContext = (! $shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId && ! $shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId);
         $testedObject = $this->getDummyMultistoreConfiguration($shopConstraint);
         $this->expectException(UndefinedOptionsException::class);
 
@@ -147,7 +147,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
      */
     public function testInvalidOptionsException(ShopConstraint $shopConstraint): void
     {
-        $isAllShopContext = ($shopConstraint->getShopGroupId() === null && $shopConstraint->getShopId() === null);
+        $isAllShopContext = (! $shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId && ! $shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId);
         $testedObject = $this->getDummyMultistoreConfiguration($shopConstraint);
         $this->expectException(InvalidOptionsException::class);
         $confValues = [

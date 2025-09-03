@@ -121,7 +121,7 @@ class ShopConstraint
 
     public function forAllShops(): bool
     {
-        return $this->shopId === null && $this->shopGroupId === null;
+        return ! $this->shopId instanceof ShopId && ! $this->shopGroupId instanceof ShopGroupId;
     }
 
     public function isStrict(): bool
@@ -135,11 +135,11 @@ class ShopConstraint
             return false;
         }
 
-        if ($this->getShopId() !== null && $constraint->getShopId() !== null && $this->getShopId()->getValue() === $constraint->getShopId()->getValue()) {
+        if ($this->getShopId() instanceof ShopId && $constraint->getShopId() instanceof ShopId && $this->getShopId()->getValue() === $constraint->getShopId()->getValue()) {
             return true;
         }
 
-        if ($this->getShopGroupId() !== null && $constraint->getShopGroupId() !== null && $this->getShopGroupId()->getValue() === $constraint->getShopGroupId()->getValue()) {
+        if ($this->getShopGroupId() instanceof ShopGroupId && $constraint->getShopGroupId() instanceof ShopGroupId && $this->getShopGroupId()->getValue() === $constraint->getShopGroupId()->getValue()) {
             return true;
         }
 
@@ -148,12 +148,12 @@ class ShopConstraint
 
     public function isSingleShopContext(): bool
     {
-        return $this->shopId !== null;
+        return $this->shopId instanceof ShopId;
     }
 
     public function isShopGroupContext(): bool
     {
-        return $this->shopGroupId !== null;
+        return $this->shopGroupId instanceof ShopGroupId;
     }
 
     public function isAllShopContext(): bool

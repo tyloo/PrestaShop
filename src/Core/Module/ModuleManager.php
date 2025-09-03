@@ -350,7 +350,7 @@ class ModuleManager implements ModuleManagerInterface
 
     private function getInstalledLocales(): array
     {
-        if ($this->languageRepository !== null) {
+        if ($this->languageRepository instanceof LangRepository) {
             $languages = $this->languageRepository->getMapping();
         } else {
             $languages = LegacyLanguage::getLanguages(false);

@@ -72,9 +72,9 @@ class SearchCombinationFeatureContext extends AbstractProductFeatureContext
                 )
             );
 
-            $expectedCombinationId = ! empty($expectedRelatedCombination['combination']) ?
-                $this->getSharedStorage()->get($expectedRelatedCombination['combination']) :
-                NoCombinationId::NO_COMBINATION_ID;
+            $expectedCombinationId = empty($expectedRelatedCombination['combination']) ?
+                NoCombinationId::NO_COMBINATION_ID :
+                $this->getSharedStorage()->get($expectedRelatedCombination['combination']);
             Assert::assertEquals(
                 $expectedCombinationId,
                 $foundCombinationForAssociation->getCombinationId(),

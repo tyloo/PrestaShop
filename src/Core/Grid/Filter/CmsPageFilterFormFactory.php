@@ -65,7 +65,7 @@ final class CmsPageFilterFormFactory implements GridFilterFormFactoryInterface
 
         $request = $this->requestStack->getCurrentRequest();
 
-        if ($request !== null) {
+        if ($request instanceof \Symfony\Component\HttpFoundation\Request) {
             $newActionUrl = $this->urlGenerator->generate('admin_cms_pages_search', [
                 'id_cms_category' => $request->query->getInt('id_cms_category'),
             ]);

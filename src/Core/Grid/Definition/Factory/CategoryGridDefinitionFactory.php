@@ -75,7 +75,7 @@ final class CategoryGridDefinitionFactory extends AbstractFilterableGridDefiniti
 
         $request = $requestStack->getCurrentRequest();
 
-        if ($request !== null && $request->attributes->has('categoryId') && $request->get('categoryId') !== null) {
+        if ($request instanceof \Symfony\Component\HttpFoundation\Request && $request->attributes->has('categoryId') && $request->get('categoryId') !== null) {
             $this->categoryId = (int) $request->get('categoryId');
         }
     }

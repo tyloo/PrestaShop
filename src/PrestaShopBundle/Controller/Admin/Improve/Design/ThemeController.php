@@ -193,7 +193,7 @@ class ThemeController extends PrestaShopAdminController
                     $importSource = ThemeImportSource::fromFtp($data['import_from_ftp']);
                 }
 
-                if ($importSource === null) {
+                if (! $importSource instanceof ThemeImportSource) {
                     $this->addFlash(
                         'warning',
                         $this->trans("Please select theme's import source.", [], 'Admin.Notifications.Warning')

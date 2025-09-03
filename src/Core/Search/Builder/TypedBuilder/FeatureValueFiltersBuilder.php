@@ -54,7 +54,7 @@ class FeatureValueFiltersBuilder extends AbstractFiltersBuilder implements Typed
     public function buildFilters(?Filters $filters = null): FeatureValueFilters
     {
         $filterParameters = FeatureValueFilters::getDefaults();
-        if ($filters !== null) {
+        if ($filters instanceof Filters) {
             $filterParameters = array_replace($filterParameters, $filters->all());
         }
 

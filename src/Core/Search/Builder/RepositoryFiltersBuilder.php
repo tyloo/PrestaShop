@@ -42,14 +42,14 @@ final class RepositoryFiltersBuilder extends AbstractRepositoryFiltersBuilder
             return $filters;
         }
 
-        if ($filters !== null && ! $filters->needsToBePersisted()) {
+        if ($filters instanceof Filters && ! $filters->needsToBePersisted()) {
             return $filters;
         }
 
         $filterId = $this->getFilterId($filters);
         $parameters = $this->getParametersFromRepository($filterId);
 
-        if ($filters !== null) {
+        if ($filters instanceof Filters) {
             $filters->add($parameters);
         } else {
             $filters = new Filters($parameters, $filterId);

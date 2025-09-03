@@ -310,7 +310,7 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
         $associatedSuppliers = $this->getAssociatedSuppliers($productReference);
 
         if (isset($data['default supplier'])) {
-            $defaultSupplierId = ! empty($data['default supplier']) ? $this->getSharedStorage()->get($data['default supplier']) : 0;
+            $defaultSupplierId = empty($data['default supplier']) ? 0 : $this->getSharedStorage()->get($data['default supplier']);
             Assert::assertEquals(
                 $defaultSupplierId,
                 $associatedSuppliers->getDefaultSupplierId(),

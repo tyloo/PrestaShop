@@ -122,7 +122,7 @@ final class CategoryFormDataProvider implements FormDataProviderInterface
         // It is important to return null when nothing is selected this way the transformer and therefore
         // the form field have no value to try and display
         $redirectTarget = null;
-        if ($editableCategory->getRedirectTarget() !== null) {
+        if ($editableCategory->getRedirectTarget() instanceof \PrestaShop\PrestaShop\Core\Domain\QueryResult\RedirectTargetInformation) {
             $redirectTarget = [
                 'id' => $editableCategory->getRedirectTarget()->getId(),
                 'name' => $editableCategory->getRedirectTarget()->getName(),

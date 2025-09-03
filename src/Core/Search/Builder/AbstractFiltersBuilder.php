@@ -63,7 +63,7 @@ abstract class AbstractFiltersBuilder implements FiltersBuilderInterface
      */
     protected function getFilterId(?Filters $filters = null)
     {
-        if ($filters === null) {
+        if (! $filters instanceof Filters) {
             return $this->filterId;
         }
 

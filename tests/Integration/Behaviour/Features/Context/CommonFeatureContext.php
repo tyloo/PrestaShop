@@ -438,7 +438,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     public function checkLastExceptionAfterStep(AfterStepScope $scope): void
     {
         // If no exception nothing to do, if there is already an exception to handle we don't override it
-        if ($this->getLastException() === null || $this->getExpectedException() !== null) {
+        if (! $this->getLastException() instanceof Exception || $this->getExpectedException() instanceof Exception) {
             return;
         }
 
@@ -464,7 +464,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function checkExpectedExceptionAfterStep(AfterStepScope $scope): void
     {
-        if ($this->getExpectedException() === null || $scope->getStep() === $this->getExpectedExceptionStep()) {
+        if (! $this->getExpectedException() instanceof Exception || $scope->getStep() === $this->getExpectedExceptionStep()) {
             return;
         }
 
@@ -573,7 +573,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     private function getLastStepFromScope(StepScope $scope): StepNode
     {
         $scenario = $this->getScenarioFromScope($scope);
-        if ($scenario !== null) {
+        if ($scenario instanceof ScenarioInterface) {
             $steps = $scenario->getSteps();
         } else {
             foreach ($scope->getFeature()->getBackground()->getSteps() as $step) {

@@ -348,7 +348,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
 
         if (isset($expectedData['customer'])) {
             Assert::assertSame(
-                ! empty($expectedData['customer']) ? $this->getSharedStorage()->get($expectedData['customer']) : 0,
+                empty($expectedData['customer']) ? 0 : $this->getSharedStorage()->get($expectedData['customer']),
                 $discountForEditing->getCustomerId(),
                 'Unexpected customer id'
             );

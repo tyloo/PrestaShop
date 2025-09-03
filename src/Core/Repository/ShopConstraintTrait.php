@@ -41,18 +41,18 @@ trait ShopConstraintTrait
         QueryBuilder $queryBuilder,
         ?ShopConstraint $shopConstraint = null,
     ): QueryBuilder {
-        if ($shopConstraint === null) {
+        if (! $shopConstraint instanceof ShopConstraint) {
             return $queryBuilder;
         }
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             $queryBuilder
                 ->andWhere('id_shop = :shop')
                 ->setParameter('shop', $shopConstraint->getShopId()->getValue())
             ;
         }
 
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             $queryBuilder
                 ->andWhere('id_shop_group = :shop_group')
                 ->setParameter('shop_group', $shopConstraint->getShopGroupId()->getValue())

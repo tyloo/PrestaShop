@@ -111,7 +111,7 @@ class EditCartRuleFeatureContext extends AbstractCartRuleFeatureContext
         }
 
         if (isset($data['customer'])) {
-            $command->setCustomerId(! empty($data['customer']) ? $this->getSharedStorage()->get($data['customer']) : 0);
+            $command->setCustomerId(empty($data['customer']) ? 0 : $this->getSharedStorage()->get($data['customer']));
         }
 
         if (isset($data['priority'])) {

@@ -54,7 +54,7 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
     public function __construct(array $filters = [], $filterId = '')
     {
         parent::__construct($filters);
-        $this->filterId = ! empty($filterId) ? $filterId : $this->filterId;
+        $this->filterId = empty($filterId) ? $this->filterId : $filterId;
     }
 
     public static function buildDefaults(): static

@@ -52,7 +52,7 @@ class ApiClientContextBuilder
     {
         $apiClientDTO = null;
         $apiClient = $this->getApiClient();
-        if ($apiClient !== null) {
+        if ($apiClient instanceof ApiClientEntity) {
             // Authorized shop should be associated to the client but for no we use the default one
             $defaultShopId = $this->configuration->get('PS_SHOP_DEFAULT', null, ShopConstraint::allShops());
             $apiClientDTO = new ApiClient(

@@ -318,7 +318,7 @@ class CmsPageDefinitionFactory extends AbstractGridDefinitionFactory
     {
         $request = $requestStack->getCurrentRequest();
 
-        if ($request !== null && $request->query->getInt('id_cms_category')) {
+        if ($request instanceof Request && $request->query->getInt('id_cms_category')) {
             $this->cmsCategoryParentId = $request->query->getInt('id_cms_category');
         }
     }

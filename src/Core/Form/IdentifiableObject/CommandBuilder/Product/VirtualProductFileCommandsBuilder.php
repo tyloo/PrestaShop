@@ -47,15 +47,15 @@ final class VirtualProductFileCommandsBuilder implements ProductCommandsBuilderI
 
         $virtualProductFileData = $formData['stock']['virtual_product_file'];
 
-        if (($addCommand = $this->buildAddCommand($productId, $virtualProductFileData)) !== null) {
+        if (($addCommand = $this->buildAddCommand($productId, $virtualProductFileData)) instanceof AddVirtualProductFileCommand) {
             return [$addCommand];
         }
 
-        if (($updateCommand = $this->buildUpdateCommand($virtualProductFileData)) !== null) {
+        if (($updateCommand = $this->buildUpdateCommand($virtualProductFileData)) instanceof UpdateVirtualProductFileCommand) {
             return [$updateCommand];
         }
 
-        if (($deleteCommand = $this->buildDeleteCommand($virtualProductFileData)) !== null) {
+        if (($deleteCommand = $this->buildDeleteCommand($virtualProductFileData)) instanceof DeleteVirtualProductFileCommand) {
             return [$deleteCommand];
         }
 

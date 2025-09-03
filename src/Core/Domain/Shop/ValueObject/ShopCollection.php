@@ -74,7 +74,7 @@ class ShopCollection extends ShopConstraint
 
     public function forAllShops(): bool
     {
-        return $this->shopId === null && $this->shopGroupId === null && $this->shopIds === null;
+        return ! $this->shopId instanceof ShopId && ! $this->shopGroupId instanceof ShopGroupId && $this->shopIds === null;
     }
 
     /**

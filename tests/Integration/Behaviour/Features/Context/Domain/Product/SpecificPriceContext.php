@@ -106,7 +106,7 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         $dataRows = $tableNode->getColumnsHash();
         $specificPrices = [];
         foreach ($dataRows as $dataRow) {
-            $specificPriceId = ! empty($dataRow['price id']) ? $this->getSharedStorage()->get($dataRow['price id']) : 0;
+            $specificPriceId = empty($dataRow['price id']) ? 0 : $this->getSharedStorage()->get($dataRow['price id']);
             $fixedPrice = $dataRow['fixed price'];
             $specificPrices[] = new SpecificPriceForListing(
                 $specificPriceId,

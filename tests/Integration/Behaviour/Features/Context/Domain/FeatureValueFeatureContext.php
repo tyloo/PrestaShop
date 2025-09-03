@@ -182,7 +182,7 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
             $caughtException = $featureValueNotFoundException;
         }
 
-        if ($caughtException === null) {
+        if (! $caughtException instanceof FeatureValueNotFoundException) {
             throw new RuntimeException(\sprintf('Feature value %s was expected not to be found', $featureValueReference));
         }
     }

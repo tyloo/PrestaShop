@@ -63,7 +63,7 @@ final class ClassFiltersBuilder extends AbstractFiltersBuilder
 
         /** @var array $defaultParameters */
         $defaultParameters = \call_user_func([$this->filtersClass, 'getDefaults']);
-        if ($filters !== null) {
+        if ($filters instanceof Filters) {
             $typedFilters = $this->constructFilters($filters->all(), $filters->getFilterId());
             $typedFilters->add($defaultParameters);
         } else {

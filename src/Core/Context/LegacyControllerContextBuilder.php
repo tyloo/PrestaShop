@@ -67,7 +67,7 @@ class LegacyControllerContextBuilder
         $id = $this->getTabId($this->getControllerName());
         $employeeId = '';
         $employeeLanguageId = (int) $this->configuration->get('PS_LANG_DEFAULT');
-        if ($this->employeeContext->getEmployee() !== null) {
+        if ($this->employeeContext->getEmployee() instanceof Employee) {
             $employeeId = $this->employeeContext->getEmployee()->getId();
             if ($this->configuration->get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG')) {
                 $employeeLanguageId = $this->employeeContext->getEmployee()->getLanguageId();
@@ -158,10 +158,8 @@ class LegacyControllerContextBuilder
 
     private function getTableFromClassName(?string $controllerName): string
     {
-        // Handle special use cases that don't follow the usual rules
-        switch ($controllerName) {
-            case 'AdminAccess':
-                return 'access';
+        if ($controllerName === 'AdminAccess') {
+            return 'access';
         }
 
         $objectClassName = $this->getClassName($controllerName);
@@ -203,6 +201,6 @@ class LegacyControllerContextBuilder
             $parameters[] = 'back=' . urlencode($this->redirectionUrl);
         }
 
-        return 'index.php' . (! empty($parameters) ? '?' . implode('&', $parameters) : '');
+        return 'index.php' . (empty($parameters) ? '' : '?' . implode('&', $parameters));
     }
 }

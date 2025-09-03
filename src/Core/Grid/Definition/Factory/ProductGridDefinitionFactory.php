@@ -101,7 +101,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
         $editAttributes = $this->getMultiShopEditionAttributes();
 
         $shopId = null;
-        if ($this->shopConstraintContext->getShopConstraint()->getShopId() !== null) {
+        if ($this->shopConstraintContext->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $shopId = $this->shopConstraintContext->getShopConstraint()->getShopId()->getValue();
         }
 
@@ -354,7 +354,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
     {
         // We use only one variable for extra params because they happen to match for all use cases, they may need to be split in the future
         $extraRouteParams = [];
-        if ($this->shopConstraintContext->getShopConstraint()->getShopGroupId() !== null) {
+        if ($this->shopConstraintContext->getShopConstraint()->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             $deleteRouteName = 'admin_products_delete_from_shop_group';
             $duplicateRouteName = 'admin_products_duplicate_shop_group';
             $enableRouteName = 'admin_products_enable_for_shop_group';
@@ -607,7 +607,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     protected function getBulkActions()
     {
-        if ($this->shopConstraintContext->getShopConstraint()->getShopId() !== null) {
+        if ($this->shopConstraintContext->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $bulkEnableRoute = 'admin_products_bulk_enable_shop';
             $bulkDisableRoute = 'admin_products_bulk_disable_shop';
             $bulkDuplicateRoute = 'admin_products_bulk_duplicate_shop';

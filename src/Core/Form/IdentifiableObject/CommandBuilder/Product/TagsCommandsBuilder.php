@@ -50,7 +50,7 @@ class TagsCommandsBuilder implements ProductCommandsBuilderInterface
                 $parsedTags = [];
                 $allEmpty = true;
                 foreach ($seoData['tags'] as $langId => $rawTags) {
-                    $parsedTags[$langId] = ! empty($rawTags) ? explode(',', (string) $rawTags) : [];
+                    $parsedTags[$langId] = empty($rawTags) ? [] : explode(',', (string) $rawTags);
                     $allEmpty = $allEmpty && empty($rawTags);
                 }
 

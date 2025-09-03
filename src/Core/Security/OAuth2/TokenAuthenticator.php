@@ -91,7 +91,7 @@ class TokenAuthenticator extends AbstractAuthenticator
         $authorizationServer = $this->getAuthorizationServer($request);
 
         // No authorization server found, return a hint in the exception to help debug a little
-        if ($authorizationServer === null) {
+        if (! $authorizationServer instanceof AuthorisationServerInterface) {
             // These two hints are probably not adapted for all the possible authorization servers, but probably most
             // of them, and at the very least they are true for the internal PrestashopAuthorizationServer
             $authorization = $request->headers->get('Authorization') ?? null;
@@ -111,7 +111,7 @@ class TokenAuthenticator extends AbstractAuthenticator
         }
 
         $jwtTokenUser = $authorizationServer->getJwtTokenUser($request);
-        if ($jwtTokenUser === null) {
+        if (! $jwtTokenUser instanceof JwtTokenUser) {
             $this->logger->error('TokenAuthenticator: Invalid credentials');
             throw new CustomUserMessageAuthenticationException(json_encode('Invalid credentials'));
         }

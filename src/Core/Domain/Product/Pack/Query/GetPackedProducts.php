@@ -79,7 +79,7 @@ class GetPackedProducts
 
     private function assertShopConstraintIsSupported(ShopConstraint $shopConstraint): void
     {
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             return;
         }
 

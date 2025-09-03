@@ -133,7 +133,7 @@ class FeatureFeatureContext extends AbstractDomainFeatureContext
             $coughtException = $featureNotFoundException;
         }
 
-        if ($coughtException === null) {
+        if (! $coughtException instanceof FeatureNotFoundException) {
             throw new RuntimeException(\sprintf('Feature %s was expected not to be found', $featureReference));
         }
     }

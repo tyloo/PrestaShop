@@ -63,7 +63,7 @@ class ThemeManagerBuilder
     {
         $configuration = new Configuration();
         $configuration->restrictUpdatesTo($this->context->shop);
-        if ($this->themeValidator === null) {
+        if (! $this->themeValidator instanceof ThemeValidator) {
             $this->themeValidator = new ThemeValidator($this->context->getTranslator(), new Configuration());
         }
 

@@ -59,7 +59,7 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
         $this->removePositionDragColumnIfEligible($searchCriteria, $categoryGrid);
 
         $filters = $searchCriteria->getFilters();
-        if ($this->isHomeCategory($filters) && ($this->filterFormFactory !== null)) {
+        if ($this->isHomeCategory($filters) && ($this->filterFormFactory instanceof GridFilterFormFactoryInterface)) {
             return $categoryGrid;
         }
 

@@ -218,7 +218,7 @@ class VirtualProductFileFeatureContext extends AbstractProductFeatureContext
     public function assertFileAndReference(string $productReference, string $fileReference, TableNode $dataTable): void
     {
         $actualFile = $this->getProductForEditing($productReference)->getVirtualProductFile();
-        if ($actualFile === null) {
+        if (! $actualFile instanceof VirtualProductFileForEditing) {
             throw new RuntimeException('Expected virtual product to have a file');
         }
 
@@ -236,7 +236,7 @@ class VirtualProductFileFeatureContext extends AbstractProductFeatureContext
     public function assertNewFile(string $productReference, string $fileReference, TableNode $dataTable): void
     {
         $actualFile = $this->getProductForEditing($productReference)->getVirtualProductFile();
-        if ($actualFile === null) {
+        if (! $actualFile instanceof VirtualProductFileForEditing) {
             throw new RuntimeException('Expected virtual product to have a file');
         }
 

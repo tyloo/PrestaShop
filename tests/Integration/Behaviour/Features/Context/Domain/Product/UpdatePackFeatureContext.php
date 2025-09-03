@@ -175,7 +175,7 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
             $expectedName = $expectedPackedProduct['name'];
             $expectedCombination = $expectedPackedProduct['combination'];
             $expectedPackedProductId = $this->getSharedStorage()->get($productReference);
-            $expectedCombinationId = ! empty($expectedPackedProduct['combination']) ? $this->getSharedStorage()->get($expectedPackedProduct['combination']) : 0;
+            $expectedCombinationId = empty($expectedPackedProduct['combination']) ? 0 : $this->getSharedStorage()->get($expectedPackedProduct['combination']);
             $foundProduct = false;
 
             foreach ($packedProducts as $key => $packedProduct) {
