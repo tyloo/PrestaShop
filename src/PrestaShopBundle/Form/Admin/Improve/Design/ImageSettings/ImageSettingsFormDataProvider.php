@@ -78,6 +78,7 @@ final class ImageSettingsFormDataProvider implements FormDataProviderInterface
         $command->setPictureMaxSize($data['picture-max-size']);
         $command->setPictureMaxWidth($data['picture-max-width']);
         $command->setPictureMaxHeight($data['picture-max-height']);
+
         $this->commandBus->handle($command);
 
         return [];

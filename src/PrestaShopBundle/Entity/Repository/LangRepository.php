@@ -105,6 +105,7 @@ class LangRepository extends EntityRepository implements LanguageRepositoryInter
     {
         $qb = $this->createQueryBuilder('l');
         $qb->select('l.id, l.locale');
+
         $result = $qb->getQuery()->getArrayResult();
 
         $mapping = [];

@@ -100,6 +100,7 @@ class EmployeeSessionSubscriber implements EventSubscriberInterface
         // Create new employee session
         $employeeSession = new EmployeeSession();
         $employeeSession->setToken(sha1(time() . uniqid()));
+
         $employee->addSession($employeeSession);
         $this->entityManager->persist($employeeSession);
         $this->entityManager->flush();
@@ -257,6 +258,7 @@ class EmployeeSessionSubscriber implements EventSubscriberInterface
 
         // Mimic AdminLogin login action
         $legacyCookie->remote_addr = (int) ip2long($request->getClientIp());
+
         $employee = $this->security->getUser();
         if ($employee instanceof Employee) {
             $legacyCookie->id_employee = $employee->getId();

@@ -180,6 +180,7 @@ class CatalogPriceRuleController extends PrestaShopAdminController
     ): Response {
         $catalogPriceRuleForm = $catalogPriceRuleBuilder->getForm();
         $catalogPriceRuleForm->handleRequest($request);
+
         $result = $catalogPriceRuleHandler->handle($catalogPriceRuleForm);
 
         try {

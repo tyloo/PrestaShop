@@ -490,6 +490,7 @@ abstract class StockManagementRepository
                   LIMIT 1';
         $statement = $this->connection->prepare($query);
         $statement->bindValue('id_product_attribute', (int) $row['combination_id'], PDO::PARAM_INT);
+
         $result = $statement->executeQuery();
         $combinationCoverId = (int) $result->fetchOne();
         $result->free();
@@ -516,6 +517,7 @@ abstract class StockManagementRepository
                     WHERE pac.id_product_attribute=:id_product_attribute';
         $statement = $this->connection->prepare($query);
         $statement->bindValue('id_product_attribute', (int) $row['combination_id'], PDO::PARAM_INT);
+
         $result = $statement->executeQuery();
         $productAttributes = $result->fetchOne();
         $result->free();

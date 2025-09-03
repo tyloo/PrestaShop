@@ -831,6 +831,7 @@ class Install extends AbstractInstall
         // Set localization configuration
         $version = str_replace('.', '', Version::VERSION);
         $version = mb_substr($version, 0, 2);
+
         $localization_file_content = $this->getLocalizationPackContent($version, $data['shop_country']);
 
         $locale = new LocalizationPack();

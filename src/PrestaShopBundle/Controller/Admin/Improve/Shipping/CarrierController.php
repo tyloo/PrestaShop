@@ -124,6 +124,7 @@ class CarrierController extends PrestaShopAdminController
     ): Response {
         $form = $formBuilder->getForm();
         $form->handleRequest($request);
+
         $result = $formHandler->handle($form);
 
         if ($result->isSubmitted() && $result->isValid()) {
@@ -149,6 +150,7 @@ class CarrierController extends PrestaShopAdminController
     ): Response {
         $form = $formBuilder->getFormFor($carrierId);
         $form->handleRequest($request);
+
         $result = $formHandler->handleFor($carrierId, $form);
 
         if ($result->isSubmitted() && $result->isValid()) {

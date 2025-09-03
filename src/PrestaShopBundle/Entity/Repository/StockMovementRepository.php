@@ -77,6 +77,7 @@ class StockMovementRepository extends StockManagementRepository
 
         $statement = $this->connection->prepare($query);
         $statement->bindValue('shop_id', $this->getContextualShopId(), PDO::PARAM_INT);
+
         $result = $statement->executeQuery();
 
         $rows = $result->fetchAllAssociative();
@@ -119,6 +120,7 @@ class StockMovementRepository extends StockManagementRepository
         $statement = $this->connection->prepare($query);
         $statement->bindValue('language_id', $this->getCurrentLanguageId(), PDO::PARAM_INT);
         $statement->bindValue('shop_id', $this->getContextualShopId(), PDO::PARAM_INT);
+
         $result = $statement->executeQuery();
 
         $rows = $result->fetchAllAssociative();

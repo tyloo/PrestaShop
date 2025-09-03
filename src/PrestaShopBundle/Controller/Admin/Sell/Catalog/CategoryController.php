@@ -532,6 +532,7 @@ class CategoryController extends PrestaShopAdminController
     {
         $deleteCategoriesForm = $this->createForm(DeleteCategoriesType::class);
         $deleteCategoriesForm->handleRequest($request);
+
         $idParent = (int) $this->getConfiguration()->get('PS_HOME_CATEGORY');
 
         if ($deleteCategoriesForm->isSubmitted()) {
@@ -568,6 +569,7 @@ class CategoryController extends PrestaShopAdminController
     {
         $deleteCategoriesForm = $this->createForm(DeleteCategoriesType::class);
         $deleteCategoriesForm->handleRequest($request);
+
         $idParent = (int) $this->getConfiguration()->get('PS_HOME_CATEGORY');
 
         if ($deleteCategoriesForm->isSubmitted()) {

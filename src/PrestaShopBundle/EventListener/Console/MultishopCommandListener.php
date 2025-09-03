@@ -63,6 +63,7 @@ class MultishopCommandListener
 
         $definition->addOption(new InputOption('id_shop', null, InputOption::VALUE_OPTIONAL, 'Specify shop context.'));
         $definition->addOption(new InputOption('id_shop_group', null, InputOption::VALUE_OPTIONAL, 'Specify shop group context.'));
+
         $input->bind($definition);
 
         $id_shop = $input->getOption('id_shop');
