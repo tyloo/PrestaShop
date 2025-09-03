@@ -96,7 +96,7 @@ class DataFormatterExtension extends AbstractExtension
      * @param array  $array Array containing Element to unset
      * @param string $key   Element to be unset
      */
-    public function unsetElement($array, $key)
+    public function unsetElement(array $array, $key): array
     {
         unset($array[$key]);
 

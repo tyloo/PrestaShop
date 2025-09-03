@@ -59,11 +59,9 @@ class LogRepository implements RepositoryInterface
     /**
      * Get all logs with employee name and avatar information SQL query.
      *
-     * @param array $filters
-     *
      * @return string the SQL query
      */
-    public function findAllWithEmployeeInformationQuery($filters)
+    public function findAllWithEmployeeInformationQuery(array $filters)
     {
         $queryBuilder = $this->getAllWithEmployeeInformationQuery($filters);
 
@@ -80,11 +78,9 @@ class LogRepository implements RepositoryInterface
     /**
      * Get all logs with employee name and avatar information.
      *
-     * @param array $filters
-     *
      * @return array the list of logs
      */
-    public function findAllWithEmployeeInformation($filters): array
+    public function findAllWithEmployeeInformation(array $filters): array
     {
         $queryBuilder = $this->getAllWithEmployeeInformationQuery($filters);
         $statement = $queryBuilder->executeQuery();
@@ -95,11 +91,9 @@ class LogRepository implements RepositoryInterface
     /**
      * Get a reusable Query Builder to dump and execute SQL.
      *
-     * @param array $filters
-     *
      * @return \Doctrine\DBAL\Query\QueryBuilder
      */
-    public function getAllWithEmployeeInformationQuery($filters)
+    public function getAllWithEmployeeInformationQuery(array $filters)
     {
         $employeeTable = $this->databasePrefix . 'employee';
         $queryBuilder = $this->connection->createQueryBuilder();

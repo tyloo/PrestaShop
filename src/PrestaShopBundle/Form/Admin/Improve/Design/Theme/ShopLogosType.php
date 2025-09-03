@@ -149,7 +149,7 @@ class ShopLogosType extends AbstractType
     {
         $builder->addModelTransformer(new CallbackTransformer(
             fn ($form) => $form,
-            function ($form) use ($suffix) {
+            function (array $form) use ($suffix) {
                 $restrictedToShopFields = [];
                 foreach ($form as $fieldName => $value) {
                     $isShopRestrictionField = $this->stringEndsWith($fieldName, $suffix);

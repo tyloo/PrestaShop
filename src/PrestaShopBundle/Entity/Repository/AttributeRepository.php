@@ -89,7 +89,7 @@ class AttributeRepository extends \Doctrine\ORM\EntityRepository
         return $attributeGroups;
     }
 
-    private function getAttributeRow($attribute): array
+    private function getAttributeRow(array $attribute): array
     {
         $attributes = [
             'id' => $attribute['id'],

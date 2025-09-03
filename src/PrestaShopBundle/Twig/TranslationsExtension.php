@@ -90,7 +90,7 @@ class TranslationsExtension extends AbstractExtension
         return $output;
     }
 
-    public function concatenateEditTranslationForm($subtree, $viewProperties): string
+    public function concatenateEditTranslationForm(array $subtree, array $viewProperties): string
     {
         $output = '';
         $hasMessages = $this->hasMessages($subtree);
@@ -140,10 +140,9 @@ class TranslationsExtension extends AbstractExtension
     }
 
     /**
-     * @param array $tree
-     * @param int   $level
+     * @param int $level
      */
-    public function makeSubtree($tree, $level = 3): string
+    public function makeSubtree(array $tree, $level = 3): string
     {
         $output = '';
         $messagesSubtree = $this->hasMessages($tree);
@@ -225,11 +224,9 @@ class TranslationsExtension extends AbstractExtension
     }
 
     /**
-     * @param array $properties
-     *
      * @return mixed|string
      */
-    protected function renderEditTranslationForm($properties): string
+    protected function renderEditTranslationForm(array $properties): string
     {
         [$domain, $locale] = explode('.', (string) $properties['camelized_domain']);
         $translationValue = $this->getTranslationValue($properties['translation']);
@@ -310,10 +307,9 @@ class TranslationsExtension extends AbstractExtension
 
     /**
      * @param string $subdomain
-     * @param array  $subtree
      * @param int    $level
      */
-    protected function concatenateSubtreeHeader($subdomain, $subtree, $level = 2): string
+    protected function concatenateSubtreeHeader($subdomain, array $subtree, $level = 2): string
     {
         $hasMessagesSubtree = $this->hasMessages($subtree);
         $subject = $subdomain;
@@ -371,10 +367,9 @@ class TranslationsExtension extends AbstractExtension
     }
 
     /**
-     * @param array  $subtree
      * @param string $output
      */
-    protected function getTranslationsFormStart(&$subtree, $output): string
+    protected function getTranslationsFormStart(array &$subtree, $output): string
     {
         $id = '';
         $parentAttribute = ' class="subdomains hide"';
@@ -423,9 +418,8 @@ class TranslationsExtension extends AbstractExtension
 
     /**
      * @param string $output
-     * @param array  $subtree
      */
-    protected function replaceWarningPlaceholder($output, $subtree): string
+    protected function replaceWarningPlaceholder($output, array $subtree): string
     {
         $missingTranslationsMessage = '';
         $missingTranslationsLongMessage = '';
@@ -481,10 +475,7 @@ class TranslationsExtension extends AbstractExtension
         );
     }
 
-    /**
-     * @param array $subtree
-     */
-    protected function parseDomain($subtree): string
+    protected function parseDomain(array $subtree): string
     {
         [$camelizedDomain] = $subtree['__messages'];
         [$domain] = explode('.', (string) $camelizedDomain);

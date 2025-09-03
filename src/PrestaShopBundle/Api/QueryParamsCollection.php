@@ -464,9 +464,8 @@ abstract class QueryParamsCollection
 
     /**
      * @param int|array<int> $value
-     * @param array          $sqlParams
      */
-    protected function appendSqlCategoryFilterParam($value, $sqlParams)
+    protected function appendSqlCategoryFilterParam($value, array $sqlParams)
     {
         if (! \is_array($value)) {
             $value = [$value];
@@ -503,9 +502,8 @@ abstract class QueryParamsCollection
 
     /**
      * @param int|array<int> $value
-     * @param array          $sqlParams
      */
-    protected function appendSqlDateAddFilterParam($value, $sqlParams)
+    protected function appendSqlDateAddFilterParam($value, array $sqlParams)
     {
         if (! \is_array($value)) {
             $value = [$value];
@@ -537,9 +535,8 @@ abstract class QueryParamsCollection
 
     /**
      * @param int|string $value
-     * @param array      $sqlParams
      */
-    protected function appendSqlActiveFilterParam($value, $sqlParams)
+    protected function appendSqlActiveFilterParam($value, array $sqlParams)
     {
         if (\in_array($value, ['0', '1'], true)) {
             $sqlParams[':active'] = $value;
@@ -650,10 +647,7 @@ abstract class QueryParamsCollection
         return $sqlParams;
     }
 
-    /**
-     * @param array $filters
-     */
-    protected function appendSqlSearchFilter($filters)
+    protected function appendSqlSearchFilter(array $filters)
     {
         if (! $this->hasSearchFilter()) {
             return $filters;

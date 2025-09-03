@@ -106,14 +106,12 @@ abstract class ApiController
     /**
      * Add additional info to JSON return.
      *
-     * @param array $headers
-     *
      * @return array
      */
     protected function addAdditionalInfo(
         Request $request,
         ?QueryParamsCollection $queryParams = null,
-        $headers = [],
+        array $headers = [],
     ) {
         $router = $this->container->get('router');
 
@@ -170,7 +168,6 @@ abstract class ApiController
     /**
      * @param array $data
      * @param int   $status
-     * @param array $headers
      *
      * @return JsonResponse
      */
@@ -179,7 +176,7 @@ abstract class ApiController
         Request $request,
         ?QueryParamsCollection $queryParams = null,
         $status = 200,
-        $headers = [],
+        array $headers = [],
     ) {
         $response = [
             'info' => $this->addAdditionalInfo($request, $queryParams, $headers),
