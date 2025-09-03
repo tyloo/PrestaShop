@@ -50,8 +50,6 @@ interface TranslationsFactoryInterface
      *
      * @param string $domainIdentifier Domain identifier
      * @param string $locale           Locale identifier
-     * @param null   $theme
-     * @param null   $search
      *
      * @return array Translation tree structure
      *

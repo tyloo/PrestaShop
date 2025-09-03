@@ -48,17 +48,11 @@ class NullDispatcher implements EventDispatcherInterface, HookDispatcherInterfac
         return $event;
     }
 
-    /**
-     * @param null $eventName
-     */
     public function getListeners($eventName = null): array
     {
         return [];
     }
 
-    /**
-     * @param null $eventName
-     */
     public function hasListeners($eventName = null): bool
     {
         return false;

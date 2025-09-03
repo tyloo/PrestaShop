@@ -135,7 +135,6 @@ class TreeBuilder
      *
      * @param array       $tree
      * @param string|null $theme
-     * @param null        $search
      * @param string|null $module
      */
     public function cleanTreeToApi($tree, Router $router, $theme = null, $search = null, $module = null): array

@@ -58,8 +58,6 @@ class FrontOfficeProvider extends AbstractProvider implements UseDefaultCatalogu
     }
 
     /**
-     * @param null $themeName
-     *
      * @return MessageCatalogue
      */
     public function getDatabaseCatalogue($themeName = null)

@@ -142,7 +142,6 @@ class StockRepository extends StockManagementRepository
     /**
      * @param string $andWhereClause
      * @param string $having
-     * @param null   $orderByClause
      */
     protected function selectSql(
         $andWhereClause = '',
