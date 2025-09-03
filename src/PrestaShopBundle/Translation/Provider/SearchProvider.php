@@ -128,8 +128,6 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
             }
         }
 
-        $defaultCatalogue = new MessageCatalogue($this->getLocale(), $allowedDomains);
-
-        return $defaultCatalogue;
+        return new MessageCatalogue($this->getLocale(), $allowedDomains);
     }
 }

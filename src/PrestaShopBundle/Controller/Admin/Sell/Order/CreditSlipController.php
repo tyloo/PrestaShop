@@ -52,8 +52,6 @@ class CreditSlipController extends PrestaShopAdminController
 {
     /**
      * Show credit slips listing page.
-     *
-     * @return Response
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function indexAction(

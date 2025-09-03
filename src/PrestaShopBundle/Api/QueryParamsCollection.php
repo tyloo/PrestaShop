@@ -169,9 +169,7 @@ abstract class QueryParamsCollection
             self::SQL_CLAUSE_WHERE => implode("\n", $whereFilters),
         ];
 
-        $filters = $this->appendSqlSearchFilter($filters);
-
-        return $filters;
+        return $this->appendSqlSearchFilter($filters);
     }
 
     /**

@@ -161,8 +161,6 @@ class HookFinder
      * erasing the other values.
      *
      * @param string|array $expectedInstanceClasses
-     *
-     * @return self
      */
     public function addExpectedInstanceClasses($expectedInstanceClasses): static
     {
@@ -179,8 +177,6 @@ class HookFinder
      * Replace all expected classes and types.
      *
      * @param array $expectedInstanceClasses
-     *
-     * @return self
      */
     public function setExpectedInstanceClasses($expectedInstanceClasses): static
     {
@@ -193,8 +189,6 @@ class HookFinder
      * Change the hook to be called.
      *
      * @param string $hookName
-     *
-     * @return self
      */
     public function setHookName($hookName): static
     {
@@ -207,8 +201,6 @@ class HookFinder
      * Add a hook param without erasing all the other values.
      *
      * @param array $params
-     *
-     * @return self
      */
     public function addParams($params): static
     {
@@ -221,8 +213,6 @@ class HookFinder
      * Replace the params array.
      *
      * @param array $params
-     *
-     * @return self
      */
     public function setParams($params): static
     {

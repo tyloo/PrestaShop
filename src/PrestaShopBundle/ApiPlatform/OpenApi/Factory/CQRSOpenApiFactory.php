@@ -169,7 +169,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
             $updatedPaths->addPath($path, $updatedPathItem);
         }
 
-        $updatedOpenApi = new OpenApi(
+        return new OpenApi(
             $parentOpenApi->getInfo(),
             [
                 new Server('/admin-api'),
@@ -182,8 +182,6 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
             $parentOpenApi->getJsonSchemaDialect(),
             $parentOpenApi->getWebhooks(),
         );
-
-        return $updatedOpenApi;
     }
 
     protected function getSchemaDefinition(OpenApi $openApi, Operation $operation): ?ArrayObject

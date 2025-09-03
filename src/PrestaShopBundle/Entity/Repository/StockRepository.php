@@ -77,9 +77,7 @@ class StockRepository extends StockManagementRepository
 
     public function bulkUpdateStock(MovementsCollection $movements): array
     {
-        $products = $movements->map(fn (Movement $movement) => $this->updateStock($movement));
-
-        return $products;
+        return $movements->map(fn (Movement $movement) => $this->updateStock($movement));
     }
 
     /**
@@ -145,8 +143,6 @@ class StockRepository extends StockManagementRepository
      * @param string $andWhereClause
      * @param string $having
      * @param null   $orderByClause
-     *
-     * @return mixed
      */
     protected function selectSql(
         $andWhereClause = '',
@@ -238,16 +234,12 @@ class StockRepository extends StockManagementRepository
         return parent::andWhere($queryParams);
     }
 
-    /**
-     * @return array
-     */
-    protected function addAdditionalData(array $rows)
+    protected function addAdditionalData(array $rows): array
     {
         $rows = $this->addCombinationsAndFeatures($rows);
         $rows = $this->addImageThumbnailPaths($rows);
-        $rows = $this->addEditProductLink($rows);
 
-        return $rows;
+        return $this->addEditProductLink($rows);
     }
 
     protected function addCombinationsAndFeatures(array $rows)

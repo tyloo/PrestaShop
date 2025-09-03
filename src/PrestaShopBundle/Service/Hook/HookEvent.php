@@ -63,8 +63,6 @@ class HookEvent extends Event
      * Sets the Hook parameters.
      *
      * @param array $parameters
-     *
-     * @return self
      */
     public function setHookParameters($parameters): static
     {

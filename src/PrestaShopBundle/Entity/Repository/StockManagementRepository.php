@@ -181,9 +181,8 @@ abstract class StockManagementRepository
     protected function addAdditionalData(array $rows)
     {
         $rows = $this->addCombinationsAndFeatures($rows);
-        $rows = $this->addImageThumbnailPaths($rows);
 
-        return $rows;
+        return $this->addImageThumbnailPaths($rows);
     }
 
     /**
@@ -230,7 +229,8 @@ abstract class StockManagementRepository
     protected function andWhere(QueryParamsCollection $queryParams)
     {
         $filters = $queryParams->getSqlFilters();
-        $filters = strtr($filters[$queryParams::SQL_CLAUSE_WHERE], [
+
+        return strtr($filters[$queryParams::SQL_CLAUSE_WHERE], [
             '{product_id}' => 'p.id_product',
             '{supplier_id}' => 'p.id_supplier',
             '{id_employee}' => 'sm.id_employee',
@@ -238,8 +238,6 @@ abstract class StockManagementRepository
             '{id_stock_mvt_reason}' => 'sm.id_stock_mvt_reason',
             '{active}' => 'p.active',
         ]);
-
-        return $filters;
     }
 
     /**

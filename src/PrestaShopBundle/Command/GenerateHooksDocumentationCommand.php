@@ -268,9 +268,8 @@ final class GenerateHooksDocumentationCommand extends Command
     private function escapeHookDetail(string $hookDetail): string
     {
         $hookDetail = str_replace("'", "''", $hookDetail);
-        $hookDetail = str_replace(["\n", "\r\n"], ' ', $hookDetail);
 
-        return $hookDetail;
+        return str_replace(["\n", "\r\n"], ' ', $hookDetail);
     }
 
     private function parseHooks(SimpleXMLElement $xml): array

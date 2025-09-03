@@ -49,9 +49,8 @@ class System extends AbstractInstall
     public function checkSf2Requirements()
     {
         $symfonyRequirements = new SymfonyRequirements();
-        $errors = $symfonyRequirements->getFailedRequirements();
 
-        return $errors;
+        return $symfonyRequirements->getFailedRequirements();
     }
 
     // get symfony recommendations

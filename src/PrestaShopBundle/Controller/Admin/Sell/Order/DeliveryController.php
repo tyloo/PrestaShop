@@ -44,8 +44,6 @@ class DeliveryController extends PrestaShopAdminController
 {
     /**
      * Main page for Delivery slips.
-     *
-     * @return Response|RedirectResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('update', request.get('_legacy_controller')) || is_granted('create', request.get('_legacy_controller')) || is_granted('delete', request.get('_legacy_controller'))", message: 'Access denied.')]
     public function slipAction(

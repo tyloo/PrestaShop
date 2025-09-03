@@ -47,15 +47,13 @@ final class PageLayoutCustomizationFormFactory implements PageLayoutCustomizatio
     ) {
     }
 
-    public function create(array $customizablePages)
+    public function create(array $customizablePages): \Symfony\Component\Form\FormInterface
     {
         $theme = $this->themeRepository->getInstanceByName($this->shopThemeName);
 
-        $pageLayoutCustomizationForm = $this->formFactory->create(PageLayoutsCustomizationType::class, [
+        return $this->formFactory->create(PageLayoutsCustomizationType::class, [
             'layouts' => $this->getCustomizablePageLayouts($theme, $customizablePages),
         ]);
-
-        return $pageLayoutCustomizationForm;
     }
 
     /**

@@ -62,8 +62,6 @@ class LegacyRoute
 
     /**
      * @param string $routeName
-     *
-     * @return LegacyRoute
      */
     public static function buildLegacyRoute($routeName, array $routeDefaults): static
     {

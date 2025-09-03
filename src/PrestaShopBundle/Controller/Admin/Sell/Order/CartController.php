@@ -194,9 +194,6 @@ class CartController extends PrestaShopAdminController
             ->setFileName('cart_' . date('Y-m-d_His') . '.csv');
     }
 
-    /**
-     * @return Response
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))")]
     public function viewAction(
         Request $request,

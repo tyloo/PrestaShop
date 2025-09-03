@@ -82,9 +82,8 @@ class StockMovementRepository extends StockManagementRepository
 
         $rows = $result->fetchAllAssociative();
         $result->free();
-        $employees = $this->castNumericToInt($rows);
 
-        return $employees;
+        return $this->castNumericToInt($rows);
     }
 
     /**
@@ -126,9 +125,7 @@ class StockMovementRepository extends StockManagementRepository
         $rows = $result->fetchAllAssociative();
         $result->free();
 
-        $types = $grouped ? $this->castIdsToArray($rows) : $this->castNumericToInt($rows);
-
-        return $types;
+        return $grouped ? $this->castIdsToArray($rows) : $this->castNumericToInt($rows);
     }
 
     public function saveStockMvt(StockMvt $stockMvt): int
@@ -143,8 +140,6 @@ class StockMovementRepository extends StockManagementRepository
      * @param string $andWhereClause
      * @param string $having
      * @param null   $orderByClause
-     *
-     * @return mixed
      */
     protected function selectSql(
         $andWhereClause = '',
@@ -254,16 +249,12 @@ class StockMovementRepository extends StockManagementRepository
         );
     }
 
-    /**
-     * @return array
-     */
-    protected function addAdditionalData(array $rows)
+    protected function addAdditionalData(array $rows): array
     {
         $rows = parent::addAdditionalData($rows);
         $rows = $this->addOrderLink($rows);
-        $rows = $this->addFormattedDate($rows);
 
-        return $rows;
+        return $this->addFormattedDate($rows);
     }
 
     protected function addFormattedDate(array $rows): array

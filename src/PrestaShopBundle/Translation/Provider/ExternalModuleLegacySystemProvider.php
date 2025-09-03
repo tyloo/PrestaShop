@@ -103,8 +103,6 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
 
     /**
      * @param string $domain
-     *
-     * @return AbstractProvider|SearchProviderInterface|void
      */
     public function setDomain($domain): never
     {

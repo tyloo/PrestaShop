@@ -64,8 +64,7 @@ class EntitySearchExtension extends AbstractExtension
 
         $parentForm = $form->parent;
         $prototypeMapping = $parentForm->vars['prototype_mapping'] ?? [];
-        $fieldPlaceholder = $prototypeMapping[$fieldName] ?? \sprintf('__%s__', $fieldName);
 
-        return $fieldPlaceholder;
+        return $prototypeMapping[$fieldName] ?? \sprintf('__%s__', $fieldName);
     }
 }

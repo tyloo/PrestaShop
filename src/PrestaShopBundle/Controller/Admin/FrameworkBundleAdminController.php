@@ -320,11 +320,10 @@ class FrameworkBundleAdminController extends AbstractController
 
         /** @var LocaleRepository $localeRepository */
         $localeRepository = $this->get('prestashop.core.localization.locale.repository');
-        $locale = $localeRepository->getLocale(
+
+        return $localeRepository->getLocale(
             $this->getContext()->language->getLocale()
         );
-
-        return $locale;
     }
 
     /**
