@@ -83,10 +83,7 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
         return $this->locale;
     }
 
-    /**
-     * @param string $locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale)
     {
         $this->locale = $locale;
 

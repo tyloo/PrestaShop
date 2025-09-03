@@ -63,7 +63,7 @@ class DemoRestricted
     /**
      * @param string $domain the translation domain name
      */
-    public function setDomain($domain): void
+    public function setDomain(string $domain): void
     {
         $this->domain = $domain;
     }
@@ -76,7 +76,7 @@ class DemoRestricted
     /**
      * @param string $message the message displayed after redirection
      */
-    public function setMessage($message): void
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
@@ -89,7 +89,7 @@ class DemoRestricted
     /**
      * @param string $redirectRoute the route used for redirection
      */
-    public function setRedirectRoute($redirectRoute): void
+    public function setRedirectRoute(?string $redirectRoute): void
     {
         $this->redirectRoute = $redirectRoute;
     }
@@ -115,10 +115,7 @@ class DemoRestricted
         return $this->redirectQueryParamsToKeep;
     }
 
-    /**
-     * @param array $redirectQueryParamsToKeep
-     */
-    public function setRedirectQueryParamsToKeep($redirectQueryParamsToKeep): void
+    public function setRedirectQueryParamsToKeep(array $redirectQueryParamsToKeep): void
     {
         $this->redirectQueryParamsToKeep = $redirectQueryParamsToKeep;
     }

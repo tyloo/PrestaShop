@@ -87,7 +87,7 @@ class ModuleHistory
         return $this->idEmployee;
     }
 
-    public function setIdModule($idModule): static
+    public function setIdModule(int $idModule): static
     {
         $this->idModule = $idModule;
 
