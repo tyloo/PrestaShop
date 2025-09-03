@@ -121,7 +121,7 @@ class TestAbstractBulkCommandHandler extends AbstractBulkCommandHandler
     /**
      * @var int[]
      */
-    private $handledIds = [];
+    private array $handledIds = [];
 
     private $command;
 

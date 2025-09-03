@@ -566,7 +566,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $filters;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(
@@ -605,7 +605,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         if ($this->shopConstraintContext->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $bulkEnableRoute = 'admin_products_bulk_enable_shop';

@@ -70,7 +70,7 @@ final class CatalogPriceRuleGridDefinitionFactory extends AbstractGridDefinition
         return $this->trans('Catalog price rules', [], 'Admin.Catalog.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new BulkActionColumn('bulk'))
@@ -179,7 +179,7 @@ final class CatalogPriceRuleGridDefinitionFactory extends AbstractGridDefinition
         ;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_specific_price_rule', TextType::class))
@@ -298,7 +298,7 @@ final class CatalogPriceRuleGridDefinitionFactory extends AbstractGridDefinition
         ;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add((new SimpleGridAction('common_refresh_list'))
@@ -316,7 +316,7 @@ final class CatalogPriceRuleGridDefinitionFactory extends AbstractGridDefinition
         ;
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add((new SubmitBulkAction('delete_selection'))

@@ -47,7 +47,7 @@ class Catalogue
     /**
      * @var Domain[]
      */
-    private $domains = [];
+    private array $domains = [];
 
     public function addDomain(Domain $domain): self
     {

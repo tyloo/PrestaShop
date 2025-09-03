@@ -86,7 +86,7 @@ class PaymentOptionFormDecoratorTest extends TestCase
         return $doc->saveHTML();
     }
 
-    private function assertSameHTML(string $exp, string|bool $act)
+    private function assertSameHTML(string $exp, string|bool $act): static
     {
         $this->assertEquals(
             $this->normalizeHTML($exp),

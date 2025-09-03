@@ -84,7 +84,7 @@ class CurrencyContextBuilder implements LegacyContextBuilderInterface
         }
     }
 
-    public function setCurrencyId(int $currencyId)
+    public function setCurrencyId(int $currencyId): static
     {
         $this->currencyId = $currencyId;
 

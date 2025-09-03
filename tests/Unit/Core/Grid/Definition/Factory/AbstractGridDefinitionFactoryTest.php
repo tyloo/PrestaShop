@@ -80,7 +80,7 @@ class AbstractGridDefinitionFactoryTest extends TestCase
         $this->assertCount(0, $definition->getFilters()->all());
     }
 
-    private function getColumns()
+    private function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add($this->createColumnMock('test_1'))

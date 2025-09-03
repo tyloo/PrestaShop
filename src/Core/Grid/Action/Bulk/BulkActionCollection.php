@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Grid\Collection\AbstractCollection;
  */
 final class BulkActionCollection extends AbstractCollection implements BulkActionCollectionInterface
 {
-    public function add(BulkActionInterface $bulkAction)
+    public function add(BulkActionInterface $bulkAction): self
     {
         $this->items[$bulkAction->getId()] = $bulkAction;
 

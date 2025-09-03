@@ -99,7 +99,7 @@ class CurrencyData
      * @return $this
      *               Fluent interface
      */
-    public function overrideWith(self $currencyData)
+    public function overrideWith(self $currencyData): static
     {
         if ($currencyData->getIsoCode() !== null) {
             $this->setIsoCode($currencyData->getIsoCode());
@@ -138,10 +138,8 @@ class CurrencyData
 
     /**
      * @param string $isoCode
-     *
-     * @return CurrencyData
      */
-    public function setIsoCode($isoCode)
+    public function setIsoCode($isoCode): static
     {
         $this->isoCode = $isoCode;
 
@@ -158,10 +156,8 @@ class CurrencyData
 
     /**
      * @param string $numericIsoCode
-     *
-     * @return CurrencyData
      */
-    public function setNumericIsoCode($numericIsoCode)
+    public function setNumericIsoCode($numericIsoCode): static
     {
         $this->numericIsoCode = $numericIsoCode;
 
@@ -178,10 +174,8 @@ class CurrencyData
 
     /**
      * @param int $decimalDigits
-     *
-     * @return CurrencyData
      */
-    public function setDecimalDigits($decimalDigits)
+    public function setDecimalDigits($decimalDigits): static
     {
         $this->decimalDigits = $decimalDigits;
 
@@ -198,10 +192,8 @@ class CurrencyData
 
     /**
      * @param string[] $displayNames
-     *
-     * @return CurrencyData
      */
-    public function setDisplayNames($displayNames)
+    public function setDisplayNames($displayNames): static
     {
         $this->displayNames = $displayNames;
 
@@ -218,10 +210,8 @@ class CurrencyData
 
     /**
      * @param string[] $symbols
-     *
-     * @return CurrencyData
      */
-    public function setSymbols($symbols)
+    public function setSymbols($symbols): static
     {
         $this->symbols = $symbols;
 

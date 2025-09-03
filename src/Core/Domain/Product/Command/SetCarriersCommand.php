@@ -44,7 +44,7 @@ class SetCarriersCommand
     /**
      * @var CarrierReferenceId[]|null
      */
-    private $carrierReferenceIds;
+    private array $carrierReferenceIds;
 
     /**
      * @param int[] $carrierReferenceIds List of carrier reference IDs (instead of usual primary id as most entities)

@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class DoctrineSearchCriteriaApplicator implements DoctrineSearchCriteriaApplicatorInterface
 {
-    public function applyPagination(SearchCriteriaInterface $searchCriteria, QueryBuilder $queryBuilder)
+    public function applyPagination(SearchCriteriaInterface $searchCriteria, QueryBuilder $queryBuilder): self
     {
         if ($searchCriteria->getLimit() !== null) {
             $queryBuilder->setMaxResults($searchCriteria->getLimit());
@@ -48,7 +48,7 @@ final class DoctrineSearchCriteriaApplicator implements DoctrineSearchCriteriaAp
         return $this;
     }
 
-    public function applySorting(SearchCriteriaInterface $searchCriteria, QueryBuilder $queryBuilder)
+    public function applySorting(SearchCriteriaInterface $searchCriteria, QueryBuilder $queryBuilder): self
     {
         if ($searchCriteria->getOrderBy() !== null && $searchCriteria->getOrderWay() !== null) {
             $queryBuilder->orderBy(

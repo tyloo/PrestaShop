@@ -43,22 +43,22 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @var string[]
      */
-    private $localisedDescription;
+    private ?array $localisedDescription = null;
 
     /**
      * @var string[]
      */
-    private $localisedMetaTitle;
+    private ?array $localisedMetaTitle = null;
 
     /**
      * @var string[]
      */
-    private $localisedMetaDescription;
+    private ?array $localisedMetaDescription = null;
 
     /**
      * @var int[]
      */
-    private $shopAssociation;
+    private ?array $shopAssociation = null;
 
     /**
      * @param int  $parentId
@@ -104,17 +104,15 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalisedDescription()
+    public function getLocalisedDescription(): ?array
     {
         return $this->localisedDescription;
     }
 
     /**
      * @param string[] $localisedDescription
-     *
-     * @return self
      */
-    public function setLocalisedDescription(array $localisedDescription)
+    public function setLocalisedDescription(array $localisedDescription): static
     {
         $this->localisedDescription = $localisedDescription;
 
@@ -124,7 +122,7 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalisedMetaTitle()
+    public function getLocalisedMetaTitle(): ?array
     {
         return $this->localisedMetaTitle;
     }
@@ -132,11 +130,9 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @param string[] $localisedMetaTitle
      *
-     * @return self
-     *
      * @throws CmsPageCategoryConstraintException
      */
-    public function setLocalisedMetaTitle(array $localisedMetaTitle)
+    public function setLocalisedMetaTitle(array $localisedMetaTitle): static
     {
         $this->assertIsGenericNameForMetaTitle($localisedMetaTitle);
         $this->localisedMetaTitle = $localisedMetaTitle;
@@ -147,7 +143,7 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalisedMetaDescription()
+    public function getLocalisedMetaDescription(): ?array
     {
         return $this->localisedMetaDescription;
     }
@@ -155,11 +151,9 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @param string[] $localisedMetaDescription
      *
-     * @return self
-     *
      * @throws CmsPageCategoryConstraintException
      */
-    public function setLocalisedMetaDescription(array $localisedMetaDescription)
+    public function setLocalisedMetaDescription(array $localisedMetaDescription): static
     {
         $this->assertIsGenericNameForMetaDescription($localisedMetaDescription);
         $this->localisedMetaDescription = $localisedMetaDescription;
@@ -170,17 +164,15 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
     /**
      * @return int[]
      */
-    public function getShopAssociation()
+    public function getShopAssociation(): ?array
     {
         return $this->shopAssociation;
     }
 
     /**
      * @param int[] $shopAssociation
-     *
-     * @return self
      */
-    public function setShopAssociation(array $shopAssociation)
+    public function setShopAssociation(array $shopAssociation): static
     {
         $this->shopAssociation = $shopAssociation;
 

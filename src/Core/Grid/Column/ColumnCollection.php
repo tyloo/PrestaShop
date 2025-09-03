@@ -47,28 +47,28 @@ final class ColumnCollection extends AbstractCollection implements ColumnCollect
      */
     public const POSITION_BEFORE = 'before';
 
-    public function add(ColumnInterface $column)
+    public function add(ColumnInterface $column): self
     {
         $this->items[$column->getId()] = $column;
 
         return $this;
     }
 
-    public function addAfter($id, ColumnInterface $newColumn)
+    public function addAfter($id, ColumnInterface $newColumn): self
     {
         $this->insertByPosition($id, $newColumn, self::POSITION_AFTER);
 
         return $this;
     }
 
-    public function addBefore($id, ColumnInterface $newColumn)
+    public function addBefore($id, ColumnInterface $newColumn): self
     {
         $this->insertByPosition($id, $newColumn, self::POSITION_BEFORE);
 
         return $this;
     }
 
-    public function remove($id)
+    public function remove($id): self
     {
         if (isset($this->items[$id])) {
             unset($this->items[$id]);
@@ -101,10 +101,8 @@ final class ColumnCollection extends AbstractCollection implements ColumnCollect
      *
      * @param string $id       the Column ID original position in the Collection
      * @param int    $position the Column ID destination position in the Collection
-     *
-     * @return self
      */
-    public function move($id, $position)
+    public function move($id, $position): self
     {
         if (! isset($this->items[$id])) {
             throw new ColumnNotFoundException(\sprintf('Cannot insert new column into collection. Column with id "%s" was not found.', $id));

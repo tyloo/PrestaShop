@@ -58,11 +58,9 @@ class DatabaseTablesList
     }
 
     /**
-     * @return self
-     *
      * @throws SqlRequestException
      */
-    private function setTables(array $tables)
+    private function setTables(array $tables): static
     {
         $filteredTables = array_filter($tables, 'is_string');
 

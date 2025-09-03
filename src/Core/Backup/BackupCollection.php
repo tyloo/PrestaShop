@@ -34,7 +34,7 @@ final class BackupCollection implements BackupCollectionInterface
      */
     private array $backups = [];
 
-    public function add(BackupInterface $backup)
+    public function add(BackupInterface $backup): self
     {
         $this->backups[] = $backup;
 

@@ -77,10 +77,8 @@ class EditTaxCommand
 
     /**
      * @param array|null $localizedNames
-     *
-     * @return self
      */
-    public function setLocalizedNames($localizedNames)
+    public function setLocalizedNames($localizedNames): static
     {
         $this->localizedNames = $localizedNames;
 
@@ -97,10 +95,8 @@ class EditTaxCommand
 
     /**
      * @param float|null $rate
-     *
-     * @return self
      */
-    public function setRate($rate)
+    public function setRate($rate): static
     {
         $this->rate = $rate;
 
@@ -117,10 +113,8 @@ class EditTaxCommand
 
     /**
      * @param bool|null $enabled
-     *
-     * @return self
      */
-    public function setEnabled($enabled)
+    public function setEnabled($enabled): static
     {
         $this->enabled = $enabled;
 

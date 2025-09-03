@@ -364,7 +364,7 @@ final class CustomerGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $filters;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(
@@ -403,7 +403,7 @@ final class CustomerGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(

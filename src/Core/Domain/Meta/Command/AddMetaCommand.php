@@ -78,11 +78,9 @@ class AddMetaCommand extends AbstractMetaCommand
     /**
      * @param string[] $localisedPageTitle
      *
-     * @return self
-     *
      * @throws MetaConstraintException
      */
-    public function setLocalisedPageTitle(array $localisedPageTitle)
+    public function setLocalisedPageTitle(array $localisedPageTitle): static
     {
         foreach ($localisedPageTitle as $idLang => $title) {
             $this->assertNameMatchesRegexPattern($idLang, $title, MetaConstraintException::INVALID_PAGE_TITLE);
@@ -104,11 +102,9 @@ class AddMetaCommand extends AbstractMetaCommand
     /**
      * @param string[] $localisedMetaDescription
      *
-     * @return self
-     *
      * @throws MetaConstraintException
      */
-    public function setLocalisedMetaDescription(array $localisedMetaDescription)
+    public function setLocalisedMetaDescription(array $localisedMetaDescription): static
     {
         foreach ($localisedMetaDescription as $idLang => $description) {
             $this->assertNameMatchesRegexPattern($idLang, $description, MetaConstraintException::INVALID_META_DESCRIPTION);
@@ -129,10 +125,8 @@ class AddMetaCommand extends AbstractMetaCommand
 
     /**
      * @param string[] $LocalisedRewriteUrls
-     *
-     * @return self
      */
-    public function setLocalisedRewriteUrls(array $LocalisedRewriteUrls)
+    public function setLocalisedRewriteUrls(array $LocalisedRewriteUrls): static
     {
         $this->LocalisedRewriteUrls = $LocalisedRewriteUrls;
 

@@ -162,7 +162,7 @@ class NumberSymbolsData
      *
      * @return $this Fluent interface
      */
-    public function overrideWith(self $symbolsData)
+    public function overrideWith(self $symbolsData): static
     {
         if ($symbolsData->getDecimal() !== null) {
             $this->setDecimal($symbolsData->getDecimal());
@@ -233,10 +233,8 @@ class NumberSymbolsData
 
     /**
      * @param string $decimal
-     *
-     * @return NumberSymbolsData
      */
-    public function setDecimal($decimal)
+    public function setDecimal($decimal): static
     {
         $this->decimal = $decimal;
 
@@ -253,10 +251,8 @@ class NumberSymbolsData
 
     /**
      * @param string $group
-     *
-     * @return NumberSymbolsData
      */
-    public function setGroup($group)
+    public function setGroup($group): static
     {
         $this->group = $group;
 
@@ -273,10 +269,8 @@ class NumberSymbolsData
 
     /**
      * @param string $list
-     *
-     * @return NumberSymbolsData
      */
-    public function setList($list)
+    public function setList($list): static
     {
         $this->list = $list;
 
@@ -293,10 +287,8 @@ class NumberSymbolsData
 
     /**
      * @param string $percentSign
-     *
-     * @return NumberSymbolsData
      */
-    public function setPercentSign($percentSign)
+    public function setPercentSign($percentSign): static
     {
         $this->percentSign = $percentSign;
 
@@ -313,10 +305,8 @@ class NumberSymbolsData
 
     /**
      * @param string $minusSign
-     *
-     * @return NumberSymbolsData
      */
-    public function setMinusSign($minusSign)
+    public function setMinusSign($minusSign): static
     {
         $this->minusSign = $minusSign;
 
@@ -333,10 +323,8 @@ class NumberSymbolsData
 
     /**
      * @param string $plusSign
-     *
-     * @return NumberSymbolsData
      */
-    public function setPlusSign($plusSign)
+    public function setPlusSign($plusSign): static
     {
         $this->plusSign = $plusSign;
 
@@ -353,10 +341,8 @@ class NumberSymbolsData
 
     /**
      * @param string $exponential
-     *
-     * @return NumberSymbolsData
      */
-    public function setExponential($exponential)
+    public function setExponential($exponential): static
     {
         $this->exponential = $exponential;
 
@@ -373,10 +359,8 @@ class NumberSymbolsData
 
     /**
      * @param string $superscriptingExponent
-     *
-     * @return NumberSymbolsData
      */
-    public function setSuperscriptingExponent($superscriptingExponent)
+    public function setSuperscriptingExponent($superscriptingExponent): static
     {
         $this->superscriptingExponent = $superscriptingExponent;
 
@@ -393,10 +377,8 @@ class NumberSymbolsData
 
     /**
      * @param string $perMille
-     *
-     * @return NumberSymbolsData
      */
-    public function setPerMille($perMille)
+    public function setPerMille($perMille): static
     {
         $this->perMille = $perMille;
 
@@ -413,10 +395,8 @@ class NumberSymbolsData
 
     /**
      * @param string $infinity
-     *
-     * @return NumberSymbolsData
      */
-    public function setInfinity($infinity)
+    public function setInfinity($infinity): static
     {
         $this->infinity = $infinity;
 
@@ -433,10 +413,8 @@ class NumberSymbolsData
 
     /**
      * @param string $nan
-     *
-     * @return NumberSymbolsData
      */
-    public function setNan($nan)
+    public function setNan($nan): static
     {
         $this->nan = $nan;
 
@@ -453,10 +431,8 @@ class NumberSymbolsData
 
     /**
      * @param string $timeSeparator
-     *
-     * @return NumberSymbolsData
      */
-    public function setTimeSeparator($timeSeparator)
+    public function setTimeSeparator($timeSeparator): static
     {
         $this->timeSeparator = $timeSeparator;
 
@@ -473,10 +449,8 @@ class NumberSymbolsData
 
     /**
      * @param string $currencyDecimal
-     *
-     * @return NumberSymbolsData
      */
-    public function setCurrencyDecimal($currencyDecimal)
+    public function setCurrencyDecimal($currencyDecimal): static
     {
         $this->currencyDecimal = $currencyDecimal;
 
@@ -493,10 +467,8 @@ class NumberSymbolsData
 
     /**
      * @param string $currencyGroup
-     *
-     * @return NumberSymbolsData
      */
-    public function setCurrencyGroup($currencyGroup)
+    public function setCurrencyGroup($currencyGroup): static
     {
         $this->currencyGroup = $currencyGroup;
 

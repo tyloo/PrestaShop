@@ -84,10 +84,8 @@ class ContextMocker
     /**
      * properly mock global context object with required properties
      * with this mock front controllers are able to be tested
-     *
-     * @return static
      */
-    public function mockContext()
+    public function mockContext(): static
     {
         global $smarty;
 

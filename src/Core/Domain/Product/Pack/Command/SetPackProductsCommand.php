@@ -44,7 +44,7 @@ class SetPackProductsCommand
     /**
      * @var QuantifiedProduct[]
      */
-    private $products;
+    private ?array $products = null;
 
     /**
      * @param array $products array of elements where each element contains product information

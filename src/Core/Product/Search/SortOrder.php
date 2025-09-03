@@ -135,7 +135,7 @@ class SortOrder
      *
      * @return $this
      */
-    public function setLabel($label)
+    public function setLabel($label): static
     {
         $this->label = $label;
 
@@ -155,7 +155,7 @@ class SortOrder
      *
      * @return $this
      */
-    public function setEntity($entity)
+    public function setEntity($entity): static
     {
         $this->entity = $entity;
 
@@ -175,7 +175,7 @@ class SortOrder
      *
      * @return $this
      */
-    public function setField($field)
+    public function setField($field): static
     {
         $this->field = $field;
 

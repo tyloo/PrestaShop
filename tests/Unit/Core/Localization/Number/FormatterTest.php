@@ -92,7 +92,7 @@ class FormatterTest extends TestCase
         $this->assertSame($expectedResult, $formattedNumber);
     }
 
-    protected function buildFormatter($localeParams): Formatter
+    protected function buildFormatter(array $localeParams): Formatter
     {
         $rounding = $localeParams['rounding'];
         $numberingSystem = $localeParams['numberingSystem'];

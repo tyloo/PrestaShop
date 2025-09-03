@@ -44,7 +44,7 @@ class SetProductFeatureValuesCommand
     /**
      * @var ProductFeatureValue[]
      */
-    private $featureValues;
+    private array $featureValues;
 
     /**
      * Set product feature values, expected format is:

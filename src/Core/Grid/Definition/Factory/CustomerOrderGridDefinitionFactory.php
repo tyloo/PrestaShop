@@ -68,7 +68,7 @@ final class CustomerOrderGridDefinitionFactory extends AbstractGridDefinitionFac
         return $this->trans('Orders', [], 'Admin.Global');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new DataColumn('id_order'))
@@ -129,7 +129,7 @@ final class CustomerOrderGridDefinitionFactory extends AbstractGridDefinitionFac
             );
     }
 
-    protected function getViewOptions()
+    protected function getViewOptions(): ViewOptionsCollection
     {
         return (new ViewOptionsCollection())
             ->add('display_name', false);

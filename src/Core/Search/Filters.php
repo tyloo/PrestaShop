@@ -127,7 +127,7 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
      *
      * @return $this
      */
-    public function setFilterId($filterId)
+    public function setFilterId($filterId): static
     {
         $this->filterId = $filterId;
 

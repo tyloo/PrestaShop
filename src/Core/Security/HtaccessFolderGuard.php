@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Exception\IOException;
  */
 class HtaccessFolderGuard implements FolderGuardInterface
 {
-    /**
-     * @var string
-     */
-    private $htaccessContent;
+    private readonly string|bool $htaccessContent;
 
     /**
      * @param string $htaccessTemplatePath

@@ -41,7 +41,7 @@ final class EntityFieldCollection implements EntityFieldCollectionInterface
      */
     private $entityFields = [];
 
-    public function addEntityField(EntityFieldInterface $entityField)
+    public function addEntityField(EntityFieldInterface $entityField): self
     {
         $this->entityFields[] = $entityField;
 
@@ -84,7 +84,7 @@ final class EntityFieldCollection implements EntityFieldCollectionInterface
         return $array;
     }
 
-    public static function createFromArray(array $entityFields)
+    public static function createFromArray(array $entityFields): self
     {
         $collection = new self();
 

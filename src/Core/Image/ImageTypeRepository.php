@@ -42,7 +42,7 @@ class ImageTypeRepository
         $this->db_prefix = $this->db->getPrefix();
     }
 
-    public function setTypes(array $types, ?string $theme_name = null)
+    public function setTypes(array $types, ?string $theme_name = null): static
     {
         if ($theme_name !== null) {
             $this->remoteAllTypesByTheme($theme_name);

@@ -81,7 +81,7 @@ class NumberCollection implements IteratorAggregate, Countable
      * @return NumberCollection
      *                          Fluent interface
      */
-    public function add($index, NumberSpecificationInterface $numberSpecification)
+    public function add($index, NumberSpecificationInterface $numberSpecification): static
     {
         $this->numberSpecifications[$index] = $numberSpecification;
 
@@ -123,7 +123,7 @@ class NumberCollection implements IteratorAggregate, Countable
      * @return NumberCollection
      *                          Fluent interface
      */
-    public function remove($index)
+    public function remove($index): static
     {
         foreach ((array) $index as $i) {
             unset($this->numberSpecifications[$i]);
@@ -138,7 +138,7 @@ class NumberCollection implements IteratorAggregate, Countable
      * @return NumberCollection
      *                          Fluent interface
      */
-    public function clear()
+    public function clear(): static
     {
         $this->numberSpecifications = [];
 

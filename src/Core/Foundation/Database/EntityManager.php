@@ -92,7 +92,7 @@ class EntityManager
      *
      * @return $this
      */
-    public function save(EntityInterface $entity)
+    public function save(EntityInterface $entity): static
     {
         $entity->save();
 
@@ -104,7 +104,7 @@ class EntityManager
      *
      * @return $this
      */
-    public function delete(EntityInterface $entity)
+    public function delete(EntityInterface $entity): static
     {
         $entity->delete();
 

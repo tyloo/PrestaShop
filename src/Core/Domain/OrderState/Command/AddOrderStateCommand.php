@@ -97,7 +97,7 @@ class AddOrderStateCommand
      *
      * @throws OrderStateConstraintException
      */
-    public function setLocalizedNames(array $localizedNames)
+    public function setLocalizedNames(array $localizedNames): static
     {
         if ($localizedNames === []) {
             throw new OrderStateConstraintException('Order status name cannot be empty', OrderStateConstraintException::EMPTY_NAME);

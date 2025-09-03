@@ -38,7 +38,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 class UserTranslatedCatalogueFinderTest extends TestCase
 {
-    private static $wordings = [
+    private static array $wordings = [
         'ShopSomeDomain' => [
             'Some wording' => 'Some wording',
             'Some other wording' => 'Some other wording',

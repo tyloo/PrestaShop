@@ -65,7 +65,7 @@ final class CustomerBoughtProductGridDefinitionFactory extends AbstractGridDefin
         return $this->trans('Purchased products', [], 'Admin.Orderscustomers.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new DateTimeColumn('date_add'))
@@ -104,7 +104,7 @@ final class CustomerBoughtProductGridDefinitionFactory extends AbstractGridDefin
             );
     }
 
-    protected function getViewOptions()
+    protected function getViewOptions(): ViewOptionsCollection
     {
         return (new ViewOptionsCollection())
             ->add('display_name', false);

@@ -47,7 +47,7 @@ class ThemeTranslationsFactoryTest extends TestCase
      */
     private MockObject $themeProviderMock;
 
-    private $translations;
+    private ?array $translations = null;
 
     protected function setUp(): void
     {

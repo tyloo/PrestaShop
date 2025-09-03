@@ -41,10 +41,7 @@ class AddCategoryCommand
      */
     private $localizedNames;
 
-    /**
-     * @var int
-     */
-    private $parentCategoryId;
+    private int $parentCategoryId;
 
     /**
      * @var string[]
@@ -54,37 +51,34 @@ class AddCategoryCommand
     /**
      * @var string[]
      */
-    private $localizedDescriptions;
+    private ?array $localizedDescriptions = null;
 
     /**
      * @var string[]|null
      */
-    private $localizedAdditionalDescriptions;
+    private ?array $localizedAdditionalDescriptions = null;
 
-    /**
-     * @var bool
-     */
-    private $isActive;
+    private ?bool $isActive = null;
 
     /**
      * @var string[]
      */
-    private $localizedMetaTitles;
+    private ?array $localizedMetaTitles = null;
 
     /**
      * @var string[]
      */
-    private $localizedMetaDescriptions;
+    private ?array $localizedMetaDescriptions = null;
 
     /**
      * @var int[]
      */
-    private $associatedGroupIds;
+    private ?array $associatedGroupIds = null;
 
     /**
      * @var int[]
      */
-    private $associatedShopIds;
+    private ?array $associatedShopIds = null;
 
     private ?UploadedFile $coverImage = null;
 
@@ -109,10 +103,7 @@ class AddCategoryCommand
             ->setParentCategoryId($parentCategoryId);
     }
 
-    /**
-     * @return int
-     */
-    public function getParentCategoryId()
+    public function getParentCategoryId(): int
     {
         return $this->parentCategoryId;
     }
@@ -120,11 +111,9 @@ class AddCategoryCommand
     /**
      * @param int $parentCategoryId
      *
-     * @return self
-     *
      * @throws CategoryConstraintException
      */
-    public function setParentCategoryId($parentCategoryId)
+    public function setParentCategoryId($parentCategoryId): static
     {
         if (! \is_int($parentCategoryId) || $parentCategoryId <= 0) {
             throw new CategoryConstraintException(\sprintf('Invalid Category parent id %s supplied', var_export($parentCategoryId, true)), CategoryConstraintException::INVALID_PARENT_ID);
@@ -150,7 +139,7 @@ class AddCategoryCommand
      *
      * @throws CategoryConstraintException
      */
-    public function setLocalizedNames(array $localizedNames)
+    public function setLocalizedNames(array $localizedNames): static
     {
         if ($localizedNames === []) {
             throw new CategoryConstraintException('Category name cannot be empty', CategoryConstraintException::EMPTY_NAME);
@@ -176,7 +165,7 @@ class AddCategoryCommand
      *
      * @throws CategoryConstraintException
      */
-    public function setLocalizedLinkRewrites(array $localizedLinkRewrites)
+    public function setLocalizedLinkRewrites(array $localizedLinkRewrites): static
     {
         if ($localizedLinkRewrites === []) {
             throw new CategoryConstraintException('Category link rewrite cannot be empty', CategoryConstraintException::EMPTY_LINK_REWRITE);
@@ -190,7 +179,7 @@ class AddCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalizedDescriptions()
+    public function getLocalizedDescriptions(): ?array
     {
         return $this->localizedDescriptions;
     }
@@ -200,7 +189,7 @@ class AddCategoryCommand
      *
      * @return $this
      */
-    public function setLocalizedDescriptions(array $localizedDescriptions)
+    public function setLocalizedDescriptions(array $localizedDescriptions): static
     {
         $this->localizedDescriptions = $localizedDescriptions;
 
@@ -227,10 +216,7 @@ class AddCategoryCommand
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isActive()
+    public function isActive(): ?bool
     {
         return $this->isActive;
     }
@@ -242,7 +228,7 @@ class AddCategoryCommand
      *
      * @throws CategoryConstraintException
      */
-    public function setIsActive($isActive)
+    public function setIsActive($isActive): static
     {
         if (! \is_bool($isActive)) {
             throw new CategoryConstraintException('Invalid Category status supplied', CategoryConstraintException::INVALID_STATUS);
@@ -256,7 +242,7 @@ class AddCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalizedMetaTitles()
+    public function getLocalizedMetaTitles(): ?array
     {
         return $this->localizedMetaTitles;
     }
@@ -266,7 +252,7 @@ class AddCategoryCommand
      *
      * @return $this
      */
-    public function setLocalizedMetaTitles(array $localizedMetaTitles)
+    public function setLocalizedMetaTitles(array $localizedMetaTitles): static
     {
         $this->localizedMetaTitles = $localizedMetaTitles;
 
@@ -276,7 +262,7 @@ class AddCategoryCommand
     /**
      * @return string[]
      */
-    public function getLocalizedMetaDescriptions()
+    public function getLocalizedMetaDescriptions(): ?array
     {
         return $this->localizedMetaDescriptions;
     }
@@ -286,7 +272,7 @@ class AddCategoryCommand
      *
      * @return $this
      */
-    public function setLocalizedMetaDescriptions(array $localizedMetaDescriptions)
+    public function setLocalizedMetaDescriptions(array $localizedMetaDescriptions): static
     {
         $this->localizedMetaDescriptions = $localizedMetaDescriptions;
 
@@ -296,7 +282,7 @@ class AddCategoryCommand
     /**
      * @return int[]
      */
-    public function getAssociatedGroupIds()
+    public function getAssociatedGroupIds(): ?array
     {
         return $this->associatedGroupIds;
     }
@@ -306,7 +292,7 @@ class AddCategoryCommand
      *
      * @return $this
      */
-    public function setAssociatedGroupIds(array $associatedGroupIds)
+    public function setAssociatedGroupIds(array $associatedGroupIds): static
     {
         $this->associatedGroupIds = $associatedGroupIds;
 
@@ -316,7 +302,7 @@ class AddCategoryCommand
     /**
      * @return int[]
      */
-    public function getAssociatedShopIds()
+    public function getAssociatedShopIds(): ?array
     {
         return $this->associatedShopIds;
     }
@@ -326,7 +312,7 @@ class AddCategoryCommand
      *
      * @return $this
      */
-    public function setAssociatedShopIds(array $associatedShopIds)
+    public function setAssociatedShopIds(array $associatedShopIds): static
     {
         $this->associatedShopIds = $associatedShopIds;
 

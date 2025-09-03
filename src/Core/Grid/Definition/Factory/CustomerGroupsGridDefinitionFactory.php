@@ -55,7 +55,7 @@ class CustomerGroupsGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $this->trans('Customer groups', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -119,7 +119,7 @@ class CustomerGroupsGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(

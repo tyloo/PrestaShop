@@ -67,7 +67,7 @@ final class ManufacturerGridDefinitionFactory extends AbstractGridDefinitionFact
         return $this->trans('Brands', [], 'Admin.Catalog.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new BulkActionColumn('bulk'))
@@ -149,7 +149,7 @@ final class ManufacturerGridDefinitionFactory extends AbstractGridDefinitionFact
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add((new LinkGridAction('import'))
@@ -183,7 +183,7 @@ final class ManufacturerGridDefinitionFactory extends AbstractGridDefinitionFact
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_manufacturer', TextType::class))
@@ -221,7 +221,7 @@ final class ManufacturerGridDefinitionFactory extends AbstractGridDefinitionFact
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add((new SubmitBulkAction('enable_selection'))

@@ -46,7 +46,7 @@ final class TaxFormDataHandler implements FormDataHandlerInterface
     /**
      * Create object from form data.
      */
-    public function create(array $data)
+    public function create(array $data): int
     {
         $command = new AddTaxCommand(
             $data['name'],

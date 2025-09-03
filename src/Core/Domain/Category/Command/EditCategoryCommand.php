@@ -116,11 +116,9 @@ class EditCategoryCommand
     /**
      * @param int $parentCategoryId
      *
-     * @return self
-     *
      * @throws CategoryConstraintException
      */
-    public function setParentCategoryId($parentCategoryId)
+    public function setParentCategoryId($parentCategoryId): static
     {
         if (! is_numeric($parentCategoryId) || $parentCategoryId <= 0) {
             throw new CategoryConstraintException(\sprintf('Invalid Category parent id %s supplied', var_export($parentCategoryId, true)), CategoryConstraintException::INVALID_PARENT_ID);
@@ -150,7 +148,7 @@ class EditCategoryCommand
      *
      * @throws CategoryConstraintException
      */
-    public function setLocalizedNames(array $localizedNames)
+    public function setLocalizedNames(array $localizedNames): static
     {
         if ($localizedNames === []) {
             throw new CategoryConstraintException('Category name cannot be empty', CategoryConstraintException::EMPTY_NAME);
@@ -176,7 +174,7 @@ class EditCategoryCommand
      *
      * @throws CategoryConstraintException
      */
-    public function setLocalizedLinkRewrites(array $localizedLinkRewrites)
+    public function setLocalizedLinkRewrites(array $localizedLinkRewrites): static
     {
         if ($localizedLinkRewrites === []) {
             throw new CategoryConstraintException('Category link rewrite cannot be empty', CategoryConstraintException::EMPTY_LINK_REWRITE);
@@ -200,7 +198,7 @@ class EditCategoryCommand
      *
      * @return $this
      */
-    public function setLocalizedDescriptions(array $localizedDescriptions)
+    public function setLocalizedDescriptions(array $localizedDescriptions): static
     {
         $this->localizedDescriptions = $localizedDescriptions;
 
@@ -239,7 +237,7 @@ class EditCategoryCommand
      *
      * @throws CategoryConstraintException
      */
-    public function setIsActive($isActive)
+    public function setIsActive($isActive): static
     {
         if (! \is_bool($isActive)) {
             throw new CategoryConstraintException('Invalid Category status supplied', CategoryConstraintException::INVALID_STATUS);
@@ -263,7 +261,7 @@ class EditCategoryCommand
      *
      * @return $this
      */
-    public function setLocalizedMetaTitles(array $localizedMetaTitles)
+    public function setLocalizedMetaTitles(array $localizedMetaTitles): static
     {
         $this->localizedMetaTitles = $localizedMetaTitles;
 
@@ -283,7 +281,7 @@ class EditCategoryCommand
      *
      * @return $this
      */
-    public function setLocalizedMetaDescriptions(array $localizedMetaDescriptions)
+    public function setLocalizedMetaDescriptions(array $localizedMetaDescriptions): static
     {
         $this->localizedMetaDescriptions = $localizedMetaDescriptions;
 
@@ -303,7 +301,7 @@ class EditCategoryCommand
      *
      * @return $this
      */
-    public function setAssociatedGroupIds(array $associatedGroupIds)
+    public function setAssociatedGroupIds(array $associatedGroupIds): static
     {
         $this->associatedGroupIds = $associatedGroupIds;
 
@@ -323,7 +321,7 @@ class EditCategoryCommand
      *
      * @return $this
      */
-    public function setAssociatedShopIds(array $associatedShopIds)
+    public function setAssociatedShopIds(array $associatedShopIds): static
     {
         $this->associatedShopIds = $associatedShopIds;
 

@@ -42,14 +42,14 @@ final class DataRow implements DataRowInterface
      */
     private $cells = [];
 
-    public function addCell(DataCellInterface $cell)
+    public function addCell(DataCellInterface $cell): self
     {
         $this->cells[] = $cell;
 
         return $this;
     }
 
-    public static function createFromArray(array $data)
+    public static function createFromArray(array $data): self
     {
         $row = new self();
 

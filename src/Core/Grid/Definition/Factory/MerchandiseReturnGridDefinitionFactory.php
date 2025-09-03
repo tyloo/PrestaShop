@@ -57,7 +57,7 @@ final class MerchandiseReturnGridDefinitionFactory extends AbstractFilterableGri
         return $this->trans('Merchandise returns', [], 'Admin.Orderscustomers.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -108,7 +108,7 @@ final class MerchandiseReturnGridDefinitionFactory extends AbstractFilterableGri
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_order_return', TextType::class))

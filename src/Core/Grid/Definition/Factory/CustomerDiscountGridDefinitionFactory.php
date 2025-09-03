@@ -56,7 +56,7 @@ final class CustomerDiscountGridDefinitionFactory extends AbstractGridDefinition
         return $this->trans('Vouchers', [], 'Admin.Orderscustomers.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -131,7 +131,7 @@ final class CustomerDiscountGridDefinitionFactory extends AbstractGridDefinition
             );
     }
 
-    protected function getViewOptions()
+    protected function getViewOptions(): ViewOptionsCollection
     {
         return (new ViewOptionsCollection())
             ->add('display_name', false);

@@ -44,7 +44,7 @@ class SetProductTagsCommand
     /**
      * @var LocalizedTags[]
      */
-    private $localizedTagsList;
+    private ?array $localizedTagsList = null;
 
     public function __construct(int $productId, array $localizedTags)
     {

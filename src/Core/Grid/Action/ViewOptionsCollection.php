@@ -37,7 +37,7 @@ use PrestaShop\PrestaShop\Core\Grid\Collection\AbstractCollection;
  */
 final class ViewOptionsCollection extends AbstractCollection implements ViewOptionsCollectionInterface
 {
-    public function add(string $action, $value)
+    public function add(string $action, $value): self
     {
         $this->items[$action] = $value;
 

@@ -39,22 +39,19 @@ final class HookableKpiRowFactory implements KpiRowFactoryInterface
     /**
      * @var KpiInterface[] the list of KPIs to display
      */
-    private $kpis;
+    private ?array $kpis = null;
 
     /**
      * @var HookDispatcherInterface the Hook Dispatcher
      */
-    private $hookDispatcher;
+    private ?HookDispatcherInterface $hookDispatcher = null;
 
     /**
      * @var string used to make the hook selectable
      */
     private $identifier;
 
-    /**
-     * @var array
-     */
-    private $options = [];
+    private array $options = [];
 
     /**
      * @param KpiInterface[] $kpis

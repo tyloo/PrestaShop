@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Grid\Collection\AbstractCollection;
  */
 final class GridActionCollection extends AbstractCollection implements GridActionCollectionInterface
 {
-    public function add(GridActionInterface $action)
+    public function add(GridActionInterface $action): self
     {
         $this->items[$action->getId()] = $action;
 

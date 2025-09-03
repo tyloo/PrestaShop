@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Grid\Collection\AbstractCollection;
  */
 final class RowActionCollection extends AbstractCollection implements RowActionCollectionInterface
 {
-    public function add(RowActionInterface $action)
+    public function add(RowActionInterface $action): self
     {
         $this->items[$action->getId()] = $action;
 

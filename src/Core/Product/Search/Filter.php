@@ -91,7 +91,7 @@ class Filter
      *
      * @return $this
      */
-    public function setLabel($label)
+    public function setLabel($label): static
     {
         $this->label = $label;
 
@@ -111,7 +111,7 @@ class Filter
      *
      * @return $this
      */
-    public function setType($type)
+    public function setType($type): static
     {
         $this->type = $type;
 
@@ -132,7 +132,7 @@ class Filter
      *
      * @return $this
      */
-    public function setProperty($name, $value)
+    public function setProperty($name, $value): static
     {
         $this->properties[$name] = $value;
 
@@ -156,7 +156,7 @@ class Filter
     /**
      * @return $this
      */
-    public function setValue($value)
+    public function setValue($value): static
     {
         $this->value = $value;
 
@@ -173,7 +173,7 @@ class Filter
      *
      * @return $this
      */
-    public function setMagnitude($magnitude)
+    public function setMagnitude($magnitude): static
     {
         $this->magnitude = (int) $magnitude;
 
@@ -193,7 +193,7 @@ class Filter
      *
      * @return $this
      */
-    public function setActive($active = true)
+    public function setActive($active = true): static
     {
         $this->active = $active;
 
@@ -213,7 +213,7 @@ class Filter
      *
      * @return $this
      */
-    public function setDisplayed($displayed = true)
+    public function setDisplayed($displayed = true): static
     {
         $this->displayed = $displayed;
 
@@ -233,7 +233,7 @@ class Filter
      *
      * @return $this
      */
-    public function setNextEncodedFacets($nextEncodedFacets)
+    public function setNextEncodedFacets($nextEncodedFacets): static
     {
         $this->nextEncodedFacets = $nextEncodedFacets;
 

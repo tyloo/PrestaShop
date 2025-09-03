@@ -70,7 +70,7 @@ class CurrencyCollection implements IteratorAggregate, Countable
      * @return CurrencyCollection
      *                            Fluent interface
      */
-    public function add(Currency $currency)
+    public function add(Currency $currency): static
     {
         $this->currencies[$currency->getIsoCode()] = $currency;
 
@@ -111,7 +111,7 @@ class CurrencyCollection implements IteratorAggregate, Countable
      * @return CurrencyCollection
      *                            Fluent interface
      */
-    public function remove($isoCode)
+    public function remove($isoCode): static
     {
         foreach ((array) $isoCode as $c) {
             unset($this->currencies[$c]);
@@ -128,7 +128,7 @@ class CurrencyCollection implements IteratorAggregate, Countable
      *
      * @return CurrencyCollection Fluent interface
      */
-    public function addCollection(self $collection)
+    public function addCollection(self $collection): static
     {
         // we need to remove all currencies with the same codes first because just replacing them
         // would not place the new currency at the end of the merged array
@@ -146,7 +146,7 @@ class CurrencyCollection implements IteratorAggregate, Countable
      * @return CurrencyCollection
      *                            Fluent interface
      */
-    public function clear()
+    public function clear(): static
     {
         $this->currencies = [];
 

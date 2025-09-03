@@ -32,7 +32,7 @@ class OrderShippingForViewing
     /**
      * @var OrderCarrierForViewing[]
      */
-    private $carriers = [];
+    private array $carriers = [];
 
     /**
      * @param OrderCarrierForViewing[] $carriers

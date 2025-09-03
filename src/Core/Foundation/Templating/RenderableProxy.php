@@ -34,7 +34,7 @@ class RenderableProxy
     ) {
     }
 
-    public function setTemplate($templatePath)
+    public function setTemplate($templatePath): static
     {
         $this->renderable->setTemplate($templatePath);
 

@@ -101,7 +101,7 @@ class Calculator
      *
      * @return $this
      */
-    public function addCartRow(CartRow $cartRow)
+    public function addCartRow(CartRow $cartRow): static
     {
         // reset state
         $this->isProcessed = false;
@@ -116,7 +116,7 @@ class Calculator
      *
      * @return $this
      */
-    public function addCartRule(CartRuleData $cartRule)
+    public function addCartRule(CartRuleData $cartRule): static
     {
         // reset state
         $this->isProcessed = false;
@@ -133,7 +133,7 @@ class Calculator
      *
      * @return $this
      */
-    public function processCalculation($computePrecision = null)
+    public function processCalculation($computePrecision = null): static
     {
         // calculate product rows
         $this->calculateRows();
@@ -240,10 +240,8 @@ class Calculator
 
     /**
      * @param CartCore $cart
-     *
-     * @return Calculator
      */
-    protected function setCart($cart)
+    protected function setCart($cart): static
     {
         // reset state
         $this->isProcessed = false;
@@ -253,10 +251,7 @@ class Calculator
         return $this;
     }
 
-    /**
-     * @return Calculator
-     */
-    protected function setCarrierId($id_carrier)
+    protected function setCarrierId($id_carrier): static
     {
         // reset state
         $this->isProcessed = false;

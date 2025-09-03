@@ -54,7 +54,7 @@ class CurrencyReference extends AbstractDataLayer implements CurrencyDataLayerIn
         $this->isWritable = false;
     }
 
-    public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer)
+    public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer): static
     {
         $this->lowerDataLayer = $lowerLayer;
 

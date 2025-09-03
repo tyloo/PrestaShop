@@ -67,7 +67,7 @@ class Theme implements ThemeInterface
      *
      * @return $this
      */
-    public function setLayouts($layouts)
+    public function setLayouts($layouts): static
     {
         $this->layouts = $layouts;
 

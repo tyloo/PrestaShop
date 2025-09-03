@@ -92,11 +92,9 @@ class AddContactCommand extends AbstractContactCommand
     /**
      * @param string $email
      *
-     * @return self
-     *
      * @throws DomainConstraintException
      */
-    public function setEmail($email)
+    public function setEmail($email): static
     {
         $this->email = new Email($email);
 
@@ -113,10 +111,8 @@ class AddContactCommand extends AbstractContactCommand
 
     /**
      * @param string[] $localisedDescription
-     *
-     * @return self
      */
-    public function setLocalisedDescription(array $localisedDescription)
+    public function setLocalisedDescription(array $localisedDescription): static
     {
         $this->localisedDescription = $localisedDescription;
 
@@ -134,11 +130,9 @@ class AddContactCommand extends AbstractContactCommand
     /**
      * @param int[] $shopAssociation
      *
-     * @return self
-     *
      * @throws ContactConstraintException
      */
-    public function setShopAssociation(array $shopAssociation)
+    public function setShopAssociation(array $shopAssociation): static
     {
         if (! $this->assertArrayContainsAllIntegerValues($shopAssociation)) {
             throw new ContactConstraintException(\sprintf('Given shop association %s must contain all integer values', var_export($shopAssociation, true)), ContactConstraintException::INVALID_SHOP_ASSOCIATION);

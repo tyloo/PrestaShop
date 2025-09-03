@@ -73,17 +73,11 @@ class ProductSearchQuery
      *
      * @var int 12 is the best number ever
      */
-    private $resultsPerPage = 12;
+    private int $resultsPerPage = 12;
 
-    /**
-     * @var int
-     */
-    private $page = 1;
+    private int $page = 1;
 
-    /**
-     * @var SortOrder
-     */
-    private $sortOrder;
+    private SortOrder $sortOrder;
 
     public function __construct()
     {
@@ -95,7 +89,7 @@ class ProductSearchQuery
      *
      * @return $this
      */
-    public function setQueryType($queryType)
+    public function setQueryType($queryType): static
     {
         $this->queryType = $queryType;
 
@@ -115,7 +109,7 @@ class ProductSearchQuery
      *
      * @return $this
      */
-    public function setIdCategory($idCategory)
+    public function setIdCategory($idCategory): static
     {
         $this->idCategory = $idCategory;
 
@@ -135,7 +129,7 @@ class ProductSearchQuery
      *
      * @return $this
      */
-    public function setIdManufacturer($idManufacturer)
+    public function setIdManufacturer($idManufacturer): static
     {
         $this->idManufacturer = $idManufacturer;
 
@@ -155,7 +149,7 @@ class ProductSearchQuery
      *
      * @return $this
      */
-    public function setIdSupplier($idSupplier)
+    public function setIdSupplier($idSupplier): static
     {
         $this->idSupplier = $idSupplier;
 
@@ -175,17 +169,14 @@ class ProductSearchQuery
      *
      * @return $this
      */
-    public function setResultsPerPage($resultsPerPage)
+    public function setResultsPerPage($resultsPerPage): static
     {
         $this->resultsPerPage = (int) $resultsPerPage;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getResultsPerPage()
+    public function getResultsPerPage(): int
     {
         return $this->resultsPerPage;
     }
@@ -195,17 +186,14 @@ class ProductSearchQuery
      *
      * @return $this
      */
-    public function setPage($page)
+    public function setPage($page): static
     {
         $this->page = (int) $page;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
@@ -213,17 +201,14 @@ class ProductSearchQuery
     /**
      * @return $this
      */
-    public function setSortOrder(SortOrder $sortOrder)
+    public function setSortOrder(SortOrder $sortOrder): static
     {
         $this->sortOrder = $sortOrder;
 
         return $this;
     }
 
-    /**
-     * @return SortOrder
-     */
-    public function getSortOrder()
+    public function getSortOrder(): SortOrder
     {
         return $this->sortOrder;
     }
@@ -233,7 +218,7 @@ class ProductSearchQuery
      *
      * @return $this
      */
-    public function setSearchString($searchString)
+    public function setSearchString($searchString): static
     {
         $this->searchString = $searchString;
 
@@ -253,7 +238,7 @@ class ProductSearchQuery
      *
      * @return $this
      */
-    public function setSearchTag($searchTag)
+    public function setSearchTag($searchTag): static
     {
         $this->searchTag = $searchTag;
 
@@ -273,7 +258,7 @@ class ProductSearchQuery
      *
      * @return $this
      */
-    public function setEncodedFacets($encodedFacets)
+    public function setEncodedFacets($encodedFacets): static
     {
         $this->encodedFacets = $encodedFacets;
 

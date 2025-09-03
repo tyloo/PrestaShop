@@ -36,10 +36,7 @@ abstract class AbstractBulkAction implements BulkActionInterface
      */
     protected $name;
 
-    /**
-     * @var array
-     */
-    private $options;
+    private ?array $options = null;
 
     /**
      * @var string

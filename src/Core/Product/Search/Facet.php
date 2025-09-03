@@ -88,7 +88,7 @@ class Facet
      *
      * @return $this
      */
-    public function setLabel($label)
+    public function setLabel($label): static
     {
         $this->label = $label;
 
@@ -108,7 +108,7 @@ class Facet
      *
      * @return $this
      */
-    public function setType($type)
+    public function setType($type): static
     {
         $this->type = $type;
 
@@ -129,7 +129,7 @@ class Facet
      *
      * @return $this
      */
-    public function setProperty($name, $value)
+    public function setProperty($name, $value): static
     {
         $this->properties[$name] = $value;
 
@@ -155,7 +155,7 @@ class Facet
      *
      * @return $this
      */
-    public function addFilter(Filter $filter)
+    public function addFilter(Filter $filter): static
     {
         $this->filters[] = $filter;
 
@@ -175,7 +175,7 @@ class Facet
      *
      * @return $this
      */
-    public function setMultipleSelectionAllowed($isAllowed = true)
+    public function setMultipleSelectionAllowed($isAllowed = true): static
     {
         $this->multipleSelectionAllowed = $isAllowed;
 
@@ -195,7 +195,7 @@ class Facet
      *
      * @return $this
      */
-    public function setDisplayed($displayed = true)
+    public function setDisplayed($displayed = true): static
     {
         $this->displayed = $displayed;
 
@@ -215,7 +215,7 @@ class Facet
      *
      * @return $this
      */
-    public function setWidgetType($widgetType)
+    public function setWidgetType($widgetType): static
     {
         $this->widgetType = $widgetType;
 

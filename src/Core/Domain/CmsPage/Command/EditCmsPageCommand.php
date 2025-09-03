@@ -101,11 +101,9 @@ class EditCmsPageCommand
     /**
      * @param int|null $cmsPageCategoryId
      *
-     * @return self
-     *
      * @throws CmsPageCategoryException
      */
-    public function setCmsPageCategoryId($cmsPageCategoryId)
+    public function setCmsPageCategoryId($cmsPageCategoryId): static
     {
         $this->cmsPageCategoryId = new CmsPageCategoryId($cmsPageCategoryId);
 
@@ -122,10 +120,8 @@ class EditCmsPageCommand
 
     /**
      * @param string[] $localizedTitle
-     *
-     * @return self
      */
-    public function setLocalizedTitle(array $localizedTitle)
+    public function setLocalizedTitle(array $localizedTitle): static
     {
         $this->localizedTitle = $localizedTitle;
 
@@ -142,10 +138,8 @@ class EditCmsPageCommand
 
     /**
      * @param string[] $localizedMetaTitle
-     *
-     * @return self
      */
-    public function setLocalizedMetaTitle(array $localizedMetaTitle)
+    public function setLocalizedMetaTitle(array $localizedMetaTitle): static
     {
         $this->localizedMetaTitle = $localizedMetaTitle;
 
@@ -162,10 +156,8 @@ class EditCmsPageCommand
 
     /**
      * @param string[] $localizedMetaDescription
-     *
-     * @return self
      */
-    public function setLocalizedMetaDescription(array $localizedMetaDescription)
+    public function setLocalizedMetaDescription(array $localizedMetaDescription): static
     {
         $this->localizedMetaDescription = $localizedMetaDescription;
 
@@ -182,10 +174,8 @@ class EditCmsPageCommand
 
     /**
      * @param string[] $localizedFriendlyUrl
-     *
-     * @return self
      */
-    public function setLocalizedFriendlyUrl(array $localizedFriendlyUrl)
+    public function setLocalizedFriendlyUrl(array $localizedFriendlyUrl): static
     {
         $this->localizedFriendlyUrl = $localizedFriendlyUrl;
 
@@ -202,10 +192,8 @@ class EditCmsPageCommand
 
     /**
      * @param string[] $localizedContent
-     *
-     * @return self
      */
-    public function setLocalizedContent(array $localizedContent)
+    public function setLocalizedContent(array $localizedContent): static
     {
         $this->localizedContent = $localizedContent;
 
@@ -222,10 +210,8 @@ class EditCmsPageCommand
 
     /**
      * @param bool|null $isIndexedForSearch
-     *
-     * @return self
      */
-    public function setIsIndexedForSearch($isIndexedForSearch)
+    public function setIsIndexedForSearch($isIndexedForSearch): static
     {
         $this->isIndexedForSearch = $isIndexedForSearch;
 
@@ -242,10 +228,8 @@ class EditCmsPageCommand
 
     /**
      * @param bool|null $isDisplayed
-     *
-     * @return self
      */
-    public function setIsDisplayed($isDisplayed)
+    public function setIsDisplayed($isDisplayed): static
     {
         $this->isDisplayed = $isDisplayed;
 
@@ -257,10 +241,7 @@ class EditCmsPageCommand
         return $this->shopAssociation;
     }
 
-    /**
-     * @return self
-     */
-    public function setShopAssociation(?array $shopAssociation = null)
+    public function setShopAssociation(?array $shopAssociation = null): static
     {
         $this->shopAssociation = $shopAssociation;
 

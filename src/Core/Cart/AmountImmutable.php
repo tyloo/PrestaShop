@@ -61,10 +61,8 @@ class AmountImmutable
 
     /**
      * @param float $taxIncluded
-     *
-     * @return AmountImmutable
      */
-    protected function setTaxIncluded($taxIncluded)
+    protected function setTaxIncluded($taxIncluded): static
     {
         $this->taxIncluded = (float) $taxIncluded;
 
@@ -81,10 +79,8 @@ class AmountImmutable
 
     /**
      * @param float $taxExcluded
-     *
-     * @return AmountImmutable
      */
-    protected function setTaxExcluded($taxExcluded)
+    protected function setTaxExcluded($taxExcluded): static
     {
         $this->taxExcluded = (float) $taxExcluded;
 

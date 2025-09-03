@@ -74,7 +74,7 @@ final class OrderReturnStatesGridDefinitionFactory extends AbstractGridDefinitio
         return $this->trans('Return statuses', [], 'Admin.Shopparameters.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -131,7 +131,7 @@ final class OrderReturnStatesGridDefinitionFactory extends AbstractGridDefinitio
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(
@@ -167,7 +167,7 @@ final class OrderReturnStatesGridDefinitionFactory extends AbstractGridDefinitio
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(

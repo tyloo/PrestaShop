@@ -68,7 +68,7 @@ final class LanguageGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $this->trans('Languages', [], 'Admin.Global');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -174,7 +174,7 @@ final class LanguageGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(
@@ -265,7 +265,7 @@ final class LanguageGridDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(
@@ -285,7 +285,7 @@ final class LanguageGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(

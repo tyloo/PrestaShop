@@ -57,7 +57,7 @@ final class Filter implements FilterInterface
         return $this->type;
     }
 
-    public function setTypeOptions(array $filterTypeOptions)
+    public function setTypeOptions(array $filterTypeOptions): self
     {
         $this->typeOptions = $filterTypeOptions;
 
@@ -74,7 +74,7 @@ final class Filter implements FilterInterface
         return $this->name;
     }
 
-    public function setAssociatedColumn($columnId)
+    public function setAssociatedColumn($columnId): self
     {
         $this->column = $columnId;
 

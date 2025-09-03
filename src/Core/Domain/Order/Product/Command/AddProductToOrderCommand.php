@@ -66,8 +66,6 @@ class AddProductToOrderCommand
     /**
      * Add product to an order with new invoice. It applies to orders that were already paid and waiting for payment.
      *
-     * @return self
-     *
      * @throws InvalidProductQuantityException
      * @throws InvalidAmountException
      * @throws OrderException
@@ -80,7 +78,7 @@ class AddProductToOrderCommand
         string $productPriceTaxExcluded,
         int $productQuantity,
         ?bool $hasFreeShipping = null,
-    ) {
+    ): self {
         $command = new self(
             $orderId,
             $productId,
@@ -98,8 +96,6 @@ class AddProductToOrderCommand
     /**
      * Add product to an order using existing invoice. It applies only for orders that were not yet paid.
      *
-     * @return self
-     *
      * @throws InvalidProductQuantityException
      * @throws InvalidAmountException
      * @throws OrderException
@@ -112,7 +108,7 @@ class AddProductToOrderCommand
         string $productPriceTaxIncluded,
         string $productPriceTaxExcluded,
         int $productQuantity,
-    ) {
+    ): self {
         $command = new self(
             $orderId,
             $productId,

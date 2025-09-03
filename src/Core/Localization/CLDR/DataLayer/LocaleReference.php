@@ -50,7 +50,7 @@ class LocaleReference extends AbstractDataLayer implements CldrLocaleDataLayerIn
     ) {
     }
 
-    public function setLowerLayer(CldrLocaleDataLayerInterface $lowerLayer)
+    public function setLowerLayer(CldrLocaleDataLayerInterface $lowerLayer): static
     {
         $this->lowerDataLayer = $lowerLayer;
 

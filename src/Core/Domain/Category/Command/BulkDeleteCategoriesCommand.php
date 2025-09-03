@@ -74,10 +74,8 @@ class BulkDeleteCategoriesCommand
 
     /**
      * @param string $mode
-     *
-     * @return self
      */
-    private function setDeleteMode($mode)
+    private function setDeleteMode($mode): static
     {
         $this->deleteMode = new CategoryDeleteMode($mode);
 
@@ -87,12 +85,10 @@ class BulkDeleteCategoriesCommand
     /**
      * @param int[] $categoryIds
      *
-     * @return self
-     *
      * @throws CategoryConstraintException
      * @throws CategoryException
      */
-    private function setCategoryIds(array $categoryIds)
+    private function setCategoryIds(array $categoryIds): static
     {
         if ($categoryIds === []) {
             throw new CategoryConstraintException('Missing Category data for bulk deleting', CategoryConstraintException::EMPTY_BULK_DELETE_DATA);

@@ -43,12 +43,9 @@ class EditContactCommand extends AbstractContactCommand
     /**
      * @var string[]
      */
-    private $localisedTitles;
+    private ?array $localisedTitles = null;
 
-    /**
-     * @var Email
-     */
-    private $email;
+    private ?Email $email = null;
 
     /**
      * @var bool
@@ -58,12 +55,12 @@ class EditContactCommand extends AbstractContactCommand
     /**
      * @var string[]
      */
-    private $localisedDescription;
+    private ?array $localisedDescription = null;
 
     /**
      * @var int[]
      */
-    private $shopAssociation;
+    private ?array $shopAssociation = null;
 
     /**
      * @param int $contactId
@@ -83,7 +80,7 @@ class EditContactCommand extends AbstractContactCommand
     /**
      * @return string[]
      */
-    public function getLocalisedTitles()
+    public function getLocalisedTitles(): ?array
     {
         return $this->localisedTitles;
     }
@@ -91,11 +88,9 @@ class EditContactCommand extends AbstractContactCommand
     /**
      * @param string[] $localisedTitles
      *
-     * @return self
-     *
      * @throws ContactConstraintException
      */
-    public function setLocalisedTitles(array $localisedTitles)
+    public function setLocalisedTitles(array $localisedTitles): static
     {
         if (! $this->assertIsNotEmptyAndContainsAllNonEmptyStringValues($localisedTitles)) {
             throw new ContactConstraintException(\sprintf('Expected to have not empty titles array but received %s', var_export($localisedTitles, true)), ContactConstraintException::INVALID_TITLE);
@@ -112,10 +107,7 @@ class EditContactCommand extends AbstractContactCommand
         return $this;
     }
 
-    /**
-     * @return Email
-     */
-    public function getEmail()
+    public function getEmail(): ?Email
     {
         return $this->email;
     }
@@ -123,11 +115,9 @@ class EditContactCommand extends AbstractContactCommand
     /**
      * @param string $email
      *
-     * @return self
-     *
      * @throws DomainConstraintException
      */
-    public function setEmail($email)
+    public function setEmail($email): static
     {
         $this->email = new Email($email);
 
@@ -144,10 +134,8 @@ class EditContactCommand extends AbstractContactCommand
 
     /**
      * @param bool $isMessagesSavingEnabled
-     *
-     * @return self
      */
-    public function setIsMessagesSavingEnabled($isMessagesSavingEnabled)
+    public function setIsMessagesSavingEnabled($isMessagesSavingEnabled): static
     {
         $this->isMessagesSavingEnabled = $isMessagesSavingEnabled;
 
@@ -157,17 +145,15 @@ class EditContactCommand extends AbstractContactCommand
     /**
      * @return string[]
      */
-    public function getLocalisedDescription()
+    public function getLocalisedDescription(): ?array
     {
         return $this->localisedDescription;
     }
 
     /**
      * @param string[] $localisedDescription
-     *
-     * @return self
      */
-    public function setLocalisedDescription(array $localisedDescription)
+    public function setLocalisedDescription(array $localisedDescription): static
     {
         $this->localisedDescription = $localisedDescription;
 
@@ -177,7 +163,7 @@ class EditContactCommand extends AbstractContactCommand
     /**
      * @return int[]
      */
-    public function getShopAssociation()
+    public function getShopAssociation(): ?array
     {
         return $this->shopAssociation;
     }
@@ -185,11 +171,9 @@ class EditContactCommand extends AbstractContactCommand
     /**
      * @param int[] $shopAssociation
      *
-     * @return self
-     *
      * @throws ContactConstraintException
      */
-    public function setShopAssociation(array $shopAssociation)
+    public function setShopAssociation(array $shopAssociation): static
     {
         if (! $this->assertArrayContainsAllIntegerValues($shopAssociation)) {
             throw new ContactConstraintException(\sprintf('Given shop association %s must contain all integer values', var_export($shopAssociation, true)), ContactConstraintException::INVALID_SHOP_ASSOCIATION);

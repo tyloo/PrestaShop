@@ -61,7 +61,7 @@ final class ProfileGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $this->trans('Roles', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new BulkActionColumn('bulk'))
@@ -107,7 +107,7 @@ final class ProfileGridDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add((new SimpleGridAction('common_refresh_list'))
@@ -125,7 +125,7 @@ final class ProfileGridDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_profile', TextType::class))
@@ -160,7 +160,7 @@ final class ProfileGridDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(

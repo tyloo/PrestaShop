@@ -34,7 +34,7 @@ class SourceHandlerFactory
     /**
      * @var SourceHandlerInterface[]
      */
-    private $sourceHandlers = [];
+    private array $sourceHandlers = [];
 
     /**
      * @param SourceHandlerInterface[] $handlers

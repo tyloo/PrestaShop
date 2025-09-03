@@ -118,7 +118,7 @@ class EditRootCategoryCommand
      *
      * @throws CategoryConstraintException
      */
-    public function setLocalizedNames(array $localizedNames)
+    public function setLocalizedNames(array $localizedNames): static
     {
         if ($localizedNames === []) {
             throw new CategoryConstraintException('Category name cannot be empty', CategoryConstraintException::EMPTY_NAME);
@@ -144,7 +144,7 @@ class EditRootCategoryCommand
      *
      * @throws CategoryConstraintException
      */
-    public function setLocalizedLinkRewrites(array $localizedLinkRewrites)
+    public function setLocalizedLinkRewrites(array $localizedLinkRewrites): static
     {
         if ($localizedLinkRewrites === []) {
             throw new CategoryConstraintException('Category link rewrite cannot be empty', CategoryConstraintException::EMPTY_LINK_REWRITE);
@@ -168,7 +168,7 @@ class EditRootCategoryCommand
      *
      * @return $this
      */
-    public function setLocalizedDescriptions(array $localizedDescriptions)
+    public function setLocalizedDescriptions(array $localizedDescriptions): static
     {
         $this->localizedDescriptions = $localizedDescriptions;
 
@@ -207,7 +207,7 @@ class EditRootCategoryCommand
      *
      * @throws CategoryConstraintException
      */
-    public function setIsActive($isActive)
+    public function setIsActive($isActive): static
     {
         if (! \is_bool($isActive)) {
             throw new CategoryConstraintException('Invalid Category status supplied', CategoryConstraintException::INVALID_STATUS);
@@ -231,7 +231,7 @@ class EditRootCategoryCommand
      *
      * @return $this
      */
-    public function setLocalizedMetaTitles(array $localizedMetaTitles)
+    public function setLocalizedMetaTitles(array $localizedMetaTitles): static
     {
         $this->localizedMetaTitles = $localizedMetaTitles;
 
@@ -251,7 +251,7 @@ class EditRootCategoryCommand
      *
      * @return $this
      */
-    public function setLocalizedMetaDescriptions(array $localizedMetaDescriptions)
+    public function setLocalizedMetaDescriptions(array $localizedMetaDescriptions): static
     {
         $this->localizedMetaDescriptions = $localizedMetaDescriptions;
 
@@ -271,7 +271,7 @@ class EditRootCategoryCommand
      *
      * @return $this
      */
-    public function setAssociatedGroupIds(array $associatedGroupIds)
+    public function setAssociatedGroupIds(array $associatedGroupIds): static
     {
         $this->associatedGroupIds = $associatedGroupIds;
 
@@ -291,7 +291,7 @@ class EditRootCategoryCommand
      *
      * @return $this
      */
-    public function setAssociatedShopIds(array $associatedShopIds)
+    public function setAssociatedShopIds(array $associatedShopIds): static
     {
         $this->associatedShopIds = $associatedShopIds;
 

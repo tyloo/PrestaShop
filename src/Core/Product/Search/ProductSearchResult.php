@@ -53,7 +53,7 @@ class ProductSearchResult
     /**
      * @return $this
      */
-    public function setProducts(array $products)
+    public function setProducts(array $products): static
     {
         $this->products = $products;
 
@@ -70,7 +70,7 @@ class ProductSearchResult
      *
      * @return $this
      */
-    public function setTotalProductsCount($totalProductsCount)
+    public function setTotalProductsCount($totalProductsCount): static
     {
         $this->totalProductsCount = $totalProductsCount;
 
@@ -88,7 +88,7 @@ class ProductSearchResult
     /**
      * @return $this
      */
-    public function setFacetCollection(FacetCollection $facetCollection)
+    public function setFacetCollection(FacetCollection $facetCollection): static
     {
         $this->facetCollection = $facetCollection;
 
@@ -105,7 +105,7 @@ class ProductSearchResult
      *
      * @return $this
      */
-    public function setEncodedFacets($encodedFacets)
+    public function setEncodedFacets($encodedFacets): static
     {
         $this->encodedFacets = $encodedFacets;
 
@@ -123,7 +123,7 @@ class ProductSearchResult
     /**
      * @return $this
      */
-    public function addAvailableSortOrder(SortOrder $sortOrder)
+    public function addAvailableSortOrder(SortOrder $sortOrder): static
     {
         $this->availableSortOrders[] = $sortOrder;
 
@@ -138,7 +138,7 @@ class ProductSearchResult
     /**
      * @return $this
      */
-    public function setAvailableSortOrders(array $sortOrders)
+    public function setAvailableSortOrders(array $sortOrders): static
     {
         $this->availableSortOrders = [];
 
@@ -152,7 +152,7 @@ class ProductSearchResult
     /**
      * @return $this
      */
-    public function setCurrentSortOrder(SortOrder $currentSortOrder)
+    public function setCurrentSortOrder(SortOrder $currentSortOrder): static
     {
         $this->currentSortOrder = $currentSortOrder;
 

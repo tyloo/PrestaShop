@@ -37,10 +37,7 @@ class GiftProduct
 {
     private readonly ProductId $productId;
 
-    /**
-     * @var CombinationId|null
-     */
-    private $combinationId;
+    private ?CombinationId $combinationId = null;
 
     public function __construct(int $productId, ?int $combinationId = null)
     {

@@ -111,7 +111,7 @@ class ProductLightGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $columns;
     }
 
-    protected function getViewOptions()
+    protected function getViewOptions(): ViewOptionsCollection
     {
         return (new ViewOptionsCollection())->add('pagination_view', 'quicknav');
     }

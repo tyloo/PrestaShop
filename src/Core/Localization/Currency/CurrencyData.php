@@ -112,7 +112,7 @@ class CurrencyData
      */
     protected $patterns;
 
-    public function overrideWith(self $currencyData)
+    public function overrideWith(self $currencyData): static
     {
         if ($currencyData->isActive() !== null) {
             $this->isActive = $currencyData->isActive();

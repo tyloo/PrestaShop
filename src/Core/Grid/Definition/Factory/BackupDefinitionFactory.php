@@ -53,7 +53,7 @@ final class BackupDefinitionFactory extends AbstractGridDefinitionFactory
         return $this->trans('DB backups', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -119,7 +119,7 @@ final class BackupDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(

@@ -61,7 +61,7 @@ class HiddenFilter implements FilterInterface
         return HiddenType::class;
     }
 
-    public function setTypeOptions(array $filterTypeOptions)
+    public function setTypeOptions(array $filterTypeOptions): static
     {
         $this->typeOptions = $filterTypeOptions;
 
@@ -78,7 +78,7 @@ class HiddenFilter implements FilterInterface
         return $this->name;
     }
 
-    public function setAssociatedColumn($columnId)
+    public function setAssociatedColumn($columnId): static
     {
         $this->column = $columnId;
 

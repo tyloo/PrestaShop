@@ -36,14 +36,14 @@ use PrestaShop\PrestaShop\Core\Grid\Collection\AbstractCollection;
  */
 final class PositionModificationCollection extends AbstractCollection implements PositionModificationCollectionInterface
 {
-    public function add(PositionModificationInterface $positionModification)
+    public function add(PositionModificationInterface $positionModification): self
     {
         $this->items[$positionModification->getId()] = $positionModification;
 
         return $this;
     }
 
-    public function remove(PositionModificationInterface $positionModification)
+    public function remove(PositionModificationInterface $positionModification): self
     {
         if (isset($this->items[$positionModification->getId()])) {
             unset($this->items[$positionModification->getId()]);

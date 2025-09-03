@@ -66,11 +66,9 @@ class AddSqlRequestCommand
      *
      * @param string $name
      *
-     * @return self
-     *
      * @throws SqlRequestConstraintException
      */
-    private function setName($name)
+    private function setName($name): static
     {
         if (! \is_string($name) || ($name === '' || $name === '0')) {
             throw new SqlRequestConstraintException(\sprintf('Invalid SqlRequest name %s', var_export($name, true)), SqlRequestConstraintException::INVALID_NAME);
@@ -90,7 +88,7 @@ class AddSqlRequestCommand
      *
      * @throws SqlRequestConstraintException
      */
-    private function setSql($sql)
+    private function setSql($sql): static
     {
         if (! \is_string($sql) || ($sql === '' || $sql === '0')) {
             throw new SqlRequestConstraintException(\sprintf('Invalid SqlRequest SQL query %s', var_export($sql, true)), SqlRequestConstraintException::INVALID_SQL_QUERY);

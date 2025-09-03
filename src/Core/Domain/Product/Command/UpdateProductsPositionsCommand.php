@@ -56,10 +56,8 @@ class UpdateProductsPositionsCommand
      *         'oldPosition' => 1,
      *     ],
      * ];
-     *
-     * @var array
      */
-    private $positions;
+    private array $positions;
 
     private readonly CategoryId $categoryId;
 

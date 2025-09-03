@@ -49,8 +49,6 @@ class GetOrderProductsForViewing
     /**
      * Builds query for paginated results
      *
-     * @return GetOrderProductsForViewing
-     *
      * @throws OrderException
      * @throws InvalidSortingException
      */
@@ -59,7 +57,7 @@ class GetOrderProductsForViewing
         int $offset,
         int $limit,
         string $productsSorting = QuerySorting::ASC,
-    ) {
+    ): self {
         $query = new self();
 
         $query->orderId = new OrderId($orderId);
@@ -73,12 +71,10 @@ class GetOrderProductsForViewing
     /**
      * Builds query for getting all results
      *
-     * @return GetOrderProductsForViewing
-     *
      * @throws OrderException
      * @throws InvalidSortingException
      */
-    public static function all(int $orderId, string $productsSorting = QuerySorting::ASC)
+    public static function all(int $orderId, string $productsSorting = QuerySorting::ASC): self
     {
         $query = new self();
         $query->orderId = new OrderId($orderId);

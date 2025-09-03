@@ -62,7 +62,7 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
         return $this->trans('SQL queries', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -140,7 +140,7 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(
@@ -177,7 +177,7 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(
@@ -185,7 +185,7 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(

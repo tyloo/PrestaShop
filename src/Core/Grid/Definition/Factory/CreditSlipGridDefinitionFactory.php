@@ -68,7 +68,7 @@ final class CreditSlipGridDefinitionFactory extends AbstractGridDefinitionFactor
         return $this->trans('Credit slips', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new DataColumn('id_order_slip'))
@@ -107,7 +107,7 @@ final class CreditSlipGridDefinitionFactory extends AbstractGridDefinitionFactor
             ->add(new ActionColumn('actions'));
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_credit_slip', TextType::class))
@@ -147,7 +147,7 @@ final class CreditSlipGridDefinitionFactory extends AbstractGridDefinitionFactor
         ;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(

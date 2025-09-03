@@ -38,7 +38,7 @@ class BulkDeleteTaxRulesGroupCommand
     /**
      * @var TaxRulesGroupId[]
      */
-    private $taxRulesGroupIds;
+    private ?array $taxRulesGroupIds = null;
 
     /**
      * @param int[] $taxRulesGroupIds

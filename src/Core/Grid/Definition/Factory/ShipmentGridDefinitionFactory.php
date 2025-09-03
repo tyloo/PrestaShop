@@ -59,7 +59,7 @@ final class ShipmentGridDefinitionFactory extends AbstractFilterableGridDefiniti
         return $this->trans('Shipments', [], 'Admin.Global');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new DateTimeColumn('date'))
@@ -139,7 +139,7 @@ final class ShipmentGridDefinitionFactory extends AbstractFilterableGridDefiniti
     /**
      * @return RowActionCollectionInterface
      */
-    private function getRowActions()
+    private function getRowActions(): RowActionCollection
     {
         return (new RowActionCollection())
             ->add(

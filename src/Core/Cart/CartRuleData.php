@@ -46,10 +46,8 @@ class CartRuleData
 
     /**
      * @param array $ruleData
-     *
-     * @return static
      */
-    public function setRuleData($ruleData)
+    public function setRuleData($ruleData): static
     {
         $this->ruleData = $ruleData;
 

@@ -89,7 +89,7 @@ class HookConfigurator
         return $currentHooks;
     }
 
-    public function setHooksConfiguration(array $hooks)
+    public function setHooksConfiguration(array $hooks): static
     {
         $this->hookRepository->persistHooksConfiguration(
             $this->getThemeHooksConfiguration($hooks)
@@ -98,7 +98,7 @@ class HookConfigurator
         return $this;
     }
 
-    public function addHook($name, $title, $description)
+    public function addHook($name, $title, $description): static
     {
         $this->hookRepository->createHook($name, $title, $description);
 

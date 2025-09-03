@@ -47,7 +47,7 @@ class SetProductCustomizationFieldsCommand
     /**
      * @var CustomizationField[]
      */
-    private $customizationFields = [];
+    private array $customizationFields = [];
 
     private ShopConstraint $shopConstraint;
 

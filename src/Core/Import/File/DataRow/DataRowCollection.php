@@ -41,7 +41,7 @@ final class DataRowCollection implements DataRowCollectionInterface
      */
     private $dataRows = [];
 
-    public function addDataRow(DataRowInterface $dataRow)
+    public function addDataRow(DataRowInterface $dataRow): self
     {
         $this->dataRows[] = $dataRow;
 

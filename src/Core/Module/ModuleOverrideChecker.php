@@ -34,10 +34,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ModuleOverrideChecker
 {
-    /**
-     * @var array
-     */
-    private $errors = [];
+    private array $errors = [];
 
     public function __construct(
         private readonly TranslatorInterface $translator,

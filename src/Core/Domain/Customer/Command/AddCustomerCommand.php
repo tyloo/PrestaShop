@@ -202,10 +202,8 @@ class AddCustomerCommand
 
     /**
      * @param string $companyName
-     *
-     * @return self
      */
-    public function setCompanyName($companyName)
+    public function setCompanyName($companyName): static
     {
         $this->companyName = $companyName;
 
@@ -222,10 +220,8 @@ class AddCustomerCommand
 
     /**
      * @param string $siretCode
-     *
-     * @return self
      */
-    public function setSiretCode($siretCode)
+    public function setSiretCode($siretCode): static
     {
         $this->siretCode = $siretCode;
 
@@ -239,10 +235,8 @@ class AddCustomerCommand
 
     /**
      * @param string $apeCode
-     *
-     * @return self
      */
-    public function setApeCode($apeCode)
+    public function setApeCode($apeCode): static
     {
         $this->apeCode = new ApeCode($apeCode);
 
@@ -259,10 +253,8 @@ class AddCustomerCommand
 
     /**
      * @param string $website
-     *
-     * @return self
      */
-    public function setWebsite($website)
+    public function setWebsite($website): static
     {
         $this->website = $website;
 
@@ -279,10 +271,8 @@ class AddCustomerCommand
 
     /**
      * @param float $allowedOutstandingAmount
-     *
-     * @return self
      */
-    public function setAllowedOutstandingAmount($allowedOutstandingAmount)
+    public function setAllowedOutstandingAmount($allowedOutstandingAmount): static
     {
         $this->allowedOutstandingAmount = $allowedOutstandingAmount;
 
@@ -299,10 +289,8 @@ class AddCustomerCommand
 
     /**
      * @param int $maxPaymentDays
-     *
-     * @return self
      */
-    public function setMaxPaymentDays($maxPaymentDays)
+    public function setMaxPaymentDays($maxPaymentDays): static
     {
         $this->maxPaymentDays = $maxPaymentDays;
 
@@ -319,10 +307,8 @@ class AddCustomerCommand
 
     /**
      * @param int $riskId
-     *
-     * @return self
      */
-    public function setRiskId($riskId)
+    public function setRiskId($riskId): static
     {
         $this->riskId = $riskId;
 

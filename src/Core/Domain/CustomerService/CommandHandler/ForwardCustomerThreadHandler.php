@@ -278,7 +278,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
     {
         $customerMessage = new CustomerMessage();
         $customerMessage->id_employee = (int) $this->context->employee->id;
-        $customerMessage->id_customer_thread = (int) $command->getCustomerThreadId()->getValue();
+        $customerMessage->id_customer_thread = $command->getCustomerThreadId()->getValue();
         $customerMessage->ip_address = (string) (int) ip2long(Tools::getRemoteAddr());
 
         if ($customerMessage->validateField('message', $command->getComment()) === false) {

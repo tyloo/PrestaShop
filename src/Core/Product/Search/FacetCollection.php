@@ -42,7 +42,7 @@ class FacetCollection
      *
      * @return $this
      */
-    public function addFacet(Facet $facet)
+    public function addFacet(Facet $facet): static
     {
         $this->facets[] = $facet;
 
@@ -54,7 +54,7 @@ class FacetCollection
      *
      * @return $this
      */
-    public function setFacets(array $facets)
+    public function setFacets(array $facets): static
     {
         $this->facets = [];
         foreach ($facets as $facet) {

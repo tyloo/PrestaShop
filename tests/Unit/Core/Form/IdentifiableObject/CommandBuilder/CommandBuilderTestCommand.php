@@ -35,35 +35,17 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 class CommandBuilderTestCommand
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private ?string $url = null;
 
-    /**
-     * @var bool
-     */
-    private $isValid;
+    private ?bool $isValid = null;
 
-    /**
-     * @var int
-     */
-    private $count;
+    private ?int $count = null;
 
-    /**
-     * @var array
-     */
-    private $children;
+    private ?array $children = null;
 
-    /**
-     * @var DateTimeImmutable
-     */
-    private $date;
+    private ?DateTimeImmutable $date = null;
 
     /**
      * @var array<string, mixed>

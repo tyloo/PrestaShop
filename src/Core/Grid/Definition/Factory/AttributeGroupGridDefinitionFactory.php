@@ -65,7 +65,7 @@ final class AttributeGroupGridDefinitionFactory extends AbstractFilterableGridDe
         return $this->trans('Attributes', [], 'Admin.Catalog.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new BulkActionColumn('bulk'))
@@ -136,7 +136,7 @@ final class AttributeGroupGridDefinitionFactory extends AbstractFilterableGridDe
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add((new LinkGridAction('import'))
@@ -164,7 +164,7 @@ final class AttributeGroupGridDefinitionFactory extends AbstractFilterableGridDe
         ;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_attribute_group', TextType::class))
@@ -201,7 +201,7 @@ final class AttributeGroupGridDefinitionFactory extends AbstractFilterableGridDe
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(

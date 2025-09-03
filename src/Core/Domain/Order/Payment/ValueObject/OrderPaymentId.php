@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\Payment\Exception\PaymentException;
  */
 class OrderPaymentId
 {
-    /**
-     * @var int
-     */
-    private $orderPaymentId;
+    private readonly int $orderPaymentId;
 
     /**
      * @param int $orderPaymentId
@@ -51,10 +48,7 @@ class OrderPaymentId
         $this->orderPaymentId = $orderPaymentId;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->orderPaymentId;
     }

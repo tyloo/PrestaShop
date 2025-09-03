@@ -311,7 +311,7 @@ class ConfigurationMock extends Configuration
 {
     private $configurationData = [];
 
-    public function set($key, $value, ?ShopConstraint $shopConstraint = null, array $options = [])
+    public function set($key, $value, ?ShopConstraint $shopConstraint = null, array $options = []): static
     {
         $this->configurationData[$key] = $value;
 
@@ -323,7 +323,7 @@ class ConfigurationMock extends Configuration
         return $this->configurationData[$key] ?? $default;
     }
 
-    public function remove($key)
+    public function remove($key): static
     {
         unset($this->configurationData[$key]);
 

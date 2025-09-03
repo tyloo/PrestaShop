@@ -65,7 +65,7 @@ final class CustomerAddressGridDefinitionFactory extends AbstractGridDefinitionF
         return $this->trans('Addresses', [], 'Admin.Global');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -143,7 +143,7 @@ final class CustomerAddressGridDefinitionFactory extends AbstractGridDefinitionF
             );
     }
 
-    protected function getViewOptions()
+    protected function getViewOptions(): ViewOptionsCollection
     {
         return (new ViewOptionsCollection())
             ->add('display_name', false);

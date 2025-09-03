@@ -74,12 +74,10 @@ class BulkUpdateCategoriesStatusCommand
     /**
      * @param int[] $categoryIds
      *
-     * @return self
-     *
      * @throws CategoryConstraintException
      * @throws CategoryException
      */
-    private function setCategoryIds(array $categoryIds)
+    private function setCategoryIds(array $categoryIds): static
     {
         if ($categoryIds === []) {
             throw new CategoryConstraintException('Missing categories data for status change');
@@ -94,10 +92,8 @@ class BulkUpdateCategoriesStatusCommand
 
     /**
      * @param bool $newStatus
-     *
-     * @return self
      */
-    private function setNewStatus($newStatus)
+    private function setNewStatus($newStatus): static
     {
         if (! \is_bool($newStatus)) {
             throw new CategoryConstraintException(\sprintf('Category status %s is invalid. Status must be of type "bool".', var_export($newStatus, true)), CategoryConstraintException::INVALID_STATUS);

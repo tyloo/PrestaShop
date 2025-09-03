@@ -68,7 +68,7 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
         return $this->trans('Files', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -147,7 +147,7 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(
@@ -203,7 +203,7 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(
@@ -223,7 +223,7 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(

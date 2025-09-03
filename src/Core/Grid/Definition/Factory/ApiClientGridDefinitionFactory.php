@@ -133,7 +133,7 @@ final class ApiClientGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $rowActions;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(

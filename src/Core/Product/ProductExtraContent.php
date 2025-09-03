@@ -73,28 +73,28 @@ class ProductExtraContent implements HookContentClassInterface
         return $this->attr;
     }
 
-    public function setTitle($title)
+    public function setTitle($title): static
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function setContent($content)
+    public function setContent($content): static
     {
         $this->content = $content;
 
         return $this;
     }
 
-    public function addAttr($attr)
+    public function addAttr($attr): static
     {
         $this->attr = array_merge($this->attr, $attr);
 
         return $this;
     }
 
-    public function setAttr($attr)
+    public function setAttr($attr): static
     {
         // We declare default values for if and class which
         // could be mandatory in the template

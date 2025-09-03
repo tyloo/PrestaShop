@@ -94,10 +94,8 @@ class EditManufacturerCommand
 
     /**
      * @param string|null $name
-     *
-     * @return self
      */
-    public function setName($name)
+    public function setName($name): static
     {
         $this->name = $name;
 
@@ -122,10 +120,8 @@ class EditManufacturerCommand
 
     /**
      * @param string[]|null $localizedDescriptions
-     *
-     * @return self
      */
-    public function setLocalizedDescriptions($localizedDescriptions)
+    public function setLocalizedDescriptions($localizedDescriptions): static
     {
         $this->localizedDescriptions = $localizedDescriptions;
 
@@ -134,10 +130,8 @@ class EditManufacturerCommand
 
     /**
      * @param string[]|null $localizedShortDescriptions
-     *
-     * @return self
      */
-    public function setLocalizedShortDescriptions($localizedShortDescriptions)
+    public function setLocalizedShortDescriptions($localizedShortDescriptions): static
     {
         $this->localizedShortDescriptions = $localizedShortDescriptions;
 
@@ -154,10 +148,8 @@ class EditManufacturerCommand
 
     /**
      * @param string[]|null $localizedMetaTitles
-     *
-     * @return self
      */
-    public function setLocalizedMetaTitles($localizedMetaTitles)
+    public function setLocalizedMetaTitles($localizedMetaTitles): static
     {
         $this->localizedMetaTitles = $localizedMetaTitles;
 
@@ -174,10 +166,8 @@ class EditManufacturerCommand
 
     /**
      * @param string[]|null $localizedMetaDescriptions
-     *
-     * @return self
      */
-    public function setLocalizedMetaDescriptions($localizedMetaDescriptions)
+    public function setLocalizedMetaDescriptions($localizedMetaDescriptions): static
     {
         $this->localizedMetaDescriptions = $localizedMetaDescriptions;
 
@@ -194,10 +184,8 @@ class EditManufacturerCommand
 
     /**
      * @param bool|null $enabled
-     *
-     * @return self
      */
-    public function setEnabled($enabled)
+    public function setEnabled($enabled): static
     {
         $this->enabled = $enabled;
 
@@ -214,10 +202,8 @@ class EditManufacturerCommand
 
     /**
      * @param array $associatedShops
-     *
-     * @return self
      */
-    public function setAssociatedShops($associatedShops)
+    public function setAssociatedShops($associatedShops): static
     {
         $this->associatedShops = $associatedShops;
 

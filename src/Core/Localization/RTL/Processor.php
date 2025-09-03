@@ -49,12 +49,12 @@ class Processor
     /**
      * @var string[] Names of the FO themes to process
      */
-    private $processFOThemes = [];
+    private array $processFOThemes = [];
 
     /**
      * @var array Indicates additional paths to process
      */
-    private $processPaths = [];
+    private array $processPaths = [];
 
     /**
      * @var bool Indicates if the default modules should be processed
@@ -77,10 +77,8 @@ class Processor
      * Specifies the installed language 2-letter ISO code.
      *
      * @param string $languageCode
-     *
-     * @return Processor
      */
-    public function setLanguageCode($languageCode)
+    public function setLanguageCode($languageCode): static
     {
         $this->languageCode = $languageCode;
 
@@ -91,10 +89,8 @@ class Processor
      * Specifies if the BO theme should be processed.
      *
      * @param bool $processBOTheme
-     *
-     * @return Processor
      */
-    public function setProcessBOTheme($processBOTheme)
+    public function setProcessBOTheme($processBOTheme): static
     {
         $this->processBOTheme = $processBOTheme;
 
@@ -105,10 +101,8 @@ class Processor
      * Specifies the names of the FO themes to process.
      *
      * @param string[] $processFOThemes
-     *
-     * @return Processor
      */
-    public function setProcessFOThemes(array $processFOThemes)
+    public function setProcessFOThemes(array $processFOThemes): static
     {
         $this->processFOThemes = $processFOThemes;
 
@@ -119,10 +113,8 @@ class Processor
      * Specifies additional paths to process.
      *
      * @param string[] $processPaths
-     *
-     * @return Processor
      */
-    public function setProcessPaths(array $processPaths)
+    public function setProcessPaths(array $processPaths): static
     {
         $this->processPaths = $processPaths;
 
@@ -133,10 +125,8 @@ class Processor
      * Specifies if the default modules should be processed.
      *
      * @param bool $processDefaultModules
-     *
-     * @return Processor
      */
-    public function setProcessDefaultModules($processDefaultModules)
+    public function setProcessDefaultModules($processDefaultModules): static
     {
         $this->processDefaultModules = $processDefaultModules;
 
@@ -167,10 +157,8 @@ class Processor
         }
 
         // generate stylesheets for BO themes
-        if ($this->processFOThemes) {
-            foreach ($this->processFOThemes as $themeName) {
-                $generator->generateInDirectory($this->themesDir . \DIRECTORY_SEPARATOR . $themeName);
-            }
+        foreach ($this->processFOThemes as $themeName) {
+            $generator->generateInDirectory($this->themesDir . \DIRECTORY_SEPARATOR . $themeName);
         }
 
         // generate stylesheets for default modules

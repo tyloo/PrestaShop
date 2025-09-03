@@ -67,7 +67,7 @@ final class CustomerCartGridDefinitionFactory extends AbstractGridDefinitionFact
         return $this->trans('Carts', [], 'Admin.Global');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new DataColumn('id_cart'))
@@ -116,7 +116,7 @@ final class CustomerCartGridDefinitionFactory extends AbstractGridDefinitionFact
             );
     }
 
-    protected function getViewOptions()
+    protected function getViewOptions(): ViewOptionsCollection
     {
         return (new ViewOptionsCollection())
             ->add('display_name', false);

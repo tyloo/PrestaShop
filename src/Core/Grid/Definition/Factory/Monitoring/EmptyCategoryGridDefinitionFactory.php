@@ -63,7 +63,7 @@ final class EmptyCategoryGridDefinitionFactory extends AbstractGridDefinitionFac
         return $this->trans('List of empty categories', [], 'Admin.Catalog.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -106,7 +106,7 @@ final class EmptyCategoryGridDefinitionFactory extends AbstractGridDefinitionFac
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(
@@ -157,7 +157,7 @@ final class EmptyCategoryGridDefinitionFactory extends AbstractGridDefinitionFac
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(
@@ -170,7 +170,7 @@ final class EmptyCategoryGridDefinitionFactory extends AbstractGridDefinitionFac
     /**
      * @return RowActionCollectionInterface
      */
-    private function getRowActions()
+    private function getRowActions(): RowActionCollection
     {
         return (new RowActionCollection())
             ->add(

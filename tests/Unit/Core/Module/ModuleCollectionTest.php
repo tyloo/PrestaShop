@@ -37,7 +37,7 @@ use stdClass;
 
 class ModuleCollectionTest extends TestCase
 {
-    private $moduleCollection;
+    private \PrestaShop\PrestaShop\Core\Module\ModuleCollection|array $moduleCollection;
 
     protected function setUp(): void
     {
@@ -122,7 +122,7 @@ class ModuleCollectionTest extends TestCase
     public function testFilter(): void
     {
         $halfCallback = new class {
-            private static $i = 0;
+            private static int $i = 0;
 
             public function __invoke(): bool
             {

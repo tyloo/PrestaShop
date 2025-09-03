@@ -55,7 +55,7 @@ class DisableableLinkColumn extends AbstractColumn
         ;
     }
 
-    public function setOptions(array $options)
+    public function setOptions(array $options): static
     {
         $disabledOptions = [];
 

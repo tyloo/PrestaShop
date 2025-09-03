@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\SqlManagement\ValueObject\SqlRequestId;
  */
 class EditableSqlRequest
 {
-    /**
-     * @var SqlRequestId
-     */
-    private $sqlRequestId;
+    private ?SqlRequestId $sqlRequestId = null;
 
     /**
      * @var string
@@ -67,10 +64,7 @@ class EditableSqlRequest
             ->setSql($sql);
     }
 
-    /**
-     * @return SqlRequestId
-     */
-    public function getSqlRequestId()
+    public function getSqlRequestId(): ?SqlRequestId
     {
         return $this->sqlRequestId;
     }
@@ -91,10 +85,7 @@ class EditableSqlRequest
         return $this->sql;
     }
 
-    /**
-     * @return EditableSqlRequest
-     */
-    private function setSqlRequestId(SqlRequestId $sqlRequestId)
+    private function setSqlRequestId(SqlRequestId $sqlRequestId): static
     {
         $this->sqlRequestId = $sqlRequestId;
 
@@ -104,11 +95,9 @@ class EditableSqlRequest
     /**
      * @param string $name
      *
-     * @return EditableSqlRequest
-     *
      * @throws SqlRequestException
      */
-    private function setName($name)
+    private function setName($name): static
     {
         if (empty($name)) {
             throw new SqlRequestException('SqlRequest name cannot be empty');
@@ -122,11 +111,9 @@ class EditableSqlRequest
     /**
      * @param string $sql
      *
-     * @return EditableSqlRequest
-     *
      * @throws SqlRequestException
      */
-    private function setSql($sql)
+    private function setSql($sql): static
     {
         if (empty($sql)) {
             throw new SqlRequestException('SqlRequest SQL cannot be empty');

@@ -98,7 +98,7 @@ class HashMapWhitelistFilter implements FilterInterface
      *
      * @return $this
      */
-    public function whitelist($definition)
+    public function whitelist($definition): static
     {
         foreach ($definition as $k => $value) {
             $this->addWhitelistItem($k, $value);
@@ -116,7 +116,7 @@ class HashMapWhitelistFilter implements FilterInterface
      *
      * @throws FilterException if $key is not scalar
      */
-    public function removeFromWhitelist($key)
+    public function removeFromWhitelist($key): static
     {
         if (! \is_scalar($key)) {
             throw new FilterException(\sprintf('Invalid parameter %s', print_r($key, true)));
@@ -194,7 +194,7 @@ class HashMapWhitelistFilter implements FilterInterface
      *
      * @return $this
      */
-    private function addWhitelistItem($paramKey, $paramValue)
+    private function addWhitelistItem($paramKey, $paramValue): static
     {
         $keyToWhitelist = $paramValue;
         if ($paramValue instanceof FilterInterface) {

@@ -71,7 +71,7 @@ final class SupplierGridDefinitionFactory extends AbstractFilterableGridDefiniti
         return $this->trans('Suppliers', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new BulkActionColumn('bulk'))
@@ -151,7 +151,7 @@ final class SupplierGridDefinitionFactory extends AbstractFilterableGridDefiniti
         ;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_supplier', TextType::class))
@@ -198,7 +198,7 @@ final class SupplierGridDefinitionFactory extends AbstractFilterableGridDefiniti
         ;
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add((new SubmitBulkAction('suppliers_enable_selection'))
@@ -219,7 +219,7 @@ final class SupplierGridDefinitionFactory extends AbstractFilterableGridDefiniti
         ;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add((new LinkGridAction('import'))

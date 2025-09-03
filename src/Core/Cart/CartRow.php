@@ -137,10 +137,8 @@ class CartRow
 
     /**
      * @param array $rowData
-     *
-     * @return CartRow
      */
-    public function setRowData($rowData)
+    public function setRowData($rowData): static
     {
         $this->rowData = $rowData;
 
@@ -250,7 +248,7 @@ class CartRow
         $this->isProcessed = true;
     }
 
-    protected function getProductPrice(CartCore $cart, $rowData): AmountImmutable
+    protected function getProductPrice(CartCore $cart, array $rowData): AmountImmutable
     {
         $productId = (int) $rowData['id_product'];
         $quantity = (int) $rowData['cart_quantity'];

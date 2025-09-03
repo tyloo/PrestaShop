@@ -51,10 +51,8 @@ class AddonListFilter
 
     /**
      * @param int $origin
-     *
-     * @return AddonListFilter
      */
-    public function addOrigin($origin)
+    public function addOrigin($origin): static
     {
         $this->origin &= $origin;
 
@@ -63,10 +61,8 @@ class AddonListFilter
 
     /**
      * @param int $status
-     *
-     * @return AddonListFilter
      */
-    public function addStatus($status)
+    public function addStatus($status): static
     {
         $this->status &= $status;
 
@@ -75,10 +71,8 @@ class AddonListFilter
 
     /**
      * @param int $type
-     *
-     * @return AddonListFilter
      */
-    public function addType($type)
+    public function addType($type): static
     {
         $this->type &= $type;
 
@@ -111,40 +105,32 @@ class AddonListFilter
 
     /**
      * @param int $origin
-     *
-     * @return AddonListFilter
      */
-    public function removeOrigin($origin)
+    public function removeOrigin($origin): static
     {
         return $this->addOrigin(~$origin);
     }
 
     /**
      * @param int $status
-     *
-     * @return AddonListFilter
      */
-    public function removeStatus($status)
+    public function removeStatus($status): static
     {
         return $this->addStatus(~$status);
     }
 
     /**
      * @param int $type
-     *
-     * @return AddonListFilter
      */
-    public function removeType($type)
+    public function removeType($type): static
     {
         return $this->addType(~$type);
     }
 
     /**
      * @param int $origin
-     *
-     * @return AddonListFilter
      */
-    public function setOrigin($origin)
+    public function setOrigin($origin): static
     {
         $this->origin = $origin;
 
@@ -153,10 +139,8 @@ class AddonListFilter
 
     /**
      * @param int $type
-     *
-     * @return AddonListFilter
      */
-    public function setType($type)
+    public function setType($type): static
     {
         $this->type = $type;
 
@@ -165,17 +149,15 @@ class AddonListFilter
 
     /**
      * @param int $status
-     *
-     * @return AddonListFilter
      */
-    public function setStatus($status)
+    public function setStatus($status): static
     {
         $this->status = $status;
 
         return $this;
     }
 
-    public function setExclude(array $exclude)
+    public function setExclude(array $exclude): static
     {
         $this->exclude = $exclude;
 

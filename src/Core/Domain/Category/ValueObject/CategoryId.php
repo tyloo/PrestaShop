@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CategoryException;
  */
 class CategoryId
 {
-    /**
-     * @var int
-     */
-    private $categoryId;
+    private int $categoryId;
 
     /**
      * @param int $categoryId
@@ -47,10 +44,7 @@ class CategoryId
         $this->setCategoryId($categoryId);
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->categoryId;
     }

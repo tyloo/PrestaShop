@@ -237,7 +237,7 @@ class ModuleManagerTest extends TestCase
         // before calling install. This callback returns true twice and then false to simulate the expected behavior
         // for the `INSTALLED_THEN_UNINSTALLED_MODULE_NAME` module name
         $isInstalledCallback = new class {
-            private $count = 0;
+            private int $count = 0;
 
             public function isInstalled($name): bool
             {

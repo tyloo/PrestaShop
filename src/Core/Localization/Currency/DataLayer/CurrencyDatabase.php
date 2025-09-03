@@ -61,10 +61,8 @@ class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInt
      * When writing data, the data will also be written in the lower data layer.
      *
      * @param CurrencyDataLayerInterface $lowerLayer The lower data layer
-     *
-     * @return self
      */
-    public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer)
+    public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer): static
     {
         $this->lowerDataLayer = $lowerLayer;
 

@@ -128,7 +128,7 @@ class PaymentOption implements HookContentClassInterface
      *
      * @return $this
      */
-    public function setCallToActionText($callToActionText)
+    public function setCallToActionText($callToActionText): static
     {
         $this->callToActionText = $callToActionText;
 
@@ -152,7 +152,7 @@ class PaymentOption implements HookContentClassInterface
      *
      * @return $this
      */
-    public function setAdditionalInformation($additionalInformation)
+    public function setAdditionalInformation($additionalInformation): static
     {
         $this->additionalInformation = $additionalInformation;
 
@@ -176,7 +176,7 @@ class PaymentOption implements HookContentClassInterface
      *
      * @return $this
      */
-    public function setLogo($logo)
+    public function setLogo($logo): static
     {
         $this->logo = $logo;
 
@@ -200,7 +200,7 @@ class PaymentOption implements HookContentClassInterface
      *
      * @return $this
      */
-    public function setAction($action)
+    public function setAction($action): static
     {
         $this->action = $action;
 
@@ -224,7 +224,7 @@ class PaymentOption implements HookContentClassInterface
      *
      * @return $this
      */
-    public function setInputs($inputs)
+    public function setInputs($inputs): static
     {
         $this->inputs = $inputs;
 
@@ -248,7 +248,7 @@ class PaymentOption implements HookContentClassInterface
      *
      * @return $this
      */
-    public function setForm($form)
+    public function setForm($form): static
     {
         $this->form = $form;
 
@@ -272,7 +272,7 @@ class PaymentOption implements HookContentClassInterface
      *
      * @return $this
      */
-    public function setModuleName($moduleName)
+    public function setModuleName($moduleName): static
     {
         $this->moduleName = $moduleName;
 
@@ -297,7 +297,7 @@ class PaymentOption implements HookContentClassInterface
      *
      * @return $this
      */
-    public function setBinary($binary)
+    public function setBinary($binary): static
     {
         $this->binary = $binary;
 

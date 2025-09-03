@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\SqlManagement\Exception\SqlManagementConst
  */
 class GetDatabaseTableFieldsList
 {
-    /**
-     * @var string
-     */
-    private $tableName;
+    private string $tableName;
 
     /**
      * @param string $tableName
@@ -49,10 +46,7 @@ class GetDatabaseTableFieldsList
         $this->setTableName($tableName);
     }
 
-    /**
-     * @return string
-     */
-    public function getTableName()
+    public function getTableName(): string
     {
         return $this->tableName;
     }
@@ -60,11 +54,9 @@ class GetDatabaseTableFieldsList
     /**
      * @param string $tableName
      *
-     * @return self
-     *
      * @throws SqlManagementConstraintException
      */
-    public function setTableName($tableName)
+    public function setTableName($tableName): static
     {
         if (! \is_string($tableName) || ($tableName === '' || $tableName === '0')) {
             throw new SqlManagementConstraintException(\sprintf('Invalid database table name %s supplied', var_export($tableName, true)), SqlManagementConstraintException::INVALID_DATABASE_TABLE_NAME);

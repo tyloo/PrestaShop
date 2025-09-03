@@ -88,10 +88,7 @@ class EditEmployeeCommand
         return $this->employeeId;
     }
 
-    /**
-     * @return EditEmployeeCommand
-     */
-    public function setEmployeeId(EmployeeId $employeeId)
+    public function setEmployeeId(EmployeeId $employeeId): static
     {
         $this->employeeId = $employeeId;
 
@@ -105,10 +102,8 @@ class EditEmployeeCommand
 
     /**
      * @param string $firstName
-     *
-     * @return EditEmployeeCommand
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): static
     {
         $this->firstName = new FirstName($firstName);
 
@@ -122,10 +117,8 @@ class EditEmployeeCommand
 
     /**
      * @param string $lastName
-     *
-     * @return EditEmployeeCommand
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): static
     {
         $this->lastName = new LastName($lastName);
 
@@ -139,10 +132,8 @@ class EditEmployeeCommand
 
     /**
      * @param string $email
-     *
-     * @return EditEmployeeCommand
      */
-    public function setEmail($email)
+    public function setEmail($email): static
     {
         $this->email = new Email($email);
 
@@ -159,10 +150,8 @@ class EditEmployeeCommand
 
     /**
      * @param int $defaultPageId
-     *
-     * @return EditEmployeeCommand
      */
-    public function setDefaultPageId($defaultPageId)
+    public function setDefaultPageId($defaultPageId): static
     {
         $this->defaultPageId = $defaultPageId;
 
@@ -179,10 +168,8 @@ class EditEmployeeCommand
 
     /**
      * @param int $languageId
-     *
-     * @return EditEmployeeCommand
      */
-    public function setLanguageId($languageId)
+    public function setLanguageId($languageId): static
     {
         $this->languageId = $languageId;
 
@@ -199,10 +186,8 @@ class EditEmployeeCommand
 
     /**
      * @param bool $active
-     *
-     * @return EditEmployeeCommand
      */
-    public function setActive($active)
+    public function setActive($active): static
     {
         $this->active = $active;
 
@@ -219,10 +204,8 @@ class EditEmployeeCommand
 
     /**
      * @param int $profileId
-     *
-     * @return EditEmployeeCommand
      */
-    public function setProfileId($profileId)
+    public function setProfileId($profileId): static
     {
         $this->profileId = $profileId;
 
@@ -239,10 +222,8 @@ class EditEmployeeCommand
 
     /**
      * @param array $shopAssociation
-     *
-     * @return EditEmployeeCommand
      */
-    public function setShopAssociation($shopAssociation)
+    public function setShopAssociation($shopAssociation): static
     {
         $this->shopAssociation = $shopAssociation;
 
@@ -256,10 +237,8 @@ class EditEmployeeCommand
 
     /**
      * @param string $plainPassword
-     *
-     * @return EditEmployeeCommand
      */
-    public function setPlainPassword($plainPassword, int $minLength, int $maxLength, int $minScore)
+    public function setPlainPassword($plainPassword, int $minLength, int $maxLength, int $minScore): static
     {
         $this->plainPassword = new Password($plainPassword, $minLength, $maxLength, $minScore);
 
@@ -271,10 +250,7 @@ class EditEmployeeCommand
         return $this->hasEnabledGravatar;
     }
 
-    /**
-     * @return EditEmployeeCommand
-     */
-    public function setHasEnabledGravatar(bool $hasEnabledGravatar)
+    public function setHasEnabledGravatar(bool $hasEnabledGravatar): static
     {
         $this->hasEnabledGravatar = $hasEnabledGravatar;
 

@@ -113,7 +113,7 @@ class LocaleData
      *
      * @return $this Fluent interface
      */
-    public function overrideWith(self $localeData)
+    public function overrideWith(self $localeData): static
     {
         if ($localeData->getLocaleCode() !== null) {
             $this->setLocaleCode($localeData->getLocaleCode());
@@ -195,10 +195,8 @@ class LocaleData
 
     /**
      * @param string $localeCode
-     *
-     * @return LocaleData
      */
-    public function setLocaleCode($localeCode)
+    public function setLocaleCode($localeCode): static
     {
         $this->localeCode = $localeCode;
 
@@ -215,10 +213,8 @@ class LocaleData
 
     /**
      * @param string[] $numberingSystems
-     *
-     * @return LocaleData
      */
-    public function setNumberingSystems($numberingSystems)
+    public function setNumberingSystems($numberingSystems): static
     {
         $this->numberingSystems = $numberingSystems;
 
@@ -235,10 +231,8 @@ class LocaleData
 
     /**
      * @param string $defaultNumberingSystem
-     *
-     * @return LocaleData
      */
-    public function setDefaultNumberingSystem($defaultNumberingSystem)
+    public function setDefaultNumberingSystem($defaultNumberingSystem): static
     {
         $this->defaultNumberingSystem = $defaultNumberingSystem;
 
@@ -255,10 +249,8 @@ class LocaleData
 
     /**
      * @param int $minimumGroupingDigits
-     *
-     * @return LocaleData
      */
-    public function setMinimumGroupingDigits($minimumGroupingDigits)
+    public function setMinimumGroupingDigits($minimumGroupingDigits): static
     {
         $this->minimumGroupingDigits = $minimumGroupingDigits;
 
@@ -275,10 +267,8 @@ class LocaleData
 
     /**
      * @param NumberSymbolsData[] $numberSymbols
-     *
-     * @return LocaleData
      */
-    public function setNumberSymbols($numberSymbols)
+    public function setNumberSymbols($numberSymbols): static
     {
         $this->numberSymbols = $numberSymbols;
 
@@ -295,10 +285,8 @@ class LocaleData
 
     /**
      * @param string[] $decimalPatterns
-     *
-     * @return LocaleData
      */
-    public function setDecimalPatterns($decimalPatterns)
+    public function setDecimalPatterns($decimalPatterns): static
     {
         $this->decimalPatterns = $decimalPatterns;
 
@@ -315,10 +303,8 @@ class LocaleData
 
     /**
      * @param string[] $percentPatterns
-     *
-     * @return LocaleData
      */
-    public function setPercentPatterns($percentPatterns)
+    public function setPercentPatterns($percentPatterns): static
     {
         $this->percentPatterns = $percentPatterns;
 
@@ -335,10 +321,8 @@ class LocaleData
 
     /**
      * @param string[] $currencyPatterns
-     *
-     * @return LocaleData
      */
-    public function setCurrencyPatterns($currencyPatterns)
+    public function setCurrencyPatterns($currencyPatterns): static
     {
         $this->currencyPatterns = $currencyPatterns;
 
@@ -371,10 +355,8 @@ class LocaleData
 
     /**
      * @param CurrencyData[] $currencies
-     *
-     * @return LocaleData
      */
-    public function setCurrencies($currencies)
+    public function setCurrencies($currencies): static
     {
         $this->currencies = $currencies;
 

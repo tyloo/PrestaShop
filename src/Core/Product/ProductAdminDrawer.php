@@ -98,28 +98,28 @@ class ProductAdminDrawer implements HookContentClassInterface
         return $this->title;
     }
 
-    public function setIcon($icon)
+    public function setIcon($icon): static
     {
         $this->icon = $icon;
 
         return $this;
     }
 
-    public function setId($id)
+    public function setId($id): static
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function setLink($link)
+    public function setLink($link): static
     {
         $this->link = $link;
 
         return $this;
     }
 
-    public function setTitle($title)
+    public function setTitle($title): static
     {
         $this->title = $title;
 

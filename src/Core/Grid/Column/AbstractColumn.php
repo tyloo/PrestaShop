@@ -40,10 +40,7 @@ abstract class AbstractColumn implements ColumnInterface
      */
     private $name = '';
 
-    /**
-     * @var array
-     */
-    private $options;
+    private ?array $options = null;
 
     /**
      * @param string $id

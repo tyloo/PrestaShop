@@ -35,16 +35,16 @@ final class FilterCollection implements FilterCollectionInterface
     /**
      * @var FilterInterface[]
      */
-    private $filters = [];
+    private array $filters = [];
 
-    public function add(FilterInterface $filter)
+    public function add(FilterInterface $filter): self
     {
         $this->filters[$filter->getName()] = $filter;
 
         return $this;
     }
 
-    public function remove($filterName)
+    public function remove($filterName): self
     {
         if (isset($this->filters[$filterName])) {
             unset($this->filters[$filterName]);
@@ -63,7 +63,7 @@ final class FilterCollection implements FilterCollectionInterface
         return $this->filters[$filterName] ?? null;
     }
 
-    public function all()
+    public function all(): array
     {
         return $this->filters;
     }

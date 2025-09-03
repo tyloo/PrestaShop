@@ -46,7 +46,7 @@ class CollectionFilter implements FilterInterface
      *
      * @throws FilterException
      */
-    public function queue(array $filters)
+    public function queue(array $filters): static
     {
         foreach ($filters as $filter) {
             if (! $filter instanceof FilterInterface) {

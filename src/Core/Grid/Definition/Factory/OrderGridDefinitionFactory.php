@@ -327,7 +327,7 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
         return $filters;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(
@@ -355,7 +355,7 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add((new ModalFormSubmitBulkAction('change_order_status'))

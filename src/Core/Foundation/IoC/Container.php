@@ -33,7 +33,7 @@ use ReflectionNamedType;
 
 class Container
 {
-    private $bindings = [];
+    private array $bindings = [];
 
     private $instances = [];
 
@@ -49,7 +49,7 @@ class Container
         return \array_key_exists($alias, $this->namespaceAliases);
     }
 
-    public function bind($serviceName, $constructor, $shared = false)
+    public function bind($serviceName, $constructor, $shared = false): static
     {
         if ($this->knows($serviceName)) {
             throw new Exception(\sprintf('Cannot bind `%s` again. A service name can only be bound once.', $serviceName));
@@ -63,7 +63,7 @@ class Container
         return $this;
     }
 
-    public function aliasNamespace($alias, $namespacePrefix)
+    public function aliasNamespace($alias, $namespacePrefix): static
     {
         if ($this->knowsNamespaceAlias($alias)) {
             throw new Exception(\sprintf('Namespace alias `%1$s` already exists and points to `%2$s`', $alias, $this->namespaceAliases[$alias]));

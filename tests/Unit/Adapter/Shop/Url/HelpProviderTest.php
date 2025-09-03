@@ -58,7 +58,7 @@ class HelpProviderTest extends TestCase
             ->method('generate')
             ->with(
                 'admin_common_sidebar',
-                $this->callback(function ($urlParameters): bool {
+                $this->callback(function (array $urlParameters): bool {
                     $this->assertEquals('https://help.prestashop.com/en/doc/products?version=8.0.0&country=en', urldecode((string) $urlParameters['url']));
                     $this->assertEquals('Help', $urlParameters['title']);
 

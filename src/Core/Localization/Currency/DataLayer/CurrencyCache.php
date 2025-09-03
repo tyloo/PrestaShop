@@ -53,7 +53,7 @@ class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayerInterf
     ) {
     }
 
-    public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer)
+    public function setLowerLayer(CurrencyDataLayerInterface $lowerLayer): static
     {
         $this->lowerDataLayer = $lowerLayer;
 

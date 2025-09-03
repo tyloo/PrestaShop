@@ -41,7 +41,7 @@ class EntityMetaData
      */
     public $tableName;
 
-    public function setTableName($name)
+    public function setTableName($name): static
     {
         $this->tableName = $name;
 
@@ -53,10 +53,7 @@ class EntityMetaData
         return $this->tableName;
     }
 
-    /**
-     * @return self
-     */
-    public function setPrimaryKeyFieldNames(array $primaryKeyFieldnames)
+    public function setPrimaryKeyFieldNames(array $primaryKeyFieldnames): static
     {
         $this->primaryKeyFieldnames = $primaryKeyFieldnames;
 
@@ -68,7 +65,7 @@ class EntityMetaData
         return $this->primaryKeyFieldnames;
     }
 
-    public function setEntityClassName($entityClassName)
+    public function setEntityClassName($entityClassName): static
     {
         $this->entityClassName = $entityClassName;
 

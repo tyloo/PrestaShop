@@ -76,10 +76,8 @@ class EditWebserviceKeyCommand
 
     /**
      * @param string $key
-     *
-     * @return self
      */
-    public function setKey($key)
+    public function setKey($key): static
     {
         $this->key = new Key($key);
 
@@ -96,10 +94,8 @@ class EditWebserviceKeyCommand
 
     /**
      * @param string $description
-     *
-     * @return self
      */
-    public function setDescription($description)
+    public function setDescription($description): static
     {
         $this->description = $description;
 
@@ -116,10 +112,8 @@ class EditWebserviceKeyCommand
 
     /**
      * @param bool $status
-     *
-     * @return self
      */
-    public function setStatus($status)
+    public function setStatus($status): static
     {
         $this->status = $status;
 
@@ -131,10 +125,7 @@ class EditWebserviceKeyCommand
         return $this->permissions;
     }
 
-    /**
-     * @return self
-     */
-    public function setPermissions(array $permissions)
+    public function setPermissions(array $permissions): static
     {
         $this->permissions = $permissions;
 
@@ -151,10 +142,8 @@ class EditWebserviceKeyCommand
 
     /**
      * @param int[] $shopAssociation
-     *
-     * @return self
      */
-    public function setShopAssociation(array $shopAssociation)
+    public function setShopAssociation(array $shopAssociation): static
     {
         $this->shopAssociation = $shopAssociation;
 

@@ -71,7 +71,7 @@ final class LogGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $this->trans('Logs', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -152,7 +152,7 @@ final class LogGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(
@@ -221,7 +221,7 @@ final class LogGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(

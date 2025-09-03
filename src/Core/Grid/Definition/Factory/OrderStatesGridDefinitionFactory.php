@@ -76,7 +76,7 @@ final class OrderStatesGridDefinitionFactory extends AbstractGridDefinitionFacto
         return $this->trans('Order statuses', [], 'Admin.Orderscustomers.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -170,7 +170,7 @@ final class OrderStatesGridDefinitionFactory extends AbstractGridDefinitionFacto
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(
@@ -228,7 +228,7 @@ final class OrderStatesGridDefinitionFactory extends AbstractGridDefinitionFacto
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(

@@ -58,7 +58,7 @@ class TermsAndConditions
      *
      * @return $this
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): static
     {
         $this->identifier = $identifier;
 
@@ -75,7 +75,7 @@ class TermsAndConditions
      *
      * @return $this
      */
-    public function setText($rawText)
+    public function setText($rawText): static
     {
         $links = \func_get_args();
         array_shift($links);

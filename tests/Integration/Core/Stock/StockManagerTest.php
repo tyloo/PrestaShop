@@ -51,10 +51,7 @@ class StockManagerTest extends KernelTestCase
 
     private ?Container $savedContainer;
 
-    /**
-     * @var PackItemsManager
-     */
-    private $packItemsManager;
+    private ?FakePackItemsManager4759 $packItemsManager = null;
 
     protected function setUp(): void
     {
@@ -381,7 +378,7 @@ class StockManagerTest extends KernelTestCase
 
 class FakeProduct4759 extends Product
 {
-    private static $LAST_ID = 0;
+    private static int $LAST_ID = 0;
 
     /**
      * @var FakeStockAvailable4759
@@ -408,11 +405,11 @@ class FakeProduct4759 extends Product
 
 class FakePackItemsManager4759 extends PackItemsManager
 {
-    private $packs = [];
+    private array $packs = [];
 
-    private $items = [];
+    private array $items = [];
 
-    private $stockAvailables = [];
+    private array $stockAvailables = [];
 
     public function addProduct(FakeProduct4759 $pack, FakeProduct4759 $product, $product_attribute_id, $quantity): void
     {

@@ -71,7 +71,7 @@ class TranslatableCoreException extends CoreException
      *
      * @return $this
      */
-    public function setKey($key)
+    public function setKey($key): static
     {
         $this->key = $key;
         $this->message = $key;
@@ -92,7 +92,7 @@ class TranslatableCoreException extends CoreException
      *
      * @return $this
      */
-    public function setDomain($domain)
+    public function setDomain($domain): static
     {
         $this->domain = $domain;
 
@@ -110,7 +110,7 @@ class TranslatableCoreException extends CoreException
     /**
      * @return $this
      */
-    public function setParameters(array $parameters)
+    public function setParameters(array $parameters): static
     {
         $this->parameters = $parameters;
 

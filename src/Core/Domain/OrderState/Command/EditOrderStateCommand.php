@@ -114,10 +114,8 @@ class EditOrderStateCommand
 
     /**
      * @param array<string> $name
-     *
-     * @return self
      */
-    public function setName($name)
+    public function setName($name): static
     {
         $this->name = $name;
 
@@ -129,10 +127,7 @@ class EditOrderStateCommand
         return $this->color;
     }
 
-    /**
-     * @return self
-     */
-    public function setColor(?string $color)
+    public function setColor(?string $color): static
     {
         $this->color = $color;
 
@@ -144,10 +139,7 @@ class EditOrderStateCommand
         return $this->loggable;
     }
 
-    /**
-     * @return self
-     */
-    public function setLoggable(?bool $loggable)
+    public function setLoggable(?bool $loggable): static
     {
         $this->loggable = $loggable;
 
@@ -159,10 +151,7 @@ class EditOrderStateCommand
         return $this->invoice;
     }
 
-    /**
-     * @return self
-     */
-    public function setInvoice(?bool $invoice)
+    public function setInvoice(?bool $invoice): static
     {
         $this->invoice = $invoice;
 
@@ -174,10 +163,7 @@ class EditOrderStateCommand
         return $this->hidden;
     }
 
-    /**
-     * @return self
-     */
-    public function setHidden(?bool $hidden)
+    public function setHidden(?bool $hidden): static
     {
         $this->hidden = $hidden;
 
@@ -189,10 +175,7 @@ class EditOrderStateCommand
         return $this->sendEmail;
     }
 
-    /**
-     * @return self
-     */
-    public function setSendEmail(?bool $sendEmail)
+    public function setSendEmail(?bool $sendEmail): static
     {
         $this->sendEmail = $sendEmail;
 
@@ -204,10 +187,7 @@ class EditOrderStateCommand
         return $this->pdfInvoice;
     }
 
-    /**
-     * @return self
-     */
-    public function setPdfInvoice(?bool $pdfInvoice)
+    public function setPdfInvoice(?bool $pdfInvoice): static
     {
         $this->pdfInvoice = $pdfInvoice;
 
@@ -219,10 +199,7 @@ class EditOrderStateCommand
         return $this->pdfDelivery;
     }
 
-    /**
-     * @return self
-     */
-    public function setPdfDelivery(?bool $pdfDelivery)
+    public function setPdfDelivery(?bool $pdfDelivery): static
     {
         $this->pdfDelivery = $pdfDelivery;
 
@@ -234,10 +211,7 @@ class EditOrderStateCommand
         return $this->shipped;
     }
 
-    /**
-     * @return self
-     */
-    public function setShipped(?bool $shipped)
+    public function setShipped(?bool $shipped): static
     {
         $this->shipped = $shipped;
 
@@ -249,10 +223,7 @@ class EditOrderStateCommand
         return $this->paid;
     }
 
-    /**
-     * @return self
-     */
-    public function setPaid(?bool $paid)
+    public function setPaid(?bool $paid): static
     {
         $this->paid = $paid;
 
@@ -264,10 +235,7 @@ class EditOrderStateCommand
         return $this->delivery;
     }
 
-    /**
-     * @return self
-     */
-    public function setDelivery(?bool $delivery)
+    public function setDelivery(?bool $delivery): static
     {
         $this->delivery = $delivery;
 
@@ -279,10 +247,7 @@ class EditOrderStateCommand
         return $this->template;
     }
 
-    /**
-     * @return self
-     */
-    public function setTemplate(?array $template)
+    public function setTemplate(?array $template): static
     {
         $this->template = $template;
 

@@ -47,7 +47,7 @@ class HookConfiguratorTest extends TestCase
         parent::setUp();
     }
 
-    private function setCurrentDisplayHooksConfiguration(array $hookConfiguration)
+    private function setCurrentDisplayHooksConfiguration(array $hookConfiguration): static
     {
         $this->hookRepository->method('getDisplayHooksWithModules')->willReturn($hookConfiguration);
 

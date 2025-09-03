@@ -61,11 +61,9 @@ class DatabaseTableFields
     /**
      * @param DatabaseTableField[] $fields
      *
-     * @return self
-     *
      * @throws SqlManagementConstraintException
      */
-    private function setFields(array $fields)
+    private function setFields(array $fields): static
     {
         foreach ($fields as $field) {
             if (! $field instanceof DatabaseTableField) {

@@ -64,7 +64,7 @@ final class WebserviceKeyDefinitionFactory extends AbstractGridDefinitionFactory
         return $this->trans('Webservice keys', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -125,7 +125,7 @@ final class WebserviceKeyDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add(
@@ -165,7 +165,7 @@ final class WebserviceKeyDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(
@@ -185,7 +185,7 @@ final class WebserviceKeyDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(

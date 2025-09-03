@@ -85,10 +85,8 @@ class CartRuleCalculator
 
     /**
      * @param CartRuleCollection $cartRules
-     *
-     * @return CartRuleCalculator
      */
-    public function setCartRules($cartRules)
+    public function setCartRules($cartRules): static
     {
         $this->cartRules = $cartRules;
 
@@ -385,10 +383,8 @@ class CartRuleCalculator
 
     /**
      * @param Calculator $calculator
-     *
-     * @return CartRuleCalculator
      */
-    public function setCalculator($calculator)
+    public function setCalculator($calculator): static
     {
         $this->calculator = $calculator;
 
@@ -411,10 +407,8 @@ class CartRuleCalculator
 
     /**
      * @param CartRowCollection $cartRows
-     *
-     * @return CartRuleCalculator
      */
-    public function setCartRows($cartRows)
+    public function setCartRows($cartRows): static
     {
         $this->cartRows = $cartRows;
 

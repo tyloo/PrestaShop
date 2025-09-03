@@ -61,7 +61,7 @@ final class OrderMessageGridDefinitionFactory extends AbstractFilterableGridDefi
         return $this->trans('Order messages', [], 'Admin.Orderscustomers.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -114,7 +114,7 @@ final class OrderMessageGridDefinitionFactory extends AbstractFilterableGridDefi
         ;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_order_message', TextType::class))
@@ -156,7 +156,7 @@ final class OrderMessageGridDefinitionFactory extends AbstractFilterableGridDefi
         ;
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(
@@ -164,7 +164,7 @@ final class OrderMessageGridDefinitionFactory extends AbstractFilterableGridDefi
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(

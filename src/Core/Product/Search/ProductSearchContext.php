@@ -77,10 +77,8 @@ class ProductSearchContext
 
     /**
      * @param int $idShop
-     *
-     * @return self
      */
-    public function setIdShop($idShop)
+    public function setIdShop($idShop): static
     {
         $this->idShop = $idShop;
 
@@ -97,10 +95,8 @@ class ProductSearchContext
 
     /**
      * @param int $idLang
-     *
-     * @return self
      */
-    public function setIdLang($idLang)
+    public function setIdLang($idLang): static
     {
         $this->idLang = $idLang;
 
@@ -117,10 +113,8 @@ class ProductSearchContext
 
     /**
      * @param int $idCurrency
-     *
-     * @return self
      */
-    public function setIdCurrency($idCurrency)
+    public function setIdCurrency($idCurrency): static
     {
         $this->idCurrency = $idCurrency;
 
@@ -137,10 +131,8 @@ class ProductSearchContext
 
     /**
      * @param int $idCustomer
-     *
-     * @return self
      */
-    public function setIdCustomer($idCustomer)
+    public function setIdCustomer($idCustomer): static
     {
         $this->idCustomer = $idCustomer;
 

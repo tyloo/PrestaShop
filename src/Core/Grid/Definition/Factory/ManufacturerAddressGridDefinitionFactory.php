@@ -64,7 +64,7 @@ final class ManufacturerAddressGridDefinitionFactory extends AbstractGridDefinit
         return $this->trans('Addresses', [], 'Admin.Catalog.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add((new BulkActionColumn('bulk'))
@@ -141,7 +141,7 @@ final class ManufacturerAddressGridDefinitionFactory extends AbstractGridDefinit
         ;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         return (new FilterCollection())
             ->add((new Filter('id_address', TextType::class))
@@ -218,7 +218,7 @@ final class ManufacturerAddressGridDefinitionFactory extends AbstractGridDefinit
         ;
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return (new BulkActionCollection())
             ->add(
@@ -227,7 +227,7 @@ final class ManufacturerAddressGridDefinitionFactory extends AbstractGridDefinit
         ;
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add((new LinkGridAction('import'))

@@ -35,54 +35,33 @@ use PrestaShop\PrestaShop\Core\Domain\SqlManagement\ValueObject\SqlRequestId;
  */
 class EditSqlRequestCommand
 {
-    /**
-     * @var SqlRequestId
-     */
-    private $sqlRequestId;
+    private SqlRequestId $sqlRequestId;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
-    private $sql;
+    private ?string $sql = null;
 
     public function __construct(SqlRequestId $sqlRequestId)
     {
         $this->setSqlRequestId($sqlRequestId);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
-    public function getSql()
+    public function getSql(): ?string
     {
         return $this->sql;
     }
 
-    /**
-     * @return SqlRequestId
-     */
-    public function getSqlRequestId()
+    public function getSqlRequestId(): SqlRequestId
     {
         return $this->sqlRequestId;
     }
 
-    /**
-     * @return self
-     */
-    private function setSqlRequestId(SqlRequestId $sqlRequestId)
+    private function setSqlRequestId(SqlRequestId $sqlRequestId): static
     {
         $this->sqlRequestId = $sqlRequestId;
 
@@ -94,11 +73,9 @@ class EditSqlRequestCommand
      *
      * @param string $name
      *
-     * @return self
-     *
      * @throws SqlRequestConstraintException
      */
-    public function setName($name)
+    public function setName($name): static
     {
         if (! \is_string($name) || ($name === '' || $name === '0')) {
             throw new SqlRequestConstraintException(\sprintf('Invalid SqlRequest name "%s"', var_export($name, true)), SqlRequestConstraintException::INVALID_NAME);
@@ -114,11 +91,9 @@ class EditSqlRequestCommand
      *
      * @param string $sql
      *
-     * @return self
-     *
      * @throws SqlRequestConstraintException
      */
-    public function setSql($sql)
+    public function setSql($sql): static
     {
         if (! \is_string($sql) || ($sql === '' || $sql === '0')) {
             throw new SqlRequestConstraintException(\sprintf('Invalid SqlRequest SQL query "%s"', var_export($sql, true)), SqlRequestConstraintException::INVALID_SQL_QUERY);

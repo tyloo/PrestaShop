@@ -70,10 +70,8 @@ final class OrderReturnStateFormDataHandler implements FormDataHandlerInterface
 
     /**
      * @param int $orderReturnStateId
-     *
-     * @return EditOrderReturnStateCommand
      */
-    private function buildOrderReturnStateEditCommand($orderReturnStateId, array $data)
+    private function buildOrderReturnStateEditCommand($orderReturnStateId, array $data): EditOrderReturnStateCommand
     {
         return (new EditOrderReturnStateCommand($orderReturnStateId))
             ->setName($data['name'])

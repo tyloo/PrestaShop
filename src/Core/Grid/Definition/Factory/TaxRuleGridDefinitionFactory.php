@@ -58,7 +58,7 @@ class TaxRuleGridDefinitionFactory extends AbstractFilterableGridDefinitionFacto
         return $this->trans('Tax rules', [], 'Admin.Navigation.Menu');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         return (new ColumnCollection())
             ->add(
@@ -137,7 +137,7 @@ class TaxRuleGridDefinitionFactory extends AbstractFilterableGridDefinitionFacto
             );
     }
 
-    protected function getGridActions()
+    protected function getGridActions(): GridActionCollection
     {
         return (new GridActionCollection())
             ->add(

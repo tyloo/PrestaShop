@@ -52,7 +52,7 @@ class LocaleCache extends AbstractDataLayer implements CldrLocaleDataLayerInterf
     ) {
     }
 
-    public function setLowerLayer(CldrLocaleDataLayerInterface $lowerLayer)
+    public function setLowerLayer(CldrLocaleDataLayerInterface $lowerLayer): static
     {
         $this->lowerDataLayer = $lowerLayer;
 

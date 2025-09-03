@@ -33,15 +33,12 @@ use PrestaShop\PrestaShop\Core\Security\HtaccessFolderGuard;
 
 class HtaccessFolderGuardTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $htaccessTemplatePath = __DIR__ . '/../../Resources/security/htaccess';
+    private string $htaccessTemplatePath = __DIR__ . '/../../Resources/security/htaccess';
 
     /**
      * @var false|string
      */
-    private $htaccessTemplate;
+    private string|bool $htaccessTemplate;
 
     protected function setUp(): void
     {

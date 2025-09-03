@@ -136,10 +136,8 @@ class Fees
 
     /**
      * @param Cart $cart
-     *
-     * @return Fees
      */
-    public function setCart($cart)
+    public function setCart($cart): static
     {
         $this->cart = $cart;
 

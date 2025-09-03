@@ -139,10 +139,8 @@ class EditCustomerCommand
 
     /**
      * @param string $firstName
-     *
-     * @return self
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): static
     {
         $this->firstName = new FirstName($firstName);
 
@@ -156,10 +154,8 @@ class EditCustomerCommand
 
     /**
      * @param string $lastName
-     *
-     * @return self
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): static
     {
         $this->lastName = new LastName($lastName);
 
@@ -173,10 +169,8 @@ class EditCustomerCommand
 
     /**
      * @param string $email
-     *
-     * @return self
      */
-    public function setEmail($email)
+    public function setEmail($email): static
     {
         $this->email = new Email($email);
 
@@ -190,10 +184,8 @@ class EditCustomerCommand
 
     /**
      * @param string $password
-     *
-     * @return self
      */
-    public function setPassword($password)
+    public function setPassword($password): static
     {
         $this->password = new Password($password);
 
@@ -210,10 +202,8 @@ class EditCustomerCommand
 
     /**
      * @param int $defaultGroupId
-     *
-     * @return self
      */
-    public function setDefaultGroupId($defaultGroupId)
+    public function setDefaultGroupId($defaultGroupId): static
     {
         $this->defaultGroupId = $defaultGroupId;
 
@@ -230,10 +220,8 @@ class EditCustomerCommand
 
     /**
      * @param int[] $groupIds
-     *
-     * @return self
      */
-    public function setGroupIds(array $groupIds)
+    public function setGroupIds(array $groupIds): static
     {
         $this->groupIds = $groupIds;
 
@@ -250,10 +238,8 @@ class EditCustomerCommand
 
     /**
      * @param int $genderId
-     *
-     * @return self
      */
-    public function setGenderId($genderId)
+    public function setGenderId($genderId): static
     {
         $this->genderId = $genderId;
 
@@ -286,10 +272,8 @@ class EditCustomerCommand
 
     /**
      * @param bool $isEnabled
-     *
-     * @return self
      */
-    public function setIsEnabled($isEnabled)
+    public function setIsEnabled($isEnabled): static
     {
         $this->isEnabled = $isEnabled;
 
@@ -306,10 +290,8 @@ class EditCustomerCommand
 
     /**
      * @param bool $isPartnerOffersSubscribed
-     *
-     * @return self
      */
-    public function setIsPartnerOffersSubscribed($isPartnerOffersSubscribed)
+    public function setIsPartnerOffersSubscribed($isPartnerOffersSubscribed): static
     {
         $this->isPartnerOffersSubscribed = $isPartnerOffersSubscribed;
 
@@ -323,10 +305,8 @@ class EditCustomerCommand
 
     /**
      * @param string $birthday
-     *
-     * @return self
      */
-    public function setBirthday($birthday)
+    public function setBirthday($birthday): static
     {
         $this->birthday = new Birthday($birthday);
 
@@ -343,10 +323,8 @@ class EditCustomerCommand
 
     /**
      * @param string $companyName
-     *
-     * @return self
      */
-    public function setCompanyName($companyName)
+    public function setCompanyName($companyName): static
     {
         $this->companyName = $companyName;
 
@@ -363,10 +341,8 @@ class EditCustomerCommand
 
     /**
      * @param string $siretCode
-     *
-     * @return self
      */
-    public function setSiretCode($siretCode)
+    public function setSiretCode($siretCode): static
     {
         $this->siretCode = $siretCode;
 
@@ -380,10 +356,8 @@ class EditCustomerCommand
 
     /**
      * @param string $apeCode
-     *
-     * @return self
      */
-    public function setApeCode($apeCode)
+    public function setApeCode($apeCode): static
     {
         $this->apeCode = new ApeCode($apeCode);
 
@@ -400,10 +374,8 @@ class EditCustomerCommand
 
     /**
      * @param string $website
-     *
-     * @return self
      */
-    public function setWebsite($website)
+    public function setWebsite($website): static
     {
         $this->website = $website;
 
@@ -420,10 +392,8 @@ class EditCustomerCommand
 
     /**
      * @param float $allowedOutstandingAmount
-     *
-     * @return self
      */
-    public function setAllowedOutstandingAmount($allowedOutstandingAmount)
+    public function setAllowedOutstandingAmount($allowedOutstandingAmount): static
     {
         $this->allowedOutstandingAmount = $allowedOutstandingAmount;
 
@@ -440,10 +410,8 @@ class EditCustomerCommand
 
     /**
      * @param int $maxPaymentDays
-     *
-     * @return self
      */
-    public function setMaxPaymentDays($maxPaymentDays)
+    public function setMaxPaymentDays($maxPaymentDays): static
     {
         $this->maxPaymentDays = $maxPaymentDays;
 
@@ -460,10 +428,8 @@ class EditCustomerCommand
 
     /**
      * @param int $riskId
-     *
-     * @return self
      */
-    public function setRiskId($riskId)
+    public function setRiskId($riskId): static
     {
         $this->riskId = $riskId;
 

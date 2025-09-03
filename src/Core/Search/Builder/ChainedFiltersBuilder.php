@@ -51,7 +51,7 @@ final class ChainedFiltersBuilder extends AbstractFiltersBuilder
         $this->builders = new FiltersBuilderCollection($builders);
     }
 
-    public function setConfig(array $config)
+    public function setConfig(array $config): self
     {
         parent::setConfig($config);
 

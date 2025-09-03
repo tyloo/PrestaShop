@@ -73,10 +73,8 @@ class EditOrderReturnStateCommand
 
     /**
      * @param array<string> $name
-     *
-     * @return self
      */
-    public function setName($name)
+    public function setName($name): static
     {
         $this->name = $name;
 
@@ -88,10 +86,7 @@ class EditOrderReturnStateCommand
         return $this->color;
     }
 
-    /**
-     * @return self
-     */
-    public function setColor(?string $color)
+    public function setColor(?string $color): static
     {
         $this->color = $color;
 

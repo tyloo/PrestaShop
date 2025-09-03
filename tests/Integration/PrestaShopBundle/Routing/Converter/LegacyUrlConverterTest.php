@@ -44,15 +44,12 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
 {
     use LoginTrait;
 
-    /**
-     * @var Link|null
-     */
-    private $link;
+    private ?Link $link = null;
 
     protected function setUp(): void
     {
         parent::setUp();
-        if (! $this->link) {
+        if (! $this->link instanceof Link) {
             $this->link = new Link();
         }
     }

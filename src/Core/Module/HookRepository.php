@@ -93,7 +93,7 @@ class HookRepository
         return (int) $id_module;
     }
 
-    public function unHookModulesFromHook($hook_name)
+    public function unHookModulesFromHook($hook_name): static
     {
         $id_hook = $this->getIdByName($hook_name);
         $id_shop = (int) $this->shop->id;
@@ -128,7 +128,7 @@ class HookRepository
      * Only hooks present as keys in the $hooks array are affected and all changes
      * are only done for the shop this Repository belongs to.
      */
-    public function persistHooksConfiguration(array $hooks)
+    public function persistHooksConfiguration(array $hooks): static
     {
         foreach ($hooks as $hook_name => $module_names) {
             $id_hook = $this->getIdByName($hook_name);
@@ -180,7 +180,7 @@ class HookRepository
         return $this;
     }
 
-    private function setModuleHookExceptions(int $id_module, $id_hook, array $pages)
+    private function setModuleHookExceptions(int $id_module, $id_hook, array $pages): static
     {
         $id_shop = (int) $this->shop->id;
         $id_hook = (int) $id_hook;

@@ -95,10 +95,7 @@ class EditLanguageCommand
         return $this->languageId;
     }
 
-    /**
-     * @return self
-     */
-    public function setLanguageId(LanguageId $languageId)
+    public function setLanguageId(LanguageId $languageId): static
     {
         $this->languageId = $languageId;
 
@@ -115,10 +112,8 @@ class EditLanguageCommand
 
     /**
      * @param string|null $name
-     *
-     * @return self
      */
-    public function setName($name)
+    public function setName($name): static
     {
         $this->name = $name;
 
@@ -132,10 +127,8 @@ class EditLanguageCommand
 
     /**
      * @param string $isoCode
-     *
-     * @return self
      */
-    public function setIsoCode($isoCode)
+    public function setIsoCode($isoCode): static
     {
         $this->isoCode = new IsoCode($isoCode);
 
@@ -149,10 +142,8 @@ class EditLanguageCommand
 
     /**
      * @param string $tagIETF
-     *
-     * @return self
      */
-    public function setTagIETF($tagIETF)
+    public function setTagIETF($tagIETF): static
     {
         $this->tagIETF = new TagIETF($tagIETF);
 
@@ -169,10 +160,8 @@ class EditLanguageCommand
 
     /**
      * @param string $shortDateFormat
-     *
-     * @return self
      */
-    public function setShortDateFormat($shortDateFormat)
+    public function setShortDateFormat($shortDateFormat): static
     {
         $this->shortDateFormat = $shortDateFormat;
 
@@ -189,10 +178,8 @@ class EditLanguageCommand
 
     /**
      * @param string $fullDateFormat
-     *
-     * @return self
      */
-    public function setFullDateFormat($fullDateFormat)
+    public function setFullDateFormat($fullDateFormat): static
     {
         $this->fullDateFormat = $fullDateFormat;
 
@@ -209,10 +196,8 @@ class EditLanguageCommand
 
     /**
      * @param string $flagImagePath
-     *
-     * @return self
      */
-    public function setFlagImagePath($flagImagePath)
+    public function setFlagImagePath($flagImagePath): static
     {
         $this->flagImagePath = $flagImagePath;
 
@@ -229,10 +214,8 @@ class EditLanguageCommand
 
     /**
      * @param string $noPictureImagePath
-     *
-     * @return self
      */
-    public function setNoPictureImagePath($noPictureImagePath)
+    public function setNoPictureImagePath($noPictureImagePath): static
     {
         $this->noPictureImagePath = $noPictureImagePath;
 
@@ -249,10 +232,8 @@ class EditLanguageCommand
 
     /**
      * @param bool $isRtl
-     *
-     * @return self
      */
-    public function setIsRtl($isRtl)
+    public function setIsRtl($isRtl): static
     {
         $this->isRtl = $isRtl;
 
@@ -269,10 +250,8 @@ class EditLanguageCommand
 
     /**
      * @param bool $isActive
-     *
-     * @return self
      */
-    public function setIsActive($isActive)
+    public function setIsActive($isActive): static
     {
         $this->isActive = $isActive;
 
@@ -289,10 +268,8 @@ class EditLanguageCommand
 
     /**
      * @param int[] $shopAssociation
-     *
-     * @return self
      */
-    public function setShopAssociation(array $shopAssociation)
+    public function setShopAssociation(array $shopAssociation): static
     {
         $this->shopAssociation = $shopAssociation;
 
