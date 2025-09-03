@@ -247,7 +247,7 @@ class TreeBuilder
      *
      * @return bool
      */
-    private function dataContainsSearchWord($search, array $data)
+    private function dataContainsSearchWord($search, array $data): bool|int
     {
         if (\is_string($search)) {
             $search = mb_strtolower($search);

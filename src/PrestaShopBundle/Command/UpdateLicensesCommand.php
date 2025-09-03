@@ -339,7 +339,7 @@ class UpdateLicensesCommand extends Command
     /**
      * @return bool
      */
-    private function addLicenseToJsonFile(SplFileInfo $file)
+    private function addLicenseToJsonFile(SplFileInfo $file): false|int
     {
         if (! \in_array($file->getFilename(), ['composer.json', 'package.json'], true)) {
             return false;

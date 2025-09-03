@@ -41,7 +41,7 @@ class DomainNormalizer
      *
      * @throws RuntimeException
      */
-    public function normalize($domain)
+    public function normalize($domain): string|array
     {
         // remove up to two dots from the domain name
         // (because legacy domain translations CAN have dots in the third part)

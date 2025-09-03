@@ -177,7 +177,7 @@ class LanguageList
      *
      * @return bool|array
      */
-    public function detectLanguage()
+    public function detectLanguage(): false|array
     {
         // This code is from a php.net comment : http://www.php.net/manual/fr/reserved.variables.server.php#94237
         $split_languages = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? explode(',', (string) $_SERVER['HTTP_ACCEPT_LANGUAGE']) : [];

@@ -183,7 +183,7 @@ trait PrestaShopTranslatorTrait
      *
      * @return string|null
      */
-    private function normalizeDomain($domain)
+    private function normalizeDomain($domain): string|array|null
     {
         // remove up to two dots from the domain name
         // (because legacy domain translations CAN have dots in the third part)

@@ -157,7 +157,7 @@ final class HookRegistry
     /**
      * @return array the list of dispatched hooks
      */
-    public function getHooks()
+    public function getHooks(): float|int|array
     {
         return $this->hooks[self::HOOK_CALLED] + $this->hooks[self::HOOK_NOT_CALLED] + $this->hooks[self::HOOK_NOT_REGISTERED];
     }

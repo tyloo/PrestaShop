@@ -106,7 +106,7 @@ class CreditSlipController extends PrestaShopAdminController
         int $creditSlipId,
         #[Autowire(service: 'prestashop.adapter.pdf.credit_slip_pdf_generator')]
         CreditSlipPdfGenerator $creditSlipPdfGenerator,
-    ) {
+    ): BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse {
         try {
             $creditSlipId = new CreditSlipId($creditSlipId);
 
@@ -128,7 +128,7 @@ class CreditSlipController extends PrestaShopAdminController
         Request $request,
         #[Autowire(service: 'prestashop.adapter.pdf.credit_slip_pdf_generator')]
         CreditSlipPdfGenerator $creditSlipPdfGenerator,
-    ) {
+    ): BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse {
         $pdfByDateForm = $this->createForm(GeneratePdfByDateType::class, [], ['method' => Request::METHOD_GET]);
         $pdfByDateForm->handleRequest($request);
 

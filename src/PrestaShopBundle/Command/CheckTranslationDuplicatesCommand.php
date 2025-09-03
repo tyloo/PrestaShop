@@ -114,7 +114,7 @@ class CheckTranslationDuplicatesCommand extends Command
      *
      * @return string with replaced parameters
      */
-    protected function removeParams($message)
+    protected function removeParams($message): string|array|null
     {
         // Remove PrestaShop arguments %<arg>%
         $message = preg_replace(Translator::$regexClassicParams, '~', $message);

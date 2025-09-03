@@ -663,7 +663,7 @@ class XmlLoader
         $this->storeId($entity, $identifier, $entity_id);
     }
 
-    public function generatePrimary($entity, $primary)
+    public function generatePrimary($entity, $primary): int|float
     {
         if (! isset($this->primaries[$entity])) {
             $entity = Db::getInstance()->escape($entity, false, true);

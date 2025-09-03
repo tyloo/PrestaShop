@@ -73,7 +73,7 @@ final class LegacyFileLoader implements LoaderInterface
      *
      * @return string
      */
-    private function buildDomain(LegacyTranslationKey $translationKey)
+    private function buildDomain(LegacyTranslationKey $translationKey): string|array
     {
         $newDomain = DomainHelper::buildModuleDomainFromLegacySource(
             $translationKey->getModule(),

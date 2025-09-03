@@ -67,7 +67,7 @@ trait NormalizeFieldTrait
      *
      * @return bool
      */
-    private function shouldCastToInt($columnName, $columnValue)
+    private function shouldCastToInt($columnName, $columnValue): false|int
     {
         if ($columnValue === null || $columnValue === 'N/A') {
             return false;
