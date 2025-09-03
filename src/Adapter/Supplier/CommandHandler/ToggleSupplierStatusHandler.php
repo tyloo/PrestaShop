@@ -45,7 +45,7 @@ final class ToggleSupplierStatusHandler implements ToggleSupplierStatusHandlerIn
     /**
      * @throws SupplierException
      */
-    public function handle(ToggleSupplierStatusCommand $command)
+    public function handle(ToggleSupplierStatusCommand $command): void
     {
         try {
             $entity = new Supplier($command->getSupplierId()->getValue());

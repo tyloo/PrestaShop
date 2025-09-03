@@ -41,7 +41,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerNotFoundExcepti
 #[AsCommandHandler]
 final class SetPrivateNoteAboutCustomerHandler implements SetPrivateNoteAboutCustomerHandlerInterface
 {
-    public function handle(SetPrivateNoteAboutCustomerCommand $command)
+    public function handle(SetPrivateNoteAboutCustomerCommand $command): void
     {
         $customerId = $command->getCustomerId();
         $customer = new Customer($customerId->getValue());

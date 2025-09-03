@@ -48,7 +48,7 @@ final class AddSupplierHandler extends AbstractSupplierHandler implements AddSup
     /**
      * @throws SupplierException
      */
-    public function handle(AddSupplierCommand $command)
+    public function handle(AddSupplierCommand $command): SupplierId
     {
         $supplier = new Supplier();
         $this->fillSupplierWithData($supplier, $command);
@@ -80,7 +80,7 @@ final class AddSupplierHandler extends AbstractSupplierHandler implements AddSup
      *
      * @throws PrestaShopDatabaseException
      */
-    private function addShopAssociation(Supplier $supplier, AddSupplierCommand $command)
+    private function addShopAssociation(Supplier $supplier, AddSupplierCommand $command): void
     {
         $this->associateWithShops(
             $supplier,
@@ -88,7 +88,7 @@ final class AddSupplierHandler extends AbstractSupplierHandler implements AddSup
         );
     }
 
-    private function fillSupplierWithData(Supplier $supplier, AddSupplierCommand $command)
+    private function fillSupplierWithData(Supplier $supplier, AddSupplierCommand $command): void
     {
         $currentDateTime = date('Y-m-d H:i:s');
 
@@ -103,10 +103,8 @@ final class AddSupplierHandler extends AbstractSupplierHandler implements AddSup
 
     /**
      * Creates legacy address from given command data
-     *
-     * @return Address
      */
-    private function fetchSupplierAddressFromCommand(AddSupplierCommand $command)
+    private function fetchSupplierAddressFromCommand(AddSupplierCommand $command): Address
     {
         $address = new Address();
         $address->alias = 'supplier';

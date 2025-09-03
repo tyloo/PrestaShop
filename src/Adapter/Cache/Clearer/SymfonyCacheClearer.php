@@ -55,7 +55,7 @@ final class SymfonyCacheClearer implements CacheClearerInterface
     ) {
     }
 
-    public function clear()
+    public function clear(): void
     {
         /** @var AppKernel */
         global $kernel;

@@ -43,7 +43,7 @@ final class BulkDeleteCmsPageHandler extends AbstractCmsPageHandler implements B
     /**
      * @throws CmsPageException
      */
-    public function handle(BulkDeleteCmsPageCommand $command)
+    public function handle(BulkDeleteCmsPageCommand $command): void
     {
         try {
             foreach ($command->getCmsPages() as $cmsPageId) {

@@ -52,7 +52,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
     ) {
     }
 
-    public function handle(EditLanguageCommand $command)
+    public function handle(EditLanguageCommand $command): void
     {
         if ($command->getNoPictureImagePath()) {
             $this->imageValidator->assertFileUploadLimits($command->getNoPictureImagePath());
@@ -81,7 +81,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
     /**
      * Update legacy language only with data that is set
      */
-    private function updateLanguageWithCommandData(Language $language, EditLanguageCommand $command)
+    private function updateLanguageWithCommandData(Language $language, EditLanguageCommand $command): void
     {
         if ($command->getName() !== null) {
             $language->name = $command->getName();
@@ -126,7 +126,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
     /**
      * Only copy new "No picture" if it's being updated
      */
-    private function copyNoPictureIfChanged(Language $language, EditLanguageCommand $command)
+    private function copyNoPictureIfChanged(Language $language, EditLanguageCommand $command): void
     {
         if ($command->getNoPictureImagePath() === null) {
             return;
@@ -147,7 +147,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
     /**
      * Default language cannot be disabled
      */
-    private function assertDefaultLanguageIsNotDisabled(EditLanguageCommand $command)
+    private function assertDefaultLanguageIsNotDisabled(EditLanguageCommand $command): void
     {
         if ($command->isActive() === false
             && $command->getLanguageId()->getValue() === (int) Configuration::get('PS_LANG_DEFAULT')
@@ -161,7 +161,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
      * and there are employees that use this language
      * then their language has to be updated to default
      */
-    private function updateEmployeeLanguage(EditLanguageCommand $command)
+    private function updateEmployeeLanguage(EditLanguageCommand $command): void
     {
         if ($command->isActive() === false) {
             Db::getInstance()->execute(
@@ -175,7 +175,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
     /**
      * Move translation files if language's ISO code has changed
      */
-    private function moveTranslationsIfIsoChanged(Language $language, EditLanguageCommand $command)
+    private function moveTranslationsIfIsoChanged(Language $language, EditLanguageCommand $command): void
     {
         if ($command->getIsoCode() instanceof IsoCode
             && $language->iso_code !== $command->getIsoCode()->getValue()
@@ -184,7 +184,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
         }
     }
 
-    private function updateShopAssociationIfChanged(Language $language, EditLanguageCommand $command)
+    private function updateShopAssociationIfChanged(Language $language, EditLanguageCommand $command): void
     {
         if ($command->getShopAssociation() === null) {
             return;
@@ -199,7 +199,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
     /**
      * Update language's flag image if it has changed
      */
-    private function uploadFlagImageIfChanged(Language $language, EditLanguageCommand $command)
+    private function uploadFlagImageIfChanged(Language $language, EditLanguageCommand $command): void
     {
         if ($command->getFlagImagePath() === null) {
             return;
@@ -217,7 +217,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
     /**
      * Assert that language with updated ISO code does not exist
      */
-    private function assertLanguageWithIsoCodeDoesNotExist(Language $language, EditLanguageCommand $command)
+    private function assertLanguageWithIsoCodeDoesNotExist(Language $language, EditLanguageCommand $command): void
     {
         if (! $command->getIsoCode() instanceof IsoCode) {
             return;

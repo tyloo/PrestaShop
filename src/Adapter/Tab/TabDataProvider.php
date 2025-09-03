@@ -47,10 +47,8 @@ class TabDataProvider
      * Gets viewable tabs for current context employee.
      *
      * @param int $languageId
-     *
-     * @return array
      */
-    public function getViewableTabsForContextEmployee($languageId)
+    public function getViewableTabsForContextEmployee($languageId): array
     {
         if ($this->legacyContext->getContext()->employee) {
             return $this->getViewableTabs(

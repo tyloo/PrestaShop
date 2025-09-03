@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\Notification\CommandHandler\UpdateEmployee
 #[AsCommandHandler]
 final class UpdateEmployeeNotificationLastElementHandler implements UpdateEmployeeNotificationLastElementCommandHandlerInterface
 {
-    public function handle(UpdateEmployeeNotificationLastElementCommand $command)
+    public function handle(UpdateEmployeeNotificationLastElementCommand $command): void
     {
         (new Notification())->updateEmployeeLastElement($command->getType()->getValue());
     }

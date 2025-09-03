@@ -45,7 +45,7 @@ final class ShopUrlDataConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'domain' => $this->mainShopUrl->domain,
@@ -90,7 +90,7 @@ final class ShopUrlDataConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['domain'],
@@ -103,10 +103,8 @@ final class ShopUrlDataConfiguration implements DataConfigurationInterface
      * Check if it's a valid URI.
      *
      * @param string $uri
-     *
-     * @return bool
      */
-    private function isValidUri($uri)
+    private function isValidUri($uri): bool
     {
         return \is_string($uri) && preg_match('#^(?:[~\-_\/&\.\+]|\w|%\d+|\s)+$#', $uri);
     }

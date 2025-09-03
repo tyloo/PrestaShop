@@ -41,7 +41,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CannotSetRequiredFields
 #[AsCommandHandler]
 final class SetRequiredFieldsForCustomerHandler implements SetRequiredFieldsForCustomerHandlerInterface
 {
-    public function handle(SetRequiredFieldsForCustomerCommand $command)
+    public function handle(SetRequiredFieldsForCustomerCommand $command): void
     {
         $customer = new Customer();
 

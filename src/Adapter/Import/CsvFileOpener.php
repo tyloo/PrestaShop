@@ -62,7 +62,7 @@ final class CsvFileOpener implements FileOpenerInterface
      *
      * @param resource $handle
      */
-    private function rewindBomAware($handle)
+    private function rewindBomAware($handle): void
     {
         if (! \is_resource($handle)) {
             return;

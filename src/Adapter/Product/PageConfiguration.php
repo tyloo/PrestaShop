@@ -41,7 +41,7 @@ class PageConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'display_quantities' => $this->configuration->getBoolean('PS_DISPLAY_QTIES'),

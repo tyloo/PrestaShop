@@ -52,22 +52,22 @@ class ModuleTabManagementSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onModuleInstall(ModuleManagementEvent $event)
+    public function onModuleInstall(ModuleManagementEvent $event): void
     {
         $this->moduleTabRegister->registerTabs($event->getModule());
     }
 
-    public function onModuleUninstall(ModuleManagementEvent $event)
+    public function onModuleUninstall(ModuleManagementEvent $event): void
     {
         $this->moduleTabUnregister->unregisterTabs($event->getModule());
     }
 
-    public function onModuleEnable(ModuleManagementEvent $event)
+    public function onModuleEnable(ModuleManagementEvent $event): void
     {
         $this->moduleTabRegister->enableTabs($event->getModule());
     }
 
-    public function onModuleDisable(ModuleManagementEvent $event)
+    public function onModuleDisable(ModuleManagementEvent $event): void
     {
         $this->moduleTabUnregister->disableTabs($event->getModule());
     }

@@ -41,7 +41,7 @@ class LocalUnitsConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'weight_unit' => $this->configuration->get('PS_WEIGHT_UNIT'),
@@ -65,7 +65,7 @@ class LocalUnitsConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $config)
+    public function validateConfiguration(array $config): bool
     {
         return isset(
             $config['weight_unit'],

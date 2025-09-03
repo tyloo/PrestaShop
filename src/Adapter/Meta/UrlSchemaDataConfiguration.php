@@ -64,7 +64,7 @@ final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
         return $configResult;
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $shopConstraint = $this->getShopConstraint();
@@ -94,10 +94,8 @@ final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
      * Gets key which is used to retrieve data from configuration table.
      *
      * @param string $routeId
-     *
-     * @return string
      */
-    private function getConfigurationKey($routeId)
+    private function getConfigurationKey($routeId): string
     {
         return \sprintf('PS_ROUTE_%s', $routeId);
     }

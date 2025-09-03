@@ -116,20 +116,14 @@ class OrderDetailLazyArray extends AbstractLazyArray
         return HistoryController::getUrlToInvoice($this->order, $this->context);
     }
 
-    /**
-     * @return string
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getGiftMessage()
+    public function getGiftMessage(): string
     {
         return nl2br((string) $this->order->gift_message);
     }
 
-    /**
-     * @return int
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getIsReturnable()
+    public function getIsReturnable(): int
     {
         return (int) $this->order->isReturnable();
     }
@@ -152,11 +146,8 @@ class OrderDetailLazyArray extends AbstractLazyArray
         return $this->order->module;
     }
 
-    /**
-     * @return bool
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getRecyclable()
+    public function getRecyclable(): bool
     {
         return (bool) $this->order->recyclable;
     }

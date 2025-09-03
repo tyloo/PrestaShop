@@ -40,7 +40,7 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 final class BackupRepository implements BackupRepositoryInterface
 {
-    public function retrieveBackups()
+    public function retrieveBackups(): BackupCollection
     {
         $backupFinder = (new Finder())
             ->files()

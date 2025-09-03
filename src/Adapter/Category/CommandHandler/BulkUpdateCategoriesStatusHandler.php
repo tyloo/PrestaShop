@@ -46,7 +46,7 @@ final class BulkUpdateCategoriesStatusHandler implements BulkUpdateCategoriesSta
      * @throws CannotUpdateCategoryStatusException
      * @throws CategoryNotFoundException
      */
-    public function handle(BulkUpdateCategoriesStatusCommand $command)
+    public function handle(BulkUpdateCategoriesStatusCommand $command): void
     {
         foreach ($command->getCategoryIds() as $categoryId) {
             $entity = new Category($categoryId->getValue());

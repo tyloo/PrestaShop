@@ -73,7 +73,7 @@ class PhpParameters
      *
      * @param string $propertyPath
      */
-    public function setProperty($propertyPath, $value)
+    public function setProperty($propertyPath, $value): void
     {
         $this->configuration->set($propertyPath, $value);
     }

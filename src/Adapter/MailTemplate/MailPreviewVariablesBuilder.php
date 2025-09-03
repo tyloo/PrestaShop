@@ -114,10 +114,8 @@ final class MailPreviewVariablesBuilder
      * @param array       $parameters
      * @param string|null $domain
      * @param string|null $local
-     *
-     * @return string
      */
-    private function trans($id, $parameters = [], $domain = null, $local = null)
+    private function trans($id, $parameters = [], $domain = null, $local = null): string
     {
         return $this->translator->trans($id, $parameters, $domain, $local);
     }
@@ -209,12 +207,10 @@ final class MailPreviewVariablesBuilder
     }
 
     /**
-     * @return string
-     *
      * @throws PrestaShopException
      * @throws \PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException
      */
-    private function getNewOrderItems(Order $order)
+    private function getNewOrderItems(Order $order): string
     {
         $itemsTable = '';
 
@@ -279,11 +275,9 @@ final class MailPreviewVariablesBuilder
     }
 
     /**
-     * @return string
-     *
      * @throws PrestaShopException
      */
-    private function getReturnSlipItems(Order $order)
+    private function getReturnSlipItems(Order $order): string
     {
         $itemsTable = '';
         foreach ($order->getCartProducts() as $key => $product) {

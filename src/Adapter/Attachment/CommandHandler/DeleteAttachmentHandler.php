@@ -44,7 +44,7 @@ final class DeleteAttachmentHandler extends AbstractAttachmentHandler implements
      * @throws DeleteAttachmentException
      * @throws AttachmentNotFoundException
      */
-    public function handle(DeleteAttachmentCommand $command)
+    public function handle(DeleteAttachmentCommand $command): void
     {
         $attachment = $this->getAttachment($command->getAttachmentId());
 

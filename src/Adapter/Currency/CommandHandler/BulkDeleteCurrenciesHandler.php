@@ -53,7 +53,7 @@ final class BulkDeleteCurrenciesHandler extends AbstractCurrencyHandler implemen
     /**
      * @throws BulkDeleteCurrenciesException
      */
-    public function handle(BulkDeleteCurrenciesCommand $command)
+    public function handle(BulkDeleteCurrenciesCommand $command): void
     {
         $faileds = [];
 

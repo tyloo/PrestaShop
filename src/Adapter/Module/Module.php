@@ -369,7 +369,7 @@ class Module implements ModuleInterface
     /**
      * @param string $attribute
      */
-    public function set($attribute, $value)
+    public function set($attribute, $value): void
     {
         $this->attributes->set($attribute, $value);
     }
@@ -379,7 +379,7 @@ class Module implements ModuleInterface
      *
      * @return mixed|string
      */
-    private function convertType($value)
+    private function convertType($value): string
     {
         $conversionTable = [
             AddonListFilterOrigin::ADDONS_CUSTOMER => 'addonsBought',
@@ -392,7 +392,7 @@ class Module implements ModuleInterface
     /**
      * Set the module logo.
      */
-    public function fillLogo()
+    public function fillLogo(): void
     {
         $img = $this->attributes->get('img');
         if (empty($img)) {

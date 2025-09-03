@@ -45,7 +45,7 @@ final class GetMetaForEditingHandler implements GetMetaForEditingHandlerInterfac
     /**
      * @throws MetaNotFoundException
      */
-    public function handle(GetMetaForEditing $query)
+    public function handle(GetMetaForEditing $query): EditableMeta
     {
         $metaId = $query->getMetaId();
 

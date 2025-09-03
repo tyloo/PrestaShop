@@ -47,7 +47,7 @@ abstract class AbstractImageUploader
     /**
      * @throws UploadedImageConstraintException
      */
-    public function checkImageIsAllowedForUpload(UploadedFile $image)
+    public function checkImageIsAllowedForUpload(UploadedFile $image): void
     {
         $maxFileSize = Tools::getMaxUploadSize();
 
@@ -140,10 +140,8 @@ abstract class AbstractImageUploader
      *
      * @param int    $id
      * @param string $imageDir
-     *
-     * @return bool
      */
-    private function resize($id, $imageDir, array $imageType)
+    private function resize($id, $imageDir, array $imageType): bool
     {
         $ext = '.jpg';
         $width = $imageType['width'];

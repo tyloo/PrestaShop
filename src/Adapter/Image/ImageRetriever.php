@@ -111,10 +111,7 @@ class ImageRetriever
         }, $images);
     }
 
-    /**
-     * @return array
-     */
-    public function getProductImages(array $product, Language $language)
+    public function getProductImages(array $product, Language $language): array
     {
         $images = $this->getAllProductImages($product, $language);
 
@@ -263,7 +260,7 @@ class ImageRetriever
         ];
     }
 
-    private function checkOrGenerateImageType(string $originalImagePath, string $imageFolderPath, int|string $idImage, array $imageTypeData, string $imageFormat)
+    private function checkOrGenerateImageType(string $originalImagePath, string $imageFolderPath, int|string $idImage, array $imageTypeData, string $imageFormat): void
     {
         $fileName = \sprintf('%s-%s.%s', $idImage, $imageTypeData['name'], $imageFormat);
         $resizedImagePath = implode(\DIRECTORY_SEPARATOR, [
@@ -285,10 +282,8 @@ class ImageRetriever
 
     /**
      * @param string $imageHash
-     *
-     * @return array
      */
-    public function getCustomizationImage($imageHash)
+    public function getCustomizationImage($imageHash): array
     {
         $large_image_url = $this->link->getPageLink('upload', null, null, ['file' => $imageHash]);
         $small_image_url = $this->link->getPageLink('upload', null, null, ['file' => $imageHash . '_small']);
@@ -317,12 +312,10 @@ class ImageRetriever
     }
 
     /**
-     * @return array
-     *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException         if the image type is not found
      */
-    public function getNoPictureImage(Language $language)
+    public function getNoPictureImage(Language $language): array
     {
         $urls = [];
 

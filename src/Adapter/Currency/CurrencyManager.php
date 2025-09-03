@@ -39,7 +39,7 @@ class CurrencyManager
     /**
      * Updates currency data after default currency has changed.
      */
-    public function updateDefaultCurrency()
+    public function updateDefaultCurrency(): void
     {
         /* Set conversion rate of default currency to 1 */
         ObjectModel::updateMultishopTable('Currency', ['conversion_rate' => 1], 'a.id_currency');

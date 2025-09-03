@@ -50,7 +50,7 @@ final class DeleteLanguageHandler extends AbstractLanguageHandler implements Del
     ) {
     }
 
-    public function handle(DeleteLanguageCommand $command)
+    public function handle(DeleteLanguageCommand $command): void
     {
         $language = $this->getLegacyLanguageObject($command->getLanguageId());
 

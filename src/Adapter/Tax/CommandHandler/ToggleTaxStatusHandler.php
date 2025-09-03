@@ -41,7 +41,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class ToggleTaxStatusHandler extends AbstractTaxHandler implements ToggleTaxStatusHandlerInterface
 {
-    public function handle(ToggleTaxStatusCommand $command)
+    public function handle(ToggleTaxStatusCommand $command): void
     {
         $tax = $this->getTax($command->getTaxId());
         $taxIdValue = $command->getTaxId()->getValue();

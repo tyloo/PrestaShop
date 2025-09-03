@@ -55,7 +55,7 @@ final class CurrencyCommandValidator
     /**
      * @throws InvalidUnofficialCurrencyException
      */
-    public function assertCurrencyIsNotInReference(string $isoCode)
+    public function assertCurrencyIsNotInReference(string $isoCode): void
     {
         /*
          * Every locale has the same list of currencies (even those defined in only one language) so it
@@ -73,7 +73,7 @@ final class CurrencyCommandValidator
      *
      * @throws CurrencyConstraintException
      */
-    public function assertCurrencyIsNotAvailableInDatabase(string $isoCode)
+    public function assertCurrencyIsNotAvailableInDatabase(string $isoCode): void
     {
         $currency = $this->currencyDataProvider->getCurrencyByIsoCode($isoCode);
 
@@ -87,7 +87,7 @@ final class CurrencyCommandValidator
      *
      * @throws CannotDisableDefaultCurrencyException
      */
-    public function assertDefaultCurrencyIsNotBeingDisabled(EditCurrencyCommand|EditUnofficialCurrencyCommand $command)
+    public function assertDefaultCurrencyIsNotBeingDisabled(EditCurrencyCommand|EditUnofficialCurrencyCommand $command): void
     {
         if (! $command->isEnabled() && $command->getCurrencyId()->getValue() === $this->defaultCurrencyId) {
             throw new CannotDisableDefaultCurrencyException(\sprintf('Currency with id "%s" is the default currency and cannot be disabled.', $command->getCurrencyId()->getValue()));
@@ -100,7 +100,7 @@ final class CurrencyCommandValidator
      *
      * @throws DefaultCurrencyInMultiShopException
      */
-    public function assertDefaultCurrencyIsNotBeingRemovedOrDisabledFromShop(Currency $currency, EditCurrencyCommand|EditUnofficialCurrencyCommand $command)
+    public function assertDefaultCurrencyIsNotBeingRemovedOrDisabledFromShop(Currency $currency, EditCurrencyCommand|EditUnofficialCurrencyCommand $command): void
     {
         if ($command->getShopIds() === []) {
             return;

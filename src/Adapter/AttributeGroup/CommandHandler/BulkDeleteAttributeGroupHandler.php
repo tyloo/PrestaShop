@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Exception\DeleteAttributeGr
 #[AsCommandHandler]
 final class BulkDeleteAttributeGroupHandler extends AbstractAttributeGroupHandler implements BulkDeleteAttributeGroupHandlerInterface
 {
-    public function handle(BulkDeleteAttributeGroupCommand $command)
+    public function handle(BulkDeleteAttributeGroupCommand $command): void
     {
         foreach ($command->getAttributeGroupIds() as $attributeGroupId) {
             $attributeGroup = $this->getAttributeGroupById($attributeGroupId);

@@ -42,7 +42,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class EditManufacturerAddressHandler extends AbstractAddressHandler implements EditManufacturerAddressHandlerInterface
 {
-    public function handle(EditManufacturerAddressCommand $command)
+    public function handle(EditManufacturerAddressCommand $command): void
     {
         $addressId = $command->getAddressId();
         $address = $this->getAddress($addressId);
@@ -63,7 +63,7 @@ final class EditManufacturerAddressHandler extends AbstractAddressHandler implem
      *
      * @param EditManufacturerAddressCommand $command
      */
-    private function populateAddressWithData(Address $address, $command)
+    private function populateAddressWithData(Address $address, $command): void
     {
         if ($command->getManufacturerId() !== null) {
             $address->id_manufacturer = $command->getManufacturerId();

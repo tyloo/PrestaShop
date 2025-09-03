@@ -44,7 +44,7 @@ final class EditManufacturerHandler extends AbstractManufacturerHandler implemen
     /**
      * @throws ManufacturerException
      */
-    public function handle(EditManufacturerCommand $command)
+    public function handle(EditManufacturerCommand $command): void
     {
         $manufacturerId = $command->getManufacturerId();
         $manufacturer = $this->getManufacturer($manufacturerId);
@@ -70,7 +70,7 @@ final class EditManufacturerHandler extends AbstractManufacturerHandler implemen
     /**
      * Populates Manufacturer object with given data
      */
-    private function populateManufacturerWithData(Manufacturer $manufacturer, EditManufacturerCommand $command)
+    private function populateManufacturerWithData(Manufacturer $manufacturer, EditManufacturerCommand $command): void
     {
         if ($command->getName() !== null) {
             $manufacturer->name = $command->getName();

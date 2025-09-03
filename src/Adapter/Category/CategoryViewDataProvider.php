@@ -55,10 +55,8 @@ class CategoryViewDataProvider
      * Get category view data.
      *
      * @param int $categoryId
-     *
-     * @return array
      */
-    public function getViewData($categoryId)
+    public function getViewData($categoryId): array
     {
         $category = new Category($categoryId);
 

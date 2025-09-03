@@ -51,7 +51,7 @@ class TitleImageUploader extends AbstractImageUploader implements ImageUploaderI
      * @throws ImageOptimizationException
      * @throws MemoryLimitException
      */
-    public function upload($entityId, UploadedFile $uploadedImage, ?int $imageWidth = null, ?int $imageHeight = null)
+    public function upload($entityId, UploadedFile $uploadedImage, ?int $imageWidth = null, ?int $imageHeight = null): void
     {
         $this->checkImageIsAllowedForUpload($uploadedImage);
         $tempImageName = $this->createTemporaryImage($uploadedImage);

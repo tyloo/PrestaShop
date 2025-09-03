@@ -53,7 +53,7 @@ final class AddCartRuleToCartHandler extends AbstractCartHandler implements AddC
     ) {
     }
 
-    public function handle(AddCartRuleToCartCommand $command)
+    public function handle(AddCartRuleToCartCommand $command): void
     {
         $cart = $this->getCart($command->getCartId());
         $cartRule = new CartRule($command->getCartRuleId()->getValue());

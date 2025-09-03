@@ -37,7 +37,7 @@ final class InstalledLanguageChecker implements InstalledLanguageCheckerInterfac
     ) {
     }
 
-    public function isInstalledRtlLanguage()
+    public function isInstalledRtlLanguage(): bool
     {
         $languages = $this->languageDataProvider->getLanguages(false);
 

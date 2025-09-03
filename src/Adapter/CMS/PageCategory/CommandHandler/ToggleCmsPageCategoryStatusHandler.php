@@ -45,7 +45,7 @@ final class ToggleCmsPageCategoryStatusHandler implements ToggleCmsPageCategoryS
     /**
      * @throws CmsPageCategoryException
      */
-    public function handle(ToggleCmsPageCategoryStatusCommand $command)
+    public function handle(ToggleCmsPageCategoryStatusCommand $command): void
     {
         try {
             $entity = new CMSCategory($command->getCmsPageCategoryId()->getValue());

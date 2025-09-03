@@ -53,7 +53,7 @@ final class UploadLogosHandler implements UploadLogosHandlerInterface
      * @throws ShopException
      * @throws FileUploadException
      */
-    public function handle(UploadLogosCommand $command)
+    public function handle(UploadLogosCommand $command): void
     {
         $this->configuration->set('PS_IMG_UPDATE_TIME', time());
 
@@ -80,28 +80,28 @@ final class UploadLogosHandler implements UploadLogosHandlerInterface
         $this->hookDispatcher->dispatchWithParameters('actionAdminThemesControllerUpdate_optionsAfter');
     }
 
-    private function uploadHeaderLogo(UploadedFile $uploadedFile)
+    private function uploadHeaderLogo(UploadedFile $uploadedFile): void
     {
         $this->setUploadedFileToBeCompatibleWithLegacyUploader(ShopLogoSettings::HEADER_LOGO_FILE_NAME, $uploadedFile);
 
         $this->logoUploader->updateHeader();
     }
 
-    private function uploadMailLogo(UploadedFile $uploadedFile)
+    private function uploadMailLogo(UploadedFile $uploadedFile): void
     {
         $this->setUploadedFileToBeCompatibleWithLegacyUploader(ShopLogoSettings::MAIL_LOGO_FILE_NAME, $uploadedFile);
 
         $this->logoUploader->updateMail();
     }
 
-    private function uploadInvoiceLogo(UploadedFile $uploadedHeaderLogo)
+    private function uploadInvoiceLogo(UploadedFile $uploadedHeaderLogo): void
     {
         $this->setUploadedFileToBeCompatibleWithLegacyUploader(ShopLogoSettings::INVOICE_LOGO_FILE_NAME, $uploadedHeaderLogo);
 
         $this->logoUploader->updateInvoice();
     }
 
-    private function uploadFavicon(UploadedFile $uploadedHeaderLogo)
+    private function uploadFavicon(UploadedFile $uploadedHeaderLogo): void
     {
         $this->setUploadedFileToBeCompatibleWithLegacyUploader(ShopLogoSettings::FAVICON_FILE_NAME, $uploadedHeaderLogo);
 

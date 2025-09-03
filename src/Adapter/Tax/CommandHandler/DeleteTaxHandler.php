@@ -41,7 +41,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class DeleteTaxHandler extends AbstractTaxHandler implements DeleteTaxHandlerInterface
 {
-    public function handle(DeleteTaxCommand $command)
+    public function handle(DeleteTaxCommand $command): void
     {
         $tax = $this->getTax($command->getTaxId());
         $taxIdValue = $command->getTaxId()->getValue();

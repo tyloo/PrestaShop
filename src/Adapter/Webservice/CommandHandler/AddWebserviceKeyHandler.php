@@ -45,7 +45,7 @@ use WebserviceKey;
 #[AsCommandHandler]
 final class AddWebserviceKeyHandler extends AbstractWebserviceKeyHandler implements AddWebserviceKeyHandlerInterface
 {
-    public function handle(AddWebserviceKeyCommand $command)
+    public function handle(AddWebserviceKeyCommand $command): WebserviceKeyId
     {
         $this->assertWebserviceKeyIsNotDuplicate($command->getKey());
 
@@ -60,17 +60,14 @@ final class AddWebserviceKeyHandler extends AbstractWebserviceKeyHandler impleme
     /**
      * Asserts that new webservice key does not duplicate already existing keys
      */
-    private function assertWebserviceKeyIsNotDuplicate(Key $key)
+    private function assertWebserviceKeyIsNotDuplicate(Key $key): void
     {
         if (WebserviceKey::keyExists($key->getValue())) {
             throw new DuplicateWebserviceKeyException(\sprintf('Webservice key "%s" already exists', $key->getValue()));
         }
     }
 
-    /**
-     * @return WebserviceKey
-     */
-    private function createLegacyWebserviceKeyFromCommand(AddWebserviceKeyCommand $command)
+    private function createLegacyWebserviceKeyFromCommand(AddWebserviceKeyCommand $command): WebserviceKey
     {
         $webserviceKey = new WebserviceKey();
         $webserviceKey->key = $command->getKey()->getValue();

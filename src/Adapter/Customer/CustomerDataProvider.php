@@ -91,7 +91,7 @@ class CustomerDataProvider
     /**
      * Provides customer messages
      */
-    public function getCustomerMessages(int $customerId, ?int $orderId = null, ?int $limit = null)
+    public function getCustomerMessages(int $customerId, ?int $orderId = null, ?int $limit = null): array
     {
         $mainSql = 'SELECT cm.*, c.`firstname` AS cfirstname, c.`lastname` AS clastname,
             e.`firstname` AS efirstname, e.`lastname` AS elastname

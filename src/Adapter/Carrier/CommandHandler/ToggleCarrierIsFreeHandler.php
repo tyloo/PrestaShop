@@ -45,7 +45,7 @@ class ToggleCarrierIsFreeHandler implements ToggleCarrierIsFreeHandlerInterface
     ) {
     }
 
-    public function handle(ToggleCarrierIsFreeCommand $command)
+    public function handle(ToggleCarrierIsFreeCommand $command): void
     {
         $carrier = $this->carrierRepository->get($command->getCarrierId());
 

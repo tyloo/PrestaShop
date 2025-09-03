@@ -45,7 +45,7 @@ final class AddTaxHandler extends AbstractTaxHandler implements AddTaxHandlerInt
     /**
      * @throws TaxException
      */
-    public function handle(AddTaxCommand $command)
+    public function handle(AddTaxCommand $command): TaxId
     {
         $tax = new Tax();
 

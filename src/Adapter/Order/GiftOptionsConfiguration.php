@@ -45,7 +45,7 @@ class GiftOptionsConfiguration extends AbstractMultistoreConfiguration
         'offer_recyclable_pack',
     ];
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
 
@@ -57,7 +57,7 @@ class GiftOptionsConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $shopConstraint = $this->getShopConstraint();

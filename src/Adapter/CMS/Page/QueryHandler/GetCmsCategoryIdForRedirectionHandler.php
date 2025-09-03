@@ -41,7 +41,7 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
 #[AsQueryHandler]
 final class GetCmsCategoryIdForRedirectionHandler extends AbstractCmsPageHandler implements GetCmsCategoryIdHandlerForRedirectionInterface
 {
-    public function handle(GetCmsCategoryIdForRedirection $query)
+    public function handle(GetCmsCategoryIdForRedirection $query): CmsPageCategoryId
     {
         try {
             $cms = $this->getCmsPageIfExistsById($query->getCmsPageId()->getValue());

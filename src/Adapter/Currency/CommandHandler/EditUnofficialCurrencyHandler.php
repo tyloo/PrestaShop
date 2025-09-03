@@ -59,7 +59,7 @@ final class EditUnofficialCurrencyHandler extends AbstractCurrencyHandler implem
      * @throws LocalizationException
      * @throws LanguageNotFoundException
      */
-    public function handle(EditUnofficialCurrencyCommand $command)
+    public function handle(EditUnofficialCurrencyCommand $command): void
     {
         try {
             $entity = new Currency($command->getCurrencyId()->getValue());
@@ -85,7 +85,7 @@ final class EditUnofficialCurrencyHandler extends AbstractCurrencyHandler implem
      * @throws DefaultCurrencyInMultiShopException
      * @throws InvalidUnofficialCurrencyException
      */
-    private function verify(Currency $entity, EditUnofficialCurrencyCommand $command)
+    private function verify(Currency $entity, EditUnofficialCurrencyCommand $command): void
     {
         $this->validator->assertDefaultCurrencyIsNotBeingDisabled($command);
         if ($command->getIsoCode() instanceof \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\AlphaIsoCode) {

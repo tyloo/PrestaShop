@@ -79,7 +79,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
         $this->context = new LegacyContext();
     }
 
-    public function handle(GetCustomerForViewing $query)
+    public function handle(GetCustomerForViewing $query): ViewableCustomer
     {
         $customerId = $query->getCustomerId();
         $customer = new Customer($customerId->getValue());
@@ -104,10 +104,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
         );
     }
 
-    /**
-     * @return GeneralInformation
-     */
-    private function getGeneralInformation(Customer $customer)
+    private function getGeneralInformation(Customer $customer): GeneralInformation
     {
         return new GeneralInformation(
             $customer->note,
@@ -115,10 +112,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
         );
     }
 
-    /**
-     * @return PersonalInformation
-     */
-    private function getPersonalInformation(Customer $customer)
+    private function getPersonalInformation(Customer $customer): PersonalInformation
     {
         $customerStats = $customer->getStats();
 
@@ -223,10 +217,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
         );
     }
 
-    /**
-     * @return ProductsInformation
-     */
-    private function getCustomerProducts()
+    private function getCustomerProducts(): ProductsInformation
     {
         return new ProductsInformation([], []);
     }
@@ -333,7 +324,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     /**
      * @throws CustomerNotFoundException
      */
-    private function assertCustomerWasFound(CustomerId $customerId, Customer $customer)
+    private function assertCustomerWasFound(CustomerId $customerId, Customer $customer): void
     {
         if (! $customer->id) {
             throw new CustomerNotFoundException(\sprintf('Customer with id "%d" was not found.', $customerId->getValue()));

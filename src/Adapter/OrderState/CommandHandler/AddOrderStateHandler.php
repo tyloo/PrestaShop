@@ -49,7 +49,7 @@ final class AddOrderStateHandler extends AbstractOrderStateHandler implements Ad
     ) {
     }
 
-    public function handle(AddOrderStateCommand $command)
+    public function handle(AddOrderStateCommand $command): OrderStateId
     {
         $orderState = new OrderState();
 
@@ -68,7 +68,7 @@ final class AddOrderStateHandler extends AbstractOrderStateHandler implements Ad
         return new OrderStateId((int) $orderState->id);
     }
 
-    private function fillOrderStateWithCommandData(OrderState $orderState, AddOrderStateCommand $command)
+    private function fillOrderStateWithCommandData(OrderState $orderState, AddOrderStateCommand $command): void
     {
         $orderState->name = $command->getLocalizedNames();
         $orderState->color = $command->getColor();

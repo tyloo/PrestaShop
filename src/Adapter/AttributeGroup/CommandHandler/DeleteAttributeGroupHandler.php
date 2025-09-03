@@ -44,7 +44,7 @@ final class DeleteAttributeGroupHandler extends AbstractAttributeGroupHandler im
     /**
      * @throws AttributeGroupException
      */
-    public function handle(DeleteAttributeGroupCommand $command)
+    public function handle(DeleteAttributeGroupCommand $command): void
     {
         $attributeGroupId = $command->getAttributeGroupId();
         $attributeGroup = $this->getAttributeGroupById($attributeGroupId);

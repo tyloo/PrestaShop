@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Category\QueryHandler\GetCategoryIsEnabled
 #[AsQueryHandler]
 final class GetCategoryIsEnabledHandler implements GetCategoryIsEnabledHandlerInterface
 {
-    public function handle(GetCategoryIsEnabled $query)
+    public function handle(GetCategoryIsEnabled $query): bool
     {
         $categoryId = $query->getCategoryId()->getValue();
         $category = new Category($categoryId);

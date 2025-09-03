@@ -43,7 +43,7 @@ use Product;
 #[AsQueryHandler]
 final class GetManufacturerForViewingHandler implements GetManufacturerForViewingHandlerInterface
 {
-    public function handle(GetManufacturerForViewing $query)
+    public function handle(GetManufacturerForViewing $query): ViewableManufacturer
     {
         $manufacturer = $this->getManufacturer($query->getManufacturerId());
 
@@ -54,10 +54,7 @@ final class GetManufacturerForViewingHandler implements GetManufacturerForViewin
         );
     }
 
-    /**
-     * @return Manufacturer
-     */
-    private function getManufacturer(ManufacturerId $manufacturerId)
+    private function getManufacturer(ManufacturerId $manufacturerId): Manufacturer
     {
         $manufacturer = new Manufacturer($manufacturerId->getValue());
 

@@ -67,11 +67,9 @@ class CategoryDataProvider
      * @param int|null $idLang
      * @param int|null $idShop
      *
-     * @return Category
-     *
      * @throws LogicException If the category id is not set
      */
-    public function getCategory($idCategory = null, $idLang = null, $idShop = null)
+    public function getCategory($idCategory = null, $idLang = null, $idShop = null): Category
     {
         if (! $idCategory) {
             throw new LogicException('You need to provide a category id', 5002);
@@ -183,10 +181,8 @@ class CategoryDataProvider
      *
      * @param int    $categoryId
      * @param string $delimiter
-     *
-     * @return string
      */
-    public function getBreadCrumb($categoryId, $delimiter = ' > ')
+    public function getBreadCrumb($categoryId, $delimiter = ' > '): string
     {
         $categories = $this->getParentNamesFromList($categoryId);
         $categories = array_reverse($categories, true);

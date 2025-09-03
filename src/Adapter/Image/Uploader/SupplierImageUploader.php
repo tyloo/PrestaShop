@@ -36,7 +36,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 final class SupplierImageUploader extends AbstractImageUploader implements ImageUploaderInterface
 {
-    public function upload($supplierId, UploadedFile $image)
+    public function upload($supplierId, UploadedFile $image): void
     {
         $this->checkImageIsAllowedForUpload($image);
         $tempImageName = $this->createTemporaryImage($image);
@@ -55,7 +55,7 @@ final class SupplierImageUploader extends AbstractImageUploader implements Image
      *
      * @param int $id
      */
-    private function deleteOldImage($id)
+    private function deleteOldImage($id): void
     {
         $supplier = new Supplier($id);
         $supplier->deleteImage();

@@ -41,7 +41,7 @@ use SpecificPrice;
 #[AsCommandHandler]
 final class UpdateProductPriceInCartHandler extends AbstractCartHandler implements UpdateProductPriceInCartHandlerInterface
 {
-    public function handle(UpdateProductPriceInCartCommand $command)
+    public function handle(UpdateProductPriceInCartCommand $command): void
     {
         $cart = $this->getCart($command->getCartId());
 
@@ -70,7 +70,7 @@ final class UpdateProductPriceInCartHandler extends AbstractCartHandler implemen
     /**
      * Deletes specific price for cart & product if it already exists.
      */
-    private function deleteSpecificPriceIfExists(UpdateProductPriceInCartCommand $command)
+    private function deleteSpecificPriceIfExists(UpdateProductPriceInCartCommand $command): void
     {
         SpecificPrice::deleteByIdCart(
             $command->getCartId()->getValue(),

@@ -58,7 +58,7 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'smart_cache_css' => $this->configuration->getBoolean('PS_CSS_THEME_CACHE'),
@@ -98,7 +98,7 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['smart_cache_css'],
@@ -110,7 +110,7 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
     /**
      * @return string Absolute path the the current active theme
      */
-    private function getThemeCacheFolder()
+    private function getThemeCacheFolder(): string
     {
         return $this->themePath . '/' . $this->themeName . '/cache/';
     }
@@ -133,7 +133,7 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
     /**
      * Update Cache version of assets if needed.
      */
-    private function updateCachesVersionsIfNeeded(array $configuration)
+    private function updateCachesVersionsIfNeeded(array $configuration): void
     {
         $cacheCSS = $configuration['smart_cache_css'];
         $currentCacheCSS = $this->configuration->get('PS_CSS_THEME_CACHE');

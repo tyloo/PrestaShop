@@ -47,7 +47,7 @@ final class GetCmsPageCategoryForEditingHandler implements GetCmsPageCategoryFor
     /**
      * @throws CmsPageCategoryException
      */
-    public function handle(GetCmsPageCategoryForEditing $query)
+    public function handle(GetCmsPageCategoryForEditing $query): EditableCmsPageCategory
     {
         try {
             $cmsPageCategory = new CMSCategory($query->getCmsPageCategoryId()->getValue());

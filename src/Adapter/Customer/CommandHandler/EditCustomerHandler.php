@@ -55,7 +55,7 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
     ) {
     }
 
-    public function handle(EditCustomerCommand $command)
+    public function handle(EditCustomerCommand $command): void
     {
         $customerId = $command->getCustomerId();
         $customer = new Customer($customerId->getValue());
@@ -105,7 +105,7 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
         }
     }
 
-    private function updateCustomerWithCommandData(Customer $customer, EditCustomerCommand $command)
+    private function updateCustomerWithCommandData(Customer $customer, EditCustomerCommand $command): void
     {
         if ($command->getGenderId() !== null) {
             $customer->id_gender = $command->getGenderId();
@@ -155,7 +155,7 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
         $this->updateCustomerB2bData($customer, $command);
     }
 
-    private function updateCustomerB2bData(Customer $customer, EditCustomerCommand $command)
+    private function updateCustomerB2bData(Customer $customer, EditCustomerCommand $command): void
     {
         if ($command->getCompanyName() !== null) {
             $customer->company = $command->getCompanyName();
@@ -186,7 +186,7 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
         }
     }
 
-    private function assertCustomerWithUpdatedEmailDoesNotExist(Customer $customer, EditCustomerCommand $command)
+    private function assertCustomerWithUpdatedEmailDoesNotExist(Customer $customer, EditCustomerCommand $command): void
     {
         // We only check this if the email is getting changed.
         if (! $command->getEmail() instanceof Email) {
@@ -208,7 +208,7 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
         }
     }
 
-    private function assertCustomerCanAccessDefaultGroup(Customer $customer, EditCustomerCommand $command)
+    private function assertCustomerCanAccessDefaultGroup(Customer $customer, EditCustomerCommand $command): void
     {
         // If nothing is updated on groups, nothing to do here
         if ($command->getDefaultGroupId() === null && $command->getGroupIds() === null) {

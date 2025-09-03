@@ -45,7 +45,7 @@ final class BulkEnableCmsPageCategoryHandler implements BulkEnableCmsPageCategor
     /**
      * @throws CmsPageCategoryException
      */
-    public function handle(BulkEnableCmsPageCategoryCommand $command)
+    public function handle(BulkEnableCmsPageCategoryCommand $command): void
     {
         try {
             foreach ($command->getCmsPageCategoryIds() as $cmsPageCategoryId) {

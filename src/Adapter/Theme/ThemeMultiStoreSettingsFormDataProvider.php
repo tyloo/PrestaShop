@@ -48,7 +48,7 @@ final class ThemeMultiStoreSettingsFormDataProvider implements MultiStoreSetting
     ) {
     }
 
-    public function getData()
+    public function getData(): array
     {
         $isValidShopRestriction = $this->isShopFeatureUsed && $this->isSingleShopContext;
 

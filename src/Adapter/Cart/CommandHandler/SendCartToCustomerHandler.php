@@ -47,7 +47,7 @@ use Validate;
 #[AsCommandHandler]
 final class SendCartToCustomerHandler implements SendCartToCustomerHanlderInterface
 {
-    public function handle(SendCartToCustomerCommand $command)
+    public function handle(SendCartToCustomerCommand $command): void
     {
         $cart = $this->getCart($command->getCartId());
         $customer = $this->getCustomer($cart->id_customer);
@@ -87,11 +87,9 @@ final class SendCartToCustomerHandler implements SendCartToCustomerHanlderInterf
     }
 
     /**
-     * @return Cart
-     *
      * @throws CartNotFoundException
      */
-    private function getCart(CartId $cartId)
+    private function getCart(CartId $cartId): Cart
     {
         $cart = new Cart($cartId->getValue());
 
@@ -105,11 +103,9 @@ final class SendCartToCustomerHandler implements SendCartToCustomerHanlderInterf
     /**
      * @param int $customerId
      *
-     * @return Customer
-     *
      * @throws CartException
      */
-    private function getCustomer($customerId)
+    private function getCustomer($customerId): Customer
     {
         $customer = new Customer($customerId);
 

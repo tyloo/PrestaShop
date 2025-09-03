@@ -51,17 +51,17 @@ class FeatureFeature implements FeatureInterface
         return Feature::isFeatureActive();
     }
 
-    public function enable()
+    public function enable(): void
     {
         $this->configuration->set('PS_FEATURE_FEATURE_ACTIVE', true);
     }
 
-    public function disable()
+    public function disable(): void
     {
         $this->configuration->set('PS_FEATURE_FEATURE_ACTIVE', false);
     }
 
-    public function update($status)
+    public function update($status): void
     {
         $status === true ? $this->enable() : $this->disable();
     }

@@ -59,7 +59,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
     ) {
     }
 
-    public function handle(GetCartForViewing $query)
+    public function handle(GetCartForViewing $query): CartView
     {
         $cartId = $query->getCartId()->getValue();
         $cart = new Cart($cartId);

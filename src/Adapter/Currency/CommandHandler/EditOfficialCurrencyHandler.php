@@ -57,7 +57,7 @@ final class EditOfficialCurrencyHandler extends AbstractCurrencyHandler implemen
      * @throws LocalizationException
      * @throws LanguageNotFoundException
      */
-    public function handle(EditCurrencyCommand $command)
+    public function handle(EditCurrencyCommand $command): void
     {
         try {
             $entity = new Currency($command->getCurrencyId()->getValue());
@@ -76,7 +76,7 @@ final class EditOfficialCurrencyHandler extends AbstractCurrencyHandler implemen
      * @throws CannotDisableDefaultCurrencyException
      * @throws DefaultCurrencyInMultiShopException
      */
-    private function verify(Currency $entity, EditCurrencyCommand $command)
+    private function verify(Currency $entity, EditCurrencyCommand $command): void
     {
         $this->validator->assertDefaultCurrencyIsNotBeingDisabled($command);
         $this->validator->assertDefaultCurrencyIsNotBeingRemovedOrDisabledFromShop($entity, $command);

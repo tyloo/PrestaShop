@@ -44,10 +44,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class AddCategoryHandler extends AbstractEditCategoryHandler implements AddCategoryHandlerInterface
 {
-    /**
-     * @return CategoryId
-     */
-    public function handle(AddCategoryCommand $command)
+    public function handle(AddCategoryCommand $command): CategoryId
     {
         $category = $this->createCategoryFromCommand($command);
 
@@ -63,13 +60,11 @@ final class AddCategoryHandler extends AbstractEditCategoryHandler implements Ad
     }
 
     /**
-     * @return Category
-     *
      * @throws CannotAddCategoryException
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
-    private function createCategoryFromCommand(AddCategoryCommand $command)
+    private function createCategoryFromCommand(AddCategoryCommand $command): Category
     {
         $category = new Category();
         $category->id_parent = $command->getParentCategoryId();

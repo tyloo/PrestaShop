@@ -377,7 +377,7 @@ class OrderProductQuantityUpdater
     /**
      * @throws ProductOutOfStockException
      */
-    private function assertValidProductQuantity(OrderDetail $orderDetail, int $newQuantity)
+    private function assertValidProductQuantity(OrderDetail $orderDetail, int $newQuantity): void
     {
         // check if product is available in stock
         if (! Product::isAvailableWhenOutOfStock(StockAvailable::outOfStock($orderDetail->product_id))) {

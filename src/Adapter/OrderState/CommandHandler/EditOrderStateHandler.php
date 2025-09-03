@@ -49,7 +49,7 @@ final class EditOrderStateHandler extends AbstractOrderStateHandler implements E
     ) {
     }
 
-    public function handle(EditOrderStateCommand $command)
+    public function handle(EditOrderStateCommand $command): void
     {
         $orderStateId = $command->getOrderStateId();
         $orderState = new OrderState($orderStateId->getValue());
@@ -76,7 +76,7 @@ final class EditOrderStateHandler extends AbstractOrderStateHandler implements E
     /**
      * @throws MissingOrderStateRequiredFieldsException
      */
-    protected function assertRequiredFieldsAreNotMissing(OrderState $orderState)
+    protected function assertRequiredFieldsAreNotMissing(OrderState $orderState): void
     {
         // Check that we have templates for all languages when send_email is on
         $haveMissingTemplates = (
@@ -91,7 +91,7 @@ final class EditOrderStateHandler extends AbstractOrderStateHandler implements E
         parent::assertRequiredFieldsAreNotMissing($orderState);
     }
 
-    private function updateOrderStateWithCommandData(OrderState $orderState, EditOrderStateCommand $command)
+    private function updateOrderStateWithCommandData(OrderState $orderState, EditOrderStateCommand $command): void
     {
         if ($command->getName() !== null) {
             $orderState->name = $command->getName();

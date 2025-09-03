@@ -74,7 +74,7 @@ class PricesDropProductSearchProvider implements ProductSearchProviderInterface
     public function runQuery(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-    ) {
+    ): ProductSearchResult {
         if (! $products = $this->getProductsOrCount($context, $query, 'products')) {
             $products = [];
         }

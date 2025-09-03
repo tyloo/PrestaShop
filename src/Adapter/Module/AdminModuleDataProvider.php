@@ -104,7 +104,7 @@ class AdminModuleDataProvider implements ModuleInterface
         $this->apiClientContext = $apiClientContext ?? new ApiClientContext(null);
     }
 
-    public function setRouter(Router $router)
+    public function setRouter(Router $router): void
     {
         $this->router = $router;
     }

@@ -468,12 +468,10 @@ class ProductLazyArray extends AbstractLazyArray
     }
 
     /**
-     * @return array
-     *
      * @throws InvalidArgumentException
      */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getLabels()
+    public function getLabels(): array
     {
         return [
             'tax_short' => $this->settings->include_taxes
@@ -589,11 +587,8 @@ class ProductLazyArray extends AbstractLazyArray
         return $this->product['category_name'];
     }
 
-    /**
-     * @return bool
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getVirtual()
+    public function getVirtual(): bool
     {
         return $this->product['is_virtual'] || ! empty($this->product['virtual']);
     }
@@ -916,13 +911,10 @@ class ProductLazyArray extends AbstractLazyArray
         }
     }
 
-    /**
-     * @return array
-     */
     private function filterImagesForCombination(
         array $images,
         int $productAttributeId,
-    ) {
+    ): array {
         $filteredImages = [];
 
         foreach ($images as $image) {
@@ -1139,7 +1131,7 @@ class ProductLazyArray extends AbstractLazyArray
     /**
      * @return int Quantity of product requested by the customer
      */
-    private function getQuantityWanted()
+    private function getQuantityWanted(): int
     {
         return (int) Tools::getValue(
             'quantity_wanted',
@@ -1150,7 +1142,7 @@ class ProductLazyArray extends AbstractLazyArray
     /**
      * @return int Minimal quantity of product requested by the customer
      */
-    private function getMinimalQuantity()
+    private function getMinimalQuantity(): int
     {
         return (int) $this->product['minimal_quantity'];
     }
@@ -1189,7 +1181,7 @@ class ProductLazyArray extends AbstractLazyArray
         ProductPresentationSettings $settings,
         array $product,
         Language $language,
-    ) {
+    ): void {
         $show_price = $this->shouldShowPrice($settings, $product);
         $show_availability = $show_price && $settings->stock_management_enabled;
         $this->product['show_availability'] = $show_availability;
@@ -1335,11 +1327,9 @@ class ProductLazyArray extends AbstractLazyArray
 
     /**
      * Returns extra price associated with current combination, if provided
-     *
-     * @return float
      */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getAttributePrice()
+    public function getAttributePrice(): float
     {
         if (! isset($this->product['attribute_price'])) {
             if (! empty($this->product['id_product_attribute'])) {
@@ -1417,10 +1407,7 @@ class ProductLazyArray extends AbstractLazyArray
         };
     }
 
-    /**
-     * @return array
-     */
-    protected function getProductAttributeWhitelist()
+    protected function getProductAttributeWhitelist(): array
     {
         return [
             'active',

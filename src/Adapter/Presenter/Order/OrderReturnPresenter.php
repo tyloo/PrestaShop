@@ -47,11 +47,9 @@ class OrderReturnPresenter implements PresenterInterface
     /**
      * @param array $orderReturn
      *
-     * @return OrderReturnLazyArray
-     *
      * @throws ReflectionException
      */
-    public function present($orderReturn)
+    public function present($orderReturn): OrderReturnLazyArray
     {
         if (! \is_array($orderReturn)) {
             throw new Exception('orderReturnPresenter can only present order_return passed as array');

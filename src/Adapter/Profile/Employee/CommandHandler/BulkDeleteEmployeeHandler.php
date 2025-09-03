@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\Exception\CannotDeleteEmployeeExc
 #[AsCommandHandler]
 final class BulkDeleteEmployeeHandler extends AbstractEmployeeHandler implements BulkDeleteEmployeeHandlerInterface
 {
-    public function handle(BulkDeleteEmployeeCommand $command)
+    public function handle(BulkDeleteEmployeeCommand $command): void
     {
         foreach ($command->getEmployeeIds() as $employeeId) {
             $employee = new Employee($employeeId->getValue());

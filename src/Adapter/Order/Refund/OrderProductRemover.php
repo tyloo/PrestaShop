@@ -124,7 +124,7 @@ class OrderProductRemover
     private function deleteOrderDetail(
         Order $order,
         OrderDetail $orderDetail,
-    ) {
+    ): void {
         if (! $orderDetail->delete()) {
             throw new DeleteProductFromOrderException('Could not delete order detail');
         }
@@ -132,7 +132,7 @@ class OrderProductRemover
         $order->update();
     }
 
-    private function deleteCustomization(Order $order, OrderDetail $orderDetail)
+    private function deleteCustomization(Order $order, OrderDetail $orderDetail): void
     {
         if ((int) $order->getCurrentState() === 0) {
             throw new DeleteCustomizedProductFromOrderException('Could not get a valid Order state before deletion');

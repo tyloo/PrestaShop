@@ -68,11 +68,9 @@ final class GetProfileForEditingHandler extends AbstractObjectModelHandler imple
     }
 
     /**
-     * @return Profile
-     *
      * @throws ProfileNotFoundException
      */
-    private function getProfile(ProfileId $profileId)
+    private function getProfile(ProfileId $profileId): Profile
     {
         $profile = new Profile($profileId->getValue());
 

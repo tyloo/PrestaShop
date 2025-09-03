@@ -182,7 +182,7 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         $this->defaultLanguageId = $this->configuration->getInt('PS_LANG_DEFAULT');
     }
 
-    public function setUp(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig)
+    public function setUp(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig): void
     {
         $languageIso = trim($importConfig->getLanguageIso());
         $locale = strtolower($languageIso) . '_' . strtoupper($languageIso) . '.UTF-8';
@@ -228,7 +228,7 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
         DataRowInterface $dataRow,
-    ) {
+    ): void {
         if ($dataRow->isEmpty()) {
             $this->warning(
                 $this->translator->trans(
@@ -249,7 +249,7 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         }
     }
 
-    public function tearDown(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig)
+    public function tearDown(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig): void
     {
         if (! $runtimeConfig->shouldValidateData()) {
             $offset = $runtimeConfig->getOffset();
@@ -295,7 +295,7 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
      *
      * @param string $message
      */
-    public function warning($message)
+    public function warning($message): void
     {
         $this->warnings[] = $message;
     }
@@ -310,7 +310,7 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
      *
      * @param string $message
      */
-    public function error($message)
+    public function error($message): void
     {
         $this->errors[] = $message;
     }
@@ -325,7 +325,7 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
      *
      * @param string $message
      */
-    public function notice($message)
+    public function notice($message): void
     {
         $this->notices[] = $message;
     }

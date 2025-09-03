@@ -65,7 +65,7 @@ final class SymfonyContainer
         return self::$instance;
     }
 
-    public static function resetStaticCache()
+    public static function resetStaticCache(): void
     {
         self::$instance = null;
     }

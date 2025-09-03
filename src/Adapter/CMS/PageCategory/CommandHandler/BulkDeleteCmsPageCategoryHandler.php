@@ -45,7 +45,7 @@ final class BulkDeleteCmsPageCategoryHandler implements BulkDeleteCmsPageCategor
     /**
      * @throws CmsPageCategoryException
      */
-    public function handle(BulkDeleteCmsPageCategoryCommand $command)
+    public function handle(BulkDeleteCmsPageCategoryCommand $command): void
     {
         try {
             foreach ($command->getCmsPageCategoryIds() as $cmsPageCategoryId) {

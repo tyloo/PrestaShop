@@ -106,10 +106,8 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "FROM" keyword validation.
-     *
-     * @return array
      */
-    private function getFromKeywordError(array $legacyError)
+    private function getFromKeywordError(array $legacyError): array
     {
         if (isset($legacyError['table'])) {
             return [
@@ -143,10 +141,8 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "SELECT" keyword validation.
-     *
-     * @return array
      */
-    private function getSelectKeywordError(array $legacyError)
+    private function getSelectKeywordError(array $legacyError): array
     {
         if (isset($legacyError['table'])) {
             return [
@@ -196,10 +192,8 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "WHERE" keyword validation.
-     *
-     * @return array
      */
-    private function getWhereKeywordError(array $legacyError)
+    private function getWhereKeywordError(array $legacyError): array
     {
         if (isset($legacyError['operator'])) {
             return [
@@ -233,10 +227,8 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "HAVING" keyword validation.
-     *
-     * @return array
      */
-    private function getHavingKeywordError(array $legacyError)
+    private function getHavingKeywordError(array $legacyError): array
     {
         if (isset($legacyError['operator'])) {
             return [
@@ -270,10 +262,8 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "ORDER" keyword validation.
-     *
-     * @return array
      */
-    private function getOrderKeywordError(array $legacyError)
+    private function getOrderKeywordError(array $legacyError): array
     {
         if (isset($legacyError['attribut'])) {
             return [
@@ -297,10 +287,8 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "GROUP" keyword validation.
-     *
-     * @return array
      */
-    private function getGroupKeywordError(array $legacyError)
+    private function getGroupKeywordError(array $legacyError): array
     {
         if (isset($legacyError['attribut'])) {
             return [
@@ -324,10 +312,8 @@ class SqlQueryValidator
 
     /**
      * Get SQL error for "LIMIT" keyword validation.
-     *
-     * @return array
      */
-    private function getLimitKeywordError()
+    private function getLimitKeywordError(): array
     {
         return [
             'key' => 'The LIMIT clause must contain numeric arguments.',
@@ -367,10 +353,8 @@ class SqlQueryValidator
      * Get required key error.
      *
      * @param string $legacyError
-     *
-     * @return array
      */
-    private function getRequiredKeyError($legacyError)
+    private function getRequiredKeyError($legacyError): array
     {
         return [
             'key' => '"%key%" does not exist.',
@@ -385,10 +369,8 @@ class SqlQueryValidator
      * Get unauthorized key error.
      *
      * @param string $legacyError
-     *
-     * @return array
      */
-    private function getUnauthorizedKeyError($legacyError)
+    private function getUnauthorizedKeyError($legacyError): array
     {
         return [
             'key' => '"%key%" is an unauthorized keyword.',

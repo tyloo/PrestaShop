@@ -88,7 +88,7 @@ class AdminLinkBuilder implements EntityLinkBuilderInterface
         );
     }
 
-    public function canBuild($entity)
+    public function canBuild($entity): bool
     {
         return ! empty($this->entityControllers[$entity]);
     }

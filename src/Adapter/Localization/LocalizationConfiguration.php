@@ -45,7 +45,7 @@ class LocalizationConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'default_language' => $this->configuration->getInt('PS_LANG_DEFAULT'),
@@ -81,7 +81,7 @@ class LocalizationConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $config)
+    public function validateConfiguration(array $config): bool
     {
         return isset(
             $config['default_language'],

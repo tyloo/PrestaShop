@@ -67,7 +67,7 @@ class ModuleDataProvider
     /**
      * @param int $employeeID
      */
-    public function setEmployeeId($employeeID)
+    public function setEmployeeId($employeeID): void
     {
         $this->employeeID = (int) $employeeID;
     }
@@ -204,7 +204,7 @@ class ModuleDataProvider
         return false;
     }
 
-    public function isInstalled($name)
+    public function isInstalled($name): bool
     {
         // ToDo: Load list of all installed modules ?
         return (bool) $this->getModuleIdByName($name);
@@ -223,7 +223,7 @@ class ModuleDataProvider
      *
      * @return int the Module Id, or 0 if not found
      */
-    public function getModuleIdByName($name, bool $activeModulesOnly = false)
+    public function getModuleIdByName($name, bool $activeModulesOnly = false): int
     {
         $sqlQuery = 'SELECT `id_module` FROM `' . _DB_PREFIX_ . 'module` WHERE `name` = "' . pSQL($name) . '"';
         if ($activeModulesOnly) {
@@ -315,7 +315,7 @@ class ModuleDataProvider
      *
      * @return bool True if found
      */
-    public function isOnDisk($name)
+    public function isOnDisk($name): bool
     {
         $path = _PS_MODULE_DIR_ . $name . '/' . $name . '.php';
 

@@ -40,27 +40,27 @@ final class ContextEmployeeProvider implements ContextEmployeeProviderInterface
     ) {
     }
 
-    public function isSuperAdmin()
+    public function isSuperAdmin(): bool
     {
         return $this->contextEmployee && $this->contextEmployee->isSuperAdmin();
     }
 
-    public function getId()
+    public function getId(): int
     {
         return (int) $this->contextEmployee?->id;
     }
 
-    public function getLanguageId()
+    public function getLanguageId(): int
     {
         return (int) $this->contextEmployee?->id_lang;
     }
 
-    public function getProfileId()
+    public function getProfileId(): int
     {
         return (int) $this->contextEmployee?->id_profile;
     }
 
-    public function getData()
+    public function getData(): array
     {
         return [
             'id' => (int) $this->contextEmployee?->id,

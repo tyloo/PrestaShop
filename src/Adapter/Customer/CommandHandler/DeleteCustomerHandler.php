@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\CommandHandler\DeleteCustomerHand
 #[AsCommandHandler]
 final class DeleteCustomerHandler extends AbstractCustomerHandler implements DeleteCustomerHandlerInterface
 {
-    public function handle(DeleteCustomerCommand $command)
+    public function handle(DeleteCustomerCommand $command): void
     {
         $customerId = $command->getCustomerId();
         $customer = new Customer($customerId->getValue());

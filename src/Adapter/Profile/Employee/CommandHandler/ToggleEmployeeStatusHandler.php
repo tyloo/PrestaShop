@@ -38,7 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\CommandHandler\ToggleEmployeeStat
 #[AsCommandHandler]
 final class ToggleEmployeeStatusHandler extends AbstractEmployeeHandler implements ToggleEmployeeStatusHandlerInterface
 {
-    public function handle(ToggleEmployeeStatusCommand $command)
+    public function handle(ToggleEmployeeStatusCommand $command): void
     {
         $employeeId = $command->getEmployeeId();
         $employee = new Employee($employeeId->getValue());

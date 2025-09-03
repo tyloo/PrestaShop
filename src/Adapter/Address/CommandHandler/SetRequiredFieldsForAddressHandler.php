@@ -45,7 +45,7 @@ final class SetRequiredFieldsForAddressHandler implements SetRequiredFieldsForAd
     /**
      * @throws CannotSetRequiredFieldsForAddressException
      */
-    public function handle(SetRequiredFieldsForAddressCommand $command)
+    public function handle(SetRequiredFieldsForAddressCommand $command): void
     {
         $address = new CustomerAddress();
 

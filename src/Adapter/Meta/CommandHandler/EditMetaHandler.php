@@ -58,7 +58,7 @@ final class EditMetaHandler implements EditMetaHandlerInterface
     /**
      * @throws MetaException
      */
-    public function handle(EditMetaCommand $command)
+    public function handle(EditMetaCommand $command): void
     {
         try {
             $entity = new Meta($command->getMetaId()->getValue());
@@ -98,7 +98,7 @@ final class EditMetaHandler implements EditMetaHandlerInterface
     /**
      * @throws MetaConstraintException
      */
-    private function assertUrlRewriteHasDefaultLanguage(Meta $entity)
+    private function assertUrlRewriteHasDefaultLanguage(Meta $entity): void
     {
         $urlRewriteErrors = $this->validator->validate(
             $entity->url_rewrite,
@@ -113,7 +113,7 @@ final class EditMetaHandler implements EditMetaHandlerInterface
     /**
      * @throws MetaConstraintException
      */
-    private function assertIsUrlRewriteValid(Meta $entity)
+    private function assertIsUrlRewriteValid(Meta $entity): void
     {
         foreach ($entity->url_rewrite as $idLang => $rewriteUrl) {
             $errors = $this->validator->validate($rewriteUrl, new IsUrlRewrite());
@@ -129,7 +129,7 @@ final class EditMetaHandler implements EditMetaHandlerInterface
      *
      * @throws MetaConstraintException
      */
-    private function assertIsValidPageName($alreadyExistingPage, EditMetaCommand $command)
+    private function assertIsValidPageName($alreadyExistingPage, EditMetaCommand $command): void
     {
         if ($command->getPageName()->getValue() === $alreadyExistingPage) {
             return;

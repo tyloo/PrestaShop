@@ -50,7 +50,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
     ) {
     }
 
-    public function deleteAll($importEntity)
+    public function deleteAll($importEntity): void
     {
         match ($importEntity) {
             Entity::TYPE_CATEGORIES => $this->deleteCategories(),
@@ -76,7 +76,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
     /**
      * Delete all suppliers data and images.
      */
-    private function deleteSuppliers()
+    private function deleteSuppliers(): void
     {
         $this->truncateTables([
             'supplier',
@@ -90,7 +90,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
     /**
      * Delete all manufacturers images and data.
      */
-    private function deleteManufacturers()
+    private function deleteManufacturers(): void
     {
         $this->truncateTables([
             'manufacturer',
@@ -104,7 +104,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
     /**
      * Delete all categories images and data, except Root and Home.
      */
-    private function deleteCategories()
+    private function deleteCategories(): void
     {
         $protectedCategoriesIds = [
             $this->configuration->getInt('PS_HOME_CATEGORY'),
@@ -137,7 +137,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
     /**
      * Delete all products images and data.
      */
-    private function deleteProducts()
+    private function deleteProducts(): void
     {
         $truncateTables = [
             'product',
@@ -187,7 +187,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
     /**
      * Delete all combinations data.
      */
-    private function deleteCombinations()
+    private function deleteCombinations(): void
     {
         $truncateTables = [
             'attribute',
@@ -214,7 +214,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    private function truncateTables(array $tables)
+    private function truncateTables(array $tables): void
     {
         foreach ($tables as $table) {
             $this->connection->executeQuery(\sprintf('TRUNCATE TABLE `%s%s`', $this->dbPrefix, $table));
@@ -226,7 +226,7 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    private function truncateTablesIfExist(array $tables)
+    private function truncateTablesIfExist(array $tables): void
     {
         foreach ($tables as $table) {
             $tableExists = $this->connection->getSchemaManager()->tablesExist(

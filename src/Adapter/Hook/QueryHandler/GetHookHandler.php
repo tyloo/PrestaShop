@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Hook\QueryResult\Hook as HookQueryResult;
 #[AsQueryHandler]
 final class GetHookHandler implements GetHookHandlerInterface
 {
-    public function handle(GetHook $query)
+    public function handle(GetHook $query): HookQueryResult
     {
         $hookId = $query->getId()->getValue();
         $hook = new Hook($hookId);

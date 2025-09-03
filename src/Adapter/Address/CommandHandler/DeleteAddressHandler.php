@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Address\Exception\DeleteAddressException;
 #[AsCommandHandler]
 final class DeleteAddressHandler extends AbstractAddressHandler implements DeleteAddressHandlerInterface
 {
-    public function handle(DeleteAddressCommand $command)
+    public function handle(DeleteAddressCommand $command): void
     {
         $addressId = $command->getAddressId();
         $address = $this->getAddress($addressId);

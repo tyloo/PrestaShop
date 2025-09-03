@@ -40,14 +40,14 @@ final class GeolocationIpAddressWhitelistConfiguration implements DataConfigurat
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'geolocation_whitelist' => $this->configuration->get('PS_GEOLOCATION_WHITELIST'),
         ];
     }
 
-    public function updateConfiguration(array $config)
+    public function updateConfiguration(array $config): array
     {
         if ($this->validateConfiguration($config)) {
             $this->configuration->set('PS_GEOLOCATION_WHITELIST', $config['geolocation_whitelist']);
@@ -56,7 +56,7 @@ final class GeolocationIpAddressWhitelistConfiguration implements DataConfigurat
         return [];
     }
 
-    public function validateConfiguration(array $config)
+    public function validateConfiguration(array $config): bool
     {
         return isset(
             $config['geolocation_whitelist']

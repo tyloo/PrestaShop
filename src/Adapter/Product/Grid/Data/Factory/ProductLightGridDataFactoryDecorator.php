@@ -60,10 +60,7 @@ class ProductLightGridDataFactoryDecorator implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @return GridData
-     */
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $productsData = $this->productGridDataFactory->getData($searchCriteria);
 

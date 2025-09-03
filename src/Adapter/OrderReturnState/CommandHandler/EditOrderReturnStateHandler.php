@@ -42,7 +42,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\Exception\OrderReturnStat
 #[AsCommandHandler]
 final class EditOrderReturnStateHandler extends AbstractOrderReturnStateHandler implements EditOrderReturnStateHandlerInterface
 {
-    public function handle(EditOrderReturnStateCommand $command)
+    public function handle(EditOrderReturnStateCommand $command): void
     {
         $orderReturnStateId = $command->getOrderReturnStateId();
         $orderReturnState = new OrderReturnState($orderReturnStateId->getValue());
@@ -62,7 +62,7 @@ final class EditOrderReturnStateHandler extends AbstractOrderReturnStateHandler 
         }
     }
 
-    private function updateOrderReturnStateWithCommandData(OrderReturnState $orderReturnState, EditOrderReturnStateCommand $command)
+    private function updateOrderReturnStateWithCommandData(OrderReturnState $orderReturnState, EditOrderReturnStateCommand $command): void
     {
         if ($command->getName() !== null) {
             $orderReturnState->name = $command->getName();

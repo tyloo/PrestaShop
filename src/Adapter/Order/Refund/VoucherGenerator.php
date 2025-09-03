@@ -62,7 +62,7 @@ class VoucherGenerator
         float $voucherAmount,
         string $currencyIsoCode,
         bool $isTaxIncluded,
-    ) {
+    ): void {
         $cartRule = new CartRule();
         $cartRule->description = $this->translator->trans(
             'Credit slip for order #%d',

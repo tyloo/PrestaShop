@@ -40,7 +40,7 @@ class SmartyCacheConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'template_compilation' => $this->configuration->get('PS_SMARTY_FORCE_COMPILE'),
@@ -70,7 +70,7 @@ class SmartyCacheConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['template_compilation'],

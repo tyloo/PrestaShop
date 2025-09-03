@@ -58,7 +58,7 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
      * @throws CategoryNotFoundException
      * @throws CannotEditRootCategoryException
      */
-    public function handle(GetCategoryForEditing $query)
+    public function handle(GetCategoryForEditing $query): EditableCategory
     {
         $category = new Category($query->getCategoryId()->getValue());
 

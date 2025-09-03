@@ -56,7 +56,7 @@ final class CategoryCoverImageUploader extends AbstractImageUploader implements 
      * @throws ImageUploadException
      * @throws UploadedImageConstraintException
      */
-    public function upload($id, UploadedFile $uploadedImage)
+    public function upload($id, UploadedFile $uploadedImage): void
     {
         $this->checkImageIsAllowedForUpload($uploadedImage);
         $this->deleteOldImage($id);
@@ -69,7 +69,7 @@ final class CategoryCoverImageUploader extends AbstractImageUploader implements 
      *
      * @param int $id
      */
-    private function deleteOldImage($id)
+    private function deleteOldImage($id): void
     {
         $category = new Category($id);
         $category->deleteImage();
@@ -82,7 +82,7 @@ final class CategoryCoverImageUploader extends AbstractImageUploader implements 
      * @throws ImageUploadException
      * @throws MemoryLimitException
      */
-    private function uploadImage($id, UploadedFile $image)
+    private function uploadImage($id, UploadedFile $image): void
     {
         $temporaryImageName = tempnam(_PS_TMP_IMG_DIR_, 'PS');
         if (! $temporaryImageName) {
@@ -118,7 +118,7 @@ final class CategoryCoverImageUploader extends AbstractImageUploader implements 
      *
      * @throws ImageUploadException
      */
-    private function generateDifferentTypes($id)
+    private function generateDifferentTypes($id): void
     {
         if (! file_exists(_PS_CAT_IMG_DIR_ . $id . '.jpg')) {
             return;

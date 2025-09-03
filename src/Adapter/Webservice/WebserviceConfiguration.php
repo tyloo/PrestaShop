@@ -37,7 +37,7 @@ final class WebserviceConfiguration extends AbstractMultistoreConfiguration
 {
     private const CONFIGURATION_FIELDS = ['enable_webservice', 'enable_cgi'];
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
 
@@ -47,7 +47,7 @@ final class WebserviceConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $shopConstraint = $this->getShopConstraint();

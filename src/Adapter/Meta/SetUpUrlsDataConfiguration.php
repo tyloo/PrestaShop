@@ -63,7 +63,7 @@ final class SetUpUrlsDataConfiguration extends AbstractMultistoreConfiguration
         parent::__construct($configuration, $shopContext, $multistoreFeature);
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
 

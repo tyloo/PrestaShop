@@ -51,7 +51,7 @@ class ContainerParametersExtension implements ContainerBuilderExtensionInterface
     ) {
     }
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         // This script is used in config.yml to init the container parameters
         // It is also able to generate the parameters.php file if it does not exist

@@ -54,7 +54,7 @@ final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbna
     ) {
     }
 
-    public function handle(DeleteCategoryThumbnailImageCommand $command)
+    public function handle(DeleteCategoryThumbnailImageCommand $command): void
     {
         $categoryId = $command->getCategoryId();
         $category = new Category($categoryId->getValue());
@@ -69,7 +69,7 @@ final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbna
     /**
      * @throws CategoryNotFoundException
      */
-    private function assertCategoryExists(CategoryId $categoryId, Category $category)
+    private function assertCategoryExists(CategoryId $categoryId, Category $category): void
     {
         if ($category->id !== $categoryId->getValue()) {
             throw new CategoryNotFoundException($categoryId, \sprintf('Category with id "%s" was not found.', $categoryId->getValue()));
@@ -79,7 +79,7 @@ final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbna
     /**
      * @throws CannotDeleteImageException
      */
-    private function deleteThumbnailImage(Category $category)
+    private function deleteThumbnailImage(Category $category): void
     {
         $thumbnailPath = $this->configuration->get('_PS_CAT_IMG_DIR_') . $category->id . '_thumb.jpg';
 
@@ -95,7 +95,7 @@ final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbna
     /**
      * @throws CannotDeleteImageException
      */
-    private function deleteTemporaryThumbnailImage(Category $category)
+    private function deleteTemporaryThumbnailImage(Category $category): void
     {
         $temporaryThumbnailPath = $this->configuration->get('_PS_TMP_IMG_DIR_') . 'category_' . $category->id . '-thumb.jpg';
 
@@ -111,7 +111,7 @@ final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbna
     /**
      * @throws CannotDeleteImageException
      */
-    private function deleteImagesForAllTypes(Category $category)
+    private function deleteImagesForAllTypes(Category $category): void
     {
         $imageTypes = ImageType::getImagesTypes('categories');
         $categoryImageDir = $this->configuration->get('_PS_CAT_IMG_DIR_');

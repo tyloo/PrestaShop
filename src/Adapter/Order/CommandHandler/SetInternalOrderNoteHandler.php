@@ -49,7 +49,7 @@ final class SetInternalOrderNoteHandler extends AbstractOrderHandler implements 
     /**
      * @throws OrderNotFoundException
      */
-    public function handle(SetInternalOrderNoteCommand $command)
+    public function handle(SetInternalOrderNoteCommand $command): void
     {
         $order = $this->getOrder($command->getOrderId());
 

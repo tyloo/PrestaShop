@@ -47,7 +47,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
 #[AsCommandHandler]
 final class BulkChangeOrderStatusHandler implements BulkChangeOrderStatusHandlerInterface
 {
-    public function handle(BulkChangeOrderStatusCommand $command)
+    public function handle(BulkChangeOrderStatusCommand $command): void
     {
         $orderState = new OrderState($command->getNewOrderStatusId());
 
@@ -104,10 +104,7 @@ final class BulkChangeOrderStatusHandler implements BulkChangeOrderStatusHandler
         }
     }
 
-    /**
-     * @return Order
-     */
-    private function getOrderObject(OrderId $orderId)
+    private function getOrderObject(OrderId $orderId): Order
     {
         $order = new Order($orderId->getValue());
 

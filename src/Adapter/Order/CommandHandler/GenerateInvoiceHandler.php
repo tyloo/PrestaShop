@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\Invoice\CommandHandler\GenerateOrder
 #[AsCommandHandler]
 final class GenerateInvoiceHandler extends AbstractOrderHandler implements GenerateOrderInvoiceHandlerInterface
 {
-    public function handle(GenerateInvoiceCommand $command)
+    public function handle(GenerateInvoiceCommand $command): void
     {
         $order = $this->getOrder($command->getOrderId());
 

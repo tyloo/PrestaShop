@@ -60,7 +60,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
     ) {
     }
 
-    public function handle(UpdateProductQuantityInCartCommand $command)
+    public function handle(UpdateProductQuantityInCartCommand $command): void
     {
         $cart = $this->getCart($command->getCartId());
         $this->contextStateManager
@@ -132,7 +132,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
     /**
      * @throws CartException
      */
-    private function assertOrderDoesNotExistForCart(Cart $cart)
+    private function assertOrderDoesNotExistForCart(Cart $cart): void
     {
         if ($cart->orderExists()) {
             throw new CartException(\sprintf('Order for cart with id "%s" already exists.', $cart->id));
@@ -140,11 +140,9 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
     }
 
     /**
-     * @return Product
-     *
      * @throws ProductNotFoundException
      */
-    private function getProductObject(ProductId $productId)
+    private function getProductObject(ProductId $productId): Product
     {
         $product = new Product($productId->getValue(), true);
 
@@ -196,7 +194,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
      *
      * @throws ProductCustomizationNotFoundException
      */
-    private function assertProductCustomization(Product $product, UpdateProductQuantityInCartCommand $command)
+    private function assertProductCustomization(Product $product, UpdateProductQuantityInCartCommand $command): void
     {
         if (! $command->getCustomizationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Customization\ValueObject\CustomizationId && ! $product->hasAllRequiredCustomizableFields()) {
             throw new ProductCustomizationNotFoundException(\sprintf('Missing customization for product with id "%s"', $product->id));

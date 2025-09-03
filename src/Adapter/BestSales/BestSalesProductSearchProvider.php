@@ -49,13 +49,10 @@ class BestSalesProductSearchProvider implements ProductSearchProviderInterface
         $this->sortOrdersCollection = new SortOrdersCollection($this->translator);
     }
 
-    /**
-     * @return ProductSearchResult
-     */
     public function runQuery(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-    ) {
+    ): ProductSearchResult {
         // If provided sort order is unsupported random, we set a fallback
         if ($query->getSortOrder()->isRandom()) {
             $query->setSortOrder((new SortOrder('product', 'sales', 'desc'))->setLabel(

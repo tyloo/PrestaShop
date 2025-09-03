@@ -43,11 +43,9 @@ use PrestaShopException;
 final class AddManufacturerAddressHandler extends AbstractAddressHandler implements AddManufacturerAddressHandlerInterface
 {
     /**
-     * @return AddressId
-     *
      * @throws AddressException
      */
-    public function handle(AddManufacturerAddressCommand $command)
+    public function handle(AddManufacturerAddressCommand $command): AddressId
     {
         $address = $this->createAddressFromCommand($command);
 
@@ -63,10 +61,7 @@ final class AddManufacturerAddressHandler extends AbstractAddressHandler impleme
         return new AddressId((int) $address->id);
     }
 
-    /**
-     * @return Address
-     */
-    private function createAddressFromCommand(AddManufacturerAddressCommand $command)
+    private function createAddressFromCommand(AddManufacturerAddressCommand $command): Address
     {
         $address = new Address();
         $address->id_manufacturer = $command->getManufacturerId();

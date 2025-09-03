@@ -52,7 +52,7 @@ final class AddRootCategoryHandler extends AbstractEditCategoryHandler implement
         parent::__construct($categoryImageUploader, $categoryRepository);
     }
 
-    public function handle(AddRootCategoryCommand $command)
+    public function handle(AddRootCategoryCommand $command): CategoryId
     {
         /** @var Category $category */
         $category = $this->createRootCategoryFromCommand($command);
@@ -71,12 +71,10 @@ final class AddRootCategoryHandler extends AbstractEditCategoryHandler implement
     /**
      * Creates legacy root category
      *
-     * @return Category
-     *
      * @throws CannotAddCategoryException
      * @throws CategoryException
      */
-    private function createRootCategoryFromCommand(AddRootCategoryCommand $command)
+    private function createRootCategoryFromCommand(AddRootCategoryCommand $command): Category
     {
         $category = new Category();
         $category->is_root_category = true;

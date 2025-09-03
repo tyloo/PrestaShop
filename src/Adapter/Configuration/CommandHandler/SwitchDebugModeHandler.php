@@ -45,7 +45,7 @@ final class SwitchDebugModeHandler implements SwitchDebugModeHandlerInterface
     ) {
     }
 
-    public function handle(SwitchDebugModeCommand $command)
+    public function handle(SwitchDebugModeCommand $command): void
     {
         $isDebugModeEnabled = $this->debugMode->isDebugModeEnabled();
 

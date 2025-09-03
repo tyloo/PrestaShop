@@ -38,7 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\CommandHandler\BulkUpdateEmployee
 #[AsCommandHandler]
 final class BulkUpdateEmployeeStatusHandler extends AbstractEmployeeHandler implements BulkUpdateEmployeeStatusHandlerInterface
 {
-    public function handle(BulkUpdateEmployeeStatusCommand $command)
+    public function handle(BulkUpdateEmployeeStatusCommand $command): void
     {
         foreach ($command->getEmployeeIds() as $employeeId) {
             $employee = new Employee($employeeId->getValue());

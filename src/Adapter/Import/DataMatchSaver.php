@@ -50,10 +50,8 @@ final class DataMatchSaver
      * @param string $name     name of the match
      * @param array  $value    value of the match
      * @param int    $skipRows number of rows to skip from the import file
-     *
-     * @return bool
      */
-    public function save($name, array $value, $skipRows)
+    public function save($name, array $value, $skipRows): bool
     {
         return (bool) $this->connection->insert(
             $this->dbPrefix . 'import_match',

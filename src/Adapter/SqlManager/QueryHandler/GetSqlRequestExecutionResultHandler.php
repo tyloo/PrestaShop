@@ -50,7 +50,7 @@ final class GetSqlRequestExecutionResultHandler implements GetSqlRequestExecutio
      * @throws SqlRequestNotFoundException
      * @throws SqlRequestException
      */
-    public function handle(GetSqlRequestExecutionResult $query)
+    public function handle(GetSqlRequestExecutionResult $query): SqlRequestExecutionResult
     {
         try {
             $id = $query->getSqlRequestId()->getValue();

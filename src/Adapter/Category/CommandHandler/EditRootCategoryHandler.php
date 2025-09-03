@@ -50,7 +50,7 @@ final class EditRootCategoryHandler extends AbstractEditCategoryHandler implemen
      * @throws CategoryException
      * @throws CategoryNotFoundException
      */
-    public function handle(EditRootCategoryCommand $command)
+    public function handle(EditRootCategoryCommand $command): void
     {
         $category = new Category($command->getCategoryId()->getValue());
 
@@ -77,7 +77,7 @@ final class EditRootCategoryHandler extends AbstractEditCategoryHandler implemen
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
-    private function updateRootCategoryFromCommandData(Category $category, EditRootCategoryCommand $command)
+    private function updateRootCategoryFromCommandData(Category $category, EditRootCategoryCommand $command): void
     {
         if ($command->isActive() !== null) {
             $category->active = $command->isActive();

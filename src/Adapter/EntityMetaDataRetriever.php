@@ -37,11 +37,9 @@ class EntityMetaDataRetriever
     /**
      * @param string $className
      *
-     * @return EntityMetaData
-     *
      * @throws CoreException
      */
-    public function getEntityMetaData($className)
+    public function getEntityMetaData($className): EntityMetaData
     {
         $metaData = new EntityMetaData();
 

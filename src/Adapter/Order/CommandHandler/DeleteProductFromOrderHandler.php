@@ -57,7 +57,7 @@ final class DeleteProductFromOrderHandler extends AbstractOrderCommandHandler im
     ) {
     }
 
-    public function handle(DeleteProductFromOrderCommand $command)
+    public function handle(DeleteProductFromOrderCommand $command): void
     {
         $orderDetail = new OrderDetail($command->getOrderDetailId());
         $order = new Order($command->getOrderId()->getValue());
@@ -87,7 +87,7 @@ final class DeleteProductFromOrderHandler extends AbstractOrderCommandHandler im
         }
     }
 
-    private function assertProductCanBeDeleted(Order $order, OrderDetail $orderDetail)
+    private function assertProductCanBeDeleted(Order $order, OrderDetail $orderDetail): void
     {
         if (! Validate::isLoadedObject($orderDetail)) {
             throw new OrderException('Order detail could not be found.');

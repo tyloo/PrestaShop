@@ -46,7 +46,7 @@ final class DeleteCategoryHandler extends AbstractDeleteCategoryHandler implemen
      * @throws CannotDeleteRootCategoryForShopException
      * @throws FailedToDeleteCategoryException
      */
-    public function handle(DeleteCategoryCommand $command)
+    public function handle(DeleteCategoryCommand $command): void
     {
         $categoryIdValue = $command->getCategoryId()->getValue();
         $category = new Category($categoryIdValue);

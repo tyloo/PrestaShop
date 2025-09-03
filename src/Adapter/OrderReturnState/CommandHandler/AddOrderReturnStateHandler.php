@@ -43,7 +43,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\ValueObject\OrderReturnSt
 #[AsCommandHandler]
 final class AddOrderReturnStateHandler extends AbstractOrderReturnStateHandler implements AddOrderReturnStateHandlerInterface
 {
-    public function handle(AddOrderReturnStateCommand $command)
+    public function handle(AddOrderReturnStateCommand $command): OrderReturnStateId
     {
         $orderReturnState = new OrderReturnState();
 
@@ -59,7 +59,7 @@ final class AddOrderReturnStateHandler extends AbstractOrderReturnStateHandler i
         return new OrderReturnStateId((int) $orderReturnState->id);
     }
 
-    private function fillOrderReturnStateWithCommandData(OrderReturnState $orderReturnState, AddOrderReturnStateCommand $command)
+    private function fillOrderReturnStateWithCommandData(OrderReturnState $orderReturnState, AddOrderReturnStateCommand $command): void
     {
         $orderReturnState->name = $command->getLocalizedNames();
         $orderReturnState->color = $command->getColor();

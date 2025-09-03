@@ -37,7 +37,7 @@ use Tools;
  */
 final class SmartyCacheClearer implements CacheClearerInterface
 {
-    public function clear()
+    public function clear(): void
     {
         Tools::clearSmartyCache();
     }

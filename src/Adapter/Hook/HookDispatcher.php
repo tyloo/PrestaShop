@@ -128,7 +128,7 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
      *
      * @throws Exception if the Event is not HookEvent or a subclass
      */
-    public function dispatchMultiple(array $eventNames, array $eventParameters)
+    public function dispatchMultiple(array $eventNames, array $eventParameters): void
     {
         foreach ($eventNames as $name) {
             $this->dispatch(
@@ -203,12 +203,12 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
         return $eventDispatched;
     }
 
-    public function dispatchWithParameters($hookName, array $hookParameters = [])
+    public function dispatchWithParameters($hookName, array $hookParameters = []): void
     {
         $this->dispatchForParameters($hookName, $hookParameters);
     }
 
-    public function dispatchRendering(HookInterface $hook)
+    public function dispatchRendering(HookInterface $hook): RenderedHook
     {
         $event = $this->renderForParameters(
             $hook->getName(),

@@ -40,7 +40,7 @@ class ImageConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'formats' => $this->configuration->get('PS_IMAGE_FORMAT'),
@@ -76,7 +76,7 @@ class ImageConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['formats'],

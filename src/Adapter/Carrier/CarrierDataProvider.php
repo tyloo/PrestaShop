@@ -95,7 +95,7 @@ class CarrierDataProvider
      *
      * @return array order by choices
      */
-    public function getOrderByChoices()
+    public function getOrderByChoices(): array
     {
         return [
             'Price' => Carrier::SORT_BY_PRICE,
@@ -108,7 +108,7 @@ class CarrierDataProvider
      *
      * @return array order way choices
      */
-    public function getOrderWayChoices()
+    public function getOrderWayChoices(): array
     {
         return [
             'Ascending' => Carrier::SORT_BY_ASC,

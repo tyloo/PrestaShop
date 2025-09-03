@@ -72,13 +72,10 @@ class ManufacturerProductSearchProvider implements ProductSearchProviderInterfac
         return $type !== 'products' ? (int) $result : $result;
     }
 
-    /**
-     * @return ProductSearchResult
-     */
     public function runQuery(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-    ) {
+    ): ProductSearchResult {
         $products = $this->getProductsOrCount($context, $query, 'products');
         $count = $this->getProductsOrCount($context, $query, 'count');
 

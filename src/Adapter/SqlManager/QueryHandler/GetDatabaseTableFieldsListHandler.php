@@ -42,7 +42,7 @@ use RequestSql;
 #[AsQueryHandler]
 final class GetDatabaseTableFieldsListHandler implements GetDatabaseTableFieldsListHandlerInterface
 {
-    public function handle(GetDatabaseTableFieldsList $query)
+    public function handle(GetDatabaseTableFieldsList $query): DatabaseTableFields
     {
         $attributes = (new RequestSql())->getAttributesByTable($query->getTableName());
         $fields = [];

@@ -49,7 +49,7 @@ final class DefaultGroupsProvider implements DefaultGroupsProviderInterface
     ) {
     }
 
-    public function getGroups()
+    public function getGroups(): DefaultGroups
     {
         $visitorsGroup = new Group($this->configuration->get('PS_UNIDENTIFIED_GROUP'));
         $guestsGroup = new Group($this->configuration->get('PS_GUEST_GROUP'));

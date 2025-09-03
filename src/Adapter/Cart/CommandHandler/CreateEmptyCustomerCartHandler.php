@@ -43,7 +43,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class CreateEmptyCustomerCartHandler implements CreateEmptyCustomerCartHandlerInterface
 {
-    public function handle(CreateEmptyCustomerCartCommand $command)
+    public function handle(CreateEmptyCustomerCartCommand $command): CartId
     {
         $customer = new Customer($command->getCustomerId()->getValue());
 

@@ -55,7 +55,7 @@ class MemcacheServerManager
      * @param int    $serverPort
      * @param int    $serverWeight
      */
-    public function addServer($serverIp, $serverPort, $serverWeight)
+    public function addServer($serverIp, $serverPort, $serverWeight): array
     {
         $this->connection->executeStatement('INSERT INTO ' . $this->tableName . ' (ip, port, weight) VALUES(:serverIp, :serverPort, :serverWeight)', [
             'serverIp' => $serverIp,
@@ -98,10 +98,8 @@ class MemcacheServerManager
      * Delete a memcache server (a deletion returns the number of rows deleted).
      *
      * @param int $serverId Server ID (in database)
-     *
-     * @return bool
      */
-    public function deleteServer($serverId)
+    public function deleteServer($serverId): bool
     {
         $deletionSuccess = $this->connection->delete($this->tableName, ['id_memcached_server' => $serverId]);
 

@@ -43,7 +43,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 final class ManufacturerImageUploader extends AbstractImageUploader implements ImageUploaderInterface
 {
-    public function upload($manufacturerId, UploadedFile $image)
+    public function upload($manufacturerId, UploadedFile $image): void
     {
         $this->checkImageIsAllowedForUpload($image);
         $temporaryImageName = tempnam(_PS_TMP_IMG_DIR_, 'PS');

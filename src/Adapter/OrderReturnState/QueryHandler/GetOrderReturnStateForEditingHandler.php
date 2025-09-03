@@ -43,7 +43,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\QueryResult\EditableOrder
 #[AsQueryHandler]
 final class GetOrderReturnStateForEditingHandler implements GetOrderReturnStateForEditingHandlerInterface
 {
-    public function handle(GetOrderReturnStateForEditing $query)
+    public function handle(GetOrderReturnStateForEditing $query): EditableOrderReturnState
     {
         $orderReturnStateId = $query->getOrderReturnStateId();
         $orderReturnState = new OrderReturnState($orderReturnStateId->getValue());

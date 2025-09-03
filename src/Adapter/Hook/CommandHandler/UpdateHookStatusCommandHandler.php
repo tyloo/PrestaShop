@@ -42,7 +42,7 @@ use PrestaShop\PrestaShop\Core\Domain\Hook\Exception\HookNotFoundException;
 #[AsCommandHandler]
 class UpdateHookStatusCommandHandler implements UpdateHookStatusCommandHandlerInterface
 {
-    public function handle(UpdateHookStatusCommand $command)
+    public function handle(UpdateHookStatusCommand $command): void
     {
         $hookId = $command->getHookId()->getValue();
         $hook = new Hook($hookId);

@@ -48,7 +48,7 @@ class ToggleCarrierStatusHandler implements ToggleCarrierStatusHandlerInterface
     ) {
     }
 
-    public function handle(ToggleCarrierStatusCommand $command)
+    public function handle(ToggleCarrierStatusCommand $command): void
     {
         $carrier = $this->carrierRepository->get($command->getCarrierId());
 

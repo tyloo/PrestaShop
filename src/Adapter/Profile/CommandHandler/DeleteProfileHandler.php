@@ -53,7 +53,7 @@ final class DeleteProfileHandler extends AbstractProfileHandler implements Delet
     ) {
     }
 
-    public function handle(DeleteProfileCommand $command)
+    public function handle(DeleteProfileCommand $command): void
     {
         $entityId = $command->getProfileId()->getValue();
 

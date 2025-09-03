@@ -58,7 +58,7 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
     /**
      * @throws ContactException
      */
-    public function handle(EditContactCommand $command)
+    public function handle(EditContactCommand $command): void
     {
         try {
             $entity = $this->getContactEntityIfFound($command->getContactId()->getValue());
@@ -98,7 +98,7 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
      *
      * @throws ContactConstraintException
      */
-    private function assertDescriptionContainsCleanHtmlValues(array $localisedDescriptions)
+    private function assertDescriptionContainsCleanHtmlValues(array $localisedDescriptions): void
     {
         foreach ($localisedDescriptions as $description) {
             $errors = $this->validator->validate($description, new CleanHtml());
@@ -114,7 +114,7 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
      *
      * @throws ContactConstraintException
      */
-    private function assertLocalisedTitleContainsDefaultLanguage(array $localisedTitle)
+    private function assertLocalisedTitleContainsDefaultLanguage(array $localisedTitle): void
     {
         $errors = $this->validator->validate($localisedTitle, new DefaultLanguage());
 
@@ -128,13 +128,11 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
      *
      * @param int $contactId
      *
-     * @return Contact
-     *
      * @throws ContactNotFoundException
      * @throws PrestaShopException
      * @throws PrestaShopDatabaseException
      */
-    private function getContactEntityIfFound($contactId)
+    private function getContactEntityIfFound($contactId): Contact
     {
         $entity = new Contact($contactId);
 

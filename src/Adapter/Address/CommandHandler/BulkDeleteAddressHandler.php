@@ -43,7 +43,7 @@ final class BulkDeleteAddressHandler extends AbstractAddressHandler implements B
     /**
      * @throws BulkDeleteAddressException
      */
-    public function handle(BulkDeleteAddressCommand $command)
+    public function handle(BulkDeleteAddressCommand $command): void
     {
         $errors = [];
 

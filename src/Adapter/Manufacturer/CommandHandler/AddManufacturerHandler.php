@@ -43,7 +43,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class AddManufacturerHandler extends AbstractManufacturerHandler implements AddManufacturerHandlerInterface
 {
-    public function handle(AddManufacturerCommand $command)
+    public function handle(AddManufacturerCommand $command): ManufacturerId
     {
         $manufacturer = new Manufacturer();
         $this->fillLegacyManufacturerWithData($manufacturer, $command);
@@ -70,7 +70,7 @@ final class AddManufacturerHandler extends AbstractManufacturerHandler implement
      *
      * @throws PrestaShopDatabaseException
      */
-    private function addShopAssociation(Manufacturer $manufacturer, AddManufacturerCommand $command)
+    private function addShopAssociation(Manufacturer $manufacturer, AddManufacturerCommand $command): void
     {
         $this->associateWithShops(
             $manufacturer,
@@ -78,7 +78,7 @@ final class AddManufacturerHandler extends AbstractManufacturerHandler implement
         );
     }
 
-    private function fillLegacyManufacturerWithData(Manufacturer $manufacturer, AddManufacturerCommand $command)
+    private function fillLegacyManufacturerWithData(Manufacturer $manufacturer, AddManufacturerCommand $command): void
     {
         $manufacturer->name = $command->getName();
         $manufacturer->short_description = $command->getLocalizedShortDescriptions();

@@ -40,7 +40,7 @@ class MediaServerConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'media_server_one' => $this->configuration->get('PS_MEDIA_SERVER_1'),

@@ -73,7 +73,7 @@ class OrderSlipCreator
     public function create(
         Order $order,
         OrderRefundSummary $orderRefundSummary,
-    ) {
+    ): void {
         if ($orderRefundSummary->getRefundedAmount() > 0) {
             $orderSlipCreated = $this->createOrderSlip(
                 $order,

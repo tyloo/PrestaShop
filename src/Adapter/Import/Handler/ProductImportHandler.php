@@ -150,7 +150,7 @@ final class ProductImportHandler extends AbstractImportHandler
         $this->importTypeLabel = $this->translator->trans('Products', [], 'Admin.Global');
     }
 
-    public function setUp(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig)
+    public function setUp(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig): void
     {
         parent::setUp($importConfig, $runtimeConfig);
 
@@ -167,7 +167,7 @@ final class ProductImportHandler extends AbstractImportHandler
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
         DataRowInterface $dataRow,
-    ) {
+    ): void {
         parent::importRow($importConfig, $runtimeConfig, $dataRow);
 
         $entityFields = $runtimeConfig->getEntityFields();
@@ -255,7 +255,7 @@ final class ProductImportHandler extends AbstractImportHandler
         }
     }
 
-    public function tearDown(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig)
+    public function tearDown(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig): void
     {
         parent::tearDown($importConfig, $runtimeConfig);
 
@@ -278,7 +278,7 @@ final class ProductImportHandler extends AbstractImportHandler
      * @param string   $categoryName
      * @param int|null $parentCategoryId
      */
-    public function createCategory($defaultLanguageId, $categoryName, $parentCategoryId = null)
+    public function createCategory($defaultLanguageId, $categoryName, $parentCategoryId = null): void
     {
         $unfriendlyError = $this->configuration->getBoolean('UNFRIENDLY_ERROR');
         $homeCategoryId = $this->configuration->getInt('PS_HOME_CATEGORY');
@@ -356,7 +356,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Load stock data for the product.
      */
-    private function loadStock(Product $product)
+    private function loadStock(Product $product): void
     {
         if (! Validate::isLoadedObject($product)) {
             return;
@@ -381,7 +381,7 @@ final class ProductImportHandler extends AbstractImportHandler
      *
      * @param string $productName used for error messages
      */
-    private function loadShops(Product $product, ImportConfigInterface $importConfig, $productName)
+    private function loadShops(Product $product, ImportConfigInterface $importConfig, $productName): void
     {
         $defaultShopId = $this->configuration->getInt('PS_SHOP_DEFAULT');
 
@@ -425,7 +425,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Load taxes data into the product object.
      */
-    private function loadTaxes(Product $product)
+    private function loadTaxes(Product $product): void
     {
         if ($product->id_tax_rules_group) {
             if (Validate::isLoadedObject(new TaxRulesGroup($product->id_tax_rules_group))) {
@@ -455,7 +455,7 @@ final class ProductImportHandler extends AbstractImportHandler
      *
      * @param bool $validateOnly if true, will not create new manufacturer if not exists
      */
-    private function loadManufacturer(Product $product, $validateOnly)
+    private function loadManufacturer(Product $product, $validateOnly): void
     {
         if (! isset($product->manufacturer)) {
             return;
@@ -510,7 +510,7 @@ final class ProductImportHandler extends AbstractImportHandler
      *
      * @param bool $validateOnly if true, will not create new supplier if not exists
      */
-    private function loadSupplier(Product $product, $validateOnly)
+    private function loadSupplier(Product $product, $validateOnly): void
     {
         if (! isset($product->supplier)) {
             return;
@@ -563,7 +563,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Load prices into product object.
      */
-    private function loadPrice(Product $product)
+    private function loadPrice(Product $product): void
     {
         if (isset($product->price_tex) && ! isset($product->price_tin)) {
             $product->price = $product->price_tex;
@@ -583,7 +583,7 @@ final class ProductImportHandler extends AbstractImportHandler
      *
      * @param bool $validateOnly
      */
-    private function loadCategory(Product $product, $validateOnly)
+    private function loadCategory(Product $product, $validateOnly): void
     {
         if (\is_array($product->category) && \count($product->category)) {
             $unfriendlyError = $this->configuration->getBoolean('UNFRIENDLY_ERROR');
@@ -673,7 +673,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Load meta data into the product object.
      */
-    private function loadMetaData(Product $product)
+    private function loadMetaData(Product $product): void
     {
         $linkRewrite = '';
 
@@ -715,7 +715,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Fix float values.
      */
-    private function fixFloatValues(Product $product)
+    private function fixFloatValues(Product $product): void
     {
         // Convert comma into dot for all floating values
         foreach (Product::$definition['fields'] as $key => $array) {
@@ -828,7 +828,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Save product supplier data.
      */
-    private function saveProductSupplier(Product $product)
+    private function saveProductSupplier(Product $product): void
     {
         if ($product->id && property_exists($product, 'supplier_reference')) {
             $productSupplierId = (int) ProductSupplier::getIdByProductAndSupplier(
@@ -865,7 +865,7 @@ final class ProductImportHandler extends AbstractImportHandler
         $reductionTo,
         $validateOnly,
         $productName,
-    ) {
+    ): void {
         $reductionPercent = (float) $reductionPercent;
         $reductionPrice = (float) $reductionPrice;
 
@@ -911,7 +911,7 @@ final class ProductImportHandler extends AbstractImportHandler
      *
      * @param string $productName product name, used for error messages
      */
-    private function saveProductTags(Product $product, ImportConfigInterface $importConfig, $productName)
+    private function saveProductTags(Product $product, ImportConfigInterface $importConfig, $productName): void
     {
         if (empty($product->tags)) {
             return;
@@ -987,7 +987,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Save product images.
      */
-    private function saveProductImages(Product $product, ImportConfigInterface $importConfig)
+    private function saveProductImages(Product $product, ImportConfigInterface $importConfig): void
     {
         // delete existing images if "delete_existing_images" is set to 1
         if (isset($product->delete_existing_images) && (bool) $product->delete_existing_images) {
@@ -1068,7 +1068,7 @@ final class ProductImportHandler extends AbstractImportHandler
      *
      * @param bool $validateOnly
      */
-    private function updateAdditionalData(Product $product, $validateOnly)
+    private function updateAdditionalData(Product $product, $validateOnly): void
     {
         if (! $validateOnly && isset($product->id_category) && \is_array($product->id_category)) {
             $product->updateCategories(array_map('intval', $product->id_category));
@@ -1083,7 +1083,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Save product features.
      */
-    private function saveFeatures(Product $product, ImportConfigInterface $importConfig)
+    private function saveFeatures(Product $product, ImportConfigInterface $importConfig): void
     {
         // Features import
         $features = get_object_vars($product);
@@ -1131,7 +1131,7 @@ final class ProductImportHandler extends AbstractImportHandler
      *
      * @param bool $validateOnly
      */
-    private function saveStock(Product $product, $validateOnly)
+    private function saveStock(Product $product, $validateOnly): void
     {
         $shopIds = $this->isMultistoreEnabled ? $product->id_shop_list : [
             $this->currentContextShopId,
@@ -1147,7 +1147,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Link product accessories.
      */
-    private function linkAccessories(Product $product, ImportRuntimeConfigInterface $runtimeConfig)
+    private function linkAccessories(Product $product, ImportRuntimeConfigInterface $runtimeConfig): void
     {
         // Accessories linkage
         if ($runtimeConfig->shouldValidateData()) {
@@ -1171,7 +1171,7 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * Import accessories.
      */
-    private function importAccessories(ImportRuntimeConfigInterface $runtimeConfig)
+    private function importAccessories(ImportRuntimeConfigInterface $runtimeConfig): void
     {
         $sharedData = $runtimeConfig->getSharedData();
 
@@ -1194,7 +1194,7 @@ final class ProductImportHandler extends AbstractImportHandler
         }
     }
 
-    public function supports($importEntityType)
+    public function supports($importEntityType): bool
     {
         return $importEntityType === Entity::TYPE_PRODUCTS;
     }

@@ -44,20 +44,16 @@ final class ImportDataFormatter
 
     /**
      * @param string|int $value
-     *
-     * @return bool
      */
-    public function getBoolean($value)
+    public function getBoolean($value): bool
     {
         return (bool) $value;
     }
 
     /**
      * @param string $field
-     *
-     * @return float
      */
-    public function getPrice($field)
+    public function getPrice($field): float
     {
         $field = str_replace(
             [',', '%'],

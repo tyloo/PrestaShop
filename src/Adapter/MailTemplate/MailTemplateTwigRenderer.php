@@ -129,11 +129,9 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
     /**
      * @param string $templateType
      *
-     * @return TransformationCollection
-     *
      * @throws TypeException
      */
-    private function getMailLayoutTransformations(LayoutInterface $mailLayout, $templateType)
+    private function getMailLayoutTransformations(LayoutInterface $mailLayout, $templateType): TransformationCollection
     {
         $themeName = '';
         $htmlPath = $mailLayout->getHtmlPath();

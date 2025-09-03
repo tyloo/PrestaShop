@@ -47,7 +47,7 @@ final class BulkDisableCmsPageHandler extends AbstractCmsPageHandler implements 
      * @throws CmsPageException
      * @throws CmsPageNotFoundException
      */
-    public function handle(BulkDisableCmsPageCommand $command)
+    public function handle(BulkDisableCmsPageCommand $command): void
     {
         try {
             $this->disableCmsPages($command);
@@ -63,7 +63,7 @@ final class BulkDisableCmsPageHandler extends AbstractCmsPageHandler implements 
      * @throws CmsPageException
      * @throws CmsPageNotFoundException
      */
-    private function disableCmsPages(BulkDisableCmsPageCommand $command)
+    private function disableCmsPages(BulkDisableCmsPageCommand $command): void
     {
         foreach ($command->getCmsPages() as $cmsPage) {
             $cms = $this->getCmsPageIfExistsById($cmsPage->getValue());

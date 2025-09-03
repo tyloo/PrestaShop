@@ -47,7 +47,7 @@ class GetCurrencyExchangeRateHandler implements GetCurrencyExchangeRateHandlerIn
     ) {
     }
 
-    public function handle(GetCurrencyExchangeRate $query)
+    public function handle(GetCurrencyExchangeRate $query): ExchangeRate
     {
         try {
             $currencyExchangeRate = $this->exchangeRateProvider->getExchangeRate($query->getIsoCode()->getValue());

@@ -43,7 +43,7 @@ use Profile;
 #[AsCommandHandler]
 final class EditProfileHandler implements EditProfileHandlerInterface
 {
-    public function handle(EditProfileCommand $command)
+    public function handle(EditProfileCommand $command): void
     {
         $profile = $this->getProfile($command->getProfileId());
         $profile->name = $command->getLocalizedNames();
@@ -58,13 +58,11 @@ final class EditProfileHandler implements EditProfileHandlerInterface
     }
 
     /**
-     * @return Profile
-     *
      * @throws ProfileNotFoundException
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
-    private function getProfile(ProfileId $profileId)
+    private function getProfile(ProfileId $profileId): Profile
     {
         $profile = new Profile($profileId->getValue());
 

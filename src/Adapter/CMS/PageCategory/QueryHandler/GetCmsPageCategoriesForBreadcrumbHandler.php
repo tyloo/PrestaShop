@@ -56,7 +56,7 @@ final class GetCmsPageCategoriesForBreadcrumbHandler implements GetCmsPageCatego
     /**
      * @throws CmsPageCategoryException
      */
-    public function handle(GetCmsPageCategoriesForBreadcrumb $query)
+    public function handle(GetCmsPageCategoriesForBreadcrumb $query): Breadcrumb
     {
         try {
             $currentCategory = new CMSCategory(

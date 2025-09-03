@@ -62,7 +62,7 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
     /**
      * Legacy code for product cancellation handling in order page
      */
-    public function handle(CancelOrderProductCommand $command)
+    public function handle(CancelOrderProductCommand $command): void
     {
         $order = new Order($command->getOrderId()->getValue());
         $this->checkInput($command);
@@ -80,7 +80,7 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
         }
     }
 
-    private function getOrderDetails(CancelOrderProductCommand $command)
+    private function getOrderDetails(CancelOrderProductCommand $command): array
     {
         $productList = [];
         $productCancelQuantity = [];
@@ -97,7 +97,7 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
         ];
     }
 
-    private function checkInput(CancelOrderProductCommand $command)
+    private function checkInput(CancelOrderProductCommand $command): void
     {
         if ($command->getCancelledProducts() === []) {
             throw new InvalidCancelProductException(InvalidCancelProductException::NO_REFUNDS);
@@ -110,14 +110,14 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
         }
     }
 
-    private function checkOrderState(Order $order)
+    private function checkOrderState(Order $order): void
     {
         if ($order->hasBeenPaid() || $order->hasPayments()) {
             throw new InvalidOrderStateException(InvalidOrderStateException::ALREADY_PAID, 'Can not cancel product on an order which is already paid');
         }
     }
 
-    private function cancelOrder(Order $order)
+    private function cancelOrder(Order $order): void
     {
         $history = new OrderHistory();
         $history->id_order = (int) $order->id;
@@ -137,7 +137,7 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
     /**
      * @throws InvalidCancelProductException
      */
-    private function assertCancelableProductQuantities(array $orderDetails)
+    private function assertCancelableProductQuantities(array $orderDetails): void
     {
         if (empty($orderDetails['productsOrderDetails'])) {
             throw new InvalidCancelProductException(InvalidCancelProductException::INVALID_QUANTITY, 0);
@@ -158,7 +158,7 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
      * @throws PrestaShopException
      * @throws \PrestaShop\PrestaShop\Core\Domain\Order\Exception\OrderException
      */
-    private function cancelProducts(Order $order, array $orderDetails)
+    private function cancelProducts(Order $order, array $orderDetails): void
     {
         if (! empty($orderDetails['productsOrderDetails'])) {
             foreach ($orderDetails['productsOrderDetails'] as $orderDetail) {

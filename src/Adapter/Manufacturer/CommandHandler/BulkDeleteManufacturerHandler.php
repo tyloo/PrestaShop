@@ -38,7 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\Exception\DeleteManufacturerE
 #[AsCommandHandler]
 final class BulkDeleteManufacturerHandler extends AbstractManufacturerCommandHandler implements BulkDeleteManufacturerHandlerInterface
 {
-    public function handle(BulkDeleteManufacturerCommand $command)
+    public function handle(BulkDeleteManufacturerCommand $command): void
     {
         foreach ($command->getManufacturerIds() as $manufacturerId) {
             $manufacturer = $this->getManufacturer($manufacturerId);

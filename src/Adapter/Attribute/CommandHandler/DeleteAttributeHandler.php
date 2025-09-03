@@ -43,7 +43,7 @@ final class DeleteAttributeHandler extends AbstractAttributeHandler implements D
     /**
      * @throws AttributeException
      */
-    public function handle(DeleteAttributeCommand $command)
+    public function handle(DeleteAttributeCommand $command): void
     {
         $attribute = $this->getAttributeById($command->getAttributeId());
 

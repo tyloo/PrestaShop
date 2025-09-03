@@ -45,7 +45,7 @@ class GeneralConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'catalog_mode' => $this->configuration->getBoolean('PS_CATALOG_MODE'),

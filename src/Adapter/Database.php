@@ -89,7 +89,7 @@ class Database implements \PrestaShop\PrestaShop\Core\Foundation\Database\Databa
     /**
      * Enable the cache.
      */
-    public function enableCache()
+    public function enableCache(): void
     {
         Db::getInstance()->enableCache();
     }
@@ -97,7 +97,7 @@ class Database implements \PrestaShop\PrestaShop\Core\Foundation\Database\Databa
     /**
      * Disable the cache.
      */
-    public function disableCache()
+    public function disableCache(): void
     {
         Db::getInstance()->disableCache();
     }

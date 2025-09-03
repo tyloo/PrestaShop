@@ -59,7 +59,7 @@ final class EditAttachmentHandler extends AbstractAttachmentHandler implements E
      * @throws AttachmentNotFoundException
      * @throws CannotUpdateAttachmentException
      */
-    public function handle(EditAttachmentCommand $command)
+    public function handle(EditAttachmentCommand $command): void
     {
         $attachmentIdValue = $command->getAttachmentId()->getValue();
 
@@ -82,7 +82,7 @@ final class EditAttachmentHandler extends AbstractAttachmentHandler implements E
      * @throws AttachmentNotFoundException
      * @throws CannotUpdateAttachmentException
      */
-    private function updateAttachmentFromCommandData(Attachment $attachment, EditAttachmentCommand $command)
+    private function updateAttachmentFromCommandData(Attachment $attachment, EditAttachmentCommand $command): void
     {
         try {
             if (! $attachment->validateFields(false) && ! $attachment->validateFieldsLang(false)) {

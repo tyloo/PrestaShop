@@ -44,7 +44,7 @@ final class BulkDeleteSqlRequestHandler implements BulkDeleteSqlRequestHandlerIn
     /**
      * @throws SqlRequestException
      */
-    public function handle(BulkDeleteSqlRequestCommand $command)
+    public function handle(BulkDeleteSqlRequestCommand $command): void
     {
         try {
             foreach ($command->getSqlRequestIds() as $sqlRequestId) {

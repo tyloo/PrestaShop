@@ -53,7 +53,7 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
      * @throws ImageUploadException
      * @throws UploadedImageConstraintException
      */
-    public function upload($id, UploadedFile $uploadedImage)
+    public function upload($id, UploadedFile $uploadedImage): void
     {
         $this->checkImageIsAllowedForUpload($uploadedImage);
         $this->deleteOldImage($id);
@@ -66,7 +66,7 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
      *
      * @param int $id
      */
-    private function deleteOldImage($id)
+    private function deleteOldImage($id): void
     {
         if (file_exists(_PS_CAT_IMG_DIR_ . $id . '_thumb.jpg')) {
             unlink(_PS_CAT_IMG_DIR_ . $id . '_thumb.jpg');
@@ -80,7 +80,7 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
      * @throws ImageUploadException
      * @throws MemoryLimitException
      */
-    private function uploadImage($id, UploadedFile $image)
+    private function uploadImage($id, UploadedFile $image): void
     {
         $temporaryImageName = tempnam(_PS_TMP_IMG_DIR_, 'PS');
         if (! $temporaryImageName) {
@@ -116,7 +116,7 @@ final class CategoryThumbnailImageUploader extends AbstractImageUploader impleme
      *
      * @throws ImageUploadException
      */
-    private function generateDifferentTypes($id)
+    private function generateDifferentTypes($id): void
     {
         if (! file_exists(_PS_CAT_IMG_DIR_ . $id . '_thumb.jpg')) {
             return;

@@ -72,12 +72,12 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
         return array_keys($this->all());
     }
 
-    public function replace(array $parameters = [])
+    public function replace(array $parameters = []): void
     {
         $this->add($parameters);
     }
 
-    public function add(array $parameters = [])
+    public function add(array $parameters = []): void
     {
         foreach ($parameters as $key => $value) {
             $this->set($key, $value);
@@ -262,7 +262,7 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
      *
      * @deprecated since version 1.7.4.0
      */
-    public function delete($key)
+    public function delete($key): void
     {
         $this->remove($key);
     }
@@ -300,7 +300,7 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
     /**
      * Restrict updates of a piece of configuration to a single shop.
      */
-    public function restrictUpdatesTo(Shop $shop)
+    public function restrictUpdatesTo(Shop $shop): void
     {
         $this->shop = $shop;
     }

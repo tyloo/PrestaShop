@@ -49,7 +49,7 @@ final class DuplicateOrderCartHandler implements DuplicateOrderCartHandlerInterf
     ) {
     }
 
-    public function handle(DuplicateOrderCartCommand $command)
+    public function handle(DuplicateOrderCartCommand $command): CartId
     {
         // IMPORTANT: context customer must be set in order to correctly fill the address
         $cart = Cart::getCartByOrderId($command->getOrderId()->getValue());

@@ -51,7 +51,7 @@ final class TransformGuestToCustomerHandler implements TransformGuestToCustomerH
     ) {
     }
 
-    public function handle(TransformGuestToCustomerCommand $command)
+    public function handle(TransformGuestToCustomerCommand $command): void
     {
         $customerId = $command->getCustomerId();
         $customer = new Customer($customerId->getValue());
@@ -67,7 +67,7 @@ final class TransformGuestToCustomerHandler implements TransformGuestToCustomerH
     /**
      * @throws CustomerNotFoundException
      */
-    private function assertCustomerExists(CustomerId $customerId, Customer $customer)
+    private function assertCustomerExists(CustomerId $customerId, Customer $customer): void
     {
         if ($customer->id !== $customerId->getValue()) {
             throw new CustomerNotFoundException(\sprintf('Customer with id "%d" was not found', $customerId->getValue()));
@@ -79,7 +79,7 @@ final class TransformGuestToCustomerHandler implements TransformGuestToCustomerH
      *
      * @throws CustomerTransformationException
      */
-    private function assertCustomerIsGuest(Customer $customer)
+    private function assertCustomerIsGuest(Customer $customer): void
     {
         if (Customer::customerExists($customer->email)) {
             throw new CustomerTransformationException(\sprintf('Customer with id "%s" already exists as non-guest', $customer->id), CustomerTransformationException::CUSTOMER_IS_NOT_GUEST);

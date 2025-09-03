@@ -72,7 +72,7 @@ final class AddUnofficialCurrencyHandler extends AbstractCurrencyHandler impleme
      * @throws LanguageNotFoundException
      * @throws LocalizationException
      */
-    public function handle(AddUnofficialCurrencyCommand $command)
+    public function handle(AddUnofficialCurrencyCommand $command): CurrencyId
     {
         $this->validator->assertCurrencyIsNotInReference($command->getIsoCode()->getValue());
         $this->validator->assertCurrencyIsNotAvailableInDatabase($command->getIsoCode()->getValue());

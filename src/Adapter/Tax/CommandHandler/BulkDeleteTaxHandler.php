@@ -41,7 +41,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class BulkDeleteTaxHandler extends AbstractTaxHandler implements BulkDeleteTaxHandlerInterface
 {
-    public function handle(BulkDeleteTaxCommand $command)
+    public function handle(BulkDeleteTaxCommand $command): void
     {
         foreach ($command->getTaxIds() as $taxId) {
             $taxIdValue = $taxId->getValue();

@@ -47,7 +47,7 @@ final class UpdateCartAddressesHandler extends AbstractCartHandler implements Up
     ) {
     }
 
-    public function handle(UpdateCartAddressesCommand $command)
+    public function handle(UpdateCartAddressesCommand $command): void
     {
         $cart = $this->getCart($command->getCartId());
         $this->fillCartWithCommandData($cart, $command);

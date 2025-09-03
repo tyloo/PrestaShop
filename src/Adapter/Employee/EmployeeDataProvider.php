@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Employee\EmployeeDataProviderInterface;
  */
 final class EmployeeDataProvider implements EmployeeDataProviderInterface
 {
-    public function getEmployeeHashedPassword($employeeId)
+    public function getEmployeeHashedPassword($employeeId): string
     {
         $employee = new Employee($employeeId);
 

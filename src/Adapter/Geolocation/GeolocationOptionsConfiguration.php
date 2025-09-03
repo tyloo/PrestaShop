@@ -40,7 +40,7 @@ final class GeolocationOptionsConfiguration implements DataConfigurationInterfac
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'geolocation_behaviour' => $this->configuration->get('PS_GEOLOCATION_BEHAVIOR'),
@@ -49,7 +49,7 @@ final class GeolocationOptionsConfiguration implements DataConfigurationInterfac
         ];
     }
 
-    public function updateConfiguration(array $config)
+    public function updateConfiguration(array $config): array
     {
         if ($this->validateConfiguration($config)) {
             $this->configuration->set('PS_GEOLOCATION_BEHAVIOR', $config['geolocation_behaviour']);
@@ -60,7 +60,7 @@ final class GeolocationOptionsConfiguration implements DataConfigurationInterfac
         return [];
     }
 
-    public function validateConfiguration(array $config)
+    public function validateConfiguration(array $config): bool
     {
         return isset(
             $config['geolocation_behaviour'],

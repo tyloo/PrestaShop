@@ -202,7 +202,7 @@ class ProductStockUpdater
         }
     }
 
-    private function updateStockAvailable(StockAvailable $stockAvailable, ProductStockProperties $properties)
+    private function updateStockAvailable(StockAvailable $stockAvailable, ProductStockProperties $properties): void
     {
         $stockUpdateRequired = false;
         $previousQuantity = (int) $stockAvailable->quantity;

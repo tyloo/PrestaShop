@@ -41,7 +41,7 @@ class CacheManager
      *
      * @param string $key
      */
-    public function clean($key)
+    public function clean($key): void
     {
         Cache::clean($key);
     }

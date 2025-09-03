@@ -44,7 +44,7 @@ final class EditTaxHandler extends AbstractTaxHandler implements EditTaxHandlerI
     /**
      * @throws TaxException
      */
-    public function handle(EditTaxCommand $command)
+    public function handle(EditTaxCommand $command): void
     {
         $tax = $this->getTax($command->getTaxId());
 

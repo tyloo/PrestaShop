@@ -42,7 +42,7 @@ use Validate;
 #[AsCommandHandler]
 final class AddPaymentHandler extends AbstractOrderHandler implements AddPaymentHandlerInterface
 {
-    public function handle(AddPaymentCommand $command)
+    public function handle(AddPaymentCommand $command): void
     {
         $order = $this->getOrder($command->getOrderId());
 

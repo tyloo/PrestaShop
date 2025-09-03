@@ -40,11 +40,9 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
     /**
      * @param string $entity
      *
-     * @return string
-     *
      * @throws InvalidArgumentException
      */
-    public function getViewLink($entity, array $parameters)
+    public function getViewLink($entity, array $parameters): string
     {
         if (! isset($parameters['current_index'])) {
             throw new InvalidArgumentException('Missing parameter current_index to build legacy link');
@@ -59,11 +57,9 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
     /**
      * @param string $entity
      *
-     * @return string
-     *
      * @throws InvalidArgumentException
      */
-    public function getEditLink($entity, array $parameters)
+    public function getEditLink($entity, array $parameters): string
     {
         if (! isset($parameters['current_index'])) {
             throw new InvalidArgumentException('Missing parameter current_index to build legacy link');

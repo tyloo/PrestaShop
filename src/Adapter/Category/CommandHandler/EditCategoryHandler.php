@@ -47,7 +47,7 @@ final class EditCategoryHandler extends AbstractEditCategoryHandler implements E
      * @throws CategoryNotFoundException
      * @throws CannotEditRootCategoryException
      */
-    public function handle(EditCategoryCommand $command)
+    public function handle(EditCategoryCommand $command): void
     {
         $category = new Category($command->getCategoryId()->getValue());
 
@@ -73,7 +73,7 @@ final class EditCategoryHandler extends AbstractEditCategoryHandler implements E
      *
      * @throws CannotEditCategoryException
      */
-    private function updateCategoryFromCommandData(Category $category, EditCategoryCommand $command)
+    private function updateCategoryFromCommandData(Category $category, EditCategoryCommand $command): void
     {
         if ($command->isActive() !== null) {
             $category->active = $command->isActive();

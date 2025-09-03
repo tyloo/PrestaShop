@@ -49,7 +49,7 @@ class EntityMapper
      *
      * @throws PrestaShopDatabaseException
      */
-    public function load($id, $id_lang, $entity, $entity_defs, $id_shop, $should_cache_objects)
+    public function load($id, $id_lang, $entity, $entity_defs, $id_shop, $should_cache_objects): void
     {
         // Load object from database if object id is present
         $cache_id = 'objectmodel_' . $entity_defs['classname'] . '_' . (int) $id . '_' . (int) $id_shop . '_' . (int) $id_lang;

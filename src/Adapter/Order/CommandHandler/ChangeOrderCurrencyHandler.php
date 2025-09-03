@@ -50,7 +50,7 @@ use Validate;
 #[AsCommandHandler]
 final class ChangeOrderCurrencyHandler extends AbstractOrderHandler implements ChangeOrderCurrencyHandlerInterface
 {
-    public function handle(ChangeOrderCurrencyCommand $command)
+    public function handle(ChangeOrderCurrencyCommand $command): void
     {
         $order = $this->getOrder($command->getOrderId());
 
@@ -185,7 +185,7 @@ final class ChangeOrderCurrencyHandler extends AbstractOrderHandler implements C
         array $fields,
         Currency $oldCurrency,
         Currency $newCurrency,
-    ) {
+    ): void {
         foreach ($fields as $field) {
             if (isset($object->{$field})) {
                 $object->{$field} = Tools::convertPriceFull($object->{$field}, $oldCurrency, $newCurrency);

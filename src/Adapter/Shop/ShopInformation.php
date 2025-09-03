@@ -49,10 +49,7 @@ class ShopInformation
         $this->context = $legacyContext->getContext();
     }
 
-    /**
-     * @return array
-     */
-    public function getShopInformation()
+    public function getShopInformation(): array
     {
         return [
             'version' => Version::VERSION,

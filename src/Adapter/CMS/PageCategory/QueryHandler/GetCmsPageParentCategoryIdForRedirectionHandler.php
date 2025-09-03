@@ -45,7 +45,7 @@ final class GetCmsPageParentCategoryIdForRedirectionHandler implements GetCmsPag
     /**
      * @throws CmsPageCategoryException
      */
-    public function handle(GetCmsPageParentCategoryIdForRedirection $query)
+    public function handle(GetCmsPageParentCategoryIdForRedirection $query): CmsPageCategoryId
     {
         try {
             $entity = new CMSCategory($query->getCmsPageCategoryId()->getValue());

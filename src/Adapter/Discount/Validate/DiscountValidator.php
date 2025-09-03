@@ -97,7 +97,7 @@ class DiscountValidator extends AbstractObjectModelValidator
     /**
      * @throws DiscountConstraintException
      */
-    public function validateDiscountPropertiesForType(AddDiscountCommand $command)
+    public function validateDiscountPropertiesForType(AddDiscountCommand $command): void
     {
         switch ($command->getDiscountType()->getValue()) {
             case DiscountType::FREE_SHIPPING:

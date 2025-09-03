@@ -110,10 +110,8 @@ class ImageManager
      * @param string $imageType
      * @param string $tableName
      * @param string $imageDir
-     *
-     * @return string
      */
-    private function getImagePath($imageId, $imageType, $tableName, $imageDir)
+    private function getImagePath($imageId, $imageType, $tableName, $imageDir): string
     {
         if ($tableName === 'product') {
             $image = new Image($imageId);
@@ -128,10 +126,8 @@ class ImageManager
      * @param int    $imageId
      * @param string $imageType
      * @param string $tableName
-     *
-     * @return string
      */
-    private function makeCachedImageName($imageId, $imageType, $tableName)
+    private function makeCachedImageName($imageId, $imageType, $tableName): string
     {
         return $tableName . '_mini_' . $imageId . '.' . $imageType;
     }

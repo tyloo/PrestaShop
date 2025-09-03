@@ -49,7 +49,7 @@ final class DeleteSqlRequestHandler implements DeleteSqlRequestHandlerInterface
      * @throws SqlRequestNotFoundException
      * @throws SqlRequestException
      */
-    public function handle(DeleteSqlRequestCommand $command)
+    public function handle(DeleteSqlRequestCommand $command): void
     {
         $entityId = $command->getSqlRequestId()->getValue();
 

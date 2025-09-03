@@ -53,10 +53,8 @@ class SupplierPresenter
 
     /**
      * @param array|Supplier $supplier Supplier object or an array
-     *
-     * @return SupplierLazyArray
      */
-    public function present(array|Supplier $supplier, Language $language)
+    public function present(array|Supplier $supplier, Language $language): SupplierLazyArray
     {
         // Convert to array if a Supplier object was passed
         if (\is_object($supplier)) {

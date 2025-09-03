@@ -46,7 +46,7 @@ final class BulkToggleLanguagesStatusHandler extends AbstractLanguageHandler imp
     ) {
     }
 
-    public function handle(BulkToggleLanguagesStatusCommand $command)
+    public function handle(BulkToggleLanguagesStatusCommand $command): void
     {
         foreach ($command->getLanguageIds() as $languageId) {
             $language = $this->getLegacyLanguageObject($languageId);

@@ -84,11 +84,8 @@ class OrderReturnLazyArray extends AbstractLazyArray
         );
     }
 
-    /**
-     * @return string
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getReturnNumber()
+    public function getReturnNumber(): string
     {
         return $this->prefix . \sprintf('%06d', $this->orderReturn['id_order_return']);
     }

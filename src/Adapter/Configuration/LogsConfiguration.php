@@ -45,7 +45,7 @@ class LogsConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'logs_by_email' => $this->configuration->get('PS_LOGS_BY_EMAIL'),
@@ -53,7 +53,7 @@ class LogsConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $checkEmails = explode(',', (string) $configuration['logs_email_receivers']);

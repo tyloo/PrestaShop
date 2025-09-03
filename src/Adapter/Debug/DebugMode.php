@@ -51,7 +51,7 @@ class DebugMode
      *
      * @return bool Whether debug mode is enabled
      */
-    public function isDebugModeEnabled()
+    public function isDebugModeEnabled(): bool
     {
         return Tools::strtolower($this->getCurrentDebugMode()) !== 'false';
     }
@@ -94,10 +94,8 @@ class DebugMode
      *                             debug_cookie_name: string
      *                             debug_cookie_value: string
      *                             }
-     *
-     * @return string
      */
-    public function createDebugModeFromConfiguration(array $configuration)
+    public function createDebugModeFromConfiguration(array $configuration): string
     {
         if (! $configuration['debug_mode']) {
             return 'false';
@@ -123,7 +121,7 @@ class DebugMode
      *
      * @return int Whether changing debug mode succeeded or error code
      */
-    public function enable()
+    public function enable(): int
     {
         return $this->changePsModeDevValue('true');
     }
@@ -133,7 +131,7 @@ class DebugMode
      *
      * @return int Whether changing debug mode succeeded or error code
      */
-    public function disable()
+    public function disable(): int
     {
         return $this->changePsModeDevValue('false');
     }
@@ -143,7 +141,7 @@ class DebugMode
      *
      * @return bool Whether the file can be read
      */
-    private function isCustomDefinesReadable()
+    private function isCustomDefinesReadable(): bool
     {
         return is_readable(_PS_ROOT_DIR_ . '/config/defines_custom.inc.php');
     }
@@ -153,7 +151,7 @@ class DebugMode
      *
      * @return bool Whether the file can be read
      */
-    private function isMainDefinesReadable()
+    private function isMainDefinesReadable(): bool
     {
         return is_readable(_PS_ROOT_DIR_ . '/config/defines.inc.php');
     }
@@ -224,7 +222,7 @@ class DebugMode
      *
      * @return int the debug mode
      */
-    public function changePsModeDevValue($value)
+    public function changePsModeDevValue($value): int
     {
         // Check custom defines file first
         if ($this->isCustomDefinesReadable()) {

@@ -48,7 +48,7 @@ final class BulkDeleteLanguagesHandler extends AbstractLanguageHandler implement
     ) {
     }
 
-    public function handle(BulkDeleteLanguagesCommand $command)
+    public function handle(BulkDeleteLanguagesCommand $command): void
     {
         // language can only be modified in "ALL SHOPS" context
         Shop::setContext(Shop::CONTEXT_ALL);

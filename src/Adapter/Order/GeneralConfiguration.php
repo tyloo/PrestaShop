@@ -50,7 +50,7 @@ class GeneralConfiguration extends AbstractMultistoreConfiguration
         'enable_backorder_status',
     ];
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
 
@@ -67,7 +67,7 @@ class GeneralConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $shopConstraint = $this->getShopConstraint();

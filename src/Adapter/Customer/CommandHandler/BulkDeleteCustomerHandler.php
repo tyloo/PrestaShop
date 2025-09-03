@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\CommandHandler\BulkDeleteCustomer
 #[AsCommandHandler]
 final class BulkDeleteCustomerHandler extends AbstractCustomerHandler implements BulkDeleteCustomerHandlerInterface
 {
-    public function handle(BulkDeleteCustomerCommand $command)
+    public function handle(BulkDeleteCustomerCommand $command): void
     {
         foreach ($command->getCustomerIds() as $customerId) {
             $customer = new Customer($customerId->getValue());

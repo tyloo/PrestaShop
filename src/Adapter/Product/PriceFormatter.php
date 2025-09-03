@@ -39,10 +39,8 @@ class PriceFormatter
     /**
      * @param float    $price
      * @param int|null $currency
-     *
-     * @return float
      */
-    public function convertAmount($price, $currency = null)
+    public function convertAmount($price, $currency = null): float
     {
         return (float) Tools::convertPrice($price, $currency);
     }

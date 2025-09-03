@@ -42,7 +42,7 @@ final class EmployeeLanguageUpdater
     ) {
     }
 
-    public function replaceDeletedLanguage(int $deletedLangId)
+    public function replaceDeletedLanguage(int $deletedLangId): void
     {
         $this->connection->update(
             $this->dbPrefix . 'employee',

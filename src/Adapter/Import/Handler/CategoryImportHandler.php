@@ -106,7 +106,7 @@ final class CategoryImportHandler extends AbstractImportHandler
         ];
     }
 
-    public function setUp(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig)
+    public function setUp(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig): void
     {
         parent::setUp($importConfig, $runtimeConfig);
 
@@ -152,7 +152,7 @@ final class CategoryImportHandler extends AbstractImportHandler
         return $category;
     }
 
-    public function tearDown(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig)
+    public function tearDown(ImportConfigInterface $importConfig, ImportRuntimeConfigInterface $runtimeConfig): void
     {
         if (! $runtimeConfig->shouldValidateData() && $runtimeConfig->isFinished()) {
             /* Import has finished, we can regenerate the categories nested tree */
@@ -167,7 +167,7 @@ final class CategoryImportHandler extends AbstractImportHandler
      *
      * @param int $categoryId
      */
-    private function checkCategoryId($categoryId)
+    private function checkCategoryId($categoryId): void
     {
         if (\in_array($categoryId, $this->coreCategories, true)) {
             $this->error(
@@ -190,7 +190,7 @@ final class CategoryImportHandler extends AbstractImportHandler
         Category $category,
         ImportRuntimeConfigInterface $runtimeConfig,
         $categoryId,
-    ) {
+    ): void {
         if (! isset($category->parent)) {
             return;
         }
@@ -284,7 +284,7 @@ final class CategoryImportHandler extends AbstractImportHandler
      *
      * @param int $categoryId
      */
-    private function fillLinkRewrite(Category $category, $categoryId)
+    private function fillLinkRewrite(Category $category, $categoryId): void
     {
         if (isset($category->link_rewrite) && ! empty($category->link_rewrite[$this->defaultLanguageId])) {
             $validLinkRewrite = $this->validate->isLinkRewrite($category->link_rewrite[$this->defaultLanguageId]);
@@ -343,7 +343,7 @@ final class CategoryImportHandler extends AbstractImportHandler
         $categoryId,
         $categoryName,
         $shopData,
-    ) {
+    ): void {
         $unfriendlyError = $this->configuration->getBoolean('UNFRIENDLY_ERROR');
         $movedCategories = [];
         $result = false;
@@ -498,7 +498,7 @@ final class CategoryImportHandler extends AbstractImportHandler
         }
     }
 
-    public function supports($importEntityType)
+    public function supports($importEntityType): bool
     {
         return $importEntityType === Entity::TYPE_CATEGORIES;
     }

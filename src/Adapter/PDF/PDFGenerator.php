@@ -43,7 +43,7 @@ final class PDFGenerator implements PDFGeneratorInterface
     ) {
     }
 
-    public function generatePDF(array $objectCollection)
+    public function generatePDF(array $objectCollection): void
     {
         $pdf = new PDF($objectCollection, $this->templateTypeProvider->getPDFTemplateType(), $this->smarty);
         $pdf->render();

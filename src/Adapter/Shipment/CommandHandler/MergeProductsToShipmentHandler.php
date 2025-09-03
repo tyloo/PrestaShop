@@ -44,7 +44,7 @@ class MergeProductsToShipmentHandler implements MergeProductsToShipmentHandlerIn
     ) {
     }
 
-    public function handle(MergeProductsToShipment $command)
+    public function handle(MergeProductsToShipment $command): void
     {
         $sourceId = $command->getSourceShipmentId()->getValue();
         $targetId = $command->getTargetShipmentId()->getValue();

@@ -38,10 +38,8 @@ final class SlipPdfConfiguration implements DataConfigurationInterface
 {
     /**
      * Returns configuration used to manage Slip pdf in back office.
-     *
-     * @return array
      */
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [];
     }
@@ -71,7 +69,7 @@ final class SlipPdfConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['date_from'],

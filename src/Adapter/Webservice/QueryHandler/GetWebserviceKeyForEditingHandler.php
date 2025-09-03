@@ -43,7 +43,7 @@ use WebserviceKey;
 #[AsQueryHandler]
 final class GetWebserviceKeyForEditingHandler implements GetWebserviceKeyForEditingHandlerInterface
 {
-    public function handle(GetWebserviceKeyForEditing $query)
+    public function handle(GetWebserviceKeyForEditing $query): EditableWebserviceKey
     {
         $webserviceKey = $this->getLegacyWebserviceKeyObject($query->getWebserviceKeyId());
 
@@ -57,10 +57,7 @@ final class GetWebserviceKeyForEditingHandler implements GetWebserviceKeyForEdit
         );
     }
 
-    /**
-     * @return WebserviceKey
-     */
-    private function getLegacyWebserviceKeyObject(WebserviceKeyId $webserviceKeyId)
+    private function getLegacyWebserviceKeyObject(WebserviceKeyId $webserviceKeyId): WebserviceKey
     {
         $webserviceKey = new WebserviceKey($webserviceKeyId->getValue());
 

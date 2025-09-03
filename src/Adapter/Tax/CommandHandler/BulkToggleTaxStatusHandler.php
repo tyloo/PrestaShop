@@ -41,7 +41,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class BulkToggleTaxStatusHandler extends AbstractTaxHandler implements BulkToggleTaxStatusHandlerInterface
 {
-    public function handle(BulkToggleTaxStatusCommand $command)
+    public function handle(BulkToggleTaxStatusCommand $command): void
     {
         foreach ($command->getTaxIds() as $taxId) {
             $tax = $this->getTax($taxId);

@@ -97,7 +97,7 @@ class ProductPresenter
         ProductPresentationSettings $settings,
         array $product,
         Language $language,
-    ) {
+    ): ProductLazyArray {
         $productLazyArray = new ProductLazyArray(
             $settings,
             $product,

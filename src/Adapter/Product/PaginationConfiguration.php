@@ -41,7 +41,7 @@ class PaginationConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'products_per_page' => $this->configuration->get('PS_PRODUCTS_PER_PAGE'),

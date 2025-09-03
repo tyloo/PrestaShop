@@ -91,14 +91,12 @@ class CategoryProductSearchProvider implements ProductSearchProviderInterface
     }
 
     /**
-     * @return ProductSearchResult
-     *
      * @throws PrestaShopDatabaseException
      */
     public function runQuery(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-    ) {
+    ): ProductSearchResult {
         $products = $this->getProductsOrCount($context, $query, 'products');
         $count = $this->getProductsOrCount($context, $query, 'count');
 

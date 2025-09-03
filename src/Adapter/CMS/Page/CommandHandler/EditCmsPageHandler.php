@@ -47,7 +47,7 @@ final class EditCmsPageHandler extends AbstractCmsPageHandler implements EditCms
      * @throws CmsPageException
      * @throws CmsPageCategoryException
      */
-    public function handle(EditCmsPageCommand $command)
+    public function handle(EditCmsPageCommand $command): void
     {
         $cms = $this->createCmsFromCommand($command);
 

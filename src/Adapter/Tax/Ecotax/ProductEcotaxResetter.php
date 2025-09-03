@@ -35,7 +35,7 @@ use Product;
  */
 final class ProductEcotaxResetter implements ProductEcotaxResetterInterface
 {
-    public function reset()
+    public function reset(): void
     {
         Product::resetEcoTax();
     }

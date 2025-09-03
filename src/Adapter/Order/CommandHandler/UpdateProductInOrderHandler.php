@@ -63,7 +63,7 @@ final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler impl
     ) {
     }
 
-    public function handle(UpdateProductInOrderCommand $command)
+    public function handle(UpdateProductInOrderCommand $command): void
     {
         try {
             $order = $this->getOrder($command->getOrderId());
@@ -117,7 +117,7 @@ final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler impl
         OrderDetail $orderDetail,
         Order $order,
         ?OrderInvoice $orderInvoice = null,
-    ) {
+    ): void {
         // assert product exists
         $product = new Product($orderDetail->product_id);
         if ($product->id !== (int) $orderDetail->product_id) {

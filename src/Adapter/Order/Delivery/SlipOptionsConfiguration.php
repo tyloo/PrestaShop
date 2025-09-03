@@ -48,10 +48,8 @@ final class SlipOptionsConfiguration implements DataConfigurationInterface
 
     /**
      * Returns configuration used to manage slip options in back office.
-     *
-     * @return array
      */
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'prefix' => $this->configuration->get(self::PREFIX),
@@ -60,7 +58,7 @@ final class SlipOptionsConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $this->configuration->set(self::PREFIX, $configuration['prefix']);
@@ -71,7 +69,7 @@ final class SlipOptionsConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['prefix'],

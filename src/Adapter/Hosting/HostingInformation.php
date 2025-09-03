@@ -35,10 +35,7 @@ use Tools;
  */
 class HostingInformation
 {
-    /**
-     * @return array
-     */
-    public function getDatabaseInformation()
+    public function getDatabaseInformation(): array
     {
         return [
             'version' => Db::getInstance()->getVersion(),
@@ -51,10 +48,7 @@ class HostingInformation
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getServerInformation()
+    public function getServerInformation(): array
     {
         return [
             'version' => $_SERVER['SERVER_SOFTWARE'] ?? 'n/a',
@@ -62,10 +56,7 @@ class HostingInformation
         ];
     }
 
-    /**
-     * @return array
-     */
-    private function getPhpInformation()
+    private function getPhpInformation(): array
     {
         return [
             'version' => \PHP_VERSION,
@@ -75,10 +66,7 @@ class HostingInformation
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getUname()
+    public function getUname(): string
     {
         return \function_exists('php_uname') ? php_uname('s') . ' ' . php_uname('v') . ' ' . php_uname('m') : '';
     }

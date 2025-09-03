@@ -43,10 +43,7 @@ class SystemInformation
     ) {
     }
 
-    /**
-     * @return array
-     */
-    public function getSummary()
+    public function getSummary(): array
     {
         return [
             'server' => $this->hostingInformation->getServerInformation(),

@@ -94,7 +94,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
         $this->context = Context::getContext();
     }
 
-    public function handle(AddProductToOrderCommand $command)
+    public function handle(AddProductToOrderCommand $command): void
     {
         $order = $this->getOrder($command->getOrderId());
 
@@ -192,7 +192,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
     /**
      * @throws OrderException
      */
-    private function assertOrderWasNotShipped(Order $order)
+    private function assertOrderWasNotShipped(Order $order): void
     {
         if ($order->hasBeenShipped()) {
             throw new OrderException('Cannot add product to shipped order.');
@@ -367,7 +367,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
      *
      * @param bool $isFreeShipping
      */
-    private function createNewInvoice(Order $order, Cart $cart, $isFreeShipping, array $newProducts)
+    private function createNewInvoice(Order $order, Cart $cart, $isFreeShipping, array $newProducts): OrderInvoice
     {
         $invoice = new OrderInvoice();
 
@@ -459,10 +459,8 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
      * @todo: this whole method should be removable as well since ALL invoices are updated by OrderAmountUpdater
      *
      * @param int $orderInvoiceId
-     *
-     * @return OrderInvoice
      */
-    private function updateExistingInvoice($orderInvoiceId, Cart $cart, array $newProducts)
+    private function updateExistingInvoice($orderInvoiceId, Cart $cart, array $newProducts): OrderInvoice
     {
         $invoice = new OrderInvoice($orderInvoiceId);
 

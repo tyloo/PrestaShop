@@ -99,10 +99,8 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
 
     /**
      * Get if it's a Shop context.
-     *
-     * @return bool
      */
-    public function isShopContext()
+    public function isShopContext(): bool
     {
         return Shop::getContext() === Shop::CONTEXT_SHOP;
     }
@@ -126,7 +124,7 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
      *
      * @param int $id Shop id to set in the current context
      */
-    public function setShopContext($id)
+    public function setShopContext($id): void
     {
         Shop::setContext(Shop::CONTEXT_SHOP, $id);
     }
@@ -136,7 +134,7 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
      *
      * @param int $id Shop id to set in the current context
      */
-    public function setShopGroupContext($id)
+    public function setShopGroupContext($id): void
     {
         Shop::setContext(Shop::CONTEXT_GROUP, $id);
     }
@@ -146,7 +144,7 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
      *
      * @param int $id Shop id to set in the current context
      */
-    public function setAllContext($id)
+    public function setAllContext($id): void
     {
         Shop::setContext(Shop::CONTEXT_ALL, $id);
     }
@@ -179,12 +177,12 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
         return new ShopGroup($shopGroupId);
     }
 
-    public function isAllShopContext()
+    public function isAllShopContext(): bool
     {
         return Shop::getContext() === Shop::CONTEXT_ALL;
     }
 
-    public function isGroupShopContext()
+    public function isGroupShopContext(): bool
     {
         return Shop::getContext() === Shop::CONTEXT_GROUP;
     }

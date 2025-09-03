@@ -59,7 +59,7 @@ class SearchProductSearchProvider implements ProductSearchProviderInterface
     public function runQuery(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-    ) {
+    ): ProductSearchResult {
         $products = [];
         $count = 0;
 

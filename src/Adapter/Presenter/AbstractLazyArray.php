@@ -132,7 +132,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
      *
      * @param array $array
      */
-    public function appendArray($array)
+    public function appendArray($array): void
     {
         foreach ($array as $key => $value) {
             // do not override any existing method
@@ -148,7 +148,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         }
     }
 
-    public function appendClosure($key, Closure $closure)
+    public function appendClosure($key, Closure $closure): void
     {
         $this->arrayAccessList->offsetSet(
             $key,
@@ -272,7 +272,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         return [];
     }
 
-    public function clearMethodCacheResults()
+    public function clearMethodCacheResults(): void
     {
         $this->methodCacheResults = [];
     }
@@ -350,7 +350,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
      *
      * @throws RuntimeException
      */
-    public function intersectKey($array)
+    public function intersectKey($array): void
     {
         $arrayCopy = $this->arrayAccessList->getArrayCopy();
         foreach ($arrayCopy as $key => $value) {
@@ -405,10 +405,8 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     /**
      * @param string $methodName
-     *
-     * @return string
      */
-    private function convertMethodNameToIndex($methodName)
+    private function convertMethodNameToIndex($methodName): string
     {
         // remove "get" prefix from the function name
         $strippedMethodName = substr($methodName, 3);

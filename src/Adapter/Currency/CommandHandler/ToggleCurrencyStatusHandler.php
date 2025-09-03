@@ -64,7 +64,7 @@ final class ToggleCurrencyStatusHandler implements ToggleCurrencyStatusHandlerIn
     /**
      * @throws CurrencyException
      */
-    public function handle(ToggleCurrencyStatusCommand $command)
+    public function handle(ToggleCurrencyStatusCommand $command): void
     {
         $entity = new Currency($command->getCurrencyId()->getValue());
 
@@ -89,7 +89,7 @@ final class ToggleCurrencyStatusHandler implements ToggleCurrencyStatusHandlerIn
     /**
      * @throws CannotDisableDefaultCurrencyException
      */
-    private function assertDefaultCurrencyIsNotBeingDisabled(Currency $currency)
+    private function assertDefaultCurrencyIsNotBeingDisabled(Currency $currency): void
     {
         if ((int) $currency->id === $this->defaultCurrencyId) {
             throw new CannotDisableDefaultCurrencyException(\sprintf('Currency with id "%s" is the default currency and cannot be disabled.', $currency->id));
@@ -99,7 +99,7 @@ final class ToggleCurrencyStatusHandler implements ToggleCurrencyStatusHandlerIn
     /**
      * @throws DefaultCurrencyInMultiShopException
      */
-    private function assertDefaultCurrencyIsNotBeingDisabledFromAnyShop(Currency $currency)
+    private function assertDefaultCurrencyIsNotBeingDisabledFromAnyShop(Currency $currency): void
     {
         $allShopIds = Shop::getShops(false, null, true);
 

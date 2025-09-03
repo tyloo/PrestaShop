@@ -120,10 +120,8 @@ class CategoryLazyArray extends AbstractLazyArray
 
     /**
      * Checks if given category image exists for our category.
-     *
-     * @return bool
      */
-    private function doesCategoryImageExist($idImage)
+    private function doesCategoryImageExist($idImage): bool
     {
         return file_exists(_PS_CAT_IMG_DIR_ . $idImage . '.jpg');
     }

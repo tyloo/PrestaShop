@@ -120,7 +120,7 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
      *
      * @throws SpecificPriceConstraintException
      */
-    private function assertDateRangeIsNotInverse(SpecificPrice $specificPrice)
+    private function assertDateRangeIsNotInverse(SpecificPrice $specificPrice): void
     {
         if (empty($specificPrice->from) || empty($specificPrice->to)) {
             return;

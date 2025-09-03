@@ -58,7 +58,7 @@ final class AddContactHandler extends AbstractObjectModelHandler implements AddC
      * @throws CannotAddContactException
      * @throws ContactException
      */
-    public function handle(AddContactCommand $command)
+    public function handle(AddContactCommand $command): ContactId
     {
         $this->assertLocalisedTitleContainsDefaultLanguage($command->getLocalisedTitles());
 
@@ -95,7 +95,7 @@ final class AddContactHandler extends AbstractObjectModelHandler implements AddC
      *
      * @throws ContactConstraintException
      */
-    private function assertLocalisedTitleContainsDefaultLanguage(array $localisedTitle)
+    private function assertLocalisedTitleContainsDefaultLanguage(array $localisedTitle): void
     {
         $errors = $this->validator->validate($localisedTitle, new DefaultLanguage());
 
@@ -109,7 +109,7 @@ final class AddContactHandler extends AbstractObjectModelHandler implements AddC
      *
      * @throws ContactConstraintException
      */
-    private function assertDescriptionContainsCleanHtmlValues(array $localisedDescriptions)
+    private function assertDescriptionContainsCleanHtmlValues(array $localisedDescriptions): void
     {
         foreach ($localisedDescriptions as $description) {
             $errors = $this->validator->validate($description, new CleanHtml());

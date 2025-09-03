@@ -47,7 +47,7 @@ final class AssignProductToCategoryHandler extends AbstractObjectModelHandler im
     ) {
     }
 
-    public function handle(AssignProductToCategoryCommand $command)
+    public function handle(AssignProductToCategoryCommand $command): void
     {
         $this->assignProductToCategory($command);
     }
@@ -55,7 +55,7 @@ final class AssignProductToCategoryHandler extends AbstractObjectModelHandler im
     /**
      * @throws CannotAssignProductToCategoryException
      */
-    private function assignProductToCategory(AssignProductToCategoryCommand $command)
+    private function assignProductToCategory(AssignProductToCategoryCommand $command): void
     {
         $product = $this->productRepository->getProductByDefaultShop($command->getProductId());
         $product->addToCategories($command->getCategoryId()->getValue());

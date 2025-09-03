@@ -45,7 +45,7 @@ final class GetSupplierForEditingHandler extends AbstractSupplierHandler impleme
     ) {
     }
 
-    public function handle(GetSupplierForEditing $query)
+    public function handle(GetSupplierForEditing $query): EditableSupplier
     {
         $supplierId = $query->getSupplierId();
         $supplier = $this->getSupplier($supplierId);

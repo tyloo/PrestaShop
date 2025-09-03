@@ -43,7 +43,7 @@ class AdminAPIConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'enable_admin_api' => $this->configuration->getBoolean('PS_ENABLE_ADMIN_API'),
@@ -70,7 +70,7 @@ class AdminAPIConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return $this->getConfigurationErrors($configuration) === [];
     }

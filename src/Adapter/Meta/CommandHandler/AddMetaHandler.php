@@ -65,7 +65,7 @@ final class AddMetaHandler implements AddMetaHandlerInterface
      * @throws CannotAddMetaException
      * @throws MetaException
      */
-    public function handle(AddMetaCommand $command)
+    public function handle(AddMetaCommand $command): MetaId
     {
         $this->assertUrlRewriteHasDefaultLanguage($command);
         $this->assertIsUrlRewriteValid($command);
@@ -102,7 +102,7 @@ final class AddMetaHandler implements AddMetaHandlerInterface
     /**
      * @throws MetaConstraintException
      */
-    private function assertUrlRewriteHasDefaultLanguage(AddMetaCommand $command)
+    private function assertUrlRewriteHasDefaultLanguage(AddMetaCommand $command): void
     {
         $urlRewriteErrors = $this->validator->validate(
             $command->getLocalisedRewriteUrls(),
@@ -117,7 +117,7 @@ final class AddMetaHandler implements AddMetaHandlerInterface
     /**
      * @throws MetaConstraintException
      */
-    private function assertIsUrlRewriteValid(AddMetaCommand $command)
+    private function assertIsUrlRewriteValid(AddMetaCommand $command): void
     {
         foreach ($command->getLocalisedRewriteUrls() as $idLang => $rewriteUrl) {
             $errors = $this->validator->validate($rewriteUrl, new IsUrlRewrite());
@@ -131,7 +131,7 @@ final class AddMetaHandler implements AddMetaHandlerInterface
     /**
      * @throws MetaConstraintException
      */
-    private function assertIsValidPageName(AddMetaCommand $command)
+    private function assertIsValidPageName(AddMetaCommand $command): void
     {
         $availablePages = $this->metaDataProvider->getAvailablePages();
         if (! \in_array($command->getPageName()->getValue(), $availablePages, true)) {

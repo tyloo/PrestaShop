@@ -43,7 +43,7 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\LanguageId;
 #[AsQueryHandler]
 final class GetLanguageForEditingHandler implements GetLanguageForEditingHandlerInterface
 {
-    public function handle(GetLanguageForEditing $query)
+    public function handle(GetLanguageForEditing $query): EditableLanguage
     {
         $language = $this->getLegacyLanguageObject($query->getLanguageId());
 

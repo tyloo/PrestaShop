@@ -47,7 +47,7 @@ final class UpdateCartCarrierHandler extends AbstractCartHandler implements Upda
     ) {
     }
 
-    public function handle(UpdateCartCarrierCommand $command)
+    public function handle(UpdateCartCarrierCommand $command): void
     {
         $this->assertActiveCarrier($command->getNewCarrierId());
 

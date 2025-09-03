@@ -97,10 +97,8 @@ class LegacyContext
 
     /**
      * Gets the Admin base url (actually random directory name).
-     *
-     * @return string
      */
-    public function getAdminBaseUrl()
+    public function getAdminBaseUrl(): string
     {
         return __PS_BASE_URI__ . basename(_PS_ADMIN_DIR_) . '/';
     }
@@ -174,10 +172,8 @@ class LegacyContext
 
     /**
      * Url to the mail themes folder
-     *
-     * @return string
      */
-    public function getMailThemesUrl()
+    public function getMailThemesUrl(): string
     {
         return $this->tools->getShopDomainSsl(true) . __PS_BASE_URI__ . $this->mailThemesUri;
     }
@@ -189,7 +185,7 @@ class LegacyContext
      *
      * @param string $legacyController
      */
-    public function setupLegacyTranslationContext($legacyController = 'AdminTab')
+    public function setupLegacyTranslationContext($legacyController = 'AdminTab'): void
     {
         Context::getContext()->override_controller_name_for_translations = $legacyController;
     }
@@ -309,7 +305,7 @@ class LegacyContext
      * @param Context $testInstance
      *                              Unit testing purpose only
      */
-    public static function setInstanceForTesting(Context $testInstance)
+    public static function setInstanceForTesting(Context $testInstance): void
     {
         static::$instance = $testInstance;
     }

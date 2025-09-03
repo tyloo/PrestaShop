@@ -46,7 +46,7 @@ final class EditSupplierHandler extends AbstractSupplierHandler implements EditS
     /**
      * @throws SupplierException
      */
-    public function handle(EditSupplierCommand $command)
+    public function handle(EditSupplierCommand $command): void
     {
         $supplierId = $command->getSupplierId();
         $supplier = $this->getSupplier($supplierId);
@@ -77,7 +77,7 @@ final class EditSupplierHandler extends AbstractSupplierHandler implements EditS
     /**
      * Populates Supplier object with given data
      */
-    private function populateSupplierWithData(Supplier $supplier, EditSupplierCommand $command)
+    private function populateSupplierWithData(Supplier $supplier, EditSupplierCommand $command): void
     {
         if ($command->getName() !== null) {
             $supplier->name = $command->getName();
@@ -105,7 +105,7 @@ final class EditSupplierHandler extends AbstractSupplierHandler implements EditS
     /**
      * Populates Supplier address with given data
      */
-    private function populateAddressWithData(Address $address, EditSupplierCommand $command)
+    private function populateAddressWithData(Address $address, EditSupplierCommand $command): void
     {
         if ($command->getAddress() !== null) {
             $address->address1 = $command->getAddress();

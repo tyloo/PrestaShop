@@ -56,7 +56,7 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
     ) {
     }
 
-    public function handle(AddCustomerCommand $command)
+    public function handle(AddCustomerCommand $command): CustomerId
     {
         // Prepare new legacy customer object
         $customer = new Customer();
@@ -94,7 +94,7 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
      * Checks if a registered customer (is_guest = false) doesn't already exist in the database.
      * In that case, we refuse the creation, we cannot have two registered customers with the same email.
      */
-    private function assertCustomerWithGivenEmailDoesNotExist(Email $email)
+    private function assertCustomerWithGivenEmailDoesNotExist(Email $email): void
     {
         $customer = new Customer();
         $customer->getByEmail($email->getValue());
@@ -104,7 +104,7 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
         }
     }
 
-    private function fillCustomerWithCommandData(Customer $customer, AddCustomerCommand $command)
+    private function fillCustomerWithCommandData(Customer $customer, AddCustomerCommand $command): void
     {
         $apeCode = $command->getApeCode() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\ApeCode ?
             $command->getApeCode()->getValue() :
@@ -141,7 +141,7 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
     /**
      * Checks if the default group of the customer was provided in the group list
      */
-    private function assertCustomerCanAccessDefaultGroup(AddCustomerCommand $command)
+    private function assertCustomerCanAccessDefaultGroup(AddCustomerCommand $command): void
     {
         if (! \in_array($command->getDefaultGroupId(), $command->getGroupIds(), true)) {
             throw new CustomerDefaultGroupAccessException(\sprintf('Customer default group with id "%s" must be in access groups', $command->getDefaultGroupId()));

@@ -41,7 +41,7 @@ class PreferencesConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'enable_ssl' => $this->configuration->getBoolean('PS_SSL_ENABLED'),
@@ -57,7 +57,7 @@ class PreferencesConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration) === false) {
             return [
@@ -102,7 +102,7 @@ class PreferencesConfiguration implements DataConfigurationInterface
         return $configuration['enable_ssl'] === false && $this->configuration->get('PS_COOKIE_SAMESITE') === CookieOptions::SAMESITE_NONE;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['enable_ssl'],

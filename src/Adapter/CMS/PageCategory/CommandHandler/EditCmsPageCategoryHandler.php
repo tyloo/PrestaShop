@@ -46,7 +46,7 @@ final class EditCmsPageCategoryHandler extends AbstractCmsPageCategoryHandler im
     /**
      * @throws CmsPageCategoryException
      */
-    public function handle(EditCmsPageCategoryCommand $command)
+    public function handle(EditCmsPageCategoryCommand $command): void
     {
         try {
             $cmsPageCategory = new CMSCategory($command->getCmsPageCategoryId()->getValue());
@@ -118,7 +118,7 @@ final class EditCmsPageCategoryHandler extends AbstractCmsPageCategoryHandler im
      *
      * @throws CmsPageCategoryConstraintException
      */
-    private function assertCmsCategoryCanBeMovedToParent($cmsCategoryId, $cmsCategoryParentId)
+    private function assertCmsCategoryCanBeMovedToParent($cmsCategoryId, $cmsCategoryParentId): void
     {
         if (! CMSCategory::checkBeforeMove($cmsCategoryId, $cmsCategoryParentId)) {
             throw new CmsPageCategoryConstraintException(\sprintf('Unable to move cms category "%s" to parent category "%s"', $cmsCategoryId, $cmsCategoryParentId), CmsPageCategoryConstraintException::CANNOT_MOVE_CATEGORY_TO_PARENT);

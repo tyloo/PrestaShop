@@ -35,12 +35,12 @@ use PrestaShop\PrestaShop\Core\Language\LanguageActivatorInterface;
  */
 final class LanguageActivator implements LanguageActivatorInterface
 {
-    public function enable($langId)
+    public function enable($langId): void
     {
         $this->setActive($langId, true);
     }
 
-    public function disable($langId)
+    public function disable($langId): void
     {
         $this->setActive($langId, false);
     }
@@ -51,7 +51,7 @@ final class LanguageActivator implements LanguageActivatorInterface
      * @param int  $langId
      * @param bool $status
      */
-    private function setActive($langId, $status)
+    private function setActive($langId, $status): void
     {
         $lang = new Language((int) $langId);
 

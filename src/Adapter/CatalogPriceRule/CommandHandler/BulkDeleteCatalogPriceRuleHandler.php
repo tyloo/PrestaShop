@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\CatalogPriceRule\Exception\CannotDeleteCat
 #[AsCommandHandler]
 final class BulkDeleteCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler implements BulkDeleteCatalogPriceRuleHandlerInterface
 {
-    public function handle(BulkDeleteCatalogPriceRuleCommand $command)
+    public function handle(BulkDeleteCatalogPriceRuleCommand $command): void
     {
         foreach ($catalogPriceRuleId = $command->getCatalogPriceRuleIds() as $catalogPriceRuleId) {
             $specificPriceRule = $this->getSpecificPriceRule($catalogPriceRuleId);

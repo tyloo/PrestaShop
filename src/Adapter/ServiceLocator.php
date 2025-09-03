@@ -43,7 +43,7 @@ class ServiceLocator
      */
     private static $service_container;
 
-    public static function setServiceContainerInstance(?Container $container)
+    public static function setServiceContainerInstance(?Container $container): void
     {
         self::$service_container = $container;
     }

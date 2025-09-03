@@ -38,7 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\Exception\UpdateManufacturerE
 #[AsCommandHandler]
 final class BulkToggleManufacturerStatusHandler extends AbstractManufacturerCommandHandler implements BulkToggleManufacturerStatusHandlerInterface
 {
-    public function handle(BulkToggleManufacturerStatusCommand $command)
+    public function handle(BulkToggleManufacturerStatusCommand $command): void
     {
         foreach ($command->getManufacturerIds() as $manufacturerId) {
             $manufacturer = $this->getManufacturer($manufacturerId);

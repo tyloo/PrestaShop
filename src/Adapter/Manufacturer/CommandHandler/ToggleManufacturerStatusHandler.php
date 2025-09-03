@@ -38,7 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\Exception\UpdateManufacturerE
 #[AsCommandHandler]
 final class ToggleManufacturerStatusHandler extends AbstractManufacturerCommandHandler implements ToggleManufacturerStatusHandlerInterface
 {
-    public function handle(ToggleManufacturerStatusCommand $command)
+    public function handle(ToggleManufacturerStatusCommand $command): void
     {
         $manufacturer = $this->getManufacturer($command->getManufacturerId());
 

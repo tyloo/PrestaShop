@@ -53,7 +53,7 @@ final class WebserviceKeyStatusModifier
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
-    public function toggleStatus($columnId)
+    public function toggleStatus($columnId): array
     {
         $webserviceKey = new WebserviceKey($columnId);
 

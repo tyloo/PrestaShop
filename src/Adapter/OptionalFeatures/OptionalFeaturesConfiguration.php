@@ -45,7 +45,7 @@ class OptionalFeaturesConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'combinations' => $this->combinationFeature->isActive(),
@@ -54,7 +54,7 @@ class OptionalFeaturesConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $this->combinationFeature->update((bool) $configuration['combinations']);
@@ -65,7 +65,7 @@ class OptionalFeaturesConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['combinations'],

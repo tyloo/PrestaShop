@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\CommandHandler\BulkDisableCustome
 #[AsCommandHandler]
 final class BulkDisableCustomerHandler extends AbstractCustomerHandler implements BulkDisableCustomerHandlerInterface
 {
-    public function handle(BulkDisableCustomerCommand $command)
+    public function handle(BulkDisableCustomerCommand $command): void
     {
         foreach ($command->getCustomerIds() as $customerId) {
             $customer = new Customer($customerId->getValue());

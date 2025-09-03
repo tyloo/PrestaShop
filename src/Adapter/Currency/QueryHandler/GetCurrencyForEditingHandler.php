@@ -49,7 +49,7 @@ final class GetCurrencyForEditingHandler implements GetCurrencyForEditingHandler
     ) {
     }
 
-    public function handle(GetCurrencyForEditing $query)
+    public function handle(GetCurrencyForEditing $query): EditableCurrency
     {
         $entity = new Currency(
             $query->getCurrencyId()->getValue(),

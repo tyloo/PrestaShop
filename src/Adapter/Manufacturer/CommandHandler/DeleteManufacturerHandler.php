@@ -38,7 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\Exception\DeleteManufacturerE
 #[AsCommandHandler]
 final class DeleteManufacturerHandler extends AbstractManufacturerCommandHandler implements DeleteManufacturerHandlerInterface
 {
-    public function handle(DeleteManufacturerCommand $command)
+    public function handle(DeleteManufacturerCommand $command): void
     {
         $manufacturer = $this->getManufacturer($command->getManufacturerId());
 

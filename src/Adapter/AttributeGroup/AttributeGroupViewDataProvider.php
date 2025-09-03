@@ -49,7 +49,7 @@ final class AttributeGroupViewDataProvider implements AttributeGroupViewDataProv
     ) {
     }
 
-    public function isColorGroup($attributeGroupId)
+    public function isColorGroup($attributeGroupId): bool
     {
         $attributeGroup = $this->getAttributeGroupById($attributeGroupId);
 

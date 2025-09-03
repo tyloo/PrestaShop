@@ -54,7 +54,7 @@ final class AddEmployeeHandler extends AbstractEmployeeHandler implements AddEmp
     ) {
     }
 
-    public function handle(AddEmployeeCommand $command)
+    public function handle(AddEmployeeCommand $command): EmployeeId
     {
         $canAccessProfile = $this->profileAccessChecker->canEmployeeAccessProfile(
             $this->contextEmployeeProvider->getId(),
@@ -77,10 +77,8 @@ final class AddEmployeeHandler extends AbstractEmployeeHandler implements AddEmp
 
     /**
      * Create legacy employee object.
-     *
-     * @return Employee
      */
-    private function createLegacyEmployeeObjectFromCommand(AddEmployeeCommand $command)
+    private function createLegacyEmployeeObjectFromCommand(AddEmployeeCommand $command): Employee
     {
         $employee = new Employee();
         $employee->firstname = $command->getFirstName()->getValue();
@@ -108,7 +106,7 @@ final class AddEmployeeHandler extends AbstractEmployeeHandler implements AddEmp
      *
      * @throws EmailAlreadyUsedException
      */
-    private function assertEmailIsNotAlreadyUsed($email)
+    private function assertEmailIsNotAlreadyUsed($email): void
     {
         if (Employee::employeeExists($email)) {
             throw new EmailAlreadyUsedException($email, 'An account already exists for this email address');

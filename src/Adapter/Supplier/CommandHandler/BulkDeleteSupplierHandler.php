@@ -42,7 +42,7 @@ final class BulkDeleteSupplierHandler extends AbstractDeleteSupplierHandler impl
     /**
      * @throws SupplierException
      */
-    public function handle(BulkDeleteSupplierCommand $command)
+    public function handle(BulkDeleteSupplierCommand $command): void
     {
         foreach ($command->getSupplierIds() as $supplierId) {
             try {

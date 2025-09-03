@@ -43,7 +43,7 @@ final class BulkDeleteAttributeHandler extends AbstractAttributeHandler implemen
     /**
      * @throws AttributeException
      */
-    public function handle(BulkDeleteAttributeCommand $command)
+    public function handle(BulkDeleteAttributeCommand $command): void
     {
         foreach ($command->getAttributeIds() as $attributeId) {
             $attribute = $this->getAttributeById($attributeId);

@@ -61,7 +61,7 @@ final class BulkToggleCurrenciesStatusHandler extends AbstractCurrencyHandler im
     /**
      * @throws BulkToggleCurrenciesException
      */
-    public function handle(BulkToggleCurrenciesStatusCommand $command)
+    public function handle(BulkToggleCurrenciesStatusCommand $command): void
     {
         $faileds = [];
 

@@ -45,7 +45,7 @@ final class DeleteCmsPageCategoryHandler implements DeleteCmsPageCategoryHandler
     /**
      * @throws CmsPageCategoryException
      */
-    public function handle(DeleteCmsPageCategoryCommand $command)
+    public function handle(DeleteCmsPageCategoryCommand $command): void
     {
         try {
             $entity = new CMSCategory($command->getCmsPageCategoryId()->getValue());

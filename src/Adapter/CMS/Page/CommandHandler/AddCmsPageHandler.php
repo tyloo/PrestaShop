@@ -42,7 +42,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class AddCmsPageHandler extends AbstractCmsPageHandler implements AddCmsPageHandlerInterface
 {
-    public function handle(AddCmsPageCommand $command)
+    public function handle(AddCmsPageCommand $command): CmsPageId
     {
         $cms = $this->createCmsFromCommand($command);
 
@@ -63,10 +63,7 @@ final class AddCmsPageHandler extends AbstractCmsPageHandler implements AddCmsPa
         return new CmsPageId((int) $cms->id);
     }
 
-    /**
-     * @return CMS
-     */
-    protected function createCmsFromCommand(AddCmsPageCommand $command)
+    protected function createCmsFromCommand(AddCmsPageCommand $command): CMS
     {
         $cmsCategoryId = $command->getCmsPageCategory()->getValue();
         $this->assertCmsCategoryExists($cmsCategoryId);

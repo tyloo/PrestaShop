@@ -44,17 +44,14 @@ use WebserviceKey;
 #[AsCommandHandler]
 final class EditWebserviceKeyHandler extends AbstractWebserviceKeyHandler implements EditWebserviceKeyHandlerInterface
 {
-    public function handle(EditWebserviceKeyCommand $command)
+    public function handle(EditWebserviceKeyCommand $command): void
     {
         $webserviceKey = $this->getLegacyWebserviceKey($command->getWebserviceKeyId());
 
         $this->updateLegacyWebserviceKeyWithCommandData($webserviceKey, $command);
     }
 
-    /**
-     * @return WebserviceKey
-     */
-    private function getLegacyWebserviceKey(WebserviceKeyId $webserviceKeyId)
+    private function getLegacyWebserviceKey(WebserviceKeyId $webserviceKeyId): WebserviceKey
     {
         $webserviceKey = new WebserviceKey($webserviceKeyId->getValue());
 
@@ -68,7 +65,7 @@ final class EditWebserviceKeyHandler extends AbstractWebserviceKeyHandler implem
     private function updateLegacyWebserviceKeyWithCommandData(
         WebserviceKey $webserviceKey,
         EditWebserviceKeyCommand $command,
-    ) {
+    ): void {
         if ($command->getKey() instanceof \PrestaShop\PrestaShop\Core\Domain\Webservice\ValueObject\Key) {
             $webserviceKey->key = $command->getKey()->getValue();
         }

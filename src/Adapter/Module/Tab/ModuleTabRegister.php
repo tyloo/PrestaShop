@@ -81,7 +81,7 @@ class ModuleTabRegister
      *
      * This is done automatically as part of the module installation.
      */
-    public function registerTabs(ModuleInterface $module)
+    public function registerTabs(ModuleInterface $module): void
     {
         if (! $module->getInstance() instanceof Module) {
             return;
@@ -97,7 +97,7 @@ class ModuleTabRegister
         }
     }
 
-    public function enableTabs(ModuleInterface $module)
+    public function enableTabs(ModuleInterface $module): void
     {
         $this->tabRepository->changeEnabledByModuleName($module->get('name'), true);
     }

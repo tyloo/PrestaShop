@@ -284,7 +284,7 @@ class ContextStateManager
     /**
      * Save context field into local array
      */
-    private function saveContextField(string $fieldName)
+    private function saveContextField(string $fieldName): void
     {
         $currentStashIndex = $this->getCurrentStashIndex();
         // NOTE: array_key_exists important here, isset cannot be used because it would not detect if null is stored

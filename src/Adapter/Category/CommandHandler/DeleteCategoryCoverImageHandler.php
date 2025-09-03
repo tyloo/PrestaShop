@@ -54,7 +54,7 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
     ) {
     }
 
-    public function handle(DeleteCategoryCoverImageCommand $command)
+    public function handle(DeleteCategoryCoverImageCommand $command): void
     {
         $categoryId = $command->getCategoryId();
         $category = new Category($categoryId->getValue());
@@ -69,7 +69,7 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
     /**
      * @throws CategoryNotFoundException
      */
-    private function assertCategoryExists(CategoryId $categoryId, Category $category)
+    private function assertCategoryExists(CategoryId $categoryId, Category $category): void
     {
         if ($category->id !== $categoryId->getValue()) {
             throw new CategoryNotFoundException($categoryId, \sprintf('Category with id "%s" was not found.', $categoryId->getValue()));
@@ -79,7 +79,7 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
     /**
      * @throws CannotDeleteImageException
      */
-    private function deleteCoverImage(Category $category)
+    private function deleteCoverImage(Category $category): void
     {
         if ($category->deleteImage(true) === false) {
             throw new CannotDeleteImageException(\sprintf('Cannot delete cover image for category with id "%s"', $category->id), CannotDeleteImageException::COVER_IMAGE);
@@ -89,7 +89,7 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
     /**
      * @throws CannotDeleteImageException
      */
-    private function deleteTemporaryThumbnailImage(Category $category)
+    private function deleteTemporaryThumbnailImage(Category $category): void
     {
         $temporaryThumbnailPath = $this->configuration->get('_PS_TMP_IMG_DIR_') . 'category_' . $category->id . '-thumb.jpg';
 
@@ -105,7 +105,7 @@ final class DeleteCategoryCoverImageHandler implements DeleteCategoryCoverImageH
     /**
      * @throws CannotDeleteImageException
      */
-    private function deleteImagesForAllTypes(Category $category)
+    private function deleteImagesForAllTypes(Category $category): void
     {
         $imageTypes = ImageType::getImagesTypes('categories');
         $categoryImageDir = $this->configuration->get('_PS_CAT_IMG_DIR_');

@@ -54,10 +54,8 @@ class DebugModeConfiguration implements DataConfigurationInterface
 
     /**
      * Returns configuration used to manage Debug mode in back office.
-     *
-     * @return array
      */
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'disable_overrides' => $this->configuration->getBoolean('PS_DISABLE_OVERRIDES'),
@@ -148,7 +146,7 @@ class DebugModeConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         $keys = [
             'disable_overrides',

@@ -45,7 +45,7 @@ final class RefreshExchangeRatesHandler implements RefreshExchangeRatesHandlerIn
     /**
      * @throws CurrencyException
      */
-    public function handle(RefreshExchangeRatesCommand $command)
+    public function handle(RefreshExchangeRatesCommand $command): void
     {
         $error = Currency::refreshCurrencies();
 

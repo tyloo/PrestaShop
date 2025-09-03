@@ -58,7 +58,7 @@ final class ChangeOrderDeliveryAddressHandler extends AbstractOrderCommandHandle
     ) {
     }
 
-    public function handle(ChangeOrderDeliveryAddressCommand $command)
+    public function handle(ChangeOrderDeliveryAddressCommand $command): void
     {
         $order = $this->getOrder($command->getOrderId());
         $address = new Address($command->getNewDeliveryAddressId()->getValue());

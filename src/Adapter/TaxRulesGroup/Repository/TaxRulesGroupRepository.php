@@ -160,10 +160,8 @@ class TaxRulesGroupRepository extends AbstractMultiShopObjectModelRepository
 
     /**
      * Get most used Tax.
-     *
-     * @return int
      */
-    public function getIdTaxRulesGroupMostUsed()
+    public function getIdTaxRulesGroupMostUsed(): int
     {
         return (int) Product::getIdTaxRulesGroupMostUsed();
     }

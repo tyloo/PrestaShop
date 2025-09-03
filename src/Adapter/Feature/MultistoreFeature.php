@@ -51,22 +51,22 @@ class MultistoreFeature implements FeatureInterface
         return Shop::isFeatureActive();
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         return (bool) $this->configuration->get(MultistoreConfig::FEATURE_STATUS);
     }
 
-    public function enable()
+    public function enable(): void
     {
         $this->configuration->set(MultistoreConfig::FEATURE_STATUS, 1);
     }
 
-    public function disable()
+    public function disable(): void
     {
         $this->configuration->set(MultistoreConfig::FEATURE_STATUS, 0);
     }
 
-    public function update($status)
+    public function update($status): void
     {
         $status ? $this->enable() : $this->disable();
     }

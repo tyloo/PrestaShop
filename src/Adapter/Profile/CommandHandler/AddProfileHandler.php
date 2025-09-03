@@ -40,7 +40,7 @@ use Profile;
 #[AsCommandHandler]
 final class AddProfileHandler implements AddProfileHandlerInterface
 {
-    public function handle(AddProfileCommand $command)
+    public function handle(AddProfileCommand $command): ProfileId
     {
         $profile = new Profile();
         $profile->name = $command->getLocalizedNames();

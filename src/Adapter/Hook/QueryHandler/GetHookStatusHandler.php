@@ -42,7 +42,7 @@ use PrestaShop\PrestaShop\Core\Domain\Hook\QueryResult\HookStatus;
 #[AsQueryHandler]
 final class GetHookStatusHandler implements GetHookStatusHandlerInterface
 {
-    public function handle(GetHookStatus $query)
+    public function handle(GetHookStatus $query): HookStatus
     {
         $hookId = $query->getId()->getValue();
         $hook = new Hook($hookId);

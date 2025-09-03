@@ -41,7 +41,7 @@ use RequestSql;
 #[AsQueryHandler]
 final class GetDatabaseTablesListHandler implements GetDatabaseTablesListHandlerInterface
 {
-    public function handle(GetDatabaseTablesList $query)
+    public function handle(GetDatabaseTablesList $query): DatabaseTablesList
     {
         $dbTables = (new RequestSql())->getTables();
 

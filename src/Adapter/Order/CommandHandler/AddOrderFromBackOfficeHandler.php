@@ -61,7 +61,7 @@ final class AddOrderFromBackOfficeHandler extends AbstractOrderCommandHandler im
     ) {
     }
 
-    public function handle(AddOrderFromBackOfficeCommand $command)
+    public function handle(AddOrderFromBackOfficeCommand $command): OrderId
     {
         $paymentModule = Configuration::get('PS_CATALOG_MODE') ?
             new BoOrderCore() :
@@ -147,7 +147,7 @@ final class AddOrderFromBackOfficeHandler extends AbstractOrderCommandHandler im
         $message->save();
     }
 
-    private function assertAddressesAreNotDisabled(Cart $cart)
+    private function assertAddressesAreNotDisabled(Cart $cart): void
     {
         $isDeliveryCountryDisabled = ! Address::isCountryActiveById((int) $cart->id_address_delivery);
         $isInvoiceCountryDisabled = ! Address::isCountryActiveById((int) $cart->id_address_invoice);

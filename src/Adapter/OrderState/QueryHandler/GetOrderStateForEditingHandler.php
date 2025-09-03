@@ -44,7 +44,7 @@ use SplFileInfo;
 #[AsQueryHandler]
 final class GetOrderStateForEditingHandler implements GetOrderStateForEditingHandlerInterface
 {
-    public function handle(GetOrderStateForEditing $query)
+    public function handle(GetOrderStateForEditing $query): EditableOrderState
     {
         $orderStateId = $query->getOrderStateId();
         $orderState = new OrderState($orderStateId->getValue());

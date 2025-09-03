@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Tax\QueryResult\EditableTax;
 #[AsQueryHandler]
 final class GetTaxForEditingHandler extends AbstractTaxHandler implements GetTaxForEditingHandlerInterface
 {
-    public function handle(GetTaxForEditing $query)
+    public function handle(GetTaxForEditing $query): EditableTax
     {
         $tax = $this->getTax($query->getTaxId());
 

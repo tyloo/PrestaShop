@@ -57,7 +57,7 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
      * @throws SupplierException
      * @throws LocalizationException
      */
-    public function handle(GetSupplierForViewing $query)
+    public function handle(GetSupplierForViewing $query): ViewableSupplier
     {
         $supplier = $this->getSupplier($query->getSupplierId());
 
@@ -68,11 +68,9 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
     }
 
     /**
-     * @return Supplier
-     *
      * @throws SupplierNotFoundException
      */
-    private function getSupplier(SupplierId $supplierId)
+    private function getSupplier(SupplierId $supplierId): Supplier
     {
         $supplier = new Supplier($supplierId->getValue());
 

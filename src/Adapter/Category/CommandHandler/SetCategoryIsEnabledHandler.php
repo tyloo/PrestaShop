@@ -44,7 +44,7 @@ final class SetCategoryIsEnabledHandler implements SetCategoryIsEnabledHandlerIn
      * @throws CategoryNotFoundException
      * @throws CannotUpdateCategoryStatusException
      */
-    public function handle(SetCategoryIsEnabledCommand $command)
+    public function handle(SetCategoryIsEnabledCommand $command): void
     {
         $categoryId = $command->getCategoryId()->getValue();
         $entity = new Category($categoryId);

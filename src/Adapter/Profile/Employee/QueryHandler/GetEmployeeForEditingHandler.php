@@ -56,7 +56,7 @@ final class GetEmployeeForEditingHandler extends AbstractObjectModelHandler impl
         $this->imageTagSourceParser = $imageTagSourceParser ?? new ImageTagSourceParser();
     }
 
-    public function handle(GetEmployeeForEditing $query)
+    public function handle(GetEmployeeForEditing $query): EditableEmployee
     {
         $employeeId = $query->getEmployeeId();
         $employee = new Employee($employeeId->getValue());

@@ -40,7 +40,7 @@ class MaintenanceConfiguration extends AbstractMultistoreConfiguration
      */
     private const CONFIGURATION_FIELDS = ['enable_shop', 'maintenance_allow_admins', 'maintenance_ip', 'maintenance_text'];
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
 
@@ -52,7 +52,7 @@ class MaintenanceConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    public function updateConfiguration(array $configurationInputValues)
+    public function updateConfiguration(array $configurationInputValues): array
     {
         if ($this->validateConfiguration($configurationInputValues)) {
             $shopConstraint = $this->getShopConstraint();

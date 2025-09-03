@@ -43,7 +43,7 @@ class ProductListingPresenter extends ProductPresenter
         ProductPresentationSettings $settings,
         array $product,
         Language $language,
-    ) {
+    ): ProductListingLazyArray {
         $productListingLazyArray = new ProductListingLazyArray(
             $settings,
             $product,

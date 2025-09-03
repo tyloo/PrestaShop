@@ -46,7 +46,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 #[AsQueryHandler]
 final class GetCustomerForEditingHandler implements GetCustomerForEditingHandlerInterface
 {
-    public function handle(GetCustomerForEditing $query)
+    public function handle(GetCustomerForEditing $query): EditableCustomer
     {
         $customerId = $query->getCustomerId();
         $customer = new Customer($customerId->getValue());

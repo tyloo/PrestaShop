@@ -60,10 +60,7 @@ class GetShipmentForViewingHandler implements GetShipmentForViewingHandlerInterf
     ) {
     }
 
-    /**
-     * @return ShipmentForViewing
-     */
-    public function handle(GetShipmentForViewing $query)
+    public function handle(GetShipmentForViewing $query): ShipmentForViewing
     {
         $id = $query->getShipmentId()->getValue();
         /** @var Shipment $shipment */

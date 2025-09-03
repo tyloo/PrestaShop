@@ -78,7 +78,7 @@ class UrlGenerator implements UrlGeneratorInterface
      *
      * @return array{0: string, 1: array<string>} An array with: the legacy controller name, then the parameters array
      */
-    final public function getLegacyOptions($routeName, $parameters = [])
+    final public function getLegacyOptions($routeName, $parameters = []): array
     {
         $legacyController = $routeName;
         $legacyParameters = $parameters;

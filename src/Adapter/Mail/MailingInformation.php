@@ -34,18 +34,12 @@ use Configuration;
  */
 class MailingInformation
 {
-    /**
-     * @return bool
-     */
-    public function isNativeMailUsed()
+    public function isNativeMailUsed(): bool
     {
         return Configuration::get('PS_MAIL_METHOD') === 1;
     }
 
-    /**
-     * @return array
-     */
-    public function getSmtpInformation()
+    public function getSmtpInformation(): array
     {
         return [
             'server' => Configuration::get('PS_MAIL_SERVER'),

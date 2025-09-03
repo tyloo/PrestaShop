@@ -46,7 +46,7 @@ final class BulkDeleteCategoriesHandler extends AbstractDeleteCategoryHandler im
      * @throws CannotDeleteRootCategoryForShopException
      * @throws FailedToDeleteCategoryException
      */
-    public function handle(BulkDeleteCategoriesCommand $command)
+    public function handle(BulkDeleteCategoriesCommand $command): void
     {
         $deletedCategoryIdsByParent = [];
         foreach ($command->getCategoryIds() as $categoryId) {

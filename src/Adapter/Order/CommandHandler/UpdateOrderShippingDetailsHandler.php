@@ -55,7 +55,7 @@ final class UpdateOrderShippingDetailsHandler extends AbstractOrderHandler imple
     ) {
     }
 
-    public function handle(UpdateOrderShippingDetailsCommand $command)
+    public function handle(UpdateOrderShippingDetailsCommand $command): void
     {
         $order = $this->getOrder($command->getOrderId());
 

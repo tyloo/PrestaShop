@@ -44,7 +44,7 @@ class OrderRefundUpdater
         OrderRefundSummary $orderRefundSummary,
         bool $returnedProducts,
         bool $restock,
-    ) {
+    ): void {
         // Update order details (after credit slip to avoid updating refunded quantities while the credit slip fails)
         foreach ($orderRefundSummary->getProductRefunds() as $orderDetailId => $productRefund) {
             $orderDetail = $orderRefundSummary->getOrderDetailById($orderDetailId);

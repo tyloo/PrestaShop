@@ -53,10 +53,8 @@ class ManufacturerPresenter
 
     /**
      * @param array|Manufacturer $manufacturer Manufacturer object or an array
-     *
-     * @return ManufacturerLazyArray
      */
-    public function present(array|Manufacturer $manufacturer, Language $language)
+    public function present(array|Manufacturer $manufacturer, Language $language): ManufacturerLazyArray
     {
         // Convert to array if a Manufacturer object was passed
         if (\is_object($manufacturer)) {

@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Address\QueryResult\EditableManufacturerAd
 #[AsQueryHandler]
 final class GetManufacturerAddressForEditingHandler extends AbstractAddressHandler implements GetManufacturerAddressForEditingHandlerInterface
 {
-    public function handle(GetManufacturerAddressForEditing $query)
+    public function handle(GetManufacturerAddressForEditing $query): EditableManufacturerAddress
     {
         $addressId = $query->getAddressId();
 

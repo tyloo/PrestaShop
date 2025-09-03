@@ -48,7 +48,7 @@ final class AddSqlRequestHandler extends AbstractSqlRequestHandler implements Ad
      * @throws CannotAddSqlRequestException
      * @throws SqlRequestException
      */
-    public function handle(AddSqlRequestCommand $command)
+    public function handle(AddSqlRequestCommand $command): SqlRequestId
     {
         $this->assertSqlQueryIsValid($command->getSql());
 

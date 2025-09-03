@@ -48,7 +48,7 @@ final class EmployeeImageUploader extends AbstractImageUploader implements Image
     ) {
     }
 
-    public function upload($employeeId, UploadedFile $image)
+    public function upload($employeeId, UploadedFile $image): void
     {
         $this->checkImageIsAllowedForUpload($image);
         $tempImageName = $this->createTemporaryImage($image);
@@ -63,7 +63,7 @@ final class EmployeeImageUploader extends AbstractImageUploader implements Image
      *
      * @param int $id
      */
-    private function deleteOldImage($id)
+    private function deleteOldImage($id): void
     {
         $employee = new Employee($id);
         $employee->deleteImage();

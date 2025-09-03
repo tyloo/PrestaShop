@@ -48,7 +48,7 @@ class BulkToggleCarrierStatusHandler implements BulkToggleCarrierStatusHandlerIn
     ) {
     }
 
-    public function handle(BulkToggleCarrierStatusCommand $command)
+    public function handle(BulkToggleCarrierStatusCommand $command): void
     {
         foreach ($command->getCarrierIds() as $carrierId) {
             $carrier = $this->carrierRepository->get($carrierId);

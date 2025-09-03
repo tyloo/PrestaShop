@@ -45,7 +45,7 @@ final class BulkEnableSupplierHandler implements BulkEnableSupplierHandlerInterf
     /**
      * @throws SupplierException
      */
-    public function handle(BulkEnableSupplierCommand $command)
+    public function handle(BulkEnableSupplierCommand $command): void
     {
         try {
             foreach ($command->getSupplierIds() as $supplierId) {

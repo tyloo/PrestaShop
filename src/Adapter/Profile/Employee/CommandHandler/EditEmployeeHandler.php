@@ -57,7 +57,7 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
     ) {
     }
 
-    public function handle(EditEmployeeCommand $command)
+    public function handle(EditEmployeeCommand $command): void
     {
         $canAccessProfile = $this->profileAccessChecker->canEmployeeAccessProfile(
             $this->contextEmployeeProvider->getId(),
@@ -85,7 +85,7 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
      *
      * @throws EmployeeException
      */
-    private function updateEmployeeWithCommandData(Employee $employee, EditEmployeeCommand $command)
+    private function updateEmployeeWithCommandData(Employee $employee, EditEmployeeCommand $command): void
     {
         $employee->firstname = $command->getFirstName()->getValue();
         $employee->lastname = $command->getLastName()->getValue();
@@ -132,7 +132,7 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
      *
      * @throws EmailAlreadyUsedException
      */
-    private function assertEmailIsNotAlreadyUsed(Employee $employee, $email)
+    private function assertEmailIsNotAlreadyUsed(Employee $employee, $email): void
     {
         // Don't count own email as usage.
         if ($employee->email === $email) {
@@ -147,7 +147,7 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
     /**
      * Update employee password in cookie.
      */
-    private function updatePasswordInCookie(Employee $employee)
+    private function updatePasswordInCookie(Employee $employee): void
     {
         $this->legacyContext->getContext()->cookie->passwd = $employee->passwd;
         $this->legacyContext->getContext()->employee->passwd = $employee->passwd;

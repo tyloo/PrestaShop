@@ -53,7 +53,7 @@ final class BulkDeleteProfileHandler extends AbstractProfileHandler implements B
     ) {
     }
 
-    public function handle(BulkDeleteProfileCommand $command)
+    public function handle(BulkDeleteProfileCommand $command): void
     {
         $entityIds = $command->getProfileIds();
         $exceptionToThrowLater = null;

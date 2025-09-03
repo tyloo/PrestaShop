@@ -64,7 +64,7 @@ final class DeleteCurrencyHandler implements DeleteCurrencyHandlerInterface
     /**
      * @throws CurrencyException
      */
-    public function handle(DeleteCurrencyCommand $command)
+    public function handle(DeleteCurrencyCommand $command): void
     {
         $entity = new Currency($command->getCurrencyId()->getValue());
 
@@ -89,7 +89,7 @@ final class DeleteCurrencyHandler implements DeleteCurrencyHandlerInterface
      *
      * @throws CannotDeleteDefaultCurrencyException
      */
-    private function assertDefaultCurrencyIsNotBeingRemoved($currencyId)
+    private function assertDefaultCurrencyIsNotBeingRemoved($currencyId): void
     {
         if ($currencyId === $this->defaultCurrencyId) {
             throw new CannotDeleteDefaultCurrencyException(\sprintf('Currency with id "%s" is the default currency and cannot be deleted.', $currencyId));
@@ -101,7 +101,7 @@ final class DeleteCurrencyHandler implements DeleteCurrencyHandlerInterface
      *
      * @throws DefaultCurrencyInMultiShopException
      */
-    private function assertDefaultCurrencyIsNotBeingRemovedFromAnyShop(Currency $currency)
+    private function assertDefaultCurrencyIsNotBeingRemovedFromAnyShop(Currency $currency): void
     {
         $allShopIds = Shop::getShops(false, null, true);
 

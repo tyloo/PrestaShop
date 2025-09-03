@@ -62,7 +62,7 @@ class MetaDataProvider implements MetaDataProviderInterface
         return Meta::getPages(true);
     }
 
-    public function getDefaultMetaPageNameById($metaId)
+    public function getDefaultMetaPageNameById($metaId): ?string
     {
         $query = new DbQuery();
         $query->select('`page`');
@@ -75,7 +75,7 @@ class MetaDataProvider implements MetaDataProviderInterface
         return \is_string($result) ? $result : null;
     }
 
-    public function getModuleMetaPageNameById($metaId)
+    public function getModuleMetaPageNameById($metaId): ?string
     {
         $query = new DbQuery();
         $query->select('`page`');
@@ -126,10 +126,8 @@ class MetaDataProvider implements MetaDataProviderInterface
      * Checks whenever the file contains module file pattern.
      *
      * @param string $fileName
-     *
-     * @return bool
      */
-    private function isModuleFile($fileName)
+    private function isModuleFile($fileName): bool
     {
         return str_starts_with($fileName, 'module-');
     }

@@ -179,7 +179,7 @@ final class AddCustomizationHandler extends AbstractCartHandler implements AddCu
     /**
      * @throws CustomizationConstraintException
      */
-    private function assertCustomTextField(int $customFieldId, string $value)
+    private function assertCustomTextField(int $customFieldId, string $value): void
     {
         $customization = new CustomizationField($customFieldId);
 

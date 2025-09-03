@@ -48,7 +48,7 @@ final class ProfileImageUploader extends AbstractImageUploader implements ImageU
     ) {
     }
 
-    public function upload($profileId, UploadedFile $image)
+    public function upload($profileId, UploadedFile $image): void
     {
         $this->checkImageIsAllowedForUpload($image);
         $tempImageName = $this->createTemporaryImage($image);

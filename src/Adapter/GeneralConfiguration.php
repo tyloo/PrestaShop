@@ -44,7 +44,7 @@ class GeneralConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'check_ip_address' => $this->configuration->getBoolean('PS_COOKIE_CHECKIP'),
@@ -85,7 +85,7 @@ class GeneralConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['check_ip_address'],

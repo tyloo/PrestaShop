@@ -46,7 +46,7 @@ final class AddCmsPageCategoryHandler extends AbstractCmsPageCategoryHandler imp
     /**
      * @throws CmsPageCategoryException
      */
-    public function handle(AddCmsPageCategoryCommand $command)
+    public function handle(AddCmsPageCategoryCommand $command): CmsPageCategoryId
     {
         if (! $this->assertHasDefaultLanguage($command->getLocalisedName())) {
             throw new CmsPageCategoryConstraintException('Missing name in default language', CmsPageCategoryConstraintException::MISSING_DEFAULT_LANGUAGE_FOR_NAME);

@@ -47,7 +47,7 @@ class CustomerConfiguration extends AbstractMultistoreConfiguration
         'enable_offers',
     ];
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
 
@@ -61,7 +61,7 @@ class CustomerConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    public function updateConfiguration(array $config)
+    public function updateConfiguration(array $config): array
     {
         if ($this->validateConfiguration($config)) {
             $shopConstraint = $this->getShopConstraint();

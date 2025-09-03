@@ -131,11 +131,8 @@ class OrderLazyArray extends AbstractLazyArray
         return $this->subTotals;
     }
 
-    /**
-     * @return int
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getProductsCount()
+    public function getProductsCount(): int
     {
         return \count($this->getProducts());
     }
@@ -268,11 +265,8 @@ class OrderLazyArray extends AbstractLazyArray
         return $amounts;
     }
 
-    /**
-     * @return OrderDetailLazyArray
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getDetails()
+    public function getDetails(): OrderDetailLazyArray
     {
         return new OrderDetailLazyArray($this->order);
     }
@@ -385,11 +379,8 @@ class OrderLazyArray extends AbstractLazyArray
         return '';
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getLabels()
+    public function getLabels(): array
     {
         return [
             'tax_short' => ($this->includeTaxes())
@@ -409,10 +400,7 @@ class OrderLazyArray extends AbstractLazyArray
         return $this->taxConfiguration->includeTaxes();
     }
 
-    /**
-     * @return array
-     */
-    private function getDefaultHistory()
+    private function getDefaultHistory(): array
     {
         return [
             'id_order_state' => '',

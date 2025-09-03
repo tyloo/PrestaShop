@@ -48,7 +48,7 @@ class DeleteCarrierHandler implements DeleteCarrierHandlerInterface
     ) {
     }
 
-    public function handle(DeleteCarrierCommand $command)
+    public function handle(DeleteCarrierCommand $command): void
     {
         $carrier = $this->carrierRepository->get($command->getCarrierId());
 

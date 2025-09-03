@@ -47,7 +47,7 @@ final class GetManufacturerForEditingHandler extends AbstractManufacturerHandler
     ) {
     }
 
-    public function handle(GetManufacturerForEditing $query)
+    public function handle(GetManufacturerForEditing $query): EditableManufacturer
     {
         $manufacturerId = $query->getManufacturerId();
         $manufacturer = $this->getManufacturer($manufacturerId);

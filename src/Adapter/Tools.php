@@ -66,7 +66,7 @@ class Tools
     /**
      * @see LegacyTools::refreshCACertFile()
      */
-    public function refreshCaCertFile()
+    public function refreshCaCertFile(): void
     {
         LegacyTools::refreshCACertFile();
     }

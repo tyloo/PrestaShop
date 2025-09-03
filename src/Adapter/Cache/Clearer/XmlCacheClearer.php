@@ -37,7 +37,7 @@ use Tools;
  */
 final class XmlCacheClearer implements CacheClearerInterface
 {
-    public function clear()
+    public function clear(): void
     {
         Tools::clearXMLCache();
     }

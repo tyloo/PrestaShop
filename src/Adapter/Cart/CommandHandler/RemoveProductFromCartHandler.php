@@ -50,7 +50,7 @@ final class RemoveProductFromCartHandler extends AbstractCartHandler implements 
     ) {
     }
 
-    public function handle(RemoveProductFromCartCommand $command)
+    public function handle(RemoveProductFromCartCommand $command): void
     {
         $cart = $this->getCart($command->getCartId());
 

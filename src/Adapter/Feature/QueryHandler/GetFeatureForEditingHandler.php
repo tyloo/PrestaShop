@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\QueryResult\EditableFeature;
 #[AsQueryHandler]
 final class GetFeatureForEditingHandler implements GetFeatureForEditingHandlerInterface
 {
-    public function handle(GetFeatureForEditing $query)
+    public function handle(GetFeatureForEditing $query): EditableFeature
     {
         $feature = new Feature($query->getFeatureId()->getValue());
 

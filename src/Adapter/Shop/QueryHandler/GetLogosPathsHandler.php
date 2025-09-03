@@ -49,7 +49,7 @@ final class GetLogosPathsHandler implements GetLogosPathsHandlerInterface
     ) {
     }
 
-    public function handle(GetLogosPaths $query)
+    public function handle(GetLogosPaths $query): LogosPaths
     {
         return new LogosPaths(
             $this->getHeaderLogoPath(),
@@ -61,20 +61,16 @@ final class GetLogosPathsHandler implements GetLogosPathsHandlerInterface
 
     /**
      * Get path to context's shop logo.
-     *
-     * @return string
      */
-    private function getHeaderLogoPath()
+    private function getHeaderLogoPath(): string
     {
         return $this->imageBaseUrl . Configuration::get('PS_LOGO');
     }
 
     /**
      * Get path to context's shop mail logo.
-     *
-     * @return string
      */
-    private function getMailLogoPath()
+    private function getMailLogoPath(): string
     {
         if (! $mailLogo = Configuration::get('PS_LOGO_MAIL')) {
             return $this->getHeaderLogoPath();
@@ -91,10 +87,8 @@ final class GetLogosPathsHandler implements GetLogosPathsHandlerInterface
 
     /**
      * Get path to context's shop invoice logo.
-     *
-     * @return string
      */
-    private function getInvoiceLogoPath()
+    private function getInvoiceLogoPath(): string
     {
         if (! $invoiceLogo = Configuration::get('PS_LOGO_INVOICE')) {
             return $this->getHeaderLogoPath();
@@ -111,10 +105,8 @@ final class GetLogosPathsHandler implements GetLogosPathsHandlerInterface
 
     /**
      * Get path to context's shop favicon.
-     *
-     * @return string
      */
-    private function getFaviconPath()
+    private function getFaviconPath(): string
     {
         return $this->imageBaseUrl . Configuration::get('PS_FAVICON');
     }

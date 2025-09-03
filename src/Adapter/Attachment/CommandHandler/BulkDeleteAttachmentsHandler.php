@@ -43,7 +43,7 @@ final class BulkDeleteAttachmentsHandler extends AbstractAttachmentHandler imple
     /**
      * @throws BulkDeleteAttachmentsException
      */
-    public function handle(BulkDeleteAttachmentsCommand $command)
+    public function handle(BulkDeleteAttachmentsCommand $command): void
     {
         $errors = [];
 

@@ -52,7 +52,7 @@ final class AddLanguageHandler extends AbstractLanguageHandler implements AddLan
     ) {
     }
 
-    public function handle(AddLanguageCommand $command)
+    public function handle(AddLanguageCommand $command): LanguageId
     {
         $this->assertLanguageWithIsoCodeDoesNotExist($command->getIsoCode());
         if ($command->getNoPictureImagePath()) {
@@ -81,7 +81,7 @@ final class AddLanguageHandler extends AbstractLanguageHandler implements AddLan
     /**
      * @throws LanguageConstraintException
      */
-    private function assertLanguageWithIsoCodeDoesNotExist(IsoCode $isoCode)
+    private function assertLanguageWithIsoCodeDoesNotExist(IsoCode $isoCode): void
     {
         if (Language::getIdByIso($isoCode->getValue())) {
             throw new LanguageConstraintException(\sprintf('Language with ISO code "%s" already exists', $isoCode->getValue()), LanguageConstraintException::DUPLICATE_ISO_CODE);
@@ -91,7 +91,7 @@ final class AddLanguageHandler extends AbstractLanguageHandler implements AddLan
     /**
      * Add language and shop association
      */
-    private function addShopAssociation(Language $language, AddLanguageCommand $command)
+    private function addShopAssociation(Language $language, AddLanguageCommand $command): void
     {
         $this->associateWithShops(
             $language,
@@ -99,10 +99,7 @@ final class AddLanguageHandler extends AbstractLanguageHandler implements AddLan
         );
     }
 
-    /**
-     * @return Language
-     */
-    private function createLegacyLanguageObjectFromCommand(AddLanguageCommand $command)
+    private function createLegacyLanguageObjectFromCommand(AddLanguageCommand $command): Language
     {
         $language = new Language();
         $language->name = $command->getName();
@@ -128,7 +125,7 @@ final class AddLanguageHandler extends AbstractLanguageHandler implements AddLan
         return $language;
     }
 
-    private function uploadFlagImage(Language $language, AddLanguageCommand $command)
+    private function uploadFlagImage(Language $language, AddLanguageCommand $command): void
     {
         $this->uploadImage(
             $language->id,

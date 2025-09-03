@@ -42,7 +42,7 @@ final class DeleteSupplierHandler extends AbstractDeleteSupplierHandler implemen
     /**
      * @throws SupplierException
      */
-    public function handle(DeleteSupplierCommand $command)
+    public function handle(DeleteSupplierCommand $command): void
     {
         $supplierId = $command->getSupplierId();
         try {

@@ -58,7 +58,7 @@ final class SearchCriteriaWithCategoryParentIdFilterFactory implements Decorated
     ) {
     }
 
-    public function createFrom(SearchCriteriaInterface $searchCriteria)
+    public function createFrom(SearchCriteriaInterface $searchCriteria): SearchCriteria
     {
         $categoryParentId = $this->resolveCategoryParentId();
 

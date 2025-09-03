@@ -45,7 +45,7 @@ final class BulkDisableSupplierHandler implements BulkDisableSupplierHandlerInte
     /**
      * @throws SupplierException
      */
-    public function handle(BulkDisableSupplierCommand $command)
+    public function handle(BulkDisableSupplierCommand $command): void
     {
         try {
             foreach ($command->getSupplierIds() as $supplierId) {

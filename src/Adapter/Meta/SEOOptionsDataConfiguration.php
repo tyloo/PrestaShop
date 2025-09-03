@@ -40,7 +40,7 @@ class SEOOptionsDataConfiguration extends AbstractMultistoreConfiguration
         'product_attributes_in_title',
     ];
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
 

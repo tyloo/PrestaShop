@@ -43,7 +43,7 @@ final class ToggleCmsPageStatusHandler extends AbstractCmsPageHandler implements
     /**
      * @throws CmsPageException
      */
-    public function handle(ToggleCmsPageStatusCommand $command)
+    public function handle(ToggleCmsPageStatusCommand $command): void
     {
         $cms = $this->getCmsPageIfExistsById($command->getCmsPageId()->getValue());
 

@@ -70,11 +70,8 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
         parent::__construct();
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getProducts()
+    public function getProducts(): array
     {
         $totalProducts = ($this->includeTaxes) ? $this->order->total_products_wt : $this->order->total_products;
 
@@ -89,11 +86,8 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
         ];
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getDiscounts()
+    public function getDiscounts(): array
     {
         $discountAmount = ($this->includeTaxes)
             ? $this->order->total_discounts_tax_incl
@@ -118,11 +112,8 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
         ];
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getShipping()
+    public function getShipping(): array
     {
         $cart = new Cart($this->order->id_cart);
         if (! $cart->isVirtualCart()) {
@@ -149,11 +140,8 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
         ];
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getTax()
+    public function getTax(): array
     {
         if (! Configuration::get('PS_TAX_DISPLAY')) {
             return [
@@ -177,11 +165,8 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
         ];
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getGiftWrapping()
+    public function getGiftWrapping(): array
     {
         if ($this->order->gift) {
             $giftWrapping = ($this->includeTaxes)

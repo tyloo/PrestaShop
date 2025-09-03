@@ -43,7 +43,7 @@ final class DeleteCmsPageHandler extends AbstractCmsPageHandler implements Delet
     /**
      * @throws CmsPageException
      */
-    public function handle(DeleteCmsPageCommand $command)
+    public function handle(DeleteCmsPageCommand $command): void
     {
         $cms = $this->getCmsPageIfExistsById($command->getCmsPageId()->getValue());
 

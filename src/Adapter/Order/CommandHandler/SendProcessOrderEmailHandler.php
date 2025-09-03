@@ -91,11 +91,9 @@ class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterf
     /**
      * Provides legacy cart object
      *
-     * @return Cart
-     *
      * @throws CartNotFoundException
      */
-    private function getCart(CartId $cartId)
+    private function getCart(CartId $cartId): Cart
     {
         $cartIdValue = $cartId->getValue();
         $cart = new Cart($cartIdValue);
@@ -110,11 +108,9 @@ class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterf
     /**
      * Provides legacy customer object
      *
-     * @return Customer
-     *
      * @throws CustomerNotFoundException
      */
-    private function getCustomer(CustomerId $customerId)
+    private function getCustomer(CustomerId $customerId): Customer
     {
         $customerIdValue = $customerId->getValue();
         $customer = new Customer($customerIdValue);

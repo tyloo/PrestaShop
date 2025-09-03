@@ -49,7 +49,7 @@ class CachingConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'use_cache' => $this->isCachingEnabled,
@@ -72,7 +72,7 @@ class CachingConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['use_cache'],

@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\CommandHandler\BulkEnableCustomer
 #[AsCommandHandler]
 final class BulkEnableCustomerHandler extends AbstractCustomerHandler implements BulkEnableCustomerHandlerInterface
 {
-    public function handle(BulkEnableCustomerCommand $command)
+    public function handle(BulkEnableCustomerCommand $command): void
     {
         foreach ($command->getCustomerIds() as $customerId) {
             $customer = new Customer($customerId->getValue());

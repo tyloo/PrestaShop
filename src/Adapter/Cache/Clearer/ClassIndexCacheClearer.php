@@ -37,7 +37,7 @@ use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerInterface;
  */
 final class ClassIndexCacheClearer implements CacheClearerInterface
 {
-    public function clear()
+    public function clear(): void
     {
         PrestashopAutoload::getInstance()->generateIndex();
     }

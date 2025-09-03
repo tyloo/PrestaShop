@@ -37,7 +37,7 @@ final class DoctrineCacheClearer implements CacheClearerInterface
     ) {
     }
 
-    public function clear()
+    public function clear(): void
     {
         $this->doctrineProvider->deleteAll();
     }

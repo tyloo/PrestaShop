@@ -37,7 +37,7 @@ use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerInterface;
  */
 final class MediaCacheClearer implements CacheClearerInterface
 {
-    public function clear()
+    public function clear(): void
     {
         Media::clearCache();
     }

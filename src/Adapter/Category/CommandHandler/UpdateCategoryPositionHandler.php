@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CategoryNotFoundExcepti
 #[AsCommandHandler]
 final class UpdateCategoryPositionHandler implements UpdateCategoryPositionHandlerInterface
 {
-    public function handle(UpdateCategoryPositionCommand $command)
+    public function handle(UpdateCategoryPositionCommand $command): void
     {
         $parentCategoryId = $command->getParentCategoryId()->getValue();
         $categoryId = $command->getCategoryId()->getValue();

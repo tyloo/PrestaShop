@@ -70,7 +70,7 @@ class ObjectPresenter implements PresenterInterface
      * @param ObjectModel $presentedObject
      * @param array       $htmlFields
      */
-    private function filterHtmlContent($type, &$presentedObject, $htmlFields)
+    private function filterHtmlContent($type, &$presentedObject, $htmlFields): void
     {
         if (! empty($htmlFields) && \is_array($htmlFields)) {
             // Chained hook call - if multiple modules are hooked here, they will receive the result of the previous one as a parameter

@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\Exception\CartException;
 #[AsCommandHandler]
 final class RemoveCartRuleFromCartHandler extends AbstractCartHandler implements RemoveCartRuleFromCartHandlerInterface
 {
-    public function handle(RemoveCartRuleFromCartCommand $command)
+    public function handle(RemoveCartRuleFromCartCommand $command): void
     {
         $cart = $this->getCart($command->getCartId());
 

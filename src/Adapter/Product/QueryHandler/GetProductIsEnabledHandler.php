@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\QueryHandler\GetProductIsEnabledHa
 #[AsQueryHandler]
 final class GetProductIsEnabledHandler implements GetProductIsEnabledHandlerInterface
 {
-    public function handle(GetProductIsEnabled $query)
+    public function handle(GetProductIsEnabled $query): bool
     {
         $productId = $query->getProductId()->getValue();
         $product = new Product($productId);

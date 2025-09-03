@@ -45,7 +45,7 @@ use SpecificPriceRule;
 #[AsCommandHandler]
 final class EditCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler implements EditCatalogPriceRuleHandlerInterface
 {
-    public function handle(EditCatalogPriceRuleCommand $command)
+    public function handle(EditCatalogPriceRuleCommand $command): void
     {
         try {
             $specificPriceRule = $this->fetchSpecificPriceRuleFromCommand($command);
@@ -120,7 +120,7 @@ final class EditCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler 
      *
      * @throws CatalogPriceRuleConstraintException
      */
-    private function fetchDateRange(EditCatalogPriceRuleCommand $command, SpecificPriceRule $specificPriceRule)
+    private function fetchDateRange(EditCatalogPriceRuleCommand $command, SpecificPriceRule $specificPriceRule): void
     {
         $commandDateFrom = $command->getDateTimeFrom();
         $commandDateTo = $command->getDateTimeTo();

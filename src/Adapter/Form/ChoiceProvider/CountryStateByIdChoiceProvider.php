@@ -73,7 +73,7 @@ final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProv
     /**
      * Configures array parameters and default values
      */
-    private function configureOptions(OptionsResolver $resolver)
+    private function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['only_active' => false]);
         $resolver->setRequired('id_country');
@@ -82,7 +82,7 @@ final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProv
         $this->allowIdCountryGreaterThanZero($resolver);
     }
 
-    private function allowIdCountryGreaterThanZero(OptionsResolver $resolver)
+    private function allowIdCountryGreaterThanZero(OptionsResolver $resolver): void
     {
         $resolver->setAllowedValues('id_country', fn ($value): bool => $value > 0);
     }

@@ -48,7 +48,7 @@ class BulkDeleteCarrierHandler implements BulkDeleteCarrierHandlerInterface
     ) {
     }
 
-    public function handle(BulkDeleteCarrierCommand $command)
+    public function handle(BulkDeleteCarrierCommand $command): void
     {
         foreach ($command->getCarrierIds() as $carrierId) {
             $carrier = $this->carrierRepository->get($carrierId);

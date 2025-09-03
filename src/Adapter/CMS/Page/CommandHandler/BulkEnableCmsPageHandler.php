@@ -45,7 +45,7 @@ final class BulkEnableCmsPageHandler extends AbstractCmsPageHandler implements B
     /**
      * @throws CmsPageException
      */
-    public function handle(BulkEnableCmsPageCommand $command)
+    public function handle(BulkEnableCmsPageCommand $command): void
     {
         try {
             $this->enableCmsPages($command);
@@ -61,7 +61,7 @@ final class BulkEnableCmsPageHandler extends AbstractCmsPageHandler implements B
      * @throws PrestaShopDatabaseException
      * @throws CmsPageNotFoundException
      */
-    private function enableCmsPages(BulkEnableCmsPageCommand $command)
+    private function enableCmsPages(BulkEnableCmsPageCommand $command): void
     {
         foreach ($command->getCmsPages() as $cmsPage) {
             $cms = $this->getCmsPageIfExistsById($cmsPage->getValue());

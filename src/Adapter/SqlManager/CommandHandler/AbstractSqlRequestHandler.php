@@ -47,7 +47,7 @@ abstract class AbstractSqlRequestHandler
     protected function assertSqlQueryIsValid(string $sql): void
     {
         $errors = $this->sqlQueryValidator->validate($sql);
-        if (\count($errors) !== 0) {
+        if ($errors !== []) {
             $message = $this->translator->trans(
                 $errors[0]['key'],
                 $errors[0]['parameters'],

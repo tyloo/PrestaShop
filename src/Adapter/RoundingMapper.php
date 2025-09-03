@@ -45,7 +45,7 @@ final class RoundingMapper
      * @return string
      *                The corresponding Rounding class' constant value
      */
-    public static function mapRounding($legacyRoundingMode)
+    public static function mapRounding($legacyRoundingMode): string
     {
         $roundModes = [
             PS_ROUND_UP => Rounding::ROUND_CEIL,

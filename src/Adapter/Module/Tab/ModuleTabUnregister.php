@@ -65,7 +65,7 @@ class ModuleTabUnregister
      *
      * This is done automatically as part of the module uninstallation.
      */
-    public function unregisterTabs(ModuleInterface $module)
+    public function unregisterTabs(ModuleInterface $module): void
     {
         // We use the Tab repository to have only
         // installed tabs related to the module
@@ -77,7 +77,7 @@ class ModuleTabUnregister
         }
     }
 
-    public function disableTabs(ModuleInterface $module)
+    public function disableTabs(ModuleInterface $module): void
     {
         $this->tabRepository->changeEnabledByModuleName($module->get('name'), false);
     }
@@ -87,7 +87,7 @@ class ModuleTabUnregister
      *
      * @param Tab $tab the instance of entity tab
      */
-    private function unregisterTab(Tab $tab)
+    private function unregisterTab(Tab $tab): void
     {
         // We need to use the legacy class because of the right management
         $tab_legacy = new TabClass($tab->getId());
@@ -109,7 +109,7 @@ class ModuleTabUnregister
      * When we add a level of children in the menu tabs, we created a dummy parent.
      * We must delete it when it has no more children than the original tab.
      */
-    private function removeDuplicatedParent(Tab $tab)
+    private function removeDuplicatedParent(Tab $tab): void
     {
         $remainingChildren = $this->tabRepository->findByParentId($tab->getIdParent());
         // Or more than one children, the parent tab is still used.

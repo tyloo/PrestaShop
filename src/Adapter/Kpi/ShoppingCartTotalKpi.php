@@ -69,7 +69,7 @@ final class ShoppingCartTotalKpi implements KpiInterface
     /**
      * Sets options for Kpi
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }

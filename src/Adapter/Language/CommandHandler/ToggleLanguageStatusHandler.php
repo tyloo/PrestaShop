@@ -46,7 +46,7 @@ final class ToggleLanguageStatusHandler extends AbstractLanguageHandler implemen
     ) {
     }
 
-    public function handle(ToggleLanguageStatusCommand $command)
+    public function handle(ToggleLanguageStatusCommand $command): void
     {
         $language = $this->getLegacyLanguageObject($command->getLanguageId());
 

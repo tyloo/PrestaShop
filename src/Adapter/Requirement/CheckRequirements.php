@@ -42,10 +42,8 @@ class CheckRequirements
 
     /**
      * Returns a summary of all system requirements.
-     *
-     * @return array
      */
-    public function getSummary()
+    public function getSummary(): array
     {
         $paramsRequiredResults = ConfigurationTest::check(ConfigurationTest::getDefaultTests());
 
@@ -76,10 +74,7 @@ class CheckRequirements
         ];
     }
 
-    /**
-     * @return array
-     */
-    private function getErrorMessages()
+    private function getErrorMessages(): array
     {
         return [
             'phpversion' => $this->translator->trans('Update your PHP version.', [], 'Admin.Advparameters.Notification'),

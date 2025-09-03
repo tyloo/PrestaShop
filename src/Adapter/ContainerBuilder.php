@@ -157,11 +157,9 @@ class ContainerBuilder
     }
 
     /**
-     * @return LegacyContainerBuilder
-     *
      * @throws Exception
      */
-    private function compileContainer()
+    private function compileContainer(): LegacyContainerBuilder
     {
         $container = new LegacyContainerBuilder();
         // If the container builder is modified the container logically should be rebuilt
@@ -203,7 +201,7 @@ class ContainerBuilder
      * to include these classes manually. This is performed in Doctrine\ORM\Configuration::newDefaultAnnotationDriver
      * which is called in Setup::createAnnotationMetadataConfiguration.
      */
-    private function loadDoctrineAnnotationMetadata()
+    private function loadDoctrineAnnotationMetadata(): void
     {
         // IMPORTANT: we need to provide a cache because doctrine tries to init a connection on redis, memcached, ... on its own
         $cacheProvider = DoctrineProvider::wrap(new ArrayAdapter());
@@ -213,7 +211,7 @@ class ContainerBuilder
     /**
      * @throws Exception
      */
-    private function loadServicesFromConfig(LegacyContainerBuilder $container)
+    private function loadServicesFromConfig(LegacyContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
         $servicesPath = \sprintf(
@@ -233,7 +231,7 @@ class ContainerBuilder
      *
      * @throws Exception
      */
-    private function loadModulesAutoloader(ContainerInterface $container)
+    private function loadModulesAutoloader(ContainerInterface $container): void
     {
         $installedModules = $container->getParameter('prestashop.installed_modules');
         /** @var array<string> $installedModules */

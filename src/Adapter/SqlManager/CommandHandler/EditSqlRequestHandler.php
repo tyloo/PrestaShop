@@ -49,7 +49,7 @@ final class EditSqlRequestHandler extends AbstractSqlRequestHandler implements E
      * @throws SqlRequestException
      * @throws SqlRequestNotFoundException
      */
-    public function handle(EditSqlRequestCommand $command)
+    public function handle(EditSqlRequestCommand $command): void
     {
         $this->assertSqlQueryIsValid($command->getSql());
 

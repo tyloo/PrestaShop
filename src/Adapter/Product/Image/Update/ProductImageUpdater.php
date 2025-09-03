@@ -62,7 +62,7 @@ class ProductImageUpdater
      * @throws CannotDeleteProductImageException
      * @throws CannotUnlinkImageException
      */
-    public function deleteImage(ImageId $imageId)
+    public function deleteImage(ImageId $imageId): void
     {
         $image = $this->productImageRepository->getImageById($imageId);
 

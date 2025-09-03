@@ -57,7 +57,7 @@ final class Backup implements BackupInterface
         return $this->fileName;
     }
 
-    public function getFilePath()
+    public function getFilePath(): string
     {
         return $this->legacyBackup->getBackupPath() . $this->getFileName();
     }
@@ -77,7 +77,7 @@ final class Backup implements BackupInterface
         return time() - $this->getDate()->getTimestamp();
     }
 
-    public function getDate()
+    public function getDate(): DateTimeImmutable
     {
         [$timestamp] = explode('-', $this->fileName);
 

@@ -53,7 +53,7 @@ final class UpdateOrderStatusHandler extends AbstractOrderHandler implements Upd
     ) {
     }
 
-    public function handle(UpdateOrderStatusCommand $command)
+    public function handle(UpdateOrderStatusCommand $command): void
     {
         $order = $this->getOrder($command->getOrderId());
         $orderState = $this->getOrderStateObject($command->getNewOrderStatusId());
@@ -100,10 +100,8 @@ final class UpdateOrderStatusHandler extends AbstractOrderHandler implements Upd
 
     /**
      * @param int $orderStatusId
-     *
-     * @return OrderState
      */
-    private function getOrderStateObject($orderStatusId)
+    private function getOrderStateObject($orderStatusId): OrderState
     {
         $orderState = new OrderState($orderStatusId);
 

@@ -109,7 +109,7 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
         return $currency;
     }
 
-    public function saveCurrency(Currency $currencyEntity)
+    public function saveCurrency(Currency $currencyEntity): void
     {
         if ($currencyEntity->save() === false) {
             throw new Exception('Failed saving Currency entity');

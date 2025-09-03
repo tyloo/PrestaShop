@@ -63,10 +63,8 @@ class StorePresenter
     /**
      * @param array|Store $store    Store object or an array
      * @param Language    $language
-     *
-     * @return StoreLazyArray
      */
-    public function present($store, $language)
+    public function present($store, $language): StoreLazyArray
     {
         // Convert to array if a Store object was passed
         if (\is_object($store)) {
