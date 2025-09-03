@@ -82,7 +82,7 @@ class SupplierType extends TranslatorAwareType
             $this->trans('Invalid characters:', 'Admin.Global')
         );
 
-        $keywordHint = \sprintf(
+        \sprintf(
             '%s ' . \PHP_EOL . $invalidGenericNameHint,
             $this->trans(
                 'To add tags, click in the field, write something, and then press the "Enter" key.',

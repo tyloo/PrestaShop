@@ -27,7 +27,6 @@
 
 namespace PrestaShopBundle\Form\Admin\Configure\ShopParameters\OrderPreferences;
 
-use PrestaShop\PrestaShop\Core\ConfigurationInterface;
 use PrestaShop\PrestaShop\Core\Currency\CurrencyDataProviderInterface;
 use PrestaShopBundle\Form\Admin\Type\MoneyWithSuffixType;
 use PrestaShopBundle\Form\Admin\Type\MultistoreConfigurationType;
@@ -49,7 +48,6 @@ class GeneralType extends TranslatorAwareType
         TranslatorInterface $translator,
         array $locales,
         private readonly CurrencyDataProviderInterface $currencyDataProvider,
-        private readonly ConfigurationInterface $configuration,
         /**
          * CMS pages choices for Terms Of Service.
          */
@@ -60,7 +58,6 @@ class GeneralType extends TranslatorAwareType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $configuration = $this->configuration;
         $currencyIsoCode = $this->currencyDataProvider->getDefaultCurrencyIsoCode();
 
         $builder

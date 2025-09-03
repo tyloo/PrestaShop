@@ -76,7 +76,7 @@ class UpdateSchemaCommand extends Command
         $this->removeDuplicateDropForeignKeys($updateSchemaSql);
         $this->removeAddConstraints($updateSchemaSql);
 
-        $constraints = $this->moveConstraints($updateSchemaSql);
+        $this->moveConstraints($updateSchemaSql);
 
         $this->clearQueries($connection, $updateSchemaSql);
 

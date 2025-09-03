@@ -409,8 +409,6 @@ class SqlManagerController extends PrestaShopAdminController
      */
     protected function handleExportException(Throwable $e): string
     {
-        $type = $e::class;
-
         if ($e instanceof FileWritingException) {
             return $this->handleApplicationExportException($e);
         }
