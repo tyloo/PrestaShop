@@ -35,7 +35,7 @@ class SymfonyControllerConventionException extends LinterException
         $message,
         private readonly string $invalidController,
     ) {
-        parent::__construct($message, 0, null);
+        parent::__construct($message);
     }
 
     public function getInvalidController(): string

@@ -46,7 +46,7 @@ return RectorConfig::configure()
     // ->withComposerBased(twig: true, doctrine: true, symfony: true)
     // ->withAttributesSets(symfony: true, doctrine: true)
     ->withTypeCoverageLevel(53) // max = 53
-    ->withDeadCodeLevel(48) // max = 51
+    ->withDeadCodeLevel(51) // max = 51
     ->withCodeQualityLevel(74) // max = 74
     ->withCodingStyleLevel(25) // max = 25
     ->withParallel()

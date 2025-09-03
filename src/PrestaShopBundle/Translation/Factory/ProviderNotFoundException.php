@@ -36,6 +36,6 @@ class ProviderNotFoundException extends Exception
 {
     public function __construct($identifier)
     {
-        parent::__construct(\sprintf('The provider with the identifier %s is not found.', $identifier), 0, null);
+        parent::__construct(\sprintf('The provider with the identifier %s is not found.', $identifier));
     }
 }
