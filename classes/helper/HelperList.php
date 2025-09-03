@@ -808,7 +808,7 @@ class HelperListCore extends Helper
         $has_value = false;
         $has_search_field = false;
 
-        foreach ($this->fields_list as $key => $field) {
+        foreach ($this->fields_list as $field) {
             if (isset($field['value']) && $field['value'] !== false && $field['value'] !== '') {
                 if (is_array($field['value']) && trim(implode('', $field['value'])) === '') {
                     continue;
@@ -892,7 +892,7 @@ class HelperListCore extends Helper
             && isset($this->bulk_actions) && is_array($this->bulk_actions) && count($this->bulk_actions)) {
             foreach ($this->bulk_actions as $action => $data) {
                 if (array_key_exists($action, $this->list_skip_actions)) {
-                    foreach ($this->_list as $key => $row) {
+                    foreach ($this->_list as $row) {
                         if (! in_array($row[$this->identifier], $this->list_skip_actions[$action], true)) {
                             return true;
                         }

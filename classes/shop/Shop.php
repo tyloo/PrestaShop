@@ -789,7 +789,7 @@ class ShopCore extends ObjectModel
                     ];
                 }
 
-                $row = $row + ['theme_name' => ''];
+                $row += ['theme_name' => ''];
 
                 self::$shops[$row['id_shop_group']]['shops'][$row['id_shop']] = [
                     'id_shop' => $row['id_shop'],
@@ -905,7 +905,7 @@ class ShopCore extends ObjectModel
     public static function getShop($shop_id)
     {
         Shop::cacheShops();
-        foreach (self::$shops as $group_id => $group_data) {
+        foreach (self::$shops as $group_data) {
             if (array_key_exists($shop_id, $group_data['shops'])) {
                 return $group_data['shops'][$shop_id];
             }

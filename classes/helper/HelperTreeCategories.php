@@ -479,7 +479,7 @@ class HelperTreeCategoriesCore extends TreeCore
     {
         $selected_childs = 0;
 
-        foreach ($categories as $key => &$category) {
+        foreach ($categories as &$category) {
             if (isset($parent) && in_array($category['id_category'], $selected, true)) {
                 ++$selected_childs;
             }

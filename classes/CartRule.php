@@ -977,7 +977,7 @@ class CartRuleCore extends ObjectModel
 
             foreach ($cart_rules as $cart_rule) {
                 if ($cart_rule['gift_product']) {
-                    foreach ($products as $key => &$product) {
+                    foreach ($products as &$product) {
                         if (empty($product['is_gift']) && $product['id_product'] === $cart_rule['gift_product'] && $product['id_product_attribute'] === $cart_rule['gift_product_attribute'] && empty($product['id_customization'])) {
                             $cartTotal = Tools::ps_round($cartTotal - $product[$this->minimum_amount_tax ? 'price_wt' : 'price'], (int) $context->currency->decimals * Context::getContext()->getComputingPrecision());
                         }

@@ -2207,7 +2207,7 @@ class CartCore extends ObjectModel
     protected function countProductLines($products)
     {
         $productsLines = [];
-        array_map(function ($product) use (&$productsLines) {
+        array_map(function ($product) use (&$productsLines): void {
             $productIndex = $product['id_product'] . '-' . $product['id_product_attribute'];
 
             if (! array_key_exists($productIndex, $productsLines)) {
@@ -3876,7 +3876,7 @@ class CartCore extends ObjectModel
 
         $products = $this->getProducts($refresh);
 
-        foreach ($products as $key => &$product) {
+        foreach ($products as &$product) {
             $product['price_without_quantity_discount'] = Product::getPriceStatic(
                 $product['id_product'],
                 ! Product::getTaxCalculationMethod(),

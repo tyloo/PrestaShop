@@ -109,8 +109,8 @@ class TaxCalculatorCore
                 $taxes *= (1 + (abs($tax->rate) / 100));
             }
 
-            $taxes = $taxes - 1;
-            $taxes = $taxes * 100;
+            --$taxes;
+            $taxes *= 100;
         } else {
             foreach ($this->taxes as $tax) {
                 $taxes += abs($tax->rate);
@@ -148,7 +148,7 @@ class TaxCalculatorCore
         foreach ($this->taxes as $tax) {
             if ($this->computation_method === TaxCalculator::ONE_AFTER_ANOTHER_METHOD) {
                 $taxes_amounts[$tax->id] = $price_te * (abs($tax->rate) / 100);
-                $price_te = $price_te + $taxes_amounts[$tax->id];
+                $price_te += $taxes_amounts[$tax->id];
             } else {
                 $taxes_amounts[$tax->id] = ($price_te * (abs($tax->rate) / 100));
             }

@@ -347,7 +347,7 @@ abstract class PaymentModuleCore extends Module
 
         if (! $this->isFeatureFlagIsEnabledForMultiShipment()) {
             foreach ($package_list as $id_address => $packageByAddress) {
-                foreach ($packageByAddress as $id_package => $package) {
+                foreach ($packageByAddress as $package) {
                     $orderData = $this->createOrderFromCart(
                         $this->context->cart,
                         $this->context->currency,
@@ -378,7 +378,7 @@ abstract class PaymentModuleCore extends Module
 
             foreach ($package_list as $id_address => $packageByAddress) {
                 $idAddress = $id_address;
-                foreach ($packageByAddress as $id_package => $package) {
+                foreach ($packageByAddress as $package) {
                     $productsByCarriers[$package['id_carrier']]['product_list'] = $package['product_list'];
                 }
             }

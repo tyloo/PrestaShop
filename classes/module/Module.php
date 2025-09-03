@@ -1803,7 +1803,7 @@ abstract class ModuleCore implements ModuleInterface
             }
         }
 
-        foreach ($module_list as $key => &$module) {
+        foreach ($module_list as &$module) {
             if (! isset($module->tab)) {
                 $module->tab = 'others';
             }

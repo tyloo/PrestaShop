@@ -561,7 +561,7 @@ class OrderSlipCore extends ObjectModel
 
                 if ($rate > 0) {
                     $rate = 1 + ($rate / 100);
-                    $tab['amount_tax_excl'] = $tab['amount_tax_excl'] / $rate;
+                    $tab['amount_tax_excl'] /= $rate;
                 }
             }
 

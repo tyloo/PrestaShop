@@ -1304,7 +1304,7 @@ class LinkCore
                     if (! is_array($value)) {
                         $vars[urlencode($k)] = $value;
                     } else {
-                        foreach (explode('&', http_build_query([$k => $value], '', '&')) as $key => $val) {
+                        foreach (explode('&', http_build_query([$k => $value], '', '&')) as $val) {
                             $data = explode('=', $val);
                             $vars[urldecode($data[0])] = $data[1];
                         }

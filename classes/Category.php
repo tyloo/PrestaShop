@@ -318,7 +318,7 @@ class CategoryCore extends ObjectModel
 
         if ($changed) {
             if (Tools::isSubmit('checkBoxShopAsso_category')) {
-                foreach (Tools::getValue('checkBoxShopAsso_category') as $idAssoObject => $idShop) {
+                foreach (Tools::getValue('checkBoxShopAsso_category') as $idShop) {
                     $this->addPosition($this->position, (int) $idShop);
                 }
             } else {

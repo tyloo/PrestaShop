@@ -183,7 +183,7 @@ class HelperCore
         }
 
         if (! $use_radio) {
-            $input_name = $input_name . '[]';
+            $input_name .= '[]';
         }
 
         if ($use_search) {

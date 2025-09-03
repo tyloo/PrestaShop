@@ -854,7 +854,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
             static::$_cache_all_language_json = [];
             $allLanguages = self::loadAllLanguagesDetails();
 
-            foreach ($allLanguages as $isoCode => $langDetails) {
+            foreach ($allLanguages as $langDetails) {
                 static::$_cache_all_language_json[$langDetails['locale']] = $langDetails;
             }
         }

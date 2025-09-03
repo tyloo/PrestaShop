@@ -53,7 +53,7 @@ class AddressChecksumCore implements ChecksumInterface
             return sha1('Invalid address');
         }
 
-        foreach ($fields as $name => $value) {
+        foreach ($fields as $value) {
             $uniqId .= $value . self::SEPARATOR;
         }
         $uniqId = rtrim($uniqId, self::SEPARATOR);

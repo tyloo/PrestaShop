@@ -794,7 +794,7 @@ class ToolsCore
         } else {
             $conversion_rate = ($currency_from->conversion_rate === 0 ? 1 : $currency_from->conversion_rate);
             // Convert amount to default currency (using the old currency rate)
-            $amount = $amount / $conversion_rate;
+            $amount /= $conversion_rate;
             // Convert to new currency
             $amount *= $currency_to->conversion_rate;
         }
@@ -1050,7 +1050,7 @@ class ToolsCore
         <div style="margin:10px;padding:10px;border:1px solid #666666">
             <ul>';
         $i = 0;
-        foreach ($backtrace as $id => $trace) {
+        foreach ($backtrace as $trace) {
             if ((int) $limit && (++$i > $limit)) {
                 break;
             }
@@ -1618,7 +1618,7 @@ class ToolsCore
                 || ($mode === PS_ROUND_HALF_EVEN && $value === (0.5 + 2 * floor($tmp_value / 2.0)))
                 || ($mode === PS_ROUND_HALF_ODD && $value === (0.5 + 2 * floor($tmp_value / 2.0) - 1.0))
             ) {
-                $tmp_value = $tmp_value - 1.0;
+                $tmp_value -= 1.0;
             }
         } else {
             $tmp_value = ceil($value - 0.5);
@@ -1628,7 +1628,7 @@ class ToolsCore
                 || ($mode === PS_ROUND_HALF_EVEN && $value === (-0.5 + 2 * ceil($tmp_value / 2.0)))
                 || ($mode === PS_ROUND_HALF_ODD && $value === (-0.5 + 2 * ceil($tmp_value / 2.0) + 1.0))
             ) {
-                $tmp_value = $tmp_value + 1.0;
+                $tmp_value += 1.0;
             }
         }
 
@@ -3079,7 +3079,7 @@ exit;
 
         $dir = _PS_ROOT_DIR_ . '/var/cache/' . $env . '/';
 
-        register_shutdown_function(function () use ($dir) {
+        register_shutdown_function(function () use ($dir): void {
             $fs = new Filesystem();
             $fs->remove($dir);
             Hook::exec('actionClearSf2Cache');

@@ -45,20 +45,20 @@ return RectorConfig::configure()
         // __DIR__ . '/webservice',
     ])
     ->withPhpSets(php81: true)
-//    ->withComposerBased(
-//        twig: true,
-//        doctrine: true,
-//        phpunit: true,
-//        symfony: true,
-//    )
-//    ->withAttributesSets(
-//        symfony: true,
-//        doctrine: true,
-//    )
-//    ->withTypeCoverageLevel(53) // max = 53
-//    ->withDeadCodeLevel(51) // max = 51
-//    ->withCodeQualityLevel(74) // max = 74
-//    ->withCodingStyleLevel(25) // max = 25
+    ->withComposerBased(
+        twig: true,
+        doctrine: true,
+        phpunit: true,
+        symfony: true,
+    )
+    ->withAttributesSets(
+        symfony: true,
+        doctrine: true,
+    )
+    ->withTypeCoverageLevel(0) // max = 53
+    ->withDeadCodeLevel(0) // max = 51
+    ->withCodeQualityLevel(0) // max = 74
+    ->withCodingStyleLevel(0) // max = 25
     ->withSkip([
         UnwrapFutureCompatibleIfPhpVersionRector::class,
     ])

@@ -1331,7 +1331,7 @@ class AdminControllerCore extends Controller
         }
         fputcsv($fd, $headers, ';', $text_delimiter, '');
 
-        foreach ($this->_list as $i => $row) {
+        foreach ($this->_list as $row) {
             $content = [];
             foreach ($this->fields_list as $key => $params) {
                 $field_value = isset($row[$key]) ? Tools::htmlentitiesDecodeUTF8(Tools::nl2br($row[$key])) : '';

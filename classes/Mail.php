@@ -950,7 +950,7 @@ class MailCore extends ObjectModel
         $end = '?=';
         $sep = $end . $newline . ' ' . $start;
         $length = 75 - Tools::strlen($start) - Tools::strlen($end);
-        $length = $length - ($length % 4);
+        $length -= $length % 4;
 
         if ($charset === 'UTF-8') {
             $parts = [];

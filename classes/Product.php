@@ -5684,7 +5684,7 @@ class ProductCore extends ObjectModel
         // Then if combination has an impact we apply it on unit price
         if ($combinationId) {
             $combination = new Combination($combinationId);
-            $baseUnitPrice = $baseUnitPrice + $combination->unit_price_impact;
+            $baseUnitPrice += $combination->unit_price_impact;
         }
 
         if ($baseUnitPrice === 0) {
@@ -7105,7 +7105,7 @@ class ProductCore extends ObjectModel
             if ($ids) {
                 $sql_values = [];
                 $ids = array_map('intval', $ids);
-                foreach ($ids as $position => $id) {
+                foreach ($ids as $id) {
                     $id_lang = Db::getInstance()->getValue('SELECT `id_lang` FROM `' . _DB_PREFIX_ . 'tag` WHERE `id_tag`=' . (int) $id);
                     $sql_values[] = '(' . (int) $this->id . ', ' . (int) $id . ', ' . (int) $id_lang . ')';
                 }

@@ -1152,7 +1152,7 @@ class WebserviceRequestCore
                                     $url_param = [$url_param];
                                 }
                                 $sql_join .= 'LEFT JOIN `' . bqSQL(_DB_PREFIX_ . $this->resourceConfiguration['retrieveData']['table']) . '_lang` AS main_i18n ON (main.`' . bqSQL($this->resourceConfiguration['fields']['id']['sqlId']) . '` = main_i18n.`' . bqSQL($this->resourceConfiguration['fields']['id']['sqlId']) . '`)' . "\n";
-                                foreach ($url_param as $field2 => $value) {
+                                foreach ($url_param as $value) {
                                     $linked_field = $this->resourceConfiguration['fields'][$field];
                                     $sql_filter .= $this->getSQLRetrieveFilter($linked_field['sqlId'], $value, 'main_i18n.');
                                     $language_filter = '[' . implode('|', $this->_available_languages) . ']';

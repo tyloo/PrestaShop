@@ -277,7 +277,7 @@ class UpgraderCore
      */
     protected function browseXmlAndCompare($node, &$currentPath = [], $level = 1)
     {
-        foreach ($node as $key => $child) {
+        foreach ($node as $child) {
             /** @var SimpleXMLElement $child */
             if (is_object($child) && $child->getName() === 'dir') {
                 $currentPath[$level] = (string) $child['name'];

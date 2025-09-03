@@ -84,7 +84,7 @@ class SpecificPriceFormatterCore
 
             if ($this->specificPrice['reduction_type'] === 'amount') {
                 if (! $this->specificPrice['reduction_tax'] && $this->isTaxIncluded) {
-                    $this->specificPrice['reduction'] = $this->specificPrice['reduction'] * (1 + $tax_rate / 100);
+                    $this->specificPrice['reduction'] *= 1 + $tax_rate / 100;
                 }
                 if ($this->isTaxIncluded) {
                     $currentPriceCurrentCurrency -= $this->specificPrice['reduction'];

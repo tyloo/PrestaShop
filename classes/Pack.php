@@ -197,7 +197,7 @@ class PackCore extends Product
 					ORDER BY pa.`id_product_attribute`';
 
                 $combinations = Db::getInstance()->executeS($sql);
-                foreach ($combinations as $k => $combination) {
+                foreach ($combinations as $combination) {
                     $p->name .= ' ' . $combination['group_name'] . '-' . $combination['attribute_name'];
                     $p->reference = $combination['attribute_reference'];
                 }
