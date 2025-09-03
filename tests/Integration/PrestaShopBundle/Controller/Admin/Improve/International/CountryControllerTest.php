@@ -102,14 +102,6 @@ class CountryControllerTest extends FormGridControllerTestCase
     public function testEdit(int $countryId): int
     {
         $this->client->disableReboot();
-
-        // this is the default format that is taken when opening country form, if you try to add spaces the test will fail.
-        $addressFormat = 'firstname lastname
-company
-address1 address2
-city, State:name postcode
-Country:name
-phone';
         // todo: change addressFormat and test if it was correctly changed when address format PR is merged. Now it only takes default value
         $isoCode = 'BB';
         $zipCodeFormat = '2NL';

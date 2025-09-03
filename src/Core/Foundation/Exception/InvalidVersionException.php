@@ -47,6 +47,6 @@ class InvalidVersionException extends CoreException
             'must contain numeric characters separated by "." characters, for example "1.7.4.0".',
             $version
         );
-        parent::__construct($message, 0, null);
+        parent::__construct($message);
     }
 }

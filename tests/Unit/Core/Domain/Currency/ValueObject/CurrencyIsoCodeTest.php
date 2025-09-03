@@ -41,7 +41,7 @@ class CurrencyIsoCodeTest extends TestCase
         $this->expectException(CurrencyConstraintException::class);
         $this->expectExceptionCode(CurrencyConstraintException::INVALID_ISO_CODE);
 
-        $currencyIsoCode = new AlphaIsoCode($incorrectIsoCode);
+        new AlphaIsoCode($incorrectIsoCode);
     }
 
     public function getIncorrectIsoCodes(): array

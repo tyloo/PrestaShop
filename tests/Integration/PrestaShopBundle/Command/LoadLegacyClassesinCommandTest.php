@@ -79,7 +79,7 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
 
             protected function execute(InputInterface $input, OutputInterface $output): int
             {
-                $products = Product::getNewProducts(1);
+                Product::getNewProducts(1);
 
                 return 0;
             }
@@ -107,7 +107,7 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
                 $contextLoader = new LegacyContextLoader(Context::getContext());
                 $contextLoader->loadGenericContext();
 
-                $products = Product::getNewProducts(1);
+                Product::getNewProducts(1);
 
                 return 0;
             }

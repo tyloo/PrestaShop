@@ -82,7 +82,7 @@ class ThemeRepository implements AddonRepositoryInterface
 
     public function getList()
     {
-        if (! isset($this->themes)) {
+        if ($this->themes === null) {
             $this->themes = $this->getFilteredList(new AddonListFilter());
         }
 

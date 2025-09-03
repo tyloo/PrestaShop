@@ -41,7 +41,7 @@ class CurrencyExchangeRateTest extends TestCase
         $this->expectException(CurrencyConstraintException::class);
         $this->expectExceptionCode(CurrencyConstraintException::INVALID_EXCHANGE_RATE);
 
-        $exchangeRate = new ExchangeRate($incorrectExchangeRate);
+        new ExchangeRate($incorrectExchangeRate);
     }
 
     public function getIncorrectExchangeRates(): array

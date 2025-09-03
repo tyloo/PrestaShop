@@ -38,7 +38,7 @@ class GenderTest extends TestCase
     public function testItThrowsExceptionWhenTypeIsNotGood(): void
     {
         $this->expectException(TitleConstraintException::class);
-        $gender = new Gender(4);
+        new Gender(4);
     }
 
     /**

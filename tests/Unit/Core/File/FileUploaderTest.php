@@ -127,7 +127,7 @@ class FileUploaderTest extends TestCase
     {
         $this->expectException(Exception\InvalidFileException::class);
 
-        $result = $this->object->upload(
+        $this->object->upload(
             [
                 'size' => 3,
             ]
@@ -138,7 +138,7 @@ class FileUploaderTest extends TestCase
     {
         $this->expectException(Exception\FileUploadException::class);
 
-        $result = $this->object->upload(
+        $this->object->upload(
             [
                 'tmp_name' => 'wrong-upload',
                 'size' => 3,
@@ -152,7 +152,7 @@ class FileUploaderTest extends TestCase
     {
         $this->expectException(Exception\FileUploadException::class);
 
-        $result = $this->object->upload(
+        $this->object->upload(
             [
                 'tmp_name' => 'wrong-move',
                 'size' => 3,
@@ -166,7 +166,7 @@ class FileUploaderTest extends TestCase
     {
         $this->expectException(Exception\InvalidFileException::class);
 
-        $result = $this->object->upload(
+        $this->object->upload(
             [
                 'tmp_name' => 'wrong-move',
                 'size' => 3,
@@ -178,7 +178,7 @@ class FileUploaderTest extends TestCase
     {
         $this->expectException(Exception\InvalidFileException::class);
 
-        $result = $this->object->upload(
+        $this->object->upload(
             [
                 'tmp_name' => 'wrong-move',
                 'size' => 3,

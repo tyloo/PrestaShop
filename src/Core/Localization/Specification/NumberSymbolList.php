@@ -241,67 +241,67 @@ class NumberSymbolList
      */
     protected function validateData()
     {
-        if (! isset($this->decimal)
+        if ($this->decimal === null
             || ! \is_string($this->decimal)
         ) {
             throw new LocalizationException('Invalid decimal : ' . print_r($this->decimal, true));
         }
 
-        if (! isset($this->group)
+        if ($this->group === null
             || ! \is_string($this->group)
         ) {
             throw new LocalizationException('Invalid group : ' . print_r($this->group, true));
         }
 
-        if (! isset($this->list)
+        if ($this->list === null
             || ! \is_string($this->list)
         ) {
             throw new LocalizationException('Invalid symbols list : ' . print_r($this->list, true));
         }
 
-        if (! isset($this->percentSign)
+        if ($this->percentSign === null
             || ! \is_string($this->percentSign)
         ) {
             throw new LocalizationException('Invalid percentSign : ' . print_r($this->percentSign, true));
         }
 
-        if (! isset($this->minusSign)
+        if ($this->minusSign === null
             || ! \is_string($this->minusSign)
         ) {
             throw new LocalizationException('Invalid minusSign : ' . print_r($this->minusSign, true));
         }
 
-        if (! isset($this->plusSign)
+        if ($this->plusSign === null
             || ! \is_string($this->plusSign)
         ) {
             throw new LocalizationException('Invalid plusSign : ' . print_r($this->plusSign, true));
         }
 
-        if (! isset($this->exponential)
+        if ($this->exponential === null
             || ! \is_string($this->exponential)
         ) {
             throw new LocalizationException('Invalid exponential : ' . print_r($this->exponential, true));
         }
 
-        if (! isset($this->superscriptingExponent)
+        if ($this->superscriptingExponent === null
             || ! \is_string($this->superscriptingExponent)
         ) {
             throw new LocalizationException('Invalid superscriptingExponent : ' . print_r($this->superscriptingExponent, true));
         }
 
-        if (! isset($this->perMille)
+        if ($this->perMille === null
             || ! \is_string($this->perMille)
         ) {
             throw new LocalizationException('Invalid perMille : ' . print_r($this->perMille, true));
         }
 
-        if (! isset($this->infinity)
+        if ($this->infinity === null
             || ! \is_string($this->infinity)
         ) {
             throw new LocalizationException('Invalid infinity : ' . print_r($this->infinity, true));
         }
 
-        if (! isset($this->nan)
+        if ($this->nan === null
             || ! \is_string($this->nan)
         ) {
             throw new LocalizationException('Invalid nan : ' . print_r($this->nan, true));

@@ -40,7 +40,6 @@ class ReturnProductFormDataHandler implements FormDataHandlerInterface
 
     public function create(array $data): void
     {
-        return;
     }
 
     public function update($id, array $data): void

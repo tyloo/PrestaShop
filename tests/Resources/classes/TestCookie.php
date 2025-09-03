@@ -62,6 +62,5 @@ class TestCookie extends Cookie
      */
     public function write(): void
     {
-        return;
     }
 }

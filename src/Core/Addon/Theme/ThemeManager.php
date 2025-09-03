@@ -427,7 +427,7 @@ class ThemeManager implements AddonManagerInterface
 
     private function getSandboxPath(): string
     {
-        if (! isset($this->sandbox)) {
+        if ($this->sandbox === null) {
             $this->sandbox = $this->configuration->get('_PS_CACHE_DIR_') . 'sandbox/' . uniqid() . '/';
             $this->filesystem->mkdir($this->sandbox, PsFileSystem::DEFAULT_MODE_FOLDER);
         }

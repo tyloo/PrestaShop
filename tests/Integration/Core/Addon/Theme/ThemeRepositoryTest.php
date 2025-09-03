@@ -96,13 +96,13 @@ class ThemeRepositoryTest extends ContextStateTestCase
         $this->assertEquals(
             $themeListWithoutRestrictions,
             $this->repository->getList(),
-            self::NOTICE . \sprintf('expected list excluding without args to return complete list of themes `see ThemeRepository::getListExcluding`')
+            self::NOTICE . 'expected list excluding without args to return complete list of themes `see ThemeRepository::getListExcluding`'
         );
 
         $this->assertCount(
             \count($themeListWithoutRestrictions) - 1,
             $themeListWithoutClassic,
-            self::NOTICE . \sprintf('expected list excluding with classic to list of themes without classic')
+            self::NOTICE . 'expected list excluding with classic to list of themes without classic'
         );
     }
 }

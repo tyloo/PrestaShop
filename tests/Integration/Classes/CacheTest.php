@@ -245,7 +245,6 @@ class CacheTest extends TestCase
         }
 
         $tableMapKey = Cache::getInstance()->getTableMapCacheKey('ps_configuration');
-        $invalidatedKeys = $this->cacheArray[$tableMapKey];
 
         $this->assertArrayHasKey($tableMapKey, $this->cacheArray);
 

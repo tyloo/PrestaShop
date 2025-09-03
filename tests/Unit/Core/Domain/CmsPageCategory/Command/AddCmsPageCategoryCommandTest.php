@@ -39,7 +39,7 @@ class AddCmsPageCategoryCommandTest extends TestCase
         $this->expectException(CmsPageCategoryConstraintException::class);
         $this->expectExceptionCode(CmsPageCategoryConstraintException::INVALID_CATEGORY_NAME);
 
-        $command = new AddCmsPageCategoryCommand(
+        new AddCmsPageCategoryCommand(
             [
                 1 => 'somecategoryname >',
             ],
@@ -56,7 +56,7 @@ class AddCmsPageCategoryCommandTest extends TestCase
         $this->expectException(CmsPageCategoryException::class);
 
         $incorrectId = '1';
-        $command = new AddCmsPageCategoryCommand(
+        new AddCmsPageCategoryCommand(
             [
                 1 => 'somecategoryname',
             ],

@@ -183,25 +183,25 @@ class CartRuleTest extends TestCase
         self::setUpBeforeClass();
 
         // Code, highlight, for everyone
-        $CodeHighlightEveryone = $this->createDummyCartRule(true, 0, true, true);
+        $this->createDummyCartRule(true, 0, true, true);
         // Code, highlight, specific customer
         $CodeHighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, true, true);
         // Code, no highlight, for everyone
-        $CodeNohighlightEveryone = $this->createDummyCartRule(true, 0, true);
+        $this->createDummyCartRule(true, 0, true);
         // Code, no highlight, specific customer
         $CodeNohighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, true);
         // No code, highlight, for everyone
-        $NocodeHighlightEveryone = $this->createDummyCartRule(true, 0, false, true);
+        $this->createDummyCartRule(true, 0, false, true);
         // No code, highlight, specific customer
         $NocodeHighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, false, true);
         // No code, no highlight, for everyone
-        $NocodeNohighlightEveryone = $this->createDummyCartRule(true, 0, false);
+        $this->createDummyCartRule(true, 0, false);
         // No code, no highlight, specific customer
         $NocodeNohighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, false);
         // Code, highlight, specific customer, disabled
-        $CodeHighlightSpecificDisabled = $this->createDummyCartRule(false, (int) $this->dummyCustomer->id, true, true);
+        $this->createDummyCartRule(false, (int) $this->dummyCustomer->id, true, true);
         // Code, highlight, specific customer, disabled
-        $CodeHighlightSpecificDisabled = $this->createDummyCartRule(false, (int) $this->dummyCustomer->id, true, true);
+        $this->createDummyCartRule(false, (int) $this->dummyCustomer->id, true, true);
 
         // Get customer's vouchers in frontoffice
         $customerCartRules = CartRule::getCustomerCartRules(
@@ -231,19 +231,19 @@ class CartRuleTest extends TestCase
         self::setUpBeforeClass();
 
         // Code, highlight, for everyone
-        $CodeHighlightEveryone = $this->createDummyCartRule(true, 0, true, true);
+        $this->createDummyCartRule(true, 0, true, true);
         // Code, highlight, specific customer
         $CodeHighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, true, true);
         // Code, no highlight, for everyone
-        $CodeNohighlightEveryone = $this->createDummyCartRule(true, 0, true);
+        $this->createDummyCartRule(true, 0, true);
         // Code, no highlight, specific customer
         $CodeNohighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, true);
         // No code, highlight, for everyone
-        $NocodeHighlightEveryone = $this->createDummyCartRule(true, 0, false, true);
+        $this->createDummyCartRule(true, 0, false, true);
         // No code, highlight, specific customer
         $NocodeHighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, false, true);
         // No code, no highlight, for everyone
-        $NocodeNohighlightEveryone = $this->createDummyCartRule(true, 0, false);
+        $this->createDummyCartRule(true, 0, false);
         // No code, no highlight, specific customer
         $NocodeNohighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, false);
         // Code, highlight, specific customer, disabled
@@ -279,21 +279,21 @@ class CartRuleTest extends TestCase
         // Code, highlight, specific customer
         $CodeHighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, true, true);
         // Code, no highlight, for everyone
-        $CodeNohighlightEveryone = $this->createDummyCartRule(true, 0, true);
+        $this->createDummyCartRule(true, 0, true);
         // Code, no highlight, specific customer
-        $CodeNohighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, true);
+        $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, true);
         // No code, highlight, for everyone
         $NocodeHighlightEveryone = $this->createDummyCartRule(true, 0, false, true);
         // No code, highlight, specific customer
         $NocodeHighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, false, true);
         // No code, no highlight, for everyone
-        $NocodeNohighlightEveryone = $this->createDummyCartRule(true, 0, false);
+        $this->createDummyCartRule(true, 0, false);
         // No code, no highlight, specific customer
-        $NocodeNohighlightSpecific = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, false);
+        $this->createDummyCartRule(true, (int) $this->dummyCustomer->id, false);
         // Code, highlight, specific customer, disabled
-        $CodeHighlightSpecificDisabled = $this->createDummyCartRule(false, (int) $this->dummyCustomer->id, true, true);
+        $this->createDummyCartRule(false, (int) $this->dummyCustomer->id, true, true);
         // Code, highlight, specific customer, disabled
-        $CodeHighlightSpecificDisabled = $this->createDummyCartRule(false, (int) $this->dummyCustomer->id, true, true);
+        $this->createDummyCartRule(false, (int) $this->dummyCustomer->id, true, true);
 
         // Get logged in customer's vouchers, we simulate getCustomerHighlightedDiscounts with no cart
         $customerCartRules = CartRule::getCustomerCartRules(
@@ -351,10 +351,10 @@ class CartRuleTest extends TestCase
         $inactiveCustomerRule = $this->createDummyCartRule(false, (int) $this->dummyCustomer->id, false);
 
         // inactive global rule
-        $inactiveGlobalRule = $this->createDummyCartRule(false, 0, false);
+        $this->createDummyCartRule(false, 0, false);
 
         // active global rule
-        $activeGlobalRule = $this->createDummyCartRule(true, 0, false);
+        $this->createDummyCartRule(true, 0, false);
 
         // active customer's rule
         $activeCustomerRule = $this->createDummyCartRule(true, (int) $this->dummyCustomer->id);

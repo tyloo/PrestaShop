@@ -146,7 +146,7 @@ abstract class AbstractDataLayer
      */
     protected function propagateRead($field)
     {
-        if (isset($this->lowerDataLayer)) {
+        if ($this->lowerDataLayer !== null) {
             return $this->lowerDataLayer->read($field);
         }
 
@@ -169,7 +169,7 @@ abstract class AbstractDataLayer
      */
     protected function propagateWrite($id, $data)
     {
-        if (isset($this->lowerDataLayer)) {
+        if ($this->lowerDataLayer !== null) {
             return $this->lowerDataLayer->write($id, $data);
         }
 

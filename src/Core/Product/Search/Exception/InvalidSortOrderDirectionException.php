@@ -44,6 +44,6 @@ class InvalidSortOrderDirectionException extends CoreException
             $direction
         );
 
-        parent::__construct($message, 0, null);
+        parent::__construct($message);
     }
 }

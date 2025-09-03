@@ -83,7 +83,7 @@ class DocumentationLinkProviderTest extends TestCase
 
         $this->expectException(HelperCardDocumentationDoesNotExistException::class);
 
-        $link = $provider->getLink('aaaa');
+        $provider->getLink('aaaa');
     }
 
     public function testGetITInvalidLinkSoExpectsFallback(): void
@@ -118,6 +118,6 @@ class DocumentationLinkProviderTest extends TestCase
 
         $this->expectException(HelperCardDocumentationDoesNotExistException::class);
 
-        $link = $provider->getLink('seo_card');
+        $provider->getLink('seo_card');
     }
 }

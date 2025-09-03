@@ -37,8 +37,8 @@ class EditContactCommandTest extends TestCase
     public function testItThrowsAnExceptionOnIncorrectIdPassed(): void
     {
         $this->expectException(ContactException::class);
-        /** @phpstan-ignore-next-line */
-        $command = new EditContactCommand('1');
+        /* @phpstan-ignore-next-line */
+        new EditContactCommand('1');
     }
 
     /**

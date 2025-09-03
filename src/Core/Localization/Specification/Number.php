@@ -230,19 +230,19 @@ class Number implements NumberInterface
      */
     protected function validateData()
     {
-        if (! isset($this->positivePattern)
+        if ($this->positivePattern === null
             || ! \is_string($this->positivePattern)
         ) {
             throw new LocalizationException('Invalid positivePattern');
         }
 
-        if (! isset($this->negativePattern)
+        if ($this->negativePattern === null
             || ! \is_string($this->negativePattern)
         ) {
             throw new LocalizationException('Invalid negativePattern');
         }
 
-        if (! isset($this->symbols)
+        if ($this->symbols === null
             || ! \is_array($this->symbols)
         ) {
             throw new LocalizationException('Invalid symbols');
@@ -254,31 +254,31 @@ class Number implements NumberInterface
             }
         }
 
-        if (! isset($this->maxFractionDigits)
+        if ($this->maxFractionDigits === null
             || ! \is_int($this->maxFractionDigits)
         ) {
             throw new LocalizationException('Invalid maxFractionDigits');
         }
 
-        if (! isset($this->minFractionDigits)
+        if ($this->minFractionDigits === null
             || ! \is_int($this->minFractionDigits)
         ) {
             throw new LocalizationException('Invalid minFractionDigits');
         }
 
-        if (! isset($this->groupingUsed)
+        if ($this->groupingUsed === null
             || ! \is_bool($this->groupingUsed)
         ) {
             throw new LocalizationException('Invalid groupingUsed');
         }
 
-        if (! isset($this->primaryGroupSize)
+        if ($this->primaryGroupSize === null
             || ! \is_int($this->primaryGroupSize)
         ) {
             throw new LocalizationException('Invalid primaryGroupSize');
         }
 
-        if (! isset($this->secondaryGroupSize)
+        if ($this->secondaryGroupSize === null
             || ! \is_int($this->secondaryGroupSize)
         ) {
             throw new LocalizationException('Invalid secondaryGroupSize');

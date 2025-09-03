@@ -40,7 +40,7 @@ class FeatureFlagTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Feature flag name cannot be empty');
 
-        $featureFlag = new FeatureFlag('');
+        new FeatureFlag('');
     }
 
     public function testAssertFeatureFlagProperties(): void

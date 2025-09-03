@@ -142,7 +142,7 @@ class Reader implements ReaderInterface
     protected function initSupplementalData()
     {
         // Supplemental data about currencies, languages and parent locales
-        if (! isset($this->supplementalXml)) {
+        if ($this->supplementalXml === null) {
             $supplementalPath = realpath(
                 _PS_ROOT_DIR_ . '/'
                 . self::CLDR_SUPPLEMENTAL
@@ -152,7 +152,7 @@ class Reader implements ReaderInterface
         }
 
         // This file contains special digits for non-occidental numbering systems
-        if (! isset($this->numberingSystemsXml)) {
+        if ($this->numberingSystemsXml === null) {
             $numberingSystemsPath = realpath(
                 _PS_ROOT_DIR_ . '/'
                 . self::CLDR_SUPPLEMENTAL
@@ -291,11 +291,11 @@ class Reader implements ReaderInterface
         $localeData = new LocaleData();
 
         // Geo
-        if (isset($xmlLocaleData->identity->language)) {
+        if (property_exists($xmlLocaleData->identity, 'language') && $xmlLocaleData->identity->language !== null) {
             $localeData->setLocaleCode((string) $xmlLocaleData->identity->language['type']);
         }
 
-        if (isset($xmlLocaleData->identity->territory)) {
+        if (property_exists($xmlLocaleData->identity, 'territory') && $xmlLocaleData->identity->territory !== null) {
             $localeData->setLocaleCode(
                 $localeData->getLocaleCode() . '-' . $xmlLocaleData->identity->territory['type']
             );
@@ -304,21 +304,21 @@ class Reader implements ReaderInterface
         // Numbers
         $numbersData = $xmlLocaleData->numbers;
         // Default numbering system.
-        if (isset($numbersData->defaultNumberingSystem)) {
+        if (property_exists($numbersData, 'defaultNumberingSystem') && $numbersData->defaultNumberingSystem !== null) {
             $localeData->setDefaultNumberingSystem((string) $numbersData->defaultNumberingSystem);
         }
 
         // Minimum grouping digits value defines when we should start grouping digits.
         // 1 => we start grouping at 4 figures numbers (1,000+) (most frequent)
         // 2 => we start grouping at 5 figures numbers (10,000+)
-        if (isset($numbersData->minimumGroupingDigits)) {
+        if (property_exists($numbersData, 'minimumGroupingDigits') && $numbersData->minimumGroupingDigits !== null) {
             $localeData->setMinimumGroupingDigits((int) $numbersData->minimumGroupingDigits);
         }
 
         // Complete numbering systems list with the "others" available for this locale.
         // Possible other systems are "native", "traditional" and "finance".
         // @see http://www.unicode.org/reports/tr35/tr35-numbers.html#otherNumberingSystems
-        if (isset($numbersData->otherNumberingSystems)) {
+        if (property_exists($numbersData, 'otherNumberingSystems') && $numbersData->otherNumberingSystems !== null) {
             $numberingSystems = [];
             foreach ($numbersData->otherNumberingSystems->children() as $system) {
                 /** @var SimplexmlElement $system */
@@ -329,7 +329,7 @@ class Reader implements ReaderInterface
         }
 
         // Symbols (by numbering system)
-        if (isset($numbersData->symbols)) {
+        if (property_exists($numbersData, 'symbols') && $numbersData->symbols !== null) {
             $numberSymbols = $localeData->getNumberSymbols();
             /** @var SimpleXMLElement $symbolsNode */
             foreach ($numbersData->symbols as $symbolsNode) {
@@ -340,7 +340,7 @@ class Reader implements ReaderInterface
                 $thisNumberingSystem = (string) $symbolsNode['numberSystem'];
 
                 // Copying data from another node when relevant (alias)
-                if (isset($symbolsNode->alias)) {
+                if (property_exists($symbolsNode, 'alias') && $symbolsNode->alias !== null) {
                     // @see <project root>/localization/CLDR/core/common/main/root.xml
                     $results = $symbolsNode->xpath($symbolsNode->alias['path']);
                     if (empty($results)) {
@@ -351,59 +351,59 @@ class Reader implements ReaderInterface
                 }
 
                 $symbolsList = new NumberSymbolsData();
-                if (isset($symbolsNode->decimal)) {
+                if (property_exists($symbolsNode, 'decimal') && $symbolsNode->decimal !== null) {
                     $symbolsList->setDecimal((string) $symbolsNode->decimal);
                 }
 
-                if (isset($symbolsNode->group)) {
+                if (property_exists($symbolsNode, 'group') && $symbolsNode->group !== null) {
                     $symbolsList->setGroup((string) $symbolsNode->group);
                 }
 
-                if (isset($symbolsNode->list)) {
+                if (property_exists($symbolsNode, 'list') && $symbolsNode->list !== null) {
                     $symbolsList->setList((string) $symbolsNode->list);
                 }
 
-                if (isset($symbolsNode->percentSign)) {
+                if (property_exists($symbolsNode, 'percentSign') && $symbolsNode->percentSign !== null) {
                     $symbolsList->setPercentSign((string) $symbolsNode->percentSign);
                 }
 
-                if (isset($symbolsNode->minusSign)) {
+                if (property_exists($symbolsNode, 'minusSign') && $symbolsNode->minusSign !== null) {
                     $symbolsList->setMinusSign((string) $symbolsNode->minusSign);
                 }
 
-                if (isset($symbolsNode->plusSign)) {
+                if (property_exists($symbolsNode, 'plusSign') && $symbolsNode->plusSign !== null) {
                     $symbolsList->setPlusSign((string) $symbolsNode->plusSign);
                 }
 
-                if (isset($symbolsNode->exponential)) {
+                if (property_exists($symbolsNode, 'exponential') && $symbolsNode->exponential !== null) {
                     $symbolsList->setExponential((string) $symbolsNode->exponential);
                 }
 
-                if (isset($symbolsNode->superscriptingExponent)) {
+                if (property_exists($symbolsNode, 'superscriptingExponent') && $symbolsNode->superscriptingExponent !== null) {
                     $symbolsList->setSuperscriptingExponent((string) $symbolsNode->superscriptingExponent);
                 }
 
-                if (isset($symbolsNode->perMille)) {
+                if (property_exists($symbolsNode, 'perMille') && $symbolsNode->perMille !== null) {
                     $symbolsList->setPerMille((string) $symbolsNode->perMille);
                 }
 
-                if (isset($symbolsNode->infinity)) {
+                if (property_exists($symbolsNode, 'infinity') && $symbolsNode->infinity !== null) {
                     $symbolsList->setInfinity((string) $symbolsNode->infinity);
                 }
 
-                if (isset($symbolsNode->nan)) {
+                if (property_exists($symbolsNode, 'nan') && $symbolsNode->nan !== null) {
                     $symbolsList->setNan((string) $symbolsNode->nan);
                 }
 
-                if (isset($symbolsNode->timeSeparator)) {
+                if (property_exists($symbolsNode, 'timeSeparator') && $symbolsNode->timeSeparator !== null) {
                     $symbolsList->setTimeSeparator((string) $symbolsNode->timeSeparator);
                 }
 
-                if (isset($symbolsNode->currencyDecimal)) {
+                if (property_exists($symbolsNode, 'currencyDecimal') && $symbolsNode->currencyDecimal !== null) {
                     $symbolsList->setCurrencyDecimal((string) $symbolsNode->currencyDecimal);
                 }
 
-                if (isset($symbolsNode->currencyGroup)) {
+                if (property_exists($symbolsNode, 'currencyGroup') && $symbolsNode->currencyGroup !== null) {
                     $symbolsList->setCurrencyGroup((string) $symbolsNode->currencyGroup);
                 }
 
@@ -414,7 +414,7 @@ class Reader implements ReaderInterface
         }
 
         // Decimal patterns (by numbering system)
-        if (isset($numbersData->decimalFormats)) {
+        if (property_exists($numbersData, 'decimalFormats') && $numbersData->decimalFormats !== null) {
             $decimalPatterns = $localeData->getDecimalPatterns();
             /** @var SimpleXMLElement $format */
             foreach ($numbersData->decimalFormats as $format) {
@@ -451,7 +451,7 @@ class Reader implements ReaderInterface
         }
 
         // Percent patterns (by numbering system)
-        if (isset($numbersData->percentFormats)) {
+        if (property_exists($numbersData, 'percentFormats') && $numbersData->percentFormats !== null) {
             $percentPatterns = $localeData->getPercentPatterns();
             foreach ($numbersData->percentFormats as $format) {
                 $numberSystem = (string) $format['numberSystem'];
@@ -486,7 +486,7 @@ class Reader implements ReaderInterface
         }
 
         // Currency patterns (by numbering system)
-        if (isset($numbersData->currencyFormats)) {
+        if (property_exists($numbersData, 'currencyFormats') && $numbersData->currencyFormats !== null) {
             $currencyPatterns = $localeData->getCurrencyPatterns();
             foreach ($numbersData->currencyFormats as $format) {
                 /** @var SimpleXMLElement $format */
@@ -526,7 +526,7 @@ class Reader implements ReaderInterface
         // Currencies
         $currenciesData = $numbersData->currencies;
         $currencyActiveDateThreshold = time() - self::CURRENCY_ACTIVE_DELAY * 86400;
-        if (isset($currenciesData->currency)) {
+        if ($currenciesData !== null && property_exists($currenciesData, 'currency') && $currenciesData->currency !== null) {
             $currencies = $localeData->getCurrencies();
             foreach ($currenciesData->currency as $currencyNode) {
                 $currencyCode = (string) $currencyNode['type'];

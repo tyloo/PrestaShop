@@ -39,7 +39,7 @@ final class StyleSheetProcessorFactory implements StyleSheetProcessorFactoryInte
     public function create(): Processor
     {
         $rootDir = $this->configuration->get('_PS_ROOT_DIR_');
-        $moduleDir = $this->configuration->get('_PS_MODULE_DIR_');
+        $this->configuration->get('_PS_MODULE_DIR_');
 
         if (null === $adminDir = $this->configuration->get('_PS_ADMIN_DIR_')) {
             $adminDir = $rootDir . \DIRECTORY_SEPARATOR . 'admin';

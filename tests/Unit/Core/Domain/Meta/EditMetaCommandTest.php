@@ -40,7 +40,7 @@ class EditMetaCommandTest extends TestCase
     public function testItThrowsAnExceptionOnIncorrectMetaIdPassed($incorrectId): void
     {
         $this->expectException(MetaException::class);
-        $command = new EditMetaCommand($incorrectId);
+        new EditMetaCommand($incorrectId);
     }
 
     /**

@@ -553,7 +553,6 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
             return null;
         }
 
-        $stateId = null;
         /** @var CountryStateByIdChoiceProvider $countryStateChoiceProvider */
         $countryStateChoiceProvider = $this->getContainer()->get('prestashop.adapter.form.choice_provider.country_state_by_id');
         $countryStateList = $countryStateChoiceProvider->getChoices(['id_country' => $countryId]);

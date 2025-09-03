@@ -38,13 +38,13 @@ class StoreIdTest extends TestCase
     public function testItThrowsExceptionWhenStoreIdIsLowerThanZero(): void
     {
         $this->expectException(StoreConstraintException::class);
-        $storeId = new StoreId(-3);
+        new StoreId(-3);
     }
 
     public function testItThrowsExceptionWhenStoreIdEqualsZero(): void
     {
         $this->expectException(StoreConstraintException::class);
-        $storeId = new StoreId(0);
+        new StoreId(0);
     }
 
     public function testItAffectsGoodValueIFStoreIdIsPositive(): void

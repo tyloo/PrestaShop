@@ -10,12 +10,12 @@ class Cart extends CartCore
     public function updateAddressId($id_address, $id_address_new): void
     {
         $to_update = false;
-        if (! isset($this->id_address_invoice) || $this->id_address_invoice === $id_address) {
+        if (! property_exists($this, 'id_address_invoice') || $this->id_address_invoice === null || $this->id_address_invoice === $id_address) {
             $to_update = true;
             $this->id_address_invoice = $id_address_new;
         }
 
-        if (! isset($this->id_address_delivery) || $this->id_address_delivery === $id_address) {
+        if (! property_exists($this, 'id_address_delivery') || $this->id_address_delivery === null || $this->id_address_delivery === $id_address) {
             $to_update = true;
             $this->id_address_delivery = $id_address_new;
         }

@@ -41,7 +41,7 @@ class AddMetaCommandTest extends TestCase
         $this->expectException(MetaConstraintException::class);
         $this->expectExceptionCode(MetaConstraintException::INVALID_PAGE_NAME);
 
-        $command = new AddMetaCommand($incorrectPageName);
+        new AddMetaCommand($incorrectPageName);
     }
 
     /**

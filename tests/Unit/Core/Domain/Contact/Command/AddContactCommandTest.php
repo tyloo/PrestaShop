@@ -41,7 +41,7 @@ class AddContactCommandTest extends TestCase
         $this->expectException(ContactConstraintException::class);
         $this->expectExceptionCode(ContactConstraintException::INVALID_TITLE);
 
-        $command = new AddContactCommand($incorrectTitle, false);
+        new AddContactCommand($incorrectTitle, false);
     }
 
     public function getIncorrectTitles(): array

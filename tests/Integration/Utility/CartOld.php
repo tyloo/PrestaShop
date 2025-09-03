@@ -83,7 +83,7 @@ class CartOld extends Cart
 
         $ps_use_ecotax = $this->configuration->get('PS_USE_ECOTAX');
         $ps_round_type = $this->configuration->get('PS_ROUND_TYPE');
-        $ps_ecotax_tax_rules_group_id = $this->configuration->get('PS_ECOTAX_TAX_RULES_GROUP_ID');
+        $this->configuration->get('PS_ECOTAX_TAX_RULES_GROUP_ID');
         $compute_precision = 2;
 
         if (! $this->id) {
@@ -162,7 +162,6 @@ class CartOld extends Cart
         }
 
         $products_total = [];
-        $ecotax_total = 0;
         $productLines = $this->countProductLines($products);
 
         foreach ($products as $product) {
