@@ -77,9 +77,10 @@ class AddProductFeatureContext extends AbstractProductFeatureContext
             ));
 
             $this->getSharedStorage()->set($productReference, $productId->getValue());
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
+
         // Fix issue related to modules hooked on `actionProductSave` and calling `Product::priceCalculation()`
         // leading to cache issues later
         Product::resetStaticCache();

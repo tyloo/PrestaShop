@@ -50,12 +50,12 @@ class ListCommandsAndQueriesCommandTest extends TestCase
     /**
      * @var ResourceNameCollectionFactoryInterface|MockObject
      */
-    private $resourceNameCollectionMock;
+    private MockObject $resourceNameCollectionMock;
 
     /**
      * @var ResourceMetadataCollectionFactoryInterface|MockObject
      */
-    private $resourceMetadataCollectionMock;
+    private MockObject $resourceMetadataCollectionMock;
 
     protected function setUp(): void
     {

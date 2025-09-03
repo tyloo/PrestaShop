@@ -51,16 +51,23 @@ use Tests\Resources\Resetter\ShopResetter;
 class MultiShopProductControllerTest extends GridControllerTestCase
 {
     protected const DEFAULT_SHOP_ID = 1;
+
     protected const DEFAULT_SHOP_GROUP_ID = 1;
+
     protected const DEFAULT_LANG_ID = 1;
+
     protected const DEFAULT_CATEGORY_ID = 2;
 
     protected const DEFAULT_SHOP_NAME = 'test_shop';
+
     protected const INDEPENDENT_SHOP_NAME = 'Independent stock Shop';
+
     protected const SHARED_SHOP_NAME = 'Shared stock Shop';
+
     protected const SECOND_SHARED_SHOP_NAME = 'Second shared stock Shop';
 
     protected const DEFAULT_SHOP_GROUP = 'Default';
+
     protected const SHARED_STOCK_SHOP_GROUP = 'Shared stock Group';
 
     protected const ALL_SHOPS_PRODUCT_DATA = [
@@ -330,6 +337,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         if (! empty($shopContext['group_shop_name'])) {
             $routeParams['shopGroupId'] = ShopGroup::getIdByName($shopContext['group_shop_name']);
         }
+
         $shopPreviewsUrl = $this->router->generate('admin_products_grid_shop_previews', $routeParams);
         $crawler = $this->client->request('GET', $shopPreviewsUrl);
         $entitiesRows = $crawler->filter('tr:not(.empty_row)');

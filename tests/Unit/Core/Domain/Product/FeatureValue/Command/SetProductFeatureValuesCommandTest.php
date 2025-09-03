@@ -39,7 +39,7 @@ class SetProductFeatureValuesCommandTest extends TestCase
     /**
      * @dataProvider getValidInput
      */
-    public function testValidInput(int $productId, array $featureValues)
+    public function testValidInput(int $productId, array $featureValues): void
     {
         $command = new SetProductFeatureValuesCommand($productId, $featureValues);
         $this->assertNotNull($command);
@@ -48,7 +48,7 @@ class SetProductFeatureValuesCommandTest extends TestCase
     /**
      * @dataProvider getInvalidInput
      */
-    public function testInvalidInput(int $productId, array $featureValues, string $expectedException)
+    public function testInvalidInput(int $productId, array $featureValues, string $expectedException): void
     {
         $this->expectException($expectedException);
         new SetProductFeatureValuesCommand($productId, $featureValues);

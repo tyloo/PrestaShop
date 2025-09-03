@@ -47,25 +47,25 @@ class QueryBuilderTest extends TestCase
         );
     }
 
-    public function testQuoteNumberNotQuoted()
+    public function testQuoteNumberNotQuoted(): void
     {
         $this->assertEquals('escaped', $this->queryBuilder->quote(42));
         $this->assertEquals('escaped', $this->queryBuilder->quote(4.2));
     }
 
-    public function testQuoteStringQuoted()
+    public function testQuoteStringQuoted(): void
     {
-        $this->assertEquals('\'escaped\'', $this->queryBuilder->quote('hello'));
+        $this->assertEquals("'escaped'", $this->queryBuilder->quote('hello'));
     }
 
-    public function testBuildWhereConditionsANDJustOneCondition()
+    public function testBuildWhereConditionsANDJustOneCondition(): void
     {
         $this->assertEquals("name = 'escaped'", $this->queryBuilder->buildWhereConditions('AND', [
             'name' => 'some string',
         ]));
     }
 
-    public function testBuildWhereConditionsANDTwoConditions()
+    public function testBuildWhereConditionsANDTwoConditions(): void
     {
         $this->assertEquals("name = 'escaped' AND num = escaped", $this->queryBuilder->buildWhereConditions('AND', [
             'name' => 'some string',
@@ -73,7 +73,7 @@ class QueryBuilderTest extends TestCase
         ]));
     }
 
-    public function testBuildWhereConditionsArrayValue()
+    public function testBuildWhereConditionsArrayValue(): void
     {
         $this->assertEquals("stuff IN ('escaped', escaped, escaped)", $this->queryBuilder->buildWhereConditions('AND', [
             'stuff' => ['a string', 123, 456452],

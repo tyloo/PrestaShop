@@ -46,13 +46,13 @@ class SourceHandlerFactoryTest extends TestCase
         $this->sourceHandlerFactory = new SourceHandlerFactory();
     }
 
-    public function testGetUnavailableHandler()
+    public function testGetUnavailableHandler(): void
     {
         $this->expectException(SourceHandlerNotFoundException::class);
         $this->sourceHandlerFactory->getHandler('unhandlablesource');
     }
 
-    public function testGetHandler()
+    public function testGetHandler(): void
     {
         $handlerMock = $this->createMock(SourceHandlerInterface::class);
         $handlerMock->method('canHandle')->willReturn(true);

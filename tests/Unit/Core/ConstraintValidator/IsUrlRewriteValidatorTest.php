@@ -44,7 +44,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
     /**
      * @var ConfigurationInterface
      */
-    private $configurationMockWithAscendingCharsOn;
+    private \PHPUnit\Framework\MockObject\MockObject $configurationMockWithAscendingCharsOn;
 
     protected function setUp(): void
     {
@@ -64,7 +64,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         parent::setUp();
     }
 
-    public function testItThrowsUnexpectedTypeExceptionOnIncorrectConstraintProvided()
+    public function testItThrowsUnexpectedTypeExceptionOnIncorrectConstraintProvided(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
@@ -74,7 +74,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getIncorrectTypeRewriteUrls
      */
-    public function testItThrowsUnexpectedTypeExceptionOnIncorrectValueTypeProvided($incorrectTypeRewriteUrl)
+    public function testItThrowsUnexpectedTypeExceptionOnIncorrectValueTypeProvided($incorrectTypeRewriteUrl): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
@@ -84,7 +84,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getIncorrectRewriteUrls
      */
-    public function testItFindsIncorrectUrlRewritePattern($incorrectRewriteUrl)
+    public function testItFindsIncorrectUrlRewritePattern($incorrectRewriteUrl): void
     {
         $this->validator->validate($incorrectRewriteUrl, new IsUrlRewrite());
 
@@ -97,7 +97,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getCorrectRewriteUrls
      */
-    public function testItFindsCorrectUrlRewritePatterns($correctRewriteUrl)
+    public function testItFindsCorrectUrlRewritePatterns($correctRewriteUrl): void
     {
         $this->validator->validate($correctRewriteUrl, new IsUrlRewrite());
 
@@ -107,7 +107,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getCorrectRewriteUlrUsingAscendingChars
      */
-    public function testItFindsCorrectUrlRewritePatternUsingAscendedChars($correctRewriteUrl)
+    public function testItFindsCorrectUrlRewritePatternUsingAscendedChars($correctRewriteUrl): void
     {
         $this->useAscendedChars = true;
 

@@ -45,7 +45,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class BackUrlRedirectResponseListenerTest extends TestCase
 {
-    protected function getLegacyContextMock($isConnected = true)
+    protected function getLegacyContextMock($isConnected = true): \PHPUnit\Framework\MockObject\MockObject
     {
         $legacyContextMock = $this->getMockBuilder(LegacyContext::class)
             ->onlyMethods([
@@ -64,7 +64,7 @@ class BackUrlRedirectResponseListenerTest extends TestCase
         return $legacyContextMock;
     }
 
-    protected function getBackUrlProviderMock($backUrl)
+    protected function getBackUrlProviderMock($backUrl): \PHPUnit\Framework\MockObject\MockObject
     {
         $backUrlProviderMock = $this
             ->getMockBuilder(BackUrlProvider::class)
@@ -79,7 +79,7 @@ class BackUrlRedirectResponseListenerTest extends TestCase
         return $backUrlProviderMock;
     }
 
-    public function testItSetsResponseWithBackUrl()
+    public function testItSetsResponseWithBackUrl(): void
     {
         $expectedUrl = 'http://localhost';
 
@@ -112,7 +112,7 @@ class BackUrlRedirectResponseListenerTest extends TestCase
         $this->assertEquals($expectedUrl, $actual->getTargetUrl());
     }
 
-    public function testWhenRequestAndResponseUrlsAreEqualItDoesNotModifyOriginalResponse()
+    public function testWhenRequestAndResponseUrlsAreEqualItDoesNotModifyOriginalResponse(): void
     {
         $expectedUrl = 'http://localhost';
 
@@ -159,7 +159,7 @@ class BackUrlRedirectResponseListenerTest extends TestCase
     /**
      * @dataProvider getBackUrlsToTest
      */
-    public function testBackUrlUpdates(Request $currentRequest, string $redirectTarget, string $backUrl, string $expectedTarget)
+    public function testBackUrlUpdates(Request $currentRequest, string $redirectTarget, string $backUrl, string $expectedTarget): void
     {
         $legacyContextMock = $this->getLegacyContextMock();
         $backUrlProviderMock = $this->getBackUrlProviderMock($backUrl);
@@ -276,7 +276,7 @@ class BackUrlRedirectResponseListenerTest extends TestCase
         ];
     }
 
-    public function testWhenEmployeeIsNotConnected()
+    public function testWhenEmployeeIsNotConnected(): void
     {
         $expectedUrl = 'http://localhost.dev';
         $legacyContextMock = $this->getLegacyContextMock(false);

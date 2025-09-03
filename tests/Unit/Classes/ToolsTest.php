@@ -36,32 +36,43 @@ class ToolsTest extends TestCase
     use ExtendedTestCaseMethodsTrait;
 
     private const PS_ROUND_UP = 0;
+
     private const PS_ROUND_DOWN = 1;
+
     private const PS_ROUND_HALF_UP = 2;
+
     private const PS_ROUND_HALF_DOWN = 3;
+
     private const PS_ROUND_HALF_EVEN = 4;
+
     private const PS_ROUND_HALF_ODD = 5;
 
     protected function setUp(): void
     {
-        $_POST = $_GET = [];
+        $_POST = [];
+        $_GET = [];
         Tools::resetRequest();
 
         if (! \defined('PS_ROUND_UP')) {
             \define('PS_ROUND_UP', self::PS_ROUND_UP);
         }
+
         if (! \defined('PS_ROUND_DOWN')) {
             \define('PS_ROUND_DOWN', self::PS_ROUND_DOWN);
         }
+
         if (! \defined('PS_ROUND_HALF_UP')) {
             \define('PS_ROUND_HALF_UP', self::PS_ROUND_HALF_UP);
         }
+
         if (! \defined('PS_ROUND_HALF_DOWN')) {
             \define('PS_ROUND_HALF_DOWN', self::PS_ROUND_HALF_DOWN);
         }
+
         if (! \defined('PS_ROUND_HALF_EVEN')) {
             \define('PS_ROUND_HALF_EVEN', self::PS_ROUND_HALF_EVEN);
         }
+
         if (! \defined('PS_ROUND_HALF_ODD')) {
             \define('PS_ROUND_HALF_ODD', self::PS_ROUND_HALF_ODD);
         }
@@ -69,7 +80,8 @@ class ToolsTest extends TestCase
 
     public static function tearDownAfterClass(): void
     {
-        $_POST = $_GET = [];
+        $_POST = [];
+        $_GET = [];
     }
 
     private function setPostAndGet(array $post = [], array $get = []): void
@@ -353,7 +365,7 @@ class ToolsTest extends TestCase
     public function testToCamelCase(string $source, string $expected, bool $firstCharUpperCase): void
     {
         $actual = Tools::toCamelCase($source, $firstCharUpperCase);
-        $this->assertEquals($expected, $actual, "Expected $source to be $expected in camel case, got $actual instead.");
+        $this->assertEquals($expected, $actual, \sprintf('Expected %s to be %s in camel case, got %s instead.', $source, $expected, $actual));
     }
 
     public function providerStrReplaceFirst(): iterable
@@ -818,9 +830,9 @@ class ToolsTest extends TestCase
      *
      * @dataProvider provideHtaccessRules
      */
-    public function testHtaccessRewriteRules(string $rule, string $replacement, array $testCases)
+    public function testHtaccessRewriteRules(string $rule, string $replacement, array $testCases): void
     {
-        $rule = "~$rule~";
+        $rule = \sprintf('~%s~', $rule);
         foreach ($testCases as $case) {
             if ($case['shouldMatch']) {
                 $this->assertMatchesRegularExpression($rule, $case['uri'], "The uri segment is expected to match the pattern, but it doesn't");

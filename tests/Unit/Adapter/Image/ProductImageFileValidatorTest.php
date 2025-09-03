@@ -49,7 +49,7 @@ class ProductImageFileValidatorTest extends TestCase
         string $filePath,
         int $maxPhpIniUploadSize,
         int $maxUploadQuotaSize,
-    ) {
+    ): void {
         $imageValidator = new ProductImageFileValidator($maxPhpIniUploadSize, $this->mockQuotaConfiguration($maxUploadQuotaSize));
 
         $this->expectException(UploadedImageSizeException::class);
@@ -74,8 +74,8 @@ class ProductImageFileValidatorTest extends TestCase
 
         try {
             $imageValidator->assertFileUploadLimits($filePath);
-        } catch (Throwable $e) {
-            $exception = $e;
+        } catch (Throwable $throwable) {
+            $exception = $throwable;
         }
 
         // assert that no exception was thrown, so that phpunit doesn't complain about missing assertions

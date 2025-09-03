@@ -45,7 +45,7 @@ class ZipCodePatternResolverTest extends TestCase
     /**
      * @dataProvider regexpPatternDataProvider
      */
-    public function testGetRegexpPattern(string $format, string $isoCode, string $expectedResult)
+    public function testGetRegexpPattern(string $format, string $isoCode, string $expectedResult): void
     {
         $result = $this->resolver->getRegexPattern($format, $isoCode);
 
@@ -55,7 +55,7 @@ class ZipCodePatternResolverTest extends TestCase
     /**
      * @dataProvider humanReadablePatternDataProvider
      */
-    public function testGetHumanReadablePattern(string $format, string $isoCode, string $expectedResult)
+    public function testGetHumanReadablePattern(string $format, string $isoCode, string $expectedResult): void
     {
         $result = $this->resolver->getHumanReadablePattern($format, $isoCode);
 

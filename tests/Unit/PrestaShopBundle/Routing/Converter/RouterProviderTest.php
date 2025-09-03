@@ -40,7 +40,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RouterProviderTest extends TestCase
 {
-    public function testBuildRoutes()
+    public function testBuildRoutes(): void
     {
         $router = $this->buildMultipleRouterMock([
             [
@@ -82,7 +82,7 @@ class RouterProviderTest extends TestCase
         ]], $legacyRoute->getControllersActions());
     }
 
-    public function testControllersActions()
+    public function testControllersActions(): void
     {
         $router = $this->buildMultipleRouterMock([
             [
@@ -126,7 +126,7 @@ class RouterProviderTest extends TestCase
         ], $controllersActions);
     }
 
-    public function testGetActionsByController()
+    public function testGetActionsByController(): void
     {
         $router = $this->buildMultipleRouterMock([
             [
@@ -162,7 +162,7 @@ class RouterProviderTest extends TestCase
         $this->assertSame(['index', 'add', 'create'], $controllerActions);
     }
 
-    public function testGetActionsByControllerInsensitive()
+    public function testGetActionsByControllerInsensitive(): void
     {
         $router = $this->buildMultipleRouterMock([
             [
@@ -202,7 +202,7 @@ class RouterProviderTest extends TestCase
         $this->assertSame(['index', 'add', 'create'], $controllerActions);
     }
 
-    public function testGetLegacyRouteByAction()
+    public function testGetLegacyRouteByAction(): void
     {
         $router = $this->buildMultipleRouterMock([
             [
@@ -280,7 +280,7 @@ class RouterProviderTest extends TestCase
         $this->assertEquals('admin_modules_create', $legacyRoute->getRouteName());
     }
 
-    public function testGetLegacyRouteByActionInsensitive()
+    public function testGetLegacyRouteByActionInsensitive(): void
     {
         $router = $this->buildMultipleRouterMock([
             [
@@ -343,7 +343,7 @@ class RouterProviderTest extends TestCase
         $this->assertEquals('admin_products_create', $legacyRoute->getRouteName());
     }
 
-    public function testControllerNotFound()
+    public function testControllerNotFound(): void
     {
         $router = $this->buildMultipleRouterMock([
             [
@@ -370,9 +370,10 @@ class RouterProviderTest extends TestCase
 
         try {
             $routerProvider->getLegacyRouteByAction('AdminCategories', 'add');
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
         $this->assertEquals('Could not find a route matching for legacy controller: AdminCategories', $caughtException->getMessage());
 
@@ -380,9 +381,10 @@ class RouterProviderTest extends TestCase
 
         try {
             $routerProvider->getLegacyRouteByAction('AdminProducts', 'edit');
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
         $this->assertEquals('Could not find a route matching for legacy action: AdminProducts:edit', $caughtException->getMessage());
     }
@@ -390,7 +392,7 @@ class RouterProviderTest extends TestCase
     /**
      * @return MockObject|RouterInterface
      */
-    private function buildMultipleRouterMock(array $routes)
+    private function buildMultipleRouterMock(array $routes): MockObject
     {
         $routeCollection = $this->buildRouteCollection($routes);
 
@@ -430,6 +432,7 @@ class RouterProviderTest extends TestCase
             if (! empty($route['_legacy_parameters'])) {
                 $routeDefaults['_legacy_parameters'] = $route['_legacy_parameters'];
             }
+
             $routeCollection->add($route['route_name'], new Route(
                 $route['path'],
                 $routeDefaults

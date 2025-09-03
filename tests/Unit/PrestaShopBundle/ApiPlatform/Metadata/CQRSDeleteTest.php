@@ -180,8 +180,8 @@ class CQRSDeleteTest extends TestCase
                 extraProperties: ['CQRSCommand' => 'My\\Namespace\\MyQuery'],
                 CQRSCommand: 'My\\Namespace\\MyOtherQuery',
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -232,8 +232,8 @@ class CQRSDeleteTest extends TestCase
                 extraProperties: ['CQRSCommandMapping' => $queryMapping],
                 CQRSCommandMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -284,8 +284,8 @@ class CQRSDeleteTest extends TestCase
                 extraProperties: ['ApiResourceMapping' => $resourceMapping],
                 ApiResourceMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -338,8 +338,8 @@ class CQRSDeleteTest extends TestCase
                 extraProperties: ['experimentalOperation' => true],
                 experimentalOperation: false,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -392,8 +392,8 @@ class CQRSDeleteTest extends TestCase
                 extraProperties: ['allowEmptyBody' => true],
                 allowEmptyBody: false,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);

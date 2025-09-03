@@ -162,8 +162,8 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
                 )
             );
             SharedStorage::getStorage()->set($sqlQueryReference, $sqlRequestId->getValue());
-        } catch (Exception $e) {
-            $this->setLastException($e);
+        } catch (Exception $exception) {
+            $this->setLastException($exception);
         }
     }
 
@@ -182,8 +182,8 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
                     ->setName($data['name'])
                     ->setSql($data['sql'])
             );
-        } catch (Exception $e) {
-            $this->setLastException($e);
+        } catch (Exception $exception) {
+            $this->setLastException($exception);
         }
     }
 

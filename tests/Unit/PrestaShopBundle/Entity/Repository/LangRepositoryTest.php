@@ -45,7 +45,7 @@ use PrestaShopBundle\Entity\Repository\LangRepository;
  */
 class LangRepositoryTest extends TestCase
 {
-    public function testInternalCacheByLocale()
+    public function testInternalCacheByLocale(): void
     {
         /** @var LanguageInterface $languageMock */
         $languageMock = $this->buildLanguageMock();
@@ -78,7 +78,7 @@ class LangRepositoryTest extends TestCase
         $this->assertEquals($languageMock, $language);
     }
 
-    public function testInternalCacheByIsoCode()
+    public function testInternalCacheByIsoCode(): void
     {
         /** @var LanguageInterface $languageMock */
         $languageMock = $this->buildLanguageMock();
@@ -111,7 +111,7 @@ class LangRepositoryTest extends TestCase
         $this->assertEquals($languageMock, $language);
     }
 
-    public function testInternalAbsentCache()
+    public function testInternalAbsentCache(): void
     {
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
@@ -152,11 +152,7 @@ class LangRepositoryTest extends TestCase
      *
      * @return MockObject|LangRepository
      */
-
-    /**
-     * @return MockObject
-     */
-    private function buildPartialMock(array $expectedCriteria, LanguageInterface $language)
+    private function buildPartialMock(array $expectedCriteria, LanguageInterface $language): MockObject
     {
         $entityManagerMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
@@ -189,7 +185,7 @@ class LangRepositoryTest extends TestCase
     /**
      * @return MockObject|LanguageInterface
      */
-    private function buildLanguageMock()
+    private function buildLanguageMock(): MockObject
     {
         $languageMock = $this->getMockBuilder(LanguageInterface::class)
             ->disableOriginalConstructor()

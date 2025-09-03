@@ -39,7 +39,7 @@ class FormDataProviderTest extends TestCase
     /**
      * @var DataConfigurationInterface|MockObject
      */
-    protected $config;
+    protected MockObject $config;
 
     /**
      * @var FormDataProvider

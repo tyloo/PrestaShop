@@ -141,7 +141,7 @@ namespace Tests\Unit\Classes {
             yield ['wrong * from ps_table', false];
         }
 
-        private function createRequestSqlMock()
+        private function createRequestSqlMock(): \PHPUnit\Framework\MockObject\MockObject
         {
             $requestSql = $this->getMockBuilder(RequestSql::class)
                 ->onlyMethods(['getTables'])

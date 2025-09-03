@@ -37,7 +37,7 @@ class LegacyParametersConverterTest extends TestCase
     /**
      * @dataProvider getExpectedLegacyParameters
      */
-    public function testGetParameters(array $requestAttributes, array $queryParameters, ?array $expectedLegacyParameters)
+    public function testGetParameters(array $requestAttributes, array $queryParameters, ?array $expectedLegacyParameters): void
     {
         $converter = new LegacyParametersConverter();
         $legacyParameters = $converter->getParameters($requestAttributes, $queryParameters);

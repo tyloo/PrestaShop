@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Shop\Url\UrlProviderInterface;
  */
 class TestCategoryImageFolderProvider implements UrlProviderInterface
 {
-    public function getUrl()
+    public function getUrl(): string
     {
         return 'http://myshop.com/img/c';
     }

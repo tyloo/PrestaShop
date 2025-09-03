@@ -38,6 +38,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class QueryLayerTest extends TestCase
 {
     private const FEATURE_FLAG_TEST = 'feature_flag_test';
+
     private const VAR_FEATURE_FLAG_TEST = 'PS_FF_FEATURE_FLAG_TEST';
 
     public function provideEnabledValues(): Generator
@@ -58,19 +59,19 @@ class QueryLayerTest extends TestCase
         yield ['no'];
     }
 
-    public function testIsReadonly()
+    public function testIsReadonly(): void
     {
         $layer = $this->createLayer(true);
         $this->assertTrue($layer->isReadonly());
     }
 
-    public function testGetTypeName()
+    public function testGetTypeName(): void
     {
         $layer = $this->createLayer(true);
         $this->assertEquals('query', $layer->getTypeName());
     }
 
-    public function testGetConstName()
+    public function testGetConstName(): void
     {
         $layer = $this->createLayer(true);
         $this->assertEquals(
@@ -79,19 +80,19 @@ class QueryLayerTest extends TestCase
         );
     }
 
-    public function testCanBeUsed()
+    public function testCanBeUsed(): void
     {
         $layer = $this->createLayer(true, 'on');
         $this->assertTrue($layer->canBeUsed(self::FEATURE_FLAG_TEST));
     }
 
-    public function testCannotBeUsedWhenStateNotAvailable()
+    public function testCannotBeUsedWhenStateNotAvailable(): void
     {
         $layer = $this->createLayer(true);
         $this->assertFalse($layer->canBeUsed(self::FEATURE_FLAG_TEST));
     }
 
-    public function testCannotBeUsedInProdEvenStateAvailable()
+    public function testCannotBeUsedInProdEvenStateAvailable(): void
     {
         $layer = $this->createLayer(false, 'on');
         $this->assertFalse($layer->canBeUsed(self::FEATURE_FLAG_TEST));
@@ -100,7 +101,7 @@ class QueryLayerTest extends TestCase
     /**
      * @dataProvider provideEnabledValues
      */
-    public function testIsEnabled(string $enabledValue)
+    public function testIsEnabled(string $enabledValue): void
     {
         $layer = $this->createLayer(true, $enabledValue);
         $this->assertTrue($layer->isEnabled(self::FEATURE_FLAG_TEST));
@@ -109,20 +110,20 @@ class QueryLayerTest extends TestCase
     /**
      * @dataProvider provideDisabledValues
      */
-    public function testIsDisabled(string $disabledValue)
+    public function testIsDisabled(string $disabledValue): void
     {
         $layer = $this->createLayer(true, $disabledValue);
         $this->assertFalse($layer->isEnabled(self::FEATURE_FLAG_TEST));
     }
 
-    public function testEnable()
+    public function testEnable(): void
     {
         $layer = $this->createLayer(true);
         $this->expectException(InvalidArgumentException::class);
         $layer->enable(self::FEATURE_FLAG_TEST);
     }
 
-    public function testDisable()
+    public function testDisable(): void
     {
         $layer = $this->createLayer(true);
         $this->expectException(InvalidArgumentException::class);

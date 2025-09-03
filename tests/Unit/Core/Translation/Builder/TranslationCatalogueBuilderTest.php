@@ -55,6 +55,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         ],
         'AdminThirdDomain' => [],
     ];
+
     private static $fileTranslatedTranslations = [
         'AdminFirstDomain' => [
             'First Domain First Wording' => 'First Domain First Wording File Translation',
@@ -64,6 +65,7 @@ class TranslationCatalogueBuilderTest extends TestCase
             'Second Domain First Wording' => 'Second Domain First Wording File Translation',
         ],
     ];
+
     private static $userTranslatedTranslations = [
         'AdminFirstDomain' => [
             'First Domain First Wording' => 'First Domain First Wording User Translation',
@@ -85,6 +87,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         foreach (self::$defaultTranslations as $domain => $messages) {
             $catalogue->add($messages, $domain);
         }
+
         $provider->method('getDefaultCatalogue')->willReturn($catalogue);
 
         // Build FileTranslated catalogue
@@ -92,6 +95,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         foreach (self::$fileTranslatedTranslations as $domain => $messages) {
             $catalogue->add($messages, $domain);
         }
+
         $provider->method('getFileTranslatedCatalogue')->willReturn($catalogue);
 
         // Build UserTranslated catalogue
@@ -99,6 +103,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         foreach (self::$userTranslatedTranslations as $domain => $messages) {
             $catalogue->add($messages, $domain);
         }
+
         $provider->method('getUserTranslatedCatalogue')->willReturn($catalogue);
 
         // The factory
@@ -149,7 +154,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         TranslationCatalogueBuilder $translationCatalogueBuilder,
         array $parameters,
         array $expectedArrayCatalogue,
-    ) {
+    ): void {
         $catalogue = $translationCatalogueBuilder->getDomainCatalogue(
             $parameters['providerDefinition'],
             $parameters['locale'],
@@ -428,6 +433,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         foreach ($defaultTranslations as $domain => $messages) {
             $catalogue->add($messages, $domain);
         }
+
         $provider->method('getDefaultCatalogue')->willReturn($catalogue);
 
         // Build FileTranslated catalogue
@@ -435,6 +441,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         foreach ($fileTranslatedTranslations as $domain => $messages) {
             $catalogue->add($messages, $domain);
         }
+
         $provider->method('getFileTranslatedCatalogue')->willReturn($catalogue);
 
         // Build UserTranslated catalogue
@@ -442,6 +449,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         foreach ($userTranslatedTranslations as $domain => $messages) {
             $catalogue->add($messages, $domain);
         }
+
         $provider->method('getUserTranslatedCatalogue')->willReturn($catalogue);
 
         // The factory

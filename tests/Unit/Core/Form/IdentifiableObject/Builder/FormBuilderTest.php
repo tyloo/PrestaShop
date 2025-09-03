@@ -41,7 +41,7 @@ use Symfony\Component\Form\ResolvedFormTypeInterface;
 
 class FormBuilderTest extends TestCase
 {
-    public function testCanBeConstructed()
+    public function testCanBeConstructed(): void
     {
         $builder = new FormBuilder(
             $this->createMock(FormFactoryInterface::class),
@@ -54,7 +54,7 @@ class FormBuilderTest extends TestCase
         $this->assertInstanceOf(FormBuilderInterface::class, $builder);
     }
 
-    public function testGetFormToCreateModel()
+    public function testGetFormToCreateModel(): void
     {
         $formMock = $this->createMock(FormInterface::class);
         $formBuilderMock = $this->createSymfonyFormBuilderMock($formMock, 'Bbcd');
@@ -73,7 +73,7 @@ class FormBuilderTest extends TestCase
         $this->assertEquals($formMock, $form);
     }
 
-    public function testGetFormToEditModel()
+    public function testGetFormToEditModel(): void
     {
         $formMock = $this->createMock(FormInterface::class);
         $formBuilderMock = $this->createSymfonyFormBuilderMock($formMock, 'Abcd');
@@ -92,7 +92,7 @@ class FormBuilderTest extends TestCase
         $this->assertEquals($formMock, $form);
     }
 
-    public function testGetFormWithOptionsToCreateModel()
+    public function testGetFormWithOptionsToCreateModel(): void
     {
         $formMock = $this->createMock(FormInterface::class);
         $formBuilderMock = $this->createSymfonyFormBuilderMock($formMock, 'Bbcd');
@@ -113,7 +113,7 @@ class FormBuilderTest extends TestCase
         $this->assertEquals($formMock, $form);
     }
 
-    public function testGetFormWithOptionsToEditModel()
+    public function testGetFormWithOptionsToEditModel(): void
     {
         $formMock = $this->createMock(FormInterface::class);
         $formBuilderMock = $this->createSymfonyFormBuilderMock($formMock, 'Abcd');

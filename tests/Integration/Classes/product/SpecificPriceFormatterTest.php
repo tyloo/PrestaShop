@@ -113,7 +113,7 @@ class SpecificPriceFormatterTest extends KernelTestCase
             $this->assertEquals(
                 $priceFormatter->format($expected[0][$checkKey]),
                 $formattedSpecificPrice[$checkKey],
-                "checkKey: $checkKey"
+                'checkKey: ' . $checkKey
             );
         }
     }

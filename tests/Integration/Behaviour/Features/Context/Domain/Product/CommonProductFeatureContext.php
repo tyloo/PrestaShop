@@ -147,9 +147,10 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
         $caughtException = null;
         try {
             $this->getProductForEditing($reference);
-        } catch (ProductNotFoundException $e) {
-            $caughtException = $e;
+        } catch (ProductNotFoundException $productNotFoundException) {
+            $caughtException = $productNotFoundException;
         }
+
         Assert::assertNotNull($caughtException);
     }
 
@@ -179,6 +180,7 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
         if ($productTypeName === 'undefined') {
             $productTypeName = ProductType::TYPE_UNDEFINED;
         }
+
         $productId = $this->getSharedStorage()->get($productReference);
         $product = new Product($productId);
         Assert::assertEquals($productTypeName, $product->product_type);
@@ -192,6 +194,7 @@ class CommonProductFeatureContext extends AbstractProductFeatureContext
         if ($productTypeName === 'undefined') {
             $productTypeName = ProductType::TYPE_UNDEFINED;
         }
+
         $productId = $this->getSharedStorage()->get($productReference);
         $product = new Product($productId);
         Assert::assertEquals($productTypeName, $product->getDynamicProductType());

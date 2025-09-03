@@ -65,7 +65,7 @@ class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
      *
      * @param string|float|bool|array $value
      */
-    public function testItFailsWhenInvalidValueIsProvided($value)
+    public function testItFailsWhenInvalidValueIsProvided($value): void
     {
         $constraint = new PositiveOrZero();
         $this->validator->validate($value, $constraint);

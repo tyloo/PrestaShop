@@ -63,6 +63,7 @@ abstract class ContextStateTestCase extends TestCase
         if (isset($contextFields['language']) && $contextFields['language'] instanceof Language) {
             $locale = $contextFields['language']->locale;
         }
+
         $translator = new Translator($locale);
         $contextMock->method('getTranslator')->willReturn($translator);
 
@@ -71,6 +72,7 @@ abstract class ContextStateTestCase extends TestCase
             if ($fieldName === 'language' && $contextValue instanceof Language) {
                 $contextMock->getTranslator()->setLocale('test' . $contextValue->id);
             }
+
             if ($fieldName === 'currentLocale') {
                 $contextMock
                     ->method('getCurrentLocale')
@@ -78,6 +80,7 @@ abstract class ContextStateTestCase extends TestCase
                 ;
             }
         }
+
         LegacyContext::setInstanceForTesting($contextMock);
 
         return $contextMock;

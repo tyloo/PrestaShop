@@ -105,6 +105,7 @@ class AdminSearchControllerCoreTest extends KernelTestCase
             if (\is_string($value)) {
                 $data[$key] = preg_replace('#&token=[a-z0-9]+#', '', $value, 1);
             }
+
             if (\is_array($value)) {
                 $data[$key] = $this->cleanDataToken($value);
             }

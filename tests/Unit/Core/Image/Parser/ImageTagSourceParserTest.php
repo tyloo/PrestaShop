@@ -45,7 +45,7 @@ class ImageTagSourceParserTest extends TestCase
     /**
      * @dataProvider getTestCases
      */
-    public function testItParsesSourceAsExpected($imageTag, $expectedSource)
+    public function testItParsesSourceAsExpected($imageTag, $expectedSource): void
     {
         $parsedSource = $this->parser->parse($imageTag);
 

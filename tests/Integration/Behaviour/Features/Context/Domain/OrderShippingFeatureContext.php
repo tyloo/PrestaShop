@@ -98,6 +98,7 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
         if (isset($availableCarriers[$carrier])) {
             return (int) $availableCarriers[$carrier];
         }
+
         throw new RuntimeException('Invalid carrier [' . $carrier . ']');
     }
 

@@ -78,7 +78,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
             /** @var EditableMeta $editableMeta */
             $editableMeta = $this->getQueryBus()->handle($queryCommand);
 
-            SharedStorage::getStorage()->set("editable_{$reference}", $editableMeta);
+            SharedStorage::getStorage()->set('editable_' . $reference, $editableMeta);
         } catch (Exception $exception) {
             $this->setLastException($exception);
         }
@@ -189,7 +189,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     public function assertMetaEditableFormFieldShouldBeEqualTo($reference, $field, $value)
     {
         /** @var EditableMeta $editableMeta */
-        $editableMeta = SharedStorage::getStorage()->get("editable_{$reference}");
+        $editableMeta = SharedStorage::getStorage()->get('editable_' . $reference);
         $defaultLanguageId = SharedStorage::getStorage()->get('default_language_id');
         $actualValue = null;
 

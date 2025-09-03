@@ -48,7 +48,7 @@ class ThemeTranslationsFactoryTest extends TestCase
     /**
      * @var ThemeProvider|MockObject
      */
-    private $themeProviderMock;
+    private MockObject $themeProviderMock;
 
     private $translations;
 
@@ -193,7 +193,7 @@ class ThemeTranslationsFactoryTest extends TestCase
         return $this->mockProvider(FrontOfficeProvider::class, 'front', self::TEST_LOCALE);
     }
 
-    private function mockProvider(string $providerPath, string $providerIdentifier, string $locale)
+    private function mockProvider(string $providerPath, string $providerIdentifier, string $locale): MockObject
     {
         $providerMock = $this->getMockBuilder($providerPath)
             ->disableOriginalConstructor()

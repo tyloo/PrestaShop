@@ -92,6 +92,7 @@ class TitleFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             $command->setLocalizedNames($data['name']);
         }
+
         if (isset($data['type'])) {
             /** @var FormChoiceProviderInterface $provider */
             $provider = CommonFeatureContext::getContainer()->get('prestashop.core.form.choice_provider.gender_choice_provider');
@@ -120,8 +121,8 @@ class TitleFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new DeleteTitleCommand((int) $titleId));
-        } catch (TitleNotFoundException $e) {
-            $this->setLastException($e);
+        } catch (TitleNotFoundException $titleNotFoundException) {
+            $this->setLastException($titleNotFoundException);
         }
     }
 
@@ -137,8 +138,8 @@ class TitleFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new BulkDeleteTitleCommand($titleIds));
-        } catch (TitleNotFoundException $e) {
-            $this->setLastException($e);
+        } catch (TitleNotFoundException $titleNotFoundException) {
+            $this->setLastException($titleNotFoundException);
         }
     }
 
@@ -191,7 +192,7 @@ class TitleFeatureContext extends AbstractDomainFeatureContext
     public function assertTitleIsNotDeleted(string $titleReference): void
     {
         if (! $this->isFoundTitle($titleReference)) {
-            throw new NoExceptionAlthoughExpectedException(\sprintf('Title %s doesn\'t exist, but it was expected to be existing', $titleReference));
+            throw new NoExceptionAlthoughExpectedException(\sprintf("Title %s doesn't exist, but it was expected to be existing", $titleReference));
         }
     }
 

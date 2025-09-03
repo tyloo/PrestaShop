@@ -44,17 +44,24 @@ class ClassLoader
 {
     // PSR-4
     private $prefixLengthsPsr4 = [];
+
     private $prefixDirsPsr4 = [];
+
     private $fallbackDirsPsr4 = [];
 
     // PSR-0
     private $prefixesPsr0 = [];
+
     private $fallbackDirsPsr0 = [];
 
     private $useIncludePath = false;
+
     private $classMap = [];
+
     private $classMapAuthoritative = false;
+
     private $missingClasses = [];
+
     private $apcuPrefix;
 
     public function getPrefixes()
@@ -130,6 +137,7 @@ class ClassLoader
 
             return;
         }
+
         if ($prepend) {
             $this->prefixesPsr0[$first][$prefix] = array_merge(
                 (array) $paths,
@@ -174,6 +182,7 @@ class ClassLoader
             if ('\\' !== $prefix[$length - 1]) {
                 throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
             }
+
             $this->prefixLengthsPsr4[$prefix[0]][$prefix] = $length;
             $this->prefixDirsPsr4[$prefix] = (array) $paths;
         } elseif ($prepend) {
@@ -225,6 +234,7 @@ class ClassLoader
             if ('\\' !== $prefix[$length - 1]) {
                 throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
             }
+
             $this->prefixLengthsPsr4[$prefix[0]][$prefix] = $length;
             $this->prefixDirsPsr4[$prefix] = (array) $paths;
         }
@@ -338,9 +348,11 @@ class ClassLoader
         if (isset($this->classMap[$class])) {
             return $this->classMap[$class];
         }
+
         if ($this->classMapAuthoritative || isset($this->missingClasses[$class])) {
             return false;
         }
+
         if (null !== $this->apcuPrefix) {
             $file = apcu_fetch($this->apcuPrefix.$class, $hit);
             if ($hit) {
@@ -439,7 +451,7 @@ class ClassLoader
  *
  * Prevents access to $this/self from included files.
  */
-function includeFile($file)
+function includeFile($file): void
 {
     include $file;
 }

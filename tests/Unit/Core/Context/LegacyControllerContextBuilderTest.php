@@ -72,6 +72,7 @@ class LegacyControllerContextBuilderTest extends TestCase
         if ($redirectionUrl !== null) {
             $builder->setRedirectionUrl($redirectionUrl);
         }
+
         $legacyController = $builder->build();
 
         $this->assertEquals($className, $legacyController->className);

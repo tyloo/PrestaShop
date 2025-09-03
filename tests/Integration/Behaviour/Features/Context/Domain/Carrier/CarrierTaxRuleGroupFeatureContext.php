@@ -44,7 +44,7 @@ class CarrierTaxRuleGroupFeatureContext extends AbstractDomainFeatureContext
     {
         $initialCarrierId = $this->getSharedStorage()->get($reference);
         $carrierId = $this->editCarrierTaxRule($reference, null, $taxRulesGroupReference);
-        if ($carrierId) {
+        if ($carrierId !== null) {
             Assert::assertEquals($initialCarrierId, $carrierId->getValue(), 'Carrier ID was expected the remain the same');
         }
     }
@@ -56,7 +56,7 @@ class CarrierTaxRuleGroupFeatureContext extends AbstractDomainFeatureContext
     {
         $initialCarrierId = $this->getSharedStorage()->get($reference);
         $carrierId = $this->editCarrierTaxRule($reference, null, null);
-        if ($carrierId) {
+        if ($carrierId !== null) {
             Assert::assertEquals($initialCarrierId, $carrierId->getValue(), 'Carrier ID was expected the remain the same');
         }
     }
@@ -68,7 +68,7 @@ class CarrierTaxRuleGroupFeatureContext extends AbstractDomainFeatureContext
     {
         $initialCarrierId = $this->getSharedStorage()->get($reference);
         $carrierId = $this->editCarrierTaxRule($reference, $newReference, $taxRulesGroupReference);
-        if ($carrierId) {
+        if ($carrierId !== null) {
             Assert::assertNotEquals($initialCarrierId, $carrierId->getValue(), 'Carrier ID was expected to be updated');
         }
     }
@@ -83,6 +83,7 @@ class CarrierTaxRuleGroupFeatureContext extends AbstractDomainFeatureContext
             } else {
                 $taxRulesGroupId = $taxRulesGroupReference === 'wrong-tax-rules' ? 4242 : $this->referenceToId($taxRulesGroupReference);
             }
+
             $command = new SetCarrierTaxRuleGroupCommand(
                 $carrierId,
                 $taxRulesGroupId,
@@ -94,12 +95,13 @@ class CarrierTaxRuleGroupFeatureContext extends AbstractDomainFeatureContext
             if ($newReference) {
                 $this->getSharedStorage()->set($newReference, $carrierIdVO->getValue());
             }
+
             // Reset cache so that the carrier becomes selectable
             Carrier::resetStaticCache();
 
             return $carrierIdVO;
-        } catch (Exception $e) {
-            $this->setLastException($e);
+        } catch (Exception $exception) {
+            $this->setLastException($exception);
         }
 
         return null;

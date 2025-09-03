@@ -133,8 +133,8 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
                 $this->getSharedStorage()->get($productReference),
                 $shopConstraint
             ));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -179,7 +179,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
         Assert::assertCount(
             \count($expectedCategories),
             $actualCategories,
-            \sprintf('Expected and actual categories count doesn\'t match for shop %d', $shopId)
+            \sprintf("Expected and actual categories count doesn't match for shop %d", $shopId)
         );
 
         $expectedDefaultCategoryId = null;
@@ -188,7 +188,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
             // We cannot anticipate categories ordering (and we don't really care) so we find related expected category by id
             $relativeExpectedCategories = array_filter(
                 $expectedCategories,
-                fn (array $expectedCategory) => $actualId === $this->getSharedStorage()->get($expectedCategory['id reference']));
+                fn (array $expectedCategory): bool => $actualId === $this->getSharedStorage()->get($expectedCategory['id reference']));
             Assert::assertNotEmpty($relativeExpectedCategories, \sprintf(
                 'Did not expect to find category %s in the list for shop %d',
                 $categoryInformation->getName(),
@@ -205,7 +205,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
             Assert::assertEquals(
                 $expectedCategory['name'],
                 $categoryInformation->getName(),
-                'Category localized names doesn\'t match'
+                "Category localized names doesn't match"
             );
 
             if (PrimitiveUtils::castStringBooleanIntoBoolean($expectedCategory['is default'])) {
@@ -229,8 +229,8 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
                 $categoryIds,
                 $shopConstraint
             ));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 }

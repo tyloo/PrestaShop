@@ -44,7 +44,7 @@ use Twig\Error\LoaderError;
 
 class MailTemplateTwigRendererTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $engineMock = $this->getMockBuilder(Environment::class)
             ->disableOriginalConstructor()
@@ -65,7 +65,7 @@ class MailTemplateTwigRendererTest extends TestCase
         $this->assertNotNull($generator);
     }
 
-    public function testFileNotFound()
+    public function testFileNotFound(): void
     {
         $this->expectException(FileNotFoundException::class);
 
@@ -169,7 +169,7 @@ class MailTemplateTwigRendererTest extends TestCase
         $this->assertEquals($expectedTemplate, $generatedTemplate);
     }
 
-    public function testRenderTxtFallback()
+    public function testRenderTxtFallback(): void
     {
         $templatePaths = [
             MailTemplateInterface::HTML_TYPE => '@Resources/mails/templates/account.html.twig',
@@ -192,7 +192,7 @@ class MailTemplateTwigRendererTest extends TestCase
         $this->assertEquals($expectedTemplate, $generatedTemplate);
     }
 
-    public function testRenderWithTransformations()
+    public function testRenderWithTransformations(): void
     {
         $templatePaths = [
             MailTemplateInterface::HTML_TYPE => '@Resources/mails/templates/account.html.twig',
@@ -223,7 +223,7 @@ class MailTemplateTwigRendererTest extends TestCase
      *
      * @return MockObject|TransformationInterface
      */
-    private function createTransformationMock($initialTemplate, $expectedVariables, $templateType)
+    private function createTransformationMock($initialTemplate, $expectedVariables, $templateType): MockObject
     {
         $transformationMock = $this->getMockBuilder(TransformationInterface::class)
             ->disableOriginalConstructor()
@@ -237,7 +237,7 @@ class MailTemplateTwigRendererTest extends TestCase
                 $this->equalTo($initialTemplate),
                 $this->equalTo($expectedVariables)
             )
-            ->will($this->returnCallback(fn ($templateContent, array $templateVariables) => $templateContent . '_transformed_' . $templateVariables['locale']))
+            ->will($this->returnCallback(fn ($templateContent, array $templateVariables): string => $templateContent . '_transformed_' . $templateVariables['locale']))
         ;
 
         $transformationMock
@@ -261,7 +261,7 @@ class MailTemplateTwigRendererTest extends TestCase
      *
      * @return MockObject|Environment
      */
-    private function createEngineMock($expectedPath, array $expectedVariables, $generatedTemplate)
+    private function createEngineMock($expectedPath, array $expectedVariables, $generatedTemplate): MockObject
     {
         $engineMock = $this->getMockBuilder(Environment::class)
             ->disableOriginalConstructor()
@@ -287,7 +287,7 @@ class MailTemplateTwigRendererTest extends TestCase
      *
      * @return MockObject|HookDispatcherInterface
      */
-    private function createHookDispatcherMock(LayoutInterface $mailLayout, $templateType, $transformationsCount = 0)
+    private function createHookDispatcherMock(LayoutInterface $mailLayout, $templateType, $transformationsCount = 0): MockObject
     {
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
             ->disableOriginalConstructor()
@@ -316,7 +316,7 @@ class MailTemplateTwigRendererTest extends TestCase
     /**
      * @return MockObject|LayoutVariablesBuilderInterface
      */
-    private function createVariablesBuilderMock(array $variables, LanguageInterface $expectedLanguage)
+    private function createVariablesBuilderMock(array $variables, LanguageInterface $expectedLanguage): MockObject
     {
         $builderMock = $this->getMockBuilder(LayoutVariablesBuilderInterface::class)
             ->disableOriginalConstructor()
@@ -339,7 +339,7 @@ class MailTemplateTwigRendererTest extends TestCase
     /**
      * @return MockObject|LanguageInterface
      */
-    private function createLanguageMock()
+    private function createLanguageMock(): MockObject
     {
         $languageMock = $this->getMockBuilder(LanguageInterface::class)
             ->disableOriginalConstructor()
@@ -351,7 +351,7 @@ class MailTemplateTwigRendererTest extends TestCase
     /**
      * @return MockObject|LayoutInterface
      */
-    private function createMailLayoutMock(array $expectedPaths)
+    private function createMailLayoutMock(array $expectedPaths): MockObject
     {
         $mailLayoutMock = $this->getMockBuilder(LayoutInterface::class)
             ->disableOriginalConstructor()

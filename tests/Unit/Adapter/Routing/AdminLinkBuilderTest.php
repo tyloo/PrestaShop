@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Adapter\Routing\AdminLinkBuilder;
 
 class AdminLinkBuilderTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $builder = new AdminLinkBuilder($this->getLinkMock(), [
             'customer' => 'AdminCustomer',
@@ -42,7 +42,7 @@ class AdminLinkBuilderTest extends TestCase
         $this->assertNotNull($builder);
     }
 
-    public function testCanBuild()
+    public function testCanBuild(): void
     {
         $builder = new AdminLinkBuilder($this->getLinkMock(), ['customer' => 'AdminCustomers']);
 
@@ -55,7 +55,7 @@ class AdminLinkBuilderTest extends TestCase
         $this->assertTrue($builder->canBuild('product'));
     }
 
-    public function testBuildViewLink()
+    public function testBuildViewLink(): void
     {
         $builder = new AdminLinkBuilder($this->getLinkMock(), ['customer' => 'AdminCustomers']);
         $viewLink = $builder->getViewLink('customer', ['id_customer' => 42]);
@@ -72,7 +72,7 @@ class AdminLinkBuilderTest extends TestCase
         $this->assertEquals('?controller=AdminProducts&id_product=42&preview=full&viewproduct=1', $viewLink);
     }
 
-    public function testBuildEditLink()
+    public function testBuildEditLink(): void
     {
         $builder = new AdminLinkBuilder($this->getLinkMock(), ['customer' => 'AdminCustomers']);
         $editLink = $builder->getEditLink('customer', ['id_customer' => 42]);
@@ -89,14 +89,14 @@ class AdminLinkBuilderTest extends TestCase
         $this->assertEquals('?controller=AdminProducts&id_product=42&preview=full&viewproduct=1', $editLink);
     }
 
-    public function testCleanTokenInLink()
+    public function testCleanTokenInLink(): void
     {
         $builder = new AdminLinkBuilder($this->getLinkMock(), ['product' => 'AdminProducts']);
         $editLink = $builder->getEditLink('product', ['id_product' => 42, 'token' => 'toto']);
         $this->assertEquals('?controller=AdminProducts&id_product=42&updateproduct=1', $editLink);
     }
 
-    public function testCleanCurrentIndex()
+    public function testCleanCurrentIndex(): void
     {
         $builder = new AdminLinkBuilder($this->getLinkMock(), ['product' => 'AdminProducts']);
         $editLink = $builder->getEditLink('product', ['id_product' => 42, 'current_index' => '/admin-dev/index.php/sell/customers/?_token=mYY9DFadRSfPTsJR-XXHHMQl_MXOCTZQ8n2bVlbeUMA']);
@@ -106,7 +106,7 @@ class AdminLinkBuilderTest extends TestCase
     /**
      * @return MockObject|Link
      */
-    private function getLinkMock()
+    private function getLinkMock(): MockObject
     {
         $linkMock = $this->getMockBuilder(Link::class)
             ->disableOriginalConstructor()

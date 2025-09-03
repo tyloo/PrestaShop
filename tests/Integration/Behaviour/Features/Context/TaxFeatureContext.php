@@ -164,14 +164,17 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
         foreach ($this->taxRules as $taxRule) {
             $taxRule->delete();
         }
+
         $this->taxRules = [];
         foreach ($this->taxRuleGroups as $taxRuleGroup) {
             $taxRuleGroup->delete();
         }
+
         $this->taxRuleGroups = [];
         foreach ($this->taxes as $tax) {
             $tax->delete();
         }
+
         $this->taxes = [];
     }
 

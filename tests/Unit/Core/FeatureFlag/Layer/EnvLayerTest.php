@@ -35,6 +35,7 @@ use PrestaShop\PrestaShop\Core\FeatureFlag\Layer\EnvLayer;
 class EnvLayerTest extends TestCase
 {
     private const FEATURE_FLAG_TEST = 'feature_flag_test';
+
     private const VAR_FEATURE_FLAG_TEST = 'PS_FF_FEATURE_FLAG_TEST';
 
     protected function setUp(): void
@@ -65,19 +66,19 @@ class EnvLayerTest extends TestCase
         yield ['no'];
     }
 
-    public function testIsReadonly()
+    public function testIsReadonly(): void
     {
         $layer = new EnvLayer();
         $this->assertTrue($layer->isReadonly());
     }
 
-    public function testGetTypeName()
+    public function testGetTypeName(): void
     {
         $layer = new EnvLayer();
         $this->assertEquals('env', $layer->getTypeName());
     }
 
-    public function testGetConstName()
+    public function testGetConstName(): void
     {
         $layer = new EnvLayer();
         $this->assertEquals(
@@ -86,14 +87,14 @@ class EnvLayerTest extends TestCase
         );
     }
 
-    public function testCanBeUsed()
+    public function testCanBeUsed(): void
     {
         $this->setEnv('true');
         $layer = new EnvLayer();
         $this->assertTrue($layer->canBeUsed(self::FEATURE_FLAG_TEST));
     }
 
-    public function testCannotBeUsed()
+    public function testCannotBeUsed(): void
     {
         $layer = new EnvLayer();
         $this->assertFalse($layer->canBeUsed(self::FEATURE_FLAG_TEST));
@@ -102,7 +103,7 @@ class EnvLayerTest extends TestCase
     /**
      * @dataProvider provideEnabledValues
      */
-    public function testIsEnabled(string $enabledValue)
+    public function testIsEnabled(string $enabledValue): void
     {
         $this->setEnv($enabledValue);
         $layer = new EnvLayer();
@@ -112,21 +113,21 @@ class EnvLayerTest extends TestCase
     /**
      * @dataProvider provideDisabledValues
      */
-    public function testIsDisabled(string $disabledValue)
+    public function testIsDisabled(string $disabledValue): void
     {
         $this->setEnv($disabledValue);
         $layer = new EnvLayer();
         $this->assertFalse($layer->isEnabled(self::FEATURE_FLAG_TEST));
     }
 
-    public function testEnable()
+    public function testEnable(): void
     {
         $layer = new EnvLayer();
         $this->expectException(InvalidArgumentException::class);
         $layer->enable(self::FEATURE_FLAG_TEST);
     }
 
-    public function testDisable()
+    public function testDisable(): void
     {
         $layer = new EnvLayer();
         $this->expectException(InvalidArgumentException::class);
@@ -140,6 +141,6 @@ class EnvLayerTest extends TestCase
 
     private function setEnv(string $status): void
     {
-        putenv(self::VAR_FEATURE_FLAG_TEST . "={$status}");
+        putenv(self::VAR_FEATURE_FLAG_TEST . ('=' . $status));
     }
 }

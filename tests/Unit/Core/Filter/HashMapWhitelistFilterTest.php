@@ -221,7 +221,7 @@ class TestLazyArray extends AbstractLazyArray
     /**
      * @arrayAccess
      */
-    public function getSomeProperty()
+    public function getSomeProperty(): string
     {
         return 'some_property';
     }
@@ -229,7 +229,7 @@ class TestLazyArray extends AbstractLazyArray
     /**
      * @arrayAccess
      */
-    public function getSomeOtherProperty()
+    public function getSomeOtherProperty(): string
     {
         return 'some_other_property';
     }

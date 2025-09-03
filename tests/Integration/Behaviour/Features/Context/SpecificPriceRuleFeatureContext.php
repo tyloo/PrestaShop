@@ -47,6 +47,7 @@ class SpecificPriceRuleFeatureContext extends AbstractPrestaShopFeatureContext
         foreach ($this->specificPriceRules as $specificPriceRule) {
             $specificPriceRule->delete();
         }
+
         $this->specificPriceRules = [];
     }
 

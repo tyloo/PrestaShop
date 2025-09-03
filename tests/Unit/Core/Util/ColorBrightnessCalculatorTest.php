@@ -45,7 +45,7 @@ class ColorBrightnessCalculatorTest extends TestCase
     /**
      * @dataProvider getColors
      */
-    public function testColorBrightness($hexColor, $isBright)
+    public function testColorBrightness($hexColor, $isBright): void
     {
         $this->assertEquals($isBright, $this->colorBrightnessCalculator->isBright($hexColor));
     }

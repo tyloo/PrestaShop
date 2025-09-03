@@ -80,7 +80,7 @@ class FolderThemeCatalogTest extends TestCase
         $this->createThemesFiles();
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         /** @var HookDispatcherInterface $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
@@ -92,7 +92,7 @@ class FolderThemeCatalogTest extends TestCase
         $this->assertNotNull($catalog);
     }
 
-    public function testListThemes()
+    public function testListThemes(): void
     {
         /** @var HookDispatcherInterface $dispatcherMock */
         $dispatcherMock = $this->createHookDispatcherMock(8);
@@ -139,13 +139,14 @@ class FolderThemeCatalogTest extends TestCase
                 $moduleLayoutsCount[$moduleLayout->getModuleName()][] = $moduleLayout->getName();
             }
         }
+
         $this->assertCount(2, $moduleLayoutsCount['followup']);
         $this->assertEquals(['followup_1', 'followup_2'], $moduleLayoutsCount['followup']);
         $this->assertCount(2, $moduleLayoutsCount['ps_emailalerts']);
         $this->assertEquals(['productoutofstock', 'return_slip'], $moduleLayoutsCount['ps_emailalerts']);
     }
 
-    public function testGetByName()
+    public function testGetByName(): void
     {
         /** @var HookDispatcherInterface $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
@@ -165,7 +166,7 @@ class FolderThemeCatalogTest extends TestCase
         $this->assertEquals('modern', $theme->getName());
     }
 
-    public function testInvalidTheme()
+    public function testInvalidTheme(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid requested theme "unknown", only available themes are: classic, modern');
@@ -182,7 +183,7 @@ class FolderThemeCatalogTest extends TestCase
         $catalog->getByName('unknown');
     }
 
-    public function testListThemesWithoutThemesFolder()
+    public function testListThemesWithoutThemesFolder(): void
     {
         /** @var HookDispatcherInterface $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
@@ -200,15 +201,16 @@ class FolderThemeCatalogTest extends TestCase
         $caughtException = null;
         try {
             $catalog->listThemes();
-        } catch (FileNotFoundException $e) {
-            $caughtException = $e;
+        } catch (FileNotFoundException $fileNotFoundException) {
+            $caughtException = $fileNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
         $this->assertStringContainsString('Invalid mail themes folder', $caughtException->getMessage());
         $this->assertStringContainsString(': no such directory', $caughtException->getMessage());
     }
 
-    public function testListThemesWithoutCoreFolder()
+    public function testListThemesWithoutCoreFolder(): void
     {
         $catalog = new FolderThemeCatalog($this->tempDir, new FolderThemeScanner(), $this->createHookDispatcherMock(4));
         // No bug occurs if the folder does not exist
@@ -223,7 +225,7 @@ class FolderThemeCatalogTest extends TestCase
         $this->assertEquals(4, $layouts->count());
     }
 
-    public function testListThemesWithoutModulesFolder()
+    public function testListThemesWithoutModulesFolder(): void
     {
         $catalog = new FolderThemeCatalog($this->tempDir, new FolderThemeScanner(), $this->createHookDispatcherMock(4));
         $this->fs->remove(implode(\DIRECTORY_SEPARATOR, [$this->tempDir, 'classic', MailTemplateInterface::MODULES_CATEGORY]));
@@ -239,7 +241,7 @@ class FolderThemeCatalogTest extends TestCase
     /**
      * @return LayoutInterface[]
      */
-    private function filterCoreLayouts(LayoutCollectionInterface $collection)
+    private function filterCoreLayouts(LayoutCollectionInterface $collection): array
     {
         $layouts = [];
         /** @var LayoutInterface $layout */
@@ -255,7 +257,7 @@ class FolderThemeCatalogTest extends TestCase
     /**
      * @return LayoutInterface[]
      */
-    private function filterModulesLayouts(LayoutCollectionInterface $collection)
+    private function filterModulesLayouts(LayoutCollectionInterface $collection): array
     {
         $layouts = [];
         /** @var LayoutInterface $layout */
@@ -273,7 +275,7 @@ class FolderThemeCatalogTest extends TestCase
      *
      * @return MockObject|HookDispatcherInterface
      */
-    private function createHookDispatcherMock($layoutsCount)
+    private function createHookDispatcherMock($layoutsCount): MockObject
     {
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
             ->disableOriginalConstructor()
@@ -354,6 +356,7 @@ class FolderThemeCatalogTest extends TestCase
             $this->fs->touch($componentsFolder . \DIRECTORY_SEPARATOR . 'title.twig');
             $this->fs->touch($componentsFolder . \DIRECTORY_SEPARATOR . 'image.twig');
         }
+
         $this->fs->mkdir($this->tempDir . \DIRECTORY_SEPARATOR . 'empty_dir');
         $this->fs->touch($this->tempDir . \DIRECTORY_SEPARATOR . 'useless_file');
     }

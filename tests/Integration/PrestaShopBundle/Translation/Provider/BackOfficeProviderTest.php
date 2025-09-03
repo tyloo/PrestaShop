@@ -57,7 +57,7 @@ class BackOfficeProviderTest extends TestCase
      * The provider should retrieve all translations from files that
      * look like `AdminSomething` or `ModulesSomethingAdmin`
      */
-    public function testItExtractsCatalogueFromXliffFiles()
+    public function testItExtractsCatalogueFromXliffFiles(): void
     {
         // The xliff file contains 38 keys
         $catalogue = $this->provider->getMessageCatalogue();

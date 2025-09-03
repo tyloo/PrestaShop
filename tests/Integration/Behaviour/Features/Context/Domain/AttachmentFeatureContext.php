@@ -102,6 +102,7 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
                     break;
                 }
             }
+
             if ($matchingAttachment === null) {
                 throw new RuntimeException(\sprintf('Could not find expected attachment %s', $expectedAttachment['attachment_id']));
             }
@@ -111,6 +112,7 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
                 Assert::assertTrue(isset($attachmentNames[$langId]));
                 Assert::assertEquals($name, $attachmentNames[$langId]);
             }
+
             $attachmentDescriptions = $matchingAttachment->getLocalizedDescriptions();
             foreach ($expectedAttachment['description'] as $langId => $description) {
                 Assert::assertTrue(isset($attachmentDescriptions[$langId]));
@@ -141,9 +143,10 @@ class AttachmentFeatureContext extends AbstractDomainFeatureContext
         $caughtException = null;
         try {
             $this->getCommandBus()->handle(new SearchAttachment($searchPhrase));
-        } catch (EmptySearchException $e) {
-            $caughtException = $e;
+        } catch (EmptySearchException $emptySearchException) {
+            $caughtException = $emptySearchException;
         }
+
         Assert::assertNotNull($caughtException, 'Expected to get no results for this search');
     }
 

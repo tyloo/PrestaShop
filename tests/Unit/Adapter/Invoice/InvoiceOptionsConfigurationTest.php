@@ -65,7 +65,7 @@ class InvoiceOptionsConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @var FormChoiceProviderInterface|MockObject
      */
-    private $invoiceModelChoiceProvider;
+    private MockObject $invoiceModelChoiceProvider;
 
     protected function setUp(): void
     {

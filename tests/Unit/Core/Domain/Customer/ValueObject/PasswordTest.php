@@ -36,7 +36,7 @@ class PasswordTest extends TestCase
     /**
      * @dataProvider getTooShortOrTooLongPasswords
      */
-    public function testItThrowsExceptionWhenCreatingTooShortOrTooLongPassword($password)
+    public function testItThrowsExceptionWhenCreatingTooShortOrTooLongPassword($password): void
     {
         $this->expectException(CustomerConstraintException::class);
         $this->expectExceptionCode(CustomerConstraintException::INVALID_PASSWORD);
@@ -47,7 +47,7 @@ class PasswordTest extends TestCase
     /**
      * @dataProvider getValidPasswords
      */
-    public function testItCreatesNewPassword($passwordValue)
+    public function testItCreatesNewPassword($passwordValue): void
     {
         $password = new Password($passwordValue);
 

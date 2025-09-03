@@ -43,9 +43,11 @@ class CommonConfigurationFeatureContext extends AbstractConfigurationFeatureCont
         if ($index === 'PS_PRICE_ROUND_MODE') {
             Tools::$round_mode = null;
         }
+
         if ($index === 'PS_ECOTAX_TAX_RULES_GROUP_ID') {
             $value = $value === 'none' ? 0 : (int) SharedStorage::getStorage()->get($value);
         }
+
         $this->setConfiguration($index, $value);
     }
 

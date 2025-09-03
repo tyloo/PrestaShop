@@ -35,7 +35,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 class LegacyFileLoaderTest extends TestCase
 {
-    public function testItInterpretsLegacyTranslationFileData()
+    public function testItInterpretsLegacyTranslationFileData(): void
     {
         $path = '/some/path/to/module/translations/';
         $locale = 'fr-FR';
@@ -43,7 +43,7 @@ class LegacyFileLoaderTest extends TestCase
             '<{psgdpr}prestashop>psgdpr_5966265f35dd87febf4d59029bc9ef66' => 'RGPD Officiel ',
             '<{psgdpr}prestashop>htmltemplatepsgdprmodule_9ad5a301cfed1c7f825506bf57205ab6' => 'DONNÉES PERSONNELLES',
             '<{psgdpr}prestashop>htmltemplatepsgdprmodule_ce114e4501d2f4e2dcea3e17b546f339' => 'This is a test',
-            '<{psgdpr}prestashop>personaldata.connections-tab_33e29c1d042c0923008f78b46af94984' => 'Demande d\'origine',
+            '<{psgdpr}prestashop>personaldata.connections-tab_33e29c1d042c0923008f78b46af94984' => "Demande d'origine",
             '<{somemodule}sometheme>somesource_57f32d7d0e6672cc2b60bc7a49f91453' => 'Page consultée',
         ];
 
@@ -56,7 +56,7 @@ class LegacyFileLoaderTest extends TestCase
                 'ce114e4501d2f4e2dcea3e17b546f339' => 'This is a test',
             ],
             'ModulesPsgdprPersonaldata.connections-tab' => [
-                '33e29c1d042c0923008f78b46af94984' => 'Demande d\'origine',
+                '33e29c1d042c0923008f78b46af94984' => "Demande d'origine",
             ],
             'ModulesSomemoduleSomesource' => [
                 '57f32d7d0e6672cc2b60bc7a49f91453' => 'Page consultée',
@@ -70,7 +70,7 @@ class LegacyFileLoaderTest extends TestCase
         $this->verifyCatalogue($catalogue, $expected);
     }
 
-    public function testItThrowsAnExceptionIfKeyIsInvalid()
+    public function testItThrowsAnExceptionIfKeyIsInvalid(): void
     {
         $this->expectException(InvalidLegacyTranslationKeyException::class);
 

@@ -39,7 +39,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
 {
-    public function testItDetectsIncorrectConstraintType()
+    public function testItDetectsIncorrectConstraintType(): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate([], new NotBlank());
@@ -48,7 +48,7 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getIncorrectTypes
      */
-    public function testItDetectsIncorrectValueType($incorrectType)
+    public function testItDetectsIncorrectValueType($incorrectType): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate($incorrectType, new InstalledApiResourceScope());
@@ -67,7 +67,7 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getCorrectValues
      */
-    public function testCorrectValues($correctValue)
+    public function testCorrectValues($correctValue): void
     {
         $this->validator->validate($correctValue, new InstalledApiResourceScope());
         $this->assertNoViolation();
@@ -84,7 +84,7 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getIncorrectValues
      */
-    public function testIncorrectValues($incorrectValue, array $invalidScopes)
+    public function testIncorrectValues($incorrectValue, array $invalidScopes): void
     {
         $this->validator->validate($incorrectValue, new InstalledApiResourceScope());
         $this->buildViolation((new InstalledApiResourceScope())->message)

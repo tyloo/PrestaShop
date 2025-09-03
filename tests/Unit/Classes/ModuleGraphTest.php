@@ -50,7 +50,7 @@ class ModuleGraphTest extends TestCase
         };
     }
 
-    public function testDrawWithoutInitialization()
+    public function testDrawWithoutInitialization(): void
     {
         $this->expectException(Error::class);
         $this->object->draw();
@@ -59,7 +59,7 @@ class ModuleGraphTest extends TestCase
     /**
      * @dataProvider getEscapeCellValues
      */
-    public function testEscapeCell($base, $expected)
+    public function testEscapeCell($base, $expected): void
     {
         $this->assertEquals(
             $this->object->escapeCell($base),

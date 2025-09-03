@@ -39,7 +39,7 @@ class CombinationCommandsBuilderTest extends AbstractCombinationCommandBuilderTe
     /**
      * @dataProvider getExpectedCommands
      */
-    public function testBuildCommands(array $formData, array $commandBuilders, array $expectedCommands)
+    public function testBuildCommands(array $formData, array $commandBuilders, array $expectedCommands): void
     {
         $builder = new CombinationCommandsBuilder($commandBuilders);
         $builtCommands = $builder->buildCommands($this->getCombinationId(), $formData, $this->getSingleShopConstraint());

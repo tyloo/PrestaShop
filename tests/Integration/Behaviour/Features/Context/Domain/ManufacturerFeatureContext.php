@@ -101,21 +101,27 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             $command->setName($data['name']);
         }
+
         if (isset($data['enabled'])) {
             $command->setEnabled(PrimitiveUtils::castStringBooleanIntoBoolean($data['enabled']));
         }
+
         if (isset($data['short_description'])) {
             $command->setLocalizedShortDescriptions($data['short_description']);
         }
+
         if (isset($data['description'])) {
             $command->setLocalizedDescriptions($data['description']);
         }
+
         if (isset($data['meta_title'])) {
             $command->setLocalizedMetaTitles($data['meta_title']);
         }
+
         if (isset($data['meta_description'])) {
             $command->setLocalizedMetaDescriptions($data['meta_description']);
         }
+
         if (isset($data['logo image'])) {
             $this->pretendImageUploaded(_PS_MANU_IMG_DIR_, $data['logo image'], $manufacturerId);
         }
@@ -160,18 +166,23 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             Assert::assertEquals($data['name'], $manufacturerForEditing->getName());
         }
+
         if (isset($data['enabled'])) {
             Assert::assertEquals(PrimitiveUtils::castStringBooleanIntoBoolean($data['enabled']), $manufacturerForEditing->isEnabled());
         }
+
         if (isset($data['short_description'])) {
             Assert::assertEquals($data['short_description'], $manufacturerForEditing->getLocalizedShortDescriptions());
         }
+
         if (isset($data['description'])) {
             Assert::assertEquals($data['description'], $manufacturerForEditing->getLocalizedDescriptions());
         }
+
         if (isset($data['meta_title'])) {
             Assert::assertEquals($data['meta_title'], $manufacturerForEditing->getLocalizedMetaTitles());
         }
+
         if (isset($data['meta_description'])) {
             Assert::assertEquals($data['meta_description'], $manufacturerForEditing->getLocalizedMetaDescriptions());
         }

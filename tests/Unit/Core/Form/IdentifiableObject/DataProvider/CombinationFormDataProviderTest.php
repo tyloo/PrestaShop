@@ -56,11 +56,17 @@ use RuntimeException;
 class CombinationFormDataProviderTest extends TestCase
 {
     private const DEFAULT_NAME = 'Combination products';
+
     private const IS_DEFAULT = false;
+
     private const COMBINATION_ID = 42;
+
     private const PRODUCT_ID = 69;
+
     private const DEFAULT_QUANTITY = 51;
+
     private const COVER_URL = 'http://localhost/cover.jpg';
+
     private const SHOP_ID = 1;
 
     public function testGetDefaultData(): void
@@ -420,7 +426,7 @@ class CombinationFormDataProviderTest extends TestCase
     /**
      * @return MockObject|CommandBusInterface
      */
-    private function createQueryBusMock(array $combinationData)
+    private function createQueryBusMock(array $combinationData): MockObject
     {
         $queryBusMock = $this->createMock(CommandBusInterface::class);
 
@@ -568,6 +574,7 @@ class CombinationFormDataProviderTest extends TestCase
                         $historyData['delta_quantity']
                     );
                 }
+
                 if ($historyData['type'] === StockMovement::ORDERS_TYPE) {
                     return StockMovement::createOrdersMovement(
                         $historyData['from_date'],
@@ -579,6 +586,7 @@ class CombinationFormDataProviderTest extends TestCase
                         $historyData['delta_quantity']
                     );
                 }
+
                 throw new RuntimeException(\sprintf('Unsupported stock movement event type "%s"', $historyData['type']));
             },
             $combinationData['stock_movements'] ?? []

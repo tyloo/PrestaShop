@@ -187,8 +187,10 @@ class HelperModule
                     copy($src . '/' . $file, $dst . '/' . $file);
                 }
             }
+
             $file = readdir($dirp);
         }
+
         closedir($dirp);
     }
 
@@ -209,8 +211,10 @@ class HelperModule
                     unlink($dir . '/' . $file);
                 }
             }
+
             $file = readdir($dirp);
         }
+
         closedir($dirp);
         rmdir($dir);
     }

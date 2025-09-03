@@ -74,6 +74,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
         foreach ($this->addedCurrencies as $currency) {
             $currency->delete();
         }
+
         $this->addedCurrencies = [];
         $this->currencies = [];
     }
@@ -102,6 +103,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
             $currency->conversion_rate = $changeRate;
             $currency->save();
         }
+
         $this->currencies[$currencyName] = $currency;
         SharedStorage::getStorage()->set($currencyName, (int) $currency->id);
     }
@@ -132,6 +134,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
         if ($this->getCurrentCart() !== null) {
             $this->getCurrentCart()->id_currency = $this->currencies[$currencyName]->id;
         }
+
         Context::getContext()->currency = $this->currencies[$currencyName];
     }
 
@@ -148,6 +151,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
         } else {
             $patterns = [$languageId => $pattern];
         }
+
         $currency->setLocalizedPatterns($patterns);
 
         if (! $currency->save(true, true)) {
@@ -168,7 +172,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
         $query = new DbQuery();
         $query->select('COUNT(c.id_currency)');
         $query->from('currency', 'c');
-        $query->where('iso_code = \'' . pSQL($currencyIsoCode) . '\'');
+        $query->where("iso_code = '" . pSQL($currencyIsoCode) . "'");
 
         $databaseCount = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query->build());
 
@@ -263,7 +267,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
         $query->select('c.id_currency');
         $query->from('currency', 'c');
         $query->where('deleted = 1');
-        $query->where('iso_code = \'' . pSQL($isoCode) . '\'');
+        $query->where("iso_code = '" . pSQL($isoCode) . "'");
 
         $currencyId = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query->build());
 
@@ -292,7 +296,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
         $query->select('c.id_currency');
         $query->from('currency', 'c');
         $query->where('active = 0');
-        $query->where('iso_code = \'' . pSQL($isoCode) . '\'');
+        $query->where("iso_code = '" . pSQL($isoCode) . "'");
 
         $currencyId = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query->build());
 

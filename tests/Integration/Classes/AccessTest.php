@@ -70,7 +70,10 @@ class AccessTest extends TestCase
             $tab->delete();
         }
 
-        $this->classNameTab = $this->routeNameTab = $this->classNameTabChild = $this->routeNameTabChild = null;
+        $this->classNameTab = null;
+        $this->routeNameTab = null;
+        $this->classNameTabChild = null;
+        $this->routeNameTabChild = null;
     }
 
     public function testFindSlugByIdTab(): void
@@ -156,6 +159,7 @@ class AccessTest extends TestCase
         foreach (Language::getLanguages(true) as $lang) {
             $this->classNameTab->name[$lang['id_lang']] = 'Class name tab';
         }
+
         $this->classNameTab->id_parent = (int) Tab::getIdFromClassName('AdminParentThemes');
         $this->classNameTab->module = 'module_test_tab';
 
@@ -180,6 +184,7 @@ class AccessTest extends TestCase
         foreach (Language::getLanguages(true) as $lang) {
             $this->classNameTabChild->name[$lang['id_lang']] = 'Class name tab child';
         }
+
         $this->classNameTabChild->id_parent = $this->classNameTab->id;
         $this->classNameTabChild->module = 'module_test_tab';
 
@@ -189,6 +194,7 @@ class AccessTest extends TestCase
         foreach (Language::getLanguages(true) as $lang) {
             $this->routeNameTabChild->name[$lang['id_lang']] = 'Route name tab child';
         }
+
         $this->routeNameTabChild->id_parent = $this->routeNameTab->id;
 
         // Add in DB

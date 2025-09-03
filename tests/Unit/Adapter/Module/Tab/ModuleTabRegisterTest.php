@@ -56,7 +56,7 @@ class ModuleTabRegisterTest extends TestCase
     /**
      * @var ModuleTabRegister
      */
-    protected $tabRegister;
+    protected \PHPUnit\Framework\MockObject\MockObject $tabRegister;
 
     protected function setUp(): void
     {
@@ -208,6 +208,7 @@ class ModuleTabRegisterTest extends TestCase
             if (\array_key_exists('exception', $tab)) {
                 continue;
             }
+
             $data = new ParameterBag($tab);
             $this->assertTrue($this->invokeMethod($this->tabRegister, 'checkIsValid', [$moduleName, $data]));
         }
@@ -224,6 +225,7 @@ class ModuleTabRegisterTest extends TestCase
                 $this->assertTrue(! \array_key_exists('exception', $tab));
                 continue;
             }
+
             $data = new ParameterBag($tab);
 
             try {
@@ -233,6 +235,7 @@ class ModuleTabRegisterTest extends TestCase
 
                 continue;
             }
+
             $this->fail('Expected Exception "' . $tab['exception'] . '" has not been raised.');
         }
     }
@@ -260,6 +263,7 @@ class ModuleTabRegisterTest extends TestCase
                     continue 2;
                 }
             }
+
             $this->fail('ModuleAdminController ' . $moduleAdminController . ' is expected but not found in the list to register!');
         }
     }

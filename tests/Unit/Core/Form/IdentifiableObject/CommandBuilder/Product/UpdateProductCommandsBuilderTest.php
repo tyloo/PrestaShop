@@ -49,7 +49,7 @@ class UpdateProductCommandsBuilderTest extends AbstractProductCommandBuilderTest
      * @dataProvider getExpectedCommandsMultiShop
      * @dataProvider getExpectedCommandsForCombinationsTypeProduct
      */
-    public function testBuildCommands(array $formData, array $expectedCommands)
+    public function testBuildCommands(array $formData, array $expectedCommands): void
     {
         $builder = new UpdateProductCommandsBuilder(self::MODIFY_ALL_SHOPS_PREFIX);
         $builtCommands = $builder->buildCommands($this->getProductId(), $formData, $this->getSingleShopConstraint());

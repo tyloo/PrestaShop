@@ -52,12 +52,12 @@ class CurrencyDatabaseTest extends TestCase
      *
      * @var Currency
      */
-    protected $fakeFrEuro;
+    protected MockObject $fakeFrEuro;
 
     /**
      * @var CurrencyDataProvider|MockObject
      */
-    protected $fakeDataProvider;
+    protected MockObject $fakeDataProvider;
 
     protected function setUp(): void
     {

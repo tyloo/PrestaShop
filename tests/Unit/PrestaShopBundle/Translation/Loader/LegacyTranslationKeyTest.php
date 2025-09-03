@@ -41,7 +41,7 @@ class LegacyTranslationKeyTest extends TestCase
      *
      * @dataProvider provideTestCases
      */
-    public function testItParsesKeys($key, $expectedModule, $expectedTheme, $expectedSource, $expectedHash)
+    public function testItParsesKeys($key, $expectedModule, $expectedTheme, $expectedSource, $expectedHash): void
     {
         $parsed = LegacyTranslationKey::buildFromString($key);
 

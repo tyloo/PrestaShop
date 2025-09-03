@@ -44,6 +44,7 @@ class EntityManagerTest extends TestCase
      * @var Container
      */
     private $container;
+
     private $entityManager;
 
     protected function setUp(): void

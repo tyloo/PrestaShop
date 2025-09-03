@@ -40,22 +40,22 @@ class ServerRequirementsCheckerTest extends TestCase
     /**
      * @var TranslatorInterface
      */
-    private $mockedTranslator;
+    private MockObject $mockedTranslator;
 
     /**
      * @var Configuration|MockObject
      */
-    private $mockedConfiguration;
+    private MockObject $mockedConfiguration;
 
     /**
      * @var HostingInformation
      */
-    private $mockedHostingInformation;
+    private MockObject $mockedHostingInformation;
 
     /**
      * @var PhpExtensionCheckerInterface
      */
-    private $mockedPhpExtensionChecker;
+    private MockObject $mockedPhpExtensionChecker;
 
     protected function setUp(): void
     {
@@ -71,7 +71,7 @@ class ServerRequirementsCheckerTest extends TestCase
         $this->mockedPhpExtensionChecker = $this->createMock(PhpExtensionCheckerInterface::class);
     }
 
-    public function testNoErrorsAreReturnedWhenSslIsEnabled()
+    public function testNoErrorsAreReturnedWhenSslIsEnabled(): void
     {
         $this->mockedConfiguration
             ->method('getBoolean')
@@ -82,7 +82,7 @@ class ServerRequirementsCheckerTest extends TestCase
         $this->assertNotContains('It is preferable to use SSL (https:) for webservice calls, as it avoids the "man in the middle" type security issues.', $errors);
     }
 
-    public function testThatErrorIsReturnedWhenSslIsNotEnabled()
+    public function testThatErrorIsReturnedWhenSslIsNotEnabled(): void
     {
         $this->mockedConfiguration
             ->method('getBoolean')

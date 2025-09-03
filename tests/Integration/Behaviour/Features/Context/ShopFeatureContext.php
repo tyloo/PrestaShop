@@ -185,6 +185,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
         if (! $shop->add()) {
             throw new RuntimeException(\sprintf('Could not create shop: %s', Db::getInstance()->getMsgError()));
         }
+
         $shop->setTheme();
 
         SharedStorage::getStorage()->set($reference, (int) $shop->id);
@@ -234,6 +235,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
         if ($countShopGroup === $expectedCount) {
             return;
         }
+
         throw new RuntimeException(\sprintf('Invalid number of shop groups, expected %s but got %s instead', $expectedCount, $countShopGroup));
     }
 
@@ -251,6 +253,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
         if (\count($shops) === $expectedCount) {
             return;
         }
+
         throw new RuntimeException(\sprintf('Invalid number of shop groups, expected %s but got %s instead', $expectedCount, \count($shops)));
     }
 
@@ -277,8 +280,8 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
         $shopUrl->main = true;
         $shopUrl->domain = 'localhost';
         $shopUrl->domain_ssl = 'localhost';
-        $shopUrl->physical_uri = "/prestatest-$shopReference/";
-        $shopUrl->virtual_uri = "/prestatest-$shopReference/";
+        $shopUrl->physical_uri = \sprintf('/prestatest-%s/', $shopReference);
+        $shopUrl->virtual_uri = \sprintf('/prestatest-%s/', $shopReference);
         if (! $shopUrl->add()) {
             throw new RuntimeException(\sprintf('Could not create shop url: %s', Db::getInstance()->getMsgError()));
         }
@@ -332,7 +335,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
                             $currentExpectedShop->getGroupName(),
                             $currentFoundShop->getGroupName(),
                             \sprintf(
-                                'Expected and found shops\'s groups don\'t match (%s and %s)',
+                                "Expected and found shops's groups don't match (%s and %s)",
                                 $currentExpectedShop->getGroupName(),
                                 $currentFoundShop->getGroupName()
                             )
@@ -341,7 +344,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
                             $currentExpectedShop->getGroupColor(),
                             $currentFoundShop->getGroupColor(),
                             \sprintf(
-                                'Expected and found shop groups\'s colors don\'t match (%s and %s)',
+                                "Expected and found shop groups's colors don't match (%s and %s)",
                                 $currentExpectedShop->getGroupColor(),
                                 $currentFoundShop->getGroupColor()
                             )
@@ -352,7 +355,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
                         $currentExpectedShop->getColor(),
                         $currentFoundShop->getColor(),
                         \sprintf(
-                            'Expected and found shops\'s colors don\'t match (%s and %s)',
+                            "Expected and found shops's colors don't match (%s and %s)",
                             $currentExpectedShop->getColor(),
                             $currentFoundShop->getColor()
                         )
@@ -365,6 +368,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
                 if ($currentExpectedShop instanceof FoundShop) {
                     throw new RuntimeException(\sprintf('Expected shop with name %s in shop group %s was not found', $currentExpectedShop->getName(), $currentExpectedShop->getGroupName()));
                 }
+
                 throw new RuntimeException(\sprintf('Expected shop group with name %s', $currentExpectedShop->getName()));
             }
         }
@@ -406,6 +410,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
         } else {
             $multistoreFeature->disable();
         }
+
         Shop::resetStaticCache();
     }
 }

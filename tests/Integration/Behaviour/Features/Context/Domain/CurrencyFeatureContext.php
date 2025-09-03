@@ -144,8 +144,8 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
             $currencyId = $this->getCommandBus()->handle($command);
 
             SharedStorage::getStorage()->set($reference, $currencyId->getValue());
-        } catch (CoreException $e) {
-            $this->setLastException($e);
+        } catch (CoreException $coreException) {
+            $this->setLastException($coreException);
         }
     }
 
@@ -200,8 +200,8 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
             $this->getCommandBus()->handle($command);
 
             SharedStorage::getStorage()->set($reference, (int) $currency->id);
-        } catch (CoreException $e) {
-            $this->setLastException($e);
+        } catch (CoreException $coreException) {
+            $this->setLastException($coreException);
         }
     }
 
@@ -214,8 +214,8 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new ToggleCurrencyStatusCommand((int) $currency->id));
-        } catch (CannotDisableDefaultCurrencyException $e) {
-            $this->setLastException($e);
+        } catch (CannotDisableDefaultCurrencyException $cannotDisableDefaultCurrencyException) {
+            $this->setLastException($cannotDisableDefaultCurrencyException);
         }
     }
 
@@ -228,8 +228,8 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new DeleteCurrencyCommand((int) $currency->id));
-        } catch (CannotDeleteDefaultCurrencyException $e) {
-            $this->setLastException($e);
+        } catch (CannotDeleteDefaultCurrencyException $cannotDeleteDefaultCurrencyException) {
+            $this->setLastException($cannotDeleteDefaultCurrencyException);
         }
     }
 
@@ -252,8 +252,8 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     {
         try {
             $this->currencyData = $this->getCommandBus()->handle(new GetReferenceCurrency($currencyIsoCode));
-        } catch (CurrencyException $e) {
-            $this->setLastException($e);
+        } catch (CurrencyException $currencyException) {
+            $this->setLastException($currencyException);
         }
     }
 
@@ -271,9 +271,6 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
             'patterns' => $this->currencyData->getPatterns(),
         ];
         $expectedData = $this->localizeByRows($node);
-        $expectedData['names'] = $expectedData['names'];
-        $expectedData['symbols'] = $expectedData['symbols'];
-        $expectedData['patterns'] = $expectedData['patterns'];
 
         foreach ($expectedData as $key => $expectedValue) {
             if ($expectedValue === 'null') {

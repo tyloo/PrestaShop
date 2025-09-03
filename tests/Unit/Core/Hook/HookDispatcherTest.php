@@ -43,7 +43,7 @@ class HookDispatcherTest extends TestCase
     /**
      * @var HookDispatcherAdapter|MockObject
      */
-    private $hookDispatcherAdapter;
+    private MockObject $hookDispatcherAdapter;
 
     /**
      * @var HookDispatcher
@@ -56,7 +56,7 @@ class HookDispatcherTest extends TestCase
         $this->hookDispatcher = new HookDispatcher($this->hookDispatcherAdapter);
     }
 
-    public function testDispatchHook()
+    public function testDispatchHook(): void
     {
         // stub hook behavior
         $hook = $this->createHook();
@@ -70,7 +70,7 @@ class HookDispatcherTest extends TestCase
         $this->hookDispatcher->dispatchHook($hook);
     }
 
-    public function testDispatchWithParameters()
+    public function testDispatchWithParameters(): void
     {
         // stub adapter expectations
         $this->hookDispatcherAdapter
@@ -81,7 +81,7 @@ class HookDispatcherTest extends TestCase
         $this->hookDispatcher->dispatchWithParameters('fooHook', ['bar' => 'Bar']);
     }
 
-    public function testDispatchRendering()
+    public function testDispatchRendering(): void
     {
         $hook = new Hook('hookName', []);
 
@@ -105,7 +105,7 @@ class HookDispatcherTest extends TestCase
         $this->assertEquals([], $renderedHook->getContent());
     }
 
-    public function testDispatchRenderingWithParameters()
+    public function testDispatchRenderingWithParameters(): void
     {
         $hook = new Hook('Baz', ['hello' => 'World']);
 

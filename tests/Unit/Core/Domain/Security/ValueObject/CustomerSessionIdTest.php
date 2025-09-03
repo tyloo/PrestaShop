@@ -38,7 +38,7 @@ class CustomerSessionIdTest extends TestCase
     /**
      * @dataProvider createsSessionIdWithValidValuesData
      */
-    public function testItCreatesSessionIdWithValidValues($idValue)
+    public function testItCreatesSessionIdWithValidValues($idValue): void
     {
         $sessionId = new CustomerSessionId($idValue);
 
@@ -56,7 +56,7 @@ class CustomerSessionIdTest extends TestCase
     /**
      * @dataProvider exceptionThrownWithInvalidValuesData
      */
-    public function testItExceptionThrownWithInvalidValues($sessionId)
+    public function testItExceptionThrownWithInvalidValues($sessionId): void
     {
         $this->expectException(SessionException::class);
         new CustomerSessionId($sessionId);

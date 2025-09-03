@@ -20,7 +20,8 @@ class ComposerAutoloaderInit0947f7d635b230626d882d70fd7789ed
         }
 
         spl_autoload_register(['ComposerAutoloaderInit0947f7d635b230626d882d70fd7789ed', 'loadClassLoader'], true, true);
-        self::$loader = $loader = new \Composer\Autoload\ClassLoader();
+        self::$loader = new \Composer\Autoload\ClassLoader();
+        $loader = self::$loader;
         spl_autoload_unregister(['ComposerAutoloaderInit0947f7d635b230626d882d70fd7789ed', 'loadClassLoader']);
 
         $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION') && (!function_exists('zend_loader_file_encoded') || !zend_loader_file_encoded());

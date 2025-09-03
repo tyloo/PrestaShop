@@ -47,14 +47,17 @@ class PositionsControllerTest extends WebTestCase
      * @var int
      */
     protected $moduleId;
+
     /**
      * @var int
      */
     protected $hookId;
+
     /**
      * @var KernelBrowser
      */
     protected $client;
+
     /**
      * @var Router
      */

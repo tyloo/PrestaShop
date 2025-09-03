@@ -78,15 +78,19 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
         if (! empty($data['name'])) {
             $command->setLocalizedNames($data['name']);
         }
+
         if (! empty($data['reduction'])) {
             $command->setReductionPercent(new DecimalNumber($data['reduction']));
         }
+
         if (! empty($data['displayPriceTaxExcluded'])) {
             $command->setDisplayPriceTaxExcluded(PrimitiveUtils::castStringBooleanIntoBoolean($data['displayPriceTaxExcluded']));
         }
+
         if (! empty($data['showPrice'])) {
             $command->setShowPrice(PrimitiveUtils::castStringBooleanIntoBoolean($data['showPrice']));
         }
+
         if (! empty($data['shopIds'])) {
             $command->setShopIds($this->referencesToIds($data['shopIds']));
         }
@@ -127,9 +131,10 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
         $caughtException = null;
         try {
             $this->getCustomerGroupForEditing($customerGroupReference);
-        } catch (GroupNotFoundException $e) {
-            $caughtException = $e;
+        } catch (GroupNotFoundException $groupNotFoundException) {
+            $caughtException = $groupNotFoundException;
         }
+
         Assert::assertNotNull($caughtException, \sprintf('Customer group %s should not exist', $customerGroupReference));
     }
 

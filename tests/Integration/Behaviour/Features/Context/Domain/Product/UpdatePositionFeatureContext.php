@@ -55,11 +55,12 @@ class UpdatePositionFeatureContext extends AbstractProductFeatureContext
                 'newPosition' => $datum['new_position'],
             ];
         }
+
         try {
             $command = new UpdateProductsPositionsCommand($positions, $this->getSharedStorage()->get($categoryReference));
             $this->getCommandBus()->handle($command);
-        } catch (PositionException $e) {
-            $this->setLastException($e);
+        } catch (PositionException $positionException) {
+            $this->setLastException($positionException);
         }
     }
 

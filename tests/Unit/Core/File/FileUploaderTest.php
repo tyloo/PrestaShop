@@ -80,28 +80,28 @@ class FileUploaderTest extends TestCase
         }
     }
 
-    public function testUploadWithInvalidType()
+    public function testUploadWithInvalidType(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
         $this->object->upload(10);
     }
 
-    public function testUploadWithInvalidFileSizeAndBinaryContext()
+    public function testUploadWithInvalidFileSizeAndBinaryContext(): void
     {
         $this->expectException(Exception\MaximumSizeExceededException::class);
 
         $this->object->upload('123456');
     }
 
-    public function testUploadWithInvalidFileSizeAndHttpContext()
+    public function testUploadWithInvalidFileSizeAndHttpContext(): void
     {
         $this->expectException(Exception\InvalidFileException::class);
 
         $this->object->upload([]);
     }
 
-    public function testUploadWithInvalidFilePutContents()
+    public function testUploadWithInvalidFilePutContents(): void
     {
         $object = new FileUploader(
             '/path/to/unknow/directory',
@@ -112,7 +112,7 @@ class FileUploaderTest extends TestCase
         $object->upload('test');
     }
 
-    public function testUploadInBinaryContext()
+    public function testUploadInBinaryContext(): void
     {
         $result = $this->object->upload('file');
         $this->assertIsArray($result);
@@ -122,7 +122,7 @@ class FileUploaderTest extends TestCase
         $this->assertEquals('text/plain', $result['mime_type']);
     }
 
-    public function testUploadInHttpWithInvalidTmpName()
+    public function testUploadInHttpWithInvalidTmpName(): void
     {
         $this->expectException(Exception\InvalidFileException::class);
 
@@ -133,7 +133,7 @@ class FileUploaderTest extends TestCase
         );
     }
 
-    public function testUploadInHttpWithInvalidUploadedFile()
+    public function testUploadInHttpWithInvalidUploadedFile(): void
     {
         $this->expectException(Exception\FileUploadException::class);
 
@@ -147,7 +147,7 @@ class FileUploaderTest extends TestCase
         );
     }
 
-    public function testUploadInHttpWithInvalidMoveUploadedFile()
+    public function testUploadInHttpWithInvalidMoveUploadedFile(): void
     {
         $this->expectException(Exception\FileUploadException::class);
 
@@ -161,7 +161,7 @@ class FileUploaderTest extends TestCase
         );
     }
 
-    public function testUploadInHttpWithInvalidType()
+    public function testUploadInHttpWithInvalidType(): void
     {
         $this->expectException(Exception\InvalidFileException::class);
 
@@ -173,7 +173,7 @@ class FileUploaderTest extends TestCase
         );
     }
 
-    public function testUploadInHttpWithInvalidName()
+    public function testUploadInHttpWithInvalidName(): void
     {
         $this->expectException(Exception\InvalidFileException::class);
 
@@ -186,7 +186,7 @@ class FileUploaderTest extends TestCase
         );
     }
 
-    public function testUploadInHttpContext()
+    public function testUploadInHttpContext(): void
     {
         $result = $this->object->upload(
             [

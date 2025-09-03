@@ -127,8 +127,8 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             }
 
             $this->getSharedStorage()->set($reference, $carrierId->getValue());
-        } catch (Exception $e) {
-            $this->setLastException($e);
+        } catch (Exception $exception) {
+            $this->setLastException($exception);
         }
     }
 
@@ -141,8 +141,8 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             $initialCarrierId = $this->getSharedStorage()->get($reference);
             $carrierId = $this->editCarrier($reference, null, $node);
             Assert::assertEquals($initialCarrierId, $carrierId->getValue(), 'Carrier ID was expected the remain the same');
-        } catch (CarrierConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CarrierConstraintException $carrierConstraintException) {
+            $this->setLastException($carrierConstraintException);
         }
     }
 
@@ -155,8 +155,8 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             $initialCarrierId = $this->getSharedStorage()->get($reference);
             $carrierId = $this->editCarrier($reference, $newReference, $node);
             Assert::assertNotEquals($initialCarrierId, $carrierId->getValue(), 'Carrier ID was expected to be updated');
-        } catch (CarrierConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CarrierConstraintException $carrierConstraintException) {
+            $this->setLastException($carrierConstraintException);
         }
     }
 
@@ -173,8 +173,8 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getSharedStorage()->get($reference);
             $this->editCarrier($reference, $reference, $node);
-        } catch (CarrierConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CarrierConstraintException $carrierConstraintException) {
+            $this->setLastException($carrierConstraintException);
         }
     }
 
@@ -186,8 +186,8 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         try {
             $carrierId = $this->editCarrier($reference, $newReference, $node);
             Assert::assertEquals($this->getSharedStorage()->get($reference), $carrierId->getValue());
-        } catch (CarrierConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CarrierConstraintException $carrierConstraintException) {
+            $this->setLastException($carrierConstraintException);
         }
     }
 
@@ -201,33 +201,43 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         if (isset($properties['name'])) {
             $command->setName($properties['name']);
         }
+
         if (isset($properties['delay'])) {
             $command->setLocalizedDelay($properties['delay']);
         }
+
         if (isset($properties['grade'])) {
             $command->setGrade((int) $properties['grade']);
         }
+
         if (isset($properties['trackingUrl'])) {
             $command->setTrackingUrl($properties['trackingUrl']);
         }
+
         if (isset($properties['position'])) {
             $command->setPosition((int) $properties['position']);
         }
+
         if (isset($properties['active'])) {
             $command->setActive(filter_var($properties['active'], \FILTER_VALIDATE_BOOLEAN));
         }
+
         if (isset($properties['max_width'])) {
             $command->setMaxWidth((int) $properties['max_width']);
         }
+
         if (isset($properties['max_height'])) {
             $command->setMaxHeight((int) $properties['max_height']);
         }
+
         if (isset($properties['max_depth'])) {
             $command->setMaxDepth((int) $properties['max_depth']);
         }
+
         if (isset($properties['max_weight'])) {
             $command->setMaxWeight((int) $properties['max_weight']);
         }
+
         if (isset($properties['group_access'])) {
             $command->setAssociatedGroupIds($this->referencesToIds($properties['group_access']));
         }
@@ -245,6 +255,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             if ($properties['logoPathName'] !== '') {
                 $tmpLogo = DummyFileUploader::upload($properties['logoPathName']);
             }
+
             $command->setLogoPathName($tmpLogo ?? '');
         }
 
@@ -270,6 +281,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         if (isset($tmpLogo)) {
             $this->fakeUploadLogo($tmpLogo, $newCarrierId->getValue());
         }
+
         if ($newReference) {
             $this->getSharedStorage()->set($newReference, $newCarrierId->getValue());
         }
@@ -292,36 +304,46 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             Assert::assertEquals($data['name'], $carrier->getName());
         }
+
         if (isset($data['grade'])) {
             Assert::assertEquals($data['grade'], $carrier->getGrade());
         }
+
         if (isset($data['trackingUrl'])) {
             Assert::assertEquals($data['trackingUrl'], $carrier->getTrackingUrl());
         }
+
         if (isset($data['position'])) {
             Assert::assertEquals($data['position'], $carrier->getPosition());
         }
+
         if (isset($data['active'])) {
             Assert::assertEquals(
                 filter_var($data['active'], \FILTER_VALIDATE_BOOLEAN),
                 $carrier->isActive()
             );
         }
+
         if (isset($data['delay'])) {
             Assert::assertEquals($data['delay'], $carrier->getLocalizedDelay());
         }
+
         if (isset($data['max_width'])) {
             Assert::assertEquals($data['max_width'], $carrier->getMaxWidth());
         }
+
         if (isset($data['max_height'])) {
             Assert::assertEquals($data['max_height'], $carrier->getMaxHeight());
         }
+
         if (isset($data['max_depth'])) {
             Assert::assertEquals($data['max_depth'], $carrier->getMaxDepth());
         }
+
         if (isset($data['max_weight'])) {
             Assert::assertEquals($data['max_weight'], $carrier->getMaxWeight());
         }
+
         if (isset($data['group_access'])) {
             Assert::assertEquals($this->referencesToIds($data['group_access']), $carrier->getAssociatedGroupIds());
         }
@@ -354,6 +376,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             } else {
                 $expectedId = TaxRulesGroupFeatureContext::getTaxRulesGroupByName($data['taxRuleGroup'])->id;
             }
+
             Assert::assertEquals($expectedId, $carrier->getIdTaxRuleGroup());
         }
 
@@ -439,7 +462,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             new GetAvailableCarriers($productIds)
         );
 
-        $actualAvailable = array_map(fn ($carrierSummary) => ['name' => $carrierSummary->getName()], $carriersResult->getAvailableCarriers());
+        $actualAvailable = array_map(fn ($carrierSummary): array => ['name' => $carrierSummary->getName()], $carriersResult->getAvailableCarriers());
 
         $actualFiltered = [];
 

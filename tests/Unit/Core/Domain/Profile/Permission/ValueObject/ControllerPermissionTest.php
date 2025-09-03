@@ -33,14 +33,14 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\Permission\ValueObject\ControllerP
 
 class ControllerPermissionTest extends TestCase
 {
-    public function testExceptionIsThrownPermissionIsNotSupported()
+    public function testExceptionIsThrownPermissionIsNotSupported(): void
     {
         $this->expectException(InvalidPermissionValueException::class);
 
         new ControllerPermission('This is not a good permission!');
     }
 
-    public function testPermissionIsSupported()
+    public function testPermissionIsSupported(): void
     {
         $permission = new ControllerPermission('view');
         $this->assertEquals('view', $permission->getValue());

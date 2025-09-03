@@ -60,8 +60,8 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
             /** @var ModuleInfos $moduleInfos */
             $moduleInfos = $this->getQueryBus()->handle(new GetModuleInfos($technicalName));
             $this->assertModuleInfosWithData($moduleInfos, $tableNode);
-        } catch (ModuleException $e) {
-            $this->setLastException($e);
+        } catch (ModuleException $moduleException) {
+            $this->setLastException($moduleException);
         }
     }
 
@@ -112,8 +112,8 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
                 $modules,
                 $action === 'enable'
             ));
-        } catch (ModuleException $e) {
-            $this->setLastException($e);
+        } catch (ModuleException $moduleException) {
+            $this->setLastException($moduleException);
         }
 
         // Clean the cache
@@ -130,8 +130,8 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
                 $technicalName,
                 $action === 'enable'
             ));
-        } catch (ModuleException $e) {
-            $this->setLastException($e);
+        } catch (ModuleException $moduleException) {
+            $this->setLastException($moduleException);
         }
 
         // Clean the cache
@@ -145,8 +145,8 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
     {
         try {
             $this->getCommandBus()->handle(new UninstallModuleCommand($module, $deleteFile === 'true'));
-        } catch (ModuleException $e) {
-            $this->setLastException($e);
+        } catch (ModuleException $moduleException) {
+            $this->setLastException($moduleException);
         }
 
         // Clean the cache
@@ -165,8 +165,8 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
             }
 
             $this->getCommandBus()->handle(new BulkUninstallModuleCommand($modules, $deleteFile === 'true'));
-        } catch (ModuleException $e) {
-            $this->setLastException($e);
+        } catch (ModuleException $moduleException) {
+            $this->setLastException($moduleException);
         }
 
         // Clean the cache
@@ -183,8 +183,8 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
                 $technicalName,
                 false
             ));
-        } catch (ModuleException $e) {
-            $this->setLastException($e);
+        } catch (ModuleException $moduleException) {
+            $this->setLastException($moduleException);
         }
 
         // Clean the cache
@@ -198,9 +198,10 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
     {
         try {
             $this->getCommandBus()->handle(new InstallModuleCommand($technicalName));
-        } catch (ModuleException $e) {
-            $this->setLastException($e);
+        } catch (ModuleException $moduleException) {
+            $this->setLastException($moduleException);
         }
+
         // Clean the cache
         Module::resetStaticCache();
     }
@@ -218,8 +219,8 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
         try {
             $moduleInfos = $this->getCommandBus()->handle(new UploadModuleCommand($source));
             $this->assertModuleInfosWithData($moduleInfos, $tableNode);
-        } catch (ModuleException $e) {
-            $this->setLastException($e);
+        } catch (ModuleException $moduleException) {
+            $this->setLastException($moduleException);
         }
 
         // Clean the cache
@@ -233,9 +234,10 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
     {
         try {
             $this->getCommandBus()->handle(new UpgradeModuleCommand($technicalName));
-        } catch (ModuleException $e) {
-            $this->setLastException($e);
+        } catch (ModuleException $moduleException) {
+            $this->setLastException($moduleException);
         }
+
         // Clean the cache
         Module::resetStaticCache();
     }
@@ -246,15 +248,19 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['technical_name'])) {
             Assert::assertEquals($data['technical_name'], $moduleInfos->getTechnicalName(), 'Invalid technical name');
         }
+
         if (isset($data['installed_version'])) {
             Assert::assertEquals($data['installed_version'] ?: null, $moduleInfos->getInstalledVersion(), 'Invalid installed version');
         }
+
         if (isset($data['module_version'])) {
             Assert::assertEquals($data['module_version'], $moduleInfos->getModuleVersion(), 'Invalid module_version version');
         }
+
         if (isset($data['enabled'])) {
             Assert::assertEquals(PrimitiveUtils::castStringBooleanIntoBoolean($data['enabled']), $moduleInfos->isEnabled(), 'Invalid enabled value');
         }
+
         if (isset($data['installed'])) {
             Assert::assertEquals(PrimitiveUtils::castStringBooleanIntoBoolean($data['installed']), $moduleInfos->isInstalled(), 'Invalid installed value');
         }

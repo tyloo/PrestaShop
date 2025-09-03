@@ -56,8 +56,8 @@ class FeatureFlagFeatureContext extends AbstractPrestaShopFeatureContext
 
             $doctrineEntityManager->persist($newFeatureFlag);
             $doctrineEntityManager->flush();
-        } catch (Exception $e) {
-            $this->latestResult = $e;
+        } catch (Exception $exception) {
+            $this->latestResult = $exception;
         }
     }
 
@@ -94,6 +94,7 @@ class FeatureFlagFeatureContext extends AbstractPrestaShopFeatureContext
         if ($state === 'enabled' && ! $featureFlag->isEnabled()) {
             throw new RuntimeException(\sprintf('Feature flag %s is disabled although it was expected to be enabled', $name));
         }
+
         if ($state === 'disabled' && $featureFlag->isEnabled()) {
             throw new RuntimeException(\sprintf('Feature flag %s is enabled although it was expected to be disabled', $name));
         }

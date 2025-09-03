@@ -43,7 +43,7 @@ class ApiSecurityTest extends ApiTestCase
         ApiClientResetter::resetApiClient();
     }
 
-    public function testAuthenticationWithoutScopeNeededSuccess()
+    public function testAuthenticationWithoutScopeNeededSuccess(): void
     {
         self::createApiClient();
         $bearerToken = $this->getBearerToken();
@@ -57,7 +57,7 @@ class ApiSecurityTest extends ApiTestCase
         $this->assertNotEmpty($response->getContent());
     }
 
-    public function testAuthenticationWithoutTokenFailed()
+    public function testAuthenticationWithoutTokenFailed(): void
     {
         self::createApiClient();
         $response = static::createClient()->request('GET', '/test/unscoped/product/1');
@@ -66,7 +66,7 @@ class ApiSecurityTest extends ApiTestCase
         $this->assertEquals('"No Authorization header provided"', $response->getContent(false));
     }
 
-    public function testAuthenticationWithoutBearerFailed()
+    public function testAuthenticationWithoutBearerFailed(): void
     {
         self::createApiClient();
         $bearerToken = $this->getBearerToken();
@@ -80,7 +80,7 @@ class ApiSecurityTest extends ApiTestCase
         $this->assertEquals('"Bearer token missing"', $response->getContent(false));
     }
 
-    public function testAuthenticationWithInvalidCredential()
+    public function testAuthenticationWithInvalidCredential(): void
     {
         self::createApiClient();
         $response = static::createClient()->request('GET', '/test/unscoped/product/1', [
@@ -94,7 +94,7 @@ class ApiSecurityTest extends ApiTestCase
         $this->assertEquals('"No authorization server matching your credentials"', $response->getContent(false));
     }
 
-    public function testAuthenticationWithLowerCaseBearerFailed()
+    public function testAuthenticationWithLowerCaseBearerFailed(): void
     {
         self::createApiClient();
         $bearerToken = $this->getBearerToken();
@@ -108,7 +108,7 @@ class ApiSecurityTest extends ApiTestCase
         $this->assertEquals('"Bearer token missing"', $response->getContent(false));
     }
 
-    public function testAuthenticationWithScopeSuccess()
+    public function testAuthenticationWithScopeSuccess(): void
     {
         self::createApiClient(['product_read']);
         $bearerToken = $this->getBearerToken(['product_read']);
@@ -120,7 +120,7 @@ class ApiSecurityTest extends ApiTestCase
         $this->assertNotEmpty($response->getContent());
     }
 
-    public function testAuthenticationWithoutScopeInJWTTokenFailed()
+    public function testAuthenticationWithoutScopeInJWTTokenFailed(): void
     {
         // API Client does have the scope associated
         self::createApiClient(['product_read']);

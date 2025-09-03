@@ -75,6 +75,7 @@ class TabTest extends TestCase
         foreach (Language::getLanguages(true) as $lang) {
             $classNameTab->name[$lang['id_lang']] = 'Class name tab';
         }
+
         $classNameTab->id_parent = (int) Tab::getIdFromClassName('AdminParentThemes');
         $classNameTab->module = 'module_test_tab';
         $classNameTab->add();
@@ -117,6 +118,7 @@ class TabTest extends TestCase
             foreach (Language::getLanguages(true) as $lang) {
                 $classNameTab->name[$lang['id_lang']] = 'Class name tab';
             }
+
             $classNameTab->id_parent = (int) Tab::getIdFromClassName('AdminParentThemes');
             $classNameTab->module = 'module_test_tab';
             $classNameTab->add();
@@ -150,6 +152,7 @@ class TabTest extends TestCase
         foreach (Language::getLanguages(true) as $lang) {
             $routeNameTab->name[$lang['id_lang']] = 'Route name tab';
         }
+
         $routeNameTab->id_parent = (int) Tab::getIdFromClassName('AdminParentThemes');
         $routeNameTab->module = 'module_test_tab';
         $routeNameTab->add();
@@ -197,6 +200,7 @@ class TabTest extends TestCase
             foreach (Language::getLanguages(true) as $lang) {
                 $routeNameTab->name[$lang['id_lang']] = 'Route name tab';
             }
+
             $routeNameTab->id_parent = (int) Tab::getIdFromClassName('AdminParentThemes');
             $routeNameTab->module = 'module_test_tab';
             $routeNameTab->add();

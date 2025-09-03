@@ -73,6 +73,7 @@ class RoutingCacheKeyGeneratorTest extends KernelTestCase
         if (is_dir($dirResources . '/Resources/modules_tests/demo')) {
             Tools::deleteDirectory($dirResources . '/Resources/modules_tests/demo');
         }
+
         $this->module->onUninstall();
         parent::tearDown();
     }

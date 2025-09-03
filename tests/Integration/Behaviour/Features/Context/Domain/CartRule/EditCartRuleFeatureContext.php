@@ -76,8 +76,8 @@ class EditCartRuleFeatureContext extends AbstractCartRuleFeatureContext
                 // resets cart rule id by the code in storage if it was edited
                 $this->getSharedStorage()->set($data['code'], $cartRuleId);
             }
-        } catch (CartRuleConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleConstraintException $cartRuleConstraintException) {
+            $this->setLastException($cartRuleConstraintException);
         }
     }
 
@@ -89,39 +89,50 @@ class EditCartRuleFeatureContext extends AbstractCartRuleFeatureContext
         if (isset($data['name'])) {
             $command->setLocalizedNames($data['name']);
         }
+
         if (isset($data['description'])) {
             $command->setDescription($data['description']);
         }
+
         if (isset($data['highlight'])) {
             $command->setHighlightInCart(PrimitiveUtils::castStringBooleanIntoBoolean($data['highlight']));
         }
+
         if (isset($data['allow_partial_use'])) {
             $command->setAllowPartialUse(PrimitiveUtils::castStringBooleanIntoBoolean($data['allow_partial_use']));
         }
+
         if (isset($data['active'])) {
             $command->setActive(PrimitiveUtils::castStringBooleanIntoBoolean($data['active']));
         }
+
         if (isset($data['code'])) {
             $command->setCode($data['code']);
         }
+
         if (isset($data['customer'])) {
             $command->setCustomerId(! empty($data['customer']) ? $this->getSharedStorage()->get($data['customer']) : 0);
         }
+
         if (isset($data['priority'])) {
             $command->setPriority((int) $data['priority']);
         }
+
         if (isset($data['valid_from'])) {
             $command->setValidityDateRange(
                 new DateTimeImmutable($data['valid_from']),
                 new DateTimeImmutable($data['valid_to'])
             );
         }
+
         if (isset($data['total_quantity'])) {
             $command->setTotalQuantity((int) $data['total_quantity']);
         }
+
         if (isset($data['quantity_per_user'])) {
             $command->setQuantityPerUser((int) $data['quantity_per_user']);
         }
+
         if (isset($data['minimum_amount'])) {
             $command->setMinimumAmount(
                 $data['minimum_amount'],

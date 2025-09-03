@@ -38,6 +38,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 class DefaultLanguageValidatorTest extends ConstraintValidatorTestCase
 {
     private const DEFAULT_LANG_ID = 1;
+
     private const DEFAULT_LANG_LOCALE = 'en-US';
 
     private LanguageContext $defaultLanguageContext;
@@ -58,7 +59,7 @@ class DefaultLanguageValidatorTest extends ConstraintValidatorTestCase
         parent::setUp();
     }
 
-    public function testItDetectsIncorrectConstraintType()
+    public function testItDetectsIncorrectConstraintType(): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate([], new NotBlank());
@@ -67,7 +68,7 @@ class DefaultLanguageValidatorTest extends ConstraintValidatorTestCase
     /**
      * @dataProvider getIncorrectTypes
      */
-    public function testItDetectsIncorrectValueType($incorrectType)
+    public function testItDetectsIncorrectValueType($incorrectType): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate($incorrectType, new DefaultLanguage());

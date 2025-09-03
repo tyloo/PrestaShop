@@ -43,7 +43,7 @@ class MultistoreUrlExtensionTest extends TestCase
     /**
      * @var MockObject|RequestStack
      */
-    private $requestStackMock;
+    private MockObject $requestStackMock;
 
     protected function setUp(): void
     {

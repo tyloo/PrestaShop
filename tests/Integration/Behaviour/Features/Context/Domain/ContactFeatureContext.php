@@ -39,7 +39,9 @@ use Tests\Integration\Behaviour\Features\Context\Util\PrimitiveUtils;
 
 class ContactFeatureContext extends AbstractDomainFeatureContext
 {
-    private const DEFAULT_LOCALE_ID = 1; // EN locale
+    private const DEFAULT_LOCALE_ID = 1;
+
+    // EN locale
     private const DUMMY_CONTACT_ID = 1;
 
     /**

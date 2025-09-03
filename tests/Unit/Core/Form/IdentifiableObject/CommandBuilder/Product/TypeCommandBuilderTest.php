@@ -38,7 +38,7 @@ class TypeCommandBuilderTest extends AbstractProductCommandBuilderTestCase
     /**
      * @dataProvider getExpectedCommands
      */
-    public function testBuildCommand(array $formData, array $expectedCommands)
+    public function testBuildCommand(array $formData, array $expectedCommands): void
     {
         $builder = new TypeCommandsBuilder();
         $builtCommands = $builder->buildCommands($this->getProductId(), $formData, $this->getSingleShopConstraint());

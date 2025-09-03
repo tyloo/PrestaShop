@@ -39,10 +39,8 @@ class LazyArrayImplementation extends AbstractLazyArray
 
     /**
      * @arrayAccess
-     *
-     * @return bool
      */
-    public function getPropertyOne()
+    public function getPropertyOne(): bool
     {
         $this->propertyOneWasCalled = true;
 

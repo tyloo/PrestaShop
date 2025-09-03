@@ -78,7 +78,7 @@ class DataTransfer
             if (method_exists($object, $setter)) {
                 $object->{$setter}($value);
             } elseif ($throwException) {
-                throw new Exception("No such setter : $setter");
+                throw new Exception('No such setter : ' . $setter);
             }
         }
 
@@ -99,7 +99,7 @@ class DataTransfer
             if (method_exists($object, $setter)) {
                 $object->{$setter}($value);
             } elseif ($throwException) {
-                throw new Exception("No such setter : $setter");
+                throw new Exception('No such setter : ' . $setter);
             }
         }
 

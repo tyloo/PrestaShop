@@ -50,6 +50,7 @@ use Symfony\Component\Routing\Router;
 class ResponseBuilderTest extends TestCase
 {
     private const ERROR_MESSAGE = 'An error occurred.';
+
     private const ERROR_LABEL = 'Field label';
 
     /**
@@ -193,7 +194,7 @@ class ResponseBuilderTest extends TestCase
         );
 
         $mockRouter = $this->createMock(Router::class);
-        $mockRouter->method('generate')->willReturnCallback(fn (string $name, array $parameters = []) => $name . '?' . http_build_query($parameters));
+        $mockRouter->method('generate')->willReturnCallback(fn (string $name, array $parameters = []): string => $name . '?' . http_build_query($parameters));
 
         $mockRequest = $this->createMock(Request::class);
         $mockRequest->setMethod('POST');
@@ -206,6 +207,7 @@ class ResponseBuilderTest extends TestCase
             $mockFlashBag->method('add')->with('error', \sprintf('%s: %s', self::ERROR_LABEL, self::ERROR_MESSAGE));
             $session->method('getFlashBag')->willReturn($mockFlashBag);
         }
+
         $requestStack->method('getSession')->willReturn($session);
 
         $responseBuilder = new ResponseBuilder(

@@ -79,19 +79,22 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
             if (isset($data['name'])) {
                 $command->setLocalizedNames($data['name']);
             }
+
             if (isset($data['public_name'])) {
                 $command->setLocalizedPublicNames($data['public_name']);
             }
+
             if (isset($data['type'])) {
                 $command->setType($data['type']);
             }
+
             if (isset($data['shopIds'])) {
                 $command->setAssociatedShopIds($this->referencesToIds($data['shopIds']));
             }
 
             $this->getCommandBus()->handle($command);
-        } catch (AttributeGroupConstraintException $e) {
-            $this->setLastException($e);
+        } catch (AttributeGroupConstraintException $attributeGroupConstraintException) {
+            $this->setLastException($attributeGroupConstraintException);
         }
     }
 
@@ -155,12 +158,15 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             Assert::assertEquals($data['name'], $attributeGroup->getName());
         }
+
         if (isset($data['public_name'])) {
             Assert::assertEquals($data['public_name'], $attributeGroup->getPublicName());
         }
+
         if (isset($data['type'])) {
             Assert::assertEquals($data['type'], $attributeGroup->getType());
         }
+
         if (isset($data['shopIds'])) {
             Assert::assertEquals($this->referencesToIds($data['shopIds']), $attributeGroup->getAssociatedShopIds());
         }
@@ -422,7 +428,7 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
         Assert::assertEquals(
             \count($expectedAttributeGroups),
             \count($actualAttributeGroups),
-            'Expected count of attribute groups doesn\'t match'
+            "Expected count of attribute groups doesn't match"
         );
         foreach ($expectedAttributeGroups as $index => $attributeGroupsDatum) {
             /** @var AttributeGroup $attributeGroup */
@@ -467,7 +473,7 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
             throw new RuntimeException(\sprintf('Could no find attribute group %s', $attributeGroupReference));
         }
 
-        if (! $tableNode) {
+        if ($tableNode === null) {
             // if tableNode is null we expect that desired group attributes are empty
             Assert::assertEmpty(
                 $checkAttributeGroup->getAttributes(),

@@ -75,8 +75,8 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->createCmsPageUsingCommand($cmsPageReference, $data);
-        } catch (Exception $e) {
-            $this->latestException = $e;
+        } catch (Exception $exception) {
+            $this->latestException = $exception;
         }
     }
 
@@ -92,24 +92,31 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['meta_title'])) {
             $command->setLocalizedTitle([$this->getDefaultLangId() => $data['meta_title']]);
         }
+
         if (isset($data['head_seo_title'])) {
             $command->setLocalizedMetaTitle([$this->getDefaultLangId() => $data['head_seo_title']]);
         }
+
         if (isset($data['meta_description'])) {
             $command->setLocalizedMetaDescription([$this->getDefaultLangId() => $data['meta_description']]);
         }
+
         if (isset($data['link_rewrite'])) {
             $command->setLocalizedFriendlyUrl([$this->getDefaultLangId() => $data['link_rewrite']]);
         }
+
         if (isset($data['content'])) {
             $command->setLocalizedContent([$this->getDefaultLangId() => $data['content']]);
         }
+
         if (isset($data['indexation'])) {
             $command->setIsIndexedForSearch(PrimitiveUtils::castStringBooleanIntoBoolean($data['indexation']));
         }
+
         if (isset($data['active'])) {
             $command->setIsDisplayed(PrimitiveUtils::castStringBooleanIntoBoolean($data['active']));
         }
+
         if (isset($data['id_cms_category'])) {
             $command->setCmsPageCategoryId((int) $data['id_cms_category']);
         }
@@ -117,8 +124,8 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getCommandBus()->handle($command);
             SharedStorage::getStorage()->set($cmsPageReference, new CMS($cmsId));
-        } catch (Exception $e) {
-            $this->latestException = $e;
+        } catch (Exception $exception) {
+            $this->latestException = $exception;
         }
     }
 
@@ -193,6 +200,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
             $cms = SharedStorage::getStorage()->get($cmsPageReference);
             $idsByReferences[$cmsPageReference] = (int) $cms->id;
         }
+
         $this->getCommandBus()->handle(new BulkDeleteCmsPageCommand($idsByReferences));
     }
 
@@ -284,7 +292,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^I should get error message '(.+)'$/
      */
-    public function assertExceptionWasThrown($message)
+    public function assertExceptionWasThrown($message): bool
     {
         if ($this->latestException instanceof Exception) {
             if ($this->latestException->getMessage() !== $message) {

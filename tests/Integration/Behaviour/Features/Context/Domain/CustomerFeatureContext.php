@@ -152,6 +152,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                 throw new Exception(\sprintf('Mandatory property %s for customer has not been provided', $mandatoryField));
             }
         }
+
         if (! \array_key_exists('password', $data) && empty($data['isGuest'])) {
             throw new Exception('Password must be provided, if creating a registered customer');
         }
@@ -271,7 +272,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                         $currentExpectedCustomer['firstName'],
                         $currentFoundCustomer['firstname'],
                         \sprintf(
-                            'Expected and found customers\'s first names don\'t match (%s and %s)',
+                            "Expected and found customers's first names don't match (%s and %s)",
                             $currentExpectedCustomer['firstName'],
                             $currentFoundCustomer['firstname']
                         )
@@ -281,7 +282,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                         $currentExpectedCustomer['lastName'],
                         $currentFoundCustomer['lastname'],
                         \sprintf(
-                            'Expected and found customers\'s last names don\'t match (%s and %s)',
+                            "Expected and found customers's last names don't match (%s and %s)",
                             $currentExpectedCustomer['lastName'],
                             $currentFoundCustomer['lastname']
                         )
@@ -291,7 +292,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                         $currentExpectedCustomer['birthday'],
                         $currentFoundCustomer['birthday'],
                         \sprintf(
-                            'Expected and found customers\'s birthdays don\'t match (%s and %s)',
+                            "Expected and found customers's birthdays don't match (%s and %s)",
                             $currentExpectedCustomer['birthday'],
                             $currentFoundCustomer['birthday']
                         )
@@ -301,14 +302,14 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                         if (isset($currentExpectedCustomer['companyName'])
                             || isset($currentFoundCustomer['company'])
                         ) {
-                            throw new RuntimeException('Company name isn\'t expected when B2B mode is disabled');
+                            throw new RuntimeException("Company name isn't expected when B2B mode is disabled");
                         }
                     } else {
                         Assert::assertEquals(
                             $currentExpectedCustomer['companyName'],
                             $currentFoundCustomer['company'],
                             \sprintf(
-                                'Expected and found customers\'s companies don\'t match (%s and %s)',
+                                "Expected and found customers's companies don't match (%s and %s)",
                                 $currentExpectedCustomer['companyName'],
                                 $currentFoundCustomer['company']
                             )
@@ -316,6 +317,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
                     }
                 }
             }
+
             if (! $wasCurrentExpectedCustomerFound) {
                 throw new RuntimeException(\sprintf('Expected customer with email %s was not found', $currentExpectedCustomer['email']));
             }

@@ -36,7 +36,7 @@ class AddMetaCommandTest extends TestCase
     /**
      * @dataProvider getIncorrectPageNames
      */
-    public function testItThrowsAnExceptionOnIncorrectOrMissingPageName($incorrectPageName)
+    public function testItThrowsAnExceptionOnIncorrectOrMissingPageName($incorrectPageName): void
     {
         $this->expectException(MetaConstraintException::class);
         $this->expectExceptionCode(MetaConstraintException::INVALID_PAGE_NAME);
@@ -47,7 +47,7 @@ class AddMetaCommandTest extends TestCase
     /**
      * @dataProvider getIncorrectMultiLanguageNames
      */
-    public function testItThrowsAnExceptionOnIncorrectPageTitle($incorrectNames)
+    public function testItThrowsAnExceptionOnIncorrectPageTitle($incorrectNames): void
     {
         $this->expectException(MetaConstraintException::class);
         $this->expectExceptionCode(MetaConstraintException::INVALID_PAGE_TITLE);
@@ -60,7 +60,7 @@ class AddMetaCommandTest extends TestCase
     /**
      * @dataProvider getIncorrectMultiLanguageNames
      */
-    public function testItThrowsAnExceptionOnIncorrectPageDescription($incorrectNames)
+    public function testItThrowsAnExceptionOnIncorrectPageDescription($incorrectNames): void
     {
         $this->expectException(MetaConstraintException::class);
         $this->expectExceptionCode(MetaConstraintException::INVALID_META_DESCRIPTION);

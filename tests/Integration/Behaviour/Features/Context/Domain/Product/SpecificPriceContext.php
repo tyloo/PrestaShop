@@ -158,8 +158,8 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         try {
             $command = $this->createEditSpecificPriceCommand($specificPriceId, $tableNode);
             $this->getCommandBus()->handle($command);
-        } catch (DomainException $e) {
-            $this->setLastException($e);
+        } catch (DomainException $domainException) {
+            $this->setLastException($domainException);
         }
     }
 
@@ -171,8 +171,8 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         $specificPriceId = $this->getSharedStorage()->get($specificPriceReference);
         try {
             $this->getCommandBus()->handle(new DeleteSpecificPriceCommand($specificPriceId));
-        } catch (DomainException $e) {
-            $this->setLastException($e);
+        } catch (DomainException $domainException) {
+            $this->setLastException($domainException);
         }
     }
 
@@ -295,6 +295,7 @@ class SpecificPriceContext extends AbstractProductFeatureContext
             if ($expectedItem->getSpecificPriceId() !== 0) {
                 Assert::assertSame($expectedItem->getSpecificPriceId(), $actualItem->getSpecificPriceId());
             }
+
             // If the reference column was specified we assign the reference ith the matching ID
             if (! empty($dataRow['id reference'])) {
                 $this->getSharedStorage()->set($dataRow['id reference'], $actualItem->getSpecificPriceId());
@@ -338,6 +339,7 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         if (\in_array($fieldName, ['reduction_type', 'reduction_amount', 'reduction_percentage'], true)) {
             $exceptionClass = DomainConstraintException::class;
         }
+
         $this->assertLastErrorIs(
             $exceptionClass,
             $this->getConstraintErrorCode($fieldName)
@@ -408,24 +410,31 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         if (! empty($dataRows['combination'])) {
             $addCommand->setCombinationId($this->getStoredId($dataRows, 'combination'));
         }
+
         if (! empty($dataRows['shop'])) {
             $addCommand->setShopId($this->getStoredId($dataRows, 'shop'));
         }
+
         if (! empty($dataRows['currency'])) {
             $addCommand->setCurrencyId($this->getStoredId($dataRows, 'currency'));
         }
+
         if (! empty($dataRows['country'])) {
             $addCommand->setCountryId($this->getStoredId($dataRows, 'country'));
         }
+
         if (! empty($dataRows['group'])) {
             $addCommand->setGroupId($this->getStoredId($dataRows, 'group'));
         }
+
         if (! empty($dataRows['customer'])) {
             $addCommand->setCustomerId($this->getStoredId($dataRows, 'customer'));
         }
+
         if (! empty($dataRows['from'])) {
             $addCommand->setDateTimeFrom(new DateTime($dataRows['from']));
         }
+
         if (! empty($dataRows['to'])) {
             $addCommand->setDateTimeTo(new DateTime($dataRows['to']));
         }
@@ -441,36 +450,47 @@ class SpecificPriceContext extends AbstractProductFeatureContext
         if (isset($dataRows['reduction type'], $dataRows['reduction value'])) {
             $editCommand->setReduction($dataRows['reduction type'], (string) $dataRows['reduction value']);
         }
+
         if (isset($dataRows['includes tax'])) {
             $editCommand->setIncludesTax(PrimitiveUtils::castStringBooleanIntoBoolean($dataRows['includes tax']));
         }
+
         if (isset($dataRows['fixed price'])) {
             $editCommand->setFixedPrice($dataRows['fixed price']);
         }
+
         if (isset($dataRows['from quantity'])) {
             $editCommand->setFromQuantity((int) $dataRows['from quantity']);
         }
+
         if (isset($dataRows['combination'])) {
             $editCommand->setCombinationId($this->getStoredId($dataRows, 'combination'));
         }
+
         if (isset($dataRows['shop'])) {
             $editCommand->setShopId($this->getNullableIdForEdit($dataRows, 'shop'));
         }
+
         if (isset($dataRows['currency'])) {
             $editCommand->setCurrencyId($this->getNullableIdForEdit($dataRows, 'currency'));
         }
+
         if (isset($dataRows['country'])) {
             $editCommand->setCountryId($this->getNullableIdForEdit($dataRows, 'country'));
         }
+
         if (isset($dataRows['group'])) {
             $editCommand->setGroupId($this->getNullableIdForEdit($dataRows, 'group'));
         }
+
         if (isset($dataRows['customer'])) {
             $editCommand->setCustomerId($this->getNullableIdForEdit($dataRows, 'customer'));
         }
+
         if (isset($dataRows['from'])) {
             $editCommand->setDateTimeFrom($this->getDateTime($dataRows['from']));
         }
+
         if (isset($dataRows['to'])) {
             $editCommand->setDateTimeTo($this->getDateTime($dataRows['to']));
         }

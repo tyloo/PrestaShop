@@ -51,14 +51,14 @@ class UrlFileCheckerTest extends TestCase
         vfsStream::newFile('writable_files/robots.txt', 0644)->at($this->root);
     }
 
-    public function testIsValidImplementation()
+    public function testIsValidImplementation(): void
     {
         $checker = new UrlFileChecker($this->root->url());
 
         $this->assertInstanceOf(UrlFileCheckerInterface::class, $checker);
     }
 
-    public function testNotWritableFiles()
+    public function testNotWritableFiles(): void
     {
         $checker = new UrlFileChecker($this->root->url() . '/not_writable_files');
 
@@ -66,7 +66,7 @@ class UrlFileCheckerTest extends TestCase
         $this->assertFalse($checker->isRobotsFileWritable());
     }
 
-    public function testWritableFiles()
+    public function testWritableFiles(): void
     {
         $checker = new UrlFileChecker($this->root->url() . '/writable_files');
 

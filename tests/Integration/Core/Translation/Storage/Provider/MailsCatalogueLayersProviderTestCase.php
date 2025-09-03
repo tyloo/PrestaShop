@@ -51,7 +51,7 @@ class MailsCatalogueLayersProviderTestCase extends AbstractCatalogueLayersProvid
             'EmailsSubject' => [
                 'count' => 24,
                 'translations' => [
-                    'Log: You have a new alert from your shop' => 'Log : Vous avez un nouveau message d\'alerte dans votre boutique',
+                    'Log: You have a new alert from your shop' => "Log : Vous avez un nouveau message d'alerte dans votre boutique",
                 ],
             ],
         ];

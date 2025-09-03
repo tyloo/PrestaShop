@@ -40,7 +40,7 @@ class SaveSqlRequestSettingsHandlerTest extends TestCase
     /**
      * @dataProvider getSettings
      */
-    public function testItSavesSettingsInCorrectFormat(string $configuredValue, string $separator, int $expectedValueFormat)
+    public function testItSavesSettingsInCorrectFormat(string $configuredValue, string $separator, int $expectedValueFormat): void
     {
         $configuration = $this->createMock(ConfigurationInterface::class);
         $configuration->set('PS_ENCODING_FILE_MANAGER_SQL', $configuredValue);

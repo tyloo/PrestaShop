@@ -36,7 +36,7 @@ class TagIETFTest extends TestCase
     /**
      * @dataProvider getValidTagIETFValues
      */
-    public function testTagIETFCanBeCreatedWithValidValues($validTagIETFValue)
+    public function testTagIETFCanBeCreatedWithValidValues($validTagIETFValue): void
     {
         $tagIETF = new TagIETF($validTagIETFValue);
 
@@ -46,7 +46,7 @@ class TagIETFTest extends TestCase
     /**
      * @dataProvider getInvalidTagIETFValues
      */
-    public function testTagIETFCanBeCreatedWithInvalidValues($invalidTagIETFValue)
+    public function testTagIETFCanBeCreatedWithInvalidValues($invalidTagIETFValue): void
     {
         $this->expectException(LanguageConstraintException::class);
 

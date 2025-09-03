@@ -34,13 +34,13 @@ use PrestaShop\PrestaShop\Core\Routing\EntityLinkBuilderInterface;
 
 class EntityLinkBuilderFactoryTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $factory = new EntityLinkBuilderFactory([$this->getEntityLinkBuilderMock(['product'])]);
         $this->assertNotNull($factory);
     }
 
-    public function testGetBuilder()
+    public function testGetBuilder(): void
     {
         $builder1 = $this->getEntityLinkBuilderMock(['customer', 'product']);
         $builder2 = $this->getEntityLinkBuilderMock(['order', 'product']);
@@ -54,7 +54,7 @@ class EntityLinkBuilderFactoryTest extends TestCase
     /**
      * @return MockObject|EntityLinkBuilderInterface
      */
-    private function getEntityLinkBuilderMock(array $managedEntities)
+    private function getEntityLinkBuilderMock(array $managedEntities): MockObject
     {
         $builderMock = $this->getMockBuilder(EntityLinkBuilderInterface::class)
             ->disableOriginalConstructor()
@@ -63,7 +63,7 @@ class EntityLinkBuilderFactoryTest extends TestCase
 
         $builderMock
             ->method('canBuild')
-            ->willReturnCallback(fn ($entity) => \in_array($entity, $managedEntities, true))
+            ->willReturnCallback(fn ($entity): bool => \in_array($entity, $managedEntities, true))
         ;
 
         return $builderMock;

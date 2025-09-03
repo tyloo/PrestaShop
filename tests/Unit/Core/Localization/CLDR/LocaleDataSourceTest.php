@@ -82,7 +82,7 @@ class LocaleDataSourceTest extends TestCase
      * When asking a specific locale data
      * Then the expected CLDR LocaleData object should be returned, or null if the locale code was not found
      */
-    public function testGetLocaleData()
+    public function testGetLocaleData(): void
     {
         $this->assertSame($this->frStubLocaleData, $this->localeDataSource->getLocaleData('fr-FR'));
         $this->assertSame($this->enStubLocaleData, $this->localeDataSource->getLocaleData('en-US'));

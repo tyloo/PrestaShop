@@ -159,6 +159,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
             $confValues[MultistoreCheckboxEnabler::MULTISTORE_FIELD_PREFIX . 'test_conf_1'] = true;
             $confValues[MultistoreCheckboxEnabler::MULTISTORE_FIELD_PREFIX . 'test_conf_2'] = true;
         }
+
         $testedObject->updateConfiguration($confValues);
     }
 
@@ -241,7 +242,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
     /**
      * @return MockObject|Context
      */
-    protected function createShopContextMock()
+    protected function createShopContextMock(): MockObject
     {
         return $this->getMockBuilder(Context::class)
             ->onlyMethods(['getContextShopGroup', 'getContextShopID', 'isAllShopContext', 'getShopConstraint'])

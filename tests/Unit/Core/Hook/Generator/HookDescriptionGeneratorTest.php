@@ -39,12 +39,12 @@ class HookDescriptionGeneratorTest extends TestCase
     /**
      * @var MockObject|StringValidatorInterface
      */
-    private $stringValidatorMock;
+    private MockObject $stringValidatorMock;
 
     /**
      * @var MockObject|StringModifierInterface
      */
-    private $stringModifierMock;
+    private MockObject $stringModifierMock;
 
     protected function setUp(): void
     {
@@ -61,7 +61,7 @@ class HookDescriptionGeneratorTest extends TestCase
         ;
     }
 
-    public function testItGetsExpectedDescriptionWithoutPlaceholder()
+    public function testItGetsExpectedDescriptionWithoutPlaceholder(): void
     {
         $expectedTitle = 'General description title';
         $expectedDescription = 'General description';
@@ -94,7 +94,7 @@ class HookDescriptionGeneratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testItGetsExpectedDescription()
+    public function testItGetsExpectedDescription(): void
     {
         $hookId = 'currency';
         $expectedTitle = 'Currency Modify grid query builder';

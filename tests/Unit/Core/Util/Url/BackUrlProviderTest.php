@@ -33,7 +33,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BackUrlProviderTest extends TestCase
 {
-    public function testItReturnsDecodedUrl()
+    public function testItReturnsDecodedUrl(): void
     {
         $backUrlProvider = new BackUrlProvider();
 

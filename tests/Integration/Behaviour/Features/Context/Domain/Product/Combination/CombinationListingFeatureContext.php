@@ -278,7 +278,7 @@ class CombinationListingFeatureContext extends AbstractCombinationFeatureContext
                 Assert::assertSame(
                     $editableCombinationForListing->getCombinationId(),
                     $this->getSharedStorage()->get($expectedCombination['combination id']),
-                    'Combination ids doesn\'t match'
+                    "Combination ids doesn't match"
                 );
             }
 

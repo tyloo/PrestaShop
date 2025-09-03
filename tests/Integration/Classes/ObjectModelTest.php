@@ -43,9 +43,11 @@ use Tests\Resources\DatabaseDump;
 class ObjectModelTest extends TestCase
 {
     private const DEFAULT_LANGUAGE_PLACEHOLDER = 'default_language';
+
     private const SECOND_LANGUAGE_PLACEHOLDER = 'second_language';
 
     private const DEFAULT_SHOP_PLACEHOLDER = 'default_shop';
+
     private const SECOND_SHOP_PLACEHOLDER = 'second_shop';
 
     /**
@@ -374,9 +376,11 @@ class ObjectModelTest extends TestCase
         if (\in_array(self::DEFAULT_SHOP_PLACEHOLDER, $initialShops, true)) {
             $initialShopIds[] = $this->defaultShopId;
         }
+
         if (\in_array(self::SECOND_SHOP_PLACEHOLDER, $initialShops, true)) {
             $initialShopIds[] = $this->secondShopId;
         }
+
         $newObject->id_shop_list = $initialShopIds;
 
         // Set the object's fields based on the input parameters and add the object to DB
@@ -491,9 +495,11 @@ class ObjectModelTest extends TestCase
         if (\in_array(self::DEFAULT_SHOP_PLACEHOLDER, $initialShops, true)) {
             $initialShopIds[] = $this->defaultShopId;
         }
+
         if (\in_array(self::SECOND_SHOP_PLACEHOLDER, $initialShops, true)) {
             $initialShopIds[] = $this->secondShopId;
         }
+
         $newObject->id_shop_list = $initialShopIds;
 
         // Set the object's fields based on the input parameters and add the object to DB
@@ -631,6 +637,7 @@ class ObjectModelTest extends TestCase
             if (\is_array($expectedValue)) {
                 $expectedValue = $this->convertLocalizedValue($expectedValue);
             }
+
             $this->assertEquals($expectedValue, $object->{$field});
         }
     }
@@ -648,6 +655,7 @@ class ObjectModelTest extends TestCase
         if (isset($value[self::DEFAULT_LANGUAGE_PLACEHOLDER])) {
             $localizedValue[$this->defaultLanguageId] = $value[self::DEFAULT_LANGUAGE_PLACEHOLDER];
         }
+
         if (isset($value[self::SECOND_LANGUAGE_PLACEHOLDER])) {
             $localizedValue[$this->secondLanguageId] = $value[self::SECOND_LANGUAGE_PLACEHOLDER];
         }

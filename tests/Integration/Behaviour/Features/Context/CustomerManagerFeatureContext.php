@@ -95,6 +95,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
                 throw new Exception(\sprintf('Mandatory property %s for customer has not been provided', $mandatoryField));
             }
         }
+
         if (! \array_key_exists('password', $data) && empty($data['isGuest'])) {
             throw new Exception('Password must be provided, if creating a registered customer');
         }
@@ -142,12 +143,12 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
         try {
             $this->createACustomerUsingCommand($customerReference, $table);
             throw new NoExceptionAlthoughExpectedException();
-        } catch (Exception $e) {
-            if ($e instanceof NoExceptionAlthoughExpectedException) {
-                throw $e;
+        } catch (Exception $exception) {
+            if ($exception instanceof NoExceptionAlthoughExpectedException) {
+                throw $exception;
             }
 
-            $this->latestResult = $e;
+            $this->latestResult = $exception;
         }
     }
 
@@ -195,12 +196,12 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
         try {
             $this->editCustomerUsingCommand($customerReference, $table);
             throw new NoExceptionAlthoughExpectedException();
-        } catch (Exception $e) {
-            if ($e instanceof NoExceptionAlthoughExpectedException) {
-                throw $e;
+        } catch (Exception $exception) {
+            if ($exception instanceof NoExceptionAlthoughExpectedException) {
+                throw $exception;
             }
 
-            $this->latestResult = $e;
+            $this->latestResult = $exception;
         }
     }
 
@@ -291,8 +292,8 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
         try {
             $this->getQueryBus()->handle(new GetCustomerForEditing($this->customerRegistry[$customerReference]));
             $caughtException = null;
-        } catch (Exception $e) {
-            $caughtException = $e;
+        } catch (Exception $exception) {
+            $caughtException = $exception;
         }
 
         if ($caughtException === null) {
@@ -313,12 +314,12 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
             $result = $queryBus->handle(new GetCustomerForEditing($this->customerRegistry[$customerReference]));
 
             throw new NoExceptionAlthoughExpectedException();
-        } catch (Exception $e) {
-            if ($e instanceof NoExceptionAlthoughExpectedException) {
-                throw $e;
+        } catch (Exception $exception) {
+            if ($exception instanceof NoExceptionAlthoughExpectedException) {
+                throw $exception;
             }
 
-            $this->latestResult = $e;
+            $this->latestResult = $exception;
         }
 
         $this->assertGotErrorMessage($errorMessage);
@@ -372,17 +373,21 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
         if (\array_key_exists('isEnabled', $data)) {
             $data['isEnabled'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['isEnabled']);
         }
+
         if (\array_key_exists('isPartnerOffersSubscribed', $data)) {
             $data['isPartnerOffersSubscribed'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['isPartnerOffersSubscribed']);
         }
+
         if (\array_key_exists('newsletterSubscribed', $data)) {
             $data['newsletterSubscribed'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['newsletterSubscribed']);
         }
+
         if (! empty($data['riskId'])) {
             $data['riskId'] = SharedStorage::getStorage()->get($data['riskId']);
         } else {
             $data['riskId'] = 0;
         }
+
         if (\array_key_exists('isGuest', $data)) {
             $data['isGuest'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['isGuest']);
         }

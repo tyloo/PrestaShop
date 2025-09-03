@@ -64,10 +64,10 @@ class AbstractBulkCommandHandlerTest extends TestCase
                 [new ExampleId(1), $failingId, new ExampleId(3)],
                 ProductException::class
             );
-        } catch (Throwable $e) {
+        } catch (Throwable $throwable) {
             // ensure that thrown exception was the one provided in this test case
-            Assert::assertInstanceOf(FeatureException::class, $e);
-            Assert::assertEquals($expectedCode, $e->getCode());
+            Assert::assertInstanceOf(FeatureException::class, $throwable);
+            Assert::assertEquals($expectedCode, $throwable->getCode());
         }
 
         // and assert that only the first id was handled and loop did not continue after second id failure
@@ -85,10 +85,10 @@ class AbstractBulkCommandHandlerTest extends TestCase
                 [$failingId, new ExampleId(2), new ExampleId(3)],
                 FeatureException::class
             );
-        } catch (Throwable $e) {
+        } catch (Throwable $throwable) {
             // ensure that thrown exception was the one provided in this test case
-            Assert::assertInstanceOf(BulkCommandExceptionInterface::class, $e);
-            foreach ($e->getExceptions() as $exception) {
+            Assert::assertInstanceOf(BulkCommandExceptionInterface::class, $throwable);
+            foreach ($throwable->getExceptions() as $exception) {
                 // check that exception list contains expected exceptions and codes inside the bulk exception
                 Assert::assertInstanceOf(FeatureException::class, $exception);
                 Assert::assertEquals($expectedCode, $exception->getCode());
@@ -173,6 +173,7 @@ class TestAbstractBulkCommandHandler extends AbstractBulkCommandHandler
                 throw $failingId->getExceptionToThrow();
             }
         }
+
         $this->handledIds[] = $id->getValue();
         $this->command = $command;
     }

@@ -32,13 +32,13 @@ use PrestaShop\PrestaShop\Core\Util\ArabicToLatinDigitConverter;
 
 class ArabicToLatinDigitConverterTest extends TestCase
 {
-    public function testConvertFromArabicToLatin()
+    public function testConvertFromArabicToLatin(): void
     {
         $converter = new ArabicToLatinDigitConverter();
         $this->assertEquals($converter->convert('٨٤'), '84');
     }
 
-    public function testConvertFromLatinToArabic()
+    public function testConvertFromLatinToArabic(): void
     {
         $converter = new ArabicToLatinDigitConverter();
         $this->assertEquals($converter->reverseConvert('84'), '٨٤');

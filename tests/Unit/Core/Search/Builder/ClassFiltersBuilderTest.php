@@ -36,14 +36,14 @@ use Tests\Resources\SampleShopFilters;
 
 class ClassFiltersBuilderTest extends TestCase
 {
-    public function testBuildWithoutClass()
+    public function testBuildWithoutClass(): void
     {
         $builder = new ClassFiltersBuilder();
         $filters = $builder->buildFilters();
         $this->assertNull($filters);
     }
 
-    public function testOverrideWithoutClass()
+    public function testOverrideWithoutClass(): void
     {
         $builder = new ClassFiltersBuilder();
         $filters = new Filters(['limit' => 51]);
@@ -53,7 +53,7 @@ class ClassFiltersBuilderTest extends TestCase
         $this->assertEmpty($builtFilters->getFilterId());
     }
 
-    public function testBuildWithClass()
+    public function testBuildWithClass(): void
     {
         $builder = new ClassFiltersBuilder();
         $builder->setConfig(['filters_class' => SampleFilters::class]);
@@ -64,7 +64,7 @@ class ClassFiltersBuilderTest extends TestCase
         $this->assertInstanceOf(SampleFilters::class, $filters);
     }
 
-    public function testBuildWithClassAndFilterId()
+    public function testBuildWithClassAndFilterId(): void
     {
         $builder = new ClassFiltersBuilder();
         $builder->setConfig(['filters_class' => SampleFilters::class, 'filter_id' => 'language']);
@@ -75,7 +75,7 @@ class ClassFiltersBuilderTest extends TestCase
         $this->assertInstanceOf(SampleFilters::class, $filters);
     }
 
-    public function testOverrideWithClass()
+    public function testOverrideWithClass(): void
     {
         $builder = new ClassFiltersBuilder();
         $builder->setConfig(['filters_class' => SampleFilters::class]);

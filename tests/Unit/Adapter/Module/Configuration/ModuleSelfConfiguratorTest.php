@@ -47,18 +47,22 @@ class ModuleSelfConfiguratorTest extends TestCase
      * @var ModuleSelfConfigurator
      */
     public $moduleSelfConfigurator;
+
     /**
      * @var ConfigurationMock
      */
     private $configuration;
+
     /**
      * @var ConnectionMock
      */
     private $connection;
+
     /**
      * @var ModuleRepository
      */
-    private $moduleRepository;
+    private ?\PHPUnit\Framework\MockObject\MockObject $moduleRepository = null;
+
     /**
      * @var string
      */
@@ -339,6 +343,7 @@ class ConfigurationMock extends Configuration
 class ConnectionMock extends Connection
 {
     public $sql = [];
+
     public $executedSql = [];
 
     public function connect()

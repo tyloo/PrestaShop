@@ -84,8 +84,8 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
             );
 
             $this->getCommandBus()->handle($command);
-        } catch (OrderException $e) {
-            $this->setLastException($e);
+        } catch (OrderException $orderException) {
+            $this->setLastException($orderException);
         }
     }
 
@@ -112,8 +112,8 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
             );
 
             $this->getCommandBus()->handle($command);
-        } catch (OrderException $e) {
-            $this->setLastException($e);
+        } catch (OrderException $orderException) {
+            $this->setLastException($orderException);
         }
     }
 
@@ -143,8 +143,8 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
             );
 
             $this->getCommandBus()->handle($command);
-        } catch (OrderException $e) {
-            $this->setLastException($e);
+        } catch (OrderException $orderException) {
+            $this->setLastException($orderException);
         }
     }
 
@@ -312,7 +312,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         ?string $voucherRefundAmount = null,
     ): IssuePartialRefundCommand {
         /** @var OrderForViewing $orderForViewing */
-        $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing((int) $orderId));
+        $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing($orderId));
 
         $shippingCostRefund = 0;
         $orderDetailsRefunds = [];
@@ -321,6 +321,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
                 $shippingCostRefund = $refund['amount'];
                 continue;
             }
+
             $products = $orderForViewing->getProducts()->getProducts();
             /** @var OrderProductForViewing $product */
             foreach ($products as $product) {
@@ -358,7 +359,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         int $voucherRefundType = VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND,
     ): IssueStandardRefundCommand {
         /** @var OrderForViewing $orderForViewing */
-        $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing((int) $orderId));
+        $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing($orderId));
 
         $refundShippingCost = false;
         $orderDetailsRefunds = [];
@@ -367,6 +368,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
                 $refundShippingCost = (int) $refund['quantity'] > 0;
                 continue;
             }
+
             $products = $orderForViewing->getProducts()->getProducts();
             /** @var OrderProductForViewing $product */
             foreach ($products as $product) {
@@ -402,7 +404,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         int $voucherRefundType = VoucherRefundType::PRODUCT_PRICES_EXCLUDING_VOUCHER_REFUND,
     ): IssueReturnProductCommand {
         /** @var OrderForViewing $orderForViewing */
-        $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing((int) $orderId));
+        $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing($orderId));
 
         $refundShippingCost = false;
         $orderDetailsRefunds = [];
@@ -411,6 +413,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
                 $refundShippingCost = (int) $refund['quantity'] > 0;
                 continue;
             }
+
             $products = $orderForViewing->getProducts()->getProducts();
             /** @var OrderProductForViewing $product */
             foreach ($products as $product) {
@@ -452,6 +455,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
                 }
             }
         }
+
         try {
             $command = new CancelOrderProductCommand(
                 $cancelledProducts,
@@ -459,8 +463,8 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
             );
 
             $this->getCommandBus()->handle($command);
-        } catch (OrderException $e) {
-            $this->setLastException($e);
+        } catch (OrderException $orderException) {
+            $this->setLastException($orderException);
         }
     }
 }

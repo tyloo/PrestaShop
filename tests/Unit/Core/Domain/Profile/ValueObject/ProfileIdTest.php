@@ -36,7 +36,7 @@ class ProfileIdTest extends TestCase
     /**
      * @dataProvider createsProfileWithValidValuesData
      */
-    public function testItCreatesProfileWithValidValues($idValue)
+    public function testItCreatesProfileWithValidValues($idValue): void
     {
         $profileId = new ProfileId($idValue);
 
@@ -54,7 +54,7 @@ class ProfileIdTest extends TestCase
     /**
      * @dataProvider exceptionThrownWithInvalidValuesData
      */
-    public function testItExceptionThrownWithInvalidValues($profileId)
+    public function testItExceptionThrownWithInvalidValues($profileId): void
     {
         $this->expectException(ProfileException::class);
         new ProfileId($profileId);

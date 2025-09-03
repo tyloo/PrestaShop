@@ -40,6 +40,7 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\NullDateTime;
 class CommandBuilderTest extends TestCase
 {
     private const MULTI_SHOP_PREFIX = 'multi_shop_';
+
     private const SHOP_ID = 1;
 
     /**

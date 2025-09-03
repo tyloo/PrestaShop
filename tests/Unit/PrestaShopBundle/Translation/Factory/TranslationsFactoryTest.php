@@ -41,10 +41,11 @@ class TranslationsFactoryTest extends TestCase
      * @var TranslationsFactory
      */
     private $factory;
+
     /**
      * @var AbstractProvider|MockObject
      */
-    private $providerMock;
+    private MockObject $providerMock;
 
     protected function setUp(): void
     {

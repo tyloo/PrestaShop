@@ -38,6 +38,7 @@ class AccessDeniedListenerTest extends WebTestCase
     use LoginTrait;
 
     protected KernelBrowser $client;
+
     protected Router $router;
 
     protected function setUp(): void

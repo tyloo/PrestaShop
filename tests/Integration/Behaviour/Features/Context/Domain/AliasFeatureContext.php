@@ -190,7 +190,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
 
         foreach ($expectedSearchTermsRows as $expectedSearchTermRow) {
             $expectedSearchTerms = PrimitiveUtils::castStringArrayIntoArray($expectedSearchTermRow['searchTerm']);
-            Assert::assertCount(\count($expectedSearchTerms), $foundAliasesForAssociation, 'Expected and found search terms count doesn\'t match');
+            Assert::assertCount(\count($expectedSearchTerms), $foundAliasesForAssociation, "Expected and found search terms count doesn't match");
 
             foreach ($expectedSearchTerms as $index => $searchTerm) {
                 $foundAliasSearchTerm = $foundAliasesForAssociation[$index];
@@ -282,7 +282,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
     private function assertAliasProperties(array $expectedData, array $aliases, bool $exist = false)
     {
         foreach ($expectedData as $expectedAlias) {
-            $filter = array_filter($aliases, fn ($alias) => $alias['alias'] === $expectedAlias['alias']
+            $filter = array_filter($aliases, fn ($alias): bool => $alias['alias'] === $expectedAlias['alias']
             && $alias['search'] === $expectedAlias['search']
             && filter_var($alias['active'], \FILTER_VALIDATE_BOOL) === filter_var($expectedAlias['active'], \FILTER_VALIDATE_BOOL));
 
@@ -306,8 +306,8 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
     {
         try {
             $this->getCommandBus()->handle(new DeleteSearchTermAliasesCommand($searchTerm));
-        } catch (AliasException $e) {
-            $this->setLastException($e);
+        } catch (AliasException $aliasException) {
+            $this->setLastException($aliasException);
         }
     }
 
@@ -319,8 +319,8 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
         try {
             $searchTerms = explode(',', $searchTerms);
             $this->getCommandBus()->handle(new BulkDeleteSearchTermsAliasesCommand($searchTerms));
-        } catch (AliasException $e) {
-            $this->setLastException($e);
+        } catch (AliasException $aliasException) {
+            $this->setLastException($aliasException);
         }
     }
 }

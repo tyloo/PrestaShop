@@ -61,7 +61,7 @@ class TaxRulesTaxManagerTest extends TestCase
     /**
      * @var ConfigurationInterface
      */
-    private $configuration;
+    private \PHPUnit\Framework\MockObject\MockObject $configuration;
 
     /**
      * @var Container
@@ -91,6 +91,7 @@ class TaxRulesTaxManagerTest extends TestCase
             $tax_rows[$tax_row['id_tax']]->id = $tax_row['id_tax'];
             $tax_rows[$tax_row['id_tax']]->rate = $tax_row['rate'];
         }
+
         $entity_mapper->method('load')->willReturnCallback(function ($id, $id_lang, $entity, $entity_defs, $id_shop, $should_cache_objects) use ($tax_rows): void {
             $entity->id = $tax_rows[$id]->id;
             $entity->rate = $tax_rows[$id]->rate;
@@ -113,7 +114,7 @@ class TaxRulesTaxManagerTest extends TestCase
         Db::deleteTestingInstance();
     }
 
-    public function testGetTaxCalculatorShouldUseFirstComputationMethodFromTaxes()
+    public function testGetTaxCalculatorShouldUseFirstComputationMethodFromTaxes(): void
     {
         $tax_rules_tax_manager = new TaxRulesTaxManager(new Address(), null, $this->configuration);
         $tax_calculator = $tax_rules_tax_manager->getTaxCalculator();

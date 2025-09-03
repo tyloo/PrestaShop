@@ -105,8 +105,8 @@ class ProductShopFeatureContext extends AbstractProductFeatureContext
                 $this->getSharedStorage()->get($data['source shop']),
                 $this->referencesToIds($data['shops'])
             ));
-        } catch (InvalidProductShopAssociationException $e) {
-            $this->setLastException($e);
+        } catch (InvalidProductShopAssociationException $invalidProductShopAssociationException) {
+            $this->setLastException($invalidProductShopAssociationException);
         }
     }
 

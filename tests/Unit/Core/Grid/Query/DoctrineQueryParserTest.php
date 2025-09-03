@@ -46,7 +46,7 @@ class DoctrineQueryParserTest extends TestCase
         $this->queryParser = new DoctrineQueryParser();
     }
 
-    public function testParseWithNamedParameters()
+    public function testParseWithNamedParameters(): void
     {
         $preparedQuery = 'SELECT tests FROM pierre_rambaud WHERE motivation = :motivation AND energy = :energy';
         $queryParameters = [
@@ -62,7 +62,7 @@ class DoctrineQueryParserTest extends TestCase
     /**
      * @throws UnsupportedParameterException
      */
-    public function testParseWithParametersMustThrowAnException()
+    public function testParseWithParametersMustThrowAnException(): void
     {
         $this->expectExceptionMessage('Only named parameters are supported in prepared queries.');
         $this->expectException(UnsupportedParameterException::class);
@@ -73,7 +73,7 @@ class DoctrineQueryParserTest extends TestCase
         $this->queryParser->parse($preparedQuery, $queryParameters);
     }
 
-    public function testParseWithArrayNamedParameters()
+    public function testParseWithArrayNamedParameters(): void
     {
         $preparedQuery = 'SELECT tests FROM pierre_rambaud WHERE motivation IN (:motivation)';
         $queryParameters = [
@@ -94,7 +94,7 @@ class DoctrineQueryParserTest extends TestCase
     /**
      * @throws UnsupportedParameterException
      */
-    public function testParseWithArrayParametersMustThrowAnException()
+    public function testParseWithArrayParametersMustThrowAnException(): void
     {
         $this->expectExceptionMessage('Only named parameters are supported in prepared queries.');
         $this->expectException(UnsupportedParameterException::class);
@@ -113,7 +113,7 @@ class DoctrineQueryParserTest extends TestCase
         $this->queryParser->parse($preparedQuery, $queryParameters);
     }
 
-    public function testParseWithNullNamedParameters()
+    public function testParseWithNullNamedParameters(): void
     {
         $preparedQuery = 'SELECT tests FROM pierre_rambaud WHERE motivation IS :motivation';
         $queryParameters = [
@@ -125,7 +125,7 @@ class DoctrineQueryParserTest extends TestCase
         $this->assertSame($expectedQuery, $this->queryParser->parse($preparedQuery, $queryParameters));
     }
 
-    public function testParseWithBooleanNamedParameters()
+    public function testParseWithBooleanNamedParameters(): void
     {
         $preparedQuery = 'SELECT tests FROM pierre_rambaud WHERE motivation = :motivation';
         $queryParameters = [
@@ -146,7 +146,7 @@ class DoctrineQueryParserTest extends TestCase
         $this->assertSame($expectedQuery2, $this->queryParser->parse($preparedQuery2, $queryParameters2));
     }
 
-    public function testParseWithUnsupportedTypeMustThrowAnException()
+    public function testParseWithUnsupportedTypeMustThrowAnException(): void
     {
         $this->expectExceptionMessage('Unsupported value type: object');
         $this->expectException(UnsupportedParameterException::class);
@@ -159,7 +159,7 @@ class DoctrineQueryParserTest extends TestCase
         $this->queryParser->parse($preparedQuery, $queryParameters);
     }
 
-    public function testParseWithNumericNamedParameters()
+    public function testParseWithNumericNamedParameters(): void
     {
         $preparedQuery = 'SELECT * FROM product WHERE id_product = :id_product';
         $queryParameters = [

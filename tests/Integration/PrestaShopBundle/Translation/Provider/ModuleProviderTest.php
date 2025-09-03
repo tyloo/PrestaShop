@@ -54,7 +54,7 @@ class ModuleProviderTest extends TestCase
         $this->provider->setModuleName('ps_wirepayment');
     }
 
-    public function testItExtractsCatalogueFromXliffFiles()
+    public function testItExtractsCatalogueFromXliffFiles(): void
     {
         $catalogue = $this->provider->getMessageCatalogue();
 

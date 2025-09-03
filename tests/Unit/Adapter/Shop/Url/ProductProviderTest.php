@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Adapter\Shop\Url\ProductProvider;
 
 class ProductProviderTest extends TestCase
 {
-    public function testGetUrl()
+    public function testGetUrl(): void
     {
         $productId = 42;
         $alias = 'super-product';

@@ -53,6 +53,7 @@ abstract class AbstractConfigurationFeatureContext implements BehatContext
             DatabaseDump::restoreTables(['configuration', 'configuration_lang']);
             Configuration::resetStaticCache();
         }
+
         $this->configurationModified = false;
     }
 }

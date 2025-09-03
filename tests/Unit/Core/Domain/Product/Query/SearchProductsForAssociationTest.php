@@ -39,6 +39,7 @@ use Throwable;
 class SearchProductsForAssociationTest extends TestCase
 {
     private const LANGUAGE_ID = 42;
+
     private const SHOP_ID = 51;
 
     /**
@@ -86,9 +87,10 @@ class SearchProductsForAssociationTest extends TestCase
         $caughtException = null;
         try {
             new SearchProductsForAssociation($phrase, $languageId, $shopId, $limit);
-        } catch (Throwable $e) {
-            $caughtException = $e;
+        } catch (Throwable $throwable) {
+            $caughtException = $throwable;
         }
+
         $this->assertNotNull($caughtException);
         $this->assertInstanceOf($exceptionClass, $caughtException);
         $this->assertEquals($errorCode, $caughtException->getCode());

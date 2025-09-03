@@ -36,6 +36,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\OptionProvider\ProductFor
 class ProductFormOptionsProviderTest extends TestCase
 {
     private const PRODUCT_ID = 42;
+
     private const VIRTUAL_PRODUCT_FILE_ID = 51;
 
     public function testGetDefaultOptions(): void

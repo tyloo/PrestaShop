@@ -36,7 +36,8 @@ use PrestaShop\PrestaShop\Core\Module\HookRepository;
 class HookConfiguratorTest extends TestCase
 {
     private $hookConfigurator;
-    private $hookRepository;
+
+    private \PHPUnit\Framework\MockObject\MockObject $hookRepository;
 
     protected function setUp(): void
     {
@@ -53,7 +54,7 @@ class HookConfiguratorTest extends TestCase
         return $this;
     }
 
-    public function testSingleModuleAppendedToHook()
+    public function testSingleModuleAppendedToHook(): void
     {
         $this->setCurrentDisplayHooksConfiguration([
             'displayTop' => [
@@ -78,7 +79,7 @@ class HookConfiguratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testSingleModuleAppendedToHookWithExceptions()
+    public function testSingleModuleAppendedToHookWithExceptions(): void
     {
         $this->setCurrentDisplayHooksConfiguration([
             'displayTop' => [
@@ -113,7 +114,7 @@ class HookConfiguratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testMultipleModulesAppendedToHook()
+    public function testMultipleModulesAppendedToHook(): void
     {
         $this->setCurrentDisplayHooksConfiguration([
             'displayTop' => [
@@ -140,7 +141,7 @@ class HookConfiguratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testMultipleTildeInHookModuleList()
+    public function testMultipleTildeInHookModuleList(): void
     {
         $this->setCurrentDisplayHooksConfiguration([
             'displayTop' => [
@@ -169,7 +170,7 @@ class HookConfiguratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testSingleModulePrependedToHook()
+    public function testSingleModulePrependedToHook(): void
     {
         $this->setCurrentDisplayHooksConfiguration([
             'displayTop' => [
@@ -194,7 +195,7 @@ class HookConfiguratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testMultipleModulesPrependedToHook()
+    public function testMultipleModulesPrependedToHook(): void
     {
         $this->setCurrentDisplayHooksConfiguration([
             'displayTop' => [
@@ -221,7 +222,7 @@ class HookConfiguratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testModulesHookedAreReplaced()
+    public function testModulesHookedAreReplaced(): void
     {
         $this->setCurrentDisplayHooksConfiguration([
             'displayTop' => [
@@ -246,7 +247,7 @@ class HookConfiguratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testWhenAModuleIsHookedItIsUnhookedFromCurrentDisplayHooks()
+    public function testWhenAModuleIsHookedItIsUnhookedFromCurrentDisplayHooks(): void
     {
         $this->setCurrentDisplayHooksConfiguration([
             'displayTop' => [
@@ -274,7 +275,7 @@ class HookConfiguratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testNewHookIsCreated()
+    public function testNewHookIsCreated(): void
     {
         $config = [
             'displayTop' => [

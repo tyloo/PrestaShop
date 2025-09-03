@@ -143,6 +143,7 @@ class MultistoreCheckboxEnablerTest extends TypeTestCase
         } else {
             $shopConstraint = ShopConstraint::shop(1);
         }
+
         $shopContextMock->method('getShopConstraint')->willReturn($shopConstraint);
 
         return $shopContextMock;

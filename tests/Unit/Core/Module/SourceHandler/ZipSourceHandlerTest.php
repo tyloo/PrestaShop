@@ -38,7 +38,9 @@ use Tests\Resources\ResourceResetter;
 class ZipSourceHandlerTest extends TestCase
 {
     private const UNHANDLABLE_SOURCE = 'unhandlablesource';
+
     private const INVALID_SOURCE = __DIR__ . '/../../../../Resources/dummyFile/invalid_module.zip';
+
     private const VALID_SOURCE = __DIR__ . '/../../../../Resources/dummyFile/valid_module.zip';
 
     /**

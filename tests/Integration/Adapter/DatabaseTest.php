@@ -37,11 +37,11 @@ class DatabaseTest extends TestCase
     public function providerEscape(): iterable
     {
         yield ['hello', 'hello'];
-        yield ['\\\'inject', '\'inject'];
+        yield ['\\\'inject', "'inject"];
         yield ['\\"inject', '"inject'];
         yield [42, 42];
         yield [4.2, 4.2];
-        yield ['4\\\'200', '4\'200'];
+        yield ['4\\\'200', "4'200"];
     }
 
     /**

@@ -126,6 +126,7 @@ class DisabledEndpointsTest extends ApiTestCase
                 break;
             }
         }
+
         $this->assertEquals($expectedEndpointStatus, $foundScope);
     }
 

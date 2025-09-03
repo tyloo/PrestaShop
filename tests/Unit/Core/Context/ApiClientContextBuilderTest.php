@@ -42,6 +42,7 @@ class ApiClientContextBuilderTest extends TestCase
     use MockConfigurationTrait;
 
     private const SHOP_ID = 42;
+
     private const API_CLIENT_ID = 51;
 
     /**

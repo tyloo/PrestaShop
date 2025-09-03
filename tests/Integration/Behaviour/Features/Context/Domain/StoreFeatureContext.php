@@ -83,8 +83,8 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new DeleteStoreCommand((int) $store->id));
-        } catch (StoreNotFoundException $e) {
-            $this->setLastException($e);
+        } catch (StoreNotFoundException $storeNotFoundException) {
+            $this->setLastException($storeNotFoundException);
         }
     }
 
@@ -100,8 +100,8 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new BulkDeleteStoreCommand($storeIds));
-        } catch (StoreNotFoundException $e) {
-            $this->setLastException($e);
+        } catch (StoreNotFoundException $storeNotFoundException) {
+            $this->setLastException($storeNotFoundException);
         }
     }
 
@@ -166,6 +166,7 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
             if ($isToBePresent) {
                 throw new RuntimeException(\sprintf('Store "%s" is present, but it was expected to be deleted', $storeReference));
             }
+
             SharedStorage::getStorage()->clear($storeReference);
         }
     }

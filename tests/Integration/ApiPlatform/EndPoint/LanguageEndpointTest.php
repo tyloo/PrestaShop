@@ -71,6 +71,7 @@ class LanguageEndpointTest extends ApiTestCase
         foreach ($items as $key => $item) {
             $items[$key]['flag'] = substr((string) $items[$key]['flag'], 0, strpos((string) $items[$key]['flag'], '?'));
         }
+
         $this->assertEquals(2, $paginatedLanguages['totalItems']);
         $this->assertEquals([
             [

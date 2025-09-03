@@ -32,7 +32,7 @@ use PrestaShopBundle\Service\Hook\HookFinder;
 
 class HookFinderTest extends TestCase
 {
-    public function testAddOneExpectedClass()
+    public function testAddOneExpectedClass(): void
     {
         $finder = new HookFinder();
         $finder->addExpectedInstanceClasses(self::class);
@@ -43,7 +43,7 @@ class HookFinderTest extends TestCase
         );
     }
 
-    public function testAddSeveralExpectedClass()
+    public function testAddSeveralExpectedClass(): void
     {
         $finder = new HookFinder();
         $finder->addExpectedInstanceClasses(self::class);

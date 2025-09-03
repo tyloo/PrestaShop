@@ -45,14 +45,14 @@ class StringArrayToIntegerArrayDataTransformerTest extends TestCase
         $this->dataTransformer = new StringArrayToIntegerArrayDataTransformer();
     }
 
-    public function testReverseTransformationForNonArrayValue()
+    public function testReverseTransformationForNonArrayValue(): void
     {
         $data = null;
 
         $this->assertEquals($data, $this->dataTransformer->reverseTransform($data));
     }
 
-    public function testReverseTransformationForStringArrayValue()
+    public function testReverseTransformationForStringArrayValue(): void
     {
         $data = [
             '1',
@@ -70,7 +70,7 @@ class StringArrayToIntegerArrayDataTransformerTest extends TestCase
         );
     }
 
-    public function testReverseTransformationForMixedContentArrayValue()
+    public function testReverseTransformationForMixedContentArrayValue(): void
     {
         $data = [
             '1',

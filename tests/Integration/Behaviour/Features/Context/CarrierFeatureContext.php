@@ -107,6 +107,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
         if (! $countryId) {
             throw new Exception('Country not found with iso code = ' . $isoCode);
         }
+
         $country = new Country($countryId);
         // clone country to be able to properly reset previous data
         $this->previousCountries[$countryName] = clone $country;
@@ -202,29 +203,35 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
         foreach ($this->priceRanges as $priceRange) {
             $priceRange->delete();
         }
+
         $this->priceRanges = [];
         foreach ($this->carriers as $carrier) {
             $carrier->delete();
         }
+
         $this->carriers = [];
         foreach ($this->addresses as $address) {
             $address->delete();
         }
+
         $this->addresses = [];
         foreach ($this->states as $state) {
             $state->delete();
         }
+
         $this->states = [];
         foreach ($this->countries as $countryName => $country) {
             $country->id_zone = $this->previousCountries[$countryName]->id_zone;
             $country->active = $this->previousCountries[$countryName]->active;
             $country->save();
         }
+
         $this->previousCountries = [];
         $this->countries = [];
         foreach ($this->zones as $zone) {
             $zone->delete();
         }
+
         $this->zones = [];
     }
 

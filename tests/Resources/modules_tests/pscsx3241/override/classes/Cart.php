@@ -34,14 +34,21 @@ class Cart extends CartCore
     public $allow_seperated_package = false;
 
     protected static $_nbProducts = [];
+
     protected static $_isVirtualCart = [];
 
     protected $_products;
+
     protected static $_totalWeight = [];
+
     protected $_taxCalculationMethod = PS_TAX_EXC;
+
     protected static $_carriers;
+
     protected static $_taxes_rate;
+
     protected static $_attributesLists = [];
+
     protected static $_customer;
 
     public function deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0)
@@ -71,6 +78,7 @@ class Cart extends CartCore
 
             return $params['productpricebysize']['products'] ?? $products;
         }
+
         $params = Hook::exec('ppbsGetProducts', ['products' => $products], null);
         $params = json_decode($params, true);
 

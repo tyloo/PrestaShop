@@ -47,14 +47,14 @@ class ContainerTest extends TestCase
         $this->container = new Container();
     }
 
-    public function testBindByClosure()
+    public function testBindByClosure(): void
     {
-        $this->container->bind('foo', fn () => 'FOO');
+        $this->container->bind('foo', fn (): string => 'FOO');
 
         $this->assertEquals('FOO', $this->container->make('foo'));
     }
 
-    public function testCannotBindTheSameServiceTwice()
+    public function testCannotBindTheSameServiceTwice(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Foundation\IoC\Exception::class);
 
@@ -62,9 +62,9 @@ class ContainerTest extends TestCase
         $this->container->bind('foo', function (): void {});
     }
 
-    public function testBindByClosureInstanceNotSharedByDefault()
+    public function testBindByClosureInstanceNotSharedByDefault(): void
     {
-        $this->container->bind('different', fn () => new Dummy());
+        $this->container->bind('different', fn (): Dummy => new Dummy());
 
         $first = $this->container->make('different');
         $second = $this->container->make('different');
@@ -72,9 +72,9 @@ class ContainerTest extends TestCase
         $this->assertNotSame($first, $second);
     }
 
-    public function testBindByClosureInstanceSharedIfExplicitelyRequired()
+    public function testBindByClosureInstanceSharedIfExplicitelyRequired(): void
     {
-        $this->container->bind('same', fn () => new Dummy(), true);
+        $this->container->bind('same', fn (): Dummy => new Dummy(), true);
 
         $first = $this->container->make('same');
         $second = $this->container->make('same');
@@ -82,26 +82,26 @@ class ContainerTest extends TestCase
         $this->assertSame($first, $second);
     }
 
-    public function testBindClassName()
+    public function testBindClassName(): void
     {
         $this->container->bind('dummy', Dummy::class);
 
         $this->assertEquals(Dummy::class, $this->container->make('dummy')::class);
     }
 
-    public function testMakeWithoutBind()
+    public function testMakeWithoutBind(): void
     {
         $this->assertEquals(Dummy::class, $this->container->make(Dummy::class)::class);
     }
 
-    public function testClassesCanBeLoadedWithCustomNamespacePrefix()
+    public function testClassesCanBeLoadedWithCustomNamespacePrefix(): void
     {
         $this->container->aliasNamespace('Fixtures', 'Tests\Unit\Core\Foundation\IoC\Fixtures');
 
         $this->assertEquals(Dummy::class, $this->container->make('Fixtures:Dummy')::class);
     }
 
-    public function testAnAliasCannotBeChanged()
+    public function testAnAliasCannotBeChanged(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Foundation\IoC\Exception::class);
 
@@ -109,31 +109,31 @@ class ContainerTest extends TestCase
         $this->container->aliasNamespace('Fixtures', 'Tests\Unit\Core\Foundation\Other');
     }
 
-    public function testDepsAreFetchedAutomagically()
+    public function testDepsAreFetchedAutomagically(): void
     {
         $this->assertEquals(Fixtures\ClassWithDep::class, $this->container->make(Fixtures\ClassWithDep::class)::class);
     }
 
-    public function testDepsAreFetchedAutomagicallyWhenDependsOnThingWithADefaultValue()
+    public function testDepsAreFetchedAutomagicallyWhenDependsOnThingWithADefaultValue(): void
     {
         $this->assertEquals(Fixtures\ClassWithDepAndDefault::class, $this->container->make(Fixtures\ClassWithDepAndDefault::class)::class);
     }
 
-    public function testUnbuildableNotBuilt()
+    public function testUnbuildableNotBuilt(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Foundation\IoC\Exception::class);
 
         $this->container->make(Fixtures\UnBuildable::class);
     }
 
-    public function testNonExistingClassNotBuilt()
+    public function testNonExistingClassNotBuilt(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Foundation\IoC\Exception::class);
 
         $this->container->make('Tests\Unit\Core\Foundation\IoC\Fixtures\AClassThatDoesntExistAtAll');
     }
 
-    public function testDependencyLoopDoesntCrashContainer()
+    public function testDependencyLoopDoesntCrashContainer(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Foundation\IoC\Exception::class);
 
@@ -144,11 +144,11 @@ class ContainerTest extends TestCase
         $this->container->make(Fixtures\CycleA::class);
     }
 
-    public function testCanBuildClassWhoseDependencyIsBuitByClosure()
+    public function testCanBuildClassWhoseDependencyIsBuitByClosure(): void
     {
         $this->container->bind(
             DepBuiltByClosure::class,
-            fn () => new DepBuiltByClosure(42)
+            fn (): DepBuiltByClosure => new DepBuiltByClosure(42)
         );
 
         $instance = $this->container->make(
@@ -172,13 +172,13 @@ class ContainerTest extends TestCase
     /**
      * @dataProvider valuesToBind
      */
-    public function testContainerCanBindValuesDirectly($value)
+    public function testContainerCanBindValuesDirectly($value): void
     {
         $this->container->bind('value', $value);
         $this->assertSame($value, $this->container->make('value'));
     }
 
-    public function testContainerDoesntBindStringsAsLiteralValues()
+    public function testContainerDoesntBindStringsAsLiteralValues(): void
     {
         $this->expectException(Exception::class);
 

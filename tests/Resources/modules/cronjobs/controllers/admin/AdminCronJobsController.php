@@ -61,13 +61,14 @@ class AdminCronJobsController extends ModuleAdminController
                 $module = Module::getInstanceById((int) $cron['id_module']);
 
                 if ($module === false) {
-                    Db::getInstance()->execute('DELETE FROM ' . _DB_PREFIX_ . bqSQL($this->module->name) . ' WHERE `id_cronjob` = \'' . (int) $cron['id_cronjob'] . '\'');
+                    Db::getInstance()->execute('DELETE FROM ' . _DB_PREFIX_ . bqSQL($this->module->name) . " WHERE `id_cronjob` = '" . (int) $cron['id_cronjob'] . "'");
 
                     break;
                 }
+
                 if ($this->shouldBeExecuted($cron) === true) {
                     Hook::exec('actionCronJob', [], $cron['id_module']);
-                    $query = 'UPDATE ' . _DB_PREFIX_ . bqSQL($this->module->name) . ' SET `updated_at` = NOW(), `active` = IF (`one_shot` = TRUE, FALSE, `active`) WHERE `id_cronjob` = \'' . (int) $cron['id_cronjob'] . '\'';
+                    $query = 'UPDATE ' . _DB_PREFIX_ . bqSQL($this->module->name) . " SET `updated_at` = NOW(), `active` = IF (`one_shot` = TRUE, FALSE, `active`) WHERE `id_cronjob` = '" . (int) $cron['id_cronjob'] . "'";
                     Db::getInstance()->execute($query);
                 }
             }
@@ -83,7 +84,7 @@ class AdminCronJobsController extends ModuleAdminController
             foreach ($crons as $cron) {
                 if ($this->shouldBeExecuted($cron) === true) {
                     Tools::file_get_contents(urldecode((string) $cron['task']), false);
-                    $query = 'UPDATE ' . _DB_PREFIX_ . bqSQL($this->module->name) . ' SET `updated_at` = NOW(), `active` = IF (`one_shot` = TRUE, FALSE, `active`) WHERE `id_cronjob` = \'' . (int) $cron['id_cronjob'] . '\'';
+                    $query = 'UPDATE ' . _DB_PREFIX_ . bqSQL($this->module->name) . " SET `updated_at` = NOW(), `active` = IF (`one_shot` = TRUE, FALSE, `active`) WHERE `id_cronjob` = '" . (int) $cron['id_cronjob'] . "'";
                     Db::getInstance()->execute($query);
                 }
             }

@@ -59,6 +59,7 @@ class ProductCombinationFactory
             if ($combinationDetails->getPrice()) {
                 $combination->price = $combinationDetails->getPrice();
             }
+
             $combination->add();
 
             StockAvailable::setQuantity($productId, $combination->id, (int) $combinationDetails->getQuantity());
@@ -74,6 +75,7 @@ class ProductCombinationFactory
                     }
                 }
             }
+
             $combination->setAttributes($combinationAttributesIds);
         }
 

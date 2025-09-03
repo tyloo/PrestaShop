@@ -123,8 +123,8 @@ class CarrierRangesFeatureContext extends AbstractDomainFeatureContext
 
             // Reset cache so that the carrier becomes selectable
             Carrier::resetStaticCache();
-        } catch (CarrierException $e) {
-            $this->setLastException($e);
+        } catch (CarrierException $carrierException) {
+            $this->setLastException($carrierException);
         }
     }
 
@@ -144,16 +144,17 @@ class CarrierRangesFeatureContext extends AbstractDomainFeatureContext
                 $range['id_zone'] = $zone->id;
                 $zoneIds[] = $zone->id;
             }
+
             $rangesExpected = new CarrierRangesCollection($data);
 
             Assert::assertEquals($rangesExpected, $rangesDatabase);
-        } catch (CarrierException $e) {
-            $this->setLastException($e);
+        } catch (CarrierException $carrierException) {
+            $this->setLastException($carrierException);
         }
     }
 
     private function getShopConstraint(string $shopReference): ShopConstraint
     {
-        return ShopConstraint::shop((int) $this->referenceToId($shopReference));
+        return ShopConstraint::shop($this->referenceToId($shopReference));
     }
 }

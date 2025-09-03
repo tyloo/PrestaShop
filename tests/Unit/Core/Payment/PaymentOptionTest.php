@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
 class PaymentOptionTest extends TestCase
 {
-    public function testConvertLegacyOptionConvertsOneOption()
+    public function testConvertLegacyOptionConvertsOneOption(): void
     {
         $newOption = new PaymentOption();
         $newOption
@@ -58,7 +58,7 @@ class PaymentOptionTest extends TestCase
         );
     }
 
-    public function testConvertLegacyOptionConvertsTwoOptionsSpecifiedAsOne()
+    public function testConvertLegacyOptionConvertsTwoOptionsSpecifiedAsOne(): void
     {
         $newOption = new PaymentOption();
         $newOption

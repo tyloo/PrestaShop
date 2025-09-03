@@ -139,7 +139,7 @@ class CacheProviderTest extends TestCase
         ];
     }
 
-    public function testGetLegacyRoutesAndSaveCache()
+    public function testGetLegacyRoutesAndSaveCache(): void
     {
         $mockProvider = $this->buildMockRouterProvider($this->legacyRoutes);
         $cacheProvider = new CacheProvider($mockProvider, $this->buildSavingCache(), $this->buildCacheKeyGenerator());
@@ -156,7 +156,7 @@ class CacheProviderTest extends TestCase
         $this->assertCount(4, $legacyRoutes);
     }
 
-    public function testGetFromCache()
+    public function testGetFromCache(): void
     {
         $cacheProvider = new CacheProvider(
             $this->buildCachedRouterProvider(),
@@ -175,7 +175,7 @@ class CacheProviderTest extends TestCase
         $this->assertCount(4, $legacyRoutes);
     }
 
-    public function testWithRealCache()
+    public function testWithRealCache(): void
     {
         $cache = new ArrayAdapter();
         $mockProvider = $this->buildMockRouterProvider($this->legacyRoutes);
@@ -209,7 +209,7 @@ class CacheProviderTest extends TestCase
         $this->assertNotEmpty($legacyRoutes['admin_categories_edit']);
     }
 
-    public function testGetControllersActions()
+    public function testGetControllersActions(): void
     {
         $cache = new ArrayAdapter();
         $mockProvider = $this->buildMockRouterProvider($this->legacyRoutes);
@@ -247,7 +247,7 @@ class CacheProviderTest extends TestCase
         $this->assertNotEmpty($controllerActions['AdminCategories']['form']);
     }
 
-    public function testGetActionsByControllerAndSaveCache()
+    public function testGetActionsByControllerAndSaveCache(): void
     {
         $mockProvider = $this->buildMockRouterProvider($this->legacyRoutes);
         $cacheProvider = new CacheProvider($mockProvider, $this->buildSavingCache(), $this->buildCacheKeyGenerator());
@@ -262,7 +262,7 @@ class CacheProviderTest extends TestCase
         $this->assertSame(['index', 'create', 'new'], $controllerActions);
     }
 
-    public function testGetActionsByControllerInsensitive()
+    public function testGetActionsByControllerInsensitive(): void
     {
         $mockProvider = $this->buildMockRouterProvider($this->legacyRoutes);
         $cacheProvider = new CacheProvider($mockProvider, $this->buildSavingCache(), $this->buildCacheKeyGenerator());
@@ -277,7 +277,7 @@ class CacheProviderTest extends TestCase
         $this->assertSame(['index', 'create', 'new'], $controllerActions);
     }
 
-    public function testGetLegacyRouteByActionAndSaveCache()
+    public function testGetLegacyRouteByActionAndSaveCache(): void
     {
         $mockProvider = $this->buildMockRouterProvider($this->legacyRoutes);
         $cacheProvider = new CacheProvider($mockProvider, $this->buildSavingCache(), $this->buildCacheKeyGenerator());
@@ -304,7 +304,7 @@ class CacheProviderTest extends TestCase
         $this->assertEquals('admin_categories_create', $legacyRoute->getRouteName());
     }
 
-    public function testGetLegacyRouteByActionInsensitive()
+    public function testGetLegacyRouteByActionInsensitive(): void
     {
         $mockProvider = $this->buildMockRouterProvider($this->legacyRoutes);
         $cacheProvider = new CacheProvider($mockProvider, $this->buildSavingCache(), $this->buildCacheKeyGenerator());
@@ -328,7 +328,7 @@ class CacheProviderTest extends TestCase
     /**
      * @return MockObject|AdapterInterface
      */
-    private function buildExistingCache()
+    private function buildExistingCache(): MockObject
     {
         // CacheItem mock
         $itemMock = $this
@@ -371,7 +371,7 @@ class CacheProviderTest extends TestCase
     /**
      * @return MockObject|AdapterInterface
      */
-    private function buildSavingCache()
+    private function buildSavingCache(): MockObject
     {
         // CacheItem mock
         $itemMock = $this
@@ -414,7 +414,7 @@ class CacheProviderTest extends TestCase
     /**
      * @return MockObject|LegacyRouteProviderInterface
      */
-    private function buildMockRouterProvider(array $legacyRoutes)
+    private function buildMockRouterProvider(array $legacyRoutes): MockObject
     {
         $providerMock = $this
             ->getMockBuilder(LegacyRouteProviderInterface::class)
@@ -432,7 +432,7 @@ class CacheProviderTest extends TestCase
     /**
      * @return MockObject|LegacyRouteProviderInterface
      */
-    private function buildCachedRouterProvider()
+    private function buildCachedRouterProvider(): MockObject
     {
         $providerMock = $this
             ->getMockBuilder(LegacyRouteProviderInterface::class)
@@ -449,7 +449,7 @@ class CacheProviderTest extends TestCase
     /**
      * @return MockObject|CacheKeyGeneratorInterface
      */
-    private function buildCacheKeyGenerator()
+    private function buildCacheKeyGenerator(): MockObject
     {
         $generatorMock = $this
             ->getMockBuilder(CacheKeyGeneratorInterface::class)

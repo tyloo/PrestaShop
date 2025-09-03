@@ -46,7 +46,7 @@ class ModuleCoreTest extends TestCase
         }
     }
 
-    public function testDisplayErrorShouldReturnSimpleError()
+    public function testDisplayErrorShouldReturnSimpleError(): void
     {
         // given
         $error = 'This is an error!';
@@ -60,7 +60,7 @@ class ModuleCoreTest extends TestCase
         $this->assertStringContainsString($error, $crawler->filter('.module_error')->text());
     }
 
-    public function testDisplayErrorShouldReturnMultipleErrors()
+    public function testDisplayErrorShouldReturnMultipleErrors(): void
     {
         // given
         $errors = [

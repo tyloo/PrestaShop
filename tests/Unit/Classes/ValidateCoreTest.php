@@ -35,7 +35,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isIp2LongDataProvider
      */
-    public function testIsIp2Long($expected, $input)
+    public function testIsIp2Long($expected, $input): void
     {
         $this->assertEquals($expected, Validate::isIp2Long($input));
     }
@@ -43,7 +43,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isEmailDataProvider
      */
-    public function testIsEmail($expected, $input)
+    public function testIsEmail($expected, $input): void
     {
         $this->assertSame($expected, Validate::isEmail($input));
     }
@@ -51,7 +51,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isBirthDateProvider
      */
-    public function testIsBirthDate($expected, $input)
+    public function testIsBirthDate($expected, $input): void
     {
         // data from isBirthDateProvider provider are in UTC
         $defaultTz = date_default_timezone_get();
@@ -66,7 +66,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isDateOrNullProvider
      */
-    public function testIsDateOrNull($expected, $input)
+    public function testIsDateOrNull($expected, $input): void
     {
         $this->assertSame($expected, Validate::isDateOrNull($input));
     }
@@ -74,7 +74,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isMd5DataProvider
      */
-    public function testIsMd5($expected, $input)
+    public function testIsMd5($expected, $input): void
     {
         $this->assertSame($expected, Validate::isMd5($input));
     }
@@ -82,7 +82,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isSha1DataProvider
      */
-    public function testIsSha1($expected, $input)
+    public function testIsSha1($expected, $input): void
     {
         $this->assertSame($expected, Validate::isSha1($input));
     }
@@ -90,7 +90,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isNameDataProvider
      */
-    public function testIsName($expected, $input)
+    public function testIsName($expected, $input): void
     {
         $this->assertSame($expected, Validate::isName($input));
     }
@@ -98,7 +98,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isCustomerNameDataProvider
      */
-    public function testIsCustomerName($expected, $input)
+    public function testIsCustomerName($expected, $input): void
     {
         $this->assertSame($expected, Validate::isCustomerName($input));
     }
@@ -106,7 +106,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isFloatDataProvider
      */
-    public function testIsFloat($expected, $input)
+    public function testIsFloat($expected, $input): void
     {
         $this->assertSame($expected, Validate::isFloat($input));
     }
@@ -114,7 +114,7 @@ class ValidateCoreTest extends TestCase
     /**
      * @dataProvider isUnsignedFloatDataProvider
      */
-    public function testIsUnsignedFloat($expected, $input)
+    public function testIsUnsignedFloat($expected, $input): void
     {
         $this->assertSame($expected, Validate::isUnsignedFloat($input));
     }
@@ -124,7 +124,7 @@ class ValidateCoreTest extends TestCase
      *
      * @dataProvider isOptFloatDataProvider
      */
-    public function testIsOptFloat($expected, $input)
+    public function testIsOptFloat($expected, $input): void
     {
         $this->assertSame($expected, Validate::isOptFloat($input));
     }
@@ -134,7 +134,7 @@ class ValidateCoreTest extends TestCase
      *
      * @param string|int|array<string|int|bool|array> $input
      */
-    public function testIsArrayWithIds(bool $expected, $input)
+    public function testIsArrayWithIds(bool $expected, $input): void
     {
         $this->assertSame($expected, Validate::isArrayWithIds($input));
     }

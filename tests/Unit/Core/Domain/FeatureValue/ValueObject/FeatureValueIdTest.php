@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureValueId;
 
 class FeatureValueIdTest extends TestCase
 {
-    public function testValidInput()
+    public function testValidInput(): void
     {
         $vo = new FeatureValueId(42);
         $this->assertNotNull($vo);
@@ -44,7 +44,7 @@ class FeatureValueIdTest extends TestCase
     /**
      * @dataProvider getInvalidInput
      */
-    public function testInvalidInput(int $featureValueId)
+    public function testInvalidInput(int $featureValueId): void
     {
         $this->expectException(InvalidFeatureValueIdException::class);
         new FeatureValueId($featureValueId);

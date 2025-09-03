@@ -36,14 +36,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RequestFiltersBuilderTest extends TestCase
 {
-    public function testBuildWithoutRequest()
+    public function testBuildWithoutRequest(): void
     {
         $builder = new RequestFiltersBuilder();
         $filters = $builder->buildFilters();
         $this->assertNull($filters);
     }
 
-    public function testOverrideWithoutRequest()
+    public function testOverrideWithoutRequest(): void
     {
         $builder = new RequestFiltersBuilder();
         $filters = new Filters(['limit' => 10]);
@@ -53,7 +53,7 @@ class RequestFiltersBuilderTest extends TestCase
         $this->assertEmpty($builtFilters->getFilterId());
     }
 
-    public function testBuildWithGetRequest()
+    public function testBuildWithGetRequest(): void
     {
         $expectedParameters = [
             'limit' => 10,
@@ -71,7 +71,7 @@ class RequestFiltersBuilderTest extends TestCase
         $this->assertEmpty($filters->getFilterId());
     }
 
-    public function testOverrideWithGetRequest()
+    public function testOverrideWithGetRequest(): void
     {
         $requestParameters = [
             'limit' => 10,
@@ -94,7 +94,7 @@ class RequestFiltersBuilderTest extends TestCase
         $this->assertEmpty($builtFilters->getFilterId());
     }
 
-    public function testBuildWithGetRequestAndFilterId()
+    public function testBuildWithGetRequestAndFilterId(): void
     {
         $expectedParameters = [
             'limit' => 10,
@@ -112,7 +112,7 @@ class RequestFiltersBuilderTest extends TestCase
         $this->assertEquals('language', $filters->getFilterId());
     }
 
-    public function testOverrideWithGetRequestAndFilterId()
+    public function testOverrideWithGetRequestAndFilterId(): void
     {
         $requestParameters = [
             'limit' => 10,
@@ -136,7 +136,7 @@ class RequestFiltersBuilderTest extends TestCase
         $this->assertEquals('alternate_language', $builtFilters->getFilterId());
     }
 
-    public function testBuildWithPostRequest()
+    public function testBuildWithPostRequest(): void
     {
         $expectedParameters = [
             'limit' => 10,
@@ -154,7 +154,7 @@ class RequestFiltersBuilderTest extends TestCase
         $this->assertEmpty($filters->getFilterId());
     }
 
-    public function testOverrideWithPostRequestAndFilterId()
+    public function testOverrideWithPostRequestAndFilterId(): void
     {
         $requestParameters = [
             'limit' => 10,
@@ -184,7 +184,7 @@ class RequestFiltersBuilderTest extends TestCase
      *
      * @return MockObject|Request
      */
-    private function buildRequestMock(array $parameters, $requestScope = '', $postQuery = false)
+    private function buildRequestMock(array $parameters, $requestScope = '', $postQuery = false): MockObject
     {
         $requestMock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()

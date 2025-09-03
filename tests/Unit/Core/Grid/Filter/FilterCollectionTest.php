@@ -61,14 +61,14 @@ class FilterCollectionTest extends TestCase
     /**
      * @depends testFilterCanBeAddedToCollection
      */
-    public function testFilterCanBeRemovedFromCollection(FilterCollection $filters)
+    public function testFilterCanBeRemovedFromCollection(FilterCollection $filters): void
     {
         $filters->remove('second');
 
         $this->assertCount(2, $filters->all());
     }
 
-    private function getFilterMock($name)
+    private function getFilterMock($name): \PHPUnit\Framework\MockObject\MockObject
     {
         $filter = $this->createMock(FilterInterface::class);
         $filter->method('getName')

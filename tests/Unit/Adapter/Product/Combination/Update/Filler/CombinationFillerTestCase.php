@@ -37,7 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 abstract class CombinationFillerTestCase extends TestCase
 {
     protected const DEFAULT_LANG_ID = 1;
+
     protected const DEFAULT_SHOP_ID = 2;
+
     protected const COMBINATION_ID = 3;
 
     protected function fillUpdatableProperties(

@@ -110,16 +110,18 @@ class UpdateCombinationStockFeatureContext extends AbstractCombinationFeatureCon
             if (isset($dataRows['delta quantity'])) {
                 $command->setDeltaQuantity((int) $dataRows['delta quantity']);
             }
+
             if (isset($dataRows['fixed quantity'])) {
                 $command->setFixedQuantity((int) $dataRows['fixed quantity']);
             }
+
             if (isset($dataRows['location'])) {
                 $command->setLocation($dataRows['location']);
             }
 
             $this->getCommandBus()->handle($command);
-        } catch (ProductStockConstraintException $e) {
-            $this->setLastException($e);
+        } catch (ProductStockConstraintException $productStockConstraintException) {
+            $this->setLastException($productStockConstraintException);
         }
     }
 }

@@ -57,7 +57,7 @@ class FrontOfficeProviderTest extends TestCase
      * The provider should retrieve all translations from files that
      * look like `ShopSomething` or `ModulesSomethingShop`
      */
-    public function testItExtractsCatalogueFromXliffFiles()
+    public function testItExtractsCatalogueFromXliffFiles(): void
     {
         // The xliff file contains 6 keys
         $catalogue = $this->provider->getMessageCatalogue();

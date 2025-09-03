@@ -30,8 +30,11 @@ namespace Tests\TestCase;
 class PhpErrorsCounter
 {
     private $notices = 0;
+
     private $warnings = 0;
+
     private $errors = 0;
+
     private $deprecations = 0;
 
     /**

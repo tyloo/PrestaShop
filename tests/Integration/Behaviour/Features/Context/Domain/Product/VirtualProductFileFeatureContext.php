@@ -100,8 +100,8 @@ class VirtualProductFileFeatureContext extends AbstractProductFeatureContext
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (VirtualProductFileConstraintException $e) {
-            $this->setLastException($e);
+        } catch (VirtualProductFileConstraintException $virtualProductFileConstraintException) {
+            $this->setLastException($virtualProductFileConstraintException);
         }
     }
 
@@ -218,9 +218,10 @@ class VirtualProductFileFeatureContext extends AbstractProductFeatureContext
     public function assertFileAndReference(string $productReference, string $fileReference, TableNode $dataTable): void
     {
         $actualFile = $this->getProductForEditing($productReference)->getVirtualProductFile();
-        if (! $actualFile) {
+        if ($actualFile === null) {
             throw new RuntimeException('Expected virtual product to have a file');
         }
+
         Assert::assertEquals(
             $this->getSharedStorage()->get($fileReference),
             $actualFile->getId(),
@@ -235,9 +236,10 @@ class VirtualProductFileFeatureContext extends AbstractProductFeatureContext
     public function assertNewFile(string $productReference, string $fileReference, TableNode $dataTable): void
     {
         $actualFile = $this->getProductForEditing($productReference)->getVirtualProductFile();
-        if (! $actualFile) {
+        if ($actualFile === null) {
             throw new RuntimeException('Expected virtual product to have a file');
         }
+
         $this->getSharedStorage()->set($fileReference, $actualFile->getId());
         $this->assertVirtualFile($actualFile, $dataTable);
 
@@ -325,14 +327,17 @@ class VirtualProductFileFeatureContext extends AbstractProductFeatureContext
             $command->setDisplayName($data['display name']);
             unset($data['display name']);
         }
+
         if (isset($data['access days'])) {
             $command->setAccessDays((int) $data['access days']);
             unset($data['access days']);
         }
+
         if (isset($data['download times limit'])) {
             $command->setDownloadTimesLimit((int) $data['download times limit']);
             unset($data['download times limit']);
         }
+
         if (isset($data['expiration date'])) {
             $command->setExpirationDate(new DateTimeImmutable($data['expiration date']));
             unset($data['expiration date']);

@@ -33,13 +33,13 @@ use PrestaShop\PrestaShop\Core\MailTemplate\Transformation\HTMLToTextTransformat
 
 class HTMLToTextTransformationTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $transformation = new HTMLToTextTransformation();
         $this->assertNotNull($transformation);
     }
 
-    public function testSetters()
+    public function testSetters(): void
     {
         $transformation = new HTMLToTextTransformation();
 
@@ -50,7 +50,7 @@ class HTMLToTextTransformationTest extends TestCase
         $this->assertEquals($transformation, $transformation->setLanguage($languageMock));
     }
 
-    public function testApply()
+    public function testApply(): void
     {
         $htmlTemplate = file_get_contents(realpath(__DIR__ . '/../../Resources/mails/html/account.html'));
         $txtTemplate = file_get_contents(realpath(__DIR__ . '/../../Resources/mails/txt/account.txt'));

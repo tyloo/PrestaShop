@@ -161,6 +161,7 @@ class ContextMocker
         } else {
             Shop::resetContext();
         }
+
         Module::setContextInstanceForTesting($this->backupContext);
     }
 

@@ -115,6 +115,7 @@ class ModuleCollectionTest extends TestCase
         foreach ($this->moduleCollection as $module) {
             ++$i;
         }
+
         $this->assertSame(2, $i);
     }
 

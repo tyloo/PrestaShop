@@ -47,13 +47,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ModuleManagerTest extends TestCase
 {
     public const INSTALLED_MODULE_NAME = 'installed';
+
     public const UNINSTALLED_MODULE_NAME = 'uninstalled';
+
     public const INSTALLED_THEN_UNINSTALLED_MODULE_NAME = 'installed_uninstalled';
 
     /**
      * @var ModuleManager
      */
-    private $moduleManager;
+    private MockObject $moduleManager;
 
     /**
      * @var Module&MockObject
@@ -63,7 +65,7 @@ class ModuleManagerTest extends TestCase
     /**
      * @var LegacyModule&MockObject
      */
-    private $legacyModule;
+    private ?MockObject $legacyModule = null;
 
     protected function setUp(): void
     {

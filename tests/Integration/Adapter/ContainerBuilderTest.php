@@ -38,14 +38,14 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class ContainerBuilderTest extends TestCase
 {
-    public function testGetFrontContainer()
+    public function testGetFrontContainer(): void
     {
         $container = ContainerBuilder::getContainer('front', true);
         $this->assertNotNull($container);
         $this->assertInstanceOf(ContainerInterface::class, $container);
     }
 
-    public function testFrontContainerContainsAnEntityManager()
+    public function testFrontContainerContainsAnEntityManager(): void
     {
         $container = ContainerBuilder::getContainer('front', true);
         $entityManager = $container->get('doctrine.orm.entity_manager');
@@ -53,13 +53,13 @@ class ContainerBuilderTest extends TestCase
         $this->assertInstanceOf(EntityManagerInterface::class, $entityManager);
     }
 
-    public function testContainerLoadsModuleAutoload()
+    public function testContainerLoadsModuleAutoload(): void
     {
         ContainerBuilder::getContainer('front', true);
         $this->assertTrue(class_exists(\PrestaShop\Module\Banner\Entity\Banner::class));
     }
 
-    public function testDoctrineModuleMapping()
+    public function testDoctrineModuleMapping(): void
     {
         $container = ContainerBuilder::getContainer('front', true);
         /** @var EntityManagerInterface $entityManager */
@@ -69,7 +69,7 @@ class ContainerBuilderTest extends TestCase
         $this->assertNotNull($classMetadata);
     }
 
-    public function testDoctrineCoreMapping()
+    public function testDoctrineCoreMapping(): void
     {
         $container = ContainerBuilder::getContainer('front', true);
         /** @var EntityManagerInterface $entityManager */
@@ -79,7 +79,7 @@ class ContainerBuilderTest extends TestCase
         $this->assertNotNull($classMetadata);
     }
 
-    public function testFrontModuleServices()
+    public function testFrontModuleServices(): void
     {
         $container = ContainerBuilder::getContainer('front', true);
         $frontRepository = $container->get('ps_banner.front_repository');
@@ -88,7 +88,7 @@ class ContainerBuilderTest extends TestCase
         $this->assertInstanceOf(FrontRepository::class, $frontRepository);
     }
 
-    public function testNoAdminServicesInFront()
+    public function testNoAdminServicesInFront(): void
     {
         $this->expectException(ServiceNotFoundException::class);
 
@@ -96,7 +96,7 @@ class ContainerBuilderTest extends TestCase
         $container->get('ps_banner.admin_repository');
     }
 
-    public function testBuildContainerAdminThrowException()
+    public function testBuildContainerAdminThrowException(): void
     {
         $this->expectException(ServiceContainerException::class);
         ContainerBuilder::getContainer('admin', false);

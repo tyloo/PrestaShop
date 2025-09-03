@@ -60,8 +60,8 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
             $this->getCommandBus()->handle(new RemoveAllAssociatedProductSuppliersCommand(
                 $this->getSharedStorage()->get($productReference))
             );
-        } catch (ProductSupplierException $e) {
-            $this->setLastException($e);
+        } catch (ProductSupplierException $productSupplierException) {
+            $this->setLastException($productSupplierException);
         }
     }
 
@@ -208,6 +208,7 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
             if ($checkProductSuppliers) {
                 $productSupplierData['product_supplier'] = $productSupplierForEditing->getProductSupplierId();
             }
+
             $actualProductSuppliers[] = $productSupplierData;
         }
 
@@ -323,7 +324,7 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
             unset($data['default supplier reference']);
         }
 
-        Assert::assertEmpty($data, \sprintf('Some provided product supplier fields haven\'t been asserted: %s', var_export($data, true)));
+        Assert::assertEmpty($data, \sprintf("Some provided product supplier fields haven't been asserted: %s", var_export($data, true)));
     }
 
     /**

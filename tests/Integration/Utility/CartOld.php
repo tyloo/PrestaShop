@@ -142,6 +142,7 @@ class CartOld extends Cart
                     unset($products[$key]);
                 }
             }
+
             $type = Cart::ONLY_PRODUCTS;
         }
 

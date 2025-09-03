@@ -57,18 +57,22 @@ class PositionsControllerTest extends TestCase
      * @var int
      */
     protected $firstModuleId;
+
     /**
      * @var int
      */
     protected $secondModuleId;
+
     /**
      * @var int
      */
     protected $hookId;
+
     /**
      * @var KernelBrowser
      */
     protected $client;
+
     /**
      * @var RouterInterface
      */
@@ -123,6 +127,7 @@ class PositionsControllerTest extends TestCase
             if ($moduleManager->isInstalled($module)) {
                 $moduleManager->uninstall($module);
             }
+
             $moduleManager->install($module);
         }
 

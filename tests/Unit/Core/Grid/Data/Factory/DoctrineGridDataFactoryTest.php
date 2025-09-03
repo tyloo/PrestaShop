@@ -42,7 +42,7 @@ use PrestaShop\PrestaShop\Core\Hook\HookDispatcherInterface;
 
 class DoctrineGridDataFactoryTest extends TestCase
 {
-    public function testItProvidesGridData()
+    public function testItProvidesGridData(): void
     {
         $hookDispatcher = $this->createHookDispatcherMock();
 

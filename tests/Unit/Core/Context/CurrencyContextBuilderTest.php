@@ -42,7 +42,9 @@ class CurrencyContextBuilderTest extends ContextBuilderTestCase
     use MockConfigurationTrait;
 
     private const EN_ID = 3;
+
     private const FR_ID = 5;
+
     private const NON_EXISTENT_LANGUAGE_ID = 42;
 
     /**

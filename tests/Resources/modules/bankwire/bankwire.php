@@ -31,12 +31,17 @@ if (! defined('_PS_VERSION_')) {
 class bankwire extends PaymentModule
 {
     protected $_html = '';
+
     protected $_postErrors = [];
 
     public $details;
+
     public $owner;
+
     public $address;
+
     public $extra_mail_vars;
+
     /**
      * @var int
      */

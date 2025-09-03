@@ -40,6 +40,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
      * @var Filesystem
      */
     private $fs;
+
     private $filesTestDir;
 
     protected function setUp(): void
@@ -55,7 +56,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         $this->cleanTestDir();
     }
 
-    public function testCoreFilesOrder()
+    public function testCoreFilesOrder(): void
     {
         $testFiles = [
             'admin/sell/catalog/products/products.yml' => 10,
@@ -97,7 +98,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ], array_keys($lastModifications));
     }
 
-    public function testLatestCoreFile()
+    public function testLatestCoreFile(): void
     {
         $originalTime = time();
         $testFiles = [
@@ -118,7 +119,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         $this->assertEquals($originalTime + 3200, $generator->getLatestModificationTime());
     }
 
-    public function testCacheKeyCoreFile()
+    public function testCacheKeyCoreFile(): void
     {
         $originalTime = time();
         $testFiles = [
@@ -140,7 +141,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         $this->assertEquals('PrestaShopBundle_Routing_Converter_' . ($originalTime + 3200), $cacheKey);
     }
 
-    public function testModuleFilesOrder()
+    public function testModuleFilesOrder(): void
     {
         $testFiles = [
             'modules/ps_linklist/config/routes.yml' => 42,
@@ -178,7 +179,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         ], array_keys($lastModifications));
     }
 
-    public function testLatestModulesFile()
+    public function testLatestModulesFile(): void
     {
         $originalTime = time();
         $testFiles = [
@@ -199,7 +200,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         $this->assertEquals($originalTime + 42, $generator->getLatestModificationTime());
     }
 
-    public function testCacheKeyModulesFile()
+    public function testCacheKeyModulesFile(): void
     {
         $originalTime = time();
         $testFiles = [
@@ -221,7 +222,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         $this->assertEquals('PrestaShopBundle_Routing_Converter_' . ($originalTime + 42), $cacheKey);
     }
 
-    public function testCoreAndModules()
+    public function testCoreAndModules(): void
     {
         $originalTime = time() - 3600;
         $testFiles = [
@@ -273,7 +274,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         $this->assertEquals('PrestaShopBundle_Routing_Converter_' . $now, $generator->getCacheKey());
     }
 
-    public function testNoRouteFiles()
+    public function testNoRouteFiles(): void
     {
         $generator = new RoutingCacheKeyGenerator([], []);
         $lastModifications = $generator->getLastModifications();
@@ -286,7 +287,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         $this->assertEquals('PrestaShopBundle_Routing_Converter', $cacheKey);
     }
 
-    public function testProdEnvironment()
+    public function testProdEnvironment(): void
     {
         $originalTime = time() - 3600;
         $testFiles = [
@@ -337,6 +338,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
             if (! file_exists(\dirname($filePath))) {
                 $this->fs->mkdir(\dirname($filePath));
             }
+
             $this->fs->touch($filePath, $originalTime + $fileOffset);
         }
     }

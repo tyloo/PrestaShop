@@ -35,8 +35,11 @@ use PrestaShop\PrestaShop\Core\FeatureFlag\Layer\DotEnvLayer;
 class DotEnvLayerTest extends TestCase
 {
     private const FEATURE_FLAG_TEST = 'feature_flag_test';
+
     private const VAR_FEATURE_FLAG_TEST = 'PS_FF_FEATURE_FLAG_TEST';
+
     private const DOTENV_PATH = _PS_ROOT_DIR_ . '/tests/Resources/env/.env.unit.local';
+
     public static $save_dotenv_vars;
 
     public static function setUpBeforeClass(): void
@@ -72,19 +75,19 @@ class DotEnvLayerTest extends TestCase
         yield ['no'];
     }
 
-    public function testIsReadonly()
+    public function testIsReadonly(): void
     {
         $layer = $this->createLayer();
         $this->assertFalse($layer->isReadonly());
     }
 
-    public function testGetTypeName()
+    public function testGetTypeName(): void
     {
         $layer = $this->createLayer();
         $this->assertEquals('dotenv', $layer->getTypeName());
     }
 
-    public function testGetConstName()
+    public function testGetConstName(): void
     {
         $layer = $this->createLayer();
         $this->assertEquals(
@@ -93,14 +96,14 @@ class DotEnvLayerTest extends TestCase
         );
     }
 
-    public function testCanBeUsed()
+    public function testCanBeUsed(): void
     {
         $this->setEnv(true);
         $layer = $this->createLayer();
         $this->assertTrue($layer->canBeUsed(self::FEATURE_FLAG_TEST));
     }
 
-    public function testCannotBeUsed()
+    public function testCannotBeUsed(): void
     {
         $layer = $this->createLayer();
         $this->assertFalse($layer->canBeUsed(self::FEATURE_FLAG_TEST));
@@ -109,7 +112,7 @@ class DotEnvLayerTest extends TestCase
     /**
      * @dataProvider provideEnabledValues
      */
-    public function testIsEnabled(string $enabledValue)
+    public function testIsEnabled(string $enabledValue): void
     {
         $this->setEnv($enabledValue);
         $layer = $this->createLayer();
@@ -119,7 +122,7 @@ class DotEnvLayerTest extends TestCase
     /**
      * @dataProvider provideDisabledValues
      */
-    public function testIsDisabled(string $disabledValue)
+    public function testIsDisabled(string $disabledValue): void
     {
         $this->setEnv($disabledValue);
         $layer = $this->createLayer();
@@ -129,9 +132,9 @@ class DotEnvLayerTest extends TestCase
     /**
      * @dataProvider provideEnabledValues
      */
-    public function testEnable(string $enabledValue)
+    public function testEnable(string $enabledValue): void
     {
-        file_put_contents(self::DOTENV_PATH, self::VAR_FEATURE_FLAG_TEST . "={$enabledValue}");
+        file_put_contents(self::DOTENV_PATH, self::VAR_FEATURE_FLAG_TEST . ('=' . $enabledValue));
         $layer = $this->createLayer();
         $layer->enable(self::FEATURE_FLAG_TEST);
         $this->assertEquals(
@@ -143,10 +146,10 @@ class DotEnvLayerTest extends TestCase
     /**
      * @dataProvider provideDisabledValues
      */
-    public function testDisable(string $disabledValue)
+    public function testDisable(string $disabledValue): void
     {
         $this->setEnv(true);
-        file_put_contents(self::DOTENV_PATH, self::VAR_FEATURE_FLAG_TEST . "={$disabledValue}");
+        file_put_contents(self::DOTENV_PATH, self::VAR_FEATURE_FLAG_TEST . ('=' . $disabledValue));
         $layer = $this->createLayer();
         $layer->disable(self::FEATURE_FLAG_TEST);
         $this->assertEquals(

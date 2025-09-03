@@ -105,6 +105,7 @@ class ProfileFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['names'])) {
             Assert::assertEquals($editableProfile->getLocalizedNames(), $data['names']);
         }
+
         if (isset($data['avatarUrl'])) {
             Assert::assertEquals($editableProfile->getAvatarUrl(), $data['avatarUrl']);
         }
@@ -118,8 +119,8 @@ class ProfileFeatureContext extends AbstractDomainFeatureContext
         $caughtException = null;
         try {
             $this->getQueryBus()->handle(new GetProfileForEditing($this->getSharedStorage()->get($profileReference)));
-        } catch (ProfileException $e) {
-            $caughtException = $e;
+        } catch (ProfileException $profileException) {
+            $caughtException = $profileException;
         }
 
         Assert::assertInstanceOf(ProfileNotFoundException::class, $caughtException);

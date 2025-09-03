@@ -48,7 +48,7 @@ class CombinationGeneratorTest extends TestCase
     /**
      * @dataProvider getValidData
      */
-    public function testGenerateCombinationsFromValidData(array $valuesByGroup, array $expectedCombinations)
+    public function testGenerateCombinationsFromValidData(array $valuesByGroup, array $expectedCombinations): void
     {
         $yieldedCombinations = $this->combinationGenerator->generate($valuesByGroup);
         $generatedCombinations = [];

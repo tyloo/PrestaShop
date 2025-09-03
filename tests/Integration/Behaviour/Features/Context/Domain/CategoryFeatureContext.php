@@ -69,8 +69,11 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     ];
 
     private const PROPERTY_TYPE_BASIC = 0;
+
     private const PROPERTY_TYPE_REFERENCE = 1;
+
     private const PROPERTY_TYPE_REFERENCE_ARRAY = 2;
+
     private const PROPERTY_TYPE_BOOL = 3;
 
     /**
@@ -180,6 +183,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         foreach ($categoriesReferenceList as $categoryReference) {
             $categoryIds[] = SharedStorage::getStorage()->get($categoryReference);
         }
+
         $this->getCommandBus()->handle(new BulkDeleteCategoriesCommand($categoryIds, $deleteMode));
     }
 
@@ -194,6 +198,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         } catch (CategoryNotFoundException) {
             return;
         }
+
         throw new RuntimeException(\sprintf('Category %s still exists', $categoryReference));
     }
 
@@ -296,24 +301,31 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['description'])) {
             $command->setLocalizedDescriptions($data['description']);
         }
+
         if (isset($data['meta description'])) {
             $command->setLocalizedMetaDescriptions($data['meta description']);
         }
+
         if (isset($data['meta title'])) {
             $command->setLocalizedMetaTitles($data['meta title']);
         }
+
         if (isset($data['active'])) {
             $command->setIsActive(PrimitiveUtils::castStringBooleanIntoBoolean($data['active']));
         }
+
         if (isset($data['additional description'])) {
             $command->setLocalizedAdditionalDescriptions($data['additional description']);
         }
+
         if (isset($data['group access'])) {
             $command->setAssociatedGroupIds($this->referencesToIds($data['group access']));
         }
+
         if (isset($data['associated shops'])) {
             $command->setAssociatedShopIds($this->referencesToIds($data['associated shops']));
         }
+
         if (isset($data['redirect type'])) {
             $target = isset($data['redirect target']) ? $this->getSharedStorage()->get($data['redirect target']) : 0;
 
@@ -354,33 +366,43 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             $command->setLocalizedNames($data['name']);
         }
+
         if (isset($data['link rewrite'])) {
             $command->setLocalizedLinkRewrites($data['link rewrite']);
         }
+
         if (isset($data['active'])) {
             $command->setIsActive(PrimitiveUtils::castStringBooleanIntoBoolean($data['active']));
         }
+
         if (isset($data['description'])) {
             $command->setLocalizedDescriptions($data['description']);
         }
+
         if (isset($data['meta description'])) {
             $command->setLocalizedMetaDescriptions($data['meta description']);
         }
+
         if (isset($data['meta title'])) {
             $command->setLocalizedMetaTitles($data['meta title']);
         }
+
         if (isset($data['additional description'])) {
             $command->setLocalizedAdditionalDescriptions($data['additional description']);
         }
+
         if (isset($data['group access'])) {
             $command->setAssociatedGroupIds($this->referencesToIds($data['group access']));
         }
+
         if (isset($data['associated shops'])) {
             $command->setAssociatedShopIds($this->referencesToIds($data['associated shops']));
         }
+
         if ($command instanceof EditCategoryCommand && isset($data['parent category'])) {
             $command->setParentCategoryId($this->getSharedStorage()->get($data['parent category']));
         }
+
         if (isset($data['redirect type'])) {
             $target = isset($data['redirect target']) ? $this->getSharedStorage()->get($data['redirect target']) : 0;
 

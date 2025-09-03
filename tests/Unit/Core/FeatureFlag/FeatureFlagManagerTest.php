@@ -185,7 +185,7 @@ class FeatureFlagManagerTest extends TestCase
         ]];
     }
 
-    private function createContainerInterfaceMock($envLayer, $queryLayer, $dotenvLayer, $dbLayer)
+    private function createContainerInterfaceMock($envLayer, $queryLayer, $dotenvLayer, $dbLayer): \PHPUnit\Framework\MockObject\MockObject
     {
         $mock = $this->getMockBuilder(ContainerInterface::class)
             ->disableOriginalConstructor()
@@ -193,7 +193,7 @@ class FeatureFlagManagerTest extends TestCase
 
         $mock->expects($this->atLeastOnce())
             ->method('has')
-            ->willReturnCallback(fn ($layer) => match ($layer) {
+            ->willReturnCallback(fn ($layer): bool => match ($layer) {
                 'env' => true,
                 'query' => true,
                 'dotenv' => true,
@@ -214,7 +214,7 @@ class FeatureFlagManagerTest extends TestCase
         return $mock;
     }
 
-    private function createFeatureFlagRepositoryMock(FeatureFlag $featureFlag)
+    private function createFeatureFlagRepositoryMock(FeatureFlag $featureFlag): \PHPUnit\Framework\MockObject\MockObject
     {
         $mock = $this->getMockBuilder(FeatureFlagRepository::class)
             ->disableOriginalConstructor()
@@ -227,7 +227,7 @@ class FeatureFlagManagerTest extends TestCase
         return $mock;
     }
 
-    private function createLayerMock(string $className, array $testCase)
+    private function createLayerMock(string $className, array $testCase): \PHPUnit\Framework\MockObject\MockObject
     {
         $mock = $this->getMockBuilder($className)
             ->onlyMethods(['canBeUsed', 'isEnabled', 'disable', 'enable'])

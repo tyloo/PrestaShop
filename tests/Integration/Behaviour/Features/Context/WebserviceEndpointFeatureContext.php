@@ -69,6 +69,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
         } else {
             $id = (int) SharedStorage::getStorage()->get($reference);
         }
+
         $this->whenRequest($webserviceKey, 'DELETE', $endpoint . '/' . $id);
     }
 
@@ -82,6 +83,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
         if ($output->filter('prestashop > errors > error')->count() !== 0) {
             return;
         }
+
         $idObject = $output->filter('prestashop id')->getNode(0)->nodeValue;
         SharedStorage::getStorage()->set($reference, $idObject);
     }
@@ -98,6 +100,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
                 'value' => (int) SharedStorage::getStorage()->get($reference),
             ];
         }
+
         $this->whenRequest($webserviceKey, 'PUT', $endpoint, $rows);
     }
 
@@ -152,7 +155,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function assertWebserviceError(int $errorCode, string $errorMessage): void
     {
-        $errors = $this->lastOutput->filter('prestashop > errors > error')->each(fn ($item) => [
+        $errors = $this->lastOutput->filter('prestashop > errors > error')->each(fn ($item): array => [
             'code' => (int) $item->filter('code')->text(),
             'message' => $item->filter('message')->text(),
         ]);
@@ -181,6 +184,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
                     $hash['key']
                 );
             }
+
             $postFields .= '</' . $itemNode . '></prestashop>';
         }
 

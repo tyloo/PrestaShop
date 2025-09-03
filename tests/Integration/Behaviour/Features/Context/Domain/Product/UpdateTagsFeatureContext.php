@@ -55,8 +55,8 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
 
         try {
             $this->getCommandBus()->handle(new SetProductTagsCommand($productId, $localizedTagsList));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 

@@ -59,8 +59,8 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
                 [$this->getDefaultShopId()]
             ));
             $this->getSharedStorage()->set($zoneReference, new Zone($zoneId->getValue()));
-        } catch (ZoneException $e) {
-            $this->setLastException($e);
+        } catch (ZoneException $zoneException) {
+            $this->setLastException($zoneException);
         }
     }
 

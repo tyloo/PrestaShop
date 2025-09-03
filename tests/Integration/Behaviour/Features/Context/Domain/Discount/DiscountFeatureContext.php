@@ -91,8 +91,8 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
                 $this->getDiscountForEditing($discountReference),
                 $this->localizeByRows($tableNode)
             );
-        } catch (DiscountException $e) {
-            $this->setLastException($e);
+        } catch (DiscountException $discountException) {
+            $this->setLastException($discountException);
         }
     }
 
@@ -110,27 +110,34 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             $command->setLocalizedNames($data['name']);
         }
+
         if (isset($data['highlight'])) {
             $command->setHighlightInCart(PrimitiveUtils::castStringBooleanIntoBoolean($data['highlight']));
         }
+
         if (isset($data['allow_partial_use'])) {
             $command->setAllowPartialUse(PrimitiveUtils::castStringBooleanIntoBoolean($data['allow_partial_use']));
         }
+
         if (isset($data['priority'])) {
             $command->setPriority((int) $data['priority']);
         }
+
         if (isset($data['active'])) {
             $command->setActive(PrimitiveUtils::castStringBooleanIntoBoolean($data['active']));
         }
+
         if (isset($data['valid_from'])) {
             if (empty($data['valid_to'])) {
                 throw new RuntimeException('When setting cart rule range "valid_from" and "valid_to" must be provided');
             }
+
             $command->setValidityDateRange(
                 new DateTimeImmutable($data['valid_from']),
                 new DateTimeImmutable($data['valid_to']),
             );
         }
+
         if (isset($data['total_quantity'])) {
             $command->setTotalQuantity((int) $data['total_quantity']);
         }
@@ -189,8 +196,8 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
             /** @var DiscountId $discountId */
             $discountId = $this->getCommandBus()->handle($command);
             $this->getSharedStorage()->set($discountReference, $discountId->getValue());
-        } catch (DiscountConstraintException $e) {
-            $this->setLastException($e);
+        } catch (DiscountConstraintException $discountConstraintException) {
+            $this->setLastException($discountConstraintException);
         }
     }
 
@@ -206,24 +213,31 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             $command->setLocalizedNames($data['name']);
         }
+
         if (isset($data['highlight'])) {
             $command->setHighlightInCart(PrimitiveUtils::castStringBooleanIntoBoolean($data['highlight']));
         }
+
         if (isset($data['allow_partial_use'])) {
             $command->setAllowPartialUse(PrimitiveUtils::castStringBooleanIntoBoolean($data['allow_partial_use']));
         }
+
         if (isset($data['priority'])) {
             $command->setPriority((int) $data['priority']);
         }
+
         if (isset($data['active'])) {
             $command->setActive(PrimitiveUtils::castStringBooleanIntoBoolean($data['active']));
         }
+
         if (isset($data['valid_from'])) {
             $command->setValidFrom(new DateTimeImmutable($data['valid_from']));
         }
+
         if (isset($data['valid_to'])) {
             $command->setValidTo(new DateTimeImmutable($data['valid_to']));
         }
+
         if (isset($data['total_quantity'])) {
             $command->setTotalQuantity((int) $data['total_quantity']);
         }
@@ -272,8 +286,8 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         try {
             /** @var DiscountId $discountId */
             $this->getCommandBus()->handle($command);
-        } catch (DiscountConstraintException $e) {
-            $this->setLastException($e);
+        } catch (DiscountConstraintException $discountConstraintException) {
+            $this->setLastException($discountConstraintException);
         }
     }
 
@@ -306,6 +320,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         if (isset($expectedData['description'])) {
             Assert::assertSame($expectedData['description'], $discountForEditing->getDescription(), 'Unexpected description');
         }
+
         if (isset($expectedData['highlight'])) {
             Assert::assertSame(
                 PrimitiveUtils::castStringBooleanIntoBoolean($expectedData['highlight']),
@@ -313,6 +328,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
                 'Unexpected highlight'
             );
         }
+
         if (isset($expectedData['allow_partial_use'])) {
             Assert::assertSame(
                 PrimitiveUtils::castStringBooleanIntoBoolean($expectedData['allow_partial_use']),
@@ -320,6 +336,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
                 'Unexpected partial use'
             );
         }
+
         if (isset($expectedData['active'])) {
             Assert::assertSame(
                 PrimitiveUtils::castStringBooleanIntoBoolean($expectedData['active']),
@@ -327,9 +344,11 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
                 'Unexpected active property'
             );
         }
+
         if (isset($expectedData['code'])) {
             Assert::assertSame($expectedData['code'], $discountForEditing->getCode(), 'Unexpected code');
         }
+
         if (isset($expectedData['customer'])) {
             Assert::assertSame(
                 ! empty($expectedData['customer']) ? $this->getSharedStorage()->get($expectedData['customer']) : 0,
@@ -337,9 +356,11 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
                 'Unexpected customer id'
             );
         }
+
         if (isset($expectedData['priority'])) {
             Assert::assertSame((int) $expectedData['priority'], $discountForEditing->getPriority(), 'Unexpected priority');
         }
+
         if (isset($expectedData['valid_from'])) {
             Assert::assertEquals(
                 $expectedData['valid_from'],
@@ -347,6 +368,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
                 'Unexpected valid_from'
             );
         }
+
         if (isset($expectedData['valid_to'])) {
             Assert::assertEquals(
                 $expectedData['valid_to'],
@@ -354,9 +376,11 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
                 'Unexpected valid_to'
             );
         }
+
         if (isset($expectedData['total_quantity'])) {
             Assert::assertSame((int) $expectedData['total_quantity'], $discountForEditing->getTotalQuantity(), 'Unexpected quantity');
         }
+
         if (isset($expectedData['quantity_per_user'])) {
             Assert::assertSame((int) $expectedData['quantity_per_user'], $discountForEditing->getQuantityPerUser(), 'Unexpected quantity_per_user');
         }
@@ -368,15 +392,19 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         if (isset($expectedData['reduction_amount'])) {
             Assert::assertSame((float) $expectedData['reduction_amount'], (float) (string) $discountForEditing->getAmountDiscount(), 'Unexpected amount discount');
         }
+
         if (isset($expectedData['reduction_currency'])) {
             Assert::assertSame($this->getSharedStorage()->get($expectedData['reduction_currency']), $discountForEditing->getCurrencyId(), 'Unexpected reduction currency');
         }
+
         if (isset($expectedData['taxIncluded'])) {
             Assert::assertSame(PrimitiveUtils::castStringBooleanIntoBoolean($expectedData['taxIncluded']), $discountForEditing->isTaxIncluded(), 'Unexpected tax included');
         }
+
         if (isset($expectedData['type'])) {
             Assert::assertSame($expectedData['type'], $discountForEditing->getType()->getValue(), 'Unexpected type');
         }
+
         if (isset($expectedData['reduction_product'])) {
             if ((int) $expectedData['reduction_product'] === -1 || (int) $expectedData['reduction_product'] === -2) {
                 Assert::assertSame((int) $expectedData['reduction_product'], $discountForEditing->getReductionProduct());
@@ -384,27 +412,35 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
                 Assert::assertSame($this->getSharedStorage()->get($expectedData['reduction_product']), $discountForEditing->getReductionProduct());
             }
         }
+
         if (isset($expectedData['name'])) {
             Assert::assertSame($expectedData['name'], $discountForEditing->getLocalizedNames());
         }
+
         if (isset($expectedData['minimum_product_quantity'])) {
             Assert::assertEquals($expectedData['minimum_product_quantity'], $discountForEditing->getMinimumProductQuantity());
         }
+
         if (isset($expectedData['minimum_amount'])) {
             Assert::assertSame((float) $expectedData['minimum_amount'], (float) (string) $discountForEditing->getMinimumAmount(), 'Unexpected minimum amount');
         }
+
         if (isset($expectedData['minimum_amount_currency'])) {
             Assert::assertSame($this->getSharedStorage()->get($expectedData['minimum_amount_currency']), $discountForEditing->getMinimumAmountCurrencyId(), 'Unexpected minimum amount currency');
         }
+
         if (isset($expectedData['minimum_amount_tax_included'])) {
             Assert::assertSame(PrimitiveUtils::castStringBooleanIntoBoolean($expectedData['minimum_amount_tax_included']), $discountForEditing->getMinimumAmountTaxIncluded(), 'Unexpected minimum amount tax included');
         }
+
         if (isset($expectedData['minimum_amount_shipping_included'])) {
             Assert::assertSame(PrimitiveUtils::castStringBooleanIntoBoolean($expectedData['minimum_amount_shipping_included']), $discountForEditing->getMinimumAmountShippingIncluded(), 'Unexpected minimum amount shipping included');
         }
+
         if (isset($expectedData['carriers'])) {
             Assert::assertSame($this->referencesToIds($expectedData['carriers']), $discountForEditing->getCarrierIds(), 'Unexpected carriers');
         }
+
         if (isset($expectedData['countries'])) {
             Assert::assertSame($this->referencesToIds($expectedData['countries']), $discountForEditing->getCountryIds(), 'Unexpected countries');
         }

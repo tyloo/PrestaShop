@@ -116,7 +116,7 @@ class RepositoryTest extends TestCase
      * When asking the repository for the corresponding locale
      * Then the expected Locale instance should be retrieved
      */
-    public function testGetLocale()
+    public function testGetLocale(): void
     {
         $locale = $this->localeRepository->getLocale('fr-FR');
 
@@ -129,7 +129,7 @@ class RepositoryTest extends TestCase
      * When asking the repository for the corresponding locale
      * Then an exception should be raised
      */
-    public function testGetLocaleWithInvalidLocaleCode()
+    public function testGetLocaleWithInvalidLocaleCode(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException::class);
 

@@ -48,7 +48,7 @@ class SecurityAttributeLinterTest extends KernelTestCase
         $this->securityAnnotationLinter = $container->get('prestashop.bundle.routing.linter.security_annotation_linter');
     }
 
-    public function testLinterPassesWhenRouteControllerHasConfiguredAdminSecurityAnnotation()
+    public function testLinterPassesWhenRouteControllerHasConfiguredAdminSecurityAnnotation(): void
     {
         $route = new Route('/', [
             '_controller' => \sprintf('%s::%s', TestController::class, 'indexAction'),
@@ -59,7 +59,7 @@ class SecurityAttributeLinterTest extends KernelTestCase
         $this->assertTrue($exceptionWasNotThrown = true);
     }
 
-    public function testLinterThrowsExceptionWhenRouteControllerDoesNotHaveConfiguredAdminSecutityAnnotation()
+    public function testLinterThrowsExceptionWhenRouteControllerDoesNotHaveConfiguredAdminSecutityAnnotation(): void
     {
         $route = new Route('/', [
             '_controller' => \sprintf('%s::%s', TestController::class, 'createAction'),

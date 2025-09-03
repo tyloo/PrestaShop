@@ -60,8 +60,8 @@ class FeatureFeatureContext extends AbstractDomainFeatureContext
             ));
 
             $this->getSharedStorage()->set($featureReference, $featureId->getValue());
-        } catch (FeatureException $e) {
-            $this->setLastException($e);
+        } catch (FeatureException $featureException) {
+            $this->setLastException($featureException);
         }
     }
 
@@ -83,8 +83,8 @@ class FeatureFeatureContext extends AbstractDomainFeatureContext
             }
 
             $this->getCommandBus()->handle($command);
-        } catch (FeatureException $e) {
-            $this->setLastException($e);
+        } catch (FeatureException $featureException) {
+            $this->setLastException($featureException);
         }
     }
 
@@ -129,8 +129,8 @@ class FeatureFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getFeatureForEditing($featureReference);
-        } catch (FeatureNotFoundException $e) {
-            $coughtException = $e;
+        } catch (FeatureNotFoundException $featureNotFoundException) {
+            $coughtException = $featureNotFoundException;
         }
 
         if ($coughtException === null) {

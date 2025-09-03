@@ -50,7 +50,7 @@ class HtaccessFolderGuardTest extends TestCase
         $this->htaccessTemplate = file_get_contents($this->htaccessTemplatePath);
     }
 
-    public function testInvalidTemplatePath()
+    public function testInvalidTemplatePath(): void
     {
         $this->expectException(FileNotFoundException::class);
 
@@ -61,7 +61,7 @@ class HtaccessFolderGuardTest extends TestCase
     /**
      * @dataProvider getInvalidFolders
      */
-    public function testProtectInvalidFolders($invalidFolder)
+    public function testProtectInvalidFolders($invalidFolder): void
     {
         $this->expectException(FileNotFoundException::class);
 
@@ -69,12 +69,13 @@ class HtaccessFolderGuardTest extends TestCase
         $protector->protectFolder($invalidFolder);
     }
 
-    public function testProtectFolder()
+    public function testProtectFolder(): void
     {
         $testFolder = sys_get_temp_dir() . \DIRECTORY_SEPARATOR . 'security_htaccess';
         if (! file_exists($testFolder)) {
             mkdir($testFolder);
         }
+
         $testHtaccessPath = $testFolder . \DIRECTORY_SEPARATOR . '.htaccess';
         if (file_exists($testHtaccessPath)) {
             unlink($testHtaccessPath);
@@ -91,16 +92,18 @@ class HtaccessFolderGuardTest extends TestCase
         rmdir($testFolder);
     }
 
-    public function testExistingHtaccessFile()
+    public function testExistingHtaccessFile(): void
     {
         $testFolder = sys_get_temp_dir() . \DIRECTORY_SEPARATOR . 'security_htaccess';
         if (! file_exists($testFolder)) {
             mkdir($testFolder);
         }
+
         $testHtaccessPath = $testFolder . \DIRECTORY_SEPARATOR . '.htaccess';
         if (file_exists($testHtaccessPath)) {
             unlink($testHtaccessPath);
         }
+
         $existingContent = 'existing file';
         file_put_contents($testHtaccessPath, $existingContent);
 

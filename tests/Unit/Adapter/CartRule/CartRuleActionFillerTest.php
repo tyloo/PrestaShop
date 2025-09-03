@@ -51,7 +51,7 @@ class CartRuleActionFillerTest extends TestCase
         CartRuleAction $cartRuleAction,
         array $expectedUpdatableProperties,
         CartRule $expectedCartRule,
-    ) {
+    ): void {
         $cartRule = $this->mockDefaultCartRule();
         $updatableProperties = (new CartRuleActionFiller())->fillUpdatableProperties(
             $cartRule,

@@ -57,6 +57,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         if (! empty($resultShopConstraint->getShopGroupId())) {
             $this->assertEquals($shopGroupId, $resultShopConstraint->getShopGroupId()->getValue());
         }
+
         if (! empty($resultShopConstraint->getShopId())) {
             $this->assertEquals($shopId, $resultShopConstraint->getShopId()->getValue());
         }

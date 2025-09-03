@@ -96,7 +96,7 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
     public function testTranslationsCatalogueIsBuiltFromKeysFoundInSourceAndTranslationsInLegacyFiles(
         $locale,
         array $expected,
-    ) {
+    ): void {
         $this->provider->setLocale($locale);
         $legacyCatalogue = $this->provider->getXliffCatalogue();
 

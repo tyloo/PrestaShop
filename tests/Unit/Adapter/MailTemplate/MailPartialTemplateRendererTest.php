@@ -49,7 +49,7 @@ class MailPartialTemplateRendererTest extends TestCase
         }
     }
 
-    public function testUnknownTemplate()
+    public function testUnknownTemplate(): void
     {
         $smartyMock = $this->buildSmartyMock();
 
@@ -58,7 +58,7 @@ class MailPartialTemplateRendererTest extends TestCase
         $this->assertEquals('', $renderer->render('unknown_template.tpl', $this->buildLanguageMock()));
     }
 
-    public function testOrderConfTemplate()
+    public function testOrderConfTemplate(): void
     {
         $smartyMock = $this->buildSmartyMock('order_conf_template');
 
@@ -70,7 +70,7 @@ class MailPartialTemplateRendererTest extends TestCase
     /**
      * @return MockObject|Smarty
      */
-    private function buildSmartyMock($template = '')
+    private function buildSmartyMock($template = ''): MockObject
     {
         $smartyMock = $this->getMockBuilder(Smarty::class)
             ->disableOriginalConstructor()
@@ -96,7 +96,7 @@ class MailPartialTemplateRendererTest extends TestCase
     /**
      * @return MockObject|LanguageInterface
      */
-    private function buildLanguageMock()
+    private function buildLanguageMock(): MockObject
     {
         $languageMock = $this->getMockBuilder(LanguageInterface::class)
             ->disableOriginalConstructor()

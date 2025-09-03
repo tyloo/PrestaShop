@@ -36,7 +36,7 @@ class ApeCodeTest extends TestCase
     /**
      * @dataProvider getValidApeCodes
      */
-    public function testItCreatesApeCodeWithValidValue($code)
+    public function testItCreatesApeCodeWithValidValue($code): void
     {
         $apeCode = new ApeCode($code);
 
@@ -46,7 +46,7 @@ class ApeCodeTest extends TestCase
     /**
      * @dataProvider getInvalidApeCodes
      */
-    public function testItThrowExceptionWhenCreatingApeCodeWithInvalidValue($code)
+    public function testItThrowExceptionWhenCreatingApeCodeWithInvalidValue($code): void
     {
         $this->expectException(CustomerConstraintException::class);
         $this->expectExceptionCode(CustomerConstraintException::INVALID_APE_CODE);

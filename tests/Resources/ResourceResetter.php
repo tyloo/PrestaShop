@@ -40,7 +40,9 @@ class ResourceResetter
      * Name for directory of test images in system tmp dir
      */
     public const BACKUP_TEST_IMG_DIR = 'ps_backup_test_img';
+
     public const BACKUP_TEST_DOWNLOADS_DIR = 'ps_backup_test_download';
+
     public const BACKUP_TEST_MODULES_DIR = 'ps_backup_test_modules';
 
     public const TEST_MODULES_DIR = _PS_ROOT_DIR_ . '/tests/Resources/modules/';

@@ -44,7 +44,7 @@ class TypedFiltersBuilderTest extends TestCase
      * Ensure that provided typed builders a re indeed used by checking their support function
      * is called.
      */
-    public function testBuildersInConstructorAreUsed()
+    public function testBuildersInConstructorAreUsed(): void
     {
         $config = ['filters_class' => SampleWithoutConstraintFilters::class];
 
@@ -63,7 +63,7 @@ class TypedFiltersBuilderTest extends TestCase
         $this->assertEquals('id_sample', $builtFilters->getOrderBy());
     }
 
-    public function testBuildersAddedAreUsed()
+    public function testBuildersAddedAreUsed(): void
     {
         $config = ['filters_class' => SampleWithoutConstraintFilters::class];
 
@@ -90,7 +90,7 @@ class TypedFiltersBuilderTest extends TestCase
      * When no config is set, it can't be set to sub builders and there is no use checking
      * compatibility of a non defined class.
      */
-    public function testWithoutConfig()
+    public function testWithoutConfig(): void
     {
         $mock1 = $this->createTypeBuilderMock(null);
         $mock2 = $this->createTypeBuilderMock(null);
@@ -106,7 +106,7 @@ class TypedFiltersBuilderTest extends TestCase
         $this->assertEquals('id_sample', $builtFilters->getOrderBy());
     }
 
-    public function testBuildFilters()
+    public function testBuildFilters(): void
     {
         $filters = new Filters(['limit' => 10]);
         $builder = new TypedFiltersBuilder($this->createBuilderMock($filters));
@@ -127,7 +127,7 @@ class TypedFiltersBuilderTest extends TestCase
      * Only the matching builder must be used (which is ensured thanks to the mock whose buildFilters
      * method must NEVER be called).
      */
-    public function testOnlyMatchingBuilderCreatesFilters()
+    public function testOnlyMatchingBuilderCreatesFilters(): void
     {
         $builder = new TypedFiltersBuilder($this->createBuilderMock(null));
         $builder->setConfig(['filters_class' => SampleWithConstraintFilters::class]);
@@ -142,7 +142,7 @@ class TypedFiltersBuilderTest extends TestCase
     /**
      * @return MockObject|FiltersBuilderInterface
      */
-    private function createBuilderMock(?Filters $filters)
+    private function createBuilderMock(?Filters $filters): MockObject
     {
         $builderMock = $this
             ->getMockBuilder(FiltersBuilderInterface::class)
@@ -169,7 +169,7 @@ class TypedFiltersBuilderTest extends TestCase
     /**
      * @return MockObject|TypedFiltersBuilderInterface
      */
-    private function createTypeBuilderMock(?array $expectedConfig)
+    private function createTypeBuilderMock(?array $expectedConfig): MockObject
     {
         $builderMock = $this
             ->getMockBuilder(TypedFiltersBuilderInterface::class)
@@ -217,6 +217,7 @@ class SampleWithConstraintFilters extends Filters
         if (empty($filterId)) {
             throw new RuntimeException('Cannot be constructed without filterId');
         }
+
         parent::__construct($filters, $filterId);
     }
 
@@ -235,6 +236,7 @@ class SampleWithConstraintFilters extends Filters
 class SampleFiltersBuilder extends AbstractFiltersBuilder implements TypedFiltersBuilderInterface
 {
     public const FILTER_ID = 'specialId';
+
     public const ORDER_BY = 'id_special';
 
     /**

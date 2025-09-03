@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\FirstName;
 
 class FirstNameTest extends TestCase
 {
-    public function testExceptionIsThrownWhenSuppliedFirstNameIsTooLong()
+    public function testExceptionIsThrownWhenSuppliedFirstNameIsTooLong(): void
     {
         $this->expectException(CustomerConstraintException::class);
         $this->expectExceptionCode(CustomerConstraintException::INVALID_FIRST_NAME);
@@ -46,7 +46,7 @@ class FirstNameTest extends TestCase
     /**
      * @dataProvider getInvalidFirstNames
      */
-    public function testItThrowsExceptionWhenInvalidFirstNameIsSupplied($invalidFirstName)
+    public function testItThrowsExceptionWhenInvalidFirstNameIsSupplied($invalidFirstName): void
     {
         $this->expectException(CustomerConstraintException::class);
         $this->expectExceptionCode(CustomerConstraintException::INVALID_FIRST_NAME);
@@ -57,7 +57,7 @@ class FirstNameTest extends TestCase
     /**
      * @dataProvider getValidFirstNames
      */
-    public function testItCreatesFirstNameWithValid($validFirstName)
+    public function testItCreatesFirstNameWithValid($validFirstName): void
     {
         $firstName = new FirstName($validFirstName);
 

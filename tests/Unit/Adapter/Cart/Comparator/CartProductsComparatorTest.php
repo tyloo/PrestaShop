@@ -45,7 +45,7 @@ class CartProductsComparatorTest extends TestCase
         array $newProducts,
         array $knownUpdatedProducts,
         array $expectedModifiedProducts,
-    ) {
+    ): void {
         $cart = $this->mockCart($initialProducts, $newProducts);
         $comparator = new CartProductsComparator($cart);
         $comparator->setKnownUpdates($knownUpdatedProducts);
@@ -254,7 +254,7 @@ class CartProductsComparatorTest extends TestCase
         array $newProducts,
         array $knownUpdatedProducts,
         array $expectedModifiedProducts,
-    ) {
+    ): void {
         $cart = $this->mockCart($initialProducts, $newProducts);
         $comparator = new CartProductsComparator($cart);
         $comparator->setKnownUpdates($knownUpdatedProducts);
@@ -277,6 +277,7 @@ class CartProductsComparatorTest extends TestCase
                     $filteredExpectedUpdates[] = $expectedUpdate;
                 }
             }
+
             $modifiedProduct[3] = $filteredExpectedUpdates;
 
             yield $modifiedProduct;
@@ -291,7 +292,7 @@ class CartProductsComparatorTest extends TestCase
         array $newProducts,
         array $knownUpdatedProducts,
         array $expectedModifiedProducts,
-    ) {
+    ): void {
         $cart = $this->mockCart($initialProducts, $newProducts);
         $comparator = new CartProductsComparator($cart);
         $comparator->setKnownUpdates($knownUpdatedProducts);
@@ -314,6 +315,7 @@ class CartProductsComparatorTest extends TestCase
                     $filteredExpectedUpdates[] = $expectedUpdate;
                 }
             }
+
             $modifiedProduct[3] = $filteredExpectedUpdates;
 
             yield $modifiedProduct;
@@ -323,7 +325,7 @@ class CartProductsComparatorTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|Cart
      */
-    private function mockCart(array $initialProducts, array $newProducts)
+    private function mockCart(array $initialProducts, array $newProducts): \PHPUnit\Framework\MockObject\MockObject
     {
         $cartMock = $this->getMockBuilder(Cart::class)
             ->disableOriginalConstructor()

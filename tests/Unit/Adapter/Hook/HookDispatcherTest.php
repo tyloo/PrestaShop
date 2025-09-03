@@ -37,12 +37,12 @@ class HookDispatcherTest extends TestCase
     /**
      * @var MockObject|HookEvent
      */
-    private $hookEventMock;
+    private MockObject $hookEventMock;
 
     /**
      * @var MockObject|HookDispatcher
      */
-    private $hookDispatcherMock;
+    private MockObject $hookDispatcherMock;
 
     protected function setUp(): void
     {

@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Tax\Command\EditTaxCommand;
 
 class CommandDefinitionTest extends TestCase
 {
-    public function testItCanBeBuilt()
+    public function testItCanBeBuilt(): void
     {
         $commandDefinition = new CommandDefinition(
             EditTaxCommand::class,

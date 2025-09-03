@@ -79,7 +79,7 @@ class Ean13Test extends TestCase
         yield ['?'];
         yield ['/'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield [';'];
         yield [':'];
         yield ['.'];

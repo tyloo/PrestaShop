@@ -60,8 +60,8 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
             /** @var FeatureValueId $featureValueId */
             $featureValueId = $this->getCommandBus()->handle($command);
             $this->getSharedStorage()->set($featureValueReference, $featureValueId->getValue());
-        } catch (FeatureValueException $e) {
-            $this->setLastException($e);
+        } catch (FeatureValueException $featureValueException) {
+            $this->setLastException($featureValueException);
         }
     }
 
@@ -78,8 +78,8 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (FeatureValueException $e) {
-            $this->setLastException($e);
+        } catch (FeatureValueException $featureValueException) {
+            $this->setLastException($featureValueException);
         }
     }
 
@@ -138,8 +138,8 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (FeatureValueException $e) {
-            $this->setLastException($e);
+        } catch (FeatureValueException $featureValueException) {
+            $this->setLastException($featureValueException);
         }
     }
 
@@ -178,8 +178,8 @@ class FeatureValueFeatureContext extends AbstractDomainFeatureContext
         $caughtException = null;
         try {
             $this->getQueryBus()->handle(new GetFeatureValueForEditing($featureValueId));
-        } catch (FeatureValueNotFoundException $e) {
-            $caughtException = $e;
+        } catch (FeatureValueNotFoundException $featureValueNotFoundException) {
+            $caughtException = $featureValueNotFoundException;
         }
 
         if ($caughtException === null) {

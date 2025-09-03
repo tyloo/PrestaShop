@@ -47,6 +47,7 @@ abstract class ApiTestCase extends ApiPlatformTestCase
     use LanguageTrait;
 
     protected const CLIENT_ID = 'test_client_id';
+
     protected const CLIENT_NAME = 'test_client_name';
 
     protected static ?string $clientSecret = null;
@@ -138,6 +139,7 @@ abstract class ApiTestCase extends ApiPlatformTestCase
         if (self::$clientSecret === null) {
             self::createApiClient($scopes);
         }
+
         $options = [
             'extra' => [
                 'parameters' => [
@@ -207,6 +209,7 @@ abstract class ApiTestCase extends ApiPlatformTestCase
         if (! $shop->add()) {
             throw new RuntimeException('Could not create shop');
         }
+
         $shop->setTheme();
         Shop::resetContext();
         Shop::resetStaticCache();

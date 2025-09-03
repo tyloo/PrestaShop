@@ -42,6 +42,7 @@ class GetCategoryForEditingHandlerTest extends KernelTestCase
      * @var object|CommandBusInterface|null
      */
     private $commandBus;
+
     /**
      * @var int
      */

@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Payment\PaymentOptionFormDecorator;
 
 class PaymentOptionFormDecoratorTest extends TestCase
 {
-    public function testAddHiddenSubmitButtonInsertsSubmitButtonIntoForm()
+    public function testAddHiddenSubmitButtonInsertsSubmitButtonIntoForm(): void
     {
         $decorator = new PaymentOptionFormDecorator();
 
@@ -62,7 +62,7 @@ class PaymentOptionFormDecoratorTest extends TestCase
         $this->assertSameHTML($exp, $act);
     }
 
-    public function testAddHiddenSubmitButtonReturnsFalseWhenMultipleForms()
+    public function testAddHiddenSubmitButtonReturnsFalseWhenMultipleForms(): void
     {
         $decorator = new PaymentOptionFormDecorator();
         $this->assertFalse(
@@ -79,6 +79,7 @@ class PaymentOptionFormDecoratorTest extends TestCase
         if (! $doc->loadHTML($html)) {
             throw new Exception('Invalid HTML.');
         }
+
         $doc->preserveWhiteSpace = false;
         $doc->formatOutput = true;
 

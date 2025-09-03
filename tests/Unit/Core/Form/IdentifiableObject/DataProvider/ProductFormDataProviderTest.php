@@ -85,13 +85,21 @@ use RuntimeException;
 class ProductFormDataProviderTest extends TestCase
 {
     private const PRODUCT_ID = 42;
+
     private const HOME_CATEGORY_ID = 49;
+
     private const DEFAULT_CATEGORY_ID = 51;
+
     private const DEFAULT_VIRTUAL_PRODUCT_FILE_ID = 69;
+
     private const CONTEXT_LANG_ID = 1;
+
     private const DEFAULT_QUANTITY = 12;
+
     private const DEFAULT_SHOP_ID = 99;
+
     private const COVER_URL = 'http://localhost/cover.jpg';
+
     private const DEFAULT_PRIORITY_LIST = [
         PriorityList::PRIORITY_GROUP,
         PriorityList::PRIORITY_CURRENCY,
@@ -145,7 +153,7 @@ class ProductFormDataProviderTest extends TestCase
     /**
      * @dataProvider getExpectedData
      */
-    public function testGetData(array $productData, array $expectedData)
+    public function testGetData(array $productData, array $expectedData): void
     {
         $queryBusMock = $this->createQueryBusMock($productData);
         $provider = $this->buildProvider($queryBusMock);
@@ -1235,6 +1243,7 @@ class ProductFormDataProviderTest extends TestCase
                         $historyData['delta_quantity']
                     );
                 }
+
                 if ($historyData['type'] === StockMovement::ORDERS_TYPE) {
                     return StockMovement::createOrdersMovement(
                         $historyData['from_date'],
@@ -1246,6 +1255,7 @@ class ProductFormDataProviderTest extends TestCase
                         $historyData['delta_quantity']
                     );
                 }
+
                 throw new RuntimeException(\sprintf('Unsupported stock movement event type "%s"', $historyData['type']));
             },
             $productData['stock_movements'] ?? []

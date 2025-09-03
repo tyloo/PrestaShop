@@ -50,7 +50,7 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
         self::bootKernel();
     }
 
-    public function testMissingArguments()
+    public function testMissingArguments(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Not enough arguments (missing: "theme, locale").');
@@ -65,7 +65,7 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
         ]);
     }
 
-    public function testGenerateTemplates()
+    public function testGenerateTemplates(): void
     {
         $outputFolder = $this->buildOutputFolder();
         $themeInfos = $this->getThemeInfos('classic');
@@ -94,16 +94,18 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
             $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$outputFolder, 'en', $coreLayout . '.html']);
             $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$outputFolder, 'en', $coreLayout . '.txt']);
         }
+
         foreach ($themeInfos['modulesLayouts'] as $moduleName => $moduleLayouts) {
             foreach ($moduleLayouts as $moduleLayout) {
                 $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$outputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.html']);
                 $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$outputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.txt']);
             }
         }
+
         $this->assertFilesExist($expectedFiles);
     }
 
-    public function testGenerateTemplatesWithModulesFolder()
+    public function testGenerateTemplatesWithModulesFolder(): void
     {
         $outputFolder = $this->buildOutputFolder();
         $coreOutputFolder = implode(\DIRECTORY_SEPARATOR, [$outputFolder, MailTemplateInterface::CORE_CATEGORY]);
@@ -136,12 +138,14 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
             $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$coreOutputFolder, 'en', $coreLayout . '.html']);
             $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$coreOutputFolder, 'en', $coreLayout . '.txt']);
         }
+
         foreach ($themeInfos['modulesLayouts'] as $moduleName => $moduleLayouts) {
             foreach ($moduleLayouts as $moduleLayout) {
                 $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$modulesOutputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.html']);
                 $expectedFiles[] = implode(\DIRECTORY_SEPARATOR, [$modulesOutputFolder, $moduleName, 'mails', 'en', $moduleLayout . '.txt']);
             }
         }
+
         $this->assertFilesExist($expectedFiles);
     }
 
@@ -154,10 +158,8 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
 
     /**
      * @param string $theme
-     *
-     * @return array
      */
-    private function getThemeInfos($theme)
+    private function getThemeInfos($theme): array
     {
         $themeInfos = [
             'coreLayouts' => [],

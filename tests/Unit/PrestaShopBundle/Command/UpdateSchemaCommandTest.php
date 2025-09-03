@@ -307,35 +307,35 @@ class UpdateSchemaCommandTest extends TestCase
             ],
             [
                 'ALTER TABLE ps_pa_subcontractor CHANGE cutting_price cutting_price NUMERIC(20, 6) NOT NULL',
-                'ALTER TABLE ps_pa_subcontractor CHANGE cutting_price cutting_price NUMERIC(20, 6) NOT NULL DEFAULT \'0\' ',
+                "ALTER TABLE ps_pa_subcontractor CHANGE cutting_price cutting_price NUMERIC(20, 6) NOT NULL DEFAULT '0' ",
             ],
             [
-                'ALTER TABLE ps_pa_fixation CHANGE resistance resistance LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', CHANGE position position INT UNSIGNED DEFAULT 0 NOT NULL',
-                'ALTER TABLE ps_pa_fixation CHANGE resistance resistance LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', CHANGE position position INT UNSIGNED DEFAULT 0 NOT NULL',
+                "ALTER TABLE ps_pa_fixation CHANGE resistance resistance LONGTEXT NOT NULL COMMENT '(DC2Type:json)', CHANGE position position INT UNSIGNED DEFAULT 0 NOT NULL",
+                "ALTER TABLE ps_pa_fixation CHANGE resistance resistance LONGTEXT NOT NULL COMMENT '(DC2Type:json)', CHANGE position position INT UNSIGNED DEFAULT 0 NOT NULL",
             ],
             [
-                'ALTER TABLE ps_pa_form CHANGE active active TINYINT(1) DEFAULT \'0\' NOT NULL',
-                'ALTER TABLE ps_pa_form CHANGE active active TINYINT(1) DEFAULT \'0\' ',
+                "ALTER TABLE ps_pa_form CHANGE active active TINYINT(1) DEFAULT '0' NOT NULL",
+                "ALTER TABLE ps_pa_form CHANGE active active TINYINT(1) DEFAULT '0' ",
             ],
             [
                 'ALTER TABLE ps_pa_subcontractor_material CHANGE labor_cost labor_cost NUMERIC(20, 6) NOT NULL',
-                'ALTER TABLE ps_pa_subcontractor_material CHANGE labor_cost labor_cost NUMERIC(20, 6) NOT NULL DEFAULT \'0\' ',
+                "ALTER TABLE ps_pa_subcontractor_material CHANGE labor_cost labor_cost NUMERIC(20, 6) NOT NULL DEFAULT '0' ",
             ],
             [
                 'ALTER TABLE ps_pa_structure CHANGE position position INT UNSIGNED DEFAULT 0 NOT NULL',
-                'ALTER TABLE ps_pa_structure CHANGE position position INT UNSIGNED DEFAULT \'0\' ',
+                "ALTER TABLE ps_pa_structure CHANGE position position INT UNSIGNED DEFAULT '0' ",
             ],
             [
-                'ALTER TABLE ps_pa_nettype CHANGE active active TINYINT(1) DEFAULT \'0\' NOT NULL',
-                'ALTER TABLE ps_pa_nettype CHANGE active active TINYINT(1) DEFAULT \'0\' ',
+                "ALTER TABLE ps_pa_nettype CHANGE active active TINYINT(1) DEFAULT '0' NOT NULL",
+                "ALTER TABLE ps_pa_nettype CHANGE active active TINYINT(1) DEFAULT '0' ",
             ],
             [
                 'ALTER TABLE ps_pa_answer CHANGE nright nright INT NOT NULL',
-                'ALTER TABLE ps_pa_answer CHANGE nright nright INT NOT NULL DEFAULT \'0\' ',
+                "ALTER TABLE ps_pa_answer CHANGE nright nright INT NOT NULL DEFAULT '0' ",
             ],
             [
-                'ALTER TABLE ps_pa_quotation_net CHANGE id_employee id_employee INT NOT NULL, CHANGE uuid uuid VARCHAR(36) NOT NULL, CHANGE dimensions dimensions LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', CHANGE plan_dimensions plan_dimensions LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', CHANGE mirror mirror TINYINT(1) NOT NULL, CHANGE net_cost_price net_cost_price NUMERIC(20, 6) NOT NULL, CHANGE is_complete is_complete TINYINT(1) NOT NULL',
-                'ALTER TABLE ps_pa_quotation_net CHANGE id_employee id_employee INT NOT NULL DEFAULT \'0\' , CHANGE uuid uuid VARCHAR(36) NOT NULL, CHANGE dimensions dimensions LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', CHANGE plan_dimensions plan_dimensions LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', CHANGE mirror mirror TINYINT(1) NOT NULL, CHANGE net_cost_price net_cost_price NUMERIC(20, 6) NOT NULL, CHANGE is_complete is_complete TINYINT(1) NOT NULL',
+                "ALTER TABLE ps_pa_quotation_net CHANGE id_employee id_employee INT NOT NULL, CHANGE uuid uuid VARCHAR(36) NOT NULL, CHANGE dimensions dimensions LONGTEXT NOT NULL COMMENT '(DC2Type:json)', CHANGE plan_dimensions plan_dimensions LONGTEXT NOT NULL COMMENT '(DC2Type:json)', CHANGE mirror mirror TINYINT(1) NOT NULL, CHANGE net_cost_price net_cost_price NUMERIC(20, 6) NOT NULL, CHANGE is_complete is_complete TINYINT(1) NOT NULL",
+                "ALTER TABLE ps_pa_quotation_net CHANGE id_employee id_employee INT NOT NULL DEFAULT '0' , CHANGE uuid uuid VARCHAR(36) NOT NULL, CHANGE dimensions dimensions LONGTEXT NOT NULL COMMENT '(DC2Type:json)', CHANGE plan_dimensions plan_dimensions LONGTEXT NOT NULL COMMENT '(DC2Type:json)', CHANGE mirror mirror TINYINT(1) NOT NULL, CHANGE net_cost_price net_cost_price NUMERIC(20, 6) NOT NULL, CHANGE is_complete is_complete TINYINT(1) NOT NULL",
             ],
         ];
     }

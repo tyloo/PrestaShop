@@ -57,17 +57,17 @@ class ThemeExporterTest extends TestCase
     /**
      * @var ThemeExtractor
      */
-    private $extractorMock;
+    private ?\PHPUnit\Framework\MockObject\MockObject $extractorMock = null;
 
     /**
      * @var ThemeProvider
      */
-    private $providerMock;
+    private ?\PHPUnit\Framework\MockObject\MockObject $providerMock = null;
 
     /**
      * @var ThemeRepository
      */
-    private $repositoryMock;
+    private ?\PHPUnit\Framework\MockObject\MockObject $repositoryMock = null;
 
     /**
      * @var XliffFileDumper
@@ -77,12 +77,12 @@ class ThemeExporterTest extends TestCase
     /**
      * @var ZipManager
      */
-    private $zipManagerMock;
+    private \PHPUnit\Framework\MockObject\MockObject $zipManagerMock;
 
     /**
      * @var Filesystem
      */
-    private $filesystemMock;
+    private ?\PHPUnit\Framework\MockObject\MockObject $filesystemMock = null;
 
     protected function setUp(): void
     {

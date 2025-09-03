@@ -48,7 +48,7 @@ class TestEntityDTOCollection extends AbstractTypedCollection
         $this->totalCount = $totalCount;
     }
 
-    protected function getType()
+    protected function getType(): string
     {
         return TestEntityDTO::class;
     }

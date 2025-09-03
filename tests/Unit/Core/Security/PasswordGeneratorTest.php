@@ -43,7 +43,7 @@ class PasswordGeneratorTest extends TestCase
     /**
      * @var OpenSSLInterface&MockObject
      */
-    private $cryptographyMock;
+    private MockObject $cryptographyMock;
 
     protected function setUp(): void
     {

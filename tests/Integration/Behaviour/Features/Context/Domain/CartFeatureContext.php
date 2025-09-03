@@ -182,8 +182,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
             // Clear cart static cache or it will have no products in next calls
             Cart::resetStaticCache();
-        } catch (MinimalQuantityException $e) {
-            $this->setLastException($e);
+        } catch (MinimalQuantityException $minimalQuantityException) {
+            $this->setLastException($minimalQuantityException);
         }
     }
 
@@ -204,8 +204,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
             // Clear cart static cache or it will have no products in next calls
             Cart::resetStaticCache();
-        } catch (MinimalQuantityException $e) {
-            $this->setLastException($e);
+        } catch (MinimalQuantityException $minimalQuantityException) {
+            $this->setLastException($minimalQuantityException);
         }
     }
 
@@ -331,8 +331,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
                     $customizationId
                 )
             );
-        } catch (Exception $e) {
-            $this->setLastException($e);
+        } catch (Exception $exception) {
+            $this->setLastException($exception);
         }
     }
 
@@ -360,6 +360,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             $this->productFeatureContext->checkProductWithNameExists($productName);
             $productId = (int) $this->productFeatureContext->getProductWithName($productName)->id;
         }
+
         // Use combination reference from shared storage if available, or from legacy context otherwise
         if ($this->getSharedStorage()->exists($combinationName)) {
             $combinationId = $this->getSharedStorage()->get($combinationName);
@@ -367,6 +368,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             $this->productFeatureContext->checkCombinationWithNameExists($productName, $combinationName);
             $combinationId = (int) $this->productFeatureContext->getCombinationWithName($productName, $combinationName)->id;
         }
+
         try {
             $this->getCommandBus()->handle(
                 new UpdateProductQuantityInCartCommand(
@@ -378,8 +380,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             );
             // Clear cart static cache or it will have no products in next calls
             Cart::resetStaticCache();
-        } catch (MinimalQuantityException $e) {
-            $this->setLastException($e);
+        } catch (MinimalQuantityException $minimalQuantityException) {
+            $this->setLastException($minimalQuantityException);
         }
     }
 
@@ -471,8 +473,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
                     $carrierId
                 )
             );
-        } catch (CartConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CartConstraintException $cartConstraintException) {
+            $this->setLastException($cartConstraintException);
         }
     }
 
@@ -489,6 +491,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         if ((int) $cart->id_carrier === 0) {
             throw new RuntimeException(\sprintf('Cart %s has no carrier defined', $cartReference));
         }
+
         if ((int) $cart->id_carrier !== $carrierId) {
             throw new RuntimeException(\sprintf('Cart %s should have %s as a carrier, expected id_carrier to be %d but is %d instead', $cartReference, $carrierReference, $carrierId, (int) $cart->id_carrier));
         }
@@ -560,8 +563,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
                     $cartRuleId
                 )
             );
-        } catch (CartRuleValidityException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleValidityException $cartRuleValidityException) {
+            $this->setLastException($cartRuleValidityException);
         }
     }
 
@@ -601,8 +604,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
                 $cartId,
                 $productId
             ));
-        } catch (CartException $e) {
-            $this->setLastException($e);
+        } catch (CartException $cartException) {
+            $this->setLastException($cartException);
         }
     }
 
@@ -741,12 +744,10 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             $matchingProducts[] = $cartProduct;
         }
 
-        if (! empty($matchingProducts)) {
-            /** @var CartForOrderCreation\CartProduct $cartProduct */
-            foreach ($matchingProducts as $cartProduct) {
-                if ($cartProduct->isGift()) {
-                    return;
-                }
+        /** @var CartForOrderCreation\CartProduct $cartProduct */
+        foreach ($matchingProducts as $cartProduct) {
+            if ($cartProduct->isGift()) {
+                return;
             }
         }
 
@@ -771,12 +772,10 @@ class CartFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (! empty($matchingProducts)) {
-            /** @var CartForOrderCreation\CartProduct $cartProduct */
-            foreach ($matchingProducts as $cartProduct) {
-                if ($cartProduct->isGift()) {
-                    throw new RuntimeException(\sprintf('Cart contains gift product "%s"', $productName));
-                }
+        /** @var CartForOrderCreation\CartProduct $cartProduct */
+        foreach ($matchingProducts as $cartProduct) {
+            if ($cartProduct->isGift()) {
+                throw new RuntimeException(\sprintf('Cart contains gift product "%s"', $productName));
             }
         }
     }
@@ -801,6 +800,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         if (! (new Product($productId))->id) {
             throw new RuntimeException(\sprintf('Product %d was not found', $productId));
         }
+
         $cartRule = $this->createCommonCartRule($voucherCode);
         $cartRule->free_shipping = true;
         $cartRule->gift_product = $productId;
@@ -1003,12 +1003,15 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['total_products'])) {
             Assert::assertSame($data['total_products'], $cartInfo->getSummary()->getTotalProductsPrice());
         }
+
         if (isset($data['total_discount'])) {
             Assert::assertSame($data['total_discount'], $cartInfo->getSummary()->getTotalDiscount());
         }
+
         if (isset($data['shipping'])) {
             Assert::assertSame($data['shipping'], $cartInfo->getSummary()->getTotalShippingPrice());
         }
+
         if (isset($data['total'])) {
             Assert::assertSame($data['total'], $cartInfo->getSummary()->getTotalPriceWithTaxes());
         }
@@ -1025,12 +1028,15 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['total_products'])) {
             Assert::assertSame($data['total_products'], $cartInfo->getSummary()->getTotalProductsPrice());
         }
+
         if (isset($data['total_discount'])) {
             Assert::assertSame($data['total_discount'], $cartInfo->getSummary()->getTotalDiscount());
         }
+
         if (isset($data['shipping'])) {
             Assert::assertSame($data['shipping'], $cartInfo->getSummary()->getTotalShippingPrice());
         }
+
         if (isset($data['total'])) {
             Assert::assertSame($data['total'], $cartInfo->getSummary()->getTotalPriceWithTaxes());
         }
@@ -1076,8 +1082,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         $cartId = (int) SharedStorage::getStorage()->get($cartReference);
         try {
             $this->getCommandBus()->handle(new DeleteCartCommand($cartId));
-        } catch (CartException $e) {
-            $this->setLastException($e);
+        } catch (CartException $cartException) {
+            $this->setLastException($cartException);
         }
     }
 
@@ -1091,8 +1097,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $repository->get(new CartId($cartId));
-        } catch (CartException $e) {
-            $this->setLastException($e);
+        } catch (CartException $cartException) {
+            $this->setLastException($cartException);
         }
 
         $this->assertLastErrorIs(CartNotFoundException::class);
@@ -1123,8 +1129,8 @@ class CartFeatureContext extends AbstractDomainFeatureContext
     {
         try {
             $this->getCommandBus()->handle(new BulkDeleteCartCommand($this->referencesToIds($cartReferences)));
-        } catch (CartException $e) {
-            $this->setLastException($e);
+        } catch (CartException $cartException) {
+            $this->setLastException($cartException);
         }
     }
 

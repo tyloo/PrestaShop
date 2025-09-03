@@ -86,7 +86,7 @@ class CatalogueProviderFactoryTest extends TestCase
         );
     }
 
-    public function testGetProviderFailsWhenWrongTypeIsGiven()
+    public function testGetProviderFailsWhenWrongTypeIsGiven(): void
     {
         $this->expectException(UnexpectedTranslationTypeException::class);
         $this->factory->getProvider(

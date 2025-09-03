@@ -36,7 +36,7 @@ class IsoCodeTest extends TestCase
     /**
      * @dataProvider getValidTwoLetterIsoCodes
      */
-    public function testIsoCodeCanBeCreatedWithValidTwoLetterIsoCode($twoLetterIsoCode, $expectedIsoCodeValue)
+    public function testIsoCodeCanBeCreatedWithValidTwoLetterIsoCode($twoLetterIsoCode, $expectedIsoCodeValue): void
     {
         $isoCode = new IsoCode($twoLetterIsoCode);
 
@@ -46,7 +46,7 @@ class IsoCodeTest extends TestCase
     /**
      * @dataProvider getInvalidCodes
      */
-    public function testIsoCodeCannotBeCreatedWithInvalidValue($invalidIsoCode)
+    public function testIsoCodeCannotBeCreatedWithInvalidValue($invalidIsoCode): void
     {
         $this->expectException(LanguageConstraintException::class);
 

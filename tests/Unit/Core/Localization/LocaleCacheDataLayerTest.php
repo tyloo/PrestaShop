@@ -53,7 +53,7 @@ class LocaleCacheDataLayerTest extends TestCase
         $this->layer = new LocaleCache($cacheAdapter);
     }
 
-    public function testReadWrite()
+    public function testReadWrite(): void
     {
         $data = new LocaleData();
         $data->setLocaleCode('fr');

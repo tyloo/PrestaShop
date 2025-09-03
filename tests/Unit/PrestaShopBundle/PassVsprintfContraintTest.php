@@ -41,7 +41,7 @@ class PassVsprintfContraintTest extends ConstraintValidatorTestCase
         return new PassVsprintfValidator();
     }
 
-    public function testEmptyTranslationIsValid()
+    public function testEmptyTranslationIsValid(): void
     {
         $translation = (new Translation())
             ->setKey('')
@@ -51,7 +51,7 @@ class PassVsprintfContraintTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testTranslationIsValid()
+    public function testTranslationIsValid(): void
     {
         $translation = (new Translation())
             ->setKey('List of products by brand %s')
@@ -61,7 +61,7 @@ class PassVsprintfContraintTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testNotValid()
+    public function testNotValid(): void
     {
         $translation = (new Translation())
             ->setKey('List of products by brand %s')

@@ -123,6 +123,7 @@ class DatabaseDump
         } else {
             $this->dumpFile = $dumpFile;
         }
+
         $this->user = _DB_USER_;
         $this->password = _DB_PASSWD_;
         $this->dbPrefix = _DB_PREFIX_;
@@ -183,24 +184,31 @@ class DatabaseDump
         if ($table === 'lang') {
             return Language::class;
         }
+
         if ($table === 'cms_category') {
             return CMSCategory::class;
         }
+
         if ($table === 'cms_role') {
             return CMSRole::class;
         }
+
         if ($table === 'product_attribute') {
             return Combination::class;
         }
+
         if ($table === 'connections') {
             return Connection::class;
         }
+
         if ($table === 'log') {
             return PrestaShopLogger::class;
         }
+
         if ($table === 'attribute') {
             return ProductAttribute::class;
         }
+
         if ($table === 'orders') {
             return Order::class;
         }
@@ -347,7 +355,7 @@ class DatabaseDump
     private function checkDumpFile(): void
     {
         if (! file_exists($this->dumpFile)) {
-            throw new Exception('You need to run \'composer create-test-db\' to create the initial test database');
+            throw new Exception("You need to run 'composer create-test-db' to create the initial test database");
         }
     }
 
@@ -355,7 +363,7 @@ class DatabaseDump
     {
         $dumpFile = $this->getTableDumpPath($tableName);
         if (! file_exists($dumpFile)) {
-            throw new Exception(\sprintf('Cannot find dump for table %s, you need to run \'composer create-test-db\' to create the initial test database', $tableName));
+            throw new Exception(\sprintf("Cannot find dump for table %s, you need to run 'composer create-test-db' to create the initial test database", $tableName));
         }
     }
 

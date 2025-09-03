@@ -38,5 +38,6 @@ const _PS_ALL_THEMES_DIR_ = _PS_ROOT_DIR_ . '/tests/Resources/themes/';
 if (! defined('_PS_ADMIN_DIR_')) {
     define('_PS_ADMIN_DIR_', __DIR__);
 }
+
 require_once $rootDirectory . 'config/config.inc.php';
 require_once $rootDirectory . 'app/AppKernel.php';

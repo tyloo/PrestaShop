@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\MailTemplate\ThemeCollection;
 
 class ThemeCollectionTest extends TestCase
 {
-    public function testGetByName()
+    public function testGetByName(): void
     {
         $theme1 = new Theme('theme1');
         $theme2 = new Theme('theme2');

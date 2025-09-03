@@ -45,15 +45,18 @@ class StockManagerTest extends KernelTestCase
     /**
      * @var ConfigurationInterface|MockObject
      */
-    private $configuration;
+    private MockObject $configuration;
+
     /**
      * @var Container
      */
     private $testContainer;
+
     /**
      * @var Container
      */
     private $savedContainer;
+
     /**
      * @var PackItemsManager
      */
@@ -95,6 +98,7 @@ class StockManagerTest extends KernelTestCase
         foreach ($products as $product) {
             $packItemsManager->addProduct($pack, $product[0], $product[1], $product[2]);
         }
+
         $this->testContainer->bind(PackItemsManager::class, $packItemsManager);
         $this->testContainer->bind(\PrestaShop\PrestaShop\Adapter\StockManager::class, $packItemsManager);
 
@@ -188,6 +192,7 @@ class StockManagerTest extends KernelTestCase
         foreach ($products as $product) {
             $this->packItemsManager->addProduct($pack, $product[0], $product[1], $product[2]);
         }
+
         $this->testContainer->bind(PackItemsManager::class, $this->packItemsManager);
         $this->testContainer->bind(\PrestaShop\PrestaShop\Adapter\StockManager::class, $this->packItemsManager);
 
@@ -286,6 +291,7 @@ class StockManagerTest extends KernelTestCase
         foreach ($products as $product) {
             $this->packItemsManager->addProduct($pack, $product[0], $product[1], $product[2]);
         }
+
         $this->testContainer->bind(PackItemsManager::class, $this->packItemsManager);
         $this->testContainer->bind(\PrestaShop\PrestaShop\Adapter\StockManager::class, $this->packItemsManager);
 
@@ -388,6 +394,7 @@ class StockManagerTest extends KernelTestCase
 class FakeProduct4759 extends Product
 {
     private static $LAST_ID = 0;
+
     public $stock_available;
 
     public function __construct($stock_available, int $pack_stock_type = PackStockType::STOCK_TYPE_PACK_ONLY)
@@ -411,7 +418,9 @@ class FakeProduct4759 extends Product
 class FakePackItemsManager4759 extends PackItemsManager
 {
     private $packs = [];
+
     private $items = [];
+
     private $stockAvailables = [];
 
     public function addProduct(FakeProduct4759 $pack, FakeProduct4759 $product, $product_attribute_id, $quantity)

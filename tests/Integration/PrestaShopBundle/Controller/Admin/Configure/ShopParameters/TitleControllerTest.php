@@ -45,6 +45,7 @@ class TitleControllerTest extends WebTestCase
      * @var KernelBrowser
      */
     protected $client;
+
     /**
      * @var Router
      */

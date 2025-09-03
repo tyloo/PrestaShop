@@ -39,6 +39,7 @@ use Symfony\Component\HttpFoundation\Request;
 class PersistFiltersBuilderTest extends TestCase
 {
     private const EMPLOYEE_ID = 42;
+
     private const SHOP_ID = 51;
 
     public function testBuildWithoutParameters(): void

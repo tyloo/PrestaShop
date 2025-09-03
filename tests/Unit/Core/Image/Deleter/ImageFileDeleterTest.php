@@ -51,7 +51,7 @@ class ImageFileDeleterTest extends TestCase
         $this->root = vfsStream::setup();
     }
 
-    public function testItDeletesAllImagesAndDirectories()
+    public function testItDeletesAllImagesAndDirectories(): void
     {
         $this->fs->mkdir([
             $this->root->url() . '/p',
@@ -71,7 +71,7 @@ class ImageFileDeleterTest extends TestCase
         $this->assertTrue($this->fs->exists($this->root->url() . '/p/index.php'));
     }
 
-    public function testItDeletesOnlyNumericImageFiles()
+    public function testItDeletesOnlyNumericImageFiles(): void
     {
         $deleteFiles = [
             $this->root->url() . '/c/1.jpg',
@@ -110,7 +110,7 @@ class ImageFileDeleterTest extends TestCase
         }
     }
 
-    public function testItDeletesAllImagesWithAnyName()
+    public function testItDeletesAllImagesWithAnyName(): void
     {
         $deleteFiles = [
             $this->root->url() . '/tmp/manufacturer_mini_1_1.jpg',

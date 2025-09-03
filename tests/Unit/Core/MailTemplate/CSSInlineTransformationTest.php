@@ -71,7 +71,7 @@ class CSSInlineTransformationTest extends TestCase
         ]);
     }
 
-    public function testNonExistentCss()
+    public function testNonExistentCss(): void
     {
         $cssPath = realpath(__DIR__ . '/../../Resources/assets/css') . '/not_found.css';
         $simpleHtml = $this->createSimpleHtml($cssPath);
@@ -86,7 +86,7 @@ class CSSInlineTransformationTest extends TestCase
         $this->assertStyle($titleTags->getNode(0), []);
     }
 
-    public function testCssSizes()
+    public function testCssSizes(): void
     {
         $cssPath = realpath(__DIR__ . '/../../Resources/assets/css') . '/sizes.css';
         $simpleHtml = $this->createSimpleHtml($cssPath);
@@ -104,7 +104,7 @@ class CSSInlineTransformationTest extends TestCase
         $this->assertEquals(100, $widthAttribute->nodeValue);
     }
 
-    public function testCssOverride()
+    public function testCssOverride(): void
     {
         $cssPath = realpath(__DIR__ . '/../../Resources/assets/css') . '/override.css';
         $simpleHtml = $this->createSimpleHtml($cssPath);
@@ -130,7 +130,7 @@ class CSSInlineTransformationTest extends TestCase
         $this->assertStyle($secondDiv, ['background-color' => '#00ff00']);
     }
 
-    public function testMultipleCss()
+    public function testMultipleCss(): void
     {
         $html = <<<'HTML'
             <!DOCTYPE html>
@@ -165,20 +165,19 @@ HTML;
         $this->assertEquals($expectedStyle, $nodeStyle);
     }
 
-    /**
-     * @return array
-     */
-    private function getNodeStyle(DOMNode $node)
+    private function getNodeStyle(DOMNode $node): array
     {
         if (! ($styleAttr = $node->attributes->getNamedItem('style'))) {
             return [];
         }
+
         $style = [];
         $styleAttributes = explode(';', (string) $styleAttr->nodeValue);
         foreach ($styleAttributes as $styleAttribute) {
             if (empty($styleAttribute)) {
                 continue;
             }
+
             $parts = explode(':', $styleAttribute);
             $style[trim($parts[0])] = trim($parts[1]);
         }

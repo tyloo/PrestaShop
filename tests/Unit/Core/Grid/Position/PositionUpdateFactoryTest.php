@@ -41,7 +41,7 @@ use PrestaShop\PrestaShop\Core\Grid\Position\PositionUpdateFactory;
  */
 class PositionUpdateFactoryTest extends TestCase
 {
-    public function testHandleData()
+    public function testHandleData(): void
     {
         $definition = $this->getDefinition();
         $data = [
@@ -64,7 +64,7 @@ class PositionUpdateFactoryTest extends TestCase
         $this->assertNull($positionUpdate->getParentId());
     }
 
-    public function testHandleDataWithParent()
+    public function testHandleDataWithParent(): void
     {
         $definition = $this->getDefinitionWithParent();
         $data = [
@@ -88,17 +88,17 @@ class PositionUpdateFactoryTest extends TestCase
         $this->assertEquals(42, $positionUpdate->getParentId());
     }
 
-    public function testDataPositionsValidation()
+    public function testDataPositionsValidation(): void
     {
         $this->checkDataValidation([], 'Missing positions in your data.');
     }
 
-    public function testDataEmptyPositionValidation()
+    public function testDataEmptyPositionValidation(): void
     {
         $this->checkDataValidation(['positions' => []], 'Missing positions in your data.');
     }
 
-    public function testDataPositionValidation()
+    public function testDataPositionValidation(): void
     {
         $data = ['positions' => [
             ['row' => 1],
@@ -116,7 +116,7 @@ class PositionUpdateFactoryTest extends TestCase
         $this->checkDataValidation($data, PositionUpdateFactory::POSITION_KEY, [0, 'newPosition']);
     }
 
-    public function testDataParentIdValidation()
+    public function testDataParentIdValidation(): void
     {
         $definition = $this->getDefinitionWithParent();
         $data = ['positions' => [
@@ -135,6 +135,7 @@ class PositionUpdateFactoryTest extends TestCase
         if ($definition === null) {
             $definition = $this->getDefinition();
         }
+
         $positionUpdateFactory = $this->getPositionUpdateFactory();
 
         /** @var PositionDataException $caughtException */
@@ -142,8 +143,8 @@ class PositionUpdateFactoryTest extends TestCase
 
         try {
             $positionUpdateFactory->buildPositionUpdate($data, $definition);
-        } catch (PositionDataException $e) {
-            $caughtException = $e;
+        } catch (PositionDataException $positionDataException) {
+            $caughtException = $positionDataException;
         }
 
         if ($expectedErrorKey === null) {

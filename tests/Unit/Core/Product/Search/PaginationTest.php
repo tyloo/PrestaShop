@@ -44,7 +44,7 @@ class PaginationTest extends TestCase
         $this->pagination = new Pagination();
     }
 
-    public function testPaginationAddsContextFirstAndLastPageAndPreviousNext()
+    public function testPaginationAddsContextFirstAndLastPageAndPreviousNext(): void
     {
         $this->pagination
             ->setPagesCount(10)
@@ -63,7 +63,7 @@ class PaginationTest extends TestCase
         ], $this->pagination->buildLinks());
     }
 
-    public function testPaginationContextWhenOnFirstPage()
+    public function testPaginationContextWhenOnFirstPage(): void
     {
         $this->pagination
             ->setPagesCount(10)
@@ -80,7 +80,7 @@ class PaginationTest extends TestCase
         ], $this->pagination->buildLinks());
     }
 
-    public function testPaginationContextWhenOnLastPage()
+    public function testPaginationContextWhenOnLastPage(): void
     {
         $this->pagination
             ->setPagesCount(10)
@@ -97,7 +97,7 @@ class PaginationTest extends TestCase
         ], $this->pagination->buildLinks());
     }
 
-    public function testPaginationContextMakesSenseWhenOnlyOnePage()
+    public function testPaginationContextMakesSenseWhenOnlyOnePage(): void
     {
         $this->pagination
             ->setPagesCount(1)

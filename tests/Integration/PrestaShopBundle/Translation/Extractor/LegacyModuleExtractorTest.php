@@ -43,6 +43,7 @@ class LegacyModuleExtractorTest extends KernelTestCase
      * @var string Domain name of the modules translations
      */
     public const DOMAIN_NAME = 'ModulesTranslationtest';
+
     public const MODULE_NAME = 'translationtest';
 
     /**
@@ -63,7 +64,7 @@ class LegacyModuleExtractorTest extends KernelTestCase
      *
      * @dataProvider provideTestCases
      */
-    public function testExtractedCatalogueContainsTheExpectedWordings($locale, $expected)
+    public function testExtractedCatalogueContainsTheExpectedWordings($locale, $expected): void
     {
         self::bootKernel();
         $container = self::$kernel->getContainer();

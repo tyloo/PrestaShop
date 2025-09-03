@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Util\HelperCard\HelperCardDocumentationDoesNotExi
 
 class DocumentationLinkProviderTest extends TestCase
 {
-    public function testIsValidImplementation()
+    public function testIsValidImplementation(): void
     {
         $provider = new DocumentationLinkProvider(
             'FR',
@@ -50,7 +50,7 @@ class DocumentationLinkProviderTest extends TestCase
         $this->assertInstanceOf(DocumentationLinkProviderInterface::class, $provider);
     }
 
-    public function testGetFRValidLink()
+    public function testGetFRValidLink(): void
     {
         $provider = new DocumentationLinkProvider(
             'FR',
@@ -68,7 +68,7 @@ class DocumentationLinkProviderTest extends TestCase
         $this->assertEquals('https://doc.presta.com/fr/seo', $link);
     }
 
-    public function testGetBadCardLink()
+    public function testGetBadCardLink(): void
     {
         $provider = new DocumentationLinkProvider(
             'FR',
@@ -86,7 +86,7 @@ class DocumentationLinkProviderTest extends TestCase
         $link = $provider->getLink('aaaa');
     }
 
-    public function testGetITInvalidLinkSoExpectsFallback()
+    public function testGetITInvalidLinkSoExpectsFallback(): void
     {
         $provider = new DocumentationLinkProvider(
             'IT',
@@ -104,7 +104,7 @@ class DocumentationLinkProviderTest extends TestCase
         $this->assertEquals('https://doc.presta.com/seo', $link);
     }
 
-    public function testGetEZInvalidLinkWithoutFallback()
+    public function testGetEZInvalidLinkWithoutFallback(): void
     {
         $provider = new DocumentationLinkProvider(
             'EZ',

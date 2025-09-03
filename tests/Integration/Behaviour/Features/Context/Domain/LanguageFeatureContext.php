@@ -84,8 +84,8 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
             ));
 
             SharedStorage::getStorage()->set($languageReference, $languageId->getValue());
-        } catch (LanguageException $e) {
-            $this->setLastException($e);
+        } catch (LanguageException $languageException) {
+            $this->setLastException($languageException);
         }
     }
 
@@ -99,29 +99,35 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             $editableLanguage->setName($data['name']);
         }
+
         if (isset($data['isoCode'])) {
             $editableLanguage->setIsoCode($data['isoCode']);
         }
+
         if (isset($data['tagIETF'])) {
             $editableLanguage->setTagIETF($data['tagIETF']);
         }
+
         if (isset($data['shortDateFormat'])) {
             $editableLanguage->setShortDateFormat($data['shortDateFormat']);
         }
+
         if (isset($data['fullDateFormat'])) {
             $editableLanguage->setFullDateFormat($data['fullDateFormat']);
         }
+
         if (isset($data['isRtl'])) {
             $editableLanguage->setIsRtl((bool) $data['isRtl']);
         }
+
         if (isset($data['isActive'])) {
             $editableLanguage->setIsActive((bool) $data['isActive']);
         }
 
         try {
             $this->getCommandBus()->handle($editableLanguage);
-        } catch (LanguageException $e) {
-            $this->setLastException($e);
+        } catch (LanguageException $languageException) {
+            $this->setLastException($languageException);
         }
     }
 
@@ -137,8 +143,8 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
 
             // Important to clean this cache or Language::getIdByIso still returns stored value for next adding
             Cache::clean('Language::getIdByIso_*');
-        } catch (LanguageException $e) {
-            $this->setLastException($e);
+        } catch (LanguageException $languageException) {
+            $this->setLastException($languageException);
         }
     }
 
@@ -157,8 +163,8 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
             foreach ($languageIds as $languageId) {
                 SharedStorage::getStorage()->clear($languageId);
             }
-        } catch (LanguageException $e) {
-            $this->setLastException($e);
+        } catch (LanguageException $languageException) {
+            $this->setLastException($languageException);
         }
     }
 
@@ -178,8 +184,8 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
                     $status === 'enabled'
                 )
             );
-        } catch (LanguageException $e) {
-            $this->setLastException($e);
+        } catch (LanguageException $languageException) {
+            $this->setLastException($languageException);
         }
     }
 
@@ -196,8 +202,8 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
             $this->getCommandBus()->handle(
                 new BulkToggleLanguagesStatusCommand($this->referencesToIds($languageReferences), $status === 'enabled')
             );
-        } catch (LanguageException $e) {
-            $this->setLastException($e);
+        } catch (LanguageException $languageException) {
+            $this->setLastException($languageException);
         }
     }
 
@@ -298,8 +304,8 @@ class LanguageFeatureContext extends AbstractDomainFeatureContext
             return $this->getQueryBus()->handle(
                 new GetLanguageForEditing($this->referenceToId($languageReference))
             );
-        } catch (LanguageException $e) {
-            $this->setLastException($e);
+        } catch (LanguageException $languageException) {
+            $this->setLastException($languageException);
         }
 
         return null;

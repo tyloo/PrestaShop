@@ -191,11 +191,11 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
             );
             $command->setActive($status);
             $this->getCommandBus()->handle($command);
-        } catch (ProductConstraintException $e) {
-            if ($e->getCode() === ProductConstraintException::INVALID_ONLINE_DATA) {
-                $this->setLastException($e);
+        } catch (ProductConstraintException $productConstraintException) {
+            if ($productConstraintException->getCode() === ProductConstraintException::INVALID_ONLINE_DATA) {
+                $this->setLastException($productConstraintException);
             } else {
-                throw $e;
+                throw $productConstraintException;
             }
         }
     }
@@ -213,8 +213,8 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
                 $status,
                 $shopConstraint
             ));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
 
             return;
         }

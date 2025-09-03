@@ -90,7 +90,10 @@ abstract class ContextEventListenerTestCase extends KernelTestCase
         $fakeShop->active = true;
         $fakeShop->theme_name = 'classic';
         $fakeShop->color = 'red';
-        $fakeShop->physical_uri = $fakeShop->virtual_uri = $fakeShop->domain = $fakeShop->domain_ssl = '';
+        $fakeShop->physical_uri = '';
+        $fakeShop->virtual_uri = '';
+        $fakeShop->domain = '';
+        $fakeShop->domain_ssl = '';
 
         $shopRepository = $this->createMock(ShopRepository::class);
         $shopRepository

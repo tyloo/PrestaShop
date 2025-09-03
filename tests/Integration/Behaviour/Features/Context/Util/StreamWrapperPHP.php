@@ -42,7 +42,9 @@ class StreamWrapperPHP
      * @var int
      */
     protected $index = 0;
+
     protected $length;
+
     protected $data = '';
 
     public $context;
@@ -84,6 +86,7 @@ class StreamWrapperPHP
         if (file_exists($this->buffer_filename())) {
             $this->data = file_get_contents($this->buffer_filename());
         }
+
         $this->index = 0;
         $this->length = \strlen((string) $this->data);
     }
@@ -114,9 +117,10 @@ class StreamWrapperPHP
 
     public function stream_read(int $count): string
     {
-        if (($this->length === null) === true) {
+        if ($this->length === null) {
             $this->length = \strlen((string) $this->data);
         }
+
         $length = min($count, $this->length - $this->index);
         $data = substr((string) $this->data, $this->index);
         $this->index += $length;
@@ -139,6 +143,7 @@ class StreamWrapperPHP
         if (file_exists($this->buffer_filename())) {
             unlink($this->buffer_filename());
         }
+
         $this->data = '';
         $this->index = 0;
         $this->length = 0;

@@ -69,8 +69,8 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
                 $this->getSharedStorage()->get($productReference),
                 $priorityList->getPriorities()
             ));
-        } catch (DomainException $e) {
-            $this->setLastException($e);
+        } catch (DomainException $domainException) {
+            $this->setLastException($domainException);
         }
     }
 
@@ -98,8 +98,8 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
 
         try {
             $priorityUpdater->updateDefaultPriorities($priorityList);
-        } catch (DomainException $e) {
-            $this->setLastException($e);
+        } catch (DomainException $domainException) {
+            $this->setLastException($domainException);
         }
     }
 

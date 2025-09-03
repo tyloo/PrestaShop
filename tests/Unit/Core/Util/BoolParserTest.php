@@ -36,7 +36,7 @@ class BoolParserTest extends TestCase
     /**
      * @throws AssertionFailedError
      */
-    public function testCastToBool()
+    public function testCastToBool(): void
     {
         $this->assertFalse(BoolParser::castToBool('false'));
         $this->assertFalse(BoolParser::castToBool('0'));

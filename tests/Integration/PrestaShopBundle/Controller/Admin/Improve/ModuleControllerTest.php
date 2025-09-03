@@ -51,14 +51,17 @@ class ModuleControllerTest extends WebTestCase
      * @var KernelBrowser
      */
     protected $client;
+
     /**
      * @var Router
      */
     protected $router;
+
     /**
      * @var Translator
      */
     protected $translator;
+
     /**
      * @var LegacyContext
      */

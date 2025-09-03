@@ -113,7 +113,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
 
         Db::getInstance()->execute(
             'INSERT INTO `' . _DB_PREFIX_ . 'cart_rule_product_rule_group` (`id_cart_rule`, `quantity`) ' .
-            'VALUES (' . (int) $cartRuleId . ', ' . $quantity . ')'
+            'VALUES (' . $cartRuleId . ', ' . $quantity . ')'
         );
         $idProductRuleGroup = Db::getInstance()->Insert_ID();
 
@@ -314,6 +314,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
         if (! isset($cartRules[$position - 1]['id_cart_rule'])) {
             throw new Exception(\sprintf('Undefined cartRule on position #%s', $position - 1));
         }
+
         $cartRule = new CartRule($cartRules[$position - 1]['id_cart_rule']);
         if ($expectedValue !== $cartRule->reduction_amount) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expectedValue, $cartRule->reduction_amount));

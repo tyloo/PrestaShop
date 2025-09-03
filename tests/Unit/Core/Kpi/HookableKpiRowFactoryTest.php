@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Kpi\Row\KpiRowInterface;
  */
 class HookableKpiRowFactoryTest extends TestCase
 {
-    public function testCanBeConstructedWithValidKpis()
+    public function testCanBeConstructedWithValidKpis(): void
     {
         $kpiMock1 = $this->createMock(KpiInterface::class);
         $kpiMock2 = $this->createMock(KpiInterface::class);
@@ -59,7 +59,7 @@ class HookableKpiRowFactoryTest extends TestCase
         $this->assertInstanceOf(KpiRowFactoryInterface::class, $factory);
     }
 
-    public function testCantBeConstructedWithInvalidKpis()
+    public function testCantBeConstructedWithInvalidKpis(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Kpi must be an instance of KpiInterface, got `string`.');
@@ -83,7 +83,7 @@ class HookableKpiRowFactoryTest extends TestCase
         $this->assertInstanceOf(KpiRowFactoryInterface::class, $factory);
     }
 
-    public function testCantBeConstructedWithInvalidIdentifier()
+    public function testCantBeConstructedWithInvalidIdentifier(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Identifier must be a string, got `boolean`.');
@@ -106,7 +106,7 @@ class HookableKpiRowFactoryTest extends TestCase
         $this->assertInstanceOf(KpiRowFactoryInterface::class, $factory);
     }
 
-    public function testBuild()
+    public function testBuild(): void
     {
         $kpiMock1 = $this->createMock(KpiInterface::class);
         $kpiMock2 = $this->createMock(KpiInterface::class);

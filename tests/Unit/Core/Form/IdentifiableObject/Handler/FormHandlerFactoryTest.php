@@ -53,7 +53,7 @@ class FormHandlerFactoryTest extends TestCase
     /**
      * @depends testCanBeConstructed
      */
-    public function testItCreatesFormHandler(FormHandlerFactoryInterface $factory)
+    public function testItCreatesFormHandler(FormHandlerFactoryInterface $factory): void
     {
         $formHandler = $factory->create(
             $this->createMock(FormDataHandlerInterface::class)

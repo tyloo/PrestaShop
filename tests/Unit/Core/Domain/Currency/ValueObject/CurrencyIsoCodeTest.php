@@ -36,7 +36,7 @@ class CurrencyIsoCodeTest extends TestCase
     /**
      * @dataProvider getIncorrectIsoCodes
      */
-    public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex($incorrectIsoCode)
+    public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex($incorrectIsoCode): void
     {
         $this->expectException(CurrencyConstraintException::class);
         $this->expectExceptionCode(CurrencyConstraintException::INVALID_ISO_CODE);
@@ -71,7 +71,7 @@ class CurrencyIsoCodeTest extends TestCase
         ];
     }
 
-    public function testItReturnsRightIsoCode()
+    public function testItReturnsRightIsoCode(): void
     {
         $currencyIsoCode = new AlphaIsoCode('LTU');
 

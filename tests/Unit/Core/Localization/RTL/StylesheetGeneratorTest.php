@@ -36,7 +36,9 @@ use Symfony\Component\Filesystem\Filesystem;
 class StylesheetGeneratorTest extends TestCase
 {
     private const RTL_INPUT_FILENAME = 'rtl_input.css';
+
     private const RTL_INPUT_FILENAME_WITH_SUFFIX = 'rtl_input_rtl.css';
+
     private const RTL_OUTPUT_FILENAME = 'rtl_output.css';
 
     /**
@@ -48,6 +50,7 @@ class StylesheetGeneratorTest extends TestCase
      * @var string
      */
     protected $cssSamplesDirectory;
+
     /**
      * @var string
      */

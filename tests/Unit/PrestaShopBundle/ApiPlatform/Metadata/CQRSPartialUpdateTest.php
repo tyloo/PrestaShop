@@ -40,7 +40,9 @@ use PrestaShopBundle\ApiPlatform\Processor\CommandProcessor;
 class CQRSPartialUpdateTest extends TestCase
 {
     public const VALID_COMMAND_CLASS = AddProductCommand::class;
+
     public const OTHER_VALID_COMMAND_CLASS = UpdateProductCommand::class;
+
     public const INVALID_COMMAND_CLASS = 'My\\Namespace\\MyCommand';
 
     public function testDefaultConstructor(): void
@@ -176,8 +178,8 @@ class CQRSPartialUpdateTest extends TestCase
                 extraProperties: ['CQRSCommand' => self::VALID_COMMAND_CLASS],
                 CQRSCommand: self::OTHER_VALID_COMMAND_CLASS,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -259,8 +261,8 @@ class CQRSPartialUpdateTest extends TestCase
                 extraProperties: ['CQRSQuery' => 'My\\Namespace\\MyQuery'],
                 CQRSQuery: 'My\\Namespace\\MyOtherQuery',
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -311,8 +313,8 @@ class CQRSPartialUpdateTest extends TestCase
                 extraProperties: ['CQRSQueryMapping' => $queryMapping],
                 CQRSQueryMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -363,8 +365,8 @@ class CQRSPartialUpdateTest extends TestCase
                 extraProperties: ['ApiResourceMapping' => $resourceMapping],
                 ApiResourceMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -417,8 +419,8 @@ class CQRSPartialUpdateTest extends TestCase
                 extraProperties: ['experimentalOperation' => true],
                 experimentalOperation: false,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -471,8 +473,8 @@ class CQRSPartialUpdateTest extends TestCase
                 extraProperties: ['allowEmptyBody' => true],
                 allowEmptyBody: false,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);

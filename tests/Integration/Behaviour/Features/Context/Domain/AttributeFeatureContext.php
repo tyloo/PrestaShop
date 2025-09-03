@@ -64,8 +64,8 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
             );
 
             $this->getSharedStorage()->set($reference, $attributeId->getValue());
-        } catch (Exception $e) {
-            $this->setLastException($e);
+        } catch (Exception $exception) {
+            $this->setLastException($exception);
         }
     }
 
@@ -98,15 +98,19 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
         if (isset($properties['attribute_group'])) {
             $command->setAttributeGroupId($this->referenceToId($properties['attribute_group']));
         }
+
         if (isset($properties['name'])) {
             $command->setLocalizedNames($properties['name']);
         }
+
         if (isset($properties['color'])) {
             $command->setColor($properties['color']);
         }
+
         if (isset($properties['shopIds'])) {
             $command->setAssociatedShopIds($this->referencesToIds($properties['shopIds']));
         }
+
         if (isset($properties['texture']) && $properties['texture'] !== 'null') {
             $file = DummyFileUploader::upload($properties['texture']);
             $command->setTextureFilePath($file);
@@ -114,8 +118,8 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (AttributeConstraintException $e) {
-            $this->setLastException($e);
+        } catch (AttributeConstraintException $attributeConstraintException) {
+            $this->setLastException($attributeConstraintException);
         }
     }
 
@@ -129,12 +133,15 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             Assert::assertEquals($data['name'], $attribute->getLocalizedNames());
         }
+
         if (isset($data['color'])) {
             Assert::assertEquals($data['color'], $attribute->getColor());
         }
+
         if (isset($data['attribute_group'])) {
             Assert::assertEquals($this->referenceToId($data['attribute_group']), $attribute->getAttributeGroupId());
         }
+
         if (isset($data['shopIds'])) {
             Assert::assertEquals($this->referencesToIds($data['shopIds']), $attribute->getAssociatedShopIds());
         }

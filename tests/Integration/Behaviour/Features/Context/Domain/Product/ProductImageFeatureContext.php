@@ -251,6 +251,7 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
                 throw new RuntimeException(\sprintf('File "%s" should not exist', $imgPath));
             }
         }
+
         $imageFolder = $this->getImageGenerationPath($imageId);
         if (file_exists($imageFolder)) {
             throw new RuntimeException(\sprintf('Folder "%s" should not exist', $imageFolder));
@@ -300,7 +301,7 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
      */
     public function assertProductHasNoImagesForShops(string $productReference, string $shopReferences): void
     {
-        $shopReferencesList = array_map(fn (string $shopReference) => trim($shopReference), explode(',', $shopReferences));
+        $shopReferencesList = array_map(fn (string $shopReference): string => trim($shopReference), explode(',', $shopReferences));
         foreach ($shopReferencesList as $shopReference) {
             Assert::assertEmpty(
                 $this->getProductImages($productReference, ShopConstraint::shop($this->referenceToId($shopReference))),
@@ -379,10 +380,11 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
                 )
             );
         }
+
         try {
             $this->getCommandBus()->handle($command);
-        } catch (CannotRemoveCoverException $e) {
-            $this->setLastException($e);
+        } catch (CannotRemoveCoverException $cannotRemoveCoverException) {
+            $this->setLastException($cannotRemoveCoverException);
         }
     }
 
@@ -449,8 +451,8 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
     {
         try {
             $this->getProductImages($productReference, ShopConstraint::allShops());
-        } catch (InvalidShopConstraintException $e) {
-            $this->setLastException($e);
+        } catch (InvalidShopConstraintException $invalidShopConstraintException) {
+            $this->setLastException($invalidShopConstraintException);
         }
     }
 
@@ -461,8 +463,8 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
     {
         try {
             $this->getProductImages($productReference, ShopConstraint::allShops());
-        } catch (InvalidShopConstraintException $e) {
-            $this->setLastException($e);
+        } catch (InvalidShopConstraintException $invalidShopConstraintException) {
+            $this->setLastException($invalidShopConstraintException);
         }
     }
 
@@ -473,8 +475,8 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
     {
         try {
             $this->getProductImages($productReference, ShopConstraint::shop($this->getSharedStorage()->get($shopReference)));
-        } catch (ShopAssociationNotFound $e) {
-            $this->setLastException($e);
+        } catch (ShopAssociationNotFound $shopAssociationNotFound) {
+            $this->setLastException($shopAssociationNotFound);
         }
     }
 

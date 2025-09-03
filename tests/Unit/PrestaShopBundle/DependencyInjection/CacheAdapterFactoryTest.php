@@ -58,6 +58,7 @@ class CacheAdapterFactoryTest extends TestCase
         ) {
             $this->markTestSkipped('apcu is not supported');
         }
+
         $this->assertTrue($this->cacheAdapterFactory->getCacheAdapter($driver) instanceof $expectedClass);
     }
 

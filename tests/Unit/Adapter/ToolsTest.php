@@ -66,6 +66,7 @@ class ToolsTest extends TestCase
         if (empty($original)) {
             $original = @file_get_contents(CaBundle::getBundledCaBundlePath());
         }
+
         self::assertEquals($original, file_get_contents(_PS_CACHE_CA_CERT_FILE_));
     }
 }

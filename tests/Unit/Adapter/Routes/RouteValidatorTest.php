@@ -34,19 +34,19 @@ use PrestaShop\PrestaShop\Adapter\Routes\RouteValidator;
 
 class RouteValidatorTest extends TestCase
 {
-    public function testIsRoutePatternReturnsTrueForValidPattern()
+    public function testIsRoutePatternReturnsTrueForValidPattern(): void
     {
         $validator = new RouteValidator();
         $this->assertTrue((bool) $validator->isRoutePattern('category/{id}-{rewrite}'));
     }
 
-    public function testIsRoutePatternReturnsFalseForInvalidPattern()
+    public function testIsRoutePatternReturnsFalseForInvalidPattern(): void
     {
         $validator = new RouteValidator();
         $this->assertFalse((bool) $validator->isRoutePattern('category/id-rewrite$'));
     }
 
-    public function testDoesRouteContainsRequiredKeywordsCallsIsRouteValid()
+    public function testDoesRouteContainsRequiredKeywordsCallsIsRouteValid(): void
     {
         $validator = new RouteValidator();
 
@@ -56,7 +56,7 @@ class RouteValidatorTest extends TestCase
     /**
      * @dataProvider routeValidationProvider
      */
-    public function testIsRouteValid($routeId, $rule, $expected)
+    public function testIsRouteValid($routeId, $rule, $expected): void
     {
         $validator = new RouteValidator();
         $result = $validator->isRouteValid($routeId, $rule);

@@ -611,6 +611,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
         if (empty(self::$contextMocker)) {
             throw new Exception('Context was not mocked');
         }
+
         self::$contextMocker->resetContext();
     }
 

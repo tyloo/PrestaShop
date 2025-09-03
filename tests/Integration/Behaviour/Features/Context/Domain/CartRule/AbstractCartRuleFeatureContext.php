@@ -55,24 +55,30 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
         if (isset($data['highlight'])) {
             $command->setHighlightInCart(PrimitiveUtils::castStringBooleanIntoBoolean($data['highlight']));
         }
+
         if (isset($data['allow_partial_use'])) {
             $command->setAllowPartialUse(PrimitiveUtils::castStringBooleanIntoBoolean($data['allow_partial_use']));
         }
+
         if (isset($data['priority'])) {
             $command->setPriority((int) $data['priority']);
         }
+
         if (isset($data['active'])) {
             $command->setActive(PrimitiveUtils::castStringBooleanIntoBoolean($data['active']));
         }
+
         if (isset($data['valid_from'])) {
             if (empty($data['valid_to'])) {
                 throw new RuntimeException('When setting cart rule range "valid_from" and "valid_to" must be provided');
             }
+
             $command->setValidityDateRange(
                 new DateTimeImmutable($data['valid_from']),
                 new DateTimeImmutable($data['valid_to']),
             );
         }
+
         if (isset($data['total_quantity'])) {
             $command->setTotalQuantity((int) $data['total_quantity']);
         }
@@ -80,6 +86,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
         if (isset($data['quantity_per_user'])) {
             $command->setQuantityPerUser((int) $data['quantity_per_user']);
         }
+
         if (! empty($data['minimum_amount'])) {
             $currencyId = $this->getSharedStorage()->get($data['minimum_amount_currency']);
             $command->setMinimumAmount(
@@ -114,9 +121,11 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
         if (isset($expectedData['name'])) {
             Assert::assertSame($expectedData['name'], $information->getLocalizedNames(), 'Unexpected localized name');
         }
+
         if (isset($expectedData['description'])) {
             Assert::assertSame($expectedData['description'], $information->getDescription(), 'Unexpected description');
         }
+
         if (isset($expectedData['highlight'])) {
             Assert::assertSame(
                 PrimitiveUtils::castStringBooleanIntoBoolean($expectedData['highlight']),
@@ -124,6 +133,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
                 'Unexpected highlight'
             );
         }
+
         if (isset($expectedData['allow_partial_use'])) {
             Assert::assertSame(
                 PrimitiveUtils::castStringBooleanIntoBoolean($expectedData['allow_partial_use']),
@@ -131,6 +141,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
                 'Unexpected partial use'
             );
         }
+
         if (isset($expectedData['active'])) {
             Assert::assertSame(
                 PrimitiveUtils::castStringBooleanIntoBoolean($expectedData['active']),
@@ -138,9 +149,11 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
                 'Unexpected active property'
             );
         }
+
         if (isset($expectedData['code'])) {
             Assert::assertSame($expectedData['code'], $information->getCode(), 'Unexpected code');
         }
+
         if (isset($expectedData['customer'])) {
             Assert::assertSame(
                 ! empty($expectedData['customer']) ? $this->getSharedStorage()->get($expectedData['customer']) : 0,
@@ -148,9 +161,11 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
                 'Unexpected customer id'
             );
         }
+
         if (isset($expectedData['priority'])) {
             Assert::assertSame((int) $expectedData['priority'], $information->getPriority(), 'Unexpected priority');
         }
+
         if (isset($expectedData['valid_from'])) {
             Assert::assertEquals(
                 $expectedData['valid_from'],
@@ -158,6 +173,7 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
                 'Unexpected valid_from'
             );
         }
+
         if (isset($expectedData['valid_to'])) {
             Assert::assertEquals(
                 $expectedData['valid_to'],
@@ -165,9 +181,11 @@ abstract class AbstractCartRuleFeatureContext extends AbstractDomainFeatureConte
                 'Unexpected valid_to'
             );
         }
+
         if (isset($expectedData['total_quantity'])) {
             Assert::assertSame((int) $expectedData['total_quantity'], $conditions->getQuantity(), 'Unexpected quantity');
         }
+
         if (isset($expectedData['quantity_per_user'])) {
             Assert::assertSame((int) $expectedData['quantity_per_user'], $conditions->getQuantityPerUser(), 'Unexpected quantity_per_user');
         }

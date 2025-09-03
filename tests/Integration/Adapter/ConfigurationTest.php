@@ -90,6 +90,7 @@ class ConfigurationTest extends KernelTestCase
         if (! empty($setParams)) {
             $this->configuration->set($setParams['key'], $setParams['value'], $setParams['shopConstraint']);
         }
+
         $result = $this->configuration->has($getParams['key'], $getParams['shopConstraint']);
 
         $this->assertEquals($expectedResult, $result);
@@ -436,6 +437,7 @@ class ConfigurationTest extends KernelTestCase
                 $this->configuration->set($params['key'], $params['value'], $params['shopConstraint']);
             }
         }
+
         LegacyConfiguration::resetStaticCache();
         $result = $this->configuration->get($getParams['key'], $getParams['default'], $getParams['shopConstraint']);
         $this->assertEquals($expectedResult, $result);

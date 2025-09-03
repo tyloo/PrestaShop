@@ -148,10 +148,12 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
         if (! isset($orderCartRulesData[$position - 1]['id_order_cart_rule'])) {
             throw new Exception(\sprintf('Undefined order cart rule on position #%s', $position));
         }
+
         $orderCartRule = new OrderCartRule($orderCartRulesData[$position - 1]['id_order_cart_rule']);
         if ((float) $discountTaxIncluded !== (float) $orderCartRule->value) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $discountTaxIncluded, $orderCartRule->value));
         }
+
         if ((float) $discountTaxExcluded !== (float) $orderCartRule->value_tax_excl) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $discountTaxExcluded, $orderCartRule->value_tax_excl));
         }
@@ -266,6 +268,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
         if ((int) $order->id_carrier === 0) {
             throw new RuntimeException(\sprintf('Order %s has no carrier defined', $orderReference));
         }
+
         if ((int) $order->id_carrier !== $carrierId) {
             throw new RuntimeException(\sprintf('Order %s should have %s as a carrier, expected id_carrier to be %d but is %d instead', $orderReference, $carrierReference, $carrierId, (int) $order->id_carrier));
         }
@@ -277,6 +280,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
         if ($cart === null) {
             throw new Exception('Current cart was not initialized');
         }
+
         $order = Order::getByCartId($cart->id);
 
         return $order;
@@ -290,6 +294,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
         foreach ($this->orders as $order) {
             $order->delete();
         }
+
         $this->orders = [];
     }
 

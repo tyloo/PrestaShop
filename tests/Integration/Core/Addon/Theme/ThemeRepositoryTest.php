@@ -38,6 +38,7 @@ use Tests\TestCase\ContextStateTestCase;
 class ThemeRepositoryTest extends ContextStateTestCase
 {
     public const NOTICE = '[ThemeRepository] ';
+
     /**
      * @var ThemeRepository|null
      */
@@ -65,7 +66,7 @@ class ThemeRepositoryTest extends ContextStateTestCase
         $this->repository = null;
     }
 
-    public function testGetInstanceByName()
+    public function testGetInstanceByName(): void
     {
         $expectedTheme = $this->repository->getInstanceByName('classic');
         $this->assertInstanceOf(
@@ -75,20 +76,20 @@ class ThemeRepositoryTest extends ContextStateTestCase
         );
     }
 
-    public function testGetInstanceByNameNotFound()
+    public function testGetInstanceByNameNotFound(): void
     {
         $this->expectException('PrestaShopException');
         $this->repository->getInstanceByName('not_found');
     }
 
-    public function testGetList()
+    public function testGetList(): void
     {
         $themeList = $this->repository->getList();
         $this->assertIsArray($themeList);
         $this->assertInstanceOf(\PrestaShop\PrestaShop\Core\Addon\Theme\Theme::class, current($themeList));
     }
 
-    public function testGetListExcluding()
+    public function testGetListExcluding(): void
     {
         $themeListWithoutRestrictions = $this->repository->GetListExcluding([]);
         $themeListWithoutClassic = $this->repository->GetListExcluding(['classic']);

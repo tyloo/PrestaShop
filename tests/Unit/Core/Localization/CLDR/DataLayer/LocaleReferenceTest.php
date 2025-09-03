@@ -69,7 +69,7 @@ class LocaleReferenceTest extends TestCase
      * When asking it for a given locale's data
      * Then the expected CLDR LocaleData object should be retrieved, of null if locale code is unknown.
      */
-    public function testRead()
+    public function testRead(): void
     {
         $cldrLocaleData = $this->layer->read('fr-FR');
 

@@ -41,8 +41,11 @@ use Tests\Resources\ResourceResetter;
 class RemoteZipSourceHandlerTest extends TestCase
 {
     private const VALID_SOURCE_ZIP = __DIR__ . '/../../../../Resources/dummyFile/valid_module.zip';
+
     private const INVALID_SOURCE_ZIP = __DIR__ . '/../../../../Resources/dummyFile/invalid_module.zip';
+
     private const VALID_SOURCE_URL = 'http://valid-source.local/valid_module.zip';
+
     private const INVALID_SOURCE_URL = 'http://valid-source.local/not_a_zipfile.xml';
 
     /**

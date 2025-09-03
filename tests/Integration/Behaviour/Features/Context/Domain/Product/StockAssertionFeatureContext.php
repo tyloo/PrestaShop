@@ -405,6 +405,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
         if (isset($data['out_of_stock_type'])) {
             $data['out_of_stock_type'] = $this->convertOutOfStockToInt($data['out_of_stock_type']);
         }
+
         if (isset($data['pack_stock_type'])) {
             $data['pack_stock_type'] = $this->convertPackStockTypeToInt($data['pack_stock_type']);
         }
@@ -423,7 +424,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
         // and finally, if provided data is not empty, it means there are some unnasserted values left
         Assert::assertEmpty(
             $data,
-            \sprintf('Some provided product stock fields haven\'t been asserted: %s', var_export($data, true))
+            \sprintf("Some provided product stock fields haven't been asserted: %s", var_export($data, true))
         );
     }
 

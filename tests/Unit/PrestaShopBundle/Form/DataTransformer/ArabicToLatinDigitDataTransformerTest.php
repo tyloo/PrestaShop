@@ -46,28 +46,28 @@ class ArabicToLatinDigitDataTransformerTest extends TestCase
         $this->dataTransformer = new ArabicToLatinDigitDataTransformer(new ArabicToLatinDigitConverter());
     }
 
-    public function testReverseTransformationForNullValue()
+    public function testReverseTransformationForNullValue(): void
     {
         $data = null;
 
         $this->assertEquals($data, $this->dataTransformer->reverseTransform($data));
     }
 
-    public function testReverseTransformationForLatinDigits()
+    public function testReverseTransformationForLatinDigits(): void
     {
         $data = '0123456789';
 
         $this->assertEquals('0123456789', $this->dataTransformer->reverseTransform($data));
     }
 
-    public function testReverseTransformationForArabicDigits()
+    public function testReverseTransformationForArabicDigits(): void
     {
         $data = '٠١٢٣٤٥٦٧٨٩';
 
         $this->assertEquals('0123456789', $this->dataTransformer->reverseTransform($data));
     }
 
-    public function testReverseTransformationForPersianDigits()
+    public function testReverseTransformationForPersianDigits(): void
     {
         $data = '۰۱۲۳۴۵۶۷۸۹';
 
@@ -75,28 +75,28 @@ class ArabicToLatinDigitDataTransformerTest extends TestCase
     }
 
     // transform() method should not actually transform the data
-    public function testTransformationForNullValue()
+    public function testTransformationForNullValue(): void
     {
         $data = null;
 
         $this->assertEquals($data, $this->dataTransformer->transform($data));
     }
 
-    public function testTransformationForLatinDigits()
+    public function testTransformationForLatinDigits(): void
     {
         $data = '0123456789';
 
         $this->assertEquals('0123456789', $this->dataTransformer->transform($data));
     }
 
-    public function testTransformationForArabicDigits()
+    public function testTransformationForArabicDigits(): void
     {
         $data = '٠١٢٣٤٥٦٧٨٩';
 
         $this->assertEquals('٠١٢٣٤٥٦٧٨٩', $this->dataTransformer->transform($data));
     }
 
-    public function testTransformationForPersianDigits()
+    public function testTransformationForPersianDigits(): void
     {
         $data = '۰۱۲۳۴۵۶۷۸۹';
 

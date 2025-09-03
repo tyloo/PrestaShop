@@ -44,10 +44,12 @@ class WebserviceControllerTest extends WebTestCase
      * @var KernelBrowser
      */
     protected $client;
+
     /**
      * @var Router
      */
     protected $router;
+
     /**
      * @var WebserviceKey
      */

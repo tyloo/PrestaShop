@@ -20,7 +20,8 @@ class ComposerAutoloaderInitae5a8118e046910fcd9c49e9f3496021
         }
 
         spl_autoload_register(['ComposerAutoloaderInitae5a8118e046910fcd9c49e9f3496021', 'loadClassLoader'], true, true);
-        self::$loader = $loader = new \Composer\Autoload\ClassLoader();
+        self::$loader = new \Composer\Autoload\ClassLoader();
+        $loader = self::$loader;
         spl_autoload_unregister(['ComposerAutoloaderInitae5a8118e046910fcd9c49e9f3496021', 'loadClassLoader']);
 
         $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION') && (!function_exists('zend_loader_file_encoded') || !zend_loader_file_encoded());

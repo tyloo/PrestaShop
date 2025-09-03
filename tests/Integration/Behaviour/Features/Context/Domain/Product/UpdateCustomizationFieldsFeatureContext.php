@@ -91,8 +91,8 @@ class UpdateCustomizationFieldsFeatureContext extends AbstractProductFeatureCont
 
         try {
             $this->updateProductCustomizationFields($productReference, ['name'], $fieldsForUpdate, ShopConstraint::shop($this->getDefaultShopId()));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -105,8 +105,8 @@ class UpdateCustomizationFieldsFeatureContext extends AbstractProductFeatureCont
             $this->getCommandBus()->handle(new RemoveAllCustomizationFieldsFromProductCommand(
                 $this->getSharedStorage()->get($productReference)
             ));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -216,15 +216,15 @@ class UpdateCustomizationFieldsFeatureContext extends AbstractProductFeatureCont
             Assert::assertSameSize(
                 $fieldReferences,
                 $newCustomizationFieldIds,
-                'Cannot set references in shared storage. References and actual customization fields doesn\'t match.'
+                "Cannot set references in shared storage. References and actual customization fields doesn't match."
             );
 
             /** @var CustomizationFieldId $customizationFieldId */
             foreach ($newCustomizationFieldIds as $key => $customizationFieldId) {
                 $this->getSharedStorage()->set($fieldReferences[$key], $customizationFieldId->getValue());
             }
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -276,6 +276,7 @@ class UpdateCustomizationFieldsFeatureContext extends AbstractProductFeatureCont
                             throw new RuntimeException(\sprintf('Expected customization field #%d to be added %s', $actualField->getCustomizationFieldId(), $expectedByModule ? 'by module' : 'not by module'));
                         }
                     }
+
                     // unset this asserted customization field so we can check if there any left after loop
                     unset($actualFields[$key]);
 

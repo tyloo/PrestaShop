@@ -35,7 +35,7 @@ class PatternTransformerTest extends TestCase
     /**
      * @dataProvider getDataForTestTransform
      */
-    public function testTransform(string $basePattern, array $transformations)
+    public function testTransform(string $basePattern, array $transformations): void
     {
         $transformer = new PatternTransformer();
 
@@ -129,7 +129,7 @@ class PatternTransformerTest extends TestCase
     /**
      * @dataProvider getDataForTestGetTransformationType
      */
-    public function testGetTransformationType(string $expectedTransformationType, array $patterns)
+    public function testGetTransformationType(string $expectedTransformationType, array $patterns): void
     {
         $transformer = new PatternTransformer();
 

@@ -214,6 +214,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         if (! $this->hasProduct($productName)) {
             throw new Exception('Product named "' . $productName . '" doesn\'t exist');
         }
+
         // Be careful this counts the amount present in the cart as well event if the stock has not been updated yet
         $nbProduct = Product::getQuantity($this->getProductWithName($productName)->id, null, null, $this->getCurrentCart(), null);
         if ($productQuantity !== $nbProduct) {
@@ -229,6 +230,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         if (! $this->hasProduct($productName)) {
             throw new Exception('Product named "' . $productName . '" doesn\'t exist');
         }
+
         $nbProduct = StockAvailable::getQuantityAvailableByProduct($this->getProductWithName($productName)->id, null);
         if ($productQuantity !== $nbProduct) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $productQuantity, $nbProduct));
@@ -264,6 +266,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         if ($this->hasProduct($productName)) {
             throw new \Exception('Product named "' . $productName . '" was already added in fixtures');
         }
+
         $product = new Product();
         $product->price = $price;
         $product->name = $productName;
@@ -275,6 +278,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         if (! $productAdded) {
             throw new RuntimeException('Could not add product in database');
         }
+
         StockAvailable::setQuantity((int) $product->id, 0, $product->quantity);
 
         $this->addProduct($product);
@@ -300,6 +304,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         foreach ($this->products as $product) {
             $product->delete();
         }
+
         $this->products = [];
     }
 
@@ -352,6 +357,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
                 $this->getProductWithName($productName)->pack_stock_type = Pack::STOCK_TYPE_PACK_BOTH;
                 break;
         }
+
         $this->getProductWithName($productName)->save();
     }
 
@@ -478,6 +484,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         if (! $this->hasProduct($productName)) {
             throw new Exception('Product named "' . $productName . '" doesn\'t exist');
         }
+
         StockAvailable::setProductOutOfStock($this->getProductWithName($productName)->id, 0);
     }
 
@@ -496,6 +503,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         if (isset($this->specificPrices[$productName][$specificPriceName])) {
             throw new \Exception('Product named "' . $productName . '" has already a specific price named "' . $specificPriceName . '"');
         }
+
         $specificPrice = new SpecificPrice();
         $specificPrice->id_product = $this->getProductWithName($productName)->id;
         $specificPrice->price = -1;
@@ -522,6 +530,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         if (isset($this->specificPrices[$productName][$specificPriceName])) {
             throw new \Exception('Product named "' . $productName . '" has already a specific price named "' . $specificPriceName . '"');
         }
+
         $specificPrice = new SpecificPrice();
         $specificPrice->id_product = $this->getProductWithName($productName)->id;
         $specificPrice->price = -1;
@@ -552,6 +561,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         if ($databaseSpecificPrice->id !== $specificPrice->id) {
             throw new RuntimeException(\sprintf('Could not find Specific price %s in database', $specificPriceName));
         }
+
         $expectedSpecificPriceData = $table->getRowsHash();
 
         foreach ($expectedSpecificPriceData as $fieldName => $expectedValue) {
@@ -574,6 +584,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
                 $specificPrice->delete();
             }
         }
+
         $this->specificPrices = [];
     }
 
@@ -603,6 +614,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         if (isset($this->combinations[$productName][$combinationName])) {
             throw new \Exception('Product named "' . $productName . '" has already a combination named "' . $combinationName . '"');
         }
+
         $combination = new Combination();
         $combination->reference = $combinationName;
         $combination->id_product = $this->getProductWithName($productName)->id;
@@ -719,6 +731,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
                 $combination->delete();
             }
         }
+
         $this->combinations = [];
     }
 
@@ -835,11 +848,13 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
                 $customizationField->delete();
             }
         }
+
         $this->customizationFields = [];
 
         foreach ($this->customizationsInCart as $customization) {
             $customization->delete();
         }
+
         $this->customizationsInCart = [];
     }
 

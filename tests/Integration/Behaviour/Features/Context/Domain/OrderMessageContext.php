@@ -75,8 +75,8 @@ class OrderMessageContext extends AbstractDomainFeatureContext
             );
 
             $this->getSharedStorage()->set($reference, new OrderMessage($orderMessageId->getValue()));
-        } catch (OrderMessageNameAlreadyUsedException $exception) {
-            $this->setLastException($exception);
+        } catch (OrderMessageNameAlreadyUsedException $orderMessageNameAlreadyUsedException) {
+            $this->setLastException($orderMessageNameAlreadyUsedException);
         }
     }
 
@@ -100,8 +100,8 @@ class OrderMessageContext extends AbstractDomainFeatureContext
                     $properties['message'] ?? null
                 )
             );
-        } catch (OrderMessageNameAlreadyUsedException $exception) {
-            $this->setLastException($exception);
+        } catch (OrderMessageNameAlreadyUsedException $orderMessageNameAlreadyUsedException) {
+            $this->setLastException($orderMessageNameAlreadyUsedException);
         }
     }
 
@@ -140,6 +140,7 @@ class OrderMessageContext extends AbstractDomainFeatureContext
                 $messageFound = true;
             }
         }
+
         if (! $messageFound) {
             throw new RuntimeException(\sprintf('Message "%s" not found in Order #%s messages', $messageContent, $orderId));
         }

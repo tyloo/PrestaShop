@@ -42,7 +42,9 @@ use Tests\Unit\PrestaShopBundle\EventListener\ContextEventListenerTestCase;
 class CurrencyContextListenerTest extends ContextEventListenerTestCase
 {
     private const DEFAULT_CURRENCY_ID = 42;
+
     private const QUERY_CURRENCY_ID = 51;
+
     private const SHOP_ID = 69;
 
     public function testCurrencyContextBasedOnRequestParameter(): void

@@ -68,7 +68,7 @@ class ModuleRepositoryTest extends TestCase
     /**
      * @var ModuleRepository
      */
-    private $moduleRepository;
+    private \PHPUnit\Framework\MockObject\MockObject $moduleRepository;
 
     protected function setUp(): void
     {

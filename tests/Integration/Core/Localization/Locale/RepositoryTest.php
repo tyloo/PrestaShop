@@ -43,6 +43,7 @@ use Tests\Resources\Resetter\LocalizationPackResetter;
 class RepositoryTest extends KernelTestCase
 {
     private const SERVICE_LOCALE_REPOSITORY = 'prestashop.core.localization.locale.repository';
+
     private const COMMAND_BUS = 'prestashop.core.command_bus';
 
     /**
@@ -138,7 +139,7 @@ class RepositoryTest extends KernelTestCase
         }
 
         $command = new AddCurrencyCommand(
-            (string) $currencyCode,
+            $currencyCode,
             (float) 1,
             true
         );

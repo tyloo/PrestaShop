@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class NoTagsValidatorTest extends ConstraintValidatorTestCase
 {
-    public function testItFailsWhenScriptTagsAreGiven()
+    public function testItFailsWhenScriptTagsAreGiven(): void
     {
         $scriptTag = '<script></script>';
 
@@ -45,7 +45,7 @@ class NoTagsValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenHTMLTagsGiven()
+    public function testItFailsWhenHTMLTagsGiven(): void
     {
         $htmlTag = '<div class="btn">Button</div>';
 
@@ -57,7 +57,7 @@ class NoTagsValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenPHPTagsGiven()
+    public function testItFailsWhenPHPTagsGiven(): void
     {
         $phpTag = '<?php $_SERVER = "crash"; ?>';
 

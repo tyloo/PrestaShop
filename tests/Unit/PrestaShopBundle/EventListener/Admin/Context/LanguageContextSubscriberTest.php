@@ -44,6 +44,7 @@ use Tests\Unit\PrestaShopBundle\EventListener\ContextEventListenerTestCase;
 class LanguageContextSubscriberTest extends ContextEventListenerTestCase
 {
     private const EMPLOYEE_CONTEXT_LANGUAGE_ID = 42;
+
     private const DEFAULT_CONFIGURATION_LANGUAGE_ID = 99;
 
     public function testContextEmployeeLanguage(): void

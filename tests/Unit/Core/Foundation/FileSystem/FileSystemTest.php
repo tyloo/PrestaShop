@@ -38,6 +38,7 @@ class FileSystemTest extends TestCase
      * @var FileSystem
      */
     private $fs;
+
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class FileSystemTest extends TestCase
         $this->fixturesPath = __DIR__ . \DIRECTORY_SEPARATOR . 'fixtures';
     }
 
-    public function testJoinPathsTwoPaths()
+    public function testJoinPathsTwoPaths(): void
     {
         $this->assertEquals(
             'a' . \DIRECTORY_SEPARATOR . 'b',
@@ -57,7 +58,7 @@ class FileSystemTest extends TestCase
         );
     }
 
-    public function testJoinPathsThreePaths()
+    public function testJoinPathsThreePaths(): void
     {
         $this->assertEquals(
             'a' . \DIRECTORY_SEPARATOR . 'b' . \DIRECTORY_SEPARATOR . 'c',
@@ -65,21 +66,21 @@ class FileSystemTest extends TestCase
         );
     }
 
-    public function testJoinPathsOnePathThrows()
+    public function testJoinPathsOnePathThrows(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Foundation\Filesystem\Exception::class);
 
         $this->fs->joinPaths('a');
     }
 
-    public function testJoinPathsZeroPathThrows()
+    public function testJoinPathsZeroPathThrows(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Foundation\Filesystem\Exception::class);
 
         $this->fs->joinPaths();
     }
 
-    public function testJoinPathsNormalizesDirectorySeparators()
+    public function testJoinPathsNormalizesDirectorySeparators(): void
     {
         $this->assertEquals(
             'a' . \DIRECTORY_SEPARATOR . 'b' . \DIRECTORY_SEPARATOR . 'c' . \DIRECTORY_SEPARATOR . 'd',
@@ -87,7 +88,7 @@ class FileSystemTest extends TestCase
         );
     }
 
-    public function testListEntriesRecursively()
+    public function testListEntriesRecursively(): void
     {
         $expectedPaths = [
             $this->fs->joinPaths($this->fixturesPath, 'a'),
@@ -103,7 +104,7 @@ class FileSystemTest extends TestCase
         );
     }
 
-    public function testListFilesRecursively()
+    public function testListFilesRecursively(): void
     {
         $expectedPaths = [
             $this->fs->joinPaths($this->fixturesPath, 'a', 'a.tmp'),
@@ -120,14 +121,14 @@ class FileSystemTest extends TestCase
     /**
      * Rationale: ls /some/non/existing/file => ls: cannot access /some/non/existing/file: No such file or directory
      */
-    public function testListEntriesRecursivelyThrowsIfPathDoesNotExist()
+    public function testListEntriesRecursivelyThrowsIfPathDoesNotExist(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Foundation\Filesystem\Exception::class);
 
         $this->fs->listEntriesRecursively('/some/w/h/e/r/e/over/the/rainbow');
     }
 
-    public function testListEntriesRecursivelyThrowsWhenPathIsAFile()
+    public function testListEntriesRecursivelyThrowsWhenPathIsAFile(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Foundation\Filesystem\Exception::class);
 

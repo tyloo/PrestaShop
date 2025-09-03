@@ -36,7 +36,7 @@ class CurrencyPrecisionTest extends TestCase
     /**
      * @dataProvider getIncorrectPrecision
      */
-    public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex($incorrectPrecision)
+    public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex($incorrectPrecision): void
     {
         $this->expectException(CurrencyConstraintException::class);
         $this->expectExceptionCode(CurrencyConstraintException::INVALID_PRECISION);
@@ -59,7 +59,7 @@ class CurrencyPrecisionTest extends TestCase
     /**
      * @dataProvider getCorrectPrecisions
      */
-    public function testItReturnsRightPrecision($correctNumericIsoCode, $expectedValue)
+    public function testItReturnsRightPrecision($correctNumericIsoCode, $expectedValue): void
     {
         $precision = new Precision($correctNumericIsoCode);
 

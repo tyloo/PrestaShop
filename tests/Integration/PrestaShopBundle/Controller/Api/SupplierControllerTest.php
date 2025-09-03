@@ -33,7 +33,7 @@ namespace Tests\Integration\PrestaShopBundle\Controller\Api;
  */
 class SupplierControllerTest extends ApiTestCase
 {
-    public function testItShouldReturnOkResponseWhenRequestingSuppliers()
+    public function testItShouldReturnOkResponseWhenRequestingSuppliers(): void
     {
         $route = $this->router->generate('api_stock_list_suppliers');
         self::$client->request('GET', $route);

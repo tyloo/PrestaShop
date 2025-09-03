@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Language\LanguageInterface;
 
 class LanguageDefaultFontsCatalogTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $fontCatalog = new LanguageDefaultFontsCatalog();
         $this->assertNotNull($fontCatalog);
@@ -46,7 +46,7 @@ class LanguageDefaultFontsCatalogTest extends TestCase
         $this->assertNotNull($fontCatalog);
     }
 
-    public function testGetDefaultFont()
+    public function testGetDefaultFont(): void
     {
         $fontCatalog = new LanguageDefaultFontsCatalog([
             'ar' => 'Tahoma',
@@ -70,7 +70,7 @@ class LanguageDefaultFontsCatalogTest extends TestCase
      *
      * @return MockObject|LanguageInterface
      */
-    private function buildLanguageMock($isoCode)
+    private function buildLanguageMock($isoCode): MockObject
     {
         $languageMock = $this->getMockBuilder(LanguageInterface::class)
             ->disableOriginalConstructor()

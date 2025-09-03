@@ -74,6 +74,7 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
         if ($attributeId !== (int) $attribute->id) {
             throw new RuntimeException(\sprintf('Failed to load Attribute with id %d. Referenced as "%s"', $attributeId, $attributeReference));
         }
+
         $attribute->associateTo($this->referencesToIds($shopReferences));
     }
 

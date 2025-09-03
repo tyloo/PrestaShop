@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Product\Search\SortOrder;
 
 class SortOrderTest extends TestCase
 {
-    public function testToLegacyOrderByProductName()
+    public function testToLegacyOrderByProductName(): void
     {
         $this->assertEquals(
             'name',
@@ -47,7 +47,7 @@ class SortOrderTest extends TestCase
         );
     }
 
-    public function testToLegacyOrderByProductPrice()
+    public function testToLegacyOrderByProductPrice(): void
     {
         $this->assertEquals(
             'price',
@@ -60,7 +60,7 @@ class SortOrderTest extends TestCase
         );
     }
 
-    public function testToLegacyOrderByProductPosition()
+    public function testToLegacyOrderByProductPosition(): void
     {
         $this->assertEquals(
             'position',
@@ -73,7 +73,7 @@ class SortOrderTest extends TestCase
         );
     }
 
-    public function testToLegacyOrderByManufacturerName()
+    public function testToLegacyOrderByManufacturerName(): void
     {
         $this->assertEquals(
             'manufacturer_name',
@@ -86,7 +86,7 @@ class SortOrderTest extends TestCase
         );
     }
 
-    public function testToLegacyOrderWayAsc()
+    public function testToLegacyOrderWayAsc(): void
     {
         $this->assertEquals(
             'asc',
@@ -94,7 +94,7 @@ class SortOrderTest extends TestCase
         );
     }
 
-    public function testToLegacyOrderWayDesc()
+    public function testToLegacyOrderWayDesc(): void
     {
         $this->assertEquals(
             'desc',
@@ -117,7 +117,7 @@ class SortOrderTest extends TestCase
     /**
      * @dataProvider serialization_examples
      */
-    public function testSerialization($data)
+    public function testSerialization($data): void
     {
         $opt = new SortOrder($data['entity'], $data['field'], $data['direction']);
 

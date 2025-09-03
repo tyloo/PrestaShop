@@ -70,6 +70,7 @@ trait ContextMockerTrait
         if (! static::$contextMocker) {
             static::$contextMocker = new ContextMocker();
         }
+
         static::$contextMocker->backupContext();
     }
 
@@ -82,6 +83,7 @@ trait ContextMockerTrait
         if (! static::$contextMocker) {
             static::$contextMocker = new ContextMocker();
         }
+
         static::$contextMocker->mockContext();
     }
 
@@ -99,6 +101,7 @@ trait ContextMockerTrait
         if (! static::$contextMocker) {
             throw new RuntimeException('No context mocker set, you cannot get a mocked context that was never mocked.');
         }
+
         if (static::$contextMocker->getMockedContext() === null) {
             throw new RuntimeException('No context was mocked, to get a mocked context you need to first use ContextMockerTrait::mockContext method.');
         }
@@ -111,6 +114,7 @@ trait ContextMockerTrait
         if (! static::$contextMocker) {
             throw new RuntimeException('No context mocker set, you cannot reset a context that was never mocked or saved.');
         }
+
         static::$contextMocker->resetContext();
     }
 }

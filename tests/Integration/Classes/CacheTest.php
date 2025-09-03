@@ -168,6 +168,7 @@ class CacheTest extends TestCase
             if ($i === 3) {
                 break;
             }
+
             ++$i;
         }
 

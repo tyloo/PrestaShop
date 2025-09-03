@@ -110,6 +110,6 @@ class GetSqlRequestExecutionResultHandlerTest extends KernelTestCase
     public function testUnauthorizedFunctionInSelect(): void
     {
         $this->expectException(SqlRequestConstraintException::class);
-        $this->commandBus->handle(new AddSqlRequestCommand('request1', 'SELECT load_file(\'/etc/passwd\') FROM ps_zone;'));
+        $this->commandBus->handle(new AddSqlRequestCommand('request1', "SELECT load_file('/etc/passwd') FROM ps_zone;"));
     }
 }

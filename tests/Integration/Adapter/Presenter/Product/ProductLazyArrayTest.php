@@ -44,42 +44,52 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProductLazyArrayTest extends TestCase
 {
     protected $runTestInSeparateProcess = false;
+
     /**
      * @var Configuration|MockObject
      */
-    private $mockConfiguration;
+    private MockObject $mockConfiguration;
+
     /**
      * @var HookManager
      */
-    private $mockHookManager;
+    private MockObject $mockHookManager;
+
     /**
      * @var ImageRetriever
      */
-    private $mockImageRetriever;
+    private MockObject $mockImageRetriever;
+
     /**
      * @var Language
      */
-    private $mockLanguage;
+    private MockObject $mockLanguage;
+
     /**
      * @var Link
      */
-    private $mockLink;
+    private MockObject $mockLink;
+
     /**
      * @var PriceFormatter
      */
-    private $mockPriceFormatter;
+    private MockObject $mockPriceFormatter;
+
     /**
      * @var ProductColorsRetriever
      */
-    private $mockProductColorsRetriever;
+    private MockObject $mockProductColorsRetriever;
+
     /**
      * @var ProductPresentationSettings|MockObject
      */
-    private $mockProductPresentationSettings;
+    private MockObject $mockProductPresentationSettings;
+
     /**
      * @var TranslatorInterface
      */
-    private $mockTranslatorInterface;
+    private MockObject $mockTranslatorInterface;
+
     /**
      * @var array
      */
@@ -98,18 +108,27 @@ class ProductLazyArrayTest extends TestCase
     ];
 
     private const PRODUCT_DISCONTINUED = 'This product is no longer available for sale.';
+
     private const PRODUCT_AVAILABLE_NOW = 'This product is available now';
+
     private const PRODUCT_AVAILABLE_LATER = 'This product is available on backorder';
+
     private const CONFIGURATION_AVAILABLE_NOW_LABEL = 'This product is available now - default';
+
     private const CONFIGURATION_AVAILABLE_LATER_LABEL = 'This product is available on backorder - default';
+
     private const CONFIGURATION_NOT_AVAILABLE_LABEL = 'This product is not available for order';
+
     private const PRODUCT_ATTRIBUTE_NOT_AVAILABLE = 'Product available with different options';
+
     private const PRODUCT_WITH_NOT_ENOUGH_STOCK = 'There are not enough products in stock';
 
     private const COMBINATION_AVAILABLE_NOW = 'This combination is available now';
+
     private const COMBINATION_AVAILABLE_LATER = 'This combination is available on backorder';
 
     private const PRODUCT_DELIVERY_TIME_AVAILABLE = '1-2 weeks - product in stock';
+
     private const PRODUCT_DELIVERY_TIME_OOSBOA = '2-4 weeks - backorder';
 
     protected function setUp(): void
@@ -199,11 +218,13 @@ class ProductLazyArrayTest extends TestCase
                         $language->id => self::CONFIGURATION_NOT_AVAILABLE_LABEL,
                     ];
                 }
+
                 if ($key === 'PS_LABEL_OOS_PRODUCTS_BOA') {
                     return [
                         $language->id => self::CONFIGURATION_AVAILABLE_LATER_LABEL,
                     ];
                 }
+
                 if ($key === 'PS_LABEL_IN_STOCK_PRODUCTS') {
                     return [
                         $language->id => self::CONFIGURATION_AVAILABLE_NOW_LABEL,

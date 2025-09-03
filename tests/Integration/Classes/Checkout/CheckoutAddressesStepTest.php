@@ -46,7 +46,8 @@ class CheckoutAddressesStepTest extends TestCase
     /**
      * @var CheckoutSession|MockObject
      */
-    private $session;
+    private MockObject $session;
+
     /**
      * @var CheckoutAddressesStep
      */

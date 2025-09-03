@@ -60,7 +60,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'name']), $invalidChar);
     }
 
-    public function testItSucceedsForCatalogNameTypeWhenValidCharactersGiven()
+    public function testItSucceedsForCatalogNameTypeWhenValidCharactersGiven(): void
     {
         $value = 'catalog name';
         $this->validator->validate($value, new TypedRegex(['type' => 'catalog_name']));
@@ -76,7 +76,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         $this->assertViolationIsRaised(new TypedRegex(['type' => 'catalog_name']), $invalidChar);
     }
 
-    public function testItSucceedsForGenericNameTypeWhenValidCharactersGiven()
+    public function testItSucceedsForGenericNameTypeWhenValidCharactersGiven(): void
     {
         $value = 'good generic name /';
         $this->validator->validate($value, new TypedRegex(['type' => 'generic_name']));
@@ -442,8 +442,8 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         ];
 
         foreach ($events as $event) {
-            yield ["<div $event=\"whatever\">", true, false];
-            yield ["<div $event=\"whatever\">", false, false];
+            yield [\sprintf('<div %s="whatever">', $event), true, false];
+            yield [\sprintf('<div %s="whatever">', $event), false, false];
         }
     }
 
@@ -591,7 +591,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield ['?'];
         yield ['/'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield [';'];
         yield [':'];
         yield ['.'];
@@ -623,7 +623,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield ['?'];
         yield ['/'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield [';'];
         yield [':'];
         yield ['.'];
@@ -654,7 +654,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield ['?'];
         yield ['/'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield [';'];
         yield [':'];
         yield ['.'];
@@ -774,7 +774,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield ['='];
         yield ['`'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield ['}'];
         yield [']'];
         yield ['['];
@@ -818,7 +818,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield ['?'];
         yield ['/'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield [';'];
         yield [':'];
         yield ['.'];
@@ -846,7 +846,7 @@ class TypedRegexValidatorTest extends ConstraintValidatorTestCase
         yield ['?'];
         yield ['/'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield [';'];
         yield [':'];
         yield ['.'];

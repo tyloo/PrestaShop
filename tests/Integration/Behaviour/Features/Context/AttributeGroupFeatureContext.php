@@ -73,6 +73,7 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
         if ($attributeGroupId !== (int) $attributeGroup->id) {
             throw new RuntimeException(\sprintf('Failed to load Attribute group with id %d. Referenced as "%s"', $attributeGroupId, $attributeGroupReference));
         }
+
         $attributeGroup->associateTo($this->referencesToIds($shopReferences));
     }
 

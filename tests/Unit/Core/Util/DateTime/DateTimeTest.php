@@ -37,6 +37,7 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\NullDateTime;
 class DateTimeTest extends TestCase
 {
     private const DATE_SAMPLE = '1969-08-16';
+
     private const DATE_TIME_SAMPLE = '1969-08-16 15:45:18';
 
     /**

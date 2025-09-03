@@ -115,7 +115,7 @@ class LocaleTest extends TestCase
      *
      * @throws \PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException
      */
-    public function testFormatNumber($number, $expected)
+    public function testFormatNumber($number, $expected): void
     {
         $formattedNumber = $this->cldrLocale->formatNumber($number);
 
@@ -129,7 +129,7 @@ class LocaleTest extends TestCase
      *
      * For more formatting cases, @see FormatterTest
      */
-    public function testFormatNumberWithInvalidRawNumber()
+    public function testFormatNumberWithInvalidRawNumber(): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException::class);
 
@@ -174,7 +174,7 @@ class LocaleTest extends TestCase
      *
      * @throws \PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException
      */
-    public function testFormatPrice($number, $currencyCode, $expected)
+    public function testFormatPrice($number, $currencyCode, $expected): void
     {
         $price = $this->cldrLocale->formatPrice($number, $currencyCode);
 
@@ -210,7 +210,7 @@ class LocaleTest extends TestCase
      *
      * @dataProvider provideInvalidPriceData
      */
-    public function testFormatNumberWithInvalidPriceData($number, $currency)
+    public function testFormatNumberWithInvalidPriceData($number, $currency): void
     {
         $this->expectException(\PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException::class);
 

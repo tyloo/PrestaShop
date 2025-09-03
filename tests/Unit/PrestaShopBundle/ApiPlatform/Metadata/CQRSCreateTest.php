@@ -40,7 +40,9 @@ use PrestaShopBundle\ApiPlatform\Processor\CommandProcessor;
 class CQRSCreateTest extends TestCase
 {
     public const VALID_COMMAND_CLASS = AddProductCommand::class;
+
     public const OTHER_VALID_COMMAND_CLASS = UpdateProductCommand::class;
+
     public const INVALID_COMMAND_CLASS = 'My\\Namespace\\MyCommand';
 
     public function testDefaultConstructor(): void
@@ -169,8 +171,8 @@ class CQRSCreateTest extends TestCase
                 extraProperties: ['CQRSCommand' => self::VALID_COMMAND_CLASS],
                 CQRSCommand: 'My\\Namespace\\MyOtherCommand',
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -252,8 +254,8 @@ class CQRSCreateTest extends TestCase
                 extraProperties: ['CQRSQuery' => 'My\\Namespace\\MyQuery'],
                 CQRSQuery: 'My\\Namespace\\MyOtherQuery',
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -304,8 +306,8 @@ class CQRSCreateTest extends TestCase
                 extraProperties: ['CQRSQueryMapping' => $queryMapping],
                 CQRSQueryMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -356,8 +358,8 @@ class CQRSCreateTest extends TestCase
                 extraProperties: ['ApiResourceMapping' => $resourceMapping],
                 ApiResourceMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -410,8 +412,8 @@ class CQRSCreateTest extends TestCase
                 extraProperties: ['experimentalOperation' => true],
                 experimentalOperation: false,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -464,8 +466,8 @@ class CQRSCreateTest extends TestCase
                 extraProperties: ['allowEmptyBody' => true],
                 allowEmptyBody: false,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);

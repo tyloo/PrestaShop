@@ -35,7 +35,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class CleanHtmlWithIframeValidatorTest extends ConstraintValidatorTestCase
 {
-    public function testItFailsWhenScriptTagsAreGiven()
+    public function testItFailsWhenScriptTagsAreGiven(): void
     {
         $scriptTag = '<script></script>';
 
@@ -47,7 +47,7 @@ class CleanHtmlWithIframeValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenJavascriptEventsAreGiven()
+    public function testItFailsWhenJavascriptEventsAreGiven(): void
     {
         $htmlTag = '<a href="#" onchange="evilJavascriptIsCalled()"></a>';
 
@@ -59,7 +59,7 @@ class CleanHtmlWithIframeValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItSucceedsWhenIframeIsGiven()
+    public function testItSucceedsWhenIframeIsGiven(): void
     {
         $htmlTag = '<iframe src="catvideo.html" /></iframe>';
 
@@ -69,7 +69,7 @@ class CleanHtmlWithIframeValidatorTest extends ConstraintValidatorTestCase
         $this->context->getViolations();
     }
 
-    public function testItSucceedsWhenFormIsGiven()
+    public function testItSucceedsWhenFormIsGiven(): void
     {
         $htmlTag = '<form>';
 
@@ -79,7 +79,7 @@ class CleanHtmlWithIframeValidatorTest extends ConstraintValidatorTestCase
         $this->context->getViolations();
     }
 
-    public function testItSucceedsWhenInputIsGiven()
+    public function testItSucceedsWhenInputIsGiven(): void
     {
         $htmlTag = '<input name="your-card-number">';
 
@@ -89,7 +89,7 @@ class CleanHtmlWithIframeValidatorTest extends ConstraintValidatorTestCase
         $this->context->getViolations();
     }
 
-    public function testItSucceedsWhenEmbedIsGiven()
+    public function testItSucceedsWhenEmbedIsGiven(): void
     {
         $htmlTag = '<embed type="image/jpg" src="funny_cat.jpg" width="300" height="200">';
 
@@ -99,7 +99,7 @@ class CleanHtmlWithIframeValidatorTest extends ConstraintValidatorTestCase
         $this->context->getViolations();
     }
 
-    public function testItSucceedsWhenObjectIsGiven()
+    public function testItSucceedsWhenObjectIsGiven(): void
     {
         $htmlTag = '<object data="funny_cat.jpg" width="300" height="200"></object> ';
 

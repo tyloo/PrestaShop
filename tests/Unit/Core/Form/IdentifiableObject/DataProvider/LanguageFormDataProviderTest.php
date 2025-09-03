@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider\LanguageForm
 
 class LanguageFormDataProviderTest extends TestCase
 {
-    public function testItProvideFormDataForLanguageEditingWhenMultistoreFeatureIsOff()
+    public function testItProvideFormDataForLanguageEditingWhenMultistoreFeatureIsOff(): void
     {
         $formDataProvider = new LanguageFormDataProvider(
             $this->createQueryBusMock(),
@@ -55,7 +55,7 @@ class LanguageFormDataProviderTest extends TestCase
         ], $formDataProvider->getData(2));
     }
 
-    public function testItProvideFormDataForLanguageEditingWhenMultistoreFeatureIsUsed()
+    public function testItProvideFormDataForLanguageEditingWhenMultistoreFeatureIsUsed(): void
     {
         $formDataProvider = new LanguageFormDataProvider(
             $this->createQueryBusMock(),
@@ -111,7 +111,7 @@ class LanguageFormDataProviderTest extends TestCase
         ], $formDataProvider->getDefaultData());
     }
 
-    private function createQueryBusMock()
+    private function createQueryBusMock(): \PHPUnit\Framework\MockObject\MockObject
     {
         $queryBus = $this->createMock(CommandBusInterface::class);
         $queryBus

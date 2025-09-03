@@ -57,8 +57,8 @@ class AddCartRuleFeatureContext extends AbstractCartRuleFeatureContext
 
         try {
             $this->createCartRuleWithReference($cartRuleReference, $data);
-        } catch (CartRuleConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleConstraintException $cartRuleConstraintException) {
+            $this->setLastException($cartRuleConstraintException);
         }
     }
 }

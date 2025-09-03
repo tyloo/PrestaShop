@@ -94,8 +94,8 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
                 [$this->getDefaultShopId()]
             ));
             $this->getSharedStorage()->set($countryReference, $countryId->getValue());
-        } catch (CountryException $e) {
-            $this->setLastException($e);
+        } catch (CountryException $countryException) {
+            $this->setLastException($countryException);
         }
     }
 
@@ -191,24 +191,31 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
         if (\array_key_exists('callPrefix', $data)) {
             $data['callPrefix'] = (int) $data['callPrefix'];
         }
+
         if (\array_key_exists('defaultCurrency', $data)) {
             $data['defaultCurrency'] = (int) $data['defaultCurrency'];
         }
+
         if (\array_key_exists('zone', $data)) {
             $data['zone'] = (int) $data['zone'];
         }
+
         if (\array_key_exists('needZipCode', $data)) {
             $data['needZipCode'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['needZipCode']);
         }
+
         if (\array_key_exists('enabled', $data)) {
             $data['enabled'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['enabled']);
         }
+
         if (\array_key_exists('containsStates', $data)) {
             $data['containsStates'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['containsStates']);
         }
+
         if (\array_key_exists('needIdNumber', $data)) {
             $data['needIdNumber'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['needIdNumber']);
         }
+
         if (\array_key_exists('displayTaxLabel', $data)) {
             $data['displayTaxLabel'] = PrimitiveUtils::castStringBooleanIntoBoolean($data['displayTaxLabel']);
         }

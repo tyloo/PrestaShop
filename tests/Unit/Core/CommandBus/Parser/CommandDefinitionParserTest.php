@@ -35,7 +35,7 @@ use ReflectionException;
 
 class CommandDefinitionParserTest extends TestCase
 {
-    public function testItProvidesCorrectClassNameWhenExistingCommandNameIsGiven()
+    public function testItProvidesCorrectClassNameWhenExistingCommandNameIsGiven(): void
     {
         $commandDefinitionParser = new CommandDefinitionParser();
 
@@ -46,7 +46,7 @@ class CommandDefinitionParserTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testItProvidesCorrectCommandTypeWhenCommandOfTypeQueryIsGiven()
+    public function testItProvidesCorrectCommandTypeWhenCommandOfTypeQueryIsGiven(): void
     {
         $commandDefinitionProvider = new CommandDefinitionParser();
 
@@ -57,7 +57,7 @@ class CommandDefinitionParserTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testItProvidesCorrectCommandTypeWhenCommandofTypeCommandIsGiven()
+    public function testItProvidesCorrectCommandTypeWhenCommandofTypeCommandIsGiven(): void
     {
         $commandDefinitionProvider = new CommandDefinitionParser();
 
@@ -68,7 +68,7 @@ class CommandDefinitionParserTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testItProvidesCorrectDescriptionWhenCommandWithoutAnnotationsInDocBlockIsGiven()
+    public function testItProvidesCorrectDescriptionWhenCommandWithoutAnnotationsInDocBlockIsGiven(): void
     {
         $commandDefinitionProvider = new CommandDefinitionParser();
 
@@ -79,7 +79,7 @@ class CommandDefinitionParserTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testItThrowsExceptionWhenNonExistingCommandNameIsGiven()
+    public function testItThrowsExceptionWhenNonExistingCommandNameIsGiven(): void
     {
         $this->expectException(ReflectionException::class);
 

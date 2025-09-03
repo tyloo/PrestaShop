@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\MailTemplate\Transformation\MailVariablesTransfor
 
 class MailVariablesTransformationTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $transformation = new MailVariablesTransformation(MailTemplateInterface::HTML_TYPE);
         $this->assertNotNull($transformation);
@@ -42,7 +42,7 @@ class MailVariablesTransformationTest extends TestCase
         $this->assertNotNull($transformation);
     }
 
-    public function testApply()
+    public function testApply(): void
     {
         $template = 'Hello {firstname} {lastname} how are you?';
         $transformation = new MailVariablesTransformation(MailTemplateInterface::HTML_TYPE);
@@ -57,7 +57,7 @@ class MailVariablesTransformationTest extends TestCase
         $this->assertEquals('Hello John Doe wasup mate?', $transformedTemplate);
     }
 
-    public function testApplyViaConstructor()
+    public function testApplyViaConstructor(): void
     {
         $template = 'Hello {firstname} {lastname} how are you?';
         $transformation = new MailVariablesTransformation(MailTemplateInterface::HTML_TYPE, [

@@ -47,7 +47,7 @@ class FloatParserTest extends TestCase
      *
      * @dataProvider provideValidStrings
      */
-    public function testItParsesNumbersFromString($string, $expected)
+    public function testItParsesNumbersFromString($string, $expected): void
     {
         $this->assertSame($expected, (new FloatParser(new ArabicToLatinDigitConverter()))->fromString($string));
     }
@@ -59,7 +59,7 @@ class FloatParserTest extends TestCase
      *
      * @dataProvider provideInvalidValues
      */
-    public function testItThrowsExceptionIfNotValid($value)
+    public function testItThrowsExceptionIfNotValid($value): void
     {
         $this->expectException(InvalidArgumentException::class);
 

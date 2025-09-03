@@ -126,6 +126,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
         foreach ($imageTypesName as $imageTypeName) {
             $imageTypesIds[] = $this->getSharedStorage()->get($imageTypeName);
         }
+
         $command = new BulkDeleteImageTypeCommand($imageTypesIds);
         $this->getCommandBus()->handle($command);
     }

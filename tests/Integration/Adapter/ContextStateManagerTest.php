@@ -40,11 +40,15 @@ use Twig\Environment;
 class ContextStateManagerTest extends ContextStateTestCase
 {
     protected LegacyContext $legacyContext;
+
     protected Shop $basicShop;
+
     protected Shop $shop1;
+
     protected Shop $shop2;
 
     protected LegacyControllerContext $legacyControllerContext1;
+
     protected LegacyControllerContext $legacyControllerContext2;
 
     protected function setUp(): void

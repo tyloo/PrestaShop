@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
 
 class LegacyHelperLinkBuilderTest extends TestCase
 {
-    public function testBuildViewLink()
+    public function testBuildViewLink(): void
     {
         $builder = new LegacyHelperLinkBuilder();
         $viewLink = $builder->getViewLink('product', [
@@ -57,7 +57,7 @@ class LegacyHelperLinkBuilderTest extends TestCase
         $this->assertEquals('index.php?controller=AdminProducts&viewproduct=on&id_product=42', $viewLink);
     }
 
-    public function testBuildEditLink()
+    public function testBuildEditLink(): void
     {
         $builder = new LegacyHelperLinkBuilder();
         $editLink = $builder->getEditLink('product', [
@@ -81,7 +81,7 @@ class LegacyHelperLinkBuilderTest extends TestCase
         $this->assertEquals('index.php?controller=AdminProducts&updateproduct=enabled&id_product=42', $viewLink);
     }
 
-    public function testViewLinkWithoutCurrentLinkFails()
+    public function testViewLinkWithoutCurrentLinkFails(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing parameter current_index to build legacy link');
@@ -90,7 +90,7 @@ class LegacyHelperLinkBuilderTest extends TestCase
         $builder->getViewLink('product', ['id_product' => 42]);
     }
 
-    public function testEditLinkWithoutCurrentLinkFails()
+    public function testEditLinkWithoutCurrentLinkFails(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing parameter current_index to build legacy link');

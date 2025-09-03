@@ -72,7 +72,7 @@ class CartPresenterTest extends TestCase
      *
      * @dataProvider providerProductAttributes
      */
-    public function testProductAttributesAreProperlyConverted($asString, $asArray)
+    public function testProductAttributesAreProperlyConverted($asString, $asArray): void
     {
         $this->assertSame(
             $asArray,

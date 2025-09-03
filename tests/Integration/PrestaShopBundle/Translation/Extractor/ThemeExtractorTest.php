@@ -42,6 +42,7 @@ class ThemeExtractorTest extends KernelTestCase
      * @var Filesystem
      */
     private $filesystem;
+
     /**
      * @var ThemeExtractor|null
      */
@@ -51,10 +52,12 @@ class ThemeExtractorTest extends KernelTestCase
      * @var string
      */
     private static $rootDir;
+
     /**
      * @var string
      */
     private static $legacyFolder;
+
     /**
      * @var string
      */

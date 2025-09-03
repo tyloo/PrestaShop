@@ -44,7 +44,9 @@ class SessionRenewerTest extends KernelTestCase
     use ContextMockerTrait;
 
     private CsrfTokenManager $sessionTokenManager;
+
     private SessionRenewer $sessionRenewer;
+
     private Session $session;
 
     protected function setUp(): void

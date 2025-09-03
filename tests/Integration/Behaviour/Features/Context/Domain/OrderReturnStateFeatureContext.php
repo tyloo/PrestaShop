@@ -63,8 +63,8 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
             ));
 
             SharedStorage::getStorage()->set($orderReturnStateReference, $orderReturnStateId->getValue());
-        } catch (OrderReturnStateException $e) {
-            $this->setLastException($e);
+        } catch (OrderReturnStateException $orderReturnStateException) {
+            $this->setLastException($orderReturnStateException);
         }
     }
 
@@ -83,14 +83,15 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
                 $this->getDefaultLangId() => $data['name'],
             ]);
         }
+
         if (isset($data['color'])) {
             $editableOrderReturnState->setColor($data['color']);
         }
 
         try {
             $this->getCommandBus()->handle($editableOrderReturnState);
-        } catch (OrderReturnStateException $e) {
-            $this->setLastException($e);
+        } catch (OrderReturnStateException $orderReturnStateException) {
+            $this->setLastException($orderReturnStateException);
         }
     }
 
@@ -103,8 +104,8 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new DeleteOrderReturnStateCommand($orderReturnStateId));
-        } catch (DeleteOrderReturnStateException $e) {
-            $this->setLastException($e);
+        } catch (DeleteOrderReturnStateException $deleteOrderReturnStateException) {
+            $this->setLastException($deleteOrderReturnStateException);
         }
     }
 
@@ -121,8 +122,8 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new BulkDeleteOrderReturnStateCommand($orderReturnStatesId));
-        } catch (BulkDeleteOrderReturnStateException $e) {
-            $this->setLastException($e);
+        } catch (BulkDeleteOrderReturnStateException $bulkDeleteOrderReturnStateException) {
+            $this->setLastException($bulkDeleteOrderReturnStateException);
         }
     }
 
@@ -170,8 +171,8 @@ class OrderReturnStateFeatureContext extends AbstractDomainFeatureContext
             return $this->getQueryBus()->handle(
                 new GetOrderReturnStateForEditing(SharedStorage::getStorage()->get($orderReturnStateReference))
             );
-        } catch (OrderReturnStateNotFoundException $e) {
-            $this->setLastException($e);
+        } catch (OrderReturnStateNotFoundException $orderReturnStateNotFoundException) {
+            $this->setLastException($orderReturnStateNotFoundException);
         }
 
         return null;

@@ -54,7 +54,7 @@ class ThemeProviderTest extends TestCase
         $this->provider->filesystem = new Filesystem();
     }
 
-    public function testItExtractsCatalogueFromXliffFiles()
+    public function testItExtractsCatalogueFromXliffFiles(): void
     {
         $catalogue = $this->provider->getMessageCatalogue();
         $this->assertInstanceOf(MessageCatalogue::class, $catalogue);

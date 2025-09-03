@@ -48,7 +48,7 @@ class FacetTest extends TestCase
         $this->facet = null;
     }
 
-    public function testCreateANewFacet()
+    public function testCreateANewFacet(): void
     {
         $this->assertInstanceOf(Facet::class, $this->facet);
 
@@ -81,7 +81,7 @@ class FacetTest extends TestCase
         );
     }
 
-    public function testGetterAndSetterForLabel()
+    public function testGetterAndSetterForLabel(): void
     {
         $this->assertSame('', $this->facet->getLabel());
 
@@ -89,7 +89,7 @@ class FacetTest extends TestCase
         $this->assertSame('Weight', $this->facet->getLabel());
     }
 
-    public function testGetterAndSetterForType()
+    public function testGetterAndSetterForType(): void
     {
         $this->assertSame('', $this->facet->getType());
 
@@ -97,7 +97,7 @@ class FacetTest extends TestCase
         $this->assertSame('weight', $this->facet->getType());
     }
 
-    public function testGetterAndSetterForWidgetType()
+    public function testGetterAndSetterForWidgetType(): void
     {
         $this->assertSame('radio', $this->facet->getWidgetType());
 
@@ -105,7 +105,7 @@ class FacetTest extends TestCase
         $this->assertSame('dropdown', $this->facet->getWidgetType());
     }
 
-    public function testGetterAndIsserForDisplayed()
+    public function testGetterAndIsserForDisplayed(): void
     {
         $this->assertTrue($this->facet->isDisplayed());
 
@@ -113,7 +113,7 @@ class FacetTest extends TestCase
         $this->assertFalse($this->facet->isDisplayed());
     }
 
-    public function testGetterAndIsserForMultipleSelectionAllowed()
+    public function testGetterAndIsserForMultipleSelectionAllowed(): void
     {
         $this->assertTrue($this->facet->isMultipleSelectionAllowed());
         $this->assertInstanceOf(Facet::class, $this->facet->setMultipleSelectionAllowed());
@@ -123,7 +123,7 @@ class FacetTest extends TestCase
         $this->assertFalse($this->facet->isMultipleSelectionAllowed());
     }
 
-    public function testGetterAndAdderForFilters()
+    public function testGetterAndAdderForFilters(): void
     {
         $this->assertSame([], $this->facet->getFilters());
         $filterMock = $this->createMock(Filter::class);
@@ -131,7 +131,7 @@ class FacetTest extends TestCase
         $this->assertSame([$filterMock], $this->facet->getFilters());
     }
 
-    public function testGetterAndSetterForProperties()
+    public function testGetterAndSetterForProperties(): void
     {
         $this->assertNull($this->facet->getProperty('product_name'));
         $this->assertInstanceOf(Facet::class, $this->facet->setProperty('product_name', 'Nice cupcake'));

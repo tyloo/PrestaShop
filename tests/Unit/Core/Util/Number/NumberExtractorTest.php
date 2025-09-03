@@ -54,7 +54,7 @@ class NumberExtractorTest extends TestCase
      *
      * @param array|FakeClass $resource
      */
-    public function testItExtractsNumberFromArrayOrObject($resource, string $path, DecimalNumber $expectedResult)
+    public function testItExtractsNumberFromArrayOrObject($resource, string $path, DecimalNumber $expectedResult): void
     {
         $actualResult = $this->numberExtractor->extract($resource, $path);
 
@@ -66,7 +66,7 @@ class NumberExtractorTest extends TestCase
      *
      * @param array|FakeClass3 $resource
      */
-    public function testItThrowsExceptionWhenNonNumericValueIsProvidedInAccessedProperty($resource, string $path)
+    public function testItThrowsExceptionWhenNonNumericValueIsProvidedInAccessedProperty($resource, string $path): void
     {
         $this->expectException(NumberExtractorException::class);
         $this->expectExceptionCode(NumberExtractorException::NON_NUMERIC_PROPERTY);
@@ -137,7 +137,7 @@ class FakeClass
     /**
      * @return int return different number than $test property to allow checking if public property has priority against public getter
      */
-    public function getTest()
+    public function getTest(): int
     {
         return 50;
     }

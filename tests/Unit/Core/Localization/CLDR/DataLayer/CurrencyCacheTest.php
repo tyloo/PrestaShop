@@ -53,7 +53,7 @@ class CurrencyCacheTest extends TestCase
         $this->layer = new CldrCurrencyCacheDataLayer($cacheAdapter);
     }
 
-    public function testReadWrite()
+    public function testReadWrite(): void
     {
         $data = new CldrCurrencyData();
 

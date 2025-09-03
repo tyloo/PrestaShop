@@ -44,15 +44,23 @@ class VersionTest extends TestCase
     protected $anotherVersion;
 
     public const VERSION = '1.2.3.4';
+
     public const MAJOR_VERSION_STRING = '1.2';
+
     public const MAJOR_VERSION = 2;
+
     public const MINOR_VERSION = 3;
+
     public const RELEASE_VERSION = 4;
 
     public const ANOTHER_VERSION = '1.2.0.0';
+
     public const ANOTHER_MAJOR_VERSION_STRING = '1.2';
+
     public const ANOTHER_MAJOR_VERSION = 2;
+
     public const ANOTHER_MINOR_VERSION = 3;
+
     public const ANOTHER_RELEASE_VERSION = 4;
 
     protected function setUp(): void
@@ -261,7 +269,7 @@ class VersionTest extends TestCase
      *
      * @throws InvalidVersionException
      */
-    public function testCompareTwoVersions(string $first, string $second, string $expectedComparison)
+    public function testCompareTwoVersions(string $first, string $second, string $expectedComparison): void
     {
         $firstVersion = Version::buildFromString($first);
         $secondVersion = Version::buildFromString($second);
@@ -301,7 +309,7 @@ class VersionTest extends TestCase
      *
      * @param string $version Version
      */
-    public function testCheckInvalidVersion($version)
+    public function testCheckInvalidVersion($version): void
     {
         $this->expectException(InvalidVersionException::class);
         $this->version->isLessThan($version);

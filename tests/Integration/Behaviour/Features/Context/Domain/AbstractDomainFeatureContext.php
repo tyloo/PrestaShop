@@ -44,6 +44,7 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
     use LastExceptionTrait;
 
     protected const JPG_IMAGE_TYPE = '.jpg';
+
     protected const JPG_IMAGE_STRING = 'iVBORw0KGgoAAAANSUhEUgAAABwAAAASCAMAAAB/2U7WAAAABl'
         . 'BMVEUAAAD///+l2Z/dAAAASUlEQVR4XqWQUQoAIAxC2/0vXZDr'
         . 'EX4IJTRkb7lobNUStXsB0jIXIAMSsQnWlsV+wULF4Avk9fLq2r'

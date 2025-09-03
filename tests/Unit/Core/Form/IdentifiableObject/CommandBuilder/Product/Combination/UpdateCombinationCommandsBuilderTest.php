@@ -43,7 +43,7 @@ class UpdateCombinationCommandsBuilderTest extends AbstractCombinationCommandBui
      * @dataProvider getExpectedCommands
      * @dataProvider getExpectedCommandsMultiShop
      */
-    public function testBuildCommands(array $formData, array $expectedCommands)
+    public function testBuildCommands(array $formData, array $expectedCommands): void
     {
         $builder = new UpdateCombinationCommandsBuilder(self::MODIFY_ALL_SHOPS_PREFIX);
         $builtCommands = $builder->buildCommands($this->getCombinationId(), $formData, $this->getSingleShopConstraint());

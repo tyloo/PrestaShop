@@ -48,6 +48,7 @@ class CommandFieldTest extends TestCase
         } else {
             $field = CommandField::createAsSingleShop($commandSetter, $dataFields);
         }
+
         $this->assertInstanceOf(CommandField::class, $field);
         $this->assertSame($commandSetter, $field->getCommandSetter());
         $this->assertSame($dataFields, $field->getDataFields());

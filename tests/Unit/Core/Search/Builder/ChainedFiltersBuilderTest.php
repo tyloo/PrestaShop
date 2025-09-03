@@ -34,14 +34,14 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
 
 class ChainedFiltersBuilderTest extends TestCase
 {
-    public function testWithoutBuilders()
+    public function testWithoutBuilders(): void
     {
         $builder = new ChainedFiltersBuilder();
         $filters = $builder->buildFilters();
         $this->assertNull($filters);
     }
 
-    public function testWithBuilders()
+    public function testWithBuilders(): void
     {
         $limitBuilder = new ConfigurableFiltersBuilder(['limit' => 'limit']);
         $offsetBuilder = new ConfigurableFiltersBuilder(['offset' => 'offset']);
@@ -53,7 +53,7 @@ class ChainedFiltersBuilderTest extends TestCase
         $this->assertEquals(['limit' => 10, 'offset' => 20], $filters->all());
     }
 
-    public function testSequentialOverride()
+    public function testSequentialOverride(): void
     {
         $limitABuilder = new ConfigurableFiltersBuilder(['limit_a' => 'limit']);
         $limitBBuilder = new ConfigurableFiltersBuilder(['limit_b' => 'limit']);

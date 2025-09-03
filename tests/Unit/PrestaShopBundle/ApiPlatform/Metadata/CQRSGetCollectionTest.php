@@ -136,8 +136,8 @@ class CQRSGetCollectionTest extends TestCase
                 extraProperties: ['CQRSQuery' => 'My\\Namespace\\MyQuery'],
                 CQRSQuery: 'My\\Namespace\\MyOtherQuery',
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -188,8 +188,8 @@ class CQRSGetCollectionTest extends TestCase
                 extraProperties: ['CQRSQueryMapping' => $queryMapping],
                 CQRSQueryMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -240,8 +240,8 @@ class CQRSGetCollectionTest extends TestCase
                 extraProperties: ['ApiResourceMapping' => $resourceMapping],
                 ApiResourceMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -367,8 +367,8 @@ class CQRSGetCollectionTest extends TestCase
                 extraProperties: ['experimentalOperation' => true],
                 experimentalOperation: false,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);

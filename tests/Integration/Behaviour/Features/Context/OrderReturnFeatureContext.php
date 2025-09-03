@@ -68,11 +68,13 @@ class OrderReturnFeatureContext extends AbstractPrestaShopFeatureContext
         $orderReturn->question = 'Why?';
         $orderReturn->state = 1;
         $orderReturn->add();
-        $orderDetailIds = $quantities = [];
+        $orderDetailIds = [];
+        $quantities = [];
         foreach ($order->getProducts() as $product) {
             $orderDetailIds[] = $product['id_order_detail'];
             $quantities[] = $product['product_quantity'];
         }
+
         $orderReturn->addReturnDetail($orderDetailIds, $quantities);
         SharedStorage::getStorage()->set($orderReturnReference, $orderReturn->id);
     }

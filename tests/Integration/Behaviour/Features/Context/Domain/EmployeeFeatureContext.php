@@ -57,7 +57,9 @@ use Tests\Integration\Behaviour\Features\Context\Util\PrimitiveUtils;
 class EmployeeFeatureContext extends AbstractDomainFeatureContext
 {
     private const MIN_PASSWORD_LENGTH = 1;
+
     private const MAX_PASSWORD_LENGTH = 72;
+
     private const MIN_PASSWORD_SCORE = 1;
 
     /**
@@ -91,8 +93,8 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
             ));
 
             SharedStorage::getStorage()->set($employeeReference, $employeeIdObject->getValue());
-        } catch (EmployeeException $e) {
-            $this->setLastException($e);
+        } catch (EmployeeException $employeeException) {
+            $this->setLastException($employeeException);
         }
     }
 
@@ -110,35 +112,43 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['firstName'])) {
             $command->setFirstName($data['firstName']);
         }
+
         if (isset($data['lastName'])) {
             $command->setLastName($data['lastName']);
         }
+
         if (isset($data['email'])) {
             $command->setEmail($data['email']);
         }
+
         if (isset($data['plainPassword'])) {
             $command->setPlainPassword($data['plainPassword'], self::MIN_PASSWORD_LENGTH, self::MAX_PASSWORD_LENGTH, self::MIN_PASSWORD_SCORE);
         }
+
         if (isset($data['defaultPageId'])) {
             $command->setDefaultPageId($data['defaultPageId']);
         }
+
         if (isset($data['languageId'])) {
             $command->setLanguageId($data['languageId']);
         }
+
         if (isset($data['profileId'])) {
             $command->setProfileId($data['profileId']);
         }
+
         if (isset($data['shopAssociation'])) {
             $command->setShopAssociation($data['shopAssociation']);
         }
+
         if (isset($data['active'])) {
             $command->setActive($data['active']);
         }
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (EmployeeException $e) {
-            $this->setLastException($e);
+        } catch (EmployeeException $employeeException) {
+            $this->setLastException($employeeException);
         }
     }
 
@@ -178,9 +188,10 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
         $caughtException = null;
         try {
             $this->getCommandBus()->handle(new GetEmployeeForEditing($this->referenceToId($employeeReference)));
-        } catch (EmployeeNotFoundException $e) {
-            $caughtException = $e;
+        } catch (EmployeeNotFoundException $employeeNotFoundException) {
+            $caughtException = $employeeNotFoundException;
         }
+
         Assert::assertNotNull($caughtException);
     }
 
@@ -197,27 +208,35 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['firstName'])) {
             Assert::assertEquals($data['firstName'], $employeeDetails->getFirstName()->getValue());
         }
+
         if (isset($data['lastName'])) {
             Assert::assertEquals($data['lastName'], $employeeDetails->getLastName()->getValue());
         }
+
         if (isset($data['email'])) {
             Assert::assertEquals($data['email'], $employeeDetails->getEmail()->getValue());
         }
+
         if (isset($data['profileId'])) {
             Assert::assertEquals($data['profileId'], $employeeDetails->getProfileId());
         }
+
         if (isset($data['shopAssociation'])) {
             Assert::assertEquals($data['shopAssociation'], $employeeDetails->getShopAssociation());
         }
+
         if (isset($data['active'])) {
             Assert::assertEquals($data['active'], $employeeDetails->isActive());
         }
+
         if (isset($data['languageId'])) {
             Assert::assertEquals($data['languageId'], $employeeDetails->getLanguageId());
         }
+
         if (isset($data['defaultPageId'])) {
             Assert::assertEquals($data['defaultPageId'], $employeeDetails->getDefaultPageId());
         }
+
         if (isset($data['password'])) {
             $this->checkPassword($data['password'], $employeeReference);
         }
@@ -285,12 +304,15 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
         if (isset($testCaseData['First name'])) {
             $data['firstName'] = $testCaseData['First name'];
         }
+
         if (isset($testCaseData['Last name'])) {
             $data['lastName'] = $testCaseData['Last name'];
         }
+
         if (isset($testCaseData['Email address'])) {
             $data['email'] = $testCaseData['Email address'];
         }
+
         if (isset($testCaseData['Password'])) {
             $data['plainPassword'] = $testCaseData['Password'];
         }
@@ -313,6 +335,7 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
                     break;
                 }
             }
+
             $data['defaultPageId'] = $pageId;
         }
 

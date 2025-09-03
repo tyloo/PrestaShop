@@ -71,7 +71,7 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function testIfFailsWhenInputIsOnlyBlank()
+    public function testIfFailsWhenInputIsOnlyBlank(): void
     {
         $this->validator->validate(' ', new CustomerName());
 
@@ -85,7 +85,7 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
      *
      * @param string $invalidChar
      */
-    public function testIfFailsWhenBadCharactersAreGiven($invalidChar)
+    public function testIfFailsWhenBadCharactersAreGiven($invalidChar): void
     {
         $input = 'AZE' . $invalidChar . 'RTY';
         $this->validator->validate($input, new CustomerName());
@@ -100,7 +100,7 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
      *
      * @param string $invalidChar
      */
-    public function testIfFailsWhenSpacedPointsAreFinal($invalidChar)
+    public function testIfFailsWhenSpacedPointsAreFinal($invalidChar): void
     {
         $input = 'AZERTY' . $invalidChar;
         $this->validator->validate($input, new CustomerName());
@@ -115,7 +115,7 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
      *
      * @param string $invalidChar
      */
-    public function testIfFailsWhenDoublePoints($invalidChar)
+    public function testIfFailsWhenDoublePoints($invalidChar): void
     {
         $input = 'AZE' . $invalidChar . 'RTY' . $invalidChar;
         $this->validator->validate($input, new CustomerName());
@@ -125,7 +125,7 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testIfSucceedsWhenNoPoints()
+    public function testIfSucceedsWhenNoPoints(): void
     {
         $input = 'AZERTY';
         $this->validator->validate($input, new CustomerName());
@@ -138,7 +138,7 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
      *
      * @param string $validChar
      */
-    public function testIfSucceedsWhenPointsAreFinal($validChar)
+    public function testIfSucceedsWhenPointsAreFinal($validChar): void
     {
         $input = 'AZERTY' . $validChar;
         $this->validator->validate($input, new CustomerName());
@@ -151,7 +151,7 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
      *
      * @param string $validChar
      */
-    public function testIfSucceedsWhenPointsWithSpacesAreGiven($validChar)
+    public function testIfSucceedsWhenPointsWithSpacesAreGiven($validChar): void
     {
         $input = 'AZE' . $validChar . 'RTY';
         $this->validator->validate($input, new CustomerName());

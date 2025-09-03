@@ -184,7 +184,8 @@ class CommandBuilderTestCommand
         if (\array_key_exists($name, $this->options)) {
             return $this->options[$name];
         }
-        throw new OutOfBoundsException("Option \"$name\" is undefined");
+
+        throw new OutOfBoundsException(\sprintf('Option "%s" is undefined', $name));
     }
 
     /**

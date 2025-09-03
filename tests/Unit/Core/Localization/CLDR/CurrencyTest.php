@@ -70,7 +70,7 @@ class CurrencyTest extends TestCase
      * When asking the ISO code
      * Then the expected value should be returned
      */
-    public function testGetIsoCode()
+    public function testGetIsoCode(): void
     {
         $this->assertSame(
             'PCE',
@@ -83,7 +83,7 @@ class CurrencyTest extends TestCase
      * When asking the numeric ISO code
      * Then the expected value should be returned
      */
-    public function testGetNumericIsoCode()
+    public function testGetNumericIsoCode(): void
     {
         $this->assertSame(
             '333',
@@ -96,7 +96,7 @@ class CurrencyTest extends TestCase
      * When asking the decimal digits (number of digits to use in the fraction part of the currency)
      * Then the expected value should be returned
      */
-    public function testGetDecimalDigits()
+    public function testGetDecimalDigits(): void
     {
         $this->assertSame(
             2,
@@ -109,7 +109,7 @@ class CurrencyTest extends TestCase
      * When asking the display name of the currency for this count context
      * Then the expected value should be returned
      */
-    public function testGetDisplayName()
+    public function testGetDisplayName(): void
     {
         $this->assertSame(
             'PrestaShop Peace',
@@ -132,7 +132,7 @@ class CurrencyTest extends TestCase
      *
      * @throws LocalizationException
      */
-    public function testGetSymbols()
+    public function testGetSymbols(): void
     {
         $this->assertSame(
             '☮',
@@ -144,7 +144,7 @@ class CurrencyTest extends TestCase
         );
     }
 
-    public function testGetSymbolsWithInvalidSymbolType()
+    public function testGetSymbolsWithInvalidSymbolType(): void
     {
         $this->expectException(LocalizationException::class);
 

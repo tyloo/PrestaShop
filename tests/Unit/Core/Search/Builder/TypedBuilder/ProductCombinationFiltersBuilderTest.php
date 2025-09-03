@@ -42,14 +42,14 @@ class ProductCombinationFiltersBuilderTest extends TestCase
     /**
      * @dataProvider getSupportsValues
      */
-    public function testSupports(string $filtersClass, bool $expectedSupport)
+    public function testSupports(string $filtersClass, bool $expectedSupport): void
     {
         $builder = new ProductCombinationFiltersBuilder();
         $isSupported = $builder->supports($filtersClass);
         $this->assertEquals($expectedSupport, $isSupported);
     }
 
-    public function testBuildFilters()
+    public function testBuildFilters(): void
     {
         $productId = 42;
         $shopId = 2;
@@ -62,7 +62,7 @@ class ProductCombinationFiltersBuilderTest extends TestCase
         $this->assertEquals($productId, $filters['product_id']);
     }
 
-    public function testBuildFiltersWithInitialValues()
+    public function testBuildFiltersWithInitialValues(): void
     {
         $productId = 42;
         $shopId = 2;

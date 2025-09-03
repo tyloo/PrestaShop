@@ -79,7 +79,7 @@ class ThemeValidatorTest extends TestCase
         $this->assertFalse($isValid, self::NOTICE . \sprintf('expected isValid to return false when theme is invalid, got %s', \gettype($isValid)));
     }
 
-    public function testIsValidWithInvalidThemeMissingProperties()
+    public function testIsValidWithInvalidThemeMissingProperties(): void
     {
         $isValid = $this->validator->isValid($this->getTheme('missconfig'));
         $this->assertFalse($isValid, self::NOTICE . \sprintf('expected isValid to return false when theme is invalid, got %s', \gettype($isValid)));
@@ -92,6 +92,7 @@ class ThemeValidatorTest extends TestCase
         if (! \in_array($name, $options, true)) {
             throw new InvalidArgumentException(self::NOTICE . 'getTheme($name) only accepts specified arguments');
         }
+
         $themeDir = __DIR__ . '/../../../../Resources/themes/minimal-' . $name . '-theme/';
         $themeConfigFile = $themeDir . 'config/theme.yml';
 

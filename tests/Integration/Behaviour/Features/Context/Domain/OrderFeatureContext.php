@@ -179,7 +179,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
 
         $productName = $data['name'];
         $product = $this->getProductByName($productName);
-        $productId = (int) $product->getProductId();
+        $productId = $product->getProductId();
 
         $combinationId = isset($data['combination']) ? $this->getProductCombinationId($product, $data['combination']) : 0;
 
@@ -193,6 +193,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
             if (isset($data['free_shipping'])) {
                 $hasFreeShipping = PrimitiveUtils::castStringBooleanIntoBoolean($data['free_shipping']);
             }
+
             $this->getCommandBus()->handle(
                 AddProductToOrderCommand::withNewInvoice(
                     $orderId,
@@ -228,6 +229,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
                 break;
             }
         }
+
         if (empty($orderDetailId)) {
             throw new RuntimeException(\sprintf('Product %s has not been found in order %s', $productReference, $orderReference));
         }
@@ -270,7 +272,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
                 AddProductToOrderCommand::toExistingInvoice(
                     (int) $orderId,
                     (int) $orderInvoice->id,
-                    (int) $product->getProductId(),
+                    $product->getProductId(),
                     (int) $combinationId,
                     $data['price_tax_incl'],
                     $data['price'],
@@ -397,6 +399,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         if (\count($orderDiscounts) === $expectedCount) {
             return;
         }
+
         throw new RuntimeException(\sprintf('Invalid number of cart rules for order %s, expected %s but got %s instead', $orderReference, $expectedCount, \count($orderDiscounts)));
     }
 
@@ -517,6 +520,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         if (! isset($invoiceIndexes[$invoicePosition])) {
             throw new RuntimeException(\sprintf('Cannot interpret this invoice position %s', $invoicePosition));
         }
+
         /** @var OrderInvoice $orderInvoice */
         $orderInvoice = $invoicesCollection->offsetGet($invoiceIndexes[$invoicePosition]);
 
@@ -544,7 +548,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getCommandBus()->handle(
                 new UpdateProductInOrderCommand(
-                    (int) $orderId,
+                    $orderId,
                     (int) $productOrderDetail['id_order_detail'],
                     $data['price_tax_incl'],
                     $data['price'],
@@ -661,6 +665,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
             if (! isset($availableOrderStates[$expectedOrderStatus['status']])) {
                 throw new RuntimeException('Unknown order status ' . $expectedOrderStatus['status']);
             }
+
             $expectedOrderStatusHistory[$key]['status_id'] = (int) $availableOrderStates[$expectedOrderStatus['status']];
         }
 
@@ -884,6 +889,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         if ($productQuantity === $quantity) {
             return;
         }
+
         throw new RuntimeException(\sprintf('Order was expected to have "%d" products "%s" in it. Instead got "%d"', $quantity, $productName, $productQuantity));
     }
 
@@ -905,6 +911,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         if ($productQuantity === $quantity) {
             return;
         }
+
         throw new RuntimeException(\sprintf('Cart of order was expected to have "%d" products "%s" in it. Instead got "%d"', $quantity, $productName, $productQuantity));
     }
 
@@ -915,7 +922,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     {
         $productQuantities = $this->getProductQuantitiesByReference($orderReference, $productName);
 
-        if ((int) $productQuantities['refunded_quantity'] === (int) $quantity) {
+        if ((int) $productQuantities['refunded_quantity'] === $quantity) {
             return;
         }
 
@@ -999,6 +1006,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         if (! isset($this->productStock[$productName])) {
             throw new RuntimeException('Cannot compare a stock that has not been checked initially');
         }
+
         $initialQuantity = $this->productStock[$productName];
         $factor = $factor === 'less' ? -1 : 1;
         $expectedDifference = $factor * $productDifference;
@@ -1009,6 +1017,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         if ($expectedQuantity !== $nbProduct) {
             throw new RuntimeException(\sprintf('Invalid difference for product %s expected %s, got %s instead', $productName, $expectedDifference, $nbProduct - $initialQuantity));
         }
+
         $this->productStock[$productName] = $expectedQuantity;
     }
 
@@ -1062,8 +1071,8 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
                 $data['type'],
                 $data['value'] ?? null
             ));
-        } catch (InvalidCartRuleDiscountValueException $e) {
-            $this->setLastException($e);
+        } catch (InvalidCartRuleDiscountValueException $invalidCartRuleDiscountValueException) {
+            $this->setLastException($invalidCartRuleDiscountValueException);
         }
     }
 
@@ -1362,13 +1371,10 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     {
         $product = $this->getProductByName($productName);
 
-        return (int) $product->getProductId();
+        return $product->getProductId();
     }
 
-    /**
-     * @return array
-     */
-    private function getProductQuantitiesByReference(string $orderReference, string $productName)
+    private function getProductQuantitiesByReference(string $orderReference, string $productName): array
     {
         $productId = $this->getProductIdByName($productName);
         $orderId = SharedStorage::getStorage()->get($orderReference);
@@ -1401,10 +1407,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         }
     }
 
-    /**
-     * @return array
-     */
-    private function mapAddOrderFromBackOfficeData(array $testCaseData)
+    private function mapAddOrderFromBackOfficeData(array $testCaseData): array
     {
         $data = [];
         $cartId = SharedStorage::getStorage()->get($testCaseData['cart']);
@@ -1461,6 +1464,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
                 break;
             }
         }
+
         if ($combinationId === null) {
             throw new RuntimeException(\sprintf('Could not find combination %s of product %s', $product->getName(), $combinationName));
         }
@@ -1565,7 +1569,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     {
         $order = new Order($orderId);
         $taxAddress = new Address($order->{Configuration::get('PS_TAX_ADDRESS_TYPE', null, null, $order->id_shop)});
-        $taxManager = TaxManagerFactory::getManager($taxAddress, Product::getIdTaxRulesGroupByIdProduct((int) $productId, Context::getContext()));
+        $taxManager = TaxManagerFactory::getManager($taxAddress, Product::getIdTaxRulesGroupByIdProduct($productId, Context::getContext()));
 
         return $taxManager->getTaxCalculator();
     }
@@ -1723,6 +1727,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
                 'Tracking URL' => $address->getTrackingUrl(),
             ];
         }
+
         foreach ($expectedDetails as $detailName => $expectedDetailValue) {
             if (! \array_key_exists($detailName, $arrayActual)) {
                 throw new RuntimeException(\sprintf('Invalid check for address field %s', $detailName));
@@ -1773,13 +1778,15 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
 
         $expectedDetails = $table->getHash();
         foreach ($expectedDetails as $expectedDetail) {
-            $hasDocument = $document = false;
+            $hasDocument = false;
+            $document = false;
             foreach ($orderForViewing->getDocuments()->getDocuments() as $document) {
                 if ($expectedDetail['referenceNumber'] === $document->getReferenceNumber()) {
                     $hasDocument = true;
                     break;
                 }
             }
+
             if (! $hasDocument) {
                 throw new RuntimeException(\sprintf('Document not found : %s', $expectedDetail['referenceNumber']));
             }
@@ -1818,13 +1825,15 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
 
         $expectedDetails = $table->getHash();
         foreach ($expectedDetails as $expectedDetail) {
-            $hasProduct = $product = false;
+            $hasProduct = false;
+            $product = false;
             foreach ($orderForViewing->getProducts()->getProducts() as $product) {
                 if ($expectedDetail['productReference'] === $product->getReference()) {
                     $hasProduct = true;
                     break;
                 }
             }
+
             if (! $hasProduct) {
                 throw new RuntimeException(\sprintf('Product not found : %s', $expectedDetail['productReference']));
             }
@@ -1837,17 +1846,20 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
             if ($expectedDetail['type'] === 'text') {
                 $customizations = $product->getCustomizations()->getTextCustomizations();
             }
+
             if ($expectedDetail['type'] === 'file') {
                 $customizations = $product->getCustomizations()->getFileCustomizations();
             }
 
-            $hasCustomization = $customization = false;
+            $hasCustomization = false;
+            $customization = false;
             foreach ($customizations as $customization) {
                 if ($expectedDetail['name'] === $customization->getName()) {
                     $hasCustomization = true;
                     break;
                 }
             }
+
             if (! $hasCustomization) {
                 throw new RuntimeException(\sprintf('Customization not found : %s (for Product %s)', $expectedDetail['name'], $expectedDetail['productReference']));
             }

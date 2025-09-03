@@ -35,7 +35,7 @@ use PrestaShopBundle\Entity\FeatureFlag;
 
 class FeatureFlagTest extends TestCase
 {
-    public function testFeatureFlagRequiresNotEmptyName()
+    public function testFeatureFlagRequiresNotEmptyName(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Feature flag name cannot be empty');
@@ -43,7 +43,7 @@ class FeatureFlagTest extends TestCase
         $featureFlag = new FeatureFlag('');
     }
 
-    public function testAssertFeatureFlagProperties()
+    public function testAssertFeatureFlagProperties(): void
     {
         $featureFlag = new FeatureFlag('prestashop_800');
 
@@ -62,7 +62,7 @@ class FeatureFlagTest extends TestCase
         $this->assertEquals(['env', 'dotenv', 'db'], $featureFlag->getOrderedTypes());
     }
 
-    public function testToggleWorks()
+    public function testToggleWorks(): void
     {
         $featureFlag = new FeatureFlag('prestashop_800');
 

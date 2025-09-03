@@ -48,7 +48,7 @@ class ApiClientEndpointTest extends ApiTestCase
         ];
     }
 
-    public function testGetInfos()
+    public function testGetInfos(): void
     {
         $bearerToken = $this->getBearerToken();
         $response = static::createClient()->request('GET', '/api-client/infos', [

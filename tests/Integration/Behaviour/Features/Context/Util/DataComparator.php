@@ -39,7 +39,7 @@ class DataComparator
         foreach ($expectedData as $key => $expectedElement) {
             if (\array_key_exists($key, $realData) === false) {
                 $availableKeys = array_keys($realData);
-                throw new Exception("Expected data $key but no such data in real data ; available data is " . implode(',', $availableKeys));
+                throw new Exception(\sprintf('Expected data %s but no such data in real data ; available data is ', $key) . implode(',', $availableKeys));
             }
 
             $realElement = $realData[$key];
@@ -62,8 +62,9 @@ class DataComparator
                     $realAsString = ($realElement) ? 'true' : 'false';
                     $expectedAsString = ($castedExpectedElement) ? 'true' : 'false';
 
-                    throw new Exception("Real $key is " . $realAsString . ' / expected ' . $expectedAsString);
+                    throw new Exception(\sprintf('Real %s is ', $key) . $realAsString . ' / expected ' . $expectedAsString);
                 }
+
                 if ($realElementType === 'array') {
                     sort($realElement);
                     sort($castedExpectedElement);
@@ -79,14 +80,14 @@ class DataComparator
                         $expectedAsString = 'empty';
                     }
 
-                    throw new Exception("Real $key is $realAsString / expected $expectedAsString");
+                    throw new Exception(\sprintf('Real %s is %s / expected %s', $key, $realAsString, $expectedAsString));
                 } elseif ($realElementType === 'datetime') {
                     $realAsString = $realElement->format('Y/m/d H:i:s');
                     $expectedAsString = $castedExpectedElement->format('Y/m/d H:i:s');
 
-                    throw new Exception("Real $key is $realAsString / expected $expectedAsString");
+                    throw new Exception(\sprintf('Real %s is %s / expected %s', $key, $realAsString, $expectedAsString));
                 } else {
-                    throw new Exception("Real $key is " . $realElement . ' / expected ' . $castedExpectedElement);
+                    throw new Exception(\sprintf('Real %s is ', $key) . $realElement . ' / expected ' . $castedExpectedElement);
                 }
             }
         }

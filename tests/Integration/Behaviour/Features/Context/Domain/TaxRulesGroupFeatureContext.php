@@ -115,9 +115,11 @@ class TaxRulesGroupFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             $command->setName($data['name']);
         }
+
         if (isset($data['is_enabled'])) {
             $command->setEnabled(PrimitiveUtils::castStringBooleanIntoBoolean($data['is_enabled']));
         }
+
         $this->getCommandBus()->handle($command);
     }
 

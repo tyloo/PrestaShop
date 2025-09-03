@@ -163,7 +163,7 @@ class PricesFillerTest extends ProductFillerTestCase
         ;
         $numberExtractor
             ->method('extract')
-            ->willReturnCallback(fn (Product $product, string $propertyPath) => new DecimalNumber((string) $product->{$propertyPath}))
+            ->willReturnCallback(fn (Product $product, string $propertyPath): DecimalNumber => new DecimalNumber((string) $product->{$propertyPath}))
         ;
 
         $configuration = $this->getMockBuilder(Configuration::class)

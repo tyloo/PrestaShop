@@ -75,7 +75,7 @@ class OrderReturnFormDataProviderTest extends TestCase
 
         $routerMock
             ->method('generate')
-            ->willReturnCallback(fn ($route, $arguments) => $this->createResultBasedOnQuery($route, $arguments));
+            ->willReturnCallback(fn ($route, $arguments): string => $this->createResultBasedOnQuery($route, $arguments));
 
         return $routerMock;
     }

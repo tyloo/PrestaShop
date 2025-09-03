@@ -35,7 +35,7 @@ use stdClass;
 
 class BirthdayTest extends TestCase
 {
-    public function testBirthdayCanBeCreatedWithValidDate()
+    public function testBirthdayCanBeCreatedWithValidDate(): void
     {
         $birthday = new Birthday('2008-07-31');
 
@@ -45,7 +45,7 @@ class BirthdayTest extends TestCase
     /**
      * @dataProvider getInvalidBirthdays
      */
-    public function testItThrowsExceptionWhenCreatingBirthdayWithInvalidData($invalidBirthday)
+    public function testItThrowsExceptionWhenCreatingBirthdayWithInvalidData($invalidBirthday): void
     {
         $this->expectException(CustomerConstraintException::class);
         $this->expectExceptionCode(CustomerConstraintException::INVALID_BIRTHDAY);

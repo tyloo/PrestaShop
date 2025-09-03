@@ -38,7 +38,7 @@ class DispatcherTest extends TestCase
     /**
      * @dataProvider validateRouteProvider
      */
-    public function testValidateRoute($routeId, $rule, $defaultRoutes, $expectedResult, $expectedErrors)
+    public function testValidateRoute($routeId, $rule, $defaultRoutes, $expectedResult, $expectedErrors): void
     {
         $dispatcher = DispatcherCore::getInstance();
 

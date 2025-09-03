@@ -40,7 +40,7 @@ class ControllerActionTest extends TestCase
      * @param string $fqcn
      * @param array  $result
      */
-    public function testGetFromString($fqcn, $result)
+    public function testGetFromString($fqcn, $result): void
     {
         $this->assertEquals($result, ControllerAction::fromString($fqcn));
     }

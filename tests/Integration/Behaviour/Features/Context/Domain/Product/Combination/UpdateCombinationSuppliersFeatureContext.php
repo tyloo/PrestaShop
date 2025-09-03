@@ -74,8 +74,8 @@ class UpdateCombinationSuppliersFeatureContext extends AbstractCombinationFeatur
                 $productSupplierAssociations,
                 'Number of updated associations does not match the input number of associations'
             );
-        } catch (ProductSupplierNotAssociatedException $e) {
-            $this->setLastException($e);
+        } catch (ProductSupplierNotAssociatedException $productSupplierNotAssociatedException) {
+            $this->setLastException($productSupplierNotAssociatedException);
         }
     }
 

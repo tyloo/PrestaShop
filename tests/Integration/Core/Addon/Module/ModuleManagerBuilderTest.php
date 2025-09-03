@@ -49,14 +49,17 @@ class ModuleManagerBuilderTest extends TestCase
      * @var ModuleManagerBuilder
      */
     public $moduleManagerBuilder;
+
     /**
      * @var ModuleManager
      */
     public $moduleManager;
+
     /**
      * @var string[]
      */
     public $moduleNames;
+
     /**
      * @var string[]
      */
@@ -71,18 +74,23 @@ class ModuleManagerBuilderTest extends TestCase
         if (is_dir($dirResources . '/Resources/modules_tests/pscsx3241')) {
             Tools::recurseCopy($dirResources . '/Resources/modules_tests/pscsx3241', _PS_MODULE_DIR_ . '/pscsx3241');
         }
+
         if (is_dir($dirResources . '/Resources/modules_tests/pscsx32412')) {
             Tools::recurseCopy($dirResources . '/Resources/modules_tests/pscsx32412', _PS_MODULE_DIR_ . '/pscsx32412');
         }
+
         if (is_dir($dirResources . '/Resources/modules_tests/testconflict')) {
             Tools::recurseCopy($dirResources . '/Resources/modules_tests/testconflict', _PS_MODULE_DIR_ . '/testconflict');
         }
+
         if (is_dir($dirResources . '/Resources/modules_tests/testtrickyconflict')) {
             Tools::recurseCopy($dirResources . '/Resources/modules_tests/testtrickyconflict', _PS_MODULE_DIR_ . '/testtrickyconflict');
         }
+
         if (is_dir($dirResources . '/Resources/modules_tests/testpropertyconflict')) {
             Tools::recurseCopy($dirResources . '/Resources/modules_tests/testpropertyconflict', _PS_MODULE_DIR_ . '/testpropertyconflict');
         }
+
         if (is_dir($dirResources . '/Resources/modules_tests/testtypedpropertyoverride')) {
             Tools::recurseCopy($dirResources . '/Resources/modules_tests/testtypedpropertyoverride', _PS_MODULE_DIR_ . '/testtypedpropertyoverride');
         }
@@ -96,18 +104,23 @@ class ModuleManagerBuilderTest extends TestCase
         if (Module::isInstalled('pscsx3241')) {
             Module::getInstanceByName('pscsx3241')->uninstall();
         }
+
         if (Module::isInstalled('pscsx32412')) {
             Module::getInstanceByName('pscsx32412')->uninstall();
         }
+
         if (Module::isInstalled('testconflict')) {
             Module::getInstanceByName('testconflict')->uninstall();
         }
+
         if (Module::isInstalled('testtrickyconflict')) {
             Module::getInstanceByName('testtrickyconflict')->uninstall();
         }
+
         if (Module::isInstalled('testpropertyconflict')) {
             Module::getInstanceByName('testpropertyconflict')->uninstall();
         }
+
         if (Module::isInstalled('testtypedpropertyoverride')) {
             Module::getInstanceByName('testtypedpropertyoverride')->uninstall();
         }
@@ -116,18 +129,23 @@ class ModuleManagerBuilderTest extends TestCase
         if (is_dir(_PS_MODULE_DIR_ . '/pscsx3241')) {
             Tools::deleteDirectory(_PS_MODULE_DIR_ . '/pscsx3241');
         }
+
         if (is_dir(_PS_MODULE_DIR_ . '/pscsx32412')) {
             Tools::deleteDirectory(_PS_MODULE_DIR_ . '/pscsx32412');
         }
+
         if (is_dir(_PS_MODULE_DIR_ . '/testconflict')) {
             Tools::deleteDirectory(_PS_MODULE_DIR_ . '/testconflict');
         }
+
         if (is_dir(_PS_MODULE_DIR_ . '/testtrickyconflict')) {
             Tools::deleteDirectory(_PS_MODULE_DIR_ . '/testtrickyconflict');
         }
+
         if (is_dir(_PS_MODULE_DIR_ . '/testpropertyconflict')) {
             Tools::deleteDirectory(_PS_MODULE_DIR_ . '/testpropertyconflict');
         }
+
         if (is_dir(_PS_MODULE_DIR_ . '/testtypedpropertyoverride')) {
             Tools::deleteDirectory(_PS_MODULE_DIR_ . '/testtypedpropertyoverride');
         }

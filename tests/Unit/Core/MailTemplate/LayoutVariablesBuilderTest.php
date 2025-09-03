@@ -38,7 +38,7 @@ use PrestaShop\PrestaShop\Core\MailTemplate\Layout\LayoutVariablesBuilderInterfa
 
 class LayoutVariablesBuilderTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         /** @var HookDispatcherInterface $dispatcherMock */
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
@@ -59,7 +59,7 @@ class LayoutVariablesBuilderTest extends TestCase
         $this->assertNotNull($builder);
     }
 
-    public function testBuildParameters()
+    public function testBuildParameters(): void
     {
         $layoutInfos = [
             'getName' => 'user_account',
@@ -82,7 +82,7 @@ class LayoutVariablesBuilderTest extends TestCase
         $this->assertEquals($expectedVariables, $builtVariables);
     }
 
-    public function testBuildParametersWithDefault()
+    public function testBuildParametersWithDefault(): void
     {
         $layoutInfos = [
             'getName' => 'user_account',
@@ -112,7 +112,7 @@ class LayoutVariablesBuilderTest extends TestCase
         $this->assertEquals($expectedVariables, $builtVariables);
     }
 
-    public function testBuildParametersWithRTL()
+    public function testBuildParametersWithRTL(): void
     {
         $layoutInfos = [
             'getName' => 'user_account',
@@ -140,7 +140,7 @@ class LayoutVariablesBuilderTest extends TestCase
     /**
      * @return MockObject|HookDispatcherInterface
      */
-    private function createHookDispatcherMock(array $expectedVariables, LayoutInterface $mailLayout)
+    private function createHookDispatcherMock(array $expectedVariables, LayoutInterface $mailLayout): MockObject
     {
         $dispatcherMock = $this->getMockBuilder(HookDispatcherInterface::class)
             ->disableOriginalConstructor()
@@ -171,7 +171,7 @@ class LayoutVariablesBuilderTest extends TestCase
      *
      * @return MockObject|LanguageInterface
      */
-    private function buildLanguageMock($isoCode = 'en', $isRTL = false)
+    private function buildLanguageMock($isoCode = 'en', $isRTL = false): MockObject
     {
         $languageMock = $this->getMockBuilder(LanguageInterface::class)
             ->disableOriginalConstructor()
@@ -200,7 +200,7 @@ class LayoutVariablesBuilderTest extends TestCase
     /**
      * @return MockObject|LayoutInterface
      */
-    private function buildLayoutMock(array $expectedMethods)
+    private function buildLayoutMock(array $expectedMethods): MockObject
     {
         $layoutMock = $this->getMockBuilder(LayoutInterface::class)
             ->disableOriginalConstructor()
@@ -221,7 +221,7 @@ class LayoutVariablesBuilderTest extends TestCase
     /**
      * @return MockObject|LanguageDefaultFontsCatalog
      */
-    private function buildFontCatalog()
+    private function buildFontCatalog(): MockObject
     {
         $fontCatalog = $this->getMockBuilder(LanguageDefaultFontsCatalog::class)
             ->disableOriginalConstructor()

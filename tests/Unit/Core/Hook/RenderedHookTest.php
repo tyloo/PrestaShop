@@ -38,7 +38,7 @@ class RenderedHookTest extends TestCase
     /**
      * @var HookInterface
      */
-    private $hookStub;
+    private \PHPUnit\Framework\MockObject\MockObject $hookStub;
 
     /**
      * @var RenderedHook
@@ -52,19 +52,19 @@ class RenderedHookTest extends TestCase
         $this->renderedHook = new RenderedHook($this->hookStub, $this->content());
     }
 
-    public function testGetHook()
+    public function testGetHook(): void
     {
         $this->assertInstanceOf(HookInterface::class, $this->renderedHook->getHook());
         $this->assertSame($this->hookStub, $this->renderedHook->getHook());
     }
 
-    public function testGetContent()
+    public function testGetContent(): void
     {
         $this->assertIsArray($this->renderedHook->getContent());
         $this->assertSame($this->content(), $this->renderedHook->getContent());
     }
 
-    public function testOutputContent()
+    public function testOutputContent(): void
     {
         /** @see RenderedHookTest::content() */
         $expected = '<h1>Hello World</h1><p>How are you?</p> '; // one extra space in the end is intended.

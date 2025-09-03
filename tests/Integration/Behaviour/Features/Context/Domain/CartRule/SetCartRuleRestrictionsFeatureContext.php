@@ -64,8 +64,8 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
         try {
             $command->setRestrictedCartRuleIds($this->referencesToIds($tableNode->getRowsHash()['restricted cart rules']));
             $this->restrictionCommandsByReference[$cartRuleReference] = $command;
-        } catch (CartRuleConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleConstraintException $cartRuleConstraintException) {
+            $this->setLastException($cartRuleConstraintException);
         }
     }
 
@@ -79,8 +79,8 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
         try {
             $command->setRestrictedCarrierIds($this->referencesToIds($tableNode->getRowsHash()['restricted carriers']));
             $this->restrictionCommandsByReference[$cartRuleReference] = $command;
-        } catch (CartRuleConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleConstraintException $cartRuleConstraintException) {
+            $this->setLastException($cartRuleConstraintException);
         }
     }
 
@@ -94,8 +94,8 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
         try {
             $command->setRestrictedGroupIds($this->referencesToIds($tableNode->getRowsHash()['restricted groups']));
             $this->restrictionCommandsByReference[$cartRuleReference] = $command;
-        } catch (CartRuleConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleConstraintException $cartRuleConstraintException) {
+            $this->setLastException($cartRuleConstraintException);
         }
     }
 
@@ -109,8 +109,8 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
         try {
             $command->setRestrictedCountryIds($this->referencesToIds($tableNode->getRowsHash()['restricted countries']));
             $this->restrictionCommandsByReference[$cartRuleReference] = $command;
-        } catch (CartRuleConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleConstraintException $cartRuleConstraintException) {
+            $this->setLastException($cartRuleConstraintException);
         }
     }
 
@@ -124,7 +124,7 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
         $rules = [];
 
         try {
-            if ($table) {
+            if ($table !== null) {
                 foreach ($table->getColumnsHash() as $row) {
                     $rules[] = new RestrictionRule($row['type'], $this->referencesToIds($row['references']));
                 }
@@ -137,8 +137,8 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
             $restrictionGroups[] = new RestrictionRuleGroup($quantity, $rules);
             $this->productRestrictionGroupsByReference[$cartRuleReference] = $restrictionGroups;
-        } catch (CartRuleConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleConstraintException $cartRuleConstraintException) {
+            $this->setLastException($cartRuleConstraintException);
         }
     }
 
@@ -152,8 +152,8 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (CartRuleNotFoundException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleNotFoundException $cartRuleNotFoundException) {
+            $this->setLastException($cartRuleNotFoundException);
         } finally {
             unset($this->restrictionCommandsByReference[$cartRuleReference]);
         }
@@ -239,8 +239,8 @@ class SetCartRuleRestrictionsFeatureContext extends AbstractCartRuleFeatureConte
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (CartRuleConstraintException $e) {
-            $this->setLastException($e);
+        } catch (CartRuleConstraintException $cartRuleConstraintException) {
+            $this->setLastException($cartRuleConstraintException);
         } finally {
             unset($this->restrictionCommandsByReference[$cartRuleReference]);
         }

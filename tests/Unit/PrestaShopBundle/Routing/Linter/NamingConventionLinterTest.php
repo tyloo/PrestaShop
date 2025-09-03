@@ -50,7 +50,7 @@ class NamingConventionLinterTest extends TestCase
     /**
      * @dataProvider getRoutesThatFollowNamingConventions
      */
-    public function testLinterPassesWhenRouteAndControllerFollowNamingConventions($routeName, Route $route)
+    public function testLinterPassesWhenRouteAndControllerFollowNamingConventions($routeName, Route $route): void
     {
         $this->namingConventionLinter->lint($routeName, $route);
 
@@ -60,7 +60,7 @@ class NamingConventionLinterTest extends TestCase
     /**
      * @dataProvider getRoutesThatDoNotFollowNamingConventions
      */
-    public function testLinterThrowsExceptionWhenRouteAndControllerDoesNotFollowNamingConventions($routeName, Route $route)
+    public function testLinterThrowsExceptionWhenRouteAndControllerDoesNotFollowNamingConventions($routeName, Route $route): void
     {
         $this->expectException(NamingConventionException::class);
 
@@ -70,7 +70,7 @@ class NamingConventionLinterTest extends TestCase
     /**
      * @dataProvider getRoutesThatDoNotFollowSymfonyConventions
      */
-    public function testLinterThrowsExceptionWhenControllerDoesNotFollowSymfonyConventions($routeName, Route $route)
+    public function testLinterThrowsExceptionWhenControllerDoesNotFollowSymfonyConventions($routeName, Route $route): void
     {
         $this->expectException(SymfonyControllerConventionException::class);
 
@@ -80,7 +80,7 @@ class NamingConventionLinterTest extends TestCase
     /**
      * @dataProvider getRoutesThatUseControllerNotFound
      */
-    public function testLinterThrowsExceptionWhenControllerIsNotFound($routeName, Route $route)
+    public function testLinterThrowsExceptionWhenControllerIsNotFound($routeName, Route $route): void
     {
         $this->expectException(ControllerNotFoundException::class);
 

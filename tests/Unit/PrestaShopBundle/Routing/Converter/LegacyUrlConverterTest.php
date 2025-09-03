@@ -44,7 +44,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class LegacyUrlConverterTest extends TestCase
 {
-    public function testBasic()
+    public function testBasic(): void
     {
         $router = $this->buildRouterMock('admin_products_index', '/products', 'AdminProducts');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -57,7 +57,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products', $url);
     }
 
-    public function testMinifiedController()
+    public function testMinifiedController(): void
     {
         $router = $this->buildRouterMock('admin_products_index', '/products', 'AdminProducts');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -70,7 +70,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products', $url);
     }
 
-    public function testIndexAlias()
+    public function testIndexAlias(): void
     {
         $router = $this->buildRouterMock('admin_products_index', '/products', 'AdminProducts');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -84,7 +84,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products', $url);
     }
 
-    public function testInsensitiveListAlias()
+    public function testInsensitiveListAlias(): void
     {
         $router = $this->buildRouterMock('admin_products_index', '/products', 'AdminProducts');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -98,7 +98,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products', $url);
     }
 
-    public function testAction()
+    public function testAction(): void
     {
         $router = $this->buildRouterMock('admin_products_create', '/products/create', 'AdminProducts:create');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -112,7 +112,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products/create', $url);
     }
 
-    public function testActionWithTrue()
+    public function testActionWithTrue(): void
     {
         $router = $this->buildRouterMock('admin_products_create', '/products/create', 'AdminProducts:create');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -126,7 +126,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products/create', $url);
     }
 
-    public function testActionWithEmptyString()
+    public function testActionWithEmptyString(): void
     {
         $router = $this->buildRouterMock('admin_products_create', '/products/create', 'AdminProducts:create');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -140,7 +140,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products/create', $url);
     }
 
-    public function testMultipleLegacyLinks()
+    public function testMultipleLegacyLinks(): void
     {
         $router = $this->buildRouterMock('admin_module_manage', '/manage/{category}/{keyword}', [
             'AdminModulesManage',
@@ -171,7 +171,7 @@ class LegacyUrlConverterTest extends TestCase
      * If a non existent action is used in the url (meaning one that has not been
      * migrated yet) it must not return the index route but throw an Exception instead
      */
-    public function testNonExistentAction()
+    public function testNonExistentAction(): void
     {
         $router = $this->buildRouterMock('admin_products_index', '/products', 'AdminProducts');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -183,9 +183,10 @@ class LegacyUrlConverterTest extends TestCase
                 'controller' => 'AdminProducts',
                 'action' => 'create',
             ]);
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
 
         try {
@@ -193,9 +194,10 @@ class LegacyUrlConverterTest extends TestCase
                 'controller' => 'AdminProducts',
                 'create' => true,
             ]);
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
 
         try {
@@ -203,37 +205,42 @@ class LegacyUrlConverterTest extends TestCase
                 'controller' => 'AdminProducts',
                 'create' => '',
             ]);
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
 
         try {
             $converter->convertByUrl('?controller=AdminProducts&action=create');
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
 
         try {
             $converter->convertByUrl('?controller=AdminProducts&create=1');
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
 
         try {
             $converter->convertByUrl('?controller=AdminProducts&create=');
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
 
         try {
             $converter->convertByUrl('?controller=AdminProducts&create');
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
     }
 
@@ -244,7 +251,7 @@ class LegacyUrlConverterTest extends TestCase
      * @throws ArgumentException
      * @throws RouteNotFoundException
      */
-    public function testIdEqualToOne()
+    public function testIdEqualToOne(): void
     {
         $router = $this->buildRouterMock('admin_products_index', '/products', 'AdminProducts');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -255,7 +262,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products', $convertedUrl);
     }
 
-    public function testActionWithArgument()
+    public function testActionWithArgument(): void
     {
         $router = $this->buildRouterMock(
             'admin_products_edit',
@@ -283,7 +290,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products/edit/{id}', $url);
     }
 
-    public function testActionWithArgumentWithoutMatching()
+    public function testActionWithArgumentWithoutMatching(): void
     {
         $router = $this->buildRouterMock(
             'admin_products_edit',
@@ -307,7 +314,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products/edit/{id}', $url);
     }
 
-    public function testConvertByRequest()
+    public function testConvertByRequest(): void
     {
         $router = $this->buildRouterMock('admin_products_create', '/products/create', 'AdminProducts:create');
         $request = new Request([
@@ -338,7 +345,7 @@ class LegacyUrlConverterTest extends TestCase
         $this->assertEquals('/products/create', $url);
     }
 
-    public function testMissingController()
+    public function testMissingController(): void
     {
         $router = $this->buildRouterMock('admin_products_create', '/products/create', 'AdminProducts:create');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -349,7 +356,7 @@ class LegacyUrlConverterTest extends TestCase
         ]);
     }
 
-    public function testControllerNotFound()
+    public function testControllerNotFound(): void
     {
         $router = $this->buildRouterMock('admin_products_create', '/products/create', 'AdminProducts:create');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -362,15 +369,16 @@ class LegacyUrlConverterTest extends TestCase
                 'controller' => 'AdminModules',
                 'action' => 'configure',
             ]);
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
         $this->assertInstanceOf(RouteNotFoundException::class, $caughtException);
         $this->assertEquals('Could not find a route matching for legacy controller: AdminModules', $caughtException->getMessage());
     }
 
-    public function testActionNotFound()
+    public function testActionNotFound(): void
     {
         $router = $this->buildRouterMock('admin_products_create', '/products/create', 'AdminProducts:create');
         $converter = new LegacyUrlConverter($router, new RouterProvider($router, new LegacyRouteFactory($this->createMock(FeatureFlagManager::class))));
@@ -383,9 +391,10 @@ class LegacyUrlConverterTest extends TestCase
                 'controller' => 'AdminProducts',
                 'action' => 'configure',
             ]);
-        } catch (RouteNotFoundException $e) {
-            $caughtException = $e;
+        } catch (RouteNotFoundException $routeNotFoundException) {
+            $caughtException = $routeNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
         $this->assertInstanceOf(RouteNotFoundException::class, $caughtException);
         $this->assertEquals('Could not find a route matching for legacy action: AdminProducts:configure', $caughtException->getMessage());
@@ -398,7 +407,7 @@ class LegacyUrlConverterTest extends TestCase
      * @throws ArgumentException
      * @throws RouteNotFoundException
      */
-    public function testMultipleRoutesActionWithTrue()
+    public function testMultipleRoutesActionWithTrue(): void
     {
         $router = $this->buildMultipleRouterMock([
             [
@@ -454,7 +463,7 @@ class LegacyUrlConverterTest extends TestCase
      *
      * @return MockObject|RouterInterface
      */
-    private function buildRouterMock($routeName, $routePath, $legacyLink, ?array $legacyParameters = null, ?array $expectedParameters = null)
+    private function buildRouterMock($routeName, $routePath, $legacyLink, ?array $legacyParameters = null, ?array $expectedParameters = null): MockObject
     {
         $routeCollection = new RouteCollection();
 
@@ -464,6 +473,7 @@ class LegacyUrlConverterTest extends TestCase
         if ($legacyParameters !== null) {
             $routeDefaults['_legacy_parameters'] = $legacyParameters;
         }
+
         $routeCollection->add($routeName, new Route(
             $routePath,
             $routeDefaults
@@ -502,7 +512,7 @@ class LegacyUrlConverterTest extends TestCase
     /**
      * @return MockObject|RouterInterface
      */
-    private function buildMultipleRouterMock(array $routes)
+    private function buildMultipleRouterMock(array $routes): MockObject
     {
         $routeCollection = $this->buildRouteCollection($routes);
 
@@ -541,6 +551,7 @@ class LegacyUrlConverterTest extends TestCase
             if (! empty($route['_legacy_parameters'])) {
                 $routeDefaults['_legacy_parameters'] = $route['_legacy_parameters'];
             }
+
             $routeCollection->add($route['route_name'], new Route(
                 $route['path'],
                 $routeDefaults

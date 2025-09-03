@@ -497,7 +497,7 @@ AND EXISTS(SELECT 1
     /**
      * @return Request
      */
-    private function mockRequest(array $params)
+    private function mockRequest(array $params): \PHPUnit\Framework\MockObject\MockObject
     {
         $attributesMock = null;
         if (\array_key_exists('_attributes', $params)) {

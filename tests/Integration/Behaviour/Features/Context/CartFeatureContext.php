@@ -103,6 +103,7 @@ class CartFeatureContext extends AbstractPrestaShopFeatureContext
             foreach ($productDatas as $productData) {
                 $this->getCurrentCart()->updateQty(0, $productData['id_product'], $productData['id_product_attribute']);
             }
+
             // delete cart
             $this->getCurrentCart()->delete();
         }
@@ -174,11 +175,13 @@ class CartFeatureContext extends AbstractPrestaShopFeatureContext
             $carrierId = (int) $cart->id_carrier <= 0 ? null : $cart->id_carrier;
             $total = $cart->getOrderTotal($withTax, Cart::BOTH, null, $carrierId);
         }
+
         if (! $precisely) {
             // here we round values to avoid round issues : rounding modes are tested by specific tests
             $expectedTotal = round($expectedTotal, 1);
             $total = round($total, 1);
         }
+
         if ($expectedTotal !== $total) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expectedTotal, $total));
         }

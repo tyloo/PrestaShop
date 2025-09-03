@@ -45,18 +45,23 @@ class FormatterTest extends TestCase
         if (! \defined('PS_ROUND_UP')) {
             \define('PS_ROUND_UP', 0);
         }
+
         if (! \defined('PS_ROUND_DOWN')) {
             \define('PS_ROUND_DOWN', 1);
         }
+
         if (! \defined('PS_ROUND_HALF_UP')) {
             \define('PS_ROUND_HALF_UP', 2);
         }
+
         if (! \defined('PS_ROUND_HALF_DOWN')) {
             \define('PS_ROUND_HALF_DOWN', 3);
         }
+
         if (! \defined('PS_ROUND_HALF_EVEN')) {
             \define('PS_ROUND_HALF_EVEN', 4);
         }
+
         if (! \defined('PS_ROUND_HALF_ODD')) {
             \define('PS_ROUND_HALF_ODD', 5);
         }
@@ -80,7 +85,7 @@ class FormatterTest extends TestCase
      *
      * @throws LocalizationException
      */
-    public function testFormat($localeParams, $numberSpecification, $number, $expectedResult)
+    public function testFormat($localeParams, $numberSpecification, $number, $expectedResult): void
     {
         $formatter = $this->buildFormatter($localeParams);
         $formattedNumber = $formatter->format($number, $numberSpecification);

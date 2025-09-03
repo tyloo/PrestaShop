@@ -43,17 +43,17 @@ class PathWithBackUrlExtensionTest extends TestCase
     /**
      * @var MockObject|UrlGeneratorInterface
      */
-    private $urlGeneratorInterfaceMock;
+    private MockObject $urlGeneratorInterfaceMock;
 
     /**
      * @var MockObject|RequestStack
      */
-    private $requestStackMock;
+    private MockObject $requestStackMock;
 
     /**
      * @var MockObject|BackUrlProvider
      */
-    private $backUrlProviderMock;
+    private MockObject $backUrlProviderMock;
 
     protected function setUp(): void
     {
@@ -80,7 +80,7 @@ class PathWithBackUrlExtensionTest extends TestCase
         ;
     }
 
-    public function testItFallBacksToDefaultUrlWhenBackUrlIsNotFound()
+    public function testItFallBacksToDefaultUrlWhenBackUrlIsNotFound(): void
     {
         $requestMock = $this
             ->getMockBuilder(Request::class)
@@ -110,7 +110,7 @@ class PathWithBackUrlExtensionTest extends TestCase
         $this->assertEquals(self::FALLBACK_URL, $url);
     }
 
-    public function testItReturnsBackUrl()
+    public function testItReturnsBackUrl(): void
     {
         $expectedUrl = 'http://localhost';
 

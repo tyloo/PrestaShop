@@ -110,7 +110,7 @@ class LocaleTest extends TestCase
      * When asking for the locale code
      * Then the expected value should be retrieved
      */
-    public function testGetLocaleCode()
+    public function testGetLocaleCode(): void
     {
         $this->assertSame(
             'fr-FR',
@@ -123,7 +123,7 @@ class LocaleTest extends TestCase
      * When asking for the locale's available numbering systems
      * Then the expected systems list should be retrieved
      */
-    public function testGetNumberingSystems()
+    public function testGetNumberingSystems(): void
     {
         $this->assertSame(
             ['latn'],
@@ -136,7 +136,7 @@ class LocaleTest extends TestCase
      * When asking for the locale's default numbering system
      * Then the expected value should be retrieved
      */
-    public function testGetDefaultNumberingSystem()
+    public function testGetDefaultNumberingSystem(): void
     {
         $this->assertSame(
             'latn',
@@ -149,7 +149,7 @@ class LocaleTest extends TestCase
      * When asking for the locale minimum grouping digits number
      * Then the expected number should be retrieved
      */
-    public function testGetMinimumGroupingDigits()
+    public function testGetMinimumGroupingDigits(): void
     {
         $this->assertSame(
             1,
@@ -162,7 +162,7 @@ class LocaleTest extends TestCase
      * When asking for all the locale's number symbols
      * Then the expected number symbols lists should be retrieved (by numbering system)
      */
-    public function testGetAllNumberSymbols()
+    public function testGetAllNumberSymbols(): void
     {
         $this->assertSame(
             ['latn' => $this->stubSymbolsData],
@@ -177,7 +177,7 @@ class LocaleTest extends TestCase
      *
      * @throws LocalizationException
      */
-    public function testGetNumberSymbolsByNumberingSystem()
+    public function testGetNumberSymbolsByNumberingSystem(): void
     {
         $this->assertSame(
             $this->stubSymbolsData,
@@ -194,7 +194,7 @@ class LocaleTest extends TestCase
      * When asking for the number symbols of this system
      * Then an exception should be raised
      */
-    public function testGetNumberSymbolsByNumberingSystemWithUnknownNumberingSystem()
+    public function testGetNumberSymbolsByNumberingSystemWithUnknownNumberingSystem(): void
     {
         $this->expectException(LocalizationException::class);
 
@@ -208,7 +208,7 @@ class LocaleTest extends TestCase
      *
      * @throws LocalizationException
      */
-    public function testGetDecimalPattern()
+    public function testGetDecimalPattern(): void
     {
         $this->assertSame(
             '#,##0.###',
@@ -225,7 +225,7 @@ class LocaleTest extends TestCase
      * When asking for decimal pattern of this system
      * Then an exception should be raised
      */
-    public function testGetDecimalPatternWithUnknownNumberingSystem()
+    public function testGetDecimalPatternWithUnknownNumberingSystem(): void
     {
         $this->expectException(LocalizationException::class);
 
@@ -239,7 +239,7 @@ class LocaleTest extends TestCase
      *
      * @throws LocalizationException
      */
-    public function testGetPercentPattern()
+    public function testGetPercentPattern(): void
     {
         $this->assertSame(
             '#,##0.### %',
@@ -256,7 +256,7 @@ class LocaleTest extends TestCase
      * When asking for percentage pattern of this system
      * Then an exception should be raised
      */
-    public function testGetPercentPatternWithUnknownNumberingSystem()
+    public function testGetPercentPatternWithUnknownNumberingSystem(): void
     {
         $this->expectException(LocalizationException::class);
 
@@ -270,7 +270,7 @@ class LocaleTest extends TestCase
      *
      * @throws LocalizationException
      */
-    public function testGetCurrencyPattern()
+    public function testGetCurrencyPattern(): void
     {
         $this->assertSame(
             '#,##0.00# ¤',
@@ -287,7 +287,7 @@ class LocaleTest extends TestCase
      * When asking for currency (price formatting) pattern of this system
      * Then an exception should be raised
      */
-    public function testGetCurrencyPatternWithUnknownNumberingSystem()
+    public function testGetCurrencyPatternWithUnknownNumberingSystem(): void
     {
         $this->expectException(LocalizationException::class);
 
@@ -299,7 +299,7 @@ class LocaleTest extends TestCase
      * When asking to this locale a given CLDR currency
      * Then the expected CLDR Currency should be retrieved. Or null if the currency code was unknown.
      */
-    public function testGetCurrency()
+    public function testGetCurrency(): void
     {
         $currency = $this->cldrLocale->getCurrency('PCE');
 
@@ -324,7 +324,7 @@ class LocaleTest extends TestCase
      * When asking to this locale a given CLDR currency data
      * Then the expected CLDR CurrencyData object should be retrieved. Or null if the currency code was unknown.
      */
-    public function testGetCurrencyData()
+    public function testGetCurrencyData(): void
     {
         $currencyData = $this->cldrLocale->getCurrencyData('PCE');
 

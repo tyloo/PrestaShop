@@ -63,25 +63,26 @@ class FileTranslatedCatalogueFinderTest extends TestCase
         foreach ($wordings as $domain => $messages) {
             $catalogue->add($messages, $domain);
         }
+
         (new XliffFileDumper())->dump($catalogue, [
             'path' => self::$tempDir . \DIRECTORY_SEPARATOR . CatalogueLayersProviderInterface::DEFAULT_LOCALE,
             'split_files' => false,
         ]);
     }
 
-    public function testItFailsWhenDirectoryNotExists()
+    public function testItFailsWhenDirectoryNotExists(): void
     {
         $this->expectException(TranslationFilesNotFoundException::class);
         new FileTranslatedCatalogueFinder('someFakeDirectory', ['filter']);
     }
 
-    public function testItFailsWhenFiltersAreNotStrings()
+    public function testItFailsWhenFiltersAreNotStrings(): void
     {
         $this->expectException(InvalidArgumentException::class);
         new FileTranslatedCatalogueFinder('/tmp', ['filter', 1]);
     }
 
-    public function testGetCatalogueFilters()
+    public function testGetCatalogueFilters(): void
     {
         $catalogue = (new FileTranslatedCatalogueFinder(
             self::$tempDir,
@@ -111,7 +112,7 @@ class FileTranslatedCatalogueFinderTest extends TestCase
         ], $domains);
     }
 
-    public function testGetCatalogueMessages()
+    public function testGetCatalogueMessages(): void
     {
         $expectedWordings = [
             'ShopSomeDomain' => [

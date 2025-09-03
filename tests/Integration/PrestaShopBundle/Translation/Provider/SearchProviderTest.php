@@ -64,7 +64,7 @@ class SearchProviderTest extends TestCase
         $this->provider->setLocale('fr-FR');
     }
 
-    public function testItExtractsOnlyTheSelectedCataloguesFromXliffFiles()
+    public function testItExtractsOnlyTheSelectedCataloguesFromXliffFiles(): void
     {
         $catalogue = $this->provider->getMessageCatalogue();
         $this->assertInstanceOf(MessageCatalogue::class, $catalogue);

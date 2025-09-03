@@ -185,7 +185,7 @@ class VirtualProductFileListenerTest extends FormListenerTestCase
             $this->assertCount(
                 \count($constraints),
                 $formFieldConstraints,
-                'expected and actual constraints count doesn\'t match'
+                "expected and actual constraints count doesn't match"
             );
 
             foreach ($constraints as $index => $expectedConstraint) {

@@ -311,7 +311,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
     /**
      * @return mixed|MockObject|HookInformationProvider
      */
-    private function buildHookInformationProvider(array $registeredModules = [])
+    private function buildHookInformationProvider(array $registeredModules = []): MockObject
     {
         $hookInformationProvider = $this->getMockBuilder(HookInformationProvider::class)
             ->disableOriginalConstructor()

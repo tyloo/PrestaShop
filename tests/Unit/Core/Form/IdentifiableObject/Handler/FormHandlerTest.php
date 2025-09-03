@@ -42,9 +42,11 @@ class FormHandlerTest extends TestCase
      */
     private $handler;
 
-    private $formBuilderMock;
-    private $hookDispatcherMock;
-    private $dataProviderMock;
+    private \PHPUnit\Framework\MockObject\MockObject $formBuilderMock;
+
+    private \PHPUnit\Framework\MockObject\MockObject $hookDispatcherMock;
+
+    private \PHPUnit\Framework\MockObject\MockObject $dataProviderMock;
 
     protected function setUp(): void
     {
@@ -82,12 +84,12 @@ class FormHandlerTest extends TestCase
         $this->dataProviderMock = $dataProviderMock;
     }
 
-    public function testCanBeConstructed()
+    public function testCanBeConstructed(): void
     {
         $this->assertInstanceOf(FormHandlerInterface::class, $this->handler);
     }
 
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $invokedCount = $this->exactly(3);
         $this->formBuilderMock->expects($invokedCount)
@@ -97,10 +99,12 @@ class FormHandlerTest extends TestCase
                     $this->assertEquals('a', $child);
                     $this->assertEquals('a', $type);
                 }
+
                 if ($invokedCount->numberOfInvocations() === 2) {
                     $this->assertEquals('b', $child);
                     $this->assertEquals('b', $type);
                 }
+
                 if ($invokedCount->numberOfInvocations() === 3) {
                     $this->assertEquals('c', $child);
                     $this->assertEquals('c', $type);
@@ -137,7 +141,7 @@ class FormHandlerTest extends TestCase
         $this->assertEquals($formMock, $form);
     }
 
-    public function testSaveData()
+    public function testSaveData(): void
     {
         $this->dataProviderMock
             ->method('setData')

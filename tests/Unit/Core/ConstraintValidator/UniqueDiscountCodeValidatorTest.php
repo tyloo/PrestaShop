@@ -38,7 +38,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class UniqueDiscountCodeValidatorTest extends ConstraintValidatorTestCase
 {
-    protected DiscountRepository|MockObject $discountRepository;
+    protected MockObject $discountRepository;
 
     protected function setUp(): void
     {
@@ -47,20 +47,20 @@ class UniqueDiscountCodeValidatorTest extends ConstraintValidatorTestCase
         parent::setUp();
     }
 
-    public function testItDetectsIncorrectConstraintType()
+    public function testItDetectsIncorrectConstraintType(): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate([], new NotBlank());
     }
 
-    public function testItDoesNotValidateEmptyCode()
+    public function testItDoesNotValidateEmptyCode(): void
     {
         $this->mockFormWithData(['id' => 1]);
         $this->validator->validate('', new UniqueDiscountCode());
         $this->assertNoViolation();
     }
 
-    public function testItValidatesUniqueCode()
+    public function testItValidatesUniqueCode(): void
     {
         $this->mockFormWithData(['id' => 1]);
 
@@ -74,7 +74,7 @@ class UniqueDiscountCodeValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testIfViolateUnicityForAnotherCode()
+    public function testIfViolateUnicityForAnotherCode(): void
     {
         $this->mockFormWithData(['id' => 1]);
 
@@ -91,7 +91,7 @@ class UniqueDiscountCodeValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testIfDoesNotViolateUnicityForSameCode()
+    public function testIfDoesNotViolateUnicityForSameCode(): void
     {
         $this->mockFormWithData(['id' => 1]);
 

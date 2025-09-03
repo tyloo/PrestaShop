@@ -37,7 +37,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ContainerFinderTest extends TestCase
 {
-    public function testGetContainerFromAttribute()
+    public function testGetContainerFromAttribute(): void
     {
         $contextMock = $this->getMockContext();
         $contextMock->container = $this->getMockContainerInterface();
@@ -46,7 +46,7 @@ class ContainerFinderTest extends TestCase
         $this->assertInstanceOf(ContainerInterface::class, $containerFinder->getContainer());
     }
 
-    public function testGetContainerFromController()
+    public function testGetContainerFromController(): void
     {
         $contextMock = $this->getMockContext();
         $contextMock->controller = $this->getMockController();
@@ -55,7 +55,7 @@ class ContainerFinderTest extends TestCase
         $this->assertInstanceOf(ContainerInterface::class, $containerFinder->getContainer());
     }
 
-    public function testGetContainerException()
+    public function testGetContainerException(): void
     {
         $this->expectException(ContainerNotFoundException::class);
         $this->expectExceptionMessage('Kernel Container is not available');
@@ -69,7 +69,7 @@ class ContainerFinderTest extends TestCase
     /**
      * @return MockObject|Context
      */
-    private function getMockContext()
+    private function getMockContext(): MockObject
     {
         return $this->getMockBuilder(Context::class)
             ->disableOriginalConstructor()
@@ -79,7 +79,7 @@ class ContainerFinderTest extends TestCase
     /**
      * @return MockObject|ContainerInterface
      */
-    private function getMockContainerInterface()
+    private function getMockContainerInterface(): MockObject
     {
         return $this->getMockBuilder(ContainerInterface::class)
             ->disableOriginalConstructor()
@@ -89,7 +89,7 @@ class ContainerFinderTest extends TestCase
     /**
      * @return MockObject|Controller
      */
-    private function getMockController()
+    private function getMockController(): MockObject
     {
         $mockController = $this->getMockBuilder(Controller::class)
             ->disableOriginalConstructor()

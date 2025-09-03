@@ -34,14 +34,23 @@ use RuntimeException;
 class PrimitiveUtils
 {
     public const TYPE_BOOLEAN = 'boolean';
+
     public const TYPE_INTEGER = 'integer';
+
     public const TYPE_DOUBLE = 'double';
+
     public const TYPE_STRING = 'string';
+
     public const TYPE_DATETIME = 'datetime';
+
     public const TYPE_ARRAY = 'array';
+
     public const TYPE_NULL = 'NULL';
+
     public const TYPE_OBJECT = 'object';
+
     public const TYPE_RESOURCE = 'resource';
+
     public const TYPE_UNKNOWN = 'unknown type';
 
     /**
@@ -69,6 +78,7 @@ class PrimitiveUtils
                 if ($element === 'empty') {
                     return [];
                 }
+
                 if (\is_array($element)) {
                     return $element;
                 }
@@ -85,9 +95,9 @@ class PrimitiveUtils
             case self::TYPE_OBJECT:
             case self::TYPE_RESOURCE:
             case self::TYPE_UNKNOWN:
-                throw new Exception("Cannot cast element into type $type");
+                throw new Exception('Cannot cast element into type ' . $type);
             default:
-                throw new RuntimeException("Unexpected cast type $type, function gettype is not supposed to return it");
+                throw new RuntimeException(\sprintf('Unexpected cast type %s, function gettype is not supposed to return it', $type));
         }
     }
 
@@ -143,9 +153,9 @@ class PrimitiveUtils
                 return false;
 
             case self::TYPE_UNKNOWN:
-                throw new Exception("Cannot compare elements of type $type");
+                throw new Exception('Cannot compare elements of type ' . $type);
             default:
-                throw new RuntimeException("Unexpected type $type, function gettype is not supposed to return it");
+                throw new RuntimeException(\sprintf('Unexpected type %s, function gettype is not supposed to return it', $type));
         }
     }
 
@@ -163,10 +173,7 @@ class PrimitiveUtils
         return \boolval($element);
     }
 
-    /**
-     * @return array
-     */
-    public static function castArrayElementsIntoString(array $array)
+    public static function castArrayElementsIntoString(array $array): array
     {
         $newArray = [];
         foreach ($array as $key => $element) {
@@ -215,7 +222,7 @@ class PrimitiveUtils
             'third', 'three' => 3,
             'four' => 4,
             'five' => 5,
-            default => throw new RuntimeException("Unknown string integer: $element"),
+            default => throw new RuntimeException('Unknown string integer: ' . $element),
         };
     }
 

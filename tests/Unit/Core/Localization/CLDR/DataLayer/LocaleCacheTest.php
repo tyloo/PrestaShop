@@ -58,7 +58,7 @@ class LocaleCacheTest extends TestCase
      * When asking it to write data and then read the same data
      * Then the said data should be retrieved unchanged
      */
-    public function testReadWrite()
+    public function testReadWrite(): void
     {
         $data = new CldrLocaleData();
 

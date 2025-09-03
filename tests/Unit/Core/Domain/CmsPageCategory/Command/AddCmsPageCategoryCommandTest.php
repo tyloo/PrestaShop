@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\Exception\CmsPageCategoryE
 
 class AddCmsPageCategoryCommandTest extends TestCase
 {
-    public function testItThrowsAnExceptionWhenCmsCategoryNamedIsIncorrect()
+    public function testItThrowsAnExceptionWhenCmsCategoryNamedIsIncorrect(): void
     {
         $this->expectException(CmsPageCategoryConstraintException::class);
         $this->expectExceptionCode(CmsPageCategoryConstraintException::INVALID_CATEGORY_NAME);
@@ -51,7 +51,7 @@ class AddCmsPageCategoryCommandTest extends TestCase
         );
     }
 
-    public function testItThrowsAnExceptionWhenIncorrectTypeIdIsPassedForCategoryParent()
+    public function testItThrowsAnExceptionWhenIncorrectTypeIdIsPassedForCategoryParent(): void
     {
         $this->expectException(CmsPageCategoryException::class);
 
@@ -69,7 +69,7 @@ class AddCmsPageCategoryCommandTest extends TestCase
         );
     }
 
-    public function testItThrowsAnExceptionWhenMetaTitleIsIncorrect()
+    public function testItThrowsAnExceptionWhenMetaTitleIsIncorrect(): void
     {
         $this->expectException(CmsPageCategoryConstraintException::class);
         $this->expectExceptionCode(CmsPageCategoryConstraintException::INVALID_META_TITLE);
@@ -81,7 +81,7 @@ class AddCmsPageCategoryCommandTest extends TestCase
         ]);
     }
 
-    public function testItThrowsAnExceptionWhenMetaDescriptionIsIncorrect()
+    public function testItThrowsAnExceptionWhenMetaDescriptionIsIncorrect(): void
     {
         $this->expectException(CmsPageCategoryConstraintException::class);
         $this->expectExceptionCode(CmsPageCategoryConstraintException::INVALID_META_DESCRIPTION);

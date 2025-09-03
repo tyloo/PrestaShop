@@ -52,7 +52,7 @@ class LocaleDataTest extends TestCase
         ?array $decimalPatternsInitial,
         ?array $decimalPatternsOverride,
         ?array $decimalPatternsExpected,
-    ) {
+    ): void {
         // Initial
         $this->localeData->setDecimalPatterns($decimalPatternsInitial);
 
@@ -106,7 +106,7 @@ class LocaleDataTest extends TestCase
         ?array $decimalPatternsInitial,
         ?array $decimalPatternsOverride,
         ?array $decimalPatternsExpected,
-    ) {
+    ): void {
         // Initial
         $this->localeData->setDecimalPatterns($decimalPatternsInitial);
 

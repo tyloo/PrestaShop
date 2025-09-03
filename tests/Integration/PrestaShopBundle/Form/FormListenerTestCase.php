@@ -46,7 +46,7 @@ class FormListenerTestCase extends KernelTestCase
     /**
      * @return MockObject|FormEvent
      */
-    protected function createEventMock(array $data, FormInterface $form)
+    protected function createEventMock(array $data, FormInterface $form): MockObject
     {
         $eventMock = $this->getMockBuilder(FormEvent::class)
             ->disableOriginalConstructor()
@@ -79,6 +79,7 @@ class FormListenerTestCase extends KernelTestCase
             } catch (OutOfBoundsException $e) {
                 $expectedException = $e;
             }
+
             $this->assertNotNull(
                 $expectedException,
                 \sprintf('Exception not triggered meaning the field %s is still present', $typeName)
@@ -100,6 +101,7 @@ class FormListenerTestCase extends KernelTestCase
             foreach ($levels as $level) {
                 $data = $data[$level];
             }
+
             $this->assertNull($data);
         }
     }

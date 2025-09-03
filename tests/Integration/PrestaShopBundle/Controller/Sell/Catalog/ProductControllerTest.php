@@ -44,8 +44,11 @@ use Tests\Resources\Resetter\ProductResetter;
 class ProductControllerTest extends FormGridControllerTestCase
 {
     private const TEST_NAME = 'testProductName';
+
     private const TEST_QUANTITY = 987;
+
     private const TEST_MINIMAL_QUANTITY = 2;
+
     private const TEST_RETAIL_PRICE_TAX_EXCLUDED = 87.7;
 
     public static function setUpBeforeClass(): void

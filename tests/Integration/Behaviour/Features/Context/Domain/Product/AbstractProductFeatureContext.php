@@ -311,6 +311,7 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         if (\array_key_exists($type, self::DATE_KEYS_BY_TYPE)) {
             return self::DATE_KEYS_BY_TYPE[$type];
         }
+
         throw new LogicException(\sprintf('Invalid history type "%s" given, expected any of: %s.', $type, implode(', ', array_keys(self::DATE_KEYS_BY_TYPE))));
     }
 

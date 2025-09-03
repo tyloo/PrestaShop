@@ -107,8 +107,8 @@ class PaginatedListTest extends TestCase
                 extraProperties: ['filtersClass' => $filtersClass],
                 filtersClass: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -159,8 +159,8 @@ class PaginatedListTest extends TestCase
                 extraProperties: ['filtersMapping' => $filtersMapping],
                 filtersMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -245,8 +245,8 @@ class PaginatedListTest extends TestCase
                 extraProperties: ['ApiResourceMapping' => $resourceMapping],
                 ApiResourceMapping: $newMapping,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);
@@ -387,8 +387,8 @@ class PaginatedListTest extends TestCase
                 extraProperties: ['experimentalOperation' => true],
                 experimentalOperation: false,
             );
-        } catch (InvalidArgumentException $e) {
-            $caughtException = $e;
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            $caughtException = $invalidArgumentException;
         }
 
         $this->assertNotNull($caughtException);

@@ -34,10 +34,12 @@ class Ps_Emailsubscription extends Module
      * @var bool|string
      */
     public $error;
+
     /**
      * @var bool|string
      */
     public $valid;
+
     /**
      * @var array|array[]|string[][]
      */

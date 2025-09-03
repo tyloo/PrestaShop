@@ -109,8 +109,8 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
                 $data['dni'] ?? null
             ));
             $this->getSharedStorage()->set($supplierReference, $supplierId->getValue());
-        } catch (SupplierException $e) {
-            $this->setLastException($e);
+        } catch (SupplierException $supplierException) {
+            $this->setLastException($supplierException);
         }
     }
 
@@ -140,53 +140,67 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             $editCommand->setName($data['name']);
         }
+
         if (isset($data['address'])) {
             $editCommand->setAddress($data['address']);
         }
+
         if (isset($data['address2'])) {
             $editCommand->setAddress2($data['address2']);
         }
+
         if (isset($data['post code'])) {
             $editCommand->setPostCode($data['post code']);
         }
+
         if (isset($data['city'])) {
             $editCommand->setCity($data['city']);
         }
+
         if (isset($data['state'])) {
             $editCommand->setStateId((int) State::getIdByName($data['state']));
         }
+
         if (isset($data['country'])) {
             $editCommand->setCountryId($this->getCountryIdByName($data['country']));
         }
+
         if (isset($data['dni'])) {
             $editCommand->setDni($data['dni']);
         }
+
         if (isset($data['phone'])) {
             $editCommand->setPhone($data['phone']);
         }
+
         if (isset($data['mobile phone'])) {
             $editCommand->setMobilePhone($data['mobile phone']);
         }
+
         if (isset($data['enabled'])) {
             $editCommand->setEnabled(PrimitiveUtils::castStringBooleanIntoBoolean($data['enabled']));
         }
+
         if (isset($data['description'])) {
             $editCommand->setLocalizedDescriptions($data['description']);
         }
+
         if (isset($data['meta title'])) {
             $editCommand->setLocalizedMetaTitles($data['meta title']);
         }
+
         if (isset($data['meta description'])) {
             $editCommand->setLocalizedMetaDescriptions($data['meta description']);
         }
+
         if (isset($data['shops'])) {
             $editCommand->setAssociatedShops($this->getShopIdsByReferences($data['shops']));
         }
 
         try {
             $this->getCommandBus()->handle($editCommand);
-        } catch (SupplierException $e) {
-            $this->setLastException($e);
+        } catch (SupplierException $supplierException) {
+            $this->setLastException($supplierException);
         }
 
         if (isset($data['logo image'])) {

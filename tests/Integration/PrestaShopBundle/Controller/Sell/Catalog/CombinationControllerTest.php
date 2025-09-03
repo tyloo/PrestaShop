@@ -94,6 +94,7 @@ class CombinationControllerTest extends FormGridControllerTestCase
         foreach ($attributeGroups[0]['attributes'] as $attribute) {
             $sizeAttributes[] = $attribute['id'];
         }
+
         $requestParameters = [
             'attributes' => [
                 $attributeGroups[0]['id'] => $sizeAttributes,
@@ -308,6 +309,7 @@ class CombinationControllerTest extends FormGridControllerTestCase
         if (! $tokenInput instanceof DOMElement) {
             throw new RuntimeException('Could not find combination list token in product page.');
         }
+
         $this->assertTrue($tokenInput->hasAttribute('value'));
         $token = $tokenInput->getAttribute('value');
         $formData['combination_list']['_token'] = $token;

@@ -141,52 +141,67 @@ class UpdateCombinationFeatureContext extends AbstractCombinationFeatureContext
         if (isset($dataRows['is default'])) {
             $command->setIsDefault(PrimitiveUtils::castStringBooleanIntoBoolean($dataRows['is default']));
         }
+
         // References
         if (isset($dataRows['ean13'])) {
             $command->setGtin($dataRows['ean13']);
         }
+
         if (isset($dataRows['isbn'])) {
             $command->setIsbn($dataRows['isbn']);
         }
+
         if (isset($dataRows['mpn'])) {
             $command->setMpn($dataRows['mpn']);
         }
+
         if (isset($dataRows['reference'])) {
             $command->setReference($dataRows['reference']);
         }
+
         if (isset($dataRows['upc'])) {
             $command->setUpc($dataRows['upc']);
         }
+
         // Prices
         if (isset($dataRows['impact on weight'])) {
             $command->setImpactOnWeight($dataRows['impact on weight']);
         }
+
         if (isset($dataRows['eco tax'])) {
             $command->setEcoTax($dataRows['eco tax']);
         }
+
         if (isset($dataRows['impact on price'])) {
             $command->setImpactOnPrice($dataRows['impact on price']);
         }
+
         if (isset($dataRows['impact on unit price'])) {
             $command->setImpactOnUnitPrice($dataRows['impact on unit price']);
         }
+
         if (isset($dataRows['wholesale price'])) {
             $command->setWholesalePrice($dataRows['wholesale price']);
         }
+
         // Stock information
         if (isset($dataRows['minimal quantity'])) {
             $command->setMinimalQuantity((int) $dataRows['minimal quantity']);
         }
+
         if (isset($dataRows['low stock threshold'])) {
             $command->setLowStockThreshold((int) $dataRows['low stock threshold']);
         }
+
         if (isset($dataRows['available date'])) {
             $command->setAvailableDate(new DateTime($dataRows['available date']));
         }
+
         if (isset($dataRows['available now labels'])) {
             $command->setLocalizedAvailableNowLabels($dataRows['available now labels']);
             unset($dataRows['available now labels']);
         }
+
         if (isset($dataRows['available later labels'])) {
             $command->setLocalizedAvailableLaterLabels($dataRows['available later labels']);
             unset($dataRows['available later labels']);

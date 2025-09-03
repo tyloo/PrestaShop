@@ -247,6 +247,7 @@ class FormClonerTest extends AbstractFormTester
         foreach ($form->getConfig()->getEventDispatcher()->getListeners() as $listeners) {
             $listenersCount += \count($listeners);
         }
+
         $this->assertSame($expectedCount, $listenersCount);
     }
 
@@ -301,6 +302,7 @@ class FormClonerTest extends AbstractFormTester
                 } else {
                     $expectedOption = $originalOption;
                 }
+
                 $this->assertSame($expectedOption, $clonedOption, \sprintf(
                     'Option "%s", expected %s but got %s instead',
                     $optionName,

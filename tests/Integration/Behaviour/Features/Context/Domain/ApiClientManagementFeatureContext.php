@@ -96,8 +96,8 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             );
 
             $this->getCommandBus()->handle($command);
-        } catch (ApiClientConstraintException $e) {
-            $this->setLastException($e);
+        } catch (ApiClientConstraintException $apiClientConstraintException) {
+            $this->setLastException($apiClientConstraintException);
         }
     }
 
@@ -118,16 +118,19 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
                 $errors[] = 'clientName';
             }
         }
+
         if (isset($expectedData['clientId'])) {
             if ($result->getClientId() !== $expectedData['clientId']) {
                 $errors[] = 'clientId';
             }
         }
+
         if (isset($expectedData['enabled'])) {
             if ($result->isEnabled() !== filter_var($expectedData['enabled'], \FILTER_VALIDATE_BOOL)) {
                 $errors[] = 'enabled';
             }
         }
+
         if (isset($expectedData['description'])) {
             if ($result->getDescription() !== $expectedData['description']) {
                 $errors[] = 'description';
@@ -167,26 +170,31 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['clientName'])) {
             $command->setClientName($data['clientName']);
         }
+
         if (isset($data['clientId'])) {
             $command->setClientId($data['clientId']);
         }
+
         if (isset($data['enabled'])) {
             $command->setEnabled($data['enabled']);
         }
+
         if (isset($data['description'])) {
             $command->setDescription($data['description']);
         }
+
         if (isset($data['scopes'])) {
             $command->setScopes(PrimitiveUtils::castStringArrayIntoArray($data['scopes']));
         }
+
         if (isset($data['lifetime'])) {
             $command->setLifetime($data['lifetime']);
         }
 
         try {
             $commandBus->handle($command);
-        } catch (ApiClientConstraintException $e) {
-            $this->setLastException($e);
+        } catch (ApiClientConstraintException $apiClientConstraintException) {
+            $this->setLastException($apiClientConstraintException);
         }
     }
 
@@ -210,8 +218,8 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             /** @var ApiClientId $id */
             $id = $this->getCommandBus()->handle($command);
             $this->getSharedStorage()->set($apiClientReference, $id->getValue());
-        } catch (ApiClientConstraintException $e) {
-            $this->setLastException($e);
+        } catch (ApiClientConstraintException $apiClientConstraintException) {
+            $this->setLastException($apiClientConstraintException);
         }
     }
 
@@ -230,20 +238,23 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['clientName'])) {
             $command->setClientName($data['clientName']);
         }
+
         if (isset($data['clientId'])) {
             $command->setClientId($data['clientId']);
         }
+
         if (isset($data['enabled'])) {
             $command->setEnabled($data['enabled']);
         }
+
         if (isset($data['description'])) {
             $command->setDescription($data['description']);
         }
 
         try {
             $commandBus->handle($command);
-        } catch (ApiClientException $e) {
-            $this->setLastException($e);
+        } catch (ApiClientException $apiClientException) {
+            $this->setLastException($apiClientException);
         }
     }
 
@@ -265,6 +276,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
         } catch (ApiClientNotFoundException) {
             return;
         }
+
         throw new RuntimeException(\sprintf('API Client %s still exists', $apiClientReference));
     }
 
@@ -414,8 +426,8 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             if (! empty($secretReference)) {
                 $this->getSharedStorage()->set($secretReference, $apiClient->getSecret());
             }
-        } catch (ApiClientConstraintException $e) {
-            $this->setLastException($e);
+        } catch (ApiClientConstraintException $apiClientConstraintException) {
+            $this->setLastException($apiClientConstraintException);
         }
     }
 

@@ -59,7 +59,7 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
         $this->previousErrorReportingLevel = error_reporting(\E_WARNING);
     }
 
-    public function testLoadLegacyCommandWithoutContextFails()
+    public function testLoadLegacyCommandWithoutContextFails(): void
     {
         set_error_handler(
             static function ($errno, $errstr): void {
@@ -94,7 +94,7 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
         ]);
     }
 
-    public function testLoadLegacyCommandWithContextWorks()
+    public function testLoadLegacyCommandWithContextWorks(): void
     {
         $application = new Application(static::$kernel);
         $application->add(new #[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop-tests:load-legacy-classes')] class extends Command {

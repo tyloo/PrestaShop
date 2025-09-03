@@ -53,7 +53,9 @@ use Tests\Unit\PrestaShopBundle\EventListener\ContextEventListenerTestCase;
 class ShopContextSubscriberTest extends ContextEventListenerTestCase
 {
     private const PS_SSL_ENABLED = 1;
+
     private const DEFAULT_SHOP_ID = 42;
+
     private const EMPLOYEE_DEFAULT_SHOP_ID = 51;
 
     public function testSingleShop(): void
@@ -242,6 +244,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         } else {
             $this->assertFalse($security->getToken()->hasAttribute(TokenAttributes::SHOP_CONSTRAINT));
         }
+
         $listener->initShopContext($event);
 
         $this->assertEquals($redirectionExpected, $event->getResponse() instanceof RedirectResponse);
@@ -489,7 +492,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         $token = $this->createMock(TokenInterface::class);
 
         // The test occurs here, the mock validates that the subscriber correctly sets the appropriate attribute on the token
-        if ($expectedShopConstraint) {
+        if ($expectedShopConstraint !== null) {
             $token->expects($this->atLeastOnce())->method('setAttribute')->with(TokenAttributes::SHOP_CONSTRAINT, $expectedShopConstraint);
         } else {
             $token->expects($this->never())->method('setAttribute');
@@ -572,6 +575,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         if ($shopConstraint !== null) {
             $token->setAttribute(TokenAttributes::SHOP_CONSTRAINT, $shopConstraint);
         }
+
         $securityMock->method('getToken')->willReturn($token);
 
         return $securityMock;
@@ -603,7 +607,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
             if (isset($employeeData['authorizedShopGroups'])) {
                 $employeeContext
                     ->method('hasAuthorizationOnShopGroup')
-                    ->will($this->returnCallback(fn ($shopGroupId) => \in_array($shopGroupId, $employeeData['authorizedShopGroups'], true)))
+                    ->will($this->returnCallback(fn ($shopGroupId): bool => \in_array($shopGroupId, $employeeData['authorizedShopGroups'], true)))
                 ;
             } else {
                 $employeeContext
@@ -615,7 +619,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
             if (isset($employeeData['authorizedShops'])) {
                 $employeeContext
                     ->method('hasAuthorizationOnShop')
-                    ->will($this->returnCallback(fn ($shopId) => \in_array($shopId, $employeeData['authorizedShops'], true)))
+                    ->will($this->returnCallback(fn ($shopId): bool => \in_array($shopId, $employeeData['authorizedShops'], true)))
                 ;
             } else {
                 $employeeContext

@@ -36,7 +36,7 @@ class CurrencyNumericIsoCodeTest extends TestCase
     /**
      * @dataProvider getIncorrectNumericIsoCodes
      */
-    public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex($incorrectNumericIsoCode)
+    public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex($incorrectNumericIsoCode): void
     {
         $this->expectException(CurrencyConstraintException::class);
         $this->expectExceptionCode(CurrencyConstraintException::INVALID_NUMERIC_ISO_CODE);
@@ -92,7 +92,7 @@ class CurrencyNumericIsoCodeTest extends TestCase
     /**
      * @dataProvider getCorrectNumericIsoCodes
      */
-    public function testItReturnsRightIsoCode($correctNumericIsoCode)
+    public function testItReturnsRightIsoCode($correctNumericIsoCode): void
     {
         $currencyNumericIsoCode = new NumericIsoCode($correctNumericIsoCode);
 

@@ -38,6 +38,7 @@ class PhpEncryptionTest extends TestCase
      * @var string
      */
     private const FOO = 'foo';
+
     /**
      * @var PhpEncryption
      */

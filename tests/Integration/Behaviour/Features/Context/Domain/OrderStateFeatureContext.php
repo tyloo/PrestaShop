@@ -73,8 +73,8 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
             ));
 
             SharedStorage::getStorage()->set($orderStateReference, $orderStateId->getValue());
-        } catch (OrderStateException $e) {
-            $this->setLastException($e);
+        } catch (OrderStateException $orderStateException) {
+            $this->setLastException($orderStateException);
         }
     }
 
@@ -93,33 +93,43 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
                 $this->getDefaultLangId() => $data['name'],
             ]);
         }
+
         if (isset($data['color'])) {
             $editableOrderState->setColor($data['color']);
         }
+
         if (isset($data['isLoggable'])) {
             $editableOrderState->setLoggable((bool) $data['isLoggable']);
         }
+
         if (isset($data['isInvoice'])) {
             $editableOrderState->setInvoice((bool) $data['isInvoice']);
         }
+
         if (isset($data['isHidden'])) {
             $editableOrderState->setHidden((bool) $data['isHidden']);
         }
+
         if (isset($data['hasSendMail'])) {
             $editableOrderState->setSendEmail((bool) $data['hasSendMail']);
         }
+
         if (isset($data['hasPdfInvoice'])) {
             $editableOrderState->setPdfInvoice((bool) $data['hasPdfInvoice']);
         }
+
         if (isset($data['isShipped'])) {
             $editableOrderState->setShipped((bool) $data['isShipped']);
         }
+
         if (isset($data['isPaid'])) {
             $editableOrderState->setPaid((bool) $data['isPaid']);
         }
+
         if (isset($data['isDelivery'])) {
             $editableOrderState->setDelivery((bool) $data['isDelivery']);
         }
+
         if (isset($data['template'])) {
             $editableOrderState->setTemplate([
                 $this->getDefaultLangId() => $data['template'],
@@ -128,8 +138,8 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle($editableOrderState);
-        } catch (OrderStateException $e) {
-            $this->setLastException($e);
+        } catch (OrderStateException $orderStateException) {
+            $this->setLastException($orderStateException);
         }
     }
 
@@ -142,8 +152,8 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new DeleteOrderStateCommand($orderStateId));
-        } catch (DeleteOrderStateException $e) {
-            $this->setLastException($e);
+        } catch (DeleteOrderStateException $deleteOrderStateException) {
+            $this->setLastException($deleteOrderStateException);
         }
     }
 
@@ -160,8 +170,8 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new BulkDeleteOrderStateCommand($orderStatesId));
-        } catch (BulkDeleteOrderStateException $e) {
-            $this->setLastException($e);
+        } catch (BulkDeleteOrderStateException $bulkDeleteOrderStateException) {
+            $this->setLastException($bulkDeleteOrderStateException);
         }
     }
 
@@ -234,8 +244,8 @@ class OrderStateFeatureContext extends AbstractDomainFeatureContext
             return $this->getQueryBus()->handle(
                 new GetOrderStateForEditing(SharedStorage::getStorage()->get($orderStateReference))
             );
-        } catch (OrderStateNotFoundException $e) {
-            $this->setLastException($e);
+        } catch (OrderStateNotFoundException $orderStateNotFoundException) {
+            $this->setLastException($orderStateNotFoundException);
         }
 
         return null;

@@ -116,8 +116,8 @@ class DuplicateProductFeatureContext extends AbstractProductFeatureContext
 
         try {
             $newProductIds = $this->getCommandBus()->handle(new BulkDuplicateProductCommand($productIds, ShopConstraint::shop($this->getDefaultShopId())));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
 
             return;
         }

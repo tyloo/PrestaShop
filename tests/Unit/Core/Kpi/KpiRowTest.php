@@ -34,14 +34,14 @@ use PrestaShop\PrestaShop\Core\Kpi\Row\KpiRowInterface;
 
 class KpiRowTest extends TestCase
 {
-    public function testCanBeConstructed()
+    public function testCanBeConstructed(): void
     {
         $row = new KpiRow();
 
         $this->assertInstanceOf(KpiRowInterface::class, $row);
     }
 
-    public function testAddKpi()
+    public function testAddKpi(): void
     {
         $row = new KpiRow();
 
@@ -53,7 +53,7 @@ class KpiRowTest extends TestCase
         $this->assertEquals(current($row->getKpis()), $kpiMock);
     }
 
-    public function testModifyAllowRefresh()
+    public function testModifyAllowRefresh(): void
     {
         $row = new KpiRow();
 

@@ -37,7 +37,7 @@ class DataLangFactoryTest extends TestCase
     /**
      * @dataProvider provideTableNames
      */
-    public function testItCreatesClassNamesFromTableNames(string $databasePrefix, string $tableName, string $expected)
+    public function testItCreatesClassNamesFromTableNames(string $databasePrefix, string $tableName, string $expected): void
     {
         $factory = new DataLangFactory(
             $databasePrefix,

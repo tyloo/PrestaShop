@@ -67,6 +67,7 @@ class ContextFeatureContext extends AbstractPrestaShopFeatureContext
         if (empty($this->contextMocker)) {
             throw new Exception('Context was not mocked');
         }
+
         $this->contextMocker->resetContext();
     }
 }

@@ -32,7 +32,7 @@ use PrestaShopBundle\Routing\Converter\LegacyRoute;
 
 class LegacyRouteTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $legacyRoute = new LegacyRoute('product_index', ['AdminProduct'], []);
         $this->assertEquals('product_index', $legacyRoute->getRouteName());
@@ -54,7 +54,7 @@ class LegacyRouteTest extends TestCase
         $this->assertEquals('product_index', $controllerActions['index']);
     }
 
-    public function testConstructorAction()
+    public function testConstructorAction(): void
     {
         $legacyRoute = new LegacyRoute('product_create', ['AdminProduct:create'], []);
         $this->assertEquals('product_create', $legacyRoute->getRouteName());
@@ -76,7 +76,7 @@ class LegacyRouteTest extends TestCase
         $this->assertEquals('product_create', $controllerActions['create']);
     }
 
-    public function testConstructorParameters()
+    public function testConstructorParameters(): void
     {
         $legacyRoute = new LegacyRoute('product_create', ['AdminProduct:create'], ['id_product' => 'productId']);
         $this->assertEquals('product_create', $legacyRoute->getRouteName());
@@ -100,7 +100,7 @@ class LegacyRouteTest extends TestCase
         $this->assertEquals('product_create', $controllerActions['create']);
     }
 
-    public function testConstructorAliases()
+    public function testConstructorAliases(): void
     {
         $legacyRoute = new LegacyRoute('product_create', ['AdminProduct:create', 'AdminProduct:new', 'SFProduct:new'], ['id_product' => 'productId']);
         $this->assertEquals('product_create', $legacyRoute->getRouteName());
@@ -135,7 +135,7 @@ class LegacyRouteTest extends TestCase
         $this->assertEquals('product_create', $controllerActions['new']);
     }
 
-    public function testStaticConstructor()
+    public function testStaticConstructor(): void
     {
         $legacyRoute = LegacyRoute::buildLegacyRoute('product_index', [
             '_legacy_link' => 'AdminProduct',
@@ -159,7 +159,7 @@ class LegacyRouteTest extends TestCase
         $this->assertEquals('product_index', $controllerActions['index']);
     }
 
-    public function testStaticConstructorAction()
+    public function testStaticConstructorAction(): void
     {
         $legacyRoute = LegacyRoute::buildLegacyRoute('product_create', [
             '_legacy_link' => 'AdminProduct:create',
@@ -183,7 +183,7 @@ class LegacyRouteTest extends TestCase
         $this->assertEquals('product_create', $controllerActions['create']);
     }
 
-    public function testStaticParameters()
+    public function testStaticParameters(): void
     {
         $legacyRoute = LegacyRoute::buildLegacyRoute('product_create', [
             '_legacy_link' => 'AdminProduct:create',
@@ -212,7 +212,7 @@ class LegacyRouteTest extends TestCase
         $this->assertEquals('product_create', $controllerActions['create']);
     }
 
-    public function testStaticAliases()
+    public function testStaticAliases(): void
     {
         $legacyRoute = LegacyRoute::buildLegacyRoute('product_create', [
             '_legacy_link' => ['AdminProduct:create', 'AdminProduct:new', 'SFProduct:new'],

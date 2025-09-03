@@ -124,6 +124,7 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
                 );
                 continue;
             }
+
             Assert::assertSame(
                 $expectedDateTime->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT),
                 $actualDateTime->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT),
@@ -166,6 +167,7 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
             if (! isset($actualCatalogPriceRules[$key])) {
                 throw new RuntimeException(\sprintf('Catalog price rule "%s" not found', $propertyAccessor->getValue($expectedItem, 'catalogPriceRuleName')));
             }
+
             $actualItem = $actualCatalogPriceRules[$key];
 
             $scalarPropertyNames = ['catalogPriceRuleName', 'currencyName', 'countryName', 'groupName', 'fromQuantity', 'reductionType', 'shopName'];
@@ -340,6 +342,7 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
         foreach ($conditions as $key => $condition) {
             $conditions[$key]['value'] = $this->getSharedStorage()->get($condition['value']);
         }
+
         $catalogPriceRule->addConditions($conditions);
         $catalogPriceRule->apply();
     }

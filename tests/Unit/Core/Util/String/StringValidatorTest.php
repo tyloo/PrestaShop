@@ -32,7 +32,7 @@ use PrestaShop\PrestaShop\Core\Util\String\StringValidator;
 
 class StringValidatorTest extends TestCase
 {
-    public function testItDetectsThatStringStartsWith()
+    public function testItDetectsThatStringStartsWith(): void
     {
         $data = [
             [
@@ -61,7 +61,7 @@ class StringValidatorTest extends TestCase
         }
     }
 
-    public function testItDetectsThatStringEndsWith()
+    public function testItDetectsThatStringEndsWith(): void
     {
         $data = [
             [
@@ -90,7 +90,7 @@ class StringValidatorTest extends TestCase
         }
     }
 
-    public function testStringStartsWithAndEndsWith()
+    public function testStringStartsWithAndEndsWith(): void
     {
         $data = [
             [
@@ -126,7 +126,7 @@ class StringValidatorTest extends TestCase
         }
     }
 
-    public function testStringContainsWhiteSpaces()
+    public function testStringContainsWhiteSpaces(): void
     {
         $data = [
             [

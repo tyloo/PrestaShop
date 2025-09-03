@@ -298,12 +298,14 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
             if ($params !== null) {
                 $parameters = array_merge($parameters, $params);
             }
+
             $convertedUrl = $converter->convertByParameters($parameters);
-        } catch (Exception $e) {
-            $caughtException = $e;
-            $caughtExceptionMessage = \sprintf('Unexpected exception %s: %s', $e::class, $e->getMessage());
+        } catch (Exception $exception) {
+            $caughtException = $exception;
+            $caughtExceptionMessage = \sprintf('Unexpected exception %s: %s', $exception::class, $exception->getMessage());
             $convertedUrl = null;
         }
+
         $this->assertNull($caughtException, $caughtExceptionMessage);
         $this->assertSameUrl($expectedUrl, $convertedUrl);
     }
@@ -339,9 +341,10 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         $caughtException = null;
         try {
             $converter->convertByUrl($convertedUrl);
-        } catch (AlreadyConvertedException $e) {
-            $caughtException = $e;
+        } catch (AlreadyConvertedException $alreadyConvertedException) {
+            $caughtException = $alreadyConvertedException;
         }
+
         $this->assertNotNull($caughtException);
         $this->assertTrue($convertedUrl . ' is already a converted url' === $caughtException->getMessage());
     }
@@ -361,6 +364,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         if ($params !== null) {
             $parameters = array_merge($parameters, $params);
         }
+
         $linkUrl = $this->link->getAdminLink($controller, true, [], $parameters);
         $this->assertSameUrl($expectedUrl, $linkUrl);
     }
@@ -378,6 +382,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         if ($action !== null && ! isset($parameters[$action])) {
             $parameters[$action] = '';
         }
+
         $linkUrl = $this->link->getAdminLink($controller, true, [], $parameters);
         $this->assertSameUrl($expectedUrl, $linkUrl);
     }
@@ -390,7 +395,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
      * @throws PrestaShopException
      * @throws ReflectionException
      */
-    public function testLegacyControllers(string $expectedUrl, string $controller, ?array $parameters = null)
+    public function testLegacyControllers(string $expectedUrl, string $controller, ?array $parameters = null): void
     {
         $parameters ??= [];
         $linkUrl = $this->link->getAdminLink($controller, true, [], $parameters);
@@ -433,7 +438,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         $this->assertFalse($response->isRedirection());
     }
 
-    public function testPostParameters()
+    public function testPostParameters(): void
     {
         $this->loginUser($this->client);
         $this->client->disableReboot();

@@ -39,6 +39,7 @@ class PhpParametersTest extends TestCase
      * @var string
      */
     protected $parametersSampleFile;
+
     /**
      * @var string
      */

@@ -43,7 +43,7 @@ use PrestaShop\PrestaShop\Core\Grid\Position\UpdateHandler\PositionUpdateHandler
 
 class GridPositionUpdaterTest extends TestCase
 {
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $positionUpdate = $this->createPositionUpdate();
         // Most of the assertions are actually in the mock
@@ -53,7 +53,7 @@ class GridPositionUpdaterTest extends TestCase
         $this->assertNull($gridUpdater->update($positionUpdate));
     }
 
-    public function testUpdateException()
+    public function testUpdateException(): void
     {
         $positionUpdate = $this->createPositionUpdate();
         $updateHandler = $this->createUpdateHandlerMockThrowingException();
@@ -63,8 +63,8 @@ class GridPositionUpdaterTest extends TestCase
 
         try {
             $gridUpdater->update($positionUpdate);
-        } catch (PositionException $e) {
-            $caughtException = $e;
+        } catch (PositionException $positionException) {
+            $caughtException = $positionException;
         }
 
         $this->assertNotNull($caughtException);
@@ -96,7 +96,7 @@ class GridPositionUpdaterTest extends TestCase
     /**
      * @return MockObject|PositionUpdateHandlerInterface
      */
-    private function createUpdateHandlerMockWithAssertions()
+    private function createUpdateHandlerMockWithAssertions(): MockObject
     {
         $updaterMock = $this->createMock(PositionUpdateHandlerInterface::class);
         $updaterMock
@@ -125,7 +125,7 @@ class GridPositionUpdaterTest extends TestCase
         return $updaterMock;
     }
 
-    private function createUpdateHandlerMockThrowingException()
+    private function createUpdateHandlerMockThrowingException(): MockObject
     {
         $updaterMock = $this->createMock(PositionUpdateHandlerInterface::class);
         $updaterMock

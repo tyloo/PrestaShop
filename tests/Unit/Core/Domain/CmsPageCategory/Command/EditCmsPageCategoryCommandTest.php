@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\Exception\CmsPageCategoryE
 
 class EditCmsPageCategoryCommandTest extends TestCase
 {
-    public function testItThrowsAnExceptionWhenCmsCategoryNamedIsIncorrect()
+    public function testItThrowsAnExceptionWhenCmsCategoryNamedIsIncorrect(): void
     {
         $this->expectException(CmsPageCategoryConstraintException::class);
         $this->expectExceptionCode(CmsPageCategoryConstraintException::INVALID_CATEGORY_NAME);
@@ -46,7 +46,7 @@ class EditCmsPageCategoryCommandTest extends TestCase
         ]);
     }
 
-    public function testItThrowsAnExceptionWhenIncorrectTypeIdIsPassed()
+    public function testItThrowsAnExceptionWhenIncorrectTypeIdIsPassed(): void
     {
         $this->expectException(CmsPageCategoryException::class);
 
@@ -55,7 +55,7 @@ class EditCmsPageCategoryCommandTest extends TestCase
         $command = new EditCmsPageCategoryCommand($incorrectTypeId);
     }
 
-    public function testItThrowsAnExceptionWhenIncorrectTypeIdIsPassedForCategoryParent()
+    public function testItThrowsAnExceptionWhenIncorrectTypeIdIsPassedForCategoryParent(): void
     {
         $this->expectException(CmsPageCategoryException::class);
 
@@ -66,7 +66,7 @@ class EditCmsPageCategoryCommandTest extends TestCase
         $command->setParentId($incorrectTypeId);
     }
 
-    public function testItThrowsAnExceptionWhenMetaTitleIsIncorrect()
+    public function testItThrowsAnExceptionWhenMetaTitleIsIncorrect(): void
     {
         $this->expectException(CmsPageCategoryConstraintException::class);
         $this->expectExceptionCode(CmsPageCategoryConstraintException::INVALID_META_TITLE);
@@ -78,7 +78,7 @@ class EditCmsPageCategoryCommandTest extends TestCase
         ]);
     }
 
-    public function testItThrowsAnExceptionWhenMetaDescriptionIsIncorrect()
+    public function testItThrowsAnExceptionWhenMetaDescriptionIsIncorrect(): void
     {
         $this->expectException(CmsPageCategoryConstraintException::class);
         $this->expectExceptionCode(CmsPageCategoryConstraintException::INVALID_META_DESCRIPTION);

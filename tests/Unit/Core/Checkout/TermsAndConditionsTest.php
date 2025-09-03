@@ -32,7 +32,7 @@ use PrestaShop\PrestaShop\Core\Checkout\TermsAndConditions;
 
 class TermsAndConditionsTest extends TestCase
 {
-    public function testSetTextInsertsLinks()
+    public function testSetTextInsertsLinks(): void
     {
         $terms = new TermsAndConditions();
 
@@ -44,7 +44,7 @@ class TermsAndConditionsTest extends TestCase
         );
     }
 
-    public function testSetTextInsertsSeveralLinks()
+    public function testSetTextInsertsSeveralLinks(): void
     {
         $terms = new TermsAndConditions();
 
@@ -56,7 +56,7 @@ class TermsAndConditionsTest extends TestCase
         );
     }
 
-    public function testSetTextJustDoesntAddLinksWhenMissing()
+    public function testSetTextJustDoesntAddLinksWhenMissing(): void
     {
         $terms = new TermsAndConditions();
 

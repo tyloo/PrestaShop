@@ -125,6 +125,7 @@ class SeoAssertionFeatureContext extends AbstractProductFeatureContext
                 'Unexpected redirect target'
             );
         }
+
         unset($dataRows['redirect_target']);
 
         if (isset($dataRows['redirect_name'])) {

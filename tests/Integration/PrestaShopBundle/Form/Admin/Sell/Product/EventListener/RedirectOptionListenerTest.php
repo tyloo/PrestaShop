@@ -141,15 +141,23 @@ class RedirectOptionListenerTest extends FormListenerTestCase
 class SimpleTargetFormTest extends CommonAbstractType
 {
     public const PRODUCT_LABEL = 'Product label';
+
     public const PRODUCT_PLACEHOLDER = 'Product placeholder';
+
     public const PRODUCT_SEARCH_URL = 'Product search url';
+
     public const PRODUCT_HELP = 'Product help';
+
     public const PRODUCT_FILTERED = [42];
 
     public const CATEGORY_LABEL = 'Category label';
+
     public const CATEGORY_PLACEHOLDER = 'Category placeholder';
+
     public const CATEGORY_SEARCH_URL = 'Category search url';
+
     public const CATEGORY_HELP = 'Category help';
+
     public const CATEGORY_FILTERED = [51];
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

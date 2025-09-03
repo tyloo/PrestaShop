@@ -48,7 +48,7 @@ class ComputingPrecisionTest extends TestCase
     /**
      * @dataProvider provider
      */
-    public function testGetPrecision($input, $expected)
+    public function testGetPrecision($input, $expected): void
     {
         $result = $this->computingPrecision->getPrecision($input);
         $this->assertEquals($expected, $result);

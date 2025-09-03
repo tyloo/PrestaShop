@@ -168,27 +168,35 @@ class AdminControllerTest extends TestCase
         if (! \defined('_PS_TAB_MODULE_LIST_URL_')) {
             \define('_PS_TAB_MODULE_LIST_URL_', '');
         }
+
         if (! \defined('_DB_SERVER_')) {
             \define('_DB_SERVER_', 'localhost');
         }
+
         if (! \defined('_DB_USER_')) {
             \define('_DB_USER_', $configuration['parameters']['database_user']);
         }
+
         if (! \defined('_DB_PASSWD_')) {
             \define('_DB_PASSWD_', $configuration['parameters']['database_password']);
         }
+
         if (! \defined('_DB_NAME_')) {
             \define('_DB_NAME_', 'test_' . $configuration['parameters']['database_name']);
         }
+
         if (! \defined('_DB_PREFIX_')) {
             \define('_DB_PREFIX_', $configuration['parameters']['database_prefix']);
         }
+
         if (! \defined('_COOKIE_KEY_')) {
             \define('_COOKIE_KEY_', Tools::passwdGen(64));
         }
+
         if (! \defined('_PS_VERSION_')) {
             \define('_PS_VERSION_', '1.7');
         }
+
         if (! \defined('_PS_ADMIN_DIR_')) {
             \define('_PS_ADMIN_DIR_', '');
         }
@@ -257,18 +265,23 @@ class AdminControllerTest extends TestCase
                 if ($param === Controller::SERVICE_LOCALE_REPOSITORY) {
                     return $this->getMockLocaleRepository();
                 }
+
                 if ($param === 'prestashop.adapter.multistore_feature') {
                     return $this->getMockFeatureInterface();
                 }
+
                 if ($param === UserTokenManager::class) {
                     return $this->getMockedUserTokenManager();
                 }
+
                 if ($param === AvifExtensionChecker::class) {
                     return $this->getMockedAvifExtensionChecker();
                 }
+
                 if ($param === FeatureFlagStateCheckerInterface::class) {
                     return $this->getMockedFeatureFlagStateCheckerInterface();
                 }
+
                 if ($param === ImageFormatConfiguration::class) {
                     return $this->getMockedImageFormatConfiguration();
                 }

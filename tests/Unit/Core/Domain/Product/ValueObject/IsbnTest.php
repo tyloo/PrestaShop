@@ -82,7 +82,7 @@ class IsbnTest extends TestCase
         yield ['?'];
         yield ['/'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield [';'];
         yield [':'];
         yield ['.'];

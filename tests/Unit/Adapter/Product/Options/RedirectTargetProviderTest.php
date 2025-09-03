@@ -47,7 +47,9 @@ use PrestaShop\PrestaShop\Core\Domain\QueryResult\RedirectTargetInformation;
 class RedirectTargetProviderTest extends TestCase
 {
     private const CATEGORY_TARGET_ID = 42;
+
     private const PRODUCT_TARGET_ID = 51;
+
     private const LANGUAGE_ID = 69;
 
     /**

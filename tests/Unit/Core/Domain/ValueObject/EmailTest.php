@@ -36,7 +36,7 @@ class EmailTest extends TestCase
     /**
      * @dataProvider getValidEmailValues
      */
-    public function testItCreatesEmailWithValidValues($validEmail)
+    public function testItCreatesEmailWithValidValues($validEmail): void
     {
         $email = new Email($validEmail);
 
@@ -46,7 +46,7 @@ class EmailTest extends TestCase
     /**
      * @dataProvider getInvalidEmailValues
      */
-    public function testItThrowsExceptionWhenCreatingEmailWithInvalidValue($invalidEmail)
+    public function testItThrowsExceptionWhenCreatingEmailWithInvalidValue($invalidEmail): void
     {
         $this->expectException(DomainConstraintException::class);
         $this->expectExceptionCode(DomainConstraintException::INVALID_EMAIL);
@@ -57,7 +57,7 @@ class EmailTest extends TestCase
     /**
      * @dataProvider getEmailCompareValues
      */
-    public function testEmailComparesValuesCorrectly($firstEmail, $secondEmail, $expectedCompareResult)
+    public function testEmailComparesValuesCorrectly($firstEmail, $secondEmail, $expectedCompareResult): void
     {
         $this->assertEquals($expectedCompareResult, (new Email($firstEmail))->isEqualTo(new Email($secondEmail)));
     }

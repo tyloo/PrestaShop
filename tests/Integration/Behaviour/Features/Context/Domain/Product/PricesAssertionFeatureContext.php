@@ -105,7 +105,7 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
         $this->assertTaxRulesGroup($data, $pricesInfo, $shopErrorMessage);
         $this->assertNumberPriceFields($data, $pricesInfo, $shopErrorMessage);
 
-        Assert::assertEmpty($data, \sprintf('Some provided product price fields haven\'t been asserted%s: %s', $shopErrorMessage, var_export($data, true)));
+        Assert::assertEmpty($data, \sprintf("Some provided product price fields haven't been asserted%s: %s", $shopErrorMessage, var_export($data, true)));
     }
 
     private function assertTaxRulesGroup(array &$data, ProductPricesInformation $pricesInfo, string $shopErrorMessage): void
@@ -121,6 +121,7 @@ class PricesAssertionFeatureContext extends AbstractProductFeatureContext
         } else {
             $expectedId = (int) TaxRulesGroupFeatureContext::getTaxRulesGroupByName($expectedName)->id;
         }
+
         $actualId = $pricesInfo->getTaxRulesGroupId();
 
         if ($expectedId !== $actualId) {

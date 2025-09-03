@@ -59,7 +59,7 @@ class GridPresenterTest extends TestCase
         $this->gridPresenter = new GridPresenter($hookDispatcherMock);
     }
 
-    public function testGridInstanceIsPresentedAsArray()
+    public function testGridInstanceIsPresentedAsArray(): void
     {
         $presentedGrid = $this->gridPresenter->present($this->createGridMock());
 
@@ -88,7 +88,7 @@ class GridPresenterTest extends TestCase
         }
     }
 
-    private function createGridMock()
+    private function createGridMock(): \PHPUnit\Framework\MockObject\MockObject
     {
         $data = $this->createMock(GridDataInterface::class);
         $data->method('getRecords')
@@ -136,7 +136,7 @@ class GridPresenterTest extends TestCase
         return $grid;
     }
 
-    private function createColumnMock($id)
+    private function createColumnMock($id): \PHPUnit\Framework\MockObject\MockObject
     {
         $column = $this->createMock(ColumnInterface::class);
         $column->method('getId')

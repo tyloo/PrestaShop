@@ -107,7 +107,7 @@ class MailTemplateGeneratorTest extends TestCase
         $this->fs->mkdir($this->modulesTempDir);
     }
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         /** @var MailTemplateRendererInterface $mailRenderer */
         $mailRenderer = $this->getMockBuilder(MailTemplateRendererInterface::class)
@@ -119,7 +119,7 @@ class MailTemplateGeneratorTest extends TestCase
         $this->assertNotNull($generator);
     }
 
-    public function testInvalidCoreOutputFolders()
+    public function testInvalidCoreOutputFolders(): void
     {
         /** @var MailTemplateRendererInterface $mailRenderer */
         $mailRenderer = $this->getMockBuilder(MailTemplateRendererInterface::class)
@@ -134,9 +134,10 @@ class MailTemplateGeneratorTest extends TestCase
         $caughtException = null;
         try {
             $generator->generateTemplates($this->theme, $this->createLanguageMock(), $fakeFolder, $this->modulesTempDir);
-        } catch (FileNotFoundException $e) {
-            $caughtException = $e;
+        } catch (FileNotFoundException $fileNotFoundException) {
+            $caughtException = $fileNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
         $this->assertInstanceOf(FileNotFoundException::class, $caughtException);
         $expectedMessage = \sprintf(
@@ -146,7 +147,7 @@ class MailTemplateGeneratorTest extends TestCase
         $this->assertEquals($expectedMessage, $caughtException->getMessage());
     }
 
-    public function testInvalidModulesOutputFolders()
+    public function testInvalidModulesOutputFolders(): void
     {
         /** @var MailTemplateRendererInterface $mailRenderer */
         $mailRenderer = $this->getMockBuilder(MailTemplateRendererInterface::class)
@@ -161,9 +162,10 @@ class MailTemplateGeneratorTest extends TestCase
         $caughtException = null;
         try {
             $generator->generateTemplates($this->theme, $this->createLanguageMock(), $this->coreTempDir, $fakeFolder);
-        } catch (FileNotFoundException $e) {
-            $caughtException = $e;
+        } catch (FileNotFoundException $fileNotFoundException) {
+            $caughtException = $fileNotFoundException;
         }
+
         $this->assertNotNull($caughtException);
         $this->assertInstanceOf(FileNotFoundException::class, $caughtException);
         $expectedMessage = \sprintf(
@@ -173,7 +175,7 @@ class MailTemplateGeneratorTest extends TestCase
         $this->assertEquals($expectedMessage, $caughtException->getMessage());
     }
 
-    public function testGenerateTemplates()
+    public function testGenerateTemplates(): void
     {
         $generator = new MailTemplateGenerator($this->createRendererMock());
         $this->assertNotNull($generator);
@@ -190,7 +192,7 @@ class MailTemplateGeneratorTest extends TestCase
         $this->checkExpectedFiles($expectedFiles);
     }
 
-    public function testGenerateTemplatesWithLocale()
+    public function testGenerateTemplatesWithLocale(): void
     {
         $generator = new MailTemplateGenerator($this->createRendererMock());
         $this->assertNotNull($generator);
@@ -207,7 +209,7 @@ class MailTemplateGeneratorTest extends TestCase
         $this->checkExpectedFiles($expectedFiles);
     }
 
-    public function testOverwriteTemplates()
+    public function testOverwriteTemplates(): void
     {
         $expectedFiles = [
             'core/fr/account.html' => 'account_html__fr',
@@ -226,8 +228,10 @@ class MailTemplateGeneratorTest extends TestCase
                 $filePath = implode(\DIRECTORY_SEPARATOR, [$this->outputTempDir, $expectedFile]);
                 $this->fs->dumpFile($filePath, $expectedFile);
             }
+
             ++$fileIndex;
         }
+
         $this->checkExpectedFiles($previousFiles);
         $generator = new MailTemplateGenerator($this->createRendererMock(1, 2));
         $this->assertNotNull($generator);
@@ -261,7 +265,7 @@ class MailTemplateGeneratorTest extends TestCase
      *
      * @return MockObject|MailTemplateRendererInterface
      */
-    private function createRendererMock($expectedHtmlRendered = null, $expectedTxtRendered = null)
+    private function createRendererMock($expectedHtmlRendered = null, $expectedTxtRendered = null): MockObject
     {
         $renderer = $this->getMockBuilder(MailTemplateRendererInterface::class)
             ->disableOriginalConstructor()
@@ -271,19 +275,21 @@ class MailTemplateGeneratorTest extends TestCase
         if ($expectedHtmlRendered === null) {
             $expectedHtmlRendered = $this->theme->getLayouts()->count();
         }
+
         $renderer
             ->expects($this->exactly($expectedHtmlRendered))
             ->method('renderHtml')
-            ->will($this->returnCallback(fn (LayoutInterface $layout, LanguageInterface $language) => implode('_', [$layout->getName(), 'html', $layout->getModuleName(), $language->getIsoCode()])))
+            ->will($this->returnCallback(fn (LayoutInterface $layout, LanguageInterface $language): string => implode('_', [$layout->getName(), 'html', $layout->getModuleName(), $language->getIsoCode()])))
         ;
 
         if ($expectedTxtRendered === null) {
             $expectedTxtRendered = $this->theme->getLayouts()->count();
         }
+
         $renderer
             ->expects($this->exactly($expectedTxtRendered))
             ->method('renderTxt')
-            ->will($this->returnCallback(fn (LayoutInterface $layout, LanguageInterface $language) => implode('_', [$layout->getName(), 'txt', $layout->getModuleName(), $language->getIsoCode()])))
+            ->will($this->returnCallback(fn (LayoutInterface $layout, LanguageInterface $language): string => implode('_', [$layout->getName(), 'txt', $layout->getModuleName(), $language->getIsoCode()])))
         ;
 
         return $renderer;
@@ -292,7 +298,7 @@ class MailTemplateGeneratorTest extends TestCase
     /**
      * @return MockObject|LanguageInterface
      */
-    private function createLanguageMock(?string $isoCode = null)
+    private function createLanguageMock(?string $isoCode = null): MockObject
     {
         $languageMock = $this->getMockBuilder(LanguageInterface::class)
             ->disableOriginalConstructor()

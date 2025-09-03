@@ -55,6 +55,7 @@ class WebserviceKeyFeatureContext extends AbstractDomainFeatureContext
             if (! str_starts_with($key, 'permission_')) {
                 continue;
             }
+
             $data['permissions'][substr($key, 11)] = PrimitiveUtils::castStringArrayIntoArray($value);
         }
 
@@ -68,8 +69,8 @@ class WebserviceKeyFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (Exception $e) {
-            $this->setLastException($e);
+        } catch (Exception $exception) {
+            $this->setLastException($exception);
         }
     }
 
@@ -86,6 +87,7 @@ class WebserviceKeyFeatureContext extends AbstractDomainFeatureContext
             if (! str_starts_with($key, 'permission_')) {
                 continue;
             }
+
             $data['permissions'][substr($key, 11)] = PrimitiveUtils::castStringArrayIntoArray($value);
         }
 
@@ -93,20 +95,23 @@ class WebserviceKeyFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['key'])) {
             $command->setKey($data['key']);
         }
+
         if (isset($data['description'])) {
             $command->setDescription($data['description']);
         }
+
         if (isset($data['is_enabled'])) {
             $command->setStatus((bool) $data['is_enabled']);
         }
+
         if (! empty($data['permissions'])) {
             $command->setPermissions($data['permissions']);
         }
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (Exception $e) {
-            $this->setLastException($e);
+        } catch (Exception $exception) {
+            $this->setLastException($exception);
         }
     }
 

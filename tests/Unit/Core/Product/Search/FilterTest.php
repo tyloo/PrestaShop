@@ -47,7 +47,7 @@ class FilterTest extends TestCase
         $this->filter = null;
     }
 
-    public function testCreateANewFilter()
+    public function testCreateANewFilter(): void
     {
         $this->assertInstanceOf(Filter::class, $this->filter);
 
@@ -81,7 +81,7 @@ class FilterTest extends TestCase
         );
     }
 
-    public function testGetterAndSetterForLabel()
+    public function testGetterAndSetterForLabel(): void
     {
         $this->assertSame('', $this->filter->getLabel());
 
@@ -89,7 +89,7 @@ class FilterTest extends TestCase
         $this->assertSame('Weight', $this->filter->getLabel());
     }
 
-    public function testGetterAndSetterForMagnitude()
+    public function testGetterAndSetterForMagnitude(): void
     {
         $this->assertSame(0, $this->filter->getMagnitude());
 
@@ -97,7 +97,7 @@ class FilterTest extends TestCase
         $this->assertSame(10, $this->filter->getMagnitude());
     }
 
-    public function testGetterAndSetterForType()
+    public function testGetterAndSetterForType(): void
     {
         $this->assertSame('', $this->filter->getType());
 
@@ -105,7 +105,7 @@ class FilterTest extends TestCase
         $this->assertSame('weight', $this->filter->getType());
     }
 
-    public function testGetterAndIsserForDisplayed()
+    public function testGetterAndIsserForDisplayed(): void
     {
         $this->assertTrue($this->filter->isDisplayed());
 
@@ -113,7 +113,7 @@ class FilterTest extends TestCase
         $this->assertFalse($this->filter->isDisplayed());
     }
 
-    public function testGetterAndIsserForActive()
+    public function testGetterAndIsserForActive(): void
     {
         $this->assertFalse($this->filter->isActive());
 
@@ -121,7 +121,7 @@ class FilterTest extends TestCase
         $this->assertFalse($this->filter->isActive());
     }
 
-    public function testGetterAndIsserForValue()
+    public function testGetterAndIsserForValue(): void
     {
         $this->assertNull($this->filter->getValue());
 
@@ -129,7 +129,7 @@ class FilterTest extends TestCase
         $this->assertSame('blue', $this->filter->getValue());
     }
 
-    public function testGetterAndSetterForProperties()
+    public function testGetterAndSetterForProperties(): void
     {
         $this->assertNull($this->filter->getProperty('product_name'));
         $this->assertInstanceOf(Filter::class, $this->filter->setProperty('product_name', 'Nice cupcake'));

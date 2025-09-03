@@ -108,8 +108,8 @@ class SecurityFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle($clearSessionCommand);
-        } catch (Exception $e) {
-            $this->setLastException($e);
+        } catch (Exception $exception) {
+            $this->setLastException($exception);
         }
     }
 
@@ -170,7 +170,7 @@ class SecurityFeatureContext extends AbstractDomainFeatureContext
         $date = new DateTime();
         $date->sub(new DateInterval('PT' . $hours . 'H'));
         Db::getInstance()->execute(
-            'UPDATE ' . _DB_PREFIX_ . $databaseTable . ' SET date_upd = \' ' . pSQL($date->format('Y-m-d H:i:s')) . '\'' .
+            'UPDATE ' . _DB_PREFIX_ . $databaseTable . " SET date_upd = ' " . pSQL($date->format('Y-m-d H:i:s')) . "'" .
             'WHERE ' . $databaseIdentifier . ' = ' . $session->id
         );
     }

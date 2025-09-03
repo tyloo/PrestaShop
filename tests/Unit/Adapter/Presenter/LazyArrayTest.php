@@ -31,7 +31,7 @@ use PHPUnit\Framework\TestCase;
 
 class LazyArrayTest extends TestCase
 {
-    public function testBasicConstructAndCall()
+    public function testBasicConstructAndCall(): void
     {
         $test = new LazyArrayImplementation();
 
@@ -43,7 +43,7 @@ class LazyArrayTest extends TestCase
         $this->assertEquals(1, $test->count());
     }
 
-    public function testAppendArray()
+    public function testAppendArray(): void
     {
         $test = new LazyArrayImplementation();
         $test->appendArray(['a' => 1]);
@@ -52,7 +52,7 @@ class LazyArrayTest extends TestCase
         $this->assertEquals(1, $test['a']);
     }
 
-    public function testBasicAppendClosureArray()
+    public function testBasicAppendClosureArray(): void
     {
         $counter = 0;
 
@@ -70,7 +70,7 @@ class LazyArrayTest extends TestCase
         $this->assertEquals(1, $test['a']);
     }
 
-    public function testAdvancedAppendClosureArray()
+    public function testAdvancedAppendClosureArray(): void
     {
         $dummyLog = new DummyLog();
 

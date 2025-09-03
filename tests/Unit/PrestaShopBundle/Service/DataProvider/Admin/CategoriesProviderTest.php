@@ -61,7 +61,7 @@ class CategoriesProviderTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $categories['categories']);
     }
 
-    public function testGetCategoriesMenuWithoutModules()
+    public function testGetCategoriesMenuWithoutModules(): void
     {
         $this->assertEquals(
             [
@@ -162,7 +162,7 @@ class CategoriesProviderTest extends TestCase
         );
     }
 
-    public function testGetCategoriesMenuWithModulesAndThemes()
+    public function testGetCategoriesMenuWithModulesAndThemes(): void
     {
         $gamification = $this->mockModule('gamification');
         $cronjobs = $this->mockModule('cronjobs');
@@ -272,7 +272,7 @@ class CategoriesProviderTest extends TestCase
         );
     }
 
-    public function testGetCategoriesMenuWithModulesWithCustomTab()
+    public function testGetCategoriesMenuWithModulesWithCustomTab(): void
     {
         $gamification = $this->mockModule('gamification', 'administration');
         $cronjobs = $this->mockModule('cronjobs', 'front_office_features');
@@ -380,7 +380,7 @@ class CategoriesProviderTest extends TestCase
         );
     }
 
-    private function mockModule(string $moduleName, ?string $tab = null)
+    private function mockModule(string $moduleName, ?string $tab = null): \PHPUnit\Framework\MockObject\MockObject
     {
         $mock = $this->getMockBuilder(Module::class)
             ->getMock();
@@ -393,12 +393,12 @@ class CategoriesProviderTest extends TestCase
         return $mock;
     }
 
-    public function testGetParentCategoryWithoutResult()
+    public function testGetParentCategoryWithoutResult(): void
     {
         $this->assertEquals('Test', $this->provider->getParentCategory('Test'));
     }
 
-    public function testGetParentCategory()
+    public function testGetParentCategory(): void
     {
         $this->assertEquals('Administration', $this->provider->getParentCategory('Registration & Ordering Process'));
     }

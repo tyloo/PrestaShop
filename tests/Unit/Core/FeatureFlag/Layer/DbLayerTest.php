@@ -35,8 +35,10 @@ use PrestaShopBundle\Entity\Repository\FeatureFlagRepository;
 class DbLayerTest extends TestCase
 {
     private const FEATURE_FLAG_TEST = 'feature_flag_test';
+
     private $featureFlag;
-    private $featureFlagRepository;
+
+    private readonly \PHPUnit\Framework\MockObject\MockObject $featureFlagRepository;
 
     public function __construct(string $name)
     {
@@ -53,49 +55,49 @@ class DbLayerTest extends TestCase
             ->will($this->returnValue($this->featureFlag));
     }
 
-    public function testIsReadonly()
+    public function testIsReadonly(): void
     {
         $layer = new DbLayer($this->featureFlagRepository);
         $this->assertFalse($layer->isReadonly());
     }
 
-    public function testGetTypeName()
+    public function testGetTypeName(): void
     {
         $layer = new DbLayer($this->featureFlagRepository);
         $this->assertEquals('db', $layer->getTypeName());
     }
 
-    public function testCanBeUsed()
+    public function testCanBeUsed(): void
     {
         $layer = new DbLayer($this->featureFlagRepository);
         $this->assertTrue($layer->canBeUsed($this->featureFlag->getName()));
     }
 
-    public function testIsEnabled()
+    public function testIsEnabled(): void
     {
         $layer = new DbLayer($this->featureFlagRepository);
         $this->featureFlagRepository->expects($this->once())
             ->method('isEnabled')
-            ->willReturnCallback(fn ($featureFlagName) => match ($featureFlagName) {
+            ->willReturnCallback(fn ($featureFlagName): bool => match ($featureFlagName) {
                 self::FEATURE_FLAG_TEST => true,
                 default => false,
             });
         $this->assertTrue($layer->isEnabled(self::FEATURE_FLAG_TEST));
     }
 
-    public function testIsDisabled()
+    public function testIsDisabled(): void
     {
         $layer = new DbLayer($this->featureFlagRepository);
         $this->featureFlagRepository->expects($this->once())
             ->method('isEnabled')
-            ->willReturnCallback(fn ($featureFlagName) => match ($featureFlagName) {
+            ->willReturnCallback(fn ($featureFlagName): bool => match ($featureFlagName) {
                 self::FEATURE_FLAG_TEST => false,
                 default => true,
             });
         $this->assertFalse($layer->isEnabled(self::FEATURE_FLAG_TEST));
     }
 
-    public function testEnable()
+    public function testEnable(): void
     {
         $layer = new DbLayer($this->featureFlagRepository);
         $this->featureFlagRepository->expects($this->once())
@@ -104,7 +106,7 @@ class DbLayerTest extends TestCase
         $layer->enable(self::FEATURE_FLAG_TEST);
     }
 
-    public function testDisable()
+    public function testDisable(): void
     {
         $layer = new DbLayer($this->featureFlagRepository);
         $this->featureFlagRepository->expects($this->once())

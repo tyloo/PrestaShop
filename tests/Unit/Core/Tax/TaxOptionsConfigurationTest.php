@@ -39,7 +39,9 @@ use Tests\TestCase\AbstractConfigurationTestCase;
 class TaxOptionsConfigurationTest extends AbstractConfigurationTestCase
 {
     private const SHOP_ID = 42;
+
     private const TAX_ADDRESS_TYPE = 'id_address_invoice';
+
     private const ECOTAX_TAX_RULES_GROUP_ID = 5;
 
     /**

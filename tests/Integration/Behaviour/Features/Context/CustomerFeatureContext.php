@@ -190,6 +190,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
         foreach ($this->customers as $customer) {
             $customer->delete();
         }
+
         $this->customers = [];
     }
 

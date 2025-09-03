@@ -91,15 +91,19 @@ class StateFeatureContext extends AbstractDomainFeatureContext
         if (isset($data['name'])) {
             $command->setName((string) $data['name']);
         }
+
         if (isset($data['iso_code'])) {
             $command->setIsoCode((string) $data['iso_code']);
         }
+
         if (isset($data['enabled'])) {
             $command->setActive(PrimitiveUtils::castStringBooleanIntoBoolean($data['enabled']));
         }
+
         if (isset($data['country'])) {
             $command->setCountryId((int) Country::getIdByName($this->getDefaultLangId(), $data['country']));
         }
+
         if (isset($data['zone'])) {
             $command->setZoneId((int) Zone::getIdByName($data['zone']));
         }
@@ -120,8 +124,8 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new DeleteStateCommand((int) $state->id));
-        } catch (StateNotFoundException $e) {
-            $this->setLastException($e);
+        } catch (StateNotFoundException $stateNotFoundException) {
+            $this->setLastException($stateNotFoundException);
         }
     }
 
@@ -137,8 +141,8 @@ class StateFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $this->getCommandBus()->handle(new BulkDeleteStateCommand($stateIds));
-        } catch (StateNotFoundException $e) {
-            $this->setLastException($e);
+        } catch (StateNotFoundException $stateNotFoundException) {
+            $this->setLastException($stateNotFoundException);
         }
     }
 

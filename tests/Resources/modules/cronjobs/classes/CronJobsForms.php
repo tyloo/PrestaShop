@@ -41,7 +41,10 @@ class CronJobsForms
         return self::$module;
     }
 
-    public static function getJobForm($title = 'New cron task', $update = false)
+    /**
+     * @return list<array{form: array{legend: array{title: mixed, icon: 'icon-plus'}, input: (array{array{type: 'free', name: 'description', label: mixed, placeholder: mixed}, array{type: 'free', name: 'task', label: mixed}, array{type: 'select', name: 'hour', label: mixed, desc: mixed, options: array{query: mixed, id: 'id', name: 'name'}}, array{type: 'select', name: 'day', desc: mixed, options: array{query: mixed, id: 'id', name: 'name'}}, array{type: 'select', name: 'month', desc: mixed, options: array{query: mixed, id: 'id', name: 'name'}}, array{type: 'select', name: 'day_of_week', desc: mixed, options: array{query: mixed, id: 'id', name: 'name'}}} | array{array{type: 'text', name: 'description', label: mixed, desc: mixed, placeholder: mixed}, array{type: 'text', name: 'task', label: mixed, desc: mixed, placeholder: non-falsy-string}, array{type: 'select', name: 'hour', label: mixed, desc: mixed, options: array{query: mixed, id: 'id', name: 'name'}}, array{type: 'select', name: 'day', desc: mixed, options: array{query: mixed, id: 'id', name: 'name'}}, array{type: 'select', name: 'month', desc: mixed, options: array{query: mixed, id: 'id', name: 'name'}}, array{type: 'select', name: 'day_of_week', desc: mixed, options: array{query: mixed, id: 'id', name: 'name'}}}), submit: array{title: mixed, type: 'submit', class: 'btn btn-default pull-right'}}}>
+     */
+    public static function getJobForm($title = 'New cron task', $update = false): array
     {
         $form = [
             [
@@ -65,8 +68,8 @@ class CronJobsForms
         if (($update === true) && Tools::isSubmit('id_cronjob')) {
             $id_cronjob = (int) Tools::getValue('id_cronjob');
             $id_module = (int) Db::getInstance()->getValue('SELECT `id_module` FROM `' . _DB_PREFIX_ . bqSQL(self::$module->name) . '`
-                WHERE `id_cronjob` = \'' . (int) $id_cronjob . '\'
-                    AND `id_shop` = \'' . $id_shop . '\' AND `id_shop_group` = \'' . $id_shop_group . '\'');
+                WHERE `id_cronjob` = \'' . $id_cronjob . '\'
+                    AND `id_shop` = \'' . $id_shop . "' AND `id_shop_group` = '" . $id_shop_group . "'");
 
             if ((bool) $id_module === true) {
                 $form[0]['form']['input'][] = [
@@ -207,7 +210,7 @@ class CronJobsForms
             'advanced_help' => '<div class="alert alert-info">
                     <p>'
                     . self::$module->l('The Advanced mode enables you to use your own cron tasks manager instead of PrestaShop cron tasks webservice.', 'CronJobsForms') . ' '
-                    . self::$module->l('First of all, make sure the \'curl\' library is installed on your server.', 'CronJobsForms')
+                    . self::$module->l("First of all, make sure the 'curl' library is installed on your server.", 'CronJobsForms')
                     . '<br />' . self::$module->l('To execute your cron tasks, please insert the following line in your cron tasks manager:', 'CronJobsForms') . '
                     </p>
                     <br />
@@ -253,13 +256,13 @@ class CronJobsForms
         $id_cronjob = (int) Tools::getValue('id_cronjob');
         $cron = Db::getInstance()->getRow('SELECT * FROM `' . _DB_PREFIX_ . bqSQL(self::$module->name) . '`
             WHERE `id_cronjob` = \'' . $id_cronjob . '\'
-            AND `id_shop` = \'' . $id_shop . '\' AND `id_shop_group` = \'' . $id_shop_group . '\'');
+            AND `id_shop` = \'' . $id_shop . "' AND `id_shop_group` = '" . $id_shop_group . "'");
 
         if ((bool) $cron['id_module'] === false) {
             $description = Tools::safeOutput(Tools::getValue('description', $cron['description']));
             $task = urldecode(Tools::getValue('task', $cron['task']));
         } else {
-            $module_name = Db::getInstance()->getValue('SELECT `name` FROM `' . _DB_PREFIX_ . 'module` WHERE `id_module` = \'' . (int) $cron['id_module'] . '\'');
+            $module_name = Db::getInstance()->getValue('SELECT `name` FROM `' . _DB_PREFIX_ . "module` WHERE `id_module` = '" . (int) $cron['id_module'] . "'");
             $description = '<p class="form-control-static"><strong>' . Tools::safeOutput(Module::getModuleName($module_name)) . '</strong></p>';
             $task = '<p class="form-control-static"><strong>' . self::$module->l('Module - Hook', 'CronJobsForms') . '</strong></p>';
         }
@@ -280,20 +283,20 @@ class CronJobsForms
         $id_shop_group = (int) Context::getContext()->shop->id_shop_group;
 
         self::$module->addNewModulesTasks();
-        $crons = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ . bqSQL(self::$module->name) . '` WHERE `id_shop` = \'' . $id_shop . '\' AND `id_shop_group` = \'' . $id_shop_group . '\'');
+        $crons = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ . bqSQL(self::$module->name) . "` WHERE `id_shop` = '" . $id_shop . "' AND `id_shop_group` = '" . $id_shop_group . "'");
 
         foreach ($crons as $key => &$cron) {
             if (empty($cron['id_module']) === false) {
                 $module = Module::getInstanceById((int) $cron['id_module']);
 
                 if ($module === false) {
-                    Db::getInstance()->execute('DELETE FROM ' . _DB_PREFIX_ . bqSQL(self::$module->name) . ' WHERE `id_cronjob` = \'' . (int) $cron['id_cronjob'] . '\'');
+                    Db::getInstance()->execute('DELETE FROM ' . _DB_PREFIX_ . bqSQL(self::$module->name) . " WHERE `id_cronjob` = '" . (int) $cron['id_cronjob'] . "'");
                     unset($crons[$key]);
 
                     break;
                 }
 
-                $query = 'SELECT `name` FROM `' . _DB_PREFIX_ . 'module` WHERE `id_module` = \'' . (int) $cron['id_module'] . '\'';
+                $query = 'SELECT `name` FROM `' . _DB_PREFIX_ . "module` WHERE `id_module` = '" . (int) $cron['id_module'] . "'";
                 $module_name = Db::getInstance()->getValue($query);
 
                 $cron['description'] = Tools::safeOutput(Module::getModuleName($module_name));
@@ -314,7 +317,10 @@ class CronJobsForms
         return $crons;
     }
 
-    protected static function getHoursFormOptions()
+    /**
+     * @return list<array{id: ('-1' | int<0, max>), name: mixed}>
+     */
+    protected static function getHoursFormOptions(): array
     {
         $data = [['id' => '-1', 'name' => self::$module->l('Every hour', 'CronJobsForms')]];
 
@@ -325,7 +331,10 @@ class CronJobsForms
         return $data;
     }
 
-    protected static function getDaysFormOptions()
+    /**
+     * @return list<array{id: ('-1' | int<1, max>), name: mixed}>
+     */
+    protected static function getDaysFormOptions(): array
     {
         $data = [['id' => '-1', 'name' => self::$module->l('Every day of the month', 'CronJobsForms')]];
 
@@ -336,7 +345,10 @@ class CronJobsForms
         return $data;
     }
 
-    protected static function getMonthsFormOptions()
+    /**
+     * @return list<array{id: ('-1' | int<1, max>), name: mixed}>
+     */
+    protected static function getMonthsFormOptions(): array
     {
         $data = [['id' => '-1', 'name' => self::$module->l('Every month', 'CronJobsForms')]];
 
@@ -347,7 +359,10 @@ class CronJobsForms
         return $data;
     }
 
-    protected static function getDaysofWeekFormOptions()
+    /**
+     * @return list<array{id: ('-1' | int<1, max>), name: mixed}>
+     */
+    protected static function getDaysofWeekFormOptions(): array
     {
         $data = [['id' => '-1', 'name' => self::$module->l('Every day of the week', 'CronJobsForms')]];
 

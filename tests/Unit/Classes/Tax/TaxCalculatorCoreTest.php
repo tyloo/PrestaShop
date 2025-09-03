@@ -36,7 +36,7 @@ class TaxCalculatorCoreTest extends TestCase
 {
     use ExtendedTestCaseMethodsTrait;
 
-    public function testGetTotalRateOK()
+    public function testGetTotalRateOK(): void
     {
         $tax = new Tax();
         $tax->rate = 20.6;
@@ -52,7 +52,7 @@ class TaxCalculatorCoreTest extends TestCase
         $this->assertEquals(26.1, $totalRate);
     }
 
-    public function testGetTotalRateBug()
+    public function testGetTotalRateBug(): void
     {
         $tax = new Tax();
         $tax->rate = 20.6;

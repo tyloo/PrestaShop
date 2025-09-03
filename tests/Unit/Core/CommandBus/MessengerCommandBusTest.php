@@ -34,7 +34,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class MessengerCommandBusTest extends TestCase
 {
-    public function testIsValidImplementation()
+    public function testIsValidImplementation(): void
     {
         $commandBudAdapter = new MessengerCommandBus($this->createMock(MessageBusInterface::class));
 

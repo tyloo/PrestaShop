@@ -40,13 +40,16 @@ class Cart extends CartCore
             $to_update = true;
             $this->id_address_invoice = $id_address_new;
         }
+
         if (! isset($this->id_address_delivery) || $this->id_address_delivery === $id_address) {
             $to_update = true;
             $this->id_address_delivery = $id_address_new;
         }
+
         if ($to_update) {
             $this->update();
         }
+
         $sql = 'UPDATE `' . _DB_PREFIX_ . 'cart_product`
 		SET `id_address_delivery` = ' . (int) $id_address_new . '
 		WHERE  `id_cart` = ' . (int) $this->id . '
@@ -69,6 +72,7 @@ class Cart extends CartCore
         if ($this->OrderExists()) { // NOT delete a cart which is associated with an order
             return false;
         }
+
         $uploaded_files = Db::getInstance()->executeS(
             '
 			SELECT cd.`value`
@@ -80,6 +84,7 @@ class Cart extends CartCore
             unlink(_PS_UPLOAD_DIR_ . $must_unlink['value'] . '_small');
             unlink(_PS_UPLOAD_DIR_ . $must_unlink['value']);
         }
+
         Db::getInstance()->execute(
             '
 			DELETE FROM `' . _DB_PREFIX_ . 'customized_data`
@@ -115,54 +120,63 @@ class Cart extends CartCore
     * version: 1
     */
     public $allow_seperated_package = false;
+
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
     * version: 1
     */
     protected static $_nbProducts = [];
+
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
     * version: 1
     */
     protected static $_isVirtualCart = [];
+
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
     * version: 1
     */
     protected $_products;
+
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
     * version: 1
     */
     protected static $_totalWeight = [];
+
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
     * version: 1
     */
     protected $_taxCalculationMethod = PS_TAX_EXC;
+
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
     * version: 1
     */
     protected static $_carriers;
+
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
     * version: 1
     */
     protected static $_taxes_rate;
+
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
     * version: 1
     */
     protected static $_attributesLists = [];
+
     /*
     * module: pscsx3241
     * date: 2018-12-26 14:14:06
@@ -206,6 +220,7 @@ class Cart extends CartCore
 
             return $params['productpricebysize']['products'] ?? $products;
         }
+
         $params = Hook::exec('ppbsGetProducts', ['products' => $products], null);
         $params = json_decode($params, true);
 

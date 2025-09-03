@@ -64,12 +64,12 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
 
         $product = new Product($productId);
         if (! Category::categoryExists($product->id_category_default)) {
-            throw new RuntimeException('The product doesn\'t have default category');
+            throw new RuntimeException("The product doesn't have default category");
         }
 
         $customerId = SharedStorage::getStorage()->get($customerReference);
         if (! Customer::customerIdExistsStatic($customerId)) {
-            throw new RuntimeException('The customer doesn\'t exist');
+            throw new RuntimeException("The customer doesn't exist");
         }
 
         $customer = new Customer((int) $customerId);

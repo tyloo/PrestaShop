@@ -47,7 +47,7 @@ class DefaultLanguageToFilledArrayDataTransformerTest extends TestCase
     /**
      * @dataProvider getInvalidValuesForModification
      */
-    public function testReverseTransformationItReturnsSameValueAsPassed($item)
+    public function testReverseTransformationItReturnsSameValueAsPassed($item): void
     {
         $dataTransformer = new DefaultLanguageToFilledArrayDataTransformer($this->defaultLanguageId);
         $result = $dataTransformer->reverseTransform($item);
@@ -77,7 +77,7 @@ class DefaultLanguageToFilledArrayDataTransformerTest extends TestCase
         ];
     }
 
-    public function testReverseTransformationItReturnsFilledArray()
+    public function testReverseTransformationItReturnsFilledArray(): void
     {
         $dataTransformer = new DefaultLanguageToFilledArrayDataTransformer($this->defaultLanguageId);
         $result = $dataTransformer->reverseTransform([

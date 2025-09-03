@@ -45,7 +45,7 @@ class PreferencesConfigurationTest extends TestCase
     /**
      * @var Configuration|MockObject
      */
-    private $mockConfiguration;
+    private MockObject $mockConfiguration;
 
     protected function setUp(): void
     {
@@ -56,7 +56,7 @@ class PreferencesConfigurationTest extends TestCase
         $this->object = new PreferencesConfiguration($this->mockConfiguration);
     }
 
-    public function testGetConfiguration()
+    public function testGetConfiguration(): void
     {
         $this->mockConfiguration
             ->method('get')
@@ -100,7 +100,7 @@ class PreferencesConfigurationTest extends TestCase
         );
     }
 
-    public function testUpdateConfigurationWithInvalidConfiguration()
+    public function testUpdateConfigurationWithInvalidConfiguration(): void
     {
         $this->assertSame(
             [
@@ -114,7 +114,7 @@ class PreferencesConfigurationTest extends TestCase
         );
     }
 
-    public function testUpdateConfigurationWithInvalidSSLConfiguration()
+    public function testUpdateConfigurationWithInvalidSSLConfiguration(): void
     {
         $this->mockConfiguration
             ->method('get')
@@ -150,7 +150,7 @@ class PreferencesConfigurationTest extends TestCase
         );
     }
 
-    public function testUpdateConfiguration()
+    public function testUpdateConfiguration(): void
     {
         $this->mockConfiguration
             ->method('get')

@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Contact\Exception\ContactException;
 
 class EditContactCommandTest extends TestCase
 {
-    public function testItThrowsAnExceptionOnIncorrectIdPassed()
+    public function testItThrowsAnExceptionOnIncorrectIdPassed(): void
     {
         $this->expectException(ContactException::class);
         /** @phpstan-ignore-next-line */

@@ -50,6 +50,7 @@ class ConfigurationTest extends TestCase
             Configuration::set('PS_TEST_GROUP_OVERRIDDEN', 'RESULT_GROUP_OVERRIDDEN_' . $idShopGroup, $idShopGroup, 0);
             Configuration::set('PS_TEST_GROUP_SHOP_OVERRIDDEN', 'RESULT_GROUP_SHOP_OVERRIDDEN_GROUP_' . $idShopGroup, $idShopGroup, 0);
         }
+
         foreach ($idShops as $idShop) {
             Configuration::set('PS_TEST_SHOP_OVERRIDDEN', 'RESULT_SHOP_OVERRIDDEN_' . $idShop, 0, $idShop);
             Configuration::set('PS_TEST_GROUP_SHOP_OVERRIDDEN', 'RESULT_GROUP_SHOP_OVERRIDDEN_SHOP_' . $idShop, 0, $idShop);

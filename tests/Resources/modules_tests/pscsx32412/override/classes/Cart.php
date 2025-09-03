@@ -39,10 +39,12 @@ class Cart extends CartCore
             $to_update = true;
             $this->id_address_invoice = $id_address_new;
         }
+
         if (! isset($this->id_address_delivery) || $this->id_address_delivery === $id_address) {
             $to_update = true;
             $this->id_address_delivery = $id_address_new;
         }
+
         if ($to_update) {
             $this->update();
         }

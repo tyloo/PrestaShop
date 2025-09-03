@@ -43,8 +43,8 @@ class ProductTypeFeatureContext extends AbstractProductFeatureContext
 
         try {
             $this->getCommandBus()->handle(new UpdateProductTypeCommand($productId, $productType));
-        } catch (InvalidProductTypeException $e) {
-            $this->setLastException($e);
+        } catch (InvalidProductTypeException $invalidProductTypeException) {
+            $this->setLastException($invalidProductTypeException);
         }
     }
 
@@ -71,6 +71,7 @@ class ProductTypeFeatureContext extends AbstractProductFeatureContext
                 $errorCode = InvalidProductTypeException::EXPECTED_NO_COMBINATIONS_TYPE;
                 break;
         }
+
         $this->assertLastErrorIs(InvalidProductTypeException::class, $errorCode);
     }
 

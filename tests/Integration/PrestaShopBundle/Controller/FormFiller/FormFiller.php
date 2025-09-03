@@ -58,8 +58,10 @@ class FormFiller
                     if ($formField instanceof ChoiceFormField && \is_bool($formValue)) {
                         $formValue = $formValue ? '1' : '0';
                     }
+
                     $formField->setValue((string) $formValue);
                 }
+
                 $this->enabledAssociatedField($form, $formField);
 
                 continue;

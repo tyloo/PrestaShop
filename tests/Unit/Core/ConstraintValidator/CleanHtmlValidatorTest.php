@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
 {
-    public function testItFailsWhenScriptTagsAreGiven()
+    public function testItFailsWhenScriptTagsAreGiven(): void
     {
         $scriptTag = '<script></script>';
 
@@ -45,7 +45,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenJavascriptEventsAreGiven()
+    public function testItFailsWhenJavascriptEventsAreGiven(): void
     {
         $htmlTag = '<a href="#" onchange="evilJavascriptIsCalled()"></a>';
 
@@ -57,7 +57,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenAttributeStartingWithOnIsGiven()
+    public function testItFailsWhenAttributeStartingWithOnIsGiven(): void
     {
         $htmlTag = '<a href="#" onanything="evilJavascriptIsCalled()"></a>';
 
@@ -69,7 +69,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testCaseInsensitiveOnEventAttributeDetection()
+    public function testCaseInsensitiveOnEventAttributeDetection(): void
     {
         $htmlTag = '<a href="#" oNnotexi="evilJavascriptIsCalled()"></a>';
 
@@ -81,7 +81,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenIframeIsGiven()
+    public function testItFailsWhenIframeIsGiven(): void
     {
         $htmlTag = '<iframe src="catvideo.html" /></iframe>';
 
@@ -93,7 +93,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenIframeWithSpacesIsGiven()
+    public function testItFailsWhenIframeWithSpacesIsGiven(): void
     {
         $htmlTag = '< iframe >';
 
@@ -105,7 +105,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenFormIsGiven()
+    public function testItFailsWhenFormIsGiven(): void
     {
         $htmlTag = '<form>';
 
@@ -117,7 +117,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenInputIsGiven()
+    public function testItFailsWhenInputIsGiven(): void
     {
         $htmlTag = '<input name="your-card-number">';
 
@@ -129,7 +129,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenEmbedIsGiven()
+    public function testItFailsWhenEmbedIsGiven(): void
     {
         $htmlTag = '<embed type="image/jpg" src="funny_cat.jpg" width="300" height="200">';
 
@@ -141,7 +141,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testItFailsWhenObjectIsGiven()
+    public function testItFailsWhenObjectIsGiven(): void
     {
         $htmlTag = '<object data="funny_cat.jpg" width="300" height="200"></object> ';
 
@@ -153,7 +153,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    public function testSucceedsWithPlainWords()
+    public function testSucceedsWithPlainWords(): void
     {
         $htmlTag = '/form input > embed object iframe';
 
@@ -163,7 +163,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         $this->context->getViolations();
     }
 
-    public function testItSucceedsWhenRegularAttributeIsGiven()
+    public function testItSucceedsWhenRegularAttributeIsGiven(): void
     {
         $htmlTag = '<div randomattribute="blabla">test</div>';
         $this->validator->validate($htmlTag, new CleanHtml());
@@ -172,7 +172,7 @@ class CleanHtmlValidatorTest extends ConstraintValidatorTestCase
         $this->context->getViolations();
     }
 
-    public function testSucceedsWithSpaces()
+    public function testSucceedsWithSpaces(): void
     {
         $htmlTag = '<div
 

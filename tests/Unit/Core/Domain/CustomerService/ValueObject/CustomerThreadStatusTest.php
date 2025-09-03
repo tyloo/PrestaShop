@@ -36,7 +36,7 @@ class CustomerThreadStatusTest extends TestCase
     /**
      * @dataProvider getValidCustomerThreadStatuses
      */
-    public function testCanBeCreatedWithValidStatus($customerThreadStatus)
+    public function testCanBeCreatedWithValidStatus($customerThreadStatus): void
     {
         $status = new CustomerThreadStatus($customerThreadStatus);
 
@@ -46,7 +46,7 @@ class CustomerThreadStatusTest extends TestCase
     /**
      * @dataProvider getInvalidCustomerThreadStatuses
      */
-    public function testThrowsExceptionWhenCreatingWithInvalidStatus($invalidCustomerThreadStatus)
+    public function testThrowsExceptionWhenCreatingWithInvalidStatus($invalidCustomerThreadStatus): void
     {
         $this->expectException(CustomerServiceException::class);
 

@@ -61,12 +61,14 @@ class CategoryTreeIterator
             if ($node['name'] === $categoryName) {
                 return (int) $node['id_category'];
             }
+
             if (isset($node['children'])) {
                 $categoryId = (int) $this->getCategoryNodeId($categoryName, $node['children']);
                 if ($categoryId) {
                     return $categoryId;
                 }
             }
+
             if (\count($nodes) === $i) {
                 return null;
             }

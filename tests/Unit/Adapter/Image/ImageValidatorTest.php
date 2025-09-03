@@ -55,7 +55,7 @@ class ImageValidatorTest extends TestCase
     /**
      * @dataProvider getInvalidMaxUploadSizesForFile
      */
-    public function testItThrowsExceptionWhenFileSizeIsLargerThanMaxUploadSize(string $filePath, int $maxUploadSize)
+    public function testItThrowsExceptionWhenFileSizeIsLargerThanMaxUploadSize(string $filePath, int $maxUploadSize): void
     {
         $imageValidator = new ImageValidator($maxUploadSize);
         $this->expectException(UploadedImageConstraintException::class);

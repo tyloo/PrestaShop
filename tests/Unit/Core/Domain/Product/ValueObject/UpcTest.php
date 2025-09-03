@@ -79,7 +79,7 @@ class UpcTest extends TestCase
         yield ['?'];
         yield ['/'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield [';'];
         yield [':'];
         yield ['.'];

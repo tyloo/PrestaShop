@@ -44,12 +44,12 @@ class NumberTest extends TestCase
     /**
      * @var NumberSymbolList
      */
-    protected $latinSymbolList;
+    protected \PHPUnit\Framework\MockObject\MockObject $latinSymbolList;
 
     /**
      * @var NumberSymbolList
      */
-    protected $arabSymbolList;
+    protected \PHPUnit\Framework\MockObject\MockObject $arabSymbolList;
 
     protected function setUp(): void
     {
@@ -83,7 +83,7 @@ class NumberTest extends TestCase
      *
      * (also tests addSymbols() at the same time)
      */
-    public function testGetAllSymbolsReturnsAListOfSymbols()
+    public function testGetAllSymbolsReturnsAListOfSymbols(): void
     {
         $this->assertSame(
             [
@@ -99,7 +99,7 @@ class NumberTest extends TestCase
      * When asking it a symbols list for a given numbering system
      * Then the good list should be retrieved
      */
-    public function testGetSymbolsByNumberingSystem()
+    public function testGetSymbolsByNumberingSystem(): void
     {
         /* @noinspection PhpUnhandledExceptionInspection */
         $this->assertSame(
@@ -114,7 +114,7 @@ class NumberTest extends TestCase
      * When asking it a symbols list for a given INVALID numbering system
      * Then an exception souhd be raised
      */
-    public function testGetSymbolsByNumberingSystemWithInvalidParameter()
+    public function testGetSymbolsByNumberingSystemWithInvalidParameter(): void
     {
         $this->expectException(LocalizationException::class);
 

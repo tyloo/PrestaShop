@@ -32,7 +32,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Tests\Resources\DatabaseDump;
 use Tests\Resources\ResourceResetter;
 
-function checkInstallationErrors(Install $install, SymfonyConsoleLogger $logger)
+function checkInstallationErrors(Install $install, SymfonyConsoleLogger $logger): void
 {
     if (! empty($install->getErrors())) {
         $logger->logError('Some errors were found during install:');

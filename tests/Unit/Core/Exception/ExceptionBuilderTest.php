@@ -40,6 +40,7 @@ use Throwable;
 class ExceptionBuilderTest extends TestCase
 {
     private const OBJECT_ID = 42;
+
     private const EXCEPTION_CODE = 51;
 
     /**

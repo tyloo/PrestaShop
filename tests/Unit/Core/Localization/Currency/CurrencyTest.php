@@ -58,7 +58,7 @@ class CurrencyTest extends TestCase
      * When asking if it is active
      * Then the expected boolean value should be returned
      */
-    public function testIsActive()
+    public function testIsActive(): void
     {
         $this->assertSame(
             true,
@@ -72,7 +72,7 @@ class CurrencyTest extends TestCase
      * When requesting its conversion rate
      * Then the expected numeric value should be returned
      */
-    public function testGetConversionRate()
+    public function testGetConversionRate(): void
     {
         $this->assertSame(
             1,
@@ -86,7 +86,7 @@ class CurrencyTest extends TestCase
      * When requesting its alphabetic ISO code
      * Then the expected code should be returned
      */
-    public function testGetIsoCode()
+    public function testGetIsoCode(): void
     {
         $this->assertSame(
             'EUR',
@@ -100,7 +100,7 @@ class CurrencyTest extends TestCase
      * When requesting its numeric ISO code
      * Then the expected code should be returned
      */
-    public function testGetNumericIsoCode()
+    public function testGetNumericIsoCode(): void
     {
         $this->assertSame(
             978,
@@ -114,7 +114,7 @@ class CurrencyTest extends TestCase
      * When requesting the currency symbol for the said locale code
      * Then the expected symbol should be returned
      */
-    public function testGetSymbol()
+    public function testGetSymbol(): void
     {
         /* @noinspection PhpUnhandledExceptionInspection */
         $this->assertSame(
@@ -130,7 +130,7 @@ class CurrencyTest extends TestCase
      * When requesting the currency symbol for the said locale code
      * Then an exception should be raised
      */
-    public function testGetSymbolWithUnknownLocaleCode()
+    public function testGetSymbolWithUnknownLocaleCode(): void
     {
         $this->expectException(LocalizationException::class);
 
@@ -142,7 +142,7 @@ class CurrencyTest extends TestCase
      * When requesting its decimal precision
      * Then the expected value should be returned
      */
-    public function testGetDecimalPrecision()
+    public function testGetDecimalPrecision(): void
     {
         $this->assertSame(
             2,
@@ -156,7 +156,7 @@ class CurrencyTest extends TestCase
      * When requesting the currency name for the said locale code
      * Then the expected name should be returned
      */
-    public function testGetName()
+    public function testGetName(): void
     {
         /* @noinspection PhpUnhandledExceptionInspection */
         $this->assertSame(
@@ -172,7 +172,7 @@ class CurrencyTest extends TestCase
      * When requesting the currency name for the said locale code
      * Then an exception should be raised
      */
-    public function testGetNameWithUnknownLocaleCode()
+    public function testGetNameWithUnknownLocaleCode(): void
     {
         $this->expectException(LocalizationException::class);
 

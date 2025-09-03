@@ -43,8 +43,11 @@ use Tests\Unit\PrestaShopBundle\EventListener\ContextEventListenerTestCase;
 class ShopContextListenerTest extends ContextEventListenerTestCase
 {
     private const DEFAULT_SHOP_ID = 42;
+
     private const QUERY_SHOP_ID = 51;
+
     private const QUERY_SECOND_SHOP_ID = 99;
+
     private const QUERY_SHOP_GROUP_ID = 69;
 
     public function testShopContextWhenMultishopDisabled(): void

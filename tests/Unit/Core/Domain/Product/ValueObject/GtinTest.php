@@ -79,7 +79,7 @@ class GtinTest extends TestCase
         yield ['?'];
         yield ['/'];
         yield ['\\'];
-        yield ['\''];
+        yield ["'"];
         yield [';'];
         yield [':'];
         yield ['.'];

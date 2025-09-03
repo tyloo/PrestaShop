@@ -64,8 +64,8 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
                 $this->getSharedStorage()->get($productReference),
                 ShopCollection::shops($this->referencesToIds($shopReferences))
             ));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -79,8 +79,8 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
                 $this->getSharedStorage()->get($productReference),
                 ShopConstraint::shop($this->referenceToId($shopReference))
             ));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -147,8 +147,8 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
                 $productIds,
                 $shopConstraint
             ));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -159,8 +159,8 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
                 $this->getSharedStorage()->get($reference),
                 $shopConstraint
             ));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -173,8 +173,8 @@ class DeleteProductFeatureContext extends AbstractProductFeatureContext
 
         try {
             $this->getCommandBus()->handle(new BulkDeleteProductCommand($productIds, $shopConstraint));
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 }

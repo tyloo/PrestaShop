@@ -60,7 +60,7 @@ class ExchangeRateProviderTest extends TestCase
         $this->feedContent = file_get_contents($this->feedFilePath);
     }
 
-    public function testGetRateFromFeed()
+    public function testGetRateFromFeed(): void
     {
         $circuitBreaker = $this->buildCircuitBreakerMock($this->feedContent, $this->feedFilePath);
 
@@ -81,7 +81,7 @@ class ExchangeRateProviderTest extends TestCase
         $this->assertEquals(1.12026, $exchangeRate->round(6));
     }
 
-    public function testGetRateFromFeedWithOtherDefault()
+    public function testGetRateFromFeedWithOtherDefault(): void
     {
         $circuitBreaker = $this->buildCircuitBreakerMock($this->feedContent, $this->feedFilePath);
 
@@ -102,7 +102,7 @@ class ExchangeRateProviderTest extends TestCase
         $this->assertEquals(1.0, $exchangeRate->round(6));
     }
 
-    public function testGetRateFromFeedWithDifferentDefaultSource()
+    public function testGetRateFromFeedWithDifferentDefaultSource(): void
     {
         // This is basically the same file, but USD is the source reference and 42 was appended to all rates
         $this->feedFilePath = _PS_ROOT_DIR_ . '/tests/Unit/Resources/currencies-feed/currencies-usd.xml';
@@ -127,7 +127,7 @@ class ExchangeRateProviderTest extends TestCase
         $this->assertEquals(1.0, $exchangeRate->round(6));
     }
 
-    public function testGetRateFromFeedWithDifferentDefaultSourceAndDifferentLocaleDefault()
+    public function testGetRateFromFeedWithDifferentDefaultSourceAndDifferentLocaleDefault(): void
     {
         // This is basically the same file, but USD is the source reference and 42 was appended to all rates
         $this->feedFilePath = _PS_ROOT_DIR_ . '/tests/Unit/Resources/currencies-feed/currencies-usd.xml';
@@ -152,7 +152,7 @@ class ExchangeRateProviderTest extends TestCase
         $this->assertEquals(0.002371, $exchangeRate->round(6));
     }
 
-    public function testFeedIsCached()
+    public function testFeedIsCached(): void
     {
         $circuitBreaker = $this->buildCircuitBreakerMock($this->feedContent, $this->feedFilePath);
 
@@ -173,7 +173,7 @@ class ExchangeRateProviderTest extends TestCase
         $this->assertEquals($this->feedContent, $cacheItem->get());
     }
 
-    public function testCacheFallbackAfterUnknownCall()
+    public function testCacheFallbackAfterUnknownCall(): void
     {
         $unknownFilePath = 'file:://unknown.file.path.to.simulate.circuit.breaker.fail';
         $cacheItem = $this->cache->getItem(ExchangeRateProvider::CACHE_KEY_XML);
@@ -198,7 +198,7 @@ class ExchangeRateProviderTest extends TestCase
         $this->assertEquals(1.12026, $exchangeRate->round(6));
     }
 
-    public function testCacheFallbackAfterInvalidCall()
+    public function testCacheFallbackAfterInvalidCall(): void
     {
         $cacheItem = $this->cache->getItem(ExchangeRateProvider::CACHE_KEY_XML);
         $cacheItem->set($this->feedContent);
@@ -222,7 +222,7 @@ class ExchangeRateProviderTest extends TestCase
         $this->assertEquals(1.12026, $exchangeRate->round(6));
     }
 
-    public function testNoFeedNoCache()
+    public function testNoFeedNoCache(): void
     {
         $this->expectException(CurrencyFeedException::class);
         $this->expectExceptionMessage('Currency feed could not be fetched');
@@ -239,7 +239,7 @@ class ExchangeRateProviderTest extends TestCase
         $exchangeRateProvider->getExchangeRate('ALL');
     }
 
-    public function testInvalidFeedAndCache()
+    public function testInvalidFeedAndCache(): void
     {
         $this->expectException(CurrencyFeedException::class);
         $this->expectExceptionMessage('Invalid currency XML feed');
@@ -259,7 +259,7 @@ class ExchangeRateProviderTest extends TestCase
         $exchangeRateProvider->getExchangeRate('ALL');
     }
 
-    public function testUnknownCurrency()
+    public function testUnknownCurrency(): void
     {
         $this->expectException(CurrencyFeedException::class);
         $this->expectExceptionMessage('Exchange rate for currency with ISO code XYZ was not found');
@@ -276,7 +276,7 @@ class ExchangeRateProviderTest extends TestCase
         $exchangeRateProvider->getExchangeRate('XYZ');
     }
 
-    public function testUnknownDefaultCurrency()
+    public function testUnknownDefaultCurrency(): void
     {
         $this->expectException(CurrencyFeedException::class);
         $this->expectExceptionMessage('Exchange rate for currency with ISO code XYZ was not found');
@@ -299,7 +299,7 @@ class ExchangeRateProviderTest extends TestCase
      *
      * @return MockObject|CircuitBreakerInterface
      */
-    private function buildCircuitBreakerMock($feedContent, $feedUrl)
+    private function buildCircuitBreakerMock($feedContent, $feedUrl): MockObject
     {
         $circuitBreakerMock = $this->getMockBuilder(CircuitBreakerInterface::class)
             ->disableOriginalConstructor()

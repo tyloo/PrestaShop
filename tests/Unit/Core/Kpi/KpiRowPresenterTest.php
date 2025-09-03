@@ -35,14 +35,14 @@ use PrestaShop\PrestaShop\Core\Kpi\Row\KpiRowPresenterInterface;
 
 class KpiRowPresenterTest extends TestCase
 {
-    public function testCanBeConstructed()
+    public function testCanBeConstructed(): void
     {
         $presenter = new KpiRowPresenter();
 
         $this->assertInstanceOf(KpiRowPresenterInterface::class, $presenter);
     }
 
-    public function testPresentsKpis()
+    public function testPresentsKpis(): void
     {
         $presenter = new KpiRowPresenter();
 

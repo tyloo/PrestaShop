@@ -112,8 +112,8 @@ class UpdateStockFeatureContext extends AbstractProductFeatureContext
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (ProductStockConstraintException $e) {
-            $this->setLastException($e);
+        } catch (ProductStockConstraintException $productStockConstraintException) {
+            $this->setLastException($productStockConstraintException);
         }
     }
 
@@ -132,8 +132,8 @@ class UpdateStockFeatureContext extends AbstractProductFeatureContext
 
             // Clean the cache or legacy code won't return the right quantity in following steps
             Cache::clean('StockAvailable::*');
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 

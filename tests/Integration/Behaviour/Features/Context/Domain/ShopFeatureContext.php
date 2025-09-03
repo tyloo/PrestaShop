@@ -27,12 +27,12 @@
 
 namespace PrestaShop\PrestaShop\Core\Shop;
 
-function move_uploaded_file($from, $to)
+function move_uploaded_file($from, $to): bool
 {
     return true;
 }
 
-function unlink($filename, $context = null)
+function unlink($filename, $context = null): bool
 {
     return true;
 }
@@ -87,6 +87,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
         if ($confWidth !== $width) {
             throw new RuntimeException('Width does not match');
         }
+
         if ($confHeight !== $height) {
             throw new RuntimeException('Height does not match');
         }

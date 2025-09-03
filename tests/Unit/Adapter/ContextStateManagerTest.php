@@ -50,7 +50,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->legacyContext = new LegacyContext();
     }
 
-    public function testCartState()
+    public function testCartState(): void
     {
         $context = $this->createContextMock([
             'cart' => $this->createContextFieldMock(Cart::class, 42),
@@ -75,7 +75,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testControllerState()
+    public function testControllerState(): void
     {
         $context = $this->createContextMock([
             'controller' => $this->createLegacyControllerContextMock('AdminProductsController'),
@@ -108,7 +108,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testCountryState()
+    public function testCountryState(): void
     {
         $context = $this->createContextMock([
             'country' => $this->createContextFieldMock(Country::class, 42),
@@ -133,7 +133,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testCurrencyState()
+    public function testCurrencyState(): void
     {
         $context = $this->createContextMock([
             'currency' => $this->createContextFieldMock(Currency::class, 42),
@@ -158,7 +158,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testCustomerState()
+    public function testCustomerState(): void
     {
         $context = $this->createContextMock([
             'customer' => $this->createContextFieldMock(Customer::class, 42),
@@ -183,7 +183,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testLanguageState()
+    public function testLanguageState(): void
     {
         $context = $this->createContextMock([
             'language' => $this->createContextFieldMock(Language::class, 42),
@@ -212,7 +212,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertEquals('test42', $context->getTranslator()->getLocale());
     }
 
-    public function testLocalizationLocaleState()
+    public function testLocalizationLocaleState(): void
     {
         $context = $this->createContextMock([
             'currentLocale' => $this->createLocalizationLocaleMock('fr-FR'),
@@ -241,7 +241,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testEmployeeState()
+    public function testEmployeeState(): void
     {
         $context = $this->createContextMock([
             'employee' => $this->createContextFieldMock(Employee::class, 42),
@@ -266,7 +266,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testNullField()
+    public function testNullField(): void
     {
         $context = $this->createContextMock([
             'language' => null,
@@ -292,7 +292,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($context->language);
     }
 
-    public function testMultipleFields()
+    public function testMultipleFields(): void
     {
         $context = $this->createContextMock([
             'cart' => $this->createContextFieldMock(Cart::class, 42),
@@ -354,7 +354,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testSavedContexts()
+    public function testSavedContexts(): void
     {
         $context = $this->createContextMock([
             'language' => $this->createContextFieldMock(Language::class, 42),
@@ -408,7 +408,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testMultipleSavedContextFields()
+    public function testMultipleSavedContextFields(): void
     {
         $context = $this->createContextMock([
             'cart' => $this->createContextFieldMock(Cart::class, 42),
@@ -496,7 +496,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testTooManyRestore()
+    public function testTooManyRestore(): void
     {
         $context = $this->createContextMock([
             'language' => $this->createContextFieldMock(Language::class, 42),
@@ -546,7 +546,7 @@ class ContextStateManagerTest extends ContextStateTestCase
         $this->assertNull($contextStateManager->getContextFieldsStack());
     }
 
-    public function testSavedContextsFirst()
+    public function testSavedContextsFirst(): void
     {
         $context = $this->createContextMock([
             'language' => $this->createContextFieldMock(Language::class, 42),

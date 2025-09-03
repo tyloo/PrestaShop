@@ -56,21 +56,24 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
             if (! empty($featuresDatum['feature_value'])) {
                 $productFeature['feature_value_id'] = $this->getSharedStorage()->get($featuresDatum['feature_value']);
             }
+
             if (! empty($featuresDatum['custom_values'])) {
                 $productFeature['custom_values'] = $this->localizeByCell($featuresDatum['custom_values']);
             }
 
             $productFeatures[] = $productFeature;
         }
+
         $command = new SetProductFeatureValuesCommand($this->getSharedStorage()->get($productReference), $productFeatures);
         try {
             $featureIds = $this->getCommandBus()->handle($command);
             if (\count($featureIds) !== \count($productFeatures)) {
                 throw new RuntimeException(\sprintf('Incorrect number of feature ids returned for product %s, expected %d but got %d instead', $productReference, \count($featureIds), \count($productFeatures)));
             }
+
             $this->storeCreatedFeatureValuesReferences($featureIds, $featuresData);
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -146,9 +149,11 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
                 if ($expectedFeatureId !== $productFeatureValue->getFeatureId()) {
                     continue;
                 }
+
                 if ($expectedFeatureValueId !== $productFeatureValue->getFeatureValueId()) {
                     continue;
                 }
+
                 $foundMatchingFeatureValue = true;
                 if (! empty($expectedFeatureValue['custom_values'])) {
                     Assert::assertTrue($productFeatureValue->isCustom());
@@ -158,6 +163,7 @@ class UpdateProductFeatureValuesFeatureContext extends AbstractProductFeatureCon
                     Assert::assertFalse($productFeatureValue->isCustom());
                 }
             }
+
             if (! $foundMatchingFeatureValue) {
                 throw new RuntimeException(\sprintf('Could not find feature value %s from feature %s in product %s', $expectedFeatureValue['feature_value'], $expectedFeatureValue['feature'], $productReference));
             }

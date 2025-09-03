@@ -45,7 +45,7 @@ class FileSizeConverterTest extends TestCase
     /**
      * @dataProvider sizeDataProvider
      */
-    public function testConvert(int $bytes, string $expectedResult)
+    public function testConvert(int $bytes, string $expectedResult): void
     {
         $result = $this->converter->convert($bytes);
 

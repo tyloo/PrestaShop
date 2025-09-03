@@ -40,7 +40,7 @@ use PrestaShop\PrestaShop\Core\Hook\HookDispatcherInterface;
 
 class AbstractGridDefinitionFactoryTest extends TestCase
 {
-    public function testItCreatesDefinitionAndDispatchesHookToAllowDefinitionModification()
+    public function testItCreatesDefinitionAndDispatchesHookToAllowDefinitionModification(): void
     {
         $hookDispatcherMock = $this->createMock(HookDispatcherInterface::class);
         $hookDispatcherMock
@@ -88,7 +88,7 @@ class AbstractGridDefinitionFactoryTest extends TestCase
             ->add($this->createColumnMock('test_3'));
     }
 
-    private function createColumnMock($id)
+    private function createColumnMock($id): \PHPUnit\Framework\MockObject\MockObject
     {
         $column = $this->createMock(ColumnInterface::class);
         $column->method('getId')

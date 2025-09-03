@@ -52,7 +52,7 @@ class UserTranslatedCatalogueFinderTest extends TestCase
     /**
      * @var MockObject|DatabaseTranslationLoader
      */
-    private $databaseTranslationLoader;
+    private MockObject $databaseTranslationLoader;
 
     protected function setUp(): void
     {
@@ -67,14 +67,14 @@ class UserTranslatedCatalogueFinderTest extends TestCase
             ->willReturn($catalogue);
     }
 
-    public function testItFailsWhenTranslationDomainsAreNotStrings()
+    public function testItFailsWhenTranslationDomainsAreNotStrings(): void
     {
         $this->expectException(InvalidArgumentException::class);
         /* @phpstan-ignore-next-line */
         new UserTranslatedCatalogueFinder($this->databaseTranslationLoader, ['domain', 1]);
     }
 
-    public function testGetCatalogueFilters()
+    public function testGetCatalogueFilters(): void
     {
         $catalogue = (new UserTranslatedCatalogueFinder(
             $this->databaseTranslationLoader,
@@ -91,7 +91,7 @@ class UserTranslatedCatalogueFinderTest extends TestCase
         ], $domains);
     }
 
-    public function testGetCatalogueMessages()
+    public function testGetCatalogueMessages(): void
     {
         $provider = new UserTranslatedCatalogueFinder(
             $this->databaseTranslationLoader,

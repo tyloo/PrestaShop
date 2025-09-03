@@ -53,7 +53,7 @@ class ModulesProviderTest extends TestCase
         $this->provider->setLocale('fr-FR');
     }
 
-    public function testItExtractsCatalogueFromXliffFiles()
+    public function testItExtractsCatalogueFromXliffFiles(): void
     {
         $catalogue = $this->provider->getMessageCatalogue();
         $this->assertInstanceOf(MessageCatalogue::class, $catalogue);

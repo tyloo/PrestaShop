@@ -47,17 +47,17 @@ class CustomerFormDataProviderTest extends TestCase
     /**
      * @var CommandBusInterface
      */
-    private $queryBus;
+    private \PHPUnit\Framework\MockObject\MockObject $queryBus;
 
     /**
      * @var ConfigurationInterface
      */
-    private $configuration;
+    private \PHPUnit\Framework\MockObject\MockObject $configuration;
 
     /**
      * @var DefaultGroupsProviderInterface
      */
-    private $defaultGroupsProvider;
+    private \PHPUnit\Framework\MockObject\MockObject $defaultGroupsProvider;
 
     /**
      * Set up dependencies for CustomerFormDataProvider
@@ -116,7 +116,7 @@ class CustomerFormDataProviderTest extends TestCase
         ;
     }
 
-    public function testItProvidesCorrectFormDataWithB2bFeatureBeingOff()
+    public function testItProvidesCorrectFormDataWithB2bFeatureBeingOff(): void
     {
         $customerFormDataProvider = new CustomerFormDataProvider(
             $this->queryBus,
@@ -139,7 +139,7 @@ class CustomerFormDataProviderTest extends TestCase
         ], $customerFormDataProvider->getData(1));
     }
 
-    public function testItProvidesCorrectFormDataWithB2bFeatureBeingOn()
+    public function testItProvidesCorrectFormDataWithB2bFeatureBeingOn(): void
     {
         $customerFormDataProvider = new CustomerFormDataProvider(
             $this->queryBus,
@@ -169,7 +169,7 @@ class CustomerFormDataProviderTest extends TestCase
         ], $customerFormDataProvider->getData(1));
     }
 
-    public function testItProvidesCorrectDefaultDataWhenB2bFeatureIsOff()
+    public function testItProvidesCorrectDefaultDataWhenB2bFeatureIsOff(): void
     {
         $customerFormDataProvider = new CustomerFormDataProvider(
             $this->queryBus,
@@ -187,7 +187,7 @@ class CustomerFormDataProviderTest extends TestCase
         ], $customerFormDataProvider->getDefaultData());
     }
 
-    public function testItProvidesAdditionalDefaultDataWhenB2bFeatureIsOn()
+    public function testItProvidesAdditionalDefaultDataWhenB2bFeatureIsOn(): void
     {
         $customerFormDataProvider = new CustomerFormDataProvider(
             $this->queryBus,

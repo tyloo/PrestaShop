@@ -58,7 +58,7 @@ class MoneyTest extends TestCase
         yield ['0', 99, true];
     }
 
-    public function testItFailsWhenCreatingWithNegativeValue()
+    public function testItFailsWhenCreatingWithNegativeValue(): void
     {
         $this->expectException(DomainConstraintException::class);
         $this->expectExceptionCode(DomainConstraintException::INVALID_MONEY_AMOUNT);

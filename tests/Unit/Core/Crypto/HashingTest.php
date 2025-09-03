@@ -32,7 +32,7 @@ use PrestaShop\PrestaShop\Core\Crypto\Hashing;
 
 class HashingTest extends TestCase
 {
-    public function testSimpleCheckHashMd5()
+    public function testSimpleCheckHashMd5(): void
     {
         $hashing = new Hashing();
         $salt = '2349123849231-4123';
@@ -41,7 +41,7 @@ class HashingTest extends TestCase
         $this->assertFalse($hashing->checkHash('23', md5($salt . '123'), $salt));
     }
 
-    public function testSimpleEncrypt()
+    public function testSimpleEncrypt(): void
     {
         $hashing = new Hashing();
         $salt = '2349123849231-4123';
@@ -49,7 +49,7 @@ class HashingTest extends TestCase
         $this->assertIsString($hashing->hash('123', $salt));
     }
 
-    public function testSimpleFirstHash()
+    public function testSimpleFirstHash(): void
     {
         $hashing = new Hashing();
         $salt = '2349123849231-4123';

@@ -44,7 +44,7 @@ class FormBuilderModifierTest extends AbstractFormTester
     /**
      * @dataProvider getAddAfterData
      */
-    public function testAddAfter(string $targetFieldName, array $childOptions, array $expectedChildren)
+    public function testAddAfter(string $targetFieldName, array $childOptions, array $expectedChildren): void
     {
         $formBuilder = $this->createFormBuilder(AdvancedFormType::class);
         $modifier = new FormBuilderModifier();
@@ -70,7 +70,7 @@ class FormBuilderModifierTest extends AbstractFormTester
     /**
      * @dataProvider getAddAfterData
      */
-    public function testAddAfterChildBuilder(string $targetFieldName, array $childOptions, array $expectedChildren)
+    public function testAddAfterChildBuilder(string $targetFieldName, array $childOptions, array $expectedChildren): void
     {
         $formBuilder = $this->createFormBuilder(AdvancedFormType::class);
         $child = $this->createNamedBuilder($childOptions['child'], $childOptions['type'], $childOptions['options'] ?? []);
@@ -117,7 +117,7 @@ class FormBuilderModifierTest extends AbstractFormTester
     /**
      * @dataProvider getAddBeforeData
      */
-    public function testAddBefore(string $targetFieldName, array $childOptions, array $expectedChildren)
+    public function testAddBefore(string $targetFieldName, array $childOptions, array $expectedChildren): void
     {
         $formBuilder = $this->createFormBuilder(AdvancedFormType::class);
         $modifier = new FormBuilderModifier();
@@ -143,7 +143,7 @@ class FormBuilderModifierTest extends AbstractFormTester
     /**
      * @dataProvider getAddBeforeData
      */
-    public function testAddBeforeChildBuilder(string $targetFieldName, array $childOptions, array $expectedChildren)
+    public function testAddBeforeChildBuilder(string $targetFieldName, array $childOptions, array $expectedChildren): void
     {
         $formBuilder = $this->createFormBuilder(AdvancedFormType::class);
         $child = $this->createNamedBuilder($childOptions['child'], $childOptions['type'], $childOptions['options'] ?? []);

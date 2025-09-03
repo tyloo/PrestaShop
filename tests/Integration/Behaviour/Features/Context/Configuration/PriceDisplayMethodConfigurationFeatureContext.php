@@ -43,6 +43,7 @@ class PriceDisplayMethodConfigurationFeatureContext extends AbstractConfiguratio
         if (! isset($data['id_customer'])) {
             throw new RuntimeException(\sprintf('Customer with email %s was not found', $customerEmail));
         }
+
         $customer = new Customer($data['id_customer']);
 
         $group = new Group($customer->id_default_group);

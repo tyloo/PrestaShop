@@ -94,8 +94,8 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
 
         try {
             $this->getCommandBus()->handle($command);
-        } catch (DomainException $e) {
-            $this->setLastException($e);
+        } catch (DomainException $domainException) {
+            $this->setLastException($domainException);
         }
     }
 
@@ -114,8 +114,8 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
             );
             $command->setManufacturerId($nonExistingId);
             $this->getCommandBus()->handle($command);
-        } catch (ManufacturerException $e) {
-            $this->setLastException($e);
+        } catch (ManufacturerException $manufacturerException) {
+            $this->setLastException($manufacturerException);
         }
     }
 
@@ -159,8 +159,8 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
                 default => throw new RuntimeException(\sprintf('Invalid field "%s" provided to scenario', $field)),
             };
             $this->getCommandBus()->handle($command);
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -169,8 +169,8 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         try {
             $command = $this->buildUpdateProductCommand($productReference, $table, $shopConstraint);
             $this->getCommandBus()->handle($command);
-        } catch (ProductException $e) {
-            $this->setLastException($e);
+        } catch (ProductException $productException) {
+            $this->setLastException($productException);
         }
     }
 
@@ -202,9 +202,11 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         if (isset($data['name'])) {
             $command->setLocalizedNames($data['name']);
         }
+
         if (isset($data['description'])) {
             $command->setLocalizedDescriptions($data['description']);
         }
+
         if (isset($data['description_short'])) {
             $command->setLocalizedShortDescriptions($data['description_short']);
         }
@@ -218,15 +220,19 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         if (isset($data['isbn'])) {
             $command->setIsbn($data['isbn']);
         }
+
         if (isset($data['upc'])) {
             $command->setUpc($data['upc']);
         }
+
         if (isset($data['ean13'])) {
             $command->setGtin($data['ean13']);
         }
+
         if (isset($data['mpn'])) {
             $command->setMpn($data['mpn']);
         }
+
         if (isset($data['reference'])) {
             $command->setReference($data['reference']);
         }
@@ -240,21 +246,27 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         if (isset($data['visibility'])) {
             $command->setVisibility($data['visibility']);
         }
+
         if (isset($data['available_for_order'])) {
             $command->setAvailableForOrder(PrimitiveUtils::castStringBooleanIntoBoolean($data['available_for_order']));
         }
+
         if (isset($data['online_only'])) {
             $command->setOnlineOnly(PrimitiveUtils::castStringBooleanIntoBoolean($data['online_only']));
         }
+
         if (isset($data['show_price'])) {
             $command->setShowPrice(PrimitiveUtils::castStringBooleanIntoBoolean($data['show_price']));
         }
+
         if (isset($data['condition'])) {
             $command->setCondition($data['condition']);
         }
+
         if (isset($data['show_condition'])) {
             $command->setShowCondition(PrimitiveUtils::castStringBooleanIntoBoolean($data['show_condition']));
         }
+
         if (isset($data['manufacturer'])) {
             $command->setManufacturerId($this->getManufacturerId($data['manufacturer']));
         }
@@ -268,23 +280,29 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         if (isset($data['price'])) {
             $command->setPrice($data['price']);
         }
+
         if (isset($data['ecotax'])) {
             $command->setEcotax($data['ecotax']);
         }
+
         if (isset($data['tax rules group'])) {
             $taxRulesGroupId = (int) TaxRulesGroupFeatureContext::getTaxRulesGroupByName($data['tax rules group'])->id;
             $command->setTaxRulesGroupId($taxRulesGroupId);
             Cache::clean('product_id_tax_rules_group_*');
         }
+
         if (isset($data['on_sale'])) {
             $command->setOnSale(PrimitiveUtils::castStringBooleanIntoBoolean($data['on_sale']));
         }
+
         if (isset($data['wholesale_price'])) {
             $command->setWholesalePrice($data['wholesale_price']);
         }
+
         if (isset($data['unit_price'])) {
             $command->setUnitPrice($data['unit_price']);
         }
+
         if (isset($data['unity'])) {
             $command->setUnity($data['unity']);
         }
@@ -298,12 +316,15 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         if (isset($data['meta_title'])) {
             $command->setLocalizedMetaTitles($data['meta_title']);
         }
+
         if (isset($data['meta_description'])) {
             $command->setLocalizedMetaDescriptions($data['meta_description']);
         }
+
         if (isset($data['link_rewrite'])) {
             $command->setLocalizedLinkRewrites($data['link_rewrite']);
         }
+
         if (isset($data['redirect_type'], $data['redirect_target'])) {
             if ($this->getSharedStorage()->exists($data['redirect_target'])) {
                 $targetId = $this->getSharedStorage()->get($data['redirect_target']);
@@ -321,24 +342,31 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
         if (isset($data['width'])) {
             $command->setWidth($data['width']);
         }
+
         if (isset($data['height'])) {
             $command->setHeight($data['height']);
         }
+
         if (isset($data['depth'])) {
             $command->setDepth($data['depth']);
         }
+
         if (isset($data['weight'])) {
             $command->setWeight($data['weight']);
         }
+
         if (isset($data['additional_shipping_cost'])) {
             $command->setAdditionalShippingCost($data['additional_shipping_cost']);
         }
+
         if (isset($data['delivery time notes type'])) {
             $command->setDeliveryTimeNoteType(DeliveryTimeNoteType::ALLOWED_TYPES[$data['delivery time notes type']]);
         }
+
         if (isset($data['delivery time in stock notes'])) {
             $command->setLocalizedDeliveryTimeInStockNotes($data['delivery time in stock notes']);
         }
+
         if (isset($data['delivery time out of stock notes'])) {
             $command->setLocalizedDeliveryTimeOutOfStockNotes($data['delivery time out of stock notes']);
         }
@@ -354,18 +382,23 @@ class UpdateProductFeatureContext extends AbstractProductFeatureContext
             Pack::resetStaticCache();
             $command->setPackStockType($this->convertPackStockTypeToInt($data['pack_stock_type']));
         }
+
         if (isset($data['minimal_quantity'])) {
             $command->setMinimalQuantity((int) $data['minimal_quantity']);
         }
+
         if (isset($data['low_stock_threshold'])) {
             $command->setLowStockThreshold((int) $data['low_stock_threshold']);
         }
+
         if (isset($data['available_now_labels'])) {
             $command->setLocalizedAvailableNowLabels($data['available_now_labels']);
         }
+
         if (isset($data['available_later_labels'])) {
             $command->setLocalizedAvailableLaterLabels($data['available_later_labels']);
         }
+
         if (isset($data['available_date'])) {
             $command->setAvailableDate(new DateTime($data['available_date']));
         }

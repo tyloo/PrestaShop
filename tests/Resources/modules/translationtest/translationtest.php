@@ -100,6 +100,7 @@ class translationtest extends Module
         foreach (Language::getLanguages(true) as $lang) {
             $tab->name[$lang['id_lang']] = $this->name;
         }
+
         $tab->id_parent = -1; // do not show
         $tab->module = $this->name;
 

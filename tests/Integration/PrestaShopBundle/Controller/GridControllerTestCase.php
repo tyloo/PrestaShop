@@ -121,7 +121,7 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
 
         // If no rows are found the collection is empty
         if ($entitiesRows->count()) {
-            $entities = $entitiesRows->each(fn ($tr, $i) => $this->parseEntityFromRow($tr, $i));
+            $entities = $entitiesRows->each(fn ($tr, $i): TestEntityDTO => $this->parseEntityFromRow($tr, $i));
 
             // Fill the collection
             foreach ($entities as $entity) {
@@ -182,8 +182,8 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
         $submitButton = $crawler->selectButton($formButtonSelector);
         try {
             $form = $submitButton->form();
-        } catch (InvalidArgumentException $e) {
-            throw new InvalidArgumentException(\sprintf('Could not find form in the page, maybe the button selector "%s" is not adapted, usually you can use the button id (without the #) or its name', $formButtonSelector), $e->getCode(), $e);
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            throw new InvalidArgumentException(\sprintf('Could not find form in the page, maybe the button selector "%s" is not adapted, usually you can use the button id (without the #) or its name', $formButtonSelector), $invalidArgumentException->getCode(), $invalidArgumentException);
         }
 
         return $form;

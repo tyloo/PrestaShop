@@ -114,7 +114,7 @@ class RepositoryTest extends TestCase
      *
      * @dataProvider provideValidCurrencyCodes
      */
-    public function testGetCurrency($currencyCode, $expectedNames, $expectedSymbols)
+    public function testGetCurrency($currencyCode, $expectedNames, $expectedSymbols): void
     {
         $currency = $this->currencyRepository->getCurrency($currencyCode, 'fr-FR');
         foreach ($expectedNames as $localeCode => $name) {
@@ -159,7 +159,7 @@ class RepositoryTest extends TestCase
      * When asking the currency repository for the corresponding Currency
      * Then an exception should be raised
      */
-    public function testGetCurrencyWithUnknownCode()
+    public function testGetCurrencyWithUnknownCode(): void
     {
         $this->expectException(LocalizationException::class);
 
