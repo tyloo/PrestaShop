@@ -76,11 +76,9 @@ final class MailPreviewVariablesBuilder
     }
 
     /**
-     * @return array
-     *
      * @throws SmartyException
      */
-    public function buildTemplateVariables(LayoutInterface $mailLayout)
+    public function buildTemplateVariables(LayoutInterface $mailLayout): array
     {
         $imageDir = $this->configuration->get('_PS_IMG_DIR_');
         $baseUrl = $this->context->link->getBaseLink();
@@ -110,24 +108,20 @@ final class MailPreviewVariablesBuilder
     }
 
     /**
-     * @param string      $id
-     * @param array       $parameters
      * @param string|null $domain
      * @param string|null $local
      */
-    private function trans($id, $parameters = [], $domain = null, $local = null): string
+    private function trans(string $id, array $parameters = [], $domain = null, $local = null): string
     {
         return $this->translator->trans($id, $parameters, $domain, $local);
     }
 
     /**
-     * @return array
-     *
      * @throws PrestaShopException
      * @throws \PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException
      * @throws SmartyException
      */
-    private function buildOrderVariables(LayoutInterface $mailLayout)
+    private function buildOrderVariables(LayoutInterface $mailLayout): array
     {
         $orders = Order::getOrdersWithInformations(1);
         if (! isset($orders[0]['id_order'])) {
@@ -389,7 +383,7 @@ final class MailPreviewVariablesBuilder
      *
      * @return string
      */
-    private function getFormatedAddress(Address $address, $lineSeparator, $fieldsStyle = [])
+    private function getFormatedAddress(Address $address, string $lineSeparator, array $fieldsStyle = [])
     {
         return AddressFormat::generateAddress($address, ['avoid' => []], $lineSeparator, ' ', $fieldsStyle);
     }

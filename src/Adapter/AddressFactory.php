@@ -43,7 +43,7 @@ class AddressFactory
      *
      * @return Address
      */
-    public function findOrCreate($id_address = null, $with_geoloc = false)
+    public function findOrCreate($id_address = null, $with_geoloc = false): mixed
     {
         $func_args = \func_get_args();
 

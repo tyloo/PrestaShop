@@ -74,7 +74,7 @@ final class ManufacturerImageUploader extends AbstractImageUploader implements I
      *
      * @return bool
      */
-    private function generateDifferentSizeImages($manufacturerId)
+    private function generateDifferentSizeImages($manufacturerId): int|bool
     {
         $resized = true;
 

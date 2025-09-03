@@ -273,7 +273,7 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
      */
     private function getShippingInformation(Product $product): ProductShippingInformation
     {
-        $carrierReferences = array_map(fn ($carrier): int => (int) $carrier['id_reference'], $product->getCarriers());
+        $carrierReferences = array_map(fn (array $carrier): int => (int) $carrier['id_reference'], $product->getCarriers());
 
         return new ProductShippingInformation(
             $this->numberExtractor->extract($product, 'width'),

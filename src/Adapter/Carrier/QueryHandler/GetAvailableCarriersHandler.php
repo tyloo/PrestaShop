@@ -83,7 +83,7 @@ class GetAvailableCarriersHandler implements GetAvailableCarriersHandlerInterfac
         foreach ($allCarrierIds as $carrierId => $productIds) {
             if (! \in_array($carrierId, $commonCarriers, true)) {
                 $carrier = $carriersIndex[$carrierId];
-                $productPreviews = array_map(function (int $pid) use ($products) {
+                $productPreviews = array_map(function (int $pid) use ($products): ProductSummary {
                     $product = $products[$pid];
 
                     return new ProductSummary($product->id, $this->getProductName($product));

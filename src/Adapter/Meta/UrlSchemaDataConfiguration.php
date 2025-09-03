@@ -95,7 +95,7 @@ final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
      *
      * @param string $routeId
      */
-    private function getConfigurationKey($routeId): string
+    private function getConfigurationKey(int|string $routeId): string
     {
         return \sprintf('PS_ROUTE_%s', $routeId);
     }

@@ -133,11 +133,8 @@ class OrderLazyArray extends AbstractLazyArray
         return $details['shipping'];
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getProducts()
+    public function getProducts(): array
     {
         $order = $this->order;
         $cart = new Cart($order->id_cart);
@@ -198,11 +195,8 @@ class OrderLazyArray extends AbstractLazyArray
         return $this->addOrderReferenceToCustomizationFileUrls($orderProducts);
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getAmounts()
+    public function getAmounts(): array
     {
         $order = $this->order;
 
@@ -421,7 +415,7 @@ class OrderLazyArray extends AbstractLazyArray
          *
          * @return array|string
          */
-        $addReferenceFunction = function ($imageUrl) use (&$addReferenceFunction) {
+        $addReferenceFunction = function ($imageUrl) use (&$addReferenceFunction): string|array {
             if (\is_array($imageUrl)) {
                 foreach ($imageUrl as $key => $url) {
                     $imageUrl[$key] = $addReferenceFunction($url);

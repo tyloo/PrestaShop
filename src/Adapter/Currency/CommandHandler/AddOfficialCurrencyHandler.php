@@ -129,10 +129,8 @@ final class AddOfficialCurrencyHandler extends AbstractCurrencyHandler implement
      * Returns a CLDR locale, since they all contain the same info about currencies
      * it doesn't matter which one is used so we return the one matching the first
      * provided language.
-     *
-     * @return Locale
      */
-    private function getCLDRLocale()
+    private function getCLDRLocale(): ?Locale
     {
         /** @var LanguageInterface $language */
         $language = $this->languages[0];

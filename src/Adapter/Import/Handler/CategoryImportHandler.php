@@ -164,10 +164,8 @@ final class CategoryImportHandler extends AbstractImportHandler
 
     /**
      * Checks if given category ID is allowed in the import.
-     *
-     * @param int $categoryId
      */
-    private function checkCategoryId($categoryId): void
+    private function checkCategoryId(int $categoryId): void
     {
         if (\in_array($categoryId, $this->coreCategories, true)) {
             $this->error(
@@ -183,13 +181,11 @@ final class CategoryImportHandler extends AbstractImportHandler
 
     /**
      * Find the parent category for category that's being imported.
-     *
-     * @param int $categoryId
      */
     private function findParentCategory(
         Category $category,
         ImportRuntimeConfigInterface $runtimeConfig,
-        $categoryId,
+        int $categoryId,
     ): void {
         if (! isset($category->parent)) {
             return;
@@ -281,10 +277,8 @@ final class CategoryImportHandler extends AbstractImportHandler
 
     /**
      * Fill link rewrite value for category.
-     *
-     * @param int $categoryId
      */
-    private function fillLinkRewrite(Category $category, $categoryId): void
+    private function fillLinkRewrite(Category $category, int $categoryId): void
     {
         if (isset($category->link_rewrite) && ! empty($category->link_rewrite[$this->defaultLanguageId])) {
             $validLinkRewrite = $this->validate->isLinkRewrite($category->link_rewrite[$this->defaultLanguageId]);
@@ -320,7 +314,7 @@ final class CategoryImportHandler extends AbstractImportHandler
                     'Rewrite link for %1$s (ID %2$s): re-written as %3$s.',
                     [
                         '%1$s' => $linkRewrite,
-                        '%2$s' => empty($categoryId) ? 'null' : $categoryId,
+                        '%2$s' => $categoryId === 0 ? 'null' : $categoryId,
                         '%3$s' => $category->link_rewrite[$this->defaultLanguageId],
                     ],
                     'Admin.Advparameters.Notification'
@@ -332,7 +326,6 @@ final class CategoryImportHandler extends AbstractImportHandler
     /**
      * Create the category.
      *
-     * @param int    $categoryId
      * @param string $categoryName
      * @param string $shopData
      */
@@ -340,7 +333,7 @@ final class CategoryImportHandler extends AbstractImportHandler
         Category $category,
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
-        $categoryId,
+        int $categoryId,
         $categoryName,
         $shopData,
     ): void {
@@ -376,7 +369,7 @@ final class CategoryImportHandler extends AbstractImportHandler
                             [],
                             'Admin.Advparameters.Notification'
                         ),
-                        empty($categoryId) ? 'null' : $categoryId
+                        $categoryId === 0 ? 'null' : $categoryId
                     )
                 );
 
@@ -455,7 +448,7 @@ final class CategoryImportHandler extends AbstractImportHandler
                     '%1$s (ID: %2$s) cannot be %3$s',
                     [
                         empty($categoryName) ? 'No Name' : $this->tools->sanitize($categoryName),
-                        empty($categoryId) ? 'No ID' : $this->tools->sanitize((string) $categoryId),
+                        $categoryId === 0 ? 'No ID' : $this->tools->sanitize((string) $categoryId),
                         'saved',
                     ],
                     'Admin.Advparameters.Notification'

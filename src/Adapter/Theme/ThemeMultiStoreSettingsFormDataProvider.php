@@ -68,11 +68,9 @@ final class ThemeMultiStoreSettingsFormDataProvider implements MultiStoreSetting
     /**
      * Checks if the configuration exists for specific shop context.
      *
-     * @param string $configurationKey
-     *
      * @return bool
      */
-    private function doesConfigurationExistInSingleShopContext($configurationKey)
+    private function doesConfigurationExistInSingleShopContext(string $configurationKey)
     {
         return Configuration::isOverridenByCurrentContext($configurationKey);
     }

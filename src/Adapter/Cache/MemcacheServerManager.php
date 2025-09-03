@@ -105,10 +105,8 @@ class MemcacheServerManager
 
     /**
      * Get list of memcached servers.
-     *
-     * @return array
      */
-    public function getServers()
+    public function getServers(): array
     {
         return $this->connection->fetchAllAssociative('SELECT * FROM ' . $this->tableName);
     }

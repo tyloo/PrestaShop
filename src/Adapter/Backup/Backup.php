@@ -72,7 +72,7 @@ final class Backup implements BackupInterface
         return filesize($this->legacyBackup->id);
     }
 
-    public function getAge()
+    public function getAge(): float|int
     {
         return time() - $this->getDate()->getTimestamp();
     }

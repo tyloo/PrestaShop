@@ -55,11 +55,9 @@ class CategoriesProvider
     /**
      * Gets all nested cms page categories.
      *
-     * @return array
-     *
      * @throws PrestaShopDatabaseException
      */
-    public function getAllNestedCategories()
+    public function getAllNestedCategories(): array
     {
         return $this->collectNestedCategoriesIdsAndNames(CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID);
     }

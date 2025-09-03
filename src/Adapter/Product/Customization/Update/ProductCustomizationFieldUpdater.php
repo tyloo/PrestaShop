@@ -121,7 +121,7 @@ class ProductCustomizationFieldUpdater
         $existingFieldIds = $this->customizationFieldRepository->getCustomizationFieldIds($productId, false);
 
         // Filter all fields that are still present in the list, the returned list contains the fields that need to be deleted
-        return array_filter($existingFieldIds, static function (CustomizationFieldId $customizationFieldId) use ($providedCustomizationFields) {
+        return array_filter($existingFieldIds, static function (CustomizationFieldId $customizationFieldId) use ($providedCustomizationFields): bool {
             foreach ($providedCustomizationFields as $providedCustomizationField) {
                 if ($providedCustomizationField->id === $customizationFieldId->getValue()) {
                     return false;

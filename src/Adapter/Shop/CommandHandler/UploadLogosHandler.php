@@ -109,11 +109,9 @@ final class UploadLogosHandler implements UploadLogosHandlerInterface
     }
 
     /**
-     * @param string $legacyFileName
-     *
      * @return array
      */
-    private function setUploadedFileToBeCompatibleWithLegacyUploader($legacyFileName, UploadedFile $uploadedFile)
+    private function setUploadedFileToBeCompatibleWithLegacyUploader(string $legacyFileName, UploadedFile $uploadedFile)
     {
         $_FILES[$legacyFileName] = [
             'name' => $uploadedFile->getClientOriginalName(),

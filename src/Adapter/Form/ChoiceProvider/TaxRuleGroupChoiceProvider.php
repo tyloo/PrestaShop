@@ -50,7 +50,7 @@ final class TaxRuleGroupChoiceProvider implements FormChoiceProviderInterface, F
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             $this->getRules(),

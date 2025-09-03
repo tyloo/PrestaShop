@@ -50,14 +50,12 @@ class NewProductsProductSearchProvider implements ProductSearchProviderInterface
     }
 
     /**
-     * @param string $type
-     *
      * @return array|int
      */
     private function getProductsOrCount(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-        $type = 'products',
+        string $type = 'products',
     ) {
         $isTypeProducts = $type === 'products';
         $result = Product::getNewProducts(

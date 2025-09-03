@@ -455,7 +455,7 @@ final class ProductImportHandler extends AbstractImportHandler
      *
      * @param bool $validateOnly if true, will not create new manufacturer if not exists
      */
-    private function loadManufacturer(Product $product, $validateOnly): void
+    private function loadManufacturer(Product $product, bool $validateOnly): void
     {
         if (! isset($product->manufacturer)) {
             return;
@@ -510,7 +510,7 @@ final class ProductImportHandler extends AbstractImportHandler
      *
      * @param bool $validateOnly if true, will not create new supplier if not exists
      */
-    private function loadSupplier(Product $product, $validateOnly): void
+    private function loadSupplier(Product $product, bool $validateOnly): void
     {
         if (! isset($product->supplier)) {
             return;
@@ -580,10 +580,8 @@ final class ProductImportHandler extends AbstractImportHandler
 
     /**
      * Load category data into product object.
-     *
-     * @param bool $validateOnly
      */
-    private function loadCategory(Product $product, $validateOnly): void
+    private function loadCategory(Product $product, bool $validateOnly): void
     {
         if (\is_array($product->category) && \count($product->category)) {
             $unfriendlyError = $this->configuration->getBoolean('UNFRIENDLY_ERROR');
@@ -729,7 +727,6 @@ final class ProductImportHandler extends AbstractImportHandler
      * Load other product data.
      *
      * @param bool $productExistsById
-     * @param bool $productExistsByReference
      * @param bool $validateOnly
      *
      * @return bool
@@ -738,7 +735,7 @@ final class ProductImportHandler extends AbstractImportHandler
         Product $product,
         ImportConfigInterface $importConfig,
         $productExistsById,
-        $productExistsByReference,
+        bool $productExistsByReference,
         $validateOnly,
         DataRowInterface $dataRow,
         array $entityFields,

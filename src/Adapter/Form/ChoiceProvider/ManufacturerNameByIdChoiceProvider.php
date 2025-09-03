@@ -42,10 +42,8 @@ final class ManufacturerNameByIdChoiceProvider implements FormChoiceProviderInte
 
     /**
      * Get choices.
-     *
-     * @return array
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             $this->manufacturers,

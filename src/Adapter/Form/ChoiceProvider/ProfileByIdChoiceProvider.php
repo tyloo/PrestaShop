@@ -44,7 +44,7 @@ final class ProfileByIdChoiceProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             Profile::getProfiles($this->contextLangId),

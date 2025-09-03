@@ -403,10 +403,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         }
     }
 
-    /**
-     * @param string $methodName
-     */
-    private function convertMethodNameToIndex($methodName): string
+    private function convertMethodNameToIndex(string $methodName): string
     {
         // remove "get" prefix from the function name
         $strippedMethodName = substr($methodName, 3);
@@ -455,9 +452,9 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         return $this->convertMethodNameToIndex($method->getName());
     }
 
-    private function isArrayAccessMethod($attributeInstance, $method): bool
+    private function isArrayAccessMethod(?LazyArrayAttribute $attributeInstance, $method): bool
     {
-        if ($attributeInstance !== null) {
+        if ($attributeInstance instanceof LazyArrayAttribute) {
             return $attributeInstance->arrayAccess;
         }
 

@@ -307,13 +307,13 @@ class CartLazyArray extends AbstractLazyArray
     {
         $vouchers = $this->getVouchers();
         $cartRulesIds = array_flip(array_map(
-            fn ($voucher) => $voucher['id_cart_rule'],
+            fn (array $voucher) => $voucher['id_cart_rule'],
             $vouchers['added']
         ));
 
         $discounts = $this->cart->getDiscounts();
         $cart = $this->cart;
-        $discounts = array_filter($discounts, function ($discount) use ($cartRulesIds, $cart) {
+        $discounts = array_filter($discounts, function (array $discount) use ($cartRulesIds, $cart): bool {
             $voucherCustomerId = (int) $discount['id_customer'];
             $voucherIsRestrictedToASingleCustomer = ($voucherCustomerId !== 0);
             $voucherIsEmptyCode = empty($discount['code']);
@@ -504,7 +504,7 @@ class CartLazyArray extends AbstractLazyArray
     /**
      * @return ProductLazyArray|ProductListingLazyArray
      */
-    private function presentProduct(array $rawProduct)
+    private function presentProduct(array $rawProduct): ProductListingLazyArray
     {
         if (isset($rawProduct['attributes']) && \is_string($rawProduct['attributes'])) {
             $rawProduct['attributes'] = $this->cartPresenter->getAttributesArrayFromString($rawProduct['attributes']);

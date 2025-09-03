@@ -48,7 +48,7 @@ final class GetSqlRequestForEditingHandler implements GetSqlRequestForEditingHan
      * @throws SqlRequestException
      * @throws SqlRequestNotFoundException
      */
-    public function handle(GetSqlRequestForEditing $query)
+    public function handle(GetSqlRequestForEditing $query): EditableSqlRequest
     {
         $entity = $this->loadById($query->getRequestSqlId());
 

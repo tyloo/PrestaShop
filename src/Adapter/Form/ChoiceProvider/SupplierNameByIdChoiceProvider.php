@@ -38,7 +38,7 @@ use Supplier;
  */
 final class SupplierNameByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    public function getChoices()
+    public function getChoices(): array
     {
         return FormChoiceFormatter::formatFormChoices(
             Supplier::getSuppliers(false, 0, false),

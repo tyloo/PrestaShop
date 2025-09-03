@@ -70,7 +70,7 @@ class ListAvailableShipmentsHandler implements ListAvailableShipmentsHandlerInte
         foreach ($getShipmentsFromOrder as $shipment) {
             foreach ($orderDetailsIds as $orderDetailId) {
                 $orderDetail = new OrderDetail($orderDetailId);
-                $carrierCompatibleWithProduct = array_map(fn ($carrier) => $carrier['id_carrier'], (new Product($orderDetail->product_id))->getCarriers());
+                $carrierCompatibleWithProduct = array_map(fn (array $carrier) => $carrier['id_carrier'], (new Product($orderDetail->product_id))->getCarriers());
 
                 if ($shipment->getDeliveredAt() === null) {
                     $isCompatible = \in_array($shipment->getCarrierId(), $carrierCompatibleWithProduct, true);

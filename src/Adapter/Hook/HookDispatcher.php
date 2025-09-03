@@ -110,7 +110,7 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
         return $event;
     }
 
-    public function dispatchHook(HookInterface $hook)
+    public function dispatchHook(HookInterface $hook): object
     {
         return $this->dispatchForParameters(
             $hook->getName(),
@@ -174,7 +174,7 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
      *
      * @throws Exception
      */
-    public function dispatchForParameters($eventName, array $parameters = [])
+    public function dispatchForParameters($eventName, array $parameters = []): object
     {
         $event = new HookEvent($this->getHookEventContextParameters());
         $event->setHookParameters($parameters);
@@ -218,7 +218,7 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
         return new RenderedHook($hook, $event->getContent());
     }
 
-    public function dispatchRenderingWithParameters($hookName, array $hookParameters = [])
+    public function dispatchRenderingWithParameters($hookName, array $hookParameters = []): RenderedHook
     {
         return $this->dispatchRendering(new Hook($hookName, $hookParameters));
     }

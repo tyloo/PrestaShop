@@ -82,11 +82,9 @@ final class DeleteCurrencyHandler implements DeleteCurrencyHandlerInterface
     }
 
     /**
-     * @param int $currencyId
-     *
      * @throws CannotDeleteDefaultCurrencyException
      */
-    private function assertDefaultCurrencyIsNotBeingRemoved($currencyId): void
+    private function assertDefaultCurrencyIsNotBeingRemoved(int $currencyId): void
     {
         if ($currencyId === $this->defaultCurrencyId) {
             throw new CannotDeleteDefaultCurrencyException(\sprintf('Currency with id "%s" is the default currency and cannot be deleted.', $currencyId));

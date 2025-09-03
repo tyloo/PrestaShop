@@ -153,7 +153,7 @@ class DiscountRepository extends AbstractObjectModelRepository
         return array_map(fn (array $row): int => (int) $row['id_carrier'], $qb->executeQuery()->fetchAllAssociative());
     }
 
-    public function getCountries(DiscountId $discountId)
+    public function getCountries(DiscountId $discountId): array
     {
         $qb = $this->connection->createQueryBuilder();
         $qb

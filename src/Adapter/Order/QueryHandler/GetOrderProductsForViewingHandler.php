@@ -255,10 +255,7 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
         return new OrderProductsForViewing($productsForViewing);
     }
 
-    /**
-     * @param array $pack_item
-     */
-    private function setProductImageInformation(&$pack_item): void
+    private function setProductImageInformation(array &$pack_item): void
     {
         if (isset($pack_item['id_product_attribute']) && $pack_item['id_product_attribute']) {
             $id_image = Db::getInstance()->getValue('

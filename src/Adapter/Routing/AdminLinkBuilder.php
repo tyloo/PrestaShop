@@ -71,12 +71,9 @@ class AdminLinkBuilder implements EntityLinkBuilderInterface
     }
 
     /**
-     * @param string $action
      * @param string $entity
-     *
-     * @return array
      */
-    private function buildActionParameters($action, $entity, array $parameters)
+    private function buildActionParameters(string $action, $entity, array $parameters): array
     {
         unset($parameters['current_index'], $parameters['token']);
 

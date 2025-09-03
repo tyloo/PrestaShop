@@ -87,8 +87,6 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
     }
 
     /**
-     * @param string $templateType
-     *
      * @return string
      *
      * @throws FileNotFoundException
@@ -97,7 +95,7 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
     private function render(
         LayoutInterface $layout,
         LanguageInterface $language,
-        $templateType,
+        string $templateType,
     ) {
         $layoutVariables = $this->variablesBuilder->buildVariables($layout, $language);
         $layoutVariables['templateType'] = $templateType;
@@ -127,11 +125,9 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
     }
 
     /**
-     * @param string $templateType
-     *
      * @throws TypeException
      */
-    private function getMailLayoutTransformations(LayoutInterface $mailLayout, $templateType): TransformationCollection
+    private function getMailLayoutTransformations(LayoutInterface $mailLayout, string $templateType): TransformationCollection
     {
         $themeName = '';
         $htmlPath = $mailLayout->getHtmlPath();

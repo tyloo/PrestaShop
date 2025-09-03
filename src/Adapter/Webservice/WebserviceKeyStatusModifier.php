@@ -90,7 +90,7 @@ final class WebserviceKeyStatusModifier
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
-    public function setStatus(array $columnIds, $status)
+    public function setStatus(array $columnIds, $status): int|bool
     {
         $result = true;
         foreach ($columnIds as $columnId) {

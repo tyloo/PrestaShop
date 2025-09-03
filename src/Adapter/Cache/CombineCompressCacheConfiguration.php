@@ -157,17 +157,15 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
     /**
      * Creates .htaccess if Apache optimization feature is enabled.
      *
-     * @param bool $enabled
-     *
      * @return array not empty in case of error
      */
-    private function manageApacheOptimization($enabled): array
+    private function manageApacheOptimization(bool $enabled): array
     {
         $errors = [];
         $isCurrentlyEnabled = (bool) $this->configuration->get('PS_HTACCESS_CACHE_CONTROL');
 
         // feature activation
-        if ($isCurrentlyEnabled === false && $enabled === true) {
+        if ($isCurrentlyEnabled === false && $enabled) {
             $this->configuration->set('PS_HTACCESS_CACHE_CONTROL', true);
             if (! $this->tools->generateHtaccess()) {
                 $errors = [

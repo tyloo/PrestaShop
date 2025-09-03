@@ -108,7 +108,7 @@ class UploadQuotaConfiguration implements DataConfigurationInterface
      *
      * @return string the related configuration key
      */
-    private function getConfigurationKey($key): string
+    private function getConfigurationKey(int|string $key): string
     {
         $properties = [
             'max_size_attached_files' => 'PS_ATTACHMENT_MAXIMUM_SIZE',

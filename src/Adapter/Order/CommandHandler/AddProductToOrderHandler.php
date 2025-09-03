@@ -299,9 +299,8 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
 
     /**
      * @param Combination|null $combination
-     * @param int              $quantity
      */
-    private function addProductToCart(Cart $cart, Product $product, $combination, $quantity): void
+    private function addProductToCart(Cart $cart, Product $product, $combination, int $quantity): void
     {
         /**
          * Here we update product and customization in the cart.
@@ -361,10 +360,8 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
     /**
      * @todo: Most of this method can be simplified, since OrderAmountUpdater computes everything
      *        the invoice computation here should be removable, as well as $order->addCartRule
-     *
-     * @param bool $isFreeShipping
      */
-    private function createNewInvoice(Order $order, Cart $cart, $isFreeShipping, array $newProducts): OrderInvoice
+    private function createNewInvoice(Order $order, Cart $cart, ?bool $isFreeShipping, array $newProducts): OrderInvoice
     {
         $invoice = new OrderInvoice();
 
@@ -454,10 +451,8 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
 
     /**
      * @todo: this whole method should be removable as well since ALL invoices are updated by OrderAmountUpdater
-     *
-     * @param int $orderInvoiceId
      */
-    private function updateExistingInvoice($orderInvoiceId, Cart $cart, array $newProducts): OrderInvoice
+    private function updateExistingInvoice(int $orderInvoiceId, Cart $cart, array $newProducts): OrderInvoice
     {
         $invoice = new OrderInvoice($orderInvoiceId);
 

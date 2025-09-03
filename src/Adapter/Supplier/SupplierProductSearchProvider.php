@@ -52,14 +52,12 @@ class SupplierProductSearchProvider implements ProductSearchProviderInterface
     }
 
     /**
-     * @param string $type
-     *
      * @return int|array
      */
     private function getProductsOrCount(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-        $type = 'products',
+        string $type = 'products',
     ) {
         $isTypeProducts = $type === 'products';
 

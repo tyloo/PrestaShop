@@ -361,7 +361,7 @@ class Module implements ModuleInterface
     /**
      * @param string $attribute
      */
-    public function get($attribute)
+    public function get($attribute): mixed
     {
         return $this->attributes->get($attribute, null);
     }

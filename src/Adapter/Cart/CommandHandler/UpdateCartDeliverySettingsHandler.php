@@ -87,11 +87,9 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
      * but is not linked to the cart. We look for this cart rule
      * to avoid creating duplicates.
      *
-     * @param string $code
-     *
      * @throws PrestaShopException
      */
-    private function getCartRuleForBackOfficeFreeShipping($code): ?CartRule
+    private function getCartRuleForBackOfficeFreeShipping(string $code): ?CartRule
     {
         $cartRuleId = CartRule::getIdByCode($code);
 

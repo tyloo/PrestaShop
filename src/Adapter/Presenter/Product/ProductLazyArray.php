@@ -139,11 +139,8 @@ class ProductLazyArray extends AbstractLazyArray
         return $this->product['customization_required'];
     }
 
-    /**
-     * @return bool
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getShowPrice()
+    public function getShowPrice(): bool
     {
         return $this->shouldShowPrice($this->settings, $this->product);
     }
@@ -152,7 +149,7 @@ class ProductLazyArray extends AbstractLazyArray
      * @return string
      */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getWeightUnit()
+    public function getWeightUnit(): mixed
     {
         return $this->configuration->get('PS_WEIGHT_UNIT');
     }
@@ -203,12 +200,10 @@ class ProductLazyArray extends AbstractLazyArray
     }
 
     /**
-     * @return array|bool
-     *
      * @throws InvalidArgumentException
      */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getCondition()
+    public function getCondition(): false|array
     {
         if (empty($this->product['show_condition'])) {
             return false;
@@ -407,11 +402,9 @@ class ProductLazyArray extends AbstractLazyArray
 
     /**
      * Returns all product feature values nicely grouped by feature name.
-     *
-     * @return array
      */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getGroupedFeatures()
+    public function getGroupedFeatures(): array
     {
         return $this->buildGroupedFeatures($this->getFeatures());
     }
@@ -697,11 +690,8 @@ class ProductLazyArray extends AbstractLazyArray
         return $flags;
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getMainVariants()
+    public function getMainVariants(): array
     {
         $colors = $this->productColorsRetriever->getColoredVariants(
             $this->product['id_product']
@@ -1127,14 +1117,12 @@ class ProductLazyArray extends AbstractLazyArray
     }
 
     /**
-     * @param bool $canonical
-     *
      * @return string
      */
     private function getProductURL(
         array $product,
         Language $language,
-        $canonical = false,
+        bool $canonical = false,
     ) {
         $linkRewrite = $product['link_rewrite'] ?? null;
         $category = $this->getCategory();
@@ -1354,12 +1342,7 @@ class ProductLazyArray extends AbstractLazyArray
         return $product['available_date'];
     }
 
-    /**
-     * @param string $key
-     *
-     * @return string
-     */
-    private function getTranslatedKey($key)
+    private function getTranslatedKey(string $key): string
     {
         return match ($key) {
             'ean13' => $this->translator->trans(

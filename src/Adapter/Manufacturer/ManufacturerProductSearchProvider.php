@@ -47,14 +47,12 @@ class ManufacturerProductSearchProvider implements ProductSearchProviderInterfac
     }
 
     /**
-     * @param string $type
-     *
      * @return array|int
      */
     private function getProductsOrCount(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-        $type = 'products',
+        string $type = 'products',
     ) {
         $result = $this->manufacturer->getProducts(
             $this->manufacturer->id,

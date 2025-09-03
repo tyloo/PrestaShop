@@ -49,7 +49,7 @@ class MediaServerConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array|false
     {
         $errors = [];
         $isValid = $this->validateConfiguration($configuration);
@@ -77,7 +77,7 @@ class MediaServerConfiguration implements DataConfigurationInterface
     /**
      * @return array<int, array<string, array|string>>|bool
      */
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): array|bool
     {
         $errors = [];
         $serverOne = $configuration['media_server_one'];

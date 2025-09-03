@@ -71,7 +71,7 @@ class CartPresenter implements PresenterInterface
 
     public function addCustomizedData(array $products, Cart $cart): array
     {
-        return array_map(function ($product) use ($cart) {
+        return array_map(function (array $product) use ($cart) {
             $customizations = [];
 
             $data = Product::getAllCustomizedDatas($cart->id, null, true, null, (int) $product['id_customization']);
@@ -166,7 +166,7 @@ class CartPresenter implements PresenterInterface
                 }
             }
 
-            usort($customizations, function (array $a, array $b) {
+            usort($customizations, function (array $a, array $b): int {
                 if (
                     $a['quantity'] > $b['quantity']
                     || \count($a['fields']) > \count($b['fields'])

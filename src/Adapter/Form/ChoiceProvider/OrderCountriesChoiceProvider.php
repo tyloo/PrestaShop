@@ -39,7 +39,7 @@ use Shop;
  */
 final class OrderCountriesChoiceProvider implements FormChoiceProviderInterface
 {
-    public function getChoices()
+    public function getChoices(): array
     {
         if (! Country::isCurrentlyUsed('country', true)) {
             return [];

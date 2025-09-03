@@ -60,10 +60,8 @@ final class EditManufacturerAddressHandler extends AbstractAddressHandler implem
 
     /**
      * Populates Address object with given data
-     *
-     * @param EditManufacturerAddressCommand $command
      */
-    private function populateAddressWithData(Address $address, $command): void
+    private function populateAddressWithData(Address $address, EditManufacturerAddressCommand $command): void
     {
         if ($command->getManufacturerId() !== null) {
             $address->id_manufacturer = $command->getManufacturerId();

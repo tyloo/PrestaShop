@@ -61,7 +61,7 @@ class MergeProductsToShipmentHandler implements MergeProductsToShipmentHandlerIn
             throw new ShipmentNotFoundException(\sprintf('Shipment with id "%s" was not found', $targetId));
         }
 
-        $shipmentProducts = array_map(function ($product) {
+        $shipmentProducts = array_map(function (array $product): ShipmentProduct {
             $shipmentProduct = new ShipmentProduct();
             $shipmentProduct->setOrderDetailId($product['id_order_detail']);
             $shipmentProduct->setQuantity($product['quantity']);

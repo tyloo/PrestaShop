@@ -55,10 +55,8 @@ class BulkDuplicateProductHandler extends AbstractBulkHandler implements BulkDup
 
     /**
      * @param BulkDuplicateProductCommand $command
-     *
-     * @return ProductId
      */
-    protected function handleSingleAction(ProductId $productId, $command = null)
+    protected function handleSingleAction(ProductId $productId, $command = null): ProductId
     {
         return $this->productDuplicator->duplicate($productId, $command->getShopConstraint());
     }

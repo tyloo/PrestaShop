@@ -89,7 +89,7 @@ class OrderSlipCreator
                 throw new OrderException('You cannot generate a partial credit slip.');
             }
 
-            $fullQuantityList = array_map(fn ($orderDetail) => $orderDetail['quantity'], $orderRefundSummary->getProductRefunds());
+            $fullQuantityList = array_map(fn (array $orderDetail) => $orderDetail['quantity'], $orderRefundSummary->getProductRefunds());
 
             // Hook called only for the shop concerned
             Hook::exec('actionOrderSlipAdd', [

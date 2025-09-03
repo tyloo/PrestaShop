@@ -66,7 +66,7 @@ class CountryDataProvider
         ;
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return array_map(fn ($country) => $country['id_country'], $result);
+        return array_map(fn (array $country) => $country['id_country'], $result);
     }
 
     /**
@@ -84,7 +84,7 @@ class CountryDataProvider
         ;
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return array_map(fn ($country) => $country['id_country'], $result);
+        return array_map(fn (array $country) => $country['id_country'], $result);
     }
 
     /**
@@ -102,7 +102,7 @@ class CountryDataProvider
         ;
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return array_map(fn ($country) => $country['id_country'], $result);
+        return array_map(fn (array $country) => $country['id_country'], $result);
     }
 
     /**

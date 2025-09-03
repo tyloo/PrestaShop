@@ -191,7 +191,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
             // Allow only whitelisted elements
             $permissions[$profile['id']] = array_filter(
                 Profile::getProfileAccesses($profile['id']),
-                fn ($item): bool => \in_array($item['id_tab'], $this->whitelist, true)
+                fn (array $item): bool => \in_array($item['id_tab'], $this->whitelist, true)
             );
         }
 
@@ -286,7 +286,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
         foreach ($profiles as $profile) {
             $profilePermissionsForModules[$profile['id']] = Module::getModulesAccessesByIdProfile($profile['id']);
 
-            uasort($profilePermissionsForModules[$profile['id']], function ($a, $b) {
+            uasort($profilePermissionsForModules[$profile['id']], function ($a, $b): int {
                 // For the reference https://github.com/PrestaShop/PrestaShop/pull/12428/files#r267703322
                 $a['name'] ??= '';
                 $b['name'] ??= '';

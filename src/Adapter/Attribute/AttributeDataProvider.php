@@ -60,7 +60,7 @@ class AttributeDataProvider
      *
      * @return array Attributes
      */
-    public static function getAttributeIdsByGroup($id_group, $not_null = false)
+    public static function getAttributeIdsByGroup($id_group, $not_null = false): array
     {
         if (! Combination::isFeatureActive()) {
             return [];
@@ -78,7 +78,7 @@ class AttributeDataProvider
 			ORDER BY a.`position` ASC
 		');
 
-        return array_map(fn ($a) => $a['id_attribute'], $result);
+        return array_map(fn (array $a) => $a['id_attribute'], $result);
     }
 
     /**
@@ -99,7 +99,7 @@ class AttributeDataProvider
         }
 
         $allCombinations = $product->getAttributeCombinations(1, false);
-        $allCombinationsIds = array_map(fn ($o) => $o['id_product_attribute'], $allCombinations);
+        $allCombinationsIds = array_map(fn (array $o) => $o['id_product_attribute'], $allCombinations);
 
         $combinations = [];
         foreach ($allCombinationsIds as $combinationId) {

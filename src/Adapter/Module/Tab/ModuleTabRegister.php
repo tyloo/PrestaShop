@@ -95,13 +95,11 @@ class ModuleTabRegister
      * add them to the list to register.
      *
      * @param string $moduleName
-     *
-     * @return array
      */
-    protected function addUndeclaredTabs($moduleName, array $tabs)
+    protected function addUndeclaredTabs($moduleName, array $tabs): array
     {
         // Function to get only class name from tabs already declared
-        $tabsNames = array_map(function ($tab) {
+        $tabsNames = array_map(function (array $tab) {
             if (\array_key_exists('class_name', $tab)) {
                 return $tab['class_name'];
             }
@@ -186,7 +184,7 @@ class ModuleTabRegister
      *
      * @return array of Symfony\Component\Finder\SplFileInfo, listing all the ModuleAdminControllers found
      */
-    protected function getModuleAdminControllers($moduleName)
+    protected function getModuleAdminControllers($moduleName): array
     {
         $modulePath = rtrim(_PS_MODULE_DIR_, '/') . '/' . $moduleName . '/controllers/admin/';
 

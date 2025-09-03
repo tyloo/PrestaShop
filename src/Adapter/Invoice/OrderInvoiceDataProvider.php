@@ -50,7 +50,7 @@ final class OrderInvoiceDataProvider implements OrderInvoiceDataProviderInterfac
         return OrderInvoice::getByStatus($orderStateId);
     }
 
-    public function getNextInvoiceNumber()
+    public function getNextInvoiceNumber(): int|float
     {
         return Order::getLastInvoiceNumber() + 1;
     }

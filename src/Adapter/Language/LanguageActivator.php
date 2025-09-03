@@ -48,10 +48,9 @@ final class LanguageActivator implements LanguageActivatorInterface
     /**
      * Enable/disable language.
      *
-     * @param int  $langId
-     * @param bool $status
+     * @param int $langId
      */
-    private function setActive($langId, $status): void
+    private function setActive($langId, bool $status): void
     {
         $lang = new Language((int) $langId);
 

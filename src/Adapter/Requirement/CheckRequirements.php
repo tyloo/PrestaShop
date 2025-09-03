@@ -118,12 +118,11 @@ class CheckRequirements
     /**
      * Add default message on missing check descriptions.
      *
-     * @param array $errorMessages
      * @param array $checks
      *
      * @return array Error messages with fallback for missing entries
      */
-    private function fillMissingDescriptions($errorMessages, $checks)
+    private function fillMissingDescriptions(array $errorMessages, $checks): array
     {
         foreach (array_keys(array_diff_key($checks, $errorMessages)) as $key) {
             $errorMessages[$key] = $this->translator->trans('%key% (missing description)', ['%key%' => $key], 'Admin.Advparameters.Feature');

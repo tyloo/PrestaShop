@@ -52,8 +52,6 @@ class CategoryProductSearchProvider implements ProductSearchProviderInterface
     }
 
     /**
-     * @param string $type
-     *
      * @return array|false|int
      *
      * @throws PrestaShopDatabaseException
@@ -61,7 +59,7 @@ class CategoryProductSearchProvider implements ProductSearchProviderInterface
     private function getProductsOrCount(
         ProductSearchContext $context,
         ProductSearchQuery $query,
-        $type = 'products',
+        string $type = 'products',
     ) {
         if ($query->getSortOrder()->isRandom()) {
             return $this->category->getProducts(

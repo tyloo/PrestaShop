@@ -200,7 +200,7 @@ class LegacyContext
     {
         $languages = $this->getLegacyLanguages($active, $id_shop, $ids_only);
         $defaultLanguageFirst = $this->getLanguage();
-        usort($languages, function ($a, $b) use ($defaultLanguageFirst) {
+        usort($languages, function (array $a, array $b) use ($defaultLanguageFirst): int {
             if ($a['id_lang'] === $defaultLanguageFirst->id) {
                 return -1; // $a is the default one.
             }
@@ -285,7 +285,7 @@ class LegacyContext
     /**
      * @return array Returns both enabled and disabled languages
      */
-    public function getAvailableLanguages()
+    public function getAvailableLanguages(): array
     {
         return $this->getLegacyLanguages(false);
     }
