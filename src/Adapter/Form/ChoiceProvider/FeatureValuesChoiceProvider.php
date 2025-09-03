@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceFormatter;
 
 class FeatureValuesChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
+    private readonly int $contextLanguageId;
 
     /**
      * Cache value to avoid performing the same request multiple times as the value should remain the same inside a request.

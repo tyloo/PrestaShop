@@ -53,35 +53,20 @@ use Tools;
 
 class OrderLazyArray extends AbstractLazyArray
 {
-    /**
-     * @var CartPresenter
-     */
-    private $cartPresenter;
+    private readonly CartPresenter $cartPresenter;
 
-    /**
-     * @var ObjectPresenter
-     */
-    private $objectPresenter;
+    private readonly ObjectPresenter $objectPresenter;
 
-    /**
-     * @var PriceFormatter
-     */
-    private $priceFormatter;
+    private readonly PriceFormatter $priceFormatter;
 
     /**
      * @var TranslatorComponent
      */
     private $translator;
 
-    /**
-     * @var TaxConfiguration
-     */
-    private $taxConfiguration;
+    private readonly TaxConfiguration $taxConfiguration;
 
-    /**
-     * @var OrderSubtotalLazyArray
-     */
-    private $subTotals;
+    private readonly OrderSubtotalLazyArray $subTotals;
 
     /**
      * @throws AnnotationException
@@ -126,7 +111,7 @@ class OrderLazyArray extends AbstractLazyArray
     }
 
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getSubtotals()
+    public function getSubtotals(): OrderSubtotalLazyArray
     {
         return $this->subTotals;
     }

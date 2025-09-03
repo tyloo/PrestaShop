@@ -62,11 +62,8 @@ class SupplierLazyArray extends AbstractLazyArray
         return $this->link->getSupplierLink($this->supplier['id']);
     }
 
-    /**
-     * @return array|null
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getImage()
+    public function getImage(): ?array
     {
         return $this->imageRetriever->getImage(
             new Supplier($this->supplier['id'], $this->language->getId()),

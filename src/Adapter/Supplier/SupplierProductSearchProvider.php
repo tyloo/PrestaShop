@@ -42,10 +42,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class SupplierProductSearchProvider implements ProductSearchProviderInterface
 {
-    /**
-     * @var SortOrdersCollection
-     */
-    private $sortOrdersCollection;
+    private readonly SortOrdersCollection $sortOrdersCollection;
 
     public function __construct(
         private readonly TranslatorInterface $translator,

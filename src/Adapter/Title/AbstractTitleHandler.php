@@ -34,19 +34,9 @@ use PrestaShop\PrestaShop\Adapter\Title\Repository\TitleRepository;
 
 class AbstractTitleHandler
 {
-    /**
-     * @var TitleRepository
-     */
-    protected $titleRepository;
-
-    /**
-     * @var TitleImageUploader
-     */
-    protected $titleImageUploader;
-
-    public function __construct(TitleRepository $titleRepository, TitleImageUploader $titleImageUploader)
-    {
-        $this->titleRepository = $titleRepository;
-        $this->titleImageUploader = $titleImageUploader;
+    public function __construct(
+        protected TitleRepository $titleRepository,
+        protected TitleImageUploader $titleImageUploader,
+    ) {
     }
 }

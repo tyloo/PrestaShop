@@ -55,10 +55,8 @@ class CountryDataProvider
 
     /**
      * Returns list of countries IDs which need DNI
-     *
-     * @return array
      */
-    public function getCountriesIdWhichNeedDni()
+    public function getCountriesIdWhichNeedDni(): array
     {
         $query = new DbQuery();
         $query
@@ -74,11 +72,9 @@ class CountryDataProvider
     /**
      * Returns list of countries IDs which need Postcode
      *
-     * @return array
-     *
      * @throws PrestaShopDatabaseException
      */
-    public function getCountriesIdWhichNeedPostcode()
+    public function getCountriesIdWhichNeedPostcode(): array
     {
         $query = new DbQuery();
         $query
@@ -94,11 +90,9 @@ class CountryDataProvider
     /**
      * Returns list of countries IDS which need a state
      *
-     * @return array
-     *
      * @throws PrestaShopDatabaseException
      */
-    public function getCountriesIdWhichNeedState()
+    public function getCountriesIdWhichNeedState(): array
     {
         $query = new DbQuery();
         $query

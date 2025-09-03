@@ -57,38 +57,14 @@ use Shop;
 abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
 {
     /**
-     * @var LocaleRepository
-     */
-    protected $localeRepoCLDR;
-
-    /**
-     * @var LanguageInterface[]
-     */
-    protected $languages;
-
-    /**
-     * @var CurrencyCommandValidator
-     */
-    protected $validator;
-
-    /**
-     * @var PatternTransformer
-     */
-    protected $patternTransformer;
-
-    /**
      * @param LanguageInterface[] $languages
      */
     public function __construct(
-        LocaleRepository $localeRepoCLDR,
-        array $languages,
-        CurrencyCommandValidator $validator,
-        PatternTransformer $patternTransformer,
+        protected LocaleRepository $localeRepoCLDR,
+        protected array $languages,
+        protected CurrencyCommandValidator $validator,
+        protected PatternTransformer $patternTransformer,
     ) {
-        $this->localeRepoCLDR = $localeRepoCLDR;
-        $this->languages = $languages;
-        $this->validator = $validator;
-        $this->patternTransformer = $patternTransformer;
     }
 
     /**

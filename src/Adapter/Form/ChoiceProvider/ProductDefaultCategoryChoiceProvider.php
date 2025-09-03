@@ -39,20 +39,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductDefaultCategoryChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * @var CategoryId
-     */
-    private $defaultCategoryId;
+    private readonly CategoryId $defaultCategoryId;
 
-    /**
-     * @var ShopId
-     */
-    private $shopId;
+    private readonly ShopId $shopId;
 
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
     public function __construct(
         int $homeCategoryId,

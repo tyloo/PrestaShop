@@ -38,19 +38,12 @@ use PrestaShop\PrestaShop\Adapter\Presenter\LazyArrayAttribute;
 
 class CategoryLazyArray extends AbstractLazyArray
 {
-    /**
-     * @var array
-     */
-    protected $category;
-
     public function __construct(
-        array $category,
+        protected array $category,
         private readonly Language $language,
         private readonly ImageRetriever $imageRetriever,
         private readonly Link $link,
     ) {
-        $this->category = $category;
-
         parent::__construct();
         $this->appendArray($this->category);
     }
@@ -67,11 +60,8 @@ class CategoryLazyArray extends AbstractLazyArray
         );
     }
 
-    /**
-     * @return array|null
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getImage()
+    public function getImage(): ?array
     {
         return $this->getCover();
     }
@@ -79,11 +69,9 @@ class CategoryLazyArray extends AbstractLazyArray
     /**
      * This returns category cover image (miniatures of CATEGORYID.jpg).
      * Used as a big image under category description.
-     *
-     * @return array|null
      */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getCover()
+    public function getCover(): ?array
     {
         // Get image identifier for the thumbnail and check if it exists
         $imageIdentifier = $this->category['id'];
@@ -100,11 +88,9 @@ class CategoryLazyArray extends AbstractLazyArray
     /**
      * This returns category thumbnail image (miniatures of CATEGORYID_thumb.jpg).
      * Used for thumbnails in subcategories.
-     *
-     * @return array|null
      */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getThumbnail()
+    public function getThumbnail(): ?array
     {
         // Get image identifier for the thumbnail and check if it exists
         $imageIdentifier = $this->category['id'] . '_thumb';

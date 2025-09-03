@@ -36,28 +36,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StorePresenter
 {
-    /**
-     * @var ImageRetriever
-     */
-    protected $imageRetriever;
-
-    /**
-     * @var Link
-     */
-    protected $link;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
+    protected ImageRetriever $imageRetriever;
 
     public function __construct(
-        Link $link,
-        TranslatorInterface $translator,
+        protected Link $link,
+        protected TranslatorInterface $translator,
     ) {
-        $this->link = $link;
-        $this->imageRetriever = new ImageRetriever($link);
-        $this->translator = $translator;
+        $this->imageRetriever = new ImageRetriever($this->link);
     }
 
     /**

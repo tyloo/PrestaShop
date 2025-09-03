@@ -39,10 +39,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CombinationIdChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
     public function __construct(
         private readonly CombinationRepository $combinationRepository,

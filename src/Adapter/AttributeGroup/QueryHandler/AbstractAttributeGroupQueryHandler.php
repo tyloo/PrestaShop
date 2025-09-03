@@ -38,22 +38,10 @@ use ProductAttribute as AttributeObjectModel;
 
 abstract class AbstractAttributeGroupQueryHandler
 {
-    /**
-     * @var AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
-     * @var AttributeGroupRepository
-     */
-    protected $attributeGroupRepository;
-
     public function __construct(
-        AttributeRepository $attributeRepository,
-        AttributeGroupRepository $attributeGroupRepository,
+        protected AttributeRepository $attributeRepository,
+        protected AttributeGroupRepository $attributeGroupRepository,
     ) {
-        $this->attributeRepository = $attributeRepository;
-        $this->attributeGroupRepository = $attributeGroupRepository;
     }
 
     /**

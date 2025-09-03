@@ -41,14 +41,9 @@ use PrestaShop\PrestaShop\Core\Image\Uploader\Exception\UploadedImageConstraintE
  */
 class ImageValidator
 {
-    /**
-     * @var int
-     */
-    protected $maxUploadSize;
-
-    public function __construct(int $maxUploadSizeInBytes)
-    {
-        $this->maxUploadSize = $maxUploadSizeInBytes;
+    public function __construct(
+        protected int $maxUploadSize,
+    ) {
     }
 
     /**

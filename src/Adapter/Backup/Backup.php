@@ -67,7 +67,7 @@ final class Backup implements BackupInterface
         return $this->legacyBackup->getBackupURL();
     }
 
-    public function getSize()
+    public function getSize(): int|false
     {
         return filesize($this->legacyBackup->id);
     }

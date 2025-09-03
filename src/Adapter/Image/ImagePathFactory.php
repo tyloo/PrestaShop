@@ -31,10 +31,7 @@ namespace PrestaShop\PrestaShop\Adapter\Image;
 
 class ImagePathFactory
 {
-    /**
-     * @var string
-     */
-    private $pathToBaseDir;
+    private readonly string $pathToBaseDir;
 
     public function __construct(
         string $pathToBaseDir,

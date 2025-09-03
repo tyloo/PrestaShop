@@ -44,22 +44,10 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
  */
 class AttachmentFileUploader implements AttachmentFileUploaderInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    protected $configuration;
-
-    /**
-     * @var UploadSizeConfigurationInterface
-     */
-    protected $uploadSizeConfiguration;
-
     public function __construct(
-        ConfigurationInterface $configuration,
-        UploadSizeConfigurationInterface $uploadSizeConfiguration,
+        protected ConfigurationInterface $configuration,
+        protected UploadSizeConfigurationInterface $uploadSizeConfiguration,
     ) {
-        $this->configuration = $configuration;
-        $this->uploadSizeConfiguration = $uploadSizeConfiguration;
     }
 
     /**

@@ -67,7 +67,7 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
     public function handle(SearchProducts $query): array
     {
         $currency = $this->currencyDataProvider->getCurrencyByIsoCode($query->getAlphaIsoCode()->getValue());
-        if ($currency === null) {
+        if (! $currency instanceof Currency) {
             throw new CurrencyNotFoundException(\sprintf('Could not find currency matching ISO code %s', $query->getAlphaIsoCode()->getValue()));
         }
 

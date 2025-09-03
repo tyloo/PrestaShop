@@ -44,14 +44,9 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\Exception\TaxRulesGroupExcep
 #[AsCommandHandler]
 class EditTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler implements EditTaxRulesGroupHandlerInterface
 {
-    /**
-     * @var TaxRulesGroupRepository
-     */
-    protected $taxRulesGroupRepository;
-
-    public function __construct(TaxRulesGroupRepository $taxRulesGroupRepository)
-    {
-        $this->taxRulesGroupRepository = $taxRulesGroupRepository;
+    public function __construct(
+        protected TaxRulesGroupRepository $taxRulesGroupRepository,
+    ) {
     }
 
     /**

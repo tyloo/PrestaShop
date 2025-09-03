@@ -67,7 +67,7 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
         return Currency::findAllInstalled();
     }
 
-    public function getCurrencyByIsoCode($isoCode, $idLang = null)
+    public function getCurrencyByIsoCode($isoCode, $idLang = null): ?Currency
     {
         $currencyId = Currency::getIdByIsoCode($isoCode, 0, false, true);
         if (! $currencyId) {
@@ -84,10 +84,8 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
     /**
      * @param string $isoCode
      * @param string $locale
-     *
-     * @return Currency|null
      */
-    public function getCurrencyByIsoCodeAndLocale($isoCode, $locale)
+    public function getCurrencyByIsoCodeAndLocale($isoCode, $locale): ?Currency
     {
         $idLang = Language::getIdByLocale($locale, true);
 
@@ -98,7 +96,7 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
     {
         // Soft deleted currencies are not kept duplicated any more, so if one try to recreate it the one in database is reused
         $currency = $this->getCurrencyByIsoCode($isoCode, $idLang);
-        if ($currency === null) {
+        if (! $currency instanceof Currency) {
             if ($idLang === null) {
                 $idLang = $this->configuration->get('PS_LANG_DEFAULT');
             }

@@ -42,20 +42,10 @@ use Symfony\Component\Filesystem\Filesystem;
 #[AsCommandHandler]
 class DeleteManufacturerLogoImageHandler extends AbstractManufacturerCommandHandler implements DeleteManufacturerLogoImageHandlerInterface
 {
-    /**
-     * @var string
-     */
-    protected $imageDir;
-
-    /**
-     * @var string
-     */
-    protected $tmpImageDir;
-
-    public function __construct(string $imageDir, string $tmpImageDir)
-    {
-        $this->imageDir = $imageDir;
-        $this->tmpImageDir = $tmpImageDir;
+    public function __construct(
+        protected string $imageDir,
+        protected string $tmpImageDir,
+    ) {
     }
 
     public function handle(DeleteManufacturerLogoImageCommand $command): void

@@ -55,11 +55,8 @@ class StoreLazyArray extends AbstractLazyArray
         $this->appendArray($this->store);
     }
 
-    /**
-     * @return array|null
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getImage()
+    public function getImage(): ?array
     {
         return $this->imageRetriever->getImage(
             new Store($this->store['id'], $this->language->getId()),

@@ -42,7 +42,7 @@ final class SupplierLogoThumbnailProvider implements ImageProviderInterface
     ) {
     }
 
-    public function getPath($supplierId)
+    public function getPath($supplierId): ?string
     {
         $imageTag = $this->imageManager->getThumbnailForListing(
             $supplierId,

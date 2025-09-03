@@ -49,10 +49,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class ProductImageUploader extends AbstractImageUploader
 {
-    /**
-     * @var Filesystem
-     */
-    private $fileSystem;
+    private readonly Filesystem $fileSystem;
 
     public function __construct(
         private readonly ProductImagePathFactory $productImagePathFactory,

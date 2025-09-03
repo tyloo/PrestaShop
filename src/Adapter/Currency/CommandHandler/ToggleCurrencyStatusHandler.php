@@ -48,10 +48,7 @@ use Shop;
 #[AsCommandHandler]
 final class ToggleCurrencyStatusHandler implements ToggleCurrencyStatusHandlerInterface
 {
-    /**
-     * @var int
-     */
-    private $defaultCurrencyId;
+    private readonly int $defaultCurrencyId;
 
     /**
      * @param int $defaultCurrencyId

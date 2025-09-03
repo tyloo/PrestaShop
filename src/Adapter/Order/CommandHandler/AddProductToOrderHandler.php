@@ -182,7 +182,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
             );
 
             // Update totals amount of order
-            $this->orderAmountUpdater->update($order, $cart, $invoice !== null ? (int) $invoice->id : null);
+            $this->orderAmountUpdater->update($order, $cart, $invoice instanceof OrderInvoice ? (int) $invoice->id : null);
             Hook::exec('actionOrderEdited', ['order' => $order]);
         } finally {
             $this->contextStateManager->restorePreviousContext();
@@ -343,15 +343,12 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
         }
     }
 
-    /**
-     * @return OrderInvoice|null
-     */
     private function createNewOrEditExistingInvoice(
         AddProductToOrderCommand $command,
         Order $order,
         Cart $cart,
         array $products,
-    ) {
+    ): ?OrderInvoice {
         if ($order->hasInvoice()) {
             return $command->getOrderInvoiceId() ?
                 $this->updateExistingInvoice($command->getOrderInvoiceId(), $cart, $products) :

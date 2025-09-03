@@ -50,59 +50,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 abstract class AbstractImportHandler implements ImportHandlerInterface
 {
     /**
-     * @var ImportDataFormatter
-     */
-    protected $dataFormatter;
-
-    /**
-     * @var array
-     */
-    protected $contextShopIds;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
-     * @var array all shops ids
-     */
-    protected $allShopIds;
-
-    /**
      * @var string import type label
      */
     protected $importTypeLabel;
-
-    /**
-     * @var Database
-     */
-    protected $legacyDatabase;
 
     /**
      * @var int
      */
     protected $languageId;
 
-    /**
-     * @var Configuration
-     */
-    protected $configuration;
+    protected PropertyAccessor $propertyAccessor;
 
-    /**
-     * @var Validate
-     */
-    protected $validate;
-
-    /**
-     * @var PropertyAccessor
-     */
-    protected $propertyAccessor;
-
-    /**
-     * @var int
-     */
-    protected $defaultLanguageId;
+    protected int $defaultLanguageId;
 
     /**
      * @var array entity default values
@@ -112,10 +71,8 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
     /**
      * Callback methods with field names as keys.
      * Callback methods are executed on fields during import process.
-     *
-     * @var array
      */
-    private $callbacks = [];
+    private array $callbacks = [];
 
     /**
      * Multilingual entity fields.
@@ -157,27 +114,23 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
      * @param int  $employeeId
      */
     public function __construct(
-        ImportDataFormatter $dataFormatter,
-        array $allShopIds,
-        array $contextShopIds,
+        protected ImportDataFormatter $dataFormatter,
+        /**
+         * @var array all shops ids
+         */
+        protected array $allShopIds,
+        protected array $contextShopIds,
         protected $currentContextShopId,
         protected $isMultistoreEnabled,
         private $contextLanguageId,
-        TranslatorInterface $translator,
+        protected TranslatorInterface $translator,
         private readonly LoggerInterface $logger,
         private $employeeId,
-        Database $legacyDatabase,
+        protected Database $legacyDatabase,
         private readonly CacheClearerInterface $cacheClearer,
-        Configuration $configuration,
-        Validate $validate,
+        protected Configuration $configuration,
+        protected Validate $validate,
     ) {
-        $this->dataFormatter = $dataFormatter;
-        $this->contextShopIds = $contextShopIds;
-        $this->translator = $translator;
-        $this->allShopIds = $allShopIds;
-        $this->legacyDatabase = $legacyDatabase;
-        $this->configuration = $configuration;
-        $this->validate = $validate;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
         $this->defaultLanguageId = $this->configuration->getInt('PS_LANG_DEFAULT');
     }
@@ -192,9 +145,9 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         $dataFormatter = $this->dataFormatter;
         $multipleValueSeparator = $importConfig->getMultipleValueSeparator();
 
-        $getBoolean = (fn ($value) => $dataFormatter->getBoolean($value));
-        $getPrice = (fn ($value) => $dataFormatter->getPrice($value));
-        $createMultilangField = (fn ($value) => $dataFormatter->createMultiLangField($value));
+        $getBoolean = (fn ($value): bool => $dataFormatter->getBoolean($value));
+        $getPrice = (fn ($value): float => $dataFormatter->getPrice($value));
+        $createMultilangField = (fn ($value): array => $dataFormatter->createMultiLangField($value));
         $split = (fn ($value) => $dataFormatter->split($value, $multipleValueSeparator));
         $this->callbacks = [
             'active' => $getBoolean,

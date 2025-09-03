@@ -65,10 +65,7 @@ final class GetManufacturerForEditingHandler extends AbstractManufacturerHandler
         );
     }
 
-    /**
-     * @return array|null
-     */
-    private function getLogoImage(ManufacturerId $manufacturerId)
+    private function getLogoImage(ManufacturerId $manufacturerId): ?array
     {
         $pathToImage = _PS_MANU_IMG_DIR_ . $manufacturerId->getValue() . '.jpg';
         $imageTag = ImageManager::thumbnail(

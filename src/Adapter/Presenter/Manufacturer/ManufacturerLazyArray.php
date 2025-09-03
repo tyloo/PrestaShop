@@ -71,11 +71,8 @@ class ManufacturerLazyArray extends AbstractLazyArray
         return $this->link->getManufacturerLink($this->manufacturer['id']);
     }
 
-    /**
-     * @return array|null
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getImage()
+    public function getImage(): ?array
     {
         return $this->imageRetriever->getImage(
             new Manufacturer($this->manufacturer['id'], $this->language->getId()),

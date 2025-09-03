@@ -44,14 +44,9 @@ use TaxRulesGroup;
 #[AsCommandHandler]
 class AddTaxRulesGroupHandler extends AbstractTaxRulesGroupHandler implements AddTaxRulesGroupHandlerInterface
 {
-    /**
-     * @var TaxRulesGroupRepository
-     */
-    protected $taxRulesGroupRepository;
-
-    public function __construct(TaxRulesGroupRepository $taxRulesGroupRepository)
-    {
-        $this->taxRulesGroupRepository = $taxRulesGroupRepository;
+    public function __construct(
+        protected TaxRulesGroupRepository $taxRulesGroupRepository,
+    ) {
     }
 
     public function handle(AddTaxRulesGroupCommand $command): TaxRulesGroupId

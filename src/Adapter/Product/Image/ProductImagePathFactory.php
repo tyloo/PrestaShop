@@ -45,15 +45,9 @@ class ProductImagePathFactory
 
     public const DEFAULT_IMAGE_FORMAT = 'jpg';
 
-    /**
-     * @var string
-     */
-    private $temporaryImgDir;
+    private readonly string $temporaryImgDir;
 
-    /**
-     * @var string
-     */
-    private $pathToBaseDir;
+    private readonly string $pathToBaseDir;
 
     public function __construct(
         string $pathToBaseDir,

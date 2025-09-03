@@ -59,17 +59,11 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
      */
     private $whitelist = [];
 
-    /**
-     * @var array
-     */
-    protected $nonConfigurableTabs;
-
     public function __construct(
         private readonly AuthorizationCheckerInterface $authorizationChecker,
         private readonly int $languageId,
-        array $nonConfigurableTabs,
+        protected array $nonConfigurableTabs,
     ) {
-        $this->nonConfigurableTabs = $nonConfigurableTabs;
     }
 
     public function handle(GetPermissionsForConfiguration $query): ConfigurablePermissions

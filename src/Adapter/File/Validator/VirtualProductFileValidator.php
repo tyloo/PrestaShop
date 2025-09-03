@@ -44,10 +44,7 @@ class VirtualProductFileValidator
      */
     private const MEGABYTE_TO_BYTE_MULTIPLIER = '1048576';
 
-    /**
-     * @var DecimalNumber
-     */
-    private $maxFileSizeInMegabytes;
+    private readonly DecimalNumber $maxFileSizeInMegabytes;
 
     public function __construct(
         string $maxFileSizeInMegabytes,

@@ -40,16 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\QueryResult\ProductForAssociation;
 #[AsQueryHandler]
 class SearchProductsForAssociationHandler implements SearchProductsForAssociationHandlerInterface
 {
-    /**
-     * @var ProductRepository
-     */
-    protected $productRepository;
-
     public function __construct(
-        ProductRepository $productRepository,
+        protected ProductRepository $productRepository,
         private readonly ProductImagePathFactory $productImagePathFactory,
     ) {
-        $this->productRepository = $productRepository;
     }
 
     public function handle(SearchProductsForAssociation $query): array

@@ -42,17 +42,11 @@ use Shop;
  */
 abstract class AbstractDeleteCategoryHandler
 {
-    /**
-     * @var int
-     */
-    protected $homeCategoryId;
-
     public function __construct(
-        int $homeCategoryId,
+        protected int $homeCategoryId,
         private readonly ProductRepository $productRepository,
         private readonly CategoryRepository $categoryRepository,
     ) {
-        $this->homeCategoryId = $homeCategoryId;
     }
 
     /**

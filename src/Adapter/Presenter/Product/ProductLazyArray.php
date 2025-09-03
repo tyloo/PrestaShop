@@ -61,29 +61,13 @@ use Validate;
  */
 class ProductLazyArray extends AbstractLazyArray
 {
-    /**
-     * @var ProductPresentationSettings
-     */
-    protected $settings;
+    private readonly HookManager $hookManager;
 
-    /**
-     * @var array
-     */
-    protected $product;
-
-    /**
-     * @var HookManager
-     */
-    private $hookManager;
-
-    /**
-     * @var Configuration
-     */
-    private $configuration;
+    private readonly Configuration $configuration;
 
     public function __construct(
-        ProductPresentationSettings $settings,
-        array $product,
+        protected ProductPresentationSettings $settings,
+        protected array $product,
         private readonly Language $language,
         private readonly ImageRetriever $imageRetriever,
         private readonly Link $link,
@@ -93,19 +77,17 @@ class ProductLazyArray extends AbstractLazyArray
         ?HookManager $hookManager = null,
         ?Configuration $configuration = null,
     ) {
-        $this->settings = $settings;
-        $this->product = $product;
         $this->hookManager = $hookManager ?? new HookManager();
         $this->configuration = $configuration ?? new Configuration();
 
         // Load image information right away
-        $this->fillImages($product, $this->language);
+        $this->fillImages($this->product, $this->language);
 
         // Load pricing information right away
-        $this->addPriceInformation($settings, $product);
+        $this->addPriceInformation($this->settings, $this->product);
 
         // Load quantity information right away
-        $this->addQuantityInformation($settings, $product, $this->language);
+        $this->addQuantityInformation($this->settings, $this->product, $this->language);
 
         parent::__construct();
 
@@ -499,11 +481,8 @@ class ProductLazyArray extends AbstractLazyArray
         ];
     }
 
-    /**
-     * @return array|null
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getEcotax()
+    public function getEcotax(): ?array
     {
         if (isset($this->product['ecotax'])) {
             return [

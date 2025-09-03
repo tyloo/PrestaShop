@@ -39,7 +39,7 @@ final class ImportHandlerFinder implements ImportHandlerFinderInterface
     /**
      * @var ImportHandlerInterface[]
      */
-    private $importHandlers;
+    private readonly array $importHandlers;
 
     /**
      * @param ImportHandlerInterface[] ...$importHandlers

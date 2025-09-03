@@ -53,10 +53,7 @@ class LegacyContext
      */
     private $employeeCurrency;
 
-    /**
-     * @var Tools
-     */
-    private $tools;
+    private readonly Tools $tools;
 
     /**
      * @param string|null $mailThemesUri

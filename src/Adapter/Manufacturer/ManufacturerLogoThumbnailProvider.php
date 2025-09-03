@@ -42,7 +42,7 @@ final class ManufacturerLogoThumbnailProvider implements ImageProviderInterface
     ) {
     }
 
-    public function getPath($manufacturerId)
+    public function getPath($manufacturerId): ?string
     {
         $pathToImage = _PS_MANU_IMG_DIR_ . $manufacturerId . '.jpg';
 

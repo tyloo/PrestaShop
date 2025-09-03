@@ -145,7 +145,7 @@ class ContainerBuilder
     /**
      * @return ContainerInterface|null
      */
-    private function loadDumpedContainer()
+    private function loadDumpedContainer(): ?object
     {
         $container = null;
         if ($this->containerConfigCache->isFresh()) {

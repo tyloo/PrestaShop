@@ -37,14 +37,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ContainerFinder
 {
-    /**
-     * @var Context
-     */
-    protected $context;
-
-    public function __construct(Context $context)
-    {
-        $this->context = $context;
+    public function __construct(
+        protected Context $context,
+    ) {
     }
 
     /**

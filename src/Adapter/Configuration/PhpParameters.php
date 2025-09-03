@@ -42,7 +42,7 @@ class PhpParameters
     /**
      * @var ArrayFinder the current configuration
      */
-    private $configuration;
+    private readonly ArrayFinder $configuration;
 
     /**
      * @var string the PHP filename

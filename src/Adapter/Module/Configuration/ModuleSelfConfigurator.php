@@ -68,36 +68,12 @@ class ModuleSelfConfigurator
      */
     protected $defaultConfigFile = 'self_config.yml';
 
-    /**
-     * @var ModuleRepository
-     */
-    protected $moduleRepository;
-
-    /**
-     * @var Configuration
-     */
-    protected $configuration;
-
-    /**
-     * @var Connection
-     */
-    protected $connection;
-
-    /**
-     * @var Filesystem
-     */
-    protected $filesystem;
-
     public function __construct(
-        ModuleRepository $moduleRepository,
-        Configuration $configuration,
-        Connection $connection,
-        Filesystem $filesystem,
+        protected ModuleRepository $moduleRepository,
+        protected Configuration $configuration,
+        protected Connection $connection,
+        protected Filesystem $filesystem,
     ) {
-        $this->moduleRepository = $moduleRepository;
-        $this->configuration = $configuration;
-        $this->connection = $connection;
-        $this->filesystem = $filesystem;
     }
 
     /**

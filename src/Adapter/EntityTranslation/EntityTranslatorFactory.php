@@ -45,15 +45,9 @@ class EntityTranslatorFactory
      */
     private $db;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
+    private readonly TranslatorInterface $translator;
 
-    /**
-     * @var DataLangFactory
-     */
-    private $dataLangFactory;
+    private readonly DataLangFactory $dataLangFactory;
 
     /**
      * @var string

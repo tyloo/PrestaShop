@@ -45,10 +45,7 @@ use PrestaShopException;
 #[AsCommandHandler]
 final class BulkToggleCurrenciesStatusHandler extends AbstractCurrencyHandler implements BulkToggleCurrenciesStatusHandlerInterface
 {
-    /**
-     * @var int
-     */
-    private $defaultCurrencyId;
+    private readonly int $defaultCurrencyId;
 
     /**
      * @param int $defaultCurrencyId

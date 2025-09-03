@@ -102,10 +102,7 @@ use Validate;
 #[AsQueryHandler]
 final class GetOrderForViewingHandler extends AbstractOrderHandler implements GetOrderForViewingHandlerInterface
 {
-    /**
-     * @var AddressFormatterInterface
-     */
-    private $addressFormatter;
+    private readonly AddressFormatterInterface $addressFormatter;
 
     public function __construct(
         private readonly TranslatorInterface $translator,

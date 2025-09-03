@@ -66,20 +66,10 @@ class ModuleRepository extends AbstractObjectModelRepository
      */
     private $presentModulesPaths;
 
-    /**
-     * @var string
-     */
-    protected $rootDir;
-
-    /**
-     * @var string
-     */
-    protected $moduleDir;
-
-    public function __construct(string $rootDir, string $moduleDir)
-    {
-        $this->rootDir = $rootDir;
-        $this->moduleDir = $moduleDir;
+    public function __construct(
+        protected string $rootDir,
+        protected string $moduleDir,
+    ) {
     }
 
     /**

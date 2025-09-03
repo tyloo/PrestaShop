@@ -44,7 +44,7 @@ class CarrierThumbnailLogoProvider implements ImageProviderInterface
     ) {
     }
 
-    public function getPath($carrierId)
+    public function getPath($carrierId): ?string
     {
         $pathToImage = _PS_SHIP_IMG_DIR_ . $carrierId . '.jpg';
 

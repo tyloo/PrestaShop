@@ -131,11 +131,9 @@ class ImageRetriever
      * @param Product|Store|Category|Manufacturer|Supplier $object
      * @param int|string                                   $id_image Identifier of the image
      *
-     * @return array|null
-     *
      * @throws PrestaShopDatabaseException
      */
-    public function getImage($object, $id_image)
+    public function getImage($object, $id_image): ?array
     {
         if (! $id_image) {
             return null;

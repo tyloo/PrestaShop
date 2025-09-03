@@ -45,41 +45,14 @@ use PrestaShopException;
  */
 class EntityTranslator implements EntityTranslatorInterface
 {
-    /**
-     * @var DataLangCore
-     */
-    protected $dataLang;
-
-    /**
-     * @var Db
-     */
-    protected $db;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
-     * @var string
-     */
-    protected $tableName;
-
-    /**
-     * @var string
-     */
-    protected $dbPrefix;
+    protected string $tableName;
 
     public function __construct(
-        Db $db,
-        string $dbPrefix,
-        TranslatorInterface $translator,
-        DataLangCore $dataLang,
+        protected Db $db,
+        protected string $dbPrefix,
+        protected TranslatorInterface $translator,
+        protected DataLangCore $dataLang,
     ) {
-        $this->dataLang = $dataLang;
-        $this->db = $db;
-        $this->dbPrefix = $dbPrefix;
-        $this->translator = $translator;
         $this->tableName = $this->buildTableNameFromDataLang();
     }
 

@@ -45,24 +45,12 @@ use PrestaShop\PrestaShop\Core\Product\Combination\NameBuilder\CombinationNameBu
 #[AsQueryHandler]
 class SearchCombinationsForAssociationHandler implements SearchCombinationsForAssociationHandlerInterface
 {
-    /**
-     * @var AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
-     * @var CombinationNameBuilderInterface
-     */
-    protected $combinationNameBuilder;
-
     public function __construct(
         private readonly ProductRepository $productRepository,
-        AttributeRepository $attributeRepository,
+        protected AttributeRepository $attributeRepository,
         private readonly ProductImagePathFactory $productImagePathFactory,
-        CombinationNameBuilderInterface $combinationNameBuilder,
+        protected CombinationNameBuilderInterface $combinationNameBuilder,
     ) {
-        $this->attributeRepository = $attributeRepository;
-        $this->combinationNameBuilder = $combinationNameBuilder;
     }
 
     public function handle(SearchCombinationsForAssociation $query): array

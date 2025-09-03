@@ -67,12 +67,12 @@ final class ProductImportHandler extends AbstractImportHandler
     /**
      * @var string product database table name
      */
-    private $productTable;
+    private readonly string $productTable;
 
     /**
      * @var string accessory database table name
      */
-    private $accessoryTable;
+    private readonly string $accessoryTable;
 
     /**
      * @param int    $currentContextShopId

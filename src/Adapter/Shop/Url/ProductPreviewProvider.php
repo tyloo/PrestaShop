@@ -35,23 +35,11 @@ use Tools;
 
 class ProductPreviewProvider implements UrlProviderInterface
 {
-    /**
-     * @var Link
-     */
-    protected $link;
-
-    /**
-     * @var int
-     */
-    protected $employeeId;
-
     public function __construct(
-        Link $link,
+        protected Link $link,
         private readonly bool $urlRewritingIsEnabled,
-        int $employeeId,
+        protected int $employeeId,
     ) {
-        $this->link = $link;
-        $this->employeeId = $employeeId;
     }
 
     /**

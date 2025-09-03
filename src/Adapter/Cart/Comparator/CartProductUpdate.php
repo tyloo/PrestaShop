@@ -35,20 +35,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 
 class CartProductUpdate
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var CombinationId|null
-     */
-    private $combinationId;
+    private readonly ?CombinationId $combinationId;
 
-    /**
-     * @var CustomizationId|null
-     */
-    private $customizationId;
+    private readonly ?CustomizationId $customizationId;
 
     public function __construct(
         int $productId,
@@ -116,8 +107,8 @@ class CartProductUpdate
     {
         return [
             'id_product' => $this->productId->getValue(),
-            'id_product_attribute' => $this->combinationId !== null ? $this->combinationId->getValue() : 0,
-            'id_customization' => $this->customizationId !== null ? $this->customizationId->getValue() : 0,
+            'id_product_attribute' => $this->combinationId instanceof CombinationId ? $this->combinationId->getValue() : 0,
+            'id_customization' => $this->customizationId instanceof CustomizationId ? $this->customizationId->getValue() : 0,
             'delta_quantity' => $this->deltaQuantity,
             'created' => $this->created,
         ];

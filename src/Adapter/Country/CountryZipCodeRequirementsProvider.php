@@ -38,10 +38,7 @@ use PrestaShopException;
 
 final class CountryZipCodeRequirementsProvider implements CountryZipCodeRequirementsProviderInterface
 {
-    /**
-     * @var int
-     */
-    private $langId;
+    private readonly int $langId;
 
     public function __construct(
         LegacyContext $context,

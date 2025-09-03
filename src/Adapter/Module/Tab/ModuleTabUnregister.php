@@ -40,24 +40,12 @@ use Tab as TabClass;
  */
 class ModuleTabUnregister
 {
-    /**
-     * @var LangRepository
-     */
-    protected $langRepository;
-
-    /**
-     * @var TabRepository
-     */
-    protected $tabRepository;
-
     public function __construct(
-        TabRepository $tabRepository,
-        LangRepository $langRepository,
+        protected TabRepository $tabRepository,
+        protected LangRepository $langRepository,
         private readonly LoggerInterface $logger,
         private readonly TranslatorInterface $translator,
     ) {
-        $this->langRepository = $langRepository;
-        $this->tabRepository = $tabRepository;
     }
 
     /**

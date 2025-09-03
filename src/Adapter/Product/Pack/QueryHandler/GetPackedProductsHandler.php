@@ -54,59 +54,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[AsQueryHandler]
 class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
 {
-    /**
-     * @var int
-     */
-    protected $languageId;
-
-    /**
-     * @var ProductPackRepository
-     */
-    protected $productPackRepository;
-
-    /**
-     * @var ProductRepository
-     */
-    protected $productRepository;
-
-    /**
-     * @var AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
-     * @var CombinationNameBuilder
-     */
-    protected $combinationNameBuilder;
-
-    /**
-     * @var ProductImageRepository
-     */
-    protected $productImageRepository;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
     public function __construct(
-        int $defaultLangId,
-        ProductPackRepository $productPackRepository,
-        ProductRepository $productRepository,
+        protected int $languageId,
+        protected ProductPackRepository $productPackRepository,
+        protected ProductRepository $productRepository,
         private readonly CombinationRepository $combinationRepository,
-        AttributeRepository $attributeRepository,
-        CombinationNameBuilder $combinationNameBuilder,
-        ProductImageRepository $productImageRepository,
-        TranslatorInterface $translator,
+        protected AttributeRepository $attributeRepository,
+        protected CombinationNameBuilder $combinationNameBuilder,
+        protected ProductImageRepository $productImageRepository,
+        protected TranslatorInterface $translator,
         private readonly ProductImageProviderInterface $productImageProvider,
     ) {
-        $this->languageId = $defaultLangId;
-        $this->productPackRepository = $productPackRepository;
-        $this->productRepository = $productRepository;
-        $this->attributeRepository = $attributeRepository;
-        $this->combinationNameBuilder = $combinationNameBuilder;
-        $this->productImageRepository = $productImageRepository;
-        $this->translator = $translator;
     }
 
     public function handle(GetPackedProducts $query): array
@@ -162,7 +120,7 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
                 (int) $packedItem['quantity'],
                 $combinationId,
                 (string) $name,
-                (string) $reference,
+                $reference,
                 $coverUrl
             );
         }

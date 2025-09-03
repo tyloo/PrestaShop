@@ -53,27 +53,15 @@ class ModuleTabRegister
      */
     private $defaultParent = 'DEFAULT';
 
-    /**
-     * @var LangRepository
-     */
-    protected $langRepository;
-
-    /**
-     * @var TabRepository
-     */
-    protected $tabRepository;
-
     public function __construct(
-        TabRepository $tabRepository,
-        LangRepository $langRepository,
+        protected TabRepository $tabRepository,
+        protected LangRepository $langRepository,
         private readonly LoggerInterface $logger,
         private readonly TranslatorInterface $translator,
         private readonly Filesystem $filesystem,
         private readonly array $languages,
         private readonly Loader $routingConfigLoader,
     ) {
-        $this->langRepository = $langRepository;
-        $this->tabRepository = $tabRepository;
     }
 
     /**
@@ -250,7 +238,7 @@ class ModuleTabRegister
      *
      * @return array of strings
      */
-    protected function getModuleAdminControllersFilename($moduleName)
+    protected function getModuleAdminControllersFilename($moduleName): array
     {
         return array_map(fn (SplFileInfo $file) => $file->getFilename(), $this->getModuleAdminControllers($moduleName));
     }

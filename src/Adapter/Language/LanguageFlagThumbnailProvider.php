@@ -46,7 +46,7 @@ final class LanguageFlagThumbnailProvider implements ImageProviderInterface
     ) {
     }
 
-    public function getPath($languageId)
+    public function getPath($languageId): ?string
     {
         $pathToImage = _PS_IMG_DIR_ . 'l' . \DIRECTORY_SEPARATOR . $languageId . '.jpg';
 

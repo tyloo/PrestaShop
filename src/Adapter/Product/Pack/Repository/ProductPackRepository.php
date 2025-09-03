@@ -47,22 +47,10 @@ use Throwable;
 
 class ProductPackRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @var Connection
-     */
-    protected $connection;
-
-    /**
-     * @var string
-     */
-    protected $dbPrefix;
-
     public function __construct(
-        Connection $connection,
-        string $dbPrefix,
+        protected Connection $connection,
+        protected string $dbPrefix,
     ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
     }
 
     /**

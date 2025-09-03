@@ -113,7 +113,7 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
     /**
      * @return array|null cover image data or null if category does not have cover
      */
-    private function getCoverImage(CategoryId $categoryId)
+    private function getCoverImage(CategoryId $categoryId): ?array
     {
         $imageType = 'jpg';
         $image = _PS_CAT_IMG_DIR_ . $categoryId->getValue() . '.' . $imageType;
@@ -139,10 +139,7 @@ final class GetCategoryForEditingHandler implements GetCategoryForEditingHandler
         ];
     }
 
-    /**
-     * @return array|null
-     */
-    private function getThumbnailImage(CategoryId $categoryId)
+    private function getThumbnailImage(CategoryId $categoryId): ?array
     {
         $imageType = 'jpg';
         $image = _PS_CAT_IMG_DIR_ . $categoryId->getValue() . '_thumb.' . $imageType;

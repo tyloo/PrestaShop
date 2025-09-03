@@ -48,20 +48,14 @@ class CartPresenter implements PresenterInterface
      */
     private $link;
 
-    /**
-     * @var ImageRetriever
-     */
-    private $imageRetriever;
+    private readonly ImageRetriever $imageRetriever;
 
     /**
      * @var ProductPresentationSettings
      */
     protected $settings;
 
-    /**
-     * @var TaxConfiguration
-     */
-    private $taxConfiguration;
+    private readonly TaxConfiguration $taxConfiguration;
 
     /**
      * @var ProductAssembler
@@ -75,10 +69,7 @@ class CartPresenter implements PresenterInterface
         $this->taxConfiguration = new TaxConfiguration();
     }
 
-    /**
-     * @return array
-     */
-    public function addCustomizedData(array $products, Cart $cart)
+    public function addCustomizedData(array $products, Cart $cart): array
     {
         return array_map(function ($product) use ($cart) {
             $customizations = [];

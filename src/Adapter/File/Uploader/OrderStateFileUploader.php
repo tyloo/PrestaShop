@@ -40,14 +40,9 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
  */
 class OrderStateFileUploader implements OrderStateFileUploaderInterface
 {
-    /**
-     * @var UploadSizeConfigurationInterface
-     */
-    protected $uploadSizeConfiguration;
-
-    public function __construct(UploadSizeConfigurationInterface $uploadSizeConfiguration)
-    {
-        $this->uploadSizeConfiguration = $uploadSizeConfiguration;
+    public function __construct(
+        protected UploadSizeConfigurationInterface $uploadSizeConfiguration,
+    ) {
     }
 
     /**

@@ -46,10 +46,7 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
 #[AsQueryHandler]
 final class GetEmployeeForEditingHandler extends AbstractObjectModelHandler implements GetEmployeeForEditingHandlerInterface
 {
-    /**
-     * @var ImageTagSourceParserInterface
-     */
-    private $imageTagSourceParser;
+    private readonly ImageTagSourceParserInterface $imageTagSourceParser;
 
     public function __construct(?ImageTagSourceParserInterface $imageTagSourceParser = null)
     {

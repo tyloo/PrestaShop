@@ -37,15 +37,9 @@ use PrestaShopDatabaseException;
  */
 class CategoriesProvider
 {
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
+    private readonly int $contextLanguageId;
 
-    /**
-     * @var array
-     */
-    private $contextShopIds;
+    private readonly array $contextShopIds;
 
     /**
      * @param int $contextLanguageId

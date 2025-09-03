@@ -40,15 +40,9 @@ use ProductSupplier;
  */
 abstract class AbstractProductSupplierHandler
 {
-    /**
-     * @var ProductSupplierRepository
-     */
-    protected $productSupplierRepository;
-
     public function __construct(
-        ProductSupplierRepository $productSupplierRepository,
+        protected ProductSupplierRepository $productSupplierRepository,
     ) {
-        $this->productSupplierRepository = $productSupplierRepository;
     }
 
     /**

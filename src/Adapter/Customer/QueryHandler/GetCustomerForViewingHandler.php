@@ -63,10 +63,7 @@ use Tools;
 #[AsQueryHandler]
 final class GetCustomerForViewingHandler implements GetCustomerForViewingHandlerInterface
 {
-    /**
-     * @var LegacyContext
-     */
-    private $context;
+    private readonly LegacyContext $context;
 
     /**
      * @param int $contextLangId

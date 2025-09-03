@@ -57,16 +57,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
 {
     /**
-     * @var ShopRepository
-     */
-    protected $shopRepository;
-
-    /**
-     * @var ProductRepository
-     */
-    protected $productRepository;
-
-    /**
      * @var Locale
      */
     private $locale;
@@ -90,14 +80,12 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
         private readonly bool $taxEnabled,
         private readonly bool $isEcotaxEnabled,
         private readonly int $ecoTaxGroupId,
-        ShopRepository $shopRepository,
-        ProductRepository $productRepository,
+        protected ShopRepository $shopRepository,
+        protected ProductRepository $productRepository,
     ) {
         $this->locale = $localeRepository->getLocale(
             $contextLocale
         );
-        $this->shopRepository = $shopRepository;
-        $this->productRepository = $productRepository;
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria): GridData

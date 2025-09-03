@@ -58,10 +58,8 @@ class DebugMode
 
     /**
      * Get the current debug mode from the defines file.
-     *
-     * @return string|null
      */
-    public function getCurrentDebugMode()
+    public function getCurrentDebugMode(): ?string
     {
         $definesClean = '';
         $customDefinesPath = _PS_ROOT_DIR_ . '/config/defines_custom.inc.php';

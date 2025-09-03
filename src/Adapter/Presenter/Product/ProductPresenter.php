@@ -40,55 +40,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProductPresenter
 {
-    /**
-     * @var Configuration
-     */
-    protected $configuration;
+    protected Configuration $configuration;
 
-    /**
-     * @var HookManager
-     */
-    protected $hookManager;
-
-    /**
-     * @var ImageRetriever
-     */
-    protected $imageRetriever;
-
-    /**
-     * @var Link
-     */
-    protected $link;
-
-    /**
-     * @var PriceFormatter
-     */
-    protected $priceFormatter;
-
-    /**
-     * @var ProductColorsRetriever
-     */
-    protected $productColorsRetriever;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
+    protected HookManager $hookManager;
 
     public function __construct(
-        ImageRetriever $imageRetriever,
-        Link $link,
-        PriceFormatter $priceFormatter,
-        ProductColorsRetriever $productColorsRetriever,
-        TranslatorInterface $translator,
+        protected ImageRetriever $imageRetriever,
+        protected Link $link,
+        protected PriceFormatter $priceFormatter,
+        protected ProductColorsRetriever $productColorsRetriever,
+        protected TranslatorInterface $translator,
         ?HookManager $hookManager = null,
         ?Configuration $configuration = null,
     ) {
-        $this->imageRetriever = $imageRetriever;
-        $this->link = $link;
-        $this->priceFormatter = $priceFormatter;
-        $this->productColorsRetriever = $productColorsRetriever;
-        $this->translator = $translator;
         $this->hookManager = $hookManager ?? new HookManager();
         $this->configuration = $configuration ?? new Configuration();
     }

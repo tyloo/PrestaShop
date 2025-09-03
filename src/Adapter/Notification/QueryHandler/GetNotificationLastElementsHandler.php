@@ -44,10 +44,7 @@ use PrestaShop\PrestaShop\Core\Domain\Notification\QueryResult\NotificationsResu
 #[AsQueryHandler]
 final class GetNotificationLastElementsHandler implements GetNotificationLastElementsHandlerInterface
 {
-    /**
-     * @var array
-     */
-    private $configuration;
+    private array $configuration;
 
     public function __construct(
         NotificationsConfiguration $notificationsConfiguration,

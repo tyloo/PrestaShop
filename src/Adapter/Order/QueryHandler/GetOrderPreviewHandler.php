@@ -60,10 +60,7 @@ use Validate;
 #[AsQueryHandler]
 final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
 {
-    /**
-     * @var AddressFormatterInterface
-     */
-    private $addressFormatter;
+    private readonly AddressFormatterInterface $addressFormatter;
 
     public function __construct(
         private readonly LocaleRepository $localeRepository,

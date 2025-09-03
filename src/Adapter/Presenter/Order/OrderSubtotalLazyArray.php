@@ -40,15 +40,9 @@ use TaxConfiguration;
 
 class OrderSubtotalLazyArray extends AbstractLazyArray
 {
-    /**
-     * @var TaxConfiguration
-     */
-    private $taxConfiguration;
+    private readonly TaxConfiguration $taxConfiguration;
 
-    /**
-     * @var PriceFormatter
-     */
-    private $priceFormatter;
+    private readonly PriceFormatter $priceFormatter;
 
     /**
      * @var bool

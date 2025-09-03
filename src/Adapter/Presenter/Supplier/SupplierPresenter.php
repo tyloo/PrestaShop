@@ -35,20 +35,12 @@ use Supplier;
 
 class SupplierPresenter
 {
-    /**
-     * @var ImageRetriever
-     */
-    protected $imageRetriever;
+    protected ImageRetriever $imageRetriever;
 
-    /**
-     * @var Link
-     */
-    protected $link;
-
-    public function __construct(Link $link)
-    {
-        $this->link = $link;
-        $this->imageRetriever = new ImageRetriever($link);
+    public function __construct(
+        protected Link $link,
+    ) {
+        $this->imageRetriever = new ImageRetriever($this->link);
     }
 
     /**

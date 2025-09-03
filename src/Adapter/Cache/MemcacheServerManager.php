@@ -36,10 +36,7 @@ use Memcached;
  */
 class MemcacheServerManager
 {
-    /**
-     * @var string
-     */
-    private $tableName;
+    private readonly string $tableName;
 
     public function __construct(
         private readonly Connection $connection,
