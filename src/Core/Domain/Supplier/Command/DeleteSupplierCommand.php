@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject\SupplierId;
  */
 class DeleteSupplierCommand
 {
-    /**
-     * @var SupplierId
-     */
-    private $supplierId;
+    private readonly SupplierId $supplierId;
 
     /**
      * @param int $supplierId
@@ -50,10 +47,7 @@ class DeleteSupplierCommand
         $this->supplierId = new SupplierId($supplierId);
     }
 
-    /**
-     * @return SupplierId
-     */
-    public function getSupplierId()
+    public function getSupplierId(): SupplierId
     {
         return $this->supplierId;
     }

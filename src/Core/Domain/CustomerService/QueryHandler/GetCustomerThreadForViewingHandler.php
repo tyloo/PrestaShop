@@ -64,17 +64,11 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
      */
     private $translator;
 
-    /**
-     * @var Locale
-     */
-    protected $locale;
-
     public function __construct(
         private readonly Context $context,
-        Locale $locale,
+        protected Locale $locale,
     ) {
         $this->translator = $this->context->getTranslator();
-        $this->locale = $locale;
     }
 
     public function handle(GetCustomerThreadForViewing $query): CustomerThreadView

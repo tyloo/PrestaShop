@@ -38,7 +38,7 @@ class SetRequiredFieldsForAddressCommand
     /**
      * @var string[]
      */
-    private $requiredFields;
+    private readonly array $requiredFields;
 
     /**
      * @param string[] $requiredFields
@@ -53,7 +53,7 @@ class SetRequiredFieldsForAddressCommand
     /**
      * @return string[]
      */
-    public function getRequiredFields()
+    public function getRequiredFields(): array
     {
         return $this->requiredFields;
     }

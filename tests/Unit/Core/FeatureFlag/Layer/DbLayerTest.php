@@ -36,7 +36,7 @@ class DbLayerTest extends TestCase
 {
     private const FEATURE_FLAG_TEST = 'feature_flag_test';
 
-    private $featureFlag;
+    private readonly FeatureFlag $featureFlag;
 
     private readonly \PHPUnit\Framework\MockObject\MockObject $featureFlagRepository;
 

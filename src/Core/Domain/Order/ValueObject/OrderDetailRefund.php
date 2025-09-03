@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Order\Exception\OrderException;
 
 class OrderDetailRefund
 {
-    /**
-     * @var int
-     */
-    private $orderDetailId;
+    private readonly int $orderDetailId;
 
-    /**
-     * @var int
-     */
-    private $productQuantity;
+    private readonly int $productQuantity;
 
     /**
      * @throws InvalidCancelProductException

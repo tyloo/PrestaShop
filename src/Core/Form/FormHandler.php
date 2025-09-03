@@ -42,22 +42,7 @@ class FormHandler implements FormHandlerInterface
     /**
      * @var FormBuilderInterface the form builder
      */
-    protected $formBuilder;
-
-    /**
-     * @var FormDataProviderInterface the form data provider
-     */
-    protected $formDataProvider;
-
-    /**
-     * @var HookDispatcherInterface the event dispatcher
-     */
-    protected $hookDispatcher;
-
-    /**
-     * @var array the list of Form Types
-     */
-    protected $formTypes;
+    protected FormBuilderInterface $formBuilder;
 
     /**
      * @param string $hookName
@@ -65,16 +50,22 @@ class FormHandler implements FormHandlerInterface
      */
     public function __construct(
         FormBuilderInterface $formBuilder,
-        HookDispatcherInterface $hookDispatcher,
-        FormDataProviderInterface $formDataProvider,
-        array $formTypes,
+        /**
+         * @var HookDispatcherInterface the event dispatcher
+         */
+        protected HookDispatcherInterface $hookDispatcher,
+        /**
+         * @var FormDataProviderInterface the form data provider
+         */
+        protected FormDataProviderInterface $formDataProvider,
+        /**
+         * @var array the list of Form Types
+         */
+        protected array $formTypes,
         protected $hookName,
         protected $formName = 'form',
     ) {
         $this->formBuilder = $formBuilder->getFormFactory()->createNamedBuilder($this->formName);
-        $this->hookDispatcher = $hookDispatcher;
-        $this->formDataProvider = $formDataProvider;
-        $this->formTypes = $formTypes;
     }
 
     /**

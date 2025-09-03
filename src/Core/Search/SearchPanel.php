@@ -31,37 +31,13 @@ namespace PrestaShop\PrestaShop\Core\Search;
 
 class SearchPanel implements SearchPanelInterface
 {
-    /**
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * @var string
-     */
-    protected $buttonLabel;
-
-    /**
-     * @var string
-     */
-    protected $link;
-
-    /**
-     * @var array
-     */
-    protected $queryParams;
-
     public function __construct(
-        string $title,
-        string $buttonLabel,
-        string $link,
-        array $queryParams,
+        protected string $title,
+        protected string $buttonLabel,
+        protected string $link,
+        protected array $queryParams,
         private readonly ?bool $isExternalLink = true,
     ) {
-        $this->title = $title;
-        $this->buttonLabel = $buttonLabel;
-        $this->link = $link;
-        $this->queryParams = $queryParams;
     }
 
     public function getTitle(): string

@@ -47,10 +47,7 @@ final class CustomerAddressGridDefinitionFactory extends AbstractGridDefinitionF
 
     public const GRID_ID = 'customer_address';
 
-    /**
-     * @var string
-     */
-    private $backUrl;
+    private string $backUrl;
 
     public function __construct(HookDispatcherInterface $hookDispatcher, ?Request $currentRequest)
     {

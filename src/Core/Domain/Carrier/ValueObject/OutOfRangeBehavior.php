@@ -54,10 +54,7 @@ class OutOfRangeBehavior
         self::DISABLED,
     ];
 
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     /**
      * @throws CarrierConstraintException

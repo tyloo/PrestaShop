@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\Exception\InvalidFeatureValueIdExc
  */
 class FeatureValueId
 {
-    /**
-     * @var int
-     */
-    private $featureValueId;
+    private readonly int $featureValueId;
 
     /**
      * @throws InvalidFeatureValueIdException

@@ -43,15 +43,9 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Money;
  */
 class Discount
 {
-    /**
-     * @var Money|null
-     */
-    private $amountDiscount;
+    private readonly ?Money $amountDiscount;
 
-    /**
-     * @var PercentageDiscount|null
-     */
-    private $percentageDiscount;
+    private readonly ?PercentageDiscount $percentageDiscount;
 
     /**
      * Static factory method to build amount reduction type discount

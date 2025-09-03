@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\ValueObject\CartId;
  */
 class GetCartForOrderCreation
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
     /**
      * @var bool

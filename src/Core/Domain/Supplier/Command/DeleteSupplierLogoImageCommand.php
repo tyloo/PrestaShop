@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject\SupplierId;
  */
 class DeleteSupplierLogoImageCommand
 {
-    /**
-     * @var SupplierId
-     */
-    private $supplierId;
+    private readonly SupplierId $supplierId;
 
     /**
      * @throws SupplierException

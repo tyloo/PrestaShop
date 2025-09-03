@@ -41,10 +41,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\ValueObject\OrderReturnSt
  */
 class EditOrderReturnStateCommand
 {
-    /**
-     * @var OrderReturnStateId
-     */
-    private $orderReturnStateId;
+    private readonly OrderReturnStateId $orderReturnStateId;
 
     /**
      * @var array<string>|null
@@ -64,10 +61,7 @@ class EditOrderReturnStateCommand
         $this->orderReturnStateId = new OrderReturnStateId($orderReturnStateId);
     }
 
-    /**
-     * @return OrderReturnStateId
-     */
-    public function getOrderReturnStateId()
+    public function getOrderReturnStateId(): OrderReturnStateId
     {
         return $this->orderReturnStateId;
     }

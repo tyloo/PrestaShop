@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureValueId;
  */
 class ProductFeatureValue
 {
-    /**
-     * @var FeatureId
-     */
-    private $featureId;
+    private readonly FeatureId $featureId;
 
-    /**
-     * @var FeatureValueId|null
-     */
-    private $featureValueId;
+    private ?FeatureValueId $featureValueId;
 
     public function __construct(
         int $featureId,

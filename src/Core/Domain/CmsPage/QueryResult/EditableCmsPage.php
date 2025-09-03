@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
  */
 class EditableCmsPage
 {
-    /**
-     * @var CmsPageId
-     */
-    private $cmsPageId;
+    private readonly CmsPageId $cmsPageId;
 
-    /**
-     * @var CmsPageCategoryId
-     */
-    private $cmsPageCategoryId;
+    private readonly CmsPageCategoryId $cmsPageCategoryId;
 
     /**
      * @param int      $cmsPageId
@@ -82,18 +76,12 @@ class EditableCmsPage
         $this->cmsPageCategoryId = new CmsPageCategoryId($cmsPageCategoryId);
     }
 
-    /**
-     * @return CmsPageId
-     */
-    public function getCmsPageId()
+    public function getCmsPageId(): CmsPageId
     {
         return $this->cmsPageId;
     }
 
-    /**
-     * @return CmsPageCategoryId
-     */
-    public function getCmsPageCategoryId()
+    public function getCmsPageCategoryId(): CmsPageCategoryId
     {
         return $this->cmsPageCategoryId;
     }

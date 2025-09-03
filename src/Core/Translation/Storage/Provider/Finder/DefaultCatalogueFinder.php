@@ -42,12 +42,12 @@ class DefaultCatalogueFinder extends AbstractCatalogueFinder
     /**
      * @var string Directory containing the default locale XLF files
      */
-    private $defaultCatalogueDirectory;
+    private readonly string $defaultCatalogueDirectory;
 
     /**
      * @var array<int, string>
      */
-    private $filenameFilters;
+    private readonly array $filenameFilters;
 
     /**
      * @param string   $defaultCatalogueDirectory Directory where to look files

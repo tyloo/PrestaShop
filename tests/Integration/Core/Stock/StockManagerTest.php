@@ -389,6 +389,9 @@ class FakeProduct4759 extends Product
 {
     private static $LAST_ID = 0;
 
+    /**
+     * @var FakeStockAvailable4759
+     */
     public $stock_available;
 
     public function __construct($stock_available, int $pack_stock_type = PackStockType::STOCK_TYPE_PACK_ONLY)

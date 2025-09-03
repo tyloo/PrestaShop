@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\Exception\ShipmentException;
 
 class ShipmentId
 {
-    /**
-     * @var int
-     */
-    private $shipmentId;
+    private readonly int $shipmentId;
 
     /**
      * @throws ShipmentException

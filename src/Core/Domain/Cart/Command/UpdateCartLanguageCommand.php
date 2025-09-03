@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\LanguageId;
  */
 class UpdateCartLanguageCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
-    /**
-     * @var LanguageId
-     */
-    private $newLanguageId;
+    private readonly LanguageId $newLanguageId;
 
     /**
      * @param int $cartId
@@ -55,18 +49,12 @@ class UpdateCartLanguageCommand
         $this->newLanguageId = new LanguageId($newLanguageId);
     }
 
-    /**
-     * @return CartId
-     */
-    public function getCartId()
+    public function getCartId(): CartId
     {
         return $this->cartId;
     }
 
-    /**
-     * @return LanguageId
-     */
-    public function getNewLanguageId()
+    public function getNewLanguageId(): LanguageId
     {
         return $this->newLanguageId;
     }

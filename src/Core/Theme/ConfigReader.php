@@ -40,14 +40,9 @@ class ConfigReader implements ConfigReaderInterface
         'preview' => 'themes/preview-fallback.png',
     ];
 
-    /**
-     * @var string
-     */
-    protected $themesDirectoryPath;
-
-    public function __construct(string $themesDirectoryPath)
-    {
-        $this->themesDirectoryPath = $themesDirectoryPath;
+    public function __construct(
+        protected string $themesDirectoryPath,
+    ) {
     }
 
     public function read(string $name): ?ArrayFinder

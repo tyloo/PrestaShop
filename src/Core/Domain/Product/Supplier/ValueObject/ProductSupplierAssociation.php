@@ -44,25 +44,13 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject\SupplierId;
  */
 class ProductSupplierAssociation implements SupplierAssociationInterface
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var CombinationIdInterface
-     */
-    private $combinationId;
+    private readonly \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId|NoCombinationId $combinationId;
 
-    /**
-     * @var SupplierId
-     */
-    private $supplierId;
+    private readonly SupplierId $supplierId;
 
-    /**
-     * @var ProductSupplierId|null
-     */
-    private $productSupplierId;
+    private readonly ?ProductSupplierId $productSupplierId;
 
     public function __construct(int $productId, int $combinationId, int $supplierId, ?int $productSupplierId = null)
     {

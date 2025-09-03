@@ -38,15 +38,9 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\ValueObject\OrderReturnSt
  */
 class UpdateOrderReturnStateCommand
 {
-    /**
-     * @var OrderReturnId
-     */
-    private $orderReturnId;
+    private readonly OrderReturnId $orderReturnId;
 
-    /**
-     * @var OrderReturnStateId
-     */
-    private $orderReturnStateId;
+    private readonly OrderReturnStateId $orderReturnStateId;
 
     /**
      * @throws OrderReturnConstraintException

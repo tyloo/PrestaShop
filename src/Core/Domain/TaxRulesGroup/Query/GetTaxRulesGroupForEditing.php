@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\ValueObject\TaxRulesGroupId;
  */
 class GetTaxRulesGroupForEditing
 {
-    /**
-     * @var TaxRulesGroupId
-     */
-    private $taxRulesGroupId;
+    private readonly TaxRulesGroupId $taxRulesGroupId;
 
     /**
      * @throws TaxRulesGroupConstraintException

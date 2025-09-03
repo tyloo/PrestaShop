@@ -102,10 +102,7 @@ class RedirectType
         self::TYPE_GONE_DISPLAYED => self::TYPE_GONE_DISPLAYED,
     ];
 
-    /**
-     * @var string
-     */
-    private $value;
+    private readonly string $value;
 
     /**
      * @throws ProductConstraintException

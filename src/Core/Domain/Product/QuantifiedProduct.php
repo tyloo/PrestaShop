@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 class QuantifiedProduct
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var CombinationId
-     */
-    private $combinationId;
+    private readonly ?CombinationId $combinationId;
 
     public function __construct(
         int $productId,

@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Address\ValueObject\AddressId;
  */
 class EditCustomerAddressCommand extends AbstractEditAddressCommand
 {
-    /**
-     * @var AddressId
-     */
-    private $addressId;
+    private readonly AddressId $addressId;
 
     /**
      * @throws AddressConstraintException

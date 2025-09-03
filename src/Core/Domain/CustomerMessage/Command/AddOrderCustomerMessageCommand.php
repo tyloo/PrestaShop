@@ -41,10 +41,7 @@ class AddOrderCustomerMessageCommand
      */
     private $message;
 
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
     /**
      * @throws OrderException

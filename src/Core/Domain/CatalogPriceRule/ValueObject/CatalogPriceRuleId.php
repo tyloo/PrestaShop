@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\CatalogPriceRule\Exception\CatalogPriceRul
  */
 final class CatalogPriceRuleId
 {
-    /**
-     * @var int
-     */
-    private $catalogPriceRuleId;
+    private readonly int $catalogPriceRuleId;
 
     /**
      * @throws CatalogPriceRuleConstraintException

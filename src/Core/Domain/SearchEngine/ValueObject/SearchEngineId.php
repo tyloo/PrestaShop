@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\SearchEngine\Exception\SearchEngineExcepti
  */
 class SearchEngineId
 {
-    /**
-     * @var int
-     */
-    private $searchEngineId;
+    private readonly int $searchEngineId;
 
     /**
      * @throws SearchEngineException

@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Pack\ValueObject\PackId;
  */
 class RemoveAllProductsFromPackCommand
 {
-    /**
-     * @var PackId
-     */
-    private $packId;
+    private readonly PackId $packId;
 
     public function __construct(int $packId)
     {

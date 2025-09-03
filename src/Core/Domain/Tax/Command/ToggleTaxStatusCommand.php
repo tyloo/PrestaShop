@@ -41,10 +41,7 @@ class ToggleTaxStatusCommand
      */
     private $expectedStatus;
 
-    /**
-     * @var TaxId
-     */
-    private $taxId;
+    private readonly TaxId $taxId;
 
     /**
      * @param int  $taxId
@@ -67,10 +64,7 @@ class ToggleTaxStatusCommand
         return $this->expectedStatus;
     }
 
-    /**
-     * @return TaxId
-     */
-    public function getTaxId()
+    public function getTaxId(): TaxId
     {
         return $this->taxId;
     }

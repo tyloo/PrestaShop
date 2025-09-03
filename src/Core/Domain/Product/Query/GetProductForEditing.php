@@ -36,16 +36,13 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 class GetProductForEditing
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @var LanguageId some data from this class is only used for reading and is not expected to be edited, so it
      *                 is provided only in the language of the user interface, which is defined by this parameter
      */
-    private $displayLanguageId;
+    private readonly LanguageId $displayLanguageId;
 
     public function __construct(
         int $productId,

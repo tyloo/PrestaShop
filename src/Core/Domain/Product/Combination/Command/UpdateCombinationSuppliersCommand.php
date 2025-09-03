@@ -42,10 +42,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
  */
 class UpdateCombinationSuppliersCommand
 {
-    /**
-     * @var CombinationId
-     */
-    private $combinationId;
+    private readonly CombinationId $combinationId;
 
     /**
      * @var array<int, ProductSupplierUpdate>

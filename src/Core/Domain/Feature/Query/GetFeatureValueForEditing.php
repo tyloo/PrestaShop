@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureValueId;
  */
 class GetFeatureValueForEditing
 {
-    /**
-     * @var FeatureValueId
-     */
-    private $featureValueId;
+    private readonly FeatureValueId $featureValueId;
 
     /**
      * @throws InvalidFeatureValueIdException

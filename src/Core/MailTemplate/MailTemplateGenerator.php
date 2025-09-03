@@ -45,10 +45,7 @@ class MailTemplateGenerator
 {
     use LoggerAwareTrait;
 
-    /**
-     * @var Filesystem
-     */
-    private $fileSystem;
+    private Filesystem $fileSystem;
 
     public function __construct(
         private MailTemplateRendererInterface $renderer,

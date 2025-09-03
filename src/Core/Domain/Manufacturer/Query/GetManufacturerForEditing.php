@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\ValueObject\ManufacturerId;
  */
 class GetManufacturerForEditing
 {
-    /**
-     * @var ManufacturerId
-     */
-    private $manufacturerId;
+    private readonly ManufacturerId $manufacturerId;
 
     /**
      * @param int $manufacturerId
@@ -50,10 +47,7 @@ class GetManufacturerForEditing
         $this->manufacturerId = new ManufacturerId($manufacturerId);
     }
 
-    /**
-     * @return ManufacturerId
-     */
-    public function getManufacturerId()
+    public function getManufacturerId(): ManufacturerId
     {
         return $this->manufacturerId;
     }

@@ -38,15 +38,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 class GetEditableCombinationsList
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
     /**
      * @param array<string, mixed> $filters

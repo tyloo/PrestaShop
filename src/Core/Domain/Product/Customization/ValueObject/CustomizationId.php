@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Customization\Exception\Customizat
  */
 class CustomizationId
 {
-    /**
-     * @var int
-     */
-    private $customizationId;
+    private readonly int $customizationId;
 
     public function __construct(int $customizationId)
     {

@@ -42,11 +42,6 @@ use Traversable;
 abstract class ImmutableCollection implements IteratorAggregate, Countable
 {
     /**
-     * @var T[]
-     */
-    protected $values;
-
-    /**
      * @param T[] $values
      *
      * Keep the constructor protected to keep immutability, the subclasses should not change this constructor
@@ -54,9 +49,9 @@ abstract class ImmutableCollection implements IteratorAggregate, Countable
      *
      *   public static function from(T ...$values): static
      */
-    protected function __construct(array $values)
-    {
-        $this->values = $values;
+    protected function __construct(
+        protected array $values,
+    ) {
     }
 
     /**

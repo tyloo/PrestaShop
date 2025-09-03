@@ -44,35 +44,26 @@ class Handler implements FormHandlerInterface
     public $form;
 
     /**
-     * @var FormFactoryInterface the form factory
-     */
-    protected $formFactory;
-
-    /**
-     * @var FormDataProviderInterface the form data provider
-     */
-    protected $formDataProvider;
-
-    /**
-     * @var HookDispatcherInterface the event dispatcher
-     */
-    protected $hookDispatcher;
-
-    /**
      * @param string $hookName
      * @param string $formName
      */
     public function __construct(
-        FormFactoryInterface $formFactory,
-        HookDispatcherInterface $hookDispatcher,
-        FormDataProviderInterface $formDataProvider,
+        /**
+         * @var FormFactoryInterface the form factory
+         */
+        protected FormFactoryInterface $formFactory,
+        /**
+         * @var HookDispatcherInterface the event dispatcher
+         */
+        protected HookDispatcherInterface $hookDispatcher,
+        /**
+         * @var FormDataProviderInterface the form data provider
+         */
+        protected FormDataProviderInterface $formDataProvider,
         string $form,
         protected $hookName,
         protected $formName = 'form',
     ) {
-        $this->formFactory = $formFactory;
-        $this->hookDispatcher = $hookDispatcher;
-        $this->formDataProvider = $formDataProvider;
         $this->form = $form;
     }
 

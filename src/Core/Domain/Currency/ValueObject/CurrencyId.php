@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\Exception\CurrencyException;
  */
 class CurrencyId implements CurrencyIdInterface
 {
-    /**
-     * @var int
-     */
-    private $currencyId;
+    private readonly int $currencyId;
 
     /**
      * @throws CurrencyException

@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\ValueObject\OrderReturnSt
  */
 class DeleteOrderReturnStateCommand
 {
-    /**
-     * @var OrderReturnStateId
-     */
-    private $orderReturnStateId;
+    private readonly OrderReturnStateId $orderReturnStateId;
 
     public function __construct(int $orderReturnStateId)
     {

@@ -39,10 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupI
  */
 class GroupedAttributeIds
 {
-    /**
-     * @var AttributeGroupId
-     */
-    private $attributeGroupId;
+    private readonly AttributeGroupId $attributeGroupId;
 
     /**
      * @var AttributeId[]

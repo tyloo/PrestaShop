@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\ValueObject\ProfileId;
  */
 class EditProfileCommand extends AbstractProfileCommand
 {
-    /**
-     * @var ProfileId
-     */
-    private $profileId;
+    private readonly ProfileId $profileId;
 
     /**
      * @param int      $profileId
@@ -52,10 +49,7 @@ class EditProfileCommand extends AbstractProfileCommand
         $this->profileId = new ProfileId((int) $profileId);
     }
 
-    /**
-     * @return ProfileId
-     */
-    public function getProfileId()
+    public function getProfileId(): ProfileId
     {
         return $this->profileId;
     }

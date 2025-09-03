@@ -38,30 +38,15 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
  */
 class AddCartRuleToOrderCommand
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
-    /**
-     * @var string
-     */
-    private $cartRuleName;
+    private readonly string $cartRuleName;
 
-    /**
-     * @var string
-     */
-    private $cartRuleType;
+    private readonly string $cartRuleType;
 
-    /**
-     * @var DecimalNumber|null
-     */
-    private $value;
+    private readonly ?DecimalNumber $value;
 
-    /**
-     * @var OrderInvoiceId|null
-     */
-    private $orderInvoiceId;
+    private readonly ?OrderInvoiceId $orderInvoiceId;
 
     /**
      * @param int|null $orderInvoiceId

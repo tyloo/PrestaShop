@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\ValueObject\Name;
  */
 class EditableMeta
 {
-    /**
-     * @var MetaId
-     */
-    private $metaId;
+    private readonly MetaId $metaId;
 
-    /**
-     * @var Name
-     */
-    private $pageName;
+    private readonly Name $pageName;
 
     /**
      * @param int      $metaId
@@ -68,18 +62,12 @@ class EditableMeta
         $this->pageName = new Name($pageName);
     }
 
-    /**
-     * @return MetaId
-     */
-    public function getMetaId()
+    public function getMetaId(): MetaId
     {
         return $this->metaId;
     }
 
-    /**
-     * @return Name
-     */
-    public function getPageName()
+    public function getPageName(): Name
     {
         return $this->pageName;
     }

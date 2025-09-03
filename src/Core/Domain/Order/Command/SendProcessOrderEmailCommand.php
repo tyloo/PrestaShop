@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\ValueObject\CartId;
  */
 class SendProcessOrderEmailCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
     /**
      * @throws CartConstraintException

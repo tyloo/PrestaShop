@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Category\ValueObject\CategoryId;
  */
 class DeleteCategoryCommand
 {
-    /**
-     * @var CategoryId
-     */
-    private $categoryId;
+    private readonly CategoryId $categoryId;
 
-    /**
-     * @var CategoryDeleteMode
-     */
-    private $deleteMode;
+    private readonly CategoryDeleteMode $deleteMode;
 
     /**
      * @param int    $categoryId
@@ -55,18 +49,12 @@ class DeleteCategoryCommand
         $this->deleteMode = new CategoryDeleteMode($mode);
     }
 
-    /**
-     * @return CategoryId
-     */
-    public function getCategoryId()
+    public function getCategoryId(): CategoryId
     {
         return $this->categoryId;
     }
 
-    /**
-     * @return CategoryDeleteMode
-     */
-    public function getDeleteMode()
+    public function getDeleteMode(): CategoryDeleteMode
     {
         return $this->deleteMode;
     }

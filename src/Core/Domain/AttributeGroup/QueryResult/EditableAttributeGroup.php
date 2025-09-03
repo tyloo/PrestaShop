@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupI
  */
 class EditableAttributeGroup
 {
-    /**
-     * @var AttributeGroupId
-     */
-    private $attributeGroupId;
+    private readonly AttributeGroupId $attributeGroupId;
 
     /**
      * @param string[] $name

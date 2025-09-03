@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\ValueObject\CarrierId;
  */
 class ToggleCarrierIsFreeCommand
 {
-    /**
-     * @var CarrierId
-     */
-    private $carrierId;
+    private readonly CarrierId $carrierId;
 
     public function __construct(int $carrierId)
     {

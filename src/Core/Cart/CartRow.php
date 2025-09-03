@@ -65,36 +65,6 @@ class CartRow
     public const PRODUCT_PRICE_CACHE_ID_PATTERN = 'Product::getPriceStatic_%d-%d';
 
     /**
-     * @var PriceCalculator adapter to calculate price
-     */
-    protected $priceCalculator;
-
-    /**
-     * @var AddressFactory adapter to get address informations
-     */
-    protected $addressFactory;
-
-    /**
-     * @var CustomerDataProvider adapter to get customer informations
-     */
-    protected $customerDataProvider;
-
-    /**
-     * @var GroupDataProvider adapter to get group informations
-     */
-    protected $groupDataProvider;
-
-    /**
-     * @var Database adapter to get database
-     */
-    protected $databaseAdapter;
-
-    /**
-     * @var CacheAdapter adapter to get cache
-     */
-    protected $cacheAdapter;
-
-    /**
      * @var array previous data for product: array given by Cart::getProducts()
      */
     protected $rowData = [];
@@ -133,24 +103,36 @@ class CartRow
      */
     public function __construct(
         $rowData,
-        PriceCalculator $priceCalculator,
-        AddressFactory $addressFactory,
-        CustomerDataProvider $customerDataProvider,
-        CacheAdapter $cacheAdapter,
-        GroupDataProvider $groupDataProvider,
-        Database $databaseAdapter,
+        /**
+         * @var PriceCalculator adapter to calculate price
+         */
+        protected PriceCalculator $priceCalculator,
+        /**
+         * @var AddressFactory adapter to get address informations
+         */
+        protected AddressFactory $addressFactory,
+        /**
+         * @var CustomerDataProvider adapter to get customer informations
+         */
+        protected CustomerDataProvider $customerDataProvider,
+        /**
+         * @var CacheAdapter adapter to get cache
+         */
+        protected CacheAdapter $cacheAdapter,
+        /**
+         * @var GroupDataProvider adapter to get group informations
+         */
+        protected GroupDataProvider $groupDataProvider,
+        /**
+         * @var Database adapter to get database
+         */
+        protected Database $databaseAdapter,
         protected $useEcotax,
         protected $precision,
         protected $roundType,
         protected $orderId = null,
     ) {
         $this->setRowData($rowData);
-        $this->priceCalculator = $priceCalculator;
-        $this->addressFactory = $addressFactory;
-        $this->customerDataProvider = $customerDataProvider;
-        $this->cacheAdapter = $cacheAdapter;
-        $this->groupDataProvider = $groupDataProvider;
-        $this->databaseAdapter = $databaseAdapter;
     }
 
     /**

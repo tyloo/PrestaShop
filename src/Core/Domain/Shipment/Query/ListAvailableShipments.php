@@ -28,15 +28,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\ValueObject\OrderDetailsId;
 
 class ListAvailableShipments
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
-    /**
-     * @var OrderDetailsId
-     */
-    private $orderIdDetails;
+    private readonly OrderDetailsId $orderIdDetails;
 
     public function __construct(int $orderId, array $orderIdDetails)
     {

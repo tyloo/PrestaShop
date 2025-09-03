@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\SearchEngine\ValueObject\SearchEngineId;
  */
 class DeleteSearchEngineCommand
 {
-    /**
-     * @var SearchEngineId
-     */
-    private $searchEngineId;
+    private readonly SearchEngineId $searchEngineId;
 
     /**
      * @throws SearchEngineException

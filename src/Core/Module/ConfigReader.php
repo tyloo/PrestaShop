@@ -33,14 +33,9 @@ use PrestaShop\PrestaShop\Core\Util\ArrayFinder;
 
 class ConfigReader implements ConfigReaderInterface
 {
-    /**
-     * @var string
-     */
-    protected $modulesDirectoryPath;
-
-    public function __construct(string $modulesDirectoryPath)
-    {
-        $this->modulesDirectoryPath = $modulesDirectoryPath;
+    public function __construct(
+        protected string $modulesDirectoryPath,
+    ) {
     }
 
     public function read(string $name, string $isoCode): ?ArrayFinder

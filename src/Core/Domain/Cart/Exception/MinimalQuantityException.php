@@ -35,16 +35,13 @@ use Throwable;
  */
 class MinimalQuantityException extends CartException
 {
-    /**
-     * @var int
-     */
-    protected $minimalQuantity;
-
-    public function __construct(string $message, int $minimalQuantity, int $code = 0, ?Throwable $previous = null)
-    {
+    public function __construct(
+        string $message,
+        protected int $minimalQuantity,
+        int $code = 0,
+        ?Throwable $previous = null,
+    ) {
         parent::__construct($message, $code, $previous);
-
-        $this->minimalQuantity = $minimalQuantity;
     }
 
     public function getMinimalQuantity(): int

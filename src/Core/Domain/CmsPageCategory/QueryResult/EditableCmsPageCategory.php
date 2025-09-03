@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
 
 class EditableCmsPageCategory
 {
-    /**
-     * @var CmsPageCategoryId
-     */
-    private $parentId;
+    private readonly CmsPageCategoryId $parentId;
 
     /**
      * @param bool $isDisplayed
@@ -69,10 +66,7 @@ class EditableCmsPageCategory
         return $this->isDisplayed;
     }
 
-    /**
-     * @return CmsPageCategoryId
-     */
-    public function getParentId()
+    public function getParentId(): CmsPageCategoryId
     {
         return $this->parentId;
     }

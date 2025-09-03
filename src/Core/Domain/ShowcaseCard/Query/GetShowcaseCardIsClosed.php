@@ -41,10 +41,7 @@ class GetShowcaseCardIsClosed
      */
     private $employeeId;
 
-    /**
-     * @var ShowcaseCard
-     */
-    private $showcaseCard;
+    private readonly ShowcaseCard $showcaseCard;
 
     /**
      * @param int    $employeeId
@@ -71,10 +68,7 @@ class GetShowcaseCardIsClosed
         return $this->employeeId;
     }
 
-    /**
-     * @return ShowcaseCard
-     */
-    public function getShowcaseCard()
+    public function getShowcaseCard(): ShowcaseCard
     {
         return $this->showcaseCard;
     }

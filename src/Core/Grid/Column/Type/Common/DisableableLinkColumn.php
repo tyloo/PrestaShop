@@ -34,10 +34,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DisableableLinkColumn extends AbstractColumn
 {
-    /**
-     * @var LinkColumn
-     */
-    private $linkColumn;
+    private readonly LinkColumn $linkColumn;
 
     public function __construct($id)
     {

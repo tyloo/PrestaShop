@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Address\ValueObject\AddressId;
  */
 class EditManufacturerAddressCommand
 {
-    /**
-     * @var AddressId
-     */
-    private $addressId;
+    private AddressId $addressId;
 
     /**
      * @var int|null
@@ -115,10 +112,7 @@ class EditManufacturerAddressCommand
         $this->addressId = new AddressId($addressId);
     }
 
-    /**
-     * @return AddressId
-     */
-    public function getAddressId()
+    public function getAddressId(): AddressId
     {
         return $this->addressId;
     }

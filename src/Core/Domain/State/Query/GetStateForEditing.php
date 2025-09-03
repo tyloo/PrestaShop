@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateId;
  */
 class GetStateForEditing
 {
-    /**
-     * @var StateId
-     */
-    private $stateId;
+    private readonly StateId $stateId;
 
     public function __construct(int $stateId)
     {

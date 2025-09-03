@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\ValueObject\Name;
 
 class EditMetaCommand extends AbstractMetaCommand
 {
-    /**
-     * @var MetaId
-     */
-    private $metaId;
+    private readonly MetaId $metaId;
 
     /**
      * @var Name
@@ -69,10 +66,7 @@ class EditMetaCommand extends AbstractMetaCommand
         $this->metaId = new MetaId($metaId);
     }
 
-    /**
-     * @return MetaId
-     */
-    public function getMetaId()
+    public function getMetaId(): MetaId
     {
         return $this->metaId;
     }

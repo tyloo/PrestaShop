@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\ValueObject\CartRuleId;
  */
 class AddCartRuleToCartCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
-    /**
-     * @var CartRuleId
-     */
-    private $cartRuleId;
+    private readonly CartRuleId $cartRuleId;
 
     /**
      * @param int $cartId
@@ -55,18 +49,12 @@ class AddCartRuleToCartCommand
         $this->cartRuleId = new CartRuleId($cartRuleId);
     }
 
-    /**
-     * @return CartId
-     */
-    public function getCartId()
+    public function getCartId(): CartId
     {
         return $this->cartId;
     }
 
-    /**
-     * @return CartRuleId
-     */
-    public function getCartRuleId()
+    public function getCartRuleId(): CartRuleId
     {
         return $this->cartRuleId;
     }

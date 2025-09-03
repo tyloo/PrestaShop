@@ -36,14 +36,9 @@ use PrestaShop\PrestaShop\Core\Localization\CLDR\Locale as CldrLocale;
  */
 class LocaleRepository
 {
-    /**
-     * @var LocaleDataSource
-     */
-    protected $dataSource;
-
-    public function __construct(LocaleDataSource $dataSource)
-    {
-        $this->dataSource = $dataSource;
+    public function __construct(
+        protected LocaleDataSource $dataSource,
+    ) {
     }
 
     /**

@@ -39,15 +39,9 @@ use RuntimeException;
  */
 class SetAssociatedProductCategoriesCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var CategoryId
-     */
-    private $defaultCategoryId;
+    private readonly CategoryId $defaultCategoryId;
 
     /**
      * @var CategoryId[]

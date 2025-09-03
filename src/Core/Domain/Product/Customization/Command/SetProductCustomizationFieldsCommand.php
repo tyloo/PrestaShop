@@ -42,20 +42,14 @@ class SetProductCustomizationFieldsCommand
 {
     use CustomizationShopConstraintTrait;
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private ProductId $productId;
 
     /**
      * @var CustomizationField[]
      */
     private $customizationFields = [];
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
+    private ShopConstraint $shopConstraint;
 
     /**
      * @param array{'type': int, "localized_names": array<int, string>, "is_required": bool, "added_by_module": bool, "id"?: int|null}[] $customizationFields

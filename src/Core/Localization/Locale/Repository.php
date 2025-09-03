@@ -53,30 +53,13 @@ class Repository implements RepositoryInterface
     public const MAX_FRACTION_DIGITS = 3;
 
     /**
-     * Repository used to retrieve low level CLDR locale objects.
-     *
-     * @var CldrLocaleRepository
-     */
-    protected $cldrLocaleRepository;
-
-    /**
-     * Repository used to retrieve Currency objects.
-     *
-     * @var CurrencyRepositoryInterface
-     */
-    protected $currencyRepository;
-
-    /**
      * Already instantiated Locale objects.
      *
      * @var Locale[]
      */
     protected $locales;
 
-    /**
-     * @var SpecificationFactory
-     */
-    protected $specificationFactory;
+    protected SpecificationFactory $specificationFactory;
 
     /**
      * @param string $roundingMode
@@ -85,8 +68,14 @@ class Repository implements RepositoryInterface
      * @param int    $maxFractionDigits
      */
     public function __construct(
-        CldrLocaleRepository $cldrLocaleRepository,
-        CurrencyRepositoryInterface $currencyRepository,
+        /**
+         * Repository used to retrieve low level CLDR locale objects.
+         */
+        protected CldrLocaleRepository $cldrLocaleRepository,
+        /**
+         * Repository used to retrieve Currency objects.
+         */
+        protected CurrencyRepositoryInterface $currencyRepository,
         /**
          * Rounding mode to use when formatting numbers
          * Possible values are listed in PrestaShop\Decimal\Operation\Rounding::ROUND_* constants.
@@ -114,8 +103,6 @@ class Repository implements RepositoryInterface
          */
         protected $maxFractionDigits = self::MAX_FRACTION_DIGITS,
     ) {
-        $this->cldrLocaleRepository = $cldrLocaleRepository;
-        $this->currencyRepository = $currencyRepository;
         $this->specificationFactory = new SpecificationFactory();
     }
 
@@ -150,7 +137,7 @@ class Repository implements RepositoryInterface
     {
         $cldrLocale = $this->cldrLocaleRepository->getLocale($localeCode);
 
-        if ($cldrLocale === null) {
+        if (! $cldrLocale instanceof \PrestaShop\PrestaShop\Core\Localization\CLDR\Locale) {
             throw new LocalizationException('CLDR locale not found for locale code "' . $localeCode . '"');
         }
 
@@ -178,7 +165,7 @@ class Repository implements RepositoryInterface
     protected function getPriceSpecifications($localeCode): PriceSpecificationMap
     {
         $cldrLocale = $this->cldrLocaleRepository->getLocale($localeCode);
-        if ($cldrLocale === null) {
+        if (! $cldrLocale instanceof \PrestaShop\PrestaShop\Core\Localization\CLDR\Locale) {
             throw new LocalizationException('CLDR locale not found for locale code "' . $localeCode . '"');
         }
 

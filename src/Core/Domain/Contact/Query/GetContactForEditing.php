@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Contact\ValueObject\ContactId;
  */
 class GetContactForEditing
 {
-    /**
-     * @var ContactId
-     */
-    private $contactId;
+    private readonly ContactId $contactId;
 
     /**
      * @param int $contactId
@@ -50,10 +47,7 @@ class GetContactForEditing
         $this->contactId = new ContactId($contactId);
     }
 
-    /**
-     * @return ContactId
-     */
-    public function getContactId()
+    public function getContactId(): ContactId
     {
         return $this->contactId;
     }

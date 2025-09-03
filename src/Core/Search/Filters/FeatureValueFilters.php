@@ -38,15 +38,9 @@ class FeatureValueFilters extends Filters
      */
     protected $filterId = FeatureValueGridDefinitionFactory::GRID_ID;
 
-    /**
-     * @var int
-     */
-    protected $featureId;
+    protected int $featureId;
 
-    /**
-     * @var int
-     */
-    protected $languageId;
+    protected int $languageId;
 
     public function __construct(array $filters = [])
     {

@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureValueId;
  */
 class EditFeatureValueCommand
 {
-    /**
-     * @var FeatureValueId
-     */
-    private $featureValueId;
+    private readonly FeatureValueId $featureValueId;
 
     /**
      * @var FeatureId|null

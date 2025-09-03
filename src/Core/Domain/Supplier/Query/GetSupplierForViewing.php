@@ -36,15 +36,12 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject\SupplierId;
  */
 class GetSupplierForViewing
 {
-    /**
-     * @var SupplierId
-     */
-    private $supplierId;
+    private readonly SupplierId $supplierId;
 
     /**
      * @var LanguageId Language in which supplier is returned
      */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
     /**
      * @param int $supplierId
@@ -58,18 +55,12 @@ class GetSupplierForViewing
         $this->languageId = new LanguageId($languageId);
     }
 
-    /**
-     * @return SupplierId
-     */
-    public function getSupplierId()
+    public function getSupplierId(): SupplierId
     {
         return $this->supplierId;
     }
 
-    /**
-     * @return LanguageId
-     */
-    public function getLanguageId()
+    public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }

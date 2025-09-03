@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerConstraintExcep
  */
 class CustomerId implements CustomerIdInterface
 {
-    /**
-     * @var int
-     */
-    private $customerId;
+    private readonly int $customerId;
 
     public function __construct(int $customerId)
     {

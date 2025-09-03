@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\Exception\GroupConstraintEx
  */
 class GroupId implements GroupIdInterface
 {
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     public function __construct(int $groupId)
     {

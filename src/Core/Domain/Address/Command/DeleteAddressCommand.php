@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Address\ValueObject\AddressId;
  */
 class DeleteAddressCommand
 {
-    /**
-     * @var AddressId
-     */
-    private $addressId;
+    private readonly AddressId $addressId;
 
     /**
      * @param int $addressId
@@ -50,10 +47,7 @@ class DeleteAddressCommand
         $this->addressId = new AddressId($addressId);
     }
 
-    /**
-     * @return AddressId
-     */
-    public function getAddressId()
+    public function getAddressId(): AddressId
     {
         return $this->addressId;
     }

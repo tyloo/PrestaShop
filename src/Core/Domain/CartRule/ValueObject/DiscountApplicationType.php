@@ -64,10 +64,7 @@ class DiscountApplicationType
         self::SELECTED_PRODUCTS,
     ];
 
-    /**
-     * @var string
-     */
-    private $type;
+    private readonly string $type;
 
     /**
      * @var ProductId|null

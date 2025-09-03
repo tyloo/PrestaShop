@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
  */
 class ToggleCmsPageCategoryStatusCommand
 {
-    /**
-     * @var CmsPageCategoryId
-     */
-    private $cmsPageCategoryId;
+    private readonly CmsPageCategoryId $cmsPageCategoryId;
 
     /**
      * @param int $cmsPageCategoryId
@@ -50,10 +47,7 @@ class ToggleCmsPageCategoryStatusCommand
         $this->cmsPageCategoryId = new CmsPageCategoryId($cmsPageCategoryId);
     }
 
-    /**
-     * @return CmsPageCategoryId
-     */
-    public function getCmsPageCategoryId()
+    public function getCmsPageCategoryId(): CmsPageCategoryId
     {
         return $this->cmsPageCategoryId;
     }

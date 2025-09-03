@@ -44,11 +44,6 @@ use PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException;
 class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInterface
 {
     /**
-     * @var CurrencyDataProvider
-     */
-    protected $dataProvider;
-
-    /**
      * This layer must be ready only, displaying a price should not change the database data
      *
      * @var bool
@@ -56,9 +51,8 @@ class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInt
     protected $isWritable = false;
 
     public function __construct(
-        CurrencyDataProvider $dataProvider,
+        protected CurrencyDataProvider $dataProvider,
     ) {
-        $this->dataProvider = $dataProvider;
     }
 
     /**

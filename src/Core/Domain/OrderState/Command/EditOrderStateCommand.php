@@ -42,10 +42,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderState\ValueObject\OrderStateId;
  */
 class EditOrderStateCommand
 {
-    /**
-     * @var OrderStateId
-     */
-    private $orderStateId;
+    private readonly OrderStateId $orderStateId;
 
     /**
      * @var array<string>|null
@@ -135,10 +132,7 @@ class EditOrderStateCommand
         $this->orderStateId = new OrderStateId($orderStateId);
     }
 
-    /**
-     * @return OrderStateId
-     */
-    public function getOrderStateId()
+    public function getOrderStateId(): OrderStateId
     {
         return $this->orderStateId;
     }

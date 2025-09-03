@@ -54,10 +54,7 @@ class CustomizationFieldType
         'text' => self::TYPE_TEXT,
     ];
 
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     public function __construct(int $value)
     {

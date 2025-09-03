@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
 
 class DeleteFeatureCommand
 {
-    /**
-     * @var FeatureId
-     */
-    private $featureId;
+    private readonly FeatureId $featureId;
 
     public function __construct(
         int $featureId,

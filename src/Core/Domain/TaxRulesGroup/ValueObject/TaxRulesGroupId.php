@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\Exception\TaxRulesGroupConst
  */
 class TaxRulesGroupId
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private readonly int $id;
 
     /**
      * @throws TaxRulesGroupConstraintException

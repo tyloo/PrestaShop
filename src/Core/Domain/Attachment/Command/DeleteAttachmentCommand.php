@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\ValueObject\AttachmentId;
  */
 class DeleteAttachmentCommand
 {
-    /**
-     * @var AttachmentId
-     */
-    private $attachmentId;
+    private readonly AttachmentId $attachmentId;
 
     public function __construct(int $attachmentId)
     {

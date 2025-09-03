@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\Exception\FeatureConstraintExcepti
  */
 class FeatureId
 {
-    /**
-     * @var int
-     */
-    private $featureId;
+    private readonly int $featureId;
 
     public function __construct(int $featureId)
     {

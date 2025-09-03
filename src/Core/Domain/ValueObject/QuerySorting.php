@@ -39,10 +39,7 @@ class QuerySorting
 
     public const DESC = 'DESC';
 
-    /**
-     * @var string
-     */
-    private $sorting;
+    private readonly string $sorting;
 
     /**
      * @throws InvalidSortingException

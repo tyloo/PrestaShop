@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId;
  */
 class GetCountryRequiredFields
 {
-    /**
-     * @var CountryId
-     */
-    private $countryId;
+    private readonly CountryId $countryId;
 
     /**
      * @throws CountryConstraintException

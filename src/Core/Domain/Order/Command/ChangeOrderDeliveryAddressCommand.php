@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
  */
 class ChangeOrderDeliveryAddressCommand
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
-    /**
-     * @var AddressId
-     */
-    private $newDeliveryAddressId;
+    private readonly AddressId $newDeliveryAddressId;
 
     /**
      * @param int $orderId
@@ -55,18 +49,12 @@ class ChangeOrderDeliveryAddressCommand
         $this->newDeliveryAddressId = new AddressId($newDeliveryAddressId);
     }
 
-    /**
-     * @return OrderId
-     */
-    public function getOrderId()
+    public function getOrderId(): OrderId
     {
         return $this->orderId;
     }
 
-    /**
-     * @return AddressId
-     */
-    public function getNewDeliveryAddressId()
+    public function getNewDeliveryAddressId(): AddressId
     {
         return $this->newDeliveryAddressId;
     }

@@ -43,15 +43,9 @@ class AddCountryCommand
      */
     private $isoCode;
 
-    /**
-     * @var ZoneId
-     */
-    private $zoneId;
+    private readonly ZoneId $zoneId;
 
-    /**
-     * @var ?CountryZipCodeFormat
-     */
-    private $zipCodeFormat;
+    private readonly ?CountryZipCodeFormat $zipCodeFormat;
 
     public function __construct(
         /**

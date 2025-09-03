@@ -38,10 +38,7 @@ namespace Tests\Integration\Behaviour\Features\Context\Util;
  */
 class StreamWrapperPHP
 {
-    /**
-     * @var int
-     */
-    protected $index = 0;
+    protected int $index;
 
     protected $length;
 

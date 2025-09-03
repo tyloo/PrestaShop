@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
  */
 class AddProductCommand
 {
-    /**
-     * @var ProductType
-     */
-    private $productType;
+    private readonly ProductType $productType;
 
-    /**
-     * @var ShopId
-     */
-    private $shopId;
+    private readonly ShopId $shopId;
 
     public function __construct(
         string $productType,

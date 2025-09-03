@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\SearchEngine\ValueObject\SearchEngineId;
  */
 class EditSearchEngineCommand
 {
-    /**
-     * @var SearchEngineId
-     */
-    private $searchEngineId;
+    private readonly SearchEngineId $searchEngineId;
 
     /**
      * @var string|null

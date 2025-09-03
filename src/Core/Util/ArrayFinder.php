@@ -46,10 +46,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
  */
 class ArrayFinder implements ArrayAccess, Countable
 {
-    /**
-     * @var PropertyAccessor
-     */
-    private $propertyAccessor;
+    private readonly PropertyAccessor $propertyAccessor;
 
     /**
      * @param array $array the array to be searched and manager by ArrayFinder

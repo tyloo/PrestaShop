@@ -41,20 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 class AddProductToOrderCommand
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var CombinationId|null
-     */
-    private $combinationId;
+    private readonly ?CombinationId $combinationId;
 
     /**
      * @var DecimalNumber

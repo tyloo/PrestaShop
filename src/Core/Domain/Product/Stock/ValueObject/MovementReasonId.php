@@ -45,10 +45,7 @@ class MovementReasonId
 
     public const DECREASE_BY_EMPLOYEE_EDITION_CONFIG_KEY = 'PS_STOCK_MVT_DEC_EMPLOYEE_EDITION';
 
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     /**
      * @throws MovementReasonConstraintException

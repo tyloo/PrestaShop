@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Exception\AttributeGroupCon
  */
 class AttributeGroupId
 {
-    /**
-     * @var int
-     */
-    private $attributeGroupId;
+    private readonly int $attributeGroupId;
 
     public function __construct(int $attributeGroupId)
     {

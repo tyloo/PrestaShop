@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Supplier\ValueObject\SupplierAssoc
  */
 class ProductSupplierUpdate
 {
-    /**
-     * @var CurrencyId
-     */
-    private $currencyId;
+    private readonly CurrencyId $currencyId;
 
     public function __construct(
         private readonly SupplierAssociationInterface $association,

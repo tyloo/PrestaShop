@@ -40,20 +40,11 @@ class SearchProductsForAssociation
      */
     public const SEARCH_PHRASE_MIN_LENGTH = 3;
 
-    /**
-     * @var string
-     */
-    private $phrase;
+    private readonly string $phrase;
 
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
-    /**
-     * @var ShopId
-     */
-    private $shopId;
+    private readonly ShopId $shopId;
 
     /**
      * @var int|null

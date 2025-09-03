@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\State\Exception\StateConstraintException;
  */
 class StateId implements StateIdInterface
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private readonly int $id;
 
     /**
      * @throws StateConstraintException

@@ -41,19 +41,15 @@ use Symfony\Component\Cache\Adapter\AdapterInterface;
  */
 class LocaleCache extends AbstractDataLayer implements CldrLocaleDataLayerInterface
 {
-    /**
-     * Symfony Cache component adapter.
-     *
-     * Provides cached LocaleData objects
-     * Implements PSR-6: Cache Interface (@see http://www.php-fig.org/psr/psr-6/)
-     *
-     * @var AdapterInterface
-     */
-    protected $cache;
-
-    public function __construct(AdapterInterface $cache)
-    {
-        $this->cache = $cache;
+    public function __construct(
+        /**
+         * Symfony Cache component adapter.
+         *
+         * Provides cached LocaleData objects
+         * Implements PSR-6: Cache Interface (@see http://www.php-fig.org/psr/psr-6/)
+         */
+        protected AdapterInterface $cache,
+    ) {
     }
 
     public function setLowerLayer(CldrLocaleDataLayerInterface $lowerLayer)

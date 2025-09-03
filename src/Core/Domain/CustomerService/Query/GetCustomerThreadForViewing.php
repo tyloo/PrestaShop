@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\ValueObject\CustomerThread
  */
 class GetCustomerThreadForViewing
 {
-    /**
-     * @var CustomerThreadId
-     */
-    private $customerThreadId;
+    private readonly CustomerThreadId $customerThreadId;
 
     /**
      * @param int $customerThreadId
@@ -47,10 +44,7 @@ class GetCustomerThreadForViewing
         $this->customerThreadId = new CustomerThreadId($customerThreadId);
     }
 
-    /**
-     * @return CustomerThreadId
-     */
-    public function getCustomerThreadId()
+    public function getCustomerThreadId(): CustomerThreadId
     {
         return $this->customerThreadId;
     }

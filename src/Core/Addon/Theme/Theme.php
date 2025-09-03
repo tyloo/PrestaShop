@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Util\File\YamlParser;
 
 class Theme implements AddonInterface
 {
-    /**
-     * @var ArrayFinder
-     */
-    private $attributes;
+    private ArrayFinder $attributes;
 
     /**
      * @param array       $attributes                  Theme attributes

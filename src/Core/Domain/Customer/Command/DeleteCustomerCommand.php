@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
  */
 class DeleteCustomerCommand
 {
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
+    private readonly CustomerId $customerId;
 
-    /**
-     * @var CustomerDeleteMethod
-     */
-    private $deleteMethod;
+    private readonly CustomerDeleteMethod $deleteMethod;
 
     /**
      * @param int    $customerId
@@ -55,18 +49,12 @@ class DeleteCustomerCommand
         $this->deleteMethod = new CustomerDeleteMethod($deleteMethod);
     }
 
-    /**
-     * @return CustomerId
-     */
-    public function getCustomerId()
+    public function getCustomerId(): CustomerId
     {
         return $this->customerId;
     }
 
-    /**
-     * @return CustomerDeleteMethod
-     */
-    public function getDeleteMethod()
+    public function getDeleteMethod(): CustomerDeleteMethod
     {
         return $this->deleteMethod;
     }

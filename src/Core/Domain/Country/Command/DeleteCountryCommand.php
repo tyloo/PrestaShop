@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId;
  */
 class DeleteCountryCommand
 {
-    /**
-     * @var CountryId
-     */
-    private $countryId;
+    private readonly CountryId $countryId;
 
     public function __construct(int $countryId)
     {

@@ -31,10 +31,7 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\Exception\SupplierException;
 
 class SupplierId implements SupplierIdInterface
 {
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     /**
      * @throws SupplierException

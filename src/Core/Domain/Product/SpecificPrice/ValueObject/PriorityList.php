@@ -54,7 +54,7 @@ class PriorityList
     /**
      * @var string[]
      */
-    private $priorities;
+    private readonly array $priorities;
 
     /**
      * @param string[] $priorities

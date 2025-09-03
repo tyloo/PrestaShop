@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\Exception\CombinationC
  */
 class CombinationId implements CombinationIdInterface
 {
-    /**
-     * @var int
-     */
-    private $combinationId;
+    private readonly int $combinationId;
 
     /**
      * @throws CombinationConstraintException

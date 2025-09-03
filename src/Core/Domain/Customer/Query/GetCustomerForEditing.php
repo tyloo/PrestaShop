@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
  */
 class GetCustomerForEditing
 {
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
+    private readonly CustomerId $customerId;
 
     /**
      * @param int $customerId
@@ -47,10 +44,7 @@ class GetCustomerForEditing
         $this->customerId = new CustomerId($customerId);
     }
 
-    /**
-     * @return CustomerId
-     */
-    public function getCustomerId()
+    public function getCustomerId(): CustomerId
     {
         return $this->customerId;
     }

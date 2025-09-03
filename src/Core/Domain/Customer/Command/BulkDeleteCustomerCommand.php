@@ -40,10 +40,7 @@ class BulkDeleteCustomerCommand
      */
     private $customerIds;
 
-    /**
-     * @var CustomerDeleteMethod
-     */
-    private $deleteMethod;
+    private readonly CustomerDeleteMethod $deleteMethod;
 
     /**
      * @param int[]  $customerIds
@@ -63,10 +60,7 @@ class BulkDeleteCustomerCommand
         return $this->customerIds;
     }
 
-    /**
-     * @return CustomerDeleteMethod
-     */
-    public function getDeleteMethod()
+    public function getDeleteMethod(): CustomerDeleteMethod
     {
         return $this->deleteMethod;
     }

@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\SqlManagement\ValueObject\SqlRequestId;
  */
 class GetSqlRequestExecutionResult
 {
-    /**
-     * @var SqlRequestId
-     */
-    private $requestSqlId;
+    private readonly SqlRequestId $requestSqlId;
 
     /**
      * @param int $requestSqlId
@@ -50,10 +47,7 @@ class GetSqlRequestExecutionResult
         $this->requestSqlId = new SqlRequestId($requestSqlId);
     }
 
-    /**
-     * @return SqlRequestId
-     */
-    public function getSqlRequestId()
+    public function getSqlRequestId(): SqlRequestId
     {
         return $this->requestSqlId;
     }

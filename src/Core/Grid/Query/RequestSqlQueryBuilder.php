@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class RequestSqlQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var string
-     */
-    private $requestSqlTable;
+    private readonly string $requestSqlTable;
 
     /**
      * @param string $dbPrefix

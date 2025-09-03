@@ -36,15 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\ValueObject\CartRuleId;
  */
 class RemoveCartRuleFromCartCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
-    /**
-     * @var CartRuleId
-     */
-    private $cartRuleId;
+    private readonly CartRuleId $cartRuleId;
 
     /**
      * @throws CartConstraintException
@@ -55,18 +49,12 @@ class RemoveCartRuleFromCartCommand
         $this->cartRuleId = new CartRuleId($cartRuleId);
     }
 
-    /**
-     * @return CartId
-     */
-    public function getCartId()
+    public function getCartId(): CartId
     {
         return $this->cartId;
     }
 
-    /**
-     * @return CartRuleId
-     */
-    public function getCartRuleId()
+    public function getCartRuleId(): CartRuleId
     {
         return $this->cartRuleId;
     }

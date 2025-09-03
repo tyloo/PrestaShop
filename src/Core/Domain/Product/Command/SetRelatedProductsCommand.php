@@ -37,10 +37,7 @@ use RuntimeException;
  */
 class SetRelatedProductsCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @var ProductId[]

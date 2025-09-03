@@ -46,10 +46,7 @@ class Ean13
      */
     public const MAX_LENGTH = 13;
 
-    /**
-     * @var string
-     */
-    private $value;
+    private readonly string $value;
 
     public function __construct(string $value)
     {

@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\Invoice\ValueObject\OrderInvoiceId;
  */
 class UpdateInvoiceNoteCommand
 {
-    /**
-     * @var OrderInvoiceId
-     */
-    private $orderInvoiceId;
+    private readonly OrderInvoiceId $orderInvoiceId;
 
     public function __construct(
         int $orderInvoiceId,

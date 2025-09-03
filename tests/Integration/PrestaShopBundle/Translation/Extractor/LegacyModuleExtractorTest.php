@@ -46,10 +46,7 @@ class LegacyModuleExtractorTest extends KernelTestCase
 
     public const MODULE_NAME = 'translationtest';
 
-    /**
-     * @var CatalogueVerifier
-     */
-    private $catalogueVerifier;
+    private readonly CatalogueVerifier $catalogueVerifier;
 
     public function __construct($name = null)
     {

@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
  */
 class AddFeatureValueCommand
 {
-    /**
-     * @var FeatureId
-     */
-    private $featureId;
+    private readonly FeatureId $featureId;
 
     /**
      * @param string[] $localizedValues

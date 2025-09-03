@@ -39,10 +39,7 @@ use PrestaShopBundle\Exception\InvalidModuleException;
  */
 class AddOrderFromBackOfficeCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
     /**
      * @var string
@@ -54,10 +51,7 @@ class AddOrderFromBackOfficeCommand
      */
     private $orderStateId;
 
-    /**
-     * @var EmployeeIdInterface
-     */
-    private $employeeId;
+    private readonly \PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\NoEmployeeId|EmployeeId $employeeId;
 
     /**
      * @param int    $cartId
@@ -82,10 +76,7 @@ class AddOrderFromBackOfficeCommand
         $this->orderStateId = $orderStateId;
     }
 
-    /**
-     * @return CartId
-     */
-    public function getCartId()
+    public function getCartId(): CartId
     {
         return $this->cartId;
     }
@@ -117,7 +108,7 @@ class AddOrderFromBackOfficeCommand
     /**
      * @return EmployeeIdInterface
      */
-    public function getEmployeeId()
+    public function getEmployeeId(): NoEmployeeId|EmployeeId
     {
         return $this->employeeId;
     }

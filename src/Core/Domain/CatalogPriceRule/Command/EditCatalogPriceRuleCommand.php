@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Reduction;
  */
 class EditCatalogPriceRuleCommand
 {
-    /**
-     * @var CatalogPriceRuleId
-     */
-    private $catalogPriceRuleId;
+    private readonly CatalogPriceRuleId $catalogPriceRuleId;
 
     /**
      * @var string|null

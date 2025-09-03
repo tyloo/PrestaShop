@@ -31,10 +31,7 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\ValueObject\CartId;
 
 class UpdateCartDeliverySettingsCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
     public function __construct(
         int $cartId,

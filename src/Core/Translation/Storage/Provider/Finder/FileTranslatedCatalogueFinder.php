@@ -44,12 +44,12 @@ class FileTranslatedCatalogueFinder extends AbstractCatalogueFinder
     /**
      * @var string Directory containing all the sub folders for each locales containing their own XLF files
      */
-    private $translatedCatalogueDirectory;
+    private readonly string $translatedCatalogueDirectory;
 
     /**
      * @var array<int, string>
      */
-    private $filenameFilters;
+    private readonly array $filenameFilters;
 
     /**
      * @throws TranslationFilesNotFoundException

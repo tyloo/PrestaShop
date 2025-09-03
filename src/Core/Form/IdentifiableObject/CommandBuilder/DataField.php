@@ -58,15 +58,9 @@ class DataField
         self::TYPE_DATETIME,
     ];
 
-    /**
-     * @var PropertyPath
-     */
-    private $propertyPath;
+    private readonly PropertyPath $propertyPath;
 
-    /**
-     * @var string
-     */
-    private $type;
+    private readonly string $type;
 
     /**
      * @var bool

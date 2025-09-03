@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\VirtualProductFile\Exception\Virtu
  */
 class VirtualProductFileId
 {
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     public function __construct(int $virtualProductFileId)
     {

@@ -66,10 +66,7 @@ class RedirectType
         self::TYPE_TEMPORARY => self::TYPE_TEMPORARY,
     ];
 
-    /**
-     * @var string
-     */
-    private $value;
+    private readonly string $value;
 
     /**
      * @throws CategoryConstraintException

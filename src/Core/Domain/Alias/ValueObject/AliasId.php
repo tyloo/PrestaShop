@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\Exception\AliasConstraintException;
  */
 class AliasId
 {
-    /**
-     * @var int
-     */
-    private $aliasId;
+    private readonly int $aliasId;
 
     /**
      * @throws AliasConstraintException

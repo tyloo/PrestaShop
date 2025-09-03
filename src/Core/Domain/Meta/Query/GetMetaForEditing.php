@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\ValueObject\MetaId;
  */
 class GetMetaForEditing
 {
-    /**
-     * @var MetaId
-     */
-    private $metaId;
+    private readonly MetaId $metaId;
 
     /**
      * @param int $metaId
@@ -50,10 +47,7 @@ class GetMetaForEditing
         $this->metaId = new MetaId($metaId);
     }
 
-    /**
-     * @return MetaId
-     */
-    public function getMetaId()
+    public function getMetaId(): MetaId
     {
         return $this->metaId;
     }

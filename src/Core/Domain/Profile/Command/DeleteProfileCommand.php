@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\ValueObject\ProfileId;
  */
 class DeleteProfileCommand
 {
-    /**
-     * @var ProfileId
-     */
-    private $profileId;
+    private readonly ProfileId $profileId;
 
     /**
      * @param int $profileId
@@ -47,10 +44,7 @@ class DeleteProfileCommand
         $this->profileId = new ProfileId((int) $profileId);
     }
 
-    /**
-     * @return ProfileId
-     */
-    public function getProfileId()
+    public function getProfileId(): ProfileId
     {
         return $this->profileId;
     }

@@ -38,7 +38,7 @@ class AddFeatureCommand
     /**
      * @var string[]
      */
-    private $localizedNames;
+    private readonly array $localizedNames;
 
     /**
      * @var ShopId[]

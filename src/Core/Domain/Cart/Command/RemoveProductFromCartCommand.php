@@ -36,15 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 class RemoveProductFromCartCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @throws CartConstraintException
@@ -59,18 +53,12 @@ class RemoveProductFromCartCommand
         $this->productId = new ProductId($productId);
     }
 
-    /**
-     * @return CartId
-     */
-    public function getCartId()
+    public function getCartId(): CartId
     {
         return $this->cartId;
     }
 
-    /**
-     * @return ProductId
-     */
-    public function getProductId()
+    public function getProductId(): ProductId
     {
         return $this->productId;
     }

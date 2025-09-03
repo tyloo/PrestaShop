@@ -40,14 +40,9 @@ abstract class AbstractCategoryDataFactory implements GridDataFactoryInterface
 {
     public const DESCRIPTION_MAX_LENGTH = 150;
 
-    /**
-     * @var GridDataFactoryInterface
-     */
-    protected $doctrineCategoryDataFactory;
-
-    public function __construct(GridDataFactoryInterface $doctrineCategoryDataFactory)
-    {
-        $this->doctrineCategoryDataFactory = $doctrineCategoryDataFactory;
+    public function __construct(
+        protected GridDataFactoryInterface $doctrineCategoryDataFactory,
+    ) {
     }
 
     public function getData(SearchCriteriaInterface $searchCriteria)

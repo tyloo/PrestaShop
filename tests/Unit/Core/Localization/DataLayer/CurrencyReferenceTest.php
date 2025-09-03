@@ -56,7 +56,7 @@ class CurrencyReferenceTest extends TestCase
             ->setSymbols([CurrencyInterface::SYMBOL_TYPE_DEFAULT => 'test'])
             ->setDisplayNames([CurrencyInterface::DISPLAY_NAME_COUNT_DEFAULT => 'test'])
         ;
-        $stubCldrCurrency = new CldrCurrency($stubCurrencyData);
+        new CldrCurrency($stubCurrencyData);
 
         // Create proper LocaleData instead of mocking CldrLocaleInterface
         $stubLocaleData = new \PrestaShop\PrestaShop\Core\Localization\CLDR\LocaleData();

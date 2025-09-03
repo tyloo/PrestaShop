@@ -40,10 +40,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 class GenerateProductCombinationsCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @var GroupedAttributeIds[]

@@ -39,10 +39,7 @@ class LocalizedTags
 {
     public const VALID_TAG_PATTERN = '/^[^<>{}]*$/u';
 
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
     /**
      * @var string[]

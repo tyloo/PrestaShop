@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\CatalogPriceRule\ValueObject\CatalogPriceR
  */
 class DeleteCatalogPriceRuleCommand
 {
-    /**
-     * @var CatalogPriceRuleId
-     */
-    private $catalogPriceRuleId;
+    private readonly CatalogPriceRuleId $catalogPriceRuleId;
 
     /**
      * @param int $catalogPriceRuleId
@@ -50,10 +47,7 @@ class DeleteCatalogPriceRuleCommand
         $this->catalogPriceRuleId = new CatalogPriceRuleId($catalogPriceRuleId);
     }
 
-    /**
-     * @return CatalogPriceRuleId
-     */
-    public function getCatalogPriceRuleId()
+    public function getCatalogPriceRuleId(): CatalogPriceRuleId
     {
         return $this->catalogPriceRuleId;
     }

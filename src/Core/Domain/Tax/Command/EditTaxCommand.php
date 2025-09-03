@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Tax\ValueObject\TaxId;
  */
 class EditTaxCommand
 {
-    /**
-     * @var TaxId
-     */
-    private $taxId;
+    private readonly TaxId $taxId;
 
     /**
      * @var array|null
@@ -65,10 +62,7 @@ class EditTaxCommand
         $this->taxId = new TaxId($taxId);
     }
 
-    /**
-     * @return TaxId
-     */
-    public function getTaxId()
+    public function getTaxId(): TaxId
     {
         return $this->taxId;
     }

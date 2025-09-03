@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
  */
 class AddressCreationCustomerInformation
 {
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
+    private readonly CustomerId $customerId;
 
     /**
      * @var string|null

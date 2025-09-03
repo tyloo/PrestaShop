@@ -73,7 +73,7 @@ class ModuleManagerBuilder
 
     protected static $adminModuleDataProvider;
 
-    protected static $legacyLogger;
+    protected static LegacyLogger $legacyLogger;
 
     protected static $moduleDataProvider;
 
@@ -81,7 +81,7 @@ class ModuleManagerBuilder
 
     protected static $instance;
 
-    protected static $cacheProvider;
+    protected static \Doctrine\Common\Cache\Cache $cacheProvider;
 
     /**
      * @var ApiClientContext

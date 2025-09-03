@@ -33,10 +33,7 @@ use Exception;
 
 class OrderDetailsId
 {
-    /**
-     * @var array
-     */
-    private $orderDetailsId;
+    private readonly array $orderDetailsId;
 
     /**
      * @throws Exception

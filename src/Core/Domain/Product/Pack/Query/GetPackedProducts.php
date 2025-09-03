@@ -39,20 +39,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
  */
 class GetPackedProducts
 {
-    /**
-     * @var PackId
-     */
-    private $packId;
+    private readonly PackId $packId;
 
-    /**
-     * @var LanguageId
-     */
-    protected $languageId;
+    protected LanguageId $languageId;
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
+    private readonly ShopConstraint $shopConstraint;
 
     public function __construct(int $packId, int $languageId, ShopConstraint $shopConstraint)
     {

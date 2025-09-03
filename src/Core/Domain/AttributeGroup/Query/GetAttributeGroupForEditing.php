@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupI
  */
 class GetAttributeGroupForEditing
 {
-    /**
-     * @var AttributeGroupId
-     */
-    private $attributeGroupId;
+    private readonly AttributeGroupId $attributeGroupId;
 
     public function __construct(int $attributeGroupId)
     {

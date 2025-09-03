@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\ValueObject\GroupId;
 
 class GetCustomerGroupForEditing
 {
-    /**
-     * @var GroupId
-     */
-    private $customerGroupId;
+    private readonly GroupId $customerGroupId;
 
     public function __construct(int $customerGroupId)
     {

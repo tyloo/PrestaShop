@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Notification\ValueObject\Type;
  */
 class NotificationsResult
 {
-    /**
-     * @var Type
-     */
-    private $type;
+    private readonly Type $type;
 
     /**
      * @param NotificationResult[] $notifications

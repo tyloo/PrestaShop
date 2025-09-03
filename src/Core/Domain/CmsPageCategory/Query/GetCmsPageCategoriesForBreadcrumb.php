@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
  */
 class GetCmsPageCategoriesForBreadcrumb
 {
-    /**
-     * @var CmsPageCategoryId
-     */
-    private $currentCategoryId;
+    private readonly CmsPageCategoryId $currentCategoryId;
 
     /**
      * @param int $currentCategoryId
@@ -53,10 +50,8 @@ class GetCmsPageCategoriesForBreadcrumb
 
     /**
      * Gets current category id.
-     *
-     * @return CmsPageCategoryId
      */
-    public function getCurrentCategoryId()
+    public function getCurrentCategoryId(): CmsPageCategoryId
     {
         return $this->currentCategoryId;
     }

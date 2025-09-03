@@ -41,10 +41,7 @@ class InitialPrice implements FixedPriceInterface
      */
     public const INITIAL_PRICE_VALUE = '-1';
 
-    /**
-     * @var DecimalNumber
-     */
-    private $value;
+    private readonly DecimalNumber $value;
 
     public function __construct()
     {

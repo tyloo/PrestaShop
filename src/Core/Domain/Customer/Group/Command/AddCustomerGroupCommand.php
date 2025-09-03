@@ -34,15 +34,12 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class AddCustomerGroupCommand
 {
-    /**
-     * @var DecimalNumber
-     */
-    private $reductionPercent;
+    private readonly DecimalNumber $reductionPercent;
 
     /**
      * @var ShopId[]
      */
-    private $shopIds;
+    private readonly array $shopIds;
 
     /**
      * @param string[]   $localizedNames

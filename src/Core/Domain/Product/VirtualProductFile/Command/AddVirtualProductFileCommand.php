@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 class AddVirtualProductFileCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @param string $displayName display name of the file

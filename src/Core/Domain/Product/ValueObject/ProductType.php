@@ -76,10 +76,7 @@ class ProductType
         self::TYPE_COMBINATIONS,
     ];
 
-    /**
-     * @var string
-     */
-    private $value;
+    private readonly string $value;
 
     /**
      * @throws ProductConstraintException

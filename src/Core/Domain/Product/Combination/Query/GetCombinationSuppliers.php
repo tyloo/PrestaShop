@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\Combinatio
  */
 class GetCombinationSuppliers
 {
-    /**
-     * @var CombinationId
-     */
-    private $combinationId;
+    private readonly CombinationId $combinationId;
 
     public function __construct(
         int $combinationId,

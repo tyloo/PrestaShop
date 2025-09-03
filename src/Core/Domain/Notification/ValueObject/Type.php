@@ -40,10 +40,7 @@ class Type
 
     public const CUSTOMER_MESSAGE = 'customer_message';
 
-    /**
-     * @var string
-     */
-    private $type;
+    private readonly string $type;
 
     /**
      * @throws NotificationException

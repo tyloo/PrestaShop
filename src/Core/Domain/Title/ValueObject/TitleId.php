@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Title\Exception\TitleConstraintException;
  */
 class TitleId
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
     /**
      * @throws TitleConstraintException

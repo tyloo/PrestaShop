@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderMessage\ValueObject\OrderMessageId;
  */
 class GetOrderMessageForEditing
 {
-    /**
-     * @var OrderMessageId
-     */
-    private $orderMessageId;
+    private readonly OrderMessageId $orderMessageId;
 
     public function __construct(int $orderMessageId)
     {

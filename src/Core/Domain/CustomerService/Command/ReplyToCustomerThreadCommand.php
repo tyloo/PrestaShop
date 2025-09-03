@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\ValueObject\CustomerThread
  */
 class ReplyToCustomerThreadCommand
 {
-    /**
-     * @var CustomerThreadId
-     */
-    private $customerThreadId;
+    private readonly CustomerThreadId $customerThreadId;
 
     /**
      * @param int    $customerThreadId
@@ -50,10 +47,7 @@ class ReplyToCustomerThreadCommand
         $this->customerThreadId = new CustomerThreadId($customerThreadId);
     }
 
-    /**
-     * @return CustomerThreadId
-     */
-    public function getCustomerThreadId()
+    public function getCustomerThreadId(): CustomerThreadId
     {
         return $this->customerThreadId;
     }

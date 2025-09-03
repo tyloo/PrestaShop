@@ -33,10 +33,7 @@ class Precision
 {
     public const DEFAULT_PRECISION = 2;
 
-    /**
-     * @var int
-     */
-    private $precision;
+    private readonly int $precision;
 
     /**
      * @throws CurrencyConstraintException
@@ -47,10 +44,7 @@ class Precision
         $this->precision = $precision;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->precision;
     }

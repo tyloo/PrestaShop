@@ -37,20 +37,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 class AddProductToCartCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var int
-     */
-    private $quantity;
+    private readonly int $quantity;
 
     /**
      * @var CombinationId|null

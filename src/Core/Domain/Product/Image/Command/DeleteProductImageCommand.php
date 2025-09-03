@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId;
  */
 class DeleteProductImageCommand
 {
-    /**
-     * @var ImageId
-     */
-    private $imageId;
+    private readonly ImageId $imageId;
 
     public function __construct(int $imageId)
     {

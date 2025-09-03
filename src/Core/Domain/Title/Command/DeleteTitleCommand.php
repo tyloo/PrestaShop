@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Title\ValueObject\TitleId;
  */
 class DeleteTitleCommand
 {
-    /**
-     * @var TitleId
-     */
-    private $titleId;
+    private readonly TitleId $titleId;
 
     public function __construct(int $titleId)
     {

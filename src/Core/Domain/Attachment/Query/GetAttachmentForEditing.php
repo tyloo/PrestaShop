@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\ValueObject\AttachmentId;
  */
 class GetAttachmentForEditing
 {
-    /**
-     * @var AttachmentId
-     */
-    private $attachmentId;
+    private readonly AttachmentId $attachmentId;
 
     /**
      * @throws AttachmentConstraintException

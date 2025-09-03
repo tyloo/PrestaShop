@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
  */
 class SetInternalOrderNoteCommand
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
     /**
      * @var string
@@ -59,10 +56,7 @@ class SetInternalOrderNoteCommand
         $this->internalNote = $internalNote;
     }
 
-    /**
-     * @return OrderId
-     */
-    public function getOrderId()
+    public function getOrderId(): OrderId
     {
         return $this->orderId;
     }

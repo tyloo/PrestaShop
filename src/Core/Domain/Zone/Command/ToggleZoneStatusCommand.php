@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Zone\ValueObject\ZoneId;
  */
 class ToggleZoneStatusCommand
 {
-    /**
-     * @var ZoneId
-     */
-    private $zoneId;
+    private readonly ZoneId $zoneId;
 
     public function __construct(int $zoneId)
     {

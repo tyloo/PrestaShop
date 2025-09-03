@@ -37,12 +37,12 @@ class AddOrderMessageCommand
     /**
      * @var string[]
      */
-    private $localizedName;
+    private readonly array $localizedName;
 
     /**
      * @var string[]
      */
-    private $localizedMessage;
+    private readonly array $localizedMessage;
 
     /**
      * @param string[] $localizedName

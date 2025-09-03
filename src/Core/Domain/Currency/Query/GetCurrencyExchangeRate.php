@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\AlphaIsoCode;
  */
 class GetCurrencyExchangeRate
 {
-    /**
-     * @var AlphaIsoCode
-     */
-    private $isoCode;
+    private readonly AlphaIsoCode $isoCode;
 
     /**
      * @param string $isoCode Currency ISO code

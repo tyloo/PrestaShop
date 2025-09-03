@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Security\Exception\SessionException;
 
 class EmployeeSessionId
 {
-    /**
-     * @var int
-     */
-    private $sessionId;
+    private readonly int $sessionId;
 
     /**
      * @throws SessionException

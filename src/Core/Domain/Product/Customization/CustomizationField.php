@@ -34,10 +34,7 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Customization;
  */
 class CustomizationField
 {
-    /**
-     * @var int|null
-     */
-    private $customizationFieldId;
+    private readonly ?int $customizationFieldId;
 
     /**
      * @param string[] $localizedNames

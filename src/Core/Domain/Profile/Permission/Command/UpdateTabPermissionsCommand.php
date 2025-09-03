@@ -42,20 +42,11 @@ use PrestaShop\PrestaShop\Core\Domain\Tab\ValueObject\TabIdInterface;
  */
 class UpdateTabPermissionsCommand
 {
-    /**
-     * @var ProfileId
-     */
-    private $profileId;
+    private readonly ProfileId $profileId;
 
-    /**
-     * @var TabId
-     */
-    private $tabId;
+    private readonly \PrestaShop\PrestaShop\Core\Domain\Tab\ValueObject\AllTab|TabId $tabId;
 
-    /**
-     * @var PermissionInterface
-     */
-    private $permission;
+    private readonly \PrestaShop\PrestaShop\Core\Domain\Profile\Permission\ValueObject\ControllerAllPermissions|ControllerPermission $permission;
 
     public function __construct(
         int $profileId,

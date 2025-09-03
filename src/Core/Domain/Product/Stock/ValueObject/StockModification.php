@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\Exception\ProductStockConstr
  */
 class StockModification
 {
-    /**
-     * @var int|null
-     */
-    private $deltaQuantity;
+    private readonly ?int $deltaQuantity;
 
     /**
      * Builds class using delta quantity (delta means the quantity will be added up to the previous quantity)

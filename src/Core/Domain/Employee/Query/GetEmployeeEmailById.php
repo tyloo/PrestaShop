@@ -31,10 +31,7 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\EmployeeId;
 
 class GetEmployeeEmailById
 {
-    /**
-     * @var EmployeeId
-     */
-    private $employeeId;
+    private readonly EmployeeId $employeeId;
 
     public function __construct(int $employeeId)
     {

@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\ValueObject\TaxRulesGroupId;
  */
 class EditTaxRulesGroupCommand
 {
-    /**
-     * @var TaxRulesGroupId
-     */
-    protected $taxRulesGroupId;
+    protected TaxRulesGroupId $taxRulesGroupId;
 
     /**
      * @var string|null

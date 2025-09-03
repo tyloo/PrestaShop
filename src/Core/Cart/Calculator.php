@@ -50,29 +50,15 @@ class Calculator
     protected $id_carrier;
 
     /**
-     * @var int|null
-     */
-    protected $orderId;
-
-    /**
      * @var CartRowCollection collection of cart content row (product+qty)
      */
-    protected $cartRows;
+    protected CartRowCollection $cartRows;
 
-    /**
-     * @var CartRuleCollection
-     */
-    protected $cartRules;
+    protected CartRuleCollection $cartRules;
 
-    /**
-     * @var Fees
-     */
-    protected $fees;
+    protected Fees $fees;
 
-    /**
-     * @var CartRuleCalculator
-     */
-    protected $cartRuleCalculator;
+    protected CartRuleCalculator $cartRuleCalculator;
 
     /**
      * indicates if cart was already processed.
@@ -81,19 +67,20 @@ class Calculator
      */
     protected $isProcessed = false;
 
-    /**
-     * @var int|null
-     */
-    protected $computePrecision;
+    protected ?int $computePrecision;
 
     /**
      * @param int $carrierId
      */
-    public function __construct(CartCore $cart, $carrierId, ?FeatureFlagStateCheckerInterface $featureFlagManager = null, ?int $computePrecision = null, ?int $orderId = null)
-    {
+    public function __construct(
+        CartCore $cart,
+        $carrierId,
+        ?FeatureFlagStateCheckerInterface $featureFlagManager = null,
+        ?int $computePrecision = null,
+        protected ?int $orderId = null,
+    ) {
         $this->setCart($cart);
         $this->setCarrierId($carrierId);
-        $this->orderId = $orderId;
         $this->cartRows = new CartRowCollection();
         $this->fees = new Fees($this->orderId);
         $this->cartRules = new CartRuleCollection();
@@ -177,9 +164,7 @@ class Calculator
         $amount = $amount->sub($this->rounded($this->getDiscountTotal(), $this->computePrecision));
 
         $shippingFees = $this->fees->getInitialShippingFees();
-        if ($shippingFees !== null) {
-            $amount = $amount->add($this->rounded($shippingFees, $this->computePrecision));
-        }
+        $amount = $amount->add($this->rounded($shippingFees, $this->computePrecision));
 
         $wrappingFees = $this->fees->getFinalWrappingFees();
         if ($wrappingFees !== null) {
@@ -281,10 +266,7 @@ class Calculator
         return $this;
     }
 
-    /**
-     * @return Fees
-     */
-    public function getFees()
+    public function getFees(): Fees
     {
         return $this->fees;
     }

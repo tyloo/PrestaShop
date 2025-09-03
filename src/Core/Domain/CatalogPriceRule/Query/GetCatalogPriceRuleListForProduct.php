@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 
 class GetCatalogPriceRuleListForProduct
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var LanguageId
-     */
-    private $langId;
+    private readonly LanguageId $langId;
 
     /**
      * @throws ProductConstraintException

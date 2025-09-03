@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Zone\ValueObject\ZoneId;
  */
 class AddStateCommand
 {
-    /**
-     * @var CountryId
-     */
-    private $countryId;
+    private readonly CountryId $countryId;
 
-    /**
-     * @var ZoneId
-     */
-    private $zoneId;
+    private readonly ZoneId $zoneId;
 
     public function __construct(
         int $countryId,

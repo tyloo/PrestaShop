@@ -43,10 +43,7 @@ class Gtin
      */
     public const MAX_LENGTH = 14;
 
-    /**
-     * @var string
-     */
-    private $value;
+    private readonly string $value;
 
     public function __construct(string $value)
     {

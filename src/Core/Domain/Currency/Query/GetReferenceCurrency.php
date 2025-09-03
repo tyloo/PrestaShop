@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\AlphaIsoCode;
  */
 class GetReferenceCurrency
 {
-    /**
-     * @var AlphaIsoCode
-     */
-    private $isoCode;
+    private readonly AlphaIsoCode $isoCode;
 
     /**
      * @throws CurrencyException

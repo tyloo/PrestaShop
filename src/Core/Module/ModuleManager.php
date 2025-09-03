@@ -55,10 +55,7 @@ use Validate as LegacyValidate;
  */
 class ModuleManager implements ModuleManagerInterface
 {
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
+    private readonly Filesystem $filesystem;
 
     public function __construct(
         private readonly ModuleRepository $moduleRepository,

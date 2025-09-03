@@ -58,15 +58,9 @@ class Reduction
      */
     public const MAX_ALLOWED_PERCENTAGE = 100;
 
-    /**
-     * @var string
-     */
-    private $type;
+    private readonly string $type;
 
-    /**
-     * @var DecimalNumber
-     */
-    private $value;
+    private readonly DecimalNumber $value;
 
     /**
      * @param string $value For percentage, we use value between 0 and 100

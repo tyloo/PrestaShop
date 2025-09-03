@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\CurrencyId;
  */
 class UpdateCartCurrencyCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
-    /**
-     * @var CurrencyId
-     */
-    private $newCurrencyId;
+    private readonly CurrencyId $newCurrencyId;
 
     /**
      * @param int $cartId
@@ -55,18 +49,12 @@ class UpdateCartCurrencyCommand
         $this->newCurrencyId = new CurrencyId($newCurrencyId);
     }
 
-    /**
-     * @return CartId
-     */
-    public function getCartId()
+    public function getCartId(): CartId
     {
         return $this->cartId;
     }
 
-    /**
-     * @return CurrencyId
-     */
-    public function getNewCurrencyId()
+    public function getNewCurrencyId(): CurrencyId
     {
         return $this->newCurrencyId;
     }

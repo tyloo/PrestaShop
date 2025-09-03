@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderMessage\ValueObject\OrderMessageId;
  */
 class EditOrderMessageCommand
 {
-    /**
-     * @var OrderMessageId
-     */
-    private $orderMessageId;
+    private readonly OrderMessageId $orderMessageId;
 
     /**
      * @param string[]|null $localizedName    Array of localized name or null if name should not be edited

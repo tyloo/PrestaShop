@@ -36,15 +36,9 @@ class SearchProductCombinations
 {
     public const DEFAULT_RESULTS_LIMIT = 20;
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
     public function __construct(
         int $productId,

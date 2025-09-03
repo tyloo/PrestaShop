@@ -37,25 +37,13 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
  */
 class AddEmployeeCommand
 {
-    /**
-     * @var FirstName
-     */
-    private $firstName;
+    private readonly FirstName $firstName;
 
-    /**
-     * @var LastName
-     */
-    private $lastName;
+    private readonly LastName $lastName;
 
-    /**
-     * @var Email
-     */
-    private $email;
+    private readonly Email $email;
 
-    /**
-     * @var Password
-     */
-    private $plainPassword;
+    private readonly Password $plainPassword;
 
     /**
      * @param string $firstName
@@ -88,26 +76,17 @@ class AddEmployeeCommand
         $this->plainPassword = new Password($plainPassword, $minLength, $maxLength, $minScore);
     }
 
-    /**
-     * @return FirstName
-     */
-    public function getFirstName()
+    public function getFirstName(): FirstName
     {
         return $this->firstName;
     }
 
-    /**
-     * @return LastName
-     */
-    public function getLastName()
+    public function getLastName(): LastName
     {
         return $this->lastName;
     }
 
-    /**
-     * @return Email
-     */
-    public function getEmail()
+    public function getEmail(): Email
     {
         return $this->email;
     }
@@ -149,10 +128,7 @@ class AddEmployeeCommand
         return $this->shopAssociation;
     }
 
-    /**
-     * @return Password
-     */
-    public function getPlainPassword()
+    public function getPlainPassword(): Password
     {
         return $this->plainPassword;
     }

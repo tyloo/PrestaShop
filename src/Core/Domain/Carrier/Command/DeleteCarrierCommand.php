@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\ValueObject\CarrierId;
  */
 class DeleteCarrierCommand
 {
-    /**
-     * @var CarrierId
-     */
-    private $carrierId;
+    private readonly CarrierId $carrierId;
 
     /**
      * @throws CarrierConstraintException

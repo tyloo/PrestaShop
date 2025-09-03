@@ -41,25 +41,13 @@ use PrestaShop\PrestaShop\Core\File\Exception\MaximumSizeExceededException;
 class FileUploader implements FileUploaderInterface
 {
     /**
-     * @var int
-     */
-    protected $maximumSize;
-
-    /**
-     * @var string
-     */
-    protected $downloadDirectory;
-
-    /**
      * @param string $downloadDirectory Server path where the file will be uploaded
      * @param int    $maximumSize       Maximum accepted file size
      */
     public function __construct(
-        string $downloadDirectory,
-        int $maximumSize,
+        protected string $downloadDirectory,
+        protected int $maximumSize,
     ) {
-        $this->downloadDirectory = $downloadDirectory;
-        $this->maximumSize = $maximumSize;
     }
 
     public function upload($file): array

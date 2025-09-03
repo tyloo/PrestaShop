@@ -61,10 +61,7 @@ class UpdateProductsPositionsCommand
      */
     private $positions;
 
-    /**
-     * @var CategoryId
-     */
-    private $categoryId;
+    private readonly CategoryId $categoryId;
 
     public function __construct(array $positions, int $categoryId)
     {

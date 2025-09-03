@@ -37,46 +37,19 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class AddTitleCommand
 {
-    /**
-     * @var array<int, string>
-     */
-    protected $localizedNames;
-
-    /**
-     * @var Gender
-     */
-    protected $gender;
-
-    /**
-     * @var UploadedFile|null
-     */
-    protected $imgFile;
-
-    /**
-     * @var int|null
-     */
-    protected $imgWidth;
-
-    /**
-     * @var int|null
-     */
-    protected $imgHeight;
+    protected Gender $gender;
 
     /**
      * @param array<string> $localizedNames
      */
     public function __construct(
-        array $localizedNames,
+        protected array $localizedNames,
         int $gender,
-        ?UploadedFile $imgFile = null,
-        ?int $imgWidth = null,
-        ?int $imgHeight = null,
+        protected ?UploadedFile $imgFile = null,
+        protected ?int $imgWidth = null,
+        protected ?int $imgHeight = null,
     ) {
-        $this->localizedNames = $localizedNames;
         $this->gender = new Gender($gender);
-        $this->imgFile = $imgFile;
-        $this->imgWidth = $imgWidth;
-        $this->imgHeight = $imgHeight;
     }
 
     /**

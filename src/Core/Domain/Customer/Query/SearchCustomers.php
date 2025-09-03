@@ -39,12 +39,9 @@ class SearchCustomers
     /**
      * @var string[]
      */
-    private $phrases;
+    private readonly array $phrases;
 
-    /**
-     * @var ShopConstraint|null
-     */
-    private $shopConstraint;
+    private readonly ?ShopConstraint $shopConstraint;
 
     /**
      * @param string[] $phrases
@@ -62,7 +59,7 @@ class SearchCustomers
     /**
      * @return string[]
      */
-    public function getPhrases()
+    public function getPhrases(): array
     {
         return $this->phrases;
     }

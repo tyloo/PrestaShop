@@ -40,7 +40,7 @@ class UserTranslatedCatalogueFinder extends AbstractCatalogueFinder
     /**
      * @var array<int, string>
      */
-    private $translationDomains;
+    private readonly array $translationDomains;
 
     /**
      * You will need to give theme if you want only the translations linked to a specific theme.

@@ -34,15 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\Category\ValueObject\CategoryId;
  */
 class UpdateCategoryPositionCommand
 {
-    /**
-     * @var CategoryId
-     */
-    private $categoryId;
+    private readonly CategoryId $categoryId;
 
-    /**
-     * @var CategoryId
-     */
-    private $parentCategoryId;
+    private readonly CategoryId $parentCategoryId;
 
     /**
      * @param int  $categoryId
@@ -61,18 +55,12 @@ class UpdateCategoryPositionCommand
         $this->parentCategoryId = new CategoryId($parentCategoryId);
     }
 
-    /**
-     * @return CategoryId
-     */
-    public function getCategoryId()
+    public function getCategoryId(): CategoryId
     {
         return $this->categoryId;
     }
 
-    /**
-     * @return CategoryId
-     */
-    public function getParentCategoryId()
+    public function getParentCategoryId(): CategoryId
     {
         return $this->parentCategoryId;
     }

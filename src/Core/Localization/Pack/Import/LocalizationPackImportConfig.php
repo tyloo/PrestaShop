@@ -33,15 +33,9 @@ namespace PrestaShop\PrestaShop\Core\Localization\Pack\Import;
  */
 final class LocalizationPackImportConfig implements LocalizationPackImportConfigInterface
 {
-    /**
-     * @var string
-     */
-    private $countryIso;
+    private readonly string $countryIso;
 
-    /**
-     * @var bool
-     */
-    private $downloadPackData;
+    private readonly bool $downloadPackData;
 
     /**
      * @param string $countryIso       Country ISO code
@@ -59,10 +53,8 @@ final class LocalizationPackImportConfig implements LocalizationPackImportConfig
 
     /**
      * Get country ISO code.
-     *
-     * @return string
      */
-    public function getCountryIsoCode()
+    public function getCountryIsoCode(): string
     {
         return $this->countryIso;
     }
@@ -77,10 +69,8 @@ final class LocalizationPackImportConfig implements LocalizationPackImportConfig
 
     /**
      * Whether pack data should be downloaded.
-     *
-     * @return bool
      */
-    public function shouldDownloadPackData()
+    public function shouldDownloadPackData(): bool
     {
         return $this->downloadPackData;
     }

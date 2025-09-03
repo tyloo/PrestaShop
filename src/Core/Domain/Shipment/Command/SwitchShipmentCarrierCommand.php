@@ -36,15 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\ValueObject\ShipmentId;
 
 class SwitchShipmentCarrierCommand
 {
-    /**
-     * @var ShipmentId
-     */
-    private $shipmentId;
+    private readonly ShipmentId $shipmentId;
 
-    /**
-     * @var CarrierId
-     */
-    private $carrierId;
+    private readonly CarrierId $carrierId;
 
     /**
      * @throws ShipmentException

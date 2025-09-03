@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\Exception\CartRuleConstraintExcep
  */
 class CartRuleId
 {
-    /**
-     * @var int
-     */
-    private $cartRuleId;
+    private readonly int $cartRuleId;
 
     public function __construct(int $cartRuleId)
     {

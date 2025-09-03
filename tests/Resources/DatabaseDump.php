@@ -87,10 +87,8 @@ class DatabaseDump
 
     /**
      * Generic dump file path (dump of the whole database)
-     *
-     * @var string
      */
-    private $dumpFile;
+    private string $dumpFile;
 
     /**
      * Db instance to perform queries

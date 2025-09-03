@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\EmployeeId;
  */
 class GetNotificationLastElements
 {
-    /**
-     * @var EmployeeId
-     */
-    private $employeeId;
+    private readonly EmployeeId $employeeId;
 
     /**
      * @throws InvalidEmployeeIdException

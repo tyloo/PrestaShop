@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\TagIETF;
  */
 class EditLanguageCommand
 {
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private LanguageId $languageId;
 
     /**
      * @var string|null
@@ -99,10 +96,7 @@ class EditLanguageCommand
         $this->languageId = new LanguageId($languageId);
     }
 
-    /**
-     * @return LanguageId
-     */
-    public function getLanguageId()
+    public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }

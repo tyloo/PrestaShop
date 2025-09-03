@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 class GetProductImage
 {
-    /**
-     * @var ImageId
-     */
-    private $imageId;
+    private readonly ImageId $imageId;
 
     public function __construct(
         int $imageId,

@@ -39,10 +39,7 @@ use RuntimeException;
  */
 class SetPackProductsCommand
 {
-    /**
-     * @var PackId
-     */
-    private $packId;
+    private readonly PackId $packId;
 
     /**
      * @var QuantifiedProduct[]

@@ -37,24 +37,14 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\Exception\TaxRulesGroupConst
 class AddTaxRulesGroupCommand
 {
     /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var bool
-     */
-    protected $enabled;
-
-    /**
      * @var int[]
      */
     protected $shopAssociation = [];
 
-    public function __construct(string $name, bool $enabled)
-    {
-        $this->name = $name;
-        $this->enabled = $enabled;
+    public function __construct(
+        protected string $name,
+        protected bool $enabled,
+    ) {
     }
 
     public function getName(): string

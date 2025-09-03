@@ -36,7 +36,7 @@ abstract class AbstractProfileCommand
     /**
      * @var string[]
      */
-    protected $localizedNames;
+    protected array $localizedNames;
 
     /**
      * @param string[] $localizedNames

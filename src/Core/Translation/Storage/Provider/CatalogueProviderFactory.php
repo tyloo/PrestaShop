@@ -53,10 +53,7 @@ class CatalogueProviderFactory
      */
     private $providers = [];
 
-    /**
-     * @var ModuleCatalogueProviderFactory
-     */
-    private $moduleCatalogueProviderFactory;
+    private readonly ModuleCatalogueProviderFactory $moduleCatalogueProviderFactory;
 
     public function __construct(
         private readonly DatabaseTranslationLoader $databaseTranslationLoader,

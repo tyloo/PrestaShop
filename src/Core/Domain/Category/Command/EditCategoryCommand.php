@@ -37,10 +37,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class EditCategoryCommand
 {
-    /**
-     * @var CategoryId
-     */
-    private $categoryId;
+    private readonly CategoryId $categoryId;
 
     /**
      * @var int
@@ -112,10 +109,7 @@ class EditCategoryCommand
         $this->categoryId = new CategoryId($categoryId);
     }
 
-    /**
-     * @return CategoryId
-     */
-    public function getCategoryId()
+    public function getCategoryId(): CategoryId
     {
         return $this->categoryId;
     }

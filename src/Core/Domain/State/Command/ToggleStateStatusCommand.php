@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateId;
  */
 class ToggleStateStatusCommand
 {
-    /**
-     * @var StateId
-     */
-    private $stateId;
+    private readonly StateId $stateId;
 
     public function __construct(int $stateId)
     {

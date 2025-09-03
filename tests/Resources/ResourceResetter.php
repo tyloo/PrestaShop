@@ -47,15 +47,9 @@ class ResourceResetter
 
     public const TEST_MODULES_DIR = _PS_ROOT_DIR_ . '/tests/Resources/modules/';
 
-    /**
-     * @var Filesystem|null
-     */
-    private $filesystem;
+    private readonly Filesystem $filesystem;
 
-    /**
-     * @var string|null
-     */
-    private $backupRootDir;
+    private readonly string $backupRootDir;
 
     public function __construct(
         ?Filesystem $filesystem = null,

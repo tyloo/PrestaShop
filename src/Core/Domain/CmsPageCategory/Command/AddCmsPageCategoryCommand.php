@@ -36,15 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
  */
 class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
 {
-    /**
-     * @var array
-     */
-    private $localisedName;
+    private readonly array $localisedName;
 
-    /**
-     * @var CmsPageCategoryId
-     */
-    private $parentId;
+    private readonly CmsPageCategoryId $parentId;
 
     /**
      * @var string[]
@@ -84,10 +78,7 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
         $this->parentId = new CmsPageCategoryId($parentId);
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalisedName()
+    public function getLocalisedName(): array
     {
         return $this->localisedName;
     }
@@ -97,10 +88,7 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
         return $this->localisedFriendlyUrl;
     }
 
-    /**
-     * @return CmsPageCategoryId
-     */
-    public function getParentId()
+    public function getParentId(): CmsPageCategoryId
     {
         return $this->parentId;
     }

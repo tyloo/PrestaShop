@@ -41,17 +41,11 @@ class AddAttributeGroupCommand
     /**
      * @var string[]
      */
-    private $localizedNames;
+    private readonly array $localizedNames;
 
-    /**
-     * @var array
-     */
-    private $localizedPublicNames;
+    private readonly array $localizedPublicNames;
 
-    /**
-     * @var AttributeGroupType
-     */
-    private $type;
+    private readonly AttributeGroupType $type;
 
     /**
      * @param string[] $localizedNames

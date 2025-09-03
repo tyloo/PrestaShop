@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Webservice\ValueObject\WebserviceKeyId;
  */
 class EditWebserviceKeyCommand
 {
-    /**
-     * @var WebserviceKeyId
-     */
-    private $webserviceKeyId;
+    private readonly WebserviceKeyId $webserviceKeyId;
 
     /**
      * @var Key|null
@@ -73,10 +70,7 @@ class EditWebserviceKeyCommand
         $this->webserviceKeyId = new WebserviceKeyId($webserviceKeyId);
     }
 
-    /**
-     * @return WebserviceKeyId
-     */
-    public function getWebserviceKeyId()
+    public function getWebserviceKeyId(): WebserviceKeyId
     {
         return $this->webserviceKeyId;
     }

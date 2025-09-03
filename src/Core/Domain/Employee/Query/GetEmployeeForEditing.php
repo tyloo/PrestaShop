@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\EmployeeId;
  */
 class GetEmployeeForEditing
 {
-    /**
-     * @var EmployeeId
-     */
-    private $employeeId;
+    private readonly EmployeeId $employeeId;
 
     /**
      * @param int $employeeId
@@ -47,10 +44,7 @@ class GetEmployeeForEditing
         $this->employeeId = new EmployeeId($employeeId);
     }
 
-    /**
-     * @return EmployeeId
-     */
-    public function getEmployeeId()
+    public function getEmployeeId(): EmployeeId
     {
         return $this->employeeId;
     }

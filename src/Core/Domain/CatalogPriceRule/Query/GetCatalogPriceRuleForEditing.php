@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\CatalogPriceRule\ValueObject\CatalogPriceR
  */
 class GetCatalogPriceRuleForEditing
 {
-    /**
-     * @var CatalogPriceRuleId
-     */
-    private $catalogPriceRuleId;
+    private readonly CatalogPriceRuleId $catalogPriceRuleId;
 
     /**
      * @param int $catalogPriceRuleId

@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 class SetSpecificPricePriorityForProductCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var PriorityList
-     */
-    private $priorityList;
+    private readonly PriorityList $priorityList;
 
     /**
      * @param string[] $priorities

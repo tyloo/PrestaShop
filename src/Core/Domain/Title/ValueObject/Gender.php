@@ -39,10 +39,7 @@ class Gender
 
     public const TYPE_OTHER = 2;
 
-    /**
-     * @var int
-     */
-    protected $type;
+    protected int $type;
 
     /**
      * @throws TitleConstraintException

@@ -86,10 +86,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class CommandBuilder
 {
-    /**
-     * @var PropertyAccessorInterface
-     */
-    private $propertyAccessor;
+    private readonly PropertyAccessorInterface $propertyAccessor;
 
     /**
      * @param CommandBuilderConfig $config contains all the configuration of the fields that need to be handled by the

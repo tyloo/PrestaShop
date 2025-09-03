@@ -32,16 +32,6 @@ namespace PrestaShop\PrestaShop\Core\Domain\Notification\QueryResult;
  */
 class NotificationResult
 {
-    /**
-     * @var string
-     */
-    protected $customerThreadViewUrl;
-
-    /**
-     * @var string
-     */
-    protected $orderViewUrl;
-
     public function __construct(
         private readonly int $orderId,
         private readonly int $customerId,
@@ -55,11 +45,9 @@ class NotificationResult
         private readonly string $company,
         private readonly string $status,
         private readonly string $dateAdd,
-        string $customerThreadViewUrl,
-        string $orderViewUrl,
+        protected string $customerThreadViewUrl,
+        protected string $orderViewUrl,
     ) {
-        $this->customerThreadViewUrl = $customerThreadViewUrl;
-        $this->orderViewUrl = $orderViewUrl;
     }
 
     public function getOrderId(): int

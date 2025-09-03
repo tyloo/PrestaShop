@@ -28,20 +28,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\ValueObject\ShipmentId;
 
 class MergeProductsToShipment
 {
-    /**
-     * @var ShipmentId
-     */
-    private $sourceShipmentId;
+    private readonly ShipmentId $sourceShipmentId;
 
-    /**
-     * @var ShipmentId
-     */
-    private $targetShipmentId;
+    private readonly ShipmentId $targetShipmentId;
 
-    /**
-     * @var OrderDetailQuantity
-     */
-    private $orderDetailQuantities;
+    private readonly OrderDetailQuantity $orderDetailQuantities;
 
     public function __construct(int $sourceShipmentId, int $targetShipmentId, array $orderDetailQuantities)
     {

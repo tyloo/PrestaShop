@@ -36,15 +36,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
  */
 final class GetCategoriesTree
 {
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
-    /**
-     * @var ShopId
-     */
-    private $shopId;
+    private readonly ShopId $shopId;
 
     public function __construct(
         int $languageId,

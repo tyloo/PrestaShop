@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\Exception\ProfileConstraintExcepti
 
 class ProfileId
 {
-    /**
-     * @var int
-     */
-    private $profileId;
+    private readonly int $profileId;
 
     /**
      * @throws ProfileConstraintException
@@ -48,10 +45,7 @@ class ProfileId
         $this->profileId = $profileId;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->profileId;
     }

@@ -47,13 +47,6 @@ class ShopConstraint
     protected ?ShopGroupId $shopGroupId = null;
 
     /**
-     * Indicate if the value returned matches the constraints strictly, else it fallbacks to Shop > Group > Global value
-     *
-     * @var bool
-     */
-    protected $strict;
-
-    /**
      * Constraint to target a specific shop
      *
      * @return static
@@ -90,11 +83,15 @@ class ShopConstraint
     /**
      * @throws ShopException
      */
-    protected function __construct(?int $shopId, ?int $shopGroupId, bool $strict = false)
-    {
+    protected function __construct(
+        ?int $shopId,
+        ?int $shopGroupId, /**
+     * Indicate if the value returned matches the constraints strictly, else it fallbacks to Shop > Group > Global value
+     */
+        protected bool $strict = false,
+    ) {
         $this->shopId = $shopId !== null ? new ShopId($shopId) : null;
         $this->shopGroupId = $shopGroupId !== null ? new ShopGroupId($shopGroupId) : null;
-        $this->strict = $strict;
     }
 
     /**

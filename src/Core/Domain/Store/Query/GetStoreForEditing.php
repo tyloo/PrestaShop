@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Store\ValueObject\StoreId;
 
 class GetStoreForEditing
 {
-    /**
-     * @var StoreId
-     */
-    private $storeId;
+    private readonly StoreId $storeId;
 
     /**
      * @param int $storeId

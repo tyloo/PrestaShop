@@ -44,10 +44,7 @@ class EditOrderAddressCommand extends AbstractEditAddressCommand
         OrderAddressType::DELIVERY_ADDRESS_TYPE,
     ];
 
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
     /**
      * @var string

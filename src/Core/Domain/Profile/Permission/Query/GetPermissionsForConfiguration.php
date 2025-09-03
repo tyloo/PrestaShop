@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\ValueObject\ProfileId;
  */
 class GetPermissionsForConfiguration
 {
-    /**
-     * @var ProfileId
-     */
-    private $employeeProfileId;
+    private readonly ProfileId $employeeProfileId;
 
     /**
      * @param int $employeeProfileId Profile id of employee who configures permissions

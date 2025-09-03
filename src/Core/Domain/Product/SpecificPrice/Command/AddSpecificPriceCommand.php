@@ -61,15 +61,9 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\NullDateTime;
  */
 class AddSpecificPriceCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var Reduction
-     */
-    private $reduction;
+    private readonly Reduction $reduction;
 
     /**
      * @var FixedPriceInterface

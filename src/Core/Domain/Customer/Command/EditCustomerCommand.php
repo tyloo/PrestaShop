@@ -45,10 +45,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
  */
 class EditCustomerCommand
 {
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
+    private readonly CustomerId $customerId;
 
     /**
      * @var FirstName|null
@@ -148,10 +145,7 @@ class EditCustomerCommand
         $this->customerId = new CustomerId($customerId);
     }
 
-    /**
-     * @return CustomerId
-     */
-    public function getCustomerId()
+    public function getCustomerId(): CustomerId
     {
         return $this->customerId;
     }

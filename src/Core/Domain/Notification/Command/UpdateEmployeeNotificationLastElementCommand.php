@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Notification\ValueObject\Type;
  */
 class UpdateEmployeeNotificationLastElementCommand
 {
-    /**
-     * @var Type
-     */
-    private $type;
+    private readonly Type $type;
 
     /**
      * @throws NotificationException
@@ -48,10 +45,7 @@ class UpdateEmployeeNotificationLastElementCommand
         $this->type = new Type($type);
     }
 
-    /**
-     * @return Type
-     */
-    public function getType()
+    public function getType(): Type
     {
         return $this->type;
     }

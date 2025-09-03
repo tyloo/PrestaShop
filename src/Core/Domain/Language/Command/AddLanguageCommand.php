@@ -38,12 +38,12 @@ class AddLanguageCommand
     /**
      * @var IsoCode Two-letter (639-1) language ISO code, e.g. FR, EN
      */
-    private $isoCode;
+    private readonly IsoCode $isoCode;
 
     /**
      * @var TagIETF IETF language tag, e.g. en-US
      */
-    private $tagIETF;
+    private readonly TagIETF $tagIETF;
 
     /**
      * @param string $name
@@ -81,18 +81,12 @@ class AddLanguageCommand
         return $this->name;
     }
 
-    /**
-     * @return IsoCode
-     */
-    public function getIsoCode()
+    public function getIsoCode(): IsoCode
     {
         return $this->isoCode;
     }
 
-    /**
-     * @return TagIETF
-     */
-    public function getTagIETF()
+    public function getTagIETF(): TagIETF
     {
         return $this->tagIETF;
     }

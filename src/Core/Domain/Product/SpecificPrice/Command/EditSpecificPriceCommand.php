@@ -51,10 +51,7 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\NullDateTime;
 
 class EditSpecificPriceCommand
 {
-    /**
-     * @var SpecificPriceId
-     */
-    private $specificPriceId;
+    private readonly SpecificPriceId $specificPriceId;
 
     /**
      * @var Reduction|null

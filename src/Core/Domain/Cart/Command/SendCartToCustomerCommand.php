@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\ValueObject\CartId;
  */
 class SendCartToCustomerCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
     /**
      * @param int $cartId
@@ -49,10 +46,7 @@ class SendCartToCustomerCommand
         $this->cartId = new CartId($cartId);
     }
 
-    /**
-     * @return CartId
-     */
-    public function getCartId()
+    public function getCartId(): CartId
     {
         return $this->cartId;
     }

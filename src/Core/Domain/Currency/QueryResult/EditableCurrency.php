@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\CurrencyId;
 
 class EditableCurrency
 {
-    /**
-     * @var CurrencyId
-     */
-    private $currencyId;
+    private readonly CurrencyId $currencyId;
 
     /**
      * @param int    $currencyId
@@ -61,10 +58,7 @@ class EditableCurrency
         $this->currencyId = new CurrencyId($currencyId);
     }
 
-    /**
-     * @return CurrencyId
-     */
-    public function getCurrencyId()
+    public function getCurrencyId(): CurrencyId
     {
         return $this->currencyId;
     }

@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\ValueObject\Specific
  */
 class GetSpecificPriceForEditing
 {
-    /**
-     * @var SpecificPriceId
-     */
-    private $specificPriceId;
+    private readonly SpecificPriceId $specificPriceId;
 
     public function __construct(
         int $specificPriceId,

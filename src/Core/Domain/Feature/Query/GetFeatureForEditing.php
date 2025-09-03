@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
  */
 class GetFeatureForEditing
 {
-    /**
-     * @var FeatureId
-     */
-    private $featureId;
+    private readonly FeatureId $featureId;
 
     /**
      * @param int $featureId
@@ -47,10 +44,7 @@ class GetFeatureForEditing
         $this->featureId = new FeatureId($featureId);
     }
 
-    /**
-     * @return FeatureId
-     */
-    public function getFeatureId()
+    public function getFeatureId(): FeatureId
     {
         return $this->featureId;
     }

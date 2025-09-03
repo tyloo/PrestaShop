@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\VirtualProductFile\ValueObject\Vir
 
 class UpdateVirtualProductFileCommand
 {
-    /**
-     * @var VirtualProductFileId
-     */
-    private $virtualProductFileId;
+    private readonly VirtualProductFileId $virtualProductFileId;
 
     /**
      * @var string|null

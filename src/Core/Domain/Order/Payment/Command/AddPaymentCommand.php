@@ -50,35 +50,17 @@ class AddPaymentCommand
      */
     private const PATTERN_PAYMENT_METHOD_NAME = '/^[^' . self::INVALID_CHARACTERS_NAME . ']*$/u';
 
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
-    /**
-     * @var DateTimeImmutable
-     */
-    private $paymentDate;
+    private readonly DateTimeImmutable $paymentDate;
 
-    /**
-     * @var string
-     */
-    private $paymentMethod;
+    private readonly string $paymentMethod;
 
-    /**
-     * @var DecimalNumber
-     */
-    private $paymentAmount;
+    private readonly DecimalNumber $paymentAmount;
 
-    /**
-     * @var CurrencyId
-     */
-    private $paymentCurrencyId;
+    private readonly CurrencyId $paymentCurrencyId;
 
-    /**
-     * @var EmployeeId
-     */
-    protected $employeeId;
+    protected EmployeeId $employeeId;
 
     /**
      * @param string|null $transactionId transaction ID, usually payment ID from payment gateway
@@ -105,42 +87,27 @@ class AddPaymentCommand
         $this->employeeId = new EmployeeId($employeeId);
     }
 
-    /**
-     * @return OrderId
-     */
-    public function getOrderId()
+    public function getOrderId(): OrderId
     {
         return $this->orderId;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
-    public function getPaymentDate()
+    public function getPaymentDate(): DateTimeImmutable
     {
         return $this->paymentDate;
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentMethod()
+    public function getPaymentMethod(): string
     {
         return $this->paymentMethod;
     }
 
-    /**
-     * @return DecimalNumber
-     */
-    public function getPaymentAmount()
+    public function getPaymentAmount(): DecimalNumber
     {
         return $this->paymentAmount;
     }
 
-    /**
-     * @return CurrencyId
-     */
-    public function getPaymentCurrencyId()
+    public function getPaymentCurrencyId(): CurrencyId
     {
         return $this->paymentCurrencyId;
     }

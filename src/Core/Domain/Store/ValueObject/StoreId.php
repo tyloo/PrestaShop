@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Store\Exception\StoreConstraintException;
  */
 class StoreId
 {
-    /**
-     * @var int
-     */
-    private $storeId;
+    private readonly int $storeId;
 
     public function __construct(int $storeId)
     {

@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\Exception\AttachmentConstraintE
  */
 class AttachmentId
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private readonly int $id;
 
     /**
      * @throws AttachmentConstraintException]

@@ -38,15 +38,9 @@ class CartRuleAction
      */
     private $freeShipping;
 
-    /**
-     * @var GiftProduct|null
-     */
-    private $giftProduct;
+    private ?GiftProduct $giftProduct;
 
-    /**
-     * @var Discount|null
-     */
-    private $discount;
+    private ?Discount $discount;
 
     public function __construct(
         bool $freeShipping,

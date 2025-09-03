@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\ValueObject\Name;
  */
 class AddMetaCommand extends AbstractMetaCommand
 {
-    /**
-     * @var Name
-     */
-    private $pageName;
+    private readonly Name $pageName;
 
     /**
      * @var string[]
@@ -65,10 +62,7 @@ class AddMetaCommand extends AbstractMetaCommand
         $this->pageName = new Name($pageName);
     }
 
-    /**
-     * @return Name
-     */
-    public function getPageName()
+    public function getPageName(): Name
     {
         return $this->pageName;
     }

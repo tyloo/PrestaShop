@@ -43,10 +43,7 @@ class ProductCombinationFilters extends ShopFilters
 
     private const FILTER_PREFIX = 'product_combinations_';
 
-    /**
-     * @var int
-     */
-    private $productId;
+    private readonly int $productId;
 
     public function __construct(ShopConstraint $shopConstraint, array $filters = [])
     {

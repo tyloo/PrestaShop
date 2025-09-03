@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\Exception\SearchShopException;
  */
 class SearchShops
 {
-    /**
-     * @var string
-     */
-    private $searchTerm;
+    private readonly string $searchTerm;
 
     public function __construct(string $searchTerm)
     {

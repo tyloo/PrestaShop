@@ -40,20 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateIdInterface;
  */
 class AddCustomerAddressCommand
 {
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
+    private readonly CustomerId $customerId;
 
-    /**
-     * @var CountryId
-     */
-    private $countryId;
+    private readonly CountryId $countryId;
 
-    /**
-     * @var StateIdInterface
-     */
-    private $stateId;
+    private readonly \PrestaShop\PrestaShop\Core\Domain\State\ValueObject\NoStateId|StateId $stateId;
 
     /**
      * @throws CountryConstraintException

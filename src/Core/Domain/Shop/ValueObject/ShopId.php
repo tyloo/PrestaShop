@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\Exception\ShopException;
  */
 class ShopId implements ShopIdInterface
 {
-    /**
-     * @var int
-     */
-    private $shopId;
+    private readonly int $shopId;
 
     /**
      * @throws ShopException

@@ -36,15 +36,10 @@ use SplFileInfo;
  */
 class EditableOrderState
 {
-    /**
-     * @var SplFileInfo|null
-     */
-    protected $icon;
-
     public function __construct(
         private readonly OrderStateId $orderStateId,
         private readonly array $localizedNames,
-        ?SplFileInfo $icon,
+        protected ?SplFileInfo $icon,
         private readonly string $color,
         private readonly bool $loggable,
         private readonly bool $invoice,
@@ -58,7 +53,6 @@ class EditableOrderState
         private readonly array $localizedTemplates,
         private readonly bool $isDeleted,
     ) {
-        $this->icon = $icon;
     }
 
     public function getOrderStateId(): OrderStateId

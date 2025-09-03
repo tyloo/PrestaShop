@@ -39,10 +39,7 @@ class ThemeProviderDefinition implements ProviderDefinitionInterface
 
     private const TRANSLATION_DOMAINS_REGEX = [];
 
-    /**
-     * @var string
-     */
-    private $themeName;
+    private readonly ?string $themeName;
 
     public function __construct(?string $themeName = null)
     {

@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupI
  */
 class AddAttributeCommand
 {
-    /**
-     * @var AttributeGroupId
-     */
-    private $attributeGroupId;
+    private readonly AttributeGroupId $attributeGroupId;
 
-    /**
-     * @var array
-     */
-    private $localizedNames;
+    private readonly array $localizedNames;
 
     /**
      * @var string|null

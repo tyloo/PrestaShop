@@ -39,44 +39,29 @@ class StockMovement
     public const ORDERS_TYPE = 'orders';
 
     /**
-     * @var string
-     */
-    protected $type;
-
-    /**
      * @var array<string, DateTimeImmutable>
      */
-    protected $dates;
+    protected array $dates;
 
     /**
      * @var int[]
      */
-    protected $stockMovementIds;
+    protected array $stockMovementIds;
 
     /**
      * @var int[]
      */
-    protected $stockIds;
+    protected array $stockIds;
 
     /**
      * @var int[]
      */
-    protected $orderIds;
+    protected array $orderIds;
 
     /**
      * @var int[]
      */
-    protected $employeeIds;
-
-    /**
-     * @var string|null
-     */
-    protected $employeeName;
-
-    /**
-     * @var int
-     */
-    protected $deltaQuantity;
+    protected array $employeeIds;
 
     /**
      * @param string[] $dates
@@ -86,24 +71,21 @@ class StockMovement
      * @param int[]    $employeeIds
      */
     protected function __construct(
-        string $type,
+        protected string $type,
         array $dates,
         array $stockMovementIds,
         array $stockIds,
         array $orderIds,
         array $employeeIds,
-        ?string $employeeName,
-        int $deltaQuantity,
+        protected ?string $employeeName,
+        protected int $deltaQuantity,
     ) {
-        $this->type = $type;
         $this->dates = $this->initializeDates($dates);
         $this->stockMovementIds = $this->initializeIds($stockMovementIds);
         $this->stockIds = $this->initializeIds($stockIds);
         $this->orderIds = $this->initializeIds($orderIds);
         $this->employeeIds = $this->initializeIds($employeeIds);
         $this->stockMovementIds = $this->initializeIds($stockMovementIds);
-        $this->employeeName = $employeeName;
-        $this->deltaQuantity = $deltaQuantity;
     }
 
     /**

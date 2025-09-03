@@ -48,14 +48,9 @@ abstract class AbstractGridDefinitionFactory implements GridDefinitionFactoryInt
 {
     use TranslatorAwareTrait;
 
-    /**
-     * @var HookDispatcherInterface
-     */
-    protected $hookDispatcher;
-
-    public function __construct(HookDispatcherInterface $hookDispatcher)
-    {
-        $this->hookDispatcher = $hookDispatcher;
+    public function __construct(
+        protected HookDispatcherInterface $hookDispatcher,
+    ) {
     }
 
     public function getDefinition()

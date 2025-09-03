@@ -38,20 +38,14 @@ use PrestaShop\PrestaShop\Core\Grid\Search\ShopSearchCriteriaInterface;
 
 class StoreQueryBuilder extends AbstractDoctrineQueryBuilder
 {
-    /**
-     * @var int
-     */
-    protected $languageId;
-
     public function __construct(
         Connection $connection,
         string $dbPrefix,
         private readonly DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        int $languageId,
+        protected int $languageId,
         private readonly StoreRepository $storeRepository,
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->languageId = $languageId;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder

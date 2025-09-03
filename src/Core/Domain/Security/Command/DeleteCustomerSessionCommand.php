@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Security\ValueObject\CustomerSessionId;
  */
 class DeleteCustomerSessionCommand
 {
-    /**
-     * @var CustomerSessionId
-     */
-    private $sessionId;
+    private readonly CustomerSessionId $sessionId;
 
     public function __construct(int $sessionId)
     {

@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\QuerySorting;
  */
 class GetOrderForViewing
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
-    /**
-     * @var QuerySorting
-     */
-    private $productsSorting;
+    private readonly QuerySorting $productsSorting;
 
     /**
      * @throws OrderException

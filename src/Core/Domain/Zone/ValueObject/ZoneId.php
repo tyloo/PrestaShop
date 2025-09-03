@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Zone\Exception\ZoneException;
  */
 class ZoneId
 {
-    /**
-     * @var int
-     */
-    private $zoneId;
+    private readonly int $zoneId;
 
     /**
      * @throws ZoneException

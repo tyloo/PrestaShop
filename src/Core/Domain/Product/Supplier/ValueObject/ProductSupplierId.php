@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Supplier\Exception\ProductSupplier
  */
 class ProductSupplierId
 {
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     public function __construct(int $value)
     {

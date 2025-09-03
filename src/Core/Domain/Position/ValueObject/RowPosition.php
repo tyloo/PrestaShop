@@ -36,20 +36,11 @@ use PrestaShop\PrestaShop\Core\Domain\Position\Exception\PositionConstraintExcep
  */
 class RowPosition
 {
-    /**
-     * @var int
-     */
-    private $rowId;
+    private readonly int $rowId;
 
-    /**
-     * @var int
-     */
-    private $oldPosition;
+    private readonly int $oldPosition;
 
-    /**
-     * @var int
-     */
-    private $newPosition;
+    private readonly int $newPosition;
 
     public function __construct(
         int $rowId,

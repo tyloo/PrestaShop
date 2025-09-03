@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
  */
 class AddSearchTermAliasesCommand
 {
-    /**
-     * @var string
-     */
-    private $searchTerm;
+    private readonly string $searchTerm;
 
     /**
      * @var array{
@@ -50,7 +47,7 @@ class AddSearchTermAliasesCommand
      *   }
      * }
      */
-    private $aliases;
+    private readonly array $aliases;
 
     public function __construct(array $aliases, string $searchTerm)
     {

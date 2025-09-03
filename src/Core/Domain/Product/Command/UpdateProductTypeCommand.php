@@ -34,15 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductType;
 
 class UpdateProductTypeCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var ProductType
-     */
-    private $productType;
+    private readonly ProductType $productType;
 
     public function __construct(int $productId, string $productType)
     {

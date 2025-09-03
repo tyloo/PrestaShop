@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\ValueObject\ManufacturerId;
  */
 class DeleteManufacturerLogoImageCommand
 {
-    /**
-     * @var ManufacturerId
-     */
-    private $manufacturerId;
+    private readonly ManufacturerId $manufacturerId;
 
     /**
      * @throws ManufacturerConstraintException

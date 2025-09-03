@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
  */
 class EditFeatureCommand
 {
-    /**
-     * @var FeatureId
-     */
-    private $featureId;
+    private readonly FeatureId $featureId;
 
     /**
      * @var string[]|null

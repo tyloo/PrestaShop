@@ -39,7 +39,7 @@ class AddContactCommand extends AbstractContactCommand
     /**
      * @var string[]
      */
-    private $localisedTitles;
+    private readonly array $localisedTitles;
 
     /**
      * @var Email
@@ -74,7 +74,7 @@ class AddContactCommand extends AbstractContactCommand
     /**
      * @return string[]
      */
-    public function getLocalisedTitles()
+    public function getLocalisedTitles(): array
     {
         return $this->localisedTitles;
     }

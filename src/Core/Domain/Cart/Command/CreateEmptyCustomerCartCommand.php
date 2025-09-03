@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
  */
 class CreateEmptyCustomerCartCommand
 {
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
+    private readonly CustomerId $customerId;
 
     /**
      * @param int $customerId Customer for which cart is being created
@@ -47,10 +44,7 @@ class CreateEmptyCustomerCartCommand
         $this->customerId = new CustomerId($customerId);
     }
 
-    /**
-     * @return CustomerId
-     */
-    public function getCustomerId()
+    public function getCustomerId(): CustomerId
     {
         return $this->customerId;
     }

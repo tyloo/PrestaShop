@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\ValueObject\ManufacturerId;
  */
 class ToggleManufacturerStatusCommand
 {
-    /**
-     * @var ManufacturerId
-     */
-    private $manufacturerId;
+    private readonly ManufacturerId $manufacturerId;
 
     /**
      * @var bool
@@ -58,10 +55,7 @@ class ToggleManufacturerStatusCommand
         $this->manufacturerId = new ManufacturerId($manufacturerId);
     }
 
-    /**
-     * @return ManufacturerId
-     */
-    public function getManufacturerId()
+    public function getManufacturerId(): ManufacturerId
     {
         return $this->manufacturerId;
     }

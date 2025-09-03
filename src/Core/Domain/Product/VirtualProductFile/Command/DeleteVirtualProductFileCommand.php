@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\VirtualProductFile\ValueObject\Vir
 
 class DeleteVirtualProductFileCommand
 {
-    /**
-     * @var VirtualProductFileId
-     */
-    private $virtualProductFileId;
+    private readonly VirtualProductFileId $virtualProductFileId;
 
     public function __construct(
         int $virtualProductFileId,

@@ -34,15 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject\SupplierId;
 
 class SetProductDefaultSupplierCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var SupplierId
-     */
-    private $defaultSupplierId;
+    private readonly SupplierId $defaultSupplierId;
 
     public function __construct(int $productId, int $defaultSupplierId)
     {

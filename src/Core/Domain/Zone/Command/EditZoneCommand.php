@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Zone\ValueObject\ZoneId;
  */
 class EditZoneCommand
 {
-    /**
-     * @var ZoneId
-     */
-    private $zoneId;
+    private readonly ZoneId $zoneId;
 
     /**
      * @var string

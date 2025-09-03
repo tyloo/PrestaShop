@@ -34,50 +34,14 @@ namespace PrestaShop\PrestaShop\Core\Domain\Product\Pack\QueryResult;
  */
 class PackedProductDetails
 {
-    /**
-     * @var int
-     */
-    protected $productId;
-
-    /**
-     * @var string
-     */
-    protected $productName;
-
-    /**
-     * @var int
-     */
-    protected $quantity;
-
-    /**
-     * @var int
-     */
-    protected $combinationId;
-
-    /**
-     * @var string
-     */
-    protected $reference;
-
-    /**
-     * @var string
-     */
-    protected $imageUrl;
-
     public function __construct(
-        int $productId,
-        int $quantity,
-        int $combinationId,
-        string $productName,
-        string $reference,
-        string $imageUrl,
+        protected int $productId,
+        protected int $quantity,
+        protected int $combinationId,
+        protected string $productName,
+        protected string $reference,
+        protected string $imageUrl,
     ) {
-        $this->productId = $productId;
-        $this->quantity = $quantity;
-        $this->combinationId = $combinationId;
-        $this->productName = $productName;
-        $this->reference = $reference;
-        $this->imageUrl = $imageUrl;
     }
 
     public function getProductId(): int

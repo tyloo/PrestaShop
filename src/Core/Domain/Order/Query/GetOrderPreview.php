@@ -31,10 +31,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
 
 class GetOrderPreview
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
     public function __construct(int $orderId)
     {

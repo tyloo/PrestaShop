@@ -41,16 +41,6 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class AbstractRepositoryFiltersBuilder extends AbstractFiltersBuilder
 {
     /**
-     * @var AdminFilterRepository
-     */
-    protected $adminFilterRepository;
-
-    /**
-     * @var ContextEmployeeProviderInterface
-     */
-    protected $employeeProvider;
-
-    /**
      * @var string
      */
     protected $controller;
@@ -64,12 +54,10 @@ abstract class AbstractRepositoryFiltersBuilder extends AbstractFiltersBuilder
      * @param int $shopId
      */
     public function __construct(
-        AdminFilterRepository $adminFilterRepository,
-        ContextEmployeeProviderInterface $employeeProvider,
+        protected AdminFilterRepository $adminFilterRepository,
+        protected ContextEmployeeProviderInterface $employeeProvider,
         protected $shopId,
     ) {
-        $this->adminFilterRepository = $adminFilterRepository;
-        $this->employeeProvider = $employeeProvider;
     }
 
     public function setConfig(array $config)

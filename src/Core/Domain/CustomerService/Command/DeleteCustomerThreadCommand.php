@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\ValueObject\CustomerThread
 
 class DeleteCustomerThreadCommand
 {
-    /**
-     * @var CustomerThreadId
-     */
-    private $customerThreadId;
+    private readonly CustomerThreadId $customerThreadId;
 
     public function __construct(int $customerThreadId)
     {

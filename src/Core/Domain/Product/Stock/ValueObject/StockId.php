@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\Exception\ProductStockConstr
  */
 class StockId
 {
-    /**
-     * @var int
-     */
-    private $stockId;
+    private readonly int $stockId;
 
     /**
      * @throws ProductStockConstraintException

@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\ValueObject\CustomerThread
  */
 class UpdateCustomerThreadStatusCommand
 {
-    /**
-     * @var CustomerThreadId
-     */
-    private $customerThreadId;
+    private readonly CustomerThreadId $customerThreadId;
 
-    /**
-     * @var CustomerThreadStatus
-     */
-    private $customerThreadStatus;
+    private readonly CustomerThreadStatus $customerThreadStatus;
 
     /**
      * @param int    $customerThreadId
@@ -55,18 +49,12 @@ class UpdateCustomerThreadStatusCommand
         $this->customerThreadStatus = new CustomerThreadStatus($newCustomerThreadStatus);
     }
 
-    /**
-     * @return CustomerThreadId
-     */
-    public function getCustomerThreadId()
+    public function getCustomerThreadId(): CustomerThreadId
     {
         return $this->customerThreadId;
     }
 
-    /**
-     * @return CustomerThreadStatus
-     */
-    public function getCustomerThreadStatus()
+    public function getCustomerThreadStatus(): CustomerThreadStatus
     {
         return $this->customerThreadStatus;
     }

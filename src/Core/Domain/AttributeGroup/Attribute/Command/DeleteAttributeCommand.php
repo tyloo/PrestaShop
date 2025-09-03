@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Attribute\ValueObject\Attri
  */
 final class DeleteAttributeCommand
 {
-    /**
-     * @var AttributeId
-     */
-    private $attributeId;
+    private readonly AttributeId $attributeId;
 
     /**
      * @param int $attributeId
@@ -50,10 +47,7 @@ final class DeleteAttributeCommand
         $this->attributeId = new AttributeId($attributeId);
     }
 
-    /**
-     * @return AttributeId
-     */
-    public function getAttributeId()
+    public function getAttributeId(): AttributeId
     {
         return $this->attributeId;
     }

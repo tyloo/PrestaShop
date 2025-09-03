@@ -40,10 +40,7 @@ class ConfigurationMap
      */
     public const CLOSED_TEMPLATE = 'PS_SHOWCASECARD_%s_CLOSED';
 
-    /**
-     * @var array
-     */
-    private $closedCardConfiguration;
+    private array $closedCardConfiguration;
 
     public function __construct()
     {

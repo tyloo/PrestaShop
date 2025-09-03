@@ -36,36 +36,12 @@ use ZipArchive;
 
 class ThemeExporter
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    protected $configuration;
-
-    /**
-     * @var Filesystem
-     */
-    protected $fileSystem;
-
-    /**
-     * @var LangRepository
-     */
-    protected $langRepository;
-
-    /**
-     * @var TranslationsExporter
-     */
-    protected $translationsExporter;
-
     public function __construct(
-        ConfigurationInterface $configuration,
-        Filesystem $fileSystem,
-        LangRepository $langRepository,
-        TranslationsExporter $translationsExporter,
+        protected ConfigurationInterface $configuration,
+        protected Filesystem $fileSystem,
+        protected LangRepository $langRepository,
+        protected TranslationsExporter $translationsExporter,
     ) {
-        $this->configuration = $configuration;
-        $this->fileSystem = $fileSystem;
-        $this->langRepository = $langRepository;
-        $this->translationsExporter = $translationsExporter;
     }
 
     /**

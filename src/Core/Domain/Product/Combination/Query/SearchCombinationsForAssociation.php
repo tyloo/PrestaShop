@@ -41,30 +41,16 @@ class SearchCombinationsForAssociation
      */
     public const SEARCH_PHRASE_MIN_LENGTH = 3;
 
-    /**
-     * @var string
-     */
-    private $phrase;
+    private readonly string $phrase;
 
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
-    /**
-     * @var ShopId
-     */
-    private $shopId;
+    private readonly ShopId $shopId;
 
     /**
      * @var int|null
      */
     private $limit;
-
-    /**
-     * @var array<string>
-     */
-    protected $filters;
 
     /**
      * @throws ProductConstraintException
@@ -74,9 +60,12 @@ class SearchCombinationsForAssociation
         string $phrase,
         int $languageId,
         int $shopId,
-        array $filters = [],
-        ?int $limit = null)
-    {
+        /**
+         * @var array<string>
+         */
+        protected array $filters = [],
+        ?int $limit = null,
+    ) {
         if ($limit !== null && $limit <= 0) {
             throw new ProductConstraintException('Search limit must be a positive integer or null', ProductConstraintException::INVALID_SEARCH_LIMIT);
         }
@@ -89,7 +78,6 @@ class SearchCombinationsForAssociation
         $this->limit = $limit;
         $this->shopId = new ShopId($shopId);
         $this->languageId = new LanguageId($languageId);
-        $this->filters = $filters;
     }
 
     public function getPhrase(): string

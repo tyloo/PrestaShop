@@ -43,22 +43,16 @@ class ZipSourceHandler implements SourceHandlerInterface
         'application/x-tgz',
     ];
 
-    private const MODULE_REGEX = '/^(.*)\/\1\.php$/i'; // module_name/module_name.php
+    private const MODULE_REGEX = '/^(.*)\/\1\.php$/i';
 
-    /**
-     * @var string
-     */
-    protected $modulePath;
+    // module_name/module_name.php
+    protected string $modulePath;
 
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    public function __construct(string $modulePath, TranslatorInterface $translator)
-    {
+    public function __construct(
+        string $modulePath,
+        protected TranslatorInterface $translator,
+    ) {
         $this->modulePath = rtrim($modulePath, '/') . '/';
-        $this->translator = $translator;
     }
 
     public function canHandle($source): bool

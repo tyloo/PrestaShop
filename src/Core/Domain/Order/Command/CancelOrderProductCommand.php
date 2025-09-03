@@ -31,10 +31,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
 
 class CancelOrderProductCommand
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
     public function __construct(
         /**
@@ -53,10 +50,7 @@ class CancelOrderProductCommand
         return $this->cancelledProducts;
     }
 
-    /**
-     * @return OrderId
-     */
-    public function getOrderId()
+    public function getOrderId(): OrderId
     {
         return $this->orderId;
     }

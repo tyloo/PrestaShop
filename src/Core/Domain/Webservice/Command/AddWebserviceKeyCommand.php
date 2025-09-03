@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Webservice\ValueObject\Key;
  */
 class AddWebserviceKeyCommand
 {
-    /**
-     * @var Key
-     */
-    private $key;
+    private readonly Key $key;
 
     /**
      * @param string $key
@@ -55,10 +52,7 @@ class AddWebserviceKeyCommand
         $this->key = new Key($key);
     }
 
-    /**
-     * @return Key
-     */
-    public function getKey()
+    public function getKey(): Key
     {
         return $this->key;
     }

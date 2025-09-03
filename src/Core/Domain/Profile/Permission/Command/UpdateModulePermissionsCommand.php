@@ -38,20 +38,11 @@ use PrestaShop\PrestaShop\Core\Domain\Profile\ValueObject\ProfileId;
  */
 class UpdateModulePermissionsCommand
 {
-    /**
-     * @var ProfileId
-     */
-    private $profileId;
+    private readonly ProfileId $profileId;
 
-    /**
-     * @var ModuleId
-     */
-    private $moduleId;
+    private readonly ModuleId $moduleId;
 
-    /**
-     * @var ModulePermission
-     */
-    private $permission;
+    private readonly ModulePermission $permission;
 
     public function __construct(
         int $profileId,

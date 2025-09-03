@@ -42,10 +42,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Money;
 
 class EditCartRuleCommand
 {
-    /**
-     * @var CartRuleId
-     */
-    private $cartRuleId;
+    private readonly CartRuleId $cartRuleId;
 
     /**
      * @var string|null

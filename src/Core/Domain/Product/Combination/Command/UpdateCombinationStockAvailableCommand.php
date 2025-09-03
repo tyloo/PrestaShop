@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 class UpdateCombinationStockAvailableCommand
 {
-    /**
-     * @var CombinationId
-     */
-    private $combinationId;
+    private readonly CombinationId $combinationId;
 
     /**
      * @var int|null

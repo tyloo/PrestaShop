@@ -34,15 +34,12 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class ProductImageSetting
 {
-    /**
-     * @var ImageId
-     */
-    private $productImageId;
+    private readonly ImageId $productImageId;
 
     /**
      * @var ShopId[]
      */
-    private $shopIds;
+    private readonly array $shopIds;
 
     /**
      * @param int[] $shopIds

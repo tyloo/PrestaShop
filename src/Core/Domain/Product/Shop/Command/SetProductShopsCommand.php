@@ -35,20 +35,14 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class SetProductShopsCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
-    /**
-     * @var ShopId
-     */
-    private $sourceShopId;
+    private readonly ShopId $sourceShopId;
 
     /**
      * @var ShopId[]
      */
-    private $shopIds;
+    private readonly array $shopIds;
 
     /**
      * @param int   $productId    the product for which the new shop association is being set

@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
  */
 class EditContactCommand extends AbstractContactCommand
 {
-    /**
-     * @var ContactId
-     */
-    private $contactId;
+    private readonly ContactId $contactId;
 
     /**
      * @var string[]
@@ -78,10 +75,7 @@ class EditContactCommand extends AbstractContactCommand
         $this->contactId = new ContactId($contactId);
     }
 
-    /**
-     * @return ContactId
-     */
-    public function getContactId()
+    public function getContactId(): ContactId
     {
         return $this->contactId;
     }

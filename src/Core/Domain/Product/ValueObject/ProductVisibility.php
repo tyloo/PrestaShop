@@ -51,10 +51,7 @@ class ProductVisibility
         self::INVISIBLE => self::INVISIBLE,
     ];
 
-    /**
-     * @var string
-     */
-    private $value;
+    private readonly string $value;
 
     public function __construct(string $value)
     {

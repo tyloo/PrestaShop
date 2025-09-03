@@ -40,10 +40,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
  */
 class UpdateProductSuppliersCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @var ProductSupplierUpdate[]

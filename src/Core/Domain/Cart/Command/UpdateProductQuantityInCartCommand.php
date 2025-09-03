@@ -40,15 +40,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 class UpdateProductQuantityInCartCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @var int
@@ -91,18 +85,12 @@ class UpdateProductQuantityInCartCommand
         $this->newQuantity = $quantity;
     }
 
-    /**
-     * @return CartId
-     */
-    public function getCartId()
+    public function getCartId(): CartId
     {
         return $this->cartId;
     }
 
-    /**
-     * @return ProductId
-     */
-    public function getProductId()
+    public function getProductId(): ProductId
     {
         return $this->productId;
     }

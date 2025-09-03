@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\ValueObject\AliasId;
  */
 class GetAliasForEditing
 {
-    /**
-     * @var AliasId
-     */
-    private $aliasId;
+    private readonly AliasId $aliasId;
 
     public function __construct(int $aliasId)
     {

@@ -46,14 +46,9 @@ class Repository implements CurrencyRepositoryInterface
      */
     protected $currencies;
 
-    /**
-     * @var CurrencyDataSourceInterface
-     */
-    protected $dataSource;
-
-    public function __construct(CurrencyDataSourceInterface $dataSource)
-    {
-        $this->dataSource = $dataSource;
+    public function __construct(
+        protected CurrencyDataSourceInterface $dataSource,
+    ) {
     }
 
     public function getCurrency($currencyCode, $localeCode)

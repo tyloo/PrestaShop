@@ -50,10 +50,7 @@ class ControllerPermission implements PermissionInterface
         self::DELETE,
     ];
 
-    /**
-     * @var string
-     */
-    private $permission;
+    private readonly string $permission;
 
     public function __construct(string $permission)
     {

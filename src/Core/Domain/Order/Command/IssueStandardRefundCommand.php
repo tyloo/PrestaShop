@@ -37,11 +37,6 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderDetailRefund;
 class IssueStandardRefundCommand extends AbstractRefundCommand
 {
     /**
-     * @var bool
-     */
-    protected $refundShippingCost;
-
-    /**
      * The expected format for $orderDetailRefunds is an associative array indexed
      * by OrderDetail id containing one fields quantity
      *
@@ -57,7 +52,7 @@ class IssueStandardRefundCommand extends AbstractRefundCommand
     public function __construct(
         int $orderId,
         array $orderDetailRefunds,
-        bool $refundShippingCost,
+        protected bool $refundShippingCost,
         bool $generateCreditSlip,
         bool $generateVoucher,
         int $voucherRefundType,
@@ -70,7 +65,6 @@ class IssueStandardRefundCommand extends AbstractRefundCommand
             $generateVoucher,
             $voucherRefundType
         );
-        $this->refundShippingCost = $refundShippingCost;
     }
 
     public function refundShippingCost(): bool

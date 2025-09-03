@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategor
  */
 class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
 {
-    /**
-     * @var CmsPageCategoryId
-     */
-    private $cmsPageCategoryId;
+    private readonly CmsPageCategoryId $cmsPageCategoryId;
 
     /**
      * @var array
@@ -91,10 +88,7 @@ class EditCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
         $this->cmsPageCategoryId = new CmsPageCategoryId($cmsPageCategoryId);
     }
 
-    /**
-     * @return CmsPageCategoryId
-     */
-    public function getCmsPageCategoryId()
+    public function getCmsPageCategoryId(): CmsPageCategoryId
     {
         return $this->cmsPageCategoryId;
     }

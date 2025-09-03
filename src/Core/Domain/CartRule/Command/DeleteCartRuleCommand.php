@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\ValueObject\CartRuleId;
  */
 class DeleteCartRuleCommand
 {
-    /**
-     * @var CartRuleId
-     */
-    private $cartRuleId;
+    private readonly CartRuleId $cartRuleId;
 
     /**
      * @throws CartRuleConstraintException

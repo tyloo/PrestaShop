@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
  */
 class UpdateProductInOrderCommand
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
     /**
      * @var DecimalNumber
@@ -77,10 +74,7 @@ class UpdateProductInOrderCommand
         $this->setQuantity($quantity);
     }
 
-    /**
-     * @return OrderId
-     */
-    public function getOrderId()
+    public function getOrderId(): OrderId
     {
         return $this->orderId;
     }

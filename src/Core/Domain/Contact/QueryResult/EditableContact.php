@@ -37,15 +37,9 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
  */
 class EditableContact
 {
-    /**
-     * @var ContactId
-     */
-    private $contactId;
+    private readonly ContactId $contactId;
 
-    /**
-     * @var Email|null
-     */
-    private $email;
+    private readonly ?Email $email;
 
     /**
      * @param int      $contactId
@@ -70,10 +64,7 @@ class EditableContact
         $this->email = $email ? new Email($email) : null;
     }
 
-    /**
-     * @return ContactId
-     */
-    public function getContactId()
+    public function getContactId(): ContactId
     {
         return $this->contactId;
     }
@@ -86,10 +77,7 @@ class EditableContact
         return $this->localisedTitles;
     }
 
-    /**
-     * @return Email|null
-     */
-    public function getEmail()
+    public function getEmail(): ?Email
     {
         return $this->email;
     }

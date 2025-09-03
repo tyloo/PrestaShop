@@ -54,10 +54,7 @@ class ShippingMethod
         self::BY_PRICE,
     ];
 
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     /**
      * @throws CarrierConstraintException

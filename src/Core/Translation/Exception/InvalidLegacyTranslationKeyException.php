@@ -40,7 +40,7 @@ class InvalidLegacyTranslationKeyException extends CoreException
     /**
      * @var string The invalid key
      */
-    private $key;
+    private readonly string $key;
 
     public function __construct(string $missingElement, string $key, $code = 0, ?Throwable $previous = null)
     {

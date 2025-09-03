@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\Exception\ShipmentException;
 
 class OrderDetailId
 {
-    /**
-     * @var int
-     */
-    private $orderDetailId;
+    private readonly int $orderDetailId;
 
     /**
      * @throws ShipmentException
@@ -50,10 +47,7 @@ class OrderDetailId
         $this->orderDetailId = $orderDetailId;
     }
 
-    /**
-     * @return int
-     */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->orderDetailId;
     }

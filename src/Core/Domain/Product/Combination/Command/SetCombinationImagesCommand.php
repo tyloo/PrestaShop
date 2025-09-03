@@ -34,15 +34,12 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId;
 
 class SetCombinationImagesCommand
 {
-    /**
-     * @var CombinationId
-     */
-    private $combinationId;
+    private readonly CombinationId $combinationId;
 
     /**
      * @var ImageId[]
      */
-    private $imageIds;
+    private readonly array $imageIds;
 
     public function __construct(int $combinationId, array $imageIds)
     {

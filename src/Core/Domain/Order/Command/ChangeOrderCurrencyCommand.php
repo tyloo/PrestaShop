@@ -35,15 +35,9 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
  */
 class ChangeOrderCurrencyCommand
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
-    /**
-     * @var CurrencyId
-     */
-    private $newCurrencyId;
+    private readonly CurrencyId $newCurrencyId;
 
     /**
      * @param int $orderId
@@ -55,18 +49,12 @@ class ChangeOrderCurrencyCommand
         $this->newCurrencyId = new CurrencyId($newCurrencyId);
     }
 
-    /**
-     * @return OrderId
-     */
-    public function getOrderId()
+    public function getOrderId(): OrderId
     {
         return $this->orderId;
     }
 
-    /**
-     * @return CurrencyId
-     */
-    public function getNewCurrencyId()
+    public function getNewCurrencyId(): CurrencyId
     {
         return $this->newCurrencyId;
     }

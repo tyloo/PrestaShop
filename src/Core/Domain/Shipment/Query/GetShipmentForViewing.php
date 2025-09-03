@@ -30,10 +30,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\ValueObject\ShipmentId;
  */
 class GetShipmentForViewing
 {
-    /**
-     * @var ShipmentId
-     */
-    private $shipmentId;
+    private readonly ShipmentId $shipmentId;
 
     public function __construct(int $shipmentId)
     {

@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\CmsPage\ValueObject\CmsPageId;
  */
 class DeleteCmsPageCommand
 {
-    /**
-     * @var CmsPageId
-     */
-    private $cmsPageId;
+    private readonly CmsPageId $cmsPageId;
 
     /**
      * @param int $cmsPageId
@@ -50,10 +47,7 @@ class DeleteCmsPageCommand
         $this->cmsPageId = new CmsPageId($cmsPageId);
     }
 
-    /**
-     * @return CmsPageId
-     */
-    public function getCmsPageId()
+    public function getCmsPageId(): CmsPageId
     {
         return $this->cmsPageId;
     }

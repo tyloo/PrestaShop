@@ -45,10 +45,7 @@ class ModulePermission implements PermissionInterface
         self::UNINSTALL,
     ];
 
-    /**
-     * @var string
-     */
-    private $permission;
+    private readonly string $permission;
 
     public function __construct(string $permission)
     {

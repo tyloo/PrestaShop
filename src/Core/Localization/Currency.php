@@ -38,10 +38,8 @@ class Currency implements CurrencyInterface
 {
     /**
      * Number of decimal digits to use with this currency.
-     *
-     * @var int
      */
-    protected $precision;
+    protected int $precision;
 
     /**
      * @param bool     $isActive       Is this currency active ?
@@ -140,7 +138,7 @@ class Currency implements CurrencyInterface
         return $this->symbols[$localeCode];
     }
 
-    public function getDecimalPrecision()
+    public function getDecimalPrecision(): int
     {
         return $this->precision;
     }

@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\ValueObject\ManufacturerId;
  */
 class EditManufacturerCommand
 {
-    /**
-     * @var ManufacturerId
-     */
-    private $manufacturerId;
+    private readonly ManufacturerId $manufacturerId;
 
     /**
      * @var string|null
@@ -82,10 +79,7 @@ class EditManufacturerCommand
         $this->manufacturerId = new ManufacturerId($manufacturerId);
     }
 
-    /**
-     * @return ManufacturerId
-     */
-    public function getManufacturerId()
+    public function getManufacturerId(): ManufacturerId
     {
         return $this->manufacturerId;
     }

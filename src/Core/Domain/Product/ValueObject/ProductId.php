@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Exception\ProductConstraintExcepti
  */
 class ProductId
 {
-    /**
-     * @var int
-     */
-    private $productId;
+    private readonly int $productId;
 
     /**
      * @throws ProductConstraintException

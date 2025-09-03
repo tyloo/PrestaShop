@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\Exception\EmptySearchInputExcep
 
 class SearchAttachment
 {
-    /**
-     * @var string
-     */
-    private $searchPhrase;
+    private readonly string $searchPhrase;
 
     public function __construct(
         string $searchPhrase,

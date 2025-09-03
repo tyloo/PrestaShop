@@ -38,10 +38,7 @@ class SetProductImagesForAllShopCommand
      */
     private $productImageSettings = [];
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     public function __construct(int $productId)
     {

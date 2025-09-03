@@ -43,18 +43,14 @@ use PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException;
  */
 class CurrencyReference extends AbstractDataLayer implements CurrencyDataLayerInterface
 {
-    /**
-     * CLDR locale repository.
-     *
-     * Provides LocaleData objects
-     *
-     * @var CldrLocaleRepository
-     */
-    protected $cldrLocaleRepository;
-
-    public function __construct(CldrLocaleRepository $cldrLocaleRepository)
-    {
-        $this->cldrLocaleRepository = $cldrLocaleRepository;
+    public function __construct(
+        /**
+         * CLDR locale repository.
+         *
+         * Provides LocaleData objects
+         */
+        protected CldrLocaleRepository $cldrLocaleRepository,
+    ) {
         $this->isWritable = false;
     }
 
@@ -89,13 +85,13 @@ class CurrencyReference extends AbstractDataLayer implements CurrencyDataLayerIn
         $localeCode = $currencyDataId->getLocaleCode();
         $cldrLocale = $this->cldrLocaleRepository->getLocale($localeCode);
 
-        if (empty($cldrLocale)) {
+        if (! $cldrLocale instanceof \PrestaShop\PrestaShop\Core\Localization\CLDR\Locale) {
             return null;
         }
 
         $cldrCurrency = $cldrLocale->getCurrency($currencyDataId->getCurrencyCode());
 
-        if (empty($cldrCurrency)) {
+        if (! $cldrCurrency instanceof \PrestaShop\PrestaShop\Core\Localization\CLDR\Currency) {
             return null;
         }
 

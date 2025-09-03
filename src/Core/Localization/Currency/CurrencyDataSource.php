@@ -36,25 +36,16 @@ use PrestaShop\PrestaShop\Core\Localization\Currency\DataLayer\CurrencyInstalled
 class CurrencyDataSource implements DataSourceInterface
 {
     /**
-     * The top layer of the middleware stack.
-     *
-     * @var CurrencyDataLayerInterface
-     */
-    protected $topLayer;
-
-    /**
-     * @var CurrencyInstalledDataLayer
-     */
-    protected $installedDataLayer;
-
-    /**
      * CurrencyDataSource constructor needs CurrencyDataLayer objects.
      * This top layer might be chained with lower layers and will be the entry point of this middleware stack.
      */
-    public function __construct(CurrencyDataLayerInterface $topLayer, CurrencyInstalledDataLayer $installedDataLayer)
-    {
-        $this->topLayer = $topLayer;
-        $this->installedDataLayer = $installedDataLayer;
+    public function __construct(
+        /**
+         * The top layer of the middleware stack.
+         */
+        protected CurrencyDataLayerInterface $topLayer,
+        protected CurrencyInstalledDataLayer $installedDataLayer,
+    ) {
     }
 
     public function getLocalizedCurrencyData(LocalizedCurrencyId $localizedCurrencyId)

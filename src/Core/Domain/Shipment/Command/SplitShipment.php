@@ -29,20 +29,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\ValueObject\ShipmentId;
 
 class SplitShipment
 {
-    /**
-     * @var ShipmentId
-     */
-    private $shipmentId;
+    private readonly ShipmentId $shipmentId;
 
-    /**
-     * @var OrderDetailQuantity
-     */
-    private $orderDetailQuantity;
+    private readonly OrderDetailQuantity $orderDetailQuantity;
 
-    /**
-     * @var CarrierId
-     */
-    private $carrierId;
+    private readonly CarrierId $carrierId;
 
     public function __construct(
         int $shipmentId,

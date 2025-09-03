@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\Exception\ShopException;
 
 class ShopGroupId
 {
-    /**
-     * @var int
-     */
-    private $shopGroupId;
+    private readonly int $shopGroupId;
 
     /**
      * @throws ShopException

@@ -39,10 +39,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
  */
 class SetProductTagsCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @var LocalizedTags[]

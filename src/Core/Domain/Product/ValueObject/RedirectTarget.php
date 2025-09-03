@@ -38,10 +38,7 @@ class RedirectTarget
 {
     public const NO_TARGET = 0;
 
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     /**
      * @throws ProductConstraintException

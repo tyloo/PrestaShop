@@ -39,10 +39,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class EditTitleCommand
 {
-    /**
-     * @var TitleId
-     */
-    protected $titleId;
+    protected TitleId $titleId;
 
     /**
      * @var array<string>|null

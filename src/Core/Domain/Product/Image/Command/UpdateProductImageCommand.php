@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 
 class UpdateProductImageCommand
 {
-    /**
-     * @var ImageId
-     */
-    private $imageId;
+    private readonly ImageId $imageId;
 
     /**
      * @var string|null

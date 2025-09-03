@@ -43,13 +43,6 @@ class Locale implements LocaleInterface
     public const NUMBERING_SYSTEM_LATIN = LocaleInterface::NUMBERING_SYSTEM_LATIN;
 
     /**
-     * Price formatting specifications collection (one spec per currency).
-     *
-     * @var NumberCollection
-     */
-    protected $priceSpecifications;
-
-    /**
      * @param string           $code
      *                                              The locale code (simplified IETF tag syntax)
      *                                              Combination of ISO 639-1 (2-letters language code) and ISO 3166-2 (2-letters region code)
@@ -64,10 +57,9 @@ class Locale implements LocaleInterface
     public function __construct(
         protected string $code,
         protected NumberInterface $numberSpecification,
-        NumberCollection $priceSpecifications,
+        protected NumberCollection $priceSpecifications,
         protected NumberFormatter $numberFormatter,
     ) {
-        $this->priceSpecifications = $priceSpecifications;
     }
 
     /**

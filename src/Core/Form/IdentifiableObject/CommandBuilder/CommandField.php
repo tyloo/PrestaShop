@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
 
 class CommandField
 {
-    /**
-     * @var string
-     */
-    private $commandSetter;
+    private readonly string $commandSetter;
 
     /**
      * @var array<int, DataField>

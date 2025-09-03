@@ -34,31 +34,13 @@ namespace PrestaShop\PrestaShop\Core\Domain\Title\QueryResult;
 class EditableTitle
 {
     /**
-     * @var int
-     */
-    protected $titleId;
-
-    /**
-     * @var array<string>
-     */
-    protected $localizedNames;
-
-    /**
-     * @var int
-     */
-    protected $gender;
-
-    /**
      * @param array<string> $localizedNames
      */
     public function __construct(
-        int $titleId,
-        array $localizedNames,
-        int $gender,
+        protected int $titleId,
+        protected array $localizedNames,
+        protected int $gender,
     ) {
-        $this->titleId = $titleId;
-        $this->localizedNames = $localizedNames;
-        $this->gender = $gender;
     }
 
     public function getTitleId(): int

@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderState\ValueObject\OrderStateId;
  */
 class DeleteOrderStateCommand
 {
-    /**
-     * @var OrderStateId
-     */
-    private $orderStateId;
+    private readonly OrderStateId $orderStateId;
 
     /**
      * @throws OrderStateException

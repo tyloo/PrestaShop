@@ -31,11 +31,6 @@ use DateTimeImmutable;
 
 class OrderPaymentForViewing
 {
-    /**
-     * @var string|null
-     */
-    protected $employeeName;
-
     public function __construct(
         private readonly int $paymentId,
         private readonly DateTimeImmutable $date,
@@ -47,9 +42,8 @@ class OrderPaymentForViewing
         private readonly string $cardBrand,
         private readonly string $cardExpiration,
         private readonly string $cardHolder,
-        ?string $employeeName = null,
+        protected ?string $employeeName = null,
     ) {
-        $this->employeeName = $employeeName;
     }
 
     public function getPaymentId(): int

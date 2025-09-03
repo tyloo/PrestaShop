@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturn\ValueObject\OrderReturnId;
  */
 class GetOrderReturnForEditing
 {
-    /**
-     * @var OrderReturnId
-     */
-    private $orderReturnId;
+    private readonly OrderReturnId $orderReturnId;
 
     /**
      * @throws OrderReturnConstraintException

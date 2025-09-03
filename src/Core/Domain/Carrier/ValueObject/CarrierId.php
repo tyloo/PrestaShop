@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\Exception\CarrierConstraintExcepti
  */
 class CarrierId
 {
-    /**
-     * @var int
-     */
-    private $carrierId;
+    private readonly int $carrierId;
 
     public function __construct(int $carrierId)
     {

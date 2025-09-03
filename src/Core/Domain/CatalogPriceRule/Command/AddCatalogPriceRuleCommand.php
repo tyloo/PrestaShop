@@ -39,15 +39,9 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Reduction;
  */
 class AddCatalogPriceRuleCommand
 {
-    /**
-     * @var Reduction
-     */
-    private $reduction;
+    private readonly Reduction $reduction;
 
-    /**
-     * @var DecimalNumber
-     */
-    private $price;
+    private readonly DecimalNumber $price;
 
     /**
      * @var DateTime|null

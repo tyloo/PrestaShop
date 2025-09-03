@@ -42,10 +42,7 @@ class AttributeGroupType
 
     public const ATTRIBUTE_GROUP_TYPE_COLOR = 'color';
 
-    /**
-     * @var string
-     */
-    private $type;
+    private readonly string $type;
 
     /**
      * @throws InvalidAttributeGroupTypeException

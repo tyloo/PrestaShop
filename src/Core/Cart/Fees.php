@@ -39,10 +39,7 @@ class Fees
      */
     protected $cart;
 
-    /**
-     * @var AmountImmutable
-     */
-    protected $shippingFees;
+    protected AmountImmutable $shippingFees;
 
     /**
      * @var AmountImmutable|null
@@ -66,15 +63,10 @@ class Fees
      */
     protected $isProcessed = false;
 
-    /**
-     * @var int|null
-     */
-    protected $orderId;
-
-    public function __construct(?int $orderId = null)
-    {
+    public function __construct(
+        protected ?int $orderId = null,
+    ) {
         $this->shippingFees = new AmountImmutable();
-        $this->orderId = $orderId;
     }
 
     /**
@@ -154,10 +146,7 @@ class Fees
         return $this;
     }
 
-    /**
-     * @return AmountImmutable
-     */
-    public function getInitialShippingFees()
+    public function getInitialShippingFees(): AmountImmutable
     {
         return $this->shippingFees;
     }

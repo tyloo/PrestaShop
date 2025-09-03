@@ -122,9 +122,9 @@ class FakeClass
 {
     public $test = 17;
 
-    private $obj2;
+    private readonly FakeClass2 $obj2;
 
-    private $obj3;
+    private readonly FakeClass3 $obj3;
 
     public function __construct()
     {

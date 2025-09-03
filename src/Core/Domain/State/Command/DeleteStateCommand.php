@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateIdInterface;
  */
 class DeleteStateCommand
 {
-    /**
-     * @var StateIdInterface
-     */
-    private $stateId;
+    private readonly \PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateId|NoStateId $stateId;
 
     public function __construct(int $stateId)
     {

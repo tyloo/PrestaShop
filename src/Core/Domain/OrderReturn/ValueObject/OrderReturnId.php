@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturn\Exception\OrderReturnConstrain
  */
 class OrderReturnId
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private readonly int $id;
 
     /**
      * @throws OrderReturnConstraintException

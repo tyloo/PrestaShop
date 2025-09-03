@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\Exception\SpecificPr
 
 class SpecificPriceId
 {
-    /**
-     * @var int
-     */
-    private $specificPriceId;
+    private readonly int $specificPriceId;
 
     /**
      * @throws SpecificPriceConstraintException

@@ -35,15 +35,9 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 abstract class AbstractFormDataFormatter
 {
-    /**
-     * @var string
-     */
-    protected $modifyAllNamePrefix;
-
     public function __construct(
-        string $modifyAllNamePrefix = '',
+        protected string $modifyAllNamePrefix = '',
     ) {
-        $this->modifyAllNamePrefix = $modifyAllNamePrefix;
     }
 
     protected function formatByPath(array $formData, array $pathAssociations): array

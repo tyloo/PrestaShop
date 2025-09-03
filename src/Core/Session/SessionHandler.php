@@ -39,36 +39,14 @@ class SessionHandler implements SessionHandlerInterface
      */
     protected $session;
 
-    /**
-     * @var int
-     */
-    protected $lifetime;
-
-    /**
-     * @var bool
-     */
-    protected $isSecure;
-
-    /**
-     * @var string
-     */
-    protected $sameSite;
-
-    /**
-     * @var string
-     */
-    protected $path;
+    protected string $path;
 
     public function __construct(
-        int $lifetime,
-        bool $isSecure,
-        string $sameSite,
+        protected int $lifetime,
+        protected bool $isSecure,
+        protected string $sameSite,
         string $shopUri,
     ) {
-        $this->lifetime = $lifetime;
-        $this->isSecure = $isSecure;
-        $this->sameSite = $sameSite;
-
         // Same behaviour as Cookie class
         $this->path = trim($shopUri, '/\\') . '/';
         if ($this->path[0] !== '/') {

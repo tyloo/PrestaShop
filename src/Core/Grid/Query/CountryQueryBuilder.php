@@ -39,28 +39,16 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
 class CountryQueryBuilder extends AbstractDoctrineQueryBuilder
 {
     /**
-     * @var DoctrineSearchCriteriaApplicatorInterface
-     */
-    protected $searchCriteriaApplicator;
-
-    /**
-     * @var int[]
-     */
-    protected $contextShopIds;
-
-    /**
      * @param int[] $contextShopIds
      */
     public function __construct(
         Connection $connection,
         string $dbPrefix,
-        DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
-        array $contextShopIds,
+        protected DoctrineSearchCriteriaApplicatorInterface $searchCriteriaApplicator,
+        protected array $contextShopIds,
         private readonly int $contextLangId,
     ) {
         parent::__construct($connection, $dbPrefix);
-        $this->searchCriteriaApplicator = $searchCriteriaApplicator;
-        $this->contextShopIds = $contextShopIds;
     }
 
     public function getSearchQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder

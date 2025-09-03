@@ -39,30 +39,15 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
  */
 class AddCustomerCommand
 {
-    /**
-     * @var FirstName
-     */
-    private $firstName;
+    private readonly FirstName $firstName;
 
-    /**
-     * @var LastName
-     */
-    private $lastName;
+    private readonly LastName $lastName;
 
-    /**
-     * @var Email
-     */
-    private $email;
+    private readonly Email $email;
 
-    /**
-     * @var Password
-     */
-    private $password;
+    private readonly Password $password;
 
-    /**
-     * @var Birthday
-     */
-    private $birthday;
+    private readonly Birthday $birthday;
 
     /**
      * @var string|null Only for B2b customers
@@ -134,34 +119,22 @@ class AddCustomerCommand
         $this->birthday = $birthday !== null ? new Birthday($birthday) : Birthday::createEmpty();
     }
 
-    /**
-     * @return FirstName
-     */
-    public function getFirstName()
+    public function getFirstName(): FirstName
     {
         return $this->firstName;
     }
 
-    /**
-     * @return LastName
-     */
-    public function getLastName()
+    public function getLastName(): LastName
     {
         return $this->lastName;
     }
 
-    /**
-     * @return Email
-     */
-    public function getEmail()
+    public function getEmail(): Email
     {
         return $this->email;
     }
 
-    /**
-     * @return Password
-     */
-    public function getPassword()
+    public function getPassword(): Password
     {
         return $this->password;
     }
@@ -206,10 +179,7 @@ class AddCustomerCommand
         return $this->isPartnerOffersSubscribed;
     }
 
-    /**
-     * @return Birthday
-     */
-    public function getBirthday()
+    public function getBirthday(): Birthday
     {
         return $this->birthday;
     }

@@ -40,15 +40,9 @@ class GetProductCustomizationFields
 {
     use CustomizationShopConstraintTrait;
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private ProductId $productId;
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
+    private ShopConstraint $shopConstraint;
 
     public function __construct(
         int $productId,

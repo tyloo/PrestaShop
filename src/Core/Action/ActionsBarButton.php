@@ -31,28 +31,13 @@ namespace PrestaShop\PrestaShop\Core\Action;
 class ActionsBarButton implements ActionsBarButtonInterface
 {
     /**
-     * @var string
-     */
-    protected $class;
-
-    /**
-     * @var array<string, scalar>
-     */
-    protected $properties;
-
-    /**
-     * @var string
-     */
-    protected $content;
-
-    /**
      * @param array<string, scalar> $properties
      */
-    public function __construct(string $class = '', array $properties = [], string $content = '')
-    {
-        $this->class = $class;
-        $this->properties = $properties;
-        $this->content = $content;
+    public function __construct(
+        protected string $class = '',
+        protected array $properties = [],
+        protected string $content = '',
+    ) {
     }
 
     public function getClass(): string

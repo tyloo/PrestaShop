@@ -42,25 +42,13 @@ class GetProductStockMovements
 {
     public const DEFAULT_LIMIT = 5;
 
-    /**
-     * @var ShopId
-     */
-    private $shopId;
+    private readonly ShopId $shopId;
 
-    /**
-     * @var int
-     */
-    private $offset;
+    private readonly int $offset;
 
-    /**
-     * @var int
-     */
-    private $limit;
+    private readonly int $limit;
 
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     public function __construct(
         int $productId,

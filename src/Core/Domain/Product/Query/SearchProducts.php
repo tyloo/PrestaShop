@@ -38,15 +38,9 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Exception\ProductSearchEmptyPhrase
  */
 class SearchProducts
 {
-    /**
-     * @var string
-     */
-    private $phrase;
+    private readonly string $phrase;
 
-    /**
-     * @var AlphaIsoCode
-     */
-    private $alphaIsoCode;
+    private readonly AlphaIsoCode $alphaIsoCode;
 
     /**
      * @var OrderId|null
@@ -76,10 +70,7 @@ class SearchProducts
         return $this->alphaIsoCode;
     }
 
-    /**
-     * @return string
-     */
-    public function getPhrase()
+    public function getPhrase(): string
     {
         return $this->phrase;
     }

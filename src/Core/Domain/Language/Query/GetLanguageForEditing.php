@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\LanguageId;
  */
 class GetLanguageForEditing
 {
-    /**
-     * @var LanguageId
-     */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
     /**
      * @param int $languageId
@@ -47,10 +44,7 @@ class GetLanguageForEditing
         $this->languageId = new LanguageId($languageId);
     }
 
-    /**
-     * @return LanguageId
-     */
-    public function getLanguageId()
+    public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }

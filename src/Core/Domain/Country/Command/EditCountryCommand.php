@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryZipCodeFormat;
  */
 class EditCountryCommand
 {
-    /**
-     * @var CountryId
-     */
-    private $countryId;
+    private readonly CountryId $countryId;
 
     /**
      * @var string[]

@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\ValueObject\CartId;
 
 class UpdateCartAddressesCommand
 {
-    /**
-     * @var CartId
-     */
-    private $cartId;
+    private readonly CartId $cartId;
 
     /**
      * @var AddressId

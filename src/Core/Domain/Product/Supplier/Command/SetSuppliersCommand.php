@@ -44,10 +44,7 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
  */
 class SetSuppliersCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @var SupplierId[]

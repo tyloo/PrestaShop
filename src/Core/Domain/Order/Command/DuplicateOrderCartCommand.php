@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
  */
 class DuplicateOrderCartCommand
 {
-    /**
-     * @var OrderId
-     */
-    private $orderId;
+    private readonly OrderId $orderId;
 
     /**
      * @param int $orderId
@@ -47,10 +44,7 @@ class DuplicateOrderCartCommand
         $this->orderId = new OrderId($orderId);
     }
 
-    /**
-     * @return OrderId
-     */
-    public function getOrderId()
+    public function getOrderId(): OrderId
     {
         return $this->orderId;
     }

@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
  */
 class EditEmployeeCommand
 {
-    /**
-     * @var EmployeeId
-     */
-    private $employeeId;
+    private EmployeeId $employeeId;
 
     /**
      * @var FirstName
@@ -101,10 +98,7 @@ class EditEmployeeCommand
         $this->employeeId = new EmployeeId((int) $employeeId);
     }
 
-    /**
-     * @return EmployeeId
-     */
-    public function getEmployeeId()
+    public function getEmployeeId(): EmployeeId
     {
         return $this->employeeId;
     }

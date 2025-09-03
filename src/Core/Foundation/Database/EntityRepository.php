@@ -31,37 +31,19 @@ use PrestaShop\PrestaShop\Core\Foundation\Database\EntityManager\QueryBuilder;
 
 class EntityRepository
 {
-    /**
-     * @var EntityManager
-     */
-    protected $entityManager;
+    protected DatabaseInterface $db;
 
-    /**
-     * @var DatabaseInterface
-     */
-    protected $db;
-
-    /**
-     * @var EntityMetaData
-     */
-    protected $entityMetaData;
-
-    /**
-     * @var QueryBuilder
-     */
-    protected $queryBuilder;
+    protected QueryBuilder $queryBuilder;
 
     /**
      * @param string $tablesPrefix
      */
     public function __construct(
-        EntityManager $entityManager,
+        protected EntityManager $entityManager,
         protected $tablesPrefix,
-        EntityMetaData $entityMetaData,
+        protected EntityMetaData $entityMetaData,
     ) {
-        $this->entityManager = $entityManager;
         $this->db = $this->entityManager->getDatabase();
-        $this->entityMetaData = $entityMetaData;
         $this->queryBuilder = new QueryBuilder($this->db);
     }
 

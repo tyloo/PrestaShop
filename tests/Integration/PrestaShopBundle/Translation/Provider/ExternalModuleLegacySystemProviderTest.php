@@ -45,10 +45,7 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
      */
     private $provider;
 
-    /**
-     * @var CatalogueVerifier
-     */
-    private $catalogueVerifier;
+    private readonly CatalogueVerifier $catalogueVerifier;
 
     public function __construct($name = null)
     {

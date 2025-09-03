@@ -51,10 +51,7 @@ class ProductCondition
         self::REFURBISHED,
     ];
 
-    /**
-     * @var string
-     */
-    private $value;
+    private readonly string $value;
 
     public function __construct(string $value)
     {

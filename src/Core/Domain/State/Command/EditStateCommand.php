@@ -39,10 +39,7 @@ use PrestaShop\PrestaShop\Core\Domain\Zone\ValueObject\ZoneId;
  */
 class EditStateCommand
 {
-    /**
-     * @var StateId
-     */
-    private $stateId;
+    private readonly StateId $stateId;
 
     /**
      * @var CountryId|null

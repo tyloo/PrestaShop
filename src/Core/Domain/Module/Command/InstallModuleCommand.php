@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Domain\Module\ValueObject\ModuleTechnicalName;
  */
 class InstallModuleCommand
 {
-    /**
-     * @var ModuleTechnicalName
-     */
-    private $technicalName;
+    private readonly ModuleTechnicalName $technicalName;
 
     /**
      * @param string $technicalName Technical name for module

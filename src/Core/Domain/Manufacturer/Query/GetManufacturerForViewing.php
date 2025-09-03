@@ -35,15 +35,12 @@ use PrestaShop\PrestaShop\Core\Domain\Manufacturer\ValueObject\ManufacturerId;
  */
 class GetManufacturerForViewing
 {
-    /**
-     * @var ManufacturerId
-     */
-    private $manufacturerId;
+    private readonly ManufacturerId $manufacturerId;
 
     /**
      * @var LanguageId Language in which manufacturer is returned
      */
-    private $languageId;
+    private readonly LanguageId $languageId;
 
     /**
      * @param int $manufacturerId
@@ -55,18 +52,12 @@ class GetManufacturerForViewing
         $this->languageId = new LanguageId($languageId);
     }
 
-    /**
-     * @return ManufacturerId
-     */
-    public function getManufacturerId()
+    public function getManufacturerId(): ManufacturerId
     {
         return $this->manufacturerId;
     }
 
-    /**
-     * @return LanguageId
-     */
-    public function getLanguageId()
+    public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }

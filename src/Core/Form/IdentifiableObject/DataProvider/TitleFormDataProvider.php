@@ -40,14 +40,9 @@ use PrestaShop\PrestaShop\Core\Domain\Title\ValueObject\Gender;
  */
 class TitleFormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * @var CommandBusInterface
-     */
-    protected $queryBus;
-
-    public function __construct(CommandBusInterface $queryBus)
-    {
-        $this->queryBus = $queryBus;
+    public function __construct(
+        protected CommandBusInterface $queryBus,
+    ) {
     }
 
     public function getData($id): array

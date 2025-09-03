@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
  */
 class SetPrivateNoteAboutCustomerCommand
 {
-    /**
-     * @var CustomerId
-     */
-    private $customerId;
+    private readonly CustomerId $customerId;
 
     /**
      * @var string
@@ -57,10 +54,7 @@ class SetPrivateNoteAboutCustomerCommand
         $this->privateNote = $privateNote;
     }
 
-    /**
-     * @return CustomerId
-     */
-    public function getCustomerId()
+    public function getCustomerId(): CustomerId
     {
         return $this->customerId;
     }

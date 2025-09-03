@@ -60,10 +60,7 @@ class DeliveryTimeNoteType
         'specific' => self::TYPE_SPECIFIC,
     ];
 
-    /**
-     * @var int
-     */
-    private $value;
+    private readonly int $value;
 
     public function __construct(int $value)
     {

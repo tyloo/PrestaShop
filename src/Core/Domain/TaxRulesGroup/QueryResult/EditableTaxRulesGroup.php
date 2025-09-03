@@ -35,38 +35,14 @@ use PrestaShop\PrestaShop\Core\Domain\TaxRulesGroup\ValueObject\TaxRulesGroupId;
 class EditableTaxRulesGroup
 {
     /**
-     * @var TaxRulesGroupId
-     */
-    protected $taxRulesGroupId;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var bool
-     */
-    protected $active;
-
-    /**
-     * @var int[]
-     */
-    protected $shopAssociationIds;
-
-    /**
      * @param array<int> $shopAssociationIds
      */
     public function __construct(
-        TaxRulesGroupId $taxRulesGroupId,
-        string $name,
-        bool $active,
-        array $shopAssociationIds,
+        protected TaxRulesGroupId $taxRulesGroupId,
+        protected string $name,
+        protected bool $active,
+        protected array $shopAssociationIds,
     ) {
-        $this->taxRulesGroupId = $taxRulesGroupId;
-        $this->name = $name;
-        $this->active = $active;
-        $this->shopAssociationIds = $shopAssociationIds;
     }
 
     public function getTaxRulesGroupId(): TaxRulesGroupId

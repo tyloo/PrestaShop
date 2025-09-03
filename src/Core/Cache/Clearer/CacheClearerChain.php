@@ -35,7 +35,7 @@ final class CacheClearerChain implements CacheClearerInterface
     /**
      * @var CacheClearerInterface[]
      */
-    private $cacheClearers;
+    private readonly array $cacheClearers;
 
     public function __construct(CacheClearerInterface ...$cacheClearers)
     {

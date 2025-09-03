@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Domain\Tab\Exception\InvalidTabValueIdException;
 
 class TabId implements TabIdInterface
 {
-    /**
-     * @var int
-     */
-    private $tabId;
+    private readonly int $tabId;
 
     public function __construct(int $tabId)
     {

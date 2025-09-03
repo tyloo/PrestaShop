@@ -37,8 +37,8 @@ use PrestaShop\PrestaShop\Adapter\Language\Repository\LanguageRepository as Obje
 use PrestaShop\PrestaShop\Core\Context\LanguageContextBuilder;
 use PrestaShop\PrestaShop\Core\Language\LanguageInterface;
 use PrestaShop\PrestaShop\Core\Language\LanguageRepositoryInterface;
-use PrestaShop\PrestaShop\Core\Localization\Locale\RepositoryInterface;
 use PrestaShop\PrestaShop\Core\Localization\Locale;
+use PrestaShop\PrestaShop\Core\Localization\Locale\RepositoryInterface;
 use PrestaShop\PrestaShop\Core\Localization\LocaleInterface;
 use PrestaShop\PrestaShop\Core\Localization\Specification\Number;
 use PrestaShop\PrestaShop\Core\Localization\Specification\NumberSymbolList;

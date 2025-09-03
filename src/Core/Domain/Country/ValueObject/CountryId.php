@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Country\Exception\CountryConstraintExcepti
  */
 class CountryId implements CountryIdInterface
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private readonly int $id;
 
     /**
      * @throws CountryConstraintException

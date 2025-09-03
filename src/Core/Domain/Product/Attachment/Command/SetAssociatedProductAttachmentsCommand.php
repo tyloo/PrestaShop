@@ -38,10 +38,7 @@ use RuntimeException;
  */
 class SetAssociatedProductAttachmentsCommand
 {
-    /**
-     * @var ProductId
-     */
-    private $productId;
+    private readonly ProductId $productId;
 
     /**
      * @var AttachmentId[]

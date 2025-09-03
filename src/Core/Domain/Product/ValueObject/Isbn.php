@@ -65,10 +65,7 @@ class Isbn
      */
     public const MAX_LENGTH = 32;
 
-    /**
-     * @var string
-     */
-    private $value;
+    private readonly string $value;
 
     public function __construct(string $value)
     {

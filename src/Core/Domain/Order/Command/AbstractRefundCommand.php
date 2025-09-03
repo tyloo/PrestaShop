@@ -39,35 +39,12 @@ use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
  */
 abstract class AbstractRefundCommand
 {
-    /**
-     * @var OrderId
-     */
-    protected $orderId;
+    protected OrderId $orderId;
 
     /**
      * @var array
      */
     protected $orderDetailRefunds;
-
-    /**
-     * @var bool
-     */
-    protected $restockRefundedProducts;
-
-    /**
-     * @var bool
-     */
-    protected $generateCreditSlip;
-
-    /**
-     * @var bool
-     */
-    protected $generateVoucher;
-
-    /**
-     * @var int
-     */
-    protected $voucherRefundType;
 
     /**
      * @var DecimalNumber|null
@@ -81,17 +58,13 @@ abstract class AbstractRefundCommand
     public function __construct(
         int $orderId,
         array $orderDetailRefunds,
-        bool $restockRefundedProducts,
-        bool $generateCreditSlip,
-        bool $generateVoucher,
-        int $voucherRefundType,
+        protected bool $restockRefundedProducts,
+        protected bool $generateCreditSlip,
+        protected bool $generateVoucher,
+        protected int $voucherRefundType,
         ?string $voucherRefundAmount = null,
     ) {
         $this->orderId = new OrderId($orderId);
-        $this->restockRefundedProducts = $restockRefundedProducts;
-        $this->generateCreditSlip = $generateCreditSlip;
-        $this->generateVoucher = $generateVoucher;
-        $this->voucherRefundType = $voucherRefundType;
         if ($voucherRefundAmount !== null) {
             try {
                 $this->voucherRefundAmount = new DecimalNumber($voucherRefundAmount);

@@ -34,15 +34,9 @@ use PrestaShop\PrestaShop\Core\Domain\Shipment\ValueObject\ShipmentId;
 
 class DeleteProductFromShipment
 {
-    /**
-     * @var ShipmentId
-     */
-    private $shipmentId;
+    private readonly ShipmentId $shipmentId;
 
-    /**
-     * @var OrderDetailId
-     */
-    private $orderDetailId;
+    private readonly OrderDetailId $orderDetailId;
 
     public function __construct(int $shipmentId, int $orderDetailId)
     {
