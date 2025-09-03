@@ -41,14 +41,13 @@ use Symfony\Component\Form\FormFactoryInterface;
 final class InvoiceByStatusFormHandler extends Handler
 {
     /**
-     * @param string $form
      * @param string $hookName
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         HookDispatcherInterface $hookDispatcher,
         FormDataProviderInterface $formDataProvider,
-        $form,
+        string $form,
         $hookName,
         private readonly OrderInvoiceDataProviderInterface $orderInvoiceDataProvider,
         private readonly PDFGeneratorInterface $pdfGenerator,

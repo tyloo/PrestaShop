@@ -41,7 +41,7 @@ class TinyMceMaxLength extends Constraint
      */
     public $message;
 
-    public function __construct($options = null)
+    public function __construct(mixed $options = null)
     {
         if ($options !== null && ! \is_array($options)) {
             $options = [

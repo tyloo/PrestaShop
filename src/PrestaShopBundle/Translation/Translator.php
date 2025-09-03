@@ -37,7 +37,7 @@ class Translator extends BaseTranslator implements TranslatorInterface
     use PrestaShopTranslatorTrait;
     use TranslatorLanguageTrait;
 
-    public function addResource($format, $resource, $locale, $domain = null): void
+    public function addResource(string $format, mixed $resource, string $locale, ?string $domain = null): void
     {
         parent::addResource($format, $resource, $locale, $domain);
         parent::addResource('db', $domain . '.' . $locale . '.db', $locale, $domain);

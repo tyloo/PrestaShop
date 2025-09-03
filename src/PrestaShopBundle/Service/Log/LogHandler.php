@@ -44,7 +44,7 @@ class LogHandler extends AbstractProcessingHandler
     public function __construct(
         protected Container $container,
         $level = Logger::DEBUG,
-        $bubble = true,
+        bool $bubble = true,
     ) {
         parent::__construct($level, $bubble);
     }

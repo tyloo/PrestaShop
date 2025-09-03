@@ -76,7 +76,7 @@ class YamlModuleLoader extends Loader
         return $type === 'module';
     }
 
-    public function import($resource, $type = null)
+    public function import(mixed $resource, ?string $type = null)
     {
         $loadedRoutes = parent::import($resource, $type);
 
