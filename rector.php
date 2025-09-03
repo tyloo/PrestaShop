@@ -47,7 +47,7 @@ return RectorConfig::configure()
     // ->withAttributesSets(symfony: true, doctrine: true)
     ->withTypeCoverageLevel(53) // max = 53
     // ->withDeadCodeLevel(0) // max = 51
-    ->withCodeQualityLevel(41) // max = 74
+    ->withCodeQualityLevel(55) // max = 74
     ->withCodingStyleLevel(25) // max = 25
     ->withParallel()
 ;

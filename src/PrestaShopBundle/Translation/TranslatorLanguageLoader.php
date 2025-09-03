@@ -78,7 +78,7 @@ class TranslatorLanguageLoader
             $translator->addLoader('xlf', $this->xliffFileLoader);
             if ($withDB) {
                 $translator->addLoader('db', new SqlTranslationLoader());
-                if ($theme !== null) {
+                if ($theme instanceof Theme) {
                     $sqlThemeTranslationLoader = new SqlTranslationLoader();
                     $sqlThemeTranslationLoader->setTheme($theme);
                     $translator->addLoader('db.theme', $sqlThemeTranslationLoader);
@@ -105,7 +105,7 @@ class TranslatorLanguageLoader
                             $translator->addResource('db', $domain . '.' . $locale . '.db', $locale, $domain);
                         }
 
-                        if (! $this->isAdminContext && $theme !== null) {
+                        if (! $this->isAdminContext && $theme instanceof Theme) {
                             // Load theme user-translated wordings for core + theme wordings
                             $translator->addResource('db.theme', $domain . '.' . $locale . '.db', $locale, $domain);
                         }
@@ -168,7 +168,7 @@ class TranslatorLanguageLoader
     {
         $locations = ['core' => $this->projectDir . '/translations'];
 
-        if ($theme !== null) {
+        if ($theme instanceof Theme) {
             $activeThemeLocation = $theme->getDirectory() . '/translations';
             if (is_dir($activeThemeLocation)) {
                 $locations['theme'] = $activeThemeLocation;
