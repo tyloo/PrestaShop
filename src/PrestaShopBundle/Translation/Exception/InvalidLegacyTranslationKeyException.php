@@ -42,10 +42,8 @@ class InvalidLegacyTranslationKeyException extends Exception
     /**
      * @param string $missingElement The missing element
      * @param string $key            The offending key
-     *
-     * @return InvalidLegacyTranslationKeyException
      */
-    public static function missingElementFromKey($missingElement, $key)
+    public static function missingElementFromKey($missingElement, $key): self
     {
         $instance = new self(
             \sprintf('Invalid key in legacy translation file: "%s" (missing %s)', $key, $missingElement)

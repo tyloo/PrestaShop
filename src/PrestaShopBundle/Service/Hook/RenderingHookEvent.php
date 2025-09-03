@@ -54,7 +54,7 @@ class RenderingHookEvent extends HookEvent
      *
      * @return $this for fluent use
      */
-    public function setContent(array $content, $fromListener = '')
+    public function setContent(array $content, $fromListener = ''): static
     {
         $this->currentContent = $content;
         $this->currentListener = $fromListener;

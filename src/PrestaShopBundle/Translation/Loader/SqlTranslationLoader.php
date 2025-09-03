@@ -47,7 +47,7 @@ class SqlTranslationLoader implements LoaderInterface
      *
      * @return $this
      */
-    public function setTheme(Theme $theme)
+    public function setTheme(Theme $theme): static
     {
         $this->theme = $theme;
 

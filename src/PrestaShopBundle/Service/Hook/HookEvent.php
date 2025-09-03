@@ -66,7 +66,7 @@ class HookEvent extends Event
      *
      * @return self
      */
-    public function setHookParameters($parameters)
+    public function setHookParameters($parameters): static
     {
         $this->hookParameters = $parameters;
 

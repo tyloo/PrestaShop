@@ -86,7 +86,7 @@ class ThemeExtractor
     /**
      * @return $this
      */
-    public function setThemeProvider(ThemeProvider $themeProvider)
+    public function setThemeProvider(ThemeProvider $themeProvider): static
     {
         $this->themeProvider = $themeProvider;
 
@@ -135,7 +135,7 @@ class ThemeExtractor
     /**
      * @return $this
      */
-    public function addDumper(FileDumper $dumper)
+    public function addDumper(FileDumper $dumper): static
     {
         $this->dumpers[] = $dumper;
 
@@ -155,7 +155,7 @@ class ThemeExtractor
      *
      * @return $this
      */
-    public function setFormat($format)
+    public function setFormat($format): static
     {
         $this->format = $format;
 
@@ -175,7 +175,7 @@ class ThemeExtractor
      *
      * @return $this
      */
-    public function setOutputPath($outputPath)
+    public function setOutputPath($outputPath): static
     {
         $this->outputPath = $outputPath;
 
@@ -198,7 +198,7 @@ class ThemeExtractor
     /**
      * @return $this
      */
-    public function disableOverridingFromDatabase()
+    public function disableOverridingFromDatabase(): static
     {
         $this->overrideFromDatabase = false;
 
@@ -208,7 +208,7 @@ class ThemeExtractor
     /**
      * @return $this
      */
-    public function enableOverridingFromDatabase()
+    public function enableOverridingFromDatabase(): static
     {
         $this->overrideFromDatabase = true;
 

@@ -36,7 +36,7 @@ class MovementsCollection
     /**
      * @return $this
      */
-    public function fromArray(array $stockMovementsParams)
+    public function fromArray(array $stockMovementsParams): static
     {
         $movements = [];
 

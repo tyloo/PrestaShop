@@ -582,7 +582,7 @@ class XmlLoader
      *
      * @throws PrestaShopDatabaseException
      */
-    public function createEntityPack($identifier, array $data, array $data_lang)
+    public function createEntityPack($identifier, array $data, array $data_lang): static
     {
         Pack::addItem($data['id_product_pack'], $data['id_product_item'], $data['quantity']);
 

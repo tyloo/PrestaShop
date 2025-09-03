@@ -99,7 +99,7 @@ class CsvResponse extends StreamedResponse
      *
      * @return $this
      */
-    public function setData($data)
+    public function setData($data): static
     {
         $this->data = $data;
 
@@ -109,7 +109,7 @@ class CsvResponse extends StreamedResponse
     /**
      * @return $this
      */
-    public function setHeadersData(array $headersData)
+    public function setHeadersData(array $headersData): static
     {
         $this->headersData = $headersData;
 
@@ -121,7 +121,7 @@ class CsvResponse extends StreamedResponse
      *
      * @return $this
      */
-    public function setModeType($modeType)
+    public function setModeType($modeType): static
     {
         $this->modeType = (int) $modeType;
 
@@ -133,7 +133,7 @@ class CsvResponse extends StreamedResponse
      *
      * @return $this
      */
-    public function setStart($start)
+    public function setStart($start): static
     {
         $this->start = (int) $start;
 
@@ -145,7 +145,7 @@ class CsvResponse extends StreamedResponse
      *
      * @return $this
      */
-    public function setLimit($limit)
+    public function setLimit($limit): static
     {
         $this->limit = (int) $limit;
 
@@ -159,7 +159,7 @@ class CsvResponse extends StreamedResponse
      *
      * @throws InvalidArgumentException
      */
-    public function setFileName($fileName)
+    public function setFileName($fileName): static
     {
         $this->fileName = $fileName;
 

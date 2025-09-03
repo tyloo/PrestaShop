@@ -160,7 +160,7 @@ class HookFinder
      *
      * @return self
      */
-    public function addExpectedInstanceClasses($expectedInstanceClasses)
+    public function addExpectedInstanceClasses($expectedInstanceClasses): static
     {
         if (\is_array($expectedInstanceClasses)) {
             $this->expectedInstanceClasses = array_merge($this->expectedInstanceClasses, $expectedInstanceClasses);
@@ -178,7 +178,7 @@ class HookFinder
      *
      * @return self
      */
-    public function setExpectedInstanceClasses($expectedInstanceClasses)
+    public function setExpectedInstanceClasses($expectedInstanceClasses): static
     {
         $this->expectedInstanceClasses = $expectedInstanceClasses;
 
@@ -192,7 +192,7 @@ class HookFinder
      *
      * @return self
      */
-    public function setHookName($hookName)
+    public function setHookName($hookName): static
     {
         $this->hookName = $hookName;
 
@@ -206,7 +206,7 @@ class HookFinder
      *
      * @return self
      */
-    public function addParams($params)
+    public function addParams($params): static
     {
         $this->params = array_merge($this->params, $params);
 
@@ -220,7 +220,7 @@ class HookFinder
      *
      * @return self
      */
-    public function setParams($params)
+    public function setParams($params): static
     {
         $this->params = $params;
 

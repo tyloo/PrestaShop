@@ -87,7 +87,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
         return 'external_legacy_module';
     }
 
-    public function setModuleName($moduleName)
+    public function setModuleName($moduleName): static
     {
         if ($this->moduleName === null || empty($this->moduleName)) {
             UnsupportedModuleException::moduleNotProvided(self::getIdentifier());

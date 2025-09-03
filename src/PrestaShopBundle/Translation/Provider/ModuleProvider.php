@@ -55,7 +55,7 @@ class ModuleProvider extends AbstractProvider implements SearchProviderInterface
         return 'module';
     }
 
-    public function setModuleName($moduleName)
+    public function setModuleName($moduleName): static
     {
         $this->moduleName = $moduleName;
 

@@ -140,7 +140,7 @@ class ThemeProvider extends AbstractProvider
      *
      * @return self
      */
-    public function setThemeName($themeName)
+    public function setThemeName($themeName): static
     {
         $this->themeName = $themeName;
 
