@@ -83,7 +83,7 @@ class CheckTranslationDuplicatesCommand extends Command
 
         // If we have duplicates to fix, let's display them and return their count.
         // This will allow us to add the command in the tests.
-        if (\count($duplicates)) {
+        if ($duplicates !== []) {
             $output->writeln('Duplicates found:');
             dump($duplicates);
 

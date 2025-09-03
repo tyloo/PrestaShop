@@ -245,7 +245,7 @@ abstract class QueryParamsCollection
             }
 
             $filterParams[$filter] = $allParameters[$filter];
-            if (\is_array($filterParams[$filter]) && \count($filterParams[$filter]) === 0) {
+            if (\is_array($filterParams[$filter]) && $filterParams[$filter] === []) {
                 unset($filterParams[$filter]);
             }
         });

@@ -580,7 +580,7 @@ class Install extends AbstractInstall
      */
     public function installLanguages($languages_list = null): array
     {
-        if ($languages_list === null || (\is_array($languages_list) && ! \count($languages_list))) {
+        if ($languages_list === null || (\is_array($languages_list) && $languages_list === [])) {
             $languages_list = $this->language->getIsoList();
         }
 
@@ -1246,7 +1246,7 @@ class Install extends AbstractInstall
             }
         }
 
-        if (\count($errors) > 0) {
+        if ($errors !== []) {
             $this->setError($errors);
 
             return false;

@@ -60,7 +60,7 @@ final class SecurityAttributeLinter implements RouteLinterInterface
 
         $attributes = $reflection->getAttributes(AdminSecurity::class);
 
-        if (\count($attributes) === 0) {
+        if ($attributes === []) {
             throw new LinterException(\sprintf('"%s:%s" does not have AdminSecurity attribute configured', $controllerAndMethod['controller'], $controllerAndMethod['method']));
         }
 

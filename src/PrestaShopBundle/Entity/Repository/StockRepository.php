@@ -292,7 +292,7 @@ class StockRepository extends StockManagementRepository
         $result->free();
         $this->foundRows = $this->getFoundRows();
 
-        if (\count($rows) === 0) {
+        if ($rows === []) {
             throw new ProductNotFoundException(\sprintf('Product with id %d and combination id %d can not be found', $productIdentity->getProductId(), $productIdentity->getCombinationId()));
         }
 

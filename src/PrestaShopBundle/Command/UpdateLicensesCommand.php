@@ -277,7 +277,7 @@ class UpdateLicensesCommand extends Command
         // Try to find an existing license
         preg_match($regex, $content, $matches);
 
-        if (\count($matches)) {
+        if ($matches !== []) {
             // Found - Replace it if prestashop one
             foreach ($matches as $match) {
                 if (mb_stripos($match, 'prestashop') !== false) {

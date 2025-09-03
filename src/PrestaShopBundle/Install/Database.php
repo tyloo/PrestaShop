@@ -124,7 +124,7 @@ class Database extends AbstractInstall
             }
         }
 
-        if (\count($errors)) {
+        if ($errors !== []) {
             $this->setError($errors);
         }
 

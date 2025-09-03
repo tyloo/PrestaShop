@@ -56,7 +56,7 @@ final class InvoicesByStatusDataProvider implements FormDataProviderInterface
         $errors = [];
         $orderStates = $data['order_states'];
 
-        if (! \is_array($orderStates) || ! \count($orderStates)) {
+        if (! \is_array($orderStates) || $orderStates === []) {
             $errors[] = [
                 'key' => 'You must select at least one order status.',
                 'domain' => 'Admin.Orderscustomers.Notification',

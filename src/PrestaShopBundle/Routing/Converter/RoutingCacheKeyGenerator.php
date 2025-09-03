@@ -54,7 +54,7 @@ class RoutingCacheKeyGenerator implements CacheKeyGeneratorInterface
     {
         $routingFiles = [];
 
-        if (\count($this->coreRoutingPaths)) {
+        if ($this->coreRoutingPaths !== []) {
             $finder = new Finder();
             $finder->files()->in($this->coreRoutingPaths);
             $finder->name('/\.(yml|yaml)$/');
@@ -85,7 +85,7 @@ class RoutingCacheKeyGenerator implements CacheKeyGeneratorInterface
     public function getLatestModificationTime()
     {
         $lastModifications = $this->getLastModifications();
-        if (! \count($lastModifications)) {
+        if ($lastModifications === []) {
             return null;
         }
 
