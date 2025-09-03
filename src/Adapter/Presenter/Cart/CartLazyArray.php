@@ -421,7 +421,7 @@ class CartLazyArray extends AbstractLazyArray
             // Voucher reduction depending of the cart tax rule
             // if $cartHasTax & voucher is tax excluded, set amount voucher to tax included
             if ($cartHasTax && $cartVoucher['reduction_tax'] == '0') {
-                $cartVoucher['reduction_amount'] = $cartVoucher['reduction_amount'] * (1 + $cartHasTax / 100);
+                $cartVoucher['reduction_amount'] *= 1 + $cartHasTax / 100;
             }
 
             $vouchers[$cartVoucher['id_cart_rule']]['reduction_amount'] = $cartVoucher['reduction_amount'];

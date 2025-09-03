@@ -101,7 +101,7 @@ class EntityMapper
                             ObjectModel::TYPE_BOOL,
                         ])) {
                             if (is_array($value)) {
-                                array_walk($value, function (&$v) { $v = strval($v); });
+                                array_walk($value, function (&$v): void { $v = strval($v); });
                                 $entity->{$key} = $value;
                             } else {
                                 $entity->{$key} = strval($value);

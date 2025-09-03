@@ -64,7 +64,7 @@ abstract class AbstractImageUploader
                 sprintf(
                     'Image format "%s", not recognized, allowed formats are: %s',
                     $image->getClientOriginalExtension(),
-                    join(', ', ImageManager::EXTENSIONS_SUPPORTED)
+                    implode(', ', ImageManager::EXTENSIONS_SUPPORTED)
                 ),
                 UploadedImageConstraintException::UNRECOGNIZED_FORMAT
             );

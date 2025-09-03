@@ -78,7 +78,7 @@ final class SymfonyCacheClearer implements CacheClearerInterface
 
         // If we reach here it means the clear lock file is locked, we register a shutdown function that will clear the cache once
         // the current process is over.
-        register_shutdown_function(function () use ($kernel) {
+        register_shutdown_function(function () use ($kernel): void {
             try {
                 // Remove time limit to make sure the cache has the time to be cleared
                 set_time_limit(0);
