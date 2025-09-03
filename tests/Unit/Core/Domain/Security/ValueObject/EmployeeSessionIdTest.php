@@ -36,11 +36,11 @@ use PrestaShop\PrestaShop\Core\Domain\Security\ValueObject\EmployeeSessionId;
 class EmployeeSessionIdTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('createsSessionIdWithValidValuesData')]
-    public function testItCreatesSessionIdWithValidValues($idValue): void
+    public function testItCreatesSessionIdWithValidValues(int $idValue): void
     {
         $sessionId = new EmployeeSessionId($idValue);
 
-        $this->assertEquals((int) $idValue, $sessionId->getValue());
+        $this->assertEquals($idValue, $sessionId->getValue());
     }
 
     public static function createsSessionIdWithValidValuesData(): array
@@ -52,7 +52,7 @@ class EmployeeSessionIdTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('exceptionThrownWithInvalidValuesData')]
-    public function testItExceptionThrownWithInvalidValues($sessionId): void
+    public function testItExceptionThrownWithInvalidValues(int $sessionId): void
     {
         $this->expectException(SessionException::class);
         new EmployeeSessionId($sessionId);

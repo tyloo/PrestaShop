@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Product\Search\Pagination;
 
 class PaginationTest extends TestCase
 {
-    /**
-     * @var Pagination
-     */
-    private $pagination;
+    private Pagination $pagination;
 
     protected function setUp(): void
     {

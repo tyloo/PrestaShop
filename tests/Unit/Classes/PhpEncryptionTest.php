@@ -39,10 +39,7 @@ class PhpEncryptionTest extends TestCase
      */
     private const FOO = 'foo';
 
-    /**
-     * @var PhpEncryption
-     */
-    private $engine;
+    private PhpEncryption $engine;
 
     protected function setUp(): void
     {

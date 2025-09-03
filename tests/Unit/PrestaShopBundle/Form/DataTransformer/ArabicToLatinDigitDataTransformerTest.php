@@ -30,14 +30,10 @@ namespace Tests\Unit\PrestaShopBundle\Form\DataTransformer;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Util\ArabicToLatinDigitConverter;
 use PrestaShopBundle\Form\DataTransformer\ArabicToLatinDigitDataTransformer;
-use Symfony\Component\Form\DataTransformerInterface;
 
 class ArabicToLatinDigitDataTransformerTest extends TestCase
 {
-    /**
-     * @var DataTransformerInterface
-     */
-    private $dataTransformer;
+    private ArabicToLatinDigitDataTransformer $dataTransformer;
 
     protected function setUp(): void
     {

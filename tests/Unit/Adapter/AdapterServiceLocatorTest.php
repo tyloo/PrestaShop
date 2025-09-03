@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Foundation\IoC\Container;
 
 class AdapterServiceLocatorTest extends TestCase
 {
-    /**
-     * @var Container
-     */
-    private $savedContainer;
+    private ?Container $savedContainer;
 
     protected function setUp(): void
     {

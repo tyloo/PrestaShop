@@ -91,7 +91,7 @@ class ClassFiltersBuilderTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getShopConstraints')]
-    public function testCreateWithShopConstraint($shopConstraint, $expectedShopConstraint): void
+    public function testCreateWithShopConstraint(ShopConstraint $shopConstraint, ShopConstraint $expectedShopConstraint): void
     {
         $builder = new ClassFiltersBuilder();
         $builder->setConfig(['filters_class' => SampleShopFilters::class, 'shop_constraint' => $shopConstraint]);
@@ -105,7 +105,7 @@ class ClassFiltersBuilderTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getShopConstraints')]
-    public function testUpdateWithShopConstraint($shopConstraint, $expectedShopConstraint): void
+    public function testUpdateWithShopConstraint(ShopConstraint $shopConstraint, ShopConstraint $expectedShopConstraint): void
     {
         $builder = new ClassFiltersBuilder();
         $builder->setConfig(['filters_class' => SampleShopFilters::class, 'shop_constraint' => $shopConstraint]);

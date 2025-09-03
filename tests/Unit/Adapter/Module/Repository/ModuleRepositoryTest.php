@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Adapter\Module\Repository\ModuleRepository;
 
 class ModuleRepositoryTest extends TestCase
 {
-    /**
-     * @var ModuleRepository
-     */
-    private $moduleRepository;
+    private ModuleRepository $moduleRepository;
 
     protected function setUp(): void
     {

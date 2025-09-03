@@ -47,15 +47,9 @@ class StockManagerTest extends KernelTestCase
      */
     private MockObject $configuration;
 
-    /**
-     * @var Container
-     */
-    private $testContainer;
+    private Container $testContainer;
 
-    /**
-     * @var Container
-     */
-    private $savedContainer;
+    private ?Container $savedContainer;
 
     /**
      * @var PackItemsManager

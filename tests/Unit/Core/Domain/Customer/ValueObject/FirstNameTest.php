@@ -27,6 +27,7 @@
 
 namespace Tests\Unit\Core\Domain\Customer\ValueObject;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\FirstName;
@@ -44,7 +45,7 @@ class FirstNameTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidFirstNames')]
-    public function testItThrowsExceptionWhenInvalidFirstNameIsSupplied($invalidFirstName): void
+    public function testItThrowsExceptionWhenInvalidFirstNameIsSupplied(string $invalidFirstName): void
     {
         $this->expectException(CustomerConstraintException::class);
         $this->expectExceptionCode(CustomerConstraintException::INVALID_FIRST_NAME);
@@ -53,14 +54,14 @@ class FirstNameTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidFirstNames')]
-    public function testItCreatesFirstNameWithValid($validFirstName): void
+    public function testItCreatesFirstNameWithValid(string $validFirstName): void
     {
         $firstName = new FirstName($validFirstName);
 
         $this->assertEquals($validFirstName, $firstName->getValue());
     }
 
-    public static function getInvalidFirstNames()
+    public static function getInvalidFirstNames(): Generator
     {
         yield ['First123Name'];
         yield ['My !@# name'];
@@ -69,7 +70,7 @@ class FirstNameTest extends TestCase
         yield ['@My@first%name'];
     }
 
-    public static function getValidFirstNames()
+    public static function getValidFirstNames(): Generator
     {
         yield ['Demo Demo'];
         yield ['MyNameIsPrettyLong'];

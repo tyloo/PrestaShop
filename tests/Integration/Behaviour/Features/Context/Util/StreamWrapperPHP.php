@@ -130,7 +130,7 @@ class StreamWrapperPHP
         return $this->index >= $this->length;
     }
 
-    public function stream_write($data)
+    public function stream_write($data): int|false
     {
         return file_put_contents($this->buffer_filename(), $data);
     }

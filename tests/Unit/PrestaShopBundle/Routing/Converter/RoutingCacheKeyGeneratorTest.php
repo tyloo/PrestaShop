@@ -36,12 +36,9 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class RoutingCacheKeyGeneratorTest extends TestCase
 {
-    /**
-     * @var Filesystem
-     */
-    private $fs;
+    private Filesystem $fs;
 
-    private $filesTestDir;
+    private string $filesTestDir;
 
     protected function setUp(): void
     {

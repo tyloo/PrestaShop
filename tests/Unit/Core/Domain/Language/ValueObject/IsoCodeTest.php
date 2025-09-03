@@ -27,6 +27,7 @@
 
 namespace Tests\Unit\Core\Domain\Language\ValueObject;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Language\Exception\LanguageConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\IsoCode;
@@ -34,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\IsoCode;
 class IsoCodeTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidTwoLetterIsoCodes')]
-    public function testIsoCodeCanBeCreatedWithValidTwoLetterIsoCode($twoLetterIsoCode, $expectedIsoCodeValue): void
+    public function testIsoCodeCanBeCreatedWithValidTwoLetterIsoCode(string $twoLetterIsoCode, string $expectedIsoCodeValue): void
     {
         $isoCode = new IsoCode($twoLetterIsoCode);
 
@@ -42,14 +43,14 @@ class IsoCodeTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCodes')]
-    public function testIsoCodeCannotBeCreatedWithInvalidValue($invalidIsoCode): void
+    public function testIsoCodeCannotBeCreatedWithInvalidValue(string|int|null $invalidIsoCode): void
     {
         $this->expectException(LanguageConstraintException::class);
 
         new IsoCode($invalidIsoCode);
     }
 
-    public static function getValidTwoLetterIsoCodes()
+    public static function getValidTwoLetterIsoCodes(): Generator
     {
         yield ['lt', 'lt'];
         yield ['fr', 'fr'];
@@ -57,7 +58,7 @@ class IsoCodeTest extends TestCase
         yield ['SW', 'sw'];
     }
 
-    public static function getInvalidCodes()
+    public static function getInvalidCodes(): Generator
     {
         yield [''];
         yield ['12'];

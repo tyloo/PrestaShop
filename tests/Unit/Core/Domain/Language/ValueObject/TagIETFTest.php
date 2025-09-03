@@ -27,6 +27,7 @@
 
 namespace Tests\Unit\Core\Domain\Language\ValueObject;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Language\Exception\LanguageConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\TagIETF;
@@ -34,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\TagIETF;
 class TagIETFTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidTagIETFValues')]
-    public function testTagIETFCanBeCreatedWithValidValues($validTagIETFValue): void
+    public function testTagIETFCanBeCreatedWithValidValues(string $validTagIETFValue): void
     {
         $tagIETF = new TagIETF($validTagIETFValue);
 
@@ -42,14 +43,14 @@ class TagIETFTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidTagIETFValues')]
-    public function testTagIETFCanBeCreatedWithInvalidValues($invalidTagIETFValue): void
+    public function testTagIETFCanBeCreatedWithInvalidValues(string|int|null $invalidTagIETFValue): void
     {
         $this->expectException(LanguageConstraintException::class);
 
         new TagIETF($invalidTagIETFValue);
     }
 
-    public static function getValidTagIETFValues()
+    public static function getValidTagIETFValues(): Generator
     {
         yield ['fr'];
         yield ['lt-LT'];
@@ -58,7 +59,7 @@ class TagIETFTest extends TestCase
         yield ['EN-AU'];
     }
 
-    public static function getInvalidTagIETFValues()
+    public static function getInvalidTagIETFValues(): Generator
     {
         yield ['enUS'];
         yield ['ENGB'];

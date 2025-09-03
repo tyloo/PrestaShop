@@ -66,7 +66,7 @@ class DefaultLanguageValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectTypes')]
-    public function testItDetectsIncorrectValueType($incorrectType): void
+    public function testItDetectsIncorrectValueType(string|bool|null $incorrectType): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate($incorrectType, new DefaultLanguage());

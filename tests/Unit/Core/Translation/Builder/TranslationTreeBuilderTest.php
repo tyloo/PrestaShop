@@ -71,10 +71,7 @@ class TranslationTreeBuilderTest extends TestCase
         ],
     ];
 
-    /**
-     * @var TranslationsTreeBuilder
-     */
-    private $treeBuilder;
+    private TranslationsTreeBuilder $treeBuilder;
 
     protected function setUp(): void
     {

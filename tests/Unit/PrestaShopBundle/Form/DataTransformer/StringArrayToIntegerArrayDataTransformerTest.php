@@ -29,14 +29,10 @@ namespace Tests\Unit\PrestaShopBundle\Form\DataTransformer;
 
 use PHPUnit\Framework\TestCase;
 use PrestaShopBundle\Form\DataTransformer\StringArrayToIntegerArrayDataTransformer;
-use Symfony\Component\Form\DataTransformerInterface;
 
 class StringArrayToIntegerArrayDataTransformerTest extends TestCase
 {
-    /**
-     * @var DataTransformerInterface
-     */
-    private $dataTransformer;
+    private StringArrayToIntegerArrayDataTransformer $dataTransformer;
 
     protected function setUp(): void
     {

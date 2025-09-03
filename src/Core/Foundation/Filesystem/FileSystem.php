@@ -131,7 +131,7 @@ class FileSystem
     /**
      * Filter used by listFilesRecursively.
      */
-    private function matchOnlyFiles(SplFileInfo $info)
+    private function matchOnlyFiles(SplFileInfo $info): bool
     {
         return $info->isFile();
     }
@@ -139,7 +139,7 @@ class FileSystem
     /**
      * Same as listEntriesRecursively but returns only files.
      */
-    public function listFilesRecursively($path)
+    public function listFilesRecursively($path): array
     {
         return array_filter(
             $this->listEntriesRecursively($path),

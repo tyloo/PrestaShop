@@ -32,14 +32,10 @@ use Generator;
 use PrestaShop\PrestaShop\Core\Domain\Product\Attachment\Command\RemoveAllAssociatedProductAttachmentsCommand;
 use PrestaShop\PrestaShop\Core\Domain\Product\Attachment\Command\SetAssociatedProductAttachmentsCommand;
 use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\ProductAttachmentsCommandsBuilder;
-use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\ProductCommandsBuilderInterface;
 
 class ProductAttachmentsCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 {
-    /**
-     * @var ProductCommandsBuilderInterface
-     */
-    private $commandsBuilder;
+    private ProductAttachmentsCommandsBuilder $commandsBuilder;
 
     protected function setUp(): void
     {

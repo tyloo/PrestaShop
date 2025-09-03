@@ -29,17 +29,13 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Adapter\OrderReturnState\Repository;
 
-use PrestaShop\PrestaShop\Adapter\OrderReturnState\Repository\OrderReturnStateRepository;
 use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\Exception\OrderReturnStateNotFoundException;
 use PrestaShop\PrestaShop\Core\Domain\OrderReturnState\ValueObject\OrderReturnStateId;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class OrderReturnStateRepositoryTest extends KernelTestCase
 {
-    /**
-     * @var OrderReturnStateRepository
-     */
-    private $orderReturnStateRepository;
+    private ?object $orderReturnStateRepository;
 
     protected function setUp(): void
     {

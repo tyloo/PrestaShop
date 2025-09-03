@@ -36,10 +36,7 @@ use stdClass;
 
 class DoctrineQueryParserTest extends TestCase
 {
-    /**
-     * @var DoctrineQueryParser
-     */
-    private $queryParser;
+    private DoctrineQueryParser $queryParser;
 
     protected function setUp(): void
     {

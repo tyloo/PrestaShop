@@ -45,10 +45,7 @@ use Tests\Integration\PrestaShopBundle\Form\FormListenerTestCase;
 
 class VirtualProductFileListenerTest extends FormListenerTestCase
 {
-    /**
-     * @var FormCloner
-     */
-    private $formCloner;
+    private FormCloner $formCloner;
 
     protected function setUp(): void
     {

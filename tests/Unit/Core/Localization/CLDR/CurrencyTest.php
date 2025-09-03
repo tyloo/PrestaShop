@@ -152,7 +152,7 @@ class CurrencyTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getEmptyDisplayNames')]
-    public function testFallbackWhenEmptyDisplayNames($displayNamesData): void
+    public function testFallbackWhenEmptyDisplayNames(?array $displayNamesData): void
     {
         $currencyData = new CurrencyData();
         $currencyData->setIsoCode('PCE');

@@ -37,10 +37,7 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class BackOfficeProviderTest extends TestCase
 {
-    /**
-     * @var BackOfficeProvider
-     */
-    private $provider;
+    private BackOfficeProvider $provider;
 
     protected function setUp(): void
     {

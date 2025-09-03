@@ -49,7 +49,7 @@ class ImageTypeIdTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidInput')]
-    public function testInvalidInput($imageTypeId): void
+    public function testInvalidInput(int $imageTypeId): void
     {
         $this->expectException(ImageTypeException::class);
         new ImageTypeId($imageTypeId);

@@ -60,7 +60,7 @@ class TinyMceMaxLengthValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('exceptionsInvalidTinyMceMaxLengthProvider')]
-    public function testExceptionsInvalidTinyMceMaxLength(Exception $expectedException, $tinyMceMaxLength): void
+    public function testExceptionsInvalidTinyMceMaxLength(Exception $expectedException, stdClass|string|bool|int|null $tinyMceMaxLength): void
     {
         $expectedExceptionClassName = $expectedException::class;
         $this->expectException($expectedExceptionClassName);

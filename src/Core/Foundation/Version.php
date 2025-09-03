@@ -319,7 +319,7 @@ class Version implements Stringable
      *
      * @throws InvalidVersionException if the provided version is invalid
      */
-    private function versionCompare($version, $operator)
+    private function versionCompare($version, $operator): bool
     {
         $otherVersion = self::buildFromString($version);
 

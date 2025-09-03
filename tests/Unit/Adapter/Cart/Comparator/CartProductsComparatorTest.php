@@ -30,6 +30,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Adapter\Cart\Comparator;
 
 use Cart;
+use Generator;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Adapter\Cart\Comparator\CartProductsComparator;
@@ -52,7 +53,7 @@ class CartProductsComparatorTest extends TestCase
         Assert::assertEquals($expectedModifiedProducts, $modifiedProducts);
     }
 
-    public static function getExpectedModifiedProducts()
+    public static function getExpectedModifiedProducts(): Generator
     {
         yield [
             // Previous products

@@ -27,15 +27,13 @@
 
 namespace Tests\Unit\Core\Util;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Util\ColorBrightnessCalculator;
 
 class ColorBrightnessCalculatorTest extends TestCase
 {
-    /**
-     * @var ColorBrightnessCalculator
-     */
-    private $colorBrightnessCalculator;
+    private ColorBrightnessCalculator $colorBrightnessCalculator;
 
     protected function setUp(): void
     {
@@ -43,12 +41,12 @@ class ColorBrightnessCalculatorTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getColors')]
-    public function testColorBrightness($hexColor, $isBright): void
+    public function testColorBrightness(string $hexColor, bool $isBright): void
     {
         $this->assertEquals($isBright, $this->colorBrightnessCalculator->isBright($hexColor));
     }
 
-    public static function getColors()
+    public static function getColors(): Generator
     {
         yield ['#8B0000', false];
         yield ['#FFD700', true];

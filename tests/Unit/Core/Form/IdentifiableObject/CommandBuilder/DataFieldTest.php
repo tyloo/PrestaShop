@@ -81,7 +81,7 @@ class DataFieldTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidParametersWithDefaultValue')]
-    public function testValidConstructorsWithDefaultValue(string $path, string $type, $defaultValue): void
+    public function testValidConstructorsWithDefaultValue(string $path, string $type, string|DateTime|array|null $defaultValue): void
     {
         $dataField = new DataField($path, $type, $defaultValue);
 

@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Core\Domain\FeatureValue\ValueObject;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Feature\Exception\InvalidFeatureValueIdException;
 use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureValueId;
@@ -48,7 +49,7 @@ class FeatureValueIdTest extends TestCase
         new FeatureValueId($featureValueId);
     }
 
-    public static function getInvalidInput()
+    public static function getInvalidInput(): Generator
     {
         yield [
             0,

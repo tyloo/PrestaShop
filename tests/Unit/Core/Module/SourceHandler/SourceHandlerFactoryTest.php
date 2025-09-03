@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Module\SourceHandler\SourceHandlerNotFoundExcepti
 
 class SourceHandlerFactoryTest extends TestCase
 {
-    /**
-     * @var SourceHandlerFactory
-     */
-    private $sourceHandlerFactory;
+    private SourceHandlerFactory $sourceHandlerFactory;
 
     protected function setUp(): void
     {

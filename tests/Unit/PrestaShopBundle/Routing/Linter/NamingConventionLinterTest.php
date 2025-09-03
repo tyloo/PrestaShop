@@ -27,6 +27,7 @@
 
 namespace Tests\Unit\PrestaShopBundle\Routing\Linter;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShopBundle\Routing\Linter\Exception\ControllerNotFoundException;
 use PrestaShopBundle\Routing\Linter\Exception\NamingConventionException;
@@ -37,10 +38,7 @@ use Tests\Resources\Controller\TestController;
 
 class NamingConventionLinterTest extends TestCase
 {
-    /**
-     * @var NamingConventionLinter
-     */
-    private $namingConventionLinter;
+    private NamingConventionLinter $namingConventionLinter;
 
     protected function setUp(): void
     {
@@ -48,7 +46,7 @@ class NamingConventionLinterTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getRoutesThatFollowNamingConventions')]
-    public function testLinterPassesWhenRouteAndControllerFollowNamingConventions($routeName, Route $route): void
+    public function testLinterPassesWhenRouteAndControllerFollowNamingConventions(string $routeName, Route $route): void
     {
         $this->namingConventionLinter->lint($routeName, $route);
 
@@ -56,7 +54,7 @@ class NamingConventionLinterTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getRoutesThatDoNotFollowNamingConventions')]
-    public function testLinterThrowsExceptionWhenRouteAndControllerDoesNotFollowNamingConventions($routeName, Route $route): void
+    public function testLinterThrowsExceptionWhenRouteAndControllerDoesNotFollowNamingConventions(string $routeName, Route $route): void
     {
         $this->expectException(NamingConventionException::class);
 
@@ -64,7 +62,7 @@ class NamingConventionLinterTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getRoutesThatDoNotFollowSymfonyConventions')]
-    public function testLinterThrowsExceptionWhenControllerDoesNotFollowSymfonyConventions($routeName, Route $route): void
+    public function testLinterThrowsExceptionWhenControllerDoesNotFollowSymfonyConventions(string $routeName, Route $route): void
     {
         $this->expectException(SymfonyControllerConventionException::class);
 
@@ -72,14 +70,14 @@ class NamingConventionLinterTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getRoutesThatUseControllerNotFound')]
-    public function testLinterThrowsExceptionWhenControllerIsNotFound($routeName, Route $route): void
+    public function testLinterThrowsExceptionWhenControllerIsNotFound(string $routeName, Route $route): void
     {
         $this->expectException(ControllerNotFoundException::class);
 
         $this->namingConventionLinter->lint($routeName, $route);
     }
 
-    public static function getRoutesThatFollowNamingConventions()
+    public static function getRoutesThatFollowNamingConventions(): Generator
     {
         yield [
             'admin_tests_index',
@@ -96,7 +94,7 @@ class NamingConventionLinterTest extends TestCase
         ];
     }
 
-    public static function getRoutesThatDoNotFollowNamingConventions()
+    public static function getRoutesThatDoNotFollowNamingConventions(): Generator
     {
         yield [
             'admin_test_index',

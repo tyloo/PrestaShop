@@ -32,10 +32,7 @@ use PrestaShopBundle\Form\DataTransformer\DefaultLanguageToFilledArrayDataTransf
 
 class DefaultLanguageToFilledArrayDataTransformerTest extends TestCase
 {
-    /**
-     * @var int
-     */
-    private $defaultLanguageId;
+    private int $defaultLanguageId;
 
     protected function setUp(): void
     {
@@ -45,7 +42,7 @@ class DefaultLanguageToFilledArrayDataTransformerTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValuesForModification')]
-    public function testReverseTransformationItReturnsSameValueAsPassed($item): void
+    public function testReverseTransformationItReturnsSameValueAsPassed(array $item): void
     {
         $dataTransformer = new DefaultLanguageToFilledArrayDataTransformer($this->defaultLanguageId);
         $result = $dataTransformer->reverseTransform($item);

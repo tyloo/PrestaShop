@@ -37,7 +37,7 @@ use Symfony\Component\Security\Core\User\InMemoryUserProvider;
 
 class ClientRepositoryTest extends TestCase
 {
-    private $clientRepository;
+    private ClientRepository $clientRepository;
 
     protected function setUp(): void
     {

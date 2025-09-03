@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder\Product\Cu
 
 class CustomizationFieldsCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 {
-    /**
-     * @var CustomizationFieldsCommandsBuilder
-     */
-    private $customizationFieldsCommandBuilder;
+    private CustomizationFieldsCommandsBuilder $customizationFieldsCommandBuilder;
 
     protected function setUp(): void
     {

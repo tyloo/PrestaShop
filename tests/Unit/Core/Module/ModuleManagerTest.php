@@ -60,7 +60,7 @@ class ModuleManagerTest extends TestCase
     /**
      * @var Module&MockObject
      */
-    private $module;
+    private Module $module;
 
     /**
      * @var LegacyModule&MockObject

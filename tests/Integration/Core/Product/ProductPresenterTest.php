@@ -45,10 +45,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ProductPresenterTest extends KernelTestCase
 {
-    /**
-     * @var ProductPresentationSettings
-     */
-    private $settings;
+    private ProductPresentationSettings $settings;
 
     /**
      * @var array<string, mixed>

@@ -27,6 +27,7 @@
 
 namespace Tests\Unit\Adapter\Hook;
 
+use Generator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Adapter\Hook\HookDispatcher;
@@ -82,7 +83,7 @@ class HookDispatcherTest extends TestCase
         $this->hookDispatcherMock->dispatch($this->hookEventMock, $eventName);
     }
 
-    public static function getHookEventNames()
+    public static function getHookEventNames(): Generator
     {
         yield [
             'normalHook',

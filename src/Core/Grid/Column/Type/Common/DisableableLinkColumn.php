@@ -70,7 +70,7 @@ class DisableableLinkColumn extends AbstractColumn
         return $this;
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         return array_merge($this->linkColumn->getOptions(), parent::getOptions());
     }

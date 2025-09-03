@@ -40,7 +40,7 @@ class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
      * @param string|float $value
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidValues')]
-    public function testItSucceedsWhenValidValueIsGiven($value): void
+    public function testItSucceedsWhenValidValueIsGiven(string|float|int $value): void
     {
         $this->validator->validate($value, new PositiveOrZero());
 
@@ -63,7 +63,7 @@ class PositiveOrZeroValidatorTest extends ConstraintValidatorTestCase
      * @param string|float|bool|array $value
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
-    public function testItFailsWhenInvalidValueIsProvided($value): void
+    public function testItFailsWhenInvalidValueIsProvided(string|float|int|bool|array $value): void
     {
         $constraint = new PositiveOrZero();
         $this->validator->validate($value, $constraint);

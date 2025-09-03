@@ -36,7 +36,7 @@ use StylesheetManager;
 class StylesheetManagerTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('providerIsAssets')]
-    public function testIsAssets(string $id, bool $toBeFound, $expectedPath): void
+    public function testIsAssets(string $id, bool $toBeFound, string|bool $expectedPath): void
     {
         $testsPath = '/tests/Resources/assets_manager/';
 

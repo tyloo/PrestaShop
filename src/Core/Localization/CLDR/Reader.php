@@ -229,7 +229,7 @@ class Reader implements ReaderInterface
      *
      * @throws LocalizationFileNotFoundException If this locale code has no corresponding xml file
      */
-    protected function getMainXmlData($localeCode)
+    protected function getMainXmlData($localeCode): SimpleXMLElement|false
     {
         return simplexml_load_file($this->mainPath($localeCode . '.xml'));
     }

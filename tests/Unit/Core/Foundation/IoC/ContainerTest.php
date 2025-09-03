@@ -37,10 +37,7 @@ use Tests\Unit\Core\Foundation\IoC\Fixtures\Dummy;
 
 class ContainerTest extends TestCase
 {
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
     protected function setUp(): void
     {
@@ -170,7 +167,7 @@ class ContainerTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('valuesToBind')]
-    public function testContainerCanBindValuesDirectly($value): void
+    public function testContainerCanBindValuesDirectly(Dummy|int|array $value): void
     {
         $this->container->bind('value', $value);
         $this->assertSame($value, $this->container->make('value'));

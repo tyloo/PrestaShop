@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Foundation\Database\Exception as DatabaseExceptio
 
 class EntityRepositoryTest extends TestCase
 {
-    /**
-     * @var EntityRepository
-     */
-    private $repository;
+    private EntityRepository $repository;
 
     protected function setUp(): void
     {

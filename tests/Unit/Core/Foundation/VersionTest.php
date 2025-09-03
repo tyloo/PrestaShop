@@ -298,7 +298,7 @@ class VersionTest extends TestCase
      * @param string $version Version
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidVersions')]
-    public function testCheckInvalidVersion($version): void
+    public function testCheckInvalidVersion(string $version): void
     {
         $this->expectException(InvalidVersionException::class);
         $this->version->isLessThan($version);

@@ -42,7 +42,7 @@ class SqlRequestIdTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValues')]
-    public function testInvalidValues($sqlRequestId): void
+    public function testInvalidValues(int|string $sqlRequestId): void
     {
         $this->expectException(SqlRequestException::class);
         new SqlRequestId($sqlRequestId);

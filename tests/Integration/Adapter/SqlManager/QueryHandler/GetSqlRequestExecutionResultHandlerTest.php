@@ -28,7 +28,6 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Adapter\SqlManager\QueryHandler;
 
-use PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface;
 use PrestaShop\PrestaShop\Core\Domain\SqlManagement\Command\AddSqlRequestCommand;
 use PrestaShop\PrestaShop\Core\Domain\SqlManagement\Exception\SqlRequestConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\SqlManagement\Query\GetSqlRequestExecutionResult;
@@ -39,15 +38,9 @@ use Tests\Resources\DatabaseDump;
 
 class GetSqlRequestExecutionResultHandlerTest extends KernelTestCase
 {
-    /**
-     * @var CommandBusInterface
-     */
-    private $queryBus;
+    private ?object $queryBus;
 
-    /**
-     * @var CommandBusInterface
-     */
-    private $commandBus;
+    private ?object $commandBus;
 
     public static function setUpBeforeClass(): void
     {

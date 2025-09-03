@@ -48,10 +48,7 @@ use Symfony\Component\Form\FormView;
 
 class GridPresenterTest extends TestCase
 {
-    /**
-     * @var GridPresenter
-     */
-    private $gridPresenter;
+    private GridPresenter $gridPresenter;
 
     protected function setUp(): void
     {

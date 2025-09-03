@@ -51,7 +51,7 @@ final class Converter
      *
      * @throws Exception
      */
-    public function toLegacyLocale(string $locale)
+    public function toLegacyLocale(string $locale): int|string|false
     {
         return array_search($locale, $this->getLangToLocalesMapping(), true);
     }

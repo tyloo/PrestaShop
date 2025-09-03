@@ -40,10 +40,7 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
 {
     public const MODULE_NAME = 'translationtest';
 
-    /**
-     * @var ExternalModuleLegacySystemProvider
-     */
-    private $provider;
+    private ExternalModuleLegacySystemProvider $provider;
 
     private readonly CatalogueVerifier $catalogueVerifier;
 
@@ -85,12 +82,9 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
         ;
     }
 
-    /**
-     * @param string $locale
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
     public function testTranslationsCatalogueIsBuiltFromKeysFoundInSourceAndTranslationsInLegacyFiles(
-        $locale,
+        string $locale,
         array $expected,
     ): void {
         $this->provider->setLocale($locale);

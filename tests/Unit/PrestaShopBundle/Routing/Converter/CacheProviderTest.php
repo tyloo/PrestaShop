@@ -43,10 +43,7 @@ class CacheProviderTest extends TestCase
 {
     public const CACHE_KEY = 'test_cache_key';
 
-    /**
-     * @var array
-     */
-    private $expectedFlattenArray;
+    private array $expectedFlattenArray;
 
     /**
      * @var string
@@ -56,7 +53,7 @@ class CacheProviderTest extends TestCase
     /**
      * @var LegacyRoute[]
      */
-    private $legacyRoutes;
+    private array $legacyRoutes;
 
     protected function setUp(): void
     {

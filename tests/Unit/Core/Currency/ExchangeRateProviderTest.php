@@ -37,10 +37,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 class ExchangeRateProviderTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $feedFilePath;
+    private string $feedFilePath;
 
     /**
      * @var string
@@ -50,7 +47,7 @@ class ExchangeRateProviderTest extends TestCase
     /**
      * @var CacheInterface
      */
-    private $cache;
+    private ArrayAdapter $cache;
 
     protected function setUp(): void
     {

@@ -29,17 +29,13 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Adapter\Order\Repository;
 
-use PrestaShop\PrestaShop\Adapter\Order\Repository\OrderRepository;
 use PrestaShop\PrestaShop\Core\Domain\Order\Exception\OrderNotFoundException;
 use PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class OrderRepositoryTest extends KernelTestCase
 {
-    /**
-     * @var OrderRepository
-     */
-    private $orderRepository;
+    private ?object $orderRepository;
 
     protected function setUp(): void
     {

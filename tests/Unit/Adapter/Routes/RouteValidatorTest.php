@@ -54,7 +54,7 @@ class RouteValidatorTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('routeValidationProvider')]
-    public function testIsRouteValid($routeId, $rule, $expected): void
+    public function testIsRouteValid(string $routeId, string $rule, array $expected): void
     {
         $validator = new RouteValidator();
         $result = $validator->isRouteValid($routeId, $rule);

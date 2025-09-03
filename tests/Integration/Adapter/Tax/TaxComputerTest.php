@@ -30,6 +30,7 @@ declare(strict_types=1);
 namespace Tests\Integration\Adapter\Tax;
 
 use Country;
+use Generator;
 use PrestaShop\Decimal\DecimalNumber;
 use PrestaShop\PrestaShop\Adapter\Tax\TaxComputer;
 use PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId;
@@ -81,7 +82,7 @@ class TaxComputerTest extends KernelTestCase
         $this->assertEquals(new DecimalNumber($priceWithoutTaxes), $computedPrice);
     }
 
-    public static function getComputePriceData()
+    public static function getComputePriceData(): Generator
     {
         $countryId = Country::getByIso('fr');
         $country = new Country($countryId);

@@ -27,6 +27,7 @@
 
 namespace Tests\Unit\Core\Domain\CustomerService\ValueObject;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\CustomerService\Exception\CustomerServiceException;
 use PrestaShop\PrestaShop\Core\Domain\CustomerService\ValueObject\CustomerThreadStatus;
@@ -34,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\CustomerService\ValueObject\CustomerThread
 class CustomerThreadStatusTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidCustomerThreadStatuses')]
-    public function testCanBeCreatedWithValidStatus($customerThreadStatus): void
+    public function testCanBeCreatedWithValidStatus(string $customerThreadStatus): void
     {
         $status = new CustomerThreadStatus($customerThreadStatus);
 
@@ -42,14 +43,14 @@ class CustomerThreadStatusTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCustomerThreadStatuses')]
-    public function testThrowsExceptionWhenCreatingWithInvalidStatus($invalidCustomerThreadStatus): void
+    public function testThrowsExceptionWhenCreatingWithInvalidStatus(int|string $invalidCustomerThreadStatus): void
     {
         $this->expectException(CustomerServiceException::class);
 
         new CustomerThreadStatus($invalidCustomerThreadStatus);
     }
 
-    public static function getValidCustomerThreadStatuses()
+    public static function getValidCustomerThreadStatuses(): Generator
     {
         yield [CustomerThreadStatus::PENDING_1];
         yield [CustomerThreadStatus::PENDING_2];
@@ -57,7 +58,7 @@ class CustomerThreadStatusTest extends TestCase
         yield [CustomerThreadStatus::CLOSED];
     }
 
-    public static function getInvalidCustomerThreadStatuses()
+    public static function getInvalidCustomerThreadStatuses(): Generator
     {
         yield [1];
         yield ['opened'];

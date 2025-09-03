@@ -71,11 +71,8 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    /**
-     * @param string $invalidChar
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidCharacters')]
-    public function testIfFailsWhenBadCharactersAreGiven($invalidChar): void
+    public function testIfFailsWhenBadCharactersAreGiven(string $invalidChar): void
     {
         $input = 'AZE' . $invalidChar . 'RTY';
         $this->validator->validate($input, new CustomerName());
@@ -85,11 +82,8 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    /**
-     * @param string $invalidChar
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidCharactersWithSpaces')]
-    public function testIfFailsWhenSpacedPointsAreFinal($invalidChar): void
+    public function testIfFailsWhenSpacedPointsAreFinal(string $invalidChar): void
     {
         $input = 'AZERTY' . $invalidChar;
         $this->validator->validate($input, new CustomerName());
@@ -99,11 +93,8 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
         ;
     }
 
-    /**
-     * @param string $invalidChar
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidCharacters')]
-    public function testIfFailsWhenDoublePoints($invalidChar): void
+    public function testIfFailsWhenDoublePoints(string $invalidChar): void
     {
         $input = 'AZE' . $invalidChar . 'RTY' . $invalidChar;
         $this->validator->validate($input, new CustomerName());
@@ -121,11 +112,8 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @param string $validChar
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidCharacters')]
-    public function testIfSucceedsWhenPointsAreFinal($validChar): void
+    public function testIfSucceedsWhenPointsAreFinal(string $validChar): void
     {
         $input = 'AZERTY' . $validChar;
         $this->validator->validate($input, new CustomerName());
@@ -133,11 +121,8 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @param string $validChar
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidCharactersWithSpaces')]
-    public function testIfSucceedsWhenPointsWithSpacesAreGiven($validChar): void
+    public function testIfSucceedsWhenPointsWithSpacesAreGiven(string $validChar): void
     {
         $input = 'AZE' . $validChar . 'RTY';
         $this->validator->validate($input, new CustomerName());

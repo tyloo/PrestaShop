@@ -50,20 +50,11 @@ class ObjectModelTest extends TestCase
 
     private const SECOND_SHOP_PLACEHOLDER = 'second_shop';
 
-    /**
-     * @var int
-     */
-    private $defaultLanguageId;
+    private int $defaultLanguageId;
 
-    /**
-     * @var int
-     */
-    private $secondLanguageId;
+    private int $secondLanguageId;
 
-    /**
-     * @var int
-     */
-    private $defaultShopId;
+    private int $defaultShopId;
 
     /**
      * @var int

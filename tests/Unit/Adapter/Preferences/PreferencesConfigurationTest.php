@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Http\CookieOptions;
 
 class PreferencesConfigurationTest extends TestCase
 {
-    /**
-     * @var PreferencesConfiguration
-     */
-    private $object;
+    private PreferencesConfiguration $object;
 
     /**
      * @var Configuration|MockObject

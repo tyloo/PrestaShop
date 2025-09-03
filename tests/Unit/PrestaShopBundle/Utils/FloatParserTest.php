@@ -41,12 +41,9 @@ class FloatParserTest extends TestCase
      * Given a string containing a number with arbitrary characters as thousand and decimal separators
      * When constructing an ImmutableFloat from that string
      * Then the string should be interpreted as a float by ImmutableFloat
-     *
-     * @param string $string
-     * @param float  $expected
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideValidStrings')]
-    public function testItParsesNumbersFromString($string, $expected): void
+    public function testItParsesNumbersFromString(string $string, float $expected): void
     {
         $this->assertSame($expected, (new FloatParser(new ArabicToLatinDigitConverter()))->fromString($string));
     }
@@ -57,7 +54,7 @@ class FloatParserTest extends TestCase
      * Then an InvalidArgumentException should be thrown
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidValues')]
-    public function testItThrowsExceptionIfNotValid($value): void
+    public function testItThrowsExceptionIfNotValid(string|bool|stdClass|array|null $value): void
     {
         $this->expectException(InvalidArgumentException::class);
 

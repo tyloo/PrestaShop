@@ -33,10 +33,7 @@ use PrestaShopBundle\Security\OAuth2\Repository\AccessTokenRepository;
 
 class AccessTokenRepositoryTest extends TestCase
 {
-    /**
-     * @var AccessTokenRepository
-     */
-    private $accessTokenRepository;
+    private AccessTokenRepository $accessTokenRepository;
 
     protected function setUp(): void
     {

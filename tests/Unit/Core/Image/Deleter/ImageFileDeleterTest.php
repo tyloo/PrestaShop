@@ -35,10 +35,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ImageFileDeleterTest extends TestCase
 {
-    /**
-     * @var Filesystem
-     */
-    private $fs;
+    private Filesystem $fs;
 
     /**
      * @var vfsStreamDirectory

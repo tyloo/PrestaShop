@@ -38,41 +38,22 @@ use PrestaShop\PrestaShop\Core\MailTemplate\MailTemplateGenerator;
 use PrestaShop\PrestaShop\Core\MailTemplate\MailTemplateInterface;
 use PrestaShop\PrestaShop\Core\MailTemplate\MailTemplateRendererInterface;
 use PrestaShop\PrestaShop\Core\MailTemplate\Theme;
-use PrestaShop\PrestaShop\Core\MailTemplate\ThemeInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 class MailTemplateGeneratorTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $tempDir;
+    private string $tempDir;
 
-    /**
-     * @var string
-     */
-    private $outputTempDir;
+    private string $outputTempDir;
 
-    /**
-     * @var string
-     */
-    private $coreTempDir;
+    private string $coreTempDir;
 
-    /**
-     * @var string
-     */
-    private $modulesTempDir;
+    private string $modulesTempDir;
 
-    /**
-     * @var Filesystem
-     */
-    private $fs;
+    private Filesystem $fs;
 
-    /**
-     * @var ThemeInterface
-     */
-    private $theme;
+    private Theme $theme;
 
     protected function setUp(): void
     {

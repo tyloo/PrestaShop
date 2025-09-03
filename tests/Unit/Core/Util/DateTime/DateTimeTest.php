@@ -80,7 +80,7 @@ class DateTimeTest extends TestCase
      * @param string|null $input
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('getCheckedValues')]
-    public function testIsNull($input, bool $isNull): void
+    public function testIsNull(string|int|NullDateTime|DateTimeImmutable|null $input, bool $isNull): void
     {
         $this->assertEquals($isNull, DateTime::isNull($input));
     }

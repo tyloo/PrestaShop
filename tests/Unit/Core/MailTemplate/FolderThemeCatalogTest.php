@@ -46,15 +46,9 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class FolderThemeCatalogTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $tempDir;
+    private string $tempDir;
 
-    /**
-     * @var Filesystem
-     */
-    private $fs;
+    private Filesystem $fs;
 
     /**
      * @var ThemeCollectionInterface

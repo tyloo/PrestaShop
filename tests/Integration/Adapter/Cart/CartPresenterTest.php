@@ -66,12 +66,9 @@ class CartPresenterTest extends TestCase
      * We check that our attributes are properly parsed from a string, EVEN IF their value or label also have the
      * separator in them.
      * See https://regex101.com/r/wlRNtX/1 for examples used
-     *
-     * @param string $asString
-     * @param array  $asArray
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('providerProductAttributes')]
-    public function testProductAttributesAreProperlyConverted($asString, $asArray): void
+    public function testProductAttributesAreProperlyConverted(string $asString, array $asArray): void
     {
         $this->assertSame(
             $asArray,

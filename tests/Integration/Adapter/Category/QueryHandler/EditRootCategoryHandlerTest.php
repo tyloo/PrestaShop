@@ -28,7 +28,6 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Adapter\Category\QueryHandler;
 
-use PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface;
 use PrestaShop\PrestaShop\Core\Domain\Category\Command\EditRootCategoryCommand;
 use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CannotEditRootCategoryException;
 use PrestaShop\PrestaShop\Core\Domain\Category\Exception\CategoryNotFoundException;
@@ -37,15 +36,9 @@ use Tests\Resources\DatabaseDump;
 
 class EditRootCategoryHandlerTest extends KernelTestCase
 {
-    /**
-     * @var object|CommandBusInterface|null
-     */
-    private $commandBus;
+    private ?object $commandBus;
 
-    /**
-     * @var int
-     */
-    private $rootCategory;
+    private int $rootCategory;
 
     public static function setUpBeforeClass(): void
     {

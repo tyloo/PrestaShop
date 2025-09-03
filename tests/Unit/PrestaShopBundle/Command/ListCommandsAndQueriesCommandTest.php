@@ -42,10 +42,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class ListCommandsAndQueriesCommandTest extends TestCase
 {
-    /**
-     * @var CommandTester
-     */
-    private $commandTester;
+    private CommandTester $commandTester;
 
     /**
      * @var ResourceNameCollectionFactoryInterface|MockObject

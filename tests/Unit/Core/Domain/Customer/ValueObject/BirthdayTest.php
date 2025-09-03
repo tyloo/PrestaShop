@@ -28,6 +28,7 @@
 namespace Tests\Unit\Core\Domain\Customer\ValueObject;
 
 use DateTime;
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\Birthday;
@@ -43,7 +44,7 @@ class BirthdayTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidBirthdays')]
-    public function testItThrowsExceptionWhenCreatingBirthdayWithInvalidData($invalidBirthday): void
+    public function testItThrowsExceptionWhenCreatingBirthdayWithInvalidData(string|stdClass $invalidBirthday): void
     {
         $this->expectException(CustomerConstraintException::class);
         $this->expectExceptionCode(CustomerConstraintException::INVALID_BIRTHDAY);
@@ -51,7 +52,7 @@ class BirthdayTest extends TestCase
         new Birthday($invalidBirthday);
     }
 
-    public static function getInvalidBirthdays()
+    public static function getInvalidBirthdays(): Generator
     {
         yield ['2150-25-100'];
         yield [new stdClass()];

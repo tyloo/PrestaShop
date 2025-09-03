@@ -29,13 +29,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit\PrestaShopBundle\Form\DataTransformer;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShopBundle\Form\DataTransformer\DefaultEmptyDataTransformer;
 
 class DefaultEmptyDataTransformerTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getTransformValues')]
-    public function testTransform($emptyData, $inputValue, $expectedValue): void
+    public function testTransform(int|string $emptyData, string|int|array|null $inputValue, int|string $expectedValue): void
     {
         $transformer = new DefaultEmptyDataTransformer($emptyData);
         $transformedValue = $transformer->transform($inputValue);
@@ -46,7 +47,7 @@ class DefaultEmptyDataTransformerTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getTransformValues')]
-    public function testReverseTransform($emptyData, $inputValue, $expectedValue): void
+    public function testReverseTransform(int|string $emptyData, string|int|array|null $inputValue, int|string $expectedValue): void
     {
         $transformer = new DefaultEmptyDataTransformer($emptyData);
         $reverseTransformedValue = $transformer->reverseTransform($inputValue);
@@ -78,7 +79,7 @@ class DefaultEmptyDataTransformerTest extends TestCase
         $this->assertTrue($reverseTransformedValue === 0);
     }
 
-    public static function getTransformValues()
+    public static function getTransformValues(): Generator
     {
         yield [0, null, 0];
         yield [1, null, 1];

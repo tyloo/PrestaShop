@@ -113,7 +113,7 @@ class RepositoryTest extends TestCase
      * @throws LocalizationException
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideValidCurrencyCodes')]
-    public function testGetCurrency($currencyCode, $expectedNames, $expectedSymbols): void
+    public function testGetCurrency(string $currencyCode, array $expectedNames, array $expectedSymbols): void
     {
         $currency = $this->currencyRepository->getCurrency($currencyCode, 'fr-FR');
         foreach ($expectedNames as $localeCode => $name) {

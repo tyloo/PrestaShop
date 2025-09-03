@@ -38,10 +38,7 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class ThemeProviderTest extends TestCase
 {
-    /**
-     * @var ThemeProvider
-     */
-    private $provider;
+    private ThemeProvider $provider;
 
     protected function setUp(): void
     {

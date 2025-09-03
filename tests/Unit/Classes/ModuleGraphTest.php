@@ -35,10 +35,7 @@ class ModuleGraphTest extends TestCase
 {
     public static $data;
 
-    /**
-     * @var ModuleGraph
-     */
-    private $object;
+    private ModuleGraph $object;
 
     protected function setUp(): void
     {
@@ -57,7 +54,7 @@ class ModuleGraphTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getEscapeCellValues')]
-    public function testEscapeCell($base, $expected): void
+    public function testEscapeCell(string $base, string $expected): void
     {
         $this->assertEquals(
             $this->object->escapeCell($base),

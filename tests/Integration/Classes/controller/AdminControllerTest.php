@@ -38,7 +38,6 @@ use PrestaShop\PrestaShop\Adapter\EntityMapper;
 use PrestaShop\PrestaShop\Adapter\ServiceLocator;
 use PrestaShop\PrestaShop\Core\Feature\FeatureInterface;
 use PrestaShop\PrestaShop\Core\FeatureFlag\FeatureFlagStateCheckerInterface;
-use PrestaShop\PrestaShop\Core\Foundation\IoC\Container;
 use PrestaShop\PrestaShop\Core\Foundation\IoC\Container as LegacyContainer;
 use PrestaShop\PrestaShop\Core\Image\AvifExtensionChecker;
 use PrestaShop\PrestaShop\Core\Image\ImageFormatConfiguration;
@@ -60,10 +59,7 @@ class AdminControllerTest extends TestCase
 {
     use ContextMockerTrait;
 
-    /**
-     * @var Container|null
-     */
-    private $savedContainer;
+    private ?LegacyContainer $savedContainer;
 
     public static function setUpBeforeClass(): void
     {

@@ -204,7 +204,7 @@ class HookRepository
         return $this;
     }
 
-    private function getModuleHookExceptions($id_module, $id_hook)
+    private function getModuleHookExceptions($id_module, $id_hook): array
     {
         $id_shop = (int) $this->shop->id;
         $id_module = (int) $id_module;
@@ -248,7 +248,7 @@ class HookRepository
                 $row['id_hook']
             );
 
-            if (empty($exceptions)) {
+            if ($exceptions === []) {
                 $hooks[$row['hook_name']][] = $row['module_name'];
             } else {
                 $hooks[$row['hook_name']][$row['module_name']] = [

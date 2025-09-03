@@ -66,7 +66,7 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getDataViolatingTheConstraint')]
-    public function testItBuildsViolation($data, string $expectedViolation, string $expectedErrorPath): void
+    public function testItBuildsViolation(array $data, string $expectedViolation, string $expectedErrorPath): void
     {
         $constraint = new CartRule();
         $this->validator->validate($data, $constraint);
@@ -85,7 +85,7 @@ class CartRuleValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidValueForTypeCheck')]
-    public function testItThrowsExceptionWhenInvalidValueTypeIsProvided($value): void
+    public function testItThrowsExceptionWhenInvalidValueTypeIsProvided(string|int|float|bool $value): void
     {
         $this->expectException(UnexpectedValueException::class);
         $this->validator->validate($value, new CartRule());

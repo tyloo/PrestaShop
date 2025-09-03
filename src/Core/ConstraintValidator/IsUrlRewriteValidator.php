@@ -78,10 +78,8 @@ class IsUrlRewriteValidator extends ConstraintValidator
      * Validates url rewrite according the patterns which vary based on ascented chars allowed setting.
      *
      * @param string $urlRewrite
-     *
-     * @return false|int
      */
-    private function isUrlRewriteValid($urlRewrite)
+    private function isUrlRewriteValid($urlRewrite): int|false
     {
         $pattern = '/^[_a-zA-Z0-9\-]+$/';
 

@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Module\HookRepository;
 
 class HookConfiguratorTest extends TestCase
 {
-    private $hookConfigurator;
+    private HookConfigurator $hookConfigurator;
 
     private \PHPUnit\Framework\MockObject\MockObject $hookRepository;
 

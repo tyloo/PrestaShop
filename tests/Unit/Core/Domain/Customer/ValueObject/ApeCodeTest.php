@@ -27,6 +27,7 @@
 
 namespace Tests\Unit\Core\Domain\Customer\ValueObject;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Customer\Exception\CustomerConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\ApeCode;
@@ -34,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\ApeCode;
 class ApeCodeTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidApeCodes')]
-    public function testItCreatesApeCodeWithValidValue($code): void
+    public function testItCreatesApeCodeWithValidValue(string $code): void
     {
         $apeCode = new ApeCode($code);
 
@@ -42,7 +43,7 @@ class ApeCodeTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidApeCodes')]
-    public function testItThrowExceptionWhenCreatingApeCodeWithInvalidValue($code): void
+    public function testItThrowExceptionWhenCreatingApeCodeWithInvalidValue(string|int|array $code): void
     {
         $this->expectException(CustomerConstraintException::class);
         $this->expectExceptionCode(CustomerConstraintException::INVALID_APE_CODE);
@@ -50,14 +51,14 @@ class ApeCodeTest extends TestCase
         new ApeCode($code);
     }
 
-    public static function getValidApeCodes()
+    public static function getValidApeCodes(): Generator
     {
         yield [''];
         yield ['001A'];
         yield ['1039B'];
     }
 
-    public static function getInvalidApeCodes()
+    public static function getInvalidApeCodes(): Generator
     {
         yield ['not_valid'];
         yield ['1236'];

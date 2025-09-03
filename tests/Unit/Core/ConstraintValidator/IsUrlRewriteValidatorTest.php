@@ -36,10 +36,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
 {
-    /**
-     * @var bool
-     */
-    private $useAscendedChars;
+    private bool $useAscendedChars;
 
     /**
      * @var ConfigurationInterface
@@ -72,7 +69,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectTypeRewriteUrls')]
-    public function testItThrowsUnexpectedTypeExceptionOnIncorrectValueTypeProvided($incorrectTypeRewriteUrl): void
+    public function testItThrowsUnexpectedTypeExceptionOnIncorrectValueTypeProvided(bool|array $incorrectTypeRewriteUrl): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
@@ -80,7 +77,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectRewriteUrls')]
-    public function testItFindsIncorrectUrlRewritePattern($incorrectRewriteUrl): void
+    public function testItFindsIncorrectUrlRewritePattern(string $incorrectRewriteUrl): void
     {
         $this->validator->validate($incorrectRewriteUrl, new IsUrlRewrite());
 
@@ -91,7 +88,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getCorrectRewriteUrls')]
-    public function testItFindsCorrectUrlRewritePatterns($correctRewriteUrl): void
+    public function testItFindsCorrectUrlRewritePatterns(string $correctRewriteUrl): void
     {
         $this->validator->validate($correctRewriteUrl, new IsUrlRewrite());
 
@@ -99,7 +96,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getCorrectRewriteUlrUsingAscendingChars')]
-    public function testItFindsCorrectUrlRewritePatternUsingAscendedChars($correctRewriteUrl): void
+    public function testItFindsCorrectUrlRewritePatternUsingAscendedChars(string $correctRewriteUrl): void
     {
         $this->useAscendedChars = true;
 

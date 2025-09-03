@@ -49,7 +49,7 @@ class FeatureIdTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidInput')]
-    public function testInvalidInput($featureValueId): void
+    public function testInvalidInput(int $featureValueId): void
     {
         $this->expectException(FeatureConstraintException::class);
         $this->expectExceptionCode(FeatureConstraintException::INVALID_ID);

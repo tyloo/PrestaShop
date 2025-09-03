@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Core\Domain\Product\FeatureValue\Command;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Product\Exception\ProductConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\Product\FeatureValue\Command\SetProductFeatureValuesCommand;
@@ -50,7 +51,7 @@ class SetProductFeatureValuesCommandTest extends TestCase
         new SetProductFeatureValuesCommand($productId, $featureValues);
     }
 
-    public static function getInvalidInput()
+    public static function getInvalidInput(): Generator
     {
         yield [
             42,
@@ -95,7 +96,7 @@ class SetProductFeatureValuesCommandTest extends TestCase
         ];
     }
 
-    public static function getValidInput()
+    public static function getValidInput(): Generator
     {
         yield [
             42,

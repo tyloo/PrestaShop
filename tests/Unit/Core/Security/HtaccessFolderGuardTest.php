@@ -59,7 +59,7 @@ class HtaccessFolderGuardTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidFolders')]
-    public function testProtectInvalidFolders($invalidFolder): void
+    public function testProtectInvalidFolders(string $invalidFolder): void
     {
         $this->expectException(FileNotFoundException::class);
 

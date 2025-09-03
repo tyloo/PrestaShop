@@ -38,15 +38,12 @@ use Symfony\Component\Yaml\Yaml;
 
 class ThemeExtractorTest extends KernelTestCase
 {
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
+    private Filesystem $filesystem;
 
     /**
      * @var ThemeExtractor|null
      */
-    private $themeExtractor;
+    private ?object $themeExtractor;
 
     /**
      * @var string

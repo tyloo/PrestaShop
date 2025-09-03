@@ -34,12 +34,8 @@ use PrestaShop\PrestaShop\Core\Search\ControllerAction;
 
 class ControllerActionTest extends TestCase
 {
-    /**
-     * @param string $fqcn
-     * @param array  $result
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('getControllers')]
-    public function testGetFromString($fqcn, $result): void
+    public function testGetFromString(string $fqcn, array $result): void
     {
         $this->assertEquals($result, ControllerAction::fromString($fqcn));
     }

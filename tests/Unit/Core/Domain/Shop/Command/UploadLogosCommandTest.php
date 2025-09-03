@@ -38,10 +38,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadLogosCommandTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    private $validImagePath = '';
+    private string $validImagePath = '';
 
     protected function setUp(): void
     {

@@ -38,10 +38,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class NumberExtractorTest extends TestCase
 {
-    /**
-     * @var NumberExtractor
-     */
-    private $numberExtractor;
+    private NumberExtractor $numberExtractor;
 
     protected function setUp(): void
     {
@@ -49,22 +46,16 @@ class NumberExtractorTest extends TestCase
         $this->numberExtractor = new NumberExtractor(PropertyAccess::createPropertyAccessor());
     }
 
-    /**
-     * @param array|FakeClass $resource
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidData')]
-    public function testItExtractsNumberFromArrayOrObject($resource, string $path, DecimalNumber $expectedResult): void
+    public function testItExtractsNumberFromArrayOrObject(FakeClass|array $resource, string $path, DecimalNumber $expectedResult): void
     {
         $actualResult = $this->numberExtractor->extract($resource, $path);
 
         $this->assertTrue($expectedResult->equals($actualResult));
     }
 
-    /**
-     * @param array|FakeClass3 $resource
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('getDataWithInvalidResourcePropertyType')]
-    public function testItThrowsExceptionWhenNonNumericValueIsProvidedInAccessedProperty($resource, string $path): void
+    public function testItThrowsExceptionWhenNonNumericValueIsProvidedInAccessedProperty(FakeClass3|array $resource, string $path): void
     {
         $this->expectException(NumberExtractorException::class);
         $this->expectExceptionCode(NumberExtractorException::NON_NUMERIC_PROPERTY);

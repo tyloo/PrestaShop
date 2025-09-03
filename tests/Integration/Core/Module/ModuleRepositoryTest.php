@@ -43,10 +43,7 @@ use Symfony\Component\Translation\Translator;
 
 class ModuleRepositoryTest extends TestCase
 {
-    /**
-     * @var ModuleRepository
-     */
-    private $moduleRepository;
+    private ModuleRepository $moduleRepository;
 
     protected function setUp(): void
     {

@@ -40,10 +40,7 @@ class ThemeTranslationsFactoryTest extends TestCase
 
     private const TEST_THEME = 'classic';
 
-    /**
-     * @var ThemeTranslationsFactory
-     */
-    private $factory;
+    private ThemeTranslationsFactory $factory;
 
     /**
      * @var ThemeProvider|MockObject

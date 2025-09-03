@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Security\PasswordGenerator;
 
 class PasswordGeneratorTest extends TestCase
 {
-    /**
-     * @var PasswordGenerator
-     */
-    private $passwordGenerator;
+    private PasswordGenerator $passwordGenerator;
 
     /**
      * @var OpenSSLInterface&MockObject

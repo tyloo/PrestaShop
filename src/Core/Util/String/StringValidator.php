@@ -53,7 +53,7 @@ final class StringValidator implements StringValidatorInterface
         return $this->startsWith($string, $prefix) && $this->endsWith($string, $suffix);
     }
 
-    public function doesContainsWhiteSpaces($string)
+    public function doesContainsWhiteSpaces($string): int|false
     {
         return preg_match('/\s/', $string);
     }

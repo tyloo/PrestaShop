@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\NumericIsoCode;
 class CurrencyNumericIsoCodeTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectNumericIsoCodes')]
-    public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex($incorrectNumericIsoCode): void
+    public function testItThrowsAnExceptionOnIncorrectIsoCodeRegex(string|bool|int|array|null $incorrectNumericIsoCode): void
     {
         $this->expectException(CurrencyConstraintException::class);
         $this->expectExceptionCode(CurrencyConstraintException::INVALID_NUMERIC_ISO_CODE);
@@ -88,7 +88,7 @@ class CurrencyNumericIsoCodeTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getCorrectNumericIsoCodes')]
-    public function testItReturnsRightIsoCode($correctNumericIsoCode): void
+    public function testItReturnsRightIsoCode(string $correctNumericIsoCode): void
     {
         $currencyNumericIsoCode = new NumericIsoCode($correctNumericIsoCode);
 

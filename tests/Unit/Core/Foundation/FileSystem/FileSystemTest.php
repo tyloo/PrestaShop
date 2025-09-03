@@ -34,15 +34,9 @@ use PrestaShop\PrestaShop\Core\Foundation\Filesystem\FileSystem;
 
 class FileSystemTest extends TestCase
 {
-    /**
-     * @var FileSystem
-     */
-    private $fs;
+    private FileSystem $fs;
 
-    /**
-     * @var string
-     */
-    private $fixturesPath;
+    private string $fixturesPath;
 
     protected function setUp(): void
     {

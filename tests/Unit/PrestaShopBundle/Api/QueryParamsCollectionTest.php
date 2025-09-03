@@ -91,8 +91,8 @@ class QueryParamsCollectionTest extends TestCase
     #[\PHPUnit\Framework\Attributes\DataProvider('getQueryParams')]
     public function testItShouldMakeQueryParamsFromARequest(
         string $order,
-        $pageIndex,
-        $pageSize,
+        ?string $pageIndex,
+        ?string $pageSize,
         array $expectedSqlClauses,
     ): void {
         $requestMock = $this->mockRequest(
@@ -126,8 +126,8 @@ class QueryParamsCollectionTest extends TestCase
     #[\PHPUnit\Framework\Attributes\DataProvider('getQueryParams')]
     public function testItShouldMakeQueryParamsWithProductFilterFromARequest(
         string $order,
-        $pageIndex,
-        $pageSize,
+        ?string $pageIndex,
+        ?string $pageSize,
         array $expectedSqlClauses,
     ): void {
         $requestMock = $this->mockRequest(

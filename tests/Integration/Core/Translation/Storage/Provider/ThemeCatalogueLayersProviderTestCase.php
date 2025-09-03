@@ -53,14 +53,11 @@ class ThemeCatalogueLayersProviderTestCase extends AbstractCatalogueLayersProvid
     private $themeExtractor;
 
     /**
-     * @var ThemeRepository
+     * @var (MockObject & \ThemeRepository)
      */
-    private $themeRepository;
+    private MockObject $themeRepository;
 
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
+    private Filesystem $filesystem;
 
     private $themesDir;
 

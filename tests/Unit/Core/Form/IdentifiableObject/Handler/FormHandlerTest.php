@@ -37,10 +37,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class FormHandlerTest extends TestCase
 {
-    /**
-     * @var FormHandler
-     */
-    private $handler;
+    private FormHandler $handler;
 
     private \PHPUnit\Framework\MockObject\MockObject $formBuilderMock;
 

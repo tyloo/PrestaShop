@@ -37,10 +37,7 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class ModuleProviderTest extends TestCase
 {
-    /**
-     * @var ModuleProvider
-     */
-    private $provider;
+    private ModuleProvider $provider;
 
     protected function setUp(): void
     {

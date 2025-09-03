@@ -35,10 +35,7 @@ use stdClass;
 
 class CategoriesProviderTest extends TestCase
 {
-    /**
-     * @var CategoriesProvider
-     */
-    private $provider;
+    private CategoriesProvider $provider;
 
     protected function setUp(): void
     {

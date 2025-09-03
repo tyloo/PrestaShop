@@ -34,7 +34,7 @@ use PrestaShopBundle\Entity\AdminFilter;
 
 class AdminFilterTest extends TestCase
 {
-    private $emptyFilter;
+    private array $emptyFilter;
 
     protected function setUp(): void
     {

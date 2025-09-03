@@ -46,7 +46,7 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectTypes')]
-    public function testItDetectsIncorrectValueType($incorrectType): void
+    public function testItDetectsIncorrectValueType(string|int|bool|array|null $incorrectType): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate($incorrectType, new InstalledApiResourceScope());
@@ -63,7 +63,7 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getCorrectValues')]
-    public function testCorrectValues($correctValue): void
+    public function testCorrectValues(array $correctValue): void
     {
         $this->validator->validate($correctValue, new InstalledApiResourceScope());
         $this->assertNoViolation();
@@ -78,7 +78,7 @@ class InstalledApiResourceScopeValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectValues')]
-    public function testIncorrectValues($incorrectValue, array $invalidScopes): void
+    public function testIncorrectValues(array $incorrectValue, array $invalidScopes): void
     {
         $this->validator->validate($incorrectValue, new InstalledApiResourceScope());
         $this->buildViolation((new InstalledApiResourceScope())->message)

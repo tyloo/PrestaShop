@@ -55,12 +55,8 @@ class LegacyModuleExtractorTest extends KernelTestCase
         $this->catalogueVerifier = new CatalogueVerifier($this);
     }
 
-    /**
-     * @param string $locale
-     * @param array  $expected
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
-    public function testExtractedCatalogueContainsTheExpectedWordings($locale, $expected): void
+    public function testExtractedCatalogueContainsTheExpectedWordings(string $locale, array $expected): void
     {
         self::bootKernel();
         $container = self::$kernel->getContainer();

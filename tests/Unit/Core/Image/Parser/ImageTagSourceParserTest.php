@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParser;
 
 class ImageTagSourceParserTest extends TestCase
 {
-    /**
-     * @var ImageTagSourceParser
-     */
-    private $parser;
+    private ImageTagSourceParser $parser;
 
     protected function setUp(): void
     {
@@ -43,7 +40,7 @@ class ImageTagSourceParserTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getTestCases')]
-    public function testItParsesSourceAsExpected($imageTag, $expectedSource): void
+    public function testItParsesSourceAsExpected(string $imageTag, ?string $expectedSource): void
     {
         $parsedSource = $this->parser->parse($imageTag);
 

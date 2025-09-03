@@ -134,7 +134,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
         return \in_array($addon, $this->addons, true);
     }
 
-    public function indexOf(AddonTheme $addon)
+    public function indexOf(AddonTheme $addon): int|string|false
     {
         return array_search($addon, $this->addons, true);
     }

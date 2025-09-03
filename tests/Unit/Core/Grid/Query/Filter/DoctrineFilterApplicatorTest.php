@@ -37,10 +37,7 @@ use PrestaShop\PrestaShop\Core\Grid\Query\Filter\SqlFilters;
 
 class DoctrineFilterApplicatorTest extends TestCase
 {
-    /**
-     * @var DoctrineFilterApplicator
-     */
-    private $doctrineFilterApplicator;
+    private DoctrineFilterApplicator $doctrineFilterApplicator;
 
     protected function setUp(): void
     {

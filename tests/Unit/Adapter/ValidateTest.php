@@ -44,7 +44,7 @@ class ValidateTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getIsOrderWay')]
-    public function testIsOrderWay(int $expected, $input): void
+    public function testIsOrderWay(int $expected, string|int|bool $input): void
     {
         self::assertEquals($expected, $this->validate::isOrderWay($input));
     }
@@ -88,7 +88,7 @@ class ValidateTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('isUnsignedIntProvider')]
-    public function testIsUnsignedInt(bool $expected, $value): void
+    public function testIsUnsignedInt(bool $expected, int|string|bool|null $value): void
     {
         self::assertEquals($expected, $this->validate->isUnsignedInt($value));
     }
@@ -118,7 +118,7 @@ class ValidateTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('isCleanHtmlDataProvider')]
-    public function testIsCleanHtml(string $html, bool $allowFrame, $expectedResult): void
+    public function testIsCleanHtml(string $html, bool $allowFrame, bool $expectedResult): void
     {
         $this->assertSame($expectedResult, $this->validate->isCleanHtml($html, $allowFrame));
     }

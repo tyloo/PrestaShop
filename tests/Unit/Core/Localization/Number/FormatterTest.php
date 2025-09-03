@@ -84,7 +84,7 @@ class FormatterTest extends TestCase
      * @throws LocalizationException
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideValidNumberFormatSpecs')]
-    public function testFormat($localeParams, $numberSpecification, $number, $expectedResult): void
+    public function testFormat(array $localeParams, NumberSpecification $numberSpecification, float|string $number, string $expectedResult): void
     {
         $formatter = $this->buildFormatter($localeParams);
         $formattedNumber = $formatter->format($number, $numberSpecification);

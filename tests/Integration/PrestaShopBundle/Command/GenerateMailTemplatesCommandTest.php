@@ -38,10 +38,7 @@ use Symfony\Component\Finder\Finder;
 
 class GenerateMailTemplatesCommandTest extends KernelTestCase
 {
-    /**
-     * @var Filesystem
-     */
-    private $fileSystem;
+    private Filesystem $fileSystem;
 
     protected function setUp(): void
     {

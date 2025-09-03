@@ -90,7 +90,7 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
      */
     private function checkConfig(LocalizationPackImportConfig $config): array
     {
-        if (empty($config->getCountryIsoCode())) {
+        if (\in_array($config->getCountryIsoCode(), ['', '0'], true)) {
             $error = $this->trans('Invalid selection', 'Admin.Notifications.Error');
 
             return [$error];

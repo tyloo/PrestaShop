@@ -63,10 +63,7 @@ class TaxRulesTaxManagerTest extends TestCase
      */
     private \PHPUnit\Framework\MockObject\MockObject $configuration;
 
-    /**
-     * @var Container
-     */
-    private $savedContainer;
+    private ?Container $savedContainer;
 
     protected function setUp(): void
     {

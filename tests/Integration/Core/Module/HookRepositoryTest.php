@@ -37,10 +37,7 @@ class HookRepositoryTest extends KernelTestCase
 {
     use ContextMockerTrait;
 
-    /**
-     * @var HookRepository
-     */
-    private $hookRepository;
+    private HookRepository $hookRepository;
 
     protected function setUp(): void
     {

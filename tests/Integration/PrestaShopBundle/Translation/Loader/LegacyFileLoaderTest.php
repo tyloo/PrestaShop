@@ -53,11 +53,10 @@ class LegacyFileLoaderTest extends KernelTestCase
     }
 
     /**
-     * @param string  $locale
      * @param array[] $expected
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
-    public function testItExtractsTranslationsFromLegacyFiles($locale, $expected): void
+    public function testItExtractsTranslationsFromLegacyFiles(string $locale, array $expected): void
     {
         self::bootKernel();
         $extractor = self::$kernel->getContainer()->get('prestashop.translation.legacy_file_loader');

@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Localization\CLDR\ComputingPrecision;
 
 class ComputingPrecisionTest extends TestCase
 {
-    /**
-     * @var ComputingPrecision
-     */
-    private $computingPrecision;
+    private ComputingPrecision $computingPrecision;
 
     /**
      * Setup tested dependency
@@ -46,7 +43,7 @@ class ComputingPrecisionTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('provider')]
-    public function testGetPrecision($input, $expected): void
+    public function testGetPrecision(int $input, int $expected): void
     {
         $result = $this->computingPrecision->getPrecision($input);
         $this->assertEquals($expected, $result);

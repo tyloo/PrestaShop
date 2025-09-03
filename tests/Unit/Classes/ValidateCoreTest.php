@@ -33,19 +33,19 @@ use Validate;
 class ValidateCoreTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('isIp2LongDataProvider')]
-    public function testIsIp2Long($expected, $input): void
+    public function testIsIp2Long(bool $expected, string $input): void
     {
         $this->assertEquals($expected, Validate::isIp2Long($input));
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('isEmailDataProvider')]
-    public function testIsEmail($expected, $input): void
+    public function testIsEmail(bool $expected, string|int|bool $input): void
     {
         $this->assertSame($expected, Validate::isEmail($input));
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('isBirthDateProvider')]
-    public function testIsBirthDate($expected, $input): void
+    public function testIsBirthDate(bool $expected, string $input): void
     {
         // data from isBirthDateProvider provider are in UTC
         $defaultTz = date_default_timezone_get();
@@ -58,31 +58,31 @@ class ValidateCoreTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('isDateOrNullProvider')]
-    public function testIsDateOrNull($expected, $input): void
+    public function testIsDateOrNull(bool $expected, ?string $input): void
     {
         $this->assertSame($expected, Validate::isDateOrNull($input));
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('isMd5DataProvider')]
-    public function testIsMd5($expected, $input): void
+    public function testIsMd5(int $expected, string|int|bool $input): void
     {
         $this->assertSame($expected, Validate::isMd5($input));
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('isSha1DataProvider')]
-    public function testIsSha1($expected, $input): void
+    public function testIsSha1(int $expected, string|int|bool $input): void
     {
         $this->assertSame($expected, Validate::isSha1($input));
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('isNameDataProvider')]
-    public function testIsName($expected, $input): void
+    public function testIsName(int $expected, string $input): void
     {
         $this->assertSame($expected, Validate::isName($input));
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('isCustomerNameDataProvider')]
-    public function testIsCustomerName($expected, $input): void
+    public function testIsCustomerName(bool $expected, string $input): void
     {
         $this->assertSame($expected, Validate::isCustomerName($input));
     }
@@ -110,7 +110,7 @@ class ValidateCoreTest extends TestCase
      * @param string|int|array<string|int|bool|array> $input
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('isArrayWithIdsDataProvider')]
-    public function testIsArrayWithIds(bool $expected, $input): void
+    public function testIsArrayWithIds(bool $expected, string|int|array $input): void
     {
         $this->assertSame($expected, Validate::isArrayWithIds($input));
     }

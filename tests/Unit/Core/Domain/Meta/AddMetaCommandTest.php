@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\Exception\MetaConstraintException;
 class AddMetaCommandTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectPageNames')]
-    public function testItThrowsAnExceptionOnIncorrectOrMissingPageName($incorrectPageName): void
+    public function testItThrowsAnExceptionOnIncorrectOrMissingPageName(?string $incorrectPageName): void
     {
         $this->expectException(MetaConstraintException::class);
         $this->expectExceptionCode(MetaConstraintException::INVALID_PAGE_NAME);
@@ -43,7 +43,7 @@ class AddMetaCommandTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectMultiLanguageNames')]
-    public function testItThrowsAnExceptionOnIncorrectPageTitle($incorrectNames): void
+    public function testItThrowsAnExceptionOnIncorrectPageTitle(array $incorrectNames): void
     {
         $this->expectException(MetaConstraintException::class);
         $this->expectExceptionCode(MetaConstraintException::INVALID_PAGE_TITLE);
@@ -54,7 +54,7 @@ class AddMetaCommandTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getIncorrectMultiLanguageNames')]
-    public function testItThrowsAnExceptionOnIncorrectPageDescription($incorrectNames): void
+    public function testItThrowsAnExceptionOnIncorrectPageDescription(array $incorrectNames): void
     {
         $this->expectException(MetaConstraintException::class);
         $this->expectExceptionCode(MetaConstraintException::INVALID_META_DESCRIPTION);

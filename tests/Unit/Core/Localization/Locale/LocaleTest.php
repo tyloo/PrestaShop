@@ -114,7 +114,7 @@ class LocaleTest extends TestCase
      * @throws LocalizationException
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideValidNumbers')]
-    public function testFormatNumber($number, $expected): void
+    public function testFormatNumber(float|string $number, string $expected): void
     {
         $formattedNumber = $this->cldrLocale->formatNumber($number);
 
@@ -172,7 +172,7 @@ class LocaleTest extends TestCase
      * @throws LocalizationException
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideValidPriceData')]
-    public function testFormatPrice($number, $currencyCode, $expected): void
+    public function testFormatPrice(float $number, string $currencyCode, string $expected): void
     {
         $price = $this->cldrLocale->formatPrice($number, $currencyCode);
 
@@ -207,7 +207,7 @@ class LocaleTest extends TestCase
      *                        Potentially invalid currency
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideInvalidPriceData')]
-    public function testFormatNumberWithInvalidPriceData($number, $currency): void
+    public function testFormatNumberWithInvalidPriceData(string|float $number, string $currency): void
     {
         $this->expectException(LocalizationException::class);
 

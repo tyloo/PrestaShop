@@ -47,7 +47,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 #[\PHPUnit\Framework\Attributes\Group('isolatedProcess')]
 class LoadLegacyClassesinCommandTest extends KernelTestCase
 {
-    private $previousErrorReportingLevel;
+    private int $previousErrorReportingLevel;
 
     protected function setUp(): void
     {

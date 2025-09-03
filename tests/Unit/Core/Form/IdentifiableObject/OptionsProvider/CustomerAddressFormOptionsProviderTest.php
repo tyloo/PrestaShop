@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Form\IdentifiableObject\OptionProvider\CustomerAd
 
 class CustomerAddressFormOptionsProviderTest extends TestCase
 {
-    /**
-     * @var CustomerAddressFormOptionsProvider
-     */
-    private $customerAddressFormOptionsProvider;
+    private CustomerAddressFormOptionsProvider $customerAddressFormOptionsProvider;
 
     protected function setUp(): void
     {

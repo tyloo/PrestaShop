@@ -40,10 +40,7 @@ class RenderedHookTest extends TestCase
      */
     private \PHPUnit\Framework\MockObject\MockObject $hookStub;
 
-    /**
-     * @var RenderedHook
-     */
-    private $renderedHook;
+    private RenderedHook $renderedHook;
 
     protected function setUp(): void
     {

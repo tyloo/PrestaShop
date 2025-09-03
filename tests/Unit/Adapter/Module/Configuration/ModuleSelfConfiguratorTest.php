@@ -48,15 +48,9 @@ class ModuleSelfConfiguratorTest extends TestCase
      */
     public $moduleSelfConfigurator;
 
-    /**
-     * @var ConfigurationMock
-     */
-    private $configuration;
+    private ConfigurationMock $configuration;
 
-    /**
-     * @var ConnectionMock
-     */
-    private $connection;
+    private ConnectionMock $connection;
 
     private ?\PHPUnit\Framework\MockObject\MockObject $moduleRepository = null;
 

@@ -562,7 +562,7 @@ class ToolsTest extends TestCase
      * @param array{"price_tmp": float} $b
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('providerCmpPriceAsc')]
-    public function testCmpPriceAsc(int $expectedReturn, $a, $b): void
+    public function testCmpPriceAsc(int $expectedReturn, array $a, array $b): void
     {
         $this->assertSame($expectedReturn, cmpPriceAsc($a, $b));
     }
@@ -579,7 +579,7 @@ class ToolsTest extends TestCase
      * @param array{"price_tmp": float} $b
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('providerCmpPriceDesc')]
-    public function testCmpPriceDesc(int $expectedReturn, $a, $b): void
+    public function testCmpPriceDesc(int $expectedReturn, array $a, array $b): void
     {
         $this->assertSame($expectedReturn, cmpPriceDesc($a, $b));
     }

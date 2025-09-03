@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Adapter\Configuration;
 class JavascriptManagerTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('providerIsAssets')]
-    public function testIsAssets(string $id, bool $toBeFound, $expectedPath): void
+    public function testIsAssets(string $id, bool $toBeFound, string|bool $expectedPath): void
     {
         $expectedAsset = false;
         $testsPath = '/tests/Resources/assets_manager/';

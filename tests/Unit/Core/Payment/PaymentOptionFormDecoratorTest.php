@@ -73,7 +73,7 @@ class PaymentOptionFormDecoratorTest extends TestCase
         );
     }
 
-    private function normalizeHTML($html)
+    private function normalizeHTML($html): string|false
     {
         $doc = new DOMDocument();
         if (! $doc->loadHTML($html)) {

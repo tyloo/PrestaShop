@@ -48,15 +48,12 @@ class RemoteZipSourceHandlerTest extends TestCase
 
     private const INVALID_SOURCE_URL = 'http://valid-source.local/not_a_zipfile.xml';
 
-    /**
-     * @var ZipSourceHandler
-     */
-    private $zipSourceHandler;
+    private ZipSourceHandler $zipSourceHandler;
 
     /**
      * @var ResourceResetter responsible to reset resources used for tests
      */
-    private $resourceResetter;
+    private ResourceResetter $resourceResetter;
 
     protected function setUp(): void
     {

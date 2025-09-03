@@ -73,10 +73,7 @@ class TranslationCatalogueBuilderTest extends TestCase
         ],
     ];
 
-    /**
-     * @var TranslationCatalogueBuilder
-     */
-    private $translationCatalogueBuilder;
+    private TranslationCatalogueBuilder $translationCatalogueBuilder;
 
     protected function setUp(): void
     {

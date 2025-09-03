@@ -45,7 +45,7 @@ class DatabaseTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('providerEscape')]
-    public function testValuesAreEscaped($expected, $actual): void
+    public function testValuesAreEscaped(string|int|float $expected, string|int|float $actual): void
     {
         $db = new Database();
         $this->assertEquals($expected, $db->escape($actual));

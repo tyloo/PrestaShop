@@ -36,10 +36,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class CustomerRepositoryTest extends KernelTestCase
 {
-    /**
-     * @var CustomerRepository
-     */
-    private $customerRepository;
+    private ?object $customerRepository;
 
     protected function setUp(): void
     {

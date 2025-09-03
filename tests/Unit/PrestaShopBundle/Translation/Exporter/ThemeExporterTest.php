@@ -49,10 +49,7 @@ class ThemeExporterTest extends TestCase
 
     private const LOCALE = 'ab-CD';
 
-    /**
-     * @var ThemeExporter
-     */
-    private $themeExporter;
+    private ThemeExporter $themeExporter;
 
     private ?\PHPUnit\Framework\MockObject\MockObject $extractorMock = null;
 
@@ -60,10 +57,7 @@ class ThemeExporterTest extends TestCase
 
     private ?\PHPUnit\Framework\MockObject\MockObject $repositoryMock = null;
 
-    /**
-     * @var XliffFileDumper
-     */
-    private $dumperMock;
+    private XliffFileDumper $dumperMock;
 
     /**
      * @var ZipManager

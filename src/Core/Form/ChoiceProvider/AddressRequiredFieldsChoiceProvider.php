@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class AddressRequiredFieldsChoiceProvider implements FormChoiceProviderInterface
 {
-    public function getChoices()
+    public function getChoices(): array
     {
         return array_combine(RequiredFields::ALLOWED_REQUIRED_FIELDS, RequiredFields::ALLOWED_REQUIRED_FIELDS);
     }

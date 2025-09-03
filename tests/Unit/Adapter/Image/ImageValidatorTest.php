@@ -40,10 +40,7 @@ use Tests\Resources\DummyFileUploader;
 
 class ImageValidatorTest extends TestCase
 {
-    /**
-     * @var ImageValidator
-     */
-    private $imageValidator;
+    private ImageValidator $imageValidator;
 
     protected function setUp(): void
     {

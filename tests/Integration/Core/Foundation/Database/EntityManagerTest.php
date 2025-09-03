@@ -40,10 +40,7 @@ use Product;
 
 class EntityManagerTest extends TestCase
 {
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
     private $entityManager;
 

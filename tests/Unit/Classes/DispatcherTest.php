@@ -36,7 +36,7 @@ use ReflectionClass;
 class DispatcherTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('validateRouteProvider')]
-    public function testValidateRoute($routeId, $rule, $defaultRoutes, $expectedResult, $expectedErrors): void
+    public function testValidateRoute(string $routeId, string $rule, array $defaultRoutes, bool $expectedResult, array $expectedErrors): void
     {
         $dispatcher = DispatcherCore::getInstance();
 

@@ -37,10 +37,7 @@ use Symfony\Component\Cache\Adapter\MemcachedAdapter;
 
 class CacheAdapterFactoryTest extends TestCase
 {
-    /**
-     * @var CacheAdapterFactory
-     */
-    private $cacheAdapterFactory;
+    private CacheAdapterFactory $cacheAdapterFactory;
 
     protected function setUp(): void
     {

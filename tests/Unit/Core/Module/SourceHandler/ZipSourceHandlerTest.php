@@ -43,15 +43,12 @@ class ZipSourceHandlerTest extends TestCase
 
     private const VALID_SOURCE = __DIR__ . '/../../../../Resources/dummyFile/valid_module.zip';
 
-    /**
-     * @var ZipSourceHandler
-     */
-    private $zipSourceHandler;
+    private ZipSourceHandler $zipSourceHandler;
 
     /**
      * @var ResourceResetter : responsible to reset resources used for tests
      * */
-    private $resourceResetter;
+    private ResourceResetter $resourceResetter;
 
     protected function setUp(): void
     {

@@ -27,6 +27,7 @@
 
 namespace Tests\Unit\Core\Domain\ValueObject;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Core\Domain\Exception\DomainConstraintException;
 use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
@@ -34,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 class EmailTest extends TestCase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getValidEmailValues')]
-    public function testItCreatesEmailWithValidValues($validEmail): void
+    public function testItCreatesEmailWithValidValues(string $validEmail): void
     {
         $email = new Email($validEmail);
 
@@ -42,7 +43,7 @@ class EmailTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidEmailValues')]
-    public function testItThrowsExceptionWhenCreatingEmailWithInvalidValue($invalidEmail): void
+    public function testItThrowsExceptionWhenCreatingEmailWithInvalidValue(string|int $invalidEmail): void
     {
         $this->expectException(DomainConstraintException::class);
         $this->expectExceptionCode(DomainConstraintException::INVALID_EMAIL);
@@ -51,26 +52,26 @@ class EmailTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('getEmailCompareValues')]
-    public function testEmailComparesValuesCorrectly($firstEmail, $secondEmail, $expectedCompareResult): void
+    public function testEmailComparesValuesCorrectly(string $firstEmail, string $secondEmail, bool $expectedCompareResult): void
     {
         $this->assertEquals($expectedCompareResult, (new Email($firstEmail))->isEqualTo(new Email($secondEmail)));
     }
 
-    public static function getValidEmailValues()
+    public static function getValidEmailValues(): Generator
     {
         yield ['demo.demo@prestashop.com'];
         yield ['12312321@123.com'];
         yield ['abc_123o@a.eu'];
     }
 
-    public static function getInvalidEmailValues()
+    public static function getInvalidEmailValues(): Generator
     {
         yield [''];
         yield [123];
         yield [\sprintf('very_long_email_%s@demo.com', str_repeat('A', 231))];
     }
 
-    public static function getEmailCompareValues()
+    public static function getEmailCompareValues(): Generator
     {
         yield ['demo@demo.com', 'demo@demo.com', true];
         yield ['demo@demo.com', 'no_the_same@demo.com', false];

@@ -52,10 +52,7 @@ use Symfony\Component\Translation\Loader\LoaderInterface;
 
 class CatalogueProviderFactoryTest extends TestCase
 {
-    /**
-     * @var CatalogueProviderFactory
-     */
-    private $factory;
+    private CatalogueProviderFactory $factory;
 
     protected function setUp(): void
     {
@@ -98,7 +95,7 @@ class CatalogueProviderFactoryTest extends TestCase
      * @throws UnexpectedTranslationTypeException
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('getProviderData')]
-    public function testGetProvider($providerDefinition, $providerClass): void
+    public function testGetProvider(BackofficeProviderDefinition|FrontofficeProviderDefinition|MailsProviderDefinition|MailsBodyProviderDefinition|OthersProviderDefinition|ModuleProviderDefinition|ThemeProviderDefinition $providerDefinition, string $providerClass): void
     {
         $provider = $this->factory->getProvider($providerDefinition);
         $this->assertInstanceOf($providerClass, $provider);

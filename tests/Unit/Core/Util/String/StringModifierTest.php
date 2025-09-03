@@ -33,10 +33,7 @@ use PrestaShop\PrestaShop\Core\Util\String\StringModifier;
 
 class StringModifierTest extends TestCase
 {
-    /**
-     * @var StringModifier
-     */
-    private $stringModifier;
+    private StringModifier $stringModifier;
 
     protected function setUp(): void
     {

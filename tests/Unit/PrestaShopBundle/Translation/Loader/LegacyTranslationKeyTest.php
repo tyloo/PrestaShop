@@ -32,15 +32,8 @@ use PrestaShopBundle\Translation\Loader\LegacyTranslationKey;
 
 class LegacyTranslationKeyTest extends TestCase
 {
-    /**
-     * @param string $key
-     * @param string $expectedModule
-     * @param string $expectedTheme
-     * @param string $expectedSource
-     * @param string $expectedHash
-     */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCases')]
-    public function testItParsesKeys($key, $expectedModule, $expectedTheme, $expectedSource, $expectedHash): void
+    public function testItParsesKeys(string $key, string $expectedModule, string $expectedTheme, string $expectedSource, string $expectedHash): void
     {
         $parsed = LegacyTranslationKey::buildFromString($key);
 

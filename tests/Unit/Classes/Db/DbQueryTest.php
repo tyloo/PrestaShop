@@ -51,7 +51,7 @@ class DbQueryTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('providerType')]
-    public function testType($type, string $expectedType): void
+    public function testType(string|int|bool|null $type, string $expectedType): void
     {
         $dbQuery = $this->getDbQueryInstance();
         $dbQuery->type($type);
@@ -59,7 +59,7 @@ class DbQueryTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('providerSelect')]
-    public function testSelect($fields, array $expectedSelect): void
+    public function testSelect(string|bool|null $fields, array $expectedSelect): void
     {
         $dbQuery = $this->getDbQueryInstance();
         $dbQuery->select($fields);

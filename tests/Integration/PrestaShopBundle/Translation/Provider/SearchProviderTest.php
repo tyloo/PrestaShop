@@ -38,10 +38,7 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class SearchProviderTest extends TestCase
 {
-    /**
-     * @var SearchProvider
-     */
-    private $provider;
+    private SearchProvider $provider;
 
     protected function setUp(): void
     {

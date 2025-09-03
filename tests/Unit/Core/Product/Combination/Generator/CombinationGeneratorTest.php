@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Product\Combination\Generator\CombinationGenerato
 
 class CombinationGeneratorTest extends TestCase
 {
-    /**
-     * @var CombinationGenerator
-     */
-    private $combinationGenerator;
+    private CombinationGenerator $combinationGenerator;
 
     protected function setUp(): void
     {

@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Foundation\Database\EntityManager\QueryBuilder;
 
 class QueryBuilderTest extends TestCase
 {
-    private $queryBuilder;
+    private QueryBuilder $queryBuilder;
 
     protected function setUp(): void
     {

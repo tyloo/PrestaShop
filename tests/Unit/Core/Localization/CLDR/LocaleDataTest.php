@@ -32,10 +32,7 @@ use PrestaShop\PrestaShop\Core\Localization\CLDR\LocaleData;
 
 class LocaleDataTest extends TestCase
 {
-    /**
-     * @var LocaleData
-     */
-    private $localeData;
+    private LocaleData $localeData;
 
     /**
      * Setup tested dependency

@@ -50,15 +50,9 @@ class SetUpUrlsDataConfigurationTest extends AbstractConfigurationTestCase
         'disable_apache_mod_security' => true,
     ];
 
-    /**
-     * @var HtaccessFileGenerator
-     */
-    private $mockHtaccessFileGenerator;
+    private HtaccessFileGenerator $mockHtaccessFileGenerator;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $mockTranslator;
+    private TranslatorInterface $mockTranslator;
 
     protected function setUp(): void
     {
