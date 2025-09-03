@@ -81,7 +81,7 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
      */
     protected function referencesToIds(string $references): array
     {
-        if (empty($references)) {
+        if ($references === '' || $references === '0') {
             return [];
         }
 

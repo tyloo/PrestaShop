@@ -65,11 +65,11 @@ class SetRequiredFieldsForCustomerCommand
      */
     private function assertContainsOnlyAllowedFields(array $requiredFields): void
     {
-        if (empty($requiredFields)) {
+        if ($requiredFields === []) {
             return;
         }
 
-        if (! empty(array_diff($requiredFields, RequiredField::ALLOWED_REQUIRED_FIELDS))) {
+        if (array_diff($requiredFields, RequiredField::ALLOWED_REQUIRED_FIELDS) !== []) {
             throw new InvalidCustomerRequiredFieldsException(\sprintf('Invalid customer required fields provided. Allowed fields are: %s', implode(',', RequiredField::ALLOWED_REQUIRED_FIELDS)));
         }
     }

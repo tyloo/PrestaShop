@@ -75,7 +75,7 @@ class SetSuppliersCommand
 
     private function setSupplierIds(array $supplierIds): void
     {
-        if (empty($supplierIds)) {
+        if ($supplierIds === []) {
             throw new InvalidArgumentException(\sprintf('Empty array of suppliers provided in %s. To remove all product suppliers use %s.', self::class, RemoveAllAssociatedProductSuppliersCommand::class));
         }
 

@@ -77,7 +77,7 @@ class SearchCustomers
      */
     private function assertPhrasesAreNotEmpty(array $phrases): void
     {
-        if (empty($phrases)) {
+        if ($phrases === []) {
             throw new CustomerException('Phrases cannot be empty when searching customers.');
         }
     }

@@ -91,7 +91,7 @@ class UpdateSearchTermAliasesCommand
      */
     private function assertAliasesNotEmpty(array $aliases): void
     {
-        if (! empty($aliases)) {
+        if ($aliases !== []) {
             return;
         }
 
@@ -103,7 +103,7 @@ class UpdateSearchTermAliasesCommand
      */
     private function assertStringNotEmpty(string $string): void
     {
-        if (! empty($string)) {
+        if ($string !== '' && $string !== '0') {
             return;
         }
 

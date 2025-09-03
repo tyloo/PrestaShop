@@ -45,7 +45,7 @@ abstract class AbstractProfileCommand
      */
     public function __construct(array $localizedNames)
     {
-        if (empty($localizedNames)) {
+        if ($localizedNames === []) {
             throw new ProfileException('Profile name cannot be empty');
         }
 

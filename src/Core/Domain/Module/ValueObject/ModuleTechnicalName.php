@@ -44,7 +44,7 @@ class ModuleTechnicalName
 
     private function assertNotEmpty(string $value): void
     {
-        if (empty($value)) {
+        if ($value === '' || $value === '0') {
             throw new ModuleConstraintException('Technical name cannot be empty', ModuleConstraintException::EMPTY_TECHNICAL_NAME);
         }
     }

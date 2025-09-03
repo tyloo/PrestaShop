@@ -160,7 +160,7 @@ class AddProductToOrderCommand
     ) {
         $this->orderId = new OrderId($orderId);
         $this->productId = new ProductId($productId);
-        $this->combinationId = empty($combinationId) ? null : new CombinationId($combinationId);
+        $this->combinationId = $combinationId === 0 ? null : new CombinationId($combinationId);
         try {
             $this->productPriceTaxIncluded = new DecimalNumber($productPriceTaxIncluded);
             $this->productPriceTaxExcluded = new DecimalNumber($productPriceTaxExcluded);

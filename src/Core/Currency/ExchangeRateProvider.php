@@ -140,13 +140,13 @@ class ExchangeRateProvider
      */
     private function fetchCurrencyFeed(): void
     {
-        if (! empty($this->currencies)) {
+        if ($this->currencies !== []) {
             return;
         }
 
         $remoteFeedData = $this->remoteServiceProvider->call($this->currencyFeedUrl);
         $cachedFeedData = $this->getCachedCurrencyFeed();
-        if (empty($remoteFeedData) && empty($cachedFeedData)) {
+        if (($remoteFeedData === '' || $remoteFeedData === '0') && empty($cachedFeedData)) {
             throw new CurrencyFeedException('Currency feed could not be fetched');
         }
 

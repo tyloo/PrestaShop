@@ -50,11 +50,11 @@ class AddOrderMessageCommand
      */
     public function __construct(array $localizedName, array $localizedMessage)
     {
-        if (empty($localizedName)) {
+        if ($localizedName === []) {
             throw new OrderMessageConstraintException('OrderMessage name must not be empty');
         }
 
-        if (empty($localizedMessage)) {
+        if ($localizedMessage === []) {
             throw new OrderMessageConstraintException('OrderMessage message must not be empty');
         }
 

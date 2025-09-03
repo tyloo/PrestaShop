@@ -121,7 +121,7 @@ abstract class AbstractEditCurrencyCommand
      */
     public function setLocalizedNames(array $localizedNames): self
     {
-        if (empty($localizedNames)) {
+        if ($localizedNames === []) {
             throw new CurrencyConstraintException('Currency name cannot be empty', CurrencyConstraintException::EMPTY_NAME);
         }
 
@@ -145,7 +145,7 @@ abstract class AbstractEditCurrencyCommand
      */
     public function setLocalizedSymbols(array $localizedSymbols): self
     {
-        if (empty($localizedSymbols)) {
+        if ($localizedSymbols === []) {
             throw new CurrencyConstraintException('Currency symbol cannot be empty', CurrencyConstraintException::EMPTY_SYMBOL);
         }
 

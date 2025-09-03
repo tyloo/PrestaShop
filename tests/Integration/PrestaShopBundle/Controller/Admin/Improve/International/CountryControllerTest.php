@@ -213,7 +213,7 @@ class CountryControllerTest extends FormGridControllerTestCase
 
     protected function generateGridUrl(array $routeParams = []): string
     {
-        if (empty($routeParams)) {
+        if ($routeParams === []) {
             $routeParams = [
                 'country[offset]' => 0,
                 'country[limit]' => 1000,

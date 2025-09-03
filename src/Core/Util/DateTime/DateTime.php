@@ -88,7 +88,7 @@ final class DateTime
      */
     public static function buildNullableDateTime(?string $value): DateTimeImmutable
     {
-        return empty($value) || $value === self::NULL_DATETIME || $value === self::NULL_DATE ? new NullDateTime() : new DateTimeImmutable($value);
+        return $value === null || $value === '' || $value === '0' || $value === self::NULL_DATETIME || $value === self::NULL_DATE ? new NullDateTime() : new DateTimeImmutable($value);
     }
 
     /**
@@ -96,6 +96,6 @@ final class DateTime
      */
     public static function buildDateTimeOrNull(?string $value): ?DateTimeImmutable
     {
-        return empty($value) || $value === self::NULL_DATETIME || $value === self::NULL_DATE ? null : new DateTimeImmutable($value);
+        return $value === null || $value === '' || $value === '0' || $value === self::NULL_DATETIME || $value === self::NULL_DATE ? null : new DateTimeImmutable($value);
     }
 }

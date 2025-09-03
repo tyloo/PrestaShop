@@ -551,7 +551,7 @@ class Reader implements ReaderInterface
                 $symbols = $currencyData->getSymbols();
                 foreach ($currencyNode->symbol as $symbolNode) {
                     $type = (string) $symbolNode['alt'];
-                    if (empty($type)) {
+                    if ($type === '' || $type === '0') {
                         $type = 'default';
                     }
 

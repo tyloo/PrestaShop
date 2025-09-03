@@ -78,7 +78,7 @@ class BulkToggleLanguagesStatusCommand implements ToggleLanguageStatusCommandInt
      */
     private function setLanguages(array $languageIds): void
     {
-        if (empty($languageIds)) {
+        if ($languageIds === []) {
             throw new LanguageConstraintException('Languages must be provided in order to toggle their status');
         }
 

@@ -71,7 +71,7 @@ final class BackUrlRedirectResponseListener
         $backUrl = $this->backUrlProvider->getBackUrl($currentRequest);
         if (
             // No back url nothing to change
-            empty($backUrl)
+            $backUrl === '' || $backUrl === '0'
             // Redirect to the current url(save and stay) nothing to change
             || $this->areUrlsEquals($currentRequest->getRequestUri(), $originalResponse->getTargetUrl(), $currentRequest)
             // If back url is the same as the target (query parameters are ignored) nothing to change

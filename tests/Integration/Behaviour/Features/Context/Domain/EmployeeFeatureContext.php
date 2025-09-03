@@ -355,7 +355,7 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
 
         if (isset($testCaseData['Shop association'])) {
             $data['shopAssociation'] = $this->referencesToIds($testCaseData['Shop association']);
-        } elseif (! empty($shopReference)) {
+        } elseif ($shopReference !== null && $shopReference !== '' && $shopReference !== '0') {
             /** @var array $shopAssociation */
             $shopAssociation = [
                 SharedStorage::getStorage()->get($shopReference),

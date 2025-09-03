@@ -74,7 +74,7 @@ class EditFeatureCommand
      */
     public function setLocalizedNames(array $localizedNames): self
     {
-        if (empty($localizedNames)) {
+        if ($localizedNames === []) {
             throw new FeatureConstraintException('Feature name cannot be empty', FeatureConstraintException::INVALID_NAME);
         }
 
@@ -96,7 +96,7 @@ class EditFeatureCommand
      */
     public function setAssociatedShopIds(array $associatedShopIds): self
     {
-        if (empty($associatedShopIds)) {
+        if ($associatedShopIds === []) {
             throw new FeatureConstraintException('Shop association cannot be empty', FeatureConstraintException::INVALID_SHOP_ASSOCIATION);
         }
 

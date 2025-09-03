@@ -97,7 +97,7 @@ class LogoUploader
      */
     public function update($fieldName, $logoPrefix, array $files = []): bool
     {
-        $files = empty($files) ? $_FILES : $files;
+        $files = $files === [] ? $_FILES : $files;
 
         if (isset($files[$fieldName]['tmp_name'], $files[$fieldName]['tmp_name'], $files[$fieldName]['size'])) {
             $availableExtensions = (\in_array($fieldName, ['PS_LOGO_MAIL', 'PS_LOGO_INVOICE'], true)) ? ShopLogoSettings::AVAILABLE_MAIL_AND_INVOICE_LOGO_IMAGE_EXTENSIONS : ShopLogoSettings::AVAILABLE_LOGO_IMAGE_EXTENSIONS;

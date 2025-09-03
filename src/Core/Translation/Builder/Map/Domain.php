@@ -147,7 +147,7 @@ class Domain
      */
     public function mergeTree(array &$tree): array
     {
-        if (empty($tree)) {
+        if ($tree === []) {
             $tree = [
                 Catalogue::METADATA_KEY_NAME => Catalogue::EMPTY_META,
             ];

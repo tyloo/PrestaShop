@@ -413,7 +413,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             $apiClient = $this->getCommandBus()->handle($command);
 
             $this->getSharedStorage()->set($apiClientReference, $apiClient->getApiClientId()->getValue());
-            if (! empty($secretReference)) {
+            if ($secretReference !== null && $secretReference !== '' && $secretReference !== '0') {
                 $this->getSharedStorage()->set($secretReference, $apiClient->getSecret());
             }
         } catch (ApiClientConstraintException $apiClientConstraintException) {

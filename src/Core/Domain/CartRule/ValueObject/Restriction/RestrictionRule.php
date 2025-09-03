@@ -92,7 +92,7 @@ class RestrictionRule
      */
     private function assertIds(array $ids): void
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             throw new CartRuleConstraintException(\sprintf('%s item ids cannot be empty', self::class), CartRuleConstraintException::EMPTY_RESTRICTION_RULE_IDS);
         }
 

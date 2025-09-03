@@ -241,7 +241,7 @@ class DiscountFormDataHandler implements FormDataHandlerInterface
                     );
                 }
 
-                if (! empty($productRuleGroups)) {
+                if ($productRuleGroups !== []) {
                     $conditionsCommand->setProductConditions($productRuleGroups);
                 }
             }

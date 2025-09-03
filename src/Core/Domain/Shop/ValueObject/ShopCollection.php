@@ -96,10 +96,10 @@ class ShopCollection extends ShopConstraint
         }
 
         if ($this->getShopIds() !== null && $constraint->getShopIds() !== null && \count($this->getShopIds()) === \count($constraint->getShopIds())) {
-            return empty(array_diff(
+            return array_diff(
                 array_map(fn (ShopId $shopId): int => $shopId->getValue(), $this->getShopIds()),
                 array_map(fn (ShopId $shopId): int => $shopId->getValue(), $constraint->getShopIds()),
-            ));
+            ) === [];
         }
 
         return false;

@@ -64,7 +64,7 @@ class AddOrderReturnStateCommand
      */
     public function setLocalizedNames(array $localizedNames)
     {
-        if (empty($localizedNames)) {
+        if ($localizedNames === []) {
             throw new OrderReturnStateConstraintException('Order return status name cannot be empty', OrderReturnStateConstraintException::EMPTY_NAME);
         }
 

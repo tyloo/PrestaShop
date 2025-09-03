@@ -55,7 +55,7 @@ class ConfigReader implements ConfigReaderInterface
         $xml = @simplexml_load_file($configFile);
         $errors = libxml_get_errors();
 
-        if ($xml === false || ! empty($errors)) {
+        if ($xml === false || $errors !== []) {
             return null;
         }
 

@@ -74,7 +74,7 @@ class SetPackProductsCommand
 
     private function setProducts(array $products): void
     {
-        if (empty($products)) {
+        if ($products === []) {
             throw new RuntimeException(\sprintf('Empty products array provided in %s. Use %s to remove all pack products', static::class, RemoveAllProductsFromPackCommand::class));
         }
 

@@ -244,7 +244,7 @@ class StoreControllerTest extends GridControllerTestCase
 
     protected function generateGridUrl(array $routeParams = []): string
     {
-        if (empty($routeParams)) {
+        if ($routeParams === []) {
             $routeParams = [
                 'store[offset]' => 0,
                 'store[limit]' => 100,

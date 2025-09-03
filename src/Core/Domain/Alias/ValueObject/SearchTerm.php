@@ -47,7 +47,7 @@ class SearchTerm
 
     private function assertStringNotEmpty(string $searchTerm): void
     {
-        if (empty($searchTerm)) {
+        if ($searchTerm === '' || $searchTerm === '0') {
             throw new AliasConstraintException('Search term cannot be empty.', AliasConstraintException::INVALID_SEARCH);
         }
     }

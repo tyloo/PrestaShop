@@ -80,7 +80,7 @@ class EmployeeContextBuilder implements LegacyContextBuilderInterface
     {
         $legacyEmployee = $this->getLegacyEmployee();
         // Only update the legacy context when the employee is not the expected one, if not leave the context unchanged
-        if (! empty($legacyEmployee) && $this->legacyObjectNeedsUpdate($this->contextStateManager->getContext()->employee, (int) $legacyEmployee->id)) {
+        if ($legacyEmployee instanceof LegacyEmployee && $this->legacyObjectNeedsUpdate($this->contextStateManager->getContext()->employee, (int) $legacyEmployee->id)) {
             $this->contextStateManager->setEmployee($legacyEmployee);
         }
     }

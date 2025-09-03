@@ -169,7 +169,7 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
      */
     protected function deleteObjectModelFromShops(ObjectModel $objectModel, array $shopIds, string $exceptionClass, int $errorCode = 0): void
     {
-        if (empty($shopIds)) {
+        if ($shopIds === []) {
             throw new InvalidArgumentException('The shopIds should not be empty');
         }
 
@@ -238,7 +238,7 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
         string $objectModelClassName,
         array $updatedShopIds,
     ): void {
-        if (empty($updatedShopIds)) {
+        if ($updatedShopIds === []) {
             return;
         }
 
@@ -262,14 +262,14 @@ class AbstractMultiShopObjectModelRepository extends AbstractObjectModelReposito
             }
         }
 
-        if (! empty($shopIdsToRemove)) {
+        if ($shopIdsToRemove !== []) {
             Db::getInstance()->delete(
                 $tableName . '_shop',
                 '`' . $primaryKeyName . '` = ' . $id . ' AND `id_shop` IN (' . implode(',', $shopIdsToRemove) . ')'
             );
         }
 
-        if (! empty($shopIdsToAdd)) {
+        if ($shopIdsToAdd !== []) {
             $insert = [];
             foreach ($shopIdsToAdd as $shopId) {
                 $insert[] = [

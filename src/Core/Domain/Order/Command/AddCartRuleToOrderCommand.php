@@ -113,7 +113,7 @@ class AddCartRuleToOrderCommand
      */
     private function assertCartRuleNameIsNotEmpty($cartRuleName): void
     {
-        if (! \is_string($cartRuleName) || empty($cartRuleName)) {
+        if (! \is_string($cartRuleName) || ($cartRuleName === '' || $cartRuleName === '0')) {
             throw new OrderConstraintException('Cart rule name cannot be empty');
         }
     }

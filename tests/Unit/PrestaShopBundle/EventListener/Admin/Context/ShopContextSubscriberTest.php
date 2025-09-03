@@ -587,7 +587,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
         $employeeContext = $this->createMock(EmployeeContext::class);
 
         // By default, authorized for everything
-        if (empty($employeeData)) {
+        if ($employeeData === null || $employeeData === []) {
             $employeeContext
                 ->method('hasAuthorizationOnShopGroup')
                 ->willReturn(true)

@@ -97,7 +97,7 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
     protected function parseEntitiesFromGridTable(Crawler $crawler): TestEntityDTOCollection
     {
         $grid = $crawler->filter($this->getGridSelector());
-        if (empty($grid->count())) {
+        if ($grid->count() === 0) {
             throw new InvalidArgumentException(\sprintf('Could not find a grid matching CSS selector "%s"', $this->getGridSelector()));
         }
 

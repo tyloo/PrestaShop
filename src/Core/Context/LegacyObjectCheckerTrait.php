@@ -38,6 +38,6 @@ trait LegacyObjectCheckerTrait
 {
     protected function legacyObjectNeedsUpdate(?ObjectModel $objectModel, ?int $expectedId): bool
     {
-        return ! empty($expectedId) && (empty($objectModel) || (int) $objectModel->id !== $expectedId);
+        return $expectedId !== null && $expectedId !== 0 && (! $objectModel instanceof ObjectModel || (int) $objectModel->id !== $expectedId);
     }
 }

@@ -90,6 +90,6 @@ abstract class ImmutableCollection implements IteratorAggregate, Countable
 
     public function isEmpty(): bool
     {
-        return empty($this->values);
+        return $this->values === [];
     }
 }

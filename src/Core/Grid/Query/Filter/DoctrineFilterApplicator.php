@@ -40,7 +40,7 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
 
     public function apply(QueryBuilder $qb, SqlFilters $filters, array $filterValues): void
     {
-        if (empty($filterValues)) {
+        if ($filterValues === []) {
             return;
         }
 

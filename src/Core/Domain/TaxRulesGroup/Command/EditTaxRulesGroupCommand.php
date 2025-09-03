@@ -122,6 +122,6 @@ class EditTaxRulesGroupCommand
     {
         $filterAllIntegers = (fn ($value): bool => \is_int($value));
 
-        return ! empty($values) && \count($values) === \count(array_filter($values, $filterAllIntegers));
+        return $values !== [] && \count($values) === \count(array_filter($values, $filterAllIntegers));
     }
 }

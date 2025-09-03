@@ -76,7 +76,7 @@ class SetRelatedProductsCommand
      */
     private function setRelatedProductIds(array $ids): void
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             throw new RuntimeException(\sprintf('Empty array of related products provided in %s. To remove all related products use %s.', self::class, RemoveAllRelatedProductsCommand::class));
         }
 

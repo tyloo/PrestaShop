@@ -74,7 +74,7 @@ class DatabaseTableField
      */
     private function setName($name)
     {
-        if (! \is_string($name) || empty($name)) {
+        if (! \is_string($name) || ($name === '' || $name === '0')) {
             throw new SqlManagementConstraintException(\sprintf('Invalid database table field name %s supplied', var_export($name, true)), SqlManagementConstraintException::INVALID_DATABASE_TABLE_FIELD_NAME);
         }
 
@@ -100,7 +100,7 @@ class DatabaseTableField
      */
     private function setType($type)
     {
-        if (! \is_string($type) || empty($type)) {
+        if (! \is_string($type) || ($type === '' || $type === '0')) {
             throw new SqlManagementConstraintException(\sprintf('Invalid database table field type %s supplied', var_export($type, true)), SqlManagementConstraintException::INVALID_DATABASE_TABLE_FIELD_TYPE);
         }
 

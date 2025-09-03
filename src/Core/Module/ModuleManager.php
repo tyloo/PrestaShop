@@ -284,7 +284,7 @@ class ModuleManager implements ModuleManagerInterface
         $module = $this->moduleRepository->getModule($name);
         if ($module->hasValidInstance()) {
             $errors = array_filter($module->getInstance()->getErrors());
-            if (empty($errors)) {
+            if ($errors === []) {
                 $error = $this->translator->trans(
                     'Unfortunately, the module %module% did not return additional details.',
                     ['%module%' => $name],
@@ -311,7 +311,7 @@ class ModuleManager implements ModuleManagerInterface
                 }
             }
 
-            if (! empty($validityErrors)) {
+            if ($validityErrors !== []) {
                 $error .= ' Errors details: ' . implode(', ', $validityErrors);
             }
         }

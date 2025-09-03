@@ -185,7 +185,7 @@ class FeatureControllerTest extends FormGridControllerTestCase
 
     protected function generateGridUrl(array $routeParams = []): string
     {
-        if (empty($routeParams)) {
+        if ($routeParams === []) {
             $routeParams = [
                 'feature[offset]' => 0,
                 'feature[limit]' => 10,

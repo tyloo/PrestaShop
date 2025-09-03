@@ -64,7 +64,7 @@ class SaveSqlRequestSettingsCommand
      */
     private function setFileEncoding(string $fileEncoding): void
     {
-        if (empty($fileEncoding)) {
+        if ($fileEncoding === '' || $fileEncoding === '0') {
             throw new SqlRequestSettingsConstraintException(\sprintf('Invalid File Encoding %s supplied', var_export($fileEncoding, true)), SqlRequestSettingsConstraintException::INVALID_FILE_ENCODING);
         }
 
@@ -85,7 +85,7 @@ class SaveSqlRequestSettingsCommand
      */
     private function setFileSeparator(string $fileSeparator): void
     {
-        if (empty($fileSeparator)) {
+        if ($fileSeparator === '' || $fileSeparator === '0') {
             throw new SqlRequestSettingsConstraintException(\sprintf('Invalid File Separator %s supplied', var_export($fileSeparator, true)), SqlRequestSettingsConstraintException::INVALID_FILE_SEPARATOR);
         }
 

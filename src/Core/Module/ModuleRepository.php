@@ -148,7 +148,7 @@ class ModuleRepository implements ModuleRepositoryInterface
 
         $isValid = $filemtime > 0 && $this->moduleDataProvider->isModuleMainClassValid($moduleName);
         $attributes = $this->getModuleAttributes($moduleName, $isValid);
-        if (empty($attributes)) {
+        if ($attributes === []) {
             $isValid = false;
         }
 
@@ -279,7 +279,7 @@ class ModuleRepository implements ModuleRepositoryInterface
 
             // Merge hooks from modules if it's an array and not empty
             $filteredModulesFromHook = array_filter($modulesFromHook, fn ($item): bool => \is_array($item));
-            $this->modulesFromHook = empty($filteredModulesFromHook) ? [] : array_merge(...$filteredModulesFromHook);
+            $this->modulesFromHook = $filteredModulesFromHook === [] ? [] : array_merge(...$filteredModulesFromHook);
         }
 
         return $this->modulesFromHook;

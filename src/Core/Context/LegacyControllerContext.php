@@ -233,7 +233,7 @@ class LegacyControllerContext
 
     public function getLanguages(): array
     {
-        if (! empty($this->languages)) {
+        if ($this->languages !== []) {
             return $this->languages;
         }
 

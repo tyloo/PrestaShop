@@ -62,7 +62,7 @@ class ThemeName
      */
     private function assertThemeNameIsNotEmptyString($themeName): void
     {
-        if (! \is_string($themeName) || empty($themeName)) {
+        if (! \is_string($themeName) || ($themeName === '' || $themeName === '0')) {
             throw new InvalidThemeNameException('Theme name cannot be empty.');
         }
     }

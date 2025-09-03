@@ -63,7 +63,7 @@ class ToolsTest extends TestCase
             ]
         );
         $original = @file_get_contents(LegacyTools::CACERT_LOCATION, false, $stream_context);
-        if (empty($original)) {
+        if ($original === '' || $original === '0' || $original === false) {
             $original = @file_get_contents(CaBundle::getBundledCaBundlePath());
         }
 

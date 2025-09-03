@@ -153,7 +153,7 @@ class EditAttributeGroupCommand
      */
     private function assertNamesAreValid(array $names, string $message, int $errorCode): void
     {
-        if (empty($names)) {
+        if ($names === []) {
             throw new AttributeGroupConstraintException($message, $errorCode);
         }
     }

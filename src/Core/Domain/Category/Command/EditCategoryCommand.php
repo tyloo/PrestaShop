@@ -167,7 +167,7 @@ class EditCategoryCommand
      */
     public function setLocalizedNames(array $localizedNames)
     {
-        if (empty($localizedNames)) {
+        if ($localizedNames === []) {
             throw new CategoryConstraintException('Category name cannot be empty', CategoryConstraintException::EMPTY_NAME);
         }
 
@@ -193,7 +193,7 @@ class EditCategoryCommand
      */
     public function setLocalizedLinkRewrites(array $localizedLinkRewrites)
     {
-        if (empty($localizedLinkRewrites)) {
+        if ($localizedLinkRewrites === []) {
             throw new CategoryConstraintException('Category link rewrite cannot be empty', CategoryConstraintException::EMPTY_LINK_REWRITE);
         }
 

@@ -108,7 +108,7 @@ class SetAssociatedProductCategoriesCommand
      */
     private function assertCategoryIdsAreNotEmpty(array $categoryIds): void
     {
-        if (empty($categoryIds)) {
+        if ($categoryIds === []) {
             throw new RuntimeException(\sprintf('Empty categoryIds provided in %s. To remove categories use %s.', self::class, RemoveAllAssociatedProductCategoriesCommand::class));
         }
     }

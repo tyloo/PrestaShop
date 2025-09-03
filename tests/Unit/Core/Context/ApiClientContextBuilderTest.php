@@ -130,7 +130,7 @@ class ApiClientContextBuilderTest extends TestCase
             ->setScopes(['scope1', 'scope3'])
         ;
 
-        if (! empty($externalIssuer)) {
+        if ($externalIssuer !== null && $externalIssuer !== '' && $externalIssuer !== '0') {
             $apiClient->setExternalIssuer($externalIssuer);
         }
 

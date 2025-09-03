@@ -90,14 +90,14 @@ class QuickAccessGenerator
         $url = preg_replace($patterns, '', $savedUrl);
         $url = trim((string) $url, '?&/');
 
-        return 'index.php' . (empty($legacyEnvironment) ? '/' : '?') . $url;
+        return 'index.php' . ($legacyEnvironment === 0 || $legacyEnvironment === false ? '/' : '?') . $url;
     }
 
     public function getTokenizedQuickAccesses(): array
     {
         // Retrieve all quick accesses
         $quickAccesses = $this->quickAccessRepository->fetchAll(new LanguageId($this->languageContext->getId()));
-        if (empty($quickAccesses)) {
+        if ($quickAccesses === []) {
             return [];
         }
 
@@ -137,7 +137,7 @@ class QuickAccessGenerator
         $separator = strpos($baseUrl, '?') ? '&' : '?';
 
         $userIdentifier = $this->security->getUser()?->getUserIdentifier();
-        if (! empty($userIdentifier) && ! str_contains('_token', $baseUrl)) {
+        if ($userIdentifier !== null && $userIdentifier !== '' && $userIdentifier !== '0' && ! str_contains('_token', $baseUrl)) {
             $baseUrl .= $separator . '_token=' . $this->tokenManager->getToken($userIdentifier)->getValue();
         }
 

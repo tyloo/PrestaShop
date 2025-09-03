@@ -398,7 +398,7 @@ class StockAssertionFeatureContext extends AbstractProductFeatureContext
 
     private function assertStockInformation(string $productReference, TableNode $table, int $shopId): void
     {
-        $shopErrorMessage = empty($shopId) ? '' : \sprintf(' for shop %s', $shopId);
+        $shopErrorMessage = $shopId === 0 ? '' : \sprintf(' for shop %s', $shopId);
         $productForEditing = $this->getProductForEditing($productReference, $shopId);
         $data = $table->getRowsHash();
 

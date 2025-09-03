@@ -319,7 +319,7 @@ class ProductControllerTest extends FormGridControllerTestCase
 
     protected function generateGridUrl(array $routeParams = []): string
     {
-        if (empty($routeParams)) {
+        if ($routeParams === []) {
             $routeParams = [
                 'product[offset]' => 0,
                 'product[limit]' => 100,

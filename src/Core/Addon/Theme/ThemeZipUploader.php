@@ -84,7 +84,7 @@ final class ThemeZipUploader implements ThemeUploaderInterface
     {
         preg_match('#application/zip#', (string) $uploadedTheme->getMimeType(), $matches);
 
-        if (empty($matches)) {
+        if ($matches === []) {
             throw new ThemeUploadException('Invalid mime type of theme zip. Allowed mime type is application/zip.', ThemeUploadException::INVALID_MIME_TYPE);
         }
     }

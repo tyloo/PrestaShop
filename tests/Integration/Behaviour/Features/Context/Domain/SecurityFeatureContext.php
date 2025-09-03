@@ -149,7 +149,7 @@ class SecurityFeatureContext extends AbstractDomainFeatureContext
      */
     public function createSession(string $name, string $hours): void
     {
-        if (! empty($name)) {
+        if ($name !== '' && $name !== '0') {
             $customerId = SharedStorage::getStorage()->get($name);
 
             $session = new CustomerSession();

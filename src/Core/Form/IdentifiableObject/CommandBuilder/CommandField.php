@@ -48,7 +48,7 @@ class CommandField
         array $dataFields,
         private readonly bool $isMultiShopField,
     ) {
-        if (empty($dataFields)) {
+        if ($dataFields === []) {
             throw new InvalidArgumentException(\sprintf('No data field provided to command setter "%s"', $commandSetter));
         }
 

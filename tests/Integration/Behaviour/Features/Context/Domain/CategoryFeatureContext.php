@@ -658,7 +658,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
             $extractedChildren = $this->extractCategoriesByParent($category->getChildren(), $parentCategoryId);
 
-            if (empty($extractedChildren)) {
+            if ($extractedChildren === []) {
                 continue;
             }
 

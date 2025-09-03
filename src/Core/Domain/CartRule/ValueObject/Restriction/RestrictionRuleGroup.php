@@ -80,7 +80,7 @@ class RestrictionRuleGroup
      */
     private function assertRestrictionRules(array $rules): void
     {
-        if (empty($rules)) {
+        if ($rules === []) {
             throw new CartRuleConstraintException('Restriction rules list cannot be empty', CartRuleConstraintException::EMPTY_RESTRICTION_RULES);
         }
     }

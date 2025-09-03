@@ -68,7 +68,7 @@ class DefaultLanguageValidator extends ConstraintValidator
         // for Admin API usages since the input data is indexed by locale thanks to the LocalizedValue attribute
         if (empty($value[$this->defaultLanguageContext->getId()]) && empty($value[$this->defaultLanguageContext->getLocale()])) {
             $fieldName = $constraint->fieldName;
-            if (empty($fieldName) && $this->context->getObject() instanceof Form) {
+            if (($fieldName === '' || $fieldName === '0') && $this->context->getObject() instanceof Form) {
                 $fieldName = $this->context->getObject()->getName();
             }
 

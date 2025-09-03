@@ -95,7 +95,7 @@ class Message
      */
     public function contains(array $search): bool
     {
-        if (empty($search)) {
+        if ($search === []) {
             return false;
         }
 

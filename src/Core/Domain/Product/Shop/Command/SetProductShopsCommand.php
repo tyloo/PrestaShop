@@ -105,7 +105,7 @@ class SetProductShopsCommand
      */
     private function assertShopsNotEmpty(array $shopIds): void
     {
-        if (empty($shopIds)) {
+        if ($shopIds === []) {
             throw new InvalidProductShopAssociationException(\sprintf('Empty shop association provided. Use %s command to delete product instead', DeleteProductCommand::class), InvalidProductShopAssociationException::EMPTY_SHOPS_ASSOCIATION);
         }
     }

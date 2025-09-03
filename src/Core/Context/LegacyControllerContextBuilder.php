@@ -163,7 +163,7 @@ class LegacyControllerContextBuilder
         }
 
         $objectClassName = $this->getClassName($controllerName);
-        if (empty($objectClassName) || ! class_exists($objectClassName) || ! property_exists($objectClassName, 'definition')) {
+        if ($objectClassName === null || $objectClassName === '' || $objectClassName === '0' || ! class_exists($objectClassName) || ! property_exists($objectClassName, 'definition')) {
             return 'configuration';
         }
 
@@ -193,14 +193,14 @@ class LegacyControllerContextBuilder
     private function getCurrentIndex(): string
     {
         $parameters = [];
-        if (! empty($this->controllerName)) {
+        if ($this->controllerName !== null && $this->controllerName !== '' && $this->controllerName !== '0') {
             $parameters[] = 'controller=' . $this->controllerName;
         }
 
-        if (! empty($this->redirectionUrl)) {
+        if ($this->redirectionUrl !== null && $this->redirectionUrl !== '' && $this->redirectionUrl !== '0') {
             $parameters[] = 'back=' . urlencode($this->redirectionUrl);
         }
 
-        return 'index.php' . (empty($parameters) ? '' : '?' . implode('&', $parameters));
+        return 'index.php' . ($parameters === [] ? '' : '?' . implode('&', $parameters));
     }
 }

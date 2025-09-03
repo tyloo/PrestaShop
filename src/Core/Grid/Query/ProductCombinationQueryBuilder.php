@@ -203,12 +203,12 @@ final class ProductCombinationQueryBuilder extends AbstractDoctrineQueryBuilder
 
         foreach ($attributeGroups as $groupAttributes) {
             foreach ($combinationAttributes as $combinationId => $attributeIds) {
-                if (empty(array_intersect($groupAttributes, $attributeIds))) {
+                if (array_intersect($groupAttributes, $attributeIds) === []) {
                     unset($combinationAttributes[$combinationId]);
                 }
             }
         }
 
-        return empty($combinationAttributes) ? [] : array_keys($combinationAttributes);
+        return $combinationAttributes === [] ? [] : array_keys($combinationAttributes);
     }
 }

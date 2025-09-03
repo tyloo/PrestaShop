@@ -116,7 +116,7 @@ class CQRSApiSerializerTest extends KernelTestCase
 
     protected static function getFrenchId(): int
     {
-        if (empty(self::$frenchLangId)) {
+        if (self::$frenchLangId === null || self::$frenchLangId === 0) {
             LanguageResetter::resetLanguages();
             self::$frenchLangId = self::addLanguageByLocale('fr-FR');
         }

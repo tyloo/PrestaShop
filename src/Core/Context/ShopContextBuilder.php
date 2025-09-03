@@ -100,7 +100,7 @@ class ShopContextBuilder implements LegacyContextBuilderInterface
         // Now we properly set the context
         if ($this->shopConstraint->forAllShops()) {
             $this->contextStateManager->setShopContext(ShopConstraint::ALL_SHOPS);
-        } elseif (! empty($this->shopConstraint->getShopGroupId())) {
+        } elseif ($this->shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             $this->contextStateManager->setShopContext(ShopConstraint::SHOP_GROUP, $this->shopConstraint->getShopGroupId()->getValue());
         } else {
             $this->contextStateManager->setShopContext(ShopConstraint::SHOP, $this->shopConstraint->getShopId()->getValue());

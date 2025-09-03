@@ -220,7 +220,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
 
     public function isEmpty(): bool
     {
-        return empty($this->addons);
+        return $this->addons === [];
     }
 
     /**

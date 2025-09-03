@@ -48,7 +48,7 @@ class CombinationGenerator implements CombinationGeneratorInterface
         unset($attributesByGroups[$currentGroup]);
 
         foreach ($currentAttributes as $attributeId) {
-            if (empty($attributesByGroups)) {
+            if ($attributesByGroups === []) {
                 yield [$currentGroup => $attributeId];
 
                 continue;

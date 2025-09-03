@@ -81,7 +81,7 @@ class UpdateCombinationSuppliersCommand
      */
     private function setCombinationSuppliers(array $productSuppliers): void
     {
-        if (empty($productSuppliers)) {
+        if ($productSuppliers === []) {
             throw new InvalidArgumentException(\sprintf('Empty array of combination suppliers provided in %s. To remove all product suppliers use %s.', self::class, RemoveAllAssociatedProductSuppliersCommand::class));
         }
 

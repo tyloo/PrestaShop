@@ -103,7 +103,7 @@ class ThemeExporter
      */
     private function copyModuleDependencies(array $moduleList, $cacheDir): void
     {
-        if (empty($moduleList)) {
+        if ($moduleList === []) {
             return;
         }
 

@@ -196,7 +196,7 @@ final class HookExtractor
             $infosToAdd['locations'] = $this->guessLocations($hookName, [$fileRelativePath]);
             $infosToAdd['title'] = $infos['title'] ?? '';
             $infosToAdd['description'] = $infos['description'] ?? '';
-            if (! empty($aliases)) {
+            if ($aliases !== []) {
                 $infosToAdd['aliases'] = $aliases;
             }
 
@@ -233,7 +233,7 @@ final class HookExtractor
                     $hookName = $matches['hookName'] ?? '';
                     $isDynamic = false;
 
-                    if (empty($hookName) || $hookName === '$hookName') {
+                    if ($hookName === '' || $hookName === '0' || $hookName === '$hookName') {
                         continue;
                     }
 
@@ -294,7 +294,7 @@ final class HookExtractor
             }
         }
 
-        if (empty($types)) {
+        if ($types === []) {
             $types[] = 'front office';
         }
 

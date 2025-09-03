@@ -64,6 +64,7 @@ class CarrierRangesCollection
 
             $rangesByZones[$zoneId][] = $carrierRange;
         }
+
         // Finally, we create CarrierRangeZone objects for each zone with its ranges.
         foreach ($rangesByZones as $zoneId => $ranges) {
             $this->zones[] = new CarrierRangeZone($zoneId, $ranges);

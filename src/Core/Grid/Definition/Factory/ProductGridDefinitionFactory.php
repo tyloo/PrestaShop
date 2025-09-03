@@ -184,7 +184,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
             )
         ;
 
-        if (! empty($shopId)) {
+        if ($shopId !== null && $shopId !== 0) {
             $columns
                 ->add(
                     (new ToggleColumn('active'))

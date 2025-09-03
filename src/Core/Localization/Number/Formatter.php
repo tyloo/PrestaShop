@@ -188,7 +188,7 @@ class Formatter
             $groups = [];
             $groupsDigits = [];
             $groups[] = array_splice($majorDigits, 0, $this->numberSpecification->getPrimaryGroupSize());
-            while (! empty($majorDigits)) {
+            while ($majorDigits !== []) {
                 $groups[] = array_splice($majorDigits, 0, $this->numberSpecification->getSecondaryGroupSize());
             }
 

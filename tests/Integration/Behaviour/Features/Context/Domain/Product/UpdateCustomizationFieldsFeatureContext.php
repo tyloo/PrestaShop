@@ -289,7 +289,7 @@ class UpdateCustomizationFieldsFeatureContext extends AbstractProductFeatureCont
             }
         }
 
-        if (! empty($notFoundExpectedFields)) {
+        if ($notFoundExpectedFields !== []) {
             throw new RuntimeException(\sprintf('Following customization fields were not found for product %s: %s', $productReference, var_export($notFoundExpectedFields, true)));
         }
 

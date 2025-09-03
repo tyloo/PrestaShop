@@ -236,7 +236,7 @@ class UpdatePackFeatureContext extends AbstractProductFeatureContext
             }
         }
 
-        if (! empty($notExistingProducts)) {
+        if ($notExistingProducts !== []) {
             throw new RuntimeException(\sprintf('Failed to find following packed products for shop %d: %s', $shopConstraint->getShopId()->getValue(), var_export($notExistingProducts, true)));
         }
 

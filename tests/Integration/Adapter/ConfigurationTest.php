@@ -87,7 +87,7 @@ class ConfigurationTest extends KernelTestCase
      */
     public function testHas(array $setParams, array $getParams, bool $expectedResult): void
     {
-        if (! empty($setParams)) {
+        if ($setParams !== []) {
             $this->configuration->set($setParams['key'], $setParams['value'], $setParams['shopConstraint']);
         }
 
@@ -430,9 +430,9 @@ class ConfigurationTest extends KernelTestCase
 
     private function setAndGetValuesForTesting(array $setParams, array $getParams, ?string $expectedResult): void
     {
-        if (! empty($setParams) && isset($setParams['key'])) {
+        if ($setParams !== [] && isset($setParams['key'])) {
             $this->configuration->set($setParams['key'], $setParams['value'], $setParams['shopConstraint']);
-        } elseif (! empty($setParams)) {
+        } elseif ($setParams !== []) {
             foreach ($setParams as $params) {
                 $this->configuration->set($params['key'], $params['value'], $params['shopConstraint']);
             }

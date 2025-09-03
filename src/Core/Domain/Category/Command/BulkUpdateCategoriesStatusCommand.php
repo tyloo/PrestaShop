@@ -87,7 +87,7 @@ class BulkUpdateCategoriesStatusCommand
      */
     private function setCategoryIds(array $categoryIds)
     {
-        if (empty($categoryIds)) {
+        if ($categoryIds === []) {
             throw new CategoryConstraintException('Missing categories data for status change');
         }
 

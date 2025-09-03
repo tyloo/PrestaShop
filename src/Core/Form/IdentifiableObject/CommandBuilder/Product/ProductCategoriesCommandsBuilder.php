@@ -61,19 +61,19 @@ class ProductCategoriesCommandsBuilder implements ProductCommandsBuilderInterfac
         $defaultCategoryId = (int) $formData['description']['categories']['default_category_id'];
 
         // Default is always amongst the associated
-        if (! empty($defaultCategoryId) && ! \in_array($defaultCategoryId, $associatedCategoryIds, true)) {
+        if ($defaultCategoryId !== 0 && ! \in_array($defaultCategoryId, $associatedCategoryIds, true)) {
             $associatedCategoryIds[] = $defaultCategoryId;
         }
 
         // If no associated categories is defined remove them all
-        if (empty($associatedCategoryIds)) {
+        if ($associatedCategoryIds === []) {
             return [
                 new RemoveAllAssociatedProductCategoriesCommand($productId->getValue(), $singleShopConstraint),
             ];
         }
 
         // If no default is defined use the first one
-        if (empty($defaultCategoryId)) {
+        if ($defaultCategoryId === 0) {
             $defaultCategoryId = $associatedCategoryIds[0];
         }
 

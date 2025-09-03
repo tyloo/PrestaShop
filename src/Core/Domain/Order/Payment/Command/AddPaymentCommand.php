@@ -171,7 +171,7 @@ class AddPaymentCommand
      */
     private function assertPaymentMethodIsGenericName(string $paymentMethod): void
     {
-        if (empty($paymentMethod) || ! preg_match(self::PATTERN_PAYMENT_METHOD_NAME, $paymentMethod)) {
+        if ($paymentMethod === '' || $paymentMethod === '0' || ! preg_match(self::PATTERN_PAYMENT_METHOD_NAME, $paymentMethod)) {
             throw new OrderConstraintException('The selected payment method is invalid.', OrderConstraintException::INVALID_PAYMENT_METHOD);
         }
     }

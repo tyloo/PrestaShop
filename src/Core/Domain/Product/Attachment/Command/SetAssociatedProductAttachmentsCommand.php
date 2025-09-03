@@ -75,7 +75,7 @@ class SetAssociatedProductAttachmentsCommand
      */
     private function setAttachmentIds(array $attachmentIds): void
     {
-        if (empty($attachmentIds)) {
+        if ($attachmentIds === []) {
             throw new RuntimeException(\sprintf('Empty array of product attachments provided in %s. To remove all product attachments use %s.', self::class, RemoveAllAssociatedProductAttachmentsCommand::class));
         }
 

@@ -70,7 +70,7 @@ class TranslationsTreeBuilder
             'theme' => $providerDefinition instanceof ThemeProviderDefinition ? $providerDefinition->getThemeName() : null,
             'module' => $providerDefinition instanceof ModuleProviderDefinition ? $providerDefinition->getModuleName() : null,
         ];
-        if (! empty($search)) {
+        if ($search !== []) {
             $routeParams['search'] = $search;
         }
 

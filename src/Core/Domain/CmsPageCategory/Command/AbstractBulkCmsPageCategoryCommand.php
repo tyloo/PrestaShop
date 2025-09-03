@@ -38,6 +38,6 @@ abstract class AbstractBulkCmsPageCategoryCommand
      */
     protected function assertIsEmptyOrContainsNonIntegerValues(array $ids)
     {
-        return empty($ids) || $ids !== array_filter($ids, 'is_int');
+        return $ids === [] || $ids !== array_filter($ids, 'is_int');
     }
 }

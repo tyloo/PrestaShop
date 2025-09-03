@@ -58,7 +58,7 @@ class SearchShops
      */
     private function assertSearchTermNotEmpty(string $searchTerm): void
     {
-        if (empty(trim($searchTerm))) {
+        if (\in_array(trim($searchTerm), ['', '0'], true)) {
             throw new SearchShopException('Search term cannot be empty.');
         }
     }

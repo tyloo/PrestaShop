@@ -140,7 +140,7 @@ class EditAttributeCommand
      */
     private function assertValuesAreValid(array $names): void
     {
-        if (empty($names)) {
+        if ($names === []) {
             throw new AttributeConstraintException('Attribute name cannot be empty', AttributeConstraintException::EMPTY_NAME);
         }
     }

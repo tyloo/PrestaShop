@@ -40,7 +40,7 @@ class CreatedApiClient
     public function __construct(int $apiClientId, ?string $secret = null)
     {
         $this->apiClientId = new ApiClientId($apiClientId);
-        if (empty($secret)) {
+        if ($secret === null || $secret === '' || $secret === '0') {
             throw new ApiClientConstraintException(\sprintf('Invalid api client secret "%s".', var_export($secret, true)), ApiClientConstraintException::INVALID_SECRET);
         }
 

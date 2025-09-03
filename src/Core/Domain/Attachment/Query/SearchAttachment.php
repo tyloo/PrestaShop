@@ -41,7 +41,7 @@ class SearchAttachment
     public function __construct(
         string $searchPhrase,
     ) {
-        if (empty($searchPhrase)) {
+        if ($searchPhrase === '' || $searchPhrase === '0') {
             throw new EmptySearchInputException('Search parameter cannot be empty');
         }
 

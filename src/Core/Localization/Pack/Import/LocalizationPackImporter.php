@@ -47,7 +47,7 @@ final class LocalizationPackImporter implements LocalizationPackImporterInterfac
     public function import(LocalizationPackImportConfig $config)
     {
         $errors = $this->checkConfig($config);
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $errors;
         }
 

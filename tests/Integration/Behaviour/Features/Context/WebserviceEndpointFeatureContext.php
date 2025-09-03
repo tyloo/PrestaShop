@@ -93,7 +93,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function whenRequestPut(string $webserviceKey, string $endpoint, string $reference, ?TableNode $rows = null): void
     {
-        if (! empty($rows)) {
+        if ($rows instanceof TableNode) {
             $rows = $rows->getHash();
             $rows[] = [
                 'key' => 'id',
@@ -173,7 +173,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
     private function whenRequest(string $webserviceKey, string $method, string $endpoint, ?array $rows = null): Crawler
     {
         $postFields = '';
-        if (! empty($rows)) {
+        if ($rows !== null && $rows !== []) {
             $itemNode = $this->getItemFromEndpoint($endpoint);
 
             $postFields = '<prestashop xmlns:xlink="http://www.w3.org/1999/xlink"><' . $itemNode . '>';

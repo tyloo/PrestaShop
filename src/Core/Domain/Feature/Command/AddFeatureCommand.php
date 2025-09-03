@@ -79,7 +79,7 @@ class AddFeatureCommand
      */
     private function assertNamesAreNotEmpty(array $names): void
     {
-        if (empty($names)) {
+        if ($names === []) {
             throw new FeatureConstraintException('Feature name cannot be empty', FeatureConstraintException::INVALID_NAME);
         }
     }
@@ -89,7 +89,7 @@ class AddFeatureCommand
      */
     private function setShopAssociation(array $associatedShopIds): void
     {
-        if (empty($associatedShopIds)) {
+        if ($associatedShopIds === []) {
             throw new FeatureConstraintException('Shop association cannot be empty', FeatureConstraintException::INVALID_SHOP_ASSOCIATION);
         }
 

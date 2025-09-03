@@ -87,7 +87,7 @@ class ModuleOverrideChecker
             }
         }
 
-        return ! empty($this->errors);
+        return $this->errors !== [];
     }
 
     public function getErrors(): array

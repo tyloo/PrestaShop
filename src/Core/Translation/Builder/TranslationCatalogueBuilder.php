@@ -156,7 +156,7 @@ class TranslationCatalogueBuilder
         $defaultCatalogue = $provider->getDefaultCatalogue($locale);
         $defaultCatalogueMessages = $domain === null ? $defaultCatalogue->all() : [$domain => $defaultCatalogue->all($domain)];
 
-        if (empty($defaultCatalogueMessages)) {
+        if ($defaultCatalogueMessages === []) {
             return new Catalogue();
         }
 
@@ -184,7 +184,7 @@ class TranslationCatalogueBuilder
                 }
 
                 // if search is empty or is in catalog default|project|user
-                if (empty($search) || $message->contains($search)) {
+                if ($search === [] || $message->contains($search)) {
                     $domainTranslation->addMessage($message);
                 }
             }
@@ -208,7 +208,7 @@ class TranslationCatalogueBuilder
             throw new UnexpectedTranslationTypeException("This 'type' param is not valid.");
         }
 
-        if ($domain !== null && empty($domain)) {
+        if ($domain !== null && ($domain === '' || $domain === '0')) {
             throw new InvalidArgumentException("The given 'domain' is not valid.");
         }
     }

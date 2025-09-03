@@ -118,7 +118,7 @@ class TokenAuthenticator extends AbstractAuthenticator
 
         // Specific check for external authorization server (PrestashopAuthorisationServer is the only internal implementation)
         if (! $authorizationServer instanceof PrestashopAuthorisationServer) {
-            if (empty($jwtTokenUser->getExternalIssuer())) {
+            if (\in_array($jwtTokenUser->getExternalIssuer(), [null, '', '0'], true)) {
                 $this->logger->error('TokenAuthenticator: No external issuer specified');
                 throw new CustomUserMessageAuthenticationException(json_encode('No external issuer specified'));
             }

@@ -84,7 +84,7 @@ class SetProductFeatureValuesCommand
      */
     private function setProductFeatures(array $featureValues): void
     {
-        if (empty($featureValues)) {
+        if ($featureValues === []) {
             throw new InvalidProductFeatureValuesFormatException(\sprintf('Cannot use empty feature values to remove all use %s instead', RemoveAllFeatureValuesFromProductCommand::class));
         }
 

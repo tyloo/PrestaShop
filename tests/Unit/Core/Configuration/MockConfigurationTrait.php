@@ -44,7 +44,7 @@ trait MockConfigurationTrait
     {
         $configuration = $this->createMock($configurationClass ?? ShopConfigurationInterface::class);
 
-        if (! empty($configurationValues)) {
+        if ($configurationValues !== []) {
             $configuration
                 ->method('get')
                 ->will($this->returnCallback(function ($configurationName, $default, $shopConstraint) use ($configurationValues, $expectedShopConstraint) {

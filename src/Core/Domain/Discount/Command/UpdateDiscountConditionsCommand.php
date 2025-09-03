@@ -127,7 +127,7 @@ class UpdateDiscountConditionsCommand
                 throw new DiscountConstraintException(\sprintf('Product conditions must be an array of %s', ProductRuleGroup::class), DiscountConstraintException::INVALID_PRODUCTS_CONDITIONS);
             }
 
-            if (empty($productCondition->getRules())) {
+            if ($productCondition->getRules() === []) {
                 throw new DiscountConstraintException('Product conditions rules cannot be empty', DiscountConstraintException::INVALID_PRODUCTS_CONDITIONS);
             }
 

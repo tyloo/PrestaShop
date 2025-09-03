@@ -90,7 +90,7 @@ class CSSInlineTransformation extends AbstractTransformation
         $cssContents = '';
         foreach ($cssUrls as $cssUrl) {
             $cssContent = @file_get_contents($cssUrl);
-            if (! empty($cssContent)) {
+            if (! ($cssContent === '' || $cssContent === '0' || $cssContent === false)) {
                 $cssContents .= $cssContent;
             }
         }

@@ -68,7 +68,7 @@ class InstalledApiResourceScopeValidator extends ConstraintValidator
             $invalidScopes[] = $scopeToValidate;
         }
 
-        if (! empty($invalidScopes)) {
+        if ($invalidScopes !== []) {
             $this->context->buildViolation($constraint->message)
                 ->setTranslationDomain('Admin.Notifications.Error')
                 ->setParameter(

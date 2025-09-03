@@ -81,7 +81,7 @@ class ApiClientContextBuilder
 
     private function getApiClient(): ?ApiClientEntity
     {
-        if (! $this->apiClient && ! empty($this->clientId)) {
+        if (! $this->apiClient && (isset($this->clientId) && ($this->clientId !== '' && $this->clientId !== '0'))) {
             $this->apiClient = $this->apiClientRepository->getByClientId($this->clientId, $this->externalIssuer);
         }
 

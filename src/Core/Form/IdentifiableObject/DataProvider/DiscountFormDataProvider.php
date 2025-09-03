@@ -106,7 +106,7 @@ class DiscountFormDataProvider implements FormDataProviderInterface
         } elseif ($discountForEditing->getMinimumAmount()) {
             $selectedCondition = DiscountConditionsType::CART_CONDITIONS;
             $selectedCartCondition = 'minimum_amount';
-        } elseif (! empty($specificProducts)) {
+        } elseif ($specificProducts !== []) {
             $selectedCondition = DiscountConditionsType::CART_CONDITIONS;
             $selectedCartCondition = 'specific_products';
         } elseif (! empty($productSegment['manufacturer']) || ! empty($productSegment['supplier']) && empty($productSegment['category'])) {
@@ -240,11 +240,11 @@ class DiscountFormDataProvider implements FormDataProviderInterface
     {
         $name = '';
         $imageUrl = '';
-        if (! empty($discountForEditing->getGiftProductId())) {
+        if (! \in_array($discountForEditing->getGiftProductId(), [null, 0], true)) {
             $product = $this->productRepository->getProductByDefaultShop(new ProductId($discountForEditing->getGiftProductId()));
             $name = $product->name[$this->languageContext->getId()];
 
-            if (! empty($discountForEditing->getGiftCombinationId())) {
+            if (! \in_array($discountForEditing->getGiftCombinationId(), [null, 0], true)) {
                 $attributesInformations = $this->attributeRepository->getAttributesInfoByCombinationIds(
                     [new CombinationId($discountForEditing->getGiftCombinationId())],
                     new LanguageId($this->languageContext->getId())

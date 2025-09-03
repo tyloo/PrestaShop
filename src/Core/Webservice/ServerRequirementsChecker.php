@@ -64,7 +64,7 @@ final class ServerRequirementsChecker implements ServerRequirementsCheckerInterf
     {
         $issues = $this->lookForIssues();
 
-        if (empty($issues)) {
+        if ($issues === []) {
             return [];
         }
 

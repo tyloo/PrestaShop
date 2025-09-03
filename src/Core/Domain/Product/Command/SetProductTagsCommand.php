@@ -75,7 +75,7 @@ class SetProductTagsCommand
      */
     private function setLocalizedTagsList(array $localizedTags): void
     {
-        if (empty($localizedTags)) {
+        if ($localizedTags === []) {
             throw new InvalidArgumentException(\sprintf('Empty array of product tags provided in %s. To remove all product tags use %s.', self::class, RemoveAllProductTagsCommand::class));
         }
 

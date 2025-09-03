@@ -161,7 +161,7 @@ class ApiClientContextListenerTest extends ContextEventListenerTestCase
         $apiClient->setId($apiId);
         $apiClient->setScopes($scopes);
         $apiClient->setClientId($expectedClientId);
-        if (! empty($externalIssuer)) {
+        if ($externalIssuer !== null && $externalIssuer !== '' && $externalIssuer !== '0') {
             $apiClient->setExternalIssuer($externalIssuer);
         }
 

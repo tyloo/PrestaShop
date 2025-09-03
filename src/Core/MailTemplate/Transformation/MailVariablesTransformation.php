@@ -60,7 +60,7 @@ class MailVariablesTransformation extends AbstractTransformation
             );
         }
 
-        if (! empty($replaceVariables)) {
+        if ($replaceVariables !== []) {
             $templateContent = strtr($templateContent, $replaceVariables);
         }
 

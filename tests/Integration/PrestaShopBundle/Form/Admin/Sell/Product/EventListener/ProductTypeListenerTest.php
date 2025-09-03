@@ -301,7 +301,7 @@ class ProductTypeListenerTest extends FormListenerTestCase
     {
         $listener = new ProductTypeListener($this->buildHookInformationProvider($registeredModules));
 
-        $formData = empty($extraData) ? [] : $extraData;
+        $formData = $extraData;
         $formData['header']['type'] = $productType;
 
         $eventMock = $this->createEventMock($formData, $form);

@@ -156,12 +156,12 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
     public function copyShopData(string $what, string $from, string $to): void
     {
         $shopToId = (int) Shop::getIdByName($to);
-        if (empty($shopToId)) {
+        if ($shopToId === 0) {
             throw new RuntimeException(\sprintf('Could not find shop: %s', $from));
         }
 
         $shopFromId = (int) Shop::getIdByName($from);
-        if (empty($shopFromId)) {
+        if ($shopFromId === 0) {
             throw new RuntimeException(\sprintf('Could not find shop: %s', $from));
         }
 

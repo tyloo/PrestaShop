@@ -167,7 +167,7 @@ class VirtualProductFileListenerTest extends FormListenerTestCase
      */
     private function assertConstraints(FormInterface $form, array $expectedFieldConstraints): void
     {
-        if (empty($expectedFieldConstraints)) {
+        if ($expectedFieldConstraints === []) {
             foreach ($form->all() as $formField) {
                 $this->assertEquals([], $formField->getConfig()->getOption('constraints'));
             }

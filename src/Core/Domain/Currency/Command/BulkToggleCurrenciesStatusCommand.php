@@ -73,7 +73,7 @@ class BulkToggleCurrenciesStatusCommand
      */
     private function setCurrencies(array $currencyIds): void
     {
-        if (empty($currencyIds)) {
+        if ($currencyIds === []) {
             throw new CurrencyConstraintException('Currencies must be provided in order to toggle their status', CurrencyConstraintException::EMPTY_BULK_TOGGLE);
         }
 

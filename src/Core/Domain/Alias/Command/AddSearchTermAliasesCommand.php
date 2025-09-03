@@ -86,7 +86,7 @@ class AddSearchTermAliasesCommand
      */
     private function assertArrayNotEmpty(array $array): void
     {
-        if (! empty($array)) {
+        if ($array !== []) {
             return;
         }
 
@@ -98,7 +98,7 @@ class AddSearchTermAliasesCommand
      */
     private function assertStringNotEmpty(string $string): void
     {
-        if (! empty($string)) {
+        if ($string !== '' && $string !== '0') {
             return;
         }
 
