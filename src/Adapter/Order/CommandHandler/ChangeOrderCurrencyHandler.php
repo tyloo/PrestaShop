@@ -78,7 +78,7 @@ final class ChangeOrderCurrencyHandler extends AbstractOrderHandler implements C
 
     private function updateOrderCarrier(int $orderCarrierId, Currency $oldCurrency, Currency $newCurrency): void
     {
-        if (! $orderCarrierId) {
+        if ($orderCarrierId === 0) {
             return;
         }
 

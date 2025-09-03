@@ -79,7 +79,7 @@ final class AddOrderFromBackOfficeHandler extends AbstractOrderCommandHandler im
         // Context country, language and currency is used in PaymentModule::validateOrder (it should rely on cart address country instead)
         $this->setCartContext($this->contextStateManager, $cart);
 
-        if ($command->getEmployeeId()->getValue()) {
+        if ($command->getEmployeeId()->getValue() !== 0) {
             $translator = Context::getContext()->getTranslator();
             $employee = new Employee($command->getEmployeeId()->getValue());
             $message = \sprintf(

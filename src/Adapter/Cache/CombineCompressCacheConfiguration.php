@@ -73,17 +73,15 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
 
         if ($this->validateConfiguration($configuration)) {
             $this->updateCachesVersionsIfNeeded($configuration);
-            if ($configuration['smart_cache_css'] || $configuration['smart_cache_js']) {
-                // Manage JS & CSS Smart cache
-                if (! $this->createThemeCacheFolder()) {
-                    $errors[] = [
-                        'key' => 'To use Smarty Cache, the directory %directorypath% must be writable.',
-                        'domain' => 'Admin.Advparameters.Notification',
-                        'parameters' => [
-                            '%directorypath%' => $this->getThemeCacheFolder(),
-                        ],
-                    ];
-                }
+            // Manage JS & CSS Smart cache
+            if (($configuration['smart_cache_css'] || $configuration['smart_cache_js']) && ! $this->createThemeCacheFolder()) {
+                $errors[] = [
+                    'key' => 'To use Smarty Cache, the directory %directorypath% must be writable.',
+                    'domain' => 'Admin.Advparameters.Notification',
+                    'parameters' => [
+                        '%directorypath%' => $this->getThemeCacheFolder(),
+                    ],
+                ];
             }
 
             // Manage Apache optimization
@@ -185,7 +183,7 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
             }
         }
 
-        if ($isCurrentlyEnabled === true && $enabled === false) {
+        if ($isCurrentlyEnabled && $enabled === false) {
             $this->configuration->set('PS_HTACCESS_CACHE_CONTROL', false);
             $this->tools->generateHtaccess();
         }

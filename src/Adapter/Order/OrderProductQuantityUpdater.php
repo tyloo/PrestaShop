@@ -123,7 +123,7 @@ class OrderProductQuantityUpdater
         if ($newQuantity === 0) {
             // Product deletion
             $cartComparator = $this->orderProductRemover->deleteProductFromOrder($order, $orderDetail, $updateCart);
-            if ((int) $orderDetail->id_customization) {
+            if ((int) $orderDetail->id_customization !== 0) {
                 $this->deleteProductCustomization((int) $orderDetail->id_customization);
             }
 
@@ -219,7 +219,7 @@ class OrderProductQuantityUpdater
                 $cart,
                 $order->getCurrentState(),
                 $productsToAdd,
-                $orderInvoice ? $orderInvoice->id : 0
+                $orderInvoice instanceof OrderInvoice ? $orderInvoice->id : 0
             );
         }
     }

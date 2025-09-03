@@ -62,7 +62,7 @@ class CartRuleBuilder
                 $cartRule->reduction_amount = 0;
                 $cartRule->reduction_currency = 0;
                 $cartRule->reduction_tax = false;
-            } elseif ($command->getAmountDiscount()) {
+            } elseif ($command->getAmountDiscount() instanceof \PrestaShop\PrestaShop\Core\Domain\ValueObject\Money) {
                 $cartRule->reduction_percent = 0;
                 $cartRule->reduction_amount = (float) (string) $command->getAmountDiscount()->getAmount();
                 $cartRule->reduction_currency = $command->getAmountDiscount()->getCurrencyId()->getValue();

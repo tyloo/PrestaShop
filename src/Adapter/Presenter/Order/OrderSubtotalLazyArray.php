@@ -98,7 +98,7 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
         $discountAmount = ($this->includeTaxes)
             ? $this->order->total_discounts_tax_incl
             : $this->order->total_discounts_tax_excl;
-        if ((float) $discountAmount) {
+        if ((float) $discountAmount !== 0.0) {
             return [
                 'type' => 'discount',
                 'label' => $this->translator->trans('Discount', [], 'Shop.Theme.Checkout'),

@@ -84,7 +84,7 @@ final class EditOrderStateHandler extends AbstractOrderStateHandler implements E
             || \count($orderState->template) !== \count(array_filter($orderState->template, fn ($v) => (bool) \strlen((string) $v)))
         );
 
-        if ($orderState->send_email === true && $haveMissingTemplates === true) {
+        if ($orderState->send_email === true && $haveMissingTemplates) {
             throw new MissingOrderStateRequiredFieldsException(['template'], 'One or more required fields for order state are missing. Missing fields are: template');
         }
 

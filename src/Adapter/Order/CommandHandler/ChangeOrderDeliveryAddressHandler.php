@@ -120,7 +120,7 @@ final class ChangeOrderDeliveryAddressHandler extends AbstractOrderCommandHandle
 
     private function getOrderDetail(CartProductUpdate $productUpdate, Order $order, Cart $cart): ?OrderDetail
     {
-        $combinationId = $productUpdate->getCombinationId() ? $productUpdate->getCombinationId()->getValue() : 0;
+        $combinationId = $productUpdate->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ? $productUpdate->getCombinationId()->getValue() : 0;
         foreach ($order->getProducts() as $product) {
             if (
                 (int) $product['product_id'] === $productUpdate->getProductId()->getValue()

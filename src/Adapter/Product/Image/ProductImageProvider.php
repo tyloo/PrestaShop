@@ -48,7 +48,7 @@ class ProductImageProvider implements ProductImageProviderInterface
     {
         $imageId = $this->productImageRepository->getDefaultImageId($productId, $shopId);
 
-        return $imageId ?
+        return $imageId instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId ?
             $this->productImagePathFactory->getPath($imageId) :
             $this->productImagePathFactory->getNoImagePath(ProductImagePathFactory::IMAGE_TYPE_SMALL_DEFAULT)
         ;

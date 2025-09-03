@@ -249,7 +249,7 @@ class ModuleDataProvider
 
         $file_path = _PS_MODULE_DIR_ . $name . '/' . $name . '.php';
         // Check if file exists (slightly faster than file_exists)
-        if (! (int) @filemtime($file_path)) {
+        if ((int) @filemtime($file_path) === 0) {
             return false;
         }
 

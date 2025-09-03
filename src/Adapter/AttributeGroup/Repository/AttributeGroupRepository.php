@@ -100,7 +100,7 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
             throw new InvalidShopConstraintException('Shop Group constraint is not supported');
         }
 
-        $shopIdValue = $shopConstraint->getShopId() ? $shopConstraint->getShopId()->getValue() : null;
+        $shopIdValue = $shopConstraint->getShopId() instanceof ShopId ? $shopConstraint->getShopId()->getValue() : null;
         $qb = $this->connection->createQueryBuilder()
             ->select('ag.*, agl.*')
             ->from($this->dbPrefix . 'attribute_group', 'ag')

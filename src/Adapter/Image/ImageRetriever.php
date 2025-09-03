@@ -207,11 +207,7 @@ class ImageRetriever
             $sources = [];
             $formattedName = ImageType::getFormattedName('small');
 
-            if ($type === 'categories' && $formattedName === $image_type['name']) {
-                $originalFileName = $id_image . '_thumb.jpg';
-            } else {
-                $originalFileName = $id_image . '.jpg';
-            }
+            $originalFileName = $formattedName === $image_type['name'] ? $id_image . '_thumb.jpg' : $id_image . '.jpg';
 
             // Get path of original uploaded image we will use to get thumbnails (original image extension is always .jpg)
             $originalImagePath = implode(\DIRECTORY_SEPARATOR, [

@@ -333,7 +333,7 @@ class ModuleTabRegister
             if (! $idParent) {
                 $idParent = $this->tabRepository->findOneIdByClassName($parentClassName);
             }
-        } elseif ($tabDetails->getBoolean('visible', true) === true) {
+        } elseif ($tabDetails->getBoolean('visible', true)) {
             $idParent = $this->tabRepository->findOneIdByClassName($this->defaultParent);
         }
 

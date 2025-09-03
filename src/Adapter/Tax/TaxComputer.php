@@ -77,7 +77,7 @@ class TaxComputer
     public function getTaxRate(TaxRulesGroupId $taxRulesGroupId, CountryId $countryId): DecimalNumber
     {
         $stateId = $this->taxRulesGroupRepository->getTaxRulesGroupDefaultStateId($taxRulesGroupId, $countryId);
-        if ($stateId) {
+        if ($stateId !== 0) {
             return $this->getTaxRateByState($taxRulesGroupId, $countryId, new StateId($stateId));
         }
 

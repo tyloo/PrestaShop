@@ -47,7 +47,7 @@ class ContextLanguageProvider implements ContextLanguageProviderInterface
     {
         $langId = (int) $this->context->getContext()->language->id;
 
-        if (! $langId) {
+        if ($langId === 0) {
             throw new CoreException('Context language is missing');
         }
 

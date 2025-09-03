@@ -892,7 +892,7 @@ final class ProductImportHandler extends AbstractImportHandler
             $specificPrice->id_customer = 0;
             $specificPrice->from_quantity = 1;
             $specificPrice->reduction = $reductionPrice ?: $reductionPercent / 100;
-            $specificPrice->reduction_type = $reductionPrice ? 'amount' : 'percentage';
+            $specificPrice->reduction_type = $reductionPrice !== 0.0 ? 'amount' : 'percentage';
             $specificPrice->from = Validate::isDate($reductionFrom) ? $reductionFrom : '0000-00-00 00:00:00';
             $specificPrice->to = Validate::isDate($reductionTo) ? $reductionTo : '0000-00-00 00:00:00';
 
@@ -990,10 +990,8 @@ final class ProductImportHandler extends AbstractImportHandler
     private function saveProductImages(Product $product, ImportConfigInterface $importConfig)
     {
         // delete existing images if "delete_existing_images" is set to 1
-        if (isset($product->delete_existing_images)) {
-            if ((bool) $product->delete_existing_images) {
-                $product->deleteImages();
-            }
+        if (isset($product->delete_existing_images) && (bool) $product->delete_existing_images) {
+            $product->deleteImages();
         }
 
         if (isset($product->image) && \is_array($product->image) && \count($product->image)) {

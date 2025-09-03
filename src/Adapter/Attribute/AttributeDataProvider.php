@@ -94,7 +94,7 @@ class AttributeDataProvider
 
         // get product
         $product = new Product((int) $idProduct, false);
-        if (! \is_object($product) || empty($product->id)) {
+        if (empty($product->id)) {
             return false;
         }
 

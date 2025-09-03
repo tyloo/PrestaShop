@@ -59,7 +59,7 @@ class GetRelatedProductsHandler implements GetRelatedProductsHandlerInterface
             // so we just use default product shop to retrieve info required by multishop repositories
             $shopId = $this->productRepository->getProductDefaultShopId($productId);
             $imageId = $this->productImageRepository->getDefaultImageId($productId, $shopId);
-            $imagePath = $imageId ?
+            $imagePath = $imageId instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId ?
                 $this->productImagePathFactory->getPathByType($imageId, ProductImagePathFactory::IMAGE_TYPE_HOME_DEFAULT) :
                 $this->productImagePathFactory->getNoImagePath(ProductImagePathFactory::IMAGE_TYPE_HOME_DEFAULT)
             ;

@@ -108,16 +108,12 @@ class DiscountValidator extends AbstractObjectModelValidator
                     throw new DiscountConstraintException('Discount can not be amount and percent at the same time', DiscountConstraintException::INVALID_DISCOUNT_CANNOT_BE_AMOUNT_AND_PERCENT);
                 }
 
-                if ($command->getAmountDiscount() !== null) {
-                    if ($command->getAmountDiscount()->getAmount()->isLowerThanZero()) {
-                        throw new DiscountConstraintException('Discount value can not be negative', DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
-                    }
+                if ($command->getAmountDiscount() !== null && $command->getAmountDiscount()->getAmount()->isLowerThanZero()) {
+                    throw new DiscountConstraintException('Discount value can not be negative', DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
                 }
 
-                if ($command->getPercentDiscount() !== null) {
-                    if ($command->getPercentDiscount()->isLowerThanZero() || $command->getPercentDiscount()->isGreaterThan(new DecimalNumber('100'))) {
-                        throw new DiscountConstraintException('Discount value can not be negative or above 100', DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
-                    }
+                if ($command->getPercentDiscount() !== null && ($command->getPercentDiscount()->isLowerThanZero() || $command->getPercentDiscount()->isGreaterThan(new DecimalNumber('100')))) {
+                    throw new DiscountConstraintException('Discount value can not be negative or above 100', DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
                 }
 
                 break;

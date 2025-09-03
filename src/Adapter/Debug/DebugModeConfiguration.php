@@ -196,7 +196,7 @@ class DebugModeConfiguration implements DataConfigurationInterface
         $isProfilingEnabled = $this->debugProfiling->isProfilingEnabled();
 
         if ($enableStatus !== $isProfilingEnabled) {
-            return ($enableStatus === true) ? $this->debugProfiling->enable() : $this->debugProfiling->disable();
+            return ($enableStatus) ? $this->debugProfiling->enable() : $this->debugProfiling->disable();
         }
 
         return null;

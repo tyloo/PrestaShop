@@ -141,21 +141,16 @@ class ProductLazyArray extends AbstractLazyArray
             $this->product['customization_required'] = false;
             // If customizable property passed here was true and customization feature is enabled,
             // we can further check the fields.
+            //  Now, we fetch the required customization fields and if we find some, the product requires customization.
             if (
-                ! empty($this->product['customizable'])
-                && Customization::isFeatureActive()
-            ) {
-                //  Now, we fetch the required customization fields and if we find some, the product requires customization.
-                if (
-                    \count(
-                        Product::getRequiredCustomizableFieldsStatic(
-                            (int) $this->product['id_product']
-                        )
+                ! empty($this->product['customizable']) && Customization::isFeatureActive() && \count(
+                    Product::getRequiredCustomizableFieldsStatic(
+                        (int) $this->product['id_product']
                     )
-                ) {
-                    // And we cache it
-                    $this->product['customization_required'] = true;
-                }
+                )
+            ) {
+                // And we cache it
+                $this->product['customization_required'] = true;
             }
         }
 

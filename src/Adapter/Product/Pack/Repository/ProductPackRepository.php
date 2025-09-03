@@ -125,7 +125,7 @@ class ProductPackRepository extends AbstractObjectModelRepository
                 $packIdValue,
                 $productForPacking->getProductId()->getValue(),
                 $productForPacking->getQuantity(),
-                $productForPacking->getCombinationId() ?
+                $productForPacking->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ?
                     $productForPacking->getCombinationId()->getValue() :
                     NoCombinationId::NO_COMBINATION_ID
             );

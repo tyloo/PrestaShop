@@ -158,7 +158,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
             ;
         }
 
-        $shopIdValue = $shopConstraint->getShopId() ? $shopConstraint->getShopId()->getValue() : null;
+        $shopIdValue = $shopConstraint->getShopId() instanceof ShopId ? $shopConstraint->getShopId()->getValue() : null;
 
         if ($shopIdValue) {
             $qb

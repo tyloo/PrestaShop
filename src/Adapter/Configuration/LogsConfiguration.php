@@ -84,7 +84,7 @@ class LogsConfiguration implements DataConfigurationInterface
                 }
             }
 
-            if ($errors) {
+            if ($errors !== []) {
                 return $errors;
             }
 

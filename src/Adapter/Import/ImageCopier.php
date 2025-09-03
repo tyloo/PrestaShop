@@ -161,9 +161,7 @@ final class ImageCopier
                         $sourceHeight
                     )) {
                         // the last image should not be added in the candidate list if it's bigger than the original image
-                        if ($targetWidth <= $sourceWidth && $targetHeight <= $sourceHeight) {
-                            $pathInfos[] = [$targetWidth, $targetHeight, $path . '-' . stripslashes((string) $imageType['name']) . '.jpg'];
-                        }
+                        $pathInfos[] = [$targetWidth, $targetHeight, $path . '-' . stripslashes((string) $imageType['name']) . '.jpg'];
 
                         if ($entity === 'products') {
                             $file = $tmpDir . 'product_mini_' . (int) $entityId . '.jpg';

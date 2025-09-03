@@ -111,7 +111,7 @@ class GetSpecificPriceListHandler implements GetSpecificPriceListHandlerInterfac
                 (int) $specificPrice['from_quantity'],
                 DateTimeUtil::buildNullableDateTime($specificPrice['from']),
                 DateTimeUtil::buildNullableDateTime($specificPrice['to']),
-                $combinationId ? $this->combinationNameBuilder->buildName($attributesInfo[$combinationId]) : null,
+                $combinationId !== 0 ? $this->combinationNameBuilder->buildName($attributesInfo[$combinationId]) : null,
                 $specificPrice['shop_name'],
                 $specificPrice['currency_name'],
                 $specificPrice['currency_iso_code'],
@@ -130,7 +130,7 @@ class GetSpecificPriceListHandler implements GetSpecificPriceListHandlerInterfac
     private function buildCustomerFullName(array $specificPrice): ?string
     {
         $customerName = null;
-        if ((int) $specificPrice['id_customer']) {
+        if ((int) $specificPrice['id_customer'] !== 0) {
             $customerName = \sprintf('%s %s', $specificPrice['customer_firstname'], $specificPrice['customer_lastname']);
         }
 

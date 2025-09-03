@@ -68,7 +68,7 @@ class GeneralConfiguration implements DataConfigurationInterface
         if ($this->validateConfiguration($config)) {
             $catalogMode = (int) $config['catalog_mode'];
             $this->configuration->set('PS_CATALOG_MODE', $catalogMode);
-            $this->configuration->set('PS_CATALOG_MODE_WITH_PRICES', $catalogMode ? (int) $config['catalog_mode_with_prices'] : 0);
+            $this->configuration->set('PS_CATALOG_MODE_WITH_PRICES', $catalogMode !== 0 ? (int) $config['catalog_mode_with_prices'] : 0);
             $this->configuration->set('PS_NB_DAYS_NEW_PRODUCT', (int) $config['new_days_number']);
             $this->configuration->set('PS_PRODUCT_SHORT_DESC_LIMIT', (int) $config['short_description_limit']);
             $this->configuration->set('PS_QTY_DISCOUNT_ON_COMBINATION', (int) $config['quantity_discount']);

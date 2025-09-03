@@ -171,7 +171,7 @@ final class AddCustomizationHandler extends AbstractCartHandler implements AddCu
             throw new FileUploadException('Image format not recognized, allowed formats are: .gif, .jpg, .png', \UPLOAD_ERR_EXTENSION);
         }
 
-        if ($file->getError()) {
+        if ($file->getError() !== 0) {
             throw new FileUploadException('Error while uploading image', $file->getError());
         }
     }

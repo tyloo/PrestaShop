@@ -204,7 +204,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
             throw new CoreException('Something went wrong when trying to find existing specific price', 0, $prestaShopException->getPrevious());
         }
 
-        if (! $id) {
+        if ($id === 0) {
             return null;
         }
 

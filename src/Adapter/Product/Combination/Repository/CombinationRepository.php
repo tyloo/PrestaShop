@@ -244,7 +244,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
 
                 return $this->get($combinationId, $defaultShopId);
             }
-        } elseif ($shopConstraint->getShopId()) {
+        } elseif ($shopConstraint->getShopId() instanceof ShopId) {
             return $this->get($combinationId, $shopConstraint->getShopId());
         }
 
@@ -698,7 +698,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
                     ArrayParameterType::INTEGER
                 )
             ;
-        } elseif ($shopConstraint->getShopId()) {
+        } elseif ($shopConstraint->getShopId() instanceof ShopId) {
             $qb->innerJoin(
                 'pac',
                 $this->dbPrefix . 'product_attribute_shop',

@@ -86,7 +86,7 @@ class VirtualProductFileRepository extends AbstractObjectModelRepository
             throw new CoreException(\sprintf('Error occurred when trying to find VirtualProductFile by product id #%d', $productId->getValue()), 0, $prestaShopException);
         }
 
-        if (! $id) {
+        if ($id === 0) {
             throw new VirtualProductFileNotFoundException(\sprintf('Cannot find VirtualProduct for product %d', $productId->getValue()));
         }
 

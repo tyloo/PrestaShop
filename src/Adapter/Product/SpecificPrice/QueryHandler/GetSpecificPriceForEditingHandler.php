@@ -93,7 +93,7 @@ class GetSpecificPriceForEditingHandler implements GetSpecificPriceForEditingHan
     {
         $customerIdValue = (int) $specificPrice->id_customer;
 
-        if (! $customerIdValue) {
+        if ($customerIdValue === 0) {
             return null;
         }
 

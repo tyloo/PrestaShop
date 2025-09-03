@@ -164,7 +164,7 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
         $this->productRepository->assertProductExists(new ProductId($productId));
 
         $shopGroupId = (int) $specificPrice->id_shop_group;
-        if ($shopGroupId) {
+        if ($shopGroupId !== 0) {
             $this->shopGroupRepository->assertShopGroupExists(new ShopGroupId($shopGroupId));
         }
 
@@ -184,7 +184,7 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
         }
 
         $countryId = (int) $specificPrice->id_country;
-        if ($countryId !== null && $countryId !== NoCountryId::NO_COUNTRY_ID_VALUE) {
+        if ($countryId !== NoCountryId::NO_COUNTRY_ID_VALUE) {
             $this->countryRepository->assertCountryExists(new CountryId($countryId));
         }
 
@@ -194,7 +194,7 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
         }
 
         $customerId = (int) $specificPrice->id_customer;
-        if ($customerId) {
+        if ($customerId !== 0) {
             $this->customerRepository->assertCustomerExists(new CustomerId($customerId));
         }
     }

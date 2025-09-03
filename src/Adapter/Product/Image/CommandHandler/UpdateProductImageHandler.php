@@ -80,7 +80,7 @@ class UpdateProductImageHandler implements UpdateProductImageHandlerInterface
             if (! $shopId) {
                 throw new ShopAssociationNotFound('Image is not associated to any shop');
             }
-        } elseif ($shopConstraint->getShopId()) {
+        } elseif ($shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $shopId = $shopConstraint->getShopId();
         }
 

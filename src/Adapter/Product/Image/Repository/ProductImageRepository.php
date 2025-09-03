@@ -151,7 +151,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
                         ArrayParameterType::INTEGER
                     )
                 ;
-            } elseif ($shopConstraint->getShopId()) {
+            } elseif ($shopConstraint->getShopId() instanceof ShopId) {
                 $this->productRepository->assertProductIsAssociatedToShop($productId, $shopConstraint->getShopId());
                 $qb->andWhere('img_shop.id_shop = :shopId')
                     ->setParameter('shopId', $shopConstraint->getShopId()->getValue())
@@ -318,7 +318,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
                 )
                 ->setParameter('shopGroupId', $shopConstraint->getShopGroupId()->getValue())
             ;
-        } elseif ($shopConstraint->getShopId()) {
+        } elseif ($shopConstraint->getShopId() instanceof ShopId) {
             $qb
                 ->andWhere('is.id_shop = :shopId')
                 ->setParameter('shopId', $shopConstraint->getShopId()->getValue())

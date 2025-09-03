@@ -54,7 +54,7 @@ class CartRuleActionFiller
         $giftProduct = $cartRuleAction->getGiftProduct();
         if ($giftProduct !== null) {
             $cartRule->gift_product = $giftProduct->getProductId()->getValue();
-            $cartRule->gift_product_attribute = $giftProduct->getCombinationId() ? $giftProduct->getCombinationId()->getValue() : null;
+            $cartRule->gift_product_attribute = $giftProduct->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ? $giftProduct->getCombinationId()->getValue() : null;
         } else {
             $cartRule->gift_product = null;
             $cartRule->gift_product_attribute = null;

@@ -146,7 +146,7 @@ class CartProductsComparator
                 $deltaQuantity = (int) $newProduct['cart_quantity'] - (int) $oldProduct['cart_quantity'];
             }
 
-            if ($deltaQuantity) {
+            if ($deltaQuantity !== 0) {
                 $updatedProducts[] = new CartProductUpdate(
                     (int) $oldProduct['id_product'],
                     (int) $oldProduct['id_product_attribute'],

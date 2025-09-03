@@ -415,7 +415,7 @@ final class CategoryImportHandler extends AbstractImportHandler
             }
         }
 
-        if ($movedCategories) {
+        if ($movedCategories !== []) {
             $sharedData = $runtimeConfig->getSharedData();
 
             if ($this->propertyAccessor->isWritable($sharedData, '[cat_moved]')) {
@@ -465,7 +465,7 @@ final class CategoryImportHandler extends AbstractImportHandler
             $error .= $langFieldsError !== true ? $langFieldsError : '';
             $error .= $this->legacyDatabase->getErrorMessage();
 
-            if ($error) {
+            if ($error !== '' && $error !== '0') {
                 $this->error($error);
             }
         } else {

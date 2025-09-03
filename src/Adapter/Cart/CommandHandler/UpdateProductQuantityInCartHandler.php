@@ -98,7 +98,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
         $this->assertOrderDoesNotExistForCart($cart);
 
         $product = $this->getProductObject($command->getProductId());
-        $combinationIdValue = $command->getCombinationId() ? $command->getCombinationId()->getValue() : 0;
+        $combinationIdValue = $command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ? $command->getCombinationId()->getValue() : 0;
         $customizationId = $command->getCustomizationId();
 
         $this->assertProductIsInStock($product, $command);
@@ -110,7 +110,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
             $qtyDiff,
             $command->getProductId()->getValue(),
             $combinationIdValue,
-            $customizationId ? $customizationId->getValue() : false,
+            $customizationId instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Customization\ValueObject\CustomizationId ? $customizationId->getValue() : false,
             $action
         );
 
@@ -121,7 +121,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
         // It seems that $updateResult can be -1,
         // when adding product with less quantity than minimum required.
         if ($updateResult < 0) {
-            $minQuantity = $combinationIdValue ?
+            $minQuantity = $combinationIdValue !== 0 ?
                 ProductAttribute::getAttributeMinimalQty($combinationIdValue) :
                 $product->minimal_quantity;
 

@@ -577,7 +577,7 @@ final class GetOrderForViewingHandler extends AbstractOrderHandler implements Ge
                 $invoice->getInvoiceNumberFormatted($this->contextLanguageId, $order->id_shop) :
                 null;
             $employee = $payment->id_employee ? new Employee($payment->id_employee) : null;
-            $employeeName = $employee ? $employee->firstname . ' ' . $employee->lastname : null;
+            $employeeName = $employee instanceof Employee ? $employee->firstname . ' ' . $employee->lastname : null;
 
             $orderPayments[] = new OrderPaymentForViewing(
                 $payment->id,

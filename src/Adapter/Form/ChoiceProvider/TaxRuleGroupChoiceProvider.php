@@ -65,7 +65,7 @@ final class TaxRuleGroupChoiceProvider implements FormChoiceProviderInterface, F
         foreach ($this->getRules() as $rule) {
             $taxRulesGroupId = new TaxRulesGroupId((int) $rule['id_tax_rules_group']);
             $stateId = $this->taxRulesGroupRepository->getTaxRulesGroupDefaultStateId($taxRulesGroupId, new CountryId($this->countryId));
-            if (! $stateId) {
+            if ($stateId === 0) {
                 $taxRate = $this->taxComputer->getTaxRate($taxRulesGroupId, new CountryId($this->countryId));
                 $stateIsoCode = '';
             } else {

@@ -91,87 +91,85 @@ class CartPresenter implements PresenterInterface
 
             $id_product = (int) $product['id_product'];
             $id_product_attribute = (int) $product['id_product_attribute'];
-            if (\array_key_exists($id_product, $data)) {
-                if (\array_key_exists($id_product_attribute, $data[$id_product])) {
-                    foreach ($data[$id_product] as $byAddress) {
-                        foreach ($byAddress as $byAddressCustomizations) {
-                            foreach ($byAddressCustomizations as $customization) {
-                                $presentedCustomization = [
-                                    'quantity' => $customization['quantity'],
-                                    'fields' => [],
-                                    'id_customization' => null,
-                                ];
+            if (\array_key_exists($id_product, $data) && \array_key_exists($id_product_attribute, $data[$id_product])) {
+                foreach ($data[$id_product] as $byAddress) {
+                    foreach ($byAddress as $byAddressCustomizations) {
+                        foreach ($byAddressCustomizations as $customization) {
+                            $presentedCustomization = [
+                                'quantity' => $customization['quantity'],
+                                'fields' => [],
+                                'id_customization' => null,
+                            ];
 
-                                foreach ($customization['datas'] as $byType) {
-                                    foreach ($byType as $data) {
-                                        $field = [];
-                                        switch ($data['type']) {
-                                            case Product::CUSTOMIZE_FILE:
-                                                $field['type'] = 'image';
-                                                $field['image'] = $this->imageRetriever->getCustomizationImage(
-                                                    $data['value']
-                                                );
+                            foreach ($customization['datas'] as $byType) {
+                                foreach ($byType as $data) {
+                                    $field = [];
+                                    switch ($data['type']) {
+                                        case Product::CUSTOMIZE_FILE:
+                                            $field['type'] = 'image';
+                                            $field['image'] = $this->imageRetriever->getCustomizationImage(
+                                                $data['value']
+                                            );
 
-                                                break;
-                                            case Product::CUSTOMIZE_TEXTFIELD:
-                                                $field['type'] = 'text';
-                                                $field['text'] = $data['value'];
+                                            break;
+                                        case Product::CUSTOMIZE_TEXTFIELD:
+                                            $field['type'] = 'text';
+                                            $field['text'] = $data['value'];
 
-                                                break;
-                                            default:
-                                                $field['type'] = null;
-                                        }
-
-                                        $field['label'] = $data['name'];
-                                        $field['id_module'] = $data['id_module'];
-                                        $presentedCustomization['id_customization'] = $data['id_customization'];
-                                        $presentedCustomization['fields'][] = $field;
+                                            break;
+                                        default:
+                                            $field['type'] = null;
                                     }
+
+                                    $field['label'] = $data['name'];
+                                    $field['id_module'] = $data['id_module'];
+                                    $presentedCustomization['id_customization'] = $data['id_customization'];
+                                    $presentedCustomization['fields'][] = $field;
                                 }
-
-                                $product['up_quantity_url'] = $this->link->getUpQuantityCartURL(
-                                    $product['id_product'],
-                                    $product['id_product_attribute'],
-                                    $presentedCustomization['id_customization']
-                                );
-                                $product['down_quantity_url'] = $this->link->getDownQuantityCartURL(
-                                    $product['id_product'],
-                                    $product['id_product_attribute'],
-                                    $presentedCustomization['id_customization']
-                                );
-                                $product['remove_from_cart_url'] = $this->link->getRemoveFromCartURL(
-                                    $product['id_product'],
-                                    $product['id_product_attribute'],
-                                    $presentedCustomization['id_customization']
-                                );
-                                $product['update_quantity_url'] = $this->link->getUpdateQuantityCartURL(
-                                    $product['id_product'],
-                                    $product['id_product_attribute'],
-                                    $presentedCustomization['id_customization']
-                                );
-
-                                $presentedCustomization['up_quantity_url'] = $this->link->getUpQuantityCartURL(
-                                    $product['id_product'],
-                                    $product['id_product_attribute'],
-                                    $presentedCustomization['id_customization']
-                                );
-
-                                $presentedCustomization['down_quantity_url'] = $this->link->getDownQuantityCartURL(
-                                    $product['id_product'],
-                                    $product['id_product_attribute'],
-                                    $presentedCustomization['id_customization']
-                                );
-
-                                $presentedCustomization['remove_from_cart_url'] = $this->link->getRemoveFromCartURL(
-                                    $product['id_product'],
-                                    $product['id_product_attribute'],
-                                    $presentedCustomization['id_customization']
-                                );
-
-                                $presentedCustomization['update_quantity_url'] = $product['update_quantity_url'];
-
-                                $customizations[] = $presentedCustomization;
                             }
+
+                            $product['up_quantity_url'] = $this->link->getUpQuantityCartURL(
+                                $product['id_product'],
+                                $product['id_product_attribute'],
+                                $presentedCustomization['id_customization']
+                            );
+                            $product['down_quantity_url'] = $this->link->getDownQuantityCartURL(
+                                $product['id_product'],
+                                $product['id_product_attribute'],
+                                $presentedCustomization['id_customization']
+                            );
+                            $product['remove_from_cart_url'] = $this->link->getRemoveFromCartURL(
+                                $product['id_product'],
+                                $product['id_product_attribute'],
+                                $presentedCustomization['id_customization']
+                            );
+                            $product['update_quantity_url'] = $this->link->getUpdateQuantityCartURL(
+                                $product['id_product'],
+                                $product['id_product_attribute'],
+                                $presentedCustomization['id_customization']
+                            );
+
+                            $presentedCustomization['up_quantity_url'] = $this->link->getUpQuantityCartURL(
+                                $product['id_product'],
+                                $product['id_product_attribute'],
+                                $presentedCustomization['id_customization']
+                            );
+
+                            $presentedCustomization['down_quantity_url'] = $this->link->getDownQuantityCartURL(
+                                $product['id_product'],
+                                $product['id_product_attribute'],
+                                $presentedCustomization['id_customization']
+                            );
+
+                            $presentedCustomization['remove_from_cart_url'] = $this->link->getRemoveFromCartURL(
+                                $product['id_product'],
+                                $product['id_product_attribute'],
+                                $presentedCustomization['id_customization']
+                            );
+
+                            $presentedCustomization['update_quantity_url'] = $product['update_quantity_url'];
+
+                            $customizations[] = $presentedCustomization;
                         }
                     }
                 }

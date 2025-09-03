@@ -136,7 +136,7 @@ class ImageThumbnailsRegenerator
                  * Let's find all original image files in this folder.
                  * They are either ID.jpg or ID_thumb.jpg in case of category thumbnails
                  */
-                if (preg_match('/^[0-9]*(|_thumb)\.jpg$/', $originalImageName)) {
+                if (preg_match('/^\d*(|_thumb)\.jpg$/', $originalImageName)) {
                     foreach ($type as $imageType) {
                         // Customizable writing dir
                         $newDir = $dir;
@@ -180,23 +180,21 @@ class ImageThumbnailsRegenerator
                         foreach ($configuredImageFormats as $imageFormat) {
                             $thumbnailName = $imageObj->getExistingImgPath() . '-' . stripslashes((string) $imageType->getName()) . '.' . $imageFormat;
 
-                            if (! file_exists($dir . $thumbnailName)) {
-                                if (! LegacyImageManager::resize(
-                                    $originalImageName,
-                                    $dir . $thumbnailName,
-                                    (int) $imageType->getWidth(),
-                                    (int) $imageType->getHeight(),
-                                    $imageFormat
-                                )) {
-                                    $errors[] = $this->translator->trans(
-                                        'Original image is corrupt (%filename%) for product ID %id% or bad permission on folder.',
-                                        [
-                                            '%filename%' => $originalImageName,
-                                            '%id%' => (int) $imageObj->id_product,
-                                        ],
-                                        'Admin.Design.Notification'
-                                    );
-                                }
+                            if (! file_exists($dir . $thumbnailName) && ! LegacyImageManager::resize(
+                                $originalImageName,
+                                $dir . $thumbnailName,
+                                (int) $imageType->getWidth(),
+                                (int) $imageType->getHeight(),
+                                $imageFormat
+                            )) {
+                                $errors[] = $this->translator->trans(
+                                    'Original image is corrupt (%filename%) for product ID %id% or bad permission on folder.',
+                                    [
+                                        '%filename%' => $originalImageName,
+                                        '%id%' => (int) $imageObj->id_product,
+                                    ],
+                                    'Admin.Design.Notification'
+                                );
                             }
                         }
                     }
@@ -281,16 +279,14 @@ class ImageThumbnailsRegenerator
                 }
 
                 foreach ($configuredImageFormats as $imageFormat) {
-                    if (! file_exists($dir . $language->getIsoCode() . '-default-' . stripslashes((string) $image_type->getName()) . '.' . $imageFormat)) {
-                        if (! LegacyImageManager::resize(
-                            $file,
-                            $dir . $language->getIsoCode() . '-default-' . stripslashes((string) $image_type->getName()) . '.' . $imageFormat,
-                            (int) $image_type->getWidth(),
-                            (int) $image_type->getHeight(),
-                            $imageFormat
-                        )) {
-                            $errors = true;
-                        }
+                    if (! file_exists($dir . $language->getIsoCode() . '-default-' . stripslashes((string) $image_type->getName()) . '.' . $imageFormat) && ! LegacyImageManager::resize(
+                        $file,
+                        $dir . $language->getIsoCode() . '-default-' . stripslashes((string) $image_type->getName()) . '.' . $imageFormat,
+                        (int) $image_type->getWidth(),
+                        (int) $image_type->getHeight(),
+                        $imageFormat
+                    )) {
+                        $errors = true;
                     }
                 }
             }
@@ -311,11 +307,9 @@ class ImageThumbnailsRegenerator
                 $this->deleteImagesFromType($imageTypeName, $file . '/');
             } else {
                 if (
-                    preg_match('/\/(\d+|\w{2}-default)-' . $imageTypeName . '\.(jpg|png|webp|avif)$/', $file)
+                    preg_match('/\/(\d+|\w{2}-default)-' . $imageTypeName . '\.(jpg|png|webp|avif)$/', $file) && ! unlink($file)
                 ) {
-                    if (! unlink($file)) {
-                        throw new ImageNotDeletedException(\sprintf('Unable to delete image "%s"', $file));
-                    }
+                    throw new ImageNotDeletedException(\sprintf('Unable to delete image "%s"', $file));
                 }
             }
         }

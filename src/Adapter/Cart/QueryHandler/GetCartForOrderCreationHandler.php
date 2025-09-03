@@ -111,7 +111,7 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
                 $this->extractCartRulesFromLegacySummary($cart, $legacySummary, $currency, $query->hideDiscounts()),
                 $addresses,
                 $this->extractSummaryFromLegacySummary($legacySummary, $currency, $cart),
-                $addresses ? $this->extractShippingFromLegacySummary($cart, $legacySummary, $query->hideDiscounts()) : null
+                $addresses !== [] ? $this->extractShippingFromLegacySummary($cart, $legacySummary, $query->hideDiscounts()) : null
             );
         } finally {
             $this->contextStateManager->restorePreviousContext();
@@ -381,7 +381,7 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
     {
         $customizationId = (int) $product['id_customization'];
 
-        if (! $customizationId) {
+        if ($customizationId === 0) {
             return null;
         }
 

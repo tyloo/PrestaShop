@@ -209,7 +209,7 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
     {
         $stockAvailable = new StockAvailable();
         $stockAvailable->id_product = $productId->getValue();
-        $stockAvailable->id_product_attribute = $combinationId ? $combinationId->getValue() : NoCombinationId::NO_COMBINATION_ID;
+        $stockAvailable->id_product_attribute = $combinationId instanceof CombinationId ? $combinationId->getValue() : NoCombinationId::NO_COMBINATION_ID;
 
         // Use legacy method, it checks if the shop belongs to a ShopGroup that shares stock, in which case the StockAvailable
         // must be assigned to the group not the shop

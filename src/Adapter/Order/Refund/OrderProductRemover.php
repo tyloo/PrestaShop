@@ -134,7 +134,7 @@ class OrderProductRemover
 
     private function deleteCustomization(Order $order, OrderDetail $orderDetail)
     {
-        if (! (int) $order->getCurrentState()) {
+        if ((int) $order->getCurrentState() === 0) {
             throw new DeleteCustomizedProductFromOrderException('Could not get a valid Order state before deletion');
         }
 
@@ -168,10 +168,8 @@ class OrderProductRemover
 
             foreach ($discountedProducts as $discountedProduct) {
                 // The return value is the concatenation of productId and attributeId, but the attributeId is always replaced by 0
-                if ($discountedProduct === $orderDetail->product_id . '-0') {
-                    if (! \in_array($orderCartRule['id_order_cart_rule'], $removedOrderCartRules, true)) {
-                        $removedOrderCartRules[] = $orderCartRule['id_order_cart_rule'];
-                    }
+                if ($discountedProduct === $orderDetail->product_id . '-0' && ! \in_array($orderCartRule['id_order_cart_rule'], $removedOrderCartRules, true)) {
+                    $removedOrderCartRules[] = $orderCartRule['id_order_cart_rule'];
                 }
             }
         }

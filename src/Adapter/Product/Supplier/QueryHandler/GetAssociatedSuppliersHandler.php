@@ -51,7 +51,7 @@ class GetAssociatedSuppliersHandler implements GetAssociatedSuppliersHandlerInte
         $supplierIds = $this->productSupplierRepository->getAssociatedSupplierIds($query->getProductId());
 
         return new AssociatedSuppliers(
-            $defaultSupplier ? $defaultSupplier->getValue() : NoSupplierId::NO_SUPPLIER_ID,
+            $defaultSupplier instanceof SupplierId ? $defaultSupplier->getValue() : NoSupplierId::NO_SUPPLIER_ID,
             array_map(static fn (SupplierId $supplierId): int => $supplierId->getValue(), $supplierIds)
         );
     }

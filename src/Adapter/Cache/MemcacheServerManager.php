@@ -91,7 +91,7 @@ class MemcacheServerManager
 
         $memcache = new Memcache();
 
-        return $memcache->connect($serverIp, (int) $serverPort) === true;
+        return $memcache->connect($serverIp, (int) $serverPort);
     }
 
     /**

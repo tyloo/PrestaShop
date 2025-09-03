@@ -50,7 +50,7 @@ class MovementReasonRepository
     {
         $id = (int) $this->configuration->get($configurationKey);
 
-        if (! $id) {
+        if ($id === 0) {
             throw new MovementReasonConfigurationNotFoundException(\sprintf('Movement reason id is not configured by "%s"', $configurationKey));
         }
 
