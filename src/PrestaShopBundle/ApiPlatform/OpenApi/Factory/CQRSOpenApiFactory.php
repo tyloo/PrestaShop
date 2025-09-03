@@ -145,7 +145,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                 'put' => $pathItem->getPut(),
                 'patch' => $pathItem->getPatch(),
                 'delete' => $pathItem->getDelete(),
-            ], fn ($operation): bool => $operation !== null);
+            ], fn (?OpenApiOperation $operation): bool => $operation !== null);
 
             $updatedPathItem = $pathItem;
             if (! empty($operations)) {

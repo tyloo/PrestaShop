@@ -29,6 +29,7 @@ namespace PrestaShopBundle\Routing\Linter;
 
 use PrestaShopBundle\Routing\Linter\Exception\LinterException;
 use PrestaShopBundle\Security\Attribute\AdminSecurity;
+use ReflectionAttribute;
 use ReflectionException;
 use ReflectionMethod;
 use Symfony\Component\Routing\Route;
@@ -63,7 +64,7 @@ final class SecurityAttributeLinter implements RouteLinterInterface
             throw new LinterException(\sprintf('"%s:%s" does not have AdminSecurity attribute configured', $controllerAndMethod['controller'], $controllerAndMethod['method']));
         }
 
-        return array_map(fn ($value): AdminSecurity => $value->newInstance(), $attributes);
+        return array_map(fn (ReflectionAttribute $value): AdminSecurity => $value->newInstance(), $attributes);
     }
 
     public function lint($routeName, Route $route): void

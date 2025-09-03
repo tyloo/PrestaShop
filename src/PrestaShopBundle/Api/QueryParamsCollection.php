@@ -202,7 +202,7 @@ abstract class QueryParamsCollection
     protected function excludeUnknownParams(array $queryParams)
     {
         $queryParamsNames = array_keys($queryParams);
-        array_walk($queryParamsNames, function ($name) use (&$queryParams): void {
+        array_walk($queryParamsNames, function (int|string $name) use (&$queryParams): void {
             $validParams = array_merge(
                 $this->getValidPaginationParams(),
                 $this->getValidOrderParams(),
@@ -235,10 +235,10 @@ abstract class QueryParamsCollection
      */
     protected function parseFilterParamsArray(array $queryParams, array $allParameters): array
     {
-        $filters = array_filter(array_keys($allParameters), fn ($filter): bool => \in_array($filter, $this->getValidFilterParams(), true));
+        $filters = array_filter(array_keys($allParameters), fn (int|string $filter): bool => \in_array($filter, $this->getValidFilterParams(), true));
 
         $filterParams = [];
-        array_walk($filters, function ($filter) use ($allParameters, &$filterParams): void {
+        array_walk($filters, function (int|string $filter) use ($allParameters, &$filterParams): void {
             if (\is_array($allParameters[$filter])) {
                 $allParameters[$filter] = array_filter($allParameters[$filter], fn ($value): bool => \is_int($value) || (\is_string($value) && mb_strlen(mb_trim($value)) > 0));
             }
@@ -398,7 +398,7 @@ abstract class QueryParamsCollection
             return $filters;
         }
 
-        $placeholders = array_map(fn ($index): string => ':' . $column . '_' . $index, array_keys($value));
+        $placeholders = array_map(fn (int|string $index): string => ':' . $column . '_' . $index, array_keys($value));
 
         $filters[] = \sprintf('AND {%s} IN (%s)', $column, implode(',', $placeholders));
 
@@ -557,7 +557,7 @@ abstract class QueryParamsCollection
         }
 
         $attributesKeys = array_keys($attributes);
-        array_walk($attributesKeys, function ($key) use (&$filters): void {
+        array_walk($attributesKeys, function (int|string $key) use (&$filters): void {
             $filters[] = \sprintf('AND EXISTS(SELECT 1
                     FROM {table_prefix}product_attribute_combination pac
                         LEFT JOIN {table_prefix}attribute a ON (
@@ -604,7 +604,7 @@ abstract class QueryParamsCollection
         }
 
         $attributesKeys = array_keys($attributes);
-        array_walk($attributesKeys, function ($key) use (&$filters): void {
+        array_walk($attributesKeys, function (int|string $key) use (&$filters): void {
             $filters[] = \sprintf('AND EXISTS(SELECT 1
                     FROM {table_prefix}feature_product fp
                         LEFT JOIN  {table_prefix}feature f ON (
@@ -657,7 +657,7 @@ abstract class QueryParamsCollection
             $this->queryParams['filter']['keywords'] = (array) $this->queryParams['filter']['keywords'];
         }
 
-        $parts = array_map(function ($index): string {
+        $parts = array_map(function (int $index): string {
             $fields = [
                 '{supplier_name}',
                 '{product_reference}',
@@ -673,7 +673,7 @@ abstract class QueryParamsCollection
                 '{combination_name}',
             ];
 
-            $conditions = array_map(fn ($field): string => \sprintf('%s LIKE :keyword_%d', $field, $index), $fields);
+            $conditions = array_map(fn (string $field): string => \sprintf('%s LIKE :keyword_%d', $field, $index), $fields);
 
             return 'AND (' . implode(' OR ', $conditions) . ')';
         }, range(0, \count($this->queryParams['filter']['keywords']) - 1));
