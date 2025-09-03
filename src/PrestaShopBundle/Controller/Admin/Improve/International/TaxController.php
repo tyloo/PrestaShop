@@ -170,7 +170,7 @@ class TaxController extends PrestaShopAdminController
         FormHandlerInterface $taxFormHandler,
     ): Response {
         try {
-            $taxForm = $taxFormBuilder->getFormFor((int) $taxId);
+            $taxForm = $taxFormBuilder->getFormFor($taxId);
         } catch (Exception $exception) {
             $this->addFlash(
                 'error',
@@ -182,7 +182,7 @@ class TaxController extends PrestaShopAdminController
 
         try {
             $taxForm->handleRequest($request);
-            $result = $taxFormHandler->handleFor((int) $taxId, $taxForm);
+            $result = $taxFormHandler->handleFor($taxId, $taxForm);
 
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
@@ -198,7 +198,7 @@ class TaxController extends PrestaShopAdminController
         }
 
         /** @var EditableTax $editableTax */
-        $editableTax = $this->dispatchQuery(new GetTaxForEditing((int) $taxId));
+        $editableTax = $this->dispatchQuery(new GetTaxForEditing($taxId));
 
         return $this->render('@PrestaShop/Admin/Improve/International/Tax/edit.html.twig', [
             'taxForm' => $taxForm->createView(),
@@ -223,7 +223,7 @@ class TaxController extends PrestaShopAdminController
     public function deleteAction(int $taxId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new DeleteTaxCommand((int) $taxId));
+            $this->dispatchCommand(new DeleteTaxCommand($taxId));
             $this->addFlash(
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')
@@ -243,8 +243,8 @@ class TaxController extends PrestaShopAdminController
     {
         try {
             /** @var EditableTax $editableTax */
-            $editableTax = $this->dispatchQuery(new GetTaxForEditing((int) $taxId));
-            $this->dispatchCommand(new ToggleTaxStatusCommand((int) $taxId, ! $editableTax->isActive()));
+            $editableTax = $this->dispatchQuery(new GetTaxForEditing($taxId));
+            $this->dispatchCommand(new ToggleTaxStatusCommand($taxId, ! $editableTax->isActive()));
             $this->addFlash(
                 'success',
                 $this->trans('The status has been successfully updated.', [], 'Admin.Notifications.Success')

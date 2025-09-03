@@ -170,7 +170,7 @@ class ProfileController extends PrestaShopAdminController
         FormHandlerInterface $formHandler,
     ): Response {
         try {
-            $form = $formBuilder->getFormFor((int) $profileId);
+            $form = $formBuilder->getFormFor($profileId);
         } catch (Exception $exception) {
             $this->addFlash(
                 'error',
@@ -182,7 +182,7 @@ class ProfileController extends PrestaShopAdminController
 
         try {
             $form->handleRequest($request);
-            $handlerResult = $formHandler->handleFor((int) $profileId, $form);
+            $handlerResult = $formHandler->handleFor($profileId, $form);
 
             if ($handlerResult->isSubmitted() && $handlerResult->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));

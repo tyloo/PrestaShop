@@ -269,7 +269,7 @@ class StockRepository extends StockManagementRepository
             $this->getCurrentShop()->id,
             $this->orderStates['error'],
             $this->orderStates['cancellation'],
-            (int) $idProduct
+            $idProduct
         );
     }
 

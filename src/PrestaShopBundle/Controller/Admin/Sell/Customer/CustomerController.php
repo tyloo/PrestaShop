@@ -218,7 +218,7 @@ class CustomerController extends PrestaShopAdminController
         ];
 
         try {
-            $customerForm = $formBuilder->getFormFor((int) $customerId, [], $customerFormOptions);
+            $customerForm = $formBuilder->getFormFor($customerId, [], $customerFormOptions);
         } catch (Exception $exception) {
             $this->addFlash(
                 'error',
@@ -230,7 +230,7 @@ class CustomerController extends PrestaShopAdminController
 
         try {
             $customerForm->handleRequest($request);
-            $result = $formHandler->handleFor((int) $customerId, $customerForm);
+            $result = $formHandler->handleFor($customerId, $customerForm);
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
 
@@ -525,7 +525,7 @@ class CustomerController extends PrestaShopAdminController
             /** @var EditableCustomer $editableCustomer */
             $editableCustomer = $this->dispatchQuery(new GetCustomerForEditing($customerId));
 
-            $editCustomerCommand = new EditCustomerCommand((int) $customerId);
+            $editCustomerCommand = new EditCustomerCommand($customerId);
             $editCustomerCommand->setIsEnabled(! $editableCustomer->isEnabled());
 
             $this->dispatchCommand($editCustomerCommand);

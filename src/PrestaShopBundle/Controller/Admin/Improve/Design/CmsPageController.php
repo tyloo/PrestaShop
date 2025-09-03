@@ -114,7 +114,7 @@ class CmsPageController extends PrestaShopAdminController
 
         $showcaseCardIsClosed = $this->dispatchQuery(
             new GetShowcaseCardIsClosed(
-                (int) $this->getEmployeeContext()->getEmployee()->getId(),
+                $this->getEmployeeContext()->getEmployee()->getId(),
                 ShowcaseCard::CMS_PAGES_CARD
             )
         );
@@ -229,8 +229,6 @@ class CmsPageController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.cms_page_form_handler')]
         FormHandlerInterface $cmsPageFormHandler,
     ): Response {
-        $cmsPageId = (int) $cmsPageId;
-
         try {
             /** @var EditableCmsPage $editableCmsPage */
             $editableCmsPage = $this->dispatchQuery(new GetCmsPageForEditing($cmsPageId));
@@ -354,8 +352,8 @@ class CmsPageController extends PrestaShopAdminController
         FormHandlerInterface $cmsPageCategoryFormHandler,
     ): Response {
         try {
-            $cmsPageCategoryForm = $cmsPageCategoryFormBuilder->getFormFor((int) $cmsCategoryId);
-            $cmsCategoryParentId = $this->getParentCategoryId((int) $cmsCategoryId)->getValue();
+            $cmsPageCategoryForm = $cmsPageCategoryFormBuilder->getFormFor($cmsCategoryId);
+            $cmsCategoryParentId = $this->getParentCategoryId($cmsCategoryId)->getValue();
         } catch (Exception $exception) {
             $this->addFlash(
                 'error',
@@ -367,7 +365,7 @@ class CmsPageController extends PrestaShopAdminController
 
         try {
             $cmsPageCategoryForm->handleRequest($request);
-            $result = $cmsPageCategoryFormHandler->handleFor((int) $cmsCategoryId, $cmsPageCategoryForm);
+            $result = $cmsPageCategoryFormHandler->handleFor($cmsCategoryId, $cmsPageCategoryForm);
 
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash(
@@ -384,7 +382,7 @@ class CmsPageController extends PrestaShopAdminController
             );
 
             if ($exception instanceof CmsPageCategoryNotFoundException) {
-                return $this->redirectToParentIndexPage((int) $cmsCategoryId);
+                return $this->redirectToParentIndexPage($cmsCategoryId);
             }
         }
 
@@ -415,7 +413,7 @@ class CmsPageController extends PrestaShopAdminController
     {
         try {
             $this->dispatchCommand(
-                new DeleteCmsPageCategoryCommand((int) $cmsCategoryId)
+                new DeleteCmsPageCategoryCommand($cmsCategoryId)
             );
 
             $this->addFlash(
@@ -429,7 +427,7 @@ class CmsPageController extends PrestaShopAdminController
             );
         }
 
-        return $this->redirectToParentIndexPage((int) $cmsCategoryId);
+        return $this->redirectToParentIndexPage($cmsCategoryId);
     }
 
     /**

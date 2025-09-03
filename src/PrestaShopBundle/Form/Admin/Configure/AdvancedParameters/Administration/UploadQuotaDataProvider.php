@@ -100,9 +100,9 @@ final class UploadQuotaDataProvider implements FormDataProviderInterface
             return $value;
         }
 
-        $value_length = mb_strlen((string) $value);
-        $qty = (int) mb_substr((string) $value, 0, $value_length - 1);
-        $unit = mb_strtolower(mb_substr((string) $value, $value_length - 1));
+        $value_length = mb_strlen($value);
+        $qty = (int) mb_substr($value, 0, $value_length - 1);
+        $unit = mb_strtolower(mb_substr($value, $value_length - 1));
         match ($unit) {
             'k' => $qty *= 1024,
             'm' => $qty *= 1048576,

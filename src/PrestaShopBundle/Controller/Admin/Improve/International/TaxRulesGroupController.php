@@ -128,9 +128,9 @@ class TaxRulesGroupController extends PrestaShopAdminController
         $taxRulesGroupForm = null;
 
         try {
-            $taxRulesGroupForm = $formBuilder->getFormFor((int) $taxRulesGroupId);
+            $taxRulesGroupForm = $formBuilder->getFormFor($taxRulesGroupId);
             $taxRulesGroupForm->handleRequest($request);
-            $result = $formHandler->handleFor((int) $taxRulesGroupId, $taxRulesGroupForm);
+            $result = $formHandler->handleFor($taxRulesGroupId, $taxRulesGroupForm);
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
 

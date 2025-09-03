@@ -588,8 +588,8 @@ abstract class QueryParamsCollection
 
         array_map(function ($index, $value) use (&$sqlParams): void {
             [$idAttributeGroup, $idAttribute] = explode(':', $value);
-            $sqlParams['attribute_id_' . $index] = (string) $idAttribute;
-            $sqlParams['attribute_group_id_' . $index] = (string) $idAttributeGroup;
+            $sqlParams['attribute_id_' . $index] = $idAttribute;
+            $sqlParams['attribute_group_id_' . $index] = $idAttributeGroup;
         }, range(0, \count($value) - 1), $value);
 
         return $sqlParams;
@@ -643,8 +643,8 @@ abstract class QueryParamsCollection
 
         array_map(function ($index, $value) use (&$sqlParams): void {
             [$idFeature, $idFeatureValue] = explode(':', $value);
-            $sqlParams['feature_id_' . $index] = (string) $idFeature;
-            $sqlParams['feature_value_id_' . $index] = (string) $idFeatureValue;
+            $sqlParams['feature_id_' . $index] = $idFeature;
+            $sqlParams['feature_value_id_' . $index] = $idFeatureValue;
         }, range(0, \count($value) - 1), $value);
 
         return $sqlParams;
@@ -693,7 +693,7 @@ abstract class QueryParamsCollection
         }
 
         array_map(function ($index, string $value) use (&$sqlParams): void {
-            $sqlParams['keyword_' . $index] = (string) ('%' . $value . '%');
+            $sqlParams['keyword_' . $index] = '%' . $value . '%';
         }, range(0, \count($value) - 1), $value);
 
         return $sqlParams;

@@ -249,7 +249,7 @@ class CategoryController extends PrestaShopAdminController
     ): Response {
         try {
             /** @var EditableCategory $editableCategory */
-            $editableCategory = $this->dispatchQuery(new GetCategoryForEditing((int) $categoryId));
+            $editableCategory = $this->dispatchQuery(new GetCategoryForEditing($categoryId));
 
             if ($editableCategory->isRootCategory()) {
                 return $this->redirectToRoute('admin_categories_edit_root', ['categoryId' => $categoryId]);
@@ -261,12 +261,12 @@ class CategoryController extends PrestaShopAdminController
         }
 
         $categoryFormOptions = [
-            'id_category' => (int) $categoryId,
+            'id_category' => $categoryId,
             'subcategories' => $editableCategory->getSubCategories(),
         ];
 
         try {
-            $categoryForm = $categoryFormBuilder->getFormFor((int) $categoryId, [], $categoryFormOptions);
+            $categoryForm = $categoryFormBuilder->getFormFor($categoryId, [], $categoryFormOptions);
         } catch (Exception $exception) {
             $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
@@ -275,7 +275,7 @@ class CategoryController extends PrestaShopAdminController
 
         try {
             $categoryForm->handleRequest($request);
-            $handlerResult = $categoryFormHandler->handleFor((int) $categoryId, $categoryForm);
+            $handlerResult = $categoryFormHandler->handleFor($categoryId, $categoryForm);
 
             if ($handlerResult->isSubmitted() && $handlerResult->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
@@ -332,7 +332,7 @@ class CategoryController extends PrestaShopAdminController
     ): Response {
         try {
             /** @var EditableCategory $editableCategory */
-            $editableCategory = $this->dispatchQuery(new GetCategoryForEditing((int) $categoryId));
+            $editableCategory = $this->dispatchQuery(new GetCategoryForEditing($categoryId));
 
             if (! $editableCategory->isRootCategory()) {
                 return $this->redirectToRoute('admin_categories_edit', ['categoryId' => $categoryId]);
@@ -344,7 +344,7 @@ class CategoryController extends PrestaShopAdminController
         }
 
         try {
-            $rootCategoryForm = $rootCategoryFormBuilder->getFormFor((int) $categoryId);
+            $rootCategoryForm = $rootCategoryFormBuilder->getFormFor($categoryId);
         } catch (Exception $exception) {
             $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));
 
@@ -353,7 +353,7 @@ class CategoryController extends PrestaShopAdminController
 
         try {
             $rootCategoryForm->handleRequest($request);
-            $handlerResult = $rootCategoryFormHandler->handleFor((int) $categoryId, $rootCategoryForm);
+            $handlerResult = $rootCategoryFormHandler->handleFor($categoryId, $rootCategoryForm);
 
             if ($handlerResult->isSubmitted() && $handlerResult->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
@@ -681,7 +681,7 @@ class CategoryController extends PrestaShopAdminController
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', 'AdminProducts')")]
     public function getCategoriesTreeAction(Request $request): JsonResponse
     {
-        $langId = $request->query->getInt('langId') ?: (int) $this->getLanguageContext()->getId();
+        $langId = $request->query->getInt('langId') ?: $this->getLanguageContext()->getId();
         $categoriesTree = $this->dispatchQuery(new GetCategoriesTree($langId, $this->getShopContext()->getId()));
 
         return $this->json($this->formatCategoriesTreeForPresentation($categoriesTree, $langId));

@@ -47,7 +47,7 @@ class ShopController extends PrestaShopAdminController
     {
         try {
             $result = [];
-            $result['shops'] = $this->dispatchQuery(new SearchShops((string) $searchTerm));
+            $result['shops'] = $this->dispatchQuery(new SearchShops($searchTerm));
             $statusCode = empty($result['shops']) ? Response::HTTP_NOT_FOUND : Response::HTTP_OK;
         } catch (Exception $exception) {
             return $this->json(

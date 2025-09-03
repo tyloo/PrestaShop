@@ -256,7 +256,7 @@ class AddressController extends PrestaShopAdminController
     ): Response {
         try {
             /** @var EditableCustomerAddress $editableAddress */
-            $editableAddress = $this->dispatchQuery(new GetCustomerAddressForEditing((int) $addressId));
+            $editableAddress = $this->dispatchQuery(new GetCustomerAddressForEditing($addressId));
 
             $formData = [];
             // Country needs to be preset before building form type because it is used to build state field choices

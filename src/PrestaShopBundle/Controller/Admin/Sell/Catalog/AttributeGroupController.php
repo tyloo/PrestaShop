@@ -65,7 +65,7 @@ class AttributeGroupController extends PrestaShopAdminController
         $attributeGroupGrid = $attributeGroupGridFactory->getGrid($attributeGroupFilters);
 
         $showcaseCardIsClosed = $this->dispatchQuery(
-            new GetShowcaseCardIsClosed((int) $this->getEmployeeContext()->getEmployee()->getId(), ShowcaseCard::ATTRIBUTES_CARD)
+            new GetShowcaseCardIsClosed($this->getEmployeeContext()->getEmployee()->getId(), ShowcaseCard::ATTRIBUTES_CARD)
         );
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/AttributeGroup/index.html.twig', [

@@ -170,7 +170,7 @@ class FeatureController extends PrestaShopAdminController
         $featureForm->handleRequest($request);
 
         try {
-            $handlerResult = $featureFormHandler->handleFor((int) $featureId, $featureForm);
+            $handlerResult = $featureFormHandler->handleFor($featureId, $featureForm);
 
             if ($handlerResult->isSubmitted() && $handlerResult->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));

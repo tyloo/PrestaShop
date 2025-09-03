@@ -141,12 +141,12 @@ class AttachmentController extends PrestaShopAdminController
     ): Response {
         try {
             /** @var EditableAttachment $attachmentInformation */
-            $attachmentInformation = $this->dispatchQuery(new GetAttachmentForEditing((int) $attachmentId));
+            $attachmentInformation = $this->dispatchQuery(new GetAttachmentForEditing($attachmentId));
 
-            $attachmentForm = $attachmentFormBuilder->getFormFor((int) $attachmentId);
+            $attachmentForm = $attachmentFormBuilder->getFormFor($attachmentId);
 
             $attachmentForm->handleRequest($request);
-            $result = $attachmentFormHandler->handleFor((int) $attachmentId, $attachmentForm);
+            $result = $attachmentFormHandler->handleFor($attachmentId, $attachmentForm);
 
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
@@ -192,7 +192,7 @@ class AttachmentController extends PrestaShopAdminController
     {
         try {
             /** @var Attachment $attachment */
-            $attachment = $this->dispatchCommand(new GetAttachment((int) $attachmentId));
+            $attachment = $this->dispatchCommand(new GetAttachment($attachmentId));
 
             return $this->file($attachment->getPath(), $attachment->getName());
         } catch (Exception $exception) {
@@ -210,7 +210,7 @@ class AttachmentController extends PrestaShopAdminController
     public function deleteAction(int $attachmentId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new DeleteAttachmentCommand((int) $attachmentId));
+            $this->dispatchCommand(new DeleteAttachmentCommand($attachmentId));
             $this->addFlash(
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')

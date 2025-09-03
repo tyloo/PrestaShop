@@ -161,7 +161,7 @@ class CarrierController extends PrestaShopAdminController
 
         try {
             $editableCarrier = $this->dispatchQuery(new GetCarrierForEditing(
-                (int) $carrierId,
+                $carrierId,
                 ShopConstraint::allShops()
             ));
         } catch (CarrierNotFoundException $carrierNotFoundException) {

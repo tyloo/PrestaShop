@@ -185,7 +185,7 @@ class StateController extends PrestaShopAdminController
     ): Response {
         try {
             /** @var EditableState $editableState */
-            $editableState = $this->dispatchQuery(new GetStateForEditing((int) $stateId));
+            $editableState = $this->dispatchQuery(new GetStateForEditing($stateId));
         } catch (StateException $stateException) {
             $this->addFlash('error', $this->getErrorMessageForException($stateException, $this->getErrorMessages()));
 
@@ -195,9 +195,9 @@ class StateController extends PrestaShopAdminController
         $stateForm = null;
 
         try {
-            $stateForm = $formBuilder->getFormFor((int) $stateId);
+            $stateForm = $formBuilder->getFormFor($stateId);
             $stateForm->handleRequest($request);
-            $result = $formHandler->handleFor((int) $stateId, $stateForm);
+            $result = $formHandler->handleFor($stateId, $stateForm);
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
 
@@ -267,7 +267,7 @@ class StateController extends PrestaShopAdminController
     {
         try {
             $this->dispatchCommand(
-                new ToggleStateStatusCommand((int) $stateId)
+                new ToggleStateStatusCommand($stateId)
             );
             $response = [
                 'status' => true,

@@ -187,7 +187,7 @@ class DiscountController extends PrestaShopAdminController
 
             // @todo: this should be replaced with dedicated discount command when available
             $this->dispatchCommand(
-                new ToggleCartRuleStatusCommand((int) $discountId, ! $editableDiscount->isActive())
+                new ToggleCartRuleStatusCommand($discountId, ! $editableDiscount->isActive())
             );
             $this->addFlash(
                 'success',

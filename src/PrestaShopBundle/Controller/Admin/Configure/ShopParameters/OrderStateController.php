@@ -195,7 +195,7 @@ class OrderStateController extends PrestaShopAdminController
             $this->addFlash('error', $this->getErrorMessageForException($orderStateException, $this->getErrorMessages($orderStateException)));
         }
 
-        $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing((int) $orderStateId));
+        $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing($orderStateId));
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/OrderStates/edit.html.twig', [
             'orderStateForm' => $orderStateForm->createView(),
@@ -285,7 +285,7 @@ class OrderStateController extends PrestaShopAdminController
             $this->addFlash('error', $this->getErrorMessageForException($orderReturnStateException, $this->getErrorMessages($orderReturnStateException)));
         }
 
-        $editableOrderReturnState = $this->dispatchQuery(new GetOrderReturnStateForEditing((int) $orderReturnStateId));
+        $editableOrderReturnState = $this->dispatchQuery(new GetOrderReturnStateForEditing($orderReturnStateId));
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/OrderReturnStates/edit.html.twig', [
             'orderReturnStateForm' => $orderReturnStateForm->createView(),
@@ -344,9 +344,9 @@ class OrderStateController extends PrestaShopAdminController
     {
         try {
             /** @var EditableOrderState $editableOrderState */
-            $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing((int) $orderStateId));
+            $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing($orderStateId));
 
-            $editOrderStateCommand = new EditOrderStateCommand((int) $orderStateId);
+            $editOrderStateCommand = new EditOrderStateCommand($orderStateId);
             $editOrderStateCommand->setDelivery(! $editableOrderState->isDelivery());
 
             $this->dispatchCommand($editOrderStateCommand);
@@ -367,9 +367,9 @@ class OrderStateController extends PrestaShopAdminController
     {
         try {
             /** @var EditableOrderState $editableOrderState */
-            $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing((int) $orderStateId));
+            $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing($orderStateId));
 
-            $editOrderStateCommand = new EditOrderStateCommand((int) $orderStateId);
+            $editOrderStateCommand = new EditOrderStateCommand($orderStateId);
             $editOrderStateCommand->setInvoice(! $editableOrderState->isInvoice());
 
             $this->dispatchCommand($editOrderStateCommand);
@@ -390,9 +390,9 @@ class OrderStateController extends PrestaShopAdminController
     {
         try {
             /** @var EditableOrderState $editableOrderState */
-            $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing((int) $orderStateId));
+            $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing($orderStateId));
 
-            $editOrderStateCommand = new EditOrderStateCommand((int) $orderStateId);
+            $editOrderStateCommand = new EditOrderStateCommand($orderStateId);
             $editOrderStateCommand->setSendEmail(! $editableOrderState->isSendEmailEnabled());
 
             $this->dispatchCommand($editOrderStateCommand);

@@ -761,7 +761,7 @@ class OrderController extends PrestaShopAdminController
             } else {
                 $hasFreeShipping = null;
                 if ($request->request->has('free_shipping')) {
-                    $hasFreeShipping = (bool) filter_var($request->get('free_shipping'), \FILTER_VALIDATE_BOOLEAN);
+                    $hasFreeShipping = filter_var($request->get('free_shipping'), \FILTER_VALIDATE_BOOLEAN);
                 }
 
                 $addProductCommand = AddProductToOrderCommand::withNewInvoice(

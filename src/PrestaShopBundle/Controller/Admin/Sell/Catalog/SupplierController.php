@@ -252,12 +252,12 @@ class SupplierController extends PrestaShopAdminController
 
         try {
             /** @var EditableSupplier $editableSupplier */
-            $editableSupplier = $this->dispatchQuery(new GetSupplierForEditing((int) $supplierId));
+            $editableSupplier = $this->dispatchQuery(new GetSupplierForEditing($supplierId));
 
-            $supplierForm = $formBuilder->getFormFor((int) $supplierId, $formData);
+            $supplierForm = $formBuilder->getFormFor($supplierId, $formData);
             $supplierForm->handleRequest($request);
 
-            $result = $formHandler->handleFor((int) $supplierId, $supplierForm);
+            $result = $formHandler->handleFor($supplierId, $supplierForm);
 
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
@@ -296,7 +296,7 @@ class SupplierController extends PrestaShopAdminController
     public function toggleStatusAction(int $supplierId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new ToggleSupplierStatusCommand((int) $supplierId));
+            $this->dispatchCommand(new ToggleSupplierStatusCommand($supplierId));
 
             $this->addFlash(
                 'success',
@@ -320,8 +320,8 @@ class SupplierController extends PrestaShopAdminController
         try {
             /** @var ViewableSupplier $viewableSupplier */
             $viewableSupplier = $this->dispatchQuery(new GetSupplierForViewing(
-                (int) $supplierId,
-                (int) $this->getLanguageContext()->getId()
+                $supplierId,
+                $this->getLanguageContext()->getId()
             ));
         } catch (Exception $exception) {
             $this->addFlash('error', $this->getErrorMessageForException($exception, $this->getErrorMessages()));

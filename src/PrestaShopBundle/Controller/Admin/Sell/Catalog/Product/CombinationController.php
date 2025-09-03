@@ -146,7 +146,7 @@ class CombinationController extends PrestaShopAdminController
             $combinationProducts = $this->dispatchQuery(new SearchCombinationsForAssociation(
                 $request->get('query', ''),
                 $language->getId(),
-                (int) $shopId,
+                $shopId,
                 $request->get('filters', []),
                 (int) $request->get('limit', 20)
             ));

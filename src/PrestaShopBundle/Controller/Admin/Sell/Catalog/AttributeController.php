@@ -220,7 +220,7 @@ class AttributeController extends PrestaShopAdminController
     public function deleteAction(int $attributeGroupId, int $attributeId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new DeleteAttributeCommand((int) $attributeId));
+            $this->dispatchCommand(new DeleteAttributeCommand($attributeId));
             $this->addFlash(
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')

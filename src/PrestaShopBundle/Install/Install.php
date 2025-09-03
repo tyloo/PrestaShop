@@ -816,7 +816,7 @@ class Install extends AbstractInstall
         }
 
         // Active only the country selected by the merchant
-        Db::getInstance()->execute('UPDATE ' . _DB_PREFIX_ . 'country SET active = 0 WHERE id_country != ' . (int) $id_country);
+        Db::getInstance()->execute('UPDATE ' . _DB_PREFIX_ . 'country SET active = 0 WHERE id_country != ' . $id_country);
 
         // Set localization configuration
         $version = str_replace('.', '', Version::VERSION);

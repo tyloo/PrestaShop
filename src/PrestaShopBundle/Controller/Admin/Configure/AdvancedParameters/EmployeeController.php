@@ -138,7 +138,7 @@ class EmployeeController extends PrestaShopAdminController
     public function toggleStatusAction(int $employeeId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new ToggleEmployeeStatusCommand((int) $employeeId));
+            $this->dispatchCommand(new ToggleEmployeeStatusCommand($employeeId));
 
             $this->addFlash(
                 'success',
@@ -200,7 +200,7 @@ class EmployeeController extends PrestaShopAdminController
     public function deleteAction(int $employeeId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new DeleteEmployeeCommand((int) $employeeId));
+            $this->dispatchCommand(new DeleteEmployeeCommand($employeeId));
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
         } catch (EmployeeException $employeeException) {
@@ -300,10 +300,10 @@ class EmployeeController extends PrestaShopAdminController
             return $this->redirectToRoute('admin_employees_index');
         }
 
-        $isRestrictedAccess = $formAccessChecker->isRestrictedAccess((int) $employeeId);
+        $isRestrictedAccess = $formAccessChecker->isRestrictedAccess($employeeId);
 
         try {
-            $employeeForm = $formBuilder->getFormFor((int) $employeeId, [], [
+            $employeeForm = $formBuilder->getFormFor($employeeId, [], [
                 'is_restricted_access' => $isRestrictedAccess,
                 'is_for_editing' => true,
             ]);
@@ -327,7 +327,7 @@ class EmployeeController extends PrestaShopAdminController
         }
 
         try {
-            $editableEmployee = $this->dispatchQuery(new GetEmployeeForEditing((int) $employeeId));
+            $editableEmployee = $this->dispatchQuery(new GetEmployeeForEditing($employeeId));
         } catch (EmployeeNotFoundException) {
             return $this->redirectToRoute('admin_employees_index');
         }

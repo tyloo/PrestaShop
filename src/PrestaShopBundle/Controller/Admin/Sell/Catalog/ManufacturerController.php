@@ -177,8 +177,8 @@ class ManufacturerController extends PrestaShopAdminController
         try {
             /** @var ViewableManufacturer $viewableManufacturer */
             $viewableManufacturer = $this->dispatchQuery(new GetManufacturerForViewing(
-                (int) $manufacturerId,
-                (int) $this->getLanguageContext()->getId()
+                $manufacturerId,
+                $this->getLanguageContext()->getId()
             ));
         } catch (ManufacturerException $manufacturerException) {
             $this->addFlash('error', $this->getErrorMessageForException($manufacturerException, $this->getErrorMessages()));
@@ -217,12 +217,12 @@ class ManufacturerController extends PrestaShopAdminController
     ): Response {
         try {
             /** @var EditableManufacturer $editableManufacturer */
-            $editableManufacturer = $this->dispatchQuery(new GetManufacturerForEditing((int) $manufacturerId));
+            $editableManufacturer = $this->dispatchQuery(new GetManufacturerForEditing($manufacturerId));
 
-            $manufacturerForm = $formBuilder->getFormFor((int) $manufacturerId);
+            $manufacturerForm = $formBuilder->getFormFor($manufacturerId);
             $manufacturerForm->handleRequest($request);
 
-            $result = $formHandler->handleFor((int) $manufacturerId, $manufacturerForm);
+            $result = $formHandler->handleFor($manufacturerId, $manufacturerForm);
 
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));
@@ -444,7 +444,7 @@ class ManufacturerController extends PrestaShopAdminController
     public function deleteAddressAction(int $addressId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new DeleteAddressCommand((int) $addressId));
+            $this->dispatchCommand(new DeleteAddressCommand($addressId));
             $this->addFlash(
                 'success',
                 $this->trans('Successful deletion', [], 'Admin.Notifications.Success')

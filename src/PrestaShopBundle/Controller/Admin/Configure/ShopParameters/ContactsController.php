@@ -123,12 +123,12 @@ class ContactsController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.contact_form_handler')]
         FormHandlerInterface $contactFormHandler,
     ): Response {
-        $contactForm = $contactFormBuilder->getFormFor((int) $contactId);
+        $contactForm = $contactFormBuilder->getFormFor($contactId);
 
         $contactForm->handleRequest($request);
 
         try {
-            $result = $contactFormHandler->handleFor((int) $contactId, $contactForm);
+            $result = $contactFormHandler->handleFor($contactId, $contactForm);
 
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash('success', $this->trans('Successful update', [], 'Admin.Notifications.Success'));

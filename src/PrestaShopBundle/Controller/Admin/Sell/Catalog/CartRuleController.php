@@ -166,9 +166,9 @@ class CartRuleController extends PrestaShopAdminController
     {
         try {
             /** @var CartRuleForEditing $editableCartRule */
-            $editableCartRule = $this->dispatchQuery(new GetCartRuleForEditing((int) $cartRuleId));
+            $editableCartRule = $this->dispatchQuery(new GetCartRuleForEditing($cartRuleId));
             $this->dispatchCommand(
-                new ToggleCartRuleStatusCommand((int) $cartRuleId, ! $editableCartRule->getInformation()->isEnabled())
+                new ToggleCartRuleStatusCommand($cartRuleId, ! $editableCartRule->getInformation()->isEnabled())
             );
             $this->addFlash(
                 'success',

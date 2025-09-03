@@ -213,8 +213,6 @@ class CatalogPriceRuleController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.handler.catalog_price_rule_form_handler')]
         FormHandlerInterface $catalogPriceRuleHandler,
     ): Response {
-        $catalogPriceRuleId = (int) $catalogPriceRuleId;
-
         try {
             /** @var EditableCatalogPriceRule $editableCatalogPriceRule */
             $editableCatalogPriceRule = $this->dispatchQuery(new GetCatalogPriceRuleForEditing($catalogPriceRuleId));

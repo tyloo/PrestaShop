@@ -441,7 +441,7 @@ class ProductController extends PrestaShopAdminController
         try {
             $productForm = $editProductFormBuilder->getFormFor($productId, [], [
                 'product_id' => $productId,
-                'shop_id' => (int) $this->getShopContext()->getId(),
+                'shop_id' => $this->getShopContext()->getId(),
                 'force_default_active' => $forceDefaultActive,
                 // @todo: patch/partial update doesn't work good for now (especially multiple empty values) so we use POST for now
                 // 'method' => Request::METHOD_PATCH,
@@ -970,7 +970,7 @@ class ProductController extends PrestaShopAdminController
             $products = $this->dispatchQuery(new SearchProductsForAssociation(
                 $request->get('query', ''),
                 $lang->getId(),
-                (int) $shopId,
+                $shopId,
                 (int) $request->get('limit', 20)
             ));
         } catch (ProductConstraintException $productConstraintException) {

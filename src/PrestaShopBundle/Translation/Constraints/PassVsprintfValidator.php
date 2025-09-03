@@ -59,7 +59,7 @@ class PassVsprintfValidator extends ConstraintValidator
         }
 
         $matches = [];
-        if (preg_match_all(Translator::$regexSprintfParams, (string) $property, $matches) === false) {
+        if (preg_match_all(Translator::$regexSprintfParams, $property, $matches) === false) {
             throw new Exception('Preg_match failed');
         }
 

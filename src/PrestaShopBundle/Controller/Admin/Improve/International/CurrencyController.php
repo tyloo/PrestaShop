@@ -200,7 +200,7 @@ class CurrencyController extends PrestaShopAdminController
     public function deleteAction(int $currencyId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new DeleteCurrencyCommand((int) $currencyId));
+            $this->dispatchCommand(new DeleteCurrencyCommand($currencyId));
         } catch (CurrencyException $currencyException) {
             $this->addFlash('error', $this->getErrorMessageForException($currencyException, $this->getErrorMessages($currencyException)));
 
@@ -262,7 +262,7 @@ class CurrencyController extends PrestaShopAdminController
     public function toggleStatusAction(int $currencyId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new ToggleCurrencyStatusCommand((int) $currencyId));
+            $this->dispatchCommand(new ToggleCurrencyStatusCommand($currencyId));
         } catch (CurrencyException $currencyException) {
             $this->addFlash('error', $this->getErrorMessageForException($currencyException, $this->getErrorMessages($currencyException)));
 

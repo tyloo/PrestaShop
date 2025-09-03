@@ -137,7 +137,7 @@ class LanguageController extends PrestaShopAdminController
         FormHandlerInterface $languageFormHandler,
     ): Response {
         try {
-            $languageForm = $languageFormBuilder->getFormFor((int) $languageId, [], [
+            $languageForm = $languageFormBuilder->getFormFor($languageId, [], [
                 'is_for_editing' => true,
             ]);
         } catch (Exception $exception) {
@@ -151,7 +151,7 @@ class LanguageController extends PrestaShopAdminController
 
         try {
             $languageForm->handleRequest($request);
-            $result = $languageFormHandler->handleFor((int) $languageId, $languageForm);
+            $result = $languageFormHandler->handleFor($languageId, $languageForm);
 
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash(
@@ -191,7 +191,7 @@ class LanguageController extends PrestaShopAdminController
     public function deleteAction(int $languageId): RedirectResponse
     {
         try {
-            $this->dispatchCommand(new DeleteLanguageCommand((int) $languageId));
+            $this->dispatchCommand(new DeleteLanguageCommand($languageId));
 
             $this->addFlash('success', $this->trans('Successful deletion', [], 'Admin.Notifications.Success'));
         } catch (LanguageException $languageException) {
@@ -233,10 +233,10 @@ class LanguageController extends PrestaShopAdminController
     {
         try {
             /** @var EditableLanguage $editableLanguage */
-            $editableLanguage = $this->dispatchQuery(new GetLanguageForEditing((int) $languageId));
+            $editableLanguage = $this->dispatchQuery(new GetLanguageForEditing($languageId));
 
             $this->dispatchCommand(new ToggleLanguageStatusCommand(
-                (int) $languageId,
+                $languageId,
                 ! $editableLanguage->isActive()
             ));
 

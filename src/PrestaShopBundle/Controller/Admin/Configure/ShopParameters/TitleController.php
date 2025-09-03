@@ -110,9 +110,9 @@ class TitleController extends PrestaShopAdminController
         FormHandlerInterface $titleFormHandler,
     ): Response {
         try {
-            $titleForm = $titleFormBuilder->getFormFor((int) $titleId);
+            $titleForm = $titleFormBuilder->getFormFor($titleId);
             $titleForm->handleRequest($request);
-            $result = $titleFormHandler->handleFor((int) $titleId, $titleForm);
+            $result = $titleFormHandler->handleFor($titleId, $titleForm);
             if ($result->isSubmitted() && $result->isValid()) {
                 $this->addFlash('success', $this->trans('Update successful', [], 'Admin.Notifications.Success'));
 

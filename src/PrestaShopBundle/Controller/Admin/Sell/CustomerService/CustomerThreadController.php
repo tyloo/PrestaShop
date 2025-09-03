@@ -361,7 +361,7 @@ class CustomerThreadController extends PrestaShopAdminController
     {
         try {
             $this->dispatchCommand(
-                new UpdateCustomerThreadStatusCommand((int) $customerThreadId, $newStatus)
+                new UpdateCustomerThreadStatusCommand($customerThreadId, $newStatus)
             );
 
             $this->addFlash(
