@@ -110,7 +110,7 @@ final class HookDataCollector extends DataCollector
     /**
      * @return array a better representation of arguments for HTML rendering
      */
-    private function stringifyHookArguments(array &$hooksList)
+    private function stringifyHookArguments(array &$hooksList): array
     {
         foreach ($hooksList as &$hookList) {
             foreach ($hookList as &$hook) {

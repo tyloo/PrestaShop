@@ -83,10 +83,7 @@ class YamlModuleLoader extends Loader
         return $this->modifyRoutes($loadedRoutes);
     }
 
-    /**
-     * @return RouteCollection
-     */
-    private function modifyRoutes(RouteCollection $routes)
+    private function modifyRoutes(RouteCollection $routes): RouteCollection
     {
         foreach ($routes->getIterator() as $route) {
             if ($route->hasDefault('_disable_module_prefix') && $route->getDefault('_disable_module_prefix') === true) {

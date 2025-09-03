@@ -285,10 +285,7 @@ class StockMovementRepository extends StockManagementRepository
         return 'ORDER BY sm.id_stock_mvt DESC';
     }
 
-    /**
-     * @return array
-     */
-    private function addOrderLink(array $rows)
+    private function addOrderLink(array $rows): array
     {
         foreach ($rows as &$row) {
             if ($row['id_order']) {

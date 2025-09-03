@@ -1501,7 +1501,7 @@ class XmlLoader
      *
      * @param string $entity
      */
-    protected function rewriteRelationedData($entity, array $data)
+    protected function rewriteRelationedData($entity, array $data): array
     {
         $xml = $this->fileLoader->load($entity);
         foreach ($xml->fields->field as $field) {

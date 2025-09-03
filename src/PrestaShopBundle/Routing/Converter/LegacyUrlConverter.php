@@ -118,10 +118,7 @@ final class LegacyUrlConverter
         return $this->router->generate($legacyRoute->getRouteName(), $queryParameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    /**
-     * @return array
-     */
-    private function convertLegacyParameters(array $parameters, LegacyRoute $legacyRoute)
+    private function convertLegacyParameters(array $parameters, LegacyRoute $legacyRoute): array
     {
         $legacyAction = $this->getActionFromParameters($parameters);
 

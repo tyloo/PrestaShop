@@ -333,7 +333,7 @@ class StockRepository extends StockManagementRepository
         return $this->totalCombinations[$row['product_id']];
     }
 
-    private function addEditProductLink(array $rows)
+    private function addEditProductLink(array $rows): array
     {
         $router = $this->container->get('router');
 

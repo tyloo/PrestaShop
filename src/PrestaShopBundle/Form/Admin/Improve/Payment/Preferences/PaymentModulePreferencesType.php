@@ -39,10 +39,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PaymentModulePreferencesType extends TranslatorAwareType
 {
-    /**
-     * @var array
-     */
-    private $paymentModules;
+    private readonly array $paymentModules;
 
     public function __construct(
         TranslatorInterface $translator,
@@ -223,10 +220,8 @@ class PaymentModulePreferencesType extends TranslatorAwareType
 
     /**
      * Sort payment modules by display name.
-     *
-     * @return array
      */
-    private function sortPaymentModules(array $paymentModules)
+    private function sortPaymentModules(array $paymentModules): array
     {
         $sortingBy = [];
 
