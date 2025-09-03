@@ -81,7 +81,9 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
             throw new RuntimeException($msg);
         }
 
-        for ($i = 0; $i < \count($data); ++$i) {
+        $counter = \count($data);
+
+        for ($i = 0; $i < $counter; ++$i) {
             $shipmentData = $data[$i];
             $shipment = $shipments[$i];
             $carrierReference = $data[$i]['carrier'];
@@ -112,8 +114,9 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
         $shipmentProducts = $this->getQueryBus()->handle(
             new GetShipmentProducts($shipmentId)
         );
+        $counter = \count($shipmentProducts);
 
-        for ($i = 0; $i < \count($shipmentProducts); ++$i) {
+        for ($i = 0; $i < $counter; ++$i) {
             Assert::assertEquals($shipmentProducts[$i]->getQuantity(), (int) $data[$i]['quantity']);
             Assert::assertEquals($shipmentProducts[$i]->getProductName(), $data[$i]['product_name']);
         }
@@ -182,8 +185,9 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
         $testAvailableShipmentForProduct = $this->getQueryBus()->handle(
             new ListAvailableShipments($orderId, $orderDetailsId)
         );
+        $counter = \count($testAvailableShipmentForProduct);
 
-        for ($i = 0; $i < \count($testAvailableShipmentForProduct); ++$i) {
+        for ($i = 0; $i < $counter; ++$i) {
             Assert::assertEquals($testAvailableShipmentForProduct[$i]->getShipmentName(), $data[$i]['shipment_name']);
             Assert::assertEquals($testAvailableShipmentForProduct[$i]->getHandleProduct(), (bool) $data[$i]['can_handle_merge']);
         }

@@ -97,7 +97,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
      */
     public function shopWithNameExists(string $reference, string $shopName): void
     {
-        (int) $shopId = Shop::getIdByName($shopName);
+        $shopId = Shop::getIdByName($shopName);
 
         if (! $shopId) {
             throw new RuntimeException(\sprintf('Shop with name "%s" does not exist', $shopName));

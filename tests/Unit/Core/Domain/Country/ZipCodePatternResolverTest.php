@@ -83,7 +83,7 @@ class ZipCodePatternResolverTest extends TestCase
         ];
 
         return array_map(function ($a, $b) {
-            array_push($a, $b);
+            $a[] = $b;
 
             return $a;
         }, $this->getPatterns(), $expectedResults);
@@ -110,7 +110,7 @@ class ZipCodePatternResolverTest extends TestCase
         ];
 
         return array_map(function ($a, $b) {
-            array_push($a, $b);
+            $a[] = $b;
 
             return $a;
         }, $this->getPatterns(), $expectedResults);

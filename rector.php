@@ -27,6 +27,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -53,8 +54,11 @@ return RectorConfig::configure()
         doctrine: true,
     )
     ->withTypeCoverageLevel(20) // max = 53
-    ->withDeadCodeLevel(35) // max = 51
-    ->withCodeQualityLevel(35) // max = 74
+    ->withDeadCodeLevel(40) // max = 51
+    ->withCodeQualityLevel(40) // max = 74
     ->withCodingStyleLevel(25) // max = 25
+    ->withSkip([
+        UnwrapFutureCompatibleIfPhpVersionRector::class,
+    ])
     ->withParallel()
 ;
