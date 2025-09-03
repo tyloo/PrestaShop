@@ -174,7 +174,7 @@ class ShopGroupCore extends ObjectModel
                 FROM `' . _DB_PREFIX_ . 'customer`
                 WHERE `id_shop` IN (' . implode(', ', $list_shops) . ')'
             );
-            if ($total_customer) {
+            if ($total_customer !== 0) {
                 return true;
             }
         }
@@ -185,7 +185,7 @@ class ShopGroupCore extends ObjectModel
                 FROM `' . _DB_PREFIX_ . 'orders`
                 WHERE `id_shop` IN (' . implode(', ', $list_shops) . ')'
             );
-            if ($total_order) {
+            if ($total_order !== 0) {
                 return true;
             }
         }

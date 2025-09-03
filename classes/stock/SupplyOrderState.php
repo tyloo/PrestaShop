@@ -190,7 +190,7 @@ class SupplyOrderStateCore extends ObjectModel
         $query->select('sl.name, s.id_supply_order_state');
         $query->from('supply_order_state', 's');
         $query->leftjoin('supply_order_state_lang', 'sl', 's.id_supply_order_state = sl.id_supply_order_state AND sl.id_lang=' . (int) $id_lang);
-        if ($ids) {
+        if ($ids !== []) {
             $query->where('s.id_supply_order_state NOT IN(' . implode(',', array_map('intval', $ids)) . ')');
         }
 

@@ -80,7 +80,7 @@ class GroupReductionCore extends ObjectModel
 
         $ids = array_column($products, 'id_product');
 
-        if ($ids) {
+        if ($ids !== []) {
             Db::getInstance()->delete('product_group_reduction_cache', 'id_product IN (' . implode(', ', $ids) . ')');
         }
 
@@ -129,7 +129,7 @@ class GroupReductionCore extends ObjectModel
         $ids = array_column($products, 'id_product');
 
         $result = true;
-        if ($ids) {
+        if ($ids !== []) {
             $result &= Db::getInstance()->update('product_group_reduction_cache', [
                 'reduction' => (float) $this->reduction,
             ], 'id_product IN(' . implode(', ', $ids) . ') AND id_group = ' . (int) $this->id_group);

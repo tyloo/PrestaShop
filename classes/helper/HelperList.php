@@ -334,7 +334,7 @@ class HelperListCore extends Helper
 
         // key_to_get is used to display the correct product category or cms category after a position change
         $identifier = in_array($this->identifier, ['id_category', 'id_cms_category'], true) ? '_parent' : '';
-        if ($identifier) {
+        if ($identifier !== '' && $identifier !== '0') {
             $key_to_get = 'id_' . ($this->is_cms ? 'cms_' : '') . 'category' . $identifier;
         }
 
@@ -722,7 +722,7 @@ class HelperListCore extends Helper
         /* Determine current page number */
         $page = (int) Tools::getValue('submitFilter' . $this->list_id);
 
-        if (! $page) {
+        if ($page === 0) {
             $page = 1;
         }
 

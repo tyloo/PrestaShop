@@ -265,7 +265,7 @@ class ImageManagerCore
             }
         }
 
-        if (! $sourceWidth) {
+        if ($sourceWidth === 0) {
             $error = self::ERROR_FILE_WIDTH;
 
             return false;
@@ -327,7 +327,7 @@ class ImageManagerCore
         }
 
         $srcImage = ImageManager::create($sourceFileType, $sourceFile);
-        if ($rotate) {
+        if ($rotate !== 0) {
             /** @phpstan-ignore-next-line */
             $srcImage = imagerotate($srcImage, $rotate, 0);
         }
@@ -433,11 +433,11 @@ class ImageManagerCore
         // Try with exec command and file binary
         if (! $mimeType && function_exists('exec')) {
             $mimeType = trim(exec('file -b --mime-type ' . escapeshellarg($filename)));
-            if (! $mimeType) {
+            if ($mimeType === '' || $mimeType === '0') {
                 $mimeType = trim(exec('file --mime ' . escapeshellarg($filename)));
             }
 
-            if (! $mimeType) {
+            if ($mimeType === '' || $mimeType === '0') {
                 $mimeType = trim(exec('file -bi ' . escapeshellarg($filename)));
             }
         }
@@ -874,9 +874,7 @@ class ImageManagerCore
                         $src_height
                     )) {
                         // the last image should not be added in the candidate list if it's bigger than the original image
-                        if ($tgt_width <= $src_width && $tgt_height <= $src_height) {
-                            $path_infos[] = [$tgt_width, $tgt_height, $path . '-' . stripslashes((string) $image_type['name']) . '.jpg'];
-                        }
+                        $path_infos[] = [$tgt_width, $tgt_height, $path . '-' . stripslashes((string) $image_type['name']) . '.jpg'];
 
                         if ($entity === 'products') {
                             if (is_file(_PS_TMP_IMG_DIR_ . 'product_mini_' . (int) $id_entity . '.jpg')) {

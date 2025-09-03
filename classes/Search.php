@@ -474,7 +474,7 @@ class SearchCore
         $sqlGroups = '';
         if (Group::isFeatureActive()) {
             $groups = FrontController::getCurrentCustomerGroups();
-            $sqlGroups = 'AND cg.`id_group` ' . (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
+            $sqlGroups = 'AND cg.`id_group` ' . (count($groups) > 0 ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
         }
 
         // Select products from the list of IDs that should be displayed and can be returned.
@@ -679,7 +679,7 @@ class SearchCore
         $sql = '';
         if (is_array($weight_array)) {
             foreach ($weight_array as $key => $weight) {
-                if ((int) $weight) {
+                if ((int) $weight !== 0) {
                     switch ($key) {
                         case 'pa_reference':
                             $sql .= ', pa.reference AS pa_reference';
@@ -737,7 +737,7 @@ class SearchCore
 
         if (is_array($weight_array)) {
             foreach ($weight_array as $key => $weight) {
-                if ((int) $weight) {
+                if ((int) $weight !== 0) {
                     switch ($key) {
                         case 'pname':
                             $sql .= ', pl.name pname';
@@ -925,15 +925,15 @@ class SearchCore
             $products_array = [];
             // Now each non-indexed product is processed one by one, language by language
             foreach ($products as $product) {
-                if ((int) $weight_array['tags']) {
+                if ((int) $weight_array['tags'] !== 0) {
                     $product['tags'] = Search::getTags($db, (int) $product['id_product'], (int) $product['id_lang']);
                 }
 
-                if ((int) $weight_array['attributes']) {
+                if ((int) $weight_array['attributes'] !== 0) {
                     $product['attributes'] = Search::getAttributes($db, (int) $product['id_product'], (int) $product['id_lang']);
                 }
 
-                if ((int) $weight_array['features']) {
+                if ((int) $weight_array['features'] !== 0) {
                     $product['features'] = Search::getFeatures($db, (int) $product['id_product'], (int) $product['id_lang']);
                 }
 
@@ -959,7 +959,7 @@ class SearchCore
                 }
 
                 // If we find words that need to be indexed, they're added to the word table in the database
-                if (is_array($product_array) && ! empty($product_array)) {
+                if (! empty($product_array)) {
                     $query_array = [];
                     $query_array2 = [];
                     foreach ($product_array as $word => $weight) {
@@ -969,7 +969,7 @@ class SearchCore
                         }
                     }
 
-                    if (is_array($query_array) && ! empty($query_array)) {
+                    if (! empty($query_array)) {
                         // The words are inserted...
                         $db->execute('
 						INSERT IGNORE INTO ' . _DB_PREFIX_ . 'search_word (id_lang, id_shop, word)
@@ -977,7 +977,7 @@ class SearchCore
                     }
 
                     $word_ids_by_word = [];
-                    if (is_array($query_array2) && ! empty($query_array2)) {
+                    if (! empty($query_array2)) {
                         // ...then their IDs are retrieved
                         $added_words = $db->executeS('
 						SELECT sw.id_word, sw.word
@@ -1095,7 +1095,7 @@ class SearchCore
         $sqlGroups = '';
         if (Group::isFeatureActive()) {
             $groups = FrontController::getCurrentCustomerGroups();
-            $sqlGroups = 'AND cg.`id_group` ' . (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
+            $sqlGroups = 'AND cg.`id_group` ' . (count($groups) > 0 ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
         }
 
         if ($count) {

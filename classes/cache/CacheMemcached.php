@@ -92,10 +92,8 @@ class CacheMemcachedCore extends Cache
 
         $result = $this->memcached->set($key, $value, $ttl);
 
-        if ($result === false) {
-            if ($this->memcached->getResultCode() === Memcached::RES_E2BIG) {
-                $this->setAdjustTableCacheSize(true);
-            }
+        if ($result === false && $this->memcached->getResultCode() === Memcached::RES_E2BIG) {
+            $this->setAdjustTableCacheSize(true);
         }
 
         return $result;

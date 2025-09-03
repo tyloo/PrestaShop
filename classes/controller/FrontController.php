@@ -316,7 +316,7 @@ class FrontControllerCore extends Controller
             $has_country = isset($this->context->cookie->iso_code_country) && $this->context->cookie->iso_code_country;
             $has_address_type = false;
 
-            if ((int) $this->context->cookie->id_cart) {
+            if ((int) $this->context->cookie->id_cart !== 0) {
                 $cart = new Cart((int) $this->context->cookie->id_cart);
                 if (Validate::isLoadedObject($cart)) {
                     $has_address_type = isset($cart->{Configuration::get('PS_TAX_ADDRESS_TYPE')}) && $cart->{Configuration::get('PS_TAX_ADDRESS_TYPE')};
@@ -364,7 +364,7 @@ class FrontControllerCore extends Controller
          * If we have an information about some cart in the cookie, we will try to use it, but we need to properly validate it.
          * It can be deleted, order already placed for it and other edge scenarios.
          */
-        if ((int) $this->context->cookie->id_cart) {
+        if ((int) $this->context->cookie->id_cart !== 0) {
             if (! isset($cart)) {
                 $cart = new Cart((int) $this->context->cookie->id_cart);
             }
@@ -875,65 +875,63 @@ class FrontControllerCore extends Controller
      */
     protected function geolocationManagement($defaultCountry)
     {
-        if (! in_array(Tools::getRemoteAddr(), ['127.0.0.1', '::1'], true) && ! Tools::isPHPCLI()) {
-            /* Check if Maxmind Database exists */
-            if (@filemtime(_PS_GEOIP_DIR_ . _PS_GEOIP_CITY_FILE_)) {
-                if (! isset($this->context->cookie->iso_code_country) || (isset($this->context->cookie->iso_code_country) && ! in_array(strtoupper($this->context->cookie->iso_code_country), explode(';', Configuration::get('PS_ALLOWED_COUNTRIES')), true))) {
-                    $reader = new GeoIp2\Database\Reader(_PS_GEOIP_DIR_ . _PS_GEOIP_CITY_FILE_);
+        /* Check if Maxmind Database exists */
+        if (! in_array(Tools::getRemoteAddr(), ['127.0.0.1', '::1'], true) && ! Tools::isPHPCLI() && @filemtime(_PS_GEOIP_DIR_ . _PS_GEOIP_CITY_FILE_)) {
+            if (! isset($this->context->cookie->iso_code_country) || (isset($this->context->cookie->iso_code_country) && ! in_array(strtoupper($this->context->cookie->iso_code_country), explode(';', Configuration::get('PS_ALLOWED_COUNTRIES')), true))) {
+                $reader = new GeoIp2\Database\Reader(_PS_GEOIP_DIR_ . _PS_GEOIP_CITY_FILE_);
 
-                    try {
-                        $record = $reader->city(Tools::getRemoteAddr());
-                    } catch (GeoIp2\Exception\AddressNotFoundException) {
-                        $record = null;
-                    }
+                try {
+                    $record = $reader->city(Tools::getRemoteAddr());
+                } catch (GeoIp2\Exception\AddressNotFoundException) {
+                    $record = null;
+                }
 
-                    if (is_object($record) && Validate::isLanguageIsoCode($record->country->isoCode) && (int) Country::getByIso(strtoupper((string) $record->country->isoCode)) !== 0) {
-                        if (! in_array(strtoupper((string) $record->country->isoCode), explode(';', Configuration::get('PS_ALLOWED_COUNTRIES')), true) && ! FrontController::isInWhitelistForGeolocation()) {
-                            if (Configuration::get('PS_GEOLOCATION_BEHAVIOR') === _PS_GEOLOCATION_NO_CATALOG_) {
-                                $this->restrictedCountry = Country::GEOLOC_FORBIDDEN;
-                            } elseif (Configuration::get('PS_GEOLOCATION_BEHAVIOR') === _PS_GEOLOCATION_NO_ORDER_) {
-                                $this->restrictedCountry = Country::GEOLOC_CATALOG_MODE;
-                                $this->warning[] = $this->trans('You cannot place a new order from your country (%s).', [htmlspecialchars((string) $record->country->name)], 'Shop.Notifications.Warning');
-                            }
-                        } else {
-                            $hasBeenSet = ! isset($this->context->cookie->iso_code_country);
-                            $this->context->cookie->iso_code_country = strtoupper((string) $record->country->isoCode);
+                if (is_object($record) && Validate::isLanguageIsoCode($record->country->isoCode) && (int) Country::getByIso(strtoupper((string) $record->country->isoCode)) !== 0) {
+                    if (! in_array(strtoupper((string) $record->country->isoCode), explode(';', Configuration::get('PS_ALLOWED_COUNTRIES')), true) && ! FrontController::isInWhitelistForGeolocation()) {
+                        if (Configuration::get('PS_GEOLOCATION_BEHAVIOR') === _PS_GEOLOCATION_NO_CATALOG_) {
+                            $this->restrictedCountry = Country::GEOLOC_FORBIDDEN;
+                        } elseif (Configuration::get('PS_GEOLOCATION_BEHAVIOR') === _PS_GEOLOCATION_NO_ORDER_) {
+                            $this->restrictedCountry = Country::GEOLOC_CATALOG_MODE;
+                            $this->warning[] = $this->trans('You cannot place a new order from your country (%s).', [htmlspecialchars((string) $record->country->name)], 'Shop.Notifications.Warning');
                         }
+                    } else {
+                        $hasBeenSet = ! isset($this->context->cookie->iso_code_country);
+                        $this->context->cookie->iso_code_country = strtoupper((string) $record->country->isoCode);
                     }
                 }
+            }
 
-                if (isset($this->context->cookie->iso_code_country) && $this->context->cookie->iso_code_country && ! Validate::isLanguageIsoCode($this->context->cookie->iso_code_country)) {
-                    $this->context->cookie->iso_code_country = Country::getIsoById((int) Configuration::get('PS_COUNTRY_DEFAULT'));
+            if (isset($this->context->cookie->iso_code_country) && $this->context->cookie->iso_code_country && ! Validate::isLanguageIsoCode($this->context->cookie->iso_code_country)) {
+                $this->context->cookie->iso_code_country = Country::getIsoById((int) Configuration::get('PS_COUNTRY_DEFAULT'));
+            }
+
+            if (isset($this->context->cookie->iso_code_country) && ($idCountry = (int) Country::getByIso(strtoupper($this->context->cookie->iso_code_country)))) {
+                /* Update defaultCountry */
+                if ($defaultCountry->iso_code !== $this->context->cookie->iso_code_country) {
+                    $defaultCountry = new Country($idCountry);
                 }
 
-                if (isset($this->context->cookie->iso_code_country) && ($idCountry = (int) Country::getByIso(strtoupper($this->context->cookie->iso_code_country)))) {
-                    /* Update defaultCountry */
-                    if ($defaultCountry->iso_code !== $this->context->cookie->iso_code_country) {
-                        $defaultCountry = new Country($idCountry);
-                    }
-
-                    if (isset($hasBeenSet) && $hasBeenSet) {
-                        $this->context->cookie->id_currency = (int) ($defaultCountry->id_currency ? (int) $defaultCountry->id_currency : Currency::getDefaultCurrencyId());
-                    }
-
-                    return $defaultCountry;
+                if (isset($hasBeenSet) && $hasBeenSet) {
+                    $this->context->cookie->id_currency = (int) ($defaultCountry->id_currency ? (int) $defaultCountry->id_currency : Currency::getDefaultCurrencyId());
                 }
 
-                if (Configuration::get('PS_GEOLOCATION_NA_BEHAVIOR') === _PS_GEOLOCATION_NO_CATALOG_ && ! FrontController::isInWhitelistForGeolocation()) {
-                    $this->restrictedCountry = Country::GEOLOC_FORBIDDEN;
-                } elseif (Configuration::get('PS_GEOLOCATION_NA_BEHAVIOR') === _PS_GEOLOCATION_NO_ORDER_ && ! FrontController::isInWhitelistForGeolocation()) {
-                    $this->restrictedCountry = Country::GEOLOC_CATALOG_MODE;
-                    $countryName = $this->trans('Undefined', [], 'Shop.Theme.Global');
-                    if (isset($record->country->name) && $record->country->name) {
-                        $countryName = $record->country->name;
-                    }
+                return $defaultCountry;
+            }
 
-                    $this->warning[] = $this->trans(
-                        'You cannot place a new order from your country (%s).',
-                        [htmlspecialchars($countryName)],
-                        'Shop.Notifications.Warning'
-                    );
+            if (Configuration::get('PS_GEOLOCATION_NA_BEHAVIOR') === _PS_GEOLOCATION_NO_CATALOG_ && ! FrontController::isInWhitelistForGeolocation()) {
+                $this->restrictedCountry = Country::GEOLOC_FORBIDDEN;
+            } elseif (Configuration::get('PS_GEOLOCATION_NA_BEHAVIOR') === _PS_GEOLOCATION_NO_ORDER_ && ! FrontController::isInWhitelistForGeolocation()) {
+                $this->restrictedCountry = Country::GEOLOC_CATALOG_MODE;
+                $countryName = $this->trans('Undefined', [], 'Shop.Theme.Global');
+                if (isset($record->country->name) && $record->country->name) {
+                    $countryName = $record->country->name;
                 }
+
+                $this->warning[] = $this->trans(
+                    'You cannot place a new order from your country (%s).',
+                    [htmlspecialchars($countryName)],
+                    'Shop.Notifications.Warning'
+                );
             }
         }
 
@@ -1408,7 +1406,7 @@ class FrontControllerCore extends Controller
         }
 
         // When using content_only, there will be no header, footer and sidebars
-        if ($content_only) {
+        if ($content_only !== 0) {
             $layout = 'layout-content-only';
         }
 
@@ -1932,7 +1930,7 @@ class FrontControllerCore extends Controller
             $page_name = 'module-' . $m[1] . '-' . str_replace(['.php', '/'], ['', '-'], $m[2]);
         } else {
             $page_name = Dispatcher::getInstance()->getController();
-            $page_name = (preg_match('/^[0-9]/', (string) $page_name) ? 'page_' . $page_name : $page_name);
+            $page_name = (preg_match('/^\d/', (string) $page_name) ? 'page_' . $page_name : $page_name);
         }
 
         return $page_name;

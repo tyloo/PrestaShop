@@ -202,7 +202,7 @@ class OrderSlipCore extends ObjectModel
     public function addSlipDetail($orderDetailList, $productQtyList)
     {
         foreach ($orderDetailList as $key => $id_order_detail) {
-            if ($qty = (int) $productQtyList[$key]) {
+            if (($qty = (int) $productQtyList[$key]) !== 0) {
                 $order_detail = new OrderDetail((int) $id_order_detail);
 
                 if (Validate::isLoadedObject($order_detail)) {
@@ -595,7 +595,7 @@ class OrderSlipCore extends ObjectModel
                 WHERE `id_order_detail` = ' . (int) $order_slip_details['id_order_detail']
             );
 
-            if (is_array($row) === true) {
+            if (is_array($row)) {
                 if (! isset($ecotax_detail[$row['rate']])) {
                     $ecotax_detail[$row['rate']] = ['ecotax_tax_incl' => 0, 'ecotax_tax_excl' => 0, 'rate' => $row['rate']];
                 }

@@ -434,7 +434,7 @@ class CMSCategoryCore extends ObjectModel
      */
     public static function hideCMSCategoryPosition($name)
     {
-        return preg_replace('/^[0-9]+\./', '', $name);
+        return preg_replace('/^\d+\./', '', $name);
     }
 
     /**

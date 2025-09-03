@@ -32,8 +32,6 @@ class SmartyDevTemplateCore extends Smarty_Internal_Template
 {
     /**
      * @param SmartyDevTemplateCore|null $template
-     * @param null                       $cache_id
-     * @param null                       $compile_id
      * @param object                     $parent
      * @param false                      $display
      * @param bool                       $merge_tpl_vars

@@ -360,7 +360,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
     public function getFirst()
     {
         $this->getAll();
-        if (! count($this)) {
+        if (count($this) === 0) {
             return false;
         }
 
@@ -375,7 +375,7 @@ class PrestaShopCollectionCore implements Iterator, ArrayAccess, Countable
     public function getLast()
     {
         $this->getAll();
-        if (! count($this)) {
+        if (count($this) === 0) {
             return false;
         }
 

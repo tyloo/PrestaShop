@@ -54,7 +54,7 @@ class ValidateCore
 
     public static function isIp2Long($ip)
     {
-        return preg_match('#^-?[0-9]+$#', (string) $ip);
+        return preg_match('#^-?\d+$#', (string) $ip);
     }
 
     /**
@@ -188,7 +188,7 @@ class ValidateCore
      */
     public static function isImageSize($size)
     {
-        return preg_match('/^[0-9]{1,4}$/', $size);
+        return preg_match('/^\d{1,4}$/', $size);
     }
 
     /**
@@ -304,7 +304,7 @@ class ValidateCore
      */
     public static function isPrice($price)
     {
-        return preg_match('/^[0-9]{1,10}(\.[0-9]{1,9})?$/', $price);
+        return preg_match('/^\d{1,10}(\.\d{1,9})?$/', $price);
     }
 
     /**
@@ -316,7 +316,7 @@ class ValidateCore
      */
     public static function isNegativePrice($price)
     {
-        return preg_match('/^[-]?[0-9]{1,10}(\.[0-9]{1,9})?$/', $price);
+        return preg_match('/^[-]?\d{1,10}(\.\d{1,9})?$/', $price);
     }
 
     /**
@@ -627,7 +627,7 @@ class ValidateCore
      */
     public static function isDateFormat($date)
     {
-        return (bool) preg_match('/^([0-9]{4})-((0?[0-9])|(1[0-2]))-((0?[0-9])|([1-2][0-9])|(3[01]))( [0-9]{2}:[0-9]{2}:[0-9]{2})?$/', $date);
+        return (bool) preg_match('/^(\d{4})-((0?\d)|(1[0-2]))-((0?\d)|([1-2]\d)|(3[01]))( \d{2}:\d{2}:\d{2})?$/', $date);
     }
 
     /**
@@ -639,7 +639,7 @@ class ValidateCore
      */
     public static function isDate($date)
     {
-        if (! preg_match('/^([0-9]{4})-((?:0?[0-9])|(?:1[0-2]))-((?:0?[0-9])|(?:[1-2][0-9])|(?:3[01]))( [0-9]{2}:[0-9]{2}:[0-9]{2})?$/', $date, $matches)) {
+        if (! preg_match('/^(\d{4})-((?:0?\d)|(?:1[0-2]))-((?:0?\d)|(?:[1-2]\d)|(?:3[01]))( \d{2}:\d{2}:\d{2})?$/', $date, $matches)) {
             return false;
         }
 
@@ -713,7 +713,7 @@ class ValidateCore
      */
     public static function isEan13($ean13)
     {
-        return ! $ean13 || preg_match('/^[0-9]{0,13}$/', $ean13);
+        return ! $ean13 || preg_match('/^\d{0,13}$/', $ean13);
     }
 
     /**
@@ -745,7 +745,7 @@ class ValidateCore
      */
     public static function isUpc($upc)
     {
-        return ! $upc || preg_match('/^[0-9]{0,12}$/', $upc);
+        return ! $upc || preg_match('/^\d{0,12}$/', $upc);
     }
 
     /**
@@ -1159,7 +1159,7 @@ class ValidateCore
      */
     public static function isBoolId($ids)
     {
-        return (bool) preg_match('#^[01]_[0-9]+$#', $ids);
+        return (bool) preg_match('#^[01]_\d+$#', $ids);
     }
 
     /**
@@ -1311,7 +1311,7 @@ class ValidateCore
 
     public static function isPrestaShopVersion($version)
     {
-        return preg_match('/^[0-1]\.[0-9]{1,2}(\.[0-9]{1,2}){0,2}$/', (string) $version) && ip2long($version);
+        return preg_match('/^[0-1]\.\d{1,2}(\.\d{1,2}){0,2}$/', (string) $version) && ip2long($version);
     }
 
     public static function isOrderInvoiceNumber($id)

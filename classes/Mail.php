@@ -671,7 +671,7 @@ class MailCore extends ObjectModel
             ]);
 
             // Create new message and DKIM sign it, if enabled and all data for signature are provided
-            if ((bool) $configuration['PS_MAIL_DKIM_ENABLE'] === true
+            if ((bool) $configuration['PS_MAIL_DKIM_ENABLE']
                 && ! empty($configuration['PS_MAIL_DKIM_DOMAIN'])
                 && ! empty($configuration['PS_MAIL_DKIM_SELECTOR'])
                 && ! empty($configuration['PS_MAIL_DKIM_KEY'])
@@ -832,7 +832,7 @@ class MailCore extends ObjectModel
             ;
 
             /* Create new message and DKIM sign it, if enabled and all data for signature are provided */
-            if ($dkimEnable === true
+            if ($dkimEnable
                 && ! empty($dkimKey)
                 && ! empty($dkimDomain)
                 && ! empty($dkimSelector)

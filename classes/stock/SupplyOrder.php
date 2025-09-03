@@ -552,7 +552,7 @@ class SupplyOrderCore extends ObjectModel
 
         $id_supply_order = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query);
 
-        if (! $id_supply_order) {
+        if ($id_supply_order === 0) {
             return false;
         }
 

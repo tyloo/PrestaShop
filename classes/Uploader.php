@@ -238,8 +238,6 @@ class UploaderCore
     }
 
     /**
-     * @param null $dest
-     *
      * @return array
      */
     public function process($dest = null)

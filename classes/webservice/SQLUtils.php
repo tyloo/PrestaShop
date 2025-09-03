@@ -59,11 +59,10 @@ class SQLUtils
                     $ret .= rtrim($temp, 'OR ') . ')' . "\n";
                 } elseif (preg_match('/^([\d\.:\-\s]+),([\d\.:\-\s]+)$/', $matches[2], $matches3)) {
                     unset($matches3[0]);
-                    if ($matches3 !== []) {
-                        sort($matches3);
-                        [$first, $last] = array_values($matches3); // reset-keys
-                        $ret .= ' AND ' . $tableAlias . '`' . bqSQL($sqlId) . '` BETWEEN "' . pSQL($first) . '" AND "' . pSQL($last) . "\"\n";
-                    }
+                    sort($matches3);
+                    [$first, $last] = array_values($matches3);
+                    // reset-keys
+                    $ret .= ' AND ' . $tableAlias . '`' . bqSQL($sqlId) . '` BETWEEN "' . pSQL($first) . '" AND "' . pSQL($last) . "\"\n";
                 } else {
                     $ret .= ' AND ' . $tableAlias . '`' . bqSQL($sqlId) . '`="' . pSQL($matches[2]) . '"' . "\n";
                 }

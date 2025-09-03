@@ -372,7 +372,7 @@ class StockAvailableCore extends ObjectModel
         }
 
         // If shop list was explicitly set we ignore the shop context
-        if (count($this->id_shop_list)) {
+        if (count($this->id_shop_list) > 0) {
             $id_shop = reset($this->id_shop_list);
         } else {
             $id_shop = (Shop::getContext() !== Shop::CONTEXT_GROUP && $this->id_shop ? $this->id_shop : null);
@@ -449,7 +449,7 @@ class StockAvailableCore extends ObjectModel
         $stockManager = ServiceLocator::get(PrestaShop\PrestaShop\Core\Stock\StockManager::class);
 
         $id_stock_available = (int) StockAvailable::getStockAvailableIdByProductId($id_product, $id_product_attribute, $id_shop);
-        if ($id_stock_available) {
+        if ($id_stock_available !== 0) {
             $stock_available = new StockAvailable($id_stock_available);
 
             $deltaQuantity = (int) $quantity - (int) $stock_available->quantity;
@@ -540,7 +540,7 @@ class StockAvailableCore extends ObjectModel
             if ((int) Db::getInstance()->getValue('SELECT COUNT(*)
 						FROM ' . _DB_PREFIX_ . 'product' . $pa_sql . '_shop
 						WHERE id_product' . $pa_sql . '=' . (int) $id_product_attribute_sql . '
-							AND id_shop IN (' . implode(',', array_map('intval', Shop::getContextListShopID(Shop::SHARE_STOCK))) . ')')) {
+							AND id_shop IN (' . implode(',', array_map('intval', Shop::getContextListShopID(Shop::SHARE_STOCK))) . ')') !== 0) {
                 return true;
             }
         }

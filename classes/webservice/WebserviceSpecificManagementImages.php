@@ -526,13 +526,11 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
             $nodes = scandir($directory, \SCANDIR_SORT_NONE);
             foreach ($nodes as $node) {
                 // avoid too much preg_match...
-                if ($node !== '.' && $node !== '..' && $node !== '.svn') {
-                    if ($this->imageType !== 'products') {
-                        preg_match('/^(\d+)\.jpg*$/Ui', $node, $matches);
-                        if (isset($matches[1])) {
-                            $id = $matches[1];
-                            $this->output .= $this->objOutput->getObjectRender()->renderNodeHeader('image', [], ['id' => $id, 'xlink_resource' => $this->wsObject->wsUrl . 'images/' . $this->imageType . '/' . $id], false);
-                        }
+                if ($node !== '.' && $node !== '..' && $node !== '.svn' && $this->imageType !== 'products') {
+                    preg_match('/^(\d+)\.jpg*$/Ui', $node, $matches);
+                    if (isset($matches[1])) {
+                        $id = $matches[1];
+                        $this->output .= $this->objOutput->getObjectRender()->renderNodeHeader('image', [], ['id' => $id, 'xlink_resource' => $this->wsObject->wsUrl . 'images/' . $this->imageType . '/' . $id], false);
                     }
                 }
             }
@@ -597,7 +595,7 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
                 }
             } elseif ($this->wsObject->method === 'GET' || $this->wsObject->method === 'HEAD') {
                 // display the list of declinated images
-                if ($available_image_ids) {
+                if ($available_image_ids !== []) {
                     $this->output .= $this->objOutput->getObjectRender()->renderNodeHeader('image', [], ['id' => $object_id]);
                     foreach ($available_image_ids as $available_image_id) {
                         $this->output .= $this->objOutput->getObjectRender()->renderNodeHeader('declination', [], ['id' => $available_image_id, 'xlink_resource' => $this->wsObject->wsUrl . 'images/' . $this->imageType . '/' . $object_id . '/' . $available_image_id], false);
@@ -945,7 +943,7 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
     protected function writeImageOnDisk($base_path, $new_path, $dest_width = null, $dest_height = null, $image_types = null, $parent_path = null)
     {
         [$source_width, $source_height, $type, $attr] = getimagesize($base_path);
-        if (! $source_width) {
+        if ($source_width === 0) {
             throw new WebserviceException('Image width was null', [68, 400]);
         }
 

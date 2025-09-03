@@ -436,7 +436,7 @@ class PackCore extends Product
 		FROM `' . _DB_PREFIX_ . 'pack` a
 		WHERE a.`id_product_item` = ' . (int) $id_product);
 
-        if (! (int) $packs) {
+        if ((int) $packs === 0) {
             return [];
         }
 

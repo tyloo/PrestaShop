@@ -630,7 +630,7 @@ class AddressCore extends ObjectModel
                 $address->id_country = (int) $context->country->id;
                 $address->id_state = 0;
                 $address->postcode = '0';
-            } elseif ((int) Configuration::get('PS_SHOP_COUNTRY_ID')) {
+            } elseif ((int) Configuration::get('PS_SHOP_COUNTRY_ID') !== 0) {
                 // set the default address
                 $address = new Address();
                 $address->id_country = (int) Configuration::get('PS_SHOP_COUNTRY_ID');

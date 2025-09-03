@@ -193,7 +193,7 @@ class SupplierCore extends ObjectModel
             $sqlGroups = '';
             if (! $allGroups) {
                 $groups = FrontController::getCurrentCustomerGroups();
-                $sqlGroups = (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
+                $sqlGroups = (count($groups) > 0 ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
             }
 
             $results = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
@@ -232,7 +232,7 @@ class SupplierCore extends ObjectModel
         $nbSuppliers = count($suppliers);
         $rewriteSettings = (int) Configuration::get('PS_REWRITING_SETTINGS');
         for ($i = 0; $i < $nbSuppliers; ++$i) {
-            $suppliers[$i]['link_rewrite'] = ($rewriteSettings ? Tools::str2url($suppliers[$i]['name']) : 0);
+            $suppliers[$i]['link_rewrite'] = ($rewriteSettings !== 0 ? Tools::str2url($suppliers[$i]['name']) : 0);
         }
 
         return $suppliers;
@@ -359,7 +359,7 @@ class SupplierCore extends ObjectModel
         $groups = [];
         if (Group::isFeatureActive()) {
             $groups = FrontController::getCurrentCustomerGroups();
-            $sqlGroups = 'WHERE cg.`id_group` ' . (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
+            $sqlGroups = 'WHERE cg.`id_group` ' . (count($groups) > 0 ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
         }
 
         /* Return only the number of products */
@@ -429,7 +429,7 @@ class SupplierCore extends ObjectModel
         if (Group::isFeatureActive() || $activeCategory) {
             $sql .= 'JOIN `' . _DB_PREFIX_ . 'category_product` cp ON (p.id_product = cp.id_product)';
             if (Group::isFeatureActive()) {
-                $sql .= 'JOIN `' . _DB_PREFIX_ . 'category_group` cg ON (cp.`id_category` = cg.`id_category` AND cg.`id_group` ' . (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '= 1') . ')';
+                $sql .= 'JOIN `' . _DB_PREFIX_ . 'category_group` cg ON (cp.`id_category` = cg.`id_category` AND cg.`id_group` ' . (count($groups) > 0 ? 'IN (' . implode(',', $groups) . ')' : '= 1') . ')';
             }
 
             if ($activeCategory) {
@@ -551,6 +551,6 @@ class SupplierCore extends ObjectModel
 
         $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return count($res) ? $res[0] : [];
+        return count($res) > 0 ? $res[0] : [];
     }
 }

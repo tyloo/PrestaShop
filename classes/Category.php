@@ -980,7 +980,7 @@ class CategoryCore extends ObjectModel
         if (Group::isFeatureActive()) {
             $sqlGroupsJoin = 'LEFT JOIN `' . _DB_PREFIX_ . 'category_group` cg ON (cg.`id_category` = c.`id_category`)';
             $groups = FrontController::getCurrentCustomerGroups();
-            $sqlGroupsWhere = 'AND cg.`id_group` ' . (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Configuration::get('PS_UNIDENTIFIED_GROUP'));
+            $sqlGroupsWhere = 'AND cg.`id_group` ' . (count($groups) > 0 ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Configuration::get('PS_UNIDENTIFIED_GROUP'));
         }
 
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
@@ -1056,7 +1056,7 @@ class CategoryCore extends ObjectModel
 					WHERE cp.`id_category` = ' . (int) $this->id .
                 ($front ? ' AND product_shop.`visibility` IN ("both", "catalog")' : '') .
                 ($active ? ' AND product_shop.`active` = 1' : '') .
-                ($idSupplier ? ' AND p.id_supplier = ' . (int) $idSupplier : '');
+                ($idSupplier !== 0 ? ' AND p.id_supplier = ' . (int) $idSupplier : '');
 
             return (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($sql);
         }
@@ -1122,7 +1122,7 @@ class CategoryCore extends ObjectModel
 					AND cp.`id_category` = ' . (int) $this->id
                     . ($active ? ' AND product_shop.`active` = 1' : '')
                     . ($front ? ' AND product_shop.`visibility` IN ("both", "catalog")' : '')
-                    . ($idSupplier ? ' AND p.id_supplier = ' . (int) $idSupplier : '');
+                    . ($idSupplier !== 0 ? ' AND p.id_supplier = ' . (int) $idSupplier : '');
 
         if ($random === true) {
             $sql .= ' ORDER BY RAND() LIMIT ' . (int) $randomNumberProducts;
@@ -1869,7 +1869,7 @@ class CategoryCore extends ObjectModel
      */
     public static function setNewGroupForHome($idGroup)
     {
-        if (! (int) $idGroup) {
+        if ((int) $idGroup === 0) {
             return false;
         }
 

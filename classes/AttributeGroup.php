@@ -238,16 +238,12 @@ class AttributeGroupCore extends ObjectModel
             }
 
             /* Also delete related attributes */
-            if ($toRemove !== []) {
-                if (! Db::getInstance()->execute('
+            if ($toRemove !== [] && (! Db::getInstance()->execute('
 				DELETE FROM `' . _DB_PREFIX_ . 'attribute_lang`
-				WHERE `id_attribute`	IN (' . implode(',', $toRemove) . ')')
-                || ! Db::getInstance()->execute('
+				WHERE `id_attribute`	IN (' . implode(',', $toRemove) . ')') || ! Db::getInstance()->execute('
 				DELETE FROM `' . _DB_PREFIX_ . 'attribute_shop`
-				WHERE `id_attribute`	IN (' . implode(',', $toRemove) . ')')
-                || ! Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'attribute` WHERE `id_attribute_group` = ' . (int) $this->id)) {
-                    return false;
-                }
+				WHERE `id_attribute`	IN (' . implode(',', $toRemove) . ')') || ! Db::getInstance()->execute('DELETE FROM `' . _DB_PREFIX_ . 'attribute` WHERE `id_attribute_group` = ' . (int) $this->id))) {
+                return false;
             }
 
             static::cleanPositions();

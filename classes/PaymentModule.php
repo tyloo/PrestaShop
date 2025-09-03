@@ -113,7 +113,7 @@ abstract class PaymentModuleCore extends Module
      */
     public function addCheckboxCurrencyRestrictionsForModule(array $shops = [])
     {
-        if (! $shops) {
+        if ($shops === []) {
             $shops = Shop::getShops(true, null, true);
         }
 
@@ -135,7 +135,7 @@ abstract class PaymentModuleCore extends Module
      */
     public function addRadioCurrencyRestrictionsForModule(array $shops = [])
     {
-        if (! $shops) {
+        if ($shops === []) {
             $shops = Shop::getShops(true, null, true);
         }
 
@@ -168,7 +168,7 @@ abstract class PaymentModuleCore extends Module
      */
     public function addCheckboxCarrierRestrictionsForModule(array $shops = [])
     {
-        if (! $shops) {
+        if ($shops === []) {
             $shops = Shop::getShops(true, null, true);
         }
 
@@ -320,24 +320,22 @@ abstract class PaymentModuleCore extends Module
         $cart_rules = $this->context->cart->getCartRules();
         foreach ($cart_rules as $cart_rule) {
             $rule = new CartRule((int) $cart_rule['obj']->id);
-            if (Validate::isLoadedObject($rule)) {
-                if ($error = $rule->checkValidity($this->context, true, true)) {
-                    $this->context->cart->removeCartRule((int) $rule->id);
-                    if (isset($this->context->cookie, $this->context->cookie->id_customer) && $this->context->cookie->id_customer && ! empty($rule->code)) {
-                        Tools::redirect($this->context->link->getPageLink(
-                            'order',
-                            null,
-                            null,
-                            [
-                                'submitAddDiscount' => 1,
-                                'discount_name' => $rule->code,
-                            ]
-                        ));
-                    } else {
-                        $rule_name = $rule->name[(int) $this->context->cart->id_lang] ?? $rule->code;
-                        $error = $this->trans('The cart rule named "%1s" (ID %2s) used in this cart is not valid and has been withdrawn from cart', [htmlspecialchars((string) $rule_name), (int) $rule->id], 'Admin.Payment.Notification');
-                        PrestaShopLogger::addLog($error, 3, 2, 'Cart', (int) $this->context->cart->id);
-                    }
+            if (Validate::isLoadedObject($rule) && $error = $rule->checkValidity($this->context, true, true)) {
+                $this->context->cart->removeCartRule((int) $rule->id);
+                if (isset($this->context->cookie, $this->context->cookie->id_customer) && $this->context->cookie->id_customer && ! empty($rule->code)) {
+                    Tools::redirect($this->context->link->getPageLink(
+                        'order',
+                        null,
+                        null,
+                        [
+                            'submitAddDiscount' => 1,
+                            'discount_name' => $rule->code,
+                        ]
+                    ));
+                } else {
+                    $rule_name = $rule->name[(int) $this->context->cart->id_lang] ?? $rule->code;
+                    $error = $this->trans('The cart rule named "%1s" (ID %2s) used in this cart is not valid and has been withdrawn from cart', [htmlspecialchars((string) $rule_name), (int) $rule->id], 'Admin.Payment.Notification');
+                    PrestaShopLogger::addLog($error, 3, 2, 'Cart', (int) $this->context->cart->id);
                 }
             }
         }
@@ -861,7 +859,7 @@ abstract class PaymentModuleCore extends Module
      */
     public function getCurrency($current_id_currency = null)
     {
-        if (! (int) $current_id_currency) {
+        if ((int) $current_id_currency === 0) {
             $current_id_currency = Context::getContext()->currency->id;
         }
 
@@ -1256,7 +1254,7 @@ abstract class PaymentModuleCore extends Module
 
                 // Set a new voucher code
                 $voucher->code = empty($voucher->code) ? substr(md5($order->id . '-' . $order->id_customer . '-' . $cartRule->id), 0, 16) : $voucher->code . '-2';
-                if (preg_match('/\-([0-9]{1,2})\-([0-9]{1,2})$/', $voucher->code, $matches) && $matches[1] === $matches[2]) {
+                if (preg_match('/\-(\d{1,2})\-(\d{1,2})$/', $voucher->code, $matches) && $matches[1] === $matches[2]) {
                     $voucher->code = preg_replace('/' . $matches[0] . '$/', '-' . (intval($matches[1]) + 1), $voucher->code);
                 }
 

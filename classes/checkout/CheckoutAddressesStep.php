@@ -77,10 +77,8 @@ class CheckoutAddressesStepCore extends AbstractCheckoutStep
         }
 
         if (isset($requestParams['cancelAddress'])) {
-            if ($requestParams['cancelAddress'] === 'invoice') {
-                if ($this->getCheckoutSession()->getCustomerAddressesCount() < 2) {
-                    $this->use_same_address = true;
-                }
+            if ($requestParams['cancelAddress'] === 'invoice' && $this->getCheckoutSession()->getCustomerAddressesCount() < 2) {
+                $this->use_same_address = true;
             }
 
             $this->setCurrent(true);

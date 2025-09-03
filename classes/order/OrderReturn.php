@@ -109,7 +109,7 @@ class OrderReturnCore extends ObjectModel
         /* Classic product return */
         if ($order_detail_list) {
             foreach ($order_detail_list as $key => $order_detail) {
-                if ($qty = (int) $product_qty_list[$key]) {
+                if (($qty = (int) $product_qty_list[$key]) !== 0) {
                     $orderdetail = new OrderDetail((int) $order_detail);
                     $id_customization = $orderdetail->id_customization;
                     Db::getInstance()->insert('order_return_detail', [
@@ -153,10 +153,8 @@ class OrderReturnCore extends ObjectModel
                     return false;
                 }
 
-                if ($qty = (int) $product_qty_list[$key]) {
-                    if ($products[$key]['product_quantity'] - $qty < 0) {
-                        return false;
-                    }
+                if (($qty = (int) $product_qty_list[$key]) !== 0 && $products[$key]['product_quantity'] - $qty < 0) {
+                    return false;
                 }
             }
         }

@@ -202,7 +202,7 @@ abstract class AbstractCheckoutStepCore implements CheckoutStepInterface
         $steps = $this->getCheckoutProcess()->getSteps();
         $next = false;
         foreach ($steps as $step) {
-            if ($next === true) {
+            if ($next) {
                 $step->step_is_current = true;
                 break;
             }

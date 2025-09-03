@@ -583,10 +583,8 @@ class WebserviceOutputBuilderCore
             }
         }
 
-        if ($this->schemaToDisplay === 'blank') {
-            if (isset($field['setter']) && ! $field['setter']) {
-                $show_field = false;
-            }
+        if ($this->schemaToDisplay === 'blank' && (isset($field['setter']) && ! $field['setter'])) {
+            $show_field = false;
         }
 
         // don't set any value for a schema
@@ -696,10 +694,8 @@ class WebserviceOutputBuilderCore
                         $output_details .= $this->renderFlatAssociation($object, $depth, $assoc_name, $association['resource'], $fields_assoc, $value, $parent_details);
                     } else {
                         foreach ($object_assoc as $id) {
-                            if ($class_name !== null) {
-                                $child_object = new $class_name($id);
-                                $output_details .= $this->renderEntity($child_object, $depth - 2 ? 0 : $depth - 2);
-                            }
+                            $child_object = new $class_name($id);
+                            $output_details .= $this->renderEntity($child_object, 0);
                         }
                     }
                 }

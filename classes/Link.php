@@ -116,7 +116,7 @@ class LinkCore
         if (! is_object($product)) {
             if (is_array($product) && isset($product['id_product'])) {
                 $product = new Product($product['id_product'], false, $idLang, $idShop);
-            } elseif ((int) $product) {
+            } elseif ((int) $product !== 0) {
                 $product = new Product((int) $product, false, $idLang, $idShop);
             } else {
                 throw new PrestaShopException('Invalid product vars');
@@ -173,7 +173,7 @@ class LinkCore
         if (! is_object($product)) {
             if (is_array($product) && isset($product['id_product'])) {
                 $params['id'] = $product['id_product'];
-            } elseif ((int) $product) {
+            } elseif ((int) $product !== 0) {
                 $params['id'] = $product;
             } else {
                 throw new PrestaShopException('Invalid product vars');
@@ -409,7 +409,7 @@ class LinkCore
         if (! is_object($category)) {
             if (isset($category['id_category'])) {
                 $category = new Category($category['id_category'], $idLang);
-            } elseif ((int) $category) {
+            } elseif ((int) $category !== 0) {
                 $category = new Category((int) $category, $idLang);
             } else {
                 throw new PrestaShopException('Invalid category vars');

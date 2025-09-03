@@ -118,11 +118,9 @@ class DeliveryOptionsFinderCore
 
                             // If carrier related to a module, check for additionnal data to display
                             $carrier['extraContent'] = '';
-                            if ($carrier['is_module']) {
-                                if ($moduleId = Module::getModuleIdByName($carrier['external_module_name'])) {
-                                    // Hook called only for the module concerned
-                                    $carrier['extraContent'] = Hook::exec('displayCarrierExtraContent', ['carrier' => $carrier], $moduleId);
-                                }
+                            if ($carrier['is_module'] && $moduleId = Module::getModuleIdByName($carrier['external_module_name'])) {
+                                // Hook called only for the module concerned
+                                $carrier['extraContent'] = Hook::exec('displayCarrierExtraContent', ['carrier' => $carrier], $moduleId);
                             }
 
                             $carriers_available[$id_carriers_list] = $carrier;

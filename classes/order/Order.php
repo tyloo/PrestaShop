@@ -570,7 +570,7 @@ class OrderCore extends ObjectModel
 
     public function deleteCustomization($id_customization, $quantity, $order_detail)
     {
-        if (! (int) $this->getCurrentState()) {
+        if ((int) $this->getCurrentState() === 0) {
             return false;
         }
 
@@ -604,27 +604,27 @@ class OrderCore extends ObjectModel
         $email = false;
 
         if ($filters > 0) {
-            if ($filters & OrderState::FLAG_NO_HIDDEN) {
+            if (($filters & OrderState::FLAG_NO_HIDDEN) !== 0) {
                 $no_hidden = true;
             }
 
-            if ($filters & OrderState::FLAG_DELIVERY) {
+            if (($filters & OrderState::FLAG_DELIVERY) !== 0) {
                 $delivery = true;
             }
 
-            if ($filters & OrderState::FLAG_LOGABLE) {
+            if (($filters & OrderState::FLAG_LOGABLE) !== 0) {
                 $logable = true;
             }
 
-            if ($filters & OrderState::FLAG_PAID) {
+            if (($filters & OrderState::FLAG_PAID) !== 0) {
                 $paid = true;
             }
 
-            if ($filters & OrderState::FLAG_SHIPPED) {
+            if (($filters & OrderState::FLAG_SHIPPED) !== 0) {
                 $shipped = true;
             }
 
-            if ($filters & OrderState::FLAG_EMAIL) {
+            if (($filters & OrderState::FLAG_EMAIL) !== 0) {
                 $email = true;
             }
         }
@@ -647,7 +647,7 @@ class OrderCore extends ObjectModel
             ' . ($paid ? ' AND os.paid = 1' : '') . '
             ' . ($shipped ? ' AND os.shipped = 1' : '') . '
             ' . ($email ? ' AND os.send_email = 1' : '') . '
-            ' . ((int) $id_order_state ? ' AND oh.`id_order_state` = ' . (int) $id_order_state : '') . '
+            ' . ((int) $id_order_state !== 0 ? ' AND oh.`id_order_state` = ' . (int) $id_order_state : '') . '
             ORDER BY oh.date_add DESC, oh.id_order_history DESC');
             if ($no_hidden) {
                 return $result;
@@ -752,7 +752,7 @@ class OrderCore extends ObjectModel
                     }
                 }
 
-                if (! $row['product_quantity']) {
+                if ($row['product_quantity'] === 0) {
                     continue;
                 }
             }
@@ -1149,7 +1149,7 @@ class OrderCore extends ObjectModel
                 WHERE 1
                     ' . Shop::addSqlRestriction(false, 'o') . '
                 ORDER BY o.`date_add` DESC
-                ' . ((int) $limit ? 'LIMIT 0, ' . (int) $limit : '');
+                ' . ((int) $limit !== 0 ? 'LIMIT 0, ' . (int) $limit : '');
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
     }
@@ -1303,7 +1303,7 @@ class OrderCore extends ObjectModel
     public function getNumberOfDays()
     {
         $nb_return_days = (int) Configuration::get('PS_ORDER_RETURN_NB_DAYS', null, null, $this->id_shop);
-        if (! $nb_return_days) {
+        if ($nb_return_days === 0) {
             return true;
         }
 
@@ -1387,8 +1387,8 @@ class OrderCore extends ObjectModel
     public function setInvoice($use_existing_payment = false)
     {
         if (! $this->hasInvoice()) {
-            $order_invoice = (int) $this->getOrderInvoiceIdIfHasDelivery() ? new OrderInvoice($id) : new OrderInvoice();
-            $id = (int) $this->getOrderInvoiceIdIfHasDelivery() ? new OrderInvoice($id) : new OrderInvoice();
+            $order_invoice = (int) $this->getOrderInvoiceIdIfHasDelivery() !== 0 ? new OrderInvoice($id) : new OrderInvoice();
+            $id = (int) $this->getOrderInvoiceIdIfHasDelivery() !== 0 ? new OrderInvoice($id) : new OrderInvoice();
             $order_invoice->id_order = $this->id;
             if (! $id) {
                 $order_invoice->number = 0;
@@ -1430,7 +1430,7 @@ class OrderCore extends ObjectModel
                     LEFT JOIN `' . _DB_PREFIX_ . 'order_invoice_payment` oip ON (oip.id_order_payment = op.id_order_payment)
                     WHERE (oip.id_order != ' . (int) $order_invoice->id_order . ' OR oip.id_order IS NULL) AND o.id_order = ' . (int) $order_invoice->id_order);
 
-                if (count($id_order_payments)) {
+                if (count($id_order_payments) > 0) {
                     foreach ($id_order_payments as $order_payment) {
                         Db::getInstance()->execute('
                             INSERT INTO `' . _DB_PREFIX_ . 'order_invoice_payment`
@@ -1922,7 +1922,7 @@ class OrderCore extends ObjectModel
         $order_payment->date_add = ($date ?: null);
 
         // Add time to the date if needed
-        if ($order_payment->date_add !== null && preg_match('/^[0-9]+-[0-9]+-[0-9]+$/', $order_payment->date_add)) {
+        if ($order_payment->date_add !== null && preg_match('/^\d+-\d+-\d+$/', $order_payment->date_add)) {
             $order_payment->date_add .= ' ' . date('H:i:s');
         }
 

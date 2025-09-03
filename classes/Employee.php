@@ -309,7 +309,7 @@ class EmployeeCore extends ObjectModel
         parent::__construct($id, null, $idShop);
 
         if ($idLang !== null) {
-            $this->id_lang = (int) (Language::getLanguage($idLang) !== false) ? $idLang : Configuration::get('PS_LANG_DEFAULT');
+            $this->id_lang = (int) (Language::getLanguage($idLang) !== false) !== 0 ? $idLang : Configuration::get('PS_LANG_DEFAULT');
         }
 
         if ($this->id) {
@@ -875,7 +875,7 @@ class EmployeeCore extends ObjectModel
      */
     public function getDefaultTabClassName()
     {
-        if ($tabId = (int) $this->default_tab) {
+        if (($tabId = (int) $this->default_tab) !== 0) {
             return Tab::getClassNameById($tabId) ?: null;
         }
 

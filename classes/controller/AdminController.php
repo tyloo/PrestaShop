@@ -1290,14 +1290,12 @@ class AdminControllerCore extends Controller
      */
     public function processDeleteImage()
     {
-        if (Validate::isLoadedObject($object = $this->loadObject())) {
-            if ($object->deleteImage()) {
-                $redirect = self::$currentIndex . '&update' . $this->table . '&' . $this->identifier . '=' . (int) Tools::getValue($this->identifier) . '&conf=7&token=' . $this->token;
-                if (! $this->ajax) {
-                    $this->redirect_after = $redirect;
-                } else {
-                    $this->content = 'ok';
-                }
+        if (Validate::isLoadedObject($object = $this->loadObject()) && $object->deleteImage()) {
+            $redirect = self::$currentIndex . '&update' . $this->table . '&' . $this->identifier . '=' . (int) Tools::getValue($this->identifier) . '&conf=7&token=' . $this->token;
+            if (! $this->ajax) {
+                $this->redirect_after = $redirect;
+            } else {
+                $this->content = 'ok';
             }
         }
 
@@ -1496,7 +1494,7 @@ class AdminControllerCore extends Controller
 
                 // Default behavior (save and back)
                 if (empty($this->redirect_after) && $this->redirect_after !== false) {
-                    $this->redirect_after = self::$currentIndex . ($parent_id ? '&' . $this->identifier . '=' . $this->object->id : '') . '&conf=3&token=' . $this->token;
+                    $this->redirect_after = self::$currentIndex . ($parent_id !== 0 ? '&' . $this->identifier . '=' . $this->object->id : '') . '&conf=3&token=' . $this->token;
                 }
             }
         }
@@ -1582,7 +1580,7 @@ class AdminControllerCore extends Controller
 
                         // Default behavior (save and back)
                         if (empty($this->redirect_after) && $this->redirect_after !== false) {
-                            $this->redirect_after = self::$currentIndex . ($parent_id ? '&' . $this->identifier . '=' . $object->id : '') . '&conf=4&token=' . $this->token;
+                            $this->redirect_after = self::$currentIndex . ($parent_id !== 0 ? '&' . $this->identifier . '=' . $object->id : '') . '&conf=4&token=' . $this->token;
                         }
                     }
 
@@ -1687,7 +1685,7 @@ class AdminControllerCore extends Controller
         } elseif (! method_exists($object, 'updatePosition') || ! $object->updatePosition((int) Tools::getValue('way'), (int) Tools::getValue('position'))) {
             $this->errors[] = $this->trans('Failed to update the position.', [], 'Admin.Notifications.Error');
         } else {
-            $id_identifier_str = ($id_identifier = (int) Tools::getValue($this->identifier)) ? '&' . $this->identifier . '=' . $id_identifier : '';
+            $id_identifier_str = (($id_identifier = (int) Tools::getValue($this->identifier)) !== 0) ? '&' . $this->identifier . '=' . $id_identifier : '';
             $redirect = self::$currentIndex . '&' . $this->table . 'Orderby=position&' . $this->table . 'Orderway=asc&conf=5' . $id_identifier_str . '&token=' . $this->token;
             $this->redirect_after = $redirect;
         }
@@ -1793,10 +1791,8 @@ class AdminControllerCore extends Controller
                 }
 
                 // Check if field value on type select is valid
-                if (isset($values['type']) && $values['type'] === 'select' && isset($values['identifier']) && ! empty($values['list'])) {
-                    if (false !== ($value = Tools::getValue($field)) && in_array($value, array_column($values['list'], $values['identifier']), true) === false) {
-                        $this->errors[] = $this->trans('The option selected in the %s field is invalid.', [$values['title']], 'Admin.Notifications.Error');
-                    }
+                if (isset($values['type']) && $values['type'] === 'select' && isset($values['identifier']) && ! empty($values['list']) && ($value = Tools::getValue($field) && in_array($value, array_column($values['list'], $values['identifier']), true) === false)) {
+                    $this->errors[] = $this->trans('The option selected in the %s field is invalid.', [$values['title']], 'Admin.Notifications.Error');
                 }
 
                 // Check field validator
@@ -1822,7 +1818,7 @@ class AdminControllerCore extends Controller
                 }
             }
 
-            if (! count($this->errors)) {
+            if (count($this->errors) === 0) {
                 foreach ($fields as $key => $options) {
                     if (Shop::isFeatureActive() && isset($options['visibility']) && $options['visibility'] > Shop::getContext()) {
                         continue;
@@ -2300,7 +2296,7 @@ class AdminControllerCore extends Controller
         $is_multishop = Shop::isFeatureActive();
 
         // Quick access
-        if ((int) $this->context->employee->id) {
+        if ((int) $this->context->employee->id !== 0) {
             $quick_access = QuickAccess::getQuickAccessesWithToken($this->context->language->id, (int) $this->context->employee->id);
         }
 
@@ -3070,7 +3066,7 @@ class AdminControllerCore extends Controller
 
         self::$currentIndex = $current_index;
 
-        if ((int) Tools::getValue('liteDisplaying')) {
+        if ((int) Tools::getValue('liteDisplaying') !== 0) {
             $this->display_header = false;
             $this->display_header_javascript = true;
             $this->display_footer = false;
@@ -3155,7 +3151,7 @@ class AdminControllerCore extends Controller
         }
 
         // Check multishop context and set right context if need
-        if (! ($this->multishop_context & Shop::getContext())) {
+        if (($this->multishop_context & Shop::getContext()) === 0) {
             if (Shop::getContext() === Shop::CONTEXT_SHOP && ! ($this->multishop_context & Shop::CONTEXT_SHOP)) {
                 Shop::setContext(Shop::CONTEXT_GROUP, Shop::getContextShopGroupID());
             }
@@ -3229,7 +3225,7 @@ class AdminControllerCore extends Controller
                  || Tools::isSubmit('submitAdd' . $this->table . 'AndPreview')
                  || Tools::isSubmit('submitAdd' . $this->table . 'AndBackToParent')) {
             // case 1: updating existing entry
-            if ($this->id_object) {
+            if ($this->id_object !== 0) {
                 if ($this->access('edit')) {
                     $this->action = 'save';
                     $this->display = Tools::isSubmit('submitAdd' . $this->table . 'AndStay') ? 'edit' : 'list';
@@ -3402,7 +3398,7 @@ class AdminControllerCore extends Controller
 
         /* Determine offset from current page */
         $start = 0;
-        if ((int) Tools::getValue('submitFilter' . $this->list_id)) {
+        if ((int) Tools::getValue('submitFilter' . $this->list_id) !== 0) {
             $start = ((int) Tools::getValue('submitFilter' . $this->list_id) - 1) * $limit;
         } elseif (
             isset($this->context->cookie->{$this->list_id . '_start'})
@@ -3427,18 +3423,16 @@ class AdminControllerCore extends Controller
             $select_shop = ', shop.name as shop_name ';
         }
 
-        if ($this->multishop_context && Shop::isTableAssociated($this->table) && ! empty($this->className)) {
-            if (Shop::getContext() !== Shop::CONTEXT_ALL || ! $this->context->employee->isSuperAdmin()) {
-                // test if multishop is already considered by planned request
-                $test_join = ($this->_join === null) || ! preg_match('#`?' . preg_quote(_DB_PREFIX_ . $this->table . '_shop') . '`? *sa#', $this->_join);
-                if (Shop::isFeatureActive() && $test_join) {
-                    $this->_where .= ' AND EXISTS (
+        if ($this->multishop_context && Shop::isTableAssociated($this->table) && ! empty($this->className) && (Shop::getContext() !== Shop::CONTEXT_ALL || ! $this->context->employee->isSuperAdmin())) {
+            // test if multishop is already considered by planned request
+            $test_join = ($this->_join === null) || ! preg_match('#`?' . preg_quote(_DB_PREFIX_ . $this->table . '_shop') . '`? *sa#', $this->_join);
+            if (Shop::isFeatureActive() && $test_join) {
+                $this->_where .= ' AND EXISTS (
                         SELECT 1
                         FROM `' . _DB_PREFIX_ . $this->table . '_shop` sa
                         WHERE a.`' . bqSQL($this->identifier) . '` = sa.`' . bqSQL($this->identifier) . '`
                          AND sa.id_shop IN (' . implode(', ', Shop::getContextListShopID()) . ')
                     )';
-                }
             }
         }
 
@@ -3907,10 +3901,8 @@ class AdminControllerCore extends Controller
 
                 foreach ($languages as $language) {
                     $value = Tools::getValue($field . '_' . $language['id_lang']);
-                    if (! empty($value)) {
-                        if (($error = $object->validateField($field, $value, $language['id_lang'], $skip, true)) !== true) {
-                            $this->errors[$field . '_' . $language['id_lang']] = $error;
-                        }
+                    if (! empty($value) && $error = $object->validateField($field, $value, $language['id_lang'], $skip, true) !== true) {
+                        $this->errors[$field . '_' . $language['id_lang']] = $error;
                     }
                 }
             } elseif (($error = $object->validateField($field, Tools::getValue($field), null, $skip, true)) !== true) {
@@ -4202,7 +4194,7 @@ class AdminControllerCore extends Controller
                 $this->errors[] = $this->trans('An error occurred while uploading the image.', [], 'Admin.Notifications.Error');
             }
 
-            if (count($this->errors)) {
+            if (count($this->errors) > 0) {
                 return false;
             }
 
@@ -4356,7 +4348,7 @@ class AdminControllerCore extends Controller
                 }
             }
 
-            if ($result) {
+            if ($result !== 0) {
                 $this->redirect_after = self::$currentIndex . '&conf=5&token=' . $this->token;
             } else {
                 $this->errors[] = $this->trans('An error occurred while updating the status.', [], 'Admin.Notifications.Error');

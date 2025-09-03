@@ -1574,12 +1574,10 @@ abstract class ModuleCore implements ModuleInterface
         // Find translations
         global $_MODULES;
         $file = _PS_MODULE_DIR_ . $module . '/' . Context::getContext()->language->iso_code . '.php';
-        if (Tools::file_exists_cache($file) && include_once ($file)) {
-            /* @phpstan-ignore-next-line Defined variable in translation file */
-            if (isset($_MODULE) && is_array($_MODULE)) {
-                /** @phpstan-ignore-next-line Defined variable in translation file */
-                $_MODULES = ! empty($_MODULES) ? array_merge($_MODULES, $_MODULE) : $_MODULE;
-            }
+        /* @phpstan-ignore-next-line Defined variable in translation file */
+        if (Tools::file_exists_cache($file) && (include_once $file) && (isset($_MODULE) && is_array($_MODULE))) {
+            /** @phpstan-ignore-next-line Defined variable in translation file */
+            $_MODULES = ! empty($_MODULES) ? array_merge($_MODULES, $_MODULE) : $_MODULE;
         }
 
         // Return Name
@@ -1677,12 +1675,10 @@ abstract class ModuleCore implements ModuleInterface
                 // If no errors in Xml, no need instand and no need new config.xml file, we load only translations
                 if ($module_errors === [] && (int) $xml_module->need_instance === 0) {
                     $file = _PS_MODULE_DIR_ . $module . '/' . Context::getContext()->language->iso_code . '.php';
-                    if (Tools::file_exists_cache($file) && include_once ($file)) {
-                        /* @phpstan-ignore-next-line Defined variable in translation file */
-                        if (isset($_MODULE) && is_array($_MODULE)) {
-                            /** @phpstan-ignore-next-line Defined variable in translation file */
-                            $_MODULES = ! empty($_MODULES) ? array_merge($_MODULES, $_MODULE) : $_MODULE;
-                        }
+                    /* @phpstan-ignore-next-line Defined variable in translation file */
+                    if (Tools::file_exists_cache($file) && (include_once $file) && (isset($_MODULE) && is_array($_MODULE))) {
+                        /** @phpstan-ignore-next-line Defined variable in translation file */
+                        $_MODULES = ! empty($_MODULES) ? array_merge($_MODULES, $_MODULE) : $_MODULE;
                     }
 
                     $item = new stdClass();
@@ -1843,7 +1839,7 @@ abstract class ModuleCore implements ModuleInterface
         }
 
         usort($module_list, fn ($a, $b) => strnatcasecmp((string) $a->displayName, (string) $b->displayName));
-        if ($errors) {
+        if ($errors !== []) {
             if (! isset(Context::getContext()->controller) && ! Context::getContext()->controller->controller_name) {
                 echo '<div class="alert error"><h3>' . Context::getContext()->getTranslator()->trans('The following module(s) could not be loaded', [], 'Admin.Modules.Notification') . ':</h3><ol>';
                 foreach ($errors as $error) {
@@ -1958,7 +1954,7 @@ abstract class ModuleCore implements ModuleInterface
             $frontend = false;
         } elseif (isset($context->customer) && $use_groups) {
             $groups = $context->customer->getGroups();
-            if (! count($groups)) {
+            if (count($groups) === 0) {
                 $groups = [Configuration::get('PS_UNIDENTIFIED_GROUP')];
             }
         }
@@ -2718,11 +2714,9 @@ abstract class ModuleCore implements ModuleInterface
         if (is_writable(_PS_MODULE_DIR_ . $this->name . '/')) {
             $iso = substr((string) Context::getContext()->language->iso_code, 0, 2);
             $file = _PS_MODULE_DIR_ . $this->name . '/' . ($iso === 'en' ? 'config.xml' : 'config_' . $iso . '.xml');
-            if (! @file_put_contents($file, $xml)) {
-                if (! is_writable($file)) {
-                    @unlink($file);
-                    @file_put_contents($file, $xml);
-                }
+            if (! @file_put_contents($file, $xml) && ! is_writable($file)) {
+                @unlink($file);
+                @file_put_contents($file, $xml);
             }
 
             @chmod($file, 0664);
@@ -2738,10 +2732,8 @@ abstract class ModuleCore implements ModuleInterface
      */
     public function isHookableOn($hook_name)
     {
-        if ($this instanceof WidgetInterface) {
-            if (Hook::isDisplayHookName($hook_name)) {
-                return true;
-            }
+        if ($this instanceof WidgetInterface && Hook::isDisplayHookName($hook_name)) {
+            return true;
         }
 
         return is_callable([$this, 'hook' . ucfirst($hook_name)]);

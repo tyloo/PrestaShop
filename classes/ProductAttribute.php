@@ -343,7 +343,7 @@ class ProductAttributeCore extends ObjectModel
      */
     public function updatePosition($direction, $position)
     {
-        if (! $idAttributeGroup = (int) Tools::getValue('id_attribute_group')) {
+        if (($idAttributeGroup = (int) Tools::getValue('id_attribute_group')) === 0) {
             $idAttributeGroup = (int) $this->id_attribute_group;
         }
 

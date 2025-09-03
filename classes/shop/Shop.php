@@ -393,7 +393,7 @@ class ShopCore extends ObjectModel
             FROM `' . _DB_PREFIX_ . 'customer`
             WHERE `id_shop`=' . (int) $id_shop
         );
-        if ($nbr_customer) {
+        if ($nbr_customer !== 0) {
             $has_dependency = true;
         } else {
             $nbr_order = (int) Db::getInstance()->getValue(
@@ -401,7 +401,7 @@ class ShopCore extends ObjectModel
                 FROM `' . _DB_PREFIX_ . 'orders`
                 WHERE `id_shop`=' . (int) $id_shop
             );
-            if ($nbr_order) {
+            if ($nbr_order !== 0) {
                 $has_dependency = true;
             }
         }
@@ -1230,7 +1230,7 @@ class ShopCore extends ObjectModel
 
         $sql = (($inner_join) ? ' INNER' : ' LEFT') . ' JOIN ' . _DB_PREFIX_ . $table . '_shop ' . $table_alias . '
         ON (' . $table_alias . '.id_' . $table . ' = ' . $alias . '.id_' . $table;
-        if ((int) self::$context_id_shop) {
+        if ((int) self::$context_id_shop !== 0) {
             $sql .= ' AND ' . $table_alias . '.id_shop = ' . (int) self::$context_id_shop;
         } elseif (Shop::checkIdShopDefault($table) && ! $force_not_default) {
             $sql .= ' AND ' . $table_alias . '.id_shop = ' . $alias . '.id_shop_default';

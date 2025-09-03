@@ -778,7 +778,7 @@ class DispatcherCore
     public function computeRoute($rule, $controller, array $keywords = [], array $params = [])
     {
         $regexp = preg_quote($rule, '#');
-        if ($keywords) {
+        if ($keywords !== []) {
             $transform_keywords = [];
             preg_match_all(
                 '#\\\{(([^{}]*)\\\:)?(' .
@@ -1025,7 +1025,6 @@ class DispatcherCore
      * @param int    $id_lang
      * @param bool   $force_routes
      * @param string $anchor       Optional anchor to add at the end of this url
-     * @param null   $id_shop
      *
      * @return string
      *
@@ -1055,8 +1054,8 @@ class DispatcherCore
             $query = http_build_query($params, '', '&');
             $index_link = $this->use_routes ? '' : 'index.php';
 
-            return ($route_id === 'index') ? $index_link . (($query) ? '?' . $query : '') :
-                ((trim($route_id) === '') ? '' : $index_link . '?controller=' . $route_id) . (($query) ? '&' . $query : '') . $anchor;
+            return ($route_id === 'index') ? $index_link . (($query !== '' && $query !== '0') ? '?' . $query : '') :
+                ((trim($route_id) === '') ? '' : $index_link . '?controller=' . $route_id) . (($query !== '' && $query !== '0') ? '&' . $query : '') . $anchor;
         }
 
         $route = $this->routes[$id_shop][$id_lang][$route_id];

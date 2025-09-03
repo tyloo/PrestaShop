@@ -90,26 +90,22 @@ class CustomerPersisterCore
             );
         }
 
-        if ($customer->is_guest || ! $passwordRequired) {
-            // TODO SECURITY: Audit requested
-            if ($customer->id !== $this->context->customer->id) {
-                // Since we're updating a customer without
-                // checking the password, we need to check that
-                // the customer being updated is the one from the
-                // current session.
+        // TODO SECURITY: Audit requested
+        if (($customer->is_guest || ! $passwordRequired) && $customer->id !== $this->context->customer->id) {
+            // Since we're updating a customer without
+            // checking the password, we need to check that
+            // the customer being updated is the one from the
+            // current session.
+            // The error message is not great,
+            // but it should only be displayed to hackers
+            // so it should not be an issue :)
+            $this->errors['email'][] = $this->translator->trans(
+                'There seems to be an issue with your account, please contact support',
+                [],
+                'Shop.Notifications.Error'
+            );
 
-                // The error message is not great,
-                // but it should only be displayed to hackers
-                // so it should not be an issue :)
-
-                $this->errors['email'][] = $this->translator->trans(
-                    'There seems to be an issue with your account, please contact support',
-                    [],
-                    'Shop.Notifications.Error'
-                );
-
-                return false;
-            }
+            return false;
         }
 
         $guestToCustomerConversion = false;

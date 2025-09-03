@@ -212,7 +212,7 @@ class ManufacturerCore extends ObjectModel
      */
     protected function getManufacturerAddress()
     {
-        if (! (int) $this->id) {
+        if ((int) $this->id === 0) {
             return false;
         }
 
@@ -262,7 +262,7 @@ class ManufacturerCore extends ObjectModel
             $sqlGroups = '';
             if (! $allGroup) {
                 $groups = FrontController::getCurrentCustomerGroups();
-                $sqlGroups = (count($groups) ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
+                $sqlGroups = (count($groups) > 0 ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id);
             }
 
             $results = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
@@ -299,7 +299,7 @@ class ManufacturerCore extends ObjectModel
         $totalManufacturers = count($manufacturers);
         $rewriteSettings = (int) Configuration::get('PS_REWRITING_SETTINGS');
         for ($i = 0; $i < $totalManufacturers; ++$i) {
-            $manufacturers[$i]['link_rewrite'] = ($rewriteSettings ? Tools::str2url($manufacturers[$i]['name']) : 0);
+            $manufacturers[$i]['link_rewrite'] = ($rewriteSettings !== 0 ? Tools::str2url($manufacturers[$i]['name']) : 0);
         }
 
         return $manufacturers;
@@ -452,7 +452,7 @@ class ManufacturerCore extends ObjectModel
         }
 
         $groups = FrontController::getCurrentCustomerGroups();
-        $sqlGroups = count($groups) ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id;
+        $sqlGroups = count($groups) > 0 ? 'IN (' . implode(',', $groups) . ')' : '=' . (int) Group::getCurrent()->id;
 
         /* Return only the number of products */
         if ($getTotal) {

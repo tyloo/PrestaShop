@@ -820,7 +820,7 @@ class OrderDetailCore extends ObjectModel
             -(int) $product['cart_quantity'],
             $product['id_shop'],
             // Add stock movement only if order state is flagged as shipped
-            (bool) $orderState->shipped === true,
+            (bool) $orderState->shipped,
             [
                 'id_order' => $this->id_order,
                 // Only one stock movement reason fits a new order creation
@@ -1154,7 +1154,7 @@ class OrderDetailCore extends ObjectModel
         LEFT JOIN ' . _DB_PREFIX_ . 'order_detail od ON (od.id_order = o.id_order)
         WHERE o.valid = 1 AND od.product_id = ' . (int) $id_product);
 
-        if (count($orders)) {
+        if (count($orders) > 0) {
             $list = '';
             foreach ($orders as $order) {
                 $list .= (int) $order['id_order'] . ',';

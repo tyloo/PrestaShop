@@ -58,7 +58,7 @@ class DbPDOCore extends Db
             $dsn .= 'dbname=' . $dbname . ';';
         }
 
-        if (preg_match('/^(.*):([0-9]+)$/', $host, $matches)) {
+        if (preg_match('/^(.*):(\d+)$/', $host, $matches)) {
             $dsn .= 'host=' . $matches[1] . ';port=' . $matches[2];
         } elseif (preg_match('#^.*:(/.*)$#', $host, $matches)) {
             $dsn .= 'unix_socket=' . $matches[1];

@@ -312,7 +312,7 @@ class CarrierCore extends ObjectModel
          * keep retrocompatibility SHIPPING_METHOD_DEFAULT
          */
         if ($this->shipping_method === Carrier::SHIPPING_METHOD_DEFAULT) {
-            $this->shipping_method = ((int) Configuration::get('PS_SHIPPING_METHOD') ? Carrier::SHIPPING_METHOD_WEIGHT : Carrier::SHIPPING_METHOD_PRICE);
+            $this->shipping_method = ((int) Configuration::get('PS_SHIPPING_METHOD') !== 0 ? Carrier::SHIPPING_METHOD_WEIGHT : Carrier::SHIPPING_METHOD_PRICE);
         }
     }
 
@@ -769,10 +769,9 @@ class CarrierCore extends ObjectModel
         }
 
         foreach ($states as $state) {
-            if (isset($countries[$state['id_country']])) { /* Does not keep the state if its country has been disabled and not selected */
-                if ($state['active'] === 1) {
-                    $countries[$state['id_country']]['states'][] = $state;
-                }
+            /* Does not keep the state if its country has been disabled and not selected */
+            if (isset($countries[$state['id_country']]) && $state['active'] === 1) {
+                $countries[$state['id_country']]['states'][] = $state;
             }
         }
 
@@ -992,13 +991,13 @@ class CarrierCore extends ObjectModel
             // Create row in ps_delivery table
             if (count($ranges_price) || count($ranges_weight)) {
                 $sql = 'INSERT INTO `' . _DB_PREFIX_ . 'delivery` (`id_carrier`, `id_range_price`, `id_range_weight`, `id_zone`, `price`) VALUES ';
-                if (count($ranges_price)) {
+                if (count($ranges_price) > 0) {
                     foreach ($ranges_price as $range) {
                         $sql .= '(' . (int) $this->id . ', ' . (int) $range['id_range_price'] . ', 0, ' . (int) $id_zone . ', 0),';
                     }
                 }
 
-                if (count($ranges_weight)) {
+                if (count($ranges_weight) > 0) {
                     foreach ($ranges_weight as $range) {
                         $sql .= '(' . (int) $this->id . ', 0, ' . (int) $range['id_range_weight'] . ', ' . (int) $id_zone . ', 0),';
                     }
@@ -1175,7 +1174,7 @@ class CarrierCore extends ObjectModel
                 SELECT `id_' . $range . '` as id_range, `delimiter1`, `delimiter2`
                 FROM `' . _DB_PREFIX_ . $range . '`
                 WHERE `id_carrier` = ' . (int) $old_id);
-            if (count($res)) {
+            if (count($res) > 0) {
                 foreach ($res as $val) {
                     Db::getInstance()->execute('
                         INSERT INTO `' . _DB_PREFIX_ . $range . '` (`id_carrier`, `delimiter1`, `delimiter2`)
@@ -1279,7 +1278,7 @@ class CarrierCore extends ObjectModel
 
         if ($this->shipping_method === Carrier::SHIPPING_METHOD_DEFAULT) {
             // backward compatibility
-            if ((int) Configuration::get('PS_SHIPPING_METHOD')) {
+            if ((int) Configuration::get('PS_SHIPPING_METHOD') !== 0) {
                 $method = Carrier::SHIPPING_METHOD_WEIGHT;
             } else {
                 $method = Carrier::SHIPPING_METHOD_PRICE;
@@ -1639,7 +1638,7 @@ class CarrierCore extends ObjectModel
         }
 
         $id_address = (int) (($id_address_delivery !== null && $id_address_delivery !== 0) ? $id_address_delivery : $cart->id_address_delivery);
-        if ($id_address) {
+        if ($id_address !== 0) {
             $id_zone = Address::getZoneById($id_address);
 
             // Check the country of the address is activated
@@ -1702,7 +1701,7 @@ class CarrierCore extends ObjectModel
             $available_carrier_list[$carrier['id_carrier']] = $carrier['id_carrier'];
         }
 
-        $carrier_list = $carrier_list ? array_intersect($available_carrier_list, $carrier_list) : $available_carrier_list;
+        $carrier_list = $carrier_list !== [] ? array_intersect($available_carrier_list, $carrier_list) : $available_carrier_list;
 
         $cart_quantity = 0;
         $cart_weight = 0;

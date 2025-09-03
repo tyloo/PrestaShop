@@ -460,7 +460,7 @@ class CustomerCore extends ObjectModel
      */
     public function delete()
     {
-        if (! count(Order::getCustomerOrders((int) $this->id))) {
+        if (count(Order::getCustomerOrders((int) $this->id)) === 0) {
             $addresses = $this->getAddresses((int) Configuration::get('PS_LANG_DEFAULT'));
             foreach ($addresses as $address) {
                 $obj = new Address((int) $address['id_address']);
@@ -1500,7 +1500,7 @@ class CustomerCore extends ObjectModel
     public function getLastEmptyCart($withOrder = true)
     {
         $carts = Cart::getCustomerCarts((int) $this->id, $withOrder);
-        if (! count($carts)) {
+        if (count($carts) === 0) {
             return false;
         }
 

@@ -122,8 +122,6 @@ class ImageCore extends ObjectModel
     /**
      * @param int|null $id
      * @param int|null $idLang
-     * @param null     $id_shop
-     * @param null     $translator
      *
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
@@ -188,7 +186,7 @@ class ImageCore extends ObjectModel
             }
         }
 
-        if ($data) {
+        if ($data !== []) {
             return Db::getInstance()->insert($this->def['table'] . '_shop', $data);
         }
 
@@ -728,7 +726,7 @@ class ImageCore extends ObjectModel
         foreach (scandir($path, \SCANDIR_SORT_NONE) as $file) {
             if (preg_match('/^[0-9]+(\-(.*))?\.' . $format . '$/', $file)) {
                 unlink($path . $file);
-            } elseif (is_dir($path . $file) && preg_match('/^[0-9]$/', $file)) {
+            } elseif (is_dir($path . $file) && preg_match('/^\d$/', $file)) {
                 Image::deleteAllImages($path . $file . '/', $format);
             }
         }
@@ -859,7 +857,7 @@ class ImageCore extends ObjectModel
         $tmpFolder = 'duplicates/';
         foreach (scandir(_PS_PRODUCT_IMG_DIR_, \SCANDIR_SORT_NONE) as $file) {
             // matches the base product image or the thumbnails
-            if (preg_match('/^([0-9]+\-)([0-9]+)(\-(.*))?\.jpg$/', $file, $matches)) {
+            if (preg_match('/^(\d+\-)(\d+)(\-(.*))?\.jpg$/', $file, $matches)) {
                 // don't recreate an image object for each image type
                 if (! $image || $image->id !== (int) $matches[2]) {
                     $image = new Image((int) $matches[2]);

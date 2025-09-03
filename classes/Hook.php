@@ -1320,21 +1320,19 @@ class HookCore extends ObjectModel
         $groups = [];
         $use_groups = Group::isFeatureActive();
         $frontend = ! $context->employee instanceof Employee;
-        if ($frontend) {
-            // Get groups list
-            if ($use_groups) {
-                if ($customer instanceof Customer && $customer->isLogged()) {
-                    $groups = $customer->getGroups();
-                } elseif (
-                    $customer instanceof Customer
-                    && $customer->isGuest()
-                ) {
-                    $groups = [(int) Configuration::get('PS_GUEST_GROUP')];
-                } else {
-                    $groups = [
-                        (int) Configuration::get('PS_UNIDENTIFIED_GROUP'),
-                    ];
-                }
+        // Get groups list
+        if ($frontend && $use_groups) {
+            if ($customer instanceof Customer && $customer->isLogged()) {
+                $groups = $customer->getGroups();
+            } elseif (
+                $customer instanceof Customer
+                && $customer->isGuest()
+            ) {
+                $groups = [(int) Configuration::get('PS_GUEST_GROUP')];
+            } else {
+                $groups = [
+                    (int) Configuration::get('PS_UNIDENTIFIED_GROUP'),
+                ];
             }
         }
 
@@ -1442,28 +1440,26 @@ class HookCore extends ObjectModel
             $sql->where('hm.`id_shop` = ' . (int) $shop->id);
         }
 
-        if ($frontend) {
-            if ($use_groups) {
-                $sql->leftJoin(
-                    'module_group',
-                    'mg',
-                    'mg.`id_module` = m.`id_module`'
+        if ($frontend && $use_groups) {
+            $sql->leftJoin(
+                'module_group',
+                'mg',
+                'mg.`id_module` = m.`id_module`'
+            );
+            if (Validate::isLoadedObject($shop)) {
+                $sql->where(
+                    'mg.id_shop = ' .
+                        ((int) $shop->id) .
+                        (count($groups) > 0
+                            ? ' AND  mg.`id_group` IN (' .
+                                implode(', ', $groups) .
+                                ')'
+                            : '')
                 );
-                if (Validate::isLoadedObject($shop)) {
-                    $sql->where(
-                        'mg.id_shop = ' .
-                            ((int) $shop->id) .
-                            (count($groups)
-                                ? ' AND  mg.`id_group` IN (' .
-                                    implode(', ', $groups) .
-                                    ')'
-                                : '')
-                    );
-                } elseif (count($groups)) {
-                    $sql->where(
-                        'mg.`id_group` IN (' . implode(', ', $groups) . ')'
-                    );
-                }
+            } elseif (count($groups) > 0) {
+                $sql->where(
+                    'mg.`id_group` IN (' . implode(', ', $groups) . ')'
+                );
             }
         }
 

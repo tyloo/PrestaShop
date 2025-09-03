@@ -344,7 +344,7 @@ class CountryCore extends ObjectModel
      */
     public static function getNeedZipCode($idCountry)
     {
-        if (! (int) $idCountry) {
+        if ((int) $idCountry === 0) {
             return false;
         }
 
@@ -363,7 +363,7 @@ class CountryCore extends ObjectModel
      */
     public static function getZipCodeFormat($idCountry)
     {
-        if (! (int) $idCountry) {
+        if ((int) $idCountry === 0) {
             return false;
         }
 

@@ -201,7 +201,7 @@ abstract class ModuleGridCore extends Module
             $this->setOption($datas['option'], $layers);
         }
 
-        if (count($datas['columns'])) {
+        if (count($datas['columns']) > 0) {
             foreach ($datas['columns'] as $column) {
                 $this->_csv .= $column['header'] . ';';
             }

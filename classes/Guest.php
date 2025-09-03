@@ -167,7 +167,7 @@ class GuestCore extends ObjectModel
     {
         // $langsArray is filled with all the languages accepted, ordered by priority
         $langsArray = [];
-        preg_match_all('/([a-z]{2}(-[a-z]{2})?)\s*(;\s*q\s*=\s*(1|0\.[0-9]+))?/', $acceptLanguage, $array);
+        preg_match_all('/([a-z]{2}(-[a-z]{2})?)\s*(;\s*q\s*=\s*(1|0\.\d+))?/', $acceptLanguage, $array);
         if ($array[1] !== []) {
             $langsArray = array_combine($array[1], $array[4]);
             foreach ($langsArray as $lang => $val) {

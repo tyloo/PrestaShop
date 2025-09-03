@@ -346,10 +346,8 @@ class StockManagerCore implements StockManagerInterface
 
                         while ($row = Db::getInstance()->nextRow($resource)) {
                             // continue - in FIFO mode, we have to retreive the oldest positive mvts for which there are left quantities
-                            if ($warehouse->management_type === 'FIFO') {
-                                if ($row['qty'] === 0) {
-                                    continue;
-                                }
+                            if ($warehouse->management_type === 'FIFO' && $row['qty'] === 0) {
+                                continue;
                             }
 
                             // converts date to timestamp
@@ -553,7 +551,7 @@ class StockManagerCore implements StockManagerInterface
                     }
 
                     $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
-                    if (count($res)) {
+                    if (count($res) > 0) {
                         foreach ($res as $row) {
                             $client_orders_qty += ($row['product_quantity'] - $row['product_quantity_refunded']) * $row['quantity'];
                         }
@@ -598,7 +596,7 @@ class StockManagerCore implements StockManagerInterface
             }
 
             $res = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
-            if (count($res)) {
+            if (count($res) > 0) {
                 foreach ($res as $row) {
                     $client_orders_qty += ($row['product_quantity'] - $row['product_quantity_refunded']);
                 }
@@ -742,7 +740,7 @@ class StockManagerCore implements StockManagerInterface
 			) as view';
 
         $quantity_out = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query);
-        if (! $quantity_out) {
+        if ($quantity_out === 0) {
             return -1;
         }
 

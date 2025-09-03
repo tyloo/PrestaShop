@@ -267,7 +267,7 @@ class CartCore extends ObjectModel
         parent::__construct($id);
 
         if ($idLang !== null) {
-            $this->id_lang = (int) (Language::getLanguage($idLang) !== false) ? $idLang : Configuration::get('PS_LANG_DEFAULT');
+            $this->id_lang = (int) (Language::getLanguage($idLang) !== false) !== 0 ? $idLang : Configuration::get('PS_LANG_DEFAULT');
         }
 
         if ($this->id_customer) {
@@ -1401,7 +1401,7 @@ class CartCore extends ObjectModel
         Cache::clean('Cart::getOrderedCartRulesIds_' . $this->id . '-' . CartRule::FILTER_ACTION_GIFT . '-ids');
         Cache::clean('getContextualValue_*');
 
-        if ((int) $cartRule->gift_product) {
+        if ((int) $cartRule->gift_product !== 0) {
             $this->updateQty(
                 1,
                 $cartRule->gift_product,
@@ -1523,7 +1523,7 @@ class CartCore extends ObjectModel
         $id_customization = (int) $id_customization;
         $product = new Product($id_product, false, (int) Configuration::get('PS_LANG_DEFAULT'), $shop->id);
 
-        if ($id_product_attribute) {
+        if ($id_product_attribute !== 0) {
             $combination = new Combination((int) $id_product_attribute);
             if ($combination->id_product !== $id_product) {
                 return false;
@@ -1631,10 +1631,8 @@ class CartCore extends ObjectModel
                 $result2['quantity'] = Pack::getQuantity($id_product, $id_product_attribute, null, $this, false);
             }
 
-            if (isset($result2['out_of_stock']) && ! Product::isAvailableWhenOutOfStock((int) $result2['out_of_stock']) && ! $skipAvailabilityCheckOutOfStock) {
-                if ($quantity > $result2['quantity']) {
-                    return false;
-                }
+            if (isset($result2['out_of_stock']) && ! Product::isAvailableWhenOutOfStock((int) $result2['out_of_stock']) && ! $skipAvailabilityCheckOutOfStock && $quantity > $result2['quantity']) {
+                return false;
             }
 
             if ($quantity < $minimal_quantity) {
@@ -1652,7 +1650,7 @@ class CartCore extends ObjectModel
                 'id_customization' => $id_customization,
             ]);
 
-            if ($id_customization) {
+            if ($id_customization !== 0) {
                 $result_add &= Db::getInstance()->update('customization', [
                     'id_product_attribute' => $id_product_attribute,
                     'id_address_delivery' => 0,
@@ -1814,10 +1812,8 @@ class CartCore extends ObjectModel
         $this->resetProductRelatedStaticCache();
 
         // First, if we are deleting a product with customization, we delete it from the database
-        if ((int) $id_customization) {
-            if (! $this->_deleteCustomization((int) $id_customization)) {
-                return false;
-            }
+        if ((int) $id_customization !== 0 && ! $this->_deleteCustomization((int) $id_customization)) {
+            return false;
         }
 
         /* Get customization quantity */
@@ -1946,7 +1942,7 @@ class CartCore extends ObjectModel
                 WHERE `id_customization` = ' . (int) $id_customization
             );
 
-            if (! $result) {
+            if ($result === 0) {
                 return false;
             }
 
@@ -3180,10 +3176,8 @@ class CartCore extends ObjectModel
     {
         $delivery_option_list = $this->getDeliveryOptionList();
         foreach ($delivery_option as $key => $value) {
-            if (isset($delivery_option_list[$key][$value])) {
-                if (count($delivery_option_list[$key][$value]['carrier_list']) === 1) {
-                    return current(array_keys($delivery_option_list[$key][$value]['carrier_list']));
-                }
+            if (isset($delivery_option_list[$key][$value]) && count($delivery_option_list[$key][$value]['carrier_list']) === 1) {
+                return current(array_keys($delivery_option_list[$key][$value]['carrier_list']));
             }
         }
 
@@ -3502,7 +3496,7 @@ class CartCore extends ObjectModel
 
         // If we still have no carrier ID, we try to find the cheapest one for the given zone
         if (empty($id_carrier)) {
-            if ((int) $this->id_customer) {
+            if ((int) $this->id_customer !== 0) {
                 $customer = new Customer((int) $this->id_customer);
                 $result = Carrier::getCarriers((int) Configuration::get('PS_LANG_DEFAULT'), true, false, (int) $id_zone, $customer->getGroups());
                 unset($customer);
@@ -4398,7 +4392,7 @@ class CartCore extends ObjectModel
         }
 
         // Insert customized_data
-        if (count($customs)) {
+        if (count($customs) > 0) {
             $first = true;
             $sql_custom_data = 'INSERT INTO ' . _DB_PREFIX_ . 'customized_data (`id_customization`, `type`, `index`, `value`, `id_module`, `price`, `weight`) VALUES ';
             foreach ($customs as $custom) {
@@ -4636,7 +4630,7 @@ class CartCore extends ObjectModel
      */
     public static function isGuestCartByCartId($id_cart)
     {
-        if (! (int) $id_cart) {
+        if ((int) $id_cart === 0) {
             return false;
         }
 

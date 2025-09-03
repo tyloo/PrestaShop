@@ -30,7 +30,7 @@
  */
 class TranslateCore
 {
-    public static $regexSprintfParams = '#(?:%%|%(?:[0-9]+\$)?[+-]?(?:[ 0]|\'.)?-?[0-9]*(?:\.[0-9]+)?[bcdeufFosxX])#';
+    public static $regexSprintfParams = '#(?:%%|%(?:\d+\$)?[+-]?(?:[ 0]|\'.)?-?\d*(?:\.\d+)?[bcdeufFosxX])#';
 
     public static $regexClassicParams = '/%\w+%/';
 

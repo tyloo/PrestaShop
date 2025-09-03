@@ -607,12 +607,10 @@ class RequestSqlCore extends ObjectModel
                 }
             }
 
-            if ($attribut['expr_type'] === 'operator') {
-                if (! in_array(strtoupper((string) $attribut['base_expr']), $this->tested['operator'], true)) {
-                    $this->error_sql['checkedHaving']['operator'] = [$attribut['base_expr']];
+            if ($attribut['expr_type'] === 'operator' && ! in_array(strtoupper((string) $attribut['base_expr']), $this->tested['operator'], true)) {
+                $this->error_sql['checkedHaving']['operator'] = [$attribut['base_expr']];
 
-                    return false;
-                }
+                return false;
             }
         }
 
@@ -696,7 +694,7 @@ class RequestSqlCore extends ObjectModel
      */
     public function checkedLimit($limit)
     {
-        if (! preg_match('#^[0-9]+$#', trim((string) $limit['offset'])) || ! preg_match('#^[0-9]+$#', trim((string) $limit['rowcount']))) {
+        if (! preg_match('#^\d+$#', trim((string) $limit['offset'])) || ! preg_match('#^\d+$#', trim((string) $limit['rowcount']))) {
             $this->error_sql['checkedLimit'] = false;
 
             return false;

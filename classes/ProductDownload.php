@@ -299,7 +299,7 @@ class ProductDownloadCore extends ObjectModel
      */
     public function getDeadline()
     {
-        if (! (int) $this->nb_days_accessible) {
+        if ((int) $this->nb_days_accessible === 0) {
             return '0000-00-00 00:00:00';
         }
 

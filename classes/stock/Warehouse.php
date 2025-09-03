@@ -234,7 +234,7 @@ class WarehouseCore extends ObjectModel
 			DELETE FROM ' . _DB_PREFIX_ . 'warehouse_carrier
 			WHERE ' . $this->def['primary'] . ' = ' . (int) $this->id);
 
-        if ($row_to_insert) {
+        if ($row_to_insert !== []) {
             Db::getInstance()->insert('warehouse_carrier', $row_to_insert);
         }
     }
@@ -402,10 +402,8 @@ class WarehouseCore extends ObjectModel
      */
     public static function getWarehouses($ignore_shop = false, $id_shop = null)
     {
-        if (! $ignore_shop) {
-            if ($id_shop === null) {
-                $id_shop = Context::getContext()->shop->id;
-            }
+        if (! $ignore_shop && $id_shop === null) {
+            $id_shop = Context::getContext()->shop->id;
         }
 
         $query = new DbQuery();

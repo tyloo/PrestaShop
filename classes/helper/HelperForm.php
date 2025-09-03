@@ -129,7 +129,7 @@ class HelperFormCore extends Helper
                             if (! empty($params['values'])) {
                                 foreach ($switch_values as $k => $value) {
                                     if (! isset($value['label'])) {
-                                        $default_key = (int) $value['value'] ? 1 : 0;
+                                        $default_key = (int) $value['value'] !== 0 ? 1 : 0;
                                         $defautl_label = $default_switch_labels[$value['id']] ?? $default_switch_values[$default_key]['label'];
                                         $this->fields_form[$fieldset_key]['form']['input'][$key]['values'][$k]['label'] = $defautl_label;
                                     }
@@ -279,10 +279,8 @@ class HelperFormCore extends Helper
                         case 'shop':
                             $disable_shops = $params['disable_shared'] ?? false;
                             $params['html'] = $this->renderAssoShop($disable_shops);
-                            if (Shop::getTotalShops(false) === 1) {
-                                if ((isset($this->fields_form[$fieldset_key]['form']['force']) && ! $this->fields_form[$fieldset_key]['form']['force']) || ! isset($this->fields_form[$fieldset_key]['form']['force'])) {
-                                    unset($this->fields_form[$fieldset_key]['form']['input'][$key]);
-                                }
+                            if (Shop::getTotalShops(false) === 1 && (isset($this->fields_form[$fieldset_key]['form']['force']) && ! $this->fields_form[$fieldset_key]['form']['force'] || ! isset($this->fields_form[$fieldset_key]['form']['force']))) {
+                                unset($this->fields_form[$fieldset_key]['form']['input'][$key]);
                             }
 
                             break;
@@ -353,7 +351,7 @@ class HelperFormCore extends Helper
         }
 
         $assos = [];
-        if ((int) $this->id) {
+        if ((int) $this->id !== 0) {
             $sql = 'SELECT `id_shop`, `' . bqSQL($this->identifier) . '`
 					FROM `' . _DB_PREFIX_ . bqSQL($this->table) . '_shop`
 					WHERE `' . bqSQL($this->identifier) . '` = ' . (int) $this->id;

@@ -1083,7 +1083,7 @@ class LanguageCore extends ObjectModel implements LanguageInterface
         foreach ($result as $row) {
             if (preg_match('/_lang/', (string) $row['Tables_in_' . _DB_NAME_]) && $row['Tables_in_' . _DB_NAME_] !== _DB_PREFIX_ . 'lang') {
                 $result2 = Db::getInstance()->executeS('SELECT * FROM `' . $row['Tables_in_' . _DB_NAME_] . '` WHERE `id_lang` = ' . (int) $from);
-                if (! count($result2)) {
+                if (count($result2) === 0) {
                     continue;
                 }
 

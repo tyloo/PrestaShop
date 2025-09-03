@@ -30,6 +30,22 @@ use PrestaShopBundle\Translation\TranslatorComponent;
 
 abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\Database\EntityInterface
 {
+    public $date_add;
+
+    public $date_upd;
+
+    public $id_shop_default;
+
+    /**
+     * @var bool
+     */
+    public $deleted;
+
+    /**
+     * @var bool
+     */
+    public $active;
+
     /**
      * List of field types.
      */
@@ -564,7 +580,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         // Database insertion
         if (Shop::checkIdShopDefault($this->def['table']) && array_key_exists('id_shop_default', get_object_vars($this))) {
             /* @phpstan-ignore-next-line */
-            $this->id_shop_default = (in_array(Configuration::get('PS_SHOP_DEFAULT'), $id_shop_list, true) === true) ? Configuration::get('PS_SHOP_DEFAULT') : min($id_shop_list);
+            $this->id_shop_default = (in_array(Configuration::get('PS_SHOP_DEFAULT'), $id_shop_list, true)) ? Configuration::get('PS_SHOP_DEFAULT') : min($id_shop_list);
         }
 
         // We get the fields before any insertion, because the validation is called inside those methods and in case of invalid value nothing
@@ -752,7 +768,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         /* @phpstan-ignore-next-line */
         if (Shop::checkIdShopDefault($this->def['table']) && array_key_exists('id_shop_default', get_object_vars($this)) && ! $this->id_shop_default) {
             /* @phpstan-ignore-next-line */
-            $this->id_shop_default = (in_array(Configuration::get('PS_SHOP_DEFAULT'), $id_shop_list, true) === true) ? Configuration::get('PS_SHOP_DEFAULT') : min($id_shop_list);
+            $this->id_shop_default = (in_array(Configuration::get('PS_SHOP_DEFAULT'), $id_shop_list, true)) ? Configuration::get('PS_SHOP_DEFAULT') : min($id_shop_list);
         }
 
         // Database update
@@ -1080,16 +1096,12 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 
         // Check if field is required
         $required_fields = $this->getCachedFieldsRequiredDatabase();
-        if (! $id_lang || $id_lang === $ps_lang_default) {
-            if (! in_array('required', $skip, true) && (! empty($data['required']) || in_array($field, $required_fields, true))) {
-                if (Tools::isEmpty($value)) {
-                    if ($human_errors) {
-                        return $this->trans('The %s field is required.', [htmlspecialchars(static::displayFieldName($field, static::class))], 'Admin.Notifications.Error');
-                    }
-
-                    return $this->trans('Property %s is empty.', [static::class . '->' . htmlspecialchars($field)], 'Admin.Notifications.Error');
-                }
+        if ((! $id_lang || $id_lang === $ps_lang_default) && (! in_array('required', $skip, true) && (! empty($data['required']) || in_array($field, $required_fields, true))) && Tools::isEmpty($value)) {
+            if ($human_errors) {
+                return $this->trans('The %s field is required.', [htmlspecialchars(static::displayFieldName($field, static::class))], 'Admin.Notifications.Error');
             }
+
+            return $this->trans('Property %s is empty.', [static::class . '->' . htmlspecialchars($field)], 'Admin.Notifications.Error');
         }
 
         // Default value
@@ -1254,10 +1266,8 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             }
 
             // Checking for required fields
-            if (isset($data['required']) && $data['required'] && empty($value) && $value !== '0') {
-                if (! $this->id || $field !== 'passwd') {
-                    $errors[$field] = '<b>' . self::displayFieldName($field, static::class, $htmlentities) . '</b> ' . $this->trans('is required.', [], 'Admin.Notifications.Error');
-                }
+            if (isset($data['required']) && $data['required'] && empty($value) && $value !== '0' && (! $this->id || $field !== 'passwd')) {
+                $errors[$field] = '<b>' . self::displayFieldName($field, static::class, $htmlentities) . '</b> ' . $this->trans('is required.', [], 'Admin.Notifications.Error');
             }
 
             // Checking for maximum fields sizes
@@ -1683,7 +1693,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             }
         }
 
-        if ($data) {
+        if ($data !== []) {
             return Db::getInstance()->insert($this->def['table'] . '_shop', $data);
         }
 
@@ -1854,11 +1864,8 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 
         if ($force_delete || ! $this->hasMultishopEntries()) {
             /* Deleting object images and thumbnails (cache) */
-            if ($this->image_dir) {
-                if (file_exists($this->image_dir . $this->id . '.' . $this->image_format)
-                    && ! unlink($this->image_dir . $this->id . '.' . $this->image_format)) {
-                    return false;
-                }
+            if ($this->image_dir && (file_exists($this->image_dir . $this->id . '.' . $this->image_format) && ! unlink($this->image_dir . $this->id . '.' . $this->image_format))) {
+                return false;
             }
 
             if (file_exists(_PS_TMP_IMG_DIR_ . $this->def['table'] . '_' . $this->id . '.' . $this->image_format)
@@ -1996,7 +2003,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 
         $collection = [];
         $rows = [];
-        if ($datas) {
+        if ($datas !== []) {
             $definition = ObjectModel::getDefinition($class);
             if (! array_key_exists($definition['primary'], $datas[0])) {
                 throw new PrestaShopException(sprintf("Identifier '%s' not found for class '%s'", $definition['primary'], $class));
@@ -2097,10 +2104,8 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         if ($definition && isset($definition['fields'][$field_name])) {
             $field = $definition['fields'][$field_name];
             // Is field multilang?
-            if (isset($field['lang']) && $field['lang']) {
-                if (is_array($this->{$field_name})) {
-                    return $this->{$field_name}[$id_lang ?: Context::getContext()->language->id];
-                }
+            if (isset($field['lang']) && $field['lang'] && is_array($this->{$field_name})) {
+                return $this->{$field_name}[$id_lang ?: Context::getContext()->language->id];
             }
 
             return $this->{$field_name};

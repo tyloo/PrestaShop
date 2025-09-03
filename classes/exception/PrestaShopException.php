@@ -75,7 +75,7 @@ class PrestaShopExceptionCore extends Exception
                     echo ' - <a style="font-size: 12px; color: #000000; cursor:pointer; color: blue;" onclick="document.getElementById(\'psArgs_' . $id . "').style.display = (document.getElementById('psArgs_" . $id . '\').style.display != \'block\') ? \'block\' : \'none\'; return false">[' . count($trace['args']) . ' Arguments]</a>';
                 }
 
-                if ($relative_file) {
+                if ($relative_file !== '' && $relative_file !== '0') {
                     $this->displayFileDebug($trace['file'], $trace['line'], $id);
                 }
 

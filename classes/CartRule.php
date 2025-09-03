@@ -894,7 +894,7 @@ class CartRuleCore extends ObjectModel
 			FROM ' . _DB_PREFIX_ . 'cart_rule_group crg
 			WHERE crg.id_cart_rule = ' . (int) $this->id . '
 			AND crg.id_group ' . ($cart->id_customer ? 'IN (SELECT cg.id_group FROM ' . _DB_PREFIX_ . 'customer_group cg WHERE cg.id_customer = ' . (int) $cart->id_customer . ')' : '= ' . (int) Configuration::get('PS_UNIDENTIFIED_GROUP')));
-            if (! $id_cart_rule) {
+            if ($id_cart_rule === 0) {
                 return (! $display_error) ? false : $this->trans('You cannot use this voucher', [], 'Shop.Notifications.Error');
             }
         }
@@ -910,7 +910,7 @@ class CartRuleCore extends ObjectModel
 			FROM ' . _DB_PREFIX_ . 'cart_rule_country crc
 			WHERE crc.id_cart_rule = ' . (int) $this->id . '
 			AND crc.id_country = (SELECT a.id_country FROM ' . _DB_PREFIX_ . 'address a WHERE a.id_address = ' . (int) $cart->id_address_delivery . ' LIMIT 1)');
-            if (! $id_cart_rule) {
+            if ($id_cart_rule === 0) {
                 return (! $display_error) ? false : $this->trans('You cannot use this voucher in your country of delivery', [], 'Shop.Notifications.Error');
             }
         }
@@ -927,7 +927,7 @@ class CartRuleCore extends ObjectModel
 			INNER JOIN ' . _DB_PREFIX_ . 'carrier c ON (c.id_reference = crc.id_carrier AND c.deleted = 0)
 			WHERE crc.id_cart_rule = ' . (int) $this->id . '
 			AND c.id_carrier = ' . (int) $cart->id_carrier);
-            if (! $id_cart_rule) {
+            if ($id_cart_rule === 0) {
                 return (! $display_error) ? false : $this->trans('You cannot use this voucher with this carrier', [], 'Shop.Notifications.Error');
             }
         }
@@ -955,7 +955,7 @@ class CartRuleCore extends ObjectModel
 			FROM ' . _DB_PREFIX_ . 'cart_rule_shop crs
 			WHERE crs.id_cart_rule = ' . (int) $this->id . '
 			AND crs.id_shop = ' . (int) $context->shop->id);
-            if (! $id_cart_rule) {
+            if ($id_cart_rule === 0) {
                 return (! $display_error) ? false : $this->trans('You cannot use this voucher', [], 'Shop.Notifications.Error');
             }
         }
@@ -973,10 +973,8 @@ class CartRuleCore extends ObjectModel
         }
 
         // Check if the minimal product quantity is met (if defined)
-        if ($this->minimum_product_quantity) {
-            if ($cart->nbProducts() < $this->minimum_product_quantity) {
-                return (! $display_error) ? false : $this->trans('You cannot use this voucher with these products', [], 'Shop.Notifications.Error');
-            }
+        if ($this->minimum_product_quantity && $cart->nbProducts() < $this->minimum_product_quantity) {
+            return (! $display_error) ? false : $this->trans('You cannot use this voucher with these products', [], 'Shop.Notifications.Error');
         }
 
         // Check if the cart rule is only usable by a specific customer, and if the current customer is the right one
@@ -1061,7 +1059,7 @@ class CartRuleCore extends ObjectModel
         }
 
         $nbOfCartRules = 0;
-        if (count($otherCartRules)) {
+        if (count($otherCartRules) > 0) {
             foreach ($otherCartRules as $otherCartRule) {
                 if ($otherCartRule['id_cart_rule'] !== $this->id) {
                     ++$nbOfCartRules;
@@ -1110,7 +1108,7 @@ class CartRuleCore extends ObjectModel
 			WHERE ocr.`id_cart_rule` = ' . (int) $this->id . '
 			AND ocr.`deleted` = 1
 			AND o.`id_cart` = ' . $cart->id);
-        if ($removed_order_cartRule_id) {
+        if ($removed_order_cartRule_id !== 0) {
             return (! $display_error) ? false : $this->trans('You cannot use this voucher because it has manually been removed.', [], 'Shop.Notifications.Error');
         }
 
@@ -1118,12 +1116,10 @@ class CartRuleCore extends ObjectModel
         $containerFinder = new ContainerFinder(Context::getContext());
         $container = $containerFinder->getContainer();
         $featureFlagManager = $container->get(FeatureFlagStateCheckerInterface::class);
-        if ($featureFlagManager !== null && $featureFlagManager->isEnabled(FeatureFlagSettings::FEATURE_FLAG_DISCOUNT)) {
-            // This part will have to handle the incompatibility between discount types, for now we can't edit those incompatibility
-            // rules yet, so for the sake of the initial POC we simplify the check by preventing discounts to be compatible with each others
-            if ($nbOfCartRules >= 1) {
-                return (! $display_error) ? false : $this->trans(sprintf('This voucher is not combinable with an other voucher already in your cart: %s', $cart_rule['code'] ?? ''), [], 'Shop.Notifications.Error');
-            }
+        // This part will have to handle the incompatibility between discount types, for now we can't edit those incompatibility
+        // rules yet, so for the sake of the initial POC we simplify the check by preventing discounts to be compatible with each others
+        if ($featureFlagManager !== null && $featureFlagManager->isEnabled(FeatureFlagSettings::FEATURE_FLAG_DISCOUNT) && $nbOfCartRules >= 1) {
+            return (! $display_error) ? false : $this->trans(sprintf('This voucher is not combinable with an other voucher already in your cart: %s', $cart_rule['code'] ?? ''), [], 'Shop.Notifications.Error');
         }
 
         if (! $display_error) {
@@ -1320,7 +1316,7 @@ class CartRuleCore extends ObjectModel
 
                             // Attribute id is not important for this filter in the global list, so the ids are replaced by 0
                             foreach ($matching_products_list as &$matching_product) {
-                                $matching_product = preg_replace('/^([0-9]+)-[0-9]+$/', '$1-0', $matching_product);
+                                $matching_product = preg_replace('/^(\d+)-\d+$/', '$1-0', $matching_product);
                             }
 
                             $eligible_products_list = $this->filterProducts($eligible_products_list, $matching_products_list, $product_rule['type']);
@@ -1388,10 +1384,8 @@ class CartRuleCore extends ObjectModel
                             return (! $displayError) ? false : $this->trans('Unknown type of product restriction', [], 'Shop.Notifications.Error');
                     }
 
-                    if (! count($eligible_products_list)) {
-                        if ($countRulesProduct === 1) {
-                            return (! $displayError) ? false : $this->trans('You cannot use this voucher with these products', [], 'Shop.Notifications.Error');
-                        }
+                    if (! count($eligible_products_list) && $countRulesProduct === 1) {
+                        return (! $displayError) ? false : $this->trans('You cannot use this voucher with these products', [], 'Shop.Notifications.Error');
                     }
                 }
 
@@ -1521,14 +1515,12 @@ class CartRuleCore extends ObjectModel
             $container = $containerFinder->getContainer();
             $featureFlagManager = $container->get(FeatureFlagStateCheckerInterface::class);
 
-            if ($featureFlagManager !== null && $featureFlagManager->isEnabled(FeatureFlagSettings::FEATURE_FLAG_DISCOUNT)) {
-                if ($this->type === DiscountType::ORDER_LEVEL && $this->reduction_percent > 0.00 && $this->reduction_product === 0) {
-                    $order_products_total = $context->cart->getOrderTotal($use_tax, Cart::ONLY_PRODUCTS, $package_products);
-                    $order_shipping_total = $context->cart->getOrderTotal($use_tax, Cart::ONLY_SHIPPING, $package_products);
-                    $order_total = $order_products_total + $order_shipping_total;
+            if ($featureFlagManager !== null && $featureFlagManager->isEnabled(FeatureFlagSettings::FEATURE_FLAG_DISCOUNT) && ($this->type === DiscountType::ORDER_LEVEL && $this->reduction_percent > 0.00 && $this->reduction_product === 0)) {
+                $order_products_total = $context->cart->getOrderTotal($use_tax, Cart::ONLY_PRODUCTS, $package_products);
+                $order_shipping_total = $context->cart->getOrderTotal($use_tax, Cart::ONLY_SHIPPING, $package_products);
+                $order_total = $order_products_total + $order_shipping_total;
 
-                    return $reduction_value + $order_total * $this->reduction_percent / 100;
-                }
+                return $reduction_value + $order_total * $this->reduction_percent / 100;
             }
 
             if ((float) $this->reduction_amount > 0
@@ -1774,20 +1766,14 @@ class CartRuleCore extends ObjectModel
         if ((int) $this->gift_product && in_array($filter, [CartRule::FILTER_ACTION_ALL, CartRule::FILTER_ACTION_ALL_NOCAP, CartRule::FILTER_ACTION_GIFT], true)) {
             $id_address = ($package === null ? 0 : $package['id_address']);
             foreach ($package_products as $product) {
-                if ($product['id_product'] === $this->gift_product && ($product['id_product_attribute'] === $this->gift_product_attribute || ! (int) $this->gift_product_attribute)) {
-                    // The free gift coupon must be applied to one product only (needed for multi-shipping which manage multiple product lists)
-                    if (! isset(CartRule::$only_one_gift[$this->id . '-' . $this->gift_product])
-                        || CartRule::$only_one_gift[$this->id . '-' . $this->gift_product] === $id_address
-                        || CartRule::$only_one_gift[$this->id . '-' . $this->gift_product] === 0
-                        || $id_address === 0
-                        || ! $use_cache) {
-                        $reduction_value += Tools::ps_round($use_tax ? $product['price_wt'] : $product['price'], Context::getContext()->getComputingPrecision());
-                        if ($use_cache && (! isset(CartRule::$only_one_gift[$this->id . '-' . $this->gift_product]) || CartRule::$only_one_gift[$this->id . '-' . $this->gift_product] === 0)) {
-                            CartRule::$only_one_gift[$this->id . '-' . $this->gift_product] = $id_address;
-                        }
-
-                        break;
+                // The free gift coupon must be applied to one product only (needed for multi-shipping which manage multiple product lists)
+                if ($product['id_product'] === $this->gift_product && ($product['id_product_attribute'] === $this->gift_product_attribute || ! (int) $this->gift_product_attribute) && (! isset(CartRule::$only_one_gift[$this->id . '-' . $this->gift_product]) || CartRule::$only_one_gift[$this->id . '-' . $this->gift_product] === $id_address || CartRule::$only_one_gift[$this->id . '-' . $this->gift_product] === 0 || $id_address === 0 || ! $use_cache)) {
+                    $reduction_value += Tools::ps_round($use_tax ? $product['price_wt'] : $product['price'], Context::getContext()->getComputingPrecision());
+                    if ($use_cache && (! isset(CartRule::$only_one_gift[$this->id . '-' . $this->gift_product]) || CartRule::$only_one_gift[$this->id . '-' . $this->gift_product] === 0)) {
+                        CartRule::$only_one_gift[$this->id . '-' . $this->gift_product] = $id_address;
                     }
+
+                    break;
                 }
             }
         }
@@ -1904,7 +1890,7 @@ class CartRuleCore extends ObjectModel
         $shop_list = '';
         if ($type === 'shop') {
             $shops = Context::getContext()->employee->getAssociatedShops();
-            if (count($shops)) {
+            if (count($shops) > 0) {
                 $shop_list = ' AND t.id_shop IN (' . implode(',', array_map('intval', $shops)) . ') ';
             }
         }
@@ -2168,7 +2154,7 @@ class CartRuleCore extends ObjectModel
         // Attribute id is not important for this filter in the global list
         // so the ids are replaced by 0
         if (in_array($ruleType, ['products', 'categories', 'manufacturers', 'suppliers'], true)) {
-            $productsList = explode(':', (string) preg_replace("#\-[0-9]+#", '-0', implode(':', $products)));
+            $productsList = explode(':', (string) preg_replace('#\\-\\d+#', '-0', implode(':', $products)));
         } else {
             $productsList = $products;
         }

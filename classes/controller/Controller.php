@@ -533,7 +533,7 @@ abstract class ControllerCore
             }
 
             if ($js_path && ! in_array($js_path, $this->js_files, true)) {
-                $this->js_files[] = $js_path . ($version ? '?' . $version : '');
+                $this->js_files[] = $js_path . ($version !== '' && $version !== '0' ? '?' . $version : '');
             }
         }
     }
@@ -689,7 +689,7 @@ abstract class ControllerCore
          * @see https://www.php.net/manual/fr/function.set-error-handler.php
          * @see https://www.php.net/manual/en/language.operators.errorcontrol.php
          */
-        if (! (error_reporting() & $errno)) {
+        if ((error_reporting() & $errno) === 0) {
             return false;
         }
 

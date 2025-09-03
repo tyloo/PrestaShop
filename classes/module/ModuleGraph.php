@@ -88,7 +88,7 @@ abstract class ModuleGraphCore extends Module
                         }
                     }
 
-                    $this->_legend[$i] = ($i % 2) ? '' : sprintf('%02dh', $i);
+                    $this->_legend[$i] = ($i % 2 !== 0) ? '' : sprintf('%02dh', $i);
                 }
             }
 
@@ -125,7 +125,7 @@ abstract class ModuleGraphCore extends Module
                         }
                     }
 
-                    $this->_legend[$i] = ($i % 2) ? '' : sprintf('%02d', $i);
+                    $this->_legend[$i] = ($i % 2 !== 0) ? '' : sprintf('%02d', $i);
                 }
             }
 

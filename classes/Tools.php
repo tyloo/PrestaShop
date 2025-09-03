@@ -686,7 +686,7 @@ class ToolsCore
 
         // First, let's try to load the currency we have in the cookie.
         $currency = null;
-        if ((int) $cookie->id_currency) {
+        if ((int) $cookie->id_currency !== 0) {
             $currency = Currency::getCurrencyInstance((int) $cookie->id_currency);
         }
 
@@ -945,26 +945,18 @@ class ToolsCore
     public static function deleteDirectory($dirname, $delete_self = true)
     {
         $dirname = rtrim($dirname, '/') . '/';
-        if (file_exists($dirname)) {
-            if ($files = scandir($dirname, \SCANDIR_SORT_NONE)) {
-                foreach ($files as $file) {
-                    if ($file !== '.' && $file !== '..' && $file !== '.svn') {
-                        if (is_dir($dirname . $file)) {
-                            Tools::deleteDirectory($dirname . $file);
-                        } elseif (file_exists($dirname . $file)) {
-                            unlink($dirname . $file);
-                        }
+        if (file_exists($dirname) && $files = scandir($dirname, \SCANDIR_SORT_NONE)) {
+            foreach ($files as $file) {
+                if ($file !== '.' && $file !== '..' && $file !== '.svn') {
+                    if (is_dir($dirname . $file)) {
+                        Tools::deleteDirectory($dirname . $file);
+                    } elseif (file_exists($dirname . $file)) {
+                        unlink($dirname . $file);
                     }
                 }
-
-                if ($delete_self) {
-                    if (! rmdir($dirname)) {
-                        return false;
-                    }
-                }
-
-                return true;
             }
+
+            return ! ($delete_self && ! rmdir($dirname));
         }
 
         return false;
@@ -1802,13 +1794,11 @@ class ToolsCore
             curl_setopt($curl, \CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($curl, \CURLOPT_MAXREDIRS, 5);
 
-            if ($opts !== null) {
-                if (isset($opts['http']['method']) && Tools::strtolower($opts['http']['method']) === 'post') {
-                    curl_setopt($curl, \CURLOPT_POST, true);
-                    if (isset($opts['http']['content'])) {
-                        parse_str($opts['http']['content'], $post_data);
-                        curl_setopt($curl, \CURLOPT_POSTFIELDS, $post_data);
-                    }
+            if ($opts !== null && (isset($opts['http']['method']) && Tools::strtolower($opts['http']['method']) === 'post')) {
+                curl_setopt($curl, \CURLOPT_POST, true);
+                if (isset($opts['http']['content'])) {
+                    parse_str($opts['http']['content'], $post_data);
+                    curl_setopt($curl, \CURLOPT_POSTFIELDS, $post_data);
                 }
             }
 
@@ -2386,7 +2376,7 @@ FileETag none
         fwrite($write_fd, 'ErrorDocument 404 ' . $domain[0]['physical'] . "index.php?controller=404\n\n");
 
         fwrite($write_fd, '# ~~end~~ Do not remove this comment, Prestashop will keep automatically the code outside this comment when .htaccess will be generated again');
-        if ($specific_after) {
+        if ($specific_after !== '' && $specific_after !== '0') {
             fwrite($write_fd, "\n\n" . trim($specific_after));
         }
 
@@ -2435,7 +2425,7 @@ FileETag none
         fwrite($write_fd, "User-agent: *\n");
 
         // Allow directives for modules
-        if (count($robots_content['Allow'])) {
+        if (count($robots_content['Allow']) > 0) {
             fwrite($write_fd, "\n# Allow directives for modules\n");
             foreach ($robots_content['Allow'] as $allow) {
                 fwrite($write_fd, 'Allow: ' . $allow . \PHP_EOL);
@@ -2443,7 +2433,7 @@ FileETag none
         }
 
         // Non-friendly URLs and parameters blocked from crawling
-        if (count($robots_content['GB'])) {
+        if (count($robots_content['GB']) > 0) {
             fwrite($write_fd, "\n# Non-friendly URLs and parameters blocked from crawling\n");
             foreach ($robots_content['GB'] as $gb) {
                 fwrite($write_fd, 'Disallow: /*' . $gb . \PHP_EOL);
@@ -2451,7 +2441,7 @@ FileETag none
         }
 
         // List of friendly rewrites on the shop blocked from crawling
-        if (count($robots_content['Directories'])) {
+        if (count($robots_content['Directories']) > 0) {
             // For this, we will need language iso codes for the URLs
             $prefixesForGeneration = [];
 
@@ -2492,7 +2482,7 @@ FileETag none
                     }
 
                     // Friendly URLs blocked from crawling
-                    if (count($robots_content['Files'])) {
+                    if (count($robots_content['Files']) > 0) {
                         fwrite($write_fd, "# Friendly URLs blocked from crawling\n");
                         foreach ($robots_content['Files'] as $iso_code => $files) {
                             foreach ($files as $file) {
@@ -3195,7 +3185,7 @@ exit;
 
         // get the first argument and parse it like a query string
         parse_str((string) $argv[1], $args);
-        if (! is_array($args) || $args === []) {
+        if ($args === []) {
             return;
         }
 
@@ -3453,7 +3443,7 @@ exit;
 
         // Check for potentially malicious serialized objects
         if (! $allowObjects) {
-            if (str_contains($serialized, 'O:') && preg_match('/(^|;|{|})O:[0-9]+:"/', $serialized)) {
+            if (str_contains($serialized, 'O:') && preg_match('/(^|;|{|})O:\d+:"/', $serialized)) {
                 return false;
             }
 
@@ -3514,7 +3504,7 @@ exit;
     {
         @ini_set('max_execution_time', $timeout);
         $time_limit = ini_get('max_execution_time');
-        if (! $time_limit) {
+        if ($time_limit === '' || $time_limit === '0') {
             $time_limit = 30;
         }
 
@@ -3975,7 +3965,7 @@ exit;
 
         $queryString = str_replace('%2F', '/', http_build_query($params, '', '&'));
 
-        return $url . ($queryString ? '?' . $queryString : '');
+        return $url . ($queryString !== '' && $queryString !== '0' ? '?' . $queryString : '');
     }
 
     /**

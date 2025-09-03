@@ -221,7 +221,7 @@ class CustomizationCore extends ObjectModel
      */
     public static function getCustomizationPrice($idCustomization)
     {
-        if (! (int) $idCustomization) {
+        if ((int) $idCustomization === 0) {
             return 0;
         }
 
@@ -242,7 +242,7 @@ class CustomizationCore extends ObjectModel
      */
     public static function getCustomizationWeight($idCustomization)
     {
-        if (! (int) $idCustomization) {
+        if ((int) $idCustomization === 0) {
             return 0;
         }
 
@@ -294,7 +294,7 @@ class CustomizationCore extends ObjectModel
             '
 		SELECT `name`
 		FROM `' . _DB_PREFIX_ . 'customization_field_lang`
-		WHERE `id_customization_field` = ' . (int) $idCustomization . ((int) $idShop ? ' AND `id_shop` = ' . (int) $idShop : '') . '
+		WHERE `id_customization_field` = ' . (int) $idCustomization . ((int) $idShop !== 0 ? ' AND `id_shop` = ' . (int) $idShop : '') . '
 		AND `id_lang` = ' . (int) $idLang
         );
     }

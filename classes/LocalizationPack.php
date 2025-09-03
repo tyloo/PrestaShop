@@ -68,7 +68,7 @@ class LocalizationPackCore
         if ($iso_localization_pack) {
             $id_country = (int) Country::getByIso($iso_localization_pack);
 
-            if ($id_country) {
+            if ($id_country !== 0) {
                 $country = new Country($id_country);
             }
 
@@ -105,7 +105,7 @@ class LocalizationPackCore
             $res = $res && $this->updateDefaultGroupDisplayMethod($xml);
 
             if (($res || $install_mode) && isset($this->iso_code_lang)) {
-                if (! ($id_lang = (int) Language::getIdByIso($this->iso_code_lang, true))) {
+                if (($id_lang = (int) Language::getIdByIso($this->iso_code_lang, true)) === 0) {
                     $id_lang = 1;
                 }
 
@@ -158,7 +158,7 @@ class LocalizationPackCore
                     $state->id_country = $id_country;
 
                     $id_zone = (int) Zone::getIdByName((string) $attributes['zone']);
-                    if (! $id_zone) {
+                    if ($id_zone === 0) {
                         $zone = new Zone();
                         $zone->name = (string) $attributes['zone'];
                         $zone->active = true;
@@ -278,7 +278,7 @@ class LocalizationPackCore
                     }
 
                     $id_country = (int) Country::getByIso(strtoupper($rule_attributes['iso_code_country']));
-                    if (! $id_country) {
+                    if ($id_country === 0) {
                         continue;
                     }
 
@@ -287,7 +287,7 @@ class LocalizationPackCore
                     }
 
                     // Default values
-                    $id_state = (int) isset($rule_attributes['iso_code_state']) ? State::getIdByIso(strtoupper($rule_attributes['iso_code_state'])) : 0;
+                    $id_state = (int) isset($rule_attributes['iso_code_state']) !== 0 ? State::getIdByIso(strtoupper($rule_attributes['iso_code_state'])) : 0;
                     $zipcode_from = 0;
                     $zipcode_to = 0;
                     $behavior = $rule_attributes['behavior'];
@@ -504,10 +504,8 @@ class LocalizationPackCore
                     $moduleManager = $moduleManagerBuilder->build();
 
                     if ($install) {
-                        if (! $moduleManager->isInstalled($name)) {
-                            if (! $module->install()) {
-                                $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred while installing the module: %s', [$name], 'Admin.International.Notification');
-                            }
+                        if (! $moduleManager->isInstalled($name) && ! $module->install()) {
+                            $this->_errors[] = Context::getContext()->getTranslator()->trans('An error occurred while installing the module: %s', [$name], 'Admin.International.Notification');
                         }
                     } elseif ($moduleManager->isInstalled($name)) {
                         if (! $module->uninstall()) {
@@ -542,14 +540,12 @@ class LocalizationPackCore
                 $attributes = $data->attributes();
                 $name = (string) $attributes['name'];
 
-                if (isset($attributes['value']) && Configuration::get($name) !== false) {
-                    if (! Configuration::updateValue($name, (string) $attributes['value'])) {
-                        $this->_errors[] = Context::getContext()->getTranslator()->trans(
-                            'An error occurred during the configuration setup: %1$s',
-                            [$name],
-                            'Admin.International.Notification'
-                        );
-                    }
+                if (isset($attributes['value']) && Configuration::get($name) !== false && ! Configuration::updateValue($name, (string) $attributes['value'])) {
+                    $this->_errors[] = Context::getContext()->getTranslator()->trans(
+                        'An error occurred during the configuration setup: %1$s',
+                        [$name],
+                        'Admin.International.Notification'
+                    );
                 }
             }
         }

@@ -301,7 +301,7 @@ class TabCore extends ObjectModel
 			SELECT `id_parent`
 			FROM `' . _DB_PREFIX_ . 'tab`
 			WHERE LOWER(class_name) = \'' . pSQL(Tools::strtolower(Tools::getValue('controller'))) . "'");
-            if (! $value) {
+            if ($value === 0) {
                 $value = -1;
             }
 

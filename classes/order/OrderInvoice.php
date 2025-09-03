@@ -255,7 +255,7 @@ class OrderInvoiceCore extends ObjectModel
                     }
                 }
 
-                if (! $row['product_quantity']) {
+                if ($row['product_quantity'] === 0) {
                     continue;
                 }
             }

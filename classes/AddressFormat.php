@@ -230,16 +230,14 @@ class AddressFormatCore extends ObjectModel
 
         $multipleLineFields = explode(self::FORMAT_NEW_LINE, $this->format);
         foreach ($multipleLineFields as $lineField) {
-            if ($patternsName = preg_split(self::_CLEANING_REGEX_, $lineField, -1, \PREG_SPLIT_NO_EMPTY)) {
-                if (is_array($patternsName)) {
-                    foreach ($patternsName as $patternName) {
-                        if (! in_array($patternName, $usedKeyList, true)) {
-                            $this->_checkLiableAssociation($patternName);
-                            $usedKeyList[] = $patternName;
-                        } else {
-                            $this->_errorFormatList[] = $this->trans('This key has already been used.', [], 'Admin.Notifications.Error') .
-                                ': ' . $patternName;
-                        }
+            if (($patternsName = preg_split(self::_CLEANING_REGEX_, $lineField, -1, \PREG_SPLIT_NO_EMPTY)) && is_array($patternsName)) {
+                foreach ($patternsName as $patternName) {
+                    if (! in_array($patternName, $usedKeyList, true)) {
+                        $this->_checkLiableAssociation($patternName);
+                        $usedKeyList[] = $patternName;
+                    } else {
+                        $this->_errorFormatList[] = $this->trans('This key has already been used.', [], 'Admin.Notifications.Error') .
+                            ': ' . $patternName;
                     }
                 }
             }
@@ -341,22 +339,20 @@ class AddressFormatCore extends ObjectModel
                     }
 
                     $formattedValue = preg_replace('/^' . $key . '$/', (string) $formattedValueList[$key], (string) $replacedValue, -1, $count);
-                    if ($formattedValue) {
-                        if ($count) {
-                            // Allow to check multiple key in the same pattern,
-                            if (empty($mainFormattedKey)) {
-                                $mainFormattedKey = $key;
-                            }
-
-                            // Set the pattern value to an empty string if an older key has already been matched before
-                            if ($mainFormattedKey !== $key) {
-                                $formattedValueList[$key] = '';
-                            }
-
-                            // Store the new pattern value
-                            $formattedValueList[$mainFormattedKey] = $start . $formattedValue . $end;
-                            unset($originalFormattedPatternList[$patternNum]);
+                    if ($formattedValue && $count) {
+                        // Allow to check multiple key in the same pattern,
+                        if (empty($mainFormattedKey)) {
+                            $mainFormattedKey = $key;
                         }
+
+                        // Set the pattern value to an empty string if an older key has already been matched before
+                        if ($mainFormattedKey !== $key) {
+                            $formattedValueList[$key] = '';
+                        }
+
+                        // Store the new pattern value
+                        $formattedValueList[$mainFormattedKey] = $start . $formattedValue . $end;
+                        unset($originalFormattedPatternList[$patternNum]);
                     }
                 }
             }

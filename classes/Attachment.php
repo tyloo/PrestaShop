@@ -240,7 +240,7 @@ class AttachmentCore extends ObjectModel
             'WHERE `id_attachment` = ' . (int) $this->id
         );
 
-        if ($updateAttachmentCache === true) {
+        if ($updateAttachmentCache) {
             $productIds = Db::getInstance()->executeS(
                 'SELECT `id_product` FROM `' . _DB_PREFIX_ . 'product_attachment` ' .
                 'WHERE `id_attachment` = ' . (int) $this->id
