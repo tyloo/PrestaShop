@@ -72,7 +72,7 @@ class CartTest extends TestCase
         self::$id_address = self::makeAddress()->id;
     }
 
-    private static function setRoundingMode(string $modeStr): int
+    private function setRoundingMode(string $modeStr): int
     {
         $mode = match ($modeStr) {
             'up' => PS_ROUND_UP,
@@ -88,7 +88,7 @@ class CartTest extends TestCase
         return $mode;
     }
 
-    private static function setRoundingType(string $typeStr): int
+    private function setRoundingType(string $typeStr): int
     {
         $type = match ($typeStr) {
             'item' => Order::ROUND_ITEM,
@@ -106,7 +106,7 @@ class CartTest extends TestCase
      * $rate is e.g. 5.5, 20...
      * This is cached by $rate.
      */
-    private static function getIdTax(int $rate): string
+    private function getIdTax(int $rate): string
     {
         static $taxes = [];
 
@@ -127,7 +127,7 @@ class CartTest extends TestCase
     /**
      * This is cached by $rate.
      */
-    private static function getIdTaxRulesGroup(int $rate): int
+    private function getIdTaxRulesGroup(int $rate): int
     {
         static $groups = [];
 
@@ -140,7 +140,7 @@ class CartTest extends TestCase
             self::assertTrue((bool) $taxRulesGroup->save());
 
             $taxRule = new TaxRule(null, (int) Configuration::get('PS_LANG_DEFAULT'));
-            $taxRule->id_tax = self::getIdTax($rate);
+            $taxRule->id_tax = $this->getIdTax($rate);
             $taxRule->id_country = Configuration::get('PS_COUNTRY_DEFAULT');
             $taxRule->id_tax_rules_group = $taxRulesGroup->id;
 
@@ -155,7 +155,7 @@ class CartTest extends TestCase
     /**
      * This is cached by $name.
      */
-    private static function makeProduct(string $name, float $price, int $id_tax_rules_group): Product
+    private function makeProduct(string $name, float $price, int $id_tax_rules_group): Product
     {
         $product = new Product(null, false, (int) Configuration::get('PS_LANG_DEFAULT'));
         $product->id_tax_rules_group = $id_tax_rules_group;
@@ -181,7 +181,7 @@ class CartTest extends TestCase
         return $address;
     }
 
-    private static function makeCart(): Cart
+    private function makeCart(): Cart
     {
         $cart = new Cart(null, (int) Configuration::get('PS_LANG_DEFAULT'));
         $cart->id_currency = Currency::getDefaultCurrencyId();
@@ -196,7 +196,7 @@ class CartTest extends TestCase
      * null $shippingCost is interpreted as free shipping
      * Carriers are cached by $name.
      */
-    private static function getIdCarrier(string $name, ?int $shippingCost = null, ?int $id_tax_rules_group = null): int
+    private function getIdCarrier(string $name, ?int $shippingCost = null, ?int $id_tax_rules_group = null): int
     {
         static $carriers = [];
 
@@ -251,7 +251,7 @@ class CartTest extends TestCase
         return $carriers[$name];
     }
 
-    private static function makeCartRule(int $amount, string $type): CartRule
+    private function makeCartRule(int $amount, string $type): CartRule
     {
         $cartRule = new CartRule(null, (int) Configuration::get('PS_LANG_DEFAULT'));
 
@@ -296,8 +296,8 @@ class CartTest extends TestCase
         Context::getContext()->currency = Currency::getDefaultCurrency();
 
         Group::clearCachedValues();
-        self::setRoundingType('line');
-        self::setRoundingMode('half_up');
+        $this->setRoundingType('line');
+        $this->setRoundingMode('half_up');
         Configuration::set('PS_PRICE_DISPLAY_PRECISION', 2);
         // Pre-existing cart rules might mess up our test
         Db::getInstance()->execute('UPDATE ' . _DB_PREFIX_ . 'cart_rule SET active = 0');
@@ -309,8 +309,8 @@ class CartTest extends TestCase
 
     public function testBasicOnlyProducts(): void
     {
-        $product = self::makeProduct('Hello Product', 10, self::getIdTaxRulesGroup(20));
-        $cart = self::makeCart();
+        $product = $this->makeProduct('Hello Product', 10, $this->getIdTaxRulesGroup(20));
+        $cart = $this->makeCart();
 
         $cart->updateQty(1, $product->id);
 
@@ -320,10 +320,10 @@ class CartTest extends TestCase
 
     public function testCartBothWithFreeCarrier(): void
     {
-        $product = self::makeProduct('Hello Product', 10, self::getIdTaxRulesGroup(20));
-        $cart = self::makeCart();
+        $product = $this->makeProduct('Hello Product', 10, $this->getIdTaxRulesGroup(20));
+        $cart = $this->makeCart();
 
-        $id_carrier = self::getIdCarrier('free');
+        $id_carrier = $this->getIdCarrier('free');
 
         $cart->updateQty(1, $product->id);
         $this->assertEquals(10, $cart->getOrderTotal(false, Cart::BOTH, null, $id_carrier));
@@ -332,10 +332,10 @@ class CartTest extends TestCase
 
     public function testCartBothWithPaidCarrier(): void
     {
-        $product = self::makeProduct('Hello Product', 10, self::getIdTaxRulesGroup(10));
-        $cart = self::makeCart();
+        $product = $this->makeProduct('Hello Product', 10, $this->getIdTaxRulesGroup(10));
+        $cart = $this->makeCart();
 
-        $id_carrier = self::getIdCarrier('costs 2', 2, self::getIdTaxRulesGroup(10));
+        $id_carrier = $this->getIdCarrier('costs 2', 2, $this->getIdTaxRulesGroup(10));
 
         $cart->updateQty(1, $product->id);
         $this->assertEquals(12, $cart->getOrderTotal(false, Cart::BOTH, null, $id_carrier));
@@ -344,12 +344,12 @@ class CartTest extends TestCase
 
     public function testBasicRoundTypeLine(): void
     {
-        self::setRoundingType('line');
+        $this->setRoundingType('line');
 
-        $product_a = self::makeProduct('A Product', 1.236, self::getIdTaxRulesGroup(20));
-        $product_b = self::makeProduct('B Product', 2.345, self::getIdTaxRulesGroup(20));
+        $product_a = $this->makeProduct('A Product', 1.236, $this->getIdTaxRulesGroup(20));
+        $product_b = $this->makeProduct('B Product', 2.345, $this->getIdTaxRulesGroup(20));
 
-        $cart = self::makeCart();
+        $cart = $this->makeCart();
 
         $cart->updateQty(1, $product_a->id);
         $cart->updateQty(1, $product_b->id);
@@ -360,12 +360,12 @@ class CartTest extends TestCase
 
     public function testBasicRoundTypeTotal(): void
     {
-        self::setRoundingType('total');
+        $this->setRoundingType('total');
 
-        $product_a = self::makeProduct('A Product', 1.236, self::getIdTaxRulesGroup(20));
-        $product_b = self::makeProduct('B Product', 2.345, self::getIdTaxRulesGroup(20));
+        $product_a = $this->makeProduct('A Product', 1.236, $this->getIdTaxRulesGroup(20));
+        $product_b = $this->makeProduct('B Product', 2.345, $this->getIdTaxRulesGroup(20));
 
-        $cart = self::makeCart();
+        $cart = $this->makeCart();
 
         $cart->updateQty(1, $product_a->id);
         $cart->updateQty(1, $product_b->id);
@@ -376,12 +376,12 @@ class CartTest extends TestCase
 
     public function testBasicCartRuleAmountBeforeTax(): void
     {
-        $id_carrier = self::getIdCarrier('free');
+        $id_carrier = $this->getIdCarrier('free');
 
-        $product = self::makeProduct('Yo Product', 10, self::getIdTaxRulesGroup(20));
+        $product = $this->makeProduct('Yo Product', 10, $this->getIdTaxRulesGroup(20));
 
-        self::makeCartRule(5, 'before tax');
-        $cart = self::makeCart();
+        $this->makeCartRule(5, 'before tax');
+        $cart = $this->makeCart();
 
         $cart->updateQty(1, $product->id);
 
@@ -403,11 +403,11 @@ class CartTest extends TestCase
     {
         Configuration::set('PS_ATCP_SHIPWRAP', true);
 
-        $highProduct = self::makeProduct('High Product', 10, self::getIdTaxRulesGroup(20));
-        $lowProduct = self::makeProduct('Low Product', 10, self::getIdTaxRulesGroup(10));
-        $cart = self::makeCart();
+        $highProduct = $this->makeProduct('High Product', 10, $this->getIdTaxRulesGroup(20));
+        $lowProduct = $this->makeProduct('Low Product', 10, $this->getIdTaxRulesGroup(10));
+        $cart = $this->makeCart();
 
-        $id_carrier = self::getIdCarrier('costs 5 with tax', 5, null);
+        $id_carrier = $this->getIdCarrier('costs 5 with tax', 5, null);
 
         $cart->updateQty(1, $highProduct->id);
         $cart->updateQty(3, $lowProduct->id);
@@ -424,8 +424,8 @@ class CartTest extends TestCase
     public function testSameTotalWithoutTax(): void
     {
         Configuration::set('PS_TAX', false);
-        $product = self::makeProduct('Hello Product', 10, self::getIdTaxRulesGroup(20));
-        $cart = self::makeCart();
+        $product = $this->makeProduct('Hello Product', 10, $this->getIdTaxRulesGroup(20));
+        $cart = $this->makeCart();
 
         $cart->updateQty(1, $product->id);
 

@@ -77,7 +77,7 @@ final class CustomerGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     protected function getId(): string
     {
-        return static::GRID_ID;
+        return self::GRID_ID;
     }
 
     protected function getName(): string

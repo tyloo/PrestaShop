@@ -89,7 +89,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
      */
     public function toggleMultiShopFeature(bool $enable): void
     {
-        self::toggleMultiShop($enable);
+        $this->toggleMultiShop($enable);
     }
 
     /**
@@ -400,7 +400,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
         }
     }
 
-    private static function toggleMultiShop(bool $enable): void
+    private function toggleMultiShop(bool $enable): void
     {
         $container = CommonFeatureContext::getContainer();
         /** @var FeatureInterface $multistoreFeature */
