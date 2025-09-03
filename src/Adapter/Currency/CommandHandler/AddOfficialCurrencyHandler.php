@@ -94,7 +94,7 @@ final class AddOfficialCurrencyHandler extends AbstractCurrencyHandler implement
 
     private function getPrecision(AddCurrencyCommand $command): int
     {
-        if ($command->getPrecision() !== null) {
+        if ($command->getPrecision() instanceof \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\Precision) {
             return $command->getPrecision()->getValue();
         }
 

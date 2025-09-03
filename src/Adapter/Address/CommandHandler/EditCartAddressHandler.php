@@ -136,7 +136,7 @@ class EditCartAddressHandler implements EditCartAddressHandlerInterface
             $addressCommand->setPostCode($cartCommand->getPostCode());
         }
 
-        if ($cartCommand->getCountryId() !== null) {
+        if ($cartCommand->getCountryId() instanceof \PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId) {
             $addressCommand->setCountryId($cartCommand->getCountryId()->getValue());
         }
 
@@ -156,7 +156,7 @@ class EditCartAddressHandler implements EditCartAddressHandlerInterface
             $addressCommand->setAddress2($cartCommand->getAddress2());
         }
 
-        if ($cartCommand->getStateId() !== null) {
+        if ($cartCommand->getStateId() instanceof \PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateIdInterface) {
             $addressCommand->setStateId($cartCommand->getStateId()->getValue());
         }
 

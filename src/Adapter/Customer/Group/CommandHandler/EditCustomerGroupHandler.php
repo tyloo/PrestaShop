@@ -55,7 +55,7 @@ class EditCustomerGroupHandler implements EditCustomerGroupHandlerInterface
             $propertiesToUpdate['name'] = array_keys($command->getLocalizedNames());
         }
 
-        if ($command->getReductionPercent() !== null) {
+        if ($command->getReductionPercent() instanceof \PrestaShop\Decimal\DecimalNumber) {
             $customerGroup->reduction = (string) $command->getReductionPercent();
             $propertiesToUpdate[] = 'reduction';
         }

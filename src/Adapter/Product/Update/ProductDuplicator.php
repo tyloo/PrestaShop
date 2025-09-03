@@ -31,6 +31,7 @@ namespace PrestaShop\PrestaShop\Adapter\Product\Update;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Image;
 use Language;
 use PrestaShop\PrestaShop\Adapter\Product\Combination\Repository\CombinationRepository;
 use PrestaShop\PrestaShop\Adapter\Product\Combination\Update\CombinationStockProperties;
@@ -144,7 +145,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
             throw new ShopAssociationNotFound(\sprintf('No shops associated with product %d by shop constraint %s', $sourceProductId->getValue(), var_export($shopConstraint, true)));
         }
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             $targetDefaultShopId = $shopConstraint->getShopId();
         } elseif ($shopConstraint->getShopGroupId() || ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds())) {
             // If source default shop is in the group use it as new default, if not use the first shop from group
@@ -155,7 +156,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                 }
             }
 
-            if ($targetDefaultShopId === null) {
+            if (! $targetDefaultShopId instanceof ShopId) {
                 $targetDefaultShopId = reset($shopIds);
             }
         } else {
@@ -712,7 +713,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
         foreach ($oldImages as $oldImage) {
             $oldImageId = new ImageId((int) $oldImage['id_image']);
             $newImage = $this->productImageRepository->duplicate($oldImageId, new ProductId($newProductId), $shopConstraint);
-            if ($newImage === null) {
+            if (! $newImage instanceof Image) {
                 continue;
             }
 

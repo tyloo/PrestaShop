@@ -57,7 +57,7 @@ class CartRuleBuilder
         $cartRule->free_shipping = $command->getDiscountType()->getValue() === DiscountType::FREE_SHIPPING;
 
         if ($command->getDiscountType()->getValue() === DiscountType::CART_LEVEL || $command->getDiscountType()->getValue() === DiscountType::ORDER_LEVEL) {
-            if ($command->getPercentDiscount() !== null) {
+            if ($command->getPercentDiscount() instanceof \PrestaShop\Decimal\DecimalNumber) {
                 $cartRule->reduction_percent = (float) (string) $command->getPercentDiscount();
                 $cartRule->reduction_amount = 0;
                 $cartRule->reduction_currency = 0;
@@ -74,7 +74,7 @@ class CartRuleBuilder
         }
 
         if ($command->getDiscountType()->getValue() === DiscountType::PRODUCT_LEVEL) {
-            if ($command->getPercentDiscount() !== null) {
+            if ($command->getPercentDiscount() instanceof \PrestaShop\Decimal\DecimalNumber) {
                 $cartRule->reduction_percent = (float) (string) $command->getPercentDiscount();
                 $cartRule->reduction_amount = 0;
                 $cartRule->reduction_currency = 0;

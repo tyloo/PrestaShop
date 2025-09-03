@@ -58,7 +58,7 @@ class ProductImageProvider implements ProductImageProviderInterface
     {
         $imageId = $this->productImageRepository->getPreviewCombinationProduct($combinationId);
 
-        if ($imageId !== null) {
+        if ($imageId instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId) {
             return $this->productImagePathFactory->getPath($imageId);
         }
 

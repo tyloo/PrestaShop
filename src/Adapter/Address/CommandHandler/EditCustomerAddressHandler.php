@@ -112,13 +112,13 @@ final class EditCustomerAddressHandler extends AbstractAddressHandler implements
             $address->postcode = $command->getPostCode();
         }
 
-        if ($command->getCountryId() !== null) {
+        if ($command->getCountryId() instanceof \PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId) {
             $address->id_country = $command->getCountryId()->getValue();
         }
 
-        if ($command->getStateId() !== null) {
+        if ($command->getStateId() instanceof \PrestaShop\PrestaShop\Core\Domain\State\ValueObject\StateIdInterface) {
             $address->id_state = $command->getStateId()->getValue();
-        } elseif ($command->getCountryId() !== null) {
+        } elseif ($command->getCountryId() instanceof \PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId) {
             // If country was changed but not state we check if state value needs to be reset
             $country = new Country($command->getCountryId()->getValue());
             if (! $country->contains_states) {

@@ -63,8 +63,8 @@ final class GetCatalogPriceRuleForEditingHandler extends AbstractCatalogPriceRul
             new DecimalNumber($specificPriceRule->price),
             new Reduction($specificPriceRule->reduction_type, (string) $specificPriceRule->reduction),
             (bool) $specificPriceRule->reduction_tax,
-            ! DateTimeUtils::isNull($from) ? new DateTime($from) : null,
-            ! DateTimeUtils::isNull($to) ? new DateTime($to) : null
+            DateTimeUtils::isNull($from) ? null : new DateTime($from),
+            DateTimeUtils::isNull($to) ? null : new DateTime($to)
         );
     }
 }

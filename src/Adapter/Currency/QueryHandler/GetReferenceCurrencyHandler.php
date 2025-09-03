@@ -55,7 +55,7 @@ class GetReferenceCurrencyHandler implements GetReferenceCurrencyHandlerInterfac
         foreach ($this->languages as $language) {
             $locale = $this->localeRepository->getLocale($language->getLocale());
             $localeCurrency = $locale->getCurrency($query->getIsoCode()->getValue());
-            if ($localeCurrency !== null) {
+            if ($localeCurrency instanceof \PrestaShop\PrestaShop\Core\Localization\CLDR\Currency) {
                 $currency = $localeCurrency;
                 $localizedNames[$language->getId()] = $localeCurrency->getDisplayName();
                 $localizedSymbols[$language->getId()] = $localeCurrency->getSymbol(CurrencyInterface::SYMBOL_TYPE_NARROW) ?: $localeCurrency->getIsoCode();
@@ -67,7 +67,7 @@ class GetReferenceCurrencyHandler implements GetReferenceCurrencyHandlerInterfac
             $localizedPatterns[$language->getId()] = $locale->getCurrencyPattern();
         }
 
-        if ($currency === null) {
+        if (! $currency instanceof \PrestaShop\PrestaShop\Core\Localization\CLDR\Currency) {
             throw new CurrencyNotFoundException(\sprintf('Can not find reference currency with ISO code %s', $query->getIsoCode()->getValue()));
         }
 

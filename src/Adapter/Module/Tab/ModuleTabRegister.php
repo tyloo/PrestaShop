@@ -28,6 +28,7 @@
 namespace PrestaShop\PrestaShop\Adapter\Module\Tab;
 
 use Exception;
+use Module;
 use PrestaShop\PrestaShop\Core\Module\ModuleInterface;
 use PrestaShopBundle\Entity\Repository\LangRepository;
 use PrestaShopBundle\Entity\Repository\TabRepository;
@@ -82,7 +83,7 @@ class ModuleTabRegister
      */
     public function registerTabs(ModuleInterface $module)
     {
-        if ($module->getInstance() === null) {
+        if (! $module->getInstance() instanceof Module) {
             return;
         }
 

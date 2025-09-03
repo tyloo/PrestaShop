@@ -58,7 +58,7 @@ class PriceFormatter
         $context = Context::getContext();
         $priceCurrency = \is_array($currency) ? $currency['iso_code'] : null;
         $priceCurrency = ! $priceCurrency && $currency instanceof Currency ? $currency->iso_code : $priceCurrency;
-        $priceCurrency = ! $priceCurrency ? $context->currency->iso_code : $priceCurrency;
+        $priceCurrency = $priceCurrency ?: $context->currency->iso_code;
 
         return Tools::getContextLocale($context)->formatPrice($price, $priceCurrency);
     }

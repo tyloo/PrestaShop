@@ -85,7 +85,7 @@ class EditCountryHandler implements EditCountryHandlerInterface
             $country->contains_states = $command->containsStates();
         }
 
-        if ($command->getZipCodeFormat() !== null) {
+        if ($command->getZipCodeFormat() instanceof \PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryZipCodeFormat) {
             $country->zip_code_format = $command->getZipCodeFormat()->getValue();
         }
 

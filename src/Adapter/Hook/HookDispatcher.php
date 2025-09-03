@@ -85,7 +85,7 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
 
         if ($listeners = $this->getListeners(strtolower($eventName ?? ''))) {
             $this->doDispatch($listeners, $eventName, $event);
-        } elseif ($this->isDebug && $this->hookRegistry !== null) {
+        } elseif ($this->isDebug && $this->hookRegistry instanceof HookRegistry) {
             // When a hook has no listeners it means it's not even in the database or no modules were attached, in the current case
             // Hook::exec will never be called meaning no stats will be registered for this hook So we handle the registry data collection
             // here so that we can still get some info in the Debug toolbar
@@ -234,12 +234,12 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
     {
         $globalParameters = ['_ps_version' => Version::VERSION];
 
-        if ($this->requestStack === null) {
+        if (! $this->requestStack instanceof RequestStack) {
             return $globalParameters;
         }
 
         $request = $this->requestStack->getCurrentRequest();
-        if ($request === null) {
+        if (! $request instanceof \Symfony\Component\HttpFoundation\Request) {
             return $globalParameters;
         }
 

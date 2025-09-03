@@ -47,12 +47,12 @@ class CartRuleActionFiller
     ): array {
         $discount = $cartRuleAction->getDiscount();
 
-        if ($discount !== null) {
+        if ($discount instanceof Discount) {
             $this->fillDiscount($cartRule, $discount);
         }
 
         $giftProduct = $cartRuleAction->getGiftProduct();
-        if ($giftProduct !== null) {
+        if ($giftProduct instanceof \PrestaShop\PrestaShop\Core\Domain\CartRule\ValueObject\GiftProduct) {
             $cartRule->gift_product = $giftProduct->getProductId()->getValue();
             $cartRule->gift_product_attribute = $giftProduct->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ? $giftProduct->getCombinationId()->getValue() : null;
         } else {
@@ -80,7 +80,7 @@ class CartRuleActionFiller
     private function fillDiscount(CartRule $cartRule, ?Discount $discount): void
     {
         // when there is no discount action, we reset all the related properties to defaults
-        if ($discount === null) {
+        if (! $discount instanceof Discount) {
             $cartRule->reduction_amount = 0;
             $cartRule->reduction_currency = 0;
             $cartRule->reduction_tax = false;
@@ -94,7 +94,7 @@ class CartRuleActionFiller
         $percentageDiscount = $discount->getPercentageDiscount();
         $amountDiscount = $discount->getAmountDiscount();
 
-        if ($amountDiscount !== null) {
+        if ($amountDiscount instanceof Money) {
             $this->fillAmountDiscount($cartRule, $amountDiscount);
         } else {
             $this->fillPercentageDiscount($cartRule, $percentageDiscount);

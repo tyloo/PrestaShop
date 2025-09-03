@@ -163,7 +163,7 @@ class AdminModuleDataProvider implements ModuleInterface
             return true;
         }
 
-        if ($this->employee === null) {
+        if (! $this->employee instanceof Employee) {
             return false;
         }
 

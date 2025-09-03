@@ -111,19 +111,19 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
             $customer->id_gender = $command->getGenderId();
         }
 
-        if ($command->getFirstName() !== null) {
+        if ($command->getFirstName() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\FirstName) {
             $customer->firstname = $command->getFirstName()->getValue();
         }
 
-        if ($command->getLastName() !== null) {
+        if ($command->getLastName() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\LastName) {
             $customer->lastname = $command->getLastName()->getValue();
         }
 
-        if ($command->getEmail() !== null) {
+        if ($command->getEmail() instanceof Email) {
             $customer->email = $command->getEmail()->getValue();
         }
 
-        if ($command->getPassword() !== null) {
+        if ($command->getPassword() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\Password) {
             $hashedPassword = $this->hashing->hash(
                 $command->getPassword()->getValue(),
                 $this->legacyCookieKey
@@ -132,7 +132,7 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
             $customer->passwd = $hashedPassword;
         }
 
-        if ($command->getBirthday() !== null) {
+        if ($command->getBirthday() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\Birthday) {
             $customer->birthday = $command->getBirthday()->getValue();
         }
 
@@ -165,7 +165,7 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
             $customer->siret = $command->getSiretCode();
         }
 
-        if ($command->getApeCode() !== null) {
+        if ($command->getApeCode() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\ApeCode) {
             $customer->ape = $command->getApeCode()->getValue();
         }
 
@@ -189,7 +189,7 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
     private function assertCustomerWithUpdatedEmailDoesNotExist(Customer $customer, EditCustomerCommand $command)
     {
         // We only check this if the email is getting changed.
-        if ($command->getEmail() === null) {
+        if (! $command->getEmail() instanceof Email) {
             return;
         }
 

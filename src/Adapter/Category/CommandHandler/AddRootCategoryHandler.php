@@ -114,7 +114,7 @@ final class AddRootCategoryHandler extends AbstractEditCategoryHandler implement
             throw new CategoryException('Invalid language data for creating root category.');
         }
 
-        if ($command->getRedirectOption() !== null) {
+        if ($command->getRedirectOption() instanceof \PrestaShop\PrestaShop\Core\Domain\Category\ValueObject\RedirectOption) {
             $this->fillWithRedirectOption($category, $command->getRedirectOption());
         }
 

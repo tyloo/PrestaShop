@@ -69,7 +69,7 @@ final class EditWebserviceKeyHandler extends AbstractWebserviceKeyHandler implem
         WebserviceKey $webserviceKey,
         EditWebserviceKeyCommand $command,
     ) {
-        if ($command->getKey() !== null) {
+        if ($command->getKey() instanceof \PrestaShop\PrestaShop\Core\Domain\Webservice\ValueObject\Key) {
             $webserviceKey->key = $command->getKey()->getValue();
         }
 

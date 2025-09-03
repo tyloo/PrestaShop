@@ -162,7 +162,7 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
     private function assertProductIsInStock(Product $product, UpdateProductQuantityInCartCommand $command): void
     {
         $isAvailableWhenOutOfStock = Product::isAvailableWhenOutOfStock($product->out_of_stock);
-        if ($command->getCombinationId() !== null) {
+        if ($command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId) {
             $isEnoughQuantity = ProductAttribute::checkAttributeQty(
                 $command->getCombinationId()->getValue(),
                 $command->getNewQuantity()
@@ -198,15 +198,15 @@ final class UpdateProductQuantityInCartHandler extends AbstractCartHandler imple
      */
     private function assertProductCustomization(Product $product, UpdateProductQuantityInCartCommand $command)
     {
-        if ($command->getCustomizationId() === null && ! $product->hasAllRequiredCustomizableFields()) {
+        if (! $command->getCustomizationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Customization\ValueObject\CustomizationId && ! $product->hasAllRequiredCustomizableFields()) {
             throw new ProductCustomizationNotFoundException(\sprintf('Missing customization for product with id "%s"', $product->id));
         }
     }
 
     private function findPreviousQuantityInCart(Cart $cart, UpdateProductQuantityInCartCommand $command): int
     {
-        $isCombination = ($command->getCombinationId() !== null);
-        $isCustomization = ($command->getCustomizationId() !== null);
+        $isCombination = $command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId;
+        $isCustomization = $command->getCustomizationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Customization\ValueObject\CustomizationId;
 
         foreach ($cart->getProducts() as $cartProduct) {
             $equalProductId = (int) $cartProduct['id_product'] === $command->getProductId()->getValue();

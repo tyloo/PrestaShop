@@ -63,9 +63,9 @@ final class AddOrderFromBackOfficeHandler extends AbstractOrderCommandHandler im
 
     public function handle(AddOrderFromBackOfficeCommand $command)
     {
-        $paymentModule = ! Configuration::get('PS_CATALOG_MODE') ?
-            Module::getInstanceByName($command->getPaymentModuleName()) :
-            new BoOrderCore();
+        $paymentModule = Configuration::get('PS_CATALOG_MODE') ?
+            new BoOrderCore() :
+            Module::getInstanceByName($command->getPaymentModuleName());
 
         if ($paymentModule === false) {
             throw new OrderException(\sprintf('Payment method "%s" does not exist.', $paymentModule));

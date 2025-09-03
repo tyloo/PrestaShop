@@ -128,7 +128,7 @@ final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler impl
             throw new OrderException('The Order Detail object could not be loaded.');
         }
 
-        if ($orderInvoice !== null && ! Validate::isLoadedObject($orderInvoice)) {
+        if ($orderInvoice instanceof OrderInvoice && ! Validate::isLoadedObject($orderInvoice)) {
             throw new OrderException('The invoice object cannot be loaded.');
         }
 
@@ -145,7 +145,7 @@ final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler impl
             throw new CannotEditDeliveredOrderProductException('You cannot edit a delivered order.');
         }
 
-        if ($orderInvoice !== null && $orderInvoice->id_order !== $order->id) {
+        if ($orderInvoice instanceof OrderInvoice && $orderInvoice->id_order !== $order->id) {
             throw new OrderException('You cannot use this invoice for the order');
         }
 
@@ -178,7 +178,7 @@ final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler impl
     private function assertProductNotDuplicate(Order $order, OrderDetail $orderDetail, ?OrderInvoice $orderInvoice = null): void
     {
         // If the OrderDetail's invoice is not changed no reason to check
-        if ($orderInvoice === null || (int) $orderInvoice->id === (int) $orderDetail->id_order_invoice) {
+        if (! $orderInvoice instanceof OrderInvoice || (int) $orderInvoice->id === (int) $orderDetail->id_order_invoice) {
             return;
         }
 

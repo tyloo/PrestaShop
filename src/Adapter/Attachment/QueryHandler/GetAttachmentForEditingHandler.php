@@ -70,7 +70,7 @@ final class GetAttachmentForEditingHandler implements GetAttachmentForEditingHan
             $attachment->description
         );
 
-        if ($file !== null) {
+        if ($file instanceof SplFileInfo) {
             $editableAttachment->setFile($file);
         }
 

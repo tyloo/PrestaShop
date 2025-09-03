@@ -66,7 +66,7 @@ class ProductCustomizationFieldUpdater
 
         foreach ($customizationFields as $customizationField) {
             if ($customizationField->id) {
-                if ($shopConstraint->getShopId() !== null) {
+                if ($shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
                     $shopIds = [$shopConstraint->getShopId()];
                 } elseif ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
                     $shopIds = $shopConstraint->getShopIds();

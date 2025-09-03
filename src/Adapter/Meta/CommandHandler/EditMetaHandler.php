@@ -67,7 +67,7 @@ final class EditMetaHandler implements EditMetaHandlerInterface
                 throw new MetaNotFoundException(\sprintf('Meta with id "%s" was not found for edit', $command->getMetaId()->getValue()));
             }
 
-            if ($command->getPageName() !== null) {
+            if ($command->getPageName() instanceof \PrestaShop\PrestaShop\Core\Domain\Meta\ValueObject\Name) {
                 $this->assertIsValidPageName($entity->page, $command);
                 $entity->page = $command->getPageName()->getValue();
             }

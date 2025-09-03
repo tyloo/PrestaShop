@@ -82,7 +82,7 @@ final class AddUnofficialCurrencyHandler extends AbstractCurrencyHandler impleme
 
             $entity->unofficial = true;
             $entity->numeric_iso_code = null;
-            if ($command->getPrecision() !== null) {
+            if ($command->getPrecision() instanceof \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\Precision) {
                 $entity->precision = $command->getPrecision()->getValue();
             }
 

@@ -261,7 +261,7 @@ final class CategoryImportHandler extends AbstractImportHandler
                                 '%category_name% (ID: %id%) cannot be saved',
                                 [
                                     '%category_name%' => $categoryToCreate->name[$this->languageId],
-                                    '%id%' => ! empty($categoryToCreate->id) ? $categoryToCreate->id : 'null',
+                                    '%id%' => empty($categoryToCreate->id) ? 'null' : $categoryToCreate->id,
                                 ],
                                 'Admin.Advparameters.Notification'
                             )
@@ -320,7 +320,7 @@ final class CategoryImportHandler extends AbstractImportHandler
                     'Rewrite link for %1$s (ID %2$s): re-written as %3$s.',
                     [
                         '%1$s' => $linkRewrite,
-                        '%2$s' => ! empty($categoryId) ? $categoryId : 'null',
+                        '%2$s' => empty($categoryId) ? 'null' : $categoryId,
                         '%3$s' => $category->link_rewrite[$this->defaultLanguageId],
                     ],
                     'Admin.Advparameters.Notification'
@@ -376,7 +376,7 @@ final class CategoryImportHandler extends AbstractImportHandler
                             [],
                             'Admin.Advparameters.Notification'
                         ),
-                        ! empty($categoryId) ? $categoryId : 'null'
+                        empty($categoryId) ? 'null' : $categoryId
                     )
                 );
 
@@ -454,8 +454,8 @@ final class CategoryImportHandler extends AbstractImportHandler
                 $this->translator->trans(
                     '%1$s (ID: %2$s) cannot be %3$s',
                     [
-                        ! empty($categoryName) ? $this->tools->sanitize($categoryName) : 'No Name',
-                        ! empty($categoryId) ? $this->tools->sanitize((string) $categoryId) : 'No ID',
+                        empty($categoryName) ? 'No Name' : $this->tools->sanitize($categoryName),
+                        empty($categoryId) ? 'No ID' : $this->tools->sanitize((string) $categoryId),
                         'saved',
                     ],
                     'Admin.Advparameters.Notification'

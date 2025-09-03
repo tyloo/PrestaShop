@@ -134,7 +134,7 @@ class ProductSupplierUpdater
 
         // Check if product has a default supplier if not we must define it
         $defaultSupplierId = $this->productSupplierRepository->getDefaultSupplierId($productId);
-        if ($defaultSupplierId === null) {
+        if (! $defaultSupplierId instanceof SupplierId) {
             // We use the first created association by default
             $firstAssociation = $allAssociations[0];
 
@@ -213,7 +213,7 @@ class ProductSupplierUpdater
         if ($productType->getValue() === ProductType::TYPE_COMBINATIONS) {
             // Product must always be updated even for product with combinations, we use the default combination as the reference
             $defaultProductSupplier = $this->getDefaultCombinationProductSupplier($productId, $defaultSupplierId);
-            if ($defaultProductSupplier === null) {
+            if (! $defaultProductSupplier instanceof ProductSupplier) {
                 // When no combinations exist yet we use the default ProductSupplier as a fallback
                 $defaultProductSupplier = $this->getDefaultProductSupplier($productId, $defaultSupplierId);
             }
@@ -342,7 +342,7 @@ class ProductSupplierUpdater
             $productId,
             $this->productRepository->getProductDefaultShopId($productId)
         );
-        if ($defaultCombinationId === null) {
+        if (! $defaultCombinationId instanceof CombinationId) {
             return null;
         }
 

@@ -87,11 +87,11 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getImages(ProductId $productId, ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             throw new InvalidShopConstraintException('Shop group constraint is not supported');
         }
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             $this->productRepository->assertProductIsAssociatedToShop($productId, $shopConstraint->getShopId());
         }
 
@@ -132,7 +132,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
                 ->addGroupBy('i.id_image')
             ;
 
-            if ($shopConstraint->getShopGroupId() !== null) {
+            if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
                 $qb
                     ->innerJoin(
                         'img_shop',
@@ -167,13 +167,13 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     public function getDefaultImageId(ProductId $productId, ShopId $shopId): ?ImageId
     {
         $coverId = $this->findCoverId($productId, $shopId);
-        if ($coverId !== null) {
+        if ($coverId instanceof ImageId) {
             return $coverId;
         }
 
         $imagesIds = $this->getImageIds($productId, ShopConstraint::shop($shopId->getValue()));
 
-        return ! empty($imagesIds) ? reset($imagesIds) : null;
+        return empty($imagesIds) ? null : reset($imagesIds);
     }
 
     public function findCoverId(ProductId $productId, ShopId $shopId): ?ImageId
@@ -264,7 +264,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
 
     public function getByShopConstraint(ImageId $imageId, ShopConstraint $shopConstraint): Image
     {
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             return $this->get($imageId, $shopConstraint->getShopId());
         }
 
@@ -308,7 +308,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('imageId', $imageId->getValue())
         ;
 
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             $qb
                 ->innerJoin(
                     '`is`',
@@ -539,11 +539,11 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         foreach ($results as $image) {
             $coverId = $this->findCoverImageId($productId, new ShopId((int) $image['id_shop']));
             $coverIdGlobal = $this->findCoverImageIdGlobal($productId);
-            if ($coverId !== null && $coverId->getValue() === (int) $image['id_image']) {
+            if ($coverId instanceof ImageId && $coverId->getValue() === (int) $image['id_image']) {
                 continue;
             }
 
-            $newValue = $coverId === null ? 1 : null;
+            $newValue = $coverId instanceof ImageId ? null : 1;
 
             if ($newValue === $image['cover']) {
                 continue;
@@ -560,7 +560,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
                 ->executeStatement()
             ;
 
-            if ($coverIdGlobal === null) {
+            if (! $coverIdGlobal instanceof ImageId) {
                 $this->connection->createQueryBuilder()
                     ->update($this->dbPrefix . 'image')
                     ->set('cover', ':cover')

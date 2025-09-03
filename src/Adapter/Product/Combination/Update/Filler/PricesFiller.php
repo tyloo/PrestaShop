@@ -41,22 +41,22 @@ class PricesFiller implements CombinationFillerInterface
     {
         $updatableProperties = [];
 
-        if ($command->getImpactOnPrice() !== null) {
+        if ($command->getImpactOnPrice() instanceof \PrestaShop\Decimal\DecimalNumber) {
             $combination->price = (float) (string) $command->getImpactOnPrice();
             $updatableProperties[] = 'price';
         }
 
-        if ($command->getEcoTax() !== null) {
+        if ($command->getEcoTax() instanceof \PrestaShop\Decimal\DecimalNumber) {
             $combination->ecotax = (float) (string) $command->getEcoTax();
             $updatableProperties[] = 'ecotax';
         }
 
-        if ($command->getImpactOnUnitPrice() !== null) {
+        if ($command->getImpactOnUnitPrice() instanceof \PrestaShop\Decimal\DecimalNumber) {
             $combination->unit_price_impact = (float) (string) $command->getImpactOnUnitPrice();
             $updatableProperties[] = 'unit_price_impact';
         }
 
-        if ($command->getWholesalePrice() !== null) {
+        if ($command->getWholesalePrice() instanceof \PrestaShop\Decimal\DecimalNumber) {
             $combination->wholesale_price = (float) (string) $command->getWholesalePrice();
             $updatableProperties[] = 'wholesale_price';
         }

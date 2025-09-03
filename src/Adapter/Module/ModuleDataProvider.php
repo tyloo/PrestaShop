@@ -46,21 +46,22 @@ class ModuleDataProvider
     /**
      * @var int
      */
-    private $employeeID;
+    private $employeeID = 0;
 
     public function __construct(
         /**
          * Logger.
          */
-        private readonly LoggerInterface $logger, /**
-     * Translator.
-     */
-        private readonly TranslatorInterface $translator, /**
-     * EntityManager for module history.
-     */
+        private readonly LoggerInterface $logger,
+        /**
+         * Translator.
+         */
+        private readonly TranslatorInterface $translator,
+        /**
+         * EntityManager for module history.
+         */
         private readonly ?EntityManager $entityManager = null,
     ) {
-        $this->employeeID = 0;
     }
 
     /**
@@ -93,7 +94,7 @@ class ModuleDataProvider
             $result['active'] = $this->isEnabled($name);
             $lastAccessDate = '0000-00-00 00:00:00';
 
-            if (! Tools::isPHPCLI() && $this->entityManager !== null && $this->employeeID) {
+            if (! Tools::isPHPCLI() && $this->entityManager instanceof EntityManager && $this->employeeID) {
                 $moduleID = (int) $result['id'];
 
                 $qb = $this->entityManager->createQueryBuilder();

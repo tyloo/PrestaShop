@@ -53,7 +53,7 @@ class EditFeatureValueHandler implements EditFeatureValueHandlerInterface
             $featureValue->value = $command->getLocalizedValues();
         }
 
-        if ($command->getFeatureId() !== null) {
+        if ($command->getFeatureId() instanceof \PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId) {
             $featureValue->id_feature = $command->getFeatureId()->getValue();
         }
 

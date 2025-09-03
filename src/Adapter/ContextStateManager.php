@@ -147,7 +147,7 @@ class ContextStateManager
     {
         $this->saveContextField('language');
         $this->getContext()->language = $language;
-        if ($language !== null) {
+        if ($language instanceof Language) {
             $this->getContext()->getTranslator()->setLocale($language->locale);
         }
 

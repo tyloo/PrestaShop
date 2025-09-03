@@ -74,7 +74,7 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
         $this->contextStateManager
             ->setCurrency($currency)
         ;
-        if ($query->getOrderId() !== null) {
+        if ($query->getOrderId() instanceof \PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId) {
             $order = $this->getOrder($query->getOrderId());
             $this->contextStateManager
                 ->setShop(new Shop($order->id_shop))
@@ -96,7 +96,7 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
         $currencyPrecision = $computingPrecision->getPrecision((int) $currency->precision);
         $order = null;
         $address = null;
-        if ($query->getOrderId() !== null) {
+        if ($query->getOrderId() instanceof \PrestaShop\PrestaShop\Core\Domain\Order\ValueObject\OrderId) {
             $order = $this->getOrder($query->getOrderId());
             $orderAddressId = $order->{Configuration::get('PS_TAX_ADDRESS_TYPE', null, null, $order->id_shop)};
             $address = new Address($orderAddressId);
@@ -229,7 +229,7 @@ final class SearchProductsHandler extends AbstractOrderHandler implements Search
         int $computingPrecision,
         ?Order $order)
     {
-        if ($order === null) {
+        if (! $order instanceof Order) {
             return Product::getPriceStatic($productId, $withTaxes, $productAttributeId, $computingPrecision);
         }
 

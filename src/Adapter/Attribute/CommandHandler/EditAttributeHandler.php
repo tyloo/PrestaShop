@@ -66,7 +66,7 @@ class EditAttributeHandler implements EditAttributeHandlerInterface
             $propertiesToUpdate[] = 'color';
         }
 
-        if ($command->getAttributeGroupId() !== null) {
+        if ($command->getAttributeGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupId) {
             $attribute->id_attribute_group = $command->getAttributeGroupId()->getValue();
             $propertiesToUpdate[] = 'id_attribute_group';
         }

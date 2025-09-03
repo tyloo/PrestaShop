@@ -47,11 +47,11 @@ class CategoryImageUploader
         ?UploadedFile $coverImage = null,
         ?UploadedFile $thumbnailImage = null,
     ): void {
-        if ($coverImage !== null) {
+        if ($coverImage instanceof UploadedFile) {
             $this->categoryCoverUploader->upload($categoryId->getValue(), $coverImage);
         }
 
-        if ($thumbnailImage !== null) {
+        if ($thumbnailImage instanceof UploadedFile) {
             $this->categoryThumbnailUploader->upload($categoryId->getValue(), $thumbnailImage);
         }
     }

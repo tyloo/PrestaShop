@@ -40,12 +40,12 @@ class DetailsFiller implements ProductFillerInterface
     {
         $updatableProperties = [];
 
-        if ($command->getGtin() !== null) {
+        if ($command->getGtin() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Gtin) {
             $product->ean13 = $command->getGtin()->getValue();
             $updatableProperties[] = 'ean13';
         }
 
-        if ($command->getIsbn() !== null) {
+        if ($command->getIsbn() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Isbn) {
             $product->isbn = $command->getIsbn()->getValue();
             $updatableProperties[] = 'isbn';
         }
@@ -55,12 +55,12 @@ class DetailsFiller implements ProductFillerInterface
             $updatableProperties[] = 'mpn';
         }
 
-        if ($command->getReference() !== null) {
+        if ($command->getReference() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Reference) {
             $product->reference = $command->getReference()->getValue();
             $updatableProperties[] = 'reference';
         }
 
-        if ($command->getUpc() !== null) {
+        if ($command->getUpc() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Upc) {
             $product->upc = $command->getUpc()->getValue();
             $updatableProperties[] = 'upc';
         }

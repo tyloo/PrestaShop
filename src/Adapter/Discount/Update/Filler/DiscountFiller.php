@@ -28,6 +28,7 @@
 namespace PrestaShop\PrestaShop\Adapter\Discount\Update\Filler;
 
 use CartRule;
+use DateTimeImmutable;
 use PrestaShop\PrestaShop\Adapter\Domain\LocalizedObjectModelTrait;
 use PrestaShop\PrestaShop\Core\Domain\Discount\Command\UpdateDiscountCommand;
 use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtil;
@@ -39,12 +40,12 @@ class DiscountFiller
     public function fillUpdatableProperties(CartRule $cartRule, UpdateDiscountCommand $command): array
     {
         $updatableProperties = [];
-        if ($command->getValidFrom() !== null) {
+        if ($command->getValidFrom() instanceof DateTimeImmutable) {
             $cartRule->date_from = $command->getValidFrom()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_from';
         }
 
-        if ($command->getValidTo() !== null) {
+        if ($command->getValidTo() instanceof DateTimeImmutable) {
             $cartRule->date_to = $command->getValidTo()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_to';
         }
@@ -79,7 +80,7 @@ class DiscountFiller
             $updatableProperties[] = 'active';
         }
 
-        if ($command->getCustomerId() !== null) {
+        if ($command->getCustomerId() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId) {
             $cartRule->id_customer = $command->getCustomerId()->getValue();
             $updatableProperties[] = 'id_customer';
         }
@@ -99,7 +100,7 @@ class DiscountFiller
             $updatableProperties[] = 'reduction_product';
         }
 
-        if ($command->getAmountDiscount() !== null) {
+        if ($command->getAmountDiscount() instanceof \PrestaShop\PrestaShop\Core\Domain\ValueObject\Money) {
             $cartRule->reduction_amount = (float) (string) $command->getAmountDiscount()->getAmount();
             $cartRule->reduction_currency = $command->getAmountDiscount()->getCurrencyId()->getValue();
             $cartRule->reduction_tax = $command->getAmountDiscount()->isTaxIncluded();
@@ -110,7 +111,7 @@ class DiscountFiller
             $updatableProperties[] = 'reduction_percent';
         }
 
-        if ($command->getPercentDiscount() !== null) {
+        if ($command->getPercentDiscount() instanceof \PrestaShop\Decimal\DecimalNumber) {
             $cartRule->reduction_percent = (float) (string) $command->getPercentDiscount();
             $cartRule->reduction_amount = null;
             $cartRule->reduction_currency = 0;
@@ -121,12 +122,12 @@ class DiscountFiller
             $updatableProperties[] = 'reduction_tax';
         }
 
-        if ($command->getProductId() !== null) {
+        if ($command->getProductId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId) {
             $cartRule->gift_product = $command->getProductId()->getValue();
             $updatableProperties[] = 'gift_product';
         }
 
-        if ($command->getCombinationId() !== null) {
+        if ($command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationIdInterface) {
             $cartRule->gift_product_attribute = $command->getCombinationId()->getValue();
             $updatableProperties[] = 'gift_product_attribute';
         }

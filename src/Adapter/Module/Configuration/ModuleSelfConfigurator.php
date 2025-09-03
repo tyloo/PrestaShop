@@ -94,9 +94,6 @@ class ModuleSelfConfigurator
         Connection $connection,
         Filesystem $filesystem,
     ) {
-        $this->module = null;
-        $this->configFile = null;
-
         $this->moduleRepository = $moduleRepository;
         $this->configuration = $configuration;
         $this->connection = $connection;
@@ -411,7 +408,7 @@ class ModuleSelfConfigurator
             $file = $this->extractFilePath($data);
 
             $module = $this->moduleRepository->getModule($this->module);
-            $params = ! empty($data['params']) ? $data['params'] : [];
+            $params = empty($data['params']) ? [] : $data['params'];
 
             $this->loadPhpFile($file)->run($module, $params);
         }

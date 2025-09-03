@@ -84,7 +84,7 @@ class AliasRepository extends AbstractObjectModelRepository
             // As search term is not a primary key, we need make sure that alias and search combination does not exist
             // if alias exists for search term, we need to apply new active if needed
             $aliasIfExists = $this->getAliasIfExists($searchAlias['alias'], $searchTerm);
-            if ($aliasIfExists !== null) {
+            if ($aliasIfExists instanceof Alias) {
                 $aliasIfExists->active = $searchAlias['active'];
                 $this->partialUpdate($aliasIfExists, ['active'], CannotAddAliasException::class);
                 continue;

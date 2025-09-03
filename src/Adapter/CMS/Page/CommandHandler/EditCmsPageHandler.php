@@ -79,7 +79,7 @@ final class EditCmsPageHandler extends AbstractCmsPageHandler implements EditCms
     {
         $cms = $this->getCmsPageIfExistsById($command->getCmsPageId()->getValue());
 
-        if ($command->getCmsPageCategoryId() !== null) {
+        if ($command->getCmsPageCategoryId() instanceof \PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategoryId) {
             $this->assertCmsCategoryExists($command->getCmsPageCategoryId()->getValue());
 
             $cms->id_cms_category = $command->getCmsPageCategoryId()->getValue();

@@ -40,7 +40,7 @@ class OptionsFiller implements ProductFillerInterface
     {
         $updatableProperties = [];
 
-        if ($command->getVisibility() !== null) {
+        if ($command->getVisibility() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductVisibility) {
             $product->visibility = $command->getVisibility()->getValue();
             $updatableProperties[] = 'visibility';
         }
@@ -65,7 +65,7 @@ class OptionsFiller implements ProductFillerInterface
             $updatableProperties[] = 'online_only';
         }
 
-        if ($command->getCondition() !== null) {
+        if ($command->getCondition() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductCondition) {
             $product->condition = $command->getCondition()->getValue();
             $updatableProperties[] = 'condition';
         }
@@ -76,7 +76,7 @@ class OptionsFiller implements ProductFillerInterface
         }
 
         $manufacturerId = $command->getManufacturerId();
-        if ($manufacturerId !== null) {
+        if ($manufacturerId instanceof \PrestaShop\PrestaShop\Core\Domain\Manufacturer\ValueObject\ManufacturerIdInterface) {
             $product->id_manufacturer = $manufacturerId->getValue();
             $updatableProperties[] = 'id_manufacturer';
         }

@@ -67,7 +67,7 @@ final class AddContactHandler extends AbstractObjectModelHandler implements AddC
             $entity->name = $command->getLocalisedTitles();
             $entity->customer_service = $command->isMessageSavingEnabled();
 
-            if ($command->getEmail() !== null) {
+            if ($command->getEmail() instanceof \PrestaShop\PrestaShop\Core\Domain\ValueObject\Email) {
                 $entity->email = $command->getEmail()->getValue();
             }
 

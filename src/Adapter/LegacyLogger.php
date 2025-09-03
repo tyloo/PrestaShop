@@ -137,10 +137,10 @@ class LegacyLogger implements LoggerInterface
             default => 0,
         };
 
-        $error_code = ! empty($context['error_code']) ? $context['error_code'] : null;
-        $object_type = ! empty($context['object_type']) ? $context['object_type'] : null;
-        $object_id = ! empty($context['object_id']) ? $context['object_id'] : null;
-        $allow_duplicate = ! empty($context['allow_duplicate']) ? $context['allow_duplicate'] : null;
+        $error_code = empty($context['error_code']) ? null : $context['error_code'];
+        $object_type = empty($context['object_type']) ? null : $context['object_type'];
+        $object_id = empty($context['object_id']) ? null : $context['object_id'];
+        $allow_duplicate = empty($context['allow_duplicate']) ? null : $context['allow_duplicate'];
 
         PrestaShopLogger::addLog($message, $pslevel, $error_code, $object_type, $object_id, $allow_duplicate);
     }

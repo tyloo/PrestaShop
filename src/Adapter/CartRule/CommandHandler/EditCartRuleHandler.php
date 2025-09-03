@@ -29,6 +29,7 @@ declare(strict_types=1);
 namespace PrestaShop\PrestaShop\Adapter\CartRule\CommandHandler;
 
 use CartRule;
+use DateTimeImmutable;
 use PrestaShop\PrestaShop\Adapter\CartRule\CartRuleActionFiller;
 use PrestaShop\PrestaShop\Adapter\CartRule\Repository\CartRuleRepository;
 use PrestaShop\PrestaShop\Core\CommandBus\Attributes\AsCommandHandler;
@@ -113,23 +114,23 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
     {
         $updatableProperties = [];
 
-        if ($command->getCustomerId() !== null) {
+        if ($command->getCustomerId() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerIdInterface) {
             $cartRule->id_customer = $command->getCustomerId()->getValue();
             $updatableProperties[] = 'id_customer';
         }
 
-        if ($command->getValidFrom() !== null) {
+        if ($command->getValidFrom() instanceof DateTimeImmutable) {
             $cartRule->date_from = $command->getValidFrom()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_from';
         }
 
-        if ($command->getValidTo() !== null) {
+        if ($command->getValidTo() instanceof DateTimeImmutable) {
             $cartRule->date_to = $command->getValidTo()->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'date_to';
         }
 
         $minimumAmount = $command->getMinimumAmount();
-        if ($minimumAmount !== null) {
+        if ($minimumAmount instanceof \PrestaShop\PrestaShop\Core\Domain\ValueObject\Money) {
             $cartRule->minimum_amount = (float) (string) $minimumAmount->getAmount();
             $cartRule->minimum_amount_currency = $minimumAmount->getCurrencyId()->getValue();
             $cartRule->minimum_amount_tax = $minimumAmount->isTaxIncluded();
@@ -164,7 +165,7 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
     {
         $cartRuleAction = $command->getCartRuleAction();
 
-        if ($cartRuleAction === null) {
+        if (! $cartRuleAction instanceof \PrestaShop\PrestaShop\Core\Domain\CartRule\ValueObject\CartRuleAction) {
             return [];
         }
 

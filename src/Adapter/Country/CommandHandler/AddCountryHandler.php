@@ -61,7 +61,7 @@ class AddCountryHandler implements AddCountryHandlerInterface
         $country->id_shop_list = $command->getShopAssociation();
         $country->contains_states = $command->containsStates();
 
-        if ($command->getZipCodeFormat() !== null) {
+        if ($command->getZipCodeFormat() instanceof \PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryZipCodeFormat) {
             $country->zip_code_format = $command->getZipCodeFormat()->getValue();
         }
 
@@ -69,7 +69,7 @@ class AddCountryHandler implements AddCountryHandlerInterface
             $country->id_currency = $command->getDefaultCurrency();
         }
 
-        if ($command->getZoneId() !== null) {
+        if ($command->getZoneId() instanceof \PrestaShop\PrestaShop\Core\Domain\Zone\ValueObject\ZoneId) {
             $country->id_zone = $command->getZoneId()->getValue();
         }
 

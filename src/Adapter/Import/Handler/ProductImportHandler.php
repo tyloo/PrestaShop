@@ -222,8 +222,8 @@ final class ProductImportHandler extends AbstractImportHandler
 
                 $this->error(\sprintf(
                     $this->translator->trans('%1$s (ID: %2$s) cannot be saved', [], 'Admin.Advparameters.Notification'),
-                    ! empty($productName) ? $this->tools->sanitize($productName) : 'No Name',
-                    ! empty($productId) ? $this->tools->sanitize($productId) : 'No ID'
+                    empty($productName) ? 'No Name' : $this->tools->sanitize($productName),
+                    empty($productId) ? 'No ID' : $this->tools->sanitize($productId)
                 ));
 
                 $this->error($fieldsError . $langFieldsError . $this->legacyDatabase->getErrorMessage());
@@ -304,7 +304,7 @@ final class ProductImportHandler extends AbstractImportHandler
                     'Admin.Advparameters.Notification'
                 ),
                 $category->name[$defaultLanguageId],
-                ! empty($category->id) ? $category->id : 'null'
+                empty($category->id) ? 'null' : $category->id
             ));
 
             if (! $isValid) {
@@ -490,7 +490,7 @@ final class ProductImportHandler extends AbstractImportHandler
                                 'Admin.Advparameters.Notification'
                             ),
                             $manufacturer->name,
-                            ! empty($manufacturer->id) ? $manufacturer->id : 'null'
+                            empty($manufacturer->id) ? 'null' : $manufacturer->id
                         ));
                     }
 
@@ -545,7 +545,7 @@ final class ProductImportHandler extends AbstractImportHandler
                                 'Admin.Advparameters.Notification'
                             ),
                             $supplier->name,
-                            ! empty($supplier->id) ? $supplier->id : 'null'
+                            empty($supplier->id) ? 'null' : $supplier->id
                         ));
                     }
 
@@ -620,7 +620,7 @@ final class ProductImportHandler extends AbstractImportHandler
                                         'Admin.Advparameters.Notification'
                                     ),
                                     $category->name[$defaultLanguageId],
-                                    ! empty($category->id) ? $category->id : 'null'
+                                    empty($category->id) ? 'null' : $category->id
                                 ));
                             }
 

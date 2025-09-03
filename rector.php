@@ -40,7 +40,7 @@ return RectorConfig::configure()
         __DIR__ . '/src/Adapter',
         //__DIR__ . '/src/Core',
         //__DIR__ . '/src/PrestaShopBundle',
-        //__DIR__ . '/tests',
+        __DIR__ . '/tests',
         // __DIR__ . '/tools',
         // __DIR__ . '/webservice',
     ])
@@ -57,7 +57,7 @@ return RectorConfig::configure()
     )
     ->withTypeCoverageLevel(0) // max = 53
     ->withDeadCodeLevel(51) // max = 51
-    ->withCodeQualityLevel(50) // max = 74
+    ->withCodeQualityLevel(60) // max = 74
     ->withCodingStyleLevel(25) // max = 25
     ->withSkip([
         UnwrapFutureCompatibleIfPhpVersionRector::class,

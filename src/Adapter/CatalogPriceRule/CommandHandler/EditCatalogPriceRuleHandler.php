@@ -107,7 +107,7 @@ final class EditCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler 
             $specificPriceRule->reduction_tax = $command->isTaxIncluded();
         }
 
-        if ($command->getReduction() !== null) {
+        if ($command->getReduction() instanceof \PrestaShop\PrestaShop\Core\Domain\ValueObject\Reduction) {
             $specificPriceRule->reduction_type = $command->getReduction()->getType();
             $specificPriceRule->reduction = $command->getReduction()->getValue();
         }
@@ -129,7 +129,7 @@ final class EditCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler 
         $modelDateTo = $specificPriceRule->to;
 
         // if `date from` value is being updated
-        if ($commandDateFrom !== null) {
+        if ($commandDateFrom instanceof DateTime) {
             // and if `date to` is set in database
             if (! UtilsDateTime::isNull($modelDateTo)) {
                 // asserts that range between these values is not inverse
@@ -140,7 +140,7 @@ final class EditCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler 
         }
 
         // if `date to` value is being updated
-        if ($commandDateTo !== null) {
+        if ($commandDateTo instanceof DateTime) {
             // and if `date from` is set in database
             if (UtilsDateTime::isNull($modelDateFrom)) {
                 // asserts that range between these values is not inverse

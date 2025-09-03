@@ -63,7 +63,7 @@ final class CurrencyCommandValidator
          */
         $locale = $this->localeRepoCLDR->getLocale('en');
         $cldrCurrency = $locale->getCurrency($isoCode);
-        if ($cldrCurrency !== null) {
+        if ($cldrCurrency instanceof \PrestaShop\PrestaShop\Core\Localization\CLDR\Currency) {
             throw new InvalidUnofficialCurrencyException(\sprintf('Unofficial currency with iso code "%s" is invalid because it matches a currency from CLDR database', $isoCode), $isoCode);
         }
     }

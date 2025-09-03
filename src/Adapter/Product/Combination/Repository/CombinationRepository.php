@@ -253,7 +253,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
 
     public function partialUpdate(Combination $combination, array $updatableProperties, ShopConstraint $shopConstraint, int $errorCode): void
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof ShopGroupId) {
             throw new InvalidShopConstraintException('Product Combination has no features related with shop group use single shop, shop collection and all shops constraints');
         }
 
@@ -378,11 +378,11 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
 
     public function findFirstCombinationId(ProductId $productId, ShopConstraint $shopConstraint): ?CombinationId
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof ShopGroupId) {
             throw new InvalidShopConstraintException('Combination has no features related with shop group use single shop, shop collection and all shops constraints');
         }
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             $shopId = $shopConstraint->getShopId();
         } elseif ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
             $shopId = $shopConstraint->getShopIds()[0];
@@ -637,7 +637,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
      */
     private function getShopIdsByConstraint(CombinationId $combinationId, ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof ShopGroupId) {
             return $this->getAssociatedShopIdsFromGroup($combinationId, $shopConstraint->getShopGroupId());
         }
 
@@ -662,7 +662,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
         string $searchPhrase,
         ?int $limit,
     ): array {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof ShopGroupId) {
             throw new InvalidShopConstraintException('Group shop constraint is not supported');
         }
 
@@ -734,7 +734,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
      */
     private function searchAttributes(LanguageId $languageId, ShopConstraint $shopConstraint, string $searchPhrase): array
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof ShopGroupId) {
             throw new InvalidShopConstraintException('Shop group constraint is not supported');
         }
 
@@ -761,7 +761,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('languageId', $languageId->getValue())
         ;
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             // this makes sure we are searching only in certain shop, so it doesn't return irrelevant attribute ids
             $qb
                 ->innerJoin(

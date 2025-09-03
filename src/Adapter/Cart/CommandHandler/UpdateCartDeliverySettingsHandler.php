@@ -145,7 +145,7 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
 
         // Step 1
         if ($freeShippingShouldBeEnabled) {
-            if ($freeShippingCartRule === null) {
+            if (! $freeShippingCartRule instanceof CartRule) {
                 // there is not yet a 'free shipping' cart rule available in the system so we create it
                 $freeShippingCartRule = $this->createCartRule($cart, $backOfficeOrderCode);
             }
@@ -155,7 +155,7 @@ final class UpdateCartDeliverySettingsHandler extends AbstractCartHandler implem
             return;
         }
 
-        if ($freeShippingCartRule === null) {
+        if (! $freeShippingCartRule instanceof CartRule) {
             return;
         }
 

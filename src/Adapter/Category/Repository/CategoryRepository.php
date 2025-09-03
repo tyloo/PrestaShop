@@ -232,7 +232,7 @@ class CategoryRepository extends AbstractObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             $qb
                 ->innerJoin(
                     'cp',
@@ -417,7 +417,7 @@ class CategoryRepository extends AbstractObjectModelRepository
             ->fetchAssociative()
         ;
 
-        return ! empty($result['id_category_default']) ? new CategoryId((int) $result['id_category_default']) : null;
+        return empty($result['id_category_default']) ? null : new CategoryId((int) $result['id_category_default']);
     }
 
     /**

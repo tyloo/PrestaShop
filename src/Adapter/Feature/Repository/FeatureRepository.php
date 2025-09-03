@@ -215,7 +215,7 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getShopIdsByConstraint(ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof ShopGroupId) {
             return $this->getAssociatedShopIdsFromGroup($shopConstraint->getShopGroupId());
         }
 

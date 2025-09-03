@@ -28,6 +28,7 @@ declare(strict_types=1);
 
 namespace PrestaShop\PrestaShop\Adapter\Product\Update\Filler;
 
+use DateTimeInterface;
 use PrestaShop\PrestaShop\Adapter\Domain\LocalizedObjectModelTrait;
 use PrestaShop\PrestaShop\Core\Domain\Product\Command\UpdateProductCommand;
 use PrestaShop\PrestaShop\Core\Domain\Product\Stock\Command\UpdateProductStockAvailableCommand;
@@ -62,7 +63,7 @@ class StockInformationFiller implements ProductFillerInterface
         }
 
         $lowStockThreshold = $command->getLowStockThreshold();
-        if ($lowStockThreshold !== null) {
+        if ($lowStockThreshold instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\LowStockThreshold) {
             $product->low_stock_threshold = $lowStockThreshold->getValue();
             $product->low_stock_alert = $lowStockThreshold->isEnabled();
             $updatableProperties[] = 'low_stock_threshold';
@@ -74,12 +75,12 @@ class StockInformationFiller implements ProductFillerInterface
             $updatableProperties[] = 'minimal_quantity';
         }
 
-        if ($command->getPackStockType() !== null) {
+        if ($command->getPackStockType() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Pack\ValueObject\PackStockType) {
             $product->pack_stock_type = $command->getPackStockType()->getValue();
             $updatableProperties[] = 'pack_stock_type';
         }
 
-        if ($command->getAvailableDate() !== null) {
+        if ($command->getAvailableDate() instanceof DateTimeInterface) {
             $product->available_date = $command->getAvailableDate()->format(DateTime::DEFAULT_DATE_FORMAT);
             $updatableProperties[] = 'available_date';
         }

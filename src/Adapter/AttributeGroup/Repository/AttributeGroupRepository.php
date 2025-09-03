@@ -96,7 +96,7 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getAttributeGroups(ShopConstraint $shopConstraint, array $attributeGroupIds = []): array
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             throw new InvalidShopConstraintException('Shop Group constraint is not supported');
         }
 

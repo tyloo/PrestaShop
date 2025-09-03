@@ -167,7 +167,7 @@ class ProductIndexationUpdater
 
     private function adaptShopContext(ShopConstraint $shopConstraint): void
     {
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $this->contextStateManager->setShop(new Shop($shopConstraint->getShopId()->getValue()));
         } elseif ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             $this->contextStateManager->setShopContext(Shop::CONTEXT_GROUP, $shopConstraint->getShopGroupId()->getValue());

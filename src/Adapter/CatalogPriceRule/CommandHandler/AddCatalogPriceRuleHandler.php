@@ -27,6 +27,7 @@
 
 namespace PrestaShop\PrestaShop\Adapter\CatalogPriceRule\CommandHandler;
 
+use DateTime;
 use PrestaShop\PrestaShop\Adapter\CatalogPriceRule\AbstractCatalogPriceRuleHandler;
 use PrestaShop\PrestaShop\Core\CommandBus\Attributes\AsCommandHandler;
 use PrestaShop\PrestaShop\Core\Domain\CatalogPriceRule\Command\AddCatalogPriceRuleCommand;
@@ -88,11 +89,11 @@ final class AddCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler i
             $this->assertDateRangeIsNotInverse($from, $to);
         }
 
-        if ($from !== null) {
+        if ($from instanceof DateTime) {
             $specificPriceRule->from = $from->format('Y-m-d H:i:s');
         }
 
-        if ($to !== null) {
+        if ($to instanceof DateTime) {
             $specificPriceRule->to = $to->format('Y-m-d H:i:s');
         }
 

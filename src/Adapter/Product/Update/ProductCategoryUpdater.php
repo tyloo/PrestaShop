@@ -140,7 +140,7 @@ class ProductCategoryUpdater
         $fallbackCategories = [];
         foreach ($this->productRepository->getAssociatedShopIds($productId) as $shopId) {
             $defaultCategoryId = $this->categoryRepository->getProductDefaultCategory($productId, $shopId);
-            if ($defaultCategoryId === null) {
+            if (! $defaultCategoryId instanceof CategoryId) {
                 $shopConstraint = ShopConstraint::shop($shopId->getValue());
                 $productCategories = $this->categoryRepository->getProductCategoryIds($productId, $shopConstraint);
                 if (empty($productCategories)) {

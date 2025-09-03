@@ -90,7 +90,7 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
     {
         // If the discount is for only one invoice
         $orderInvoice = null;
-        if ($order->hasInvoice() && $command->getOrderInvoiceId() !== null) {
+        if ($order->hasInvoice() && $command->getOrderInvoiceId() instanceof \PrestaShop\PrestaShop\Core\Domain\Order\Invoice\ValueObject\OrderInvoiceId) {
             $orderInvoice = new OrderInvoice($command->getOrderInvoiceId()->getValue());
             if (! Validate::isLoadedObject($orderInvoice)) {
                 throw new OrderException("Can't load Order Invoice object");
@@ -140,7 +140,7 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
             throw new OrderException('An error occurred while adding CartRule to cart', 0, $prestaShopException);
         }
 
-        $this->orderAmountUpdater->update($order, $cart, $orderInvoice !== null ? (int) $orderInvoice->id : null);
+        $this->orderAmountUpdater->update($order, $cart, $orderInvoice instanceof OrderInvoice ? (int) $orderInvoice->id : null);
     }
 
     /**
@@ -171,12 +171,12 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
             return;
         }
 
-        if ($command->getDiscountValue() === null || $command->getDiscountValue()->isLowerOrEqualThanZero()) {
+        if (! $command->getDiscountValue() instanceof \PrestaShop\Decimal\DecimalNumber || $command->getDiscountValue()->isLowerOrEqualThanZero()) {
             throw new InvalidCartRuleDiscountValueException('Discount amount specified is not positive', InvalidCartRuleDiscountValueException::INVALID_MIN_AMOUNT);
         }
 
         $discountValue = (float) (string) $command->getDiscountValue();
-        if ($orderInvoice !== null) {
+        if ($orderInvoice instanceof OrderInvoice) {
             $orderInvoices = [$orderInvoice];
         } elseif ($order->hasInvoice()) {
             $orderInvoices = $order->getInvoicesCollection()->getResults();
@@ -202,7 +202,7 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
             return;
         }
 
-        if ($orderInvoice !== null) {
+        if ($orderInvoice instanceof OrderInvoice) {
             $orderInvoices = [$orderInvoice];
         } elseif ($order->hasInvoice()) {
             $orderInvoices = $order->getInvoicesCollection()->getResults();

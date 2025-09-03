@@ -93,7 +93,7 @@ class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHan
     {
         $productImageSetting = $this->getProductImageSettingByImage($productImageSettings, $imageId);
         $shopsToAddImageTo = [];
-        if ($productImageSetting !== null) {
+        if ($productImageSetting instanceof ProductImageSetting) {
             $shopsToAddImageTo = $this->shopIdsToInt($productImageSetting->getShopIds());
         }
 

@@ -58,19 +58,19 @@ final class UploadLogosHandler implements UploadLogosHandlerInterface
         $this->configuration->set('PS_IMG_UPDATE_TIME', time());
 
         try {
-            if ($command->getUploadedHeaderLogo() !== null) {
+            if ($command->getUploadedHeaderLogo() instanceof UploadedFile) {
                 $this->uploadHeaderLogo($command->getUploadedHeaderLogo());
             }
 
-            if ($command->getUploadedMailLogo() !== null) {
+            if ($command->getUploadedMailLogo() instanceof UploadedFile) {
                 $this->uploadMailLogo($command->getUploadedMailLogo());
             }
 
-            if ($command->getUploadedInvoiceLogo() !== null) {
+            if ($command->getUploadedInvoiceLogo() instanceof UploadedFile) {
                 $this->uploadInvoiceLogo($command->getUploadedInvoiceLogo());
             }
 
-            if ($command->getUploadedFavicon() !== null) {
+            if ($command->getUploadedFavicon() instanceof UploadedFile) {
                 $this->uploadFavicon($command->getUploadedFavicon());
             }
         } catch (PrestaShopException $prestaShopException) {

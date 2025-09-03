@@ -111,7 +111,7 @@ final class EditRootCategoryHandler extends AbstractEditCategoryHandler implemen
             $category->groupBox = $command->getAssociatedGroupIds();
         }
 
-        if ($command->getRedirectOption() !== null) {
+        if ($command->getRedirectOption() instanceof \PrestaShop\PrestaShop\Core\Domain\Category\ValueObject\RedirectOption) {
             $this->fillWithRedirectOption($category, $command->getRedirectOption());
         }
 

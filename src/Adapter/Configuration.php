@@ -95,7 +95,7 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
      */
     public function get($key, $default = null, ?ShopConstraint $shopConstraint = null): mixed
     {
-        if ($shopConstraint === null) {
+        if (! $shopConstraint instanceof ShopConstraint) {
             $shopConstraint = $this->buildShopConstraintFromContext();
         }
 
@@ -150,7 +150,7 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
      */
     public function set($key, $value, ?ShopConstraint $shopConstraint = null, array $options = [])
     {
-        if ($this->shop instanceof Shop && $shopConstraint === null) {
+        if ($this->shop instanceof Shop && ! $shopConstraint instanceof ShopConstraint) {
             $shopGroupId = $this->shop->id_shop_group;
             $shopId = $this->shop->id;
         } else {
@@ -183,7 +183,7 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
      */
     public function has($key, ?ShopConstraint $shopConstraint = null): bool
     {
-        if ($shopConstraint === null) {
+        if (! $shopConstraint instanceof ShopConstraint) {
             $shopConstraint = $this->buildShopConstraintFromContext();
         }
 
@@ -325,7 +325,7 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
 
     private function getShopId(ShopConstraint $shopConstraint): ?int
     {
-        return $shopConstraint->getShopId() !== null
+        return $shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId
             ? $shopConstraint->getShopId()->getValue()
             : null
         ;
@@ -333,11 +333,11 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
 
     private function getShopGroupId(ShopConstraint $shopConstraint): ?int
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             return $shopConstraint->getShopGroupId()->getValue();
         }
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $shopGroupId = Shop::getGroupIdFromShopId($shopConstraint->getShopId()->getValue());
             // $shopGroupId can not be false, it would mean that the shop group was not found for the given shop
             if (empty($shopGroupId)) {
@@ -364,8 +364,8 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
 
         ConfigurationLegacy::deleteFromGivenContext(
             $key,
-            ! empty($shopGroupId) ? $shopGroupId->getValue() : null,
-            ! empty($shopId) ? $shopId->getValue() : null
+            empty($shopGroupId) ? null : $shopGroupId->getValue(),
+            empty($shopId) ? null : $shopId->getValue()
         );
     }
 
@@ -384,13 +384,13 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
 
     private function getStrictValue(string $key, ShopConstraint $shopConstraint)
     {
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $hasKey = ConfigurationLegacy::hasKey($key, null, null, $shopConstraint->getShopId()->getValue());
 
             return $hasKey ? ConfigurationLegacy::get($key, null, null, $shopConstraint->getShopId()->getValue()) : null;
         }
 
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             $hasKey = ConfigurationLegacy::hasKey($key, null, $shopConstraint->getShopGroupId()->getValue());
 
             return $hasKey ? ConfigurationLegacy::get($key, null, $shopConstraint->getShopGroupId()->getValue()) : null;

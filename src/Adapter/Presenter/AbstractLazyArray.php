@@ -418,7 +418,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     private function isResultRewritable(ReflectionClass $reflexionClass, ?LazyArrayAttribute $methodAttributeInstance): bool
     {
-        if ($methodAttributeInstance !== null && $methodAttributeInstance->isRewritable !== null) {
+        if ($methodAttributeInstance instanceof LazyArrayAttribute && $methodAttributeInstance->isRewritable !== null) {
             return $methodAttributeInstance->isRewritable;
         }
 
@@ -450,7 +450,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     private function getIndexNameFromMethod(?LazyArrayAttribute $attributeInstance, ReflectionMethod $method): string
     {
-        if ($attributeInstance !== null && ! empty($attributeInstance->indexName)) {
+        if ($attributeInstance instanceof LazyArrayAttribute && ! empty($attributeInstance->indexName)) {
             return $attributeInstance->indexName;
         }
 

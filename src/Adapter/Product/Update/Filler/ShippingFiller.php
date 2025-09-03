@@ -43,32 +43,32 @@ class ShippingFiller implements ProductFillerInterface
     {
         $updatableProperties = [];
 
-        if ($command->getWidth() !== null) {
+        if ($command->getWidth() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Dimension) {
             $product->width = (string) $command->getWidth()->getDecimalValue();
             $updatableProperties[] = 'width';
         }
 
-        if ($command->getHeight() !== null) {
+        if ($command->getHeight() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Dimension) {
             $product->height = (string) $command->getHeight()->getDecimalValue();
             $updatableProperties[] = 'height';
         }
 
-        if ($command->getDepth() !== null) {
+        if ($command->getDepth() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Dimension) {
             $product->depth = (string) $command->getDepth()->getDecimalValue();
             $updatableProperties[] = 'depth';
         }
 
-        if ($command->getWeight() !== null) {
+        if ($command->getWeight() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Dimension) {
             $product->weight = (string) $command->getWeight()->getDecimalValue();
             $updatableProperties[] = 'weight';
         }
 
-        if ($command->getAdditionalShippingCost() !== null) {
+        if ($command->getAdditionalShippingCost() instanceof \PrestaShop\Decimal\DecimalNumber) {
             $product->additional_shipping_cost = (float) (string) $command->getAdditionalShippingCost();
             $updatableProperties[] = 'additional_shipping_cost';
         }
 
-        if ($command->getDeliveryTimeNoteType() !== null) {
+        if ($command->getDeliveryTimeNoteType() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\DeliveryTimeNoteType) {
             $product->additional_delivery_times = $command->getDeliveryTimeNoteType()->getValue();
             $updatableProperties[] = 'additional_delivery_times';
         }

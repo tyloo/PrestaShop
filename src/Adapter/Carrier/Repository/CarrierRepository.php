@@ -102,7 +102,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getShopIdsByConstraint(CarrierId $carrierId, ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof ShopGroupId) {
             return $this->getAssociatedShopIdsFromGroup($carrierId, $shopConstraint->getShopGroupId());
         }
 
@@ -241,7 +241,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
             ->setMaxResults(1)
         ;
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             $qb
                 ->andWhere('ct.id_shop = :shopId')
                 ->setparameter('shopId', $shopConstraint->getShopId()->getValue())
@@ -253,7 +253,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
 
     public function setTaxRulesGroup(CarrierId $carrierId, TaxRulesGroupId $taxRulesGroupId, ShopConstraint $shopConstraint): void
     {
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             $shopIdsToClean = [$shopConstraint->getShopId()->getValue()];
             $shopIdsToUpdate = [$shopConstraint->getShopId()->getValue()];
         } elseif ($shopConstraint->forAllShops()) {

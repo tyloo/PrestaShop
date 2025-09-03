@@ -75,7 +75,7 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
 
         $this->updateEmployeeWithCommandData($employee, $command);
 
-        if ($command->getPlainPassword() !== null && $employee->id === $this->contextEmployeeProvider->getId()) {
+        if ($command->getPlainPassword() instanceof \PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\Password && $employee->id === $this->contextEmployeeProvider->getId()) {
             $this->updatePasswordInCookie($employee);
         }
     }
@@ -109,7 +109,7 @@ final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditE
             throw new MissingShopAssociationException('Employee must be associated to at least one shop.');
         }
 
-        if ($command->getPlainPassword() !== null) {
+        if ($command->getPlainPassword() instanceof \PrestaShop\PrestaShop\Core\Domain\Employee\ValueObject\Password) {
             $employee->passwd = $this->hashing->hash($command->getPlainPassword()->getValue());
         }
 

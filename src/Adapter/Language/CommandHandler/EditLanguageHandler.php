@@ -87,14 +87,14 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
             $language->name = $command->getName();
         }
 
-        if ($command->getIsoCode() !== null) {
+        if ($command->getIsoCode() instanceof IsoCode) {
             $language->iso_code = $command->getIsoCode()->getValue();
             if (false !== ($languageDetails = Language::getLangDetails($command->getIsoCode()->getValue()))) {
                 $language->locale = $languageDetails['locale'];
             }
         }
 
-        if ($command->getTagIETF() !== null) {
+        if ($command->getTagIETF() instanceof \PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\TagIETF) {
             $language->language_code = $command->getTagIETF()->getValue();
         }
 
@@ -177,7 +177,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
      */
     private function moveTranslationsIfIsoChanged(Language $language, EditLanguageCommand $command)
     {
-        if ($command->getIsoCode() !== null
+        if ($command->getIsoCode() instanceof IsoCode
             && $language->iso_code !== $command->getIsoCode()->getValue()
         ) {
             $language->moveToIso($command->getLanguageId()->getValue());
@@ -219,7 +219,7 @@ final class EditLanguageHandler extends AbstractLanguageHandler implements EditL
      */
     private function assertLanguageWithIsoCodeDoesNotExist(Language $language, EditLanguageCommand $command)
     {
-        if ($command->getIsoCode() === null) {
+        if (! $command->getIsoCode() instanceof IsoCode) {
             return;
         }
 

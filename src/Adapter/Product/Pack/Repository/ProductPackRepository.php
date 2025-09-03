@@ -175,7 +175,7 @@ class ProductPackRepository extends AbstractObjectModelRepository
      */
     private function appendIdsToMessage(string $messageBody, QuantifiedProduct $product, int $packId): string
     {
-        if ($product->getCombinationId() !== null) {
+        if ($product->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId) {
             $combinationId = \sprintf(' combinationId #%d', $product->getCombinationId()->getValue());
         }
 

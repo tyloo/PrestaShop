@@ -28,6 +28,7 @@ declare(strict_types=1);
 
 namespace PrestaShop\PrestaShop\Adapter\Product\SpecificPrice\CommandHandler;
 
+use DateTimeInterface;
 use PrestaShop\Decimal\DecimalNumber;
 use PrestaShop\PrestaShop\Adapter\Product\SpecificPrice\Repository\SpecificPriceRepository;
 use PrestaShop\PrestaShop\Core\CommandBus\Attributes\AsCommandHandler;
@@ -65,7 +66,7 @@ class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
     {
         $updatableProperties = [];
 
-        if ($command->getReduction() !== null) {
+        if ($command->getReduction() instanceof Reduction) {
             $specificPrice->reduction_type = $command->getReduction()->getType();
             $reductionValue = $command->getReduction()->getValue();
             // VO stores percent expressed based on 100, while the DB stored the float value (VO: 57.5 - DB: 0.575)
@@ -80,7 +81,7 @@ class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
             ];
         }
 
-        if ($command->getFixedPrice() !== null) {
+        if ($command->getFixedPrice() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\ValueObject\FixedPriceInterface) {
             $specificPrice->price = (string) $command->getFixedPrice()->getValue();
             $updatableProperties[] = 'price';
         }
@@ -95,17 +96,17 @@ class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
             $updatableProperties[] = 'from_quantity';
         }
 
-        if ($command->getShopId() !== null) {
+        if ($command->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopIdInterface) {
             $specificPrice->id_shop = $command->getShopId()->getValue();
             $updatableProperties[] = 'id_shop';
         }
 
-        if ($command->getCombinationId() !== null) {
+        if ($command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationIdInterface) {
             $specificPrice->id_product_attribute = $command->getCombinationId()->getValue();
             $updatableProperties[] = 'id_product_attribute';
         }
 
-        if ($command->getCurrencyId() !== null) {
+        if ($command->getCurrencyId() instanceof \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\CurrencyIdInterface) {
             $specificPrice->id_currency = $command->getCurrencyId()->getValue();
             $updatableProperties[] = 'id_currency';
         }
@@ -115,7 +116,7 @@ class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
             $updatableProperties[] = 'id_country';
         }
 
-        if ($command->getGroupId() !== null) {
+        if ($command->getGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\Group\ValueObject\GroupIdInterface) {
             $specificPrice->id_group = $command->getGroupId()->getValue();
             $updatableProperties[] = 'id_group';
         }
@@ -125,12 +126,12 @@ class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
             $updatableProperties[] = 'id_customer';
         }
 
-        if ($command->getDateTimeFrom() !== null) {
+        if ($command->getDateTimeFrom() instanceof DateTimeInterface) {
             $specificPrice->from = $command->getDateTimeFrom()->format(DateTime::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'from';
         }
 
-        if ($command->getDateTimeTo() !== null) {
+        if ($command->getDateTimeTo() instanceof DateTimeInterface) {
             $specificPrice->to = $command->getDateTimeTo()->format(DateTime::DEFAULT_DATETIME_FORMAT);
             $updatableProperties[] = 'to';
         }

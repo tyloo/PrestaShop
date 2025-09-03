@@ -52,7 +52,7 @@ class EditTitleHandler extends AbstractTitleHandler implements EditTitleHandlerI
             $updatableProperties['name'] = array_keys($command->getLocalizedNames());
         }
 
-        if ($command->getGender() !== null) {
+        if ($command->getGender() instanceof \PrestaShop\PrestaShop\Core\Domain\Title\ValueObject\Gender) {
             $title->type = $command->getGender()->getValue();
             $updatableProperties[] = 'type';
         }
@@ -73,7 +73,7 @@ class EditTitleHandler extends AbstractTitleHandler implements EditTitleHandlerI
      */
     private function uploadTitleImage(Gender $title, EditTitleCommand $command): void
     {
-        if ($command->getImageFile() === null) {
+        if (! $command->getImageFile() instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
             return;
         }
 

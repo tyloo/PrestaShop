@@ -107,7 +107,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
         }
 
         $product = $this->getProduct($command->getProductId(), (int) $order->getAssociatedLanguage()->getId());
-        $combination = $command->getCombinationId() !== null ? $this->getCombination($command->getCombinationId()->getValue()) : null;
+        $combination = $command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ? $this->getCombination($command->getCombinationId()->getValue()) : null;
         $combinationId = $combination !== null ? (int) $combination->id : 0;
 
         $this->contextStateManager
@@ -170,7 +170,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
             $this->orderDetailUpdater->updateOrderDetailsForProduct(
                 $order,
                 $command->getProductId()->getValue(),
-                $command->getCombinationId() !== null ? $command->getCombinationId()->getValue() : 0,
+                $command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ? $command->getCombinationId()->getValue() : 0,
                 $command->getProductPriceTaxExcluded(),
                 $command->getProductPriceTaxIncluded(),
                 0
@@ -211,7 +211,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
             $cart,
             $order->getCurrentState(),
             $cartProducts,
-            ! empty($invoice->id) ? $invoice->id : 0
+            empty($invoice->id) ? 0 : $invoice->id
         );
     }
 
@@ -497,7 +497,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
     {
         // check if product is available in stock
         if (! Product::isAvailableWhenOutOfStock(StockAvailable::outOfStock($command->getProductId()->getValue()))) {
-            $combinationId = $command->getCombinationId() !== null ? $command->getCombinationId()->getValue() : 0;
+            $combinationId = $command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ? $command->getCombinationId()->getValue() : 0;
             $availableQuantity = StockAvailable::getQuantityAvailableByProduct(
                 $command->getProductId()->getValue(),
                 $combinationId,

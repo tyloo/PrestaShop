@@ -63,7 +63,7 @@ class DiscountConditionsUpdater
             $updatableProperties = array_merge($updatableProperties, $this->updateMinimalProductQuantity($discount, $minimumProductsQuantity));
         }
 
-        if ($minimumAmount !== null) {
+        if ($minimumAmount instanceof Money) {
             $updatableProperties = array_merge($updatableProperties, $this->updateMinimalAmount($discount, $minimumAmount, $minimumShippingIncluded));
         }
 

@@ -63,7 +63,7 @@ final class GetCurrencyForEditingHandler implements GetCurrencyForEditingHandler
 
         $transformations = [];
         foreach ($entity->getLocalizedPatterns() as $langId => $pattern) {
-            $transformations[$langId] = ! empty($pattern) ? $this->patternTransformer->getTransformationType($pattern) : '';
+            $transformations[$langId] = empty($pattern) ? '' : $this->patternTransformer->getTransformationType($pattern);
         }
 
         return new EditableCurrency(

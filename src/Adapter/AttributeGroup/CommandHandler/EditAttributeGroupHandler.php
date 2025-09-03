@@ -63,7 +63,7 @@ final class EditAttributeGroupHandler implements EditAttributeGroupHandlerInterf
             $this->fillLocalizedValues($attributeGroup, 'public_name', $command->getLocalizedPublicNames(), $propertiesToUpdate);
         }
 
-        if ($command->getType() !== null) {
+        if ($command->getType() instanceof \PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupType) {
             $propertiesToUpdate[] = 'group_type';
             $attributeGroup->group_type = $command->getType()->getValue();
         }

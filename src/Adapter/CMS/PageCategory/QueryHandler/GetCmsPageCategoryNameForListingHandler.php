@@ -65,7 +65,7 @@ final class GetCmsPageCategoryNameForListingHandler implements GetCmsPageCategor
     {
         $currentRequest = $this->requestStack->getCurrentRequest();
         $categoryIdFromRequest = null;
-        if ($currentRequest !== null) {
+        if ($currentRequest instanceof \Symfony\Component\HttpFoundation\Request) {
             $categoryIdFromRequest = $currentRequest->query->getInt('id_cms_category');
         }
 

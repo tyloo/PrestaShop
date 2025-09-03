@@ -56,7 +56,7 @@ class UpdateProductImageHandler implements UpdateProductImageHandlerInterface
     {
         $shopConstraint = $command->getShopConstraint();
 
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             throw new InvalidShopConstraintException('Shop group constraint is not supported');
         }
 

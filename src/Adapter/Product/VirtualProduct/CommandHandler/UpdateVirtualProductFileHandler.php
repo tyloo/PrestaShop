@@ -28,6 +28,7 @@ declare(strict_types=1);
 
 namespace PrestaShop\PrestaShop\Adapter\Product\VirtualProduct\CommandHandler;
 
+use DateTimeInterface;
 use PrestaShop\PrestaShop\Adapter\Product\VirtualProduct\Repository\VirtualProductFileRepository;
 use PrestaShop\PrestaShop\Adapter\Product\VirtualProduct\Update\VirtualProductUpdater;
 use PrestaShop\PrestaShop\Core\CommandBus\Attributes\AsCommandHandler;
@@ -73,7 +74,7 @@ final class UpdateVirtualProductFileHandler implements UpdateVirtualProductFileH
             $virtualProductFile->nb_downloadable = $command->getDownloadTimesLimit();
         }
 
-        if ($command->getExpirationDate() !== null) {
+        if ($command->getExpirationDate() instanceof DateTimeInterface) {
             $virtualProductFile->date_expiration = $command->getExpirationDate()->format(DateTime::DEFAULT_DATE_FORMAT);
         }
     }

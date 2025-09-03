@@ -67,7 +67,7 @@ final class EditCmsPageCategoryHandler extends AbstractCmsPageCategoryHandler im
                 $cmsPageCategory->active = $command->isDisplayed();
             }
 
-            if ($command->getParentId() !== null) {
+            if ($command->getParentId() instanceof \PrestaShop\PrestaShop\Core\Domain\CmsPageCategory\ValueObject\CmsPageCategoryId) {
                 $this->assertCmsCategoryCanBeMovedToParent(
                     $command->getCmsPageCategoryId()->getValue(),
                     $command->getParentId()->getValue()

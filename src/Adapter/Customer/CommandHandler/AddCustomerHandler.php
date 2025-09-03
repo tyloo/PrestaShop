@@ -106,7 +106,7 @@ final class AddCustomerHandler extends AbstractCustomerHandler implements AddCus
 
     private function fillCustomerWithCommandData(Customer $customer, AddCustomerCommand $command)
     {
-        $apeCode = $command->getApeCode() !== null ?
+        $apeCode = $command->getApeCode() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\ApeCode ?
             $command->getApeCode()->getValue() :
             null;
 

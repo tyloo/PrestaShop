@@ -53,7 +53,7 @@ final class AddProductToCartHandler extends AbstractCartHandler implements AddPr
     {
         $cartIdValue = $command->getCartId()->getValue();
         $productIdValue = $command->getProductId()->getValue();
-        $combinationId = $command->getCombinationId() !== null ? $command->getCombinationId()->getValue() : null;
+        $combinationId = $command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ? $command->getCombinationId()->getValue() : null;
         $customizationId = null;
 
         if (! empty($command->getCustomizationsByFieldIds())) {
@@ -62,7 +62,7 @@ final class AddProductToCartHandler extends AbstractCartHandler implements AddPr
                 $command->getProductId()->getValue(),
                 $command->getCustomizationsByFieldIds()
             ));
-            if ($customizationIdVO !== null) {
+            if ($customizationIdVO instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Customization\ValueObject\CustomizationId) {
                 $customizationId = $customizationIdVO->getValue();
             }
         }

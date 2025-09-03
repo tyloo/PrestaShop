@@ -77,7 +77,7 @@ class ProductImageUpdater
      */
     public function updateProductCover(Image $newCover, ShopConstraint $shopConstraint): void
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             throw new InvalidShopConstraintException('Image has no features related with shop group use single shop and all shops constraints');
         }
 
@@ -93,11 +93,11 @@ class ProductImageUpdater
         foreach ($shopIds as $shopId) {
             $currentCover = $this->productImageRepository->findCoverImageId($productId, $shopId);
 
-            if ($currentCover !== null && $currentCover->getValue() === (int) $newCover->id) {
+            if ($currentCover instanceof ImageId && $currentCover->getValue() === (int) $newCover->id) {
                 continue;
             }
 
-            if ($currentCover !== null) {
+            if ($currentCover instanceof ImageId) {
                 $currentImage = $this->productImageRepository->get($currentCover, $shopId);
                 $this->updateCover($currentImage, false, $shopId);
             }

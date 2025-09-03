@@ -164,7 +164,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getByShopConstraint(ProductId $productId, ShopConstraint $shopConstraint): Product
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof ShopGroupId) {
             return $this->getProductByShopGroup($productId, $shopConstraint->getShopGroupId());
         }
 
@@ -789,7 +789,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getShopIdsByConstraint(ProductId $productId, ShopConstraint $shopConstraint): array
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof ShopGroupId) {
             return $this->getAssociatedShopIdsFromGroup($productId, $shopConstraint->getShopGroupId());
         }
 

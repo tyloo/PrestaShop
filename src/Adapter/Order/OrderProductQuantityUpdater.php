@@ -95,7 +95,7 @@ class OrderProductQuantityUpdater
             $this->updateOrderDetail($order, $cart, $orderDetail, $newQuantity, $orderInvoice, $updateCart);
 
             // Update prices on the order after cart rules are recomputed
-            $this->orderAmountUpdater->update($order, $cart, $orderInvoice !== null ? (int) $orderInvoice->id : null);
+            $this->orderAmountUpdater->update($order, $cart, $orderInvoice instanceof OrderInvoice ? (int) $orderInvoice->id : null);
         } finally {
             $this->contextStateManager->restorePreviousContext();
         }
@@ -132,7 +132,7 @@ class OrderProductQuantityUpdater
         } else {
             $this->assertValidProductQuantity($orderDetail, $newQuantity);
             // It's important to override the invoice, this is what allows to switch an OrderDetail from an invoice to another
-            if ($orderInvoice !== null) {
+            if ($orderInvoice instanceof OrderInvoice) {
                 $orderDetail->id_order_invoice = $orderInvoice->id;
             }
 
@@ -177,7 +177,7 @@ class OrderProductQuantityUpdater
                 }
             }
 
-            if ($updatedOrderDetail !== null) {
+            if ($updatedOrderDetail instanceof OrderDetail) {
                 $newUpdatedQuantity = (int) $updatedOrderDetail->product_quantity + $updatedProduct->getDeltaQuantity();
                 // Important: we update the OrderDetail but not the cart (it is already updated) to avoid infinite loop
                 $this->updateOrderDetail(

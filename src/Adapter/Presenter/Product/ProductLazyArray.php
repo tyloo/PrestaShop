@@ -560,9 +560,9 @@ class ProductLazyArray extends AbstractLazyArray
                 (int) $this->product['id_category_default'],
                 (int) $this->language->id
             );
-            $this->product['category'] = ! empty($categoryLinkRewrite)
-                ? $categoryLinkRewrite
-                : null;
+            $this->product['category'] = empty($categoryLinkRewrite)
+                ? null
+                : $categoryLinkRewrite;
         }
 
         return $this->product['category'];
@@ -586,9 +586,9 @@ class ProductLazyArray extends AbstractLazyArray
                     ' AND id_category = ' .
                     (int) $this->product['id_category_default']
             );
-            $this->product['category_name'] = ! empty($categoryName)
-                ? $categoryName
-                : null;
+            $this->product['category_name'] = empty($categoryName)
+                ? null
+                : $categoryName;
         }
 
         return $this->product['category_name'];

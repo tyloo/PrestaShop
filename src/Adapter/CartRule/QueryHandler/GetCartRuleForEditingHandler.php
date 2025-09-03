@@ -78,8 +78,8 @@ class GetCartRuleForEditingHandler implements GetCartRuleForEditingHandlerInterf
             $cartRuleInformation,
             $cartRuleConditions,
             $cartRuleActions,
-            ! DateTimeUtils::isNull($dateAdd) ? new DateTime($dateAdd) : null,
-            ! DateTimeUtils::isNull($dateUpd) ? new DateTime($dateUpd) : null
+            DateTimeUtils::isNull($dateAdd) ? null : new DateTime($dateAdd),
+            DateTimeUtils::isNull($dateUpd) ? null : new DateTime($dateUpd)
         );
     }
 
@@ -147,8 +147,8 @@ class GetCartRuleForEditingHandler implements GetCartRuleForEditingHandlerInterf
 
         return new CartRuleConditionsForEditing(
             $customerId,
-            ! DateTimeUtils::isNull($dateFrom) ? new DateTime($dateFrom) : null,
-            ! DateTimeUtils::isNull($dateTo) ? new DateTime($dateTo) : null,
+            DateTimeUtils::isNull($dateFrom) ? null : new DateTime($dateFrom),
+            DateTimeUtils::isNull($dateTo) ? null : new DateTime($dateTo),
             (int) $cartRule->quantity,
             (int) $cartRule->quantity_per_user,
             $cartRuleMinimum,

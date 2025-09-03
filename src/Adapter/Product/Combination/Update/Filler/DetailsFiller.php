@@ -41,12 +41,12 @@ class DetailsFiller implements CombinationFillerInterface
     {
         $updatableProperties = [];
 
-        if ($command->getGtin() !== null) {
+        if ($command->getGtin() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Gtin) {
             $combination->ean13 = $command->getGtin()->getValue();
             $updatableProperties[] = 'ean13';
         }
 
-        if ($command->getIsbn() !== null) {
+        if ($command->getIsbn() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Isbn) {
             $combination->isbn = $command->getIsbn()->getValue();
             $updatableProperties[] = 'isbn';
         }
@@ -56,17 +56,17 @@ class DetailsFiller implements CombinationFillerInterface
             $updatableProperties[] = 'mpn';
         }
 
-        if ($command->getReference() !== null) {
+        if ($command->getReference() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Reference) {
             $combination->reference = $command->getReference()->getValue();
             $updatableProperties[] = 'reference';
         }
 
-        if ($command->getUpc() !== null) {
+        if ($command->getUpc() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\Upc) {
             $combination->upc = $command->getUpc()->getValue();
             $updatableProperties[] = 'upc';
         }
 
-        if ($command->getImpactOnWeight() !== null) {
+        if ($command->getImpactOnWeight() instanceof \PrestaShop\Decimal\DecimalNumber) {
             $combination->weight = (float) (string) $command->getImpactOnWeight();
             $updatableProperties[] = 'weight';
         }

@@ -61,7 +61,7 @@ class SetProductCustomizationFieldsHandler implements SetProductCustomizationFie
     public function handle(SetProductCustomizationFieldsCommand $command): array
     {
         $shopConstraint = $command->getShopConstraint();
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof ShopId) {
             $shopId = $shopConstraint->getShopId();
         } elseif ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
             $shopId = $shopConstraint->getShopIds()[0];

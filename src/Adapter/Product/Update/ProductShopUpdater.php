@@ -212,7 +212,7 @@ class ProductShopUpdater
             $this->combinationRepository->copyToShop($shopCombinationId, $sourceShopId, $targetShopId);
         }
 
-        if ($this->combinationRepository->findDefaultCombinationIdForShop($productId, $targetShopId) === null) {
+        if (! $this->combinationRepository->findDefaultCombinationIdForShop($productId, $targetShopId) instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId) {
             $shopConstraint = ShopConstraint::shop($targetShopId->getValue());
             $firstCombinationId = $this->combinationRepository->findFirstCombinationId($productId, $shopConstraint);
             $this->defaultCombinationUpdater->setDefaultCombination($firstCombinationId, $shopConstraint);

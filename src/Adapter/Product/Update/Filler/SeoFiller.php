@@ -55,7 +55,7 @@ class SeoFiller implements ProductFillerInterface
     {
         $updatableProperties = [];
 
-        if ($command->getRedirectOption() !== null) {
+        if ($command->getRedirectOption() instanceof RedirectOption) {
             $updatableProperties = array_merge(
                 $updatableProperties,
                 $this->fillWithRedirectOption($product, $command->getRedirectOption())

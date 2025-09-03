@@ -30,6 +30,7 @@ declare(strict_types=1);
 namespace PrestaShop\PrestaShop\Adapter\Product\Combination\Update\Filler;
 
 use Combination;
+use DateTimeInterface;
 use PrestaShop\PrestaShop\Core\Domain\Product\Combination\Command\UpdateCombinationCommand;
 use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime;
 
@@ -55,13 +56,13 @@ class StockInformationFiller implements CombinationFillerInterface
             $updatableProperties['available_now'] = array_keys($localizedNowLabels);
         }
 
-        if ($command->getAvailableDate() !== null) {
+        if ($command->getAvailableDate() instanceof DateTimeInterface) {
             $combination->available_date = $command->getAvailableDate()->format(DateTime::DEFAULT_DATE_FORMAT);
             $updatableProperties[] = 'available_date';
         }
 
         $lowStockThreshold = $command->getLowStockThreshold();
-        if ($lowStockThreshold !== null) {
+        if ($lowStockThreshold instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\LowStockThreshold) {
             $combination->low_stock_threshold = $lowStockThreshold->getValue();
             $combination->low_stock_alert = $lowStockThreshold->isEnabled();
             $updatableProperties[] = 'low_stock_threshold';

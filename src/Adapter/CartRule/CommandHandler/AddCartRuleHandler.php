@@ -83,9 +83,9 @@ class AddCartRuleHandler implements AddCartRuleHandlerInterface
      */
     private function fillCartRuleConditionsFromCommandData(CartRule $cartRule, AddCartRuleCommand $command): void
     {
-        $cartRule->id_customer = $command->getCustomerId() !== null ? $command->getCustomerId()->getValue() : null;
+        $cartRule->id_customer = $command->getCustomerId() instanceof \PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId ? $command->getCustomerId()->getValue() : null;
 
-        if ($command->getValidFrom() === null || $command->getValidTo() === null) {
+        if (! $command->getValidFrom() instanceof DateTimeImmutable || ! $command->getValidTo() instanceof DateTimeImmutable) {
             $now = new DateTimeImmutable();
 
             $cartRule->date_from = $now->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
@@ -96,7 +96,7 @@ class AddCartRuleHandler implements AddCartRuleHandlerInterface
         }
 
         $minimumAmount = $command->getMinimumAmount();
-        if ($minimumAmount !== null) {
+        if ($minimumAmount instanceof \PrestaShop\PrestaShop\Core\Domain\ValueObject\Money) {
             $cartRule->minimum_amount = (float) (string) $minimumAmount->getAmount();
             $cartRule->minimum_amount_currency = $minimumAmount->getCurrencyId()->getValue();
             $cartRule->minimum_amount_shipping = $command->isMinimumAmountShippingIncluded();

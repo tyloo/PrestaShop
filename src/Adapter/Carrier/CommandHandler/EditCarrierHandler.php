@@ -115,11 +115,11 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
             $newCarrier->is_free = false;
         }
 
-        if ($command->getShippingMethod() !== null) {
+        if ($command->getShippingMethod() instanceof \PrestaShop\PrestaShop\Core\Domain\Carrier\ValueObject\ShippingMethod) {
             $newCarrier->shipping_method = $command->getShippingMethod()->getValue();
         }
 
-        if ($command->getRangeBehavior() !== null) {
+        if ($command->getRangeBehavior() instanceof \PrestaShop\PrestaShop\Core\Domain\Carrier\ValueObject\OutOfRangeBehavior) {
             $newCarrier->range_behavior = (bool) $command->getRangeBehavior()->getValue();
         }
 

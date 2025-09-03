@@ -103,9 +103,9 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
         $layoutVariables['templateType'] = $templateType;
         $layoutVariables['giftWrapping'] = $this->hasGiftWrapping;
         if ($templateType === MailTemplateInterface::HTML_TYPE) {
-            $layoutPath = ! empty($layout->getHtmlPath()) ? $layout->getHtmlPath() : $layout->getTxtPath();
+            $layoutPath = empty($layout->getHtmlPath()) ? $layout->getTxtPath() : $layout->getHtmlPath();
         } else {
-            $layoutPath = ! empty($layout->getTxtPath()) ? $layout->getTxtPath() : $layout->getHtmlPath();
+            $layoutPath = empty($layout->getTxtPath()) ? $layout->getHtmlPath() : $layout->getTxtPath();
         }
 
         try {

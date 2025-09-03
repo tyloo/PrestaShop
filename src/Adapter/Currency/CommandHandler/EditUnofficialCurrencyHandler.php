@@ -69,7 +69,7 @@ final class EditUnofficialCurrencyHandler extends AbstractCurrencyHandler implem
 
             $this->verify($entity, $command);
 
-            if ($command->getIsoCode() !== null) {
+            if ($command->getIsoCode() instanceof \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\AlphaIsoCode) {
                 $entity->iso_code = $command->getIsoCode()->getValue();
             }
 
@@ -88,7 +88,7 @@ final class EditUnofficialCurrencyHandler extends AbstractCurrencyHandler implem
     private function verify(Currency $entity, EditUnofficialCurrencyCommand $command)
     {
         $this->validator->assertDefaultCurrencyIsNotBeingDisabled($command);
-        if ($command->getIsoCode() !== null) {
+        if ($command->getIsoCode() instanceof \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\AlphaIsoCode) {
             $this->validator->assertCurrencyIsNotInReference($command->getIsoCode()->getValue());
             if ($entity->iso_code !== $command->getIsoCode()->getValue()) {
                 $this->validator->assertCurrencyIsNotAvailableInDatabase($command->getIsoCode()->getValue());

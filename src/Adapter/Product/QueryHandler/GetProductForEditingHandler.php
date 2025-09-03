@@ -390,7 +390,7 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
     {
         $idOfCoverImage = $this->productImageRepository->findCoverImageId($productId, new ShopId($shopId));
 
-        if ($idOfCoverImage !== null) {
+        if ($idOfCoverImage instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId) {
             return $this->productImageUrlFactory->getPathByType($idOfCoverImage, ProductImagePathFactory::IMAGE_TYPE_CART_DEFAULT);
         }
 

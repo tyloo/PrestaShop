@@ -65,7 +65,7 @@ final class GetEditableCombinationsListHandler implements GetEditableCombination
     {
         $shopId = $query->getShopConstraint()->getShopId();
 
-        if ($shopId === null) {
+        if (! $shopId instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             throw new CombinationException(\sprintf('Only single shop constraint is supported for query %s', GetEditableCombinationsList::class));
         }
 

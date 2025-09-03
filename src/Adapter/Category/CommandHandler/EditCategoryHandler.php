@@ -119,7 +119,7 @@ final class EditCategoryHandler extends AbstractEditCategoryHandler implements E
             throw new CannotEditCategoryException('Invalid language data for updating category.');
         }
 
-        if ($command->getRedirectOption() !== null) {
+        if ($command->getRedirectOption() instanceof \PrestaShop\PrestaShop\Core\Domain\Category\ValueObject\RedirectOption) {
             $this->fillWithRedirectOption($category, $command->getRedirectOption());
         }
 

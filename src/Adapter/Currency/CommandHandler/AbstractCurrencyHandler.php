@@ -182,11 +182,11 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
      */
     protected function updateEntity(Currency $entity, EditCurrencyCommand|EditUnofficialCurrencyCommand $command)
     {
-        if ($command->getExchangeRate() !== null) {
+        if ($command->getExchangeRate() instanceof \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\ExchangeRate) {
             $entity->conversion_rate = $command->getExchangeRate()->getValue();
         }
 
-        if ($command->getPrecision() !== null) {
+        if ($command->getPrecision() instanceof \PrestaShop\PrestaShop\Core\Domain\Currency\ValueObject\Precision) {
             $entity->precision = $command->getPrecision()->getValue();
         }
 

@@ -93,7 +93,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             ->setParameter('supplierId', $association->getSupplierId()->getValue())
         ;
 
-        if ($association->getProductId() !== null) {
+        if ($association->getProductId() instanceof ProductId) {
             $qb
                 ->andWhere('ps.id_product = :productId')
                 ->setParameter('productId', $association->getProductId()->getValue())
@@ -107,7 +107,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
 
         $productSupplierId = (int) $result['id_product_supplier'];
 
-        if ($association->getProductSupplierId() !== null
+        if ($association->getProductSupplierId() instanceof ProductSupplierId
             && $productSupplierId !== $association->getProductSupplierId()->getValue()) {
             throw new InvalidProductSupplierAssociationException(\sprintf('Invalid ProductSupplier ID in association: %s Provided is %d but the persisted one is %d.', (string) $association, $association->getProductSupplierId()->getValue(), $productSupplierId));
         }
@@ -126,7 +126,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
     public function getByAssociation(SupplierAssociationInterface $association): ProductSupplier
     {
         $productSupplierId = $this->findIdByAssociation($association);
-        if ($productSupplierId === null) {
+        if (! $productSupplierId instanceof ProductSupplierId) {
             throw new ProductSupplierNotAssociatedException(\sprintf('Could not find a ProductSupplier matching this association: %s', (string) $association));
         }
 
@@ -215,7 +215,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             $productId->getValue(),
             (int) $row['id_product_attribute'],
             $supplierId->getValue(),
-            ! empty($row['id_product_supplier']) ? (int) $row['id_product_supplier'] : null
+            empty($row['id_product_supplier']) ? null : (int) $row['id_product_supplier']
         ), $results);
     }
 
@@ -307,7 +307,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        if ($combinationId !== null) {
+        if ($combinationId instanceof CombinationIdInterface) {
             $qb->andWhere('ps.id_product_attribute = :combinationId')
                 ->setParameter('combinationId', $combinationId->getValue())
             ;

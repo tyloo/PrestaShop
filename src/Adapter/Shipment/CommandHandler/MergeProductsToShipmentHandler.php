@@ -53,11 +53,11 @@ class MergeProductsToShipmentHandler implements MergeProductsToShipmentHandlerIn
         $targetShipment = $this->repository->findById($targetId);
         $shipmentProducts = [];
 
-        if ($sourceShipment === null) {
+        if (! $sourceShipment instanceof \PrestaShopBundle\Entity\Shipment) {
             throw new ShipmentNotFoundException(\sprintf('Shipment with id "%s" was not found', $sourceId));
         }
 
-        if ($targetShipment === null) {
+        if (! $targetShipment instanceof \PrestaShopBundle\Entity\Shipment) {
             throw new ShipmentNotFoundException(\sprintf('Shipment with id "%s" was not found', $targetId));
         }
 

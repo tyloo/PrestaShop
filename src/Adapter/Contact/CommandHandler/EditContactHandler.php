@@ -73,7 +73,7 @@ final class EditContactHandler extends AbstractObjectModelHandler implements Edi
                 $entity->description = $command->getLocalisedDescription();
             }
 
-            if ($command->getEmail() !== null) {
+            if ($command->getEmail() instanceof \PrestaShop\PrestaShop\Core\Domain\ValueObject\Email) {
                 $entity->email = $command->getEmail()->getValue();
             }
 

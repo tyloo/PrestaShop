@@ -104,27 +104,27 @@ class DiscountValidator extends AbstractObjectModelValidator
                 break;
             case DiscountType::CART_LEVEL:
             case DiscountType::ORDER_LEVEL:
-                if ($command->getAmountDiscount() !== null && $command->getPercentDiscount() !== null) {
+                if ($command->getAmountDiscount() instanceof \PrestaShop\PrestaShop\Core\Domain\ValueObject\Money && $command->getPercentDiscount() instanceof DecimalNumber) {
                     throw new DiscountConstraintException('Discount can not be amount and percent at the same time', DiscountConstraintException::INVALID_DISCOUNT_CANNOT_BE_AMOUNT_AND_PERCENT);
                 }
 
-                if ($command->getAmountDiscount() !== null && $command->getAmountDiscount()->getAmount()->isLowerThanZero()) {
+                if ($command->getAmountDiscount() instanceof \PrestaShop\PrestaShop\Core\Domain\ValueObject\Money && $command->getAmountDiscount()->getAmount()->isLowerThanZero()) {
                     throw new DiscountConstraintException('Discount value can not be negative', DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
                 }
 
-                if ($command->getPercentDiscount() !== null && ($command->getPercentDiscount()->isLowerThanZero() || $command->getPercentDiscount()->isGreaterThan(new DecimalNumber('100')))) {
+                if ($command->getPercentDiscount() instanceof DecimalNumber && ($command->getPercentDiscount()->isLowerThanZero() || $command->getPercentDiscount()->isGreaterThan(new DecimalNumber('100')))) {
                     throw new DiscountConstraintException('Discount value can not be negative or above 100', DiscountConstraintException::INVALID_DISCOUNT_VALUE_CANNOT_BE_NEGATIVE);
                 }
 
                 break;
             case DiscountType::PRODUCT_LEVEL:
-                if ($command->getReductionProduct() === 0 || $command->getPercentDiscount() === null) {
+                if ($command->getReductionProduct() === 0 || ! $command->getPercentDiscount() instanceof DecimalNumber) {
                     throw new DiscountConstraintException('Product discount must have his properties set.', DiscountConstraintException::INVALID_PRODUCT_DISCOUNT_PROPERTIES);
                 }
 
                 break;
             case DiscountType::FREE_GIFT:
-                if ($command->getProductId() === null) {
+                if (! $command->getProductId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId) {
                     throw new DiscountConstraintException('Free gift discount must have his properties set.', DiscountConstraintException::INVALID_FREE_GIFT_DISCOUNT_PROPERTIES);
                 }
 
@@ -148,7 +148,7 @@ class DiscountValidator extends AbstractObjectModelValidator
     {
         // To avoid circular dependency, we need to set the repository with setDiscountRepository.
         // So, we need to check if discountRepository property is set before use this function!
-        if ($this->discountRepository === null) {
+        if (! $this->discountRepository instanceof DiscountRepository) {
             throw new CoreException('Discount repository is mandatory to check discount code uniquicity.');
         }
 

@@ -92,17 +92,17 @@ class PricesFiller implements ProductFillerInterface
         ShopConstraint $shopConstraint,
     ): array {
         $updatableProperties = [];
-        if ($wholesalePrice !== null) {
+        if ($wholesalePrice instanceof DecimalNumber) {
             $product->wholesale_price = (float) (string) $wholesalePrice;
             $updatableProperties[] = 'wholesale_price';
         }
 
-        if ($price !== null) {
+        if ($price instanceof DecimalNumber) {
             $product->price = (float) (string) $price;
             $updatableProperties[] = 'price';
         }
 
-        if ($ecotax !== null) {
+        if ($ecotax instanceof DecimalNumber) {
             $product->ecotax = (float) (string) $ecotax;
             $updatableProperties[] = 'ecotax';
         }
@@ -114,14 +114,14 @@ class PricesFiller implements ProductFillerInterface
             $unitPrice = new DecimalNumber('0');
         }
 
-        if ($unitPrice !== null) {
+        if ($unitPrice instanceof DecimalNumber) {
             $product->unit_price = (float) (string) $unitPrice;
             $updatableProperties[] = 'unit_price';
         }
 
         // When price or unit price is changed the ratio must be updated, but only the object field
         // we don't ask to update this property since it will be updated via an SQL query by the Product class
-        if ($unitPrice !== null || $price !== null) {
+        if ($unitPrice instanceof DecimalNumber || $price instanceof DecimalNumber) {
             $this->fillUnitPriceRatio($product, $price, $unitPrice);
         }
 

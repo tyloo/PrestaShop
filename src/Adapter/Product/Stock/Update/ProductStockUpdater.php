@@ -94,7 +94,7 @@ class ProductStockUpdater
      */
     public function resetStock(ProductId $productId, ShopConstraint $shopConstraint): void
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             throw new InvalidShopConstraintException('Product has no features related with shop group use single shop and all shops constraints');
         }
 
@@ -160,12 +160,12 @@ class ProductStockUpdater
             $updatableProperties[] = 'location';
         }
 
-        if ($properties->getOutOfStockType() !== null) {
+        if ($properties->getOutOfStockType() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\OutOfStockType) {
             $product->out_of_stock = $properties->getOutOfStockType()->getValue();
             $updatableProperties[] = 'out_of_stock';
         }
 
-        if ($properties->getStockModification() !== null) {
+        if ($properties->getStockModification() instanceof StockModification) {
             $product->quantity = $properties->getStockModification()->getDeltaQuantity() !== null ?
                 $stockAvailable->quantity + $properties->getStockModification()->getDeltaQuantity() :
                 $properties->getStockModification()->getFixedQuantity()
@@ -207,7 +207,7 @@ class ProductStockUpdater
         $stockUpdateRequired = false;
         $previousQuantity = (int) $stockAvailable->quantity;
 
-        if ($properties->getOutOfStockType() !== null) {
+        if ($properties->getOutOfStockType() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\OutOfStockType) {
             $stockAvailable->out_of_stock = $properties->getOutOfStockType()->getValue();
             $stockUpdateRequired = true;
         }
@@ -217,7 +217,7 @@ class ProductStockUpdater
             $stockUpdateRequired = true;
         }
 
-        if ($properties->getStockModification() !== null) {
+        if ($properties->getStockModification() instanceof StockModification) {
             $stockAvailable->quantity = $properties->getStockModification()->getDeltaQuantity() !== null ?
                 $stockAvailable->quantity + $properties->getStockModification()->getDeltaQuantity() :
                 $properties->getStockModification()->getFixedQuantity()
@@ -232,7 +232,7 @@ class ProductStockUpdater
         $fallbackShopId = $this->stockAvailableRepository->getFallbackShopId($stockAvailable);
         $this->stockAvailableRepository->update($stockAvailable, $fallbackShopId);
 
-        if ($properties->getStockModification() !== null) {
+        if ($properties->getStockModification() instanceof StockModification) {
             // Save movement only after stock has been updated
             $this->saveMovement($stockAvailable, $properties->getStockModification(), $previousQuantity, $fallbackShopId->getValue());
 

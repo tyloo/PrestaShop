@@ -261,7 +261,7 @@ class ImageRetriever
             'small' => $small,
             'medium' => $medium,
             'large' => $large,
-            'legend' => ! empty($object->meta_title) ? $object->meta_title : $object->name,
+            'legend' => empty($object->meta_title) ? $object->name : $object->meta_title,
             'id_image' => $id_image,
         ];
     }

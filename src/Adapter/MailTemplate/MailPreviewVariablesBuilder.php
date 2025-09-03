@@ -256,7 +256,7 @@ final class MailPreviewVariablesBuilder
 					<td style="padding:0.6em 0.4em;">
 						<strong><a href="' . $url . '">' . $product['product_name'] . '</a>'
                 . (isset($product['attributes_small']) ? ' ' . $product['attributes_small'] : '')
-                . (! empty($customizationText) ? '<br />' . $customizationText : '')
+                . (empty($customizationText) ? '' : '<br />' . $customizationText)
                 . '</strong>
 					</td>
 					<td style="padding:0.6em 0.4em; text-align:right;">' . $this->locale->formatPrice($unitPrice, $this->context->currency->iso_code) . '</td>

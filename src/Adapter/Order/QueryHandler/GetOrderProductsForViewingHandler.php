@@ -105,7 +105,7 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                 }
             }
 
-            $product['customizations'] = ! empty($customizations) ? new OrderProductCustomizationsForViewing($customizations) : null;
+            $product['customizations'] = empty($customizations) ? null : new OrderProductCustomizationsForViewing($customizations);
             $product['customized_product_quantity'] = $customized_product_quantity;
             $product['current_stock'] = StockAvailable::getQuantityAvailableByProduct($product['product_id'], $product['product_attribute_id'], $product['id_shop']);
             $product['quantity_refundable'] = $product['product_quantity'] - $product['product_quantity_return'] - $product['product_quantity_refunded'];
@@ -170,15 +170,15 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                 null;
             $product['product_quantity_refunded'] = $product['product_quantity_refunded'] ?: false;
 
-            $productType = ! empty($product['pack_items']) ? OrderProductForViewing::TYPE_PACK :
-                OrderProductForViewing::TYPE_PRODUCT_WITHOUT_COMBINATIONS;
+            $productType = empty($product['pack_items']) ? OrderProductForViewing::TYPE_PRODUCT_WITHOUT_COMBINATIONS :
+                OrderProductForViewing::TYPE_PACK;
 
             $orderInvoice = new OrderInvoice($product['id_order_invoice']);
 
             $packItems = [];
             foreach ($product['pack_items'] as $pack_item) {
-                $packItemType = ! empty($pack_item['pack_items']) ? OrderProductForViewing::TYPE_PACK :
-                    OrderProductForViewing::TYPE_PRODUCT_WITHOUT_COMBINATIONS;
+                $packItemType = empty($pack_item['pack_items']) ? OrderProductForViewing::TYPE_PRODUCT_WITHOUT_COMBINATIONS :
+                    OrderProductForViewing::TYPE_PACK;
                 $packItemImagePath = isset($pack_item['image_tag']) ?
                     $this->imageTagSourceParser->parse($pack_item['image_tag']) :
                     null;
@@ -232,10 +232,10 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                 $this->locale->formatPrice($product['displayed_max_refundable'], $currency->iso_code),
                 (string) $product['displayed_max_refundable'],
                 $product['location'],
-                ! empty($product['id_order_invoice']) ? $product['id_order_invoice'] : null,
-                ! empty($product['id_order_invoice'])
-                    ? $orderInvoice->getInvoiceNumberFormatted((int) $order->getAssociatedLanguage()->getId())
-                    : '',
+                empty($product['id_order_invoice']) ? null : $product['id_order_invoice'],
+                empty($product['id_order_invoice'])
+                    ? ''
+                    : $orderInvoice->getInvoiceNumberFormatted((int) $order->getAssociatedLanguage()->getId()),
                 $productType,
                 (bool) Product::isAvailableWhenOutOfStock(StockAvailable::outOfStock($product['product_id'])),
                 $packItems,

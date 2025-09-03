@@ -93,7 +93,7 @@ final class BulkDeleteProfileHandler extends AbstractProfileHandler implements B
             }
         }
 
-        if ($exceptionToThrowLater !== null) {
+        if ($exceptionToThrowLater instanceof FailedToDeleteProfileException) {
             throw $exceptionToThrowLater;
         }
     }

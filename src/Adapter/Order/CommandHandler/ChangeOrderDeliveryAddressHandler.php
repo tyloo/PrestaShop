@@ -99,7 +99,7 @@ final class ChangeOrderDeliveryAddressHandler extends AbstractOrderCommandHandle
         $modified = $productsComparator->getModifiedProducts();
         foreach ($modified as $productUpdate) {
             $orderDetail = $this->getOrderDetail($productUpdate, $order, $cart);
-            if ($orderDetail === null) {
+            if (! $orderDetail instanceof OrderDetail) {
                 continue;
             }
 

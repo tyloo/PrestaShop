@@ -55,7 +55,7 @@ abstract class AbstractBulkHandler
             try {
                 $actionResults[$productId->getValue()] = $this->handleSingleAction($productId, $command);
             } catch (ProductException $e) {
-                if ($bulkException === null) {
+                if (! $bulkException instanceof BulkProductException) {
                     $bulkException = $this->buildBulkException();
                 }
 
@@ -63,7 +63,7 @@ abstract class AbstractBulkHandler
             }
         }
 
-        if ($bulkException !== null) {
+        if ($bulkException instanceof BulkProductException) {
             throw $bulkException;
         }
 

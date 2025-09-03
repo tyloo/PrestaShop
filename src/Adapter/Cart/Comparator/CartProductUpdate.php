@@ -68,11 +68,11 @@ class CartProductUpdate
             return false;
         }
 
-        $combinationIdValue = $this->getCombinationId() !== null ? $this->getCombinationId()->getValue() : 0;
-        $checkedCombinationIdValue = $cartProductUpdate->getCombinationId() !== null ? $cartProductUpdate->getCombinationId()->getValue() : 0;
+        $combinationIdValue = $this->getCombinationId() instanceof CombinationId ? $this->getCombinationId()->getValue() : 0;
+        $checkedCombinationIdValue = $cartProductUpdate->getCombinationId() instanceof CombinationId ? $cartProductUpdate->getCombinationId()->getValue() : 0;
 
-        $customizationIdValue = $this->getCustomizationId() !== null ? $this->getCustomizationId()->getValue() : 0;
-        $checkedCustomizationIdValue = $cartProductUpdate->getCustomizationId() !== null ? $cartProductUpdate->getCustomizationId()->getValue() : 0;
+        $customizationIdValue = $this->getCustomizationId() instanceof CustomizationId ? $this->getCustomizationId()->getValue() : 0;
+        $checkedCustomizationIdValue = $cartProductUpdate->getCustomizationId() instanceof CustomizationId ? $cartProductUpdate->getCustomizationId()->getValue() : 0;
 
         return $combinationIdValue === $checkedCombinationIdValue && $customizationIdValue === $checkedCustomizationIdValue;
     }

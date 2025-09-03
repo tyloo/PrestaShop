@@ -78,7 +78,7 @@ class UpdateProductStockAvailableHandler implements UpdateProductStockHandlerInt
             $shopConstraint
         );
 
-        if ($outOfStockType !== null) {
+        if ($outOfStockType instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\OutOfStockType) {
             if ($shopConstraint->forAllShops() || ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds())) {
                 if ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
                     $updatedShopIds = $shopConstraint->getShopIds();

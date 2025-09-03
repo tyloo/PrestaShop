@@ -79,7 +79,7 @@ final class SlipPdfConfiguration implements DataConfigurationInterface
             }
         }
 
-        return ! empty($errors) ? $errors : [];
+        return empty($errors) ? [] : $errors;
     }
 
     public function validateConfiguration(array $configuration)

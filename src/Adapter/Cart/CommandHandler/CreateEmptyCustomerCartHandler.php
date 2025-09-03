@@ -71,7 +71,7 @@ final class CreateEmptyCustomerCartHandler implements CreateEmptyCustomerCartHan
         $cart->id_currency = Currency::getDefaultCurrencyId();
 
         $addresses = $customer->getAddresses($cart->id_lang);
-        $addressId = ! empty($addresses) ? (int) reset($addresses)['id_address'] : null;
+        $addressId = empty($addresses) ? null : (int) reset($addresses)['id_address'];
         $cart->id_address_delivery = $addressId;
         $cart->id_address_invoice = $addressId;
 

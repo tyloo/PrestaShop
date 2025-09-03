@@ -174,9 +174,9 @@ class OrderAmountUpdater
 
     private function findProductInCart(CartProductUpdate $productUpdate, Cart $cart): ?array
     {
-        $combinationId = $productUpdate->getCombinationId() === null
-            ? 0
-            : $productUpdate->getCombinationId()->getValue();
+        $combinationId = $productUpdate->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId
+            ? $productUpdate->getCombinationId()->getValue()
+            : 0;
         foreach ($cart->getProducts() as $product) {
             if ((int) $product['id_product'] === $productUpdate->getProductId()->getValue()
                 && (int) $product['id_product_attribute'] === $combinationId) {
@@ -189,9 +189,9 @@ class OrderAmountUpdater
 
     private function findProductInOrder(CartProductUpdate $productUpdate, Order $order): ?array
     {
-        $combinationId = $productUpdate->getCombinationId() === null
-            ? 0
-            : $productUpdate->getCombinationId()->getValue();
+        $combinationId = $productUpdate->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId
+            ? $productUpdate->getCombinationId()->getValue()
+            : 0;
         foreach ($order->getProducts() as $product) {
             if ((int) $product['product_id'] === $productUpdate->getProductId()->getValue()
                 && (int) $product['product_attribute_id'] === $combinationId) {
