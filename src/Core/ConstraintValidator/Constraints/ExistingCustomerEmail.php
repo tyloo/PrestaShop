@@ -39,7 +39,7 @@ class ExistingCustomerEmail extends Constraint
 {
     public $message = 'This email address is not registered.';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return ExistingCustomerEmailValidator::class;
     }

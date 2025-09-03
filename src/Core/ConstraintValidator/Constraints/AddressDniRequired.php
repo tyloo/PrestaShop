@@ -43,12 +43,12 @@ class AddressDniRequired extends Constraint
 
     public $required;
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return AddressDniRequiredValidator::class;
     }
 
-    public function getRequiredOptions()
+    public function getRequiredOptions(): array
     {
         return ['id_country', 'required'];
     }

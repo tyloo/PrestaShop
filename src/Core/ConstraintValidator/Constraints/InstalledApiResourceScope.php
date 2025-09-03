@@ -42,7 +42,7 @@ class InstalledApiResourceScope extends Constraint
 {
     public $message = 'The scopes %scope_names% are not associated to any installed API.';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return InstalledApiResourceScopeValidator::class;
     }

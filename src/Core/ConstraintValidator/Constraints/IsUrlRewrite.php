@@ -42,7 +42,7 @@ class IsUrlRewrite extends Constraint
 {
     public $message = '%s is invalid.';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return IsUrlRewriteValidator::class;
     }

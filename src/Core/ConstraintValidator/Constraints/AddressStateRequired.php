@@ -41,12 +41,12 @@ class AddressStateRequired extends Constraint
 
     public $id_country;
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return AddressStateRequiredValidator::class;
     }
 
-    public function getRequiredOptions()
+    public function getRequiredOptions(): array
     {
         return ['id_country'];
     }

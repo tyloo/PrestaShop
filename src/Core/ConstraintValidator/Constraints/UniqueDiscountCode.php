@@ -39,7 +39,7 @@ class UniqueDiscountCode extends Constraint
 {
     public $message = 'The discount code is already used (conflict with discount "%s").';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return UniqueDiscountCodeValidator::class;
     }

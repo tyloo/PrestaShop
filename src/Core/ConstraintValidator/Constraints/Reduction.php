@@ -43,7 +43,7 @@ final class Reduction extends Constraint
 
     public $invalidPercentageValueMessage = 'Reduction value "%value%" is invalid. Value must be more than zero and maximum %max%.';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return ReductionValidator::class;
     }

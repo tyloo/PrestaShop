@@ -40,7 +40,7 @@ final class CleanHtml extends Constraint
 {
     public $message = '%s is invalid.';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return CleanHtmlValidator::class;
     }

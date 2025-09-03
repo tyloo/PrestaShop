@@ -39,7 +39,7 @@ final class CustomerName extends Constraint
 {
     public $message = 'The %s field is invalid.';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return CustomerNameValidator::class;
     }

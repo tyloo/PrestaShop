@@ -36,12 +36,12 @@ class NotBlankWhenRequired extends NotBlank
 {
     public $required;
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return NotBlankWhenRequiredValidator::class;
     }
 
-    public function getRequiredOptions()
+    public function getRequiredOptions(): array
     {
         return ['required'];
     }

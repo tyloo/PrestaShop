@@ -41,7 +41,7 @@ class PositiveOrZero extends Constraint
 {
     public $message = 'This value should be either positive or zero.';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return PositiveOrZeroValidator::class;
     }

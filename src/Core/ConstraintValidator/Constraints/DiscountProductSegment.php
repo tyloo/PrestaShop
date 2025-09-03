@@ -32,7 +32,7 @@ use Symfony\Component\Validator\Constraint;
 
 class DiscountProductSegment extends Constraint
 {
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return DiscountProductSegmentValidator::class;
     }

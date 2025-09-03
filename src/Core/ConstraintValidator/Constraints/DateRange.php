@@ -39,7 +39,7 @@ class DateRange extends Constraint
 {
     public $message = 'The selected date range is not valid.';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return DateRangeValidator::class;
     }

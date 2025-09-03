@@ -51,12 +51,12 @@ class UniqueStateIsoCode extends Constraint
      */
     public $excludeStateId;
 
-    public function getRequiredOptions()
+    public function getRequiredOptions(): array
     {
         return ['excludeStateId'];
     }
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return UniqueStateIsoCodeValidator::class;
     }

@@ -41,7 +41,7 @@ class NoTags extends Constraint
 {
     public $message = 'Field must not contain HTML or PHP tags';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return NoTagsValidator::class;
     }
