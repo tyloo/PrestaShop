@@ -196,26 +196,24 @@ class AddressFormatCore extends ObjectModel
                 $this->_errorFormatList[] = $this->trans('This name is not allowed.', [], 'Admin.Notifications.Error') . ': ' .
                 $associationName[0];
             }
+        } elseif (empty($associationName[0]) || empty($associationName[1])) {
+            $this->_errorFormatList[] = $this->trans('Syntax error with this pattern.', [], 'Admin.Notifications.Error') . ': ' . $patternName;
         } else {
-            if (empty($associationName[0]) || empty($associationName[1])) {
-                $this->_errorFormatList[] = $this->trans('Syntax error with this pattern.', [], 'Admin.Notifications.Error') . ': ' . $patternName;
+            $associationName[0] = ucfirst($associationName[0]);
+            $associationName[1] = strtolower($associationName[1]);
+
+            if (in_array($associationName[0], self::$forbiddenClassList, true)) {
+                $this->_errorFormatList[] = $this->trans('This name is not allowed.', [], 'Admin.Notifications.Error') . ': ' .
+                $associationName[0];
             } else {
-                $associationName[0] = ucfirst($associationName[0]);
-                $associationName[1] = strtolower($associationName[1]);
-
-                if (in_array($associationName[0], self::$forbiddenClassList, true)) {
-                    $this->_errorFormatList[] = $this->trans('This name is not allowed.', [], 'Admin.Notifications.Error') . ': ' .
-                    $associationName[0];
-                } else {
-                    // Check if the id field name exist in the Address class
-                    // Don't check this attribute on Address (no sense)
-                    if ($associationName[0] !== 'Address') {
-                        $this->_checkValidateClassField('Address', 'id_' . strtolower($associationName[0]), true);
-                    }
-
-                    // Check if the field name exist in the class write by the user
-                    $this->_checkValidateClassField($associationName[0], $associationName[1], false);
+                // Check if the id field name exist in the Address class
+                // Don't check this attribute on Address (no sense)
+                if ($associationName[0] !== 'Address') {
+                    $this->_checkValidateClassField('Address', 'id_' . strtolower($associationName[0]), true);
                 }
+
+                // Check if the field name exist in the class write by the user
+                $this->_checkValidateClassField($associationName[0], $associationName[1], false);
             }
         }
     }

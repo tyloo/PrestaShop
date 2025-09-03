@@ -238,6 +238,8 @@ class StockAvailableCore extends ObjectModel
             StockAvailable::addSqlShopParams($params, $id_shop);
             Db::getInstance()->insert('stock_available', $params, false, true, Db::ON_DUPLICATE_KEY);
         }
+
+        return null;
     }
 
     /**
@@ -431,7 +433,7 @@ class StockAvailableCore extends ObjectModel
      * @param int|null $id_shop
      * @param bool     $add_movement
      *
-     * @return bool|void
+     * @return bool|null
      */
     public static function setQuantity($id_product, $id_product_attribute, $quantity, $id_shop = null, $add_movement = true)
     {
@@ -500,6 +502,8 @@ class StockAvailableCore extends ObjectModel
             ]
         );
         Cache::clean('StockAvailable::getQuantityAvailableByProduct_' . (int) $id_product . '*');
+
+        return null;
     }
 
     /**
@@ -681,14 +685,12 @@ class StockAvailableCore extends ObjectModel
                 $sql = ' AND ' . pSQL($alias) . 'id_shop_group = ' . (int) $shop_group->id . ' ';
                 $sql .= ' AND ' . pSQL($alias) . 'id_shop = 0 ';
             }
+        } elseif (is_object($sql)) {
+            $sql->where(pSQL($alias) . 'id_shop = ' . (int) $shop->id);
+            $sql->where(pSQL($alias) . 'id_shop_group = 0');
         } else {
-            if (is_object($sql)) {
-                $sql->where(pSQL($alias) . 'id_shop = ' . (int) $shop->id);
-                $sql->where(pSQL($alias) . 'id_shop_group = 0');
-            } else {
-                $sql = ' AND ' . pSQL($alias) . 'id_shop = ' . (int) $shop->id . ' ';
-                $sql .= ' AND ' . pSQL($alias) . 'id_shop_group = 0 ';
-            }
+            $sql = ' AND ' . pSQL($alias) . 'id_shop = ' . (int) $shop->id . ' ';
+            $sql .= ' AND ' . pSQL($alias) . 'id_shop_group = 0 ';
         }
 
         return $sql;

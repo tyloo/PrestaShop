@@ -530,6 +530,8 @@ class CMSCategoryCore extends ObjectModel
 
             $i = $result['id_parent'];
         }
+
+        return null;
     }
 
     public static function getLinkRewrite($id_cms_category, $id_lang)

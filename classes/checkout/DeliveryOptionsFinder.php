@@ -88,25 +88,23 @@ class DeliveryOptionsFinderCore
                                     [],
                                     'Shop.Theme.Checkout'
                                 );
+                            } elseif ($include_taxes) {
+                                $carrier['price'] = $this->priceFormatter->format($carriers_list['total_price_with_tax']);
+                                if ($display_taxes_label) {
+                                    $carrier['price'] = $this->translator->trans(
+                                        '%price% tax incl.',
+                                        ['%price%' => $carrier['price']],
+                                        'Shop.Theme.Checkout'
+                                    );
+                                }
                             } else {
-                                if ($include_taxes) {
-                                    $carrier['price'] = $this->priceFormatter->format($carriers_list['total_price_with_tax']);
-                                    if ($display_taxes_label) {
-                                        $carrier['price'] = $this->translator->trans(
-                                            '%price% tax incl.',
-                                            ['%price%' => $carrier['price']],
-                                            'Shop.Theme.Checkout'
-                                        );
-                                    }
-                                } else {
-                                    $carrier['price'] = $this->priceFormatter->format($carriers_list['total_price_without_tax']);
-                                    if ($display_taxes_label) {
-                                        $carrier['price'] = $this->translator->trans(
-                                            '%price% tax excl.',
-                                            ['%price%' => $carrier['price']],
-                                            'Shop.Theme.Checkout'
-                                        );
-                                    }
+                                $carrier['price'] = $this->priceFormatter->format($carriers_list['total_price_without_tax']);
+                                if ($display_taxes_label) {
+                                    $carrier['price'] = $this->translator->trans(
+                                        '%price% tax excl.',
+                                        ['%price%' => $carrier['price']],
+                                        'Shop.Theme.Checkout'
+                                    );
                                 }
                             }
 

@@ -185,7 +185,7 @@ class SpecificPriceRuleCore extends ObjectModel
     public function addConditions($conditions)
     {
         if (! is_array($conditions)) {
-            return;
+            return null;
         }
 
         $result = Db::getInstance()->insert('specific_price_rule_condition_group', [
@@ -356,22 +356,20 @@ class SpecificPriceRuleCore extends ObjectModel
 
             // Remove duplicate after the array_merge
             $result = array_unique($result, \SORT_REGULAR);
-        } else {
+        } elseif ($products && count($products)) {
             // All products without conditions
-            if ($products && count($products)) {
-                if (! SpecificPrice::getByProductId(0, false, false, (int) $this->id)) {
-                    $query = new DbQuery();
-                    $query->select('p.`id_product`')
-                        ->select('NULL as `id_product_attribute`')
-                        ->from('product', 'p')
-                        ->leftJoin('product_shop', 'ps', 'p.`id_product` = ps.`id_product`')
-                        ->where('ps.id_shop = ' . (int) $shop_id);
-                    $query->where('p.`id_product` IN (' . implode(', ', array_map('intval', $products)) . ')');
-                    $result = Db::getInstance()->executeS($query);
-                }
-            } else {
-                $result = [['id_product' => 0, 'id_product_attribute' => null]];
+            if (! SpecificPrice::getByProductId(0, false, false, (int) $this->id)) {
+                $query = new DbQuery();
+                $query->select('p.`id_product`')
+                    ->select('NULL as `id_product_attribute`')
+                    ->from('product', 'p')
+                    ->leftJoin('product_shop', 'ps', 'p.`id_product` = ps.`id_product`')
+                    ->where('ps.id_shop = ' . (int) $shop_id);
+                $query->where('p.`id_product` IN (' . implode(', ', array_map('intval', $products)) . ')');
+                $result = Db::getInstance()->executeS($query);
             }
+        } else {
+            $result = [['id_product' => 0, 'id_product_attribute' => null]];
         }
 
         return $result;

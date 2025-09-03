@@ -96,7 +96,7 @@ class ShopUrlCore extends ObjectModel
     public function getURL($ssl = false)
     {
         if (! $this->id) {
-            return;
+            return null;
         }
 
         $url = ($ssl) ? 'https://' . $this->domain_ssl : 'http://' . $this->domain;

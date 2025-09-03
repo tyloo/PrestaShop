@@ -1881,14 +1881,12 @@ class ToolsCore
 
         if ($is_local_file) {
             $content = @file_get_contents($url, $use_include_path, $stream_context);
+        } elseif ($require_fopen) {
+            $content = Tools::file_get_contents_fopen($url, $use_include_path, $stream_context);
         } else {
-            if ($require_fopen) {
+            $content = Tools::file_get_contents_curl($url, $curl_timeout, $opts);
+            if (empty($content) && $fallback) {
                 $content = Tools::file_get_contents_fopen($url, $use_include_path, $stream_context);
-            } else {
-                $content = Tools::file_get_contents_curl($url, $curl_timeout, $opts);
-                if (empty($content) && $fallback) {
-                    $content = Tools::file_get_contents_fopen($url, $use_include_path, $stream_context);
-                }
             }
         }
 
@@ -2128,13 +2126,11 @@ class ToolsCore
             if (preg_match('#^(.*)\# ~~start~~.*\# ~~end~~[^\n]*(.*)$#s', $content, $m)) {
                 $specific_before = $m[1];
                 $specific_after = $m[2];
-            } else {
+            } elseif (preg_match('#\# http://www\.prestashop\.com - http://www\.prestashop\.com/forums\s*(.*)<IfModule mod_rewrite\.c>#si', $content, $m)) {
                 // For retrocompatibility
-                if (preg_match('#\# http://www\.prestashop\.com - http://www\.prestashop\.com/forums\s*(.*)<IfModule mod_rewrite\.c>#si', $content, $m)) {
-                    $specific_before = $m[1];
-                } else {
-                    $specific_before = $content;
-                }
+                $specific_before = $m[1];
+            } else {
+                $specific_before = $content;
             }
         }
 
@@ -3332,6 +3328,8 @@ exit;
         if ($del && is_writable($src)) {
             rmdir($src);
         }
+
+        return null;
     }
 
     /**
@@ -3828,6 +3826,8 @@ exit;
 
             return Tools::getPath($url_base, $category->id_parent, $path, '', 'cms');
         }
+
+        return null;
     }
 
     public static function redirectToInstall()

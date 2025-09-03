@@ -1424,6 +1424,8 @@ class CategoryCore extends ObjectModel
 
             $i = $result['id_parent'];
         }
+
+        return null;
     }
 
     /**
@@ -1941,12 +1943,12 @@ class CategoryCore extends ObjectModel
      * but remove duplicate position. Should not be used if positions
      * are clean at the beginning !
      *
-     * @return bool|void true if succeed
+     * @return bool|null true if succeed
      */
     public static function cleanPositions($idCategoryParent = null)
     {
         if ($idCategoryParent === null) {
-            return;
+            return null;
         }
 
         $return = true;
@@ -2361,13 +2363,11 @@ class CategoryCore extends ObjectModel
 
         if ($idShop !== null) {
             $shopIds = [(int) $idShop];
+        } elseif (Shop::getContext() !== Shop::CONTEXT_SHOP) {
+            $shopIds = Shop::getContextListShopID();
         } else {
-            if (Shop::getContext() !== Shop::CONTEXT_SHOP) {
-                $shopIds = Shop::getContextListShopID();
-            } else {
-                $id = Context::getContext()->shop->id;
-                $shopIds = [$id ?: Configuration::get('PS_SHOP_DEFAULT')];
-            }
+            $id = Context::getContext()->shop->id;
+            $shopIds = [$id ?: Configuration::get('PS_SHOP_DEFAULT')];
         }
 
         foreach ($shopIds as $idShop) {

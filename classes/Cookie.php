@@ -438,7 +438,7 @@ class CookieCore
     public function write()
     {
         if (! $this->_modified || headers_sent() || ! $this->_allow_writing) {
-            return;
+            return null;
         }
 
         $previousChecksum = '';
@@ -458,7 +458,7 @@ class CookieCore
         $newChecksum = hash('sha256', $this->_salt . $cookie);
         // do not set cookie if the checksum is the same: it means the content has not changed!
         if ($previousChecksum === $newChecksum) {
-            return;
+            return null;
         }
 
         $cookie .= 'checksum|' . $newChecksum;

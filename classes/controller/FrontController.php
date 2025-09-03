@@ -1871,6 +1871,8 @@ class FrontControllerCore extends Controller
                 'url' => $this->context->link->getCategoryLink($category),
             ];
         }
+
+        return null;
     }
 
     /**

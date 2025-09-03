@@ -459,8 +459,6 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
 
         switch ($type) {
             case self::TYPE_INT:
-                return (int) $value;
-
             case self::TYPE_BOOL:
                 return (int) $value;
 
@@ -1669,14 +1667,14 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
      *
      * @param int|array $id_shops
      *
-     * @return bool|void
+     * @return bool|null
      *
      * @throws PrestaShopDatabaseException
      */
     public function associateTo($id_shops)
     {
         if (! $this->id) {
-            return;
+            return null;
         }
 
         if (! is_array($id_shops)) {
@@ -1824,12 +1822,10 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
                     $update_data[] = sprintf("a.%s = '%s'", $field, $value);
                     $update_data[] = sprintf("%s_shop.%s = '%s'", $def['table'], $field, $value);
                 }
+            } elseif ($value === null && ! empty($def['fields'][$field]['allow_null'])) {
+                $update_data[] = sprintf('a.%s = NULL', $field);
             } else {
-                if ($value === null && ! empty($def['fields'][$field]['allow_null'])) {
-                    $update_data[] = sprintf('a.%s = NULL', $field);
-                } else {
-                    $update_data[] = sprintf("a.%s = '%s'", $field, $value);
-                }
+                $update_data[] = sprintf("a.%s = '%s'", $field, $value);
             }
         }
 

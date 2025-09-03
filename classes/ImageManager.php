@@ -286,16 +286,14 @@ class ImageManagerCore
         if ($widthDiff > 1 && $heightDiff > 1) {
             $nextWidth = $sourceWidth;
             $nextHeight = $sourceHeight;
+        } elseif ($psImageGenerationMethod === 2 || (! $psImageGenerationMethod && $widthDiff > $heightDiff)) {
+            $nextHeight = $destinationHeight;
+            $nextWidth = round(($sourceWidth * $nextHeight) / $sourceHeight);
+            $destinationWidth = (int) (! $psImageGenerationMethod ? $destinationWidth : $nextWidth);
         } else {
-            if ($psImageGenerationMethod === 2 || (! $psImageGenerationMethod && $widthDiff > $heightDiff)) {
-                $nextHeight = $destinationHeight;
-                $nextWidth = round(($sourceWidth * $nextHeight) / $sourceHeight);
-                $destinationWidth = (int) (! $psImageGenerationMethod ? $destinationWidth : $nextWidth);
-            } else {
-                $nextWidth = $destinationWidth;
-                $nextHeight = round($sourceHeight * $destinationWidth / $sourceWidth);
-                $destinationHeight = (int) (! $psImageGenerationMethod ? $destinationHeight : $nextHeight);
-            }
+            $nextWidth = $destinationWidth;
+            $nextHeight = round($sourceHeight * $destinationWidth / $sourceWidth);
+            $destinationHeight = (int) (! $psImageGenerationMethod ? $destinationHeight : $nextHeight);
         }
 
         if (! ImageManager::checkImageMemoryLimit($sourceFile)) {

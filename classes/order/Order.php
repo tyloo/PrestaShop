@@ -1749,6 +1749,8 @@ class OrderCore extends ObjectModel
         $this->update();
 
         $history->addWithemail();
+
+        return null;
     }
 
     public function addWs($autodate = true, $null_values = false)

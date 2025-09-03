@@ -779,21 +779,19 @@ class WebserviceRequestCore
 
         if ($this->_key === null) {
             $this->setError(401, 'Please enter the authentication key as the login. No password required', 16);
+        } elseif (empty($this->_key)) {
+            $this->setError(401, 'Authentication key is empty', 17);
+        } elseif (strlen($this->_key) !== '32') {
+            $this->setError(401, 'Invalid authentication key format', 18);
         } else {
-            if (empty($this->_key)) {
-                $this->setError(401, 'Authentication key is empty', 17);
-            } elseif (strlen($this->_key) !== '32') {
-                $this->setError(401, 'Invalid authentication key format', 18);
+            if (WebserviceKey::isKeyActive($this->_key)) {
+                $this->keyPermissions = WebserviceKey::getPermissionForAccount($this->_key);
             } else {
-                if (WebserviceKey::isKeyActive($this->_key)) {
-                    $this->keyPermissions = WebserviceKey::getPermissionForAccount($this->_key);
-                } else {
-                    $this->setError(401, 'Authentification key is not active', 20);
-                }
+                $this->setError(401, 'Authentification key is not active', 20);
+            }
 
-                if (! $this->keyPermissions) {
-                    $this->setError(401, 'No permission for this authentication key', 21);
-                }
+            if (! $this->keyPermissions) {
+                $this->setError(401, 'No permission for this authentication key', 21);
             }
         }
 
@@ -1324,6 +1322,8 @@ class WebserviceRequestCore
 
             return $objects;
         }
+
+        return null;
     }
 
     public function getFilteredObjectDetails()
@@ -1379,6 +1379,8 @@ class WebserviceRequestCore
 
             return false;
         }
+
+        return null;
     }
 
     /**

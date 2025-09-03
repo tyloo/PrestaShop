@@ -133,11 +133,9 @@ class CheckoutSessionCore
                 $message->id_customer = (int) $this->context->cart->id_customer;
                 $message->add();
             }
-        } else {
-            if ($oldMessage = Message::getMessageByCartId($this->context->cart->id)) {
-                $message = new Message($oldMessage['id_message']);
-                $message->delete();
-            }
+        } elseif ($oldMessage = Message::getMessageByCartId($this->context->cart->id)) {
+            $message = new Message($oldMessage['id_message']);
+            $message->delete();
         }
 
         return true;

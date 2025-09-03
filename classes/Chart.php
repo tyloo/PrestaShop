@@ -58,6 +58,8 @@ class ChartCore
 
             return true;
         }
+
+        return null;
     }
 
     /**
@@ -161,5 +163,7 @@ class ChartCore
 				});
 			</script>';
         }
+
+        return null;
     }
 }

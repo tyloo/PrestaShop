@@ -70,7 +70,6 @@ class SpecificPriceFormatterCore
         $this->specificPrice['quantity'] = &$this->specificPrice['from_quantity'];
         if ($this->specificPrice['price'] >= 0) {
             // The price may be directly set
-
             /** @var float $currentPriceDefaultCurrency current price with taxes in default currency */
             if ($this->isTaxIncluded) {
                 $currentPriceDefaultCurrency = ($this->specificPrice['price'] * (1 + $tax_rate / 100)) + (float) $ecotax_amount;
@@ -81,7 +80,6 @@ class SpecificPriceFormatterCore
             // Since this price is set in default currency,
             // we need to convert it into current currency
             $currentPriceCurrentCurrency = Tools::convertPrice($currentPriceDefaultCurrency, $this->currency, true);
-
             if ($this->specificPrice['reduction_type'] === 'amount') {
                 if (! $this->specificPrice['reduction_tax'] && $this->isTaxIncluded) {
                     $this->specificPrice['reduction'] *= 1 + $tax_rate / 100;
@@ -100,7 +98,24 @@ class SpecificPriceFormatterCore
 
             $this->specificPrice['real_value'] = $initialPrice > 0 ? $initialPrice - $currentPriceCurrentCurrency : $currentPriceCurrentCurrency;
             $discountPrice = $initialPrice - $this->specificPrice['real_value'];
+            if ($this->displayDiscountPrice) {
+                if ($this->specificPrice['reduction_tax'] === 0 && ! $this->specificPrice['price']) {
+                    $this->specificPrice['discount'] = $priceFormatter->format($initialPrice - ($initialPrice * $this->specificPrice['reduction_with_tax']));
+                } else {
+                    $this->specificPrice['discount'] = $priceFormatter->format($initialPrice - $this->specificPrice['real_value']);
+                }
+            } else {
+                $this->specificPrice['discount'] = $priceFormatter->format($this->specificPrice['real_value']);
+            }
+        } elseif ($this->specificPrice['reduction_type'] === 'amount') {
+            if ($this->isTaxIncluded) {
+                $this->specificPrice['real_value'] = $this->specificPrice['reduction_tax'] === 1 ? $this->specificPrice['reduction'] : $this->specificPrice['reduction'] * (1 + $tax_rate / 100);
+            } else {
+                $this->specificPrice['real_value'] = $this->specificPrice['reduction_tax'] === 0 ? $this->specificPrice['reduction'] : $this->specificPrice['reduction'] / (1 + $tax_rate / 100);
+            }
 
+            $this->specificPrice['reduction_with_tax'] = $this->specificPrice['reduction_tax'] ? $this->specificPrice['reduction'] : $this->specificPrice['reduction'] + ($this->specificPrice['reduction'] * $tax_rate) / 100;
+            $discountPrice = $initialPrice - $this->specificPrice['real_value'];
             if ($this->displayDiscountPrice) {
                 if ($this->specificPrice['reduction_tax'] === 0 && ! $this->specificPrice['price']) {
                     $this->specificPrice['discount'] = $priceFormatter->format($initialPrice - ($initialPrice * $this->specificPrice['reduction_with_tax']));
@@ -111,36 +126,16 @@ class SpecificPriceFormatterCore
                 $this->specificPrice['discount'] = $priceFormatter->format($this->specificPrice['real_value']);
             }
         } else {
-            if ($this->specificPrice['reduction_type'] === 'amount') {
-                if ($this->isTaxIncluded) {
-                    $this->specificPrice['real_value'] = $this->specificPrice['reduction_tax'] === 1 ? $this->specificPrice['reduction'] : $this->specificPrice['reduction'] * (1 + $tax_rate / 100);
+            $this->specificPrice['real_value'] = $this->specificPrice['reduction'] * 100;
+            $discountPrice = $initialPrice - $initialPrice * $this->specificPrice['reduction'];
+            if ($this->displayDiscountPrice) {
+                if ($this->specificPrice['reduction_tax'] === 0) {
+                    $this->specificPrice['discount'] = $priceFormatter->format($initialPrice - ($initialPrice * $this->specificPrice['reduction_with_tax']));
                 } else {
-                    $this->specificPrice['real_value'] = $this->specificPrice['reduction_tax'] === 0 ? $this->specificPrice['reduction'] : $this->specificPrice['reduction'] / (1 + $tax_rate / 100);
-                }
-
-                $this->specificPrice['reduction_with_tax'] = $this->specificPrice['reduction_tax'] ? $this->specificPrice['reduction'] : $this->specificPrice['reduction'] + ($this->specificPrice['reduction'] * $tax_rate) / 100;
-                $discountPrice = $initialPrice - $this->specificPrice['real_value'];
-                if ($this->displayDiscountPrice) {
-                    if ($this->specificPrice['reduction_tax'] === 0 && ! $this->specificPrice['price']) {
-                        $this->specificPrice['discount'] = $priceFormatter->format($initialPrice - ($initialPrice * $this->specificPrice['reduction_with_tax']));
-                    } else {
-                        $this->specificPrice['discount'] = $priceFormatter->format($initialPrice - $this->specificPrice['real_value']);
-                    }
-                } else {
-                    $this->specificPrice['discount'] = $priceFormatter->format($this->specificPrice['real_value']);
+                    $this->specificPrice['discount'] = $priceFormatter->format($initialPrice - ($initialPrice * $this->specificPrice['reduction']));
                 }
             } else {
-                $this->specificPrice['real_value'] = $this->specificPrice['reduction'] * 100;
-                $discountPrice = $initialPrice - $initialPrice * $this->specificPrice['reduction'];
-                if ($this->displayDiscountPrice) {
-                    if ($this->specificPrice['reduction_tax'] === 0) {
-                        $this->specificPrice['discount'] = $priceFormatter->format($initialPrice - ($initialPrice * $this->specificPrice['reduction_with_tax']));
-                    } else {
-                        $this->specificPrice['discount'] = $priceFormatter->format($initialPrice - ($initialPrice * $this->specificPrice['reduction']));
-                    }
-                } else {
-                    $this->specificPrice['discount'] = $this->specificPrice['real_value'] . '%';
-                }
+                $this->specificPrice['discount'] = $this->specificPrice['real_value'] . '%';
             }
         }
 

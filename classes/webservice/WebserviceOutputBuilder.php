@@ -95,10 +95,6 @@ class WebserviceOutputBuilderCore
      */
     public function setObjectRender(WebserviceOutputInterface $obj_render)
     {
-        if (! $obj_render instanceof WebserviceOutputInterface) {
-            throw new WebserviceException('Obj_render param must be an WebserviceOutputInterface object type', [83, 500]);
-        }
-
         $this->objectRender = $obj_render;
         $this->objectRender->setWsUrl($this->wsUrl);
         if ($this->objectRender->getContentType()) {
@@ -661,17 +657,15 @@ class WebserviceOutputBuilderCore
                             $objects_assoc[] = $association_resource;
                         }
                     }
-                } else {
-                    if (method_exists($object, $getter) && $this->schemaToDisplay === null) {
-                        $association_resources = $object->{$getter}();
-                        if (is_array($association_resources) && ! empty($association_resources)) {
-                            foreach ($association_resources as $association_resource) {
-                                $objects_assoc[] = $association_resource;
-                            }
+                } elseif (method_exists($object, $getter) && $this->schemaToDisplay === null) {
+                    $association_resources = $object->{$getter}();
+                    if (is_array($association_resources) && ! empty($association_resources)) {
+                        foreach ($association_resources as $association_resource) {
+                            $objects_assoc[] = $association_resource;
                         }
-                    } else {
-                        $objects_assoc[] = '';
                     }
+                } else {
+                    $objects_assoc[] = '';
                 }
 
                 $class_name = null;
@@ -802,11 +796,7 @@ class WebserviceOutputBuilderCore
      */
     public function setSpecificField($object, $method, $field_name, $entity_name)
     {
-        try {
-            $this->validateObjectAndMethod($object, $method);
-        } catch (WebserviceException $webserviceException) {
-            throw $webserviceException;
-        }
+        $this->validateObjectAndMethod($object, $method);
 
         $this->specificFields[$field_name] = ['entity' => $entity_name, 'object' => $object, 'method' => $method, 'type' => gettype($object)];
 
@@ -848,11 +838,7 @@ class WebserviceOutputBuilderCore
 
     public function setVirtualField($object, $method, $entity_name, $parameters)
     {
-        try {
-            $this->validateObjectAndMethod($object, $method);
-        } catch (WebserviceException $webserviceException) {
-            throw $webserviceException;
-        }
+        $this->validateObjectAndMethod($object, $method);
 
         $this->virtualFields[$entity_name][] = ['parameters' => $parameters, 'object' => $object, 'method' => $method, 'type' => gettype($object)];
     }

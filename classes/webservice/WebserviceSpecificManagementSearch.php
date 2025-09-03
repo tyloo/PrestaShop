@@ -136,6 +136,8 @@ class WebserviceSpecificManagementSearchCore implements WebserviceSpecificManage
         // return false;
 
         $this->output .= $this->objOutput->getContent($objects_categories, null, $this->wsObject->fieldsToDisplay, $this->wsObject->depth, WebserviceOutputBuilder::VIEW_LIST, false);
+
+        return null;
     }
 
     /**

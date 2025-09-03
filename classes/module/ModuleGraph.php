@@ -251,13 +251,11 @@ abstract class ModuleGraphCore extends Module
                         } else {
                             $this->_csv .= '0';
                         }
-                    } else {
+                    } elseif (is_numeric($this->_values[$i][$key])) {
                         // We don't want strings to be divided. Example: product name
-                        if (is_numeric($this->_values[$i][$key])) {
-                            $this->_csv .= $this->_values[$i][$key] / (($datas['type'] === 'pie') ? $total : 1);
-                        } else {
-                            $this->_csv .= $this->escapeCell($this->_values[$i][$key]);
-                        }
+                        $this->_csv .= $this->_values[$i][$key] / (($datas['type'] === 'pie') ? $total : 1);
+                    } else {
+                        $this->_csv .= $this->escapeCell($this->_values[$i][$key]);
                     }
 
                     $this->_csv .= ';';

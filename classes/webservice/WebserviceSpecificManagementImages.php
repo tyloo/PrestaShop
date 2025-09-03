@@ -349,7 +349,7 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
     /**
      * Management of general images.
      *
-     * @return bool|void
+     * @return bool|null
      *
      * @throws WebserviceException
      */
@@ -447,6 +447,8 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
 
                 throw new WebserviceException('Error while copying image to the directory', [54, 400]);
         }
+
+        return null;
     }
 
     protected function manageDefaultDeclinatedImages($directory, $normal_image_sizes)
@@ -808,6 +810,8 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
 
             return $this->manageDeclinatedImagesCRUD($filename_exists, $this->imgToDisplay, $normal_image_sizes, _PS_UPLOAD_DIR_);
         }
+
+        return null;
     }
 
     /**
@@ -818,7 +822,7 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
      * @param array  $image_sizes     The
      * @param string $directory
      *
-     * @return bool|void
+     * @return bool|null
      *
      * @throws WebserviceException
      */
@@ -884,6 +888,8 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
             default:
                 throw new WebserviceException('This method is not allowed', [67, 405]);
         }
+
+        return null;
     }
 
     /**
@@ -968,16 +974,14 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
         if ($width_diff > 1 && $height_diff > 1) {
             $next_width = $source_width;
             $next_height = $source_height;
+        } elseif ((int) Configuration::get('PS_IMAGE_GENERATION_METHOD') === 2 || ((int) Configuration::get('PS_IMAGE_GENERATION_METHOD') === 0 && $width_diff > $height_diff)) {
+            $next_height = $dest_height;
+            $next_width = (int) (($source_width * $next_height) / $source_height);
+            $dest_width = ((int) Configuration::get('PS_IMAGE_GENERATION_METHOD') === 0 ? $dest_width : $next_width);
         } else {
-            if ((int) Configuration::get('PS_IMAGE_GENERATION_METHOD') === 2 || ((int) Configuration::get('PS_IMAGE_GENERATION_METHOD') === 0 && $width_diff > $height_diff)) {
-                $next_height = $dest_height;
-                $next_width = (int) (($source_width * $next_height) / $source_height);
-                $dest_width = ((int) Configuration::get('PS_IMAGE_GENERATION_METHOD') === 0 ? $dest_width : $next_width);
-            } else {
-                $next_width = $dest_width;
-                $next_height = (int) ($source_height * $dest_width / $source_width);
-                $dest_height = ((int) Configuration::get('PS_IMAGE_GENERATION_METHOD') === 0 ? $dest_height : $next_height);
-            }
+            $next_width = $dest_width;
+            $next_height = (int) ($source_height * $dest_width / $source_width);
+            $dest_height = ((int) Configuration::get('PS_IMAGE_GENERATION_METHOD') === 0 ? $dest_height : $next_height);
         }
 
         $border_width = (int) (($dest_width - $next_width) / 2);
@@ -1038,12 +1042,10 @@ class WebserviceSpecificManagementImagesCore implements WebserviceSpecificManage
             foreach ($image_types as $image_type) {
                 if ($this->defaultImage) {
                     $thumbnail_path = $parent_path . $this->wsObject->urlSegment[3] . '-default-' . $image_type['name'] . '.jpg';
+                } elseif ($this->imageType === 'products') {
+                    $thumbnail_path = $parent_path . chunk_split((string) $this->wsObject->urlSegment[3], 1, '/') . $this->wsObject->urlSegment[3] . '-' . $image_type['name'] . '.jpg';
                 } else {
-                    if ($this->imageType === 'products') {
-                        $thumbnail_path = $parent_path . chunk_split((string) $this->wsObject->urlSegment[3], 1, '/') . $this->wsObject->urlSegment[3] . '-' . $image_type['name'] . '.jpg';
-                    } else {
-                        $thumbnail_path = $parent_path . $this->wsObject->urlSegment[2] . '-' . $image_type['name'] . '.jpg';
-                    }
+                    $thumbnail_path = $parent_path . $this->wsObject->urlSegment[2] . '-' . $image_type['name'] . '.jpg';
                 }
 
                 if (! $this->writeImageOnDisk($base_path, $thumbnail_path, $image_type['width'], $image_type['height'])) {

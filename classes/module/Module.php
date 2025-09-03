@@ -2979,7 +2979,7 @@ abstract class ModuleCore implements ModuleInterface
      *
      * @param string $msg
      *
-     * @return false|void
+     * @return false|null
      */
     public function adminDisplayWarning($msg)
     {
@@ -2988,6 +2988,8 @@ abstract class ModuleCore implements ModuleInterface
         }
 
         $this->context->controller->warnings[] = $msg;
+
+        return null;
     }
 
     /**
@@ -2995,7 +2997,7 @@ abstract class ModuleCore implements ModuleInterface
      *
      * @param string $msg
      *
-     * @return false|void
+     * @return false|null
      */
     protected function adminDisplayInformation($msg)
     {
@@ -3004,6 +3006,8 @@ abstract class ModuleCore implements ModuleInterface
         }
 
         $this->context->controller->informations[] = $msg;
+
+        return null;
     }
 
     /**

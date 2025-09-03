@@ -1125,6 +1125,8 @@ class CartRuleCore extends ObjectModel
         if (! $display_error) {
             return true;
         }
+
+        return null;
     }
 
     /**
@@ -1910,27 +1912,25 @@ class CartRuleCore extends ObjectModel
                 (in_array($type, ['carrier', 'shop'], true) ? ' ORDER BY t.name ASC ' : '') .
                 (in_array($type, ['country', 'group', 'cart_rule'], true) && $i18n ? ' ORDER BY tl.name ASC ' : '') .
                 $sql_limit);
+        } elseif ($type === 'cart_rule') {
+            $array = $this->getCartRuleCombinations($offset, $limit, $search_cart_rule_name);
         } else {
-            if ($type === 'cart_rule') {
-                $array = $this->getCartRuleCombinations($offset, $limit, $search_cart_rule_name);
-            } else {
-                $resource = Db::getInstance()->executeS(
-                    '
+            $resource = Db::getInstance()->executeS(
+                '
 				SELECT t.*' . ($i18n ? ', tl.*' : '') . ', IF(crt.id_' . $type . ' IS NULL, 0, 1) as selected
 				FROM `' . _DB_PREFIX_ . $type . '` t
 				' . ($i18n ? 'LEFT JOIN `' . _DB_PREFIX_ . $type . '_lang` tl ON (t.id_' . $type . ' = tl.id_' . $type . ' AND tl.id_lang = ' . (int) Context::getContext()->language->id . ')' : '') . '
 				LEFT JOIN (SELECT id_' . $type . ' FROM `' . _DB_PREFIX_ . 'cart_rule_' . $type . '` WHERE id_cart_rule = ' . (int) $this->id . ') crt ON t.id_' . ($type === 'carrier' ? 'reference' : $type) . ' = crt.id_' . $type . '
 				WHERE 1 ' . ($active_only ? ' AND t.active = 1' : '') .
-                    $shop_list
-                    . (in_array($type, ['carrier', 'shop'], true) ? ' AND t.deleted = 0' : '') .
-                    (in_array($type, ['carrier', 'shop'], true) ? ' ORDER BY t.name ASC ' : '') .
-                    (in_array($type, ['country', 'group'], true) && $i18n ? ' ORDER BY tl.name ASC ' : '') .
-                    $sql_limit,
-                    false
-                );
-                while ($row = Db::getInstance()->nextRow($resource)) {
-                    $array[($row['selected'] || $this->{$type . '_restriction'} === 0) ? 'selected' : 'unselected'][] = $row;
-                }
+                $shop_list
+                . (in_array($type, ['carrier', 'shop'], true) ? ' AND t.deleted = 0' : '') .
+                (in_array($type, ['carrier', 'shop'], true) ? ' ORDER BY t.name ASC ' : '') .
+                (in_array($type, ['country', 'group'], true) && $i18n ? ' ORDER BY tl.name ASC ' : '') .
+                $sql_limit,
+                false
+            );
+            while ($row = Db::getInstance()->nextRow($resource)) {
+                $array[($row['selected'] || $this->{$type . '_restriction'} === 0) ? 'selected' : 'unselected'][] = $row;
             }
         }
 

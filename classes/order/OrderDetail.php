@@ -1140,7 +1140,7 @@ class OrderDetailCore extends ObjectModel
     public static function getCrossSells($id_product, $id_lang, $limit = 12)
     {
         if (! $id_product || ! $id_lang) {
-            return;
+            return null;
         }
 
         $front = true;
@@ -1208,6 +1208,8 @@ class OrderDetailCore extends ObjectModel
                 return $order_products;
             }
         }
+
+        return null;
     }
 
     public function add($autodate = true, $null_values = false)

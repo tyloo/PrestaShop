@@ -3642,11 +3642,9 @@ class CartCore extends ObjectModel
                     // price. This is on purpose and required in Germany.
                     $shipping_cost /= (1 + $this->getAverageProductsTaxRate());
                 }
-            } else {
+            } elseif ($use_tax && isset($carrier_tax)) {
                 // Apply tax
-                if ($use_tax && isset($carrier_tax)) {
-                    $shipping_cost *= 1 + ($carrier_tax / 100);
-                }
+                $shipping_cost *= 1 + ($carrier_tax / 100);
             }
 
             $shipping_cost = (float) Tools::ps_round((float) $shipping_cost, Context::getContext()->getComputingPrecision());
@@ -3672,11 +3670,9 @@ class CartCore extends ObjectModel
                     // price. This is on purpose and required in Germany.
                     $shipping_cost /= (1 + $this->getAverageProductsTaxRate());
                 }
-            } else {
+            } elseif ($use_tax && isset($carrier_tax)) {
                 // Apply tax
-                if ($use_tax && isset($carrier_tax)) {
-                    $shipping_cost *= 1 + ($carrier_tax / 100);
-                }
+                $shipping_cost *= 1 + ($carrier_tax / 100);
             }
 
             $shipping_cost = (float) Tools::ps_round((float) $shipping_cost, Context::getContext()->getComputingPrecision());
@@ -3688,23 +3684,17 @@ class CartCore extends ObjectModel
         // Get shipping cost using correct method
         $shipping_method = $carrier->getShippingMethod();
         if ($carrier->range_behavior) {
-            if (($shipping_method === Carrier::SHIPPING_METHOD_WEIGHT && Carrier::checkDeliveryPriceByWeight($carrier->id, $this->getTotalWeight(), (int) $id_zone) === false)
-                || (
-                    $shipping_method === Carrier::SHIPPING_METHOD_PRICE && Carrier::checkDeliveryPriceByPrice($carrier->id, $order_total, $id_zone, (int) $this->id_currency) === false
-                )) {
-            } else {
+            if (! ($shipping_method === Carrier::SHIPPING_METHOD_WEIGHT && Carrier::checkDeliveryPriceByWeight($carrier->id, $this->getTotalWeight(), (int) $id_zone) === false) && ! ($shipping_method === Carrier::SHIPPING_METHOD_PRICE && Carrier::checkDeliveryPriceByPrice($carrier->id, $order_total, $id_zone, (int) $this->id_currency) === false)) {
                 if ($shipping_method === Carrier::SHIPPING_METHOD_WEIGHT) {
                     $shipping_cost += $carrier->getDeliveryPriceByWeight($this->getTotalWeight($product_list), $id_zone);
                 } else { // by price
                     $shipping_cost += $carrier->getDeliveryPriceByPrice($order_total, $id_zone, (int) $this->id_currency);
                 }
             }
+        } elseif ($shipping_method === Carrier::SHIPPING_METHOD_WEIGHT) {
+            $shipping_cost += $carrier->getDeliveryPriceByWeight($this->getTotalWeight($product_list), $id_zone);
         } else {
-            if ($shipping_method === Carrier::SHIPPING_METHOD_WEIGHT) {
-                $shipping_cost += $carrier->getDeliveryPriceByWeight($this->getTotalWeight($product_list), $id_zone);
-            } else {
-                $shipping_cost += $carrier->getDeliveryPriceByPrice($order_total, $id_zone, (int) $this->id_currency);
-            }
+            $shipping_cost += $carrier->getDeliveryPriceByPrice($order_total, $id_zone, (int) $this->id_currency);
         }
 
         // Adding global handling charges
@@ -3736,11 +3726,9 @@ class CartCore extends ObjectModel
                 // price. This is on purpose and required in Germany.
                 $shipping_cost /= (1 + $this->getAverageProductsTaxRate());
             }
-        } else {
+        } elseif ($use_tax && isset($carrier_tax)) {
             // Apply tax
-            if ($use_tax && isset($carrier_tax)) {
-                $shipping_cost *= 1 + ($carrier_tax / 100);
-            }
+            $shipping_cost *= 1 + ($carrier_tax / 100);
         }
 
         $shipping_cost = (float) Tools::ps_round((float) $shipping_cost, Context::getContext()->getComputingPrecision());

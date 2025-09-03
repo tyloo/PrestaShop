@@ -2268,7 +2268,7 @@ class ProductCore extends ObjectModel
      * @param string[]|string $available_now       Combination available now labels
      * @param string[]|string $available_later     Combination available later labels
      *
-     * @return int|false|void Attribute identifier if success, false if failed to add Combination, void if Product identifier not set
+     * @return int|false|null Attribute identifier if success, false if failed to add Combination, void if Product identifier not set
      */
     public function addAttribute(
         $price,
@@ -2293,7 +2293,7 @@ class ProductCore extends ObjectModel
         $available_later = [],
     ) {
         if (! $this->id) {
-            return;
+            return null;
         }
 
         $price = (float) str_replace(',', '.', (string) $price);
@@ -4624,7 +4624,7 @@ class ProductCore extends ObjectModel
      * @param int $id_value   FeatureValue identifier
      * @param int $cust       1 = use a custom value, 0 = use $id_value
      *
-     * @return int|string|void FeatureValue identifier or void if it fail
+     * @return int|string|null FeatureValue identifier or void if it fail
      */
     public function addFeaturesToDB($id_feature, $id_value, $cust = 0)
     {
@@ -4640,6 +4640,8 @@ class ProductCore extends ObjectModel
         if ($id_value) {
             return $id_value;
         }
+
+        return null;
     }
 
     /**
@@ -4908,10 +4910,8 @@ class ProductCore extends ObjectModel
                     $row2['id_product_attribute'] = $id_product_attribute_new;
                     $return &= Db::getInstance()->insert('product_attribute_combination', $row2);
                 }
-            } else {
-                if (isset($context_old, $context_shop_id_old)) {
-                    Shop::setContext($context_old, $context_shop_id_old);
-                }
+            } elseif (isset($context_old, $context_shop_id_old)) {
+                Shop::setContext($context_old, $context_shop_id_old);
             }
 
             // Copy suppliers

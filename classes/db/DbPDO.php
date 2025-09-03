@@ -121,7 +121,7 @@ class DbPDOCore extends Db
         try {
             $this->link = static::getPDO($this->server, $this->user, $this->password, $this->database, 5);
         } catch (PDOException $pdoException) {
-            throw new PrestaShopException('Link to database cannot be established: ' . $pdoException->getMessage());
+            throw new PrestaShopException('Link to database cannot be established: ' . $pdoException->getMessage(), $pdoException->getCode(), $pdoException);
         }
 
         $this->link->exec("SET SESSION sql_mode = ''");

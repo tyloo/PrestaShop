@@ -418,10 +418,8 @@ class OrderSlipCore extends ObjectModel
                 if (! isset($total_products[$id_tax_rules_group])) {
                     $total_products[$id_tax_rules_group] = 0;
                 }
-            } else {
-                if (! isset($total_products[$id_tax_rules_group . '_' . $id_address])) {
-                    $total_products[$id_tax_rules_group . '_' . $id_address] = 0;
-                }
+            } elseif (! isset($total_products[$id_tax_rules_group . '_' . $id_address])) {
+                $total_products[$id_tax_rules_group . '_' . $id_address] = 0;
             }
 
             $product_tax_incl_line = Tools::ps_round($tax_calculator->{$taxCalculatorMethod}($price) * $quantity, Context::getContext()->getComputingPrecision());

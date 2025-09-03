@@ -955,7 +955,7 @@ class AdminControllerCore extends Controller
     }
 
     /**
-     * @return string|void
+     * @return string|null
      */
     public function addFiltersToBreadcrumbs()
     {
@@ -1010,6 +1010,8 @@ class AdminControllerCore extends Controller
                 return $this->trans('filter by %s', [implode(', ', $filters)]);
             }
         }
+
+        return null;
     }
 
     /**
@@ -1331,12 +1333,10 @@ class AdminControllerCore extends Controller
         foreach ($this->fields_list as $key => $datas) {
             if ($datas['title'] === 'PDF') {
                 unset($this->fields_list[$key]);
+            } elseif ($datas['title'] === 'ID') {
+                $headers[] = strtolower(Tools::htmlentitiesDecodeUTF8($datas['title']));
             } else {
-                if ($datas['title'] === 'ID') {
-                    $headers[] = strtolower(Tools::htmlentitiesDecodeUTF8($datas['title']));
-                } else {
-                    $headers[] = Tools::htmlentitiesDecodeUTF8($datas['title']);
-                }
+                $headers[] = Tools::htmlentitiesDecodeUTF8($datas['title']);
             }
         }
 
@@ -1513,7 +1513,7 @@ class AdminControllerCore extends Controller
     /**
      * Object update.
      *
-     * @return ObjectModel|false|void
+     * @return ObjectModel|false|null
      *
      * @throws PrestaShopException
      */
@@ -1608,9 +1608,7 @@ class AdminControllerCore extends Controller
             return false;
         }
 
-        if (isset($object)) {
-            return $object;
-        }
+        return $object ?? null;
     }
 
     /**
@@ -3232,14 +3230,12 @@ class AdminControllerCore extends Controller
                 } else {
                     $this->errors[] = $this->trans('You do not have permission to edit this.', [], 'Admin.Notifications.Error');
                 }
-            } else {
+            } elseif ($this->access('add')) {
                 // case 2: creating new entry
-                if ($this->access('add')) {
-                    $this->action = 'save';
-                    $this->display = Tools::isSubmit('submitAdd' . $this->table . 'AndStay') ? 'edit' : 'list';
-                } else {
-                    $this->errors[] = $this->trans('You do not have permission to add this.', [], 'Admin.Notifications.Error');
-                }
+                $this->action = 'save';
+                $this->display = Tools::isSubmit('submitAdd' . $this->table . 'AndStay') ? 'edit' : 'list';
+            } else {
+                $this->errors[] = $this->trans('You do not have permission to add this.', [], 'Admin.Notifications.Error');
             }
         } elseif (isset($_GET['add' . $this->table])) {
             if ($this->access('add')) {
@@ -4061,18 +4057,18 @@ class AdminControllerCore extends Controller
      *
      * @param int $id_object
      *
-     * @return bool|void
+     * @return bool|null
      *
      * @throws PrestaShopDatabaseException
      */
     protected function updateAssoShop($id_object)
     {
         if (! Shop::isFeatureActive()) {
-            return;
+            return null;
         }
 
         if (! Shop::isTableAssociated($this->table)) {
-            return;
+            return null;
         }
 
         $assos_data = $this->getSelectedAssoShop($this->table);
@@ -4398,12 +4394,12 @@ class AdminControllerCore extends Controller
     /**
      * Prepare the view to display the required fields form.
      *
-     * @return string|void
+     * @return string|null
      */
     public function displayRequiredFields()
     {
         if (! $this->access('add') || ! $this->access('delete') || ! $this->required_database) {
-            return;
+            return null;
         }
 
         $helper = new Helper();

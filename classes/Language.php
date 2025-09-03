@@ -299,6 +299,8 @@ class LanguageCore extends ObjectModel implements LanguageInterface
                 }
             }
         }
+
+        return null;
     }
 
     public function add($autodate = true, $nullValues = false, $only_add = false)

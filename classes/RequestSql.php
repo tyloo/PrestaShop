@@ -276,10 +276,8 @@ class RequestSqlCore extends ObjectModel
                         $tab[] = $attribut;
                     }
                 }
-            } else {
-                if ($attribut = $this->cutAttribute($attr['base_expr'], $from)) {
-                    $tab[] = $attribut;
-                }
+            } elseif ($attribut = $this->cutAttribute($attr['base_expr'], $from)) {
+                $tab[] = $attribut;
             }
         }
 

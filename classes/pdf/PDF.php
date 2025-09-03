@@ -133,7 +133,7 @@ class PDFCore
      *
      * @param bool $display
      *
-     * @return string|void
+     * @return string|null
      *
      * @throws PrestaShopException
      */
@@ -171,6 +171,8 @@ class PDFCore
 
             return $this->pdf_renderer->render($this->getFilename(), $display);
         }
+
+        return null;
     }
 
     /**

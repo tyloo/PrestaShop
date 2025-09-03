@@ -1265,11 +1265,9 @@ abstract class PaymentModuleCore extends Module
                     if ($voucher->free_shipping === 1 && $voucher->reduction_amount >= $order->total_shipping_tax_incl) {
                         $voucher->reduction_amount -= $order->total_shipping_tax_incl;
                     }
-                } else {
+                } elseif ($voucher->free_shipping === 1 && $voucher->reduction_amount >= $order->total_shipping_tax_excl) {
                     // Add total shipping amount only if reduction amount > total shipping
-                    if ($voucher->free_shipping === 1 && $voucher->reduction_amount >= $order->total_shipping_tax_excl) {
-                        $voucher->reduction_amount -= $order->total_shipping_tax_excl;
-                    }
+                    $voucher->reduction_amount -= $order->total_shipping_tax_excl;
                 }
 
                 if ($voucher->reduction_amount <= 0) {

@@ -116,12 +116,10 @@ class HelperCore
                 $override_tpl_path = $this->context->controller->getTemplatePath() . $this->override_folder . $this->base_folder . $tpl_name;
             } elseif ($this->module) {
                 $override_tpl_path = _PS_MODULE_DIR_ . $this->module->name . '/views/templates/admin/_configure/' . $this->override_folder . $this->base_folder . $tpl_name;
-            } else {
-                if (file_exists($this->context->smarty->getTemplateDir(1) . $this->override_folder . $this->base_folder . $tpl_name)) {
-                    $override_tpl_path = $this->context->smarty->getTemplateDir(1) . $this->override_folder . $this->base_folder . $tpl_name;
-                } elseif (file_exists($this->context->smarty->getTemplateDir(0) . 'controllers' . \DIRECTORY_SEPARATOR . $this->override_folder . $this->base_folder . $tpl_name)) {
-                    $override_tpl_path = $this->context->smarty->getTemplateDir(0) . 'controllers' . \DIRECTORY_SEPARATOR . $this->override_folder . $this->base_folder . $tpl_name;
-                }
+            } elseif (file_exists($this->context->smarty->getTemplateDir(1) . $this->override_folder . $this->base_folder . $tpl_name)) {
+                $override_tpl_path = $this->context->smarty->getTemplateDir(1) . $this->override_folder . $this->base_folder . $tpl_name;
+            } elseif (file_exists($this->context->smarty->getTemplateDir(0) . 'controllers' . \DIRECTORY_SEPARATOR . $this->override_folder . $this->base_folder . $tpl_name)) {
+                $override_tpl_path = $this->context->smarty->getTemplateDir(0) . 'controllers' . \DIRECTORY_SEPARATOR . $this->override_folder . $this->base_folder . $tpl_name;
             }
         } elseif ($this->module) {
             $override_tpl_path = _PS_MODULE_DIR_ . $this->module->name . '/views/templates/admin/_configure/' . $this->base_folder . $tpl_name;

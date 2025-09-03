@@ -31,7 +31,6 @@ use PrestaShop\PrestaShop\Adapter\ServiceLocator;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 use PrestaShop\PrestaShop\Core\Exception\CoreException;
 use PrestaShop\PrestaShop\Core\Hook\HookModuleFilter;
-use PrestaShop\PrestaShop\Core\Module\Exception\ModuleErrorInterface;
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 use PrestaShopBundle\Form\Admin\Type\FormattedTextareaType;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
@@ -449,15 +448,12 @@ class HookCore extends ObjectModel
                     );
                 }
             }
-        } catch (ModuleErrorInterface $e) {
-            // Exceptions that implements ModuleErrorInterface are usefull to display error messages
-            throw $e;
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             $environment = ServiceLocator::get(
                 PrestaShop\PrestaShop\Adapter\Environment::class
             );
             if ($environment->isDebug()) {
-                throw new CoreException($e->getMessage(), $e->getCode(), $e);
+                throw new CoreException($exception->getMessage(), $exception->getCode(), $exception);
             }
         }
 
@@ -1118,23 +1114,21 @@ class HookCore extends ObjectModel
                 } elseif ($chain === true) {
                     $output = $display;
                 // Case 3 - classic display hook. Here we need to verify if the response is not an array.
-                } else {
+                } elseif (is_array($display)) {
                     // If it's an array, we will disregard the response
-                    if (is_array($display)) {
-                        // And notify the developer in debug mode.
-                        if (_PS_MODE_DEV_) {
-                            trigger_error(
-                                sprintf(
-                                    'Module %s returned an array on hook %s. This is not allowed, the response must be joinable to a string.',
-                                    $moduleInstance->name,
-                                    $hook_name
-                                ),
-                                \E_USER_NOTICE
-                            );
-                        }
-                    } else {
-                        $output .= $display;
+                    // And notify the developer in debug mode.
+                    if (_PS_MODE_DEV_) {
+                        trigger_error(
+                            sprintf(
+                                'Module %s returned an array on hook %s. This is not allowed, the response must be joinable to a string.',
+                                $moduleInstance->name,
+                                $hook_name
+                            ),
+                            \E_USER_NOTICE
+                        );
                     }
+                } else {
+                    $output .= $display;
                 }
 
                 if ($isRegistryEnabled) {
@@ -1164,23 +1158,21 @@ class HookCore extends ObjectModel
                     } elseif ($chain === true) {
                         $output = $display;
                     // Case 3 - classic display hook. Here we need to verify if the response is not an array.
-                    } else {
+                    } elseif (is_array($display)) {
                         // If it's an array, we will disregard the response
-                        if (is_array($display)) {
-                            // And notify the developer in debug mode.
-                            if (_PS_MODE_DEV_) {
-                                trigger_error(
-                                    sprintf(
-                                        'Module %s returned an array on hook %s. This is not allowed, the response must be joinable to a string.',
-                                        $moduleInstance->name,
-                                        $hook_name
-                                    ),
-                                    \E_USER_NOTICE
-                                );
-                            }
-                        } else {
-                            $output .= $display;
+                        // And notify the developer in debug mode.
+                        if (_PS_MODE_DEV_) {
+                            trigger_error(
+                                sprintf(
+                                    'Module %s returned an array on hook %s. This is not allowed, the response must be joinable to a string.',
+                                    $moduleInstance->name,
+                                    $hook_name
+                                ),
+                                \E_USER_NOTICE
+                            );
                         }
+                    } else {
+                        $output .= $display;
                     }
                 }
 

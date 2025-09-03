@@ -163,7 +163,7 @@ class ImageCore extends ObjectModel
     public function associateTo($id_shops, ?int $productId = null)
     {
         if (! $this->id) {
-            return;
+            return null;
         }
 
         $productId ??= $this->id_product;

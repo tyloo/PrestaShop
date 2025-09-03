@@ -90,6 +90,8 @@ class UpgraderCore
         if ($var === 'need_upgrade') {
             return $this->isLastVersion();
         }
+
+        return null;
     }
 
     /**

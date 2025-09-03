@@ -222,13 +222,11 @@ class SmartyCustomCore extends Smarty
             }
 
             $return = true;
+        } elseif ($result === false
+            || @filemtime($this->getCacheDir() . $result['filepath']) < $result['last_update']) {
+            $return = false;
         } else {
-            if ($result === false
-                || @filemtime($this->getCacheDir() . $result['filepath']) < $result['last_update']) {
-                $return = false;
-            } else {
-                $return = $result['filepath'];
-            }
+            $return = $result['filepath'];
         }
 
         $is_in_lazy_cache[$key] = $return;

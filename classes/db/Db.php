@@ -630,13 +630,11 @@ abstract class DbCore
 
         if (! $this->result) {
             $result = false;
+        } elseif (! $array) {
+            $use_cache = false;
+            $result = $this->result;
         } else {
-            if (! $array) {
-                $use_cache = false;
-                $result = $this->result;
-            } else {
-                $result = $this->getAll($this->result);
-            }
+            $result = $this->getAll($this->result);
         }
 
         $this->last_cached = false;

@@ -571,15 +571,12 @@ class MailCore extends ObjectModel
              * we will use it, otherwise we will use the default logo.
              */
             if (Configuration::get('PS_LOGO_MAIL', null, null, $idShop) !== false
-                && file_exists(_PS_IMG_DIR_ . Configuration::get('PS_LOGO_MAIL', null, null, $idShop))
-            ) {
+                && file_exists(_PS_IMG_DIR_ . Configuration::get('PS_LOGO_MAIL', null, null, $idShop))) {
                 $logo = _PS_IMG_DIR_ . Configuration::get('PS_LOGO_MAIL', null, null, $idShop);
+            } elseif (file_exists(_PS_IMG_DIR_ . Configuration::get('PS_LOGO', null, null, $idShop))) {
+                $logo = _PS_IMG_DIR_ . Configuration::get('PS_LOGO', null, null, $idShop);
             } else {
-                if (file_exists(_PS_IMG_DIR_ . Configuration::get('PS_LOGO', null, null, $idShop))) {
-                    $logo = _PS_IMG_DIR_ . Configuration::get('PS_LOGO', null, null, $idShop);
-                } else {
-                    $templateVars['{shop_logo}'] = '';
-                }
+                $templateVars['{shop_logo}'] = '';
             }
 
             ShopUrl::cacheMainDomainForShop((int) $idShop);

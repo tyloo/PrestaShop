@@ -1231,6 +1231,8 @@ class CarrierCore extends ObjectModel
                 (SELECT ' . (int) $this->id . ', `id_tax_rules_group`, `id_shop`
                 FROM `' . _DB_PREFIX_ . 'carrier_tax_rules_group_shop`
                 WHERE `id_carrier`=' . (int) $old_id . ')');
+
+        return null;
     }
 
     /**
