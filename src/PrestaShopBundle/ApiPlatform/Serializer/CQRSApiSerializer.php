@@ -156,22 +156,20 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
     protected function updateLocalizedValues(array $data, string $type, bool $denormalize, array $context = []): array
     {
         $localizedAttributesContext = $this->localizedValueUpdater->getLocalizedAttributesContext($type);
-        if ($localizedAttributesContext !== []) {
-            foreach ($localizedAttributesContext as $parameterName => $attributeContext) {
-                if (! empty($data[$parameterName])) {
-                    if ($denormalize) {
-                        $data[$parameterName] = $this->localizedValueUpdater->denormalizeLocalizedValue(
-                            $data[$parameterName],
-                            $parameterName,
-                            $context + [LocalizedValue::IS_LOCALIZED_VALUE => true] + $attributeContext
-                        );
-                    } else {
-                        $data[$parameterName] = $this->localizedValueUpdater->normalizeLocalizedValue(
-                            $data[$parameterName],
-                            $parameterName,
-                            $context + [LocalizedValue::IS_LOCALIZED_VALUE => true] + $attributeContext
-                        );
-                    }
+        foreach ($localizedAttributesContext as $parameterName => $attributeContext) {
+            if (! empty($data[$parameterName])) {
+                if ($denormalize) {
+                    $data[$parameterName] = $this->localizedValueUpdater->denormalizeLocalizedValue(
+                        $data[$parameterName],
+                        $parameterName,
+                        $context + [LocalizedValue::IS_LOCALIZED_VALUE => true] + $attributeContext
+                    );
+                } else {
+                    $data[$parameterName] = $this->localizedValueUpdater->normalizeLocalizedValue(
+                        $data[$parameterName],
+                        $parameterName,
+                        $context + [LocalizedValue::IS_LOCALIZED_VALUE => true] + $attributeContext
+                    );
                 }
             }
         }

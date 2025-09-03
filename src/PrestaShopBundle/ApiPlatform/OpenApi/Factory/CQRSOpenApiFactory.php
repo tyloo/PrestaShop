@@ -148,24 +148,22 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
             ], fn (?OpenApiOperation $operation): bool => $operation instanceof OpenApiOperation);
 
             $updatedPathItem = $pathItem;
-            if ($operations !== []) {
-                /** @var OpenApiOperation $operation */
-                foreach ($operations as $httpMethod => $operation) {
-                    $updatedOperation = $operation;
+            /** @var OpenApiOperation $operation */
+            foreach ($operations as $httpMethod => $operation) {
+                $updatedOperation = $operation;
 
-                    // Update tag to group by domain
-                    if (isset($domainsByUri[$path]) && ($domainsByUri[$path] !== '' && $domainsByUri[$path] !== '0')) {
-                        $updatedOperation = $operation->withTags([$domainsByUri[$path]]);
-                    }
-
-                    // Add security scopes
-                    if (! empty($scopesByUri[$path][$httpMethod])) {
-                        $updatedOperation = $updatedOperation->withSecurity([['oauth' => $scopesByUri[$path][$httpMethod]]]);
-                    }
-
-                    $setterMethod = 'with' . ucfirst($httpMethod);
-                    $updatedPathItem = $updatedPathItem->{$setterMethod}($updatedOperation);
+                // Update tag to group by domain
+                if (isset($domainsByUri[$path]) && ($domainsByUri[$path] !== '' && $domainsByUri[$path] !== '0')) {
+                    $updatedOperation = $operation->withTags([$domainsByUri[$path]]);
                 }
+
+                // Add security scopes
+                if (! empty($scopesByUri[$path][$httpMethod])) {
+                    $updatedOperation = $updatedOperation->withSecurity([['oauth' => $scopesByUri[$path][$httpMethod]]]);
+                }
+
+                $setterMethod = 'with' . ucfirst($httpMethod);
+                $updatedPathItem = $updatedPathItem->{$setterMethod}($updatedOperation);
             }
 
             $updatedPaths->addPath($path, $updatedPathItem);
