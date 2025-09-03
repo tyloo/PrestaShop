@@ -34,10 +34,7 @@ use Throwable;
 
 class DataProviderException extends DomainException
 {
-    /**
-     * @var InvalidConfigurationDataErrorCollection
-     */
-    private $InvalidConfigurationDataErrors;
+    private readonly InvalidConfigurationDataErrorCollection $InvalidConfigurationDataErrors;
 
     public function __construct($message = '', $code = 0, ?Throwable $previous = null, ?InvalidConfigurationDataErrorCollection $InvalidConfigurationDataErrors = null)
     {

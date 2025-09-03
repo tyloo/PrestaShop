@@ -37,7 +37,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ConfigYamlLoader extends FileLoader
 {
-    private $configValues = [];
+    private array $configValues = [];
 
     public function load($resource, $type = null): void
     {

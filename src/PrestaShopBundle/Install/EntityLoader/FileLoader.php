@@ -42,7 +42,7 @@ class FileLoader
     /**
      * @var array[] Loaded data, indexed by entity name and iso code
      */
-    private $cache = [];
+    private array $cache = [];
 
     /**
      * @param string $dataPath Path for data files

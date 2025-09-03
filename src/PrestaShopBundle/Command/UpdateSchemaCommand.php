@@ -41,9 +41,9 @@ class UpdateSchemaCommand extends Command
 {
     private array $executedQueries = [];
 
-    private $forceSql = false;
+    private bool $forceSql = false;
 
-    private $dumpSql = false;
+    private bool $dumpSql = false;
 
     public function __construct(
         private readonly string $dbName,

@@ -87,7 +87,7 @@ class AttributeGroup
      */
     private Collection $attributeGroupLangs;
 
-    private $groupTypeAvailable = [
+    private array $groupTypeAvailable = [
         'select',
         'radio',
         'color',

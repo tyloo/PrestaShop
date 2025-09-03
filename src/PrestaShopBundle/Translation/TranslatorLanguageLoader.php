@@ -42,10 +42,7 @@ class TranslatorLanguageLoader
 
     private const MODULE_TRANSLATION_FILENAME_PATTERN = '#^%s[A-Z][\w.-]+\.%s\.xlf$#';
 
-    /**
-     * @var bool
-     */
-    private $isAdminContext = false;
+    private bool $isAdminContext = false;
 
     private readonly XliffFileLoader $xliffFileLoader;
 

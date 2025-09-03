@@ -51,7 +51,7 @@ class ExternalModuleLegacySystemProvider extends AbstractProvider implements Use
     /**
      * @var MessageCatalogue[]
      */
-    private $defaultCatalogueCache;
+    private ?array $defaultCatalogueCache = null;
 
     public function __construct(
         LoaderInterface $databaseLoader,

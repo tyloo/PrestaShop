@@ -41,10 +41,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DefaultEmptyDataExtension extends AbstractTypeExtension
 {
-    /**
-     * @var stdClass
-     */
-    private $privateEmptyValue;
+    private ?stdClass $privateEmptyValue = null;
 
     public function configureOptions(OptionsResolver $resolver): void
     {

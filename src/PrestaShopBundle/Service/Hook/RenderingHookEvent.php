@@ -35,10 +35,7 @@ namespace PrestaShopBundle\Service\Hook;
  */
 class RenderingHookEvent extends HookEvent
 {
-    /**
-     * @var array
-     */
-    private $currentContent = [];
+    private array $currentContent = [];
 
     /**
      * @var string
@@ -67,20 +64,16 @@ class RenderingHookEvent extends HookEvent
 
     /**
      * Gets the last pushed content (for the current listener).
-     *
-     * @return array
      */
-    public function getContent()
+    public function getContent(): array
     {
         return $this->currentContent;
     }
 
     /**
      * Retrieves the last pushed content (and cleans the corresponding attribute).
-     *
-     * @return array
      */
-    public function popContent()
+    public function popContent(): array
     {
         $content = $this->currentContent;
         $this->currentContent = [];

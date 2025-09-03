@@ -52,7 +52,7 @@ class FeatureFlagCommand extends Command
     /**
      * @var string[]
      */
-    private $allowedActions = [
+    private array $allowedActions = [
         'enable',
         'disable',
         'list',

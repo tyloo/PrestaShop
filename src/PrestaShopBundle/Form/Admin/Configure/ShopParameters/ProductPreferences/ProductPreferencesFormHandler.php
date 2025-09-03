@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Form\Handler;
  */
 class ProductPreferencesFormHandler extends Handler
 {
-    /**
-     * @var CacheClearerInterface
-     */
-    private $cacheClearer;
+    private ?CacheClearerInterface $cacheClearer = null;
 
     public function save(array $data)
     {

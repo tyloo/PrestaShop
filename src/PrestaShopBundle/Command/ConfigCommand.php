@@ -73,16 +73,13 @@ class ConfigCommand extends Command
      */
     protected $input;
 
-    private $allowedActions = [
+    private array $allowedActions = [
         'get',
         'set',
         'remove',
     ];
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
+    private ?ShopConstraint $shopConstraint = null;
 
     /**
      * @var string|null

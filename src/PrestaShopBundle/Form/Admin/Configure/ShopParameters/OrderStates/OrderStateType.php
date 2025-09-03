@@ -55,15 +55,9 @@ class OrderStateType extends TranslatorAwareType
 {
     protected const NAME_CHARS = '!<>,;?=+()@#"{}_$%:';
 
-    /**
-     * @var array
-     */
-    private $templates;
+    private ?array $templates = null;
 
-    /**
-     * @var array
-     */
-    private $templateAttributes;
+    private ?array $templateAttributes = null;
 
     /**
      * @throws InvalidArgumentException

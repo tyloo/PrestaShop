@@ -40,7 +40,7 @@ class YamlModuleLoader extends Loader
     /**
      * @var bool we load the route collection only once per request
      */
-    private $isLoaded = false;
+    private bool $isLoaded = false;
 
     public function __construct(
         /**

@@ -53,7 +53,7 @@ class ModuleCommand extends Command
      */
     protected $output;
 
-    private $allowedActions = [
+    private array $allowedActions = [
         'install',
         'uninstall',
         'enable',

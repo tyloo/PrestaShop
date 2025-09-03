@@ -50,30 +50,24 @@ class CsvResponse extends StreamedResponse
      */
     private $fileName;
 
-    /**
-     * @var array
-     */
-    private $headersData = [];
+    private array $headersData = [];
 
     /**
      * @var int, self::MODE_PAGINATION by default
      */
-    private $modeType = self::MODE_PAGINATION;
+    private int $modeType = self::MODE_PAGINATION;
 
-    /**
-     * @var int|null
-     */
-    private $start;
+    private ?int $start = null;
 
     /**
      * @var int Default limit
      */
-    private $limit = 1000;
+    private int $limit = 1000;
 
     /**
      * @var bool includeHeaderRow
      */
-    private $includeHeaderRow = true;
+    private bool $includeHeaderRow = true;
 
     /**
      * @param callable|null $callback A valid PHP callback or null to set it later

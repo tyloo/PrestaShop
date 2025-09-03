@@ -47,12 +47,12 @@ class ThemeExtractor
     /**
      * @var MessageCatalogue|null the Message catalogue
      */
-    private $catalog;
+    private ?MessageCatalogue $catalog = null;
 
     /**
      * @var array the list of Translation dumpers
      */
-    private $dumpers = [];
+    private array $dumpers = [];
 
     /**
      * @var string the format of extracted files
@@ -67,12 +67,12 @@ class ThemeExtractor
     /**
      * @var ThemeProvider the Theme Provider
      */
-    private $themeProvider;
+    private ?ThemeProvider $themeProvider = null;
 
     /**
      * @var bool checks wether we should override the database with results or not
      */
-    private $overrideFromDatabase = false;
+    private bool $overrideFromDatabase = false;
 
     public function __construct(
         /**
@@ -145,7 +145,7 @@ class ThemeExtractor
     /**
      * @return DumperInterface[]
      */
-    public function getDumpers()
+    public function getDumpers(): array
     {
         return $this->dumpers;
     }
@@ -190,10 +190,7 @@ class ThemeExtractor
         return $this->outputPath;
     }
 
-    /**
-     * @return MessageCatalogue|null
-     */
-    public function getCatalog()
+    public function getCatalog(): ?MessageCatalogue
     {
         return $this->catalog;
     }
@@ -259,12 +256,11 @@ class ThemeExtractor
     /**
      * Add database catalogue in this &$catalogue.
      *
-     * @param string           $themeName
-     * @param MessageCatalogue $catalogue
+     * @param string $themeName
      *
      * @throws Exception
      */
-    private function overrideFromDatabase($themeName, string $locale, &$catalogue): void
+    private function overrideFromDatabase($themeName, string $locale, ?MessageCatalogue &$catalogue): void
     {
         if ($this->themeProvider === null) {
             throw new Exception('Theme provider is required.');

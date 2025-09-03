@@ -47,10 +47,7 @@ class CategoriesProvider
 
     private readonly array $categories;
 
-    /**
-     * @var array
-     */
-    private $categoriesMenu;
+    private ?array $categoriesMenu = null;
 
     /**
      * @var object

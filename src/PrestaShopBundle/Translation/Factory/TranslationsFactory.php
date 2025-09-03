@@ -40,7 +40,7 @@ class TranslationsFactory implements TranslationsFactoryInterface
     /**
      * @var array the list of translation providers
      */
-    private $providers = [];
+    private array $providers = [];
 
     public function createCatalogue($domainIdentifier, $locale = 'en_US')
     {

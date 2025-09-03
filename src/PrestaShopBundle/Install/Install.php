@@ -106,7 +106,7 @@ class Install extends AbstractInstall
      */
     protected $isDebug;
 
-    private static $_cache_localization_pack_content;
+    private static ?array $_cache_localization_pack_content = null;
 
     /**
      * @param string|null               $settingsFile

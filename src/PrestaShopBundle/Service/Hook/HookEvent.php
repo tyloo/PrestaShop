@@ -45,10 +45,8 @@ class HookEvent extends Event
 
     /**
      * Hook context, such as PrestaShop version or request and controller
-     *
-     * @var array
      */
-    private $contextParameters = [];
+    private array $contextParameters = [];
 
     public function __construct(?array $contextParameters = null, ?array $hookParameters = null)
     {

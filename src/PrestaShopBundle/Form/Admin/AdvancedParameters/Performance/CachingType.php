@@ -37,7 +37,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CachingType extends TranslatorAwareType
 {
-    private $extensionsList = [
+    private array $extensionsList = [
         'CacheMemcache' => ['memcache'],
         'CacheMemcached' => ['memcached'],
         'CacheApc' => ['apc', 'apcu'],

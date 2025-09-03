@@ -42,10 +42,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  */
 class UserTokenManager implements CacheClearerInterface
 {
-    /**
-     * @var array
-     */
-    private $tokens = [];
+    private array $tokens = [];
 
     public function __construct(
         private readonly CsrfTokenManagerInterface $tokenManager,

@@ -51,10 +51,7 @@ class ModifyAllShopsExtension extends AbstractTypeExtension
 {
     public const MODIFY_ALL_SHOPS_PREFIX = 'modify_all_shops_';
 
-    /**
-     * @var string
-     */
-    private $checkboxLabel;
+    private ?string $checkboxLabel = null;
 
     public function __construct(
         private readonly FeatureInterface $multiStoreFeature,

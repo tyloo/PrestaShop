@@ -79,10 +79,7 @@ class XmlLoader
 
     protected $delayed_inserts = [];
 
-    /**
-     * @var FileLoader
-     */
-    private $fileLoader;
+    private FileLoader $fileLoader;
 
     public function __construct()
     {

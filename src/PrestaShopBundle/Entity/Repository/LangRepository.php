@@ -40,10 +40,8 @@ class LangRepository extends EntityRepository implements LanguageRepositoryInter
     /**
      * Stores language instances in different arrays to match them quickly
      * via a criteria and avoid multiple database queries.
-     *
-     * @var array
      */
-    private $matches = [
+    private array $matches = [
         self::ISO_CODE => [],
         self::LOCALE => [],
     ];

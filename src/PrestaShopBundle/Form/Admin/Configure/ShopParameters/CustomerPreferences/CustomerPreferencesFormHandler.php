@@ -37,10 +37,7 @@ use PrestaShopBundle\Entity\Repository\TabRepository;
  */
 final class CustomerPreferencesFormHandler extends Handler
 {
-    /**
-     * @var TabRepository
-     */
-    private $tabRepository;
+    private ?TabRepository $tabRepository = null;
 
     public function save(array $data)
     {

@@ -44,7 +44,7 @@ final class HookRegistry
     /**
      * @var array the current selected hook during the request
      */
-    private $currentHook;
+    private ?array $currentHook = null;
 
     /**
      * @var array<string, array<string, array{args: array, name:string, location: string, modules: array}>> the list of hooks data

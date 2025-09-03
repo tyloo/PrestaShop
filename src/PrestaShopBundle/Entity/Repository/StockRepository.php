@@ -45,15 +45,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class StockRepository extends StockManagementRepository
 {
-    /**
-     * @var array
-     */
-    private $orderStates = [];
+    private array $orderStates = [];
 
-    /**
-     * @var array
-     */
-    private $totalCombinations = [];
+    private array $totalCombinations = [];
 
     /**
      * @param string $tablePrefix

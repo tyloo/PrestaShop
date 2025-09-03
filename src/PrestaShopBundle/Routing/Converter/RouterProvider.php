@@ -38,10 +38,7 @@ class RouterProvider extends AbstractLegacyRouteProvider
 
     public const FEATURE_FLAG_NAME = '_legacy_feature_flag';
 
-    /**
-     * @var array|null
-     */
-    private $legacyRoutes;
+    private ?array $legacyRoutes = null;
 
     public function __construct(
         private readonly RouterInterface $router,
@@ -49,7 +46,7 @@ class RouterProvider extends AbstractLegacyRouteProvider
     ) {
     }
 
-    public function getLegacyRoutes()
+    public function getLegacyRoutes(): array
     {
         if ($this->legacyRoutes !== null) {
             return $this->legacyRoutes;

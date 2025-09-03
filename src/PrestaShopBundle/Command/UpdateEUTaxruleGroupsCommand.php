@@ -64,10 +64,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class UpdateEUTaxruleGroupsCommand extends Command
 {
-    /**
-     * @var OutputInterface
-     */
-    private $output;
+    private ?OutputInterface $output = null;
 
     public function __construct(
         private readonly string $localizationPath,

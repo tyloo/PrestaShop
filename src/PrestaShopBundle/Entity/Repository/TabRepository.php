@@ -37,7 +37,7 @@ class TabRepository extends EntityRepository
     /**
      * @var array<string, int>
      */
-    private $cachedTabIds = [];
+    private array $cachedTabIds = [];
 
     /**
      * @param string $moduleName

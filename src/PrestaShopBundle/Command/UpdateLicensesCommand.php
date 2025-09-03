@@ -68,7 +68,7 @@ class UpdateLicensesCommand extends Command
      */
     private $license;
 
-    private $aflLicense = [
+    private array $aflLicense = [
         'themes/classic/',
         'themes/StarterTheme/',
         'modules/',
