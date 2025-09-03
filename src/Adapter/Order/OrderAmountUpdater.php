@@ -59,15 +59,9 @@ use Validate;
 
 class OrderAmountUpdater
 {
-    /**
-     * @var array
-     */
-    private $orderConstraints = [];
+    private array $orderConstraints = [];
 
-    /**
-     * @var bool
-     */
-    private $keepOrderPrices = true;
+    private bool $keepOrderPrices = true;
 
     public function __construct(
         private readonly ShopConfigurationInterface $shopConfiguration,
@@ -327,7 +321,7 @@ class OrderAmountUpdater
 
     private function getProductFromCart(array $cartProducts, int $productId, int $productAttributeId, int $customizationId = 0): array
     {
-        $cartProduct = array_reduce($cartProducts, function ($carry, $item) use ($productId, $productAttributeId, $customizationId) {
+        $cartProduct = array_reduce($cartProducts, function ($carry, array $item) use ($productId, $productAttributeId, $customizationId) {
             if ($carry !== null) {
                 return $carry;
             }

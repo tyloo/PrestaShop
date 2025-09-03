@@ -38,10 +38,8 @@ class ServiceLocator
 {
     /**
      * Set a service container Instance.
-     *
-     * @var Container|null
      */
-    private static $service_container;
+    private static ?Container $service_container = null;
 
     public static function setServiceContainerInstance(?Container $container): void
     {
@@ -64,7 +62,7 @@ class ServiceLocator
      */
     public static function get($serviceName)
     {
-        if (self::$service_container === null) {
+        if (! self::$service_container instanceof Container) {
             throw new CoreException('Service container is not set.');
         }
 

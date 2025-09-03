@@ -38,17 +38,12 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 final class SymfonyContainer
 {
-    /**
-     * @var ContainerInterface|null
-     */
-    private static $instance;
+    private static ?ContainerInterface $instance = null;
 
     /**
      * Get a singleton instance of SymfonyContainer.
-     *
-     * @return ContainerInterface|null
      */
-    public static function getInstance()
+    public static function getInstance(): ?ContainerInterface
     {
         if (! isset(self::$instance)) {
             global $kernel;

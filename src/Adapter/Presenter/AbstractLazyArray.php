@@ -79,10 +79,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
      */
     private $arrayAccessIterator;
 
-    /**
-     * @var array
-     */
-    private $methodCacheResults = [];
+    private array $methodCacheResults = [];
 
     /**
      * @throws ReflectionException

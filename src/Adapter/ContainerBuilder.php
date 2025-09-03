@@ -56,30 +56,18 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class ContainerBuilder
 {
-    /**
-     * @var ContainerInterface
-     */
-    private static $containers;
+    private static ?array $containers = null;
 
     /**
      * @var string
      */
     private $containerName;
 
-    /**
-     * @var string
-     */
-    private $containerClassName;
+    private ?string $containerClassName = null;
 
-    /**
-     * @var string
-     */
-    private $dumpFile;
+    private ?string $dumpFile = null;
 
-    /**
-     * @var ConfigCache
-     */
-    private $containerConfigCache;
+    private ?ConfigCache $containerConfigCache = null;
 
     /**
      * @param string $containerName

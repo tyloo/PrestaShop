@@ -54,10 +54,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
      */
     public const MAX_NESTING_LEVEL = 12;
 
-    /**
-     * @var array
-     */
-    private $whitelist = [];
+    private array $whitelist = [];
 
     public function __construct(
         private readonly AuthorizationCheckerInterface $authorizationChecker,

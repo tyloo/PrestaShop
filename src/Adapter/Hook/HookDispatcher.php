@@ -50,10 +50,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
 {
-    /**
-     * @var array
-     */
-    private $renderingContent = [];
+    private array $renderingContent = [];
 
     /**
      * @param RequestStack|null $requestStack (nullable to preserve backward compatibility)
@@ -174,7 +171,7 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
      *
      * @throws Exception
      */
-    public function dispatchForParameters($eventName, array $parameters = []): object
+    public function dispatchForParameters(?string $eventName, array $parameters = []): object
     {
         $event = new HookEvent($this->getHookEventContextParameters());
         $event->setHookParameters($parameters);
@@ -192,7 +189,7 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
      *
      * @throws Exception
      */
-    public function renderForParameters($eventName, array $parameters = [])
+    public function renderForParameters(?string $eventName, array $parameters = [])
     {
         $event = new RenderingHookEvent($this->getHookEventContextParameters());
         $event->setHookParameters($parameters);

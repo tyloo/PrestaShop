@@ -34,7 +34,7 @@ use Validate;
 
 final class InstalledPaymentModulesChoiceProvider implements FormChoiceProviderInterface
 {
-    private static $paymentModules;
+    private static ?array $paymentModules = null;
 
     public function getChoices(): array
     {

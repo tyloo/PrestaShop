@@ -53,10 +53,7 @@ use Tools;
  */
 class OrderSlipCreator
 {
-    /**
-     * @var OrderSlip
-     */
-    private $orderSlipCreated;
+    private ?OrderSlip $orderSlipCreated = null;
 
     public function __construct(
         private readonly ConfigurationInterface $configuration,

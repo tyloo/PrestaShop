@@ -70,10 +70,8 @@ class PhpParameters
 
     /**
      * Insert a value into configuration at the specified path.
-     *
-     * @param string $propertyPath
      */
-    public function setProperty($propertyPath, $value): void
+    public function setProperty(string $propertyPath, $value): void
     {
         $this->configuration->set($propertyPath, $value);
     }

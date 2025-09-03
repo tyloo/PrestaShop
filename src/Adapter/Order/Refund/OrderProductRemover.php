@@ -45,10 +45,7 @@ use SpecificPrice;
 
 class OrderProductRemover
 {
-    /**
-     * @var CartProductsComparator
-     */
-    private $cartProductComparator;
+    private ?CartProductsComparator $cartProductComparator = null;
 
     /**
      * @param bool $updateCart Used when you don't want to update the cart (CartRule removal for example)

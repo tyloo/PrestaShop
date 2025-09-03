@@ -196,7 +196,7 @@ class LegacyContext
      *
      * @return array<int|array> Languages
      */
-    public function getLanguages($active = true, $id_shop = false, $ids_only = false): array
+    public function getLanguages(bool $active = true, $id_shop = false, bool $ids_only = false): array
     {
         $languages = $this->getLegacyLanguages($active, $id_shop, $ids_only);
         $defaultLanguageFirst = $this->getLanguage();

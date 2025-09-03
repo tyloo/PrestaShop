@@ -107,11 +107,7 @@ final class MailPreviewVariablesBuilder
         return array_merge($templateVars, $this->buildOrderVariables($mailLayout));
     }
 
-    /**
-     * @param string|null $domain
-     * @param string|null $local
-     */
-    private function trans(string $id, array $parameters = [], $domain = null, $local = null): string
+    private function trans(string $id, array $parameters = [], ?string $domain = null, ?string $local = null): string
     {
         return $this->translator->trans($id, $parameters, $domain, $local);
     }

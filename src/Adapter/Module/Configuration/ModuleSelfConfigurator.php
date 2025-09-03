@@ -83,7 +83,7 @@ class ModuleSelfConfigurator
      *
      * @return $this
      */
-    public function module($name)
+    public function module($name): static
     {
         return $this->setModule($name);
     }
@@ -97,7 +97,7 @@ class ModuleSelfConfigurator
      *
      * @throws UnexpectedTypeException
      */
-    public function setModule($name)
+    public function setModule($name): static
     {
         if (! \is_string($name)) {
             throw new UnexpectedTypeException($name, 'string');
@@ -149,7 +149,7 @@ class ModuleSelfConfigurator
      *
      * @return $this
      */
-    public function file($filepath)
+    public function file($filepath): static
     {
         return $this->setFile($filepath);
     }
@@ -163,7 +163,7 @@ class ModuleSelfConfigurator
      *
      * @throws UnexpectedTypeException
      */
-    public function setFile($filepath)
+    public function setFile($filepath): static
     {
         if (! \is_string($filepath)) {
             throw new UnexpectedTypeException($filepath, 'string');

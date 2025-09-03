@@ -46,10 +46,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  */
 class Configuration extends ParameterBag implements ShopConfigurationInterface
 {
-    /**
-     * @var Shop
-     */
-    private $shop;
+    private ?Shop $shop = null;
 
     public function __construct(array $parameters = [])
     {

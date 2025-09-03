@@ -51,7 +51,7 @@ class RouteValidator
     /**
      * @deprecated since 9.0.1, use isRouteValid instead.
      */
-    public function doesRouteContainsRequiredKeywords($routeId, $rule)
+    public function doesRouteContainsRequiredKeywords(string $routeId, string $rule)
     {
         $errors = $this->isRouteValid($routeId, $rule);
 

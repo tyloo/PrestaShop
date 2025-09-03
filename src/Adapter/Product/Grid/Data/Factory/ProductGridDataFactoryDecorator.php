@@ -66,7 +66,7 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
      *
      * @var array<int, Shop>
      */
-    private $shopsNames;
+    private ?array $shopsNames = null;
 
     public function __construct(
         private readonly GridDataFactoryInterface $productGridDataFactory,

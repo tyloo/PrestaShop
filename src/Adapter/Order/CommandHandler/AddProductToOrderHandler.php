@@ -79,10 +79,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
      */
     private $context;
 
-    /**
-     * @var int
-     */
-    private $computingPrecision;
+    private ?int $computingPrecision = null;
 
     public function __construct(
         private readonly TranslatorInterface $translator,
@@ -284,7 +281,7 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
      */
     private function getMatchingProduct(array $productList, array $searchedProduct): ?array
     {
-        return array_reduce($productList, function ($carry, $item) use ($searchedProduct) {
+        return array_reduce($productList, function ($carry, array $item) use ($searchedProduct) {
             if ($carry !== null) {
                 return $carry;
             }

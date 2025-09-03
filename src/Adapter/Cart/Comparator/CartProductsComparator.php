@@ -45,7 +45,7 @@ class CartProductsComparator
     /**
      * @var CartProductUpdate[]
      */
-    private $knownUpdates = [];
+    private array $knownUpdates = [];
 
     public function __construct(
         private readonly Cart $cart,
@@ -189,7 +189,7 @@ class CartProductsComparator
 
     private function getMatchingProduct(array $products, array $searchedProduct): ?array
     {
-        return array_reduce($products, function ($carry, $item) use ($searchedProduct) {
+        return array_reduce($products, function ($carry, array $item) use ($searchedProduct) {
             if ($carry !== null) {
                 return $carry;
             }

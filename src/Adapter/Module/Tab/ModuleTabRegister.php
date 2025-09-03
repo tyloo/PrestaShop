@@ -48,10 +48,7 @@ class ModuleTabRegister
 {
     public const SUFFIX = '_MTR';
 
-    /**
-     * @var string
-     */
-    private $defaultParent = 'DEFAULT';
+    private string $defaultParent = 'DEFAULT';
 
     public function __construct(
         protected TabRepository $tabRepository,
@@ -93,10 +90,8 @@ class ModuleTabRegister
     /**
      * Looks for ModuleAdminControllers not declared as Tab and
      * add them to the list to register.
-     *
-     * @param string $moduleName
      */
-    protected function addUndeclaredTabs($moduleName, array $tabs): array
+    protected function addUndeclaredTabs(string $moduleName, array $tabs): array
     {
         // Function to get only class name from tabs already declared
         $tabsNames = array_map(function (array $tab) {
@@ -143,13 +138,11 @@ class ModuleTabRegister
     /**
      * Check mandatory data for tab registration, such as class name and class exists.
      *
-     * @param string $moduleName
-     *
      * @return bool (= true) when no issue detected
      *
      * @throws Exception in case of invalid data
      */
-    protected function checkIsValid($moduleName, ParameterBag $data): bool
+    protected function checkIsValid(string $moduleName, ParameterBag $data): bool
     {
         $className = $data->get('class_name', null);
         if ($className === null) {

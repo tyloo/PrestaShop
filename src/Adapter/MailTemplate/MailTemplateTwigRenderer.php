@@ -46,10 +46,7 @@ use Twig\Error\LoaderError;
  */
 class MailTemplateTwigRenderer implements MailTemplateRendererInterface
 {
-    /**
-     * @var TransformationCollection
-     */
-    private $transformations;
+    private \PrestaShop\PrestaShop\Core\MailTemplate\Transformation\TransformationCollection|array $transformations;
 
     /**
      * @throws TypeException
@@ -162,7 +159,7 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
         return $templateTransformations;
     }
 
-    public function addTransformation(TransformationInterface $transformation)
+    public function addTransformation(TransformationInterface $transformation): static
     {
         $this->transformations[] = $transformation;
 

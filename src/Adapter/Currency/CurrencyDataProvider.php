@@ -38,10 +38,7 @@ use PrestaShop\PrestaShop\Core\Currency\CurrencyDataProviderInterface;
  */
 class CurrencyDataProvider implements CurrencyDataProviderInterface
 {
-    /**
-     * @var Currency
-     */
-    private $defaultCurrency;
+    private ?Currency $defaultCurrency = null;
 
     /**
      * @param int $shopId
@@ -129,7 +126,7 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
      */
     public function getDefaultCurrency(): Currency
     {
-        if ($this->defaultCurrency === null) {
+        if (! $this->defaultCurrency instanceof Currency) {
             $this->defaultCurrency = new Currency((int) $this->configuration->get('PS_CURRENCY_DEFAULT'), null, $this->shopId);
         }
 

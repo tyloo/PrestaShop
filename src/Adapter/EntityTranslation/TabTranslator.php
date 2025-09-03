@@ -39,7 +39,7 @@ class TabTranslator extends EntityTranslator
     /**
      * @var array[] Sets of wording, wording_domain
      */
-    private $sourceIndex = [];
+    private array $sourceIndex = [];
 
     /**
      * Translate using wordings

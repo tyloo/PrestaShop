@@ -43,10 +43,7 @@ use Validate;
  */
 class ModuleDataProvider
 {
-    /**
-     * @var int
-     */
-    private $employeeID = 0;
+    private int $employeeID = 0;
 
     public function __construct(
         /**

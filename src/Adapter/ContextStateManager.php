@@ -67,10 +67,7 @@ class ContextStateManager
         'shopContext',
     ];
 
-    /**
-     * @var array|null
-     */
-    private $contextFieldsStack;
+    private ?array $contextFieldsStack = null;
 
     public function __construct(
         private readonly LegacyContext $legacyContext,

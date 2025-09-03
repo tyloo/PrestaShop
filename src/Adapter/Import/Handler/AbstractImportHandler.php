@@ -76,10 +76,8 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
 
     /**
      * Multilingual entity fields.
-     *
-     * @var array
      */
-    private $languageFields = [
+    private array $languageFields = [
         'name',
         'description',
         'description_short',

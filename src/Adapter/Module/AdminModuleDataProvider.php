@@ -73,10 +73,7 @@ class AdminModuleDataProvider implements ModuleInterface
         Module::ACTION_DELETE,
     ];
 
-    /**
-     * @var Router|null
-     */
-    private $router;
+    private ?Router $router = null;
 
     /**
      * @var array

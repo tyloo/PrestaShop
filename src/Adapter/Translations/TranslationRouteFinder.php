@@ -172,11 +172,9 @@ class TranslationRouteFinder
     /**
      * Checks if module is using the new translation system.
      *
-     * @param string $moduleName
-     *
      * @return bool
      */
-    private function isModuleUsingNewTranslationSystem($moduleName)
+    private function isModuleUsingNewTranslationSystem(string $moduleName)
     {
         $module = $this->moduleRepository->getModule($moduleName);
 

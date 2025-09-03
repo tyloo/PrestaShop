@@ -36,10 +36,7 @@ use PrestaShop\PrestaShop\Core\Localization\Locale;
 
 final class ShoppingCartTotalKpi implements KpiInterface
 {
-    /**
-     * @var array
-     */
-    private $options;
+    private ?array $options = null;
 
     public function __construct(
         private readonly Locale $locale,

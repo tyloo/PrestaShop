@@ -84,10 +84,8 @@ class Module implements ModuleInterface
 
     /**
      * Default values for ParameterBag attributes.
-     *
-     * @var array
      */
-    private $attributes_default = [
+    private array $attributes_default = [
         'id' => 0,
         'name' => '',
         'categoryName' => '',
@@ -126,10 +124,8 @@ class Module implements ModuleInterface
 
     /**
      * Default values for ParameterBag disk.
-     *
-     * @var array
      */
-    private $disk_default = [
+    private array $disk_default = [
         'filemtype' => 0,
         'is_present' => 0,
         'is_valid' => 0,
@@ -139,10 +135,8 @@ class Module implements ModuleInterface
 
     /**
      * Default values for ParameterBag database.
-     *
-     * @var array
      */
-    private $database_default = [
+    private array $database_default = [
         'installed' => 0,
         'active' => null,
         'version' => null,
@@ -366,10 +360,7 @@ class Module implements ModuleInterface
         return $this->attributes->get($attribute, null);
     }
 
-    /**
-     * @param string $attribute
-     */
-    public function set($attribute, $value): void
+    public function set(string $attribute, $value): void
     {
         $this->attributes->set($attribute, $value);
     }

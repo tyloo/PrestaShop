@@ -55,7 +55,7 @@ final class CategoryImportHandler extends AbstractImportHandler
     /**
      * @var array core categories IDs, such as Root and Home
      */
-    private $coreCategories;
+    private ?array $coreCategories = null;
 
     /**
      * @param int    $currentContextShopId
@@ -120,7 +120,7 @@ final class CategoryImportHandler extends AbstractImportHandler
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
         DataRowInterface $dataRow,
-    ) {
+    ): void {
         parent::importRow($importConfig, $runtimeConfig, $dataRow);
 
         $entityFields = $runtimeConfig->getEntityFields();

@@ -40,10 +40,8 @@ class FeatureValuesChoiceProvider implements ConfigurableFormChoiceProviderInter
 
     /**
      * Cache value to avoid performing the same request multiple times as the value should remain the same inside a request.
-     *
-     * @var array
      */
-    private $cacheFeatureValueChoices;
+    private ?array $cacheFeatureValueChoices = null;
 
     public function __construct(
         private readonly FeatureValueRepository $featureValueRepository,

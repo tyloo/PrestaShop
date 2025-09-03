@@ -78,7 +78,7 @@ class ModulePresenter implements PresenterInterface
         return $result;
     }
 
-    private function getModulePrice($prices)
+    private function getModulePrice(array $prices): array
     {
         $iso_code = $this->currency->iso_code;
         if (\array_key_exists($iso_code, $prices)) {

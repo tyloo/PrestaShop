@@ -48,7 +48,7 @@ class CustomizationFieldDeleter
     /**
      * @var array<int, Product>
      */
-    private $productsById = [];
+    private array $productsById = [];
 
     public function __construct(
         private readonly CustomizationFieldRepository $customizationFieldRepository,
