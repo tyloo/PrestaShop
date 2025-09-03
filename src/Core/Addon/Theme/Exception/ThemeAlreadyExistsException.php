@@ -35,7 +35,6 @@ class ThemeAlreadyExistsException extends CoreException
      * @param string $themeName
      * @param string $message
      * @param int    $code
-     * @param null   $previous
      */
     public function __construct(
         private $themeName,

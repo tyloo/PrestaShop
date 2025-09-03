@@ -40,7 +40,7 @@ class SupplierFeatureContext extends AbstractPrestaShopFeatureContext
     {
         $id = (int) Supplier::getIdByName($supplierName);
 
-        if (! $id) {
+        if ($id === 0) {
             throw new RuntimeException(\sprintf('Supplier with name "%s" doesnt exist', $supplierName));
         }
 

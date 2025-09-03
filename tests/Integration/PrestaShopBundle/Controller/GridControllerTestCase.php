@@ -120,7 +120,7 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
         $testEntityDTOCollection = new TestEntityDTOCollection();
 
         // If no rows are found the collection is empty
-        if ($entitiesRows->count()) {
+        if ($entitiesRows->count() !== 0) {
             $entities = $entitiesRows->each(fn ($tr, $i): TestEntityDTO => $this->parseEntityFromRow($tr, $i));
 
             // Fill the collection

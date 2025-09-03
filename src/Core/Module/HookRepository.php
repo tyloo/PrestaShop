@@ -132,7 +132,7 @@ class HookRepository
     {
         foreach ($hooks as $hook_name => $module_names) {
             $id_hook = $this->getIdByName($hook_name);
-            if (! $id_hook) {
+            if ($id_hook === 0) {
                 $id_hook = $this->createHook($hook_name);
             }
 
@@ -154,7 +154,7 @@ class HookRepository
 
                 ++$position;
                 $id_module = $this->getIdModule($module_name);
-                if (! $id_module) {
+                if ($id_module === 0) {
                     continue;
                 }
 

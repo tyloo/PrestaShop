@@ -39,7 +39,7 @@ class Ean13
     /**
      * Valid ean regex pattern
      */
-    public const VALID_PATTERN = '/^[0-9]{0,13}$/';
+    public const VALID_PATTERN = '/^\d{0,13}$/';
 
     /**
      * Maximum allowed symbols

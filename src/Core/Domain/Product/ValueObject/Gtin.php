@@ -36,7 +36,7 @@ class Gtin
     /**
      * Valid gtin regex pattern
      */
-    public const VALID_PATTERN = '/^[0-9]{0,14}$/';
+    public const VALID_PATTERN = '/^\d{0,14}$/';
 
     /**
      * Maximum allowed symbols

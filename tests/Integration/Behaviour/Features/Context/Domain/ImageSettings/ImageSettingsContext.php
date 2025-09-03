@@ -69,64 +69,44 @@ class ImageSettingsContext extends AbstractDomainFeatureContext
         /** @var EditableImageSettings $imageSettings */
         $imageSettings = $this->getQueryBus()->handle(new GetImageSettingsForEditing());
 
-        if (isset($expectedData['formats'])) {
-            if ($imageSettings->getFormats() !== $expectedData['formats']) {
-                $errors[] = 'formats';
-            }
+        if (isset($expectedData['formats']) && $imageSettings->getFormats() !== $expectedData['formats']) {
+            $errors[] = 'formats';
         }
 
-        if (isset($expectedData['base-format'])) {
-            if ($imageSettings->getBaseFormat() !== $expectedData['base-format']) {
-                $errors[] = 'base-format';
-            }
+        if (isset($expectedData['base-format']) && $imageSettings->getBaseFormat() !== $expectedData['base-format']) {
+            $errors[] = 'base-format';
         }
 
-        if (isset($expectedData['avif-quality'])) {
-            if ($imageSettings->getAvifQuality() !== $expectedData['avif-quality']) {
-                $errors[] = 'avif-quality';
-            }
+        if (isset($expectedData['avif-quality']) && $imageSettings->getAvifQuality() !== $expectedData['avif-quality']) {
+            $errors[] = 'avif-quality';
         }
 
-        if (isset($expectedData['jpeg-quality'])) {
-            if ($imageSettings->getJpegQuality() !== $expectedData['jpeg-quality']) {
-                $errors[] = 'jpeg-quality';
-            }
+        if (isset($expectedData['jpeg-quality']) && $imageSettings->getJpegQuality() !== $expectedData['jpeg-quality']) {
+            $errors[] = 'jpeg-quality';
         }
 
-        if (isset($expectedData['png-quality'])) {
-            if ($imageSettings->getPngQuality() !== $expectedData['png-quality']) {
-                $errors[] = 'png-quality';
-            }
+        if (isset($expectedData['png-quality']) && $imageSettings->getPngQuality() !== $expectedData['png-quality']) {
+            $errors[] = 'png-quality';
         }
 
-        if (isset($expectedData['webp-quality'])) {
-            if ($imageSettings->getWebpQuality() !== $expectedData['webp-quality']) {
-                $errors[] = 'webp-quality';
-            }
+        if (isset($expectedData['webp-quality']) && $imageSettings->getWebpQuality() !== $expectedData['webp-quality']) {
+            $errors[] = 'webp-quality';
         }
 
-        if (isset($expectedData['generation-method'])) {
-            if ($imageSettings->getGenerationMethod() !== $expectedData['generation-method']) {
-                $errors[] = 'generation-method';
-            }
+        if (isset($expectedData['generation-method']) && $imageSettings->getGenerationMethod() !== $expectedData['generation-method']) {
+            $errors[] = 'generation-method';
         }
 
-        if (isset($expectedData['picture-max-size'])) {
-            if ($imageSettings->getPictureMaxSize() !== $expectedData['picture-max-size']) {
-                $errors[] = 'picture-max-size';
-            }
+        if (isset($expectedData['picture-max-size']) && $imageSettings->getPictureMaxSize() !== $expectedData['picture-max-size']) {
+            $errors[] = 'picture-max-size';
         }
 
-        if (isset($expectedData['picture-max-width'])) {
-            if ($imageSettings->getPictureMaxWidth() !== $expectedData['picture-max-width']) {
-                $errors[] = 'picture-max-width';
-            }
+        if (isset($expectedData['picture-max-width']) && $imageSettings->getPictureMaxWidth() !== $expectedData['picture-max-width']) {
+            $errors[] = 'picture-max-width';
         }
 
-        if (isset($expectedData['picture-max-height'])) {
-            if ($imageSettings->getPictureMaxHeight() !== $expectedData['picture-max-height']) {
-                $errors[] = 'picture-max-height';
-            }
+        if (isset($expectedData['picture-max-height']) && $imageSettings->getPictureMaxHeight() !== $expectedData['picture-max-height']) {
+            $errors[] = 'picture-max-height';
         }
 
         if ($errors !== []) {

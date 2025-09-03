@@ -82,7 +82,7 @@ class CarrierFormDataHandler implements FormDataHandlerInterface
     public function update($id, array $data): int
     {
         // If the courier has no costs, 'has_additional_handling_fee' must be false.
-        if ((bool) $data['shipping_settings']['is_free'] === true) {
+        if ((bool) $data['shipping_settings']['is_free']) {
             $data['shipping_settings']['has_additional_handling_fee'] = false;
         }
 

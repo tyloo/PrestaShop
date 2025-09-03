@@ -102,7 +102,7 @@ class TypedFiltersBuilder extends AbstractFiltersBuilder
 
         // When a typed builder matches it MUST be used in priority, do not try to manually a filters class that might
         // need some special inputs
-        return $typedBuilder ? $typedBuilder->buildFilters($filters) : $this->defaultBuilder->buildFilters($filters);
+        return $typedBuilder instanceof TypedFiltersBuilderInterface ? $typedBuilder->buildFilters($filters) : $this->defaultBuilder->buildFilters($filters);
     }
 
     private function findTypedBuilder(): ?TypedFiltersBuilderInterface

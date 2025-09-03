@@ -36,11 +36,6 @@ use PrestaShop\PrestaShop\Core\Domain\QueryResult\RedirectTargetInformation;
 class EditableCategory
 {
     /**
-     * @var null
-     */
-    private $coverImage;
-
-    /**
      * @param string[] $name
      * @param bool     $isActive
      * @param string[] $description
@@ -67,12 +62,11 @@ class EditableCategory
         private readonly array $groupAssociationIds,
         private readonly array $shopAssociationIds,
         private $isRootCategory,
-        $coverImage = null,
+        private $coverImage = null,
         private $thumbnailImage = null,
         private readonly array $subCategories = [],
         private readonly array $additionalDescription = [],
     ) {
-        $this->coverImage = $coverImage;
     }
 
     /**

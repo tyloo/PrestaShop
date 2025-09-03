@@ -57,7 +57,7 @@ class CombinationListFormDataHandler implements FormDataHandlerInterface
 
     public function update($productId, array $data): void
     {
-        $singleShopConstraint = $this->contextShopId ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
+        $singleShopConstraint = $this->contextShopId !== 0 ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
 
         // @todo: a hook system should be integrated in this handler for extendability
         foreach ($data as $combinationItemData) {

@@ -329,7 +329,7 @@ class PaymentOption implements HookContentClassInterface
      */
     public static function convertLegacyOption(array $legacyOption)
     {
-        if (! $legacyOption) {
+        if ($legacyOption === []) {
             return;
         }
 

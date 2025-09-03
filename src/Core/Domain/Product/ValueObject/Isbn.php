@@ -45,12 +45,12 @@ class Isbn
         '(?:ISBN(?:-1[03])?:? )?' . // Optional ISBN/ISBN-10/ISBN-13 identifier.
         '(?=[0-9X]{10}$' .          // Require 10 digits/Xs (no separators).
         '|' .                       // Or:
-        '(?=(?:[0-9]+[- ]){3})' .   // Require 3 separators
+        '(?=(?:\d+[- ]){3})' .   // Require 3 separators
         '[- 0-9X]{13}$' .           // Out of 13 characters total.
         '|' .                       // Or:
         '97[89][0-9]{10}$' .        // 978/979 plus 10 digits (13 total).
         '|' .                       // Or:
-        '(?=(?:[0-9]+[- ]){4})' .   // Require 4 separators
+        '(?=(?:\d+[- ]){4})' .   // Require 4 separators
         '[- 0-9]{17}$' .            // Out of 17 characters total.
         ')' .                       // End format pre-checks.
         '(?:97[89][- ]?)?' .        // Optional ISBN-13 prefix.

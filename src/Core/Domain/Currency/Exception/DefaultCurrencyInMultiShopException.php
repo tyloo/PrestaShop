@@ -48,7 +48,6 @@ class DefaultCurrencyInMultiShopException extends CurrencyException
      * @param string $shopName
      * @param string $message
      * @param int    $code
-     * @param null   $previous
      */
     public function __construct(
         private $currencyName,

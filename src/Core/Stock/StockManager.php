@@ -173,11 +173,9 @@ class StockManager
             $stockAvailable->update();
 
             // Decrease case only: the stock of linked packs should be decreased too.
-            if ($delta_quantity < 0) {
-                // The product is not a pack, but the product combination is part of a pack (use of isPacked, not isPack)
-                if ($packItemsManager->isPacked($product, $id_product_attribute)) {
-                    $this->updatePacksQuantityContainingProduct($product, $id_product_attribute, $stockAvailable, $id_shop);
-                }
+            // The product is not a pack, but the product combination is part of a pack (use of isPacked, not isPack)
+            if ($delta_quantity < 0 && $packItemsManager->isPacked($product, $id_product_attribute)) {
+                $this->updatePacksQuantityContainingProduct($product, $id_product_attribute, $stockAvailable, $id_shop);
             }
         }
 

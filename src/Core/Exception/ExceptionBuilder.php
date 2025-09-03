@@ -60,20 +60,18 @@ class ExceptionBuilder
             }
 
             // One of the parameter is an object ID (it contains id in its name)
-            if ($objectModelId !== null && preg_match('/.*id$/i', $parameterName)) {
-                if ($constructorParameter->getType() instanceof ReflectionNamedType) {
-                    $parameterTypeName = $constructorParameter->getType()->getName();
-                    // It can be an integer
-                    if ($parameterTypeName === 'int') {
-                        $parameters[] = $objectModelId;
-                        continue;
-                    }
+            if ($objectModelId !== null && preg_match('/.*id$/i', $parameterName) && $constructorParameter->getType() instanceof ReflectionNamedType) {
+                $parameterTypeName = $constructorParameter->getType()->getName();
+                // It can be an integer
+                if ($parameterTypeName === 'int') {
+                    $parameters[] = $objectModelId;
+                    continue;
+                }
 
-                    // Or it could be a ValueObject instance that we try and build
-                    if (class_exists($parameterTypeName)) {
-                        $parameters[] = new $parameterTypeName($objectModelId);
-                        continue;
-                    }
+                // Or it could be a ValueObject instance that we try and build
+                if (class_exists($parameterTypeName)) {
+                    $parameters[] = new $parameterTypeName($objectModelId);
+                    continue;
                 }
             }
 

@@ -78,7 +78,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function whenRequestPost(string $webserviceKey, string $endpoint, string $reference, ?TableNode $rows = null): void
     {
-        $output = $this->whenRequest($webserviceKey, 'POST', $endpoint, $rows ? $rows->getHash() : null);
+        $output = $this->whenRequest($webserviceKey, 'POST', $endpoint, $rows instanceof TableNode ? $rows->getHash() : null);
 
         if ($output->filter('prestashop > errors > error')->count() !== 0) {
             return;

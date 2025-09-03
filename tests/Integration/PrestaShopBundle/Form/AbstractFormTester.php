@@ -44,25 +44,16 @@ abstract class AbstractFormTester extends KernelTestCase
         self::bootKernel();
     }
 
-    /**
-     * @param null $data
-     */
     protected function createForm(string $type, array $options = [], $data = null): FormInterface
     {
         return $this->getFormFactory()->create($type, $data, $options);
     }
 
-    /**
-     * @param null $data
-     */
     protected function createFormBuilder(string $type, array $options = [], $data = null): FormBuilderInterface
     {
         return $this->getFormFactory()->createBuilder($type, $data, $options);
     }
 
-    /**
-     * @param null $data
-     */
     protected function createNamedBuilder(string $name, string $type, array $options = [], $data = null): FormBuilderInterface
     {
         return $this->getFormFactory()->createNamedBuilder($name, $type, $data, $options);

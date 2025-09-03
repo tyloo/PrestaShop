@@ -448,10 +448,10 @@ class MultiShopProductControllerTest extends GridControllerTestCase
     protected function parseEntityFromRow(Crawler $tr, int $i): TestEntityDTO
     {
         $shopListNode = $tr->filter('.column-associated_shops .product-shop-list');
-        $associatedShops = $shopListNode->count() ? $shopListNode->attr('title') : '';
+        $associatedShops = $shopListNode->count() !== 0 ? $shopListNode->attr('title') : '';
 
         $shopNameNode = $tr->filter('.column-shop_name .shop-name-text');
-        $shopName = $shopNameNode->count() ? $shopNameNode->text() : '';
+        $shopName = $shopNameNode->count() !== 0 ? $shopNameNode->text() : '';
 
         return new TestEntityDTO(
             (int) trim($tr->filter('.column-id_product')->text()),

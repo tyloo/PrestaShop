@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider;
 
+use DateTimeInterface;
 use PrestaShop\PrestaShop\Adapter\Form\ChoiceProvider\FeaturesChoiceProvider;
 use PrestaShop\PrestaShop\Core\CommandBus\CommandBusInterface;
 use PrestaShop\PrestaShop\Core\ConfigurationInterface;
@@ -213,7 +214,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
                 'name' => $virtualProductFile->getDisplayName(),
                 'download_times_limit' => $virtualProductFile->getDownloadTimesLimit(),
                 'access_days_limit' => $virtualProductFile->getAccessDays(),
-                'expiration_date' => $virtualProductFile->getExpirationDate() ?
+                'expiration_date' => $virtualProductFile->getExpirationDate() instanceof DateTimeInterface ?
                     $virtualProductFile->getExpirationDate()->format(DateTime::DEFAULT_DATE_FORMAT) :
                     null,
             ];
@@ -345,7 +346,7 @@ class ProductFormDataProvider implements FormDataProviderInterface
                 'out_of_stock_type' => $stockInformation->getOutOfStockType(),
                 'available_now_label' => $stockInformation->getLocalizedAvailableNowLabels(),
                 'available_later_label' => $stockInformation->getLocalizedAvailableLaterLabels(),
-                'available_date' => $availableDate ? $availableDate->format(DateTime::DEFAULT_DATE_FORMAT) : '',
+                'available_date' => $availableDate instanceof DateTimeInterface ? $availableDate->format(DateTime::DEFAULT_DATE_FORMAT) : '',
             ],
             'packed_products' => $this->extractPackedProducts($productForEditing->getProductId(), $shopConstraint),
         ];

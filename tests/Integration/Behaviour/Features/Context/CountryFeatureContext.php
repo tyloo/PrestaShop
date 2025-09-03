@@ -39,7 +39,7 @@ class CountryFeatureContext extends AbstractPrestaShopFeatureContext
     {
         $countryId = (int) Country::getByIso($isoCode);
 
-        if (! $countryId) {
+        if ($countryId === 0) {
             throw new RuntimeException(\sprintf('Country "%s" does not exist', $countryReference));
         }
 

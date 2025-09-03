@@ -39,7 +39,7 @@ class Upc
     /**
      * Valid upc regex pattern
      */
-    public const VALID_PATTERN = '/^[0-9]{0,12}$/';
+    public const VALID_PATTERN = '/^\d{0,12}$/';
 
     /**
      * Maximum allowed symbols

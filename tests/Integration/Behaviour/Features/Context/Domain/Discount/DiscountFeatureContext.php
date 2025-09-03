@@ -172,13 +172,11 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        if ($command->getDiscountType()->getValue() === DiscountType::PRODUCT_LEVEL) {
-            if (! empty($data['reduction_product'])) {
-                if ((int) $data['reduction_product'] === -1 || (int) $data['reduction_product'] === -2) {
-                    $command->setReductionProduct((int) $data['reduction_product']);
-                } else {
-                    $command->setReductionProduct($this->getSharedStorage()->get($data['reduction_product']));
-                }
+        if ($command->getDiscountType()->getValue() === DiscountType::PRODUCT_LEVEL && ! empty($data['reduction_product'])) {
+            if ((int) $data['reduction_product'] === -1 || (int) $data['reduction_product'] === -2) {
+                $command->setReductionProduct((int) $data['reduction_product']);
+            } else {
+                $command->setReductionProduct($this->getSharedStorage()->get($data['reduction_product']));
             }
         }
 
@@ -284,7 +282,6 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         }
 
         try {
-            /** @var DiscountId $discountId */
             $this->getCommandBus()->handle($command);
         } catch (DiscountConstraintException $discountConstraintException) {
             $this->setLastException($discountConstraintException);

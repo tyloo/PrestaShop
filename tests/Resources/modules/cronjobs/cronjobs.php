@@ -184,7 +184,7 @@ class CronJobs extends Module
     {
         $id_tab = (int) Tab::getIdFromClassName('AdminCronJobs');
 
-        if ($id_tab) {
+        if ($id_tab !== 0) {
             $tab = new Tab($id_tab);
 
             return $tab->delete();
@@ -218,7 +218,7 @@ class CronJobs extends Module
     public function hookBackOfficeHeader(): void
     {
         if (Tools::getValue('configure') === $this->name) {
-            if (version_compare(_PS_VERSION_, '1.6', '<') === true) {
+            if (version_compare(_PS_VERSION_, '1.6', '<')) {
                 $this->context->controller->addCSS($this->_path . 'views/css/bootstrap.min.css');
                 $this->context->controller->addCSS($this->_path . 'views/css/configure-ps-15.css');
             } else {
@@ -259,7 +259,7 @@ class CronJobs extends Module
 
         $output .= $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
 
-        if (Tools::isSubmit('newcronjobs') || ((isset($submit_cron) === true) && ($submit_cron === false))) {
+        if (Tools::isSubmit('newcronjobs') || ((isset($submit_cron)) && ($submit_cron === false))) {
             $output .= $this->renderForm(CronJobsForms::getJobForm(), CronJobsForms::getNewJobFormValues(), 'submitNewCronJob', true, $back_url);
         } elseif (Tools::isSubmit('updatecronjobs') && Tools::isSubmit('id_cronjob')) {
             $form_structure = CronJobsForms::getJobForm('Update cron task', true);
@@ -326,7 +326,7 @@ class CronJobs extends Module
                 AND `one_shot` IS TRUE
                 AND `id_shop` = \'' . $id_shop . "' AND `id_shop_group` = '" . $id_shop_group . "'";
 
-        if ((bool) Db::getInstance()->getValue($query) === true) {
+        if ((bool) Db::getInstance()->getValue($query)) {
             return true;
         }
 
@@ -351,7 +351,7 @@ class CronJobs extends Module
         $is_frequency_valid = (($month >= -1) && ($month <= 31) && $is_frequency_valid);
         $is_frequency_valid = (($day_of_week >= -1) && ($day_of_week < 7) && $is_frequency_valid);
 
-        if ($is_frequency_valid === true) {
+        if ($is_frequency_valid) {
             $query = 'INSERT INTO ' . _DB_PREFIX_ . 'cronjobs
                     (`description`, `task`, `hour`, `day`, `month`, `day_of_week`, `updated_at`, `one_shot`, `active`, `id_shop`, `id_shop_group`)
                     VALUES (\'' . Db::getInstance()->escape($description) . "', '" .
@@ -684,7 +684,7 @@ class CronJobs extends Module
 
         $link = new Link();
         $admin_folder = $this->getAdminDir();
-        if (version_compare(_PS_VERSION_, '1.7', '<') === true) {
+        if (version_compare(_PS_VERSION_, '1.7', '<')) {
             $path = Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . $admin_folder;
             $cron_url = $path . '/' . $link->getAdminLink('AdminCronJobs', false);
         } else {
@@ -721,7 +721,7 @@ class CronJobs extends Module
             return $this->setErrorMessage("An error occurred while trying to contact PrestaShop's cron tasks webservice.");
         }
 
-        if ((bool) $use_webservice === true) {
+        if ((bool) $use_webservice) {
             return $this->setSuccessMessage("Your cron tasks have been successfully added to PrestaShop's cron tasks webservice.");
         }
 
@@ -750,7 +750,7 @@ class CronJobs extends Module
         $id_shop = (int) Context::getContext()->shop->id;
         $id_shop_group = (int) Context::getContext()->shop->id_shop_group;
 
-        if (is_callable([$module, 'getCronFrequency']) === true) {
+        if (is_callable([$module, 'getCronFrequency'])) {
             $frequency = $module->getCronFrequency();
 
             $query = 'INSERT INTO ' . _DB_PREFIX_ . bqSQL($this->name) . '

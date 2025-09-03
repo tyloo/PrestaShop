@@ -783,7 +783,6 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         $orderId = SharedStorage::getStorage()->get($orderReference);
         /** @var OrderForViewing $orderForViewing */
         $orderForViewing = $this->getQueryBus()->handle(new GetOrderForViewing($orderId));
-        /** @var OrderInvoiceAddressForViewing $invoiceAddress */
         $orderForViewing->getInvoiceAddress();
     }
 
@@ -1200,7 +1199,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         $order = new Order($orderId);
         $expectedTaxId = (int) Tax::getTaxIdByName($taxName);
 
-        if (! $expectedTaxId) {
+        if ($expectedTaxId === 0) {
             throw new RuntimeException(\sprintf('Tax "%s" does not exist', $taxName));
         }
 

@@ -107,7 +107,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
     {
         $currencyId = (int) Currency::getIdByIsoCode($currencyIsoCode);
 
-        if ($currencyId) {
+        if ($currencyId !== 0) {
             $currency = new Currency($currencyId);
         } else {
             $currency = new Currency();

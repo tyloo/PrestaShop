@@ -113,34 +113,24 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
         /** @var EditableApiClient $result */
         $result = $this->getQueryBus()->handle(new GetApiClientForEditing($this->getSharedStorage()->get($apiClientReference)));
 
-        if (isset($expectedData['clientName'])) {
-            if ($result->getClientName() !== $expectedData['clientName']) {
-                $errors[] = 'clientName';
-            }
+        if (isset($expectedData['clientName']) && $result->getClientName() !== $expectedData['clientName']) {
+            $errors[] = 'clientName';
         }
 
-        if (isset($expectedData['clientId'])) {
-            if ($result->getClientId() !== $expectedData['clientId']) {
-                $errors[] = 'clientId';
-            }
+        if (isset($expectedData['clientId']) && $result->getClientId() !== $expectedData['clientId']) {
+            $errors[] = 'clientId';
         }
 
-        if (isset($expectedData['enabled'])) {
-            if ($result->isEnabled() !== filter_var($expectedData['enabled'], \FILTER_VALIDATE_BOOL)) {
-                $errors[] = 'enabled';
-            }
+        if (isset($expectedData['enabled']) && $result->isEnabled() !== filter_var($expectedData['enabled'], \FILTER_VALIDATE_BOOL)) {
+            $errors[] = 'enabled';
         }
 
-        if (isset($expectedData['description'])) {
-            if ($result->getDescription() !== $expectedData['description']) {
-                $errors[] = 'description';
-            }
+        if (isset($expectedData['description']) && $result->getDescription() !== $expectedData['description']) {
+            $errors[] = 'description';
         }
 
-        if (isset($expectedData['externalIssuer'])) {
-            if ($result->getExternalIssuer() !== ($expectedData['externalIssuer'] ?: null)) {
-                $errors[] = 'externalIssuer';
-            }
+        if (isset($expectedData['externalIssuer']) && $result->getExternalIssuer() !== $expectedData['externalIssuer'] ?: null) {
+            $errors[] = 'externalIssuer';
         }
 
         if (isset($expectedData['scopes'])) {

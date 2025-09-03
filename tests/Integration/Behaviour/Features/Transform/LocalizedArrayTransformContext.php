@@ -60,7 +60,7 @@ class LocalizedArrayTransformContext implements Context
     {
         $id = (int) Language::getIdByLocale($locale, true);
 
-        if (! $id) {
+        if ($id === 0) {
             throw new RuntimeException(\sprintf('Language by locale "%s" does not exist', $locale));
         }
 

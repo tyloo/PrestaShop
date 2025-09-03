@@ -55,7 +55,7 @@ class CombinationFormDataHandler implements FormDataHandlerInterface
 
     public function update($id, array $data): void
     {
-        $singleShopConstraint = $this->contextShopId ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
+        $singleShopConstraint = $this->contextShopId !== 0 ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
 
         $commands = $this->commandsBuilder->buildCommands(new CombinationId($id), $data, $singleShopConstraint);
 

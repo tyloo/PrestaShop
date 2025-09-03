@@ -49,11 +49,11 @@ abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureC
             $this->getSharedStorage()->get($productReference),
             $this->getDefaultLangId(),
             ShopConstraint::shop($shopId),
-            $combinationFilters ? $combinationFilters->getLimit() : null,
-            $combinationFilters ? $combinationFilters->getOffset() : null,
-            $combinationFilters ? $combinationFilters->getOrderBy() : null,
-            $combinationFilters ? $combinationFilters->getOrderWay() : null,
-            $combinationFilters ? $combinationFilters->getFilters() : []
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getLimit() : null,
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getOffset() : null,
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getOrderBy() : null,
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getOrderWay() : null,
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getFilters() : []
         ));
     }
 
@@ -65,11 +65,11 @@ abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureC
         return $this->getQueryBus()->handle(new GetCombinationIds(
             $this->getSharedStorage()->get($productReference),
             ShopConstraint::shop($shopId),
-            $combinationFilters ? $combinationFilters->getLimit() : null,
-            $combinationFilters ? $combinationFilters->getOffset() : null,
-            $combinationFilters ? $combinationFilters->getOrderBy() : null,
-            $combinationFilters ? $combinationFilters->getOrderWay() : null,
-            $combinationFilters ? $combinationFilters->getFilters() : []
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getLimit() : null,
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getOffset() : null,
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getOrderBy() : null,
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getOrderWay() : null,
+            $combinationFilters instanceof ProductCombinationFilters ? $combinationFilters->getFilters() : []
         ));
     }
 

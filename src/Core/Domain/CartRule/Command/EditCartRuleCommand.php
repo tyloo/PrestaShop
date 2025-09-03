@@ -218,7 +218,7 @@ class EditCartRuleCommand
 
     public function setCustomerId(int $customerId): self
     {
-        if ($customerId) {
+        if ($customerId !== 0) {
             $this->customerId = new CustomerId($customerId);
         } else {
             $this->customerId = new NoCustomerId();

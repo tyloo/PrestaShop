@@ -47,7 +47,6 @@ class DuplicateCustomerEmailException extends CustomerException
     /**
      * @param string $message
      * @param int    $code
-     * @param null   $previous
      */
     public function __construct(
         private readonly Email $email,

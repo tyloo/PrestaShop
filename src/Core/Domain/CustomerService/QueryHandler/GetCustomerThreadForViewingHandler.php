@@ -322,7 +322,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
         $totalOk = 0;
         $ordersOk = [];
 
-        if (\count($orders)) {
+        if (\count($orders) > 0) {
             foreach ($orders as $key => $order) {
                 if ($order['valid']) {
                     $ordersOk[] = $order;

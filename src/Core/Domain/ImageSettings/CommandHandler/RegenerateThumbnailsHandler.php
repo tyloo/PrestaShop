@@ -96,16 +96,12 @@ final class RegenerateThumbnailsHandler extends AbstractObjectModelHandler imple
 
                 throw new RegenerateThumbnailsWriteException($this->translator->trans('Cannot write images for this type: %1$s. Please check the %2$s folder\'s writing permissions.', [$proc['type'], $proc['dir']], 'Admin.Design.Notification'));
             } else {
-                if ($proc['type'] === 'products') {
-                    if ($this->imageThumbnailsRegenerator->regenerateWatermark($proc['dir'], $formats) === 'timeout') {
-                        throw new RegenerateThumbnailsTimeoutException($this->translator->trans('Server timed out. The watermark may not have been applied to all images.', [], 'Admin.Design.Notification'));
-                    }
+                if ($proc['type'] === 'products' && $this->imageThumbnailsRegenerator->regenerateWatermark($proc['dir'], $formats) === 'timeout') {
+                    throw new RegenerateThumbnailsTimeoutException($this->translator->trans('Server timed out. The watermark may not have been applied to all images.', [], 'Admin.Design.Notification'));
                 }
 
-                if (\count($errors) === 0) {
-                    if ($this->imageThumbnailsRegenerator->regenerateNoPictureImages($proc['dir'], $formats, $languages)) {
-                        throw new RegenerateThumbnailsTimeoutException($this->translator->trans('Cannot write images for this type: %1$s. Please check the %2$s folder\'s writing permissions.', [$proc['type'], $proc['dir']], 'Admin.Design.Notification'));
-                    }
+                if (\count($errors) === 0 && $this->imageThumbnailsRegenerator->regenerateNoPictureImages($proc['dir'], $formats, $languages)) {
+                    throw new RegenerateThumbnailsTimeoutException($this->translator->trans('Cannot write images for this type: %1$s. Please check the %2$s folder\'s writing permissions.', [$proc['type'], $proc['dir']], 'Admin.Design.Notification'));
                 }
             }
         }

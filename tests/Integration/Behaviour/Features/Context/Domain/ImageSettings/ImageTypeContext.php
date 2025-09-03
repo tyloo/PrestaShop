@@ -142,52 +142,36 @@ class ImageTypeContext extends AbstractDomainFeatureContext
         /** @var EditableImageType $imageType */
         $imageType = $this->getQueryBus()->handle(new GetImageTypeForEditing($this->getSharedStorage()->get($imageTypeName)));
 
-        if (isset($expectedData['name'])) {
-            if ($imageType->getName() !== $imageTypeName) {
-                $errors[] = 'name';
-            }
+        if (isset($expectedData['name']) && $imageType->getName() !== $imageTypeName) {
+            $errors[] = 'name';
         }
 
-        if (isset($expectedData['width'])) {
-            if ($imageType->getWidth() !== $expectedData['width']) {
-                $errors[] = 'width';
-            }
+        if (isset($expectedData['width']) && $imageType->getWidth() !== $expectedData['width']) {
+            $errors[] = 'width';
         }
 
-        if (isset($expectedData['height'])) {
-            if ($imageType->getHeight() !== $expectedData['height']) {
-                $errors[] = 'height';
-            }
+        if (isset($expectedData['height']) && $imageType->getHeight() !== $expectedData['height']) {
+            $errors[] = 'height';
         }
 
-        if (isset($expectedData['products'])) {
-            if ($imageType->isProducts() !== filter_var($expectedData['products'], \FILTER_VALIDATE_BOOL)) {
-                $errors[] = 'products';
-            }
+        if (isset($expectedData['products']) && $imageType->isProducts() !== filter_var($expectedData['products'], \FILTER_VALIDATE_BOOL)) {
+            $errors[] = 'products';
         }
 
-        if (isset($expectedData['categories'])) {
-            if ($imageType->isCategories() !== filter_var($expectedData['categories'], \FILTER_VALIDATE_BOOL)) {
-                $errors[] = 'categories';
-            }
+        if (isset($expectedData['categories']) && $imageType->isCategories() !== filter_var($expectedData['categories'], \FILTER_VALIDATE_BOOL)) {
+            $errors[] = 'categories';
         }
 
-        if (isset($expectedData['manufacturers'])) {
-            if ($imageType->isManufacturers() !== filter_var($expectedData['manufacturers'], \FILTER_VALIDATE_BOOL)) {
-                $errors[] = 'manufacturers';
-            }
+        if (isset($expectedData['manufacturers']) && $imageType->isManufacturers() !== filter_var($expectedData['manufacturers'], \FILTER_VALIDATE_BOOL)) {
+            $errors[] = 'manufacturers';
         }
 
-        if (isset($expectedData['suppliers'])) {
-            if ($imageType->isSuppliers() !== filter_var($expectedData['suppliers'], \FILTER_VALIDATE_BOOL)) {
-                $errors[] = 'suppliers';
-            }
+        if (isset($expectedData['suppliers']) && $imageType->isSuppliers() !== filter_var($expectedData['suppliers'], \FILTER_VALIDATE_BOOL)) {
+            $errors[] = 'suppliers';
         }
 
-        if (isset($expectedData['stores'])) {
-            if ($imageType->isStores() !== filter_var($expectedData['stores'], \FILTER_VALIDATE_BOOL)) {
-                $errors[] = 'stores';
-            }
+        if (isset($expectedData['stores']) && $imageType->isStores() !== filter_var($expectedData['stores'], \FILTER_VALIDATE_BOOL)) {
+            $errors[] = 'stores';
         }
 
         if ($errors !== []) {

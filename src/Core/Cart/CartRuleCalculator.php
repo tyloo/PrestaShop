@@ -109,19 +109,17 @@ class CartRuleCalculator
             return;
         }
 
-        if ($cartRule->type === DiscountType::ORDER_LEVEL && (float) $cartRule->reduction_percent > 0 && $cartRule->reduction_product === 0) {
-            if ($this->featureFlagManager !== null && $this->featureFlagManager->isEnabled(FeatureFlagSettings::FEATURE_FLAG_DISCOUNT)) {
-                $initialShippingFees = $this->calculator->getFees()->getInitialShippingFees();
-                $productsTotal = $this->calculator->getRowTotal();
-                $orderTotal = $productsTotal->add($initialShippingFees);
-                $orderDiscountAmount = new AmountImmutable(
-                    $orderTotal->getTaxExcluded() * $cartRule->reduction_percent / 100,
-                    $orderTotal->getTaxIncluded() * $cartRule->reduction_percent / 100
-                );
-                $cartRuleData->addDiscountApplied($orderDiscountAmount);
+        if ($cartRule->type === DiscountType::ORDER_LEVEL && (float) $cartRule->reduction_percent > 0 && $cartRule->reduction_product === 0 && ($this->featureFlagManager !== null && $this->featureFlagManager->isEnabled(FeatureFlagSettings::FEATURE_FLAG_DISCOUNT))) {
+            $initialShippingFees = $this->calculator->getFees()->getInitialShippingFees();
+            $productsTotal = $this->calculator->getRowTotal();
+            $orderTotal = $productsTotal->add($initialShippingFees);
+            $orderDiscountAmount = new AmountImmutable(
+                $orderTotal->getTaxExcluded() * $cartRule->reduction_percent / 100,
+                $orderTotal->getTaxIncluded() * $cartRule->reduction_percent / 100
+            );
+            $cartRuleData->addDiscountApplied($orderDiscountAmount);
 
-                return;
-            }
+            return;
         }
 
         /*
@@ -164,7 +162,7 @@ class CartRuleCalculator
          * We use getInitialUnitPrice because the product row may have been already discounted by some previously applied
          * cart rule.
          */
-        if ((int) $cartRule->gift_product) {
+        if ((int) $cartRule->gift_product !== 0) {
             foreach ($this->cartRows as $cartRow) {
                 $product = $cartRow->getRowData();
                 if ($product['id_product'] === $cartRule->gift_product

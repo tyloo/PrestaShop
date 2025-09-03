@@ -48,25 +48,19 @@ class HookParserVisitor extends NodeVisitorAbstract
 
     public function enterNode(Node $node): int|Node|null
     {
-        if ($node instanceof StaticCall && $node->class instanceof Node\Name && $node->name instanceof Node\Identifier) {
-            if ($node->class->toString() === 'Hook' && $node->name->toString() === 'exec') {
-                /* @phpstan-ignore property.undefined */
-                $this->processHookCall($node, $node->args[0]->value, 'action');
-            }
+        if ($node instanceof StaticCall && $node->class instanceof Node\Name && $node->name instanceof Node\Identifier && ($node->class->toString() === 'Hook' && $node->name->toString() === 'exec')) {
+            /* @phpstan-ignore property.undefined */
+            $this->processHookCall($node, $node->args[0]->value, 'action');
         }
 
-        if ($node instanceof MethodCall && $node->var instanceof Node\Expr\PropertyFetch && $node->name instanceof Node\Identifier) {
-            if ($node->name->toString() === 'dispatchWithParameters') {
-                /* @phpstan-ignore property.undefined */
-                $this->processHookCall($node, $node->args[0]->value, 'action');
-            }
+        if ($node instanceof MethodCall && $node->var instanceof Node\Expr\PropertyFetch && $node->name instanceof Node\Identifier && $node->name->toString() === 'dispatchWithParameters') {
+            /* @phpstan-ignore property.undefined */
+            $this->processHookCall($node, $node->args[0]->value, 'action');
         }
 
-        if ($node instanceof MethodCall && $node->name instanceof Node\Identifier) {
-            if ($node->name->toString() === 'dispatchHook') {
-                /* @phpstan-ignore property.undefined */
-                $this->processHookCall($node, $node->args[0]->value, 'action');
-            }
+        if ($node instanceof MethodCall && $node->name instanceof Node\Identifier && $node->name->toString() === 'dispatchHook') {
+            /* @phpstan-ignore property.undefined */
+            $this->processHookCall($node, $node->args[0]->value, 'action');
         }
 
         return null;
@@ -107,7 +101,7 @@ class HookParserVisitor extends NodeVisitorAbstract
             throw new InvalidArgumentException('Node does not have args property.');
         }
 
-        if ($hookName) {
+        if ($hookName !== '' && $hookName !== '0') {
             $hookData = [
                 'hook' => $hookName,
                 'filepath' => $this->filePath,
@@ -234,24 +228,21 @@ class HookParserVisitor extends NodeVisitorAbstract
             }
 
             // Handle camelize method specifically
-            if ($methodName === 'camelize') {
-                // Process the first argument of camelize
-                if (isset($expr->args[0])) {
-                    $argumentValue = $this->resolveDynamicHookName($expr->args[0]->value, $isDynamic);
-
-                    // Check if the argument is one of the known placeholders
-                    $knownPlaceholders = ['<FormName>', '<DefinitionId>', '<LegacyControllerName>', '<HookName>', '<Action>', '<ClassName>'];
-                    if (\in_array($argumentValue, $knownPlaceholders, true)) {
-                        $isDynamic = true;
-
-                        return $argumentValue;
-                    }
-
-                    // Add more conditions if needed
+            // Process the first argument of camelize
+            if ($methodName === 'camelize' && isset($expr->args[0])) {
+                $argumentValue = $this->resolveDynamicHookName($expr->args[0]->value, $isDynamic);
+                // Check if the argument is one of the known placeholders
+                $knownPlaceholders = ['<FormName>', '<DefinitionId>', '<LegacyControllerName>', '<HookName>', '<Action>', '<ClassName>'];
+                if (\in_array($argumentValue, $knownPlaceholders, true)) {
                     $isDynamic = true;
 
-                    return '<CamelizedValue>';
+                    return $argumentValue;
                 }
+
+                // Add more conditions if needed
+                $isDynamic = true;
+
+                return '<CamelizedValue>';
             }
 
             // If method call is not recognized, return a placeholder
@@ -264,23 +255,20 @@ class HookParserVisitor extends NodeVisitorAbstract
             $methodName = $expr->name->toString();
 
             // Handle static method calls
-            if ($methodName === 'camelize') {
-                // Process the first argument of camelize
-                if (isset($expr->args[0])) {
-                    $argumentValue = $this->resolveDynamicHookName($expr->args[0]->value, $isDynamic);
-
-                    // Check for known placeholders
-                    $knownPlaceholders = ['<FormName>', '<DefinitionId>', '<LegacyControllerName>', '<HookName>', '<Action>', '<ClassName>'];
-                    if (\in_array($argumentValue, $knownPlaceholders, true)) {
-                        $isDynamic = true;
-
-                        return $argumentValue;
-                    }
-
+            // Process the first argument of camelize
+            if ($methodName === 'camelize' && isset($expr->args[0])) {
+                $argumentValue = $this->resolveDynamicHookName($expr->args[0]->value, $isDynamic);
+                // Check for known placeholders
+                $knownPlaceholders = ['<FormName>', '<DefinitionId>', '<LegacyControllerName>', '<HookName>', '<Action>', '<ClassName>'];
+                if (\in_array($argumentValue, $knownPlaceholders, true)) {
                     $isDynamic = true;
 
-                    return '<CamelizedValue>';
+                    return $argumentValue;
                 }
+
+                $isDynamic = true;
+
+                return '<CamelizedValue>';
             }
 
             // Handle other static methods if necessary

@@ -117,7 +117,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
             $shopId = $searchCriteria->getShopConstraint()->getShopId()->getValue();
             $shopGroup = $this->shopGroupRepository->getByShop($searchCriteria->getShopConstraint()->getShopId());
             $sharedStockGroupId = (bool) $shopGroup->share_stock ? (int) $shopGroup->id : null;
-        } elseif ($searchCriteria->getShopConstraint()->getShopGroupId()) {
+        } elseif ($searchCriteria->getShopConstraint()->getShopGroupId() instanceof ShopGroupId) {
             $filteredShopGroupId = $searchCriteria->getShopConstraint()->getShopGroupId()->getValue();
             $shopGroup = $this->shopGroupRepository->get(new ShopGroupId($filteredShopGroupId));
             $sharedStockGroupId = (bool) $shopGroup->share_stock ? $filteredShopGroupId : null;

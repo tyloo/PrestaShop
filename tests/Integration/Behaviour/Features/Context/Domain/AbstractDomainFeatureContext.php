@@ -167,7 +167,7 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
 
             $langId = (int) Language::getIdByLocale($locale, true);
 
-            if (! $langId) {
+            if ($langId === 0) {
                 throw new RuntimeException(\sprintf('Language by locale "%s" was not found', $locale));
             }
 

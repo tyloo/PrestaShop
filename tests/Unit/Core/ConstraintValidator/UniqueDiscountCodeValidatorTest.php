@@ -42,7 +42,6 @@ class UniqueDiscountCodeValidatorTest extends ConstraintValidatorTestCase
 
     protected function setUp(): void
     {
-        /** @var DiscountRepository|MockObject $discountRepository */
         $this->discountRepository = $this->createMock(DiscountRepository::class);
         parent::setUp();
     }

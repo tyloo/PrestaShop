@@ -117,7 +117,7 @@ class Formatter
 
         // Assemble the final number
         $formattedNumber = $majorDigits;
-        if (\strlen($minorDigits)) {
+        if (\strlen($minorDigits) !== 0) {
             $formattedNumber .= self::DECIMAL_SEPARATOR_PLACEHOLDER . $minorDigits;
         }
 

@@ -67,7 +67,7 @@ class ProductSupplierAssociation implements SupplierAssociationInterface
     public function __construct(int $productId, int $combinationId, int $supplierId, ?int $productSupplierId = null)
     {
         $this->productId = new ProductId($productId);
-        $this->combinationId = $combinationId ? new CombinationId($combinationId) : new NoCombinationId();
+        $this->combinationId = $combinationId !== 0 ? new CombinationId($combinationId) : new NoCombinationId();
         $this->supplierId = new SupplierId($supplierId);
         $this->productSupplierId = $productSupplierId !== null ? new ProductSupplierId($productSupplierId) : null;
     }

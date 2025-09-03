@@ -79,7 +79,7 @@ class AddOrderCustomerMessageCommand
      */
     private function setMessage(string $message): void
     {
-        if (! $message) {
+        if ($message === '' || $message === '0') {
             throw new CustomerMessageConstraintException('Missing required message', CustomerMessageConstraintException::MISSING_MESSAGE);
         }
 

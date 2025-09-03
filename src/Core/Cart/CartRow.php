@@ -296,7 +296,7 @@ class CartRow
         }
 
         $cartQuantity = 0;
-        if ((int) $cart->id) {
+        if ((int) $cart->id !== 0) {
             $cacheId = \sprintf(self::PRODUCT_PRICE_CACHE_ID_PATTERN, $productId, (int) $cart->id);
             if (! $this->cacheAdapter->isStored($cacheId)
                 || ($cartQuantity = $this->cacheAdapter->retrieve($cacheId)

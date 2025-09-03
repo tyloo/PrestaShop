@@ -106,7 +106,8 @@ class DotEnvLayer implements TypeLayerInterface
      */
     private function setStatus(string $featureFlagName, bool $status): void
     {
-        if ($pathDotenv = $this->locateDotEnvFile($featureFlagName)) {
+        $pathDotenv = $this->locateDotEnvFile($featureFlagName);
+        if ($pathDotenv !== '' && $pathDotenv !== '0') {
             file_put_contents(
                 $pathDotenv,
                 preg_replace(

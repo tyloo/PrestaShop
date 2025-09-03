@@ -50,10 +50,8 @@ class DefaultLanguageValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, DefaultLanguage::class);
         }
 
-        if ($constraint->allowNull) {
-            if ($value === null) {
-                return;
-            }
+        if ($constraint->allowNull && $value === null) {
+            return;
         }
 
         if (! \is_array($value)) {

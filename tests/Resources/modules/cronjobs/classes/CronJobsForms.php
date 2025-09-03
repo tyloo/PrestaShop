@@ -71,7 +71,7 @@ class CronJobsForms
                 WHERE `id_cronjob` = \'' . $id_cronjob . '\'
                     AND `id_shop` = \'' . $id_shop . "' AND `id_shop_group` = '" . $id_shop_group . "'");
 
-            if ((bool) $id_module === true) {
+            if ((bool) $id_module) {
                 $form[0]['form']['input'][] = [
                     'type' => 'free',
                     'name' => 'description',
@@ -196,7 +196,7 @@ class CronJobsForms
     {
         $token = Configuration::get('CRONJOBS_EXECUTION_TOKEN', null, 0, 0);
         $admin_folder = str_replace(_PS_ROOT_DIR_ . '/', null, basename(_PS_ADMIN_DIR_));
-        if (version_compare(_PS_VERSION_, '1.7', '<') === true) {
+        if (version_compare(_PS_VERSION_, '1.7', '<')) {
             $path = Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__ . $admin_folder . '/';
             $curl_url = $path . Context::getContext()->link->getAdminLink('AdminCronJobs', false);
             $curl_url .= '&token=' . $token;

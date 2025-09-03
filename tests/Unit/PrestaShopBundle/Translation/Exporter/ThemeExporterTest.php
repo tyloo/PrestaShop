@@ -54,19 +54,10 @@ class ThemeExporterTest extends TestCase
      */
     private $themeExporter;
 
-    /**
-     * @var ThemeExtractor
-     */
     private ?\PHPUnit\Framework\MockObject\MockObject $extractorMock = null;
 
-    /**
-     * @var ThemeProvider
-     */
     private ?\PHPUnit\Framework\MockObject\MockObject $providerMock = null;
 
-    /**
-     * @var ThemeRepository
-     */
     private ?\PHPUnit\Framework\MockObject\MockObject $repositoryMock = null;
 
     /**
@@ -79,9 +70,6 @@ class ThemeExporterTest extends TestCase
      */
     private \PHPUnit\Framework\MockObject\MockObject $zipManagerMock;
 
-    /**
-     * @var Filesystem
-     */
     private ?\PHPUnit\Framework\MockObject\MockObject $filesystemMock = null;
 
     protected function setUp(): void

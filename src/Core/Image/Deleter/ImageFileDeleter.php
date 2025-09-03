@@ -41,7 +41,7 @@ final class ImageFileDeleter implements ImageFileDeleterInterface
         foreach (scandir($path, \SCANDIR_SORT_NONE) as $file) {
             $pattern = '/^[0-9]+(\-(.*))?\.' . $format . '$/';
 
-            if ($recursively && is_dir($path . $file) && preg_match('/^[0-9]$/', $file)) {
+            if ($recursively && is_dir($path . $file) && preg_match('/^\d$/', $file)) {
                 // Recursion
                 $this->deleteFromPath($path . $file . '/', $recursively, $deleteSubdirectories, $format);
             }

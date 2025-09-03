@@ -188,7 +188,7 @@ class LegacyControllerContext
             }
 
             if ($js_path && ! \in_array($js_path, $this->js_files, true)) {
-                $this->js_files[] = $js_path . ($version ? '?' . $version : '');
+                $this->js_files[] = $js_path . ($version !== '' && $version !== '0' ? '?' . $version : '');
             }
         }
     }

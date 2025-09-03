@@ -73,7 +73,7 @@ class PathWithBackUrlExtension extends AbstractExtension
 
         $backUrl = $this->backUrlProvider->getBackUrl($request);
 
-        if (! $backUrl) {
+        if ($backUrl === '' || $backUrl === '0') {
             return $fallbackPath;
         }
 

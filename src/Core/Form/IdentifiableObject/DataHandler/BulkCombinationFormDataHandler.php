@@ -54,7 +54,7 @@ class BulkCombinationFormDataHandler implements FormDataHandlerInterface
     public function update($id, array $data): void
     {
         // @todo: a hook system should be integrated in this handler for extendability
-        $singleShopConstraint = $this->contextShopId ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
+        $singleShopConstraint = $this->contextShopId !== 0 ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
         $formattedData = $this->bulkCombinationFormDataFormatter->format($data);
         $commands = $this->commandsBuilder->buildCommands(new CombinationId($id), $formattedData, $singleShopConstraint);
 

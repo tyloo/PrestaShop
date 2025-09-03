@@ -159,7 +159,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
 
         Assert::assertEquals(
             $expectedRedirectTarget,
-            $editableCategory->getRedirectTarget() ? $editableCategory->getRedirectTarget()->getId() : RedirectTarget::NO_TARGET,
+            $editableCategory->getRedirectTarget() instanceof \PrestaShop\PrestaShop\Core\Domain\QueryResult\RedirectTargetInformation ? $editableCategory->getRedirectTarget()->getId() : RedirectTarget::NO_TARGET,
             'Unexpected redirect target'
         );
     }

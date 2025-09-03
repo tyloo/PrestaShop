@@ -81,7 +81,7 @@ class EntityRepository
             throw new Exception(\sprintf('Method %s takes exactly one argument.', $method));
         }
 
-        if (! $by) {
+        if ($by === '' || $by === '0') {
             $where = $arguments[0];
         } else {
             $where = [];

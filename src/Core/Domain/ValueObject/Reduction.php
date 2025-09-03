@@ -108,10 +108,8 @@ class Reduction
      */
     private function assertIsValidValue(string $type, DecimalNumber $value): void
     {
-        if ($type === self::TYPE_PERCENTAGE) {
-            if ($value->isLowerThanZero() || $value->isGreaterThan(new DecimalNumber((string) self::MAX_ALLOWED_PERCENTAGE))) {
-                throw new DomainConstraintException(\sprintf('Invalid reduction percentage "%s". It must be from 0 to %s%%', (string) $value, self::MAX_ALLOWED_PERCENTAGE), DomainConstraintException::INVALID_REDUCTION_PERCENTAGE);
-            }
+        if ($type === self::TYPE_PERCENTAGE && ($value->isLowerThanZero() || $value->isGreaterThan(new DecimalNumber((string) self::MAX_ALLOWED_PERCENTAGE)))) {
+            throw new DomainConstraintException(\sprintf('Invalid reduction percentage "%s". It must be from 0 to %s%%', (string) $value, self::MAX_ALLOWED_PERCENTAGE), DomainConstraintException::INVALID_REDUCTION_PERCENTAGE);
         }
 
         if ($value->isLowerThanZero()) {

@@ -263,7 +263,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
                     'ids_field' => 'associated_shops_ids',
                     'product_id_field' => 'id_product',
                     'max_displayed_characters' => 35,
-                    'shop_group_id' => $this->shopConstraintContext->getShopConstraint()->getShopGroupId() ?
+                    'shop_group_id' => $this->shopConstraintContext->getShopConstraint()->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId ?
                         $this->shopConstraintContext->getShopConstraint()->getShopGroupId()->getValue() : null,
                 ])
             );
@@ -626,7 +626,7 @@ class ProductGridDefinitionFactory extends AbstractGridDefinitionFactory
                 $bulkDuplicateLabel = $this->trans('Duplicate selection', [], 'Admin.Actions');
                 $bulkDeleteLabel = $this->trans('Delete selection', [], 'Admin.Actions');
             }
-        } elseif ($this->shopConstraintContext->getShopConstraint()->getShopGroupId()) {
+        } elseif ($this->shopConstraintContext->getShopConstraint()->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             $bulkEnableRoute = 'admin_products_bulk_enable_shop_group';
             $bulkDisableRoute = 'admin_products_bulk_disable_shop_group';
             $bulkDuplicateRoute = 'admin_products_bulk_duplicate_shop_group';

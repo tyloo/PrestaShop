@@ -271,7 +271,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
 
         $currencyId = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query->build());
 
-        if (! $currencyId) {
+        if ($currencyId === 0) {
             throw new RuntimeException(\sprintf('Currency with ISO Code "%s" should be deleted in database', $isoCode));
         }
     }
@@ -282,7 +282,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     public function assertCurrencyIsNotDeleted($isoCode): void
     {
         $currencyId = (int) Currency::getIdByIsoCode($isoCode, 0, true, false);
-        if (! $currencyId) {
+        if ($currencyId === 0) {
             throw new RuntimeException(\sprintf('Currency with ISO Code "%s" should not be deleted in database', $isoCode));
         }
     }
@@ -300,7 +300,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
 
         $currencyId = (int) Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($query->build());
 
-        if (! $currencyId) {
+        if ($currencyId === 0) {
             throw new RuntimeException(\sprintf('Currency with ISO Code "%s" should be deactivated in database', $isoCode));
         }
     }

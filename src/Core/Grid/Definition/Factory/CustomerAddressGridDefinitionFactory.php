@@ -55,7 +55,7 @@ final class CustomerAddressGridDefinitionFactory extends AbstractGridDefinitionF
     public function __construct(HookDispatcherInterface $hookDispatcher, ?Request $currentRequest)
     {
         parent::__construct($hookDispatcher);
-        $this->backUrl = $currentRequest ? $currentRequest->getUri() : '';
+        $this->backUrl = $currentRequest instanceof Request ? $currentRequest->getUri() : '';
     }
 
     protected function getId(): string

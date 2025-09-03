@@ -44,7 +44,7 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
     {
         $langId = (int) Language::getIdByIso($langIso);
 
-        if (! $langId) {
+        if ($langId === 0) {
             throw new RuntimeException(\sprintf('Language by iso code "%s" was not found', $langIso));
         }
 

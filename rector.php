@@ -53,8 +53,8 @@ return RectorConfig::configure()
         doctrine: true,
     )
     ->withTypeCoverageLevel(20) // max = 53
-    ->withDeadCodeLevel(20) // max = 51
-    ->withCodeQualityLevel(20) // max = 74
-    ->withCodingStyleLevel(20) // max = 25
+    ->withDeadCodeLevel(25) // max = 51
+    ->withCodeQualityLevel(25) // max = 74
+    ->withCodingStyleLevel(25) // max = 25
     ->withParallel()
 ;

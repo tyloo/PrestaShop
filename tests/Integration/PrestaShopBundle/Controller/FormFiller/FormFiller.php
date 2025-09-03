@@ -116,7 +116,7 @@ class FormFiller
 
         $formCrawler = new Crawler($form->getFormNode());
         $fieldCrawler = $formCrawler->filter(\sprintf('[name="%s"]', $associatedFieldName));
-        if (! $fieldCrawler->count()) {
+        if ($fieldCrawler->count() === 0) {
             return;
         }
 

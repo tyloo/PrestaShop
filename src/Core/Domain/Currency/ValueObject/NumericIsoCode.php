@@ -34,7 +34,7 @@ class NumericIsoCode
     /**
      * @var string Numeric ISO Code validation pattern
      */
-    public const PATTERN = '/^[0-9]{3}$/';
+    public const PATTERN = '/^\d{3}$/';
 
     /**
      * @var string
