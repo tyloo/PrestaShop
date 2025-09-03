@@ -323,7 +323,7 @@ class AdminModuleDataProvider implements ModuleInterface
     protected function getUrlsLabels(array $actions)
     {
         $urlsLabels = [];
-        foreach ($actions as $actionName => $actionUrl) {
+        foreach (array_keys($actions) as $actionName) {
             $urlsLabels[$actionName] = $this->translator->trans(self::ACTIONS_TRANSLATION_LABELS[$actionName], [], 'Admin.Modules.Actions');
         }
 

@@ -60,7 +60,7 @@ final class TransformGuestToCustomerHandler implements TransformGuestToCustomerH
         $this->assertCustomerIsGuest($customer);
 
         if (! $customer->transformToCustomer($this->contextLangId)) {
-            throw new CustomerTransformationException(\sprintf('Failed to transform guest into customer'), CustomerTransformationException::TRANSFORMATION_FAILED);
+            throw new CustomerTransformationException('Failed to transform guest into customer', CustomerTransformationException::TRANSFORMATION_FAILED);
         }
     }
 

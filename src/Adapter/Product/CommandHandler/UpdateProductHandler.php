@@ -54,8 +54,7 @@ class UpdateProductHandler implements UpdateProductHandlerInterface
     {
         $shopConstraint = $command->getShopConstraint();
         $product = $this->productRepository->getByShopConstraint($command->getProductId(), $shopConstraint);
-        $wasVisibleOnSearch = $this->productIndexationUpdater->isVisibleOnSearch($product);
-        $wasActive = (bool) $product->active;
+        $this->productIndexationUpdater->isVisibleOnSearch($product);
 
         $updatableProperties = $this->productUpdatablePropertyFiller->fillUpdatableProperties(
             $product,

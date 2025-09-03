@@ -52,7 +52,7 @@ final class AddCatalogPriceRuleHandler extends AbstractCatalogPriceRuleHandler i
             }
 
             if ($specificPriceRule->add() === false) {
-                throw new CatalogPriceRuleException(\sprintf('Failed to create specific price rule'));
+                throw new CatalogPriceRuleException('Failed to create specific price rule');
             }
 
             $specificPriceRule->deleteConditions();

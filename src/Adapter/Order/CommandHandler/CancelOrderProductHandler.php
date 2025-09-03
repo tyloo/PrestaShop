@@ -68,7 +68,7 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
         $this->checkInput($command);
         $this->checkOrderState($order);
 
-        $cartId = Cart::getCartIdByOrderId($command->getOrderId()->getValue());
+        Cart::getCartIdByOrderId($command->getOrderId()->getValue());
         $orderDetails = $this->getOrderDetails($command);
 
         $this->assertCancelableProductQuantities($orderDetails);

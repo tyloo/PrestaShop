@@ -62,15 +62,15 @@ abstract class AbstractLanguageHandler extends AbstractObjectModelHandler
         }
 
         if (! ImageManager::resize($temporaryImage, _PS_IMG_DIR_ . 'p/' . $isoCode->getValue() . '.jpg')) {
-            throw new CopyingNoPictureException(\sprintf('An error occurred while copying "No Picture" image to product directory'), CopyingNoPictureException::PRODUCT_IMAGE_COPY_ERROR);
+            throw new CopyingNoPictureException('An error occurred while copying "No Picture" image to product directory', CopyingNoPictureException::PRODUCT_IMAGE_COPY_ERROR);
         }
 
         if (! ImageManager::resize($temporaryImage, _PS_IMG_DIR_ . 'c/' . $isoCode->getValue() . '.jpg')) {
-            throw new CopyingNoPictureException(\sprintf('An error occurred while copying "No Picture" image to category directory'), CopyingNoPictureException::CATEGORY_IMAGE_COPY_ERROR);
+            throw new CopyingNoPictureException('An error occurred while copying "No Picture" image to category directory', CopyingNoPictureException::CATEGORY_IMAGE_COPY_ERROR);
         }
 
         if (! ImageManager::resize($temporaryImage, _PS_IMG_DIR_ . 'm/' . $isoCode->getValue() . '.jpg')) {
-            throw new CopyingNoPictureException(\sprintf('An error occurred while copying "No Picture" image to brand directory'), CopyingNoPictureException::BRAND_IMAGE_COPY_ERROR);
+            throw new CopyingNoPictureException('An error occurred while copying "No Picture" image to brand directory', CopyingNoPictureException::BRAND_IMAGE_COPY_ERROR);
         }
 
         $imagesTypes = ImageType::getImagesTypes('products');
@@ -81,15 +81,15 @@ abstract class AbstractLanguageHandler extends AbstractObjectModelHandler
             $imageHeight = $imagesType['height'];
 
             if (! ImageManager::resize($temporaryImage, _PS_IMG_DIR_ . 'p/' . $imageName, $imageWidth, $imageHeight)) {
-                throw new CopyingNoPictureException(\sprintf('An error occurred while copying "No Picture" image to product directory'), CopyingNoPictureException::PRODUCT_IMAGE_COPY_ERROR);
+                throw new CopyingNoPictureException('An error occurred while copying "No Picture" image to product directory', CopyingNoPictureException::PRODUCT_IMAGE_COPY_ERROR);
             }
 
             if (! ImageManager::resize($temporaryImage, _PS_IMG_DIR_ . 'c/' . $imageName, $imageWidth, $imageHeight)) {
-                throw new CopyingNoPictureException(\sprintf('An error occurred while copying "No Picture" image to category directory'), CopyingNoPictureException::CATEGORY_IMAGE_COPY_ERROR);
+                throw new CopyingNoPictureException('An error occurred while copying "No Picture" image to category directory', CopyingNoPictureException::CATEGORY_IMAGE_COPY_ERROR);
             }
 
             if (! ImageManager::resize($temporaryImage, _PS_IMG_DIR_ . 'm/' . $imageName, $imageWidth, $imageHeight)) {
-                throw new CopyingNoPictureException(\sprintf('An error occurred while copying "No Picture" image to brand directory'), CopyingNoPictureException::BRAND_IMAGE_COPY_ERROR);
+                throw new CopyingNoPictureException('An error occurred while copying "No Picture" image to brand directory', CopyingNoPictureException::BRAND_IMAGE_COPY_ERROR);
             }
         }
 

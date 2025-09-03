@@ -82,7 +82,7 @@ class ProductLightGridDataFactoryDecorator implements GridDataFactoryInterface
     private function applyModification(array $products): array
     {
         $currency = new Currency($this->defaultCurrencyId);
-        foreach ($products as $i => $product) {
+        foreach (array_keys($products) as $i) {
             $products[$i]['price_tax_excluded'] = $this->locale->formatPrice(
                 $products[$i]['price_tax_excluded'],
                 $currency->iso_code

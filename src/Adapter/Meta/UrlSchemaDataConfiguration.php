@@ -66,7 +66,7 @@ final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
         if ($this->validateConfiguration($configuration)) {
             $shopConstraint = $this->getShopConstraint();
 
-            foreach ($configuration as $routeId => $value) {
+            foreach (array_keys($configuration) as $routeId) {
                 $this->updateConfigurationValue($this->getConfigurationKey($routeId), $routeId, $configuration, $shopConstraint);
             }
         }

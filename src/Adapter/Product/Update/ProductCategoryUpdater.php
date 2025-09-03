@@ -199,7 +199,7 @@ class ProductCategoryUpdater
                 $this->categoryRepository->assertCategoryExists($categoryId);
             }
         } catch (CategoryNotFoundException) {
-            throw new CannotUpdateProductException(\sprintf("Failed to update product categories. Some of categories doesn't exist."), CannotUpdateProductException::FAILED_UPDATE_CATEGORIES);
+            throw new CannotUpdateProductException("Failed to update product categories. Some of categories doesn't exist.", CannotUpdateProductException::FAILED_UPDATE_CATEGORIES);
         }
     }
 }
