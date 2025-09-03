@@ -43,10 +43,7 @@ class AddTaxCommand
     ) {
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalizedNames()
+    public function getLocalizedNames(): array
     {
         return $this->localizedNames;
     }

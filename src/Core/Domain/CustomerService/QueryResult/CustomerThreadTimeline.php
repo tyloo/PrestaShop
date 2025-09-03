@@ -43,7 +43,7 @@ class CustomerThreadTimeline
     /**
      * @return CustomerThreadTimelineItem[]
      */
-    public function getTimelineItems()
+    public function getTimelineItems(): array
     {
         return $this->timelineItems;
     }

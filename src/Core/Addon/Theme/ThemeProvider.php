@@ -35,7 +35,7 @@ final class ThemeProvider implements ThemeProviderInterface
     ) {
     }
 
-    public function getCurrentlyUsedTheme()
+    public function getCurrentlyUsedTheme(): Theme
     {
         return $this->theme;
     }

@@ -42,18 +42,12 @@ class CartView
     ) {
     }
 
-    /**
-     * @return array
-     */
-    public function getCustomerInformation()
+    public function getCustomerInformation(): array
     {
         return $this->customerInformation;
     }
 
-    /**
-     * @return array
-     */
-    public function getOrderInformation()
+    public function getOrderInformation(): array
     {
         return $this->orderInformation;
     }
@@ -74,10 +68,7 @@ class CartView
         return $this->currencyId;
     }
 
-    /**
-     * @return array
-     */
-    public function getCartSummary()
+    public function getCartSummary(): array
     {
         return $this->cartSummary;
     }

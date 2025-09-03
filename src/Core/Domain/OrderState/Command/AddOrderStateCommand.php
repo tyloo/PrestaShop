@@ -113,74 +113,47 @@ class AddOrderStateCommand
         return $this->color;
     }
 
-    /**
-     * @return bool
-     */
-    public function isLoggable()
+    public function isLoggable(): bool
     {
         return $this->loggable;
     }
 
-    /**
-     * @return bool
-     */
-    public function isInvoice()
+    public function isInvoice(): bool
     {
         return $this->invoice;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSendEmailEnabled()
+    public function isSendEmailEnabled(): bool
     {
         return $this->sendEmail;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPdfInvoice()
+    public function isPdfInvoice(): bool
     {
         return $this->pdfInvoice;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPdfDelivery()
+    public function isPdfDelivery(): bool
     {
         return $this->pdfDelivery;
     }
 
-    /**
-     * @return bool
-     */
-    public function isShipped()
+    public function isShipped(): bool
     {
         return $this->shipped;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPaid()
+    public function isPaid(): bool
     {
         return $this->paid;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDelivery()
+    public function isDelivery(): bool
     {
         return $this->delivery;
     }
@@ -188,7 +161,7 @@ class AddOrderStateCommand
     /**
      * @return string[]
      */
-    public function getLocalizedTemplates()
+    public function getLocalizedTemplates(): array
     {
         return $this->localizedTemplates;
     }

@@ -51,10 +51,7 @@ class OrderReturnStateNotFoundException extends OrderReturnStateException
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return OrderReturnStateId
-     */
-    public function getOrderReturnStateId()
+    public function getOrderReturnStateId(): OrderReturnStateId
     {
         return $this->orderReturnStateId;
     }

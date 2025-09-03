@@ -49,10 +49,7 @@ class CategoryNotFoundException extends CategoryException
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return CategoryId
-     */
-    public function getCategoryId()
+    public function getCategoryId(): CategoryId
     {
         return $this->categoryId;
     }

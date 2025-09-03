@@ -161,10 +161,7 @@ class PersonalInformation
         return $this->languageName;
     }
 
-    /**
-     * @return Subscriptions
-     */
-    public function getSubscriptions()
+    public function getSubscriptions(): Subscriptions
     {
         return $this->subscriptions;
     }

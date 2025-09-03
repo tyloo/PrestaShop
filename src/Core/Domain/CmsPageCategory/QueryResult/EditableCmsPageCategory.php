@@ -56,10 +56,7 @@ class EditableCmsPageCategory
         $this->parentId = new CmsPageCategoryId($parentId);
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalisedName()
+    public function getLocalisedName(): array
     {
         return $this->localisedName;
     }
@@ -80,42 +77,27 @@ class EditableCmsPageCategory
         return $this->parentId;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalisedDescription()
+    public function getLocalisedDescription(): array
     {
         return $this->localisedDescription;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalisedMetaDescription()
+    public function getLocalisedMetaDescription(): array
     {
         return $this->localisedMetaDescription;
     }
 
-    /**
-     * @return array
-     */
-    public function getMetaTitle()
+    public function getMetaTitle(): array
     {
         return $this->metaTitle;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalisedFriendlyUrl()
+    public function getLocalisedFriendlyUrl(): array
     {
         return $this->localisedFriendlyUrl;
     }
 
-    /**
-     * @return array
-     */
-    public function getShopIds()
+    public function getShopIds(): array
     {
         return $this->shopIds;
     }

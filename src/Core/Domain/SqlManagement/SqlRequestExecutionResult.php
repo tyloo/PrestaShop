@@ -38,18 +38,12 @@ class SqlRequestExecutionResult
     ) {
     }
 
-    /**
-     * @return array
-     */
-    public function getColumns()
+    public function getColumns(): array
     {
         return $this->columns;
     }
 
-    /**
-     * @return array
-     */
-    public function getRows()
+    public function getRows(): array
     {
         return $this->rows;
     }

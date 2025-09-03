@@ -59,34 +59,22 @@ class EditableEmployee
     ) {
     }
 
-    /**
-     * @return EmployeeId
-     */
-    public function getEmployeeId()
+    public function getEmployeeId(): EmployeeId
     {
         return $this->employeeId;
     }
 
-    /**
-     * @return FirstName
-     */
-    public function getFirstName()
+    public function getFirstName(): FirstName
     {
         return $this->firstName;
     }
 
-    /**
-     * @return LastName
-     */
-    public function getLastName()
+    public function getLastName(): LastName
     {
         return $this->lastName;
     }
 
-    /**
-     * @return Email
-     */
-    public function getEmail()
+    public function getEmail(): Email
     {
         return $this->email;
     }
@@ -123,10 +111,7 @@ class EditableEmployee
         return $this->profileId;
     }
 
-    /**
-     * @return array
-     */
-    public function getShopAssociation()
+    public function getShopAssociation(): array
     {
         return $this->shopAssociation;
     }
@@ -139,10 +124,7 @@ class EditableEmployee
         return $this->avatarUrl;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasEnabledGravatar()
+    public function hasEnabledGravatar(): bool
     {
         return $this->hasEnabledGravatar;
     }

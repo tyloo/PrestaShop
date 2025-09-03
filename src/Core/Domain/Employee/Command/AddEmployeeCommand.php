@@ -144,10 +144,7 @@ class AddEmployeeCommand
         return $this->profileId;
     }
 
-    /**
-     * @return array
-     */
-    public function getShopAssociation()
+    public function getShopAssociation(): array
     {
         return $this->shopAssociation;
     }
@@ -160,10 +157,7 @@ class AddEmployeeCommand
         return $this->plainPassword;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasEnabledGravatar()
+    public function hasEnabledGravatar(): bool
     {
         return $this->hasEnabledGravatar;
     }

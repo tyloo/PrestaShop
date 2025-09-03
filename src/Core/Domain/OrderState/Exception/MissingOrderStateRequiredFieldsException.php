@@ -53,7 +53,7 @@ class MissingOrderStateRequiredFieldsException extends OrderStateException
     /**
      * @return string[]
      */
-    public function getMissingRequiredFields()
+    public function getMissingRequiredFields(): array
     {
         return $this->missingRequiredFields;
     }

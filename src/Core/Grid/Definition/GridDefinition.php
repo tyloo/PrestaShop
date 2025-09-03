@@ -66,7 +66,7 @@ final class GridDefinition implements GridDefinitionInterface
         return $this->name;
     }
 
-    public function getColumns()
+    public function getColumns(): ColumnCollectionInterface
     {
         return $this->columns;
     }
@@ -83,22 +83,22 @@ final class GridDefinition implements GridDefinitionInterface
         throw new ColumnNotFoundException(\sprintf('Column with id "%s" not found', $id));
     }
 
-    public function getBulkActions()
+    public function getBulkActions(): BulkActionCollectionInterface
     {
         return $this->bulkActions;
     }
 
-    public function getGridActions()
+    public function getGridActions(): GridActionCollectionInterface
     {
         return $this->gridActions;
     }
 
-    public function getViewOptions()
+    public function getViewOptions(): ViewOptionsCollectionInterface
     {
         return $this->viewOptions;
     }
 
-    public function getFilters()
+    public function getFilters(): FilterCollectionInterface
     {
         return $this->filters;
     }

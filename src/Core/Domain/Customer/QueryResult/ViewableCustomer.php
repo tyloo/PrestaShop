@@ -71,26 +71,17 @@ class ViewableCustomer
     ) {
     }
 
-    /**
-     * @return CustomerId
-     */
-    public function getCustomerId()
+    public function getCustomerId(): CustomerId
     {
         return $this->customerId;
     }
 
-    /**
-     * @return PersonalInformation
-     */
-    public function getPersonalInformation()
+    public function getPersonalInformation(): PersonalInformation
     {
         return $this->personalInformation;
     }
 
-    /**
-     * @return OrdersInformation
-     */
-    public function getOrdersInformation()
+    public function getOrdersInformation(): OrdersInformation
     {
         return $this->ordersInformation;
     }
@@ -100,17 +91,15 @@ class ViewableCustomer
      *
      * @return CartInformation[]
      */
-    public function getCartsInformation()
+    public function getCartsInformation(): array
     {
         return $this->cartsInformation;
     }
 
     /**
      * @deprecated Since 9.0.0, returns empty ProductsInformation object with no data.
-     *
-     * @return ProductsInformation
      */
-    public function getProductsInformation()
+    public function getProductsInformation(): ProductsInformation
     {
         return $this->productsInformation;
     }
@@ -118,7 +107,7 @@ class ViewableCustomer
     /**
      * @return MessageInformation[]
      */
-    public function getMessagesInformation()
+    public function getMessagesInformation(): array
     {
         return $this->messagesInformation;
     }
@@ -128,7 +117,7 @@ class ViewableCustomer
      *
      * @return DiscountInformation[]
      */
-    public function getDiscountsInformation()
+    public function getDiscountsInformation(): array
     {
         return $this->discountsInformation;
     }
@@ -136,7 +125,7 @@ class ViewableCustomer
     /**
      * @return SentEmailInformation[]
      */
-    public function getSentEmailsInformation()
+    public function getSentEmailsInformation(): array
     {
         return $this->sentEmailsInformation;
     }
@@ -144,7 +133,7 @@ class ViewableCustomer
     /**
      * @return LastConnectionInformation[]
      */
-    public function getLastConnectionsInformation()
+    public function getLastConnectionsInformation(): array
     {
         return $this->lastConnectionsInformation;
     }
@@ -152,7 +141,7 @@ class ViewableCustomer
     /**
      * @return GroupInformation[]
      */
-    public function getGroupsInformation()
+    public function getGroupsInformation(): array
     {
         return $this->groupsInformation;
     }
@@ -162,15 +151,12 @@ class ViewableCustomer
      *
      * @return AddressInformation[]
      */
-    public function getAddressesInformation()
+    public function getAddressesInformation(): array
     {
         return $this->addressesInformation;
     }
 
-    /**
-     * @return GeneralInformation
-     */
-    public function getGeneralInformation()
+    public function getGeneralInformation(): GeneralInformation
     {
         return $this->generalInformation;
     }

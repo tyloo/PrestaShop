@@ -65,7 +65,7 @@ class CartShipping
         return $this->deliveryOptions;
     }
 
-    public function getSelectedCarrierId()
+    public function getSelectedCarrierId(): ?int
     {
         return $this->selectedCarrierId;
     }

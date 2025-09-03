@@ -144,7 +144,7 @@ class EditableCurrency
      *
      * @return int[]
      */
-    public function getAssociatedShopIds()
+    public function getAssociatedShopIds(): array
     {
         return $this->associatedShopIds;
     }

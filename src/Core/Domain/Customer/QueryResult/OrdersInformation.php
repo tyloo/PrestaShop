@@ -47,7 +47,7 @@ class OrdersInformation
     /**
      * @return OrderInformation[]
      */
-    public function getValidOrders()
+    public function getValidOrders(): array
     {
         return $this->validOrders;
     }
@@ -55,7 +55,7 @@ class OrdersInformation
     /**
      * @return OrderInformation[]
      */
-    public function getInvalidOrders()
+    public function getInvalidOrders(): array
     {
         return $this->invalidOrders;
     }

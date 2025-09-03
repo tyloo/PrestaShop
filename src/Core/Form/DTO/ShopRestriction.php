@@ -46,7 +46,7 @@ class ShopRestriction
     /**
      * @return int[]
      */
-    public function getShopIds()
+    public function getShopIds(): array
     {
         return $this->shopIds;
     }
@@ -54,7 +54,7 @@ class ShopRestriction
     /**
      * @return ShopRestrictionField[]
      */
-    public function getShopRestrictionFields()
+    public function getShopRestrictionFields(): array
     {
         return $this->shopRestrictionFields;
     }

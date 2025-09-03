@@ -60,10 +60,7 @@ class BulkToggleCurrenciesStatusCommand
         return $this->currencyIds;
     }
 
-    /**
-     * @return bool
-     */
-    public function getStatus()
+    public function getStatus(): bool
     {
         return $this->expectedStatus;
     }

@@ -85,10 +85,7 @@ class UpdateCategoryPositionCommand
         return $this->way;
     }
 
-    /**
-     * @return array
-     */
-    public function getPositions()
+    public function getPositions(): array
     {
         return $this->positions;
     }

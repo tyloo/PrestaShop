@@ -77,7 +77,7 @@ class AddCmsPageCommand
     /**
      * @return string[]
      */
-    public function getLocalizedTitle()
+    public function getLocalizedTitle(): array
     {
         return $this->localizedTitle;
     }
@@ -85,7 +85,7 @@ class AddCmsPageCommand
     /**
      * @return string[]
      */
-    public function getLocalizedMetaTitle()
+    public function getLocalizedMetaTitle(): array
     {
         return $this->localizedMetaTitle;
     }
@@ -93,7 +93,7 @@ class AddCmsPageCommand
     /**
      * @return string[]
      */
-    public function getLocalizedMetaDescription()
+    public function getLocalizedMetaDescription(): array
     {
         return $this->localizedMetaDescription;
     }
@@ -101,7 +101,7 @@ class AddCmsPageCommand
     /**
      * @return string[]
      */
-    public function getLocalizedFriendlyUrl()
+    public function getLocalizedFriendlyUrl(): array
     {
         return $this->localizedFriendlyUrl;
     }
@@ -109,7 +109,7 @@ class AddCmsPageCommand
     /**
      * @return string[]
      */
-    public function getLocalizedContent()
+    public function getLocalizedContent(): array
     {
         return $this->localizedContent;
     }
@@ -130,10 +130,7 @@ class AddCmsPageCommand
         return $this->displayed;
     }
 
-    /**
-     * @return array
-     */
-    public function getShopAssociation()
+    public function getShopAssociation(): array
     {
         return $this->shopAssociation;
     }

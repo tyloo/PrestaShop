@@ -114,10 +114,7 @@ class UpdateProductInOrderCommand
         return $this->quantity;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getOrderInvoiceId()
+    public function getOrderInvoiceId(): ?int
     {
         return $this->orderInvoiceId;
     }

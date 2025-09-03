@@ -46,7 +46,7 @@ final class GridData implements GridDataInterface
     ) {
     }
 
-    public function getRecords()
+    public function getRecords(): RecordCollectionInterface
     {
         return $this->records;
     }

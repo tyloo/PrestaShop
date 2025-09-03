@@ -48,10 +48,7 @@ class DuplicateOrderReturnStateNameException extends OrderReturnStateException
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return Name
-     */
-    public function getName()
+    public function getName(): Name
     {
         return $this->name;
     }

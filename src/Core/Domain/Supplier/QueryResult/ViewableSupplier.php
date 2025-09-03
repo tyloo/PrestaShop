@@ -49,10 +49,7 @@ class ViewableSupplier
         return $this->name;
     }
 
-    /**
-     * @return array
-     */
-    public function getSupplierProducts()
+    public function getSupplierProducts(): array
     {
         return $this->supplierProducts;
     }

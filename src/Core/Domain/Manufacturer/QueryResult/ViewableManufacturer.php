@@ -50,18 +50,12 @@ class ViewableManufacturer
         return $this->name;
     }
 
-    /**
-     * @return array
-     */
-    public function getManufacturerAddresses()
+    public function getManufacturerAddresses(): array
     {
         return $this->manufacturerAddresses;
     }
 
-    /**
-     * @return array
-     */
-    public function getManufacturerProducts()
+    public function getManufacturerProducts(): array
     {
         return $this->manufacturerProducts;
     }

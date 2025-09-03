@@ -69,10 +69,8 @@ final class LocalizationPackImportConfig implements LocalizationPackImportConfig
 
     /**
      * Get content to import.
-     *
-     * @return array
      */
-    public function getContentToImport()
+    public function getContentToImport(): array
     {
         return $this->contentToImport;
     }

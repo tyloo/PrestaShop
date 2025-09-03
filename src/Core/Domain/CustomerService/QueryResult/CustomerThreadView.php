@@ -50,26 +50,17 @@ class CustomerThreadView
     ) {
     }
 
-    /**
-     * @return CustomerThreadId
-     */
-    public function getCustomerThreadId()
+    public function getCustomerThreadId(): CustomerThreadId
     {
         return $this->customerThreadId;
     }
 
-    /**
-     * @return array
-     */
-    public function getActions()
+    public function getActions(): array
     {
         return $this->actions;
     }
 
-    /**
-     * @return CustomerInformation
-     */
-    public function getCustomerInformation()
+    public function getCustomerInformation(): CustomerInformation
     {
         return $this->customerInformation;
     }
@@ -85,23 +76,17 @@ class CustomerThreadView
     /**
      * @return CustomerThreadMessage[]
      */
-    public function getMessages()
+    public function getMessages(): array
     {
         return $this->messages;
     }
 
-    /**
-     * @return LanguageId
-     */
-    public function getLanguageId()
+    public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }
 
-    /**
-     * @return CustomerThreadTimeline
-     */
-    public function getTimeline()
+    public function getTimeline(): CustomerThreadTimeline
     {
         return $this->timeline;
     }

@@ -76,10 +76,7 @@ class EditableCustomer
     ) {
     }
 
-    /**
-     * @return CustomerId
-     */
-    public function getCustomerId()
+    public function getCustomerId(): CustomerId
     {
         return $this->customerId;
     }
@@ -92,34 +89,22 @@ class EditableCustomer
         return $this->genderId;
     }
 
-    /**
-     * @return FirstName
-     */
-    public function getFirstName()
+    public function getFirstName(): FirstName
     {
         return $this->firstName;
     }
 
-    /**
-     * @return LastName
-     */
-    public function getLastName()
+    public function getLastName(): LastName
     {
         return $this->lastName;
     }
 
-    /**
-     * @return Email
-     */
-    public function getEmail()
+    public function getEmail(): Email
     {
         return $this->email;
     }
 
-    /**
-     * @return Birthday
-     */
-    public function getBirthday()
+    public function getBirthday(): Birthday
     {
         return $this->birthday;
     }
@@ -143,7 +128,7 @@ class EditableCustomer
     /**
      * @return array|int[]
      */
-    public function getGroupIds()
+    public function getGroupIds(): array
     {
         return $this->groupIds;
     }

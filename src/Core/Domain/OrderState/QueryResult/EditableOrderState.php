@@ -61,18 +61,12 @@ class EditableOrderState
         $this->icon = $icon;
     }
 
-    /**
-     * @return OrderStateId
-     */
-    public function getOrderStateId()
+    public function getOrderStateId(): OrderStateId
     {
         return $this->orderStateId;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalizedNames()
+    public function getLocalizedNames(): array
     {
         return $this->localizedNames;
     }
@@ -87,82 +81,52 @@ class EditableOrderState
         return $this->isDeleted;
     }
 
-    /**
-     * @return bool
-     */
-    public function isLoggable()
+    public function isLoggable(): bool
     {
         return $this->loggable;
     }
 
-    /**
-     * @return bool
-     */
-    public function isInvoice()
+    public function isInvoice(): bool
     {
         return $this->invoice;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSendEmailEnabled()
+    public function isSendEmailEnabled(): bool
     {
         return $this->sendEmail;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPdfInvoice()
+    public function isPdfInvoice(): bool
     {
         return $this->pdfInvoice;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPdfDelivery()
+    public function isPdfDelivery(): bool
     {
         return $this->pdfDelivery;
     }
 
-    /**
-     * @return bool
-     */
-    public function isShipped()
+    public function isShipped(): bool
     {
         return $this->shipped;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPaid()
+    public function isPaid(): bool
     {
         return $this->paid;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDelivery()
+    public function isDelivery(): bool
     {
         return $this->delivery;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalizedTemplates()
+    public function getLocalizedTemplates(): array
     {
         return $this->localizedTemplates;
     }

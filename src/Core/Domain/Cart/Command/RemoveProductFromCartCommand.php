@@ -75,18 +75,12 @@ class RemoveProductFromCartCommand
         return $this->productId;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getCombinationId()
+    public function getCombinationId(): ?int
     {
         return $this->combinationId;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getCustomizationId()
+    public function getCustomizationId(): ?int
     {
         return $this->customizationId;
     }

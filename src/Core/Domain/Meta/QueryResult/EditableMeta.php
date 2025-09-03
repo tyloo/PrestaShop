@@ -87,7 +87,7 @@ class EditableMeta
     /**
      * @return string[]
      */
-    public function getLocalisedPageTitles()
+    public function getLocalisedPageTitles(): array
     {
         return $this->localisedPageTitles;
     }
@@ -95,7 +95,7 @@ class EditableMeta
     /**
      * @return string[]
      */
-    public function getLocalisedMetaDescriptions()
+    public function getLocalisedMetaDescriptions(): array
     {
         return $this->localisedMetaDescriptions;
     }
@@ -103,7 +103,7 @@ class EditableMeta
     /**
      * @return string[]
      */
-    public function getLocalisedUrlRewrites()
+    public function getLocalisedUrlRewrites(): array
     {
         return $this->localisedUrlRewrites;
     }

@@ -46,7 +46,7 @@ final class Hook implements HookInterface
         return $this->name;
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }

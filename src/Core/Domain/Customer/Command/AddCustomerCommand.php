@@ -177,7 +177,7 @@ class AddCustomerCommand
     /**
      * @return int[]
      */
-    public function getGroupIds()
+    public function getGroupIds(): array
     {
         return $this->groupIds;
     }

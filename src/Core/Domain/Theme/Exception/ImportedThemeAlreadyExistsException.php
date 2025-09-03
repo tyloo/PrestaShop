@@ -49,10 +49,7 @@ class ImportedThemeAlreadyExistsException extends ThemeException
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return ThemeName
-     */
-    public function getThemeName()
+    public function getThemeName(): ThemeName
     {
         return $this->themeName;
     }

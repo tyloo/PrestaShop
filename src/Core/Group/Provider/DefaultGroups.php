@@ -41,28 +41,21 @@ class DefaultGroups
 
     /**
      * Get default visitors group
-     *
-     * @return DefaultGroup
      */
-    public function getVisitorsGroup()
+    public function getVisitorsGroup(): DefaultGroup
     {
         return $this->visitorsGroup;
     }
 
     /**
      * Get default guests group
-     *
-     * @return DefaultGroup
      */
-    public function getGuestsGroup()
+    public function getGuestsGroup(): DefaultGroup
     {
         return $this->guestsGroup;
     }
 
-    /**
-     * @return DefaultGroup
-     */
-    public function getCustomersGroup()
+    public function getCustomersGroup(): DefaultGroup
     {
         return $this->customersGroup;
     }

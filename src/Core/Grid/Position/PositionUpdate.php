@@ -43,12 +43,12 @@ final class PositionUpdate implements PositionUpdateInterface
     ) {
     }
 
-    public function getPositionDefinition()
+    public function getPositionDefinition(): PositionDefinitionInterface
     {
         return $this->positionDefinition;
     }
 
-    public function getPositionModificationCollection()
+    public function getPositionModificationCollection(): PositionModificationCollectionInterface
     {
         return $this->positionModificationCollection;
     }

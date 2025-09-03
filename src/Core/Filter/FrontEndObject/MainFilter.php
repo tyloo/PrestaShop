@@ -64,7 +64,7 @@ class MainFilter implements FilterInterface
     /**
      * @return FilterInterface[] filters, indexed by key to filter
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return $this->filters;
     }

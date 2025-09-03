@@ -45,22 +45,22 @@ final class Grid implements GridInterface
     ) {
     }
 
-    public function getDefinition()
+    public function getDefinition(): GridDefinitionInterface
     {
         return $this->definition;
     }
 
-    public function getSearchCriteria()
+    public function getSearchCriteria(): SearchCriteriaInterface
     {
         return $this->searchCriteria;
     }
 
-    public function getData()
+    public function getData(): GridDataInterface
     {
         return $this->data;
     }
 
-    public function getFilterForm()
+    public function getFilterForm(): FormInterface
     {
         return $this->filtersForm;
     }

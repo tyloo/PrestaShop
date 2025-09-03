@@ -40,18 +40,12 @@ final class GetCreditSlipIdsByDateRange
     ) {
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDateTimeFrom()
+    public function getDateTimeFrom(): DateTime
     {
         return $this->dateTimeFrom;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDateTimeTo()
+    public function getDateTimeTo(): DateTime
     {
         return $this->dateTimeTo;
     }

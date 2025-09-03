@@ -99,12 +99,12 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
         return $this->limit;
     }
 
-    public function getEntityFields()
+    public function getEntityFields(): array
     {
         return $this->entityFields;
     }
 
-    public function getSharedData()
+    public function getSharedData(): array
     {
         return $this->sharedData;
     }

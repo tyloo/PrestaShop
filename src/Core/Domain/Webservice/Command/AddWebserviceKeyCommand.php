@@ -76,18 +76,12 @@ class AddWebserviceKeyCommand
         return $this->status;
     }
 
-    /**
-     * @return array
-     */
-    public function getPermissions()
+    public function getPermissions(): array
     {
         return $this->permissions;
     }
 
-    /**
-     * @return array
-     */
-    public function getAssociatedShops()
+    public function getAssociatedShops(): array
     {
         return $this->associatedShops;
     }

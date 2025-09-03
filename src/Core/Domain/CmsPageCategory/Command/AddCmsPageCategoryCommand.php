@@ -92,10 +92,7 @@ class AddCmsPageCategoryCommand extends AbstractCmsPageCategoryCommand
         return $this->localisedName;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalisedFriendlyUrl()
+    public function getLocalisedFriendlyUrl(): array
     {
         return $this->localisedFriendlyUrl;
     }

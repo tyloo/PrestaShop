@@ -69,10 +69,7 @@ class EditableCategory
     ) {
     }
 
-    /**
-     * @return CategoryId
-     */
-    public function getId()
+    public function getId(): CategoryId
     {
         return $this->id;
     }
@@ -80,7 +77,7 @@ class EditableCategory
     /**
      * @return string[]
      */
-    public function getName()
+    public function getName(): array
     {
         return $this->name;
     }
@@ -96,7 +93,7 @@ class EditableCategory
     /**
      * @return string[]
      */
-    public function getDescription()
+    public function getDescription(): array
     {
         return $this->description;
     }
@@ -120,7 +117,7 @@ class EditableCategory
     /**
      * @return string[]
      */
-    public function getMetaTitle()
+    public function getMetaTitle(): array
     {
         return $this->metaTitle;
     }
@@ -128,7 +125,7 @@ class EditableCategory
     /**
      * @return string[]
      */
-    public function getMetaDescription()
+    public function getMetaDescription(): array
     {
         return $this->metaDescription;
     }
@@ -136,7 +133,7 @@ class EditableCategory
     /**
      * @return string[]
      */
-    public function getLinkRewrite()
+    public function getLinkRewrite(): array
     {
         return $this->linkRewrite;
     }
@@ -164,7 +161,7 @@ class EditableCategory
     /**
      * @return int[]
      */
-    public function getGroupAssociationIds()
+    public function getGroupAssociationIds(): array
     {
         return $this->groupAssociationIds;
     }
@@ -172,7 +169,7 @@ class EditableCategory
     /**
      * @return int[]
      */
-    public function getShopAssociationIds()
+    public function getShopAssociationIds(): array
     {
         return $this->shopAssociationIds;
     }
@@ -195,10 +192,7 @@ class EditableCategory
         return $this->isRootCategory;
     }
 
-    /**
-     * @return array
-     */
-    public function getSubCategories()
+    public function getSubCategories(): array
     {
         return $this->subCategories;
     }

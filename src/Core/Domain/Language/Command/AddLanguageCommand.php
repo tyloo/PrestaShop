@@ -148,7 +148,7 @@ class AddLanguageCommand
     /**
      * @return int[]
      */
-    public function getShopAssociation()
+    public function getShopAssociation(): array
     {
         return $this->shopAssociation;
     }

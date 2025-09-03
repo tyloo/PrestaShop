@@ -36,7 +36,7 @@ class ClassDependingOnClosureBuiltDep
     ) {
     }
 
-    public function getDep()
+    public function getDep(): DepBuiltByClosure
     {
         return $this->dep;
     }

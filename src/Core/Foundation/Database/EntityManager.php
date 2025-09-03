@@ -41,10 +41,8 @@ class EntityManager
 
     /**
      * Return current database object used.
-     *
-     * @return DatabaseInterface
      */
-    public function getDatabase()
+    public function getDatabase(): DatabaseInterface
     {
         return $this->db;
     }

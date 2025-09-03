@@ -47,10 +47,7 @@ class EditableTax
     ) {
     }
 
-    /**
-     * @return TaxId
-     */
-    public function getTaxId()
+    public function getTaxId(): TaxId
     {
         return $this->taxId;
     }
@@ -58,7 +55,7 @@ class EditableTax
     /**
      * @return string[]
      */
-    public function getLocalizedNames()
+    public function getLocalizedNames(): array
     {
         return $this->localizedNames;
     }

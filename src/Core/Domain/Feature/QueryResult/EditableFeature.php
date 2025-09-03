@@ -45,10 +45,7 @@ class EditableFeature
     ) {
     }
 
-    /**
-     * @return FeatureId
-     */
-    public function getFeatureId()
+    public function getFeatureId(): FeatureId
     {
         return $this->featureId;
     }
@@ -56,7 +53,7 @@ class EditableFeature
     /**
      * @return string[]
      */
-    public function getName()
+    public function getName(): array
     {
         return $this->name;
     }
@@ -64,7 +61,7 @@ class EditableFeature
     /**
      * @return int[]
      */
-    public function getShopAssociationIds()
+    public function getShopAssociationIds(): array
     {
         return $this->shopAssociationIds;
     }

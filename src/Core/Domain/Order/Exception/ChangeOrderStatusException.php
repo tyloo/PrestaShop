@@ -57,7 +57,7 @@ class ChangeOrderStatusException extends OrderException
     /**
      * @return OrderId[]
      */
-    public function getOrdersWithFailedToUpdateStatus()
+    public function getOrdersWithFailedToUpdateStatus(): array
     {
         return $this->ordersWithFailedToUpdateStatus;
     }
@@ -65,7 +65,7 @@ class ChangeOrderStatusException extends OrderException
     /**
      * @return OrderId[]
      */
-    public function getOrdersWithFailedToSendEmail()
+    public function getOrdersWithFailedToSendEmail(): array
     {
         return $this->ordersWithFailedToSendEmail;
     }
@@ -73,7 +73,7 @@ class ChangeOrderStatusException extends OrderException
     /**
      * @return OrderId[]
      */
-    public function getOrdersWithAssignedStatus()
+    public function getOrdersWithAssignedStatus(): array
     {
         return $this->ordersWithAssignedStatus;
     }

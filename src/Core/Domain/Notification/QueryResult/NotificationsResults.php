@@ -43,7 +43,7 @@ class NotificationsResults
     /**
      * @return NotificationsResult[]
      */
-    public function getNotificationsResults()
+    public function getNotificationsResults(): array
     {
         return $this->notifications;
     }

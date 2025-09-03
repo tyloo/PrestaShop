@@ -66,10 +66,8 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      * Gets a native PHP array representation of the collection.
-     *
-     * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->addons;
     }

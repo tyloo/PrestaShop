@@ -49,10 +49,7 @@ class EmployeeNotFoundException extends EmployeeException
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return EmployeeId
-     */
-    public function getEmployeeId()
+    public function getEmployeeId(): EmployeeId
     {
         return $this->employeeId;
     }

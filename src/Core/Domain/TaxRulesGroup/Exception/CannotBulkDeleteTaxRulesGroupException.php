@@ -49,7 +49,7 @@ class CannotBulkDeleteTaxRulesGroupException extends TaxRulesGroupException
     /**
      * @return int[]
      */
-    public function getTaxRulesGroupsIds()
+    public function getTaxRulesGroupsIds(): array
     {
         return $this->taxRulesGroupsIds;
     }

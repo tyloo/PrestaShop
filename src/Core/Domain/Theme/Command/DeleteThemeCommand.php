@@ -39,10 +39,7 @@ class DeleteThemeCommand
     ) {
     }
 
-    /**
-     * @return ThemeName
-     */
-    public function getThemeName()
+    public function getThemeName(): ThemeName
     {
         return $this->themeName;
     }

@@ -52,10 +52,7 @@ class EditableWebserviceKey
     ) {
     }
 
-    /**
-     * @return WebserviceKeyId
-     */
-    public function getWebserviceKeyId()
+    public function getWebserviceKeyId(): WebserviceKeyId
     {
         return $this->webserviceKeyId;
     }
@@ -84,10 +81,7 @@ class EditableWebserviceKey
         return $this->status;
     }
 
-    /**
-     * @return array
-     */
-    public function getResourcePermissions()
+    public function getResourcePermissions(): array
     {
         return $this->resourcePermissions;
     }
@@ -95,7 +89,7 @@ class EditableWebserviceKey
     /**
      * @return int[]
      */
-    public function getAssociatedShops()
+    public function getAssociatedShops(): array
     {
         return $this->associatedShops;
     }

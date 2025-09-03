@@ -39,10 +39,7 @@ class ImportThemeCommand
     ) {
     }
 
-    /**
-     * @return ThemeImportSource
-     */
-    public function getImportSource()
+    public function getImportSource(): ThemeImportSource
     {
         return $this->importSource;
     }

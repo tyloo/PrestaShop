@@ -57,7 +57,7 @@ class AddManufacturerCommand
     /**
      * @return string[]
      */
-    public function getLocalizedShortDescriptions()
+    public function getLocalizedShortDescriptions(): array
     {
         return $this->localizedShortDescriptions;
     }
@@ -65,7 +65,7 @@ class AddManufacturerCommand
     /**
      * @return string[]
      */
-    public function getLocalizedDescriptions()
+    public function getLocalizedDescriptions(): array
     {
         return $this->localizedDescriptions;
     }
@@ -73,7 +73,7 @@ class AddManufacturerCommand
     /**
      * @return string[]
      */
-    public function getLocalizedMetaTitles()
+    public function getLocalizedMetaTitles(): array
     {
         return $this->localizedMetaTitles;
     }
@@ -81,23 +81,17 @@ class AddManufacturerCommand
     /**
      * @return string[]
      */
-    public function getLocalizedMetaDescriptions()
+    public function getLocalizedMetaDescriptions(): array
     {
         return $this->localizedMetaDescriptions;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * @return array
-     */
-    public function getShopAssociation()
+    public function getShopAssociation(): array
     {
         return $this->shopAssociation;
     }

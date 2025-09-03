@@ -64,10 +64,7 @@ class EditableManufacturer
     ) {
     }
 
-    /**
-     * @return ManufacturerId
-     */
-    public function getManufacturerId()
+    public function getManufacturerId(): ManufacturerId
     {
         return $this->manufacturerId;
     }
@@ -83,7 +80,7 @@ class EditableManufacturer
     /**
      * @return string[]
      */
-    public function getLocalizedShortDescriptions()
+    public function getLocalizedShortDescriptions(): array
     {
         return $this->localizedShortDescriptions;
     }
@@ -91,7 +88,7 @@ class EditableManufacturer
     /**
      * @return string[]
      */
-    public function getLocalizedDescriptions()
+    public function getLocalizedDescriptions(): array
     {
         return $this->localizedDescriptions;
     }
@@ -107,7 +104,7 @@ class EditableManufacturer
     /**
      * @return string[]
      */
-    public function getLocalizedMetaTitles()
+    public function getLocalizedMetaTitles(): array
     {
         return $this->localizedMetaTitles;
     }
@@ -115,7 +112,7 @@ class EditableManufacturer
     /**
      * @return string[]
      */
-    public function getLocalizedMetaDescriptions()
+    public function getLocalizedMetaDescriptions(): array
     {
         return $this->localizedMetaDescriptions;
     }
@@ -128,10 +125,7 @@ class EditableManufacturer
         return $this->enabled;
     }
 
-    /**
-     * @return array
-     */
-    public function getAssociatedShops()
+    public function getAssociatedShops(): array
     {
         return $this->associatedShops;
     }

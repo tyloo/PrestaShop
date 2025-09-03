@@ -41,12 +41,12 @@ final class RenderedHook implements RenderedHookInterface
     ) {
     }
 
-    public function getHook()
+    public function getHook(): HookInterface
     {
         return $this->hook;
     }
 
-    public function getContent()
+    public function getContent(): array
     {
         return $this->content;
     }

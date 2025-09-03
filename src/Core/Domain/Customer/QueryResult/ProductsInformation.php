@@ -45,7 +45,7 @@ class ProductsInformation
     /**
      * @return BoughtProductInformation[]
      */
-    public function getBoughtProductsInformation()
+    public function getBoughtProductsInformation(): array
     {
         return $this->boughtProductsInformation;
     }
@@ -53,7 +53,7 @@ class ProductsInformation
     /**
      * @return ViewedProductInformation[]
      */
-    public function getViewedProductsInformation()
+    public function getViewedProductsInformation(): array
     {
         return $this->viewedProductsInformation;
     }

@@ -145,10 +145,7 @@ class AddPaymentCommand
         return $this->paymentCurrencyId;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getOrderInvoiceId()
+    public function getOrderInvoiceId(): ?int
     {
         return $this->orderInvoiceId;
     }
@@ -158,10 +155,7 @@ class AddPaymentCommand
         return $this->employeeId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPaymentTransactionId()
+    public function getPaymentTransactionId(): ?string
     {
         return $this->transactionId;
     }

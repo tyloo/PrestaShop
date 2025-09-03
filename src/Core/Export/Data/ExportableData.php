@@ -41,12 +41,12 @@ final class ExportableData implements ExportableDataInterface
     ) {
     }
 
-    public function getTitles()
+    public function getTitles(): array
     {
         return $this->titles;
     }
 
-    public function getRows()
+    public function getRows(): array
     {
         return $this->rows;
     }

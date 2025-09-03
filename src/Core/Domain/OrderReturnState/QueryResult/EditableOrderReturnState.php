@@ -42,18 +42,12 @@ class EditableOrderReturnState
     ) {
     }
 
-    /**
-     * @return OrderReturnStateId
-     */
-    public function getOrderReturnStateId()
+    public function getOrderReturnStateId(): OrderReturnStateId
     {
         return $this->orderReturnStateId;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalizedNames()
+    public function getLocalizedNames(): array
     {
         return $this->localizedNames;
     }

@@ -67,10 +67,7 @@ class EditableManufacturerAddress
     ) {
     }
 
-    /**
-     * @return AddressId
-     */
-    public function getAddressId()
+    public function getAddressId(): AddressId
     {
         return $this->addressId;
     }

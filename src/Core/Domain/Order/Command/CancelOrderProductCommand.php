@@ -48,10 +48,7 @@ class CancelOrderProductCommand
         $this->orderId = new OrderId($orderId);
     }
 
-    /**
-     * @return array
-     */
-    public function getCancelledProducts()
+    public function getCancelledProducts(): array
     {
         return $this->cancelledProducts;
     }

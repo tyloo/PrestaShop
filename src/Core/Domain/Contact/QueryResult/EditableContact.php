@@ -81,7 +81,7 @@ class EditableContact
     /**
      * @return string[]
      */
-    public function getLocalisedTitles()
+    public function getLocalisedTitles(): array
     {
         return $this->localisedTitles;
     }
@@ -113,7 +113,7 @@ class EditableContact
     /**
      * @return int[]
      */
-    public function getShopAssociation()
+    public function getShopAssociation(): array
     {
         return $this->shopAssociation;
     }

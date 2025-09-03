@@ -44,18 +44,12 @@ class EditableProfile
     ) {
     }
 
-    /**
-     * @return ProfileId
-     */
-    public function getProfileId()
+    public function getProfileId(): ProfileId
     {
         return $this->profileId;
     }
 
-    /**
-     * @return array
-     */
-    public function getLocalizedNames()
+    public function getLocalizedNames(): array
     {
         return $this->localizedNames;
     }

@@ -49,10 +49,7 @@ class LanguageNotFoundException extends LanguageException
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return LanguageId
-     */
-    public function getLanguageId()
+    public function getLanguageId(): LanguageId
     {
         return $this->languageId;
     }

@@ -57,10 +57,7 @@ class DuplicateCustomerEmailException extends CustomerException
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return Email
-     */
-    public function getEmail()
+    public function getEmail(): Email
     {
         return $this->email;
     }
