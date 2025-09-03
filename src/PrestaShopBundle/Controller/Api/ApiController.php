@@ -193,7 +193,7 @@ abstract class ApiController
      *
      * @return bool
      */
-    protected function isGranted($accessLevel, $controller)
+    protected function isGranted($accessLevel, string $controller)
     {
         return $this->authorizationChecker->isGranted(
             $accessLevel,

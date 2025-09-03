@@ -149,22 +149,17 @@ class XmlLoader
     /**
      * Store an ID related to an entity and its identifier (E.g. we want to save that product with ID "ipod_nano" has the ID 1).
      *
-     * @param string $entity
-     * @param string $identifier
-     * @param int    $id
+     * @param int $id
      */
-    public function storeId($entity, $identifier, $id): void
+    public function storeId(string $entity, string $identifier, $id): void
     {
         $this->ids[$entity . ':' . $identifier] = $id;
     }
 
     /**
      * Retrieve an ID related to an entity and its identifier.
-     *
-     * @param string $entity
-     * @param string $identifier
      */
-    public function retrieveId($entity, $identifier)
+    public function retrieveId(string $entity, string $identifier)
     {
         return $this->ids[$entity . ':' . $identifier] ?? 0;
     }
@@ -258,7 +253,7 @@ class XmlLoader
      *
      * @throws PrestashopInstallerException
      */
-    public function populateEntity($entity): void
+    public function populateEntity(string $entity): void
     {
         $populateEntityMethod = 'populateEntity' . Tools::toCamelCase($entity);
         if (method_exists($this, $populateEntityMethod)) {
@@ -476,11 +471,9 @@ class XmlLoader
      * Create a simple entity with all its data and lang data
      * If a methode createEntity$entity exists, use it. Else if $classname is given, use it. Else do a simple insert in database.
      *
-     * @param string $entity
-     * @param string $identifier
      * @param string $classname
      */
-    public function createEntity($entity, $identifier, $classname, array $data, array $data_lang = []): void
+    public function createEntity(string $entity, string $identifier, $classname, array $data, array $data_lang = []): void
     {
         $xml = $this->fileLoader->load($entity);
         if ($classname) {
@@ -540,12 +533,12 @@ class XmlLoader
         $this->storeId($entity, $identifier, $entity_id);
     }
 
-    public function createEntityAttribute($identifier, array $data, array $data_lang = []): void
+    public function createEntityAttribute(string $identifier, array $data, array $data_lang = []): void
     {
         $this->createEntity('attribute', $identifier, 'ProductAttribute', $data, $data_lang);
     }
 
-    public function createEntityConfiguration($identifier, array $data, array $data_lang): void
+    public function createEntityConfiguration(string $identifier, array $data, array $data_lang): void
     {
         if (Db::getInstance()->getValue('SELECT id_configuration FROM ' . _DB_PREFIX_ . 'configuration WHERE name = \'' . pSQL($data['name']) . '\'')) {
             return;
@@ -604,7 +597,7 @@ class XmlLoader
      *
      * @throws PrestashopInstallerException
      */
-    public function createEntityTab($identifier, array $data, array $data_lang): void
+    public function createEntityTab(string $identifier, array $data, array $data_lang): void
     {
         static $position = [];
 
@@ -673,7 +666,7 @@ class XmlLoader
         return ++$this->primaries[$entity];
     }
 
-    public function copyImages($entity, $identifier, $path, array $data, $extension = 'jpg'): void
+    public function copyImages($entity, string $identifier, $path, array $data, string $extension = 'jpg'): void
     {
         // Get list of image types
         $reference = [
@@ -770,7 +763,7 @@ class XmlLoader
         Image::moveToNewFileSystem();
     }
 
-    public function copyImagesOrderState($identifier, array $data): void
+    public function copyImagesOrderState(string $identifier, array $data): void
     {
         $this->copyImages('order_state', $identifier, 'os', $data, 'gif');
     }
@@ -789,7 +782,7 @@ class XmlLoader
         }
     }
 
-    public function copyImagesImage($identifier): void
+    public function copyImagesImage(string $identifier): void
     {
         $path = $this->img_path . 'p/';
         $image = new Image($this->retrieveId('image', $identifier));
@@ -871,7 +864,7 @@ class XmlLoader
         return (bool) Db::getInstance()->getValue('SELECT COUNT(*) FROM `' . _DB_PREFIX_ . $table . '`');
     }
 
-    public function getColumns($table, $multilang = false, array $exclude = [])
+    public function getColumns(string $table, $multilang = false, array $exclude = [])
     {
         static $columns = [];
 
@@ -951,7 +944,7 @@ class XmlLoader
         return isset($tables[$entity]) && $tables[$entity];
     }
 
-    public function entityExists($entity): bool
+    public function entityExists(string $entity): bool
     {
         return file_exists($this->data_path . $entity . '.xml');
     }
@@ -974,7 +967,7 @@ class XmlLoader
     /**
      * @return array<mixed, array<string, array{}|array{relation: string}|string>>
      */
-    public function getEntityInfo($entity): array
+    public function getEntityInfo(string $entity): array
     {
         $info = [
             'config' => [
@@ -1062,7 +1055,7 @@ class XmlLoader
         return $dependencies;
     }
 
-    public function generateEntitySchema($entity, array $fields, array $config): void
+    public function generateEntitySchema(string $entity, array $fields, array $config): void
     {
         if ($this->entityExists($entity)) {
             $xml = $this->fileLoader->load($entity);
@@ -1144,7 +1137,7 @@ class XmlLoader
         }
     }
 
-    public function generateEntityContent($entity): void
+    public function generateEntityContent(string $entity): void
     {
         $xml = $this->fileLoader->load($entity);
         if (method_exists($this, 'getEntityContents' . Tools::toCamelCase($entity))) {
@@ -1188,7 +1181,7 @@ class XmlLoader
     /**
      * ONLY FOR DEVELOPMENT PURPOSE.
      */
-    public function getEntityContents($entity): array
+    public function getEntityContents(string $entity): array
     {
         $xml = $this->fileLoader->load($entity);
         $primary = ! empty($xml->fields['primary']) ? (string) $xml->fields['primary'] : 'id_' . $entity;
@@ -1333,7 +1326,7 @@ class XmlLoader
     /**
      * ONLY FOR DEVELOPMENT PURPOSE.
      */
-    public function generateId($entity, $primary, array $row = [], $id_format = null)
+    public function generateId(string $entity, ?string $primary, array $row = [], $id_format = null)
     {
         static $ids = [];
 
@@ -1479,12 +1472,12 @@ class XmlLoader
         }
     }
 
-    protected function getFallBackToDefaultLanguage($iso)
+    protected function getFallBackToDefaultLanguage(string $iso): string
     {
         return file_exists($this->lang_path . $iso . '/data/') ? $iso : 'en';
     }
 
-    protected function getFallBackToDefaultEntityLanguage($iso, $entity)
+    protected function getFallBackToDefaultEntityLanguage($iso, string $entity)
     {
         if ($this->getFallBackToDefaultLanguage($iso) === 'en') {
             return 'en';

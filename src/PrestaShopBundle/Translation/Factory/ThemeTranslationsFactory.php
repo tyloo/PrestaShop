@@ -72,7 +72,7 @@ class ThemeTranslationsFactory extends TranslationsFactory
      * @param string $locale the catalogue locale
      * @param string $domain the catalogue domain
      */
-    protected function removeLocaleFromDomain($locale, $domain): string
+    protected function removeLocaleFromDomain(string $locale, $domain): string
     {
         return str_replace('.' . $locale, '', $domain);
     }

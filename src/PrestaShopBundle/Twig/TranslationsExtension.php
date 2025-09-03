@@ -267,7 +267,7 @@ class TranslationsExtension extends AbstractExtension
         );
     }
 
-    protected function getTranslationHash($domain, $translationKey): string
+    protected function getTranslationHash(string $domain, string $translationKey): string
     {
         return md5($domain . $translationKey);
     }
@@ -492,11 +492,10 @@ class TranslationsExtension extends AbstractExtension
     }
 
     /**
-     * @param string      $subject
      * @param bool        $isLastChild
      * @param string|null $id
      */
-    protected function tagSubject($subject, $isLastChild, $id = null): string
+    protected function tagSubject(string $subject, $isLastChild, $id = null): string
     {
         if ($isLastChild) {
             $openingTag = '<h2 class="domain-part">' .

@@ -86,10 +86,9 @@ class ThemeExporter
 
     /**
      * @param string $themeName
-     * @param string $locale
      * @param bool   $rootDir
      */
-    public function createZipArchive($themeName, $locale, $rootDir = false): string
+    public function createZipArchive($themeName, string $locale, $rootDir = false): string
     {
         $archiveParentDirectory = $this->exportCatalogues($themeName, $locale, $rootDir);
         $zipFilename = $this->makeZipFilename($themeName, $locale);
@@ -100,10 +99,9 @@ class ThemeExporter
 
     /**
      * @param string $themeName
-     * @param string $locale
      * @param bool   $rootDir
      */
-    public function exportCatalogues($themeName, $locale, $rootDir = false): string
+    public function exportCatalogues($themeName, string $locale, $rootDir = false): string
     {
         $this->themeProvider->setLocale($locale);
         $this->themeProvider->setThemeName($themeName);
@@ -152,10 +150,7 @@ class ThemeExporter
         $this->exportDir = str_replace('/export', \DIRECTORY_SEPARATOR . 'export', $exportDir);
     }
 
-    /**
-     * @param string $themeName
-     */
-    public function cleanArtifacts($themeName): void
+    public function cleanArtifacts(string $themeName): void
     {
         $this->filesystem->remove($this->getFlattenizationFolder($themeName));
         $this->filesystem->remove($this->getTemporaryExtractionFolder($themeName));
@@ -185,12 +180,11 @@ class ThemeExporter
 
     /**
      * @param string $themeName
-     * @param string $locale
      * @param bool   $rootDir
      *
      * @return MessageCatalogue
      */
-    protected function getCatalogueExtractedFromTemplates($themeName, $locale, $rootDir = false)
+    protected function getCatalogueExtractedFromTemplates($themeName, string $locale, $rootDir = false)
     {
         $tmpFolderPath = $this->getTemporaryExtractionFolder($themeName);
         $folderPath = $this->getFlattenizationFolder($themeName);
@@ -211,11 +205,7 @@ class ThemeExporter
         return $this->themeProvider->getCatalogueFromPaths([$folderPath], $locale, '*');
     }
 
-    /**
-     * @param string $locale
-     * @param string $archiveParentDirectory
-     */
-    protected function renameCatalogues($locale, $archiveParentDirectory)
+    protected function renameCatalogues(string $locale, string $archiveParentDirectory)
     {
         $finder = Finder::create();
 
@@ -235,35 +225,22 @@ class ThemeExporter
         $this->filesystem->remove($archiveParentDirectory . \DIRECTORY_SEPARATOR . $locale);
     }
 
-    /**
-     * @param string $themeName
-     */
-    protected function getTemporaryExtractionFolder($themeName): string
+    protected function getTemporaryExtractionFolder(string $themeName): string
     {
         return $this->cacheDir . \DIRECTORY_SEPARATOR . $themeName . '-tmp';
     }
 
-    /**
-     * @param string $themeName
-     */
-    protected function getFlattenizationFolder($themeName): string
+    protected function getFlattenizationFolder(string $themeName): string
     {
         return $this->cacheDir . \DIRECTORY_SEPARATOR . $themeName;
     }
 
-    /**
-     * @param string $themeName
-     */
-    protected function getExportDir($themeName): string
+    protected function getExportDir(string $themeName): string
     {
         return $this->exportDir . \DIRECTORY_SEPARATOR . $themeName;
     }
 
-    /**
-     * @param string $themeName
-     * @param string $locale
-     */
-    protected function makeZipFilename($themeName, $locale): string
+    protected function makeZipFilename(string $themeName, string $locale): string
     {
         if (! file_exists($this->exportDir)) {
             mkdir($this->exportDir);
@@ -280,12 +257,9 @@ class ThemeExporter
     }
 
     /**
-     * @param string $themeName
-     * @param string $locale
-     *
      * @throws Exception
      */
-    protected function makeArchiveParentDirectory($themeName, $locale): string
+    protected function makeArchiveParentDirectory(string $themeName, string $locale): string
     {
         $zipFilename = $this->makeZipFilename($themeName, $locale);
 
@@ -324,10 +298,7 @@ class ThemeExporter
         return $metadata === null || ! \array_key_exists('file', $metadata);
     }
 
-    /**
-     * @param string $locale
-     */
-    protected function addLocaleToDomain($locale, MessageCatalogue $sourceCatalogue): MessageCatalogue
+    protected function addLocaleToDomain(string $locale, MessageCatalogue $sourceCatalogue): MessageCatalogue
     {
         $catalogue = new MessageCatalogue($locale, []);
         foreach ($sourceCatalogue->all() as $domain => $messages) {

@@ -66,10 +66,9 @@ class MoneyWithSuffixType extends MoneyType
      * Can be used with array_walk().
      *
      * @param string $value
-     * @param int    $key    not used, it's only here to make this method compatible with array_walk
-     * @param string $suffix
+     * @param int    $key   not used, it's only here to make this method compatible with array_walk
      */
-    private function applySuffix(&$value, $key, $suffix): void
+    private function applySuffix(&$value, $key, string $suffix): void
     {
         if (mb_strlen($value) > 0) {
             $value = mb_rtrim($value) . ' ' . $suffix;

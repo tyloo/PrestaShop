@@ -650,7 +650,7 @@ class Install extends AbstractInstall
         return $languages;
     }
 
-    public function copyLanguageImages($iso): void
+    public function copyLanguageImages(string $iso): void
     {
         $img_path = _PS_INSTALL_LANGS_PATH_ . $iso . '/img/';
         if (! is_dir($img_path)) {

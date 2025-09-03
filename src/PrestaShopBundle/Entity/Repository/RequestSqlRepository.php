@@ -37,12 +37,9 @@ class RequestSqlRepository implements RepositoryInterface
 {
     private readonly string $requestSqlTable;
 
-    /**
-     * @param string $dbPrefix
-     */
     public function __construct(
         private readonly Connection $connection,
-        $dbPrefix,
+        string $dbPrefix,
     ) {
         $this->requestSqlTable = $dbPrefix . 'request_sql';
     }

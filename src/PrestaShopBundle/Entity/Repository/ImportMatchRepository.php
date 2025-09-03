@@ -40,12 +40,9 @@ class ImportMatchRepository implements RepositoryInterface
      */
     private readonly string $importMatchTable;
 
-    /**
-     * @param string $tablePrefix
-     */
     public function __construct(
         private readonly Connection $connection,
-        $tablePrefix,
+        string $tablePrefix,
     ) {
         $this->importMatchTable = $tablePrefix . 'import_match';
     }

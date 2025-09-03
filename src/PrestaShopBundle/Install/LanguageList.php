@@ -92,7 +92,7 @@ class LanguageList
      *
      * @param string $iso Language iso
      */
-    public function setLanguage($iso): void
+    public function setLanguage(string $iso): void
     {
         if (! \in_array($iso, $this->getIsoList(), true)) {
             throw new PrestashopInstallerException('Language ' . $iso . ' not found');

@@ -58,7 +58,7 @@ class Language
 
     public $allow_accented_chars_url;
 
-    public function __construct($iso)
+    public function __construct(string $iso)
     {
         $this->iso_code = mb_strtolower((string) $iso);
         $xmlPath = _PS_INSTALL_LANGS_PATH_ . $iso . '/';
@@ -66,7 +66,7 @@ class Language
         $this->is_rtl = ($this->is_rtl === 'true') ? true : false;
     }
 
-    public function setPropertiesFromXml($xmlPath): void
+    public function setPropertiesFromXml(string $xmlPath): void
     {
         $xml = @simplexml_load_file($xmlPath . '/language.xml');
         if ($xml) {

@@ -415,11 +415,10 @@ class FrameworkBundleAdminController extends AbstractController
      *
      * @param string $action
      * @param string $object
-     * @param string $suffix
      *
      * @throws LogicException
      */
-    protected function actionIsAllowed($action, $object = '', $suffix = ''): bool
+    protected function actionIsAllowed($action, $object = '', string $suffix = ''): bool
     {
         return (
             $action === 'delete' . $suffix && $this->isGranted(Permission::DELETE, $object)
@@ -435,12 +434,9 @@ class FrameworkBundleAdminController extends AbstractController
     /**
      * Display a message about permissions failure according to an action.
      *
-     * @param string $action
-     * @param string $suffix
-     *
      * @throws Exception
      */
-    protected function getForbiddenActionMessage($action, $suffix = ''): string
+    protected function getForbiddenActionMessage(string $action, string $suffix = ''): string
     {
         if ($action === 'delete' . $suffix) {
             return $this->trans('You do not have permission to delete this.', 'Admin.Notifications.Error');

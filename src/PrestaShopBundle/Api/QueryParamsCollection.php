@@ -689,7 +689,7 @@ abstract class QueryParamsCollection
             $value = [$value];
         }
 
-        array_map(function ($index, $value) use (&$sqlParams): void {
+        array_map(function ($index, string $value) use (&$sqlParams): void {
             $sqlParams['keyword_' . $index] = (string) ('%' . $value . '%');
         }, range(0, \count($value) - 1), $value);
 
