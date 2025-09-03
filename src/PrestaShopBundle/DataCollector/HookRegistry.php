@@ -71,7 +71,7 @@ final class HookRegistry
         $this->currentHook = [
             'name' => $hookName,
             'args' => $hookArguments,
-            'location' => "$file:$line",
+            'location' => \sprintf('%s:%d', $file, $line),
             'status' => self::HOOK_NOT_CALLED,
             'modules' => [],
         ];

@@ -83,11 +83,11 @@ class LegacyRouterChecker
 
             $controllerName = $controllers[mb_strtolower((string) $queryController)];
             // Controllers in modules can be named AdminXXX.php or AdminXXXController.php
-            include_once _PS_MODULE_DIR_ . "{$moduleName}/controllers/admin/$controllerName.php";
+            include_once _PS_MODULE_DIR_ . \sprintf('%s/controllers/admin/%s.php', $moduleName, $controllerName);
             if (file_exists(
-                _PS_OVERRIDE_DIR_ . "modules/{$moduleName}/controllers/admin/$controllerName.php"
+                _PS_OVERRIDE_DIR_ . \sprintf('modules/%s/controllers/admin/%s.php', $moduleName, $controllerName)
             )) {
-                include_once _PS_OVERRIDE_DIR_ . "modules/{$moduleName}/controllers/admin/$controllerName.php";
+                include_once _PS_OVERRIDE_DIR_ . \sprintf('modules/%s/controllers/admin/%s.php', $moduleName, $controllerName);
                 $controllerClass = $controllerName . (
                     mb_strpos($controllerName, 'Controller') ? 'Override' : 'ControllerOverride'
                 );

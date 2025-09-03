@@ -175,7 +175,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
      */
     private function getSqlUpgradeFileByPrestaShopVersion(string $version, $autoUpgradeModulePath): string
     {
-        $sqlUpgradeFile = "$autoUpgradeModulePath/upgrade/sql/$version.sql";
+        $sqlUpgradeFile = \sprintf('%s/upgrade/sql/%s.sql', $autoUpgradeModulePath, $version);
 
         if (! file_exists($sqlUpgradeFile)) {
             throw new FileNotFoundException(\sprintf('File %s has not been found', $sqlUpgradeFile));
@@ -205,7 +205,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
             return '';
         }
 
-        $insertSQL = \PHP_EOL . "/* Auto generated hooks added for version $prestashopVersion */" . \PHP_EOL;
+        $insertSQL = \PHP_EOL . \sprintf('/* Auto generated hooks added for version %s */', $prestashopVersion) . \PHP_EOL;
         $insertSQL .= 'INSERT INTO `PREFIX_hook` (`id_hook`, `name`, `title`, `description`, `position`) VALUES' . \PHP_EOL;
         $insertSQL .= implode(',' . \PHP_EOL, $valuesToInsert);
         $insertSQL .= \PHP_EOL . 'ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `description` = VALUES(`description`);' . \PHP_EOL;
@@ -219,9 +219,9 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
             return '';
         }
 
-        $deleteSQL = \PHP_EOL . "/* Auto generated hooks removed for version $prestashopVersion */" . \PHP_EOL;
+        $deleteSQL = \PHP_EOL . \sprintf('/* Auto generated hooks removed for version %s */', $prestashopVersion) . \PHP_EOL;
         $deleteSQL .= 'DELETE FROM `PREFIX_hook` WHERE `name` IN (' . \PHP_EOL;
-        $deleteSQL .= implode(',' . \PHP_EOL, array_map(fn (string $hookName): string => "  '$hookName'", $removedHooks));
+        $deleteSQL .= implode(',' . \PHP_EOL, array_map(fn (string $hookName): string => \sprintf("  '%s'", $hookName), $removedHooks));
         $deleteSQL .= \PHP_EOL . ');' . \PHP_EOL;
         $deleteSQL .= '/* Clean hook registrations related to removed hooks */' . \PHP_EOL;
         $deleteSQL .= 'DELETE FROM `PREFIX_hook_module` WHERE `id_hook` NOT IN (SELECT id_hook FROM `PREFIX_hook`);' . \PHP_EOL;

@@ -49,7 +49,7 @@ class TimezoneRepository implements RepositoryInterface
      */
     public function findAll(): array
     {
-        $statement = $this->connection->query("SELECT t.* FROM $this->timezoneTable t");
+        $statement = $this->connection->query(\sprintf('SELECT t.* FROM %s t', $this->timezoneTable));
 
         return $statement->fetchAll();
     }

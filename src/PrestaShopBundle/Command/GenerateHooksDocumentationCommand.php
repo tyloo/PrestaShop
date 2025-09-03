@@ -146,12 +146,12 @@ final class GenerateHooksDocumentationCommand extends Command
             foreach ($files as $file) {
                 $fileUrl = $file['url'];
                 $fileFilePath = $file['file'];
-                $content .= "\n    -\n        url: '$fileUrl'\n        file: $fileFilePath";
+                $content .= "\n    -\n        url: '{$fileUrl}'\n        file: {$fileFilePath}";
             }
 
             $locationsYaml = '';
             foreach ($locations as $location) {
-                $locationsYaml .= "\n    - '$location'";
+                $locationsYaml .= "\n    - '{$location}'";
             }
 
             $content .= <<<EOT

@@ -110,7 +110,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
                             'iso_code_country' => basename($entry, '.xml'),
                         ];
                     } else {
-                        $output->writeln("<error>Too many taxes with eu-tax-group=\"virtual\" found in `$localizationPackFile`.");
+                        $output->writeln(\sprintf('<error>Too many taxes with eu-tax-group="virtual" found in `%s`.', $localizationPackFile));
 
                         return 1;
                     }
@@ -184,7 +184,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
 
         $nUpdated = \count($euLocalizationFiles);
 
-        $output->writeln("<info>Updated the virtual tax groups for $nUpdated localization files</info>");
+        $output->writeln(\sprintf('<info>Updated the virtual tax groups for %d localization files</info>', $nUpdated));
 
         return 0;
     }

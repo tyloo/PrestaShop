@@ -51,7 +51,7 @@ class LogRepository implements RepositoryInterface
 
     public function findAll(): array
     {
-        $result = $this->connection->executeQuery("SELECT l.* FROM $this->logTable l");
+        $result = $this->connection->executeQuery(\sprintf('SELECT l.* FROM %s l', $this->logTable));
 
         return $result->fetchAllAssociative();
     }
@@ -69,7 +69,7 @@ class LogRepository implements RepositoryInterface
         $parameters = $queryBuilder->getParameters();
 
         foreach ($parameters as $pattern => $value) {
-            $query = str_replace(":$pattern", $value, $query);
+            $query = str_replace(':' . $pattern, $value, $query);
         }
 
         return $query;
@@ -109,7 +109,7 @@ class LogRepository implements RepositoryInterface
             ->setMaxResults($filters['limit']);
 
         foreach ($scalarFilters as $column => $value) {
-            $qb->andWhere("$column LIKE :$column");
+            $qb->andWhere(\sprintf('%s LIKE :%s', $column, $column));
             $qb->setParameter($column, '%' . $value . '%');
         }
 

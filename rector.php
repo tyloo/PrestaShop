@@ -48,5 +48,5 @@ return RectorConfig::configure()
     ->withTypeCoverageLevel(53) // max = 53
     // ->withDeadCodeLevel(0) // max = 51
     // ->withCodeQualityLevel(0) // max = 74
-    ->withCodingStyleLevel(9) // max = 25
+    ->withCodingStyleLevel(10) // max = 25
 ;

@@ -57,7 +57,7 @@ class ImportFormHandler implements ImportFormHandlerInterface
     {
         $this->formBuilder->setData($this->formDataProvider->getData($importConfig));
         $this->hookDispatcher->dispatchWithParameters(
-            "action{$this->hookName}Form",
+            \sprintf('action%sForm', $this->hookName),
             [
                 'form_builder' => $this->formBuilder,
             ]
@@ -71,7 +71,7 @@ class ImportFormHandler implements ImportFormHandlerInterface
         $errors = $this->formDataProvider->setData($data);
 
         $this->hookDispatcher->dispatchWithParameters(
-            "action{$this->hookName}Save",
+            \sprintf('action%sSave', $this->hookName),
             [
                 'errors' => &$errors,
                 'form_data' => $data,

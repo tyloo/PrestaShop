@@ -130,7 +130,7 @@ class FileLoader
      */
     private function getLookupPaths(string $entity, ?string $iso = null): array
     {
-        $fileName = "$entity.xml";
+        $fileName = $entity . '.xml';
 
         // default path
         if (empty($iso)) {

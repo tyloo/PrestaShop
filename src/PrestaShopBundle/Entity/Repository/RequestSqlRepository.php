@@ -46,7 +46,7 @@ class RequestSqlRepository implements RepositoryInterface
 
     public function findAll(): array
     {
-        $statement = $this->connection->query("SELECT rs.* FROM $this->requestSqlTable rs");
+        $statement = $this->connection->query(\sprintf('SELECT rs.* FROM %s rs', $this->requestSqlTable));
 
         return $statement->fetchAll();
     }
@@ -58,7 +58,7 @@ class RequestSqlRepository implements RepositoryInterface
      */
     public function getCount(): int
     {
-        $statement = $this->connection->query("SELECT COUNT(rs.id_request_sql) AS c FROM $this->requestSqlTable rs");
+        $statement = $this->connection->query(\sprintf('SELECT COUNT(rs.id_request_sql) AS c FROM %s rs', $this->requestSqlTable));
         $row = $statement->fetch();
 
         return (int) $row['c'];

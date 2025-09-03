@@ -118,7 +118,7 @@ class FeatureFlagCommand extends Command
 
         foreach ($featureFlag->getOrderedTypes() as $type) {
             if ($this->featureFlagManager->getUsedType($featureFlag->getName()) === $type) {
-                $out[] = "[$type]";
+                $out[] = \sprintf('[%s]', $type);
             } else {
                 $out[] = $type;
             }

@@ -46,7 +46,7 @@ final class TranslationsSettingsFormHandler implements FormHandlerInterface
         $formBuilder = $this->formFactory->createNamedBuilder('form', $this->form);
 
         $this->hookDispatcher->dispatchWithParameters(
-            "action{$this->hookName}Form",
+            \sprintf('action%sForm', $this->hookName),
             [
                 'form_builder' => $formBuilder,
             ]
