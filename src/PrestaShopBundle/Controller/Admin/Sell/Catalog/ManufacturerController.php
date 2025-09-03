@@ -467,7 +467,7 @@ class ManufacturerController extends PrestaShopAdminController
         ManufacturerAddressFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.grid_factory.manufacturer_address')]
         GridFactoryInterface $addressesGridFactory,
-    ) {
+    ): CsvResponse {
         $addressesGrid = $addressesGridFactory->getGrid($filters);
 
         $headers = [

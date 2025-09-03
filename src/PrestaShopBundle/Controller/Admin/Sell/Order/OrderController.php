@@ -323,15 +323,12 @@ class OrderController extends PrestaShopAdminController
         return $this->redirectToRoute('admin_orders_index');
     }
 
-    /**
-     * @return CsvResponse
-     */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller'))", redirectRoute: 'admin_orders_index')]
     public function exportAction(
         OrderFilters $filters,
         #[Autowire(service: 'prestashop.core.grid.factory.order')]
         GridFactory $orderGridFactory,
-    ) {
+    ): CsvResponse {
         $isB2bEnabled = $this->getConfiguration()->get('PS_B2B_ENABLE');
 
         $filters = new OrderFilters(['limit' => null] + $filters->all());
