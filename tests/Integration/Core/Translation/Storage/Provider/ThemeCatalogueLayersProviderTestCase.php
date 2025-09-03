@@ -47,10 +47,7 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class ThemeCatalogueLayersProviderTestCase extends AbstractCatalogueLayersProviderTestCase
 {
-    /**
-     * @var MockObject|ThemeExtractor
-     */
-    private $themeExtractor;
+    private \PHPUnit\Framework\MockObject\MockObject|ThemeExtractor $themeExtractor;
 
     /**
      * @var (MockObject & \ThemeRepository)

@@ -93,7 +93,7 @@ class SetAssociatedProductCategoriesCommand
         $this->assertCategoryIdsAreNotEmpty($categoryIds);
 
         $this->categoryIds = array_map(
-            fn ($id): CategoryId => new CategoryId($id), $categoryIds
+            fn (int $id): CategoryId => new CategoryId($id), $categoryIds
         );
     }
 

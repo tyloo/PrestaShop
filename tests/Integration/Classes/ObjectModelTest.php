@@ -56,10 +56,7 @@ class ObjectModelTest extends TestCase
 
     private int $defaultShopId;
 
-    /**
-     * @var int
-     */
-    private $secondShopId;
+    private int $secondShopId;
 
     public static function setUpBeforeClass(): void
     {

@@ -37,10 +37,7 @@ class ImageFileDeleterTest extends TestCase
 {
     private Filesystem $fs;
 
-    /**
-     * @var vfsStreamDirectory
-     */
-    private $root;
+    private vfsStreamDirectory $root;
 
     protected function setUp(): void
     {

@@ -44,10 +44,7 @@ use TaxRulesGroup;
 
 class TaxComputerTest extends KernelTestCase
 {
-    /**
-     * @var TaxComputer
-     */
-    private $taxComputer;
+    private TaxComputer $taxComputer;
 
     protected function setUp(): void
     {

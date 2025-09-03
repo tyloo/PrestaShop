@@ -36,10 +36,7 @@ use Tests\Resources\DatabaseDump;
 
 class StockManagementControllerTest extends ApiTestCase
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
 
     public static function setUpBeforeClass(): void
     {

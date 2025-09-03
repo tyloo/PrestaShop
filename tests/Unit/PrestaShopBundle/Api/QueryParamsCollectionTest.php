@@ -39,10 +39,7 @@ use Symfony\Component\HttpFoundation\Request;
 #[\PHPUnit\Framework\Attributes\Group('api')]
 class QueryParamsCollectionTest extends TestCase
 {
-    /**
-     * @var QueryParamsCollection
-     */
-    private $queryParams;
+    private QueryParamsCollection $queryParams;
 
     protected function setUp(): void
     {
@@ -461,7 +458,7 @@ AND EXISTS(SELECT 1
             'features',
         ];
 
-        array_walk($validQueryParams, function ($name) use ($testedParams, &$params): void {
+        array_walk($validQueryParams, function (string $name) use ($testedParams, &$params): void {
             if (\array_key_exists($name, $testedParams) && $testedParams[$name] !== null) {
                 $params[$name] = $testedParams[$name];
             }

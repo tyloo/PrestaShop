@@ -35,10 +35,7 @@ use Tests\Resources\Controller\TestController;
 
 class SecurityAttributeLinterTest extends KernelTestCase
 {
-    /**
-     * @var SecurityAttributeLinter
-     */
-    private $securityAnnotationLinter;
+    private SecurityAttributeLinter $securityAnnotationLinter;
 
     protected function setUp(): void
     {

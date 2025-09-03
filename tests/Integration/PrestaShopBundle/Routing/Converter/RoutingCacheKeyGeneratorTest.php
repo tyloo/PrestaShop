@@ -42,10 +42,7 @@ use Tools;
 #[\PHPUnit\Framework\Attributes\Group('isolatedProcess')]
 class RoutingCacheKeyGeneratorTest extends KernelTestCase
 {
-    /**
-     * @var Module
-     */
-    private $module;
+    private Module $module;
 
     protected function setUp(): void
     {

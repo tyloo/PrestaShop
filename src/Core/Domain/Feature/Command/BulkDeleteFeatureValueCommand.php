@@ -43,7 +43,7 @@ class BulkDeleteFeatureValueCommand
      */
     public function __construct(array $featureValueIds)
     {
-        $this->featureValueIds = array_map(static fn ($id): FeatureValueId => new FeatureValueId($id), $featureValueIds);
+        $this->featureValueIds = array_map(static fn (int $id): FeatureValueId => new FeatureValueId($id), $featureValueIds);
     }
 
     /**

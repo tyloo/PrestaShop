@@ -41,10 +41,7 @@ class CartPresenterTest extends TestCase
      */
     protected $cartPresenter;
 
-    /**
-     * @var false|string
-     */
-    private $previousSeparator;
+    private false|string $previousSeparator;
 
     protected function setUp(): void
     {

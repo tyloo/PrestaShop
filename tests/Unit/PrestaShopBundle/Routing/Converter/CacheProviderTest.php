@@ -45,10 +45,7 @@ class CacheProviderTest extends TestCase
 
     private array $expectedFlattenArray;
 
-    /**
-     * @var string
-     */
-    private $expectedCacheValue;
+    private string $expectedCacheValue;
 
     /**
      * @var LegacyRoute[]

@@ -46,10 +46,7 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class ModuleCatalogueLayersProviderTest extends KernelTestCase
 {
-    /**
-     * @var string
-     */
-    private $translationsDir;
+    private string $translationsDir;
 
     /**
      * @var MockObject|LegacyModuleExtractorInterface

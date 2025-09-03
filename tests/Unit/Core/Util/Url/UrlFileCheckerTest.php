@@ -35,10 +35,7 @@ use PrestaShop\PrestaShop\Core\Util\Url\UrlFileCheckerInterface;
 
 class UrlFileCheckerTest extends TestCase
 {
-    /**
-     * @var vfsStreamDirectory
-     */
-    private $root;
+    private vfsStreamDirectory $root;
 
     protected function setUp(): void
     {

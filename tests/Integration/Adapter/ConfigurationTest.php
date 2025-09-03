@@ -30,7 +30,6 @@ declare(strict_types=1);
 namespace Tests\Integration\Adapter;
 
 use Configuration as LegacyConfiguration;
-use PrestaShop\PrestaShop\Adapter\Configuration;
 use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 use PrestaShopBundle\Entity\Shop;
 use PrestaShopBundle\Entity\ShopGroup;
@@ -40,10 +39,7 @@ use Tests\Resources\DatabaseDump;
 
 class ConfigurationTest extends KernelTestCase
 {
-    /**
-     * @var Configuration|null
-     */
-    private $configuration;
+    private ?LegacyConfiguration $configuration;
 
     public static function setUpBeforeClass(): void
     {
