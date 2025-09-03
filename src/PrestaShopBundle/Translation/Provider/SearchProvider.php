@@ -96,7 +96,7 @@ class SearchProvider extends AbstractProvider implements UseDefaultCatalogueInte
         return $xliffCatalogue;
     }
 
-    public function setLocale($locale)
+    public function setLocale(string $locale)
     {
         $this->externalModuleLegacySystemProvider->setLocale($locale);
 
