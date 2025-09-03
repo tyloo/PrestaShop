@@ -41,9 +41,7 @@ class UpdateCombinationImagesFeatureContext extends AbstractCombinationFeatureCo
      */
     public function associateCombinationImages(array $imageReferences, string $combinationReference): void
     {
-        $imageIds = array_map(function (string $imageReference) {
-            return (int) $this->getSharedStorage()->get($imageReference);
-        }, $imageReferences);
+        $imageIds = array_map(fn (string $imageReference) => (int) $this->getSharedStorage()->get($imageReference), $imageReferences);
 
         $this->getCommandBus()->handle(new SetCombinationImagesCommand(
             (int) $this->getSharedStorage()->get($combinationReference),

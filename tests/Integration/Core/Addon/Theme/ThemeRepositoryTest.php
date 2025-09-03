@@ -69,7 +69,7 @@ class ThemeRepositoryTest extends ContextStateTestCase
     {
         $expectedTheme = $this->repository->getInstanceByName('classic');
         $this->assertInstanceOf(
-            'PrestaShop\PrestaShop\Core\Addon\Theme\Theme',
+            \PrestaShop\PrestaShop\Core\Addon\Theme\Theme::class,
             $expectedTheme,
             self::NOTICE . \sprintf('expected `getInstanceByName to return Theme, get %s`', \gettype($expectedTheme))
         );
@@ -85,7 +85,7 @@ class ThemeRepositoryTest extends ContextStateTestCase
     {
         $themeList = $this->repository->getList();
         $this->assertIsArray($themeList);
-        $this->assertInstanceOf('PrestaShop\PrestaShop\Core\Addon\Theme\Theme', current($themeList));
+        $this->assertInstanceOf(\PrestaShop\PrestaShop\Core\Addon\Theme\Theme::class, current($themeList));
     }
 
     public function testGetListExcluding()

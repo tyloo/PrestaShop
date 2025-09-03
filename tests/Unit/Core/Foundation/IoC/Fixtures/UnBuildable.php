@@ -31,14 +31,10 @@ namespace Tests\Unit\Core\Foundation\IoC\Fixtures;
 
 class UnBuildable
 {
-    private $dummy;
-    private $something;
-    private $cannotBeBuilt;
-
-    public function __construct(Dummy $dummy, $cannotBeBuilt, $something = 4)
-    {
-        $this->dummy = $dummy;
-        $this->cannotBeBuilt = $cannotBeBuilt;
-        $this->something = $something;
+    public function __construct(
+        private readonly Dummy $dummy,
+        private $cannotBeBuilt,
+        private $something = 4,
+    ) {
     }
 }

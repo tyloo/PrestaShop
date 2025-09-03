@@ -110,8 +110,8 @@ class Ps_Banner extends Module implements WidgetInterface
                     if ($error = ImageManager::validateUpload($_FILES['BANNER_IMG_' . $lang['id_lang']], 4000000)) {
                         return $error;
                     }
-                    $ext = substr($_FILES['BANNER_IMG_' . $lang['id_lang']]['name'], strrpos($_FILES['BANNER_IMG_' . $lang['id_lang']]['name'], '.') + 1);
-                    $file_name = md5($_FILES['BANNER_IMG_' . $lang['id_lang']]['name']) . '.' . $ext;
+                    $ext = substr((string) $_FILES['BANNER_IMG_' . $lang['id_lang']]['name'], strrpos((string) $_FILES['BANNER_IMG_' . $lang['id_lang']]['name'], '.') + 1);
+                    $file_name = md5((string) $_FILES['BANNER_IMG_' . $lang['id_lang']]['name']) . '.' . $ext;
 
                     if (! move_uploaded_file($_FILES['BANNER_IMG_' . $lang['id_lang']]['tmp_name'], __DIR__ . \DIRECTORY_SEPARATOR . 'img' . \DIRECTORY_SEPARATOR . $file_name)) {
                         return $this->displayError($this->trans('An error occurred while attempting to upload the file.', [], 'Admin.Notifications.Error'));
@@ -194,7 +194,7 @@ class Ps_Banner extends Module implements WidgetInterface
         $helper->table = $this->table;
         $helper->default_form_language = $lang->id;
         $helper->module = $this;
-        $helper->allow_employee_form_lang = Configuration::get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG') ? Configuration::get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG') : 0;
+        $helper->allow_employee_form_lang = Configuration::get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG') ?: 0;
         $helper->identifier = $this->identifier;
         $helper->submit_action = 'submitStoreConf';
         $helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false) . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name;
@@ -253,7 +253,7 @@ class Ps_Banner extends Module implements WidgetInterface
 
     private function updateUrl($link)
     {
-        if (substr($link, 0, 7) !== 'http://' && substr($link, 0, 8) !== 'https://') {
+        if (! str_starts_with((string) $link, 'http://') && ! str_starts_with((string) $link, 'https://')) {
             $link = 'http://' . $link;
         }
 

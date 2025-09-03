@@ -43,10 +43,10 @@ class CacheTest extends TestCase
             ->onlyMethods(['_set', '_get', '_delete', '_deleteMulti'])
             ->getMock();
 
-        $memcachedMock->method('_get')->willReturnCallback([$this, 'getFromArray']);
-        $memcachedMock->method('_set')->willReturnCallback([$this, 'setIntoArray']);
-        $memcachedMock->method('_delete')->willReturnCallback([$this, 'deleteFromArray']);
-        $memcachedMock->method('_deleteMulti')->willReturnCallback([$this, 'deleteMultiFromArray']);
+        $memcachedMock->method('_get')->willReturnCallback($this->getFromArray(...));
+        $memcachedMock->method('_set')->willReturnCallback($this->setIntoArray(...));
+        $memcachedMock->method('_delete')->willReturnCallback($this->deleteFromArray(...));
+        $memcachedMock->method('_deleteMulti')->willReturnCallback($this->deleteMultiFromArray(...));
 
         Cache::setInstanceForTesting($memcachedMock);
     }

@@ -83,7 +83,7 @@ class CartRuleAssertionFeatureContext extends AbstractCartRuleFeatureContext
         try {
             $this->getCartRuleForEditing($cartRuleReference);
             throw new NoExceptionAlthoughExpectedException(\sprintf('Cart rule "%s" was found, but it was expected to be deleted', $cartRuleReference));
-        } catch (CartRuleNotFoundException $e) {
+        } catch (CartRuleNotFoundException) {
             $this->getSharedStorage()->clear($cartRuleReference);
         }
     }

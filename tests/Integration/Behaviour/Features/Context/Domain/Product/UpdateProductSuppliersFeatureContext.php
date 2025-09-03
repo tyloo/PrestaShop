@@ -106,9 +106,9 @@ class UpdateProductSuppliersFeatureContext extends AbstractProductFeatureContext
             if (! empty($supplierRow['product_supplier'])) {
                 $productSuppliersReferences[$supplierId][NoCombinationId::NO_COMBINATION_ID] = $supplierRow['product_supplier'];
             } elseif (! empty($supplierRow['combination_suppliers'])) {
-                $combinationReferences = explode(';', $supplierRow['combination_suppliers']);
+                $combinationReferences = explode(';', (string) $supplierRow['combination_suppliers']);
                 foreach ($combinationReferences as $combinationReference) {
-                    list($combinationReference, $productSupplierReference) = explode(':', $combinationReference);
+                    [$combinationReference, $productSupplierReference] = explode(':', $combinationReference);
                     $combinationId = (int) $this->getSharedStorage()->get($combinationReference);
                     $productSuppliersReferences[$supplierId][$combinationId] = $productSupplierReference;
                 }

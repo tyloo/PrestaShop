@@ -35,10 +35,10 @@ class HookFinderTest extends TestCase
     public function testAddOneExpectedClass()
     {
         $finder = new HookFinder();
-        $finder->addExpectedInstanceClasses(__CLASS__);
+        $finder->addExpectedInstanceClasses(self::class);
 
         $this->assertSame(
-            [__CLASS__],
+            [self::class],
             $finder->getExpectedInstanceClasses()
         );
     }
@@ -46,11 +46,11 @@ class HookFinderTest extends TestCase
     public function testAddSeveralExpectedClass()
     {
         $finder = new HookFinder();
-        $finder->addExpectedInstanceClasses(__CLASS__);
+        $finder->addExpectedInstanceClasses(self::class);
         $finder->addExpectedInstanceClasses([HookFinder::class, TestCase::class]);
 
         $this->assertSame(
-            [__CLASS__, HookFinder::class, TestCase::class],
+            [self::class, HookFinder::class, TestCase::class],
             $finder->getExpectedInstanceClasses()
         );
     }

@@ -115,7 +115,7 @@ abstract class AbstractDomainFeatureContext extends AbstractPrestaShopFeatureCon
     protected function localizeByColumns(TableNode $table): array
     {
         $rows = [];
-        foreach ($table->getColumnsHash() as $key => $column) {
+        foreach ($table->getColumnsHash() as $column) {
             $row = [];
             foreach ($column as $columnName => $value) {
                 $row[$columnName] = $value;

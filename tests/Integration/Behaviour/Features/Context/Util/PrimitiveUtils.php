@@ -73,7 +73,7 @@ class PrimitiveUtils
                     return $element;
                 }
 
-                return explode('; ', $element);
+                return explode('; ', (string) $element);
 
             case self::TYPE_NULL:
                 if (($element === 'null') || ($element === 'Null') || ($element === 'NULL')) {
@@ -120,7 +120,7 @@ class PrimitiveUtils
 
             case self::TYPE_STRING:
                 $cleanedString1 = trim($element1);
-                $cleanedString2 = trim($element2);
+                $cleanedString2 = trim((string) $element2);
 
                 return $cleanedString1 === $cleanedString2;
 
@@ -209,28 +209,14 @@ class PrimitiveUtils
             return \intval($element);
         }
 
-        switch ($element) {
-            case 'first':
-            case 'one':
-                return 1;
-
-            case 'second':
-            case 'two':
-                return 2;
-
-            case 'third':
-            case 'three':
-                return 3;
-
-            case 'four':
-                return 4;
-
-            case 'five':
-                return 5;
-
-            default:
-                throw new RuntimeException("Unknown string integer: $element");
-        }
+        return match ($element) {
+            'first', 'one' => 1,
+            'second', 'two' => 2,
+            'third', 'three' => 3,
+            'four' => 4,
+            'five' => 5,
+            default => throw new RuntimeException("Unknown string integer: $element"),
+        };
     }
 
     /**

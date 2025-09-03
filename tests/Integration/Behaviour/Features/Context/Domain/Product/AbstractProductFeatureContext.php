@@ -219,7 +219,7 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
         } else {
             $expectedDateTime = new DateTime($data[$propertyName]);
             if (! ($actualValue instanceof DateTimeInterface)) {
-                throw new RuntimeException(\sprintf('Unexpected type %s, expected DateTimeInterface', \get_class($actualValue)));
+                throw new RuntimeException(\sprintf('Unexpected type %s, expected DateTimeInterface', $actualValue::class));
             }
 
             $formattedExpectedDate = $expectedDateTime->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);

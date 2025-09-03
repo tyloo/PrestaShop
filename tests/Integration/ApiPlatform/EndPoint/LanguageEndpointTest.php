@@ -69,7 +69,7 @@ class LanguageEndpointTest extends ApiTestCase
         $items = $paginatedLanguages['items'];
         // We delete the end of the flag path because it is a timestamp and could cause random fails in tests.
         foreach ($items as $key => $item) {
-            $items[$key]['flag'] = substr($items[$key]['flag'], 0, strpos($items[$key]['flag'], '?'));
+            $items[$key]['flag'] = substr((string) $items[$key]['flag'], 0, strpos((string) $items[$key]['flag'], '?'));
         }
         $this->assertEquals(2, $paginatedLanguages['totalItems']);
         $this->assertEquals([

@@ -174,12 +174,12 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
             $password,
             $defaultGroupId,
             $groupIds,
-            isset($data['shopId']) ? $data['shopId'] : 0,
-            isset($data['genderId']) ? $data['genderId'] : null,
-            isset($data['isEnabled']) ? $data['isEnabled'] : true,
-            isset($data['isPartnerOffersSubscribed']) ? $data['isPartnerOffersSubscribed'] : false,
-            isset($data['birthday']) ? $data['birthday'] : null,
-            isset($data['isGuest']) ? $data['isGuest'] : false
+            $data['shopId'] ?? 0,
+            $data['genderId'] ?? null,
+            $data['isEnabled'] ?? true,
+            $data['isPartnerOffersSubscribed'] ?? false,
+            $data['birthday'] ?? null,
+            $data['isGuest'] ?? false
         );
 
         if (Configuration::get('PS_B2B_ENABLE')) {

@@ -97,7 +97,7 @@ class ListCommandsAndQueriesCommandTest extends TestCase
 
         $command = new ListCommandsAndQueriesCommand(
             new CommandDefinitionParser(),
-            ["PrestaShop\PrestaShop\Adapter\HookManager"],
+            [\PrestaShop\PrestaShop\Adapter\HookManager::class],
             $this->resourceNameCollectionMock,
             $this->resourceMetadataCollectionMock
         );
@@ -143,10 +143,10 @@ class ListCommandsAndQueriesCommandTest extends TestCase
     private function getListOfCQRSCommands(): array
     {
         return [
-            "PrestaShop\PrestaShop\Core\Domain\CustomerService\Command\DeleteCustomerThreadCommand",
-            "PrestaShop\PrestaShop\Core\Domain\CustomerService\Command\BulkDeleteCustomerThreadCommand",
-            "PrestaShop\PrestaShop\Core\Domain\CustomerMessage\Command\AddOrderCustomerMessageCommand",
-            "PrestaShop\PrestaShop\Core\Domain\CustomerService\Query\GetCustomerThreadForViewing",
+            \PrestaShop\PrestaShop\Core\Domain\CustomerService\Command\DeleteCustomerThreadCommand::class,
+            \PrestaShop\PrestaShop\Core\Domain\CustomerService\Command\BulkDeleteCustomerThreadCommand::class,
+            \PrestaShop\PrestaShop\Core\Domain\CustomerMessage\Command\AddOrderCustomerMessageCommand::class,
+            \PrestaShop\PrestaShop\Core\Domain\CustomerService\Query\GetCustomerThreadForViewing::class,
         ];
     }
 }

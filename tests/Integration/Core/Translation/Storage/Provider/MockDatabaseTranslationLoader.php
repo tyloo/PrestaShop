@@ -37,17 +37,13 @@ use Symfony\Component\Translation\MessageCatalogue;
 class MockDatabaseTranslationLoader extends DatabaseTranslationLoader
 {
     /**
-     * @var array
-     */
-    private $databaseContent;
-
-    /**
      * @param array<array{lang: string, key: string, translation: string, domain: string, theme: ?string}> $databaseContent
      */
-    public function __construct(array $databaseContent, $languageRepository, $translationRepository)
-    {
-        $this->databaseContent = $databaseContent;
-
+    public function __construct(
+        private readonly array $databaseContent,
+        $languageRepository,
+        $translationRepository,
+    ) {
         parent::__construct($languageRepository, $translationRepository);
     }
 
@@ -56,7 +52,7 @@ class MockDatabaseTranslationLoader extends DatabaseTranslationLoader
         $catalogue = new MessageCatalogue($locale);
 
         foreach ($this->databaseContent as $item) {
-            $domainMatches = ($domainSearch === '*') ?: (bool) preg_match("/$domainSearch/", $item['domain']);
+            $domainMatches = ($domainSearch === '*') ?: (bool) preg_match("/$domainSearch/", (string) $item['domain']);
 
             if (
                 $item['lang'] === $locale

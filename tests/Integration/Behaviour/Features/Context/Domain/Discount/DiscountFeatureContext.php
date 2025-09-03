@@ -296,7 +296,7 @@ class DiscountFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getDiscountForEditing($discountReference);
             throw new NoExceptionAlthoughExpectedException(\sprintf('Discount "%s" was found, but it was expected to be deleted', $discountReference));
-        } catch (DiscountNotFoundException $e) {
+        } catch (DiscountNotFoundException) {
             $this->getSharedStorage()->clear($discountReference);
         }
     }

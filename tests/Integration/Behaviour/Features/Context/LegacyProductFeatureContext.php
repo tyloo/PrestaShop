@@ -569,8 +569,8 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function cleanSpecificPriceFixtures()
     {
-        foreach ($this->specificPrices as $productName => $specificPrices) {
-            foreach ($specificPrices as $specificPriceName => $specificPrice) {
+        foreach ($this->specificPrices as $specificPrices) {
+            foreach ($specificPrices as $specificPrice) {
                 $specificPrice->delete();
             }
         }
@@ -643,7 +643,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
             $combinationDetails[] = new CombinationDetails(
                 $combination['reference'],
                 (int) $combination['quantity'],
-                explode(';', $combination['attributes']),
+                explode(';', (string) $combination['attributes']),
                 isset($combination['price']) ? (float) $combination['price'] : null
             );
         }
@@ -714,8 +714,8 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function cleanCombinationFixtures()
     {
-        foreach ($this->combinations as $productName => $combinations) {
-            foreach ($combinations as $combinationName => $combination) {
+        foreach ($this->combinations as $combinations) {
+            foreach ($combinations as $combination) {
                 $combination->delete();
             }
         }
@@ -830,14 +830,14 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function cleanCustomizationFixtures(): void
     {
-        foreach ($this->customizationFields as $productName => $customizationFields) {
-            foreach ($customizationFields as $customizationFieldName => $customizationField) {
+        foreach ($this->customizationFields as $customizationFields) {
+            foreach ($customizationFields as $customizationField) {
                 $customizationField->delete();
             }
         }
         $this->customizationFields = [];
 
-        foreach ($this->customizationsInCart as $productName => $customization) {
+        foreach ($this->customizationsInCart as $customization) {
             $customization->delete();
         }
         $this->customizationsInCart = [];
@@ -879,16 +879,11 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     {
         $this->checkProductWithNameExists($packName);
         $result = Pack::isInStock($this->products[$packName]->id, $packQuantity);
-        switch ($enoughStock) {
-            case 'enough stock':
-                $expected = true;
-                break;
-            case 'not enough stock':
-                $expected = false;
-                break;
-            default:
-                throw new \Exception('Unknown stock status: ' . $enoughStock);
-        }
+        $expected = match ($enoughStock) {
+            'enough stock' => true,
+            'not enough stock' => false,
+            default => throw new \Exception('Unknown stock status: ' . $enoughStock),
+        };
         if ($result !== $expected) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $enoughStock, $result ? 'enough stock' : 'not enough stock'));
         }

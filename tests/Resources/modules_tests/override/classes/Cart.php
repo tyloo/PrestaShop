@@ -168,19 +168,13 @@ class Cart extends CartCore
         $products = parent::getProducts($refresh, $id_product, $id_country);
         if (_PS_VERSION_ >= 1.6) {
             $params = Hook::exec('ppbsGetProducts', ['products' => $products], null, true);
-            if (isset($params['productpricebysize']['products'])) {
-                return $params['productpricebysize']['products'];
-            }
 
-            return $products;
+            return $params['productpricebysize']['products'] ?? $products;
         }
         $params = Hook::exec('ppbsGetProducts', ['products' => $products], null);
         $params = json_decode($params, true);
-        if (isset($params['products'])) {
-            return $params['products'];
-        }
 
-        return $products;
+        return $params['products'] ?? $products;
     }
 
     /*
@@ -188,5 +182,5 @@ class Cart extends CartCore
     * date: 2018-12-26 14:14:06
     * version: 1
     */
-    private string $testTypedProperty;
+    private readonly string $testTypedProperty;
 }

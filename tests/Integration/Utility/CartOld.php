@@ -69,7 +69,7 @@ class CartOld extends Cart
     ) {
         // Dependencies
         /** @var \PrestaShop\PrestaShop\Adapter\Product\PriceCalculator $price_calculator */
-        $price_calculator = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Adapter\\Product\\PriceCalculator');
+        $price_calculator = ServiceLocator::get(\PrestaShop\PrestaShop\Adapter\Product\PriceCalculator::class);
 
         $ps_use_ecotax = $this->configuration->get('PS_USE_ECOTAX');
         $ps_round_type = $this->configuration->get('PS_ROUND_TYPE');
@@ -186,7 +186,7 @@ class CartOld extends Cart
                 true,
                 $product['cart_quantity'],
                 false,
-                (int) $this->id_customer ? (int) $this->id_customer : null,
+                (int) $this->id_customer ?: null,
                 (int) $this->id,
                 $id_address,
                 $null,
@@ -231,7 +231,7 @@ class CartOld extends Cart
             }
         }
 
-        foreach ($products_total as $key => $price) {
+        foreach ($products_total as $price) {
             $order_total += $price;
         }
 

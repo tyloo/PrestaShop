@@ -40,7 +40,7 @@ class MailDevClient
     public function __construct(
         private readonly string $mailDevHost,
         private readonly int $mailDevPort,
-        private HttpClientInterface $client,
+        private readonly HttpClientInterface $client,
     ) {
     }
 

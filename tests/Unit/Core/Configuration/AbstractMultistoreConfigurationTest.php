@@ -53,7 +53,7 @@ class AbstractMultistoreConfigurationTest extends AbstractConfigurationTestCase
         }
 
         // check that result is of the right type
-        $this->assertInstanceOf('PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint', $resultShopConstraint);
+        $this->assertInstanceOf(ShopConstraint::class, $resultShopConstraint);
         if (! empty($resultShopConstraint->getShopGroupId())) {
             $this->assertEquals($shopGroupId, $resultShopConstraint->getShopGroupId()->getValue());
         }

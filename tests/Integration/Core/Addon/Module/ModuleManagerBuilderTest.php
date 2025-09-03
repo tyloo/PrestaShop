@@ -224,6 +224,6 @@ class ModuleManagerBuilderTest extends TestCase
     {
         $withoutDate = preg_replace('#\* date: .*?\n#m', '', $str);
 
-        return preg_replace('#\n?^(?:\s*)$#m', '', $withoutDate);
+        return preg_replace('#\n?^(?:\s*)$#m', '', (string) $withoutDate);
     }
 }

@@ -63,9 +63,7 @@ class EntityLinkBuilderFactoryTest extends TestCase
 
         $builderMock
             ->method('canBuild')
-            ->willReturnCallback(function ($entity) use ($managedEntities) {
-                return \in_array($entity, $managedEntities, true);
-            })
+            ->willReturnCallback(fn ($entity) => \in_array($entity, $managedEntities, true))
         ;
 
         return $builderMock;

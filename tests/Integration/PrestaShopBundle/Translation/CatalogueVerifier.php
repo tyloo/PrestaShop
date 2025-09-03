@@ -37,16 +37,11 @@ use Symfony\Component\Translation\MessageCatalogueInterface;
 class CatalogueVerifier
 {
     /**
-     * @var TestCase
-     */
-    private $test;
-
-    /**
      * @param TestCase $test The test class
      */
-    public function __construct(TestCase $test)
-    {
-        $this->test = $test;
+    public function __construct(
+        private readonly TestCase $test,
+    ) {
     }
 
     /**

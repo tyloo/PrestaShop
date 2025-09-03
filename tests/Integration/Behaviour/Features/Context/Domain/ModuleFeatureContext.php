@@ -210,17 +210,11 @@ class ModuleFeatureContext extends AbstractDomainFeatureContext
      */
     public function uploadModule(string $sourceType, string $sourceGiven, TableNode $tableNode): void
     {
-        switch ($sourceType) {
-            case 'zip':
-                $source = _PS_MODULE_DIR_ . $sourceGiven;
-                break;
-            case 'url':
-                $source = $sourceGiven;
-                break;
-            default:
-                $source = null;
-                break;
-        }
+        $source = match ($sourceType) {
+            'zip' => _PS_MODULE_DIR_ . $sourceGiven,
+            'url' => $sourceGiven,
+            default => null,
+        };
         try {
             $moduleInfos = $this->getCommandBus()->handle(new UploadModuleCommand($source));
             $this->assertModuleInfosWithData($moduleInfos, $tableNode);

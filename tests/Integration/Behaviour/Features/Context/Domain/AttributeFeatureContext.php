@@ -186,7 +186,7 @@ class AttributeFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle(new GetAttributeForEditing($attributeId));
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Attribute %s exists, but it was expected to be deleted', $reference));
-        } catch (AttributeNotFoundException $e) {
+        } catch (AttributeNotFoundException) {
             $this->getSharedStorage()->clear($reference);
         }
     }

@@ -489,7 +489,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
             /** @var EditableManufacturerAddress $editableManufacturerAddress */
             $this->getQueryBus()->handle(new GetManufacturerAddressForEditing($addressId));
             throw new RuntimeException(\sprintf('Manufacturer address "%s" should not be found', $addressReference));
-        } catch (AddressNotFoundException $exception) {
+        } catch (AddressNotFoundException) {
         }
     }
 

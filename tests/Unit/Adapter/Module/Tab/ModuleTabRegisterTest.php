@@ -154,7 +154,7 @@ class ModuleTabRegisterTest extends TestCase
         $filesystemMock
             ->method('exists')
             ->willReturnCallback(function ($filePath) use ($service) {
-                if (strpos($filePath, 'undeclared_symfony/config/routes.yml') !== false) {
+                if (str_contains($filePath, 'undeclared_symfony/config/routes.yml')) {
                     return true;
                 }
 
@@ -184,7 +184,7 @@ class ModuleTabRegisterTest extends TestCase
                 ]);
                 $routeCollection->add('not_detected_route', $simpleRoute);
 
-                if (strpos($routingFile, 'symfony/config/routes.yml') !== false) {
+                if (str_contains($routingFile, 'symfony/config/routes.yml')) {
                     $route = new Route('/hidden-url', [
                         '_controller' => 'PrestaShop\\Module\\Test\\SecuredSymfonyController::securedAction',
                         '_legacy_controller' => 'UndeclaredLegacyController',
@@ -341,9 +341,8 @@ class ModuleTabRegisterTest extends TestCase
      */
     protected function invokeMethod(object $object, string $methodName, array $parameters = [])
     {
-        $reflection = new ReflectionClass(\get_class($object));
+        $reflection = new ReflectionClass($object::class);
         $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
 
         return $method->invokeArgs($object, $parameters);
     }

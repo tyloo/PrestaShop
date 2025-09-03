@@ -233,7 +233,7 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
             $this->getEditableManufacturer($this->getSharedStorage()->get($manufacturerReference));
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Manufacturer %s exists, but it was expected to be deleted', $manufacturerReference));
-        } catch (ManufacturerNotFoundException $e) {
+        } catch (ManufacturerNotFoundException) {
             $this->getSharedStorage()->clear($manufacturerReference);
         }
     }

@@ -93,8 +93,8 @@ class LanguageFeatureContext extends AbstractPrestaShopFeatureContext
             $language->active = true;
             $language->name = $locale;
             $language->is_rtl = false;
-            $language->language_code = strtolower($locale);
-            $language->iso_code = substr($locale, 0, strpos($locale, '-'));
+            $language->language_code = strtolower((string) $locale);
+            $language->iso_code = substr((string) $locale, 0, strpos((string) $locale, '-'));
             $language->add();
             // We need to reset the static cache, or it messes with multilang fields (because the
             // cache doesn't contain all the expected languages)
@@ -138,7 +138,7 @@ class LanguageFeatureContext extends AbstractPrestaShopFeatureContext
 
         Assert::assertSame(
             $isAllowed,
-            strpos($robotsTxtFile, 'Disallow: ' . $directory . "\n") !== false
+            str_contains($robotsTxtFile, 'Disallow: ' . $directory . "\n")
         );
     }
 }

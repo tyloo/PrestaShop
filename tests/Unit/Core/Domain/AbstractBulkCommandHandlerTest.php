@@ -119,16 +119,6 @@ class AbstractBulkCommandHandlerTest extends TestCase
 class TestAbstractBulkCommandHandler extends AbstractBulkCommandHandler
 {
     /**
-     * @var FailingId[]
-     */
-    private $failingIdsMock;
-
-    /**
-     * @var string
-     */
-    private $supportedIdType;
-
-    /**
      * @var int[]
      */
     private $handledIds = [];
@@ -136,11 +126,12 @@ class TestAbstractBulkCommandHandler extends AbstractBulkCommandHandler
     private $command;
 
     public function __construct(
-        array $failingIdsMock,
-        string $supportedIdType,
+        /**
+         * @var FailingId[]
+         */
+        private readonly array $failingIdsMock,
+        private readonly string $supportedIdType,
     ) {
-        $this->failingIdsMock = $failingIdsMock;
-        $this->supportedIdType = $supportedIdType;
     }
 
     /**
@@ -199,12 +190,9 @@ interface IdInterface
 
 class ExampleId implements IdInterface
 {
-    private $id;
-
     public function __construct(
-        int $id,
+        private readonly int $id,
     ) {
-        $this->id = $id;
     }
 
     public function getValue(): int
@@ -219,16 +207,10 @@ class ExampleId2 extends ExampleId
 
 class FailingId implements IdInterface
 {
-    private $id;
-
-    private $exceptionToThrow;
-
     public function __construct(
-        int $id,
-        Throwable $exceptionToThrow,
+        private readonly int $id,
+        private readonly Throwable $exceptionToThrow,
     ) {
-        $this->id = $id;
-        $this->exceptionToThrow = $exceptionToThrow;
     }
 
     public function getValue(): int

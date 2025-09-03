@@ -38,16 +38,14 @@ use PrestaShop\PrestaShop\Core\Context\ApiClientContext;
  */
 class ApiClientContextDecorator extends ApiClientContext
 {
-    private ApiClientContext $decoratedApiClientContext;
-
     private ?ApiClient $overriddenApiClient = null;
 
     private bool $useOverriddenValue = false;
 
-    public function __construct(ApiClientContext $decoratedApiClientContext)
-    {
-        $this->decoratedApiClientContext = $decoratedApiClientContext;
-        parent::__construct($decoratedApiClientContext->getApiClient());
+    public function __construct(
+        private readonly ApiClientContext $decoratedApiClientContext,
+    ) {
+        parent::__construct($this->decoratedApiClientContext->getApiClient());
     }
 
     public function getApiClient(): ?ApiClient

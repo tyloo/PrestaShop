@@ -8,7 +8,7 @@ class ComposerAutoloaderInit6ff0e5a705530539c3f4f03f48949f68
 
     public static function loadClassLoader($class)
     {
-        if ('Composer\Autoload\ClassLoader' === $class) {
+        if (\Composer\Autoload\ClassLoader::class === $class) {
             require __DIR__ . '/ClassLoader.php';
         }
     }
@@ -19,9 +19,9 @@ class ComposerAutoloaderInit6ff0e5a705530539c3f4f03f48949f68
             return self::$loader;
         }
 
-        spl_autoload_register(array('ComposerAutoloaderInit6ff0e5a705530539c3f4f03f48949f68', 'loadClassLoader'), true, true);
+        spl_autoload_register(['ComposerAutoloaderInit6ff0e5a705530539c3f4f03f48949f68', 'loadClassLoader'], true, true);
         self::$loader = $loader = new \Composer\Autoload\ClassLoader();
-        spl_autoload_unregister(array('ComposerAutoloaderInit6ff0e5a705530539c3f4f03f48949f68', 'loadClassLoader'));
+        spl_autoload_unregister(['ComposerAutoloaderInit6ff0e5a705530539c3f4f03f48949f68', 'loadClassLoader']);
 
         $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION') && (!function_exists('zend_loader_file_encoded') || !zend_loader_file_encoded());
         if ($useStaticLoader) {

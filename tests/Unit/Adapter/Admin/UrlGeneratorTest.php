@@ -41,7 +41,7 @@ class UrlGeneratorTest extends TestCase
         $generator = new UrlGenerator($this->getMockLegacyContext(), $this->getMockRouter());
 
         // the following route contains a "_legacy" equivalent
-        list($controller, $parameters) = $generator->getLegacyOptions('admin_products_index');
+        [$controller, $parameters] = $generator->getLegacyOptions('admin_products_index');
         $this->assertEquals('AdminProducts', $controller);
         $this->assertCount(0, $parameters);
     }

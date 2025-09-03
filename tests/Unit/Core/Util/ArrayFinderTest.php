@@ -157,7 +157,7 @@ class ArrayFinderTest extends TestCase
 
     public function testSetCorrectlyReturnTheInstance(): void
     {
-        $this->assertInstanceOf('\PrestaShop\PrestaShop\Core\Util\ArrayFinder', $this->arrayFinder->set('a', 'b'));
+        $this->assertInstanceOf(ArrayFinder::class, $this->arrayFinder->set('a', 'b'));
     }
 
     public function testSetCorrectlyAddValueIfPathDoesNotExist(): void

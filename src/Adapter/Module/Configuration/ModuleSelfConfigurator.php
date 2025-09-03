@@ -36,6 +36,7 @@ use Symfony\Component\Process\Exception\InvalidArgumentException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
+use Throwable;
 
 /**
  * This class allow system users and developers to configure their module
@@ -430,7 +431,7 @@ class ModuleSelfConfigurator
                 $this->runSqlFile($data);
             }
             $this->connection->commit();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->connection->rollBack();
 
             throw $e;
@@ -466,7 +467,7 @@ class ModuleSelfConfigurator
             );
 
             $stmt = $this->connection->prepare($sql);
-            $stmt->execute();
+            $stmt->executeQuery();
         }
     }
 

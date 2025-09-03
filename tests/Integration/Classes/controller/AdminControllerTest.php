@@ -101,7 +101,6 @@ class AdminControllerTest extends TestCase
     {
         $testedController = new $controllerClass();
         $transMethod = new ReflectionMethod($testedController, 'trans');
-        $transMethod->setAccessible(true);
         $trans = $transMethod->invoke($testedController, '<a href="test">%d Succesful deletion "%s"</a>', [10, '<b>stringTest</b>'], 'Admin.Notifications.Success');
         $this->assertEquals('<a href="test">10 Succesful deletion "<b>stringTest</b>"</a>', $trans);
 
@@ -118,7 +117,6 @@ class AdminControllerTest extends TestCase
         $testedController = new $controllerClass();
         $refController = new ReflectionObject($testedController);
         $refProperty = $refController->getProperty('container');
-        $refProperty->setAccessible(true);
         $refProperty->setValue($testedController, $this->getMockContainerBuilder());
 
         if (! \defined('_PS_BASE_URL_')) {
@@ -265,7 +263,7 @@ class AdminControllerTest extends TestCase
                 if ($param === UserTokenManager::class) {
                     return $this->getMockedUserTokenManager();
                 }
-                if ($param === 'PrestaShop\PrestaShop\Core\Image\AvifExtensionChecker') {
+                if ($param === AvifExtensionChecker::class) {
                     return $this->getMockedAvifExtensionChecker();
                 }
                 if ($param === FeatureFlagStateCheckerInterface::class) {

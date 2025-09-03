@@ -32,7 +32,7 @@ if (defined('_PS_ADMIN_DIR_') === false) {
     define('_PS_ADMIN_DIR_', _PS_ROOT_DIR_ . '/admin/');
 }
 
-require_once dirname(__FILE__) . '/classes/CronJobsForms.php';
+require_once __DIR__ . '/classes/CronJobsForms.php';
 
 class CronJobs extends Module
 {
@@ -255,14 +255,14 @@ class CronJobs extends Module
                 . '&token=' . Tools::getAdminTokenLite('AdminModules');
         }
 
-        $output = $output . $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
+        $output .= $this->context->smarty->fetch($this->local_path . 'views/templates/admin/configure.tpl');
 
         if (Tools::isSubmit('newcronjobs') || ((isset($submit_cron) === true) && ($submit_cron === false))) {
-            $output = $output . $this->renderForm(CronJobsForms::getJobForm(), CronJobsForms::getNewJobFormValues(), 'submitNewCronJob', true, $back_url);
+            $output .= $this->renderForm(CronJobsForms::getJobForm(), CronJobsForms::getNewJobFormValues(), 'submitNewCronJob', true, $back_url);
         } elseif (Tools::isSubmit('updatecronjobs') && Tools::isSubmit('id_cronjob')) {
             $form_structure = CronJobsForms::getJobForm('Update cron task', true);
             $form = $this->renderForm($form_structure, CronJobsForms::getUpdateJobFormValues(), 'submitUpdateCronJob', true, $back_url, true);
-            $output = $output . $form;
+            $output .= $form;
         } elseif (Tools::isSubmit('deletecronjobs') && Tools::isSubmit('id_cronjob')) {
             $this->postProcessDeleteCronJob((int) Tools::getValue('id_cronjob'));
         } elseif (Tools::isSubmit('oneshotcronjobs')) {
@@ -270,7 +270,7 @@ class CronJobs extends Module
         } elseif (Tools::isSubmit('statuscronjobs')) {
             $this->postProcessUpdateJobStatus();
         } elseif (defined('_PS_HOST_MODE_') === false) {
-            $output = $output . $this->renderForm(CronJobsForms::getForm(), CronJobsForms::getFormValues(), 'submitCronJobs');
+            $output .= $this->renderForm(CronJobsForms::getForm(), CronJobsForms::getFormValues(), 'submitCronJobs');
         }
 
         return $output . $this->renderTasksList();
@@ -320,7 +320,7 @@ class CronJobs extends Module
         $id_shop_group = (int) Context::getContext()->shop->id_shop_group;
 
         $query = 'SELECT `active` FROM ' . _DB_PREFIX_ . 'cronjobs
-            WHERE `task` = \'' . urlencode($task) . '\' AND `updated_at` IS NULL
+            WHERE `task` = \'' . urlencode((string) $task) . '\' AND `updated_at` IS NULL
                 AND `one_shot` IS TRUE
                 AND `id_shop` = \'' . $id_shop . '\' AND `id_shop_group` = \'' . $id_shop_group . '\'';
 
@@ -332,7 +332,7 @@ class CronJobs extends Module
             $query = 'INSERT INTO ' . _DB_PREFIX_ . 'cronjobs
                 (`description`, `task`, `hour`, `day`, `month`, `day_of_week`, `updated_at`, `one_shot`, `active`, `id_shop`, `id_shop_group`)
                 VALUES (\'' . Db::getInstance()->escape($description) . '\', \'' .
-                urlencode($task) . '\', \'0\', \'' . static::EACH . '\', \'' . static::EACH . '\', \'' . static::EACH . '\',
+                urlencode((string) $task) . '\', \'0\', \'' . static::EACH . '\', \'' . static::EACH . '\', \'' . static::EACH . '\',
                     NULL, TRUE, TRUE, ' . $id_shop . ', ' . $id_shop_group . ')';
 
             return Db::getInstance()->execute($query);
@@ -352,7 +352,7 @@ class CronJobs extends Module
             $query = 'INSERT INTO ' . _DB_PREFIX_ . 'cronjobs
                     (`description`, `task`, `hour`, `day`, `month`, `day_of_week`, `updated_at`, `one_shot`, `active`, `id_shop`, `id_shop_group`)
                     VALUES (\'' . Db::getInstance()->escape($description) . '\', \'' .
-                urlencode($task) . '\', \'' . $hour . '\', \'' . $day . '\', \'' . $month . '\', \'' . $day_of_week . '\',
+                urlencode((string) $task) . '\', \'' . $hour . '\', \'' . $day . '\', \'' . $month . '\', \'' . $day_of_week . '\',
                         NULL, TRUE, TRUE, ' . $id_shop . ', ' . $id_shop_group . ')';
 
             return Db::getInstance()->execute($query);
@@ -630,11 +630,11 @@ class CronJobs extends Module
 
     protected static function isTaskURLValid($task)
     {
-        $task = urlencode($task);
+        $task = urlencode((string) $task);
         $shop_url = urlencode(Tools::getShopDomain(true, true) . __PS_BASE_URI__);
         $shop_url_ssl = urlencode(Tools::getShopDomainSsl(true, true) . __PS_BASE_URI__);
 
-        return (strpos($task, $shop_url) === 0) || (strpos($task, $shop_url_ssl) === 0);
+        return str_starts_with($task, $shop_url) || str_starts_with($task, $shop_url_ssl);
     }
 
     protected function setErrorMessage($message)

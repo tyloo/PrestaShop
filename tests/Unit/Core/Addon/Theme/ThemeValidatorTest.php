@@ -97,7 +97,7 @@ class ThemeValidatorTest extends TestCase
 
         try {
             $themeConfigContent = file_get_contents($themeConfigFile);
-        } catch (Throwable $exception) {
+        } catch (Throwable) {
             throw new RuntimeException(\sprintf('Unable to read theme config file %s', $themeConfigFile));
         }
 

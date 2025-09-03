@@ -202,7 +202,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
         try {
             $this->getQueryBus()->handle(new GetImageTypeForEditing($this->getSharedStorage()->get($imageTypeName)));
             throw new RuntimeException(\sprintf('Image type %s still exists', $imageTypeName));
-        } catch (ImageTypeNotFoundException $ex) {
+        } catch (ImageTypeNotFoundException) {
             return;
         }
     }

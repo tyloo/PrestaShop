@@ -52,7 +52,7 @@ class WebserviceKeyFeatureContext extends AbstractDomainFeatureContext
         ];
         $data['permissions'] = [];
         foreach ($data as $key => $value) {
-            if (substr($key, 0, 11) !== 'permission_') {
+            if (! str_starts_with($key, 'permission_')) {
                 continue;
             }
             $data['permissions'][substr($key, 11)] = PrimitiveUtils::castStringArrayIntoArray($value);
@@ -83,7 +83,7 @@ class WebserviceKeyFeatureContext extends AbstractDomainFeatureContext
         $data = $node->getRowsHash();
         $data['permissions'] = [];
         foreach ($data as $key => $value) {
-            if (substr($key, 0, 11) !== 'permission_') {
+            if (! str_starts_with($key, 'permission_')) {
                 continue;
             }
             $data['permissions'][substr($key, 11)] = PrimitiveUtils::castStringArrayIntoArray($value);

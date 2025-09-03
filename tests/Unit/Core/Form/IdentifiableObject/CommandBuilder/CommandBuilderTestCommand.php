@@ -70,15 +70,10 @@ class CommandBuilderTestCommand
      */
     private $options;
 
-    /**
-     * @var ShopConstraint
-     */
-    private $shopConstraint;
-
-    public function __construct(ShopConstraint $shopConstraint)
-    {
+    public function __construct(
+        private readonly ShopConstraint $shopConstraint,
+    ) {
         $this->options = [];
-        $this->shopConstraint = $shopConstraint;
     }
 
     public function getName(): string

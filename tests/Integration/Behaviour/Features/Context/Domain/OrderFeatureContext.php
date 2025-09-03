@@ -204,11 +204,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
                     $hasFreeShipping
                 )
             );
-        } catch (InvalidProductQuantityException $e) {
-            $this->setLastException($e);
-        } catch (ProductOutOfStockException $e) {
-            $this->setLastException($e);
-        } catch (DuplicateProductInOrderException $e) {
+        } catch (InvalidProductQuantityException|ProductOutOfStockException|DuplicateProductInOrderException $e) {
             $this->setLastException($e);
         }
     }
@@ -281,9 +277,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
                     (int) $data['amount']
                 )
             );
-        } catch (InvalidProductQuantityException $e) {
-            $this->setLastException($e);
-        } catch (DuplicateProductInOrderException $e) {
+        } catch (InvalidProductQuantityException|DuplicateProductInOrderException $e) {
             $this->setLastException($e);
         }
     }
@@ -558,13 +552,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
                     $invoiceId
                 )
             );
-        } catch (InvalidProductQuantityException $e) {
-            $this->setLastException($e);
-        } catch (ProductOutOfStockException $e) {
-            $this->setLastException($e);
-        } catch (DuplicateProductInOrderInvoiceException $e) {
-            $this->setLastException($e);
-        } catch (CannotFindProductInOrderException $e) {
+        } catch (InvalidProductQuantityException|ProductOutOfStockException|DuplicateProductInOrderInvoiceException|CannotFindProductInOrderException $e) {
             $this->setLastException($e);
         }
     }
@@ -1712,18 +1700,13 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         $orderId = SharedStorage::getStorage()->get($orderReference);
         /** @var OrderPreview $orderPreview */
         $orderPreview = $this->getQueryBus()->handle(new GetOrderPreview($orderId));
-        switch ($addressType) {
-            case 'shipping':
-                /** @var OrderPreviewShippingDetails $address */
-                $address = $orderPreview->getShippingDetails();
-                break;
-            case 'invoice':
-                /** @var OrderPreviewInvoiceDetails $address */
-                $address = $orderPreview->getInvoiceDetails();
-                break;
-            default:
-                throw new RuntimeException('Address Type is invalid');
-        }
+        $address = match ($addressType) {
+            /** @var OrderPreviewShippingDetails $address */
+            'shipping' => $orderPreview->getShippingDetails(),
+            /** @var OrderPreviewInvoiceDetails $address */
+            'invoice' => $orderPreview->getInvoiceDetails(),
+            default => throw new RuntimeException('Address Type is invalid'),
+        };
 
         $expectedDetails = $table->getRowsHash();
         $arrayActual = [

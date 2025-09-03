@@ -46,7 +46,7 @@ class AbstractGridDefinitionFactoryTest extends TestCase
         $hookDispatcherMock
             ->expects($this->once())
             ->method('dispatchWithParameters')
-            ->willReturnCallback(function (string $hookName, array $parameters) {
+            ->willReturnCallback(function (string $hookName, array $parameters): void {
                 $this->assertEquals('actionTestIdGridDefinitionModifier', $hookName);
                 $this->assertArrayHasKey('definition', $parameters);
             });

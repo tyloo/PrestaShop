@@ -46,7 +46,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AdvancedFormType extends TranslatorAwareType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('type', ChoiceType::class, [
@@ -91,7 +91,7 @@ class AdvancedFormType extends TranslatorAwareType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

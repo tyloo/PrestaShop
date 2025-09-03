@@ -137,15 +137,10 @@ class SeoAssertionFeatureContext extends AbstractProductFeatureContext
         }
 
         if (isset($dataRows['redirect_image'])) {
-            switch ($redirectType) {
-                case RedirectType::TYPE_CATEGORY_TEMPORARY:
-                case RedirectType::TYPE_CATEGORY_PERMANENT:
-                    $realImageUrl = $this->getRealCategoryImageUrl($dataRows['redirect_image']);
-                    break;
-                default:
-                    $realImageUrl = $this->getRealImageUrl($dataRows['redirect_image']);
-                    break;
-            }
+            $realImageUrl = match ($redirectType) {
+                RedirectType::TYPE_CATEGORY_TEMPORARY, RedirectType::TYPE_CATEGORY_PERMANENT => $this->getRealCategoryImageUrl($dataRows['redirect_image']),
+                default => $this->getRealImageUrl($dataRows['redirect_image']),
+            };
 
             Assert::assertEquals(
                 $realImageUrl,

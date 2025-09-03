@@ -130,11 +130,7 @@ abstract class AbstractCombinationFeatureContext extends AbstractProductFeatureC
             'is default' => 'default_on',
         ];
 
-        if (isset($fieldMap[$field])) {
-            return $fieldMap[$field];
-        }
-
-        return $field;
+        return $fieldMap[$field] ?? $field;
     }
 
     private function countOffset(int $page, int $limit): int

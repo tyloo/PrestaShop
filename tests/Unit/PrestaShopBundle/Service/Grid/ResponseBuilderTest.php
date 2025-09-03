@@ -193,9 +193,7 @@ class ResponseBuilderTest extends TestCase
         );
 
         $mockRouter = $this->createMock(Router::class);
-        $mockRouter->method('generate')->willReturnCallback(function (string $name, array $parameters = []) {
-            return $name . '?' . http_build_query($parameters);
-        });
+        $mockRouter->method('generate')->willReturnCallback(fn (string $name, array $parameters = []) => $name . '?' . http_build_query($parameters));
 
         $mockRequest = $this->createMock(Request::class);
         $mockRequest->setMethod('POST');

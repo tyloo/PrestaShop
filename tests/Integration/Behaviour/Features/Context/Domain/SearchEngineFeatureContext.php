@@ -147,7 +147,7 @@ class SearchEngineFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle($query);
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Search engine "%s" exists, but it was expected to be deleted.', $searchEngineReference));
-        } catch (SearchEngineNotFoundException $e) {
+        } catch (SearchEngineNotFoundException) {
             SharedStorage::getStorage()->clear($searchEngineReference);
         }
     }

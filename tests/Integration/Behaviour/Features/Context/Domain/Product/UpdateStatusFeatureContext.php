@@ -173,7 +173,7 @@ class UpdateStatusFeatureContext extends AbstractProductFeatureContext
         foreach ($bulkException->getBulkExceptions() as $productId => $productException) {
             Assert::assertContains($productId, $invalidProductIds);
             if (! $productException instanceof ProductConstraintException) {
-                throw new RuntimeException(\sprintf('Product error should be "%s", but got "%s"', ProductConstraintException::class, \get_class($productException)));
+                throw new RuntimeException(\sprintf('Product error should be "%s", but got "%s"', ProductConstraintException::class, $productException::class));
             }
 
             if ($productException->getCode() !== ProductConstraintException::INVALID_ONLINE_DATA) {

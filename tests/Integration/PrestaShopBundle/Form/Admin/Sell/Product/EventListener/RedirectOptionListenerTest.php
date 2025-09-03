@@ -152,7 +152,7 @@ class SimpleTargetFormTest extends CommonAbstractType
     public const CATEGORY_HELP = 'Category help';
     public const CATEGORY_FILTERED = [51];
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('type', FormType::class)

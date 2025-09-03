@@ -126,8 +126,8 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
      */
     private function assertInstanceOf($expected, $subject)
     {
-        if (\get_class($subject) !== $expected) {
-            throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expected, \get_class($subject)));
+        if ($subject::class !== $expected) {
+            throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expected, $subject::class));
         }
     }
 

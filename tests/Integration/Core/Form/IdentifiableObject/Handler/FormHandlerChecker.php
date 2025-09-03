@@ -35,18 +35,13 @@ use Symfony\Component\Form\FormInterface;
 class FormHandlerChecker implements FormHandlerInterface
 {
     /**
-     * @var FormHandlerInterface
-     */
-    private $formHandler;
-
-    /**
      * @var int|null
      */
     private $lastCreatedId;
 
-    public function __construct(FormHandlerInterface $formHandler)
-    {
-        $this->formHandler = $formHandler;
+    public function __construct(
+        private readonly FormHandlerInterface $formHandler,
+    ) {
     }
 
     public function handle(FormInterface $form)

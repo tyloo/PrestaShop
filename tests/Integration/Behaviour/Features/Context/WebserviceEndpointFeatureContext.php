@@ -152,12 +152,10 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function assertWebserviceError(int $errorCode, string $errorMessage): void
     {
-        $errors = $this->lastOutput->filter('prestashop > errors > error')->each(function ($item) {
-            return [
-                'code' => (int) $item->filter('code')->text(),
-                'message' => $item->filter('message')->text(),
-            ];
-        });
+        $errors = $this->lastOutput->filter('prestashop > errors > error')->each(fn ($item) => [
+            'code' => (int) $item->filter('code')->text(),
+            'message' => $item->filter('message')->text(),
+        ]);
         foreach ($errors as $error) {
             if ($error['code'] === $errorCode) {
                 Assert::assertEquals($errorMessage, $error['message']);
@@ -193,7 +191,7 @@ class WebserviceEndpointFeatureContext extends AbstractPrestaShopFeatureContext
     {
         $resources = WebserviceRequest::getResources();
 
-        return \array_key_exists($endpoint, $resources) ? strtolower($resources[$endpoint]['class']) : '';
+        return \array_key_exists($endpoint, $resources) ? strtolower((string) $resources[$endpoint]['class']) : '';
     }
 
     private function requestWebserviceXML(

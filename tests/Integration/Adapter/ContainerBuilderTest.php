@@ -56,7 +56,7 @@ class ContainerBuilderTest extends TestCase
     public function testContainerLoadsModuleAutoload()
     {
         ContainerBuilder::getContainer('front', true);
-        $this->assertTrue(class_exists('\PrestaShop\Module\Banner\Entity\Banner'));
+        $this->assertTrue(class_exists(\PrestaShop\Module\Banner\Entity\Banner::class));
     }
 
     public function testDoctrineModuleMapping()
@@ -65,7 +65,7 @@ class ContainerBuilderTest extends TestCase
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $container->get('doctrine.orm.entity_manager');
         /** @var ClassMetadata $classMetadata */
-        $classMetadata = $entityManager->getClassMetadata('\PrestaShop\Module\Banner\Entity\Banner');
+        $classMetadata = $entityManager->getClassMetadata(\PrestaShop\Module\Banner\Entity\Banner::class);
         $this->assertNotNull($classMetadata);
     }
 
@@ -75,7 +75,7 @@ class ContainerBuilderTest extends TestCase
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $container->get('doctrine.orm.entity_manager');
         /** @var ClassMetadata $classMetadata */
-        $classMetadata = $entityManager->getClassMetadata('\PrestaShopBundle\Entity\Lang');
+        $classMetadata = $entityManager->getClassMetadata(\PrestaShopBundle\Entity\Lang::class);
         $this->assertNotNull($classMetadata);
     }
 

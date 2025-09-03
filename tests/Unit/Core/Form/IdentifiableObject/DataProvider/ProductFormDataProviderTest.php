@@ -1403,9 +1403,7 @@ class ProductFormDataProviderTest extends TestCase
         $queryBusMock
             ->method('handle')
             ->with($this->getHandledQueries())
-            ->willReturnCallback(function ($query) use ($productData) {
-                return $this->createResultBasedOnQuery($query, $productData);
-            })
+            ->willReturnCallback(fn ($query) => $this->createResultBasedOnQuery($query, $productData))
         ;
 
         return $queryBusMock;
@@ -1429,7 +1427,7 @@ class ProductFormDataProviderTest extends TestCase
      */
     private function createResultBasedOnQuery($query, array $productData)
     {
-        switch ($queryClass = \get_class($query)) {
+        switch ($queryClass = $query::class) {
             case GetProductForEditing::class:
                 return $this->createProductForEditing($productData);
             case GetProductSupplierOptions::class:

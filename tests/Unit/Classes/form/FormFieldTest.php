@@ -56,7 +56,7 @@ class FormFieldTest extends TestCase
 
     public function testMinLength(): void
     {
-        $expectedValue = rand(0, 1000);
+        $expectedValue = random_int(0, 1000);
         $formField = new FormField();
         $formField->setMinLength($expectedValue);
 

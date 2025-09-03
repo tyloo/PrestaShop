@@ -475,7 +475,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
         // We clean the expected exception so that it doesn't pollute the following scenarios
         $this->cleanExpectedException();
 
-        throw new RuntimeException(implode(\PHP_EOL, ['An unexpected exception was raised in previous step:', \sprintf('Line %d: %s', $exceptionStep->getLine(), $exceptionStep->getText()), \sprintf('%s: %s', \get_class($unexpectedException), $unexpectedException->getMessage()), 'Either it was unexpected and an error occurred or you forgot to add an intermediate step to assert that exception using assertLastErrorIs']), 0, $unexpectedException);
+        throw new RuntimeException(implode(\PHP_EOL, ['An unexpected exception was raised in previous step:', \sprintf('Line %d: %s', $exceptionStep->getLine(), $exceptionStep->getText()), \sprintf('%s: %s', $unexpectedException::class, $unexpectedException->getMessage()), 'Either it was unexpected and an error occurred or you forgot to add an intermediate step to assert that exception using assertLastErrorIs']), 0, $unexpectedException);
     }
 
     /**
@@ -622,7 +622,7 @@ class CommonFeatureContext extends AbstractPrestaShopFeatureContext
     private static function rebootKernel(): void
     {
         $realCacheDir = self::$kernel->getContainer()->getParameter('kernel.cache_dir');
-        $warmupDir = substr($realCacheDir, 0, -1) . (substr($realCacheDir, -1) === '_' ? '-' : '_');
+        $warmupDir = substr($realCacheDir, 0, -1) . (str_ends_with($realCacheDir, '_') ? '-' : '_');
         self::$kernel->reboot($warmupDir);
     }
 

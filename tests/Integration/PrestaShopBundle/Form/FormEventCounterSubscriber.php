@@ -41,7 +41,7 @@ class FormEventCounterSubscriber implements EventSubscriberInterface
 {
     private $eventCalls = [];
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::PRE_SUBMIT => ['preSubmit', -1024],
@@ -83,6 +83,6 @@ class FormEventCounterSubscriber implements EventSubscriberInterface
             $this->eventCalls[$eventName] = 0;
         }
 
-        $this->eventCalls[$eventName] = $this->eventCalls[$eventName] + 1;
+        ++$this->eventCalls[$eventName];
     }
 }

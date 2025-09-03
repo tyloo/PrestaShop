@@ -100,7 +100,7 @@ class FormFiller
      */
     private function enabledAssociatedField(Form $form, FormField $formField): void
     {
-        if (strpos($formField->getName(), DisablingSwitchExtension::FIELD_PREFIX) === false) {
+        if (! str_contains($formField->getName(), DisablingSwitchExtension::FIELD_PREFIX)) {
             return;
         }
 
@@ -108,7 +108,7 @@ class FormFiller
         try {
             /** @var InputFormField $associatedField */
             $associatedField = $form->get($associatedFieldName);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             return;
         }
 

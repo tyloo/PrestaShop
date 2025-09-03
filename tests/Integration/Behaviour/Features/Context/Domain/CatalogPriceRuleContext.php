@@ -263,7 +263,7 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
             return null;
         }
 
-        if (ctype_digit($dataRows[$fieldId])) {
+        if (ctype_digit((string) $dataRows[$fieldId])) {
             return (int) $dataRows[$fieldId];
         }
 

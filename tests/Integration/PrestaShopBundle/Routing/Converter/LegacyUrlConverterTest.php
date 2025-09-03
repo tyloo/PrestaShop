@@ -301,7 +301,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
             $convertedUrl = $converter->convertByParameters($parameters);
         } catch (Exception $e) {
             $caughtException = $e;
-            $caughtExceptionMessage = \sprintf('Unexpected exception %s: %s', \get_class($e), $e->getMessage());
+            $caughtExceptionMessage = \sprintf('Unexpected exception %s: %s', $e::class, $e->getMessage());
             $convertedUrl = null;
         }
         $this->assertNull($caughtException, $caughtExceptionMessage);
@@ -374,7 +374,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         ?string $action = null,
         ?array $params = null,
     ): void {
-        $parameters = $params !== null ? $params : [];
+        $parameters = $params ?? [];
         if ($action !== null && ! isset($parameters[$action])) {
             $parameters[$action] = '';
         }
@@ -392,7 +392,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
      */
     public function testLegacyControllers(string $expectedUrl, string $controller, ?array $parameters = null)
     {
-        $parameters = $parameters === null ? [] : $parameters;
+        $parameters ??= [];
         $linkUrl = $this->link->getAdminLink($controller, true, [], $parameters);
         $this->assertSameUrl($expectedUrl, $linkUrl);
     }

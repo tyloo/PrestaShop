@@ -62,7 +62,7 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
     public function testLoadLegacyCommandWithoutContextFails()
     {
         set_error_handler(
-            static function ($errno, $errstr) {
+            static function ($errno, $errstr): void {
                 restore_error_handler();
                 throw new Exception($errstr, $errno);
             },
@@ -72,16 +72,12 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
         $this->expectExceptionMessage('Attempt to read property "controller_type" on null');
 
         $application = new Application(static::$kernel);
-        $application->add(new class extends Command {
+        $application->add(new #[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop-tests:load-legacy-classes')] class extends Command {
             protected function configure()
             {
-                $this->setName('prestashop-tests:load-legacy-classes');
             }
 
-            /**
-             * @return int
-             */
-            protected function execute(InputInterface $input, OutputInterface $output)
+            protected function execute(InputInterface $input, OutputInterface $output): int
             {
                 $products = Product::getNewProducts(1);
 
@@ -101,16 +97,12 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
     public function testLoadLegacyCommandWithContextWorks()
     {
         $application = new Application(static::$kernel);
-        $application->add(new class extends Command {
+        $application->add(new #[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop-tests:load-legacy-classes')] class extends Command {
             protected function configure()
             {
-                $this->setName('prestashop-tests:load-legacy-classes');
             }
 
-            /**
-             * @return int
-             */
-            protected function execute(InputInterface $input, OutputInterface $output)
+            protected function execute(InputInterface $input, OutputInterface $output): int
             {
                 $contextLoader = new LegacyContextLoader(Context::getContext());
                 $contextLoader->loadGenericContext();

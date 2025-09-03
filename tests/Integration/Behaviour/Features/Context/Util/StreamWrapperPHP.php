@@ -85,7 +85,7 @@ class StreamWrapperPHP
             $this->data = file_get_contents($this->buffer_filename());
         }
         $this->index = 0;
-        $this->length = \strlen($this->data);
+        $this->length = \strlen((string) $this->data);
     }
 
     protected function buffer_filename(): string
@@ -115,11 +115,11 @@ class StreamWrapperPHP
     public function stream_read(int $count): string
     {
         if (($this->length === null) === true) {
-            $this->length = \strlen($this->data);
+            $this->length = \strlen((string) $this->data);
         }
         $length = min($count, $this->length - $this->index);
-        $data = substr($this->data, $this->index);
-        $this->index = $this->index + $length;
+        $data = substr((string) $this->data, $this->index);
+        $this->index += $length;
 
         return $data;
     }

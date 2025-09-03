@@ -330,7 +330,7 @@ class CombinationListingFeatureContext extends AbstractCombinationFeatureContext
         $combinationDataRow = PrimitiveUtils::castStringArrayIntoArray($combinationDataRow);
         $combinationAttributesInfo = [];
         foreach ($combinationDataRow as $attributesInfo) {
-            $attributeInfo = explode(':', $attributesInfo);
+            $attributeInfo = explode(':', (string) $attributesInfo);
             $combinationAttributesInfo[] = new CombinationAttributeInformation(
                 $this->getSharedStorage()->get($attributeInfo[0]),
                 $attributeInfo[0],

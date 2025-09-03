@@ -188,9 +188,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
             // We cannot anticipate categories ordering (and we don't really care) so we find related expected category by id
             $relativeExpectedCategories = array_filter(
                 $expectedCategories,
-                function (array $expectedCategory) use ($actualId) {
-                    return $actualId === $this->getSharedStorage()->get($expectedCategory['id reference']);
-                });
+                fn (array $expectedCategory) => $actualId === $this->getSharedStorage()->get($expectedCategory['id reference']));
             Assert::assertNotEmpty($relativeExpectedCategories, \sprintf(
                 'Did not expect to find category %s in the list for shop %d',
                 $categoryInformation->getName(),

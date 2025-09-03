@@ -162,9 +162,7 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
                     $data['transaction_id']
                 )
             );
-        } catch (NegativePaymentAmountException $exception) {
-            $this->setLastException($exception);
-        } catch (OrderConstraintException $exception) {
+        } catch (NegativePaymentAmountException|OrderConstraintException $exception) {
             $this->setLastException($exception);
         }
     }

@@ -38,16 +38,14 @@ use PrestaShop\PrestaShop\Core\Context\EmployeeContext;
  */
 class EmployeeContextDecorator extends EmployeeContext
 {
-    private EmployeeContext $decoratedEmployeeContext;
-
     private ?Employee $overriddenEmployee = null;
 
     private bool $useOverriddenValue = false;
 
-    public function __construct(EmployeeContext $decoratedEmployeeContext)
-    {
-        $this->decoratedEmployeeContext = $decoratedEmployeeContext;
-        parent::__construct($decoratedEmployeeContext->getEmployee(), []);
+    public function __construct(
+        private readonly EmployeeContext $decoratedEmployeeContext,
+    ) {
+        parent::__construct($this->decoratedEmployeeContext->getEmployee(), []);
     }
 
     public function getEmployee(): ?Employee

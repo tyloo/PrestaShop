@@ -163,7 +163,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
      */
     public function createMultipleCmsPages($cmsPageReferences)
     {
-        $cmsPageReferences = explode(',', $cmsPageReferences);
+        $cmsPageReferences = explode(',', (string) $cmsPageReferences);
 
         foreach ($cmsPageReferences as $ref) {
             $data = $this->getValidDataForCmsPageCreation();
@@ -216,7 +216,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getQueryBus()->handle(new GetCmsPageForEditing($cmsPageId));
             throw new NoExceptionAlthoughExpectedException(\sprintf('CMS page "%s" was found, but it was expected to be deleted', $cmsPageReference));
-        } catch (CmsPageNotFoundException $e) {
+        } catch (CmsPageNotFoundException) {
             SharedStorage::getStorage()->clear($cmsPageReference);
         }
     }
@@ -307,7 +307,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle($query);
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Cms category with id "%s" expected to not exist, but it exists', $id));
-        } catch (CmsPageCategoryNotFoundException $e) {
+        } catch (CmsPageCategoryNotFoundException) {
         }
     }
 

@@ -54,13 +54,10 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function validateCartWithPaymentModule($paymentModuleName)
     {
-        switch ($paymentModuleName) {
-            case 'fake':
-                $paymentModule = new PaymentModuleFake();
-                break;
-            default:
-                throw new Exception(\sprintf('Invalid payment module: %s' . $paymentModuleName));
-        }
+        $paymentModule = match ($paymentModuleName) {
+            'fake' => new PaymentModuleFake(),
+            default => throw new Exception(\sprintf('Invalid payment module: %s' . $paymentModuleName)),
+        };
 
         // need to boot kernel for usage in $paymentModule->validateOrder()
         global $kernel;

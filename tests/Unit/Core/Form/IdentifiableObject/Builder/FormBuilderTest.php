@@ -195,7 +195,7 @@ class FormBuilderTest extends TestCase
         $invokedCount = $this->exactly(2);
         $hookDispatcherMock->expects($invokedCount)
             ->method('dispatchWithParameters')
-            ->willReturnCallback(function ($hookName, array $hookParameters) use ($invokedCount, $formName, $hookNameEnd, $hookOptions, $formBuilder, $expectedOptions, $expectedId) {
+            ->willReturnCallback(function ($hookName, array $hookParameters) use ($invokedCount, $formName, $hookNameEnd, $hookOptions, $formBuilder, $expectedOptions, $expectedId): void {
                 if ($invokedCount->numberOfInvocations() === 1) {
                     $this->assertEquals('action' . $formName . $hookNameEnd, $hookName);
                     $this->assertEquals($hookOptions, $hookParameters);

@@ -69,7 +69,7 @@ class StockManagementControllerTest extends ApiTestCase
 
         $this->connection = self::$kernel->getContainer()->get('doctrine.dbal.default_connection');
 
-        $stockMovementRepository = $this->getMockBuilder('PrestaShopBundle\Entity\Repository\StockMovementRepository')
+        $stockMovementRepository = $this->getMockBuilder(\PrestaShopBundle\Entity\Repository\StockMovementRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 

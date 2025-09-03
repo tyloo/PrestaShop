@@ -6,27 +6,27 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit6ff0e5a705530539c3f4f03f48949f68
 {
-    public static $prefixLengthsPsr4 = array (
+    public static $prefixLengthsPsr4 =  [
         'P' => 
-        array (
+         [
             'PrestaShop\\Module\\Banner\\' => 25,
-        ),
-    );
+        ],
+    ];
 
-    public static $prefixDirsPsr4 = array (
+    public static $prefixDirsPsr4 =  [
         'PrestaShop\\Module\\Banner\\' => 
-        array (
+         [
             0 => __DIR__ . '/../..' . '/src',
-        ),
-    );
+        ],
+    ];
 
-    public static $classMap = array (
+    public static $classMap =  [
         'Ps_Banner' => __DIR__ . '/../..' . '/ps_banner.php',
-    );
+    ];
 
     public static function getInitializer(ClassLoader $loader)
     {
-        return \Closure::bind(function () use ($loader) {
+        return \Closure::bind(function () use ($loader): void {
             $loader->prefixLengthsPsr4 = ComposerStaticInit6ff0e5a705530539c3f4f03f48949f68::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit6ff0e5a705530539c3f4f03f48949f68::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit6ff0e5a705530539c3f4f03f48949f68::$classMap;

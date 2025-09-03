@@ -213,7 +213,7 @@ class ZoneFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle($query);
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Zone %s exists, but it was expected to be deleted', $zoneReference));
-        } catch (ZoneNotFoundException $e) {
+        } catch (ZoneNotFoundException) {
             SharedStorage::getStorage()->clear($zoneReference);
         }
     }

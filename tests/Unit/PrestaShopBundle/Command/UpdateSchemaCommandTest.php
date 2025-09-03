@@ -173,7 +173,7 @@ class UpdateSchemaCommandTest extends TestCase
         $connection
             ->expects($this->any())
             ->method('executeQuery')
-            ->will($this->returnCallback([$this, 'columnsNames']));
+            ->will($this->returnCallback($this->columnsNames(...)));
 
         $this->command->clearQueries($connection, $queries);
         $this->assertEquals(

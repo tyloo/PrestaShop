@@ -348,7 +348,7 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
 
     private function getSupplierForViewing(string $reference, ?int $langId = null): ViewableSupplier
     {
-        $langId = $langId ?? $this->getDefaultLangId();
+        $langId ??= $this->getDefaultLangId();
         $supplierId = $this->getSharedStorage()->get($reference);
 
         /** @var ViewableSupplier $viewableSupplier */

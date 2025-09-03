@@ -31,11 +31,9 @@ namespace Tests\Unit\Core\Foundation\IoC\Fixtures;
 
 class DepBuiltByClosure
 {
-    private $value;
-
-    public function __construct($value)
-    {
-        $this->value = $value;
+    public function __construct(
+        private $value,
+    ) {
     }
 
     public function getValue()

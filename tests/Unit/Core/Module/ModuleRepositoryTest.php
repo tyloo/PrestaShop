@@ -84,7 +84,7 @@ class ModuleRepositoryTest extends TestCase
             ->onlyMethods(['getModule'])
             ->getMock()
         ;
-        $this->moduleRepository->method('getModule')->willReturnCallback([$this, 'getModuleMock']);
+        $this->moduleRepository->method('getModule')->willReturnCallback($this->getModuleMock(...));
     }
 
     public function testGetList(): void

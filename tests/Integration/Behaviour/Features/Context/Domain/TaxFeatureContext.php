@@ -186,7 +186,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle(new GetTaxForEditing($taxId));
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Tax %s expected to be deleted, but it was found', $taxReference));
-        } catch (TaxNotFoundException $e) {
+        } catch (TaxNotFoundException) {
             SharedStorage::getStorage()->clear($taxReference);
         }
     }

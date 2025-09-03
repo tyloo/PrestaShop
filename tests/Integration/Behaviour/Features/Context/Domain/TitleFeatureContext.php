@@ -218,7 +218,7 @@ class TitleFeatureContext extends AbstractDomainFeatureContext
             $this->getTitleForEdition($titleReference);
 
             return true;
-        } catch (TitleNotFoundException $e) {
+        } catch (TitleNotFoundException) {
             return false;
         }
     }

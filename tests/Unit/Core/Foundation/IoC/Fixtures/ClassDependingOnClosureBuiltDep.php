@@ -31,11 +31,9 @@ namespace Tests\Unit\Core\Foundation\IoC\Fixtures;
 
 class ClassDependingOnClosureBuiltDep
 {
-    private $dep;
-
-    public function __construct(DepBuiltByClosure $dep)
-    {
-        $this->dep = $dep;
+    public function __construct(
+        private readonly DepBuiltByClosure $dep,
+    ) {
     }
 
     public function getDep()

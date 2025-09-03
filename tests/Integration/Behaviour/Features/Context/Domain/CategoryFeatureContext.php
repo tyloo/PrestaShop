@@ -191,7 +191,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         $categoryId = SharedStorage::getStorage()->get($categoryReference);
         try {
             $this->getQueryBus()->handle(new GetCategoryForEditing($categoryId));
-        } catch (CategoryNotFoundException $e) {
+        } catch (CategoryNotFoundException) {
             return;
         }
         throw new RuntimeException(\sprintf('Category %s still exists', $categoryReference));
@@ -345,7 +345,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     {
         $supportedCommands = [EditCategoryCommand::class, EditRootCategoryCommand::class];
 
-        if (! \in_array(\get_class($command), $supportedCommands, true)) {
+        if (! \in_array($command::class, $supportedCommands, true)) {
             throw new RuntimeException('Unsupported command provided for filling the data in test');
         }
 
@@ -522,7 +522,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
             $this->getEditableCategory($categoryReference);
 
             throw new RuntimeException(\sprintf('%s exception was expected', CannotEditRootCategoryException::class));
-        } catch (CannotEditRootCategoryException $e) {
+        } catch (CannotEditRootCategoryException) {
             // this is expected. We want to make sure that root category cannot be edited.
         }
     }
@@ -588,9 +588,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
         foreach ($actualCategories as $key => $category) {
             $expectedCategory = $expectedCategories[$key];
             $expectedId = $this->getSharedStorage()->get($expectedCategory['id reference']);
-            $expectedChildrenCategoryIds = array_map(function (string $childCategoryReference): int {
-                return $this->getSharedStorage()->get($childCategoryReference);
-            }, PrimitiveUtils::castStringArrayIntoArray($expectedCategory['direct child categories']));
+            $expectedChildrenCategoryIds = array_map(fn (string $childCategoryReference): int => $this->getSharedStorage()->get($childCategoryReference), PrimitiveUtils::castStringArrayIntoArray($expectedCategory['direct child categories']));
 
             $actualCategoryChildren = $category->getChildren();
             Assert::assertEquals(
@@ -715,20 +713,12 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
             return;
         }
 
-        switch ($type) {
-            case self::PROPERTY_TYPE_REFERENCE:
-                $expectedValue = $this->getSharedStorage()->get($localizedData[$index]);
-                break;
-            case self::PROPERTY_TYPE_REFERENCE_ARRAY:
-                $expectedValue = $this->referencesToIds($localizedData[$index]);
-                break;
-            case self::PROPERTY_TYPE_BOOL:
-                $expectedValue = PrimitiveUtils::castStringBooleanIntoBoolean($localizedData[$index]);
-                break;
-            default:
-                $expectedValue = $localizedData[$index];
-                break;
-        }
+        $expectedValue = match ($type) {
+            self::PROPERTY_TYPE_REFERENCE => $this->getSharedStorage()->get($localizedData[$index]),
+            self::PROPERTY_TYPE_REFERENCE_ARRAY => $this->referencesToIds($localizedData[$index]),
+            self::PROPERTY_TYPE_BOOL => PrimitiveUtils::castStringBooleanIntoBoolean($localizedData[$index]),
+            default => $localizedData[$index],
+        };
 
         Assert::assertSame(
             $expectedValue,

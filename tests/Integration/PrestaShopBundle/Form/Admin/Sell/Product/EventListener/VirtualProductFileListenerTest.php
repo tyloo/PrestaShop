@@ -190,7 +190,7 @@ class VirtualProductFileListenerTest extends FormListenerTestCase
 
             foreach ($constraints as $index => $expectedConstraint) {
                 $actualConstraint = $formFieldConstraints[$index];
-                $this->assertInstanceOf(\get_class($expectedConstraint), $actualConstraint);
+                $this->assertInstanceOf($expectedConstraint::class, $actualConstraint);
             }
         }
     }
@@ -223,7 +223,7 @@ class VirtualProductFileListenerTest extends FormListenerTestCase
 
 class SimpleVirtualProductFileFormTest extends CommonAbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('virtual_product_file', VirtualProductFileType::class);
     }

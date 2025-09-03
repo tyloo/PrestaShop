@@ -250,7 +250,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
         $layoutCustomizationPages = SharedStorage::getStorage()->get('meta_customization_pages');
 
         $pageNames = array_map(
-            static function (LayoutCustomizationPage $item) { return $item->getPage(); },
+            static fn (LayoutCustomizationPage $item) => $item->getPage(),
             $layoutCustomizationPages)
         ;
 

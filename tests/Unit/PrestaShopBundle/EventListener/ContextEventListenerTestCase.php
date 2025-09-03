@@ -53,8 +53,7 @@ abstract class ContextEventListenerTestCase extends KernelTestCase
      */
     protected function getPrivateField($object, string $propertyName)
     {
-        $reflectionProperty = new ReflectionProperty(\get_class($object), $propertyName);
-        $reflectionProperty->setAccessible(true);
+        $reflectionProperty = new ReflectionProperty($object::class, $propertyName);
 
         return $reflectionProperty->getValue($object);
     }

@@ -110,33 +110,25 @@ class CombinationCommandsBuilderTest extends AbstractCombinationCommandBuilderTe
 
 class FakeCombinationCommand
 {
-    public $value;
-
     /**
      * @var CombinationId
      */
     public $combinationId;
 
-    public function __construct(CombinationId $combinationId, $value)
-    {
+    public function __construct(
+        CombinationId $combinationId,
+        public $value,
+    ) {
         $this->combinationId = $combinationId;
-        $this->value = $value;
     }
 }
 
 class ConditionBuilder implements CombinationCommandsBuilderInterface
 {
-    /**
-     * @var array
-     */
-    private $formCondition;
-
-    private $command;
-
-    public function __construct(array $formCondition, $command)
-    {
-        $this->formCondition = $formCondition;
-        $this->command = $command;
+    public function __construct(
+        private readonly array $formCondition,
+        private $command,
+    ) {
     }
 
     public function buildCommands(CombinationId $combinationId, array $formData, ShopConstraint $singleShopConstraint): array
@@ -161,14 +153,12 @@ class AlwaysEmptyBuilder implements CombinationCommandsBuilderInterface
 
 class MultiCommandsBuilder implements CombinationCommandsBuilderInterface
 {
-    /**
-     * @var CombinationCommandsBuilderInterface[]
-     */
-    private $builders;
-
-    public function __construct(array $commandBuilders)
-    {
-        $this->builders = $commandBuilders;
+    public function __construct(
+        /**
+         * @var CombinationCommandsBuilderInterface[]
+         */
+        private readonly array $builders,
+    ) {
     }
 
     public function buildCommands(CombinationId $combinationId, array $formData, ShopConstraint $singleShopConstraint): array

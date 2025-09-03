@@ -74,26 +74,14 @@ class CartTest extends TestCase
 
     private static function setRoundingMode(string $modeStr): int
     {
-        switch ($modeStr) {
-            case 'up':
-                $mode = PS_ROUND_UP;
-                break;
-            case 'down':
-                $mode = PS_ROUND_DOWN;
-                break;
-            case 'half_up':
-                $mode = PS_ROUND_HALF_UP;
-                break;
-            case 'half_down':
-            case 'half_even':
-                $mode = PS_ROUND_HALF_DOWN;
-                break;
-            case 'hald_odd':
-                $mode = PS_ROUND_HALF_ODD;
-                break;
-            default:
-                throw new Exception(\sprintf('Unknown rounding mode `%s`.', $modeStr));
-        }
+        $mode = match ($modeStr) {
+            'up' => PS_ROUND_UP,
+            'down' => PS_ROUND_DOWN,
+            'half_up' => PS_ROUND_HALF_UP,
+            'half_down', 'half_even' => PS_ROUND_HALF_DOWN,
+            'hald_odd' => PS_ROUND_HALF_ODD,
+            default => throw new Exception(\sprintf('Unknown rounding mode `%s`.', $modeStr)),
+        };
 
         Configuration::set('PS_PRICE_ROUND_MODE', $mode);
 
@@ -102,19 +90,12 @@ class CartTest extends TestCase
 
     private static function setRoundingType(string $typeStr): int
     {
-        switch ($typeStr) {
-            case 'item':
-                $type = Order::ROUND_ITEM;
-                break;
-            case 'line':
-                $type = Order::ROUND_LINE;
-                break;
-            case 'total':
-                $type = Order::ROUND_TOTAL;
-                break;
-            default:
-                throw new Exception(\sprintf('Unknown rounding type `%s`.', $typeStr));
-        }
+        $type = match ($typeStr) {
+            'item' => Order::ROUND_ITEM,
+            'line' => Order::ROUND_LINE,
+            'total' => Order::ROUND_TOTAL,
+            default => throw new Exception(\sprintf('Unknown rounding type `%s`.', $typeStr)),
+        };
 
         Configuration::set('PS_ROUND_TYPE', $type);
 

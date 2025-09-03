@@ -247,7 +247,7 @@ class StateFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle($query);
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('State %s exists, but it was expected to be deleted', $stateReference));
-        } catch (StateNotFoundException $e) {
+        } catch (StateNotFoundException) {
             SharedStorage::getStorage()->clear($stateReference);
         }
     }

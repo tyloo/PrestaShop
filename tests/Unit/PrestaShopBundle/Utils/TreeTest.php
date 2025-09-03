@@ -99,13 +99,9 @@ class TreeTest extends TestCase
             20 => 20,
         ];
 
-        $getChildren = function (array $element) {
-            return isset($element['children']) ? $element['children'] : [];
-        };
+        $getChildren = (fn (array $element) => $element['children'] ?? []);
 
-        $getId = function ($element) {
-            return (int) $element['element_id'];
-        };
+        $getId = (fn ($element) => (int) $element['element_id']);
 
         $this->assertSame($idList, Tree::extractChildrenId($tree, $getChildren, $getId));
     }

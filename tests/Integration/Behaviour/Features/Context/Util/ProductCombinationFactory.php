@@ -66,7 +66,7 @@ class ProductCombinationFactory
             $combinations[] = $combination;
             $combinationAttributesIds = [];
             foreach ($combinationDetails->getAttributes() as $combinationAttribute) {
-                list($attributeGroup, $attributeName) = explode(':', $combinationAttribute);
+                [$attributeGroup, $attributeName] = explode(':', (string) $combinationAttribute);
                 foreach ($attributesList as $attributeDetail) {
                     if ($attributeDetail['attribute_group'] === $attributeGroup && $attributeDetail['name'] === $attributeName) {
                         $combinationAttributesIds[] = (int) $attributeDetail['id_attribute'];

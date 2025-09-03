@@ -172,16 +172,12 @@ class CategoryDisplayNameBuilderTest extends TestCase
         ;
 
         $mock->method('getDuplicateNameIds')
-            ->willReturn(array_map(function (int $id): CategoryId {
-                return new CategoryId($id);
-            }, array_keys($breadcrumbPartsByDuplicatedIds)))
+            ->willReturn(array_map(fn (int $id): CategoryId => new CategoryId($id), array_keys($breadcrumbPartsByDuplicatedIds)))
         ;
 
         $mock->method('getBreadcrumbParts')
             ->willReturnCallback(
-                function (CategoryId $categoryId, LanguageId $languageId) use ($breadcrumbPartsByDuplicatedIds): array {
-                    return $breadcrumbPartsByDuplicatedIds[$categoryId->getValue()];
-                }
+                fn (CategoryId $categoryId, LanguageId $languageId): array => $breadcrumbPartsByDuplicatedIds[$categoryId->getValue()]
             )
         ;
 

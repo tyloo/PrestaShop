@@ -50,7 +50,7 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
 
         $localizedTagsList = [];
         foreach ($data['tags'] as $langId => $localizedTagString) {
-            $localizedTagsList[$langId] = explode(',', $localizedTagString);
+            $localizedTagsList[$langId] = explode(',', (string) $localizedTagString);
         }
 
         try {
@@ -97,7 +97,7 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
             }
 
             // convert filled tags to array
-            $expectedTags = array_map('trim', explode(',', $tagsString));
+            $expectedTags = array_map('trim', explode(',', (string) $tagsString));
             $valueInLangExists = false;
             foreach ($actualLocalizedTagsList as $actualLocalizedTags) {
                 if ($actualLocalizedTags->getLanguageId() !== $langId) {

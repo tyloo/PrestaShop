@@ -162,7 +162,7 @@ class FormClonerTest extends AbstractFormTester
     {
         $listener = [
             'event' => FormEvents::SUBMIT,
-            'callback' => function (FormEvent $formEvent) {
+            'callback' => function (FormEvent $formEvent): void {
                 // Empty listener
             },
         ];
@@ -235,10 +235,8 @@ class FormClonerTest extends AbstractFormTester
     private function getTransformerChoiceList(DataTransformerInterface $transformer): ChoiceListInterface
     {
         $reflectionProperty = new ReflectionProperty(ChoiceToValueTransformer::class, 'choiceList');
-        $reflectionProperty->setAccessible(true);
 
         $choiceList = $reflectionProperty->getValue($transformer);
-        $reflectionProperty->setAccessible(false);
 
         return $choiceList;
     }
@@ -246,7 +244,7 @@ class FormClonerTest extends AbstractFormTester
     private function assertTotalNumberOfListeners(FormInterface $form, int $expectedCount): void
     {
         $listenersCount = 0;
-        foreach ($form->getConfig()->getEventDispatcher()->getListeners() as $eventName => $listeners) {
+        foreach ($form->getConfig()->getEventDispatcher()->getListeners() as $listeners) {
             $listenersCount += \count($listeners);
         }
         $this->assertSame($expectedCount, $listenersCount);
@@ -329,7 +327,7 @@ class FormClonerTest extends AbstractFormTester
                     $this->assertIsArray($clonedListener);
                     $this->assertSame(2, \count($clonedListener));
                     $this->assertIsObject($clonedListener[0]);
-                    $this->assertInstanceOf(\get_class($originalListener[0]), $clonedListener[0]);
+                    $this->assertInstanceOf($originalListener[0]::class, $clonedListener[0]);
                     // This is the event name
                     $this->assertSame($originalListener[1], $clonedListener[1]);
                 } else {
@@ -350,7 +348,7 @@ class FormClonerTest extends AbstractFormTester
             $this->assertArrayHasKey($index, $clonedTransformers);
             $clonedTransformer = $clonedTransformers[$index];
             // We can't check the whole object but at least the type
-            $this->assertInstanceOf(\get_class($originalTransformer), $clonedTransformer);
+            $this->assertInstanceOf($originalTransformer::class, $clonedTransformer);
         }
     }
 }

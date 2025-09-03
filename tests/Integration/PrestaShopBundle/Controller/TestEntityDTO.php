@@ -33,22 +33,10 @@ use Tests\Integration\PrestaShopBundle\Controller\Exception\VariableNotFoundExce
 
 class TestEntityDTO
 {
-    /**
-     * @var ?int
-     */
-    private $id;
-
-    /**
-     * @var array
-     */
-    private $variables;
-
     public function __construct(
-        ?int $id,
-        array $variables = [],
+        private readonly ?int $id,
+        private array $variables = [],
     ) {
-        $this->id = $id;
-        $this->variables = $variables;
     }
 
     public function getId(): ?int

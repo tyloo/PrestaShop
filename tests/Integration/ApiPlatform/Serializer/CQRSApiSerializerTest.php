@@ -140,9 +140,9 @@ class CQRSApiSerializerTest extends KernelTestCase
         $serializer = self::getContainer()->get(CQRSApiSerializer::class);
 
         foreach ($this->getExpectedDenormalizedData() as $useCase => $denormalizationData) {
-            list($dataToDenormalize, $denormalizedObject, $normalizationMapping, $type, $extraContext) = array_pad($denormalizationData, 5, null);
+            [$dataToDenormalize, $denormalizedObject, $normalizationMapping, $type, $extraContext] = array_pad($denormalizationData, 5, null);
             $context = [NormalizationMapper::NORMALIZATION_MAPPING => $normalizationMapping ?? []];
-            $type = $type ?: \get_class($denormalizedObject);
+            $type = $type ?: $denormalizedObject::class;
             if (! empty($extraContext)) {
                 $context = array_merge($context, $extraContext);
             }
@@ -523,7 +523,7 @@ class CQRSApiSerializerTest extends KernelTestCase
     {
         $serializer = self::getContainer()->get(CQRSApiSerializer::class);
         foreach ($this->getNormalizationData() as $useCase => $normalizationData) {
-            list($dataToNormalize, $expectedNormalizedData, $normalizationMapping, $extraContext) = array_pad($normalizationData, 4, null);
+            [$dataToNormalize, $expectedNormalizedData, $normalizationMapping, $extraContext] = array_pad($normalizationData, 4, null);
             $context = [NormalizationMapper::NORMALIZATION_MAPPING => ($normalizationMapping ?? [])] + ($extraContext ?? []);
 
             self::assertEquals($expectedNormalizedData, $serializer->normalize($dataToNormalize, null, $context), $useCase);

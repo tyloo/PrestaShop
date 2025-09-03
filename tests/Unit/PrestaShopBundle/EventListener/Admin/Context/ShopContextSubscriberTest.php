@@ -603,9 +603,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
             if (isset($employeeData['authorizedShopGroups'])) {
                 $employeeContext
                     ->method('hasAuthorizationOnShopGroup')
-                    ->will($this->returnCallback(function ($shopGroupId) use ($employeeData) {
-                        return \in_array($shopGroupId, $employeeData['authorizedShopGroups'], true);
-                    }))
+                    ->will($this->returnCallback(fn ($shopGroupId) => \in_array($shopGroupId, $employeeData['authorizedShopGroups'], true)))
                 ;
             } else {
                 $employeeContext
@@ -617,9 +615,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
             if (isset($employeeData['authorizedShops'])) {
                 $employeeContext
                     ->method('hasAuthorizationOnShop')
-                    ->will($this->returnCallback(function ($shopId) use ($employeeData) {
-                        return \in_array($shopId, $employeeData['authorizedShops'], true);
-                    }))
+                    ->will($this->returnCallback(fn ($shopId) => \in_array($shopId, $employeeData['authorizedShops'], true)))
                 ;
             } else {
                 $employeeContext

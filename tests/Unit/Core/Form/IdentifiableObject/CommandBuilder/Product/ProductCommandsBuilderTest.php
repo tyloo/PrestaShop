@@ -110,33 +110,25 @@ class ProductCommandsBuilderTest extends AbstractProductCommandBuilderTestCase
 
 class FakeProductCommand
 {
-    public $value;
-
     /**
      * @var ProductId
      */
     public $productId;
 
-    public function __construct(ProductId $productId, $value)
-    {
+    public function __construct(
+        ProductId $productId,
+        public $value,
+    ) {
         $this->productId = $productId;
-        $this->value = $value;
     }
 }
 
 class ConditionBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * @var array
-     */
-    private $formCondition;
-
-    private $command;
-
-    public function __construct(array $formCondition, $command)
-    {
-        $this->formCondition = $formCondition;
-        $this->command = $command;
+    public function __construct(
+        private readonly array $formCondition,
+        private $command,
+    ) {
     }
 
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array
@@ -161,14 +153,12 @@ class AlwaysEmptyBuilder implements ProductCommandsBuilderInterface
 
 class MultiCommandsBuilder implements ProductCommandsBuilderInterface
 {
-    /**
-     * @var ProductCommandsBuilderInterface[]
-     */
-    private $builders;
-
-    public function __construct(array $commandBuilders)
-    {
-        $this->builders = $commandBuilders;
+    public function __construct(
+        /**
+         * @var ProductCommandsBuilderInterface[]
+         */
+        private readonly array $builders,
+    ) {
     }
 
     public function buildCommands(ProductId $productId, array $formData, ShopConstraint $singleShopConstraint): array

@@ -174,7 +174,7 @@ HTML;
             return [];
         }
         $style = [];
-        $styleAttributes = explode(';', $styleAttr->nodeValue);
+        $styleAttributes = explode(';', (string) $styleAttr->nodeValue);
         foreach ($styleAttributes as $styleAttribute) {
             if (empty($styleAttribute)) {
                 continue;

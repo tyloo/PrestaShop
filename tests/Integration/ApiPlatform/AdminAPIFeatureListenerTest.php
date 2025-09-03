@@ -67,7 +67,7 @@ class AdminAPIFeatureListenerTest extends ApiTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->featureFlagManager = self::getContainer()->get('PrestaShop\PrestaShop\Core\FeatureFlag\FeatureFlagManager');
+        $this->featureFlagManager = self::getContainer()->get(FeatureFlagManager::class);
     }
 
     public function testAPIIsProtectedByDefault(): void

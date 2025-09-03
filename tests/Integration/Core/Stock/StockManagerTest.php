@@ -68,7 +68,7 @@ class StockManagerTest extends KernelTestCase
 
         $this->testContainer = new Container();
         $this->testContainer->bind(
-            '\\PrestaShop\\PrestaShop\\Core\\ConfigurationInterface',
+            ConfigurationInterface::class,
             $this->configuration
         );
         ServiceLocator::setServiceContainerInstance($this->testContainer);
@@ -95,8 +95,8 @@ class StockManagerTest extends KernelTestCase
         foreach ($products as $product) {
             $packItemsManager->addProduct($pack, $product[0], $product[1], $product[2]);
         }
-        $this->testContainer->bind('\\PrestaShop\\PrestaShop\\Adapter\\Product\\PackItemsManager', $packItemsManager);
-        $this->testContainer->bind('\\PrestaShop\\PrestaShop\\Adapter\\StockManager', $packItemsManager);
+        $this->testContainer->bind(PackItemsManager::class, $packItemsManager);
+        $this->testContainer->bind(\PrestaShop\PrestaShop\Adapter\StockManager::class, $packItemsManager);
 
         $stockManager = new StockManager();
         $stockManager->updatePackQuantity($pack, $pack->stock_available, $delta);
@@ -188,13 +188,13 @@ class StockManagerTest extends KernelTestCase
         foreach ($products as $product) {
             $this->packItemsManager->addProduct($pack, $product[0], $product[1], $product[2]);
         }
-        $this->testContainer->bind('\\PrestaShop\\PrestaShop\\Adapter\\Product\\PackItemsManager', $this->packItemsManager);
-        $this->testContainer->bind('\\PrestaShop\\PrestaShop\\Adapter\\StockManager', $this->packItemsManager);
+        $this->testContainer->bind(PackItemsManager::class, $this->packItemsManager);
+        $this->testContainer->bind(\PrestaShop\PrestaShop\Adapter\StockManager::class, $this->packItemsManager);
 
         $stockManager = new StockManager();
         // we will update first product quantity only, others will remain inchanged (excepting pack on needed cases)
         $stockAvailable = $products[0][0]->stock_available;
-        $stockAvailable->quantity = $stockAvailable->quantity + $delta;
+        $stockAvailable->quantity += $delta;
         $stockAvailable->update();
         $stockManager->updatePacksQuantityContainingProduct($products[0][0], $products[0][1], $stockAvailable);
 
@@ -286,8 +286,8 @@ class StockManagerTest extends KernelTestCase
         foreach ($products as $product) {
             $this->packItemsManager->addProduct($pack, $product[0], $product[1], $product[2]);
         }
-        $this->testContainer->bind('\\PrestaShop\\PrestaShop\\Adapter\\Product\\PackItemsManager', $this->packItemsManager);
-        $this->testContainer->bind('\\PrestaShop\\PrestaShop\\Adapter\\StockManager', $this->packItemsManager);
+        $this->testContainer->bind(PackItemsManager::class, $this->packItemsManager);
+        $this->testContainer->bind(\PrestaShop\PrestaShop\Adapter\StockManager::class, $this->packItemsManager);
 
         $productToUpdate = ($product_to_update === 0) ? $pack : $products[$product_to_update - 1][0];
         $productAttributeToUpdate = ($product_to_update === 0) ? null : $products[$product_to_update - 1][1];
@@ -446,7 +446,7 @@ class FakePackItemsManager4759 extends PackItemsManager
 
     public function getStockAvailableByProduct($product, ?int $id_product_attribute = null, $id_shop = null)
     {
-        $id_product_attribute = $id_product_attribute ? $id_product_attribute : 0;
+        $id_product_attribute = $id_product_attribute ?: 0;
 
         return $this->stockAvailables[$product->id][$id_product_attribute];
     }

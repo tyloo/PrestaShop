@@ -85,14 +85,9 @@ class ConfigurableFiltersBuilder extends AbstractFiltersBuilder
      */
     private $parameters;
 
-    /**
-     * @var array
-     */
-    private $managedParameters;
-
-    public function __construct(array $managedParameters)
-    {
-        $this->managedParameters = $managedParameters;
+    public function __construct(
+        private array $managedParameters,
+    ) {
     }
 
     public function setConfig(array $config)

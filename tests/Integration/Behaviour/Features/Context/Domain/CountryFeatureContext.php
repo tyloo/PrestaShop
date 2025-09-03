@@ -237,7 +237,7 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle(new GetCountryForEditing($countryId));
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Country %s exists, but it was expected to be deleted', $countryReference));
-        } catch (CountryNotFoundException $e) {
+        } catch (CountryNotFoundException) {
             SharedStorage::getStorage()->clear($countryReference);
         }
     }

@@ -50,7 +50,7 @@ class DataComparator
                 $realElementType = \gettype($realElement);
             }
 
-            $isADateTime = (($realElementType === 'object') && (\get_class($realElement) === 'DateTime'));
+            $isADateTime = (($realElementType === 'object') && ($realElement::class === 'DateTime'));
             if ($isADateTime) {
                 $realElementType = 'datetime';
             }

@@ -139,7 +139,7 @@ class AttributeGroupFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle(new GetAttributeGroupForEditing($attributeGroupId));
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Attribute group %s exists, but it was expected to be deleted', $reference));
-        } catch (AttributeGroupNotFoundException $e) {
+        } catch (AttributeGroupNotFoundException) {
             $this->getSharedStorage()->clear($reference);
         }
     }

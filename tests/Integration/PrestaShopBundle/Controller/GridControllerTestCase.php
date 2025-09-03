@@ -121,9 +121,7 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
 
         // If no rows are found the collection is empty
         if ($entitiesRows->count()) {
-            $entities = $entitiesRows->each(function ($tr, $i) {
-                return $this->parseEntityFromRow($tr, $i);
-            });
+            $entities = $entitiesRows->each(fn ($tr, $i) => $this->parseEntityFromRow($tr, $i));
 
             // Fill the collection
             foreach ($entities as $entity) {
@@ -196,9 +194,7 @@ abstract class GridControllerTestCase extends SymfonyIntegrationTestCase
      */
     protected function assertCollectionContainsEntity(TestEntityDTOCollection $entities, int $searchEntityId): void
     {
-        $ids = array_map(function ($entity) {
-            return $entity->getId();
-        }, iterator_to_array($entities));
+        $ids = array_map(fn ($entity) => $entity->getId(), iterator_to_array($entities));
 
         $this->assertContains($searchEntityId, $ids);
     }

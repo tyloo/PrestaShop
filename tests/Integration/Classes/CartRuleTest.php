@@ -378,7 +378,7 @@ class CartRuleTest extends TestCase
         bool $code = true,
         bool $highlight = false,
     ): CartRule {
-        $randomNumber = rand(999, 9999);
+        $randomNumber = random_int(999, 9999);
         $cart_rule = new CartRule();
         $cart_rule->code = $code ? 'TEST_CART_RULE_' . $randomNumber : '';
         $cart_rule->name = [

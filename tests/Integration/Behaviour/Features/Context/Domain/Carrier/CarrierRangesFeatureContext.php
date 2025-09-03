@@ -103,7 +103,7 @@ class CarrierRangesFeatureContext extends AbstractDomainFeatureContext
                     /** @var Zone $zone */
                     $zone = $this->getSharedStorage()->get($range['id_zone']);
                     $range['id_zone'] = $zone->id;
-                } catch (RuntimeException $e) {
+                } catch (RuntimeException) {
                     $this->setLastException(new CarrierConstraintException(
                         \sprintf('Invalid zone id reference %d supplied. Zone id must be a positive integer.', $range['id_zone']),
                         CarrierConstraintException::INVALID_ZONE_ID

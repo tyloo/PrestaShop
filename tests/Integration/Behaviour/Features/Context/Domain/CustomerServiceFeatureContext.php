@@ -182,7 +182,7 @@ class CustomerServiceFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle($query);
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Thread %s exists, but it was expected to be deleted', $threadReference));
-        } catch (CustomerThreadNotFoundException $e) {
+        } catch (CustomerThreadNotFoundException) {
             SharedStorage::getStorage()->clear($threadReference);
         }
     }

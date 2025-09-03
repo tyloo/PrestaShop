@@ -262,7 +262,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     {
         try {
             $this->getCommandBus()->handle(new GetApiClientForEditing($this->getSharedStorage()->get($apiClientReference)));
-        } catch (ApiClientNotFoundException $e) {
+        } catch (ApiClientNotFoundException) {
             return;
         }
         throw new RuntimeException(\sprintf('API Client %s still exists', $apiClientReference));

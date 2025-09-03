@@ -154,9 +154,7 @@ class ProductLazyArrayTest extends TestCase
         ;
         $this->mockTranslatorInterface
             ->method('trans')
-            ->willReturnCallback(function ($id, array $parameters = [], $domain = null, $locale = null) {
-                return $id;
-            })
+            ->willReturnCallback(fn ($id, array $parameters = [], $domain = null, $locale = null) => $id)
         ;
     }
 

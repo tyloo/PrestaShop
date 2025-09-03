@@ -387,7 +387,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
         $exceptionTriggered = false;
         try {
             $this->getQueryBus()->handle(new SearchShops($searchTerm));
-        } catch (SearchShopException $e) {
+        } catch (SearchShopException) {
             $exceptionTriggered = true;
         }
 

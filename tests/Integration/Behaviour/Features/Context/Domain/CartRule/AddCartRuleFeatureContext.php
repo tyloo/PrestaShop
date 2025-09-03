@@ -50,7 +50,7 @@ class AddCartRuleFeatureContext extends AbstractCartRuleFeatureContext
                 );
 
                 return;
-            } catch (CartRuleNotFoundException $e) {
+            } catch (CartRuleNotFoundException) {
                 // if cart rule was not found we proceed to create it under this reference.
             }
         }

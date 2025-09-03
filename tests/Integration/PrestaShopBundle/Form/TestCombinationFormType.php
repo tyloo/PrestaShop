@@ -42,7 +42,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class TestCombinationFormType extends CommonAbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('stock', FormType::class)

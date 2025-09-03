@@ -162,7 +162,7 @@ class StoreFeatureContext extends AbstractDomainFeatureContext
             if ($storeQueried && $isToBeDeleted) {
                 throw new RuntimeException(\sprintf('Store "%s" is present, but it was expected to be deleted', $storeReference));
             }
-        } catch (StoreNotFoundException $e) {
+        } catch (StoreNotFoundException) {
             if ($isToBePresent) {
                 throw new RuntimeException(\sprintf('Store "%s" is present, but it was expected to be deleted', $storeReference));
             }

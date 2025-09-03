@@ -235,7 +235,7 @@ class TaxRulesGroupFeatureContext extends AbstractDomainFeatureContext
             $this->getQueryBus()->handle(new GetTaxRulesGroupForEditing($taxRulesGroupId));
 
             throw new NoExceptionAlthoughExpectedException(\sprintf('Tax rules group  %s expected to be deleted, but it was found', $taxRulesGroupReference));
-        } catch (TaxRulesGroupNotFoundException $e) {
+        } catch (TaxRulesGroupNotFoundException) {
             SharedStorage::getStorage()->clear($taxRulesGroupReference);
         }
     }

@@ -119,9 +119,7 @@ class ModuleRepositoryTest extends TestCase
     public function testGetListReturnsWellEnrichedModule(): void
     {
         $moduleList = iterator_to_array($this->moduleRepository->getList());
-        $filteredModules = array_filter($moduleList, function ($module, $key) {
-            return $module->get('name') === 'dummy_payment';
-        }, \ARRAY_FILTER_USE_BOTH);
+        $filteredModules = array_filter($moduleList, fn ($module, $key) => $module->get('name') === 'dummy_payment', \ARRAY_FILTER_USE_BOTH);
 
         $this->assertEquals(1, \count($filteredModules), 'Returned module list may contain at least "dummy_payment" module.');
         $dummy_module = array_shift($filteredModules);

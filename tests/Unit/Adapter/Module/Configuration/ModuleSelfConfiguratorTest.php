@@ -36,6 +36,7 @@ use Doctrine\DBAL\Statement;
 use PHPUnit\Framework\TestCase;
 use PrestaShop\PrestaShop\Adapter\Configuration;
 use PrestaShop\PrestaShop\Adapter\Module\Configuration\ModuleSelfConfigurator;
+use PrestaShop\PrestaShop\Adapter\Module\Module;
 use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 use PrestaShop\PrestaShop\Core\Module\ModuleRepository;
 use Symfony\Component\Filesystem\Filesystem;
@@ -185,13 +186,13 @@ class ModuleSelfConfiguratorTest extends TestCase
 
         $basePath = $this->defaultDir . '/..';
 
-        $mockFilesystem = $this->getMockBuilder('\Symfony\Component\Filesystem\Filesystem')
+        $mockFilesystem = $this->getMockBuilder(Filesystem::class)
             ->getMock();
 
         $invokedCount = $this->exactly(2);
         $mockFilesystem->expects($invokedCount)
             ->method('copy')
-            ->willReturnCallback(function (string $originFile, string $targetFile) use ($invokedCount, $basePath) {
+            ->willReturnCallback(function (string $originFile, string $targetFile) use ($invokedCount, $basePath): void {
                 if ($invokedCount->numberOfInvocations() === 1) {
                     $this->assertEquals($basePath . '/modules/ganalytics/ganalytics.php', $originFile);
                     $this->assertEquals($basePath . '/modules/ganalytics/ganalytics_copy.php', $targetFile);
@@ -260,7 +261,7 @@ class ModuleSelfConfiguratorTest extends TestCase
         // Redefine self configuratrion as mock
         $moduleSelfConfigurator = $this
             ->getMockBuilder(
-                '\PrestaShop\PrestaShop\Adapter\Module\Configuration\ModuleSelfConfigurator'
+                ModuleSelfConfigurator::class
             )
             ->setConstructorArgs([$this->moduleRepository, $this->configuration, $this->connection, new Filesystem()])
             ->onlyMethods(['loadPhpFile'])
@@ -279,7 +280,7 @@ class ModuleSelfConfiguratorTest extends TestCase
 
     private function mockModuleRepository(): void
     {
-        $moduleS = $this->getMockBuilder('PrestaShop\PrestaShop\Adapter\Module\Module')
+        $moduleS = $this->getMockBuilder(Module::class)
             ->disableOriginalConstructor()
             ->getMock();
         $moduleS
@@ -324,7 +325,7 @@ class ConfigurationMock extends Configuration
 
     public function get($key, $default = null, ?ShopConstraint $shopConstraint = null): mixed
     {
-        return isset($this->configurationData[$key]) ? $this->configurationData[$key] : $default;
+        return $this->configurationData[$key] ?? $default;
     }
 
     public function remove($key)
@@ -382,7 +383,7 @@ class StatementMock extends Statement
     {
     }
 
-    public function execute($params = null): Result
+    public function executeQuery($params = null): Result
     {
         return new ResultMock();
     }

@@ -102,9 +102,7 @@ class ProductPresenterTest extends KernelTestCase
 
         $priceFormatter = $this->createMock(PriceFormatter::class);
         $priceFormatter->method('convertAmount')->withAnyParameters()->willReturnArgument(0);
-        $priceFormatter->method('format')->withAnyParameters()->willReturnCallback(function (?float $price) {
-            return '#' . $price;
-        });
+        $priceFormatter->method('format')->withAnyParameters()->willReturnCallback(fn (?float $price) => '#' . $price);
 
         $presenter = new $presenterClass(
             $imageRetriever,

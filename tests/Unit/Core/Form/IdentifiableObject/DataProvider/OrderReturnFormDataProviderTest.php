@@ -75,9 +75,7 @@ class OrderReturnFormDataProviderTest extends TestCase
 
         $routerMock
             ->method('generate')
-            ->willReturnCallback(function ($route, $arguments) {
-                return $this->createResultBasedOnQuery($route, $arguments);
-            });
+            ->willReturnCallback(fn ($route, $arguments) => $this->createResultBasedOnQuery($route, $arguments));
 
         return $routerMock;
     }
@@ -132,13 +130,10 @@ class OrderReturnFormDataProviderTest extends TestCase
 
     private function createResultBasedOnQuery(string $route, array $arguments): string
     {
-        switch ($route) {
-            case 'admin_customers_view':
-                return 'customer_' . $arguments['customerId'];
-            case 'admin_orders_view':
-                return 'order_' . $arguments['orderId'];
-        }
-
-        throw new RuntimeException(\sprintf('Route "%s" was not expected in query bus mock', $route));
+        return match ($route) {
+            'admin_customers_view' => 'customer_' . $arguments['customerId'],
+            'admin_orders_view' => 'order_' . $arguments['orderId'],
+            default => throw new RuntimeException(\sprintf('Route "%s" was not expected in query bus mock', $route)),
+        };
     }
 }

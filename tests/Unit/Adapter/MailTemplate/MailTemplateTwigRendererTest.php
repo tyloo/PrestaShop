@@ -237,9 +237,7 @@ class MailTemplateTwigRendererTest extends TestCase
                 $this->equalTo($initialTemplate),
                 $this->equalTo($expectedVariables)
             )
-            ->will($this->returnCallback(function ($templateContent, array $templateVariables) {
-                return $templateContent . '_transformed_' . $templateVariables['locale'];
-            }))
+            ->will($this->returnCallback(fn ($templateContent, array $templateVariables) => $templateContent . '_transformed_' . $templateVariables['locale']))
         ;
 
         $transformationMock

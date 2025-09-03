@@ -45,7 +45,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TestProductFormType extends CommonAbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('stock', FormType::class)
@@ -82,7 +82,7 @@ class TestProductFormType extends CommonAbstractType
         $retailPricingForm->add('ecotax_tax_included', UnavailableType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver

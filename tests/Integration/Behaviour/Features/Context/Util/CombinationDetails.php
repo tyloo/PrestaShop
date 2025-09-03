@@ -35,34 +35,14 @@ namespace Tests\Integration\Behaviour\Features\Context\Util;
 class CombinationDetails
 {
     /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var int
-     */
-    private $quantity;
-
-    /**
-     * @var array
-     */
-    private $attributes;
-
-    /**
-     * @var float|null
-     */
-    private $price;
-
-    /**
      * @param string[] $attributes
      */
-    public function __construct(string $reference, int $quantity, array $attributes, ?float $price = null)
-    {
-        $this->reference = $reference;
-        $this->quantity = $quantity;
-        $this->attributes = $attributes;
-        $this->price = $price;
+    public function __construct(
+        private readonly string $reference,
+        private readonly int $quantity,
+        private readonly array $attributes,
+        private readonly ?float $price = null,
+    ) {
     }
 
     public function getReference(): string

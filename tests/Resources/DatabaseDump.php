@@ -263,7 +263,7 @@ class DatabaseDump
         exec($command, $output, $ret);
 
         if ($ret !== 0) {
-            throw new Exception(\sprintf('Unable to exec command: `%s`, output : %s', $command, implode($output)));
+            throw new Exception(\sprintf('Unable to exec command: `%s`, output : %s', $command, implode('', $output)));
         }
 
         return $output;
@@ -412,7 +412,7 @@ class DatabaseDump
         foreach ($tables as $table) {
             // $table is an array looking like this [Tables_in_database_name => 'ps_access']
             $tableName = reset($table);
-            $tableName = substr($tableName, \strlen($dump->dbPrefix));
+            $tableName = substr((string) $tableName, \strlen($dump->dbPrefix));
             $dump->restoreTable($tableName);
         }
     }
@@ -440,7 +440,7 @@ class DatabaseDump
         foreach ($tables as $table) {
             // $table is an array looking like this [Tables_in_database_name => 'ps_access']
             $tableName = reset($table);
-            $tableName = substr($tableName, \strlen($dump->dbPrefix));
+            $tableName = substr((string) $tableName, \strlen($dump->dbPrefix));
             if (preg_match($regexp, $tableName)) {
                 $dump->restoreTable($tableName);
             }

@@ -546,9 +546,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         static::createProduct($commandBus, self::PARTIAL_SHOPS_PRODUCT_DATA);
         static::createProduct($commandBus, self::ALL_SHOPS_PRODUCT_DATA);
 
-        $shopIds = array_map(static function (string $shopName): int {
-            return (int) Shop::getIdByName($shopName);
-        }, array_keys(self::FIXTURE_PRODUCT_DATA));
+        $shopIds = array_map(static fn (string $shopName): int => (int) Shop::getIdByName($shopName), array_keys(self::FIXTURE_PRODUCT_DATA));
 
         // copy product to new shops
         $commandBus->handle(new SetProductShopsCommand((int) Product::getIdByReference('demo_14'), static::DEFAULT_SHOP_ID, $shopIds));
@@ -567,9 +565,7 @@ class MultiShopProductControllerTest extends GridControllerTestCase
         ));
         static::$testProductId = $productId->getValue();
 
-        $shopIds = array_map(static function (string $shopName): int {
-            return (int) Shop::getIdByName($shopName);
-        }, array_keys($multiShopProductData));
+        $shopIds = array_map(static fn (string $shopName): int => (int) Shop::getIdByName($shopName), array_keys($multiShopProductData));
 
         $commandBus->handle(new SetProductShopsCommand($productId->getValue(), static::DEFAULT_SHOP_ID, $shopIds));
 

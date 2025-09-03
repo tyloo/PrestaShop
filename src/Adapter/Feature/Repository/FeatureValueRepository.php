@@ -168,7 +168,7 @@ class FeatureValueRepository extends AbstractObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        $result = $qb->execute()->fetchAllAssociative();
+        $result = $qb->executeQuery()->fetchAllAssociative();
         $featureValues = [];
         foreach ($result as $featureValue) {
             $featureValueId = (int) $featureValue['id_feature_value'];
@@ -201,7 +201,7 @@ class FeatureValueRepository extends AbstractObjectModelRepository
             ->orderBy('fvl.value')
         ;
 
-        return $qb->execute()->fetchAllAssociative();
+        return $qb->executeQuery()->fetchAllAssociative();
     }
 
     /**

@@ -41,7 +41,7 @@ class PhpErrorsCounter
      */
     public function registerErrorHandler()
     {
-        set_error_handler([$this, 'errorHandler'], \E_ALL);
+        set_error_handler($this->errorHandler(...), \E_ALL);
     }
 
     public function errorHandler(int $errorType): bool

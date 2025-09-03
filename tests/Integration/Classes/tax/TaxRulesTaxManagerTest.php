@@ -91,17 +91,17 @@ class TaxRulesTaxManagerTest extends TestCase
             $tax_rows[$tax_row['id_tax']]->id = $tax_row['id_tax'];
             $tax_rows[$tax_row['id_tax']]->rate = $tax_row['rate'];
         }
-        $entity_mapper->method('load')->willReturnCallback(function ($id, $id_lang, $entity, $entity_defs, $id_shop, $should_cache_objects) use ($tax_rows) {
+        $entity_mapper->method('load')->willReturnCallback(function ($id, $id_lang, $entity, $entity_defs, $id_shop, $should_cache_objects) use ($tax_rows): void {
             $entity->id = $tax_rows[$id]->id;
             $entity->rate = $tax_rows[$id]->rate;
         });
 
         $container->bind(
-            '\\PrestaShop\\PrestaShop\\Adapter\\EntityMapper',
+            EntityMapper::class,
             $entity_mapper
         );
         $container->bind(
-            '\\PrestaShop\\PrestaShop\\Core\\ConfigurationInterface',
+            ConfigurationInterface::class,
             $this->configuration
         );
     }

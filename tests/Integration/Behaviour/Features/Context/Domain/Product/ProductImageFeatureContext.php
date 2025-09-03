@@ -264,9 +264,7 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
     {
         $shopId = (int) $this->getSharedStorage()->get(trim($shopReference));
         Assert::assertTrue($this->shopProductImagesCollection
-            ->filter(function (ShopProductImages $shopProductImages) use ($shopId): bool {
-                return $shopProductImages->getShopId() === $shopId;
-            })
+            ->filter(fn (ShopProductImages $shopProductImages): bool => $shopProductImages->getShopId() === $shopId)
             ->first()
             ->getProductImages()
             ->isEmpty()
@@ -373,12 +371,10 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
         foreach ($table as $data) {
             $command->addProductSetting(
                 new ProductImageSetting(
-                    $this->getSharedStorage()->get(trim($data['imageReference'])),
+                    $this->getSharedStorage()->get(trim((string) $data['imageReference'])),
                     array_map(
-                        function (string $shopReference): int {
-                            return $this->getSharedStorage()->get(trim($shopReference));
-                        },
-                        explode(',', $data['shopReferences'])
+                        fn (string $shopReference): int => $this->getSharedStorage()->get(trim($shopReference)),
+                        explode(',', (string) $data['shopReferences'])
                     )
                 )
             );
@@ -406,17 +402,15 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
         $dataRows = $tableNode->getColumnsHash();
         $productImagesByShop = [];
         foreach ($dataRows as $dataRow) {
-            $shopId = (int) $this->getSharedStorage()->get(trim($dataRow['shopReference']));
+            $shopId = (int) $this->getSharedStorage()->get(trim((string) $dataRow['shopReference']));
             $productImagesByShop[$shopId][] = new ShopImageAssociation(
-                (int) $this->getSharedStorage()->get(trim($dataRow['image reference'])),
+                (int) $this->getSharedStorage()->get(trim((string) $dataRow['image reference'])),
                 (int) $dataRow['cover'] === 1
             );
         }
 
         $shopProductImagesArray = array_map(
-            function (int $shopId, array $productImages): ShopProductImages {
-                return new ShopProductImages($shopId, ShopImageAssociationCollection::from(...$productImages));
-            },
+            fn (int $shopId, array $productImages): ShopProductImages => new ShopProductImages($shopId, ShopImageAssociationCollection::from(...$productImages)),
             array_keys($productImagesByShop),
             $productImagesByShop
         );
@@ -431,9 +425,7 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
     {
         foreach ($expectedShopProductImagesCollection as $expectedShopProductImage) {
             $actualShopProductImages = $this->shopProductImagesCollection
-                ->filter(function (ShopProductImages $shopProductImages) use ($expectedShopProductImage): bool {
-                    return $shopProductImages->getShopId() === $expectedShopProductImage->getShopId();
-                })
+                ->filter(fn (ShopProductImages $shopProductImages): bool => $shopProductImages->getShopId() === $expectedShopProductImage->getShopId())
                 ->first();
 
             Assert::assertEquals(

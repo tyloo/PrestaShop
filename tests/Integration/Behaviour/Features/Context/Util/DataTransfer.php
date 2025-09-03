@@ -112,7 +112,7 @@ class DataTransfer
     private static function isGetMethod(ReflectionMethod $method)
     {
         return
-            strpos($method->name, 'get') === 0
+            str_starts_with($method->name, 'get')
             && \strlen($method->name) > 3
             && $method->getNumberOfRequiredParameters() === 0
         ;

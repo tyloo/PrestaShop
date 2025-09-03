@@ -301,31 +301,21 @@ class UpdateCustomizationFieldsFeatureContext extends AbstractProductFeatureCont
     {
         $customizationOptions = $this->getProductForEditing($productReference, $shopId)->getCustomizationOptions();
 
-        switch ($customizability) {
-            case 'not be customizable':
-                Assert::assertTrue(
-                    $customizationOptions->isNotCustomizable(),
-                    \sprintf('Expected product "%s" to be not customizable', $productReference)
-                );
-
-                break;
-            case 'allow customization':
-                Assert::assertTrue(
-                    $customizationOptions->allowsCustomization(),
-                    \sprintf('Expected product "%s" to allow customization', $productReference)
-                );
-
-                break;
-            case 'require customization':
-                Assert::assertTrue(
-                    $customizationOptions->requiresCustomization(),
-                    \sprintf('Expected product "%s" to require customization', $productReference)
-                );
-
-                break;
-            default:
-                throw new RuntimeException(\sprintf('Invalid customizability "%s" provided in test scenario', $customizability));
-        }
+        match ($customizability) {
+            'not be customizable' => Assert::assertTrue(
+                $customizationOptions->isNotCustomizable(),
+                \sprintf('Expected product "%s" to be not customizable', $productReference)
+            ),
+            'allow customization' => Assert::assertTrue(
+                $customizationOptions->allowsCustomization(),
+                \sprintf('Expected product "%s" to allow customization', $productReference)
+            ),
+            'require customization' => Assert::assertTrue(
+                $customizationOptions->requiresCustomization(),
+                \sprintf('Expected product "%s" to require customization', $productReference)
+            ),
+            default => throw new RuntimeException(\sprintf('Invalid customizability "%s" provided in test scenario', $customizability)),
+        };
     }
 
     private function assertCustomizationOptions(string $productReference, int $expectedCount, string $customizationType, int $shopId): void

@@ -246,7 +246,7 @@ class ModuleManagerTest extends TestCase
         };
 
         $moduleDataProvider->method('isInstalled')
-            ->willReturnCallback([$isInstalledCallback, 'isInstalled'])
+            ->willReturnCallback($isInstalledCallback->isInstalled(...))
         ;
 
         $moduleDataProvider->method('isEnabled')

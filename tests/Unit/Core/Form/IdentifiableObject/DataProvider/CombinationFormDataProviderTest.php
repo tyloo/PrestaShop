@@ -432,9 +432,7 @@ class CombinationFormDataProviderTest extends TestCase
                 $this->isInstanceOf(GetCombinationSuppliers::class),
                 $this->isInstanceOf(GetCombinationStockMovements::class)
             ))
-            ->willReturnCallback(function ($query) use ($combinationData) {
-                return $this->createResultBasedOnQuery($query, $combinationData);
-            })
+            ->willReturnCallback(fn ($query) => $this->createResultBasedOnQuery($query, $combinationData))
         ;
 
         return $queryBusMock;
@@ -447,7 +445,7 @@ class CombinationFormDataProviderTest extends TestCase
      */
     private function createResultBasedOnQuery($query, array $combinationData)
     {
-        switch ($queryClass = \get_class($query)) {
+        switch ($queryClass = $query::class) {
             case GetCombinationForEditing::class:
                 return $this->createCombinationForEditing($combinationData);
             case GetAssociatedSuppliers::class:

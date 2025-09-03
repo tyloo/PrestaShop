@@ -47,7 +47,7 @@ trait LastExceptionTrait
         $e = $this->getExpectedExceptionFromStorage();
 
         if ($e !== null) {
-            throw new RuntimeException(\sprintf('An unexpected exception was thrown %s: %s', \get_class($e), $e->getMessage()), 0, $e);
+            throw new RuntimeException(\sprintf('An unexpected exception was thrown %s: %s', $e::class, $e->getMessage()), 0, $e);
         }
     }
 
@@ -70,7 +70,7 @@ trait LastExceptionTrait
         }
 
         if (! $lastException instanceof $expectedError) {
-            throw new RuntimeException(\sprintf('Last error should be "%s", but got "%s"', $expectedError, $lastException ? \get_class($lastException) : 'null'), 0, $lastException);
+            throw new RuntimeException(\sprintf('Last error should be "%s", but got "%s"', $expectedError, $lastException ? $lastException::class : 'null'), 0, $lastException);
         }
 
         if ($errorCode !== null && $lastException->getCode() !== $errorCode) {

@@ -65,7 +65,7 @@ class QueryParamsCollectionTest extends TestCase
             );
             $this->fail('Invalid pagination params should raise an exception');
         } catch (Exception $exception) {
-            $expectedInstanceOf = '\PrestaShopBundle\Exception\InvalidPaginationParamsException';
+            $expectedInstanceOf = \PrestaShopBundle\Exception\InvalidPaginationParamsException::class;
             $this->assertInstanceOf(
                 $expectedInstanceOf,
                 $exception,
@@ -471,7 +471,7 @@ AND EXISTS(SELECT 1
             'features',
         ];
 
-        array_walk($validQueryParams, function ($name) use ($testedParams, &$params) {
+        array_walk($validQueryParams, function ($name) use ($testedParams, &$params): void {
             if (\array_key_exists($name, $testedParams) && $testedParams[$name] !== null) {
                 $params[$name] = $testedParams[$name];
             }

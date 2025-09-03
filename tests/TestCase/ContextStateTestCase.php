@@ -74,9 +74,7 @@ abstract class ContextStateTestCase extends TestCase
             if ($fieldName === 'currentLocale') {
                 $contextMock
                     ->method('getCurrentLocale')
-                    ->willReturnCallback(static function () use ($contextMock) {
-                        return $contextMock->currentLocale;
-                    })
+                    ->willReturnCallback(static fn () => $contextMock->currentLocale)
                 ;
             }
         }

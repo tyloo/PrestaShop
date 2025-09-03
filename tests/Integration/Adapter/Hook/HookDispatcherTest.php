@@ -66,7 +66,7 @@ class HookDispatcherTest extends KernelTestCase
     {
         $hookDispatcher = $this->getHookDispatcher();
 
-        $hookDispatcher->addListener('test_test', [$this, 'listenerCallback']);
+        $hookDispatcher->addListener('test_test', $this->listenerCallback(...));
         $hookDispatcher->dispatch(new HookEvent(), 'unknown_hook_name');
         $this->assertFalse($this->testedListenerCallbackCalled);
         $hookDispatcher->dispatch(new HookEvent(), 'test_test');
@@ -80,8 +80,8 @@ class HookDispatcherTest extends KernelTestCase
     {
         $hookDispatcher = $this->getHookDispatcher();
 
-        $hookDispatcher->addListener('test_test_2', [$this, 'listenerCallback2']);
-        $hookDispatcher->addListener('test_test_2', [$this, 'listenerCallback2b']);
+        $hookDispatcher->addListener('test_test_2', $this->listenerCallback2(...));
+        $hookDispatcher->addListener('test_test_2', $this->listenerCallback2b(...));
         /** @var RenderingHookEvent $event */
         $event = $hookDispatcher->dispatch(new RenderingHookEvent(), 'test_test_2');
 

@@ -72,7 +72,7 @@ class TranslationsFactoryTest extends TestCase
 
     public function testCreateCatalogueWithoutProviderFails(): void
     {
-        $this->expectException('PrestaShopBundle\Translation\Factory\ProviderNotFoundException');
+        $this->expectException(\PrestaShopBundle\Translation\Factory\ProviderNotFoundException::class);
         $this->factory->createCatalogue($this->providerMock->getIdentifier());
     }
 
@@ -82,12 +82,12 @@ class TranslationsFactoryTest extends TestCase
 
         $expected = $this->factory->createCatalogue($this->providerMock->getIdentifier());
 
-        $this->assertInstanceOf('Symfony\Component\Translation\MessageCatalogue', $expected);
+        $this->assertInstanceOf(MessageCatalogue::class, $expected);
     }
 
     public function testCreateTranslationsArrayWithoutProviderFails(): void
     {
-        $this->expectException('PrestaShopBundle\Translation\Factory\ProviderNotFoundException');
+        $this->expectException(\PrestaShopBundle\Translation\Factory\ProviderNotFoundException::class);
         $this->factory->createTranslationsArray($this->providerMock->getIdentifier());
     }
 

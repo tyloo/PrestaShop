@@ -279,9 +279,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
             // Clear cart static cache or it will have no products in next calls
             Cart::resetStaticCache();
-        } catch (MinimalQuantityException $e) {
-            $this->setLastException($e);
-        } catch (PackOutOfStockException $e) {
+        } catch (MinimalQuantityException|PackOutOfStockException $e) {
             $this->setLastException($e);
         }
     }
@@ -1140,7 +1138,7 @@ class CartFeatureContext extends AbstractDomainFeatureContext
 
         try {
             $repository->get(new CartId($cartId));
-        } catch (CartException $e) {
+        } catch (CartException) {
             throw new RuntimeException(\sprintf('cart %s should exist', $cartReference));
         }
     }

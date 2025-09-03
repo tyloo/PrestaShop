@@ -418,9 +418,9 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
         foreach ($expectedRows as $row) {
             $carrier = ['name' => $row['carrier']];
 
-            if (strtolower($row['state']) === 'available') {
+            if (strtolower((string) $row['state']) === 'available') {
                 $expectedAvailable[] = $carrier;
-            } elseif (strtolower($row['state']) === 'filtered') {
+            } elseif (strtolower((string) $row['state']) === 'filtered') {
                 $expectedFiltered[] = [
                     'carrier' => $row['carrier'],
                     'products' => $row['products'] ?? '',
@@ -439,17 +439,13 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
             new GetAvailableCarriers($productIds)
         );
 
-        $actualAvailable = array_map(function ($carrierSummary) {
-            return ['name' => $carrierSummary->getName()];
-        }, $carriersResult->getAvailableCarriers());
+        $actualAvailable = array_map(fn ($carrierSummary) => ['name' => $carrierSummary->getName()], $carriersResult->getAvailableCarriers());
 
         $actualFiltered = [];
 
         foreach ($carriersResult->getFilteredOutCarriers() as $removedCarrier) {
             $carrierName = $removedCarrier->getCarrier()->getName();
-            $productNames = array_map(function ($productSummary) {
-                return $productSummary->getName();
-            }, $removedCarrier->getProducts());
+            $productNames = array_map(fn ($productSummary) => $productSummary->getName(), $removedCarrier->getProducts());
 
             $actualFiltered[] = [
                 'carrier' => $carrierName,

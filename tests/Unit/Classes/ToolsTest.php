@@ -821,7 +821,7 @@ class ToolsTest extends TestCase
     public function testHtaccessRewriteRules(string $rule, string $replacement, array $testCases)
     {
         $rule = "~$rule~";
-        foreach ($testCases as $setName => $case) {
+        foreach ($testCases as $case) {
             if ($case['shouldMatch']) {
                 $this->assertMatchesRegularExpression($rule, $case['uri'], "The uri segment is expected to match the pattern, but it doesn't");
             } else {
@@ -829,7 +829,7 @@ class ToolsTest extends TestCase
             }
 
             if ($case['shouldMatch']) {
-                $result = preg_replace($rule, $replacement, $case['uri']);
+                $result = preg_replace($rule, $replacement, (string) $case['uri']);
                 $this->assertSame($case['rewritten'], $result);
             }
         }

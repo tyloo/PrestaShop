@@ -299,14 +299,14 @@ class CronJobsForms
                 $cron['description'] = Tools::safeOutput(Module::getModuleName($module_name));
                 $cron['task'] = self::$module->l('Module - Hook', 'CronJobsForms');
             } else {
-                $cron['task'] = urldecode($cron['task']);
+                $cron['task'] = urldecode((string) $cron['task']);
             }
 
             $cron['hour'] = ($cron['hour'] === -1) ? self::$module->l('Every hour', 'CronJobsForms') : date('H:i', mktime((int) $cron['hour'], 0, 0, 0, 1));
             $cron['day'] = ($cron['day'] === -1) ? self::$module->l('Every day', 'CronJobsForms') : (int) $cron['day'];
             $cron['month'] = ($cron['month'] === -1) ? self::$module->l('Every month', 'CronJobsForms') : self::$module->l(date('F', mktime(0, 0, 0, (int) $cron['month'], 1)));
             $cron['day_of_week'] = ($cron['day_of_week'] === -1) ? self::$module->l('Every day of the week', 'CronJobsForms') : self::$module->l(date('l', mktime(0, 0, 0, 0, (int) $cron['day_of_week'])));
-            $cron['updated_at'] = ($cron['updated_at'] === 0) ? self::$module->l('Never', 'CronJobsForms') : date('Y-m-d H:i:s', strtotime($cron['updated_at']));
+            $cron['updated_at'] = ($cron['updated_at'] === 0) ? self::$module->l('Never', 'CronJobsForms') : date('Y-m-d H:i:s', strtotime((string) $cron['updated_at']));
             $cron['one_shot'] = (bool) $cron['one_shot'];
             $cron['active'] = (bool) $cron['active'];
         }

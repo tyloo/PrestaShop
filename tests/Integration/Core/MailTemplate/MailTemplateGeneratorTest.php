@@ -274,9 +274,7 @@ class MailTemplateGeneratorTest extends TestCase
         $renderer
             ->expects($this->exactly($expectedHtmlRendered))
             ->method('renderHtml')
-            ->will($this->returnCallback(function (LayoutInterface $layout, LanguageInterface $language) {
-                return implode('_', [$layout->getName(), 'html', $layout->getModuleName(), $language->getIsoCode()]);
-            }))
+            ->will($this->returnCallback(fn (LayoutInterface $layout, LanguageInterface $language) => implode('_', [$layout->getName(), 'html', $layout->getModuleName(), $language->getIsoCode()])))
         ;
 
         if ($expectedTxtRendered === null) {
@@ -285,9 +283,7 @@ class MailTemplateGeneratorTest extends TestCase
         $renderer
             ->expects($this->exactly($expectedTxtRendered))
             ->method('renderTxt')
-            ->will($this->returnCallback(function (LayoutInterface $layout, LanguageInterface $language) {
-                return implode('_', [$layout->getName(), 'txt', $layout->getModuleName(), $language->getIsoCode()]);
-            }))
+            ->will($this->returnCallback(fn (LayoutInterface $layout, LanguageInterface $language) => implode('_', [$layout->getName(), 'txt', $layout->getModuleName(), $language->getIsoCode()])))
         ;
 
         return $renderer;

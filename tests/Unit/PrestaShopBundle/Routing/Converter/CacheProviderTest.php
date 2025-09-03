@@ -198,9 +198,7 @@ class CacheProviderTest extends TestCase
         // Now empty the private field to force CacheProvider to call the cache
         $reflectionClass = new ReflectionClass(CacheProvider::class);
         $routesProperty = $reflectionClass->getProperty('legacyRoutes');
-        $routesProperty->setAccessible(true);
         $routesProperty->setValue($cacheProvider, null);
-        $routesProperty->setAccessible(false);
 
         // Retry to get the value, the cache will be used hence the mockRouterProvider won't be called
         $legacyRoutes = $cacheProvider->getLegacyRoutes();
@@ -236,9 +234,7 @@ class CacheProviderTest extends TestCase
         // Now empty the private field to force CacheProvider to call the cache
         $reflectionClass = new ReflectionClass(CacheProvider::class);
         $routesProperty = $reflectionClass->getProperty('legacyRoutes');
-        $routesProperty->setAccessible(true);
         $routesProperty->setValue($cacheProvider, null);
-        $routesProperty->setAccessible(false);
 
         // Retry to get the value, the cache will be used hence the mockRouterProvider won't be called
         $controllerActions = $cacheProvider->getControllersActions();

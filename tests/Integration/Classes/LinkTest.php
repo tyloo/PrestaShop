@@ -40,7 +40,6 @@ class LinkTest extends TestCase
     {
         $reflectionDispatcher = new ReflectionClass('Dispatcher');
         $property = $reflectionDispatcher->getProperty('use_routes');
-        $property->setAccessible(true);
         $property->setValue(Dispatcher::getInstance(), $statusUseRoutes);
 
         $url = Context::getContext()->link->getProductLink(
@@ -56,26 +55,26 @@ class LinkTest extends TestCase
             true
         );
 
-        return parse_url($url);
+        return parse_url((string) $url);
     }
 
     public function testUrlTakesVariantIntoAccountWithUrlRewriting(): void
     {
-        $filename = basename($this->getProductLink(true, 1, 2)['path']);
+        $filename = basename((string) $this->getProductLink(true, 1, 2)['path']);
 
         $this->assertEquals('1-2-hummingbird-printed-t-shirt.html', $filename);
     }
 
     public function testUrlIgnoresVariantIfNotSpecifiedWithUrlRewriting(): void
     {
-        $filename = basename($this->getProductLink(true, 1, null)['path']);
+        $filename = basename((string) $this->getProductLink(true, 1, null)['path']);
 
         $this->assertEquals('1-hummingbird-printed-t-shirt.html', $filename);
     }
 
     public function testUrlTakesVariantIntoAccountWithoutUrlRewriting(): void
     {
-        parse_str($this->getProductLink(false, 1, 6)['query'], $query);
+        parse_str((string) $this->getProductLink(false, 1, 6)['query'], $query);
 
         $this->assertEquals(1, $query['id_product']);
         $this->assertEquals(6, $query['id_product_attribute']);
@@ -83,7 +82,7 @@ class LinkTest extends TestCase
 
     public function testUrlIgnoresVariantIfNotSpecifiedWithoutUrlRewriting(): void
     {
-        parse_str($this->getProductLink(false, 1, null)['query'], $query);
+        parse_str((string) $this->getProductLink(false, 1, null)['query'], $query);
 
         $this->assertEquals(1, $query['id_product']);
         $this->assertArrayNotHasKey('id_product_attribute', $query);
