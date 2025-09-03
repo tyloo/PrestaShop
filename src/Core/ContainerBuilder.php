@@ -41,8 +41,6 @@ class ContainerBuilder
         $container = new Container();
 
         $container->bind(ConfigurationInterface::class, \PrestaShop\PrestaShop\Adapter\Configuration::class, true);
-        $container->bind(ConfigurationInterface::class, \PrestaShop\PrestaShop\Adapter\Configuration::class, true);
-        $container->bind(Foundation\Database\DatabaseInterface::class, \PrestaShop\PrestaShop\Adapter\Database::class, true);
         $container->bind(Foundation\Database\DatabaseInterface::class, \PrestaShop\PrestaShop\Adapter\Database::class, true);
         $container->bind(Image\ImageFormatConfiguration::class, Image\ImageFormatConfiguration::class, true);
 

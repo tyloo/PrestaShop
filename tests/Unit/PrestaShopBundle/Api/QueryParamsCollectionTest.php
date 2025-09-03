@@ -52,13 +52,17 @@ class QueryParamsCollectionTest extends TestCase
     #[\PHPUnit\Framework\Attributes\DataProvider('getInvalidPaginationParams')]
     public function testItShouldRaiseAnExceptionOnInvalidPaginationParams(int $pageIndex, int $pageSize): void
     {
+        $requestMock = $this->mockRequest(
+            [
+                'order' => 'product',
+                'page_index' => (string) $pageIndex,
+                'page_size' => (string) $pageSize,
+                '_attributes' => $this->mockAttributes([]),
+            ]
+        );
+
         try {
-            $this->testItShouldMakeQueryParamsFromARequest(
-                'product',
-                $pageIndex,
-                $pageSize,
-                []
-            );
+            $this->queryParams->fromRequest($requestMock);
             $this->fail('Invalid pagination params should raise an exception');
         } catch (Exception $exception) {
             $expectedInstanceOf = \PrestaShopBundle\Exception\InvalidPaginationParamsException::class;

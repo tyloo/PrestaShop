@@ -38,7 +38,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'prestashop:update:hooks-documentation', description: 'Extract Hooks Documentation files', description: 'Extract Hooks Documentation files')]
+#[AsCommand(name: 'prestashop:update:hooks-documentation', description: 'Extract Hooks Documentation files')]
 final class GenerateHooksDocumentationCommand extends Command
 {
     private array $dynamicHookDetails = [

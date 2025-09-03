@@ -41,5 +41,5 @@ interface SearchProviderInterface extends ProviderInterface, UseDefaultCatalogue
      *
      * @return self
      */
-    public function setLocale($locale);
+    public function setLocale(string $locale);
 }

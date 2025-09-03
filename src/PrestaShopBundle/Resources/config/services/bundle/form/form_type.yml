@@ -34,7 +34,6 @@ services:
       $employeeIsoCode: '@=service("prestashop.adapter.legacy.context").getEmployeeLanguageIso()'
       $customerGroupChoices: '@=service("prestashop.core.form.choice_provider.group_by_id").getChoices()'
       $isSingleShopContext: '@=service("prestashop.adapter.shop.context").isShopContext()'
-      $categoryDataProvider: '@prestashop.adapter.data_provider.category'
       $ecoTaxGroupId: "@=service('prestashop.adapter.legacy.configuration').getInt('PS_ECOTAX_TAX_RULES_GROUP_ID')"
       $router: '@router'
       $isCombinationsUsed: '@=service("prestashop.adapter.combination_feature").isUsed()'
@@ -463,7 +462,7 @@ services:
     arguments:
       $currencyIsoCode: "@=service('prestashop.adapter.legacy.context').getContext().currency.iso_code"
       $carrierChoiceProvider: '@prestashop.core.form.choice_provider.carrier_by_reference_id'
-      $additionalDeliveryTimeNoteTypesProvider: '@prestashop.core.form.choice_provider.delivery_time_note_types_provider'
+      $deliveryTimeNoteTypesProvider: '@prestashop.core.form.choice_provider.delivery_time_note_types_provider'
 
   PrestaShopBundle\Form\Admin\Sell\Product\Pricing\RetailPriceType:
     arguments:
@@ -476,6 +475,7 @@ services:
       $attributeRepository: '@PrestaShop\PrestaShop\Adapter\Attribute\Repository\AttributeRepository'
       $specificPriceCombinationListener: '@PrestaShopBundle\Form\Admin\Sell\Product\EventListener\SpecificPriceCombinationListener'
       $combinationNameBuilder: '@PrestaShop\PrestaShop\Core\Product\Combination\NameBuilder\CombinationNameBuilder'
+      $languageId: "@=service('prestashop.adapter.legacy.context').getContext().language.id"
 
   PrestaShopBundle\Form\Admin\Sell\Product\Pricing\SpecificPricePriorityType:
     arguments:

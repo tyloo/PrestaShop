@@ -532,7 +532,7 @@ services:
     public: false
     arguments:
       $searchCriteriaApplicator: '@prestashop.core.query.doctrine_search_criteria_applicator'
-      $contextLangId: "@=service('prestashop.adapter.legacy.context').getContext().language.id"
+      $languageId: "@=service('prestashop.adapter.legacy.context').getContext().language.id"
 
   PrestaShop\PrestaShop\Core\Grid\Query\FeatureValueQueryBuilder:
     parent: 'prestashop.core.grid.abstract_query_builder'

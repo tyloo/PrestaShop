@@ -50,7 +50,7 @@ class DefaultLanguageToFilledArrayDataTransformerTest extends TestCase
         $this->assertEquals($item, $result);
     }
 
-    public function getInvalidValuesForModification(): array
+    public static function getInvalidValuesForModification(): array
     {
         return [
             [
@@ -64,7 +64,7 @@ class DefaultLanguageToFilledArrayDataTransformerTest extends TestCase
             ],
             [
                 [
-                    $this->defaultLanguageId => 'test1',
+                    1 => 'test1',
                     2 => 'test2',
                     3 => 'test3',
                 ],
