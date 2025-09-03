@@ -44,22 +44,8 @@ use Shop;
  */
 class ProductIndexationUpdater
 {
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var bool
-     */
-    private $isSearchIndexationOn;
-
-    public function __construct(
-        ContextStateManager $contextStateManager,
-        bool $isSearchIndexationOn
-    ) {
-        $this->contextStateManager = $contextStateManager;
-        $this->isSearchIndexationOn = $isSearchIndexationOn;
+    public function __construct(private readonly ContextStateManager $contextStateManager, private readonly bool $isSearchIndexationOn)
+    {
     }
 
     /**

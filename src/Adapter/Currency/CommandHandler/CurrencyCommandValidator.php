@@ -45,33 +45,12 @@ use Shop;
 final class CurrencyCommandValidator
 {
     /**
-     * @var LocaleRepository
-     */
-    private $localeRepoCLDR;
-
-    /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
-    /**
-     * @var int
-     */
-    private $defaultCurrencyId;
-
-    /**
      * @param LocaleRepository $localeRepoCLDR
      * @param CurrencyDataProviderInterface $currencyDataProvider
      * @param int $defaultCurrencyId
      */
-    public function __construct(
-        LocaleRepository $localeRepoCLDR,
-        CurrencyDataProviderInterface $currencyDataProvider,
-        int $defaultCurrencyId
-    ) {
-        $this->localeRepoCLDR = $localeRepoCLDR;
-        $this->currencyDataProvider = $currencyDataProvider;
-        $this->defaultCurrencyId = $defaultCurrencyId;
+    public function __construct(private readonly LocaleRepository $localeRepoCLDR, private readonly CurrencyDataProviderInterface $currencyDataProvider, private readonly int $defaultCurrencyId)
+    {
     }
 
     /**

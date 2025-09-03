@@ -36,29 +36,8 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class ProductDeleter
 {
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    public function __construct(
-        ProductRepository $productRepository,
-        CombinationRepository $combinationRepository,
-        ProductImageRepository $productImageRepository
-    ) {
-        $this->productRepository = $productRepository;
-        $this->combinationRepository = $combinationRepository;
-        $this->productImageRepository = $productImageRepository;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly CombinationRepository $combinationRepository, private readonly ProductImageRepository $productImageRepository)
+    {
     }
 
     /**

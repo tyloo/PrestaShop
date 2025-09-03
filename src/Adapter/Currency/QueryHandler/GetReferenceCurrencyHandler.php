@@ -39,25 +39,11 @@ use PrestaShop\PrestaShop\Core\Localization\CLDR\LocaleRepository;
 class GetReferenceCurrencyHandler implements GetReferenceCurrencyHandlerInterface
 {
     /**
-     * @var LocaleRepository
-     */
-    private $localeRepository;
-
-    /**
-     * @var LanguageInterface[]
-     */
-    private $languages;
-
-    /**
      * @param LocaleRepository $localeRepository
      * @param array $languages
      */
-    public function __construct(
-        LocaleRepository $localeRepository,
-        array $languages
-    ) {
-        $this->localeRepository = $localeRepository;
-        $this->languages = $languages;
+    public function __construct(private readonly LocaleRepository $localeRepository, private readonly array $languages)
+    {
     }
 
     /**

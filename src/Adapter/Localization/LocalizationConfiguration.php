@@ -38,33 +38,12 @@ use PrestaShop\PrestaShop\Core\Language\LanguageActivatorInterface;
 class LocalizationConfiguration implements DataConfigurationInterface
 {
     /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var LanguageActivatorInterface
-     */
-    private $languageActivator;
-
-    /**
-     * @var CurrencyManager
-     */
-    private $currencyManager;
-
-    /**
      * @param Configuration $configuration
      * @param LanguageActivatorInterface $languageActivator
      * @param CurrencyManager $currencyManager
      */
-    public function __construct(
-        Configuration $configuration,
-        LanguageActivatorInterface $languageActivator,
-        CurrencyManager $currencyManager
-    ) {
-        $this->configuration = $configuration;
-        $this->languageActivator = $languageActivator;
-        $this->currencyManager = $currencyManager;
+    public function __construct(private readonly Configuration $configuration, private readonly LanguageActivatorInterface $languageActivator, private readonly CurrencyManager $currencyManager)
+    {
     }
 
     /**

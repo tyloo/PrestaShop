@@ -201,9 +201,7 @@ class ProductPackRepository extends AbstractObjectModelRepository
 
         $packs = $qb->executeQuery()->fetchAllAssociative();
 
-        return array_map(function (array $packData) {
-            return new PackId((int) $packData['id_product_pack']);
-        }, $packs);
+        return array_map(fn(array $packData) => new PackId((int) $packData['id_product_pack']), $packs);
     }
 
     /**
@@ -225,7 +223,7 @@ class ProductPackRepository extends AbstractObjectModelRepository
             "$messageBody. [packId #%d; productId #%d;%s]",
             $packId,
             $product->getProductId()->getValue(),
-            isset($combinationId) ? $combinationId : ''
+            $combinationId ?? ''
         );
     }
 

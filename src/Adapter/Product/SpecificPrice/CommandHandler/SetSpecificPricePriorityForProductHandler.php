@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\CommandHandler\SetSp
 class SetSpecificPricePriorityForProductHandler implements SetSpecificPricePriorityForProductHandlerInterface
 {
     /**
-     * @var SpecificPricePriorityUpdater
-     */
-    private $specificPricePriorityUpdater;
-
-    /**
      * @param SpecificPricePriorityUpdater $specificPricePriorityUpdater
      */
-    public function __construct(
-        SpecificPricePriorityUpdater $specificPricePriorityUpdater
-    ) {
-        $this->specificPricePriorityUpdater = $specificPricePriorityUpdater;
+    public function __construct(private readonly SpecificPricePriorityUpdater $specificPricePriorityUpdater)
+    {
     }
 
     /**

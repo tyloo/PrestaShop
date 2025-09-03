@@ -51,16 +51,8 @@ use RuntimeException;
  */
 class AttributeRepository extends AbstractMultiShopObjectModelRepository
 {
-    private Connection $connection;
-
-    private string $dbPrefix;
-
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
+    {
     }
 
     /**
@@ -147,9 +139,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
             return [];
         }
 
-        $attributeGroupIdValues = array_map(static function (AttributeGroupId $attributeGroupId): int {
-            return $attributeGroupId->getValue();
-        }, $attributeGroupIds);
+        $attributeGroupIdValues = array_map(static fn(AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
 
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -167,9 +157,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
         ;
 
         if (!empty($attributeIds)) {
-            $attributeIdValues = array_map(static function (AttributeId $attributeId): int {
-                return $attributeId->getValue();
-            }, $attributeIds);
+            $attributeIdValues = array_map(static fn(AttributeId $attributeId): int => $attributeId->getValue(), $attributeIds);
 
             $qb->andWhere($qb->expr()->in('a.id_attribute', ':attributeIds'))
                 ->setParameter('attributeIds', $attributeIdValues, Connection::PARAM_INT_ARRAY)
@@ -230,9 +218,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
     public function getAttributesInfoByCombinationIds(array $combinationIds, LanguageId $langId): array
     {
         $attributeCombinationAssociations = $this->getAttributeCombinationAssociations($combinationIds);
-        $attributeIds = array_unique(array_map(static function (array $attributeByCombination): int {
-            return (int) $attributeByCombination['id_attribute'];
-        }, $attributeCombinationAssociations));
+        $attributeIds = array_unique(array_map(static fn(array $attributeByCombination): int => (int) $attributeByCombination['id_attribute'], $attributeCombinationAssociations));
 
         $attributesInfoByAttributeId = $this->getAttributesInformation($attributeIds, $langId->getValue());
 
@@ -253,13 +239,9 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
      */
     public function assertExistsInEveryShop(array $attributeIds, array $shopIds): void
     {
-        $attributeIdValues = array_map(static function (AttributeId $attributeId): int {
-            return $attributeId->getValue();
-        }, $attributeIds);
+        $attributeIdValues = array_map(static fn(AttributeId $attributeId): int => $attributeId->getValue(), $attributeIds);
 
-        $shopIdValues = array_map(static function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $shopIds);
+        $shopIdValues = array_map(static fn(ShopId $shopId): int => $shopId->getValue(), $shopIds);
 
         $qb = $this->connection->createQueryBuilder();
         $results = $qb
@@ -301,9 +283,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
             return [];
         }
 
-        $combinationIds = array_map(function (CombinationId $id): int {
-            return $id->getValue();
-        }, $combinationIds);
+        $combinationIds = array_map(fn(CombinationId $id): int => $id->getValue(), $combinationIds);
 
         $qb = $this->connection->createQueryBuilder();
         $qb->select('pac.id_attribute')

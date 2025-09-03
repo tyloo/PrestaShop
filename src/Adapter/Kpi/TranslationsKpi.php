@@ -37,33 +37,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class TranslationsKpi implements KpiInterface
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var string
-     */
-    private $sourceLink;
-
-    /**
      * @param TranslatorInterface $translator
      * @param ConfigurationInterface $configuration
      * @param string $sourceLink a link to refresh KPI
      */
-    public function __construct(
-        TranslatorInterface $translator,
-        ConfigurationInterface $configuration,
-        $sourceLink
-    ) {
-        $this->translator = $translator;
-        $this->configuration = $configuration;
-        $this->sourceLink = $sourceLink;
+    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $configuration, private $sourceLink)
+    {
     }
 
     /**

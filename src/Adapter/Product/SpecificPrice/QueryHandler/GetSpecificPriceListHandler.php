@@ -53,33 +53,12 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtil;
 class GetSpecificPriceListHandler implements GetSpecificPriceListHandlerInterface
 {
     /**
-     * @var SpecificPriceRepository
-     */
-    private $specificPriceRepository;
-
-    /**
-     * @var AttributeRepository
-     */
-    private $attributeRepository;
-
-    /**
-     * @var CombinationNameBuilderInterface
-     */
-    private $combinationNameBuilder;
-
-    /**
      * @param SpecificPriceRepository $specificPriceRepository
      * @param AttributeRepository $attributeRepository
      * @param CombinationNameBuilderInterface $combinationNameBuilder
      */
-    public function __construct(
-        SpecificPriceRepository $specificPriceRepository,
-        AttributeRepository $attributeRepository,
-        CombinationNameBuilderInterface $combinationNameBuilder
-    ) {
-        $this->specificPriceRepository = $specificPriceRepository;
-        $this->attributeRepository = $attributeRepository;
-        $this->combinationNameBuilder = $combinationNameBuilder;
+    public function __construct(private readonly SpecificPriceRepository $specificPriceRepository, private readonly AttributeRepository $attributeRepository, private readonly CombinationNameBuilderInterface $combinationNameBuilder)
+    {
     }
 
     /**

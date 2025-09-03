@@ -41,14 +41,8 @@ use PrestaShop\PrestaShop\Core\Domain\Security\CommandHandler\ClearOutdatedEmplo
 #[AsCommandHandler]
 class ClearOutdatedEmployeeSessionHandler implements ClearOutdatedEmployeeSessionHandlerInterface
 {
-    /**
-     * @var EmployeeSessionRepository
-     */
-    private $repository;
-
-    public function __construct(EmployeeSessionRepository $repository)
+    public function __construct(private readonly EmployeeSessionRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**

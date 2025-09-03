@@ -36,15 +36,11 @@ use Tools;
  */
 class MailPartialTemplateRenderer
 {
-    /** @var Smarty */
-    private $smarty;
-
     /**
      * @param Smarty $smarty
      */
-    public function __construct(Smarty $smarty)
+    public function __construct(private readonly Smarty $smarty)
     {
-        $this->smarty = $smarty;
     }
 
     /**

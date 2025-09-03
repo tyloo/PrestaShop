@@ -55,49 +55,14 @@ use ProductSupplier;
 class ProductSupplierUpdater
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var SupplierRepository
-     */
-    private $supplierRepository;
-
-    /**
-     * @var ProductSupplierRepository
-     */
-    private $productSupplierRepository;
-
-    /**
-     * @var int
-     */
-    private $defaultCurrencyId;
-
-    /**
      * @param ProductRepository $productRepository
      * @param CombinationRepository $combinationRepository
      * @param SupplierRepository $supplierRepository
      * @param ProductSupplierRepository $productSupplierRepository
      * @param int $defaultCurrencyId
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        CombinationRepository $combinationRepository,
-        SupplierRepository $supplierRepository,
-        ProductSupplierRepository $productSupplierRepository,
-        int $defaultCurrencyId
-    ) {
-        $this->supplierRepository = $supplierRepository;
-        $this->productSupplierRepository = $productSupplierRepository;
-        $this->combinationRepository = $combinationRepository;
-        $this->defaultCurrencyId = $defaultCurrencyId;
-        $this->productRepository = $productRepository;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly CombinationRepository $combinationRepository, private readonly SupplierRepository $supplierRepository, private readonly ProductSupplierRepository $productSupplierRepository, private readonly int $defaultCurrencyId)
+    {
     }
 
     /**
@@ -146,9 +111,7 @@ class ProductSupplierUpdater
             // Loop through all combinations to check if they have a matching association if not it will need to be created
             foreach ($combinationIds as $combinationId) {
                 // Search matching association by combination, if none is found the association is missing
-                $matchingAssociations = array_filter($supplierAssociations, function (ProductSupplierAssociation $association) use ($combinationId) {
-                    return $association->getCombinationId()->getValue() === $combinationId->getValue();
-                });
+                $matchingAssociations = array_filter($supplierAssociations, fn(ProductSupplierAssociation $association) => $association->getCombinationId()->getValue() === $combinationId->getValue());
 
                 if (empty($matchingAssociations)) {
                     $productSupplier = new ProductSupplier();
@@ -457,9 +420,7 @@ class ProductSupplierUpdater
      */
     private function getProductSupplierIds(ProductId $productId, ?CombinationIdInterface $combinationId = null): array
     {
-        return array_map(function (array $currentSupplier): ProductSupplierId {
-            return new ProductSupplierId((int) $currentSupplier['id_product_supplier']);
-        }, $this->productSupplierRepository->getProductSuppliersInfo($productId, $combinationId));
+        return array_map(fn(array $currentSupplier): ProductSupplierId => new ProductSupplierId((int) $currentSupplier['id_product_supplier']), $this->productSupplierRepository->getProductSuppliersInfo($productId, $combinationId));
     }
 
     /**

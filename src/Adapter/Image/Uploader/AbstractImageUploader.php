@@ -161,7 +161,7 @@ abstract class AbstractImageUploader
 
         if (!ImageManager::resize(
             $imageDir . $id . '.jpg',
-            $imageDir . $id . '-' . stripslashes($imageType['name']) . $ext,
+            $imageDir . $id . '-' . stripslashes((string) $imageType['name']) . $ext,
             (int) $width,
             (int) $height
         )) {

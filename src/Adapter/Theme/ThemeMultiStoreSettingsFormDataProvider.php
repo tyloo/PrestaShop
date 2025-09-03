@@ -38,25 +38,11 @@ use PrestaShop\PrestaShop\Core\Form\MultiStoreSettingsFormDataProviderInterface;
 final class ThemeMultiStoreSettingsFormDataProvider implements MultiStoreSettingsFormDataProviderInterface
 {
     /**
-     * @var bool
-     */
-    private $isShopFeatureUsed;
-
-    /**
-     * @var bool
-     */
-    private $isSingleShopContext;
-
-    /**
      * @param bool $isShopFeatureUsed
      * @param bool $isSingleShopContext
      */
-    public function __construct(
-        $isShopFeatureUsed,
-        $isSingleShopContext
-    ) {
-        $this->isShopFeatureUsed = $isShopFeatureUsed;
-        $this->isSingleShopContext = $isSingleShopContext;
+    public function __construct(private $isShopFeatureUsed, private $isSingleShopContext)
+    {
     }
 
     /**

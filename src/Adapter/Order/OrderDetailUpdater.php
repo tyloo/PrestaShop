@@ -53,25 +53,11 @@ class OrderDetailUpdater
     private const COMPARISON_PRECISION = 6;
 
     /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var ShopConfigurationInterface
-     */
-    private $shopConfiguration;
-
-    /**
      * @param ContextStateManager $contextStateManager
      * @param ShopConfigurationInterface $shopConfiguration
      */
-    public function __construct(
-        ContextStateManager $contextStateManager,
-        ShopConfigurationInterface $shopConfiguration
-    ) {
-        $this->contextStateManager = $contextStateManager;
-        $this->shopConfiguration = $shopConfiguration;
+    public function __construct(private readonly ContextStateManager $contextStateManager, private readonly ShopConfigurationInterface $shopConfiguration)
+    {
     }
 
     /**

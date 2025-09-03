@@ -41,15 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\Currency\QueryResult\ExchangeRate;
 #[AsQueryHandler]
 class GetCurrencyExchangeRateHandler implements GetCurrencyExchangeRateHandlerInterface
 {
-    /** @var ExchangeRateProvider */
-    private $exchangeRateProvider;
-
     /**
      * @param ExchangeRateProvider $exchangeRateProvider
      */
-    public function __construct(ExchangeRateProvider $exchangeRateProvider)
+    public function __construct(private readonly ExchangeRateProvider $exchangeRateProvider)
     {
-        $this->exchangeRateProvider = $exchangeRateProvider;
     }
 
     /**

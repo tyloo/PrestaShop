@@ -51,9 +51,7 @@ class GetAttributeGroupListHandler extends AbstractAttributeGroupQueryHandler im
             $attributeGroups,
             $this->attributeRepository->getGroupedAttributes(
                 $shopConstraint,
-                array_map(static function (int $id): AttributeGroupId {
-                    return new AttributeGroupId($id);
-                }, array_keys($attributeGroups))
+                array_map(static fn(int $id): AttributeGroupId => new AttributeGroupId($id), array_keys($attributeGroups))
             )
         );
     }

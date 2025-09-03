@@ -46,35 +46,14 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturn\QueryResult\OrderReturnForEdit
 class GetOrderReturnForEditingHandler implements GetOrderReturnForEditingHandlerInterface
 {
     /**
-     * @var OrderReturnRepository
-     */
-    private $orderReturnRepository;
-
-    /**
-     * @var CustomerRepository
-     */
-    private $customerRepository;
-
-    /**
-     * @var OrderRepository
-     */
-    private $orderRepository;
-
-    /**
      * GetOrderReturnForEditingHandler constructor.
      *
      * @param OrderReturnRepository $orderReturnRepository
      * @param CustomerRepository $customerRepository
      * @param OrderRepository $orderRepository
      */
-    public function __construct(
-        OrderReturnRepository $orderReturnRepository,
-        CustomerRepository $customerRepository,
-        OrderRepository $orderRepository
-    ) {
-        $this->orderReturnRepository = $orderReturnRepository;
-        $this->customerRepository = $customerRepository;
-        $this->orderRepository = $orderRepository;
+    public function __construct(private readonly OrderReturnRepository $orderReturnRepository, private readonly CustomerRepository $customerRepository, private readonly OrderRepository $orderRepository)
+    {
     }
 
     /**

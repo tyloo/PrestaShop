@@ -50,25 +50,11 @@ use SpecificPrice;
 class GetSpecificPriceForEditingHandler implements GetSpecificPriceForEditingHandlerInterface
 {
     /**
-     * @var SpecificPriceRepository
-     */
-    private $specificPriceRepository;
-
-    /**
-     * @var CustomerRepository
-     */
-    private $customerRepository;
-
-    /**
      * @param SpecificPriceRepository $specificPriceRepository
      * @param CustomerRepository $customerRepository
      */
-    public function __construct(
-        SpecificPriceRepository $specificPriceRepository,
-        CustomerRepository $customerRepository
-    ) {
-        $this->specificPriceRepository = $specificPriceRepository;
-        $this->customerRepository = $customerRepository;
+    public function __construct(private readonly SpecificPriceRepository $specificPriceRepository, private readonly CustomerRepository $customerRepository)
+    {
     }
 
     /**

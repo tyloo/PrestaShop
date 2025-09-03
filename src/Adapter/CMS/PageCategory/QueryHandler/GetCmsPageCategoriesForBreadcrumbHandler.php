@@ -45,16 +45,10 @@ use PrestaShopException;
 final class GetCmsPageCategoriesForBreadcrumbHandler implements GetCmsPageCategoriesForBreadcrumbHandlerInterface
 {
     /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
      * @param int $contextLanguageId
      */
-    public function __construct($contextLanguageId)
+    public function __construct(private $contextLanguageId)
     {
-        $this->contextLanguageId = $contextLanguageId;
     }
 
     /**

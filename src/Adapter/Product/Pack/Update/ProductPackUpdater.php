@@ -47,25 +47,11 @@ use PrestaShopException;
 class ProductPackUpdater
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductPackRepository
-     */
-    private $productPackRepository;
-
-    /**
      * @param ProductRepository $productRepository
      * @param ProductPackRepository $productPackRepository
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        ProductPackRepository $productPackRepository
-    ) {
-        $this->productRepository = $productRepository;
-        $this->productPackRepository = $productPackRepository;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductPackRepository $productPackRepository)
+    {
     }
 
     /**

@@ -35,25 +35,11 @@ use Profile;
 class ProfileDataProvider
 {
     /**
-     * @var ContextEmployeeProviderInterface
-     */
-    private $contextEmployeeProvider;
-
-    /**
-     * @var int
-     */
-    private $superAdminProfileId;
-
-    /**
      * @param ContextEmployeeProviderInterface $contextEmployeeProvider
      * @param int $superAdminProfileId
      */
-    public function __construct(
-        ContextEmployeeProviderInterface $contextEmployeeProvider,
-        $superAdminProfileId
-    ) {
-        $this->contextEmployeeProvider = $contextEmployeeProvider;
-        $this->superAdminProfileId = $superAdminProfileId;
+    public function __construct(private readonly ContextEmployeeProviderInterface $contextEmployeeProvider, private $superAdminProfileId)
+    {
     }
 
     /**

@@ -41,33 +41,12 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
 class CombinationDeleter
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var DefaultCombinationUpdater
-     */
-    private $defaultCombinationUpdater;
-
-    /**
      * @param ProductRepository $productRepository
      * @param CombinationRepository $combinationRepository
      * @param DefaultCombinationUpdater $defaultCombinationUpdater
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        CombinationRepository $combinationRepository,
-        DefaultCombinationUpdater $defaultCombinationUpdater
-    ) {
-        $this->productRepository = $productRepository;
-        $this->combinationRepository = $combinationRepository;
-        $this->defaultCombinationUpdater = $defaultCombinationUpdater;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly CombinationRepository $combinationRepository, private readonly DefaultCombinationUpdater $defaultCombinationUpdater)
+    {
     }
 
     /**

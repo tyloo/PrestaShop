@@ -51,24 +51,11 @@ use Validate;
 final class DeleteProductFromOrderHandler extends AbstractOrderCommandHandler implements DeleteProductFromOrderHandlerInterface
 {
     /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-    /**
-     * @var OrderProductQuantityUpdater
-     */
-    private $orderProductQuantityUpdater;
-
-    /**
      * @param ContextStateManager $contextStateManager
      * @param OrderProductQuantityUpdater $orderProductQuantityUpdater
      */
-    public function __construct(
-        ContextStateManager $contextStateManager,
-        OrderProductQuantityUpdater $orderProductQuantityUpdater
-    ) {
-        $this->contextStateManager = $contextStateManager;
-        $this->orderProductQuantityUpdater = $orderProductQuantityUpdater;
+    public function __construct(private readonly ContextStateManager $contextStateManager, private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater)
+    {
     }
 
     /**

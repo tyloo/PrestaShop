@@ -38,22 +38,8 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtil;
 #[AsCommandHandler]
 class EditCartRuleHandler implements EditCartRuleHandlerInterface
 {
-    /**
-     * @var CartRuleRepository
-     */
-    private $cartRuleRepository;
-
-    /**
-     * @var CartRuleActionFiller
-     */
-    private $cartRuleActionFiller;
-
-    public function __construct(
-        CartRuleRepository $cartRuleRepository,
-        CartRuleActionFiller $cartRuleActionFiller
-    ) {
-        $this->cartRuleRepository = $cartRuleRepository;
-        $this->cartRuleActionFiller = $cartRuleActionFiller;
+    public function __construct(private readonly CartRuleRepository $cartRuleRepository, private readonly CartRuleActionFiller $cartRuleActionFiller)
+    {
     }
 
     public function handle(EditCartRuleCommand $command): void

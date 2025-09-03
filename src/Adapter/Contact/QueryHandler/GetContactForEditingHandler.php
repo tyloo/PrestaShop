@@ -45,16 +45,10 @@ use Symfony\Component\Form\DataTransformerInterface;
 final class GetContactForEditingHandler implements GetContactForEditingHandlerInterface
 {
     /**
-     * @var DataTransformerInterface
-     */
-    private $stringArrayToIntegerArrayDataTransformer;
-
-    /**
      * @param DataTransformerInterface $stringArrayToIntegerArrayDataTransformer
      */
-    public function __construct(DataTransformerInterface $stringArrayToIntegerArrayDataTransformer)
+    public function __construct(private readonly DataTransformerInterface $stringArrayToIntegerArrayDataTransformer)
     {
-        $this->stringArrayToIntegerArrayDataTransformer = $stringArrayToIntegerArrayDataTransformer;
     }
 
     /**

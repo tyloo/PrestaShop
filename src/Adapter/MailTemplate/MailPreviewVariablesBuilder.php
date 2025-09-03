@@ -56,30 +56,8 @@ final class MailPreviewVariablesBuilder
     public const NEW_ORDER = 'new_order';
     public const RETURN_SLIP = 'return_slip';
 
-    /** @var ConfigurationInterface */
-    private $configuration;
-
-    /** @var LegacyContext */
-    private $legacyContext;
-
-    /**
-     * @var Locale
-     */
-    private $locale;
-
-    /** @var ContextEmployeeProviderInterface */
-    private $employeeProvider;
-
     /** @var Context */
     private $context;
-
-    /** @var MailPartialTemplateRenderer */
-    private $mailPartialTemplateRenderer;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
 
     /**
      * MailPreviewVariablesBuilder constructor.
@@ -89,23 +67,17 @@ final class MailPreviewVariablesBuilder
      * @param ContextEmployeeProviderInterface $employeeProvider
      * @param MailPartialTemplateRenderer $mailPartialTemplateRenderer
      * @param Locale $locale
-     * @param TranslatorInterface $translatorComponent
+     * @param TranslatorInterface $translator
      */
     public function __construct(
-        ConfigurationInterface $configuration,
-        LegacyContext $legacyContext,
-        ContextEmployeeProviderInterface $employeeProvider,
-        MailPartialTemplateRenderer $mailPartialTemplateRenderer,
-        Locale $locale,
-        TranslatorInterface $translatorComponent
+        private readonly ConfigurationInterface $configuration,
+        private readonly LegacyContext $legacyContext,
+        private readonly ContextEmployeeProviderInterface $employeeProvider,
+        private readonly MailPartialTemplateRenderer $mailPartialTemplateRenderer,
+        private readonly Locale $locale,
+        private readonly TranslatorInterface $translator
     ) {
-        $this->configuration = $configuration;
-        $this->legacyContext = $legacyContext;
         $this->context = $this->legacyContext->getContext();
-        $this->employeeProvider = $employeeProvider;
-        $this->mailPartialTemplateRenderer = $mailPartialTemplateRenderer;
-        $this->locale = $locale;
-        $this->translator = $translatorComponent;
     }
 
     /**

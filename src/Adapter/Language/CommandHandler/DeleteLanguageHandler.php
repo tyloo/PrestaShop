@@ -44,22 +44,10 @@ use Shop;
 final class DeleteLanguageHandler extends AbstractLanguageHandler implements DeleteLanguageHandlerInterface
 {
     /**
-     * @var RobotsTextFileGenerator
-     */
-    private $robotsTextFileGenerator;
-
-    /**
-     * @var EmployeeLanguageUpdater
-     */
-    private $employeeLanguageUpdater;
-
-    /**
      * @param RobotsTextFileGenerator $robotsTextFileGenerator
      */
-    public function __construct(RobotsTextFileGenerator $robotsTextFileGenerator, EmployeeLanguageUpdater $employeeLanguageUpdater)
+    public function __construct(private readonly RobotsTextFileGenerator $robotsTextFileGenerator, private readonly EmployeeLanguageUpdater $employeeLanguageUpdater)
     {
-        $this->robotsTextFileGenerator = $robotsTextFileGenerator;
-        $this->employeeLanguageUpdater = $employeeLanguageUpdater;
     }
 
     /**

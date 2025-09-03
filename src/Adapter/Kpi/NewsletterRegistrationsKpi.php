@@ -37,33 +37,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class NewsletterRegistrationsKpi implements KpiInterface
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $kpiConfiguration;
-
-    /**
-     * @var string
-     */
-    private $sourceUrl;
-
-    /**
      * @param TranslatorInterface $translator
      * @param ConfigurationInterface $kpiConfiguration
      * @param string $sourceUrl
      */
-    public function __construct(
-        TranslatorInterface $translator,
-        ConfigurationInterface $kpiConfiguration,
-        $sourceUrl
-    ) {
-        $this->translator = $translator;
-        $this->kpiConfiguration = $kpiConfiguration;
-        $this->sourceUrl = $sourceUrl;
+    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $kpiConfiguration, private $sourceUrl)
+    {
     }
 
     /**

@@ -37,23 +37,11 @@ use Tab;
 class TabDataProvider
 {
     /**
-     * @var ConfigurationInterface
-     */
-    private $legacyConfiguration;
-
-    /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    /**
      * @param LegacyContext $legacyContext
      * @param ConfigurationInterface $legacyConfiguration
      */
-    public function __construct(LegacyContext $legacyContext, ConfigurationInterface $legacyConfiguration)
+    public function __construct(private readonly LegacyContext $legacyContext, private readonly ConfigurationInterface $legacyConfiguration)
     {
-        $this->legacyContext = $legacyContext;
-        $this->legacyConfiguration = $legacyConfiguration;
     }
 
     /**

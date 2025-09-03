@@ -35,23 +35,11 @@ use Doctrine\DBAL\Connection;
 final class DataMatchSaver
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      */
-    public function __construct(Connection $connection, $dbPrefix)
+    public function __construct(private readonly Connection $connection, private $dbPrefix)
     {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
     }
 
     /**

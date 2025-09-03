@@ -42,20 +42,14 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Supplier\CommandHandler\UpdateProd
 final class UpdateProductSuppliersHandler extends AbstractProductSupplierHandler implements UpdateProductSuppliersHandlerInterface
 {
     /**
-     * @var ProductSupplierUpdater
-     */
-    private $productSupplierUpdater;
-
-    /**
      * @param ProductSupplierUpdater $productSupplierUpdater
      * @param ProductSupplierRepository $productSupplierRepository
      */
     public function __construct(
-        ProductSupplierUpdater $productSupplierUpdater,
+        private readonly ProductSupplierUpdater $productSupplierUpdater,
         ProductSupplierRepository $productSupplierRepository
     ) {
         parent::__construct($productSupplierRepository);
-        $this->productSupplierUpdater = $productSupplierUpdater;
     }
 
     /**

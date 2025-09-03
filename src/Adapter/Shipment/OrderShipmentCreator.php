@@ -37,14 +37,8 @@ use PrestaShopBundle\Entity\ShipmentProduct;
 
 class OrderShipmentCreator
 {
-    /**
-     * @var ShipmentRepository
-     */
-    private $shipmentRepository;
-
-    public function __construct(ShipmentRepository $shipmentRepository)
+    public function __construct(private readonly ShipmentRepository $shipmentRepository)
     {
-        $this->shipmentRepository = $shipmentRepository;
     }
 
     public function addShipmentOrder(Order $order, array $productsHandledByCarrier): void
@@ -61,9 +55,7 @@ class OrderShipmentCreator
             $shipment->setShippedAt(null);
             $shipment->setCancelledAt(null);
 
-            $productWeight = array_map(function ($product) {
-                return $product['weight'] * $product['quantity'];
-            }, $products['product_list']);
+            $productWeight = array_map(fn($product) => $product['weight'] * $product['quantity'], $products['product_list']);
 
             // add OrderCarrier here for keep the compatibility for legacy
             $orderCarrier = new OrderCarrier();

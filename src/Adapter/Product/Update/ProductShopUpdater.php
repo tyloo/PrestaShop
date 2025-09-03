@@ -57,78 +57,8 @@ use Product;
  */
 class ProductShopUpdater
 {
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var StockAvailableRepository
-     */
-    private $stockAvailableRepository;
-
-    /**
-     * @var ShopRepository
-     */
-    private $shopRepository;
-
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
-     * @var ProductStockUpdater
-     */
-    private $productStockUpdater;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var CombinationStockUpdater
-     */
-    private $combinationStockUpdater;
-
-    /**
-     * @var DefaultCombinationUpdater
-     */
-    private $defaultCombinationUpdater;
-
-    /**
-     * @var ProductCategoryUpdater
-     */
-    private $productCategoryUpdater;
-
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    public function __construct(
-        ProductRepository $productRepository,
-        StockAvailableRepository $stockAvailableRepository,
-        ShopRepository $shopRepository,
-        ProductImageRepository $productImageRepository,
-        ProductStockUpdater $productStockUpdater,
-        CombinationRepository $combinationMultiShopRepository,
-        CombinationStockUpdater $combinationStockUpdater,
-        DefaultCombinationUpdater $defaultCombinationUpdater,
-        ProductCategoryUpdater $productCategoryUpdater,
-        CategoryRepository $categoryRepository
-    ) {
-        $this->productRepository = $productRepository;
-        $this->stockAvailableRepository = $stockAvailableRepository;
-        $this->shopRepository = $shopRepository;
-        $this->productImageRepository = $productImageRepository;
-        $this->productStockUpdater = $productStockUpdater;
-        $this->combinationRepository = $combinationMultiShopRepository;
-        $this->combinationStockUpdater = $combinationStockUpdater;
-        $this->defaultCombinationUpdater = $defaultCombinationUpdater;
-        $this->productCategoryUpdater = $productCategoryUpdater;
-        $this->categoryRepository = $categoryRepository;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly StockAvailableRepository $stockAvailableRepository, private readonly ShopRepository $shopRepository, private readonly ProductImageRepository $productImageRepository, private readonly ProductStockUpdater $productStockUpdater, private readonly CombinationRepository $combinationRepository, private readonly CombinationStockUpdater $combinationStockUpdater, private readonly DefaultCombinationUpdater $defaultCombinationUpdater, private readonly ProductCategoryUpdater $productCategoryUpdater, private readonly CategoryRepository $categoryRepository)
+    {
     }
 
     /**
@@ -261,9 +191,7 @@ class ProductShopUpdater
     private function copyImageAssociations(ProductId $productId, ShopId $sourceShopId, ShopId $targetShopId): void
     {
         $imagesFromSourceShop = $this->productImageRepository->getImages($productId, ShopConstraint::shop($sourceShopId->getValue()));
-        $targetImageIds = array_map(static function (ImageId $imageId): int {
-            return $imageId->getValue();
-        }, $this->productImageRepository->getImageIds($productId, ShopConstraint::shop($targetShopId->getValue())));
+        $targetImageIds = array_map(static fn(ImageId $imageId): int => $imageId->getValue(), $this->productImageRepository->getImageIds($productId, ShopConstraint::shop($targetShopId->getValue())));
 
         foreach ($imagesFromSourceShop as $image) {
             // skip image if it is already associated with the target shop

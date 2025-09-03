@@ -58,63 +58,14 @@ use Traversable;
 class CombinationCreator
 {
     /**
-     * @var CombinationGeneratorInterface
-     */
-    private $combinationGenerator;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var StockAvailableRepository
-     */
-    private $stockAvailableRepository;
-
-    /**
-     * @var AttributeGroupRepository
-     */
-    private $attributeGroupRepository;
-
-    /**
-     * @var AttributeRepository
-     */
-    private $attributeRepository;
-
-    /**
-     * @var DefaultCombinationUpdater
-     */
-    private $defaultCombinationUpdater;
-
-    /**
      * @param CombinationGeneratorInterface $combinationGenerator
      * @param CombinationRepository $combinationRepository
      * @param ProductRepository $productRepository
      * @param StockAvailableRepository $stockAvailableRepository
      * @param DefaultCombinationUpdater $defaultCombinationUpdater
      */
-    public function __construct(
-        CombinationGeneratorInterface $combinationGenerator,
-        CombinationRepository $combinationRepository,
-        ProductRepository $productRepository,
-        StockAvailableRepository $stockAvailableRepository,
-        AttributeGroupRepository $attributeGroupRepository,
-        AttributeRepository $attributeRepository,
-        DefaultCombinationUpdater $defaultCombinationUpdater
-    ) {
-        $this->combinationGenerator = $combinationGenerator;
-        $this->combinationRepository = $combinationRepository;
-        $this->productRepository = $productRepository;
-        $this->stockAvailableRepository = $stockAvailableRepository;
-        $this->defaultCombinationUpdater = $defaultCombinationUpdater;
-        $this->attributeGroupRepository = $attributeGroupRepository;
-        $this->attributeRepository = $attributeRepository;
+    public function __construct(private readonly CombinationGeneratorInterface $combinationGenerator, private readonly CombinationRepository $combinationRepository, private readonly ProductRepository $productRepository, private readonly StockAvailableRepository $stockAvailableRepository, private readonly AttributeGroupRepository $attributeGroupRepository, private readonly AttributeRepository $attributeRepository, private readonly DefaultCombinationUpdater $defaultCombinationUpdater)
+    {
     }
 
     /**

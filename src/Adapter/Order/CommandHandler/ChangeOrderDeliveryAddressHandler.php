@@ -50,41 +50,13 @@ use Validate;
 final class ChangeOrderDeliveryAddressHandler extends AbstractOrderCommandHandler implements ChangeOrderDeliveryAddressHandlerInterface
 {
     /**
-     * @var OrderAmountUpdater
-     */
-    private $orderAmountUpdater;
-
-    /**
-     * @var OrderDetailUpdater
-     */
-    private $orderDetailTaxUpdater;
-
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var OrderProductQuantityUpdater
-     */
-    private $orderProductQuantityUpdater;
-
-    /**
      * @param OrderAmountUpdater $orderAmountUpdater
      * @param OrderDetailUpdater $orderDetailTaxUpdater
      * @param ContextStateManager $contextStateManager
      * @param OrderProductQuantityUpdater $orderProductQuantityUpdater
      */
-    public function __construct(
-        OrderAmountUpdater $orderAmountUpdater,
-        OrderDetailUpdater $orderDetailTaxUpdater,
-        ContextStateManager $contextStateManager,
-        OrderProductQuantityUpdater $orderProductQuantityUpdater
-    ) {
-        $this->orderAmountUpdater = $orderAmountUpdater;
-        $this->orderDetailTaxUpdater = $orderDetailTaxUpdater;
-        $this->contextStateManager = $contextStateManager;
-        $this->orderProductQuantityUpdater = $orderProductQuantityUpdater;
+    public function __construct(private readonly OrderAmountUpdater $orderAmountUpdater, private readonly OrderDetailUpdater $orderDetailTaxUpdater, private readonly ContextStateManager $contextStateManager, private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater)
+    {
     }
 
     /**

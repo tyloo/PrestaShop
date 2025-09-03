@@ -62,31 +62,6 @@ class ModuleTabRegister
     protected $tabRepository;
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var array List all active languages on the shop
-     */
-    private $languages;
-
-    /**
-     * @var Loader
-     */
-    private $routingConfigLoader;
-
-    /**
      * @param TabRepository $tabRepository
      * @param LangRepository $langRepository
      * @param LoggerInterface $logger
@@ -98,19 +73,14 @@ class ModuleTabRegister
     public function __construct(
         TabRepository $tabRepository,
         LangRepository $langRepository,
-        LoggerInterface $logger,
-        TranslatorInterface $translator,
-        Filesystem $filesystem,
-        array $languages,
-        Loader $routingConfigLoader
+        private readonly LoggerInterface $logger,
+        private readonly TranslatorInterface $translator,
+        private readonly Filesystem $filesystem,
+        private readonly array $languages,
+        private readonly Loader $routingConfigLoader
     ) {
         $this->langRepository = $langRepository;
         $this->tabRepository = $tabRepository;
-        $this->logger = $logger;
-        $this->translator = $translator;
-        $this->filesystem = $filesystem;
-        $this->languages = $languages;
-        $this->routingConfigLoader = $routingConfigLoader;
     }
 
     /**
@@ -194,9 +164,7 @@ class ModuleTabRegister
     protected function getDetectedModuleControllers(string $moduleName): array
     {
         $legacyControllersFilenames = $this->getModuleAdminControllersFilename($moduleName);
-        $legacyControllers = array_map(function ($legacyControllersFilename) {
-            return str_replace('Controller.php', '', $legacyControllersFilename);
-        }, $legacyControllersFilenames);
+        $legacyControllers = array_map(fn($legacyControllersFilename) => str_replace('Controller.php', '', $legacyControllersFilename), $legacyControllersFilenames);
 
         $routingControllers = $this->getModuleControllersFromRouting($moduleName);
 
@@ -303,9 +271,7 @@ class ModuleTabRegister
      */
     protected function getModuleAdminControllersFilename($moduleName)
     {
-        return array_map(function (SplFileInfo $file) {
-            return $file->getFilename();
-        }, $this->getModuleAdminControllers($moduleName));
+        return array_map(fn(SplFileInfo $file) => $file->getFilename(), $this->getModuleAdminControllers($moduleName));
     }
 
     /**

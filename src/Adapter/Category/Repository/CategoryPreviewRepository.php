@@ -45,25 +45,11 @@ class CategoryPreviewRepository
     public const BREADCRUMB_SEPARATOR = ' > ';
 
     /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
-     * @var ImagePathFactory
-     */
-    private $categoryImagePathFactory;
-
-    /**
      * @param CategoryRepository $categoryRepository
      * @param ImagePathFactory $categoryImagePathFactory
      */
-    public function __construct(
-        CategoryRepository $categoryRepository,
-        ImagePathFactory $categoryImagePathFactory
-    ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->categoryImagePathFactory = $categoryImagePathFactory;
+    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly ImagePathFactory $categoryImagePathFactory)
+    {
     }
 
     /**

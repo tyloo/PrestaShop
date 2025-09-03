@@ -39,15 +39,8 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
 #[AsCommandHandler]
 class AddFeatureHandler extends AbstractObjectModelHandler implements AddFeatureHandlerInterface
 {
-    /**
-     * @var FeatureRepository
-     */
-    private $featureRepository;
-
-    public function __construct(
-        FeatureRepository $featureRepository
-    ) {
-        $this->featureRepository = $featureRepository;
+    public function __construct(private readonly FeatureRepository $featureRepository)
+    {
     }
 
     /**

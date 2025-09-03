@@ -39,15 +39,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\CommandHandler\DeleteProduct
 #[AsCommandHandler]
 class DeleteProductImageHandler implements DeleteProductImageHandlerInterface
 {
-    /**
-     * @var ProductImageUpdater
-     */
-    private $productImageUpdater;
-
-    public function __construct(
-        ProductImageUpdater $productImageUpdater
-    ) {
-        $this->productImageUpdater = $productImageUpdater;
+    public function __construct(private readonly ProductImageUpdater $productImageUpdater)
+    {
     }
 
     /**

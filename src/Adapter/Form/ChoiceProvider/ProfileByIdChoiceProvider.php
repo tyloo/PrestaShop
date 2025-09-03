@@ -36,16 +36,10 @@ use Profile;
 final class ProfileByIdChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param int $contextLangId
      */
-    public function __construct($contextLangId)
+    public function __construct(private $contextLangId)
     {
-        $this->contextLangId = $contextLangId;
     }
 
     /**

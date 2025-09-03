@@ -61,31 +61,6 @@ use Validate;
 class ProductLazyArray extends AbstractLazyArray
 {
     /**
-     * @var ImageRetriever
-     */
-    private $imageRetriever;
-
-    /**
-     * @var Link
-     */
-    private $link;
-
-    /**
-     * @var PriceFormatter
-     */
-    private $priceFormatter;
-
-    /**
-     * @var ProductColorsRetriever
-     */
-    private $productColorsRetriever;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @var ProductPresentationSettings
      */
     protected $settings;
@@ -94,11 +69,6 @@ class ProductLazyArray extends AbstractLazyArray
      * @var array
      */
     protected $product;
-
-    /**
-     * @var Language
-     */
-    private $language;
 
     /**
      * @var HookManager
@@ -113,34 +83,28 @@ class ProductLazyArray extends AbstractLazyArray
     public function __construct(
         ProductPresentationSettings $settings,
         array $product,
-        Language $language,
-        ImageRetriever $imageRetriever,
-        Link $link,
-        PriceFormatter $priceFormatter,
-        ProductColorsRetriever $productColorsRetriever,
-        TranslatorInterface $translator,
+        private readonly Language $language,
+        private readonly ImageRetriever $imageRetriever,
+        private readonly Link $link,
+        private readonly PriceFormatter $priceFormatter,
+        private readonly ProductColorsRetriever $productColorsRetriever,
+        private readonly TranslatorInterface $translator,
         ?HookManager $hookManager = null,
         ?Configuration $configuration = null
     ) {
         $this->settings = $settings;
         $this->product = $product;
-        $this->language = $language;
-        $this->imageRetriever = $imageRetriever;
-        $this->link = $link;
-        $this->priceFormatter = $priceFormatter;
-        $this->productColorsRetriever = $productColorsRetriever;
-        $this->translator = $translator;
         $this->hookManager = $hookManager ?? new HookManager();
         $this->configuration = $configuration ?? new Configuration();
 
         // Load image information right away
-        $this->fillImages($product, $language);
+        $this->fillImages($product, $this->language);
 
         // Load pricing information right away
         $this->addPriceInformation($settings, $product);
 
         // Load quantity information right away
-        $this->addQuantityInformation($settings, $product, $language);
+        $this->addQuantityInformation($settings, $product, $this->language);
 
         parent::__construct();
 
@@ -164,11 +128,7 @@ class ProductLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getAttributes()
     {
-        if (isset($this->product['attributes'])) {
-            return $this->product['attributes'];
-        }
-
-        return [];
+        return $this->product['attributes'] ?? [];
     }
 
     /**
@@ -279,40 +239,36 @@ class ProductLazyArray extends AbstractLazyArray
             return false;
         }
 
-        switch ($this->product['condition']) {
-            case 'new':
-                return [
-                    'type' => 'new',
-                    'label' => $this->translator->trans(
-                        'New',
-                        [],
-                        'Shop.Theme.Catalog'
-                    ),
-                    'schema_url' => 'https://schema.org/NewCondition',
-                ];
-            case 'used':
-                return [
-                    'type' => 'used',
-                    'label' => $this->translator->trans(
-                        'Used',
-                        [],
-                        'Shop.Theme.Catalog'
-                    ),
-                    'schema_url' => 'https://schema.org/UsedCondition',
-                ];
-            case 'refurbished':
-                return [
-                    'type' => 'refurbished',
-                    'label' => $this->translator->trans(
-                        'Refurbished',
-                        [],
-                        'Shop.Theme.Catalog'
-                    ),
-                    'schema_url' => 'https://schema.org/RefurbishedCondition',
-                ];
-            default:
-                return false;
-        }
+        return match ($this->product['condition']) {
+            'new' => [
+                'type' => 'new',
+                'label' => $this->translator->trans(
+                    'New',
+                    [],
+                    'Shop.Theme.Catalog'
+                ),
+                'schema_url' => 'https://schema.org/NewCondition',
+            ],
+            'used' => [
+                'type' => 'used',
+                'label' => $this->translator->trans(
+                    'Used',
+                    [],
+                    'Shop.Theme.Catalog'
+                ),
+                'schema_url' => 'https://schema.org/UsedCondition',
+            ],
+            'refurbished' => [
+                'type' => 'refurbished',
+                'label' => $this->translator->trans(
+                    'Refurbished',
+                    [],
+                    'Shop.Theme.Catalog'
+                ),
+                'schema_url' => 'https://schema.org/RefurbishedCondition',
+            ],
+            default => false,
+        };
     }
 
     /**
@@ -427,9 +383,7 @@ class ProductLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getQuantityDiscounts()
     {
-        return isset($this->product['quantity_discounts'])
-            ? $this->product['quantity_discounts']
-            : [];
+        return $this->product['quantity_discounts'] ?? [];
     }
 
     /**
@@ -1245,11 +1199,9 @@ class ProductLazyArray extends AbstractLazyArray
         Language $language,
         $canonical = false
     ) {
-        $linkRewrite = isset($product['link_rewrite'])
-            ? $product['link_rewrite']
-            : null;
+        $linkRewrite = $product['link_rewrite'] ?? null;
         $category = $this->getCategory();
-        $ean13 = isset($product['ean13']) ? $product['ean13'] : null;
+        $ean13 = $product['ean13'] ?? null;
 
         return $this->link->getProductLink(
             $product['id_product'],
@@ -1479,34 +1431,29 @@ class ProductLazyArray extends AbstractLazyArray
      */
     private function getTranslatedKey($key)
     {
-        switch ($key) {
-            case 'ean13':
-                return $this->translator->trans(
-                    'ean13',
-                    [],
-                    'Shop.Theme.Catalog'
-                );
-            case 'isbn':
-                return $this->translator->trans(
-                    'isbn',
-                    [],
-                    'Shop.Theme.Catalog'
-                );
-            case 'upc':
-                return $this->translator->trans(
-                    'upc',
-                    [],
-                    'Shop.Theme.Catalog'
-                );
-            case 'mpn':
-                return $this->translator->trans(
-                    'MPN',
-                    [],
-                    'Shop.Theme.Catalog'
-                );
-        }
-
-        return $key;
+        return match ($key) {
+            'ean13' => $this->translator->trans(
+                'ean13',
+                [],
+                'Shop.Theme.Catalog'
+            ),
+            'isbn' => $this->translator->trans(
+                'isbn',
+                [],
+                'Shop.Theme.Catalog'
+            ),
+            'upc' => $this->translator->trans(
+                'upc',
+                [],
+                'Shop.Theme.Catalog'
+            ),
+            'mpn' => $this->translator->trans(
+                'MPN',
+                [],
+                'Shop.Theme.Catalog'
+            ),
+            default => $key,
+        };
     }
 
     /**

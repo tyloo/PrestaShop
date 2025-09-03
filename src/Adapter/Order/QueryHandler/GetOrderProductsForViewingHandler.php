@@ -58,29 +58,8 @@ use StockAvailable;
 #[AsQueryHandler]
 final class GetOrderProductsForViewingHandler extends AbstractOrderHandler implements GetOrderProductsForViewingHandlerInterface
 {
-    /**
-     * @var ImageTagSourceParserInterface
-     */
-    private $imageTagSourceParser;
-
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
-     * @var Locale
-     */
-    private $locale;
-
-    public function __construct(
-        ImageTagSourceParserInterface $imageTagSourceParser,
-        int $contextLanguageId,
-        Locale $locale
-    ) {
-        $this->imageTagSourceParser = $imageTagSourceParser;
-        $this->contextLanguageId = $contextLanguageId;
-        $this->locale = $locale;
+    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser, private readonly int $contextLanguageId, private readonly Locale $locale)
+    {
     }
 
     public function handle(GetOrderProductsForViewing $query): OrderProductsForViewing

@@ -50,7 +50,7 @@ final class UpdateCategoryPositionHandler implements UpdateCategoryPositionHandl
         $position = null;
 
         foreach ($command->getPositions() as $key => $value) {
-            [, $positionParentCategoryId, $positionCategoryId] = explode('_', $value);
+            [, $positionParentCategoryId, $positionCategoryId] = explode('_', (string) $value);
 
             if ((int) $positionParentCategoryId === $parentCategoryId && (int) $positionCategoryId === $categoryId) {
                 $position = $key;

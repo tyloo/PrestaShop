@@ -36,33 +36,12 @@ use PrestaShopBundle\Entity\Repository\ModuleRepository as ModuleEntityRepositor
 final class PaymentModuleListProvider implements PaymentModuleListProviderInterface
 {
     /**
-     * @var ModuleRepositoryInterface
-     */
-    private $moduleRepository;
-
-    /**
-     * @var ModuleEntityRepository
-     */
-    private $moduleEntityRepository;
-
-    /**
-     * @var int
-     */
-    private $shopId;
-
-    /**
      * @param ModuleRepositoryInterface $moduleRepository
      * @param ModuleEntityRepository $moduleEntityRepository
      * @param int $shopId
      */
-    public function __construct(
-        ModuleRepositoryInterface $moduleRepository,
-        ModuleEntityRepository $moduleEntityRepository,
-        int $shopId
-    ) {
-        $this->moduleRepository = $moduleRepository;
-        $this->moduleEntityRepository = $moduleEntityRepository;
-        $this->shopId = $shopId;
+    public function __construct(private readonly ModuleRepositoryInterface $moduleRepository, private readonly ModuleEntityRepository $moduleEntityRepository, private readonly int $shopId)
+    {
     }
 
     /**

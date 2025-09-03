@@ -45,25 +45,13 @@ use Symfony\Component\Routing\Router;
 class UrlGenerator implements UrlGeneratorInterface
 {
     /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    /**
-     * @var Router
-     */
-    private $router;
-
-    /**
      * Constructor.
      *
      * @param LegacyContext $legacyContext
      * @param Router $router
      */
-    public function __construct(LegacyContext $legacyContext, Router $router)
+    public function __construct(private readonly LegacyContext $legacyContext, private readonly Router $router)
     {
-        $this->legacyContext = $legacyContext;
-        $this->router = $router;
     }
 
     /**

@@ -57,29 +57,8 @@ use StockAvailable;
  */
 class OrderProductQuantityUpdater
 {
-    /**
-     * @var OrderAmountUpdater
-     */
-    private $orderAmountUpdater;
-
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var OrderProductRemover
-     */
-    private $orderProductRemover;
-
-    public function __construct(
-        OrderAmountUpdater $orderAmountUpdater,
-        OrderProductRemover $orderProductRemover,
-        ContextStateManager $contextStateManager
-    ) {
-        $this->orderAmountUpdater = $orderAmountUpdater;
-        $this->orderProductRemover = $orderProductRemover;
-        $this->contextStateManager = $contextStateManager;
+    public function __construct(private readonly OrderAmountUpdater $orderAmountUpdater, private readonly OrderProductRemover $orderProductRemover, private readonly ContextStateManager $contextStateManager)
+    {
     }
 
     /**

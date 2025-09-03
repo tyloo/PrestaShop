@@ -44,23 +44,11 @@ use PrestaShopException;
 final class GetCmsPageForEditingHandler extends AbstractCmsPageHandler implements GetCmsPageForEditingHandlerInterface
 {
     /**
-     * @var Link
-     */
-    private $link;
-
-    /**
-     * @var int
-     */
-    private $langId;
-
-    /**
      * @param Link $link
      * @param int $langId
      */
-    public function __construct(Link $link, $langId)
+    public function __construct(private readonly Link $link, private $langId)
     {
-        $this->link = $link;
-        $this->langId = $langId;
     }
 
     /**

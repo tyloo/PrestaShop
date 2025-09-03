@@ -49,31 +49,6 @@ use Symfony\Component\Filesystem\Filesystem;
 class ProductImageUploader extends AbstractImageUploader
 {
     /**
-     * @var ProductImagePathFactory
-     */
-    private $productImagePathFactory;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var ImageGenerator
-     */
-    private $imageGenerator;
-
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
      * @var Filesystem
      */
     private $fileSystem;
@@ -86,17 +61,12 @@ class ProductImageUploader extends AbstractImageUploader
      * @param ProductImageRepository $productImageRepository
      */
     public function __construct(
-        ProductImagePathFactory $productImagePathFactory,
-        int $contextShopId,
-        ImageGenerator $imageGenerator,
-        HookDispatcherInterface $hookDispatcher,
-        ProductImageRepository $productImageRepository
+        private readonly ProductImagePathFactory $productImagePathFactory,
+        private readonly int $contextShopId,
+        private readonly ImageGenerator $imageGenerator,
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly ProductImageRepository $productImageRepository
     ) {
-        $this->productImagePathFactory = $productImagePathFactory;
-        $this->contextShopId = $contextShopId;
-        $this->imageGenerator = $imageGenerator;
-        $this->hookDispatcher = $hookDispatcher;
-        $this->productImageRepository = $productImageRepository;
         $this->fileSystem = new Filesystem();
     }
 
@@ -212,7 +182,7 @@ class ProductImageUploader extends AbstractImageUploader
         $imageBaseName = rtrim($imagePath, '.' . $fileExtension);
 
         foreach ($imageTypes as $imageType) {
-            $generatedImagePath = sprintf('%s-%s%s', $imageBaseName, stripslashes($imageType->name), $destinationExtension);
+            $generatedImagePath = sprintf('%s-%s%s', $imageBaseName, stripslashes((string) $imageType->name), $destinationExtension);
             if (!file_exists($generatedImagePath)) {
                 continue;
             }

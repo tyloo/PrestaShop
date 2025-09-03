@@ -37,22 +37,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 abstract class AbstractSqlRequestHandler
 {
-    /**
-     * @var SqlQueryValidator
-     */
-    private $sqlQueryValidator;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(
-        SqlQueryValidator $sqlQueryValidator,
-        TranslatorInterface $translator
-    ) {
-        $this->sqlQueryValidator = $sqlQueryValidator;
-        $this->translator = $translator;
+    public function __construct(private readonly SqlQueryValidator $sqlQueryValidator, private readonly TranslatorInterface $translator)
+    {
     }
 
     protected function assertSqlQueryIsValid(string $sql): void

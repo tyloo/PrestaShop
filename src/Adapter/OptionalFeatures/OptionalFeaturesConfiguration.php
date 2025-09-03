@@ -37,29 +37,8 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
  */
 class OptionalFeaturesConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @var CombinationFeature
-     */
-    private $combinationFeature;
-
-    /**
-     * @var FeatureFeature
-     */
-    private $featureFeature;
-
-    /**
-     * @var GroupFeature
-     */
-    private $groupFeature;
-
-    public function __construct(
-        CombinationFeature $combinationFeature,
-        FeatureFeature $featureFeature,
-        GroupFeature $groupFeature
-    ) {
-        $this->combinationFeature = $combinationFeature;
-        $this->featureFeature = $featureFeature;
-        $this->groupFeature = $groupFeature;
+    public function __construct(private readonly CombinationFeature $combinationFeature, private readonly FeatureFeature $featureFeature, private readonly GroupFeature $groupFeature)
+    {
     }
 
     /**

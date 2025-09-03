@@ -41,15 +41,8 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
 #[AsQueryHandler]
 final class GetManufacturerForEditingHandler extends AbstractManufacturerHandler implements GetManufacturerForEditingHandlerInterface
 {
-    /**
-     * @var ImageTagSourceParserInterface
-     */
-    private $imageTagSourceParser;
-
-    public function __construct(
-        ImageTagSourceParserInterface $imageTagSourceParser
-    ) {
-        $this->imageTagSourceParser = $imageTagSourceParser;
+    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser)
+    {
     }
 
     /**

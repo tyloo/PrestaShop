@@ -41,14 +41,8 @@ use PrestaShop\PrestaShop\Core\Domain\Security\CommandHandler\DeleteEmployeeSess
 #[AsCommandHandler]
 final class DeleteEmployeeSessionHandler implements DeleteEmployeeSessionHandlerInterface
 {
-    /**
-     * @var EmployeeSessionRepository
-     */
-    private $repository;
-
-    public function __construct(EmployeeSessionRepository $repository)
+    public function __construct(private readonly EmployeeSessionRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**

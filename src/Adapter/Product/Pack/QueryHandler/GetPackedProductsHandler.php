@@ -69,11 +69,6 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
     protected $productRepository;
 
     /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
      * @var AttributeRepository
      */
     protected $attributeRepository;
@@ -93,21 +88,16 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
      */
     protected $translator;
 
-    /**
-     * @var ProductImageProviderInterface
-     */
-    private $productImageProvider;
-
     public function __construct(
         int $defaultLangId,
         ProductPackRepository $productPackRepository,
         ProductRepository $productRepository,
-        CombinationRepository $combinationRepository,
+        private readonly CombinationRepository $combinationRepository,
         AttributeRepository $attributeRepository,
         CombinationNameBuilder $combinationNameBuilder,
         ProductImageRepository $productImageRepository,
         TranslatorInterface $translator,
-        ProductImageProviderInterface $productImageProvider
+        private readonly ProductImageProviderInterface $productImageProvider
     ) {
         $this->languageId = $defaultLangId;
         $this->productPackRepository = $productPackRepository;
@@ -116,8 +106,6 @@ class GetPackedProductsHandler implements GetPackedProductsHandlerInterface
         $this->combinationNameBuilder = $combinationNameBuilder;
         $this->productImageRepository = $productImageRepository;
         $this->translator = $translator;
-        $this->combinationRepository = $combinationRepository;
-        $this->productImageProvider = $productImageProvider;
     }
 
     /**

@@ -68,34 +68,16 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     private $context;
 
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var Locale
-     */
-    private $locale;
-
-    /**
      * @param TranslatorInterface $translator
      * @param int $contextLangId
      * @param Locale $locale
      */
     public function __construct(
-        TranslatorInterface $translator,
-        $contextLangId,
-        Locale $locale
+        private readonly TranslatorInterface $translator,
+        private $contextLangId,
+        private readonly Locale $locale
     ) {
         $this->context = new LegacyContext();
-        $this->contextLangId = $contextLangId;
-        $this->translator = $translator;
-        $this->locale = $locale;
     }
 
     /**
@@ -280,13 +262,11 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
         ];
 
         foreach ($messages as $message) {
-            $status = isset($messageStatuses[$message['status']]) ?
-                $messageStatuses[$message['status']] :
-                $message['status'];
+            $status = $messageStatuses[$message['status']] ?? $message['status'];
 
             $customerMessages[] = new MessageInformation(
                 (int) $message['id_customer_thread'],
-                substr(strip_tags(html_entity_decode($message['message'], ENT_NOQUOTES, 'UTF-8')), 0, 75),
+                substr(strip_tags(html_entity_decode((string) $message['message'], ENT_NOQUOTES, 'UTF-8')), 0, 75),
                 $status,
                 Tools::displayDate($message['date_add'], true)
             );
@@ -333,7 +313,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
 
         foreach ($connections as $connection) {
             $httpReferer = $connection['http_referer'] ?
-                preg_replace('/^www./', '', parse_url($connection['http_referer'], PHP_URL_HOST)) :
+                preg_replace('/^www./', '', parse_url((string) $connection['http_referer'], PHP_URL_HOST)) :
                 $this->translator->trans('Direct link', [], 'Admin.Orderscustomers.Notification');
 
             $lastConnections[] = new LastConnectionInformation(

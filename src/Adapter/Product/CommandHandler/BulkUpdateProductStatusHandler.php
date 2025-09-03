@@ -45,22 +45,8 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopCollection;
 #[AsCommandHandler]
 class BulkUpdateProductStatusHandler extends AbstractBulkHandler implements BulkUpdateProductStatusHandlerInterface
 {
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductIndexationUpdater
-     */
-    private $productIndexationUpdater;
-
-    public function __construct(
-        ProductRepository $productRepository,
-        ProductIndexationUpdater $productIndexationUpdater
-    ) {
-        $this->productRepository = $productRepository;
-        $this->productIndexationUpdater = $productIndexationUpdater;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductIndexationUpdater $productIndexationUpdater)
+    {
     }
 
     /**

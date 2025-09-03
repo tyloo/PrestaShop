@@ -39,25 +39,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class GeneralConfiguration implements DataConfigurationInterface
 {
     /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var SpecificPricePriorityUpdater
-     */
-    private $specificPricePriorityUpdater;
-
-    /**
      * @param Configuration $configuration
      * @param SpecificPricePriorityUpdater $specificPricePriorityUpdater
      */
-    public function __construct(
-        Configuration $configuration,
-        SpecificPricePriorityUpdater $specificPricePriorityUpdater
-    ) {
-        $this->configuration = $configuration;
-        $this->specificPricePriorityUpdater = $specificPricePriorityUpdater;
+    public function __construct(private readonly Configuration $configuration, private readonly SpecificPricePriorityUpdater $specificPricePriorityUpdater)
+    {
     }
 
     /**
@@ -145,7 +131,7 @@ class GeneralConfiguration implements DataConfigurationInterface
     private function getPrioritiesData(): array
     {
         if (!empty($this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'))) {
-            return explode(';', $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
+            return explode(';', (string) $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
         }
 
         return array_values(PriorityList::AVAILABLE_PRIORITIES);

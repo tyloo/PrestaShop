@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Employee\AvatarProviderInterface;
 final class AvatarProvider implements AvatarProviderInterface
 {
     /**
-     * @var Tools
-     */
-    private $tools;
-
-    /**
      * @param Tools $tools
      */
-    public function __construct(Tools $tools)
+    public function __construct(private readonly Tools $tools)
     {
-        $this->tools = $tools;
     }
 
     /**

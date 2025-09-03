@@ -57,26 +57,6 @@ final class CategoryImportHandler extends AbstractImportHandler
     private $coreCategories;
 
     /**
-     * @var ImageCopier
-     */
-    private $imageCopier;
-
-    /**
-     * @var Tools
-     */
-    private $tools;
-
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string database prefix
-     */
-    private $dbPrefix;
-
-    /**
      * @param ImportDataFormatter $dataFormatter
      * @param array $allShopIds
      * @param array $contextShopIds
@@ -109,10 +89,10 @@ final class CategoryImportHandler extends AbstractImportHandler
         CacheClearerInterface $cacheClearer,
         Configuration $configuration,
         Validate $validate,
-        ImageCopier $imageCopier,
-        Tools $tools,
-        Connection $connection,
-        $dbPrefix
+        private readonly ImageCopier $imageCopier,
+        private readonly Tools $tools,
+        private readonly Connection $connection,
+        private $dbPrefix
     ) {
         parent::__construct(
             $dataFormatter,
@@ -129,10 +109,6 @@ final class CategoryImportHandler extends AbstractImportHandler
             $configuration,
             $validate
         );
-        $this->imageCopier = $imageCopier;
-        $this->tools = $tools;
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
         $this->importTypeLabel = $this->translator->trans('Categories', [], 'Admin.Global');
         $this->defaultValues = [
             'active' => '1',
@@ -257,7 +233,7 @@ final class CategoryImportHandler extends AbstractImportHandler
             }
 
             $sharedData = $runtimeConfig->getSharedData();
-            $movedCategories = isset($sharedData['cat_moved']) ? $sharedData['cat_moved'] : [];
+            $movedCategories = $sharedData['cat_moved'] ?? [];
 
             if (isset($movedCategories[$category->parent])) {
                 $category->parent = $movedCategories[$category->parent];

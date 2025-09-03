@@ -40,25 +40,11 @@ use Product;
 class PricesFiller implements ProductFillerInterface
 {
     /**
-     * @var NumberExtractor
-     */
-    private $numberExtractor;
-
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
      * @param NumberExtractor $numberExtractor
      * @param Configuration $configuration
      */
-    public function __construct(
-        NumberExtractor $numberExtractor,
-        Configuration $configuration
-    ) {
-        $this->numberExtractor = $numberExtractor;
-        $this->configuration = $configuration;
+    public function __construct(private readonly NumberExtractor $numberExtractor, private readonly Configuration $configuration)
+    {
     }
 
     /**

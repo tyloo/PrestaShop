@@ -117,19 +117,12 @@ class CartRuleActionFiller
         CartRule $cartRule,
         DiscountApplicationType $discountApplicationType
     ): void {
-        switch ($discountApplicationType->getType()) {
-            case DiscountApplicationType::SELECTED_PRODUCTS:
-                $discountApplicationValue = LegacyDiscountApplicationType::SELECTED_PRODUCTS;
-                break;
-            case DiscountApplicationType::CHEAPEST_PRODUCT:
-                $discountApplicationValue = LegacyDiscountApplicationType::CHEAPEST_PRODUCT;
-                break;
-            case DiscountApplicationType::SPECIFIC_PRODUCT:
-                $discountApplicationValue = $discountApplicationType->getProductId()->getValue();
-                break;
-            default:
-                $discountApplicationValue = LegacyDiscountApplicationType::ORDER_WITHOUT_SHIPPING;
-        }
+        $discountApplicationValue = match ($discountApplicationType->getType()) {
+            DiscountApplicationType::SELECTED_PRODUCTS => LegacyDiscountApplicationType::SELECTED_PRODUCTS,
+            DiscountApplicationType::CHEAPEST_PRODUCT => LegacyDiscountApplicationType::CHEAPEST_PRODUCT,
+            DiscountApplicationType::SPECIFIC_PRODUCT => $discountApplicationType->getProductId()->getValue(),
+            default => LegacyDiscountApplicationType::ORDER_WITHOUT_SHIPPING,
+        };
 
         $cartRule->reduction_product = $discountApplicationValue;
     }

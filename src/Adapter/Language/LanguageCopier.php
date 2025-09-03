@@ -39,33 +39,12 @@ use Symfony\Component\Filesystem\Filesystem;
 final class LanguageCopier implements LanguageCopierInterface
 {
     /**
-     * @var LanguageDataProvider
-     */
-    private $languageDataProvider;
-
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var ThemeCollection
-     */
-    private $themeCollection;
-
-    /**
      * @param LanguageDataProvider $languageDataProvider
      * @param Filesystem $filesystem
      * @param ThemeCollection $themeCollection
      */
-    public function __construct(
-        LanguageDataProvider $languageDataProvider,
-        Filesystem $filesystem,
-        ThemeCollection $themeCollection
-    ) {
-        $this->languageDataProvider = $languageDataProvider;
-        $this->filesystem = $filesystem;
-        $this->themeCollection = $themeCollection;
+    public function __construct(private readonly LanguageDataProvider $languageDataProvider, private readonly Filesystem $filesystem, private readonly ThemeCollection $themeCollection)
+    {
     }
 
     /**
@@ -88,7 +67,7 @@ final class LanguageCopier implements LanguageCopierInterface
 
         foreach ($languageFiles as $source => $destination) {
             try {
-                $this->filesystem->mkdir(dirname($destination));
+                $this->filesystem->mkdir(dirname((string) $destination));
             } catch (IOExceptionInterface) {
                 $errors[] = [
                     'key' => 'Cannot create the folder "%folder%". Please check your directory writing permissions.',

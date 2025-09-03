@@ -35,22 +35,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /** One service that uploads all category images */
 class CategoryImageUploader
 {
-    /**
-     * @var ImageUploaderInterface
-     */
-    private $categoryCoverUploader;
-
-    /**
-     * @var ImageUploaderInterface
-     */
-    private $categoryThumbnailUploader;
-
-    public function __construct(
-        ImageUploaderInterface $categoryCoverUploader,
-        ImageUploaderInterface $categoryThumbnailUploader
-    ) {
-        $this->categoryCoverUploader = $categoryCoverUploader;
-        $this->categoryThumbnailUploader = $categoryThumbnailUploader;
+    public function __construct(private readonly ImageUploaderInterface $categoryCoverUploader, private readonly ImageUploaderInterface $categoryThumbnailUploader)
+    {
     }
 
     /**

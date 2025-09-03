@@ -39,14 +39,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\FeatureValue\CommandHandler\Remove
 #[AsCommandHandler]
 class RemoveAllFeatureValuesFromProductHandler implements RemoveAllFeatureValuesFromProductHandlerInterface
 {
-    /**
-     * @var ProductFeatureValueUpdater
-     */
-    private $productFeatureValueUpdater;
-
-    public function __construct(ProductFeatureValueUpdater $productFeatureValueUpdater)
+    public function __construct(private readonly ProductFeatureValueUpdater $productFeatureValueUpdater)
     {
-        $this->productFeatureValueUpdater = $productFeatureValueUpdater;
     }
 
     /**

@@ -35,30 +35,12 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 final class CategoryTreeChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var CategoryDataProvider
-     */
-    private $categoryDataProvider;
-
-    /**
-     * @var int
-     */
-    private $contextShopRootCategoryId;
-
-    /**
-     * @var bool
-     */
-    private $enabledCategoriesOnly;
-
-    /**
      * @param CategoryDataProvider $categoryDataProvider
      * @param int $contextShopRootCategoryId
      * @param bool $enabledCategoriesOnly
      */
-    public function __construct(CategoryDataProvider $categoryDataProvider, $contextShopRootCategoryId, $enabledCategoriesOnly = false)
+    public function __construct(private readonly CategoryDataProvider $categoryDataProvider, private $contextShopRootCategoryId, private $enabledCategoriesOnly = false)
     {
-        $this->categoryDataProvider = $categoryDataProvider;
-        $this->contextShopRootCategoryId = $contextShopRootCategoryId;
-        $this->enabledCategoriesOnly = $enabledCategoriesOnly;
     }
 
     /**

@@ -41,14 +41,8 @@ use PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId;
 #[AsCommandHandler]
 class AddCountryHandler implements AddCountryHandlerInterface
 {
-    /**
-     * @var CountryRepository
-     */
-    private $countryRepository;
-
-    public function __construct(CountryRepository $countryRepository)
+    public function __construct(private readonly CountryRepository $countryRepository)
     {
-        $this->countryRepository = $countryRepository;
     }
 
     /**

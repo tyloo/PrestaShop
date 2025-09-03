@@ -47,33 +47,12 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractMultiShopObjectModelRepository
 class CustomizationFieldRepository extends AbstractMultiShopObjectModelRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var CustomizationFieldValidator
-     */
-    private $customizationFieldValidator;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param CustomizationFieldValidator $customizationFieldValidator
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        CustomizationFieldValidator $customizationFieldValidator
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->customizationFieldValidator = $customizationFieldValidator;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly CustomizationFieldValidator $customizationFieldValidator)
+    {
     }
 
     /**
@@ -186,8 +165,6 @@ class CustomizationFieldRepository extends AbstractMultiShopObjectModelRepositor
             $qb->andWhere('cf.is_deleted = 0');
         }
 
-        return array_map(static function (array $customizationFieldId) {
-            return new CustomizationFieldId((int) $customizationFieldId['id_customization_field']);
-        }, $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn(array $customizationFieldId) => new CustomizationFieldId((int) $customizationFieldId['id_customization_field']), $qb->executeQuery()->fetchAllAssociative());
     }
 }

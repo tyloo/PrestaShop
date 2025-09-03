@@ -66,54 +66,9 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
     protected $productRepository;
 
     /**
-     * @var GridDataFactoryInterface
-     */
-    private $productGridDataFactory;
-
-    /**
      * @var Locale
      */
     private $locale;
-
-    /**
-     * @var int
-     */
-    private $defaultCurrencyId;
-
-    /**
-     * @var TaxComputer
-     */
-    private $taxComputer;
-
-    /**
-     * @var int
-     */
-    private $countryId;
-
-    /**
-     * @var ProductImagePathFactory
-     */
-    private $productImagePathFactory;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var bool
-     */
-    private $taxEnabled;
-
-    /**
-     * @var bool
-     */
-    private $isEcotaxEnabled;
-
-    /**
-     * @var int
-     */
-    private $ecoTaxGroupId;
 
     /**
      * Use as cache for shop names.
@@ -123,34 +78,23 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
     private $shopsNames;
 
     public function __construct(
-        GridDataFactoryInterface $productGridDataFactory,
+        private readonly GridDataFactoryInterface $productGridDataFactory,
         Repository $localeRepository,
         string $contextLocale,
-        int $defaultCurrencyId,
-        TaxComputer $taxComputer,
-        int $countryId,
-        ProductImagePathFactory $productImagePathFactory,
-        TranslatorInterface $translator,
-        bool $taxEnabled,
-        bool $isEcotaxEnabled,
-        int $ecoTaxGroupId,
+        private readonly int $defaultCurrencyId,
+        private readonly TaxComputer $taxComputer,
+        private readonly int $countryId,
+        private readonly ProductImagePathFactory $productImagePathFactory,
+        private readonly TranslatorInterface $translator,
+        private readonly bool $taxEnabled,
+        private readonly bool $isEcotaxEnabled,
+        private readonly int $ecoTaxGroupId,
         ShopRepository $shopRepository,
         ProductRepository $productRepository
     ) {
-        $this->productGridDataFactory = $productGridDataFactory;
-
         $this->locale = $localeRepository->getLocale(
             $contextLocale
         );
-
-        $this->defaultCurrencyId = $defaultCurrencyId;
-        $this->taxComputer = $taxComputer;
-        $this->countryId = $countryId;
-        $this->productImagePathFactory = $productImagePathFactory;
-        $this->translator = $translator;
-        $this->taxEnabled = $taxEnabled;
-        $this->isEcotaxEnabled = $isEcotaxEnabled;
-        $this->ecoTaxGroupId = $ecoTaxGroupId;
         $this->shopRepository = $shopRepository;
         $this->productRepository = $productRepository;
     }
@@ -250,9 +194,7 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
             // Transform list of IDs into list of names
             if ($searchCriteria->getShopConstraint()->forAllShops() || null !== $searchCriteria->getShopConstraint()->getShopGroupId()) {
                 $shopIds = $this->productRepository->getAssociatedShopIds(new ProductId((int) $product['id_product']));
-                $products[$i]['associated_shops_ids'] = array_map(static function (ShopId $shopId) {
-                    return $shopId->getValue();
-                }, $shopIds);
+                $products[$i]['associated_shops_ids'] = array_map(static fn(ShopId $shopId) => $shopId->getValue(), $shopIds);
                 $products[$i]['associated_shops'] = $this->getShopsNames(
                     $shopIds,
                     $searchCriteria

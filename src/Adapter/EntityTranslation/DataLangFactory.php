@@ -39,23 +39,11 @@ use PrestaShopBundle\Translation\TranslatorInterface;
 class DataLangFactory
 {
     /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @param string $dbPrefix
      * @param TranslatorInterface $translator
      */
-    public function __construct(string $dbPrefix, TranslatorInterface $translator)
+    public function __construct(private readonly string $dbPrefix, private readonly TranslatorInterface $translator)
     {
-        $this->dbPrefix = $dbPrefix;
-        $this->translator = $translator;
     }
 
     /**

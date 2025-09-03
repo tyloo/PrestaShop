@@ -37,16 +37,10 @@ use PrestaShop\PrestaShop\Core\Shop\Url\UrlProviderInterface;
 class ProductProvider implements UrlProviderInterface
 {
     /**
-     * @var Link
-     */
-    private $link;
-
-    /**
      * @param Link $link
      */
-    public function __construct(Link $link)
+    public function __construct(private readonly Link $link)
     {
-        $this->link = $link;
     }
 
     /**

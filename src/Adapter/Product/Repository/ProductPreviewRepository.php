@@ -40,22 +40,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
  */
 class ProductPreviewRepository
 {
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductImageProviderInterface
-     */
-    private $productImageProvider;
-
-    public function __construct(
-        ProductRepository $productRepository,
-        ProductImageProviderInterface $productImageProvider
-    ) {
-        $this->productRepository = $productRepository;
-        $this->productImageProvider = $productImageProvider;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductImageProviderInterface $productImageProvider)
+    {
     }
 
     public function getPreview(ProductId $productId, LanguageId $languageId): ProductPreview

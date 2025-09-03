@@ -40,16 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\DeleteC
 class DeleteCombinationHandler implements DeleteCombinationHandlerInterface
 {
     /**
-     * @var CombinationDeleter
-     */
-    private $combinationDeleter;
-
-    /**
      * @param CombinationDeleter $combinationDeleter
      */
-    public function __construct(CombinationDeleter $combinationDeleter)
+    public function __construct(private readonly CombinationDeleter $combinationDeleter)
     {
-        $this->combinationDeleter = $combinationDeleter;
     }
 
     /**

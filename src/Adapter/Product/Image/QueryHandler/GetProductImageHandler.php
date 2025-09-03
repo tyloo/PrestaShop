@@ -46,25 +46,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 class GetProductImageHandler implements GetProductImageHandlerInterface
 {
     /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
-     * @var ProductImagePathFactory
-     */
-    private $productImageUrlFactory;
-
-    /**
      * @param ProductImageRepository $productImageRepository
      * @param ProductImagePathFactory $productImageUrlFactory
      */
-    public function __construct(
-        ProductImageRepository $productImageRepository,
-        ProductImagePathFactory $productImageUrlFactory
-    ) {
-        $this->productImageRepository = $productImageRepository;
-        $this->productImageUrlFactory = $productImageUrlFactory;
+    public function __construct(private readonly ProductImageRepository $productImageRepository, private readonly ProductImagePathFactory $productImageUrlFactory)
+    {
     }
 
     /**
@@ -94,9 +80,7 @@ class GetProductImageHandler implements GetProductImageHandlerInterface
             $this->productImageUrlFactory->getPath($imageId),
             $this->productImageUrlFactory->getPathByType($imageId, ProductImagePathFactory::IMAGE_TYPE_SMALL_DEFAULT),
             array_map(
-                static function (ShopId $shopId): int {
-                    return $shopId->getValue();
-                },
+                static fn(ShopId $shopId): int => $shopId->getValue(),
                 $this->productImageRepository->getAssociatedShopIds($imageId)
             )
         );

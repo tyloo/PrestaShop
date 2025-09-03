@@ -36,49 +36,14 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 class CachingConfiguration implements DataConfigurationInterface
 {
     /**
-     * @var MemcacheServerManager
-     */
-    private $memcacheServerManager;
-
-    /**
-     * @var PhpParameters
-     */
-    private $phpParameters;
-
-    /**
-     * @var CacheClearerInterface
-     */
-    private $symfonyCacheClearer;
-
-    /**
-     * @var bool check if the caching is enabled
-     */
-    private $isCachingEnabled;
-
-    /**
-     * @var string the selected Caching system: 'CacheApc' for instance
-     */
-    private $cachingSystem;
-
-    /**
      * @param MemcacheServerManager $memcacheServerManager
      * @param PhpParameters $phpParameters
      * @param CacheClearerInterface $symfonyCacheClearer
      * @param bool $isCachingEnabled
      * @param string $cachingSystem
      */
-    public function __construct(
-        MemcacheServerManager $memcacheServerManager,
-        PhpParameters $phpParameters,
-        CacheClearerInterface $symfonyCacheClearer,
-        $isCachingEnabled,
-        $cachingSystem
-    ) {
-        $this->memcacheServerManager = $memcacheServerManager;
-        $this->phpParameters = $phpParameters;
-        $this->symfonyCacheClearer = $symfonyCacheClearer;
-        $this->isCachingEnabled = $isCachingEnabled;
-        $this->cachingSystem = $cachingSystem;
+    public function __construct(private readonly MemcacheServerManager $memcacheServerManager, private readonly PhpParameters $phpParameters, private readonly CacheClearerInterface $symfonyCacheClearer, private $isCachingEnabled, private $cachingSystem)
+    {
     }
 
     /**

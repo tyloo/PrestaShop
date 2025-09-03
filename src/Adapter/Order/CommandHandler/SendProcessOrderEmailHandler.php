@@ -49,22 +49,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[AsCommandHandler]
 class SendProcessOrderEmailHandler implements SendProcessOrderEmailHandlerInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var Link
-     */
-    private $contextLink;
-
-    public function __construct(
-        TranslatorInterface $translator,
-        Link $contextLink
-    ) {
-        $this->translator = $translator;
-        $this->contextLink = $contextLink;
+    public function __construct(private readonly TranslatorInterface $translator, private readonly Link $contextLink)
+    {
     }
 
     /**

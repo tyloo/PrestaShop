@@ -279,9 +279,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
      */
     private function duplicateRelations(int $oldProductId, int $newProductId, ShopConstraint $shopConstraint, string $productType): void
     {
-        $shopIds = array_map(static function (ShopId $shopId) {
-            return $shopId->getValue();
-        }, $this->productRepository->getShopIdsByConstraint(new ProductId($oldProductId), $shopConstraint));
+        $shopIds = array_map(static fn(ShopId $shopId) => $shopId->getValue(), $this->productRepository->getShopIdsByConstraint(new ProductId($oldProductId), $shopConstraint));
 
         $this->duplicateCategories($oldProductId, $newProductId);
         $combinationMatching = $this->duplicateCombinations($oldProductId, $newProductId, $shopIds);
@@ -584,9 +582,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
         $oldProductFeatures = $this->getRows('feature_product', ['id_product' => $oldProductId], CannotDuplicateProductException::FAILED_DUPLICATE_FEATURES);
 
         // Custom values need to be copied and assigned to new products
-        $featureValuesIds = array_map(static function (array $oldProductFeature) {
-            return (int) $oldProductFeature['id_feature_value'];
-        }, $oldProductFeatures);
+        $featureValuesIds = array_map(static fn(array $oldProductFeature) => (int) $oldProductFeature['id_feature_value'], $oldProductFeatures);
         $customFeatureValues = $this->getRows('feature_value', ['id_feature_value' => $featureValuesIds, 'custom' => 1], CannotDuplicateProductException::FAILED_DUPLICATE_FEATURES);
         $customValuesMapping = [];
         if (!empty($customFeatureValues)) {

@@ -49,25 +49,11 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 class CategoryRepository extends AbstractObjectModelRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
+    {
     }
 
     /**
@@ -102,9 +88,7 @@ class CategoryRepository extends AbstractObjectModelRepository
      */
     public function getLocalizedNames(array $categoryIds): array
     {
-        $categoryIds = array_map(function ($categoryId) {
-            return $categoryId->getValue();
-        }, $categoryIds
+        $categoryIds = array_map(fn($categoryId) => $categoryId->getValue(), $categoryIds
         );
 
         $qb = $this->connection->createQueryBuilder();
@@ -331,9 +315,7 @@ class CategoryRepository extends AbstractObjectModelRepository
             return;
         }
 
-        $categoryIds = array_unique(array_map(static function (CategoryId $categoryId): int {
-            return $categoryId->getValue();
-        }, $newCategories));
+        $categoryIds = array_unique(array_map(static fn(CategoryId $categoryId): int => $categoryId->getValue(), $newCategories));
 
         $maxPositions = $this->connection
             ->createQueryBuilder()
@@ -372,9 +354,7 @@ class CategoryRepository extends AbstractObjectModelRepository
      */
     public function removeProductAssociations(ProductId $productId, array $removedCategories): void
     {
-        $categoryIds = array_values(array_unique(array_map(static function (CategoryId $categoryId): int {
-            return $categoryId->getValue();
-        }, $removedCategories)));
+        $categoryIds = array_values(array_unique(array_map(static fn(CategoryId $categoryId): int => $categoryId->getValue(), $removedCategories)));
 
         $currentPositions = $this->connection
             ->createQueryBuilder()

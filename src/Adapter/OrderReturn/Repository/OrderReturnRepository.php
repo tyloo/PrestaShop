@@ -39,16 +39,10 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 class OrderReturnRepository extends AbstractObjectModelRepository
 {
     /**
-     * @var OrderReturnValidator
-     */
-    private $orderReturnValidator;
-
-    /**
      * @param OrderReturnValidator $orderReturnValidator
      */
-    public function __construct(OrderReturnValidator $orderReturnValidator)
+    public function __construct(private readonly OrderReturnValidator $orderReturnValidator)
     {
-        $this->orderReturnValidator = $orderReturnValidator;
     }
 
     /**

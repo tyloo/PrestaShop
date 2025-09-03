@@ -38,25 +38,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 final class EmployeeImageUploader extends AbstractImageUploader implements ImageUploaderInterface
 {
     /**
-     * @var string
-     */
-    private $employeeImageDir;
-
-    /**
-     * @var string
-     */
-    private $tmpImageDir;
-
-    /**
      * @param string $employeeImageDir
      * @param string $tmpImageDir
      */
-    public function __construct(
-        string $employeeImageDir = _PS_EMPLOYEE_IMG_DIR_,
-        string $tmpImageDir = _PS_TMP_IMG_DIR_
-    ) {
-        $this->employeeImageDir = $employeeImageDir;
-        $this->tmpImageDir = $tmpImageDir;
+    public function __construct(private $employeeImageDir = _PS_EMPLOYEE_IMG_DIR_, private $tmpImageDir = _PS_TMP_IMG_DIR_)
+    {
     }
 
     /**

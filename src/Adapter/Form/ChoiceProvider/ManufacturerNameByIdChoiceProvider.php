@@ -34,14 +34,8 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class ManufacturerNameByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    /**
-     * @var array
-     */
-    private $manufacturers;
-
-    public function __construct(array $manufacturers)
+    public function __construct(private readonly array $manufacturers)
     {
-        $this->manufacturers = $manufacturers;
     }
 
     /**

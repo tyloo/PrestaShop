@@ -41,25 +41,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class EmailConfigurationTester implements EmailConfigurationTesterInterface
 {
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @param ConfigurationInterface $configuration
      * @param TranslatorInterface $translator
      */
-    public function __construct(
-        ConfigurationInterface $configuration,
-        TranslatorInterface $translator
-    ) {
-        $this->configuration = $configuration;
-        $this->translator = $translator;
+    public function __construct(private readonly ConfigurationInterface $configuration, private readonly TranslatorInterface $translator)
+    {
     }
 
     /**
@@ -79,7 +65,7 @@ final class EmailConfigurationTester implements EmailConfigurationTesterInterfac
         $smtpChecked = MailOption::METHOD_SMTP === (int) $config['mail_method'];
 
         $password = !empty($config['smtp_password']) ?
-            urldecode($config['smtp_password']) :
+            urldecode((string) $config['smtp_password']) :
             $this->configuration->get('PS_MAIL_PASSWD');
         $password = str_replace(
             ['&lt;', '&gt;', '&quot;', '&amp;'],

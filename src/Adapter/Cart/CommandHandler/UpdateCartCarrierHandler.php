@@ -42,16 +42,10 @@ use Validate;
 final class UpdateCartCarrierHandler extends AbstractCartHandler implements UpdateCartCarrierHandlerInterface
 {
     /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
      * @param ContextStateManager $contextStateManager
      */
-    public function __construct(ContextStateManager $contextStateManager)
+    public function __construct(private readonly ContextStateManager $contextStateManager)
     {
-        $this->contextStateManager = $contextStateManager;
     }
 
     /**

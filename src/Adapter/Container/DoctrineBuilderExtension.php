@@ -42,15 +42,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class DoctrineBuilderExtension implements ContainerBuilderExtensionInterface
 {
-    /** @var EnvironmentInterface */
-    private $environment;
-
     /**
      * @param EnvironmentInterface $environment
      */
-    public function __construct(EnvironmentInterface $environment)
+    public function __construct(private readonly EnvironmentInterface $environment)
     {
-        $this->environment = $environment;
     }
 
     /**

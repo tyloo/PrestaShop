@@ -46,14 +46,8 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\IsoCode;
 #[AsCommandHandler]
 final class EditLanguageHandler extends AbstractLanguageHandler implements EditLanguageHandlerInterface
 {
-    /**
-     * @var ImageValidator
-     */
-    private $imageValidator;
-
-    public function __construct(ImageValidator $imageValidator)
+    public function __construct(private readonly ImageValidator $imageValidator)
     {
-        $this->imageValidator = $imageValidator;
     }
 
     /**

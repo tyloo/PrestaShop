@@ -128,9 +128,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
     {
         $shops = parent::getObjectModelAssociatedShopIds($carrierId->getValue(), 'carrier');
 
-        return array_map(static function (int $shopId) {
-            return new ShopId((int) $shopId);
-        }, $shops);
+        return array_map(static fn(int $shopId) => new ShopId((int) $shopId), $shops);
     }
 
     /**
@@ -157,9 +155,7 @@ class CarrierRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('carrierId', $carrierId->getValue())
         ;
 
-        return array_map(static function (array $shop) {
-            return new ShopId((int) $shop['id_shop']);
-        }, $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn(array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**

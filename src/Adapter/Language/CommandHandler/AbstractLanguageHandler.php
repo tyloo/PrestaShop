@@ -76,7 +76,7 @@ abstract class AbstractLanguageHandler extends AbstractObjectModelHandler
         $imagesTypes = ImageType::getImagesTypes('products');
 
         foreach ($imagesTypes as $imagesType) {
-            $imageName = $isoCode->getValue() . '-default-' . stripslashes($imagesType['name']) . '.jpg';
+            $imageName = $isoCode->getValue() . '-default-' . stripslashes((string) $imagesType['name']) . '.jpg';
             $imageWidth = $imagesType['width'];
             $imageHeight = $imagesType['height'];
 

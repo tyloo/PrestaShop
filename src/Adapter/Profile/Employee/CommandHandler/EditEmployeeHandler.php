@@ -49,41 +49,13 @@ use Shop;
 final class EditEmployeeHandler extends AbstractEmployeeHandler implements EditEmployeeHandlerInterface
 {
     /**
-     * @var Hashing
-     */
-    private $hashing;
-
-    /**
-     * @var ProfileAccessCheckerInterface
-     */
-    private $profileAccessChecker;
-
-    /**
-     * @var ContextEmployeeProviderInterface
-     */
-    private $contextEmployeeProvider;
-
-    /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    /**
      * @param Hashing $hashing
      * @param ProfileAccessCheckerInterface $profileAccessChecker
      * @param ContextEmployeeProviderInterface $contextEmployeeProvider
      * @param LegacyContext $legacyContext
      */
-    public function __construct(
-        Hashing $hashing,
-        ProfileAccessCheckerInterface $profileAccessChecker,
-        ContextEmployeeProviderInterface $contextEmployeeProvider,
-        LegacyContext $legacyContext
-    ) {
-        $this->hashing = $hashing;
-        $this->profileAccessChecker = $profileAccessChecker;
-        $this->contextEmployeeProvider = $contextEmployeeProvider;
-        $this->legacyContext = $legacyContext;
+    public function __construct(private readonly Hashing $hashing, private readonly ProfileAccessCheckerInterface $profileAccessChecker, private readonly ContextEmployeeProviderInterface $contextEmployeeProvider, private readonly LegacyContext $legacyContext)
+    {
     }
 
     /**

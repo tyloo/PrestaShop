@@ -40,14 +40,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\FeatureValue\QueryResult\ProductFe
 #[AsQueryHandler]
 class GetProductFeatureValuesHandler implements GetProductFeatureValuesHandlerInterface
 {
-    /**
-     * @var FeatureValueRepository
-     */
-    private $featureValueRepository;
-
-    public function __construct(FeatureValueRepository $featureValueRepository)
+    public function __construct(private readonly FeatureValueRepository $featureValueRepository)
     {
-        $this->featureValueRepository = $featureValueRepository;
     }
 
     /**

@@ -53,33 +53,12 @@ use Validate;
 final class DeleteCartRuleFromOrderHandler extends AbstractOrderHandler implements DeleteCartRuleFromOrderHandlerInterface
 {
     /**
-     * @var OrderAmountUpdater
-     */
-    private $orderAmountUpdater;
-
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var OrderProductQuantityUpdater
-     */
-    private $orderProductQuantityUpdater;
-
-    /**
      * @param OrderAmountUpdater $orderAmountUpdater
      * @param ContextStateManager $contextStateManager
      * @param OrderProductQuantityUpdater $orderProductQuantityUpdater
      */
-    public function __construct(
-        OrderAmountUpdater $orderAmountUpdater,
-        OrderProductQuantityUpdater $orderProductQuantityUpdater,
-        ContextStateManager $contextStateManager
-    ) {
-        $this->orderAmountUpdater = $orderAmountUpdater;
-        $this->orderProductQuantityUpdater = $orderProductQuantityUpdater;
-        $this->contextStateManager = $contextStateManager;
+    public function __construct(private readonly OrderAmountUpdater $orderAmountUpdater, private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater, private readonly ContextStateManager $contextStateManager)
+    {
     }
 
     /**
@@ -162,7 +141,7 @@ final class DeleteCartRuleFromOrderHandler extends AbstractOrderHandler implemen
                 return new OrderDetail($giftOrderDetailId);
             }
             // keep the first one for fallback
-            $fallbackOrderDetailId = $fallbackOrderDetailId ?? $orderDetail['id_order_detail'];
+            $fallbackOrderDetailId ??= $orderDetail['id_order_detail'];
         }
 
         return (null === $fallbackOrderDetailId) ? null : new OrderDetail($fallbackOrderDetailId);

@@ -42,17 +42,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\StockModificatio
 class UpdateCombinationStockAvailableHandler implements UpdateCombinationStockAvailableHandlerInterface
 {
     /**
-     * @var CombinationStockUpdater
-     */
-    private $combinationStockUpdater;
-
-    /**
      * @param CombinationStockUpdater $combinationStockUpdater
      */
-    public function __construct(
-        CombinationStockUpdater $combinationStockUpdater
-    ) {
-        $this->combinationStockUpdater = $combinationStockUpdater;
+    public function __construct(private readonly CombinationStockUpdater $combinationStockUpdater)
+    {
     }
 
     /**

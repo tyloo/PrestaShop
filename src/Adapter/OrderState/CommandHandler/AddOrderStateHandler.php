@@ -44,16 +44,10 @@ use PrestaShop\PrestaShop\Core\Domain\OrderState\ValueObject\OrderStateId;
 final class AddOrderStateHandler extends AbstractOrderStateHandler implements AddOrderStateHandlerInterface
 {
     /**
-     * @var OrderStateFileUploaderInterface
-     */
-    protected $fileUploader;
-
-    /**
      * @param OrderStateFileUploaderInterface $fileUploader
      */
-    public function __construct(OrderStateFileUploaderInterface $fileUploader)
+    public function __construct(protected OrderStateFileUploaderInterface $fileUploader)
     {
-        $this->fileUploader = $fileUploader;
     }
 
     /**

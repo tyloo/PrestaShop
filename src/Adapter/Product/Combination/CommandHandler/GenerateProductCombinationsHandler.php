@@ -41,25 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\Generat
 final class GenerateProductCombinationsHandler implements GenerateProductCombinationsHandlerInterface
 {
     /**
-     * @var CombinationCreator
-     */
-    private $combinationCreator;
-
-    /**
-     * @var ProductSupplierUpdater
-     */
-    private $productSupplierUpdater;
-
-    /**
      * @param CombinationCreator $combinationCreator
      * @param ProductSupplierUpdater $productSupplierUpdater
      */
-    public function __construct(
-        CombinationCreator $combinationCreator,
-        ProductSupplierUpdater $productSupplierUpdater
-    ) {
-        $this->combinationCreator = $combinationCreator;
-        $this->productSupplierUpdater = $productSupplierUpdater;
+    public function __construct(private readonly CombinationCreator $combinationCreator, private readonly ProductSupplierUpdater $productSupplierUpdater)
+    {
     }
 
     /**

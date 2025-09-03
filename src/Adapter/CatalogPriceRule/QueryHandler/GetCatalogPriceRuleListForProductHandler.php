@@ -44,17 +44,10 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtil;
 class GetCatalogPriceRuleListForProductHandler implements GetCatalogPriceRuleListForProductHandlerInterface
 {
     /**
-     * @var CatalogPriceRuleRepository
-     */
-    private $catalogPriceRuleRepository;
-
-    /**
      * @param CatalogPriceRuleRepository $catalogPriceRuleRepository
      */
-    public function __construct(
-        CatalogPriceRuleRepository $catalogPriceRuleRepository
-    ) {
-        $this->catalogPriceRuleRepository = $catalogPriceRuleRepository;
+    public function __construct(private readonly CatalogPriceRuleRepository $catalogPriceRuleRepository)
+    {
     }
 
     /**

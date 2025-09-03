@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Localization\LocaleInterface;
 final class OrderInvoiceByIdChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
     /**
-     * @var LocaleInterface
-     */
-    private $locale;
-
-    /**
      * @param LocaleInterface $locale
      */
-    public function __construct(LocaleInterface $locale)
+    public function __construct(private readonly LocaleInterface $locale)
     {
-        $this->locale = $locale;
     }
 
     /**

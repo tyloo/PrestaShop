@@ -40,27 +40,13 @@ use PrestaShop\PrestaShop\Core\Domain\OrderReturn\Exception\OrderReturnException
 class UpdateOrderReturnStateHandler implements UpdateOrderReturnStateHandlerInterface
 {
     /**
-     * @var OrderReturnRepository
-     */
-    private $orderReturnRepository;
-
-    /**
-     * @var OrderReturnStateRepository
-     */
-    private $orderReturnStateRepository;
-
-    /**
      * UpdateOrderReturnStateHandler constructor.
      *
      * @param OrderReturnRepository $orderReturnRepository
      * @param OrderReturnStateRepository $orderReturnStateRepository
      */
-    public function __construct(
-        OrderReturnRepository $orderReturnRepository,
-        OrderReturnStateRepository $orderReturnStateRepository
-    ) {
-        $this->orderReturnRepository = $orderReturnRepository;
-        $this->orderReturnStateRepository = $orderReturnStateRepository;
+    public function __construct(private readonly OrderReturnRepository $orderReturnRepository, private readonly OrderReturnStateRepository $orderReturnStateRepository)
+    {
     }
 
     /**

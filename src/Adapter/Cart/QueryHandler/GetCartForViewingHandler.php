@@ -53,23 +53,11 @@ use Validate;
 final class GetCartForViewingHandler implements GetCartForViewingHandlerInterface
 {
     /**
-     * @var ImageManager
-     */
-    private $imageManager;
-
-    /**
-     * @var Locale
-     */
-    private $locale;
-
-    /**
      * @param ImageManager $imageManager
      * @param Locale $locale
      */
-    public function __construct(ImageManager $imageManager, Locale $locale)
+    public function __construct(private readonly ImageManager $imageManager, private readonly Locale $locale)
     {
-        $this->imageManager = $imageManager;
-        $this->locale = $locale;
     }
 
     /**
@@ -137,7 +125,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
             // Add CURRENT quantity in stock
             $product['qty_in_stock'] = StockAvailable::getQuantityAvailableByProduct(
                 $product['id_product'],
-                isset($product['id_product_attribute']) ? $product['id_product_attribute'] : null,
+                $product['id_product_attribute'] ?? null,
                 (int) $id_shop
             );
 
@@ -234,7 +222,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
             $formattedProduct = [
                 'id' => $product['id_product'],
                 'name' => $product['name'],
-                'attributes' => isset($product['attributes']) ? $product['attributes'] : '',
+                'attributes' => $product['attributes'] ?? '',
                 'reference' => $product['reference'],
                 'supplier_reference' => $product['supplier_reference'],
                 'stock_quantity' => $product['qty_in_stock'],

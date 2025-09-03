@@ -73,36 +73,6 @@ use Product;
 class ProductRepository extends AbstractMultiShopObjectModelRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var ProductValidator
-     */
-    private $productValidator;
-
-    /**
-     * @var TaxRulesGroupRepository
-     */
-    private $taxRulesGroupRepository;
-
-    /**
-     * @var ManufacturerRepository
-     */
-    private $manufacturerRepository;
-
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param ProductValidator $productValidator
@@ -110,20 +80,8 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      * @param ManufacturerRepository $manufacturerRepository
      * @param CategoryRepository $categoryRepository
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        ProductValidator $productValidator,
-        TaxRulesGroupRepository $taxRulesGroupRepository,
-        ManufacturerRepository $manufacturerRepository,
-        CategoryRepository $categoryRepository
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->productValidator = $productValidator;
-        $this->taxRulesGroupRepository = $taxRulesGroupRepository;
-        $this->manufacturerRepository = $manufacturerRepository;
-        $this->categoryRepository = $categoryRepository;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ProductValidator $productValidator, private readonly TaxRulesGroupRepository $taxRulesGroupRepository, private readonly ManufacturerRepository $manufacturerRepository, private readonly CategoryRepository $categoryRepository)
+    {
     }
 
     /**
@@ -314,9 +272,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     public function setCarrierReferences(ProductId $productId, array $carrierReferenceIds, ShopConstraint $shopConstraint): void
     {
-        $shopIds = array_map(function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $this->getShopIdsByConstraint($productId, $shopConstraint));
+        $shopIds = array_map(fn(ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
 
         $productIdValue = $productId->getValue();
 
@@ -388,9 +344,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        return array_map(static function (array $shop) {
-            return new ShopId((int) $shop['id_shop']);
-        }, $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn(array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**
@@ -417,9 +371,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        return array_map(static function (array $shop) {
-            return new ShopId((int) $shop['id_shop']);
-        }, $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn(array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**
@@ -483,9 +435,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getProductAttributesGroupIds(ProductId $productId, ShopConstraint $shopConstraint): array
     {
-        $shopIds = array_map(static function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $this->getShopIdsByConstraint($productId, $shopConstraint));
+        $shopIds = array_map(static fn(ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
 
         $qb = $this->connection->createQueryBuilder();
         $qb->select('a.id_attribute_group')
@@ -511,9 +461,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
 
         $results = $qb->executeQuery()->fetchFirstColumn();
 
-        return array_map(static function (string $id): AttributeGroupId {
-            return new AttributeGroupId((int) $id);
-        }, $results);
+        return array_map(static fn(string $id): AttributeGroupId => new AttributeGroupId((int) $id), $results);
     }
 
     /**
@@ -523,9 +471,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getProductAttributesIds(ProductId $productId, ShopConstraint $shopConstraint): array
     {
-        $shopIds = array_map(static function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $this->getShopIdsByConstraint($productId, $shopConstraint));
+        $shopIds = array_map(static fn(ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
 
         $qb = $this->connection->createQueryBuilder();
         $qb->select('pac.id_attribute')
@@ -545,9 +491,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
 
         $results = $qb->executeQuery()->fetchFirstColumn();
 
-        return array_map(static function (string $id): AttributeId {
-            return new AttributeId((int) $id);
-        }, $results);
+        return array_map(static fn(string $id): AttributeId => new AttributeId((int) $id), $results);
     }
 
     /**
@@ -557,9 +501,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     public function updateCachedDefaultCombination(ProductId $productId, ShopConstraint $shopConstraint): void
     {
-        $shopIds = array_map(function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $this->getShopIdsByConstraint($productId, $shopConstraint));
+        $shopIds = array_map(fn(ShopId $shopId): int => $shopId->getValue(), $this->getShopIdsByConstraint($productId, $shopConstraint));
 
         $defaultShopId = $this->getProductDefaultShopId($productId)->getValue();
         $defaultCombinations = $this->connection->fetchAllAssociative(
@@ -756,9 +698,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
     public function assertAllProductsExists(array $productIds): void
     {
         // @todo: no shop association. Should it be checked here?
-        $ids = array_map(function (ProductId $productId): int {
-            return $productId->getValue();
-        }, $productIds);
+        $ids = array_map(fn(ProductId $productId): int => $productId->getValue(), $productIds);
         $ids = array_unique($ids);
 
         $qb = $this->connection->createQueryBuilder();

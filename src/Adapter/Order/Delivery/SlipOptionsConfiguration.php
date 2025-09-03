@@ -38,14 +38,8 @@ final class SlipOptionsConfiguration implements DataConfigurationInterface
     public const NUMBER = 'PS_DELIVERY_NUMBER';
     public const ENABLE_PRODUCT_IMAGE = 'PS_PDF_IMG_DELIVERY';
 
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    public function __construct(Configuration $configuration)
+    public function __construct(private readonly Configuration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

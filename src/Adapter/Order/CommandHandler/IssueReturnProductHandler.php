@@ -53,36 +53,6 @@ use Validate;
 class IssueReturnProductHandler extends AbstractOrderCommandHandler implements IssueReturnProductHandlerInterface
 {
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var OrderRefundCalculator
-     */
-    private $orderRefundCalculator;
-
-    /**
-     * @var OrderSlipCreator
-     */
-    private $orderSlipCreator;
-
-    /**
-     * @var VoucherGenerator
-     */
-    private $voucherGenerator;
-
-    /**
-     * @var OrderRefundUpdater
-     */
-    private $refundUpdater;
-
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
      * @param ConfigurationInterface $configuration
      * @param OrderRefundCalculator $orderRefundCalculator
      * @param OrderSlipCreator $orderSlipCreator
@@ -90,20 +60,8 @@ class IssueReturnProductHandler extends AbstractOrderCommandHandler implements I
      * @param OrderRefundUpdater $refundUpdater
      * @param ContextStateManager $contextStateManager
      */
-    public function __construct(
-        ConfigurationInterface $configuration,
-        OrderRefundCalculator $orderRefundCalculator,
-        OrderSlipCreator $orderSlipCreator,
-        VoucherGenerator $voucherGenerator,
-        OrderRefundUpdater $refundUpdater,
-        ContextStateManager $contextStateManager
-    ) {
-        $this->configuration = $configuration;
-        $this->orderRefundCalculator = $orderRefundCalculator;
-        $this->orderSlipCreator = $orderSlipCreator;
-        $this->voucherGenerator = $voucherGenerator;
-        $this->refundUpdater = $refundUpdater;
-        $this->contextStateManager = $contextStateManager;
+    public function __construct(private readonly ConfigurationInterface $configuration, private readonly OrderRefundCalculator $orderRefundCalculator, private readonly OrderSlipCreator $orderSlipCreator, private readonly VoucherGenerator $voucherGenerator, private readonly OrderRefundUpdater $refundUpdater, private readonly ContextStateManager $contextStateManager)
+    {
     }
 
     /**

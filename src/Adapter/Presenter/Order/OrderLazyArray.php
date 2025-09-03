@@ -67,9 +67,6 @@ class OrderLazyArray extends AbstractLazyArray
     /** @var TaxConfiguration */
     private $taxConfiguration;
 
-    /** @var Order */
-    private $order;
-
     /** @var OrderSubtotalLazyArray */
     private $subTotals;
 
@@ -79,9 +76,8 @@ class OrderLazyArray extends AbstractLazyArray
      * @throws AnnotationException
      * @throws ReflectionException
      */
-    public function __construct(Order $order)
+    public function __construct(private readonly Order $order)
     {
-        $this->order = $order;
         $this->cartPresenter = new CartPresenter();
         $this->objectPresenter = new ObjectPresenter();
         $this->priceFormatter = new PriceFormatter();

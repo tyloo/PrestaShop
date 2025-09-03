@@ -44,56 +44,14 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 class ProductTypeUpdater
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductPackUpdater
-     */
-    private $productPackUpdater;
-
-    /**
-     * @var CombinationDeleter
-     */
-    private $combinationDeleter;
-
-    /**
-     * @var VirtualProductUpdater
-     */
-    private $virtualProductUpdater;
-
-    /**
-     * @var ProductStockUpdater
-     */
-    private $productStockUpdater;
-
-    /**
-     * @var ProductPackRepository
-     */
-    private $productPackRepository;
-
-    /**
      * @param ProductRepository $productRepository
      * @param ProductPackUpdater $productPackUpdater
      * @param CombinationDeleter $combinationDeleter
      * @param VirtualProductUpdater $virtualProductUpdater
      * @param ProductStockUpdater $productStockUpdater
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        ProductPackUpdater $productPackUpdater,
-        CombinationDeleter $combinationDeleter,
-        VirtualProductUpdater $virtualProductUpdater,
-        ProductStockUpdater $productStockUpdater,
-        ProductPackRepository $productPackRepository
-    ) {
-        $this->productRepository = $productRepository;
-        $this->productPackUpdater = $productPackUpdater;
-        $this->combinationDeleter = $combinationDeleter;
-        $this->virtualProductUpdater = $virtualProductUpdater;
-        $this->productStockUpdater = $productStockUpdater;
-        $this->productPackRepository = $productPackRepository;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductPackUpdater $productPackUpdater, private readonly CombinationDeleter $combinationDeleter, private readonly VirtualProductUpdater $virtualProductUpdater, private readonly ProductStockUpdater $productStockUpdater, private readonly ProductPackRepository $productPackRepository)
+    {
     }
 
     public function updateType(ProductId $productId, ProductType $productType): void

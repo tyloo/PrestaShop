@@ -48,14 +48,8 @@ use Supplier;
  */
 class ImageRetriever
 {
-    /**
-     * @var Link
-     */
-    private $link;
-
-    public function __construct(Link $link)
+    public function __construct(private readonly Link $link)
     {
-        $this->link = $link;
     }
 
     /**
@@ -264,9 +258,7 @@ class ImageRetriever
         }
 
         // Sort thumbnails by size
-        uasort($urls, function (array $a, array $b) {
-            return $a['width'] * $a['height'] > $b['width'] * $b['height'] ? 1 : -1;
-        });
+        uasort($urls, fn(array $a, array $b) => $a['width'] * $a['height'] > $b['width'] * $b['height'] ? 1 : -1);
 
         // Resolve some basic sizes - the smallest, middle and largest
         $keys = array_keys($urls);
@@ -376,14 +368,14 @@ class ImageRetriever
 
             // We get the "no image available" in the folder of the object
             $originalImagePath = implode(DIRECTORY_SEPARATOR, [
-                rtrim($object['dir'], DIRECTORY_SEPARATOR),
+                rtrim((string) $object['dir'], DIRECTORY_SEPARATOR),
                 $language->getIsoCode() . '.jpg',
             ]);
 
             if (!file_exists($originalImagePath)) {
                 // If it doesn't exist, we use an image for default language
                 $originalImagePath = implode(DIRECTORY_SEPARATOR, [
-                    rtrim($object['dir'], DIRECTORY_SEPARATOR),
+                    rtrim((string) $object['dir'], DIRECTORY_SEPARATOR),
                     Language::getIsoById((int) Configuration::get('PS_LANG_DEFAULT')) . '.jpg',
                 ]);
 
@@ -400,7 +392,7 @@ class ImageRetriever
             foreach ($imageTypes as $imageType) {
                 // Get path of the final thumbnail
                 $resizedImagePath = implode(DIRECTORY_SEPARATOR, [
-                    rtrim($object['dir'], DIRECTORY_SEPARATOR),
+                    rtrim((string) $object['dir'], DIRECTORY_SEPARATOR),
                     $language->getIsoCode() . '-default-' . $imageType['name'] . '.jpg',
                 ]);
 
@@ -430,9 +422,7 @@ class ImageRetriever
             }
         }
 
-        uasort($urls, function (array $a, array $b) {
-            return $a['width'] * $a['height'] > $b['width'] * $b['height'] ? 1 : -1;
-        });
+        uasort($urls, fn(array $a, array $b) => $a['width'] * $a['height'] > $b['width'] * $b['height'] ? 1 : -1);
 
         $keys = array_keys($urls);
 

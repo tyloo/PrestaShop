@@ -41,25 +41,11 @@ use ProductDownload as VirtualProductFile;
 class VirtualProductFileUploader
 {
     /**
-     * @var VirtualProductFileValidator
-     */
-    private $virtualProductFileValidator;
-
-    /**
-     * @var string
-     */
-    private $virtualProductFileDir;
-
-    /**
      * @param VirtualProductFileValidator $virtualProductFileValidator
-     * @param string $downloadDir
+     * @param string $virtualProductFileDir
      */
-    public function __construct(
-        VirtualProductFileValidator $virtualProductFileValidator,
-        string $downloadDir
-    ) {
-        $this->virtualProductFileValidator = $virtualProductFileValidator;
-        $this->virtualProductFileDir = $downloadDir;
+    public function __construct(private readonly VirtualProductFileValidator $virtualProductFileValidator, private readonly string $virtualProductFileDir)
+    {
     }
 
     /**

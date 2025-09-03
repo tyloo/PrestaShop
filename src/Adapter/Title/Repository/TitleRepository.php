@@ -44,17 +44,10 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 class TitleRepository extends AbstractObjectModelRepository
 {
     /**
-     * @var TitleValidator
-     */
-    private $titleValidator;
-
-    /**
      * @param TitleValidator $titleValidator
      */
-    public function __construct(
-        TitleValidator $titleValidator
-    ) {
-        $this->titleValidator = $titleValidator;
+    public function __construct(private readonly TitleValidator $titleValidator)
+    {
     }
 
     /**

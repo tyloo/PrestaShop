@@ -55,22 +55,11 @@ use Validate;
 final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements AddCartRuleToOrderHandlerInterface
 {
     /**
-     * @var OrderAmountUpdater
-     */
-    private $orderAmountUpdater;
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
      * @param OrderAmountUpdater $orderAmountUpdater
      * @param ContextStateManager $contextStateManager
      */
-    public function __construct(OrderAmountUpdater $orderAmountUpdater, ContextStateManager $contextStateManager)
+    public function __construct(private readonly OrderAmountUpdater $orderAmountUpdater, private readonly ContextStateManager $contextStateManager)
     {
-        $this->orderAmountUpdater = $orderAmountUpdater;
-        $this->contextStateManager = $contextStateManager;
     }
 
     /**

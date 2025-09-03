@@ -43,17 +43,10 @@ use SpecificPrice;
 class EditSpecificPriceHandler implements EditSpecificPriceHandlerInterface
 {
     /**
-     * @var SpecificPriceRepository
-     */
-    private $specificPriceRepository;
-
-    /**
      * @param SpecificPriceRepository $specificPriceRepository
      */
-    public function __construct(
-        SpecificPriceRepository $specificPriceRepository
-    ) {
-        $this->specificPriceRepository = $specificPriceRepository;
+    public function __construct(private readonly SpecificPriceRepository $specificPriceRepository)
+    {
     }
 
     /**

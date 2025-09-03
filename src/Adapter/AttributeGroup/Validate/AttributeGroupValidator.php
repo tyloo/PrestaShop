@@ -41,7 +41,7 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
 class AttributeGroupValidator extends AbstractObjectModelValidator
 {
     public function __construct(
-        private ShopRepository $shopRepository
+        private readonly ShopRepository $shopRepository
     ) {
     }
 

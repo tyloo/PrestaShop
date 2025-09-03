@@ -40,16 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\QueryResult\Attachment;
 final class GetAttachmentHandler extends AbstractAttachmentHandler implements GetAttachmentHandlerInterface
 {
     /**
-     * @var string
-     */
-    private $downloadDirectory;
-
-    /**
      * @param string $downloadDirectory
      */
-    public function __construct(string $downloadDirectory)
+    public function __construct(private readonly string $downloadDirectory)
     {
-        $this->downloadDirectory = $downloadDirectory;
     }
 
     /**

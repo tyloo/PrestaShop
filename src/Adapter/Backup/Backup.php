@@ -43,17 +43,11 @@ final class Backup implements BackupInterface
     private $legacyBackup;
 
     /**
-     * @var string
-     */
-    private $fileName;
-
-    /**
      * @param string $fileName Backup file name
      */
-    public function __construct($fileName)
+    public function __construct(private $fileName)
     {
-        $this->fileName = $fileName;
-        $this->legacyBackup = new PrestaShopBackup($fileName);
+        $this->legacyBackup = new PrestaShopBackup($this->fileName);
     }
 
     /**

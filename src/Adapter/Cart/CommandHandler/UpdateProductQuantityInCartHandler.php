@@ -55,16 +55,10 @@ use Shop;
 final class UpdateProductQuantityInCartHandler extends AbstractCartHandler implements UpdateProductQuantityInCartHandlerInterface
 {
     /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
      * @param ContextStateManager $contextStateManager
      */
-    public function __construct(ContextStateManager $contextStateManager)
+    public function __construct(private readonly ContextStateManager $contextStateManager)
     {
-        $this->contextStateManager = $contextStateManager;
     }
 
     /**

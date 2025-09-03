@@ -39,16 +39,10 @@ use PrestaShop\PrestaShop\Core\Domain\Meta\QueryResult\LayoutCustomizationPage;
 final class GetPagesForLayoutCustomizationHandler implements GetPagesForLayoutCustomizationHandlerInterface
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param int $contextLangId
      */
-    public function __construct($contextLangId)
+    public function __construct(private $contextLangId)
     {
-        $this->contextLangId = $contextLangId;
     }
 
     /**

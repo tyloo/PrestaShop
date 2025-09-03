@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Supplier\CommandHandler\RemoveAllA
 final class RemoveAllAssociatedProductSuppliersHandler implements RemoveAllAssociatedProductSuppliersHandlerInterface
 {
     /**
-     * @var ProductSupplierUpdater
-     */
-    private $productSupplierUpdater;
-
-    /**
      * @param ProductSupplierUpdater $productSupplierUpdater
      */
-    public function __construct(
-        ProductSupplierUpdater $productSupplierUpdater
-    ) {
-        $this->productSupplierUpdater = $productSupplierUpdater;
+    public function __construct(private readonly ProductSupplierUpdater $productSupplierUpdater)
+    {
     }
 
     /**

@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Language\RTL\InstalledLanguageCheckerInterface;
 final class InstalledLanguageChecker implements InstalledLanguageCheckerInterface
 {
     /**
-     * @var LanguageDataProvider
-     */
-    private $languageDataProvider;
-
-    /**
      * @param LanguageDataProvider $languageDataProvider
      */
-    public function __construct(LanguageDataProvider $languageDataProvider)
+    public function __construct(private readonly LanguageDataProvider $languageDataProvider)
     {
-        $this->languageDataProvider = $languageDataProvider;
     }
 
     /**

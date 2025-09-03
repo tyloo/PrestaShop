@@ -37,17 +37,11 @@ class ProductImageFileValidator extends ImageValidator
 {
     private const MEGABYTE_IN_BYTES = 1048576;
 
-    /**
-     * @var DataConfigurationInterface
-     */
-    private $uploadQuotaConfiguration;
-
     public function __construct(
         int $maxUploadSizeInBytes,
-        DataConfigurationInterface $uploadQuotaConfiguration
+        private readonly DataConfigurationInterface $uploadQuotaConfiguration
     ) {
         parent::__construct($maxUploadSizeInBytes);
-        $this->uploadQuotaConfiguration = $uploadQuotaConfiguration;
     }
 
     /**

@@ -41,33 +41,12 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 class GetRelatedProductsHandler implements GetRelatedProductsHandlerInterface
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
-     * @var ProductImagePathFactory
-     */
-    private $productImagePathFactory;
-
-    /**
      * @param ProductRepository $productRepository
      * @param ProductImageRepository $productImageRepository
      * @param ProductImagePathFactory $productImagePathFactory
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        ProductImageRepository $productImageRepository,
-        ProductImagePathFactory $productImagePathFactory
-    ) {
-        $this->productRepository = $productRepository;
-        $this->productImageRepository = $productImageRepository;
-        $this->productImagePathFactory = $productImagePathFactory;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductImageRepository $productImageRepository, private readonly ProductImagePathFactory $productImagePathFactory)
+    {
     }
 
     /**

@@ -47,33 +47,12 @@ use PrestaShop\PrestaShop\Core\Employee\ContextEmployeeProviderInterface;
 final class AddEmployeeHandler extends AbstractEmployeeHandler implements AddEmployeeHandlerInterface
 {
     /**
-     * @var Hashing
-     */
-    private $hashing;
-
-    /**
-     * @var ProfileAccessCheckerInterface
-     */
-    private $profileAccessChecker;
-
-    /**
-     * @var ContextEmployeeProviderInterface
-     */
-    private $contextEmployeeProvider;
-
-    /**
      * @param Hashing $hashing
      * @param ProfileAccessCheckerInterface $profileAccessChecker
      * @param ContextEmployeeProviderInterface $contextEmployeeProvider
      */
-    public function __construct(
-        Hashing $hashing,
-        ProfileAccessCheckerInterface $profileAccessChecker,
-        ContextEmployeeProviderInterface $contextEmployeeProvider
-    ) {
-        $this->hashing = $hashing;
-        $this->profileAccessChecker = $profileAccessChecker;
-        $this->contextEmployeeProvider = $contextEmployeeProvider;
+    public function __construct(private readonly Hashing $hashing, private readonly ProfileAccessCheckerInterface $profileAccessChecker, private readonly ContextEmployeeProviderInterface $contextEmployeeProvider)
+    {
     }
 
     /**

@@ -40,22 +40,8 @@ use ShopGroup;
  */
 class ShopGroupRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
+    {
     }
 
     /**
@@ -136,9 +122,7 @@ class ShopGroupRepository extends AbstractObjectModelRepository
      */
     public function getShopsFromGroup(ShopGroupId $shopGroupId): array
     {
-        return array_map(static function (array $shop) {
-            return new ShopId((int) $shop['id_shop']);
-        }, $this->connection
+        return array_map(static fn(array $shop) => new ShopId((int) $shop['id_shop']), $this->connection
             ->createQueryBuilder()
             ->select('s.id_shop')
             ->from($this->dbPrefix . 'shop', 's')

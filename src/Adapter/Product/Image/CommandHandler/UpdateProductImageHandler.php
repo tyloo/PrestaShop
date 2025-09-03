@@ -44,41 +44,13 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopCollection;
 class UpdateProductImageHandler implements UpdateProductImageHandlerInterface
 {
     /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
-     * @var ProductImageUpdater
-     */
-    private $productImageUpdater;
-
-    /**
-     * @var ProductImageUploader
-     */
-    private $productImageUploader;
-
-    /**
-     * @var ProductImageFileValidator
-     */
-    private $imageValidator;
-
-    /**
      * @param ProductImageRepository $productImageRepository
      * @param ProductImageUpdater $productImageUpdater
      * @param ProductImageUploader $productImageUploader
      * @param ProductImageFileValidator $imageValidator
      */
-    public function __construct(
-        ProductImageRepository $productImageRepository,
-        ProductImageUpdater $productImageUpdater,
-        ProductImageUploader $productImageUploader,
-        ProductImageFileValidator $imageValidator
-    ) {
-        $this->productImageRepository = $productImageRepository;
-        $this->productImageUpdater = $productImageUpdater;
-        $this->productImageUploader = $productImageUploader;
-        $this->imageValidator = $imageValidator;
+    public function __construct(private readonly ProductImageRepository $productImageRepository, private readonly ProductImageUpdater $productImageUpdater, private readonly ProductImageUploader $productImageUploader, private readonly ProductImageFileValidator $imageValidator)
+    {
     }
 
     /**

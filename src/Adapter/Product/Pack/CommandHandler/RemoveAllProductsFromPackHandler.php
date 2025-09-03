@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Pack\CommandHandler\RemoveAllProdu
 final class RemoveAllProductsFromPackHandler implements RemoveAllProductsFromPackHandlerInterface
 {
     /**
-     * @var ProductPackUpdater
-     */
-    private $productPackUpdater;
-
-    /**
      * @param ProductPackUpdater $productPackUpdater
      */
-    public function __construct(
-        ProductPackUpdater $productPackUpdater
-    ) {
-        $this->productPackUpdater = $productPackUpdater;
+    public function __construct(private readonly ProductPackUpdater $productPackUpdater)
+    {
     }
 
     /**

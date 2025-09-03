@@ -67,7 +67,7 @@ class CountryDataProvider
         ;
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return array_map(function ($country) { return $country['id_country']; }, $result);
+        return array_map(fn($country) => $country['id_country'], $result);
     }
 
     /**
@@ -87,7 +87,7 @@ class CountryDataProvider
         ;
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return array_map(function ($country) { return $country['id_country']; }, $result);
+        return array_map(fn($country) => $country['id_country'], $result);
     }
 
     /**
@@ -107,7 +107,7 @@ class CountryDataProvider
         ;
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
-        return array_map(function ($country) { return $country['id_country']; }, $result);
+        return array_map(fn($country) => $country['id_country'], $result);
     }
 
     /**
@@ -119,7 +119,7 @@ class CountryDataProvider
      */
     public function getIsoCodebyId($id = null)
     {
-        $countryId = (null === $id) ? Configuration::get('PS_COUNTRY_DEFAULT') : $id;
+        $countryId = $id ?? Configuration::get('PS_COUNTRY_DEFAULT');
 
         return Country::getIsoById($countryId);
     }

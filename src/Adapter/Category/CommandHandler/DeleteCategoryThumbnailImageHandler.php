@@ -48,25 +48,11 @@ use Symfony\Component\Filesystem\Filesystem;
 final class DeleteCategoryThumbnailImageHandler implements DeleteCategoryThumbnailImageHandlerInterface
 {
     /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param Filesystem $filesystem
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(
-        Filesystem $filesystem,
-        ConfigurationInterface $configuration
-    ) {
-        $this->filesystem = $filesystem;
-        $this->configuration = $configuration;
+    public function __construct(private readonly Filesystem $filesystem, private readonly ConfigurationInterface $configuration)
+    {
     }
 
     /**

@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\SetRelatedProductsH
 final class SetRelatedProductsHandler implements SetRelatedProductsHandlerInterface
 {
     /**
-     * @var RelatedProductsUpdater
-     */
-    private $relatedProductsUpdater;
-
-    /**
      * @param RelatedProductsUpdater $relatedProductsUpdater
      */
-    public function __construct(
-        RelatedProductsUpdater $relatedProductsUpdater
-    ) {
-        $this->relatedProductsUpdater = $relatedProductsUpdater;
+    public function __construct(private readonly RelatedProductsUpdater $relatedProductsUpdater)
+    {
     }
 
     /**

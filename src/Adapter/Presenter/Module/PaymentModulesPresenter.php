@@ -37,25 +37,11 @@ use PrestaShop\PrestaShop\Adapter\Presenter\PresenterInterface;
 class PaymentModulesPresenter
 {
     /**
-     * @var PresenterInterface
-     */
-    private $modulePresenter;
-
-    /**
-     * @var PaymentModuleListProvider
-     */
-    private $paymentModuleListProvider;
-
-    /**
      * @param PresenterInterface $modulePresenter
      * @param PaymentModuleListProvider $paymentModuleListProvider
      */
-    public function __construct(
-        PresenterInterface $modulePresenter,
-        PaymentModuleListProvider $paymentModuleListProvider
-    ) {
-        $this->modulePresenter = $modulePresenter;
-        $this->paymentModuleListProvider = $paymentModuleListProvider;
+    public function __construct(private readonly PresenterInterface $modulePresenter, private readonly PaymentModuleListProvider $paymentModuleListProvider)
+    {
     }
 
     /**

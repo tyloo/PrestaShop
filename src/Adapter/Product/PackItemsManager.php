@@ -46,7 +46,7 @@ class PackItemsManager
     public function getPackItems($pack, $id_lang = false)
     {
         if ($id_lang === false) {
-            $configuration = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\ConfigurationInterface');
+            $configuration = ServiceLocator::get(\PrestaShop\PrestaShop\Core\ConfigurationInterface::class);
             $id_lang = (int) $configuration->get('PS_LANG_DEFAULT');
         }
 
@@ -65,7 +65,7 @@ class PackItemsManager
     public function getPacksContainingItem($item, $item_attribute_id, $id_lang = false)
     {
         if ($id_lang === false) {
-            $configuration = ServiceLocator::get('\\PrestaShop\\PrestaShop\\Core\\ConfigurationInterface');
+            $configuration = ServiceLocator::get(\PrestaShop\PrestaShop\Core\ConfigurationInterface::class);
             $id_lang = (int) $configuration->get('PS_LANG_DEFAULT');
         }
 

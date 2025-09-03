@@ -43,24 +43,9 @@ use PrestaShop\PrestaShop\Core\Localization\Locale\Repository;
 class ProductLightGridDataFactoryDecorator implements GridDataFactoryInterface
 {
     /**
-     * @var GridDataFactoryInterface
-     */
-    private $productGridDataFactory;
-
-    /**
      * @var Locale
      */
     private $locale;
-
-    /**
-     * @var int
-     */
-    private $defaultCurrencyId;
-
-    /**
-     * @var bool
-     */
-    private $stockManagementEnabled;
 
     /**
      * @param GridDataFactoryInterface $productGridDataFactory
@@ -69,18 +54,15 @@ class ProductLightGridDataFactoryDecorator implements GridDataFactoryInterface
      * @param int $defaultCurrencyId
      */
     public function __construct(
-        GridDataFactoryInterface $productGridDataFactory,
+        private readonly GridDataFactoryInterface $productGridDataFactory,
         Repository $localeRepository,
         string $contextLocale,
-        int $defaultCurrencyId,
-        bool $stockManagementEnabled
+        private readonly int $defaultCurrencyId,
+        private readonly bool $stockManagementEnabled
     ) {
-        $this->productGridDataFactory = $productGridDataFactory;
         $this->locale = $localeRepository->getLocale(
             $contextLocale
         );
-        $this->defaultCurrencyId = $defaultCurrencyId;
-        $this->stockManagementEnabled = $stockManagementEnabled;
     }
 
     /**

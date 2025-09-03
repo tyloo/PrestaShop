@@ -38,33 +38,12 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
 class TitleImageThumbnailProvider implements ImageProviderInterface
 {
     /**
-     * @var ImageTagSourceParserInterface
-     */
-    private $imageTagSourceParser;
-
-    /**
-     * @var ImageManager
-     */
-    private $imageManager;
-
-    /**
-     * @var string
-     */
-    private $genderImageDirectoryName;
-
-    /**
      * @param ImageTagSourceParserInterface $imageTagSourceParser
      * @param ImageManager $imageManager
      * @param string $genderImageDirectoryName
      */
-    public function __construct(
-        ImageTagSourceParserInterface $imageTagSourceParser,
-        ImageManager $imageManager,
-        string $genderImageDirectoryName
-    ) {
-        $this->imageTagSourceParser = $imageTagSourceParser;
-        $this->imageManager = $imageManager;
-        $this->genderImageDirectoryName = $genderImageDirectoryName;
+    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser, private readonly ImageManager $imageManager, private readonly string $genderImageDirectoryName)
+    {
     }
 
     /**

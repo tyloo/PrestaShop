@@ -39,29 +39,8 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsCommandHandler]
 class SetProductShopsHandler implements SetProductShopsHandlerInterface
 {
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductDeleter
-     */
-    private $productDeleter;
-
-    /**
-     * @var ProductShopUpdater
-     */
-    private $productShopUpdater;
-
-    public function __construct(
-        ProductRepository $productRepository,
-        ProductDeleter $productDeleter,
-        ProductShopUpdater $productShopUpdater
-    ) {
-        $this->productRepository = $productRepository;
-        $this->productDeleter = $productDeleter;
-        $this->productShopUpdater = $productShopUpdater;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductDeleter $productDeleter, private readonly ProductShopUpdater $productShopUpdater)
+    {
     }
 
     public function handle(SetProductShopsCommand $command): void

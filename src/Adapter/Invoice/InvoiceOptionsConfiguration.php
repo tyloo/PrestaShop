@@ -39,11 +39,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class InvoiceOptionsConfiguration extends AbstractMultistoreConfiguration
 {
     /**
-     * @var FormChoiceProviderInterface
-     */
-    private $invoiceModelByNameChoiceProvider;
-
-    /**
      * AbstractMultistoreConfiguration constructor.
      *
      * @param Configuration $configuration
@@ -55,10 +50,9 @@ final class InvoiceOptionsConfiguration extends AbstractMultistoreConfiguration
         Configuration $configuration,
         Context $shopContext,
         FeatureInterface $multistoreFeature,
-        FormChoiceProviderInterface $invoiceModelByNameChoiceProvider
+        private readonly FormChoiceProviderInterface $invoiceModelByNameChoiceProvider
     ) {
         parent::__construct($configuration, $shopContext, $multistoreFeature);
-        $this->invoiceModelByNameChoiceProvider = $invoiceModelByNameChoiceProvider;
     }
 
     /**
@@ -140,9 +134,7 @@ final class InvoiceOptionsConfiguration extends AbstractMultistoreConfiguration
             ->setAllowedTypes('year_position', ['integer'])
             ->setAllowedValues('year_position', [0, 1])
             ->setAllowedTypes('invoice_number', ['integer'])
-            ->setAllowedValues('invoice_number', function (int $value) {
-                return $value >= 0;
-            })
+            ->setAllowedValues('invoice_number', fn(int $value) => $value >= 0)
             ->setAllowedTypes('legal_free_text', ['array'])
             ->setAllowedTypes('footer_text', ['array'])
             ->setAllowedTypes('invoice_model', ['string'])

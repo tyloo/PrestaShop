@@ -51,11 +51,6 @@ class ProductImagePathFactory
     private $pathToBaseDir;
 
     /**
-     * @var string
-     */
-    private $contextLangIsoCode;
-
-    /**
      * @param string $pathToBaseDir
      * @param string $temporaryImgDir
      * @param string $contextLangIsoCode
@@ -63,12 +58,11 @@ class ProductImagePathFactory
     public function __construct(
         string $pathToBaseDir,
         string $temporaryImgDir,
-        string $contextLangIsoCode
+        private readonly string $contextLangIsoCode
     ) {
         // make sure one trailing slash is always there
         $this->temporaryImgDir = rtrim($temporaryImgDir, '/') . '/';
         $this->pathToBaseDir = rtrim($pathToBaseDir, '/') . '/';
-        $this->contextLangIsoCode = $contextLangIsoCode;
     }
 
     /**

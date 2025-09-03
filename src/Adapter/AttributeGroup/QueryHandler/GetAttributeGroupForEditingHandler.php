@@ -40,11 +40,8 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\QueryResult\EditableAttribu
 #[AsQueryHandler]
 final class GetAttributeGroupForEditingHandler implements GetAttributeGroupForEditingHandlerInterface
 {
-    private AttributeGroupRepository $attributeGroupRepository;
-
-    public function __construct(AttributeGroupRepository $attributeGroupRepository)
+    public function __construct(private readonly AttributeGroupRepository $attributeGroupRepository)
     {
-        $this->attributeGroupRepository = $attributeGroupRepository;
     }
 
     /**

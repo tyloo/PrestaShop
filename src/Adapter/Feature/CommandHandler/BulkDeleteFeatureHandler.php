@@ -40,15 +40,8 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
 #[AsCommandHandler]
 class BulkDeleteFeatureHandler extends AbstractBulkCommandHandler implements BulkDeleteFeatureHandlerInterface
 {
-    /**
-     * @var FeatureRepository
-     */
-    private $featureRepository;
-
-    public function __construct(
-        FeatureRepository $featureRepository
-    ) {
-        $this->featureRepository = $featureRepository;
+    public function __construct(private readonly FeatureRepository $featureRepository)
+    {
     }
 
     public function handle(BulkDeleteFeatureCommand $command): void

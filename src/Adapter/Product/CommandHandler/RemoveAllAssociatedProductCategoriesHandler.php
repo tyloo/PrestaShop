@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\RemoveAllAssociated
 final class RemoveAllAssociatedProductCategoriesHandler implements RemoveAllAssociatedProductCategoriesHandlerInterface
 {
     /**
-     * @var ProductCategoryUpdater
-     */
-    private $productCategoryUpdater;
-
-    /**
      * @param ProductCategoryUpdater $productCategoryUpdater
      */
-    public function __construct(
-        ProductCategoryUpdater $productCategoryUpdater
-    ) {
-        $this->productCategoryUpdater = $productCategoryUpdater;
+    public function __construct(private readonly ProductCategoryUpdater $productCategoryUpdater)
+    {
     }
 
     /**

@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\ConfigurationInterface;
 final class GeolocationIpAddressWhitelistConfiguration implements DataConfigurationInterface
 {
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(ConfigurationInterface $configuration)
+    public function __construct(private readonly ConfigurationInterface $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

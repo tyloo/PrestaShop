@@ -64,11 +64,6 @@ use TaxRulesGroup;
 final class ProductImportHandler extends AbstractImportHandler
 {
     /**
-     * @var Connection database connection
-     */
-    private $connection;
-
-    /**
      * @var string product database table name
      */
     private $productTable;
@@ -77,21 +72,6 @@ final class ProductImportHandler extends AbstractImportHandler
      * @var string accessory database table name
      */
     private $accessoryTable;
-
-    /**
-     * @var Address
-     */
-    private $shopAddress;
-
-    /**
-     * @var Tools
-     */
-    private $tools;
-
-    /**
-     * @var ImageCopier
-     */
-    private $imageCopier;
 
     /**
      * @param ImportDataFormatter $dataFormatter
@@ -125,13 +105,13 @@ final class ProductImportHandler extends AbstractImportHandler
         $employeeId,
         Database $legacyDatabase,
         CacheClearerInterface $cacheClearer,
-        Connection $connection,
+        private readonly Connection $connection,
         $dbPrefix,
         Configuration $configuration,
-        Address $shopAddress,
+        private readonly Address $shopAddress,
         Validate $validate,
-        Tools $tools,
-        ImageCopier $imageCopier
+        private readonly Tools $tools,
+        private readonly ImageCopier $imageCopier
     ) {
         parent::__construct(
             $dataFormatter,
@@ -148,8 +128,6 @@ final class ProductImportHandler extends AbstractImportHandler
             $configuration,
             $validate
         );
-
-        $this->connection = $connection;
         $this->productTable = $dbPrefix . 'product';
         $this->accessoryTable = $dbPrefix . 'accessory';
         $this->defaultValues = [
@@ -181,9 +159,6 @@ final class ProductImportHandler extends AbstractImportHandler
             'text_fields' => 0,
             'is_virtual' => 0,
         ];
-        $this->shopAddress = $shopAddress;
-        $this->tools = $tools;
-        $this->imageCopier = $imageCopier;
         $this->importTypeLabel = $this->translator->trans('Products', [], 'Admin.Global');
     }
 
@@ -333,7 +308,7 @@ final class ProductImportHandler extends AbstractImportHandler
         $category->id_shop_default = $this->isMultistoreEnabled ? (int) $this->currentContextShopId : 1;
         $category->name = $this->dataFormatter->createMultiLangField(trim($categoryName));
         $category->active = true;
-        $category->id_parent = (int) ($parentCategoryId ? $parentCategoryId : $homeCategoryId);
+        $category->id_parent = (int) ($parentCategoryId ?: $homeCategoryId);
         $category->link_rewrite = $this->dataFormatter->createMultiLangField(
             $this->dataFormatter->createFriendlyUrl($category->name[$defaultLanguageId])
         );
@@ -394,7 +369,7 @@ final class ProductImportHandler extends AbstractImportHandler
                 );
                 $row = $statement->fetch();
 
-                return isset($row['id_product']) ? $row['id_product'] : null;
+                return $row['id_product'] ?? null;
             }
         }
 
@@ -451,7 +426,7 @@ final class ProductImportHandler extends AbstractImportHandler
         if (empty($multipleValueSeparator)) {
             return;
         }
-        $productShops = explode($multipleValueSeparator, $product->shop);
+        $productShops = explode($multipleValueSeparator, (string) $product->shop);
 
         if (is_array($productShops)) {
             foreach ($productShops as $shop) {
@@ -739,7 +714,7 @@ final class ProductImportHandler extends AbstractImportHandler
         $linkRewriteExists = is_array($product->link_rewrite) && isset($product->link_rewrite[$this->languageId]);
 
         if ($linkRewriteExists) {
-            $linkRewrite = trim($product->link_rewrite[$this->languageId]);
+            $linkRewrite = trim((string) $product->link_rewrite[$this->languageId]);
         }
 
         $validLink = $this->validate->isLinkRewrite($linkRewrite);
@@ -958,7 +933,7 @@ final class ProductImportHandler extends AbstractImportHandler
             $specificPrice->price = -1;
             $specificPrice->id_customer = 0;
             $specificPrice->from_quantity = 1;
-            $specificPrice->reduction = $reductionPrice ? $reductionPrice : $reductionPercent / 100;
+            $specificPrice->reduction = $reductionPrice ?: $reductionPercent / 100;
             $specificPrice->reduction_type = $reductionPrice ? 'amount' : 'percentage';
             $specificPrice->from = Validate::isDate($reductionFrom) ? $reductionFrom : '0000-00-00 00:00:00';
             $specificPrice->to = Validate::isDate($reductionTo) ? $reductionTo : '0000-00-00 00:00:00';
@@ -997,7 +972,7 @@ final class ProductImportHandler extends AbstractImportHandler
                 if (is_array($product->tags)) {
                     foreach ($product->tags as $key => $tag) {
                         if (!empty($tag)) {
-                            $product->tags[$key] = trim($tag);
+                            $product->tags[$key] = trim((string) $tag);
                         }
                     }
                     $tags[$this->languageId] = $product->tags;
@@ -1070,7 +1045,7 @@ final class ProductImportHandler extends AbstractImportHandler
             $product_has_images = (bool) Image::getImages($this->languageId, (int) $product->id);
 
             foreach ($product->image as $key => $url) {
-                $url = trim($url);
+                $url = trim((string) $url);
                 $error = false;
                 if (!empty($url)) {
                     $url = str_replace(' ', '%20', $url);
@@ -1080,7 +1055,7 @@ final class ProductImportHandler extends AbstractImportHandler
                     $image->position = Image::getHighestPosition($product->id) + 1;
                     $image->cover = (!$key && !$product_has_images) ? true : false;
                     $alt = $product->image_alt[$key];
-                    if (strlen($alt) > 0) {
+                    if (strlen((string) $alt) > 0) {
                         $image->legend = $this->dataFormatter->createMultiLangField($alt);
                     }
 
@@ -1168,7 +1143,7 @@ final class ProductImportHandler extends AbstractImportHandler
             return;
         }
 
-        foreach (explode($multipleValueSeparator, $features['features']) as $singleFeature) {
+        foreach (explode($multipleValueSeparator, (string) $features['features']) as $singleFeature) {
             if (empty($singleFeature)) {
                 continue;
             }
@@ -1243,7 +1218,7 @@ final class ProductImportHandler extends AbstractImportHandler
 
         if ($hasAccessories) {
             $sharedData = $runtimeConfig->getSharedData();
-            $accessories = isset($sharedData['accessories']) ? $sharedData['accessories'] : [];
+            $accessories = $sharedData['accessories'] ?? [];
             $accessories[$product->id] = $product->accessories;
             $runtimeConfig->addSharedDataItem('accessories', $accessories);
         }

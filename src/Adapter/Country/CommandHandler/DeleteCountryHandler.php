@@ -40,14 +40,8 @@ use PrestaShop\PrestaShop\Core\Domain\Country\CommandHandler\DeleteCountryHandle
 #[AsCommandHandler]
 class DeleteCountryHandler implements DeleteCountryHandlerInterface
 {
-    /**
-     * @var CountryRepository
-     */
-    private $countryRepository;
-
-    public function __construct(CountryRepository $countryRepository)
+    public function __construct(private readonly CountryRepository $countryRepository)
     {
-        $this->countryRepository = $countryRepository;
     }
 
     /**

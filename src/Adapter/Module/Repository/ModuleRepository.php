@@ -115,9 +115,7 @@ class ModuleRepository extends AbstractObjectModelRepository
             );
 
             if (is_array($modulesData)) {
-                $activeModulesInDb = array_map(function (array $module): string {
-                    return $module['name'];
-                }, $modulesData);
+                $activeModulesInDb = array_map(fn(array $module): string => $module['name'], $modulesData);
 
                 foreach ($this->getModulesFromFolder() as $moduleName => $modulePath) {
                     if (in_array($moduleName, $activeModulesInDb)) {
@@ -169,9 +167,7 @@ class ModuleRepository extends AbstractObjectModelRepository
             );
 
             if (is_array($modulesData)) {
-                $installedModulesInDb = array_map(function (array $module): string {
-                    return $module['name'];
-                }, $modulesData);
+                $installedModulesInDb = array_map(fn(array $module): string => $module['name'], $modulesData);
 
                 foreach ($this->getModulesFromFolder() as $moduleName => $modulePath) {
                     if (in_array($moduleName, $installedModulesInDb)) {
@@ -261,11 +257,9 @@ class ModuleRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        $modules = array_filter($content['packages'], function (array $package) {
-            return self::COMPOSER_PACKAGE_TYPE === $package['type'] && !empty($package['name']);
-        });
+        $modules = array_filter($content['packages'], fn(array $package) => self::COMPOSER_PACKAGE_TYPE === $package['type'] && !empty($package['name']));
         $modules = array_map(function (array $package) {
-            $vendorName = explode('/', $package['name']);
+            $vendorName = explode('/', (string) $package['name']);
 
             return $vendorName[1];
         }, $modules);

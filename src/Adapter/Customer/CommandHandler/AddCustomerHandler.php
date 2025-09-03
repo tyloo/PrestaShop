@@ -47,23 +47,11 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 final class AddCustomerHandler extends AbstractCustomerHandler implements AddCustomerHandlerInterface
 {
     /**
-     * @var Hashing
-     */
-    private $hashing;
-
-    /**
-     * @var string Value of legacy _COOKIE_KEY_
-     */
-    private $legacyCookieKey;
-
-    /**
      * @param Hashing $hashing
      * @param string $legacyCookieKey
      */
-    public function __construct(Hashing $hashing, $legacyCookieKey)
+    public function __construct(private readonly Hashing $hashing, private $legacyCookieKey)
     {
-        $this->hashing = $hashing;
-        $this->legacyCookieKey = $legacyCookieKey;
     }
 
     /**

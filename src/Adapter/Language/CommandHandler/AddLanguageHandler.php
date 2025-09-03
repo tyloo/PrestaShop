@@ -45,20 +45,8 @@ use PrestaShop\PrestaShop\Core\Domain\Language\ValueObject\LanguageId;
 #[AsCommandHandler]
 final class AddLanguageHandler extends AbstractLanguageHandler implements AddLanguageHandlerInterface
 {
-    /**
-     * @var ImageValidator
-     */
-    private $imageValidator;
-
-    /**
-     * @var RobotsTextFileGenerator
-     */
-    private $robotsTextFileGenerator;
-
-    public function __construct(ImageValidator $imageValidator, RobotsTextFileGenerator $robotsTextFileGenerator)
+    public function __construct(private readonly ImageValidator $imageValidator, private readonly RobotsTextFileGenerator $robotsTextFileGenerator)
     {
-        $this->imageValidator = $imageValidator;
-        $this->robotsTextFileGenerator = $robotsTextFileGenerator;
     }
 
     /**

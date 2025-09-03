@@ -37,16 +37,10 @@ use PrestaShop\PrestaShop\Core\Grid\Action\Row\AccessibilityChecker\Accessibilit
 final class CategoryForViewAccessibilityChecker implements AccessibilityCheckerInterface
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param int $contextLangId
      */
-    public function __construct($contextLangId)
+    public function __construct(private $contextLangId)
     {
-        $this->contextLangId = $contextLangId;
     }
 
     /**

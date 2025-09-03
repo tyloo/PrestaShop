@@ -45,25 +45,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class VoucherGenerator
 {
     /**
-     * @var Locale
-     */
-    private $locale;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @param Locale $locale
      * @param TranslatorInterface $translator
      */
-    public function __construct(
-        Locale $locale,
-        TranslatorInterface $translator
-    ) {
-        $this->locale = $locale;
-        $this->translator = $translator;
+    public function __construct(private readonly Locale $locale, private readonly TranslatorInterface $translator)
+    {
     }
 
     /**

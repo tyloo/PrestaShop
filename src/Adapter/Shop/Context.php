@@ -64,9 +64,7 @@ class Context implements MultistoreContextCheckerInterface, ShopContextInterface
 
     public function getContextShopIds(): array
     {
-        return array_map(static function ($shopId): int {
-            return (int) $shopId;
-        }, $this->getContextListShopID());
+        return array_map(static fn($shopId): int => (int) $shopId, $this->getContextListShopID());
     }
 
     /**

@@ -41,25 +41,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\UpdateProductTagsHa
 final class SetProductTagsHandler implements UpdateProductTagsHandlerInterface
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductTagUpdater
-     */
-    private $productTagUpdater;
-
-    /**
      * @param ProductRepository $productRepository
      * @param ProductTagUpdater $productTagUpdater
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        ProductTagUpdater $productTagUpdater
-    ) {
-        $this->productRepository = $productRepository;
-        $this->productTagUpdater = $productTagUpdater;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly ProductTagUpdater $productTagUpdater)
+    {
     }
 
     /**

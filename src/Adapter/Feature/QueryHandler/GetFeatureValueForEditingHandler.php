@@ -39,16 +39,10 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\ValueObject\FeatureId;
 class GetFeatureValueForEditingHandler implements GetFeatureValueForEditingHandlerInterface
 {
     /**
-     * @var FeatureValueRepository
-     */
-    private $featureValueRepository;
-
-    /**
      * @param FeatureValueRepository $featureValueRepository
      */
-    public function __construct(FeatureValueRepository $featureValueRepository)
+    public function __construct(private readonly FeatureValueRepository $featureValueRepository)
     {
-        $this->featureValueRepository = $featureValueRepository;
     }
 
     /**

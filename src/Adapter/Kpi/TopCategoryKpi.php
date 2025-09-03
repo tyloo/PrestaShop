@@ -39,41 +39,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class TopCategoryKpi implements KpiInterface
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $kpiConfiguration;
-
-    /**
-     * @var string
-     */
-    private $sourceUrl;
-
-    /**
-     * @var int
-     */
-    private $employeeIdLang;
-
-    /**
      * @param TranslatorInterface $translator
      * @param ConfigurationInterface $kpiConfiguration
      * @param string $sourceUrl
      * @param int $employeeIdLang
      */
-    public function __construct(
-        TranslatorInterface $translator,
-        ConfigurationInterface $kpiConfiguration,
-        $sourceUrl,
-        $employeeIdLang
-    ) {
-        $this->translator = $translator;
-        $this->kpiConfiguration = $kpiConfiguration;
-        $this->sourceUrl = $sourceUrl;
-        $this->employeeIdLang = $employeeIdLang;
+    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $kpiConfiguration, private $sourceUrl, private $employeeIdLang)
+    {
     }
 
     /**

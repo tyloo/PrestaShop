@@ -42,16 +42,10 @@ use Shop;
 class LegacyContextLoader
 {
     /**
-     * @var Context
-     */
-    private $context;
-
-    /**
      * @param Context $context
      */
-    public function __construct(Context $context)
+    public function __construct(private readonly Context $context)
     {
-        $this->context = $context;
     }
 
     /**

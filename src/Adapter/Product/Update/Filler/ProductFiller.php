@@ -39,17 +39,10 @@ use Product;
 class ProductFiller implements ProductFillerInterface
 {
     /**
-     * @var ProductFillerInterface[]
-     */
-    private $updatablePropertyFillers;
-
-    /**
      * @param ProductFillerInterface[] $updatablePropertyFillers
      */
-    public function __construct(
-        iterable $updatablePropertyFillers
-    ) {
-        $this->updatablePropertyFillers = $updatablePropertyFillers;
+    public function __construct(private readonly iterable $updatablePropertyFillers)
+    {
     }
 
     /**

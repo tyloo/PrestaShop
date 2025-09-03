@@ -43,18 +43,12 @@ final class CountryZipCodeRequirementsProvider implements CountryZipCodeRequirem
     private $langId;
 
     /**
-     * @var ZipCodePatternResolver
-     */
-    private $patternResolver;
-
-    /**
      * @param LegacyContext $context
      * @param ZipCodePatternResolver $patternResolver
      */
-    public function __construct(LegacyContext $context, ZipCodePatternResolver $patternResolver)
+    public function __construct(LegacyContext $context, private readonly ZipCodePatternResolver $patternResolver)
     {
         $this->langId = (int) $context->getLanguage()->id;
-        $this->patternResolver = $patternResolver;
     }
 
     /**

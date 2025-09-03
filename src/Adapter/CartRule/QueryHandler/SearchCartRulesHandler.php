@@ -39,16 +39,10 @@ use PrestaShop\PrestaShop\Core\Domain\CartRule\QueryResult\FoundCartRule;
 final class SearchCartRulesHandler implements SearchCartRulesHandlerInterface
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param int $contextLangId
      */
-    public function __construct(int $contextLangId)
+    public function __construct(private readonly int $contextLangId)
     {
-        $this->contextLangId = $contextLangId;
     }
 
     /**

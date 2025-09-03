@@ -40,23 +40,11 @@ use PrestaShopException;
 final class AttributeGroupViewDataProvider implements AttributeGroupViewDataProviderInterface
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param int $contextLangId
      * @param ConfigurationInterface $configuration
      */
-    public function __construct($contextLangId, ConfigurationInterface $configuration)
+    public function __construct(private $contextLangId, private readonly ConfigurationInterface $configuration)
     {
-        $this->contextLangId = $contextLangId;
-        $this->configuration = $configuration;
     }
 
     /**

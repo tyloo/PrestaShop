@@ -41,7 +41,7 @@ use ProductAttribute;
 class AttributeValidator extends AbstractObjectModelValidator
 {
     public function __construct(
-        private ShopRepository $shopRepository
+        private readonly ShopRepository $shopRepository
     ) {
     }
 

@@ -44,33 +44,12 @@ class SeoFiller implements ProductFillerInterface
     use LocalizedObjectModelTrait;
 
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
-     * @var Tools
-     */
-    private $tools;
-
-    /**
      * @param ProductRepository $productRepository
      * @param CategoryRepository $categoryRepository
      * @param Tools $tools
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        CategoryRepository $categoryRepository,
-        Tools $tools
-    ) {
-        $this->productRepository = $productRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->tools = $tools;
+    public function __construct(private ProductRepository $productRepository, private CategoryRepository $categoryRepository, private Tools $tools)
+    {
     }
 
     /**

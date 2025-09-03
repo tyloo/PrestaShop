@@ -35,12 +35,6 @@ use PrestaShop\PrestaShop\Core\Routing\EntityLinkBuilderInterface;
  */
 class AdminLinkBuilder implements EntityLinkBuilderInterface
 {
-    /** @var Link */
-    private $link;
-
-    /** @var array */
-    private $entityControllers;
-
     /**
      * This class can manage entities based on the $entityControllers parameter,
      * you need to specify an array map with then entity/table short name and its
@@ -53,10 +47,8 @@ class AdminLinkBuilder implements EntityLinkBuilderInterface
      * @param Link $link Link class that generates links
      * @param array $entityControllers List of entities with appropriate controller
      */
-    public function __construct(Link $link, array $entityControllers)
+    public function __construct(private readonly Link $link, private array $entityControllers)
     {
-        $this->link = $link;
-        $this->entityControllers = $entityControllers;
     }
 
     /**

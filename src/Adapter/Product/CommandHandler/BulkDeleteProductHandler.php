@@ -43,15 +43,8 @@ use PrestaShop\PrestaShop\Core\Exception\InvalidArgumentException;
 #[AsCommandHandler]
 final class BulkDeleteProductHandler extends AbstractBulkHandler implements BulkDeleteProductHandlerInterface
 {
-    /**
-     * @var ProductDeleter
-     */
-    private $productDeleter;
-
-    public function __construct(
-        ProductDeleter $productDeleter
-    ) {
-        $this->productDeleter = $productDeleter;
+    public function __construct(private readonly ProductDeleter $productDeleter)
+    {
     }
 
     /**

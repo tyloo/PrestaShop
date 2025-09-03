@@ -55,7 +55,7 @@ class CategoriesProvider
         array $contextShopIds
     ) {
         $this->contextLanguageId = (int) $contextLanguageId;
-        $this->contextShopIds = array_map(function ($item) { return (int) $item; }, $contextShopIds);
+        $this->contextShopIds = array_map(fn($item) => (int) $item, $contextShopIds);
     }
 
     /**

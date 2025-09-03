@@ -55,50 +55,8 @@ use StockAvailable;
  */
 class ProductStockUpdater
 {
-    /**
-     * @var StockManager
-     */
-    private $stockManager;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var StockAvailableRepository
-     */
-    private $stockAvailableRepository;
-
-    /**
-     * @var MovementReasonRepository
-     */
-    private $movementReasonRepository;
-
-    /**
-     * @var ShopConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var HookManager
-     */
-    private $hookManager;
-
-    public function __construct(
-        StockManager $stockManager,
-        ProductRepository $productRepository,
-        StockAvailableRepository $stockAvailableRepository,
-        MovementReasonRepository $movementReasonRepository,
-        ShopConfigurationInterface $configuration,
-        HookManager $hookManager
-    ) {
-        $this->stockManager = $stockManager;
-        $this->productRepository = $productRepository;
-        $this->stockAvailableRepository = $stockAvailableRepository;
-        $this->movementReasonRepository = $movementReasonRepository;
-        $this->configuration = $configuration;
-        $this->hookManager = $hookManager;
+    public function __construct(private readonly StockManager $stockManager, private readonly ProductRepository $productRepository, private readonly StockAvailableRepository $stockAvailableRepository, private readonly MovementReasonRepository $movementReasonRepository, private readonly ShopConfigurationInterface $configuration, private readonly HookManager $hookManager)
+    {
     }
 
     /**

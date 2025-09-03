@@ -44,25 +44,11 @@ use PrestaShopException;
 class AddCartRuleHandler implements AddCartRuleHandlerInterface
 {
     /**
-     * @var CartRuleRepository
-     */
-    private $cartRuleRepository;
-
-    /**
-     * @var CartRuleActionFiller
-     */
-    private $cartRuleActionFiller;
-
-    /**
      * @param CartRuleRepository $cartRuleRepository
      * @param CartRuleActionFiller $cartRuleActionFiller
      */
-    public function __construct(
-        CartRuleRepository $cartRuleRepository,
-        CartRuleActionFiller $cartRuleActionFiller
-    ) {
-        $this->cartRuleRepository = $cartRuleRepository;
-        $this->cartRuleActionFiller = $cartRuleActionFiller;
+    public function __construct(private readonly CartRuleRepository $cartRuleRepository, private readonly CartRuleActionFiller $cartRuleActionFiller)
+    {
     }
 
     /**

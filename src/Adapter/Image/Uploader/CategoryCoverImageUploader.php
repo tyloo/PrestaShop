@@ -131,7 +131,7 @@ final class CategoryCoverImageUploader extends AbstractImageUploader implements 
             foreach ($configuredImageFormats as $imageFormat) {
                 $generated = ImageManager::resize(
                     _PS_CAT_IMG_DIR_ . $id . '.jpg',
-                    _PS_CAT_IMG_DIR_ . $id . '-' . stripslashes($imageType['name']) . '.' . $imageFormat,
+                    _PS_CAT_IMG_DIR_ . $id . '-' . stripslashes((string) $imageType['name']) . '.' . $imageFormat,
                     (int) $imageType['width'],
                     (int) $imageType['height'],
                     $imageFormat

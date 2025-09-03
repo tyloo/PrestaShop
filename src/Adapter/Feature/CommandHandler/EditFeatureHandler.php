@@ -39,15 +39,8 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 #[AsCommandHandler]
 class EditFeatureHandler extends AbstractObjectModelHandler implements EditFeatureHandlerInterface
 {
-    /**
-     * @var FeatureRepository
-     */
-    private $featureRepository;
-
-    public function __construct(
-        FeatureRepository $featureRepository
-    ) {
-        $this->featureRepository = $featureRepository;
+    public function __construct(private readonly FeatureRepository $featureRepository)
+    {
     }
 
     /**
@@ -65,9 +58,7 @@ class EditFeatureHandler extends AbstractObjectModelHandler implements EditFeatu
 
         // ObjectModel::update doesn't seem to remove unassociated shops, so we must always update them manually afterwards
         if (null !== $command->getAssociatedShopIds()) {
-            $this->associateWithShops($feature, array_map(static function (ShopId $shopId) {
-                return $shopId->getValue();
-            }, $command->getAssociatedShopIds()));
+            $this->associateWithShops($feature, array_map(static fn(ShopId $shopId) => $shopId->getValue(), $command->getAssociatedShopIds()));
         }
     }
 }

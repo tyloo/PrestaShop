@@ -48,24 +48,10 @@ use SpecificPriceRule;
 class ProductCategoryUpdater
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
      * @param ProductRepository $productRepository
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        CategoryRepository $categoryRepository
-    ) {
-        $this->productRepository = $productRepository;
-        $this->categoryRepository = $categoryRepository;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly CategoryRepository $categoryRepository)
+    {
     }
 
     /**
@@ -172,9 +158,7 @@ class ProductCategoryUpdater
                     $fallbackDefaultCategory = $this->categoryRepository->getShopDefaultCategory($shopId)->getValue();
                 } else {
                     // If product has still some categories we use the one with smallest ID as fallback
-                    $fallbackDefaultCategory = min(array_values(array_map(static function (CategoryId $categoryId): int {
-                        return $categoryId->getValue();
-                    }, $productCategories)));
+                    $fallbackDefaultCategory = min(array_values(array_map(static fn(CategoryId $categoryId): int => $categoryId->getValue(), $productCategories)));
                 }
                 $fallbackCategories[$shopId->getValue()] = $fallbackDefaultCategory;
             }
@@ -205,16 +189,12 @@ class ProductCategoryUpdater
      */
     private function formatCategoryIdsList(array $categoryIds, CategoryId $defaultCategoryId): array
     {
-        $categoryIds = array_map(function (CategoryId $categoryId) {
-            return $categoryId->getValue();
-        }, $categoryIds);
+        $categoryIds = array_map(fn(CategoryId $categoryId) => $categoryId->getValue(), $categoryIds);
 
         $categoryIds[] = $defaultCategoryId->getValue();
         $categoryIds = array_unique($categoryIds, SORT_REGULAR);
 
-        return array_map(static function (int $categoryId) {
-            return new CategoryId($categoryId);
-        }, $categoryIds);
+        return array_map(static fn(int $categoryId) => new CategoryId($categoryId), $categoryIds);
     }
 
     /**

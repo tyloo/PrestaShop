@@ -35,29 +35,8 @@ use PrestaShop\PrestaShop\Adapter\Shop\ShopInformation;
  */
 class SystemInformation
 {
-    /**
-     * @var HostingInformation
-     */
-    private $hostingInformation;
-
-    /**
-     * @var MailingInformation
-     */
-    private $mailingInformation;
-
-    /**
-     * @var ShopInformation
-     */
-    private $shopInformation;
-
-    public function __construct(
-        HostingInformation $hostingInformation,
-        MailingInformation $mailingInformation,
-        ShopInformation $shopInformation
-    ) {
-        $this->hostingInformation = $hostingInformation;
-        $this->mailingInformation = $mailingInformation;
-        $this->shopInformation = $shopInformation;
+    public function __construct(private readonly HostingInformation $hostingInformation, private readonly MailingInformation $mailingInformation, private readonly ShopInformation $shopInformation)
+    {
     }
 
     /**

@@ -45,20 +45,8 @@ use Twig\Error\LoaderError;
  */
 class MailTemplateTwigRenderer implements MailTemplateRendererInterface
 {
-    /** @var Environment */
-    private $twig;
-
-    /** @var LayoutVariablesBuilderInterface */
-    private $variablesBuilder;
-
-    /** @var HookDispatcherInterface */
-    private $hookDispatcher;
-
     /** @var TransformationCollection */
     private $transformations;
-
-    /** @var bool */
-    private $hasGiftWrapping;
 
     /**
      * @param Environment $twig
@@ -69,16 +57,12 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
      * @throws TypeException
      */
     public function __construct(
-        Environment $twig,
-        LayoutVariablesBuilderInterface $variablesBuilder,
-        HookDispatcherInterface $hookDispatcher,
-        bool $hasGiftWrapping
+        private readonly Environment $twig,
+        private readonly LayoutVariablesBuilderInterface $variablesBuilder,
+        private readonly HookDispatcherInterface $hookDispatcher,
+        private readonly bool $hasGiftWrapping
     ) {
-        $this->twig = $twig;
-        $this->variablesBuilder = $variablesBuilder;
-        $this->hookDispatcher = $hookDispatcher;
         $this->transformations = new TransformationCollection();
-        $this->hasGiftWrapping = $hasGiftWrapping;
     }
 
     /**
@@ -170,7 +154,7 @@ class MailTemplateTwigRenderer implements MailTemplateRendererInterface
         $templateTransformations = new TransformationCollection();
         /** @var TransformationInterface $transformation */
         foreach ($this->transformations as $transformation) {
-            if ($transformation::class == 'PrestaShop\PrestaShop\Core\MailTemplate\Transformation\CSSInlineTransformation' && $themeName == 'modern') {
+            if ($transformation::class == \PrestaShop\PrestaShop\Core\MailTemplate\Transformation\CSSInlineTransformation::class && $themeName == 'modern') {
                 continue;
             }
             if ($templateType !== $transformation->getType()) {

@@ -40,16 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\CommandHandler\EditFeatureValueHan
 class EditFeatureValueHandler implements EditFeatureValueHandlerInterface
 {
     /**
-     * @var FeatureValueRepository
-     */
-    private $featureValueRepository;
-
-    /**
      * @param FeatureValueRepository $featureValueRepository
      */
-    public function __construct(FeatureValueRepository $featureValueRepository)
+    public function __construct(private readonly FeatureValueRepository $featureValueRepository)
     {
-        $this->featureValueRepository = $featureValueRepository;
     }
 
     /**

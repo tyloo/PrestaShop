@@ -37,26 +37,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class LogsConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var Validate
-     */
-    private $validate;
-
-    public function __construct(ConfigurationInterface $configuration, TranslatorInterface $translator, Validate $validate)
+    public function __construct(private readonly ConfigurationInterface $configuration, private readonly TranslatorInterface $translator, private readonly Validate $validate)
     {
-        $this->configuration = $configuration;
-        $this->translator = $translator;
-        $this->validate = $validate;
     }
 
     /**
@@ -76,7 +58,7 @@ class LogsConfiguration implements DataConfigurationInterface
     public function updateConfiguration(array $configuration)
     {
         if ($this->validateConfiguration($configuration)) {
-            $checkEmails = explode(',', $configuration['logs_email_receivers']);
+            $checkEmails = explode(',', (string) $configuration['logs_email_receivers']);
             $errors = [];
             $invalidEmails = [];
 

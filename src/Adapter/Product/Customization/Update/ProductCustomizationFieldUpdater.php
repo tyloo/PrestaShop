@@ -46,33 +46,12 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 class ProductCustomizationFieldUpdater
 {
     /**
-     * @var CustomizationFieldRepository
-     */
-    private $customizationFieldRepository;
-
-    /**
-     * @var CustomizationFieldDeleter
-     */
-    private $customizationFieldDeleter;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
      * @param CustomizationFieldRepository $customizationFieldRepository
      * @param CustomizationFieldDeleter $customizationFieldDeleter
      * @param ProductRepository $productRepository
      */
-    public function __construct(
-        CustomizationFieldRepository $customizationFieldRepository,
-        CustomizationFieldDeleter $customizationFieldDeleter,
-        ProductRepository $productRepository
-    ) {
-        $this->customizationFieldRepository = $customizationFieldRepository;
-        $this->customizationFieldDeleter = $customizationFieldDeleter;
-        $this->productRepository = $productRepository;
+    public function __construct(private readonly CustomizationFieldRepository $customizationFieldRepository, private readonly CustomizationFieldDeleter $customizationFieldDeleter, private readonly ProductRepository $productRepository)
+    {
     }
 
     /**

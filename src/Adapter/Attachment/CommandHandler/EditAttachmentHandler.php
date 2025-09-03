@@ -46,19 +46,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class EditAttachmentHandler extends AbstractAttachmentHandler implements EditAttachmentHandlerInterface
 {
     /**
-     * @var AttachmentFileUploaderInterface
-     */
-    protected $fileUploader;
-
-    /**
      * @param ValidatorInterface $validator
      * @param AttachmentFileUploaderInterface $fileUploader
      */
-    public function __construct(ValidatorInterface $validator, AttachmentFileUploaderInterface $fileUploader)
+    public function __construct(ValidatorInterface $validator, protected AttachmentFileUploaderInterface $fileUploader)
     {
         parent::__construct($validator);
-
-        $this->fileUploader = $fileUploader;
     }
 
     /**

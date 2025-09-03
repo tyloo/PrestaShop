@@ -43,31 +43,10 @@ use SpecificPrice;
 class SpecificPricePriorityUpdater
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        ConfigurationInterface $configuration
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->configuration = $configuration;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ConfigurationInterface $configuration)
+    {
     }
 
     /**

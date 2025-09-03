@@ -45,12 +45,12 @@ class DebugModeConfiguration implements DataConfigurationInterface
      * @param CacheClearerInterface $cacheClearer
      */
     public function __construct(
-        private DebugMode $debugMode,
-        private Configuration $configuration,
-        private string $configDefinesPath,
-        private ClassIndexCacheClearer $classIndexCacheClearer,
-        private DebugProfiling $debugProfiling,
-        private CacheClearerInterface $cacheClearer,
+        private readonly DebugMode $debugMode,
+        private readonly Configuration $configuration,
+        private readonly string $configDefinesPath,
+        private readonly ClassIndexCacheClearer $classIndexCacheClearer,
+        private readonly DebugProfiling $debugProfiling,
+        private readonly CacheClearerInterface $cacheClearer,
     ) {
     }
 

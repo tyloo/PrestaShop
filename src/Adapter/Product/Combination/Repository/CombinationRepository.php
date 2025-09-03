@@ -64,49 +64,14 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
     use ShopConstraintTrait;
 
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var CombinationValidator
-     */
-    private $combinationValidator;
-
-    /**
-     * @var AttributeRepository
-     */
-    private $attributeRepository;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param CombinationValidator $combinationValidator
      * @param AttributeRepository $attributeRepository
      * @param ProductRepository $productRepository
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        CombinationValidator $combinationValidator,
-        AttributeRepository $attributeRepository,
-        ProductRepository $productRepository
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->combinationValidator = $combinationValidator;
-        $this->attributeRepository = $attributeRepository;
-        $this->productRepository = $productRepository;
+    public function __construct(private Connection $connection, private string $dbPrefix, private CombinationValidator $combinationValidator, private AttributeRepository $attributeRepository, private ProductRepository $productRepository)
+    {
     }
 
     /**
@@ -144,9 +109,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
         $combination = new Combination();
         $combination->id_product = $productId->getValue();
         $combination->default_on = false;
-        $combination->id_shop_list = array_map(function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $shopIds);
+        $combination->id_shop_list = array_map(fn(ShopId $shopId): int => $shopId->getValue(), $shopIds);
 
         $this->addObjectModelToShops($combination, $shopIds, CannotAddCombinationException::class);
 
@@ -445,9 +408,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
     public function getCombinationIds(ProductId $productId, ShopConstraint $shopConstraint): array
     {
         $shopIds = $this->productRepository->getShopIdsByConstraint($productId, $shopConstraint);
-        $shopIds = array_map(function (ShopId $shopId) {
-            return $shopId->getValue();
-        }, $shopIds);
+        $shopIds = array_map(fn(ShopId $shopId) => $shopId->getValue(), $shopIds);
 
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -464,7 +425,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
         $combinationIds = $qb->executeQuery()->fetchAllAssociative();
 
         return array_map(
-            function (array $combination) { return new CombinationId((int) $combination['id_product_attribute']); },
+            fn(array $combination) => new CombinationId((int) $combination['id_product_attribute']),
             $combinationIds
         );
     }
@@ -581,9 +542,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
         ;
 
         return array_map(
-            static function (array $result): ShopId {
-                return new ShopId((int) $result['id_shop']);
-            },
+            static fn(array $result): ShopId => new ShopId((int) $result['id_shop']),
             $qb->executeQuery()->fetchAllAssociative()
         );
     }
@@ -612,9 +571,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
             ->addGroupBy('id_shop')
         ;
 
-        return array_map(static function (array $shop) {
-            return new ShopId((int) $shop['id_shop']);
-        }, $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn(array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**
@@ -746,7 +703,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
         $shopCombinationTable = sprintf('%sproduct_attribute_shop', $this->dbPrefix);
         $shopIdsString = implode(
             ',',
-            array_map(function (ShopId $shopId): int { return $shopId->getValue(); }, $shopIds)
+            array_map(fn(ShopId $shopId): int => $shopId->getValue(), $shopIds)
         );
         // find current default combination and make it non-default
         // important to check NULL, because it is impossible to have "0" as falsy value due to sql constraint
@@ -868,9 +825,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
             return [];
         }
 
-        return array_map(static function (array $result): CombinationId {
-            return new CombinationId((int) $result['id_product_attribute']);
-        }, $results);
+        return array_map(static fn(array $result): CombinationId => new CombinationId((int) $result['id_product_attribute']), $results);
     }
 
     /**

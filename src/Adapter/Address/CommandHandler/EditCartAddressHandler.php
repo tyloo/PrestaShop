@@ -51,16 +51,10 @@ use PrestaShopException;
 class EditCartAddressHandler implements EditCartAddressHandlerInterface
 {
     /**
-     * @var EditCustomerAddressHandlerInterface
-     */
-    private $addressHandler;
-
-    /**
      * @param EditCustomerAddressHandlerInterface $addressHandler
      */
-    public function __construct(EditCustomerAddressHandlerInterface $addressHandler)
+    public function __construct(private readonly EditCustomerAddressHandlerInterface $addressHandler)
     {
-        $this->addressHandler = $addressHandler;
     }
 
     /**

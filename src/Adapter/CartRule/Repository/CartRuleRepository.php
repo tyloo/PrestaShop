@@ -66,9 +66,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
 
     public function assertAllCartRulesExists(array $cartRuleIds): void
     {
-        $cartRuleIds = array_map(static function (CartRuleId $cartRuleId): int {
-            return $cartRuleId->getValue();
-        }, $cartRuleIds);
+        $cartRuleIds = array_map(static fn(CartRuleId $cartRuleId): int => $cartRuleId->getValue(), $cartRuleIds);
 
         $qb = $this->connection->createQueryBuilder();
 

@@ -40,15 +40,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\QueryResult\Shop\ShopProduct
 #[AsQueryHandler]
 final class GetShopProductImagesHandler implements GetShopProductImagesHandlerInterface
 {
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    public function __construct(
-        ProductImageRepository $productImageRepository
-    ) {
-        $this->productImageRepository = $productImageRepository;
+    public function __construct(private readonly ProductImageRepository $productImageRepository)
+    {
     }
 
     /**

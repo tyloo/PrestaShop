@@ -52,49 +52,14 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
 class ProductFeatureValueUpdater
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var FeatureRepository
-     */
-    private $featureRepository;
-
-    /**
-     * @var FeatureValueRepository
-     */
-    private $featureValueRepository;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param ProductRepository $productRepository
      * @param FeatureRepository $featureRepository
      * @param FeatureValueRepository $featureValueRepository
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        ProductRepository $productRepository,
-        FeatureRepository $featureRepository,
-        FeatureValueRepository $featureValueRepository
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->productRepository = $productRepository;
-        $this->featureRepository = $featureRepository;
-        $this->featureValueRepository = $featureValueRepository;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ProductRepository $productRepository, private readonly FeatureRepository $featureRepository, private readonly FeatureValueRepository $featureValueRepository)
+    {
     }
 
     /**

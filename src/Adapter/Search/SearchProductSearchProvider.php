@@ -45,19 +45,13 @@ use Tools;
 class SearchProductSearchProvider implements ProductSearchProviderInterface
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @var SortOrdersCollection
      */
     private $sortOrdersCollection;
 
     public function __construct(
-        TranslatorInterface $translator
+        private readonly TranslatorInterface $translator
     ) {
-        $this->translator = $translator;
         $this->sortOrdersCollection = new SortOrdersCollection($this->translator);
     }
 

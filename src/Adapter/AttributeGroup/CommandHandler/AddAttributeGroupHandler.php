@@ -43,8 +43,8 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\ValueObject\AttributeGroupI
 final class AddAttributeGroupHandler implements AddAttributeGroupHandlerInterface
 {
     public function __construct(
-        private AttributeGroupRepository $attributeGroupRepository,
-        private AttributeGroupValidator $validator
+        private readonly AttributeGroupRepository $attributeGroupRepository,
+        private readonly AttributeGroupValidator $validator
     ) {
     }
 

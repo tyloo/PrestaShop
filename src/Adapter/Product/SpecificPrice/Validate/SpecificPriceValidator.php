@@ -64,51 +64,6 @@ use SpecificPrice;
 class SpecificPriceValidator extends AbstractObjectModelValidator
 {
     /**
-     * @var ShopGroupRepository
-     */
-    private $shopGroupRepository;
-
-    /**
-     * @var ShopRepository
-     */
-    private $shopRepository;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var CurrencyRepository
-     */
-    private $currencyRepository;
-
-    /**
-     * @var CountryRepository
-     */
-    private $countryRepository;
-
-    /**
-     * @var GroupRepository
-     */
-    private $groupRepository;
-
-    /**
-     * @var CustomerRepository
-     */
-    private $customerRepository;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var NumberExtractor
-     */
-    private $numberExtractor;
-
-    /**
      * @param ShopGroupRepository $shopGroupRepository
      * @param ShopRepository $shopRepository
      * @param CombinationRepository $combinationRepository
@@ -119,26 +74,8 @@ class SpecificPriceValidator extends AbstractObjectModelValidator
      * @param ProductRepository $productRepository
      * @param NumberExtractor $numberExtractor
      */
-    public function __construct(
-        ShopGroupRepository $shopGroupRepository,
-        ShopRepository $shopRepository,
-        CombinationRepository $combinationRepository,
-        CurrencyRepository $currencyRepository,
-        CountryRepository $countryRepository,
-        GroupRepository $groupRepository,
-        CustomerRepository $customerRepository,
-        ProductRepository $productRepository,
-        NumberExtractor $numberExtractor
-    ) {
-        $this->shopGroupRepository = $shopGroupRepository;
-        $this->shopRepository = $shopRepository;
-        $this->combinationRepository = $combinationRepository;
-        $this->currencyRepository = $currencyRepository;
-        $this->countryRepository = $countryRepository;
-        $this->groupRepository = $groupRepository;
-        $this->customerRepository = $customerRepository;
-        $this->productRepository = $productRepository;
-        $this->numberExtractor = $numberExtractor;
+    public function __construct(private readonly ShopGroupRepository $shopGroupRepository, private readonly ShopRepository $shopRepository, private readonly CombinationRepository $combinationRepository, private readonly CurrencyRepository $currencyRepository, private readonly CountryRepository $countryRepository, private readonly GroupRepository $groupRepository, private readonly CustomerRepository $customerRepository, private readonly ProductRepository $productRepository, private readonly NumberExtractor $numberExtractor)
+    {
     }
 
     /**

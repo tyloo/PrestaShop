@@ -46,23 +46,11 @@ use Profile;
 final class DeleteProfileHandler extends AbstractProfileHandler implements DeleteProfileHandlerInterface
 {
     /**
-     * @var int
-     */
-    private $superAdminProfileId;
-
-    /**
-     * @var ContextEmployeeProviderInterface
-     */
-    private $contextEmployeeProvider;
-
-    /**
      * @param int $superAdminProfileId
      * @param ContextEmployeeProviderInterface $contextEmployeeProvider
      */
-    public function __construct($superAdminProfileId, ContextEmployeeProviderInterface $contextEmployeeProvider)
+    public function __construct(private $superAdminProfileId, private readonly ContextEmployeeProviderInterface $contextEmployeeProvider)
     {
-        $this->superAdminProfileId = $superAdminProfileId;
-        $this->contextEmployeeProvider = $contextEmployeeProvider;
     }
 
     /**

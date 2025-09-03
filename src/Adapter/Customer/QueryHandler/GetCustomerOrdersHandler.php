@@ -45,17 +45,10 @@ use PrestaShop\PrestaShop\Core\Localization\LocaleInterface;
 final class GetCustomerOrdersHandler extends AbstractCustomerHandler implements GetCustomerOrdersHandlerInterface
 {
     /**
-     * @var LocaleInterface
-     */
-    private $locale;
-
-    /**
      * @param LocaleInterface $locale
      */
-    public function __construct(
-        LocaleInterface $locale
-    ) {
-        $this->locale = $locale;
+    public function __construct(private readonly LocaleInterface $locale)
+    {
     }
 
     /**

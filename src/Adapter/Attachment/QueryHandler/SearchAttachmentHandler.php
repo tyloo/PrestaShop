@@ -42,16 +42,10 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\QueryResult\AttachmentInformati
 class SearchAttachmentHandler implements SearchAttachmentHandlerInterface
 {
     /**
-     * @var AttachmentRepository
-     */
-    private $repository;
-
-    /**
      * @param AttachmentRepository $repository
      */
-    public function __construct(AttachmentRepository $repository)
+    public function __construct(private readonly AttachmentRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**

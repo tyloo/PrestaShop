@@ -39,16 +39,10 @@ use PrestaShop\PrestaShop\Core\Employee\FormLanguageChangerInterface;
 final class FormLanguageChanger implements FormLanguageChangerInterface
 {
     /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    /**
      * @param LegacyContext $legacyContext
      */
-    public function __construct(LegacyContext $legacyContext)
+    public function __construct(private readonly LegacyContext $legacyContext)
     {
-        $this->legacyContext = $legacyContext;
     }
 
     /**

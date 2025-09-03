@@ -49,48 +49,13 @@ use PrestaShop\PrestaShop\Core\Image\Exception\CannotUnlinkImageException;
 class ProductImageUpdater
 {
     /**
-     * @var ProductImageUploader
-     */
-    private $productImageUploader;
-
-    /**
-     * @var PositionUpdateFactoryInterface
-     */
-    private $positionUpdateFactory;
-
-    /**
-     * @var PositionDefinition
-     */
-    private $positionDefinition;
-
-    /**
-     * @var GridPositionUpdaterInterface
-     */
-    private $positionUpdater;
-
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
      * @param ProductImageUploader $productImageUploader
      * @param PositionUpdateFactoryInterface $positionUpdateFactory
      * @param PositionDefinition $positionDefinition
      * @param GridPositionUpdaterInterface $positionUpdater
      */
-    public function __construct(
-        ProductImageUploader $productImageUploader,
-        PositionUpdateFactoryInterface $positionUpdateFactory,
-        PositionDefinition $positionDefinition,
-        GridPositionUpdaterInterface $positionUpdater,
-        ProductImageRepository $productImageRepository
-    ) {
-        $this->productImageUploader = $productImageUploader;
-        $this->positionUpdateFactory = $positionUpdateFactory;
-        $this->positionDefinition = $positionDefinition;
-        $this->positionUpdater = $positionUpdater;
-        $this->productImageRepository = $productImageRepository;
+    public function __construct(private readonly ProductImageUploader $productImageUploader, private readonly PositionUpdateFactoryInterface $positionUpdateFactory, private readonly PositionDefinition $positionDefinition, private readonly GridPositionUpdaterInterface $positionUpdater, private readonly ProductImageRepository $productImageRepository)
+    {
     }
 
     /**

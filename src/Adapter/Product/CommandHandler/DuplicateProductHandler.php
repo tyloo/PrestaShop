@@ -41,17 +41,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 final class DuplicateProductHandler implements DuplicateProductHandlerInterface
 {
     /**
-     * @var ProductDuplicator
-     */
-    private $productDuplicator;
-
-    /**
      * @param ProductDuplicator $productDuplicator
      */
-    public function __construct(
-        ProductDuplicator $productDuplicator
-    ) {
-        $this->productDuplicator = $productDuplicator;
+    public function __construct(private readonly ProductDuplicator $productDuplicator)
+    {
     }
 
     /**

@@ -55,49 +55,14 @@ use Shop;
 final class SearchProductsHandler extends AbstractOrderHandler implements SearchProductsHandlerInterface
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var LocaleInterface
-     */
-    private $contextLocale;
-
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var CurrencyDataProvider
-     */
-    private $currencyDataProvider;
-
-    /**
-     * @var Tools
-     */
-    private $tools;
-
-    /**
      * @param int $contextLangId
      * @param LocaleInterface $contextLocale
      * @param Tools $tools
      * @param CurrencyDataProvider $currencyDataProvider
      * @param ContextStateManager $contextStateManager
      */
-    public function __construct(
-        int $contextLangId,
-        LocaleInterface $contextLocale,
-        Tools $tools,
-        CurrencyDataProvider $currencyDataProvider,
-        ContextStateManager $contextStateManager
-    ) {
-        $this->contextLangId = $contextLangId;
-        $this->contextLocale = $contextLocale;
-        $this->currencyDataProvider = $currencyDataProvider;
-        $this->tools = $tools;
-        $this->contextStateManager = $contextStateManager;
+    public function __construct(private readonly int $contextLangId, private readonly LocaleInterface $contextLocale, private readonly Tools $tools, private readonly CurrencyDataProvider $currencyDataProvider, private readonly ContextStateManager $contextStateManager)
+    {
     }
 
     /**

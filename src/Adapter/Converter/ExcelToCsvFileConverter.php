@@ -38,23 +38,11 @@ use Symfony\Component\Filesystem\Filesystem;
 final class ExcelToCsvFileConverter implements FileConverterInterface
 {
     /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var string
-     */
-    private $excelDirectory;
-
-    /**
      * @param Filesystem $filesystem
      * @param string $excelDirectory path to excel files directory
      */
-    public function __construct(Filesystem $filesystem, $excelDirectory)
+    public function __construct(private readonly Filesystem $filesystem, private $excelDirectory)
     {
-        $this->filesystem = $filesystem;
-        $this->excelDirectory = $excelDirectory;
     }
 
     /**

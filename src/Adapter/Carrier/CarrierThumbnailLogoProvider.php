@@ -39,16 +39,10 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
 class CarrierThumbnailLogoProvider implements ImageProviderInterface
 {
     /**
-     * @var ImageTagSourceParserInterface
+     * @param ImageTagSourceParserInterface $imageTagSourceParser
      */
-    private $imageTagSourceParser;
-
-    /**
-     * @param ImageTagSourceParserInterface $parser
-     */
-    public function __construct(ImageTagSourceParserInterface $parser)
+    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser)
     {
-        $this->imageTagSourceParser = $parser;
     }
 
     /**

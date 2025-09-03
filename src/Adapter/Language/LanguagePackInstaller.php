@@ -37,25 +37,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class LanguagePackInstaller implements LanguagePackInstallerInterface
 {
     /**
-     * @var Version
-     */
-    private $version;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * LanguagePackInstaller constructor.
      *
      * @param TranslatorInterface $translator
      * @param Version $version
      */
-    public function __construct(TranslatorInterface $translator, Version $version)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly Version $version)
     {
-        $this->version = $version;
-        $this->translator = $translator;
     }
 
     /**

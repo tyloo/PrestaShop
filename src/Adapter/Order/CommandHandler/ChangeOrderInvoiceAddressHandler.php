@@ -44,25 +44,11 @@ use Validate;
 final class ChangeOrderInvoiceAddressHandler extends AbstractOrderHandler implements ChangeOrderInvoiceAddressHandlerInterface
 {
     /**
-     * @var OrderAmountUpdater
-     */
-    private $orderAmountUpdater;
-
-    /**
-     * @var OrderDetailUpdater
-     */
-    private $orderDetailTaxUpdater;
-
-    /**
      * @param OrderAmountUpdater $orderAmountUpdater
      * @param OrderDetailUpdater $orderDetailTaxUpdater
      */
-    public function __construct(
-        OrderAmountUpdater $orderAmountUpdater,
-        OrderDetailUpdater $orderDetailTaxUpdater
-    ) {
-        $this->orderAmountUpdater = $orderAmountUpdater;
-        $this->orderDetailTaxUpdater = $orderDetailTaxUpdater;
+    public function __construct(private readonly OrderAmountUpdater $orderAmountUpdater, private readonly OrderDetailUpdater $orderDetailTaxUpdater)
+    {
     }
 
     /**

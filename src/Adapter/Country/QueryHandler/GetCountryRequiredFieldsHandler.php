@@ -38,15 +38,11 @@ use PrestaShop\PrestaShop\Core\Domain\Country\QueryResult\CountryRequiredFields;
 #[AsQueryHandler]
 final class GetCountryRequiredFieldsHandler implements GetCountryRequiredFieldsHandlerInterface
 {
-    /** @var CountryRequiredFieldsProviderInterface */
-    private $requiredFieldsProvider;
-
     /**
      * @param CountryRequiredFieldsProviderInterface $requiredFieldsProvider
      */
-    public function __construct(CountryRequiredFieldsProviderInterface $requiredFieldsProvider)
+    public function __construct(private readonly CountryRequiredFieldsProviderInterface $requiredFieldsProvider)
     {
-        $this->requiredFieldsProvider = $requiredFieldsProvider;
     }
 
     /**

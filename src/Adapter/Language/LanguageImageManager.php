@@ -81,7 +81,7 @@ class LanguageImageManager
      */
     public function setupLanguageFlag(string $localeCode, int $langId, ?string $flagCode = null): void
     {
-        $flagCode = $flagCode ?? $this->getFlagCountryCodeFromLocale($localeCode);
+        $flagCode ??= $this->getFlagCountryCodeFromLocale($localeCode);
 
         $flagPath = $this->getFlagPath($flagCode);
 

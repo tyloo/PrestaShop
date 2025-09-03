@@ -35,22 +35,8 @@ use PrestaShop\PrestaShop\Core\ConfigurationInterface;
  */
 final class ImportDataFormatter
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var Tools
-     */
-    private $tools;
-
-    public function __construct(
-        ConfigurationInterface $configuration,
-        Tools $tools
-    ) {
-        $this->configuration = $configuration;
-        $this->tools = $tools;
+    public function __construct(private readonly ConfigurationInterface $configuration, private readonly Tools $tools)
+    {
     }
 
     /**

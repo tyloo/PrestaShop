@@ -39,41 +39,13 @@ use PrestaShop\PrestaShop\Core\Hook\HookDispatcherInterface;
 final class ImageCopier
 {
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var Tools
-     */
-    private $tools;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
      * @param ConfigurationInterface $configuration
      * @param Tools $tools
      * @param int $contextShopId
      * @param HookDispatcherInterface $hookDispatcher
      */
-    public function __construct(
-        ConfigurationInterface $configuration,
-        Tools $tools,
-        $contextShopId,
-        HookDispatcherInterface $hookDispatcher
-    ) {
-        $this->configuration = $configuration;
-        $this->tools = $tools;
-        $this->contextShopId = $contextShopId;
-        $this->hookDispatcher = $hookDispatcher;
+    public function __construct(private readonly ConfigurationInterface $configuration, private readonly Tools $tools, private $contextShopId, private readonly HookDispatcherInterface $hookDispatcher)
+    {
     }
 
     /**
@@ -171,7 +143,7 @@ final class ImageCopier
 
                     if (ImageManager::resize(
                         $tmpFile,
-                        $path . '-' . stripslashes($imageType['name']) . '.jpg',
+                        $path . '-' . stripslashes((string) $imageType['name']) . '.jpg',
                         $imageType['width'],
                         $imageType['height'],
                         'jpg',
@@ -185,7 +157,7 @@ final class ImageCopier
                     )) {
                         // the last image should not be added in the candidate list if it's bigger than the original image
                         if ($targetWidth <= $sourceWidth && $targetHeight <= $sourceHeight) {
-                            $pathInfos[] = [$targetWidth, $targetHeight, $path . '-' . stripslashes($imageType['name']) . '.jpg'];
+                            $pathInfos[] = [$targetWidth, $targetHeight, $path . '-' . stripslashes((string) $imageType['name']) . '.jpg'];
                         }
                         if ($entity == 'products') {
                             $file = $tmpDir . 'product_mini_' . (int) $entityId . '.jpg';

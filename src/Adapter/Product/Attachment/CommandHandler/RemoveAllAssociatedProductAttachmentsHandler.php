@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Attachment\CommandHandler\RemoveAl
 final class RemoveAllAssociatedProductAttachmentsHandler implements RemoveAllAssociatedProductAttachmentsHandlerInterface
 {
     /**
-     * @var ProductAttachmentUpdater
-     */
-    private $productAttachmentUpdater;
-
-    /**
      * @param ProductAttachmentUpdater $productAttachmentUpdater
      */
-    public function __construct(
-        ProductAttachmentUpdater $productAttachmentUpdater
-    ) {
-        $this->productAttachmentUpdater = $productAttachmentUpdater;
+    public function __construct(private readonly ProductAttachmentUpdater $productAttachmentUpdater)
+    {
     }
 
     /**

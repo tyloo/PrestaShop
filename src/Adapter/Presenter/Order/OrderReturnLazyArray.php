@@ -36,19 +36,6 @@ use Tools;
 class OrderReturnLazyArray extends AbstractLazyArray
 {
     /**
-     * @var string
-     */
-    private $prefix;
-
-    /**
-     * @var Link
-     */
-    private $link;
-
-    /** @var array */
-    private $orderReturn;
-
-    /**
      * OrderReturnLazyArray constructor.
      *
      * @param string $prefix
@@ -57,13 +44,10 @@ class OrderReturnLazyArray extends AbstractLazyArray
      *
      * @throws ReflectionException
      */
-    public function __construct($prefix, Link $link, array $orderReturn)
+    public function __construct(private $prefix, private readonly Link $link, private array $orderReturn)
     {
-        $this->prefix = $prefix;
-        $this->link = $link;
-        $this->orderReturn = $orderReturn;
         parent::__construct();
-        $this->appendArray($orderReturn);
+        $this->appendArray($this->orderReturn);
     }
 
     /**

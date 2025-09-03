@@ -37,28 +37,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class AverageCustomerAgeKpi implements KpiInterface
 {
     /**
-     * @var TranslatorInterface
+     * @param string $sourceUrl
      */
-    private $translator;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $kpiConfiguration;
-
-    /**
-     * @var string
-     */
-    private $sourceUrl;
-
-    public function __construct(
-        TranslatorInterface $translator,
-        ConfigurationInterface $kpiConfiguration,
-        $sourceUrl
-    ) {
-        $this->translator = $translator;
-        $this->kpiConfiguration = $kpiConfiguration;
-        $this->sourceUrl = $sourceUrl;
+    public function __construct(private readonly TranslatorInterface $translator, private readonly ConfigurationInterface $kpiConfiguration, private $sourceUrl)
+    {
     }
 
     /**

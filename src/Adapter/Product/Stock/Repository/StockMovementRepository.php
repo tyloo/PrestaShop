@@ -36,22 +36,8 @@ class StockMovementRepository
 {
     private const DEFAULT_LIMIT = 10;
 
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
+    {
     }
 
     /**

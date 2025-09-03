@@ -47,8 +47,8 @@ use PrestaShopBundle\Entity\MutationAction;
 final class UpdateOrderStatusHandler extends AbstractOrderHandler implements UpdateOrderStatusHandlerInterface
 {
     public function __construct(
-        private EmployeeContext $employeeContext,
-        private MutationTracker $mutationTracker,
+        private readonly EmployeeContext $employeeContext,
+        private readonly MutationTracker $mutationTracker,
     ) {
     }
 

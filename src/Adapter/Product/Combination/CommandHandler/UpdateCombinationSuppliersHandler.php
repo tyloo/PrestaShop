@@ -39,28 +39,16 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\UpdateC
 class UpdateCombinationSuppliersHandler extends AbstractProductSupplierHandler implements UpdateCombinationSuppliersHandlerInterface
 {
     /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var ProductSupplierUpdater
-     */
-    private $productSupplierUpdater;
-
-    /**
      * @param CombinationRepository $combinationRepository
      * @param ProductSupplierRepository $productSupplierRepository
      * @param ProductSupplierUpdater $productSupplierUpdater
      */
     public function __construct(
-        CombinationRepository $combinationRepository,
+        private readonly CombinationRepository $combinationRepository,
         ProductSupplierRepository $productSupplierRepository,
-        ProductSupplierUpdater $productSupplierUpdater
+        private readonly ProductSupplierUpdater $productSupplierUpdater
     ) {
         parent::__construct($productSupplierRepository);
-        $this->combinationRepository = $combinationRepository;
-        $this->productSupplierUpdater = $productSupplierUpdater;
     }
 
     /**

@@ -43,36 +43,21 @@ use Validate;
 class ModuleDataProvider
 {
     /**
-     * Logger.
-     *
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * Translator.
-     *
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * EntityManager for module history.
-     *
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
      * @var int
      */
     private $employeeID;
 
-    public function __construct(LoggerInterface $logger, TranslatorInterface $translator, ?EntityManager $entityManager = null)
+    public function __construct(/**
+     * Logger.
+     */
+    private readonly LoggerInterface $logger, /**
+     * Translator.
+     */
+    private readonly TranslatorInterface $translator, /**
+     * EntityManager for module history.
+     */
+    private readonly ?EntityManager $entityManager = null)
     {
-        $this->logger = $logger;
-        $this->translator = $translator;
-        $this->entityManager = $entityManager;
         $this->employeeID = 0;
     }
 

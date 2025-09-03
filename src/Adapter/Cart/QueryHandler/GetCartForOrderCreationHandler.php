@@ -64,49 +64,14 @@ use Tools;
 final class GetCartForOrderCreationHandler extends AbstractCartHandler implements GetCartForOrderCreationHandlerInterface
 {
     /**
-     * @var LocaleInterface
-     */
-    private $locale;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var Link
-     */
-    private $contextLink;
-
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var int
-     */
-    private $defaultCarrierId;
-
-    /**
      * @param LocaleInterface $locale
      * @param int $contextLangId
      * @param Link $contextLink
      * @param ContextStateManager $contextStateManager
      * @param int $defaultCarrierId
      */
-    public function __construct(
-        LocaleInterface $locale,
-        int $contextLangId,
-        Link $contextLink,
-        ContextStateManager $contextStateManager,
-        int $defaultCarrierId
-    ) {
-        $this->locale = $locale;
-        $this->contextLangId = $contextLangId;
-        $this->contextLink = $contextLink;
-        $this->contextStateManager = $contextStateManager;
-        $this->defaultCarrierId = $defaultCarrierId;
+    public function __construct(private readonly LocaleInterface $locale, private readonly int $contextLangId, private readonly Link $contextLink, private readonly ContextStateManager $contextStateManager, private readonly int $defaultCarrierId)
+    {
     }
 
     /**
@@ -373,7 +338,7 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
             $isFreeShipping && $hideDiscounts ? '0' : (string) $legacySummary['total_shipping'],
             $isFreeShipping,
             $this->fetchCartDeliveryOptions($deliveryOptionsByAddress, $deliveryAddress),
-            (int) $carrier->id ?: $this->defaultCarrierId ?: null,
+            ((int) $carrier->id ?: $this->defaultCarrierId) ?: null,
             (bool) $cart->gift,
             (bool) $cart->recyclable,
             $cart->gift_message,
@@ -548,7 +513,7 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
             (int) $product['id_product'],
             isset($product['id_product_attribute']) ? (int) $product['id_product_attribute'] : 0,
             $product['name'],
-            isset($product['attributes_small']) ? $product['attributes_small'] : '',
+            $product['attributes_small'] ?? '',
             $product['reference'],
             (string) Tools::ps_round($product['price'], $currency->precision),
             $product['quantity'],

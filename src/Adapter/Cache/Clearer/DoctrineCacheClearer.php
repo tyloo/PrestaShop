@@ -31,13 +31,8 @@ use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerInterface;
 
 final class DoctrineCacheClearer implements CacheClearerInterface
 {
-    /** @var DoctrineProvider */
-    private $doctrineProvider;
-
-    public function __construct(
-        DoctrineProvider $doctrineProvider
-    ) {
-        $this->doctrineProvider = $doctrineProvider;
+    public function __construct(private readonly DoctrineProvider $doctrineProvider)
+    {
     }
 
     /**

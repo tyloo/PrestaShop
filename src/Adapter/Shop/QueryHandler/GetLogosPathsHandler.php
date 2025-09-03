@@ -39,23 +39,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\QueryResult\LogosPaths;
 final class GetLogosPathsHandler implements GetLogosPathsHandlerInterface
 {
     /**
-     * @var string
-     */
-    private $imageBaseUrl;
-
-    /**
-     * @var string
-     */
-    private $imageDirectory;
-
-    /**
      * @param string $imageBaseUrl
      * @param string $imageDirectory
      */
-    public function __construct($imageBaseUrl, $imageDirectory)
+    public function __construct(private $imageBaseUrl, private $imageDirectory)
     {
-        $this->imageBaseUrl = $imageBaseUrl;
-        $this->imageDirectory = $imageDirectory;
     }
 
     /**

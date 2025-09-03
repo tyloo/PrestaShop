@@ -45,20 +45,14 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject\SupplierId;
 class GetProductSupplierOptionsHandler extends AbstractProductSupplierHandler implements GetProductSupplierOptionsHandlerInterface
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
      * @param ProductSupplierRepository $productSupplierRepository
      * @param ProductRepository $productRepository
      */
     public function __construct(
         ProductSupplierRepository $productSupplierRepository,
-        ProductRepository $productRepository
+        private readonly ProductRepository $productRepository
     ) {
         parent::__construct($productSupplierRepository);
-        $this->productRepository = $productRepository;
     }
 
     /**
@@ -75,9 +69,7 @@ class GetProductSupplierOptionsHandler extends AbstractProductSupplierHandler im
         if ($productType->getValue() !== ProductType::TYPE_COMBINATIONS) {
             $productSuppliers = $this->getProductSuppliersInfo($query->getProductId());
         }
-        $supplierIntIds = array_map(function (SupplierId $supplierId) {
-            return $supplierId->getValue();
-        }, $supplierIds);
+        $supplierIntIds = array_map(fn(SupplierId $supplierId) => $supplierId->getValue(), $supplierIds);
 
         return new ProductSupplierOptions(
             null !== $defaultSupplier ? $defaultSupplier->getValue() : 0,

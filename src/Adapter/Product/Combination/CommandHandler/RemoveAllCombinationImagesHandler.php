@@ -40,16 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\RemoveA
 final class RemoveAllCombinationImagesHandler implements RemoveAllCombinationImagesHandlerInterface
 {
     /**
-     * @var CombinationImagesUpdater
-     */
-    private $combinationImagesUpdater;
-
-    /**
      * @param CombinationImagesUpdater $combinationImagesUpdater
      */
-    public function __construct(CombinationImagesUpdater $combinationImagesUpdater)
+    public function __construct(private readonly CombinationImagesUpdater $combinationImagesUpdater)
     {
-        $this->combinationImagesUpdater = $combinationImagesUpdater;
     }
 
     /**

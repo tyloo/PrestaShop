@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\Command\UpdateCombinat
 class CombinationFiller implements CombinationFillerInterface
 {
     /**
-     * @var CombinationFillerInterface[]
-     */
-    private $updatablePropertyFillers;
-
-    /**
      * @param CombinationFillerInterface[] $updatablePropertyFillers
      */
-    public function __construct(
-        iterable $updatablePropertyFillers
-    ) {
-        $this->updatablePropertyFillers = $updatablePropertyFillers;
+    public function __construct(private readonly iterable $updatablePropertyFillers)
+    {
     }
 
     /**

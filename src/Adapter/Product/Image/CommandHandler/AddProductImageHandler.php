@@ -42,29 +42,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Image\ValueObject\ImageId;
 #[AsCommandHandler]
 final class AddProductImageHandler implements AddProductImageHandlerInterface
 {
-    /**
-     * @var ProductImageUploader
-     */
-    private $productImageUploader;
-
-    /**
-     * @var ProductImageFileValidator
-     */
-    private $imageValidator;
-
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    public function __construct(
-        ProductImageUploader $productImageUploader,
-        ProductImageRepository $productImageRepository,
-        ProductImageFileValidator $imageValidator
-    ) {
-        $this->productImageUploader = $productImageUploader;
-        $this->imageValidator = $imageValidator;
-        $this->productImageRepository = $productImageRepository;
+    public function __construct(private readonly ProductImageUploader $productImageUploader, private readonly ProductImageRepository $productImageRepository, private readonly ProductImageFileValidator $imageValidator)
+    {
     }
 
     /**

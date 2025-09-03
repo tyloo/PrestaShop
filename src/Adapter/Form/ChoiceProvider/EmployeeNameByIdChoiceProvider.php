@@ -44,7 +44,7 @@ final class EmployeeNameByIdChoiceProvider implements FormChoiceProviderInterfac
         $choices = [];
 
         foreach ($employees as $employee) {
-            $name = sprintf('%s. %s', substr($employee['firstname'], 0, 1), $employee['lastname']);
+            $name = sprintf('%s. %s', substr((string) $employee['firstname'], 0, 1), $employee['lastname']);
 
             $choices[$name] = (int) $employee['id_employee'];
         }

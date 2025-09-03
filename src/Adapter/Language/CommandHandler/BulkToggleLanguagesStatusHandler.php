@@ -41,16 +41,10 @@ use PrestaShop\PrestaShop\Core\Domain\Language\Exception\LanguageException;
 final class BulkToggleLanguagesStatusHandler extends AbstractLanguageHandler implements BulkToggleLanguagesStatusHandlerInterface
 {
     /**
-     * @var RobotsTextFileGenerator
-     */
-    private $robotsTextFileGenerator;
-
-    /**
      * @param RobotsTextFileGenerator $robotsTextFileGenerator
      */
-    public function __construct(RobotsTextFileGenerator $robotsTextFileGenerator)
+    public function __construct(private readonly RobotsTextFileGenerator $robotsTextFileGenerator)
     {
-        $this->robotsTextFileGenerator = $robotsTextFileGenerator;
     }
 
     /**

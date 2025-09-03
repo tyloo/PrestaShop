@@ -38,35 +38,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class StoreLazyArray extends AbstractLazyArray
 {
     /**
-     * @var ImageRetriever
-     */
-    private $imageRetriever;
-
-    /**
      * @var array
      */
     protected $store;
 
-    /**
-     * @var Language
-     */
-    private $language;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(
         array $store,
-        Language $language,
-        ImageRetriever $imageRetriever,
-        TranslatorInterface $translator,
+        private readonly Language $language,
+        private readonly ImageRetriever $imageRetriever,
+        private readonly TranslatorInterface $translator,
     ) {
         $this->store = $store;
-        $this->language = $language;
-        $this->imageRetriever = $imageRetriever;
-        $this->translator = $translator;
 
         parent::__construct();
         $this->appendArray($this->store);
@@ -119,7 +101,7 @@ class StoreLazyArray extends AbstractLazyArray
             return $this->store['business_hours'];
         }
 
-        $temp = json_decode($this->store['hours'], true);
+        $temp = json_decode((string) $this->store['hours'], true);
         $this->store['business_hours'] = [
             [
                 'day' => $this->translator->trans('Monday', [], 'Shop.Theme.Global'),

@@ -290,7 +290,7 @@ class AdminModuleDataProvider implements ModuleInterface
                     // We build our results array.
                     // We could remove directly the non-matching modules, but we will give that for the final loop of this function
 
-                    foreach (explode(' ', $value) as $keyword) {
+                    foreach (explode(' ', (string) $value) as $keyword) {
                         if (empty($keyword)) {
                             continue;
                         }
@@ -298,9 +298,9 @@ class AdminModuleDataProvider implements ModuleInterface
                         // Instead of looping on the whole module list, we use $module_ids which can already be reduced
                         // thanks to the previous array_intersect(...)
                         foreach ($modules as $key => $module) {
-                            if (str_contains($module->displayName, $keyword)
-                                || str_contains($module->name, $keyword)
-                                || str_contains($module->description, $keyword)) {
+                            if (str_contains((string) $module->displayName, $keyword)
+                                || str_contains((string) $module->name, $keyword)
+                                || str_contains((string) $module->description, $keyword)) {
                                 $search_result[] = $key;
                             }
                         }

@@ -42,16 +42,10 @@ use PrestaShop\PrestaShop\Core\Domain\Security\CommandHandler\BulkDeleteEmployee
 final class BulkDeleteEmployeeSessionsHandler implements BulkDeleteEmployeeSessionsHandlerInterface
 {
     /**
-     * @var EmployeeSessionRepository
-     */
-    private $repository;
-
-    /**
      * @param EmployeeSessionRepository $repository
      */
-    public function __construct(EmployeeSessionRepository $repository)
+    public function __construct(private readonly EmployeeSessionRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**

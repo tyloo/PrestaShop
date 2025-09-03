@@ -36,18 +36,12 @@ use Memcached;
 class MemcacheServerManager
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
      * @var string
      */
     private $tableName;
 
-    public function __construct(Connection $connection, $dbPrefix)
+    public function __construct(private readonly Connection $connection, $dbPrefix)
     {
-        $this->connection = $connection;
         $this->tableName = $dbPrefix . 'memcached_servers';
     }
 

@@ -45,20 +45,14 @@ class SearchProductsForAssociationHandler implements SearchProductsForAssociatio
     protected $productRepository;
 
     /**
-     * @var ProductImagePathFactory
-     */
-    private $productImagePathFactory;
-
-    /**
      * @param ProductRepository $productRepository
      * @param ProductImagePathFactory $productImagePathFactory
      */
     public function __construct(
         ProductRepository $productRepository,
-        ProductImagePathFactory $productImagePathFactory
+        private readonly ProductImagePathFactory $productImagePathFactory
     ) {
         $this->productRepository = $productRepository;
-        $this->productImagePathFactory = $productImagePathFactory;
     }
 
     /**

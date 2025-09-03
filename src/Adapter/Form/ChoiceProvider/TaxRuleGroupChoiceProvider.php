@@ -42,26 +42,8 @@ use TaxRulesGroup;
  */
 final class TaxRuleGroupChoiceProvider implements FormChoiceProviderInterface, FormChoiceAttributeProviderInterface
 {
-    /**
-     * @var int
-     */
-    private $countryId;
-
-    /**
-     * @var TaxRulesGroupRepository
-     */
-    private $taxRulesGroupRepository;
-
-    /**
-     * @var TaxComputer
-     */
-    private $taxComputer;
-
-    public function __construct(int $countryId, TaxRulesGroupRepository $taxRulesGroupRepository, TaxComputer $taxComputer)
+    public function __construct(private readonly int $countryId, private readonly TaxRulesGroupRepository $taxRulesGroupRepository, private readonly TaxComputer $taxComputer)
     {
-        $this->countryId = $countryId;
-        $this->taxRulesGroupRepository = $taxRulesGroupRepository;
-        $this->taxComputer = $taxComputer;
     }
 
     /**

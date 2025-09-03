@@ -40,14 +40,8 @@ use PrestaShop\PrestaShop\Core\Domain\Store\Repository\StoreRepository;
 #[AsCommandHandler]
 class BulkDeleteStoreHandler implements BulkDeleteStoreHandlerInterface
 {
-    /**
-     * @var StoreRepository
-     */
-    private $storeRepository;
-
-    public function __construct(StoreRepository $storeRepository)
+    public function __construct(private readonly StoreRepository $storeRepository)
     {
-        $this->storeRepository = $storeRepository;
     }
 
     /**

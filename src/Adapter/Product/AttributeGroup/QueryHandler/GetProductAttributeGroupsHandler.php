@@ -42,18 +42,12 @@ use PrestaShop\PrestaShop\Core\Domain\Product\AttributeGroup\QueryHandler\GetPro
 #[AsQueryHandler]
 class GetProductAttributeGroupsHandler extends AbstractAttributeGroupQueryHandler implements GetProductAttributeGroupsHandlerInterface
 {
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
     public function __construct(
         AttributeRepository $attributeRepository,
         AttributeGroupRepository $attributeGroupRepository,
-        ProductRepository $productRepository
+        private readonly ProductRepository $productRepository
     ) {
         parent::__construct($attributeRepository, $attributeGroupRepository);
-        $this->productRepository = $productRepository;
     }
 
     /**

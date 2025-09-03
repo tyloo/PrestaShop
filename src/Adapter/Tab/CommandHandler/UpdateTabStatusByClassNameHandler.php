@@ -38,14 +38,8 @@ use PrestaShopBundle\Entity\Tab;
 #[AsCommandHandler]
 class UpdateTabStatusByClassNameHandler implements UpdateTabStatusByClassNameHandlerInterface
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    public function __construct(EntityManager $entityManager)
+    public function __construct(private readonly EntityManager $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function handle(UpdateTabStatusByClassNameCommand $command): void

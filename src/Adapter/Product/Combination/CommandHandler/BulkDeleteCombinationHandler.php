@@ -39,17 +39,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\CommandHandler\BulkDel
 class BulkDeleteCombinationHandler implements BulkDeleteCombinationHandlerInterface
 {
     /**
-     * @var CombinationDeleter
-     */
-    private $combinationDeleter;
-
-    /**
      * @param CombinationDeleter $combinationDeleter
      */
-    public function __construct(
-        CombinationDeleter $combinationDeleter
-    ) {
-        $this->combinationDeleter = $combinationDeleter;
+    public function __construct(private readonly CombinationDeleter $combinationDeleter)
+    {
     }
 
     /**

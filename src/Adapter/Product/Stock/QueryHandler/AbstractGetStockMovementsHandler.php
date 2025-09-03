@@ -73,12 +73,9 @@ abstract class AbstractGetStockMovementsHandler
         );
 
         return array_map(
-            function (array $historyRow): StockMovement {
-                return $historyRow['grouping_type'] === StockMovement::EDITION_TYPE
-                    ? $this->createEditionStockMovement($historyRow)
-                    : $this->createOrdersStockMovement($historyRow)
-                ;
-            },
+            fn(array $historyRow): StockMovement => $historyRow['grouping_type'] === StockMovement::EDITION_TYPE
+                ? $this->createEditionStockMovement($historyRow)
+                : $this->createOrdersStockMovement($historyRow),
             $lastStockMovements
         );
     }

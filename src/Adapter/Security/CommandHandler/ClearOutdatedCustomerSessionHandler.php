@@ -41,14 +41,8 @@ use PrestaShop\PrestaShop\Core\Domain\Security\CommandHandler\ClearOutdatedCusto
 #[AsCommandHandler]
 class ClearOutdatedCustomerSessionHandler implements ClearOutdatedCustomerSessionHandlerInterface
 {
-    /**
-     * @var CustomerSessionRepository
-     */
-    private $repository;
-
-    public function __construct(CustomerSessionRepository $repository)
+    public function __construct(private readonly CustomerSessionRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**

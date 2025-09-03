@@ -36,25 +36,11 @@ use PrestaShop\PrestaShop\Core\Language\Pack\LanguagePackInstallerInterface;
 final class LanguagePackImporter implements LanguagePackImporterInterface
 {
     /**
-     * @var LanguagePackInstallerInterface
-     */
-    private $languagePack;
-
-    /**
-     * @var CacheClearerInterface
-     */
-    private $entireCacheClearer;
-
-    /**
      * @param LanguagePackInstallerInterface $languagePack
      * @param CacheClearerInterface $entireCacheClearer
      */
-    public function __construct(
-        LanguagePackInstallerInterface $languagePack,
-        CacheClearerInterface $entireCacheClearer
-    ) {
-        $this->languagePack = $languagePack;
-        $this->entireCacheClearer = $entireCacheClearer;
+    public function __construct(private readonly LanguagePackInstallerInterface $languagePack, private readonly CacheClearerInterface $entireCacheClearer)
+    {
     }
 
     /**

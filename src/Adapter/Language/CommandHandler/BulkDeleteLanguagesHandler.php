@@ -43,16 +43,10 @@ use Shop;
 final class BulkDeleteLanguagesHandler extends AbstractLanguageHandler implements BulkDeleteLanguagesHandlerInterface
 {
     /**
-     * @var RobotsTextFileGenerator
-     */
-    private $robotsTextFileGenerator;
-
-    /**
      * @param RobotsTextFileGenerator $robotsTextFileGenerator
      */
-    public function __construct(RobotsTextFileGenerator $robotsTextFileGenerator)
+    public function __construct(private readonly RobotsTextFileGenerator $robotsTextFileGenerator)
     {
-        $this->robotsTextFileGenerator = $robotsTextFileGenerator;
     }
 
     /**

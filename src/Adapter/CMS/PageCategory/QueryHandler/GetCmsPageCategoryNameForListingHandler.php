@@ -40,25 +40,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 final class GetCmsPageCategoryNameForListingHandler implements GetCmsPageCategoryNameForListingHandlerInterface
 {
     /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @param int $contextLanguageId
      * @param RequestStack $requestStack
      */
-    public function __construct(
-        $contextLanguageId,
-        RequestStack $requestStack
-    ) {
-        $this->contextLanguageId = $contextLanguageId;
-        $this->requestStack = $requestStack;
+    public function __construct(private $contextLanguageId, private readonly RequestStack $requestStack)
+    {
     }
 
     /**
@@ -68,7 +54,7 @@ final class GetCmsPageCategoryNameForListingHandler implements GetCmsPageCategor
     {
         $cmsCategory = new CMSCategory($this->getCmsCategoryIdFromRequest());
 
-        return isset($cmsCategory->name[$this->contextLanguageId]) ? $cmsCategory->name[$this->contextLanguageId] : '';
+        return $cmsCategory->name[$this->contextLanguageId] ?? '';
     }
 
     /**

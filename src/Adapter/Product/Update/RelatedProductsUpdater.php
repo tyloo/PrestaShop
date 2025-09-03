@@ -41,17 +41,10 @@ use Product;
 class RelatedProductsUpdater
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
      * @param ProductRepository $productRepository
      */
-    public function __construct(
-        ProductRepository $productRepository
-    ) {
-        $this->productRepository = $productRepository;
+    public function __construct(private readonly ProductRepository $productRepository)
+    {
     }
 
     /**
@@ -82,9 +75,7 @@ class RelatedProductsUpdater
      */
     private function insertRelatedProducts(Product $product, array $relatedProductIds): void
     {
-        $ids = array_map(function (ProductId $productId): int {
-            return $productId->getValue();
-        }, $relatedProductIds);
+        $ids = array_map(fn(ProductId $productId): int => $productId->getValue(), $relatedProductIds);
 
         try {
             $product->changeAccessories($ids);

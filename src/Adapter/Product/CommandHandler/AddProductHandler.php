@@ -42,24 +42,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 final class AddProductHandler implements AddProductHandlerInterface
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var Tools
-     */
-    private $tools;
-
-    /**
      * @param ProductRepository $productRepository
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        Tools $tools
-    ) {
-        $this->productRepository = $productRepository;
-        $this->tools = $tools;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly Tools $tools)
+    {
     }
 
     /**

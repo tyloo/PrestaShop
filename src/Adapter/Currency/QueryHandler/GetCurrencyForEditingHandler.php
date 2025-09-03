@@ -43,24 +43,10 @@ use PrestaShop\PrestaShop\Core\Localization\Currency\PatternTransformer;
 final class GetCurrencyForEditingHandler implements GetCurrencyForEditingHandlerInterface
 {
     /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
-     * @var PatternTransformer
-     */
-    private $patternTransformer;
-
-    /**
      * @param int $contextShopId
      */
-    public function __construct(
-        int $contextShopId,
-        PatternTransformer $patternTransformer
-    ) {
-        $this->contextShopId = $contextShopId;
-        $this->patternTransformer = $patternTransformer;
+    public function __construct(private readonly int $contextShopId, private readonly PatternTransformer $patternTransformer)
+    {
     }
 
     /**

@@ -39,17 +39,10 @@ class BasicInformationFiller implements ProductFillerInterface
     use LocalizedObjectModelTrait;
 
     /**
-     * @var int
-     */
-    private $defaultLanguageId;
-
-    /**
      * @param int $defaultLanguageId
      */
-    public function __construct(
-        int $defaultLanguageId
-    ) {
-        $this->defaultLanguageId = $defaultLanguageId;
+    public function __construct(private int $defaultLanguageId)
+    {
     }
 
     /**

@@ -42,16 +42,10 @@ use PrestaShop\PrestaShop\Core\Domain\Security\CommandHandler\BulkDeleteCustomer
 final class BulkDeleteCustomerSessionsHandler implements BulkDeleteCustomerSessionsHandlerInterface
 {
     /**
-     * @var CustomerSessionRepository
-     */
-    private $repository;
-
-    /**
      * @param CustomerSessionRepository $repository
      */
-    public function __construct(CustomerSessionRepository $repository)
+    public function __construct(private readonly CustomerSessionRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**

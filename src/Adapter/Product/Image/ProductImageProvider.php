@@ -36,29 +36,8 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class ProductImageProvider implements ProductImageProviderInterface
 {
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var ProductImagePathFactory
-     */
-    private $productImagePathFactory;
-
-    public function __construct(
-        ProductImageRepository $productImageRepository,
-        CombinationRepository $combinationRepository,
-        ProductImagePathFactory $productImagePathFactory
-    ) {
-        $this->productImageRepository = $productImageRepository;
-        $this->productImagePathFactory = $productImagePathFactory;
-        $this->combinationRepository = $combinationRepository;
+    public function __construct(private readonly ProductImageRepository $productImageRepository, private readonly CombinationRepository $combinationRepository, private readonly ProductImagePathFactory $productImagePathFactory)
+    {
     }
 
     public function getProductCoverUrl(ProductId $productId, ShopId $shopId): string

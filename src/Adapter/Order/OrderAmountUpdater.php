@@ -59,26 +59,6 @@ use Validate;
 class OrderAmountUpdater
 {
     /**
-     * @var ShopConfigurationInterface
-     */
-    private $shopConfiguration;
-
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var OrderDetailUpdater
-     */
-    private $orderDetailUpdater;
-
-    /**
-     * @var OrderProductRemover
-     */
-    private $orderProductRemover;
-
-    /**
      * @var array
      */
     private $orderConstraints = [];
@@ -94,16 +74,8 @@ class OrderAmountUpdater
      * @param OrderDetailUpdater $orderDetailUpdater
      * @param OrderProductRemover $orderProductRemover
      */
-    public function __construct(
-        ShopConfigurationInterface $shopConfiguration,
-        ContextStateManager $contextStateManager,
-        OrderDetailUpdater $orderDetailUpdater,
-        OrderProductRemover $orderProductRemover
-    ) {
-        $this->shopConfiguration = $shopConfiguration;
-        $this->contextStateManager = $contextStateManager;
-        $this->orderDetailUpdater = $orderDetailUpdater;
-        $this->orderProductRemover = $orderProductRemover;
+    public function __construct(private readonly ShopConfigurationInterface $shopConfiguration, private readonly ContextStateManager $contextStateManager, private readonly OrderDetailUpdater $orderDetailUpdater, private readonly OrderProductRemover $orderProductRemover)
+    {
     }
 
     /**
@@ -520,7 +492,7 @@ class OrderAmountUpdater
 
         foreach ($invoiceCollection as $invoice) {
             // If all the invoice's products have been removed the offset won't exist
-            $currentInvoiceProducts = isset($invoiceProducts[$invoice->id]) ? $invoiceProducts[$invoice->id] : [];
+            $currentInvoiceProducts = $invoiceProducts[$invoice->id] ?? [];
 
             // Shipping are computed on first invoice only
             $carrierId = $order->id_carrier;

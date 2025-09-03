@@ -39,11 +39,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
 {
     /**
-     * @var array
-     */
-    private $rules;
-
-    /**
      * UrlSchemaDataConfiguration constructor.
      *
      * @param Configuration $configuration
@@ -51,11 +46,9 @@ final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
      * @param FeatureInterface $multistoreFeature
      * @param array $rules
      */
-    public function __construct(Configuration $configuration, Context $shopContext, FeatureInterface $multistoreFeature, array $rules)
+    public function __construct(Configuration $configuration, Context $shopContext, FeatureInterface $multistoreFeature, private readonly array $rules)
     {
         parent::__construct($configuration, $shopContext, $multistoreFeature);
-
-        $this->rules = $rules;
     }
 
     /**

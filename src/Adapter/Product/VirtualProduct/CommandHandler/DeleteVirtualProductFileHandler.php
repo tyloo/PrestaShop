@@ -39,17 +39,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\VirtualProductFile\CommandHandler\
 class DeleteVirtualProductFileHandler implements DeleteVirtualProductFileHandlerInterface
 {
     /**
-     * @var VirtualProductUpdater
-     */
-    private $virtualProductUpdater;
-
-    /**
      * @param VirtualProductUpdater $virtualProductUpdater
      */
-    public function __construct(
-        VirtualProductUpdater $virtualProductUpdater
-    ) {
-        $this->virtualProductUpdater = $virtualProductUpdater;
+    public function __construct(private readonly VirtualProductUpdater $virtualProductUpdater)
+    {
     }
 
     /**

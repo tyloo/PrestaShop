@@ -276,7 +276,7 @@ class ModuleSelfConfigurator
     {
         // If we do not deal with any kind of URL, add the path to the YML config file
         if (!filter_var($file, FILTER_VALIDATE_URL)) {
-            $file = dirname($this->getFile()) . '/' . $file;
+            $file = dirname((string) $this->getFile()) . '/' . $file;
         }
 
         return $file;

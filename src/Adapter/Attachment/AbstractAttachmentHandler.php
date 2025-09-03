@@ -42,16 +42,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 abstract class AbstractAttachmentHandler
 {
     /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /**
      * @param ValidatorInterface $validator
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(private readonly ValidatorInterface $validator)
     {
-        $this->validator = $validator;
     }
 
     /**

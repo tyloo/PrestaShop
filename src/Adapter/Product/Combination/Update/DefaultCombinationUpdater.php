@@ -40,25 +40,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 class DefaultCombinationUpdater
 {
     /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
      * @param CombinationRepository $combinationRepository
      * @param ProductRepository $productRepository
      */
-    public function __construct(
-        CombinationRepository $combinationRepository,
-        ProductRepository $productRepository
-    ) {
-        $this->combinationRepository = $combinationRepository;
-        $this->productRepository = $productRepository;
+    public function __construct(private readonly CombinationRepository $combinationRepository, private readonly ProductRepository $productRepository)
+    {
     }
 
     /**

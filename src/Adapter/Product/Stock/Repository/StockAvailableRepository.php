@@ -52,36 +52,8 @@ use StockAvailable;
 
 class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var StockAvailableValidator
-     */
-    private $stockAvailableValidator;
-
-    /**
-     * @var ShopGroupRepository
-     */
-    private $shopGroupRepository;
-
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        StockAvailableValidator $stockAvailableValidator,
-        ShopGroupRepository $shopGroupRepository
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->stockAvailableValidator = $stockAvailableValidator;
-        $this->shopGroupRepository = $shopGroupRepository;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly StockAvailableValidator $stockAvailableValidator, private readonly ShopGroupRepository $shopGroupRepository)
+    {
     }
 
     /**
@@ -320,9 +292,7 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('combinationId', $combinationId->getValue())
         ;
 
-        return array_map(static function (array $stock) {
-            return new StockId((int) $stock['id_stock_available']);
-        }, $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn(array $stock) => new StockId((int) $stock['id_stock_available']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**

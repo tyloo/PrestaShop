@@ -56,7 +56,7 @@ class HostingInformation
     public function getServerInformation()
     {
         return [
-            'version' => isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : 'n/a',
+            'version' => $_SERVER['SERVER_SOFTWARE'] ?? 'n/a',
             'php' => $this->getPhpInformation(),
         ];
     }

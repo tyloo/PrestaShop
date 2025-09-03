@@ -35,14 +35,8 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
  */
 class UploadQuotaConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    public function __construct(Configuration $configuration)
+    public function __construct(private readonly Configuration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

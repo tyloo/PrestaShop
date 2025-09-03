@@ -33,33 +33,12 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\StockModificatio
 class ProductStockProperties
 {
     /**
-     * @var StockModification|null
-     */
-    private $stockModification;
-
-    /**
-     * @var OutOfStockType|null
-     */
-    private $outOfStockType;
-
-    /**
-     * @var string|null
-     */
-    private $location;
-
-    /**
      * @param StockModification|null $stockModification
      * @param OutOfStockType|null $outOfStockType
      * @param string|null $location
      */
-    public function __construct(
-        ?StockModification $stockModification = null,
-        ?OutOfStockType $outOfStockType = null,
-        ?string $location = null
-    ) {
-        $this->stockModification = $stockModification;
-        $this->outOfStockType = $outOfStockType;
-        $this->location = $location;
+    public function __construct(private readonly ?StockModification $stockModification = null, private readonly ?OutOfStockType $outOfStockType = null, private readonly ?string $location = null)
+    {
     }
 
     /**

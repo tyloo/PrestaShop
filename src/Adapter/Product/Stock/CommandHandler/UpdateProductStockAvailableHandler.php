@@ -45,33 +45,12 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 class UpdateProductStockAvailableHandler implements UpdateProductStockHandlerInterface
 {
     /**
-     * @var ProductStockUpdater
-     */
-    private $productStockUpdater;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
      * @param ProductStockUpdater $productStockUpdater
      * @param ProductRepository $productRepository
      * @param CombinationRepository $combinationRepository
      */
-    public function __construct(
-        ProductStockUpdater $productStockUpdater,
-        ProductRepository $productRepository,
-        CombinationRepository $combinationRepository
-    ) {
-        $this->productStockUpdater = $productStockUpdater;
-        $this->combinationRepository = $combinationRepository;
-        $this->productRepository = $productRepository;
+    public function __construct(private readonly ProductStockUpdater $productStockUpdater, private readonly ProductRepository $productRepository, private readonly CombinationRepository $combinationRepository)
+    {
     }
 
     /**

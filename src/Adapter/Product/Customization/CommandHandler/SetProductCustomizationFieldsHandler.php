@@ -47,25 +47,11 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 class SetProductCustomizationFieldsHandler implements SetProductCustomizationFieldsHandlerInterface
 {
     /**
-     * @var CustomizationFieldRepository
-     */
-    private $customizationFieldRepository;
-
-    /**
-     * @var ProductCustomizationFieldUpdater
-     */
-    private $productCustomizationFieldUpdater;
-
-    /**
      * @param CustomizationFieldRepository $customizationFieldRepository,
      * @param ProductCustomizationFieldUpdater $productCustomizationFieldUpdater
      */
-    public function __construct(
-        CustomizationFieldRepository $customizationFieldRepository,
-        ProductCustomizationFieldUpdater $productCustomizationFieldUpdater
-    ) {
-        $this->customizationFieldRepository = $customizationFieldRepository;
-        $this->productCustomizationFieldUpdater = $productCustomizationFieldUpdater;
+    public function __construct(private readonly CustomizationFieldRepository $customizationFieldRepository, private readonly ProductCustomizationFieldUpdater $productCustomizationFieldUpdater)
+    {
     }
 
     /**

@@ -46,33 +46,12 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 class CustomerSessionRepository extends AbstractObjectModelRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var int
-     */
-    private $cookieLifetime;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param int $cookieLifetime
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        int $cookieLifetime
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->cookieLifetime = $cookieLifetime;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly int $cookieLifetime)
+    {
     }
 
     /**

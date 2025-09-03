@@ -38,14 +38,8 @@ use PrestaShop\PrestaShop\Core\Domain\AttributeGroup\Attribute\QueryResult\Edita
 #[AsQueryHandler]
 final class GetAttributeForEditingHandler implements GetAttributeForEditingHandlerInterface
 {
-    /**
-     * @var AttributeRepository
-     */
-    private $attributeRepository;
-
-    public function __construct(AttributeRepository $attributeRepository)
+    public function __construct(private readonly AttributeRepository $attributeRepository)
     {
-        $this->attributeRepository = $attributeRepository;
     }
 
     /**

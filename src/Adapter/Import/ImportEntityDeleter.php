@@ -39,41 +39,13 @@ use PrestaShop\PrestaShop\Core\Import\Exception\NotSupportedImportEntityExceptio
 final class ImportEntityDeleter implements ImportEntityDeleterInterface
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string database prefix
-     */
-    private $dbPrefix;
-
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var ImageFileDeleterInterface
-     */
-    private $imageFileDeleter;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param Configuration $configuration
      * @param ImageFileDeleterInterface $imageFileDeleter
      */
-    public function __construct(
-        Connection $connection,
-        $dbPrefix,
-        Configuration $configuration,
-        ImageFileDeleterInterface $imageFileDeleter
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->configuration = $configuration;
-        $this->imageFileDeleter = $imageFileDeleter;
+    public function __construct(private readonly Connection $connection, private $dbPrefix, private readonly Configuration $configuration, private readonly ImageFileDeleterInterface $imageFileDeleter)
+    {
     }
 
     /**
@@ -81,56 +53,23 @@ final class ImportEntityDeleter implements ImportEntityDeleterInterface
      */
     public function deleteAll($importEntity)
     {
-        switch ($importEntity) {
-            case Entity::TYPE_CATEGORIES:
-                $this->deleteCategories();
-
-                break;
-
-            case Entity::TYPE_PRODUCTS:
-                $this->deleteProducts();
-
-                break;
-
-            case Entity::TYPE_COMBINATIONS:
-                $this->deleteCombinations();
-
-                break;
-
-            case Entity::TYPE_CUSTOMERS:
-                $this->truncateTables([
-                    'customer',
-                ]);
-
-                break;
-
-            case Entity::TYPE_ADDRESSES:
-                $this->truncateTables([
-                    'address',
-                ]);
-
-                break;
-
-            case Entity::TYPE_MANUFACTURERS:
-                $this->deleteManufacturers();
-
-                break;
-
-            case Entity::TYPE_SUPPLIERS:
-                $this->deleteSuppliers();
-
-                break;
-
-            case Entity::TYPE_ALIAS:
-                $this->truncateTables([
-                    'alias',
-                ]);
-
-                break;
-
-            default:
-                throw new NotSupportedImportEntityException("Import entity \"{$importEntity}\" is not supported");
-        }
+        match ($importEntity) {
+            Entity::TYPE_CATEGORIES => $this->deleteCategories(),
+            Entity::TYPE_PRODUCTS => $this->deleteProducts(),
+            Entity::TYPE_COMBINATIONS => $this->deleteCombinations(),
+            Entity::TYPE_CUSTOMERS => $this->truncateTables([
+                'customer',
+            ]),
+            Entity::TYPE_ADDRESSES => $this->truncateTables([
+                'address',
+            ]),
+            Entity::TYPE_MANUFACTURERS => $this->deleteManufacturers(),
+            Entity::TYPE_SUPPLIERS => $this->deleteSuppliers(),
+            Entity::TYPE_ALIAS => $this->truncateTables([
+                'alias',
+            ]),
+            default => throw new NotSupportedImportEntityException("Import entity \"{$importEntity}\" is not supported"),
+        };
 
         $this->imageFileDeleter->deleteAllImages($this->configuration->get('_PS_TMP_IMG_DIR_'));
     }

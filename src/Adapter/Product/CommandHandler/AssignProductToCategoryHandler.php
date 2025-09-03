@@ -41,14 +41,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Exception\CannotAssignProductToCat
 #[AsCommandHandler]
 final class AssignProductToCategoryHandler extends AbstractObjectModelHandler implements AssignProductToCategoryHandlerInterface
 {
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(private readonly ProductRepository $productRepository)
     {
-        $this->productRepository = $productRepository;
     }
 
     /**

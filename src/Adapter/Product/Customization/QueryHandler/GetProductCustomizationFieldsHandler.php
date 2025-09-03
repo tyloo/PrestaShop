@@ -43,17 +43,10 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 final class GetProductCustomizationFieldsHandler implements GetProductCustomizationFieldsHandlerInterface
 {
     /**
-     * @var CustomizationFieldRepository
-     */
-    private $customizationFieldRepository;
-
-    /**
      * @param CustomizationFieldRepository $customizationFieldRepository
      */
-    public function __construct(
-        CustomizationFieldRepository $customizationFieldRepository
-    ) {
-        $this->customizationFieldRepository = $customizationFieldRepository;
+    public function __construct(private readonly CustomizationFieldRepository $customizationFieldRepository)
+    {
     }
 
     /**

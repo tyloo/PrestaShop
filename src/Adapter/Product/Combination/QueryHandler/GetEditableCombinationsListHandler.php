@@ -52,49 +52,14 @@ use PrestaShop\PrestaShop\Core\Search\Filters\ProductCombinationFilters;
 final class GetEditableCombinationsListHandler implements GetEditableCombinationsListHandlerInterface
 {
     /**
-     * @var DoctrineQueryBuilderInterface
-     */
-    private $combinationQueryBuilder;
-
-    /**
-     * @var AttributeRepository
-     */
-    private $attributeRepository;
-
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
-     * @var ProductImagePathFactory
-     */
-    private $productImagePathFactory;
-
-    /**
-     * @var CombinationNameBuilderInterface
-     */
-    private $combinationNameBuilder;
-
-    /**
      * @param DoctrineQueryBuilderInterface $combinationQueryBuilder
      * @param AttributeRepository $attributeRepository
      * @param ProductImageRepository $productImageRepository
      * @param ProductImagePathFactory $productImagePathFactory
      * @param CombinationNameBuilderInterface $combinationNameBuilder
      */
-    public function __construct(
-        DoctrineQueryBuilderInterface $combinationQueryBuilder,
-        AttributeRepository $attributeRepository,
-        ProductImageRepository $productImageRepository,
-        ProductImagePathFactory $productImagePathFactory,
-        CombinationNameBuilderInterface $combinationNameBuilder
-    ) {
-        $this->combinationQueryBuilder = $combinationQueryBuilder;
-        $this->attributeRepository = $attributeRepository;
-        $this->productImageRepository = $productImageRepository;
-        $this->productImagePathFactory = $productImagePathFactory;
-        $this->combinationNameBuilder = $combinationNameBuilder;
+    public function __construct(private readonly DoctrineQueryBuilderInterface $combinationQueryBuilder, private readonly AttributeRepository $attributeRepository, private readonly ProductImageRepository $productImageRepository, private readonly ProductImagePathFactory $productImagePathFactory, private readonly CombinationNameBuilderInterface $combinationNameBuilder)
+    {
     }
 
     /**
@@ -128,9 +93,7 @@ final class GetEditableCombinationsListHandler implements GetEditableCombination
         $combinations = $this->combinationQueryBuilder->getSearchQueryBuilder($searchCriteria)->executeQuery()->fetchAllAssociative();
         $total = (int) $this->combinationQueryBuilder->getCountQueryBuilder($searchCriteria)->executeQuery()->fetchOne();
 
-        $combinationIds = array_map(function (array $combination): CombinationId {
-            return new CombinationId((int) $combination['id_product_attribute']);
-        }, $combinations);
+        $combinationIds = array_map(fn(array $combination): CombinationId => new CombinationId((int) $combination['id_product_attribute']), $combinations);
 
         $attributesInformation = $this->attributeRepository->getAttributesInfoByCombinationIds(
             $combinationIds,

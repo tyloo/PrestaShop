@@ -54,19 +54,9 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
     public const MAX_NESTING_LEVEL = 12;
 
     /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorizationChecker;
-
-    /**
      * @var array
      */
     private $whitelist = [];
-
-    /**
-     * @var int
-     */
-    private $languageId;
 
     /**
      * @var array
@@ -77,12 +67,10 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
-        AuthorizationCheckerInterface $authorizationChecker,
-        int $languageId,
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
+        private readonly int $languageId,
         array $nonConfigurableTabs
     ) {
-        $this->authorizationChecker = $authorizationChecker;
-        $this->languageId = $languageId;
         $this->nonConfigurableTabs = $nonConfigurableTabs;
     }
 
@@ -232,9 +220,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
             // Allow only whitelisted elements
             $permissions[$profile['id']] = array_filter(
                 Profile::getProfileAccesses($profile['id']),
-                function ($item) {
-                    return in_array($item['id_tab'], $this->whitelist);
-                }
+                fn($item) => in_array($item['id_tab'], $this->whitelist)
             );
         }
 
@@ -346,10 +332,10 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
 
             uasort($profilePermissionsForModules[$profile['id']], function ($a, $b) {
                 // For the reference https://github.com/PrestaShop/PrestaShop/pull/12428/files#r267703322
-                $a['name'] = $a['name'] ?? '';
-                $b['name'] = $b['name'] ?? '';
+                $a['name'] ??= '';
+                $b['name'] ??= '';
 
-                return strnatcmp($a['name'], $b['name']);
+                return strnatcmp((string) $a['name'], (string) $b['name']);
             });
         }
 

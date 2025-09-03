@@ -43,25 +43,11 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\Exception\CartConstraintException;
 final class AddProductToCartHandler extends AbstractCartHandler implements AddProductToCartHandlerInterface
 {
     /**
-     * @var AddCustomizationHandlerInterface
-     */
-    private $addCustomizationHandler;
-
-    /**
-     * @var UpdateProductQuantityInCartHandlerInterface
-     */
-    private $updateProductQuantityInCartHandler;
-
-    /**
      * @param AddCustomizationHandlerInterface $addCustomizationHandler
      * @param UpdateProductQuantityInCartHandlerInterface $updateProductQuantityInCartHandler
      */
-    public function __construct(
-        AddCustomizationHandlerInterface $addCustomizationHandler,
-        UpdateProductQuantityInCartHandlerInterface $updateProductQuantityInCartHandler
-    ) {
-        $this->addCustomizationHandler = $addCustomizationHandler;
-        $this->updateProductQuantityInCartHandler = $updateProductQuantityInCartHandler;
+    public function __construct(private readonly AddCustomizationHandlerInterface $addCustomizationHandler, private readonly UpdateProductQuantityInCartHandlerInterface $updateProductQuantityInCartHandler)
+    {
     }
 
     /**

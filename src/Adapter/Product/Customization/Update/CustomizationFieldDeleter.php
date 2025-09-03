@@ -45,16 +45,6 @@ use Product;
 class CustomizationFieldDeleter
 {
     /**
-     * @var CustomizationFieldRepository
-     */
-    private $customizationFieldRepository;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
      * @var array<int, Product>
      */
     private $productsById = [];
@@ -63,12 +53,8 @@ class CustomizationFieldDeleter
      * @param CustomizationFieldRepository $customizationFieldRepository
      * @param ProductRepository $productRepository
      */
-    public function __construct(
-        CustomizationFieldRepository $customizationFieldRepository,
-        ProductRepository $productRepository
-    ) {
-        $this->customizationFieldRepository = $customizationFieldRepository;
-        $this->productRepository = $productRepository;
+    public function __construct(private readonly CustomizationFieldRepository $customizationFieldRepository, private readonly ProductRepository $productRepository)
+    {
     }
 
     /**

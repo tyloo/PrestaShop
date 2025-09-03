@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Supplier\CommandHandler\SetSupplie
 class SetSuppliersHandler implements SetSuppliersHandlerInterface
 {
     /**
-     * @var ProductSupplierUpdater
-     */
-    private $productSupplierUpdater;
-
-    /**
      * @param ProductSupplierUpdater $productSupplierUpdater
      */
-    public function __construct(
-        ProductSupplierUpdater $productSupplierUpdater
-    ) {
-        $this->productSupplierUpdater = $productSupplierUpdater;
+    public function __construct(private readonly ProductSupplierUpdater $productSupplierUpdater)
+    {
     }
 
     /**

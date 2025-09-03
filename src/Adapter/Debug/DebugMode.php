@@ -101,13 +101,13 @@ class DebugMode
             return 'true';
         }
 
-        $debug_cookie_name = stripslashes($configuration['debug_cookie_name']);
+        $debug_cookie_name = stripslashes((string) $configuration['debug_cookie_name']);
 
         if (empty($configuration['debug_cookie_value'])) {
             return "isset(\$_COOKIE['$debug_cookie_name'])";
         }
 
-        $debug_cookie_value = stripslashes($configuration['debug_cookie_value']);
+        $debug_cookie_value = stripslashes((string) $configuration['debug_cookie_value']);
 
         return "isset(\$_COOKIE['$debug_cookie_name']) && \$_COOKIE['$debug_cookie_name'] === '$debug_cookie_value'";
     }

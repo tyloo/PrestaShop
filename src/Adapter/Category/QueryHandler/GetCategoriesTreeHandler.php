@@ -46,41 +46,13 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 final class GetCategoriesTreeHandler implements GetCategoriesTreeHandlerInterface
 {
     /**
-     * @var CategoryDisplayNameBuilder
-     */
-    private $displayNameBuilder;
-
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var ShopRepository
-     */
-    private $shopRepository;
-
-    /**
-     * @var int
-     */
-    private $rootCategoryId;
-
-    /**
      * @param CategoryDisplayNameBuilder $displayNameBuilder
      * @param ContextStateManager $contextStateManager
      * @param ShopRepository $shopRepository
      * @param int $rootCategoryId
      */
-    public function __construct(
-        CategoryDisplayNameBuilder $displayNameBuilder,
-        ContextStateManager $contextStateManager,
-        ShopRepository $shopRepository,
-        int $rootCategoryId
-    ) {
-        $this->displayNameBuilder = $displayNameBuilder;
-        $this->contextStateManager = $contextStateManager;
-        $this->shopRepository = $shopRepository;
-        $this->rootCategoryId = $rootCategoryId;
+    public function __construct(private readonly CategoryDisplayNameBuilder $displayNameBuilder, private readonly ContextStateManager $contextStateManager, private readonly ShopRepository $shopRepository, private readonly int $rootCategoryId)
+    {
     }
 
     /**

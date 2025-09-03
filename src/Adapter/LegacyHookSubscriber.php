@@ -67,7 +67,7 @@ class LegacyHookSubscriber implements EventSubscriberInterface
 
         if (is_array($hooks)) {
             foreach ($hooks as $hook) {
-                $name = strtolower($hook['name']);
+                $name = strtolower((string) $hook['name']);
                 $id = $hook['id_hook'];
 
                 $moduleListeners = [];

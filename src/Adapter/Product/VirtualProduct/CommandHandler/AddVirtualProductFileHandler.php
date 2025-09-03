@@ -45,17 +45,10 @@ use ProductDownload as VirtualProductFile;
 final class AddVirtualProductFileHandler implements AddVirtualProductFileHandlerInterface
 {
     /**
-     * @var VirtualProductUpdater
-     */
-    private $virtualProductUpdater;
-
-    /**
      * @param VirtualProductUpdater $virtualProductUpdater
      */
-    public function __construct(
-        VirtualProductUpdater $virtualProductUpdater
-    ) {
-        $this->virtualProductUpdater = $virtualProductUpdater;
+    public function __construct(private readonly VirtualProductUpdater $virtualProductUpdater)
+    {
     }
 
     /**

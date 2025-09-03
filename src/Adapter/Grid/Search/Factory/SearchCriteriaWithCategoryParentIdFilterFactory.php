@@ -45,36 +45,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 final class SearchCriteriaWithCategoryParentIdFilterFactory implements DecoratedSearchCriteriaFactory
 {
     /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var Context
-     */
-    private $shopContext;
-
-    /**
-     * @var FeatureInterface
-     */
-    private $multistoreFeature;
-
-    /**
-     * @var MultistoreContextCheckerInterface
-     */
-    private $multistoreContextChecker;
-
-    /**
-     * @var int
-     */
-    private $contextShopCategoryId;
-
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @param Configuration $configuration
      * @param Context $shopContext
      * @param FeatureInterface $multistoreFeature
@@ -82,20 +52,8 @@ final class SearchCriteriaWithCategoryParentIdFilterFactory implements Decorated
      * @param int $contextShopCategoryId
      * @param RequestStack $requestStack
      */
-    public function __construct(
-        Configuration $configuration,
-        Context $shopContext,
-        FeatureInterface $multistoreFeature,
-        MultistoreContextCheckerInterface $multistoreContextChecker,
-        $contextShopCategoryId,
-        RequestStack $requestStack
-    ) {
-        $this->configuration = $configuration;
-        $this->shopContext = $shopContext;
-        $this->multistoreFeature = $multistoreFeature;
-        $this->multistoreContextChecker = $multistoreContextChecker;
-        $this->contextShopCategoryId = $contextShopCategoryId;
-        $this->requestStack = $requestStack;
+    public function __construct(private readonly Configuration $configuration, private readonly Context $shopContext, private readonly FeatureInterface $multistoreFeature, private readonly MultistoreContextCheckerInterface $multistoreContextChecker, private $contextShopCategoryId, private readonly RequestStack $requestStack)
+    {
     }
 
     /**

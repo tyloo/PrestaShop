@@ -37,11 +37,6 @@ use Cart;
 class CartProductsComparator
 {
     /**
-     * @var Cart
-     */
-    private $cart;
-
-    /**
      * @var array
      */
     private $savedProducts;
@@ -54,10 +49,9 @@ class CartProductsComparator
     /**
      * @param Cart $cart
      */
-    public function __construct(Cart $cart)
+    public function __construct(private readonly Cart $cart)
     {
-        $this->cart = $cart;
-        $this->savedProducts = $cart->getProducts(true);
+        $this->savedProducts = $this->cart->getProducts(true);
     }
 
     /**

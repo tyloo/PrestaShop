@@ -42,7 +42,7 @@ class OrderRepository extends AbstractObjectModelRepository
 {
     public function __construct(
         private readonly Connection $connection,
-        private string $dbPrefix
+        private readonly string $dbPrefix
     ) {
     }
 

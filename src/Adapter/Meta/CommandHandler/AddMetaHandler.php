@@ -50,41 +50,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class AddMetaHandler implements AddMetaHandlerInterface
 {
     /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    /**
-     * @var int
-     */
-    private $defaultLanguageId;
-
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /**
-     * @var MetaDataProvider
-     */
-    private $metaDataProvider;
-
-    /**
      * @param HookDispatcherInterface $hookDispatcher
      * @param ValidatorInterface $validator
      * @param int $defaultLanguageId
      * @param MetaDataProvider $metaDataProvider
      */
-    public function __construct(
-        HookDispatcherInterface $hookDispatcher,
-        ValidatorInterface $validator,
-        $defaultLanguageId,
-        MetaDataProvider $metaDataProvider
-    ) {
-        $this->hookDispatcher = $hookDispatcher;
-        $this->defaultLanguageId = $defaultLanguageId;
-        $this->validator = $validator;
-        $this->metaDataProvider = $metaDataProvider;
+    public function __construct(private readonly HookDispatcherInterface $hookDispatcher, private readonly ValidatorInterface $validator, private $defaultLanguageId, private readonly MetaDataProvider $metaDataProvider)
+    {
     }
 
     /**

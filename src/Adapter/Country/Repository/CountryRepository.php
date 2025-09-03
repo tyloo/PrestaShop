@@ -43,14 +43,8 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
  */
 class CountryRepository extends AbstractObjectModelRepository
 {
-    /**
-     * @var CountryValidator
-     */
-    private $countryValidator;
-
-    public function __construct(CountryValidator $countryValidator)
+    public function __construct(private readonly CountryValidator $countryValidator)
     {
-        $this->countryValidator = $countryValidator;
     }
 
     /**

@@ -48,33 +48,12 @@ use TaxRulesGroup;
 class TaxRulesGroupRepository extends AbstractMultiShopObjectModelRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var TaxRulesGroupValidator
-     */
-    private $taxRulesGroupValidator;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param TaxRulesGroupValidator $taxRulesGroupValidator
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        TaxRulesGroupValidator $taxRulesGroupValidator
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->taxRulesGroupValidator = $taxRulesGroupValidator;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly TaxRulesGroupValidator $taxRulesGroupValidator)
+    {
     }
 
     /**

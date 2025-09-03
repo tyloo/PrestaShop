@@ -154,7 +154,7 @@ class ImageThumbnailsRegenerator
                         }
 
                         foreach ($configuredImageFormats as $imageFormat) {
-                            $thumbnailName = substr($originalImageName, 0, -4) . '-' . stripslashes($imageType->getName()) . '.' . $imageFormat;
+                            $thumbnailName = substr($originalImageName, 0, -4) . '-' . stripslashes((string) $imageType->getName()) . '.' . $imageFormat;
                             // If thumbnail does not exist
                             if (!file_exists($newDir . $thumbnailName)) {
                                 // Check if original image exists
@@ -187,7 +187,7 @@ class ImageThumbnailsRegenerator
                 if (file_exists($originalImageName) && filesize($originalImageName)) {
                     foreach ($type as $imageType) {
                         foreach ($configuredImageFormats as $imageFormat) {
-                            $thumbnailName = $imageObj->getExistingImgPath() . '-' . stripslashes($imageType->getName()) . '.' . $imageFormat;
+                            $thumbnailName = $imageObj->getExistingImgPath() . '-' . stripslashes((string) $imageType->getName()) . '.' . $imageFormat;
 
                             if (!file_exists($dir . $thumbnailName)) {
                                 if (!LegacyImageManager::resize(
@@ -295,10 +295,10 @@ class ImageThumbnailsRegenerator
                 }
 
                 foreach ($configuredImageFormats as $imageFormat) {
-                    if (!file_exists($dir . $language->getIsoCode() . '-default-' . stripslashes($image_type->getName()) . '.' . $imageFormat)) {
+                    if (!file_exists($dir . $language->getIsoCode() . '-default-' . stripslashes((string) $image_type->getName()) . '.' . $imageFormat)) {
                         if (!LegacyImageManager::resize(
                             $file,
-                            $dir . $language->getIsoCode() . '-default-' . stripslashes($image_type->getName()) . '.' . $imageFormat,
+                            $dir . $language->getIsoCode() . '-default-' . stripslashes((string) $image_type->getName()) . '.' . $imageFormat,
                             (int) $image_type->getWidth(),
                             (int) $image_type->getHeight(),
                             $imageFormat

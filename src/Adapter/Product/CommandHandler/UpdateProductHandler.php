@@ -43,33 +43,12 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopCollection;
 class UpdateProductHandler implements UpdateProductHandlerInterface
 {
     /**
-     * @var ProductFillerInterface
-     */
-    private $productUpdatablePropertyFiller;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductIndexationUpdater
-     */
-    private $productIndexationUpdater;
-
-    /**
      * @param ProductFillerInterface $productUpdatablePropertyFiller
      * @param ProductRepository $productRepository
      * @param ProductIndexationUpdater $productIndexationUpdater
      */
-    public function __construct(
-        ProductFillerInterface $productUpdatablePropertyFiller,
-        ProductRepository $productRepository,
-        ProductIndexationUpdater $productIndexationUpdater
-    ) {
-        $this->productUpdatablePropertyFiller = $productUpdatablePropertyFiller;
-        $this->productRepository = $productRepository;
-        $this->productIndexationUpdater = $productIndexationUpdater;
+    public function __construct(private readonly ProductFillerInterface $productUpdatablePropertyFiller, private readonly ProductRepository $productRepository, private readonly ProductIndexationUpdater $productIndexationUpdater)
+    {
     }
 
     /**

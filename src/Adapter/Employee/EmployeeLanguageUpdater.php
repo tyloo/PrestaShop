@@ -35,30 +35,12 @@ use Doctrine\DBAL\Connection;
 final class EmployeeLanguageUpdater
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    private $langDefaultId;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param int $langDefaultId
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        int $langDefaultId
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->langDefaultId = $langDefaultId;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly int $langDefaultId)
+    {
     }
 
     public function replaceDeletedLanguage(int $deletedLangId)

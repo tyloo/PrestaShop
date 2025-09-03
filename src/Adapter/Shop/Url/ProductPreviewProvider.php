@@ -44,19 +44,13 @@ class ProductPreviewProvider implements UrlProviderInterface
      */
     protected $employeeId;
 
-    /**
-     * @var bool
-     */
-    private $urlRewritingIsEnabled;
-
     public function __construct(
         Link $link,
-        bool $urlRewritingIsEnabled,
+        private readonly bool $urlRewritingIsEnabled,
         int $employeeId
     ) {
         $this->link = $link;
         $this->employeeId = $employeeId;
-        $this->urlRewritingIsEnabled = $urlRewritingIsEnabled;
     }
 
     /**
@@ -86,7 +80,7 @@ class ProductPreviewProvider implements UrlProviderInterface
             $preview_url = sprintf(
                 '%s%sadtoken=%s&id_employee=%d&preview=1',
                 $preview_url,
-                (!str_contains($preview_url, '?')) ? '?' : '&',
+                (!str_contains((string) $preview_url, '?')) ? '?' : '&',
                 $token,
                 $this->employeeId
             );

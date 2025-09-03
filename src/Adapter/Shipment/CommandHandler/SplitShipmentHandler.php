@@ -66,7 +66,7 @@ class SplitShipmentHandler implements SplitShipmentHandlerInterface
 
         try {
             $this->repository->splitShipment($carrierId, $findShipment, $shipmentProducts);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             throw new ShipmentNotFoundException();
         }
     }

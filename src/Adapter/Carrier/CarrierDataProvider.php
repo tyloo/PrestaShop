@@ -34,14 +34,8 @@ use PrestaShop\PrestaShop\Adapter\Configuration;
  */
 class CarrierDataProvider
 {
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    public function __construct(Configuration $configuration)
+    public function __construct(private readonly Configuration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

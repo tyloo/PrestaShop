@@ -47,11 +47,6 @@ class OrderDetailLazyArray extends AbstractLazyArray
     private $locale;
 
     /**
-     * @var Order
-     */
-    private $order;
-
-    /**
      * @var Context
      */
     private $context;
@@ -66,9 +61,8 @@ class OrderDetailLazyArray extends AbstractLazyArray
      *
      * @param Order $order
      */
-    public function __construct(Order $order)
+    public function __construct(private readonly Order $order)
     {
-        $this->order = $order;
         $this->context = Context::getContext();
         $this->translator = Context::getContext()->getTranslator();
         $this->locale = $this->context->getCurrentLocale();
@@ -137,7 +131,7 @@ class OrderDetailLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getGiftMessage()
     {
-        return nl2br($this->order->gift_message);
+        return nl2br((string) $this->order->gift_message);
     }
 
     /**

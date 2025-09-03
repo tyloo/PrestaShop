@@ -46,33 +46,12 @@ use Supplier;
 abstract class AbstractDeleteSupplierHandler
 {
     /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var SupplierAddressProvider
-     */
-    private $supplierAddressProvider;
-
-    /**
-     * @var ProductSupplierUpdater
-     */
-    private $productSupplierUpdater;
-
-    /**
      * @param SupplierAddressProvider $supplierAddressProvider
      * @param ProductSupplierUpdater $productSupplierUpdater
      * @param string $dbPrefix
      */
-    public function __construct(
-        SupplierAddressProvider $supplierAddressProvider,
-        ProductSupplierUpdater $productSupplierUpdater,
-        string $dbPrefix
-    ) {
-        $this->dbPrefix = $dbPrefix;
-        $this->supplierAddressProvider = $supplierAddressProvider;
-        $this->productSupplierUpdater = $productSupplierUpdater;
+    public function __construct(private readonly SupplierAddressProvider $supplierAddressProvider, private readonly ProductSupplierUpdater $productSupplierUpdater, private readonly string $dbPrefix)
+    {
     }
 
     /**

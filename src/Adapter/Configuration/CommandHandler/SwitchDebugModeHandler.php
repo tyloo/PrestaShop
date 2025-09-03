@@ -40,16 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Configuration\CommandHandler\SwitchDebugMo
 final class SwitchDebugModeHandler implements SwitchDebugModeHandlerInterface
 {
     /**
-     * @var DebugMode
-     */
-    private $debugMode;
-
-    /**
      * @param DebugMode $debugMode
      */
-    public function __construct(DebugMode $debugMode)
+    public function __construct(private readonly DebugMode $debugMode)
     {
-        $this->debugMode = $debugMode;
     }
 
     /**

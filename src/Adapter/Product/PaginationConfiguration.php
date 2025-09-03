@@ -35,14 +35,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PaginationConfiguration implements DataConfigurationInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
+    public function __construct(private readonly ConfigurationInterface $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

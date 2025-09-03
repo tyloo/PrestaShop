@@ -61,11 +61,6 @@ class ContainerBuilder
     private static $containers;
 
     /**
-     * @var EnvironmentInterface
-     */
-    private $environment;
-
-    /**
      * @var string
      */
     private $containerName;
@@ -113,9 +108,8 @@ class ContainerBuilder
     /**
      * @param EnvironmentInterface $environment
      */
-    public function __construct(EnvironmentInterface $environment)
+    public function __construct(private readonly EnvironmentInterface $environment)
     {
-        $this->environment = $environment;
     }
 
     /**

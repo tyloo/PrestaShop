@@ -37,25 +37,11 @@ use PrestaShop\PrestaShop\Core\Shop\Url\UrlProviderInterface;
 class ImageFolderProvider implements UrlProviderInterface
 {
     /**
-     * @var Link
-     */
-    private $link;
-
-    /**
-     * @var string
-     */
-    private $imagesRelativeFolder;
-
-    /**
      * @param Link $link
      * @param string $imagesRelativeFolder
      */
-    public function __construct(
-        Link $link,
-        string $imagesRelativeFolder
-    ) {
-        $this->link = $link;
-        $this->imagesRelativeFolder = $imagesRelativeFolder;
+    public function __construct(private readonly Link $link, private readonly string $imagesRelativeFolder)
+    {
     }
 
     /**
@@ -65,6 +51,6 @@ class ImageFolderProvider implements UrlProviderInterface
      */
     public function getUrl(): string
     {
-        return rtrim($this->link->getBaseLink(), '/') . '/' . rtrim($this->imagesRelativeFolder, '/');
+        return rtrim((string) $this->link->getBaseLink(), '/') . '/' . rtrim($this->imagesRelativeFolder, '/');
     }
 }

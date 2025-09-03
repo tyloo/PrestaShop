@@ -36,18 +36,12 @@ use Validate;
 class ShopUrlDataProvider
 {
     /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
      * ShopUrlDataProvider constructor.
      *
      * @param int $contextShopId
      */
-    public function __construct($contextShopId)
+    public function __construct(private $contextShopId)
     {
-        $this->contextShopId = $contextShopId;
     }
 
     /**

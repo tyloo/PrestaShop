@@ -37,25 +37,11 @@ use Smarty;
 final class PDFGenerator implements PDFGeneratorInterface
 {
     /**
-     * @var Smarty
-     */
-    private $smarty;
-
-    /**
-     * @var PDFTemplateTypeProviderInterface
-     */
-    private $templateTypeProvider;
-
-    /**
      * @param Smarty $smarty
      * @param PDFTemplateTypeProviderInterface $templateTypeProvider
      */
-    public function __construct(
-        Smarty $smarty,
-        PDFTemplateTypeProviderInterface $templateTypeProvider
-    ) {
-        $this->smarty = $smarty;
-        $this->templateTypeProvider = $templateTypeProvider;
+    public function __construct(private readonly Smarty $smarty, private readonly PDFTemplateTypeProviderInterface $templateTypeProvider)
+    {
     }
 
     /**

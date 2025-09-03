@@ -42,14 +42,8 @@ use Product;
  */
 class ProductValidator extends AbstractObjectModelValidator
 {
-    /**
-     * @var ShopConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ShopConfigurationInterface $configuration)
+    public function __construct(private readonly ShopConfigurationInterface $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

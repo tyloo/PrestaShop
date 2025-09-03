@@ -38,35 +38,17 @@ use PrestaShop\PrestaShop\Adapter\Presenter\LazyArrayAttribute;
 class CategoryLazyArray extends AbstractLazyArray
 {
     /**
-     * @var ImageRetriever
-     */
-    private $imageRetriever;
-
-    /**
-     * @var Link
-     */
-    private $link;
-
-    /**
      * @var array
      */
     protected $category;
 
-    /**
-     * @var Language
-     */
-    private $language;
-
     public function __construct(
         array $category,
-        Language $language,
-        ImageRetriever $imageRetriever,
-        Link $link
+        private readonly Language $language,
+        private readonly ImageRetriever $imageRetriever,
+        private readonly Link $link
     ) {
         $this->category = $category;
-        $this->language = $language;
-        $this->imageRetriever = $imageRetriever;
-        $this->link = $link;
 
         parent::__construct();
         $this->appendArray($this->category);

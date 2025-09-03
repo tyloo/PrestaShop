@@ -34,14 +34,11 @@ use PrestaShop\PrestaShop\Core\Employee\ContextEmployeeProviderInterface;
  */
 final class ContextEmployeeProvider implements ContextEmployeeProviderInterface
 {
-    private ?Employee $contextEmployee;
-
     /**
      * @param ?Employee $contextEmployee
      */
-    public function __construct(?Employee $contextEmployee)
+    public function __construct(private readonly ?Employee $contextEmployee)
     {
-        $this->contextEmployee = $contextEmployee;
     }
 
     /**

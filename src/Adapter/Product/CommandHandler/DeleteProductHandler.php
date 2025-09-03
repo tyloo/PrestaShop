@@ -39,15 +39,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\DeleteProductHandle
 #[AsCommandHandler]
 class DeleteProductHandler implements DeleteProductHandlerInterface
 {
-    /**
-     * @var ProductDeleter
-     */
-    private $productDeleter;
-
-    public function __construct(
-        ProductDeleter $productDeleter
-    ) {
-        $this->productDeleter = $productDeleter;
+    public function __construct(private readonly ProductDeleter $productDeleter)
+    {
     }
 
     /**

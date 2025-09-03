@@ -35,14 +35,8 @@ use PrestaShop\PrestaShop\Core\Feature\FeatureInterface;
  */
 class CombinationFeature implements FeatureInterface
 {
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    public function __construct(Configuration $configuration)
+    public function __construct(private readonly Configuration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

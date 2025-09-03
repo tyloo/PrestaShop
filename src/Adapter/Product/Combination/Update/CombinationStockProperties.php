@@ -32,25 +32,11 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\StockModificatio
 class CombinationStockProperties
 {
     /**
-     * @var StockModification|null
-     */
-    private $stockModification;
-
-    /**
-     * @var string|null
-     */
-    private $location;
-
-    /**
      * @param StockModification|null $stockModification
      * @param string|null $location
      */
-    public function __construct(
-        ?StockModification $stockModification = null,
-        ?string $location = null
-    ) {
-        $this->stockModification = $stockModification;
-        $this->location = $location;
+    public function __construct(private readonly ?StockModification $stockModification = null, private readonly ?string $location = null)
+    {
     }
 
     /**

@@ -39,14 +39,8 @@ use PrestaShop\PrestaShop\Core\Domain\Country\CommandHandler\EditCountryHandlerI
 #[AsCommandHandler]
 class EditCountryHandler implements EditCountryHandlerInterface
 {
-    /**
-     * @var CountryRepository
-     */
-    private $countryRepository;
-
-    public function __construct(CountryRepository $countryRepository)
+    public function __construct(private readonly CountryRepository $countryRepository)
     {
-        $this->countryRepository = $countryRepository;
     }
 
     /**

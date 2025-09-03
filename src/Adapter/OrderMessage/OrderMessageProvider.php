@@ -34,16 +34,10 @@ use OrderMessage;
 class OrderMessageProvider
 {
     /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
      * @param int $contextLanguageId
      */
-    public function __construct(int $contextLanguageId)
+    public function __construct(private readonly int $contextLanguageId)
     {
-        $this->contextLanguageId = $contextLanguageId;
     }
 
     /**

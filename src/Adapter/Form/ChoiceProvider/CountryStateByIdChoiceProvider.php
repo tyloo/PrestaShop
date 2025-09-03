@@ -88,8 +88,6 @@ final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProv
      */
     private function allowIdCountryGreaterThanZero(OptionsResolver $resolver)
     {
-        $resolver->setAllowedValues('id_country', function ($value) {
-            return 0 < $value;
-        });
+        $resolver->setAllowedValues('id_country', fn($value) => 0 < $value);
     }
 }

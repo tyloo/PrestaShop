@@ -37,18 +37,8 @@ use PrestaShop\PrestaShop\Core\Module\ModuleInterface;
 
 class ModulePresenter implements PresenterInterface
 {
-    /**
-     * @var Currency
-     */
-    private $currency;
-
-    /** @var PriceFormatter */
-    private $priceFormatter;
-
-    public function __construct(Currency $currency, PriceFormatter $priceFormatter)
+    public function __construct(private readonly Currency $currency, private readonly PriceFormatter $priceFormatter)
     {
-        $this->currency = $currency;
-        $this->priceFormatter = $priceFormatter;
     }
 
     /**

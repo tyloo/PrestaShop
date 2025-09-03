@@ -498,6 +498,6 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
         $methodDoc = $method->getDocComment();
 
-        return str_contains($methodDoc, '@arrayAccess');
+        return str_contains((string) $methodDoc, '@arrayAccess');
     }
 }

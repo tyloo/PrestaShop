@@ -42,25 +42,11 @@ use Product;
 class ProductTagUpdater
 {
     /**
-     * @var TagRepository
-     */
-    private $tagRepository;
-
-    /**
-     * @var ProductIndexationUpdater
-     */
-    private $productIndexationUpdater;
-
-    /**
      * @param TagRepository $tagRepository
      * @param ProductIndexationUpdater $productIndexationUpdater
      */
-    public function __construct(
-        TagRepository $tagRepository,
-        ProductIndexationUpdater $productIndexationUpdater
-    ) {
-        $this->tagRepository = $tagRepository;
-        $this->productIndexationUpdater = $productIndexationUpdater;
+    public function __construct(private readonly TagRepository $tagRepository, private readonly ProductIndexationUpdater $productIndexationUpdater)
+    {
     }
 
     /**
@@ -116,9 +102,7 @@ class ProductTagUpdater
     {
         $localizedProductTags = $this->tagRepository->getLocalizedProductTags($productId);
         $currentTagLanguages = array_keys($localizedProductTags);
-        $updateTagLanguages = array_map(static function (LocalizedTags $localizedTags): int {
-            return $localizedTags->getLanguageId()->getValue();
-        }, $localizedTagsList);
+        $updateTagLanguages = array_map(static fn(LocalizedTags $localizedTags): int => $localizedTags->getLanguageId()->getValue(), $localizedTagsList);
 
         if (array_diff($currentTagLanguages, $updateTagLanguages)) {
             return true;

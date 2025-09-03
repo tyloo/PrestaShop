@@ -40,41 +40,13 @@ use Tools;
 class CategoryViewDataProvider
 {
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var FeatureInterface
-     */
-    private $multishopFeature;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
-     * @var Context
-     */
-    private $shopContext;
-
-    /**
      * @param ConfigurationInterface $configuration
      * @param FeatureInterface $multishopFeature
      * @param Context $shopContext
      * @param int $contextLangId
      */
-    public function __construct(
-        ConfigurationInterface $configuration,
-        FeatureInterface $multishopFeature,
-        Context $shopContext,
-        $contextLangId
-    ) {
-        $this->configuration = $configuration;
-        $this->multishopFeature = $multishopFeature;
-        $this->contextLangId = $contextLangId;
-        $this->shopContext = $shopContext;
+    public function __construct(private readonly ConfigurationInterface $configuration, private readonly FeatureInterface $multishopFeature, private readonly Context $shopContext, private $contextLangId)
+    {
     }
 
     /**

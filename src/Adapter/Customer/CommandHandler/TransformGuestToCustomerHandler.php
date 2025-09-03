@@ -43,16 +43,10 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\ValueObject\CustomerId;
 final class TransformGuestToCustomerHandler implements TransformGuestToCustomerHandlerInterface
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param int $contextLangId
      */
-    public function __construct($contextLangId)
+    public function __construct(private $contextLangId)
     {
-        $this->contextLangId = $contextLangId;
     }
 
     /**

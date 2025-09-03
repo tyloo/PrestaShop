@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\UpdateProductTypeHa
 class UpdateProductTypeHandler implements UpdateProductTypeHandlerInterface
 {
     /**
-     * @var ProductTypeUpdater
-     */
-    private $productTypeUpdater;
-
-    /**
      * @param ProductTypeUpdater $productTypeUpdater
      */
-    public function __construct(
-        ProductTypeUpdater $productTypeUpdater
-    ) {
-        $this->productTypeUpdater = $productTypeUpdater;
+    public function __construct(private readonly ProductTypeUpdater $productTypeUpdater)
+    {
     }
 
     /**

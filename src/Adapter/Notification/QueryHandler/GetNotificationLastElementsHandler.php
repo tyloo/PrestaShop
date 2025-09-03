@@ -105,15 +105,11 @@ final class GetNotificationLastElementsHandler implements GetNotificationLastEle
      */
     protected function isDisplayed(string $type): bool
     {
-        switch ($type) {
-            case 'customer':
-                return $this->configuration['show_notifs_new_customers'] ?: false;
-            case 'customer_message':
-                return $this->configuration['show_notifs_new_messages'] ?: false;
-            case 'order':
-                return $this->configuration['show_notifs_new_orders'] ?: false;
-        }
-
-        return false;
+        return match ($type) {
+            'customer' => $this->configuration['show_notifs_new_customers'] ?: false,
+            'customer_message' => $this->configuration['show_notifs_new_messages'] ?: false,
+            'order' => $this->configuration['show_notifs_new_orders'] ?: false,
+            default => false,
+        };
     }
 }

@@ -52,41 +52,13 @@ use SpecificPrice;
 class SpecificPriceRepository extends AbstractObjectModelRepository
 {
     /**
-     * @var SpecificPriceValidator
-     */
-    private $specificPriceValidator;
-
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param SpecificPriceValidator $specificPriceValidator
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        SpecificPriceValidator $specificPriceValidator,
-        ConfigurationInterface $configuration
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->specificPriceValidator = $specificPriceValidator;
-        $this->configuration = $configuration;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly SpecificPriceValidator $specificPriceValidator, private readonly ConfigurationInterface $configuration)
+    {
     }
 
     /**
@@ -198,9 +170,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
      */
     public function getProductSpecificPricesIds(ProductId $productId): array
     {
-        return array_map(static function (array $specificPrice): SpecificPriceId {
-            return new SpecificPriceId((int) $specificPrice['id_specific_price']);
-        }, $this->connection
+        return array_map(static fn(array $specificPrice): SpecificPriceId => new SpecificPriceId((int) $specificPrice['id_specific_price']), $this->connection
             ->createQueryBuilder()
             ->from($this->dbPrefix . 'specific_price', 'sp')
             ->select('sp.id_specific_price')
@@ -304,7 +274,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
             return null;
         }
 
-        return new PriorityList(explode(';', $result));
+        return new PriorityList(explode(';', (string) $result));
     }
 
     /**
@@ -315,7 +285,7 @@ class SpecificPriceRepository extends AbstractObjectModelRepository
     public function getDefaultPriorities(): PriorityList
     {
         try {
-            $priorities = explode(';', $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
+            $priorities = explode(';', (string) $this->configuration->get('PS_SPECIFIC_PRICE_PRIORITIES'));
         } catch (PrestaShopException $e) {
             throw new CoreException(
                 'Something went wrong when trying to get default priorities of specific prices',

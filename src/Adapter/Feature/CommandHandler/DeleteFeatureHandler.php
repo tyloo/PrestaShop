@@ -35,15 +35,8 @@ use PrestaShop\PrestaShop\Core\Domain\Feature\CommandHandler\DeleteFeatureHandle
 #[AsCommandHandler]
 class DeleteFeatureHandler implements DeleteFeatureHandlerInterface
 {
-    /**
-     * @var FeatureRepository
-     */
-    private $featureRepository;
-
-    public function __construct(
-        FeatureRepository $featureRepository
-    ) {
-        $this->featureRepository = $featureRepository;
+    public function __construct(private readonly FeatureRepository $featureRepository)
+    {
     }
 
     public function handle(DeleteFeatureCommand $command): void

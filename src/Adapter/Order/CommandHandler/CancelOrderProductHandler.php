@@ -52,35 +52,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class CancelOrderProductHandler extends AbstractOrderCommandHandler implements CancelOrderProductHandlerInterface
 {
     /**
-     * @var OrderProductQuantityUpdater
-     */
-    private $orderProductQuantityUpdater;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * CancelOrderProductHandler constructor.
      *
      * @param OrderProductQuantityUpdater $orderProductQuantityUpdater
      * @param LoggerInterface $logger
      * @param TranslatorInterface $translator
      */
-    public function __construct(
-        OrderProductQuantityUpdater $orderProductQuantityUpdater,
-        LoggerInterface $logger,
-        TranslatorInterface $translator
-    ) {
-        $this->orderProductQuantityUpdater = $orderProductQuantityUpdater;
-        $this->logger = $logger;
-        $this->translator = $translator;
+    public function __construct(private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater, private readonly LoggerInterface $logger, private readonly TranslatorInterface $translator)
+    {
     }
 
     /**

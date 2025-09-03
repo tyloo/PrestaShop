@@ -55,36 +55,17 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
     private $renderingContent = [];
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
-     * @var HookRegistry
-     */
-    private $hookRegistry;
-
-    /**
-     * @var bool
-     */
-    private $isDebug;
-
-    /**
      * @param RequestStack|null $requestStack (nullable to preserve backward compatibility)
      * @param iterable|null $hookSubscribers
      * @param HookRegistry|null $hookRegistry (nullable to preserve backward compatibility)
      * @param bool $isDebug
      */
     public function __construct(
-        ?RequestStack $requestStack = null,
+        private readonly ?RequestStack $requestStack = null,
         ?iterable $hookSubscribers = null,
-        ?HookRegistry $hookRegistry = null,
-        bool $isDebug = false
+        private readonly ?HookRegistry $hookRegistry = null,
+        private readonly bool $isDebug = false
     ) {
-        $this->requestStack = $requestStack;
-        $this->hookRegistry = $hookRegistry;
-        $this->isDebug = $isDebug;
-
         foreach ($hookSubscribers as $hookSubscriber) {
             $this->addSubscriber($hookSubscriber);
         }

@@ -35,16 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
 class OrderReturnStateChoiceProvider implements FormChoiceProviderInterface
 {
     /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param int $contextLangId
      */
-    public function __construct(int $contextLangId)
+    public function __construct(private readonly int $contextLangId)
     {
-        $this->contextLangId = $contextLangId;
     }
 
     /**

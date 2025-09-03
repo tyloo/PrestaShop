@@ -245,9 +245,7 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
         }
 
         if ($shopConstraint->forAllShops()) {
-            return array_map(static function (array $result): ShopId {
-                return new ShopId((int) $result['id_shop']);
-            }, $this->connection->createQueryBuilder()
+            return array_map(static fn(array $result): ShopId => new ShopId((int) $result['id_shop']), $this->connection->createQueryBuilder()
                 ->select('id_shop')
                 ->from($this->dbPrefix . 'feature_shop', 'fs')
                 ->executeQuery()
@@ -280,9 +278,7 @@ class FeatureRepository extends AbstractMultiShopObjectModelRepository
             ->groupBy('id_shop')
         ;
 
-        return array_map(static function (array $result): ShopId {
-            return new ShopId((int) $result['id_shop']);
-        }, $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn(array $result): ShopId => new ShopId((int) $result['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**

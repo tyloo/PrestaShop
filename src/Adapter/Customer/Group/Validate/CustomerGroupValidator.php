@@ -34,14 +34,8 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
 
 class CustomerGroupValidator extends AbstractObjectModelValidator
 {
-    /**
-     * @var ShopRepository
-     */
-    private $shopRepository;
-
-    public function __construct(ShopRepository $shopRepository)
+    public function __construct(private readonly ShopRepository $shopRepository)
     {
-        $this->shopRepository = $shopRepository;
     }
 
     /**

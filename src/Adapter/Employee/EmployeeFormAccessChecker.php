@@ -37,25 +37,11 @@ use PrestaShop\PrestaShop\Core\Employee\EmployeeDataProviderInterface;
 final class EmployeeFormAccessChecker implements EmployeeFormAccessCheckerInterface
 {
     /**
-     * @var ContextEmployeeProviderInterface
-     */
-    private $contextEmployeeProvider;
-
-    /**
-     * @var EmployeeDataProviderInterface
-     */
-    private $employeeDataProvider;
-
-    /**
      * @param ContextEmployeeProviderInterface $contextEmployeeProvider
      * @param EmployeeDataProviderInterface $employeeDataProvider
      */
-    public function __construct(
-        ContextEmployeeProviderInterface $contextEmployeeProvider,
-        EmployeeDataProviderInterface $employeeDataProvider
-    ) {
-        $this->contextEmployeeProvider = $contextEmployeeProvider;
-        $this->employeeDataProvider = $employeeDataProvider;
+    public function __construct(private readonly ContextEmployeeProviderInterface $contextEmployeeProvider, private readonly EmployeeDataProviderInterface $employeeDataProvider)
+    {
     }
 
     /**

@@ -60,33 +60,12 @@ class TranslationRouteFinder
     public const THEMES = 'themes';
 
     /**
-     * @var TranslationService
-     */
-    private $translationService;
-
-    /**
-     * @var Link
-     */
-    private $link;
-
-    /**
-     * @var ModuleRepositoryInterface
-     */
-    private $moduleRepository;
-
-    /**
      * @param TranslationService $translationService
      * @param Link $link
      * @param ModuleRepositoryInterface $moduleRepository
      */
-    public function __construct(
-        TranslationService $translationService,
-        Link $link,
-        ModuleRepositoryInterface $moduleRepository
-    ) {
-        $this->translationService = $translationService;
-        $this->link = $link;
-        $this->moduleRepository = $moduleRepository;
+    public function __construct(private readonly TranslationService $translationService, private readonly Link $link, private readonly ModuleRepositoryInterface $moduleRepository)
+    {
     }
 
     /**

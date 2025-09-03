@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Attachment\CommandHandler\SetAssoc
 final class SetAssociatedProductAttachmentsHandler implements SetAssociatedProductAttachmentsHandlerInterface
 {
     /**
-     * @var ProductAttachmentUpdater
+     * @param ProductAttachmentUpdater $productAttachmentUpdater
      */
-    private $productAttachmentUpdater;
-
-    /**
-     * @param ProductAttachmentUpdater $productUpdater
-     */
-    public function __construct(
-        ProductAttachmentUpdater $productUpdater
-    ) {
-        $this->productAttachmentUpdater = $productUpdater;
+    public function __construct(private readonly ProductAttachmentUpdater $productAttachmentUpdater)
+    {
     }
 
     /**

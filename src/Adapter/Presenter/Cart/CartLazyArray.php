@@ -47,15 +47,9 @@ use Tools;
 #[LazyArrayAttribute(isRewritable: true)]
 class CartLazyArray extends AbstractLazyArray
 {
-    private bool $shouldSeparateGifts;
+    private readonly TranslatorInterface $translator;
 
-    private CartPresenter $cartPresenter;
-
-    private Cart $cart;
-
-    private TranslatorInterface $translator;
-
-    private PriceFormatter $priceFormatter;
+    private readonly PriceFormatter $priceFormatter;
 
     private array $products;
 
@@ -83,15 +77,12 @@ class CartLazyArray extends AbstractLazyArray
 
     private array $discounts;
 
-    private Link $link;
+    private readonly Link $link;
 
-    private ImageRetriever $imageRetriever;
+    private readonly ImageRetriever $imageRetriever;
 
-    public function __construct(Cart $cart, CartPresenter $cartPresenter, bool $shouldSeparateGifts = false)
+    public function __construct(private readonly Cart $cart, private readonly CartPresenter $cartPresenter, private readonly bool $shouldSeparateGifts = false)
     {
-        $this->shouldSeparateGifts = $shouldSeparateGifts;
-        $this->cart = $cart;
-        $this->cartPresenter = $cartPresenter;
         $context = Context::getContext();
         $this->translator = $context->getTranslator();
         $this->link = $context->link;
@@ -236,9 +227,7 @@ class CartLazyArray extends AbstractLazyArray
     {
         // If product list is already available, no need to execute a new sql query
         if (isset($this->products)) {
-            $this->productsCount = array_reduce($this->products, function ($count, $product) {
-                return $count + $product['quantity'];
-            }, 0);
+            $this->productsCount = array_reduce($this->products, fn($count, $product) => $count + $product['quantity'], 0);
 
             return $this->productsCount;
         }
@@ -313,9 +302,7 @@ class CartLazyArray extends AbstractLazyArray
     {
         $vouchers = $this->getVouchers();
         $cartRulesIds = array_flip(array_map(
-            function ($voucher) {
-                return $voucher['id_cart_rule'];
-            },
+            fn($voucher) => $voucher['id_cart_rule'],
             $vouchers['added']
         ));
 

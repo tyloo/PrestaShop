@@ -42,16 +42,10 @@ use PrestaShop\PrestaShop\Core\Domain\Cart\Exception\CartException;
 final class UpdateCartAddressesHandler extends AbstractCartHandler implements UpdateCartAddressesHandlerInterface
 {
     /**
-     * @var UpdateCartCarrierHandlerInterface
-     */
-    private $updateCartCarrierHandler;
-
-    /**
      * @param UpdateCartCarrierHandlerInterface $updateCartCarrierHandler
      */
-    public function __construct(UpdateCartCarrierHandlerInterface $updateCartCarrierHandler)
+    public function __construct(private readonly UpdateCartCarrierHandlerInterface $updateCartCarrierHandler)
     {
-        $this->updateCartCarrierHandler = $updateCartCarrierHandler;
     }
 
     /**

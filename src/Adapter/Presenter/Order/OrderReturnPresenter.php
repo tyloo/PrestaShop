@@ -35,25 +35,13 @@ use ReflectionException;
 class OrderReturnPresenter implements PresenterInterface
 {
     /**
-     * @var string
-     */
-    private $prefix;
-
-    /**
-     * @var Link
-     */
-    private $link;
-
-    /**
      * OrderReturnPresenter constructor.
      *
      * @param string $prefix
      * @param Link $link
      */
-    public function __construct($prefix, Link $link)
+    public function __construct(private $prefix, private readonly Link $link)
     {
-        $this->prefix = $prefix;
-        $this->link = $link;
     }
 
     /**

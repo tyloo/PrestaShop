@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\SetCarriersHandlerI
 class SetCarriersHandler implements SetCarriersHandlerInterface
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
      * @param ProductRepository $productRepository
      */
-    public function __construct(
-        ProductRepository $productRepository
-    ) {
-        $this->productRepository = $productRepository;
+    public function __construct(private readonly ProductRepository $productRepository)
+    {
     }
 
     /**

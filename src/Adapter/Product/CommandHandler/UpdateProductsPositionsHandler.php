@@ -45,29 +45,8 @@ use PrestaShop\PrestaShop\Core\Grid\Position\PositionUpdateFactoryInterface;
 #[AsCommandHandler]
 class UpdateProductsPositionsHandler implements UpdateProductsPositionsHandlerInterface
 {
-    /**
-     * @var PositionDefinition
-     */
-    private $positionDefinition;
-
-    /**
-     * @var PositionUpdateFactoryInterface
-     */
-    private $positionUpdateFactory;
-
-    /**
-     * @var GridPositionUpdaterInterface
-     */
-    private $positionUpdater;
-
-    public function __construct(
-        PositionDefinition $positionDefinition,
-        PositionUpdateFactoryInterface $positionUpdateFactory,
-        GridPositionUpdaterInterface $positionUpdater
-    ) {
-        $this->positionDefinition = $positionDefinition;
-        $this->positionUpdateFactory = $positionUpdateFactory;
-        $this->positionUpdater = $positionUpdater;
+    public function __construct(private readonly PositionDefinition $positionDefinition, private readonly PositionUpdateFactoryInterface $positionUpdateFactory, private readonly GridPositionUpdaterInterface $positionUpdater)
+    {
     }
 
     /**
@@ -90,12 +69,10 @@ class UpdateProductsPositionsHandler implements UpdateProductsPositionsHandlerIn
 
     private function convertPositions(array $positions): array
     {
-        return array_map(function (RowPosition $rowPosition): array {
-            return [
-                'rowId' => $rowPosition->getRowId(),
-                'oldPosition' => $rowPosition->getOldPosition(),
-                'newPosition' => $rowPosition->getNewPosition(),
-            ];
-        }, $positions);
+        return array_map(fn(RowPosition $rowPosition): array => [
+            'rowId' => $rowPosition->getRowId(),
+            'oldPosition' => $rowPosition->getOldPosition(),
+            'newPosition' => $rowPosition->getNewPosition(),
+        ], $positions);
     }
 }

@@ -43,25 +43,11 @@ use PrestaShopException;
 final class CreditSlipPdfGenerator implements PDFGeneratorInterface
 {
     /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
      * @param string $dbPrefix
      * @param Connection $connection
      */
-    public function __construct(
-        $dbPrefix,
-        Connection $connection
-    ) {
-        $this->dbPrefix = $dbPrefix;
-        $this->connection = $connection;
+    public function __construct(private $dbPrefix, private readonly Connection $connection)
+    {
     }
 
     /**

@@ -49,16 +49,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class AddContactHandler extends AbstractObjectModelHandler implements AddContactHandlerInterface
 {
     /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /**
      * @param ValidatorInterface $validator
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(private readonly ValidatorInterface $validator)
     {
-        $this->validator = $validator;
     }
 
     /**

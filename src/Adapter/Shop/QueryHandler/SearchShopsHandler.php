@@ -43,25 +43,13 @@ use PrestaShopBundle\Entity\Repository\ShopRepository;
 final class SearchShopsHandler implements SearchShopsHandlerInterface
 {
     /**
-     * @var ShopRepository
-     */
-    private $shopRepository;
-
-    /**
-     * @var ShopGroupRepository
-     */
-    private $shopGroupRepository;
-
-    /**
      * SearchShopsHandler constructor.
      *
      * @param ShopRepository $shopRepository
      * @param ShopGroupRepository $shopGroupRepository
      */
-    public function __construct(ShopRepository $shopRepository, ShopGroupRepository $shopGroupRepository)
+    public function __construct(private readonly ShopRepository $shopRepository, private readonly ShopGroupRepository $shopGroupRepository)
     {
-        $this->shopRepository = $shopRepository;
-        $this->shopGroupRepository = $shopGroupRepository;
     }
 
     /**

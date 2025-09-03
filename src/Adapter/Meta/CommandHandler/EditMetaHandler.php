@@ -49,25 +49,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class EditMetaHandler implements EditMetaHandlerInterface
 {
     /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /**
-     * @var MetaDataProvider
-     */
-    private $metaDataProvider;
-
-    /**
      * @param ValidatorInterface $validator
      * @param MetaDataProvider $metaDataProvider
      */
-    public function __construct(
-        ValidatorInterface $validator,
-        MetaDataProvider $metaDataProvider
-    ) {
-        $this->validator = $validator;
-        $this->metaDataProvider = $metaDataProvider;
+    public function __construct(private readonly ValidatorInterface $validator, private readonly MetaDataProvider $metaDataProvider)
+    {
     }
 
     /**

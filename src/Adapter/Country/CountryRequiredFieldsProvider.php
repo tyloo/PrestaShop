@@ -32,14 +32,8 @@ use PrestaShop\PrestaShop\Core\Domain\Country\ValueObject\CountryId;
 
 class CountryRequiredFieldsProvider implements CountryRequiredFieldsProviderInterface
 {
-    /**
-     * @var CountryDataProvider
-     */
-    private $countryDataProvider;
-
-    public function __construct(CountryDataProvider $countryDataProvider)
+    public function __construct(private readonly CountryDataProvider $countryDataProvider)
     {
-        $this->countryDataProvider = $countryDataProvider;
     }
 
     /**

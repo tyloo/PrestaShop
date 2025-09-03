@@ -49,50 +49,8 @@ use StockAvailable;
  */
 class CombinationStockUpdater
 {
-    /**
-     * @var StockAvailableRepository
-     */
-    private $stockAvailableRepository;
-
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var MovementReasonRepository
-     */
-    private $movementReasonRepository;
-
-    /**
-     * @var StockManager
-     */
-    private $stockManager;
-
-    /**
-     * @var ShopConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var HookDispatcherInterface
-     */
-    private $hookDispatcher;
-
-    public function __construct(
-        StockAvailableRepository $stockAvailableRepository,
-        CombinationRepository $combinationRepository,
-        MovementReasonRepository $movementReasonRepository,
-        StockManager $stockManager,
-        ShopConfigurationInterface $configuration,
-        HookDispatcherInterface $hookDispatcher
-    ) {
-        $this->stockAvailableRepository = $stockAvailableRepository;
-        $this->combinationRepository = $combinationRepository;
-        $this->stockManager = $stockManager;
-        $this->configuration = $configuration;
-        $this->movementReasonRepository = $movementReasonRepository;
-        $this->hookDispatcher = $hookDispatcher;
+    public function __construct(private readonly StockAvailableRepository $stockAvailableRepository, private readonly CombinationRepository $combinationRepository, private readonly MovementReasonRepository $movementReasonRepository, private readonly StockManager $stockManager, private readonly ShopConfigurationInterface $configuration, private readonly HookDispatcherInterface $hookDispatcher)
+    {
     }
 
     /**

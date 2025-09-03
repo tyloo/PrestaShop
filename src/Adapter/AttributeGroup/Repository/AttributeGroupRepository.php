@@ -43,8 +43,8 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractMultiShopObjectModelRepository
 class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
 {
     public function __construct(
-        private Connection $connection,
-        private string $dbPrefix,
+        private readonly Connection $connection,
+        private readonly string $dbPrefix,
     ) {
     }
 
@@ -121,9 +121,7 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
         ;
 
         if (!empty($attributeGroupIds)) {
-            $attributeGroupIdValues = array_map(static function (AttributeGroupId $attributeGroupId): int {
-                return $attributeGroupId->getValue();
-            }, $attributeGroupIds);
+            $attributeGroupIdValues = array_map(static fn(AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
 
             $qb->andWhere($qb->expr()->in('ag.id_attribute_group', ':attributeGroupIds'))
                 ->setParameter('attributeGroupIds', $attributeGroupIdValues, Connection::PARAM_INT_ARRAY)
@@ -184,13 +182,9 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
      */
     public function assertExistsInEveryShop(array $attributeGroupIds, array $shopIds): void
     {
-        $attributeGroupIdValues = array_map(static function (AttributeGroupId $attributeGroupId): int {
-            return $attributeGroupId->getValue();
-        }, $attributeGroupIds);
+        $attributeGroupIdValues = array_map(static fn(AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
 
-        $shopIdValues = array_map(static function (ShopId $shopId): int {
-            return $shopId->getValue();
-        }, $shopIds);
+        $shopIdValues = array_map(static fn(ShopId $shopId): int => $shopId->getValue(), $shopIds);
 
         $qb = $this->connection->createQueryBuilder();
         $results = $qb

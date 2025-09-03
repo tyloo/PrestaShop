@@ -37,16 +37,10 @@ use SplFileInfo;
 final class CsvFileOpener implements FileOpenerInterface
 {
     /**
-     * @var FileConverterInterface
-     */
-    private $excelToCsvConverter;
-
-    /**
      * @param FileConverterInterface $excelToCsvConverter
      */
-    public function __construct(FileConverterInterface $excelToCsvConverter)
+    public function __construct(private readonly FileConverterInterface $excelToCsvConverter)
     {
-        $this->excelToCsvConverter = $excelToCsvConverter;
     }
 
     /**

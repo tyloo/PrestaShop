@@ -190,14 +190,11 @@ class CarrierRangeRepository
 
     private function getRangeMethodTable(int $calculatingMethod): string
     {
-        switch ($calculatingMethod) {
-            case ShippingMethod::BY_WEIGHT:
-                return 'range_weight';
-            case ShippingMethod::BY_PRICE:
-                return 'range_price';
-            default:
-                throw new CarrierException(sprintf('Unknown shipping method "%s"', $calculatingMethod));
-        }
+        return match ($calculatingMethod) {
+            ShippingMethod::BY_WEIGHT => 'range_weight',
+            ShippingMethod::BY_PRICE => 'range_price',
+            default => throw new CarrierException(sprintf('Unknown shipping method "%s"', $calculatingMethod)),
+        };
     }
 
     private function applyRangeTypeForQuery(QueryBuilder $queryBuilder, Carrier $carrier): QueryBuilder

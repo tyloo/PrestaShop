@@ -42,25 +42,11 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 class AttachmentRepository extends AbstractObjectModelRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix)
+    {
     }
 
     /**
@@ -167,9 +153,7 @@ class AttachmentRepository extends AbstractObjectModelRepository
      */
     private function addLocalizedValues(array $results): array
     {
-        $attachmentIds = array_map(function (array $result) {
-            return (int) $result['id_attachment'];
-        }, $results);
+        $attachmentIds = array_map(fn(array $result) => (int) $result['id_attachment'], $results);
 
         $localizedValuesByAttachmentIds = $this->getAttachmentsLocalizedValues($attachmentIds);
 

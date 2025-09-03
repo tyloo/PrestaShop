@@ -48,9 +48,6 @@ class LegacyContext
     /** @var Currency|null */
     private $employeeCurrency;
 
-    /** @var string Contains the base uri for mail themes (by default https://domain.com/mails/themes/). Used for mails assets. */
-    private $mailThemesUri;
-
     /** @var Tools */
     private $tools;
 
@@ -59,11 +56,10 @@ class LegacyContext
      * @param Tools|null $tools
      */
     public function __construct(
-        $mailThemesUri = null,
+        private $mailThemesUri = null,
         ?Tools $tools = null
     ) {
-        $this->mailThemesUri = $mailThemesUri;
-        $this->tools = null !== $tools ? $tools : new Tools();
+        $this->tools = $tools ?? new Tools();
     }
 
     /**

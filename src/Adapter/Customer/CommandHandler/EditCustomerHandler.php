@@ -46,23 +46,11 @@ use PrestaShop\PrestaShop\Core\Domain\ValueObject\Email;
 final class EditCustomerHandler extends AbstractCustomerHandler implements EditCustomerHandlerInterface
 {
     /**
-     * @var Hashing
-     */
-    private $hashing;
-
-    /**
-     * @var string Value of legacy _COOKIE_KEY_
-     */
-    private $legacyCookieKey;
-
-    /**
      * @param Hashing $hashing
      * @param string $legacyCookieKey
      */
-    public function __construct(Hashing $hashing, $legacyCookieKey)
+    public function __construct(private readonly Hashing $hashing, private $legacyCookieKey)
     {
-        $this->hashing = $hashing;
-        $this->legacyCookieKey = $legacyCookieKey;
     }
 
     /**
@@ -248,8 +236,8 @@ final class EditCustomerHandler extends AbstractCustomerHandler implements EditC
         }
 
         // Arrange data to compare, we will use customer's original data if not provided in the command
-        $groupIds = ($command->getGroupIds() === null ? $customer->getGroups() : $command->getGroupIds());
-        $defaultGroupId = ($command->getDefaultGroupId() === null ? $customer->id_default_group : $command->getDefaultGroupId());
+        $groupIds = ($command->getGroupIds() ?? $customer->getGroups());
+        $defaultGroupId = ($command->getDefaultGroupId() ?? $customer->id_default_group);
 
         // Check if the default group is in the list of checked groups
         if (!in_array($defaultGroupId, $groupIds)) {

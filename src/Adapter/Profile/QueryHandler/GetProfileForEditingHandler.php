@@ -43,31 +43,12 @@ use Profile;
 final class GetProfileForEditingHandler extends AbstractObjectModelHandler implements GetProfileForEditingHandlerInterface
 {
     /**
-     * @var string
-     */
-    private $defaultAvatarUrl;
-    /**
-     * @var ImageTagSourceParserInterface
-     */
-    private $imageTagSourceParser;
-    /**
-     * @var string
-     */
-    private $imgDir;
-
-    /**
      * @param ImageTagSourceParserInterface $imageTagSourceParser
      * @param string $imgDir
      * @param string $defaultAvatarUrl
      */
-    public function __construct(
-        string $defaultAvatarUrl,
-        ImageTagSourceParserInterface $imageTagSourceParser,
-        string $imgDir = _PS_PROFILE_IMG_DIR_
-    ) {
-        $this->imgDir = $imgDir;
-        $this->imageTagSourceParser = $imageTagSourceParser;
-        $this->defaultAvatarUrl = $defaultAvatarUrl;
+    public function __construct(private readonly string $defaultAvatarUrl, private readonly ImageTagSourceParserInterface $imageTagSourceParser, private $imgDir = _PS_PROFILE_IMG_DIR_)
+    {
     }
 
     /**

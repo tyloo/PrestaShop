@@ -47,17 +47,10 @@ use ProductDownload as VirtualProductFile;
 class VirtualProductFileRepository extends AbstractObjectModelRepository
 {
     /**
-     * @var VirtualProductFileValidator
-     */
-    private $virtualProductFileValidator;
-
-    /**
      * @param VirtualProductFileValidator $virtualProductFileValidator
      */
-    public function __construct(
-        VirtualProductFileValidator $virtualProductFileValidator
-    ) {
-        $this->virtualProductFileValidator = $virtualProductFileValidator;
+    public function __construct(private readonly VirtualProductFileValidator $virtualProductFileValidator)
+    {
     }
 
     /**

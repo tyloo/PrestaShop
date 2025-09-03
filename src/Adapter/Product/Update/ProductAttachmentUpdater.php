@@ -43,25 +43,11 @@ use PrestaShopException;
 class ProductAttachmentUpdater
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var AttachmentRepository
-     */
-    private $attachmentRepository;
-
-    /**
      * @param ProductRepository $productRepository
      * @param AttachmentRepository $attachmentRepository
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        AttachmentRepository $attachmentRepository
-    ) {
-        $this->productRepository = $productRepository;
-        $this->attachmentRepository = $attachmentRepository;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly AttachmentRepository $attachmentRepository)
+    {
     }
 
     /**

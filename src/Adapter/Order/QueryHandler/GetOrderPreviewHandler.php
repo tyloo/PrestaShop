@@ -60,16 +60,6 @@ use Validate;
 final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
 {
     /**
-     * @var LocaleRepository
-     */
-    private $localeRepository;
-
-    /**
-     * @var string
-     */
-    private $locale;
-
-    /**
      * @var AddressFormatterInterface
      */
     private $addressFormatter;
@@ -80,12 +70,10 @@ final class GetOrderPreviewHandler implements GetOrderPreviewHandlerInterface
      * @param AddressFormatterInterface|null $addressFormatter
      */
     public function __construct(
-        LocaleRepository $localeRepository,
-        string $locale,
+        private readonly LocaleRepository $localeRepository,
+        private readonly string $locale,
         ?AddressFormatterInterface $addressFormatter = null
     ) {
-        $this->localeRepository = $localeRepository;
-        $this->locale = $locale;
         $this->addressFormatter = $addressFormatter ?? new AddressFormatter();
     }
 

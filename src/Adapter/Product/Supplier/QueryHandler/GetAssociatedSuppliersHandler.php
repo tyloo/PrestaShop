@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Supplier\ValueObject\SupplierId;
 class GetAssociatedSuppliersHandler implements GetAssociatedSuppliersHandlerInterface
 {
     /**
-     * @var ProductSupplierRepository
-     */
-    private $productSupplierRepository;
-
-    /**
      * @param ProductSupplierRepository $productSupplierRepository
      */
-    public function __construct(
-        ProductSupplierRepository $productSupplierRepository
-    ) {
-        $this->productSupplierRepository = $productSupplierRepository;
+    public function __construct(private readonly ProductSupplierRepository $productSupplierRepository)
+    {
     }
 
     /**
@@ -63,9 +56,7 @@ class GetAssociatedSuppliersHandler implements GetAssociatedSuppliersHandlerInte
 
         return new AssociatedSuppliers(
             $defaultSupplier ? $defaultSupplier->getValue() : NoSupplierId::NO_SUPPLIER_ID,
-            array_map(static function (SupplierId $supplierId): int {
-                return $supplierId->getValue();
-            }, $supplierIds)
+            array_map(static fn(SupplierId $supplierId): int => $supplierId->getValue(), $supplierIds)
         );
     }
 }

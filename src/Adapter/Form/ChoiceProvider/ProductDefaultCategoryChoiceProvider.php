@@ -44,16 +44,6 @@ class ProductDefaultCategoryChoiceProvider implements ConfigurableFormChoiceProv
     private $defaultCategoryId;
 
     /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
-     * @var CategoryDisplayNameBuilder
-     */
-    private $categoryDisplayNameBuilder;
-
-    /**
      * @var ShopId
      */
     private $shopId;
@@ -72,14 +62,12 @@ class ProductDefaultCategoryChoiceProvider implements ConfigurableFormChoiceProv
      */
     public function __construct(
         int $homeCategoryId,
-        CategoryRepository $categoryRepository,
-        CategoryDisplayNameBuilder $categoryDisplayNameBuilder,
+        private readonly CategoryRepository $categoryRepository,
+        private readonly CategoryDisplayNameBuilder $categoryDisplayNameBuilder,
         int $shopId,
         int $languageId
     ) {
         $this->defaultCategoryId = new CategoryId($homeCategoryId);
-        $this->categoryRepository = $categoryRepository;
-        $this->categoryDisplayNameBuilder = $categoryDisplayNameBuilder;
         $this->shopId = new ShopId($shopId);
         $this->languageId = new LanguageId($languageId);
     }

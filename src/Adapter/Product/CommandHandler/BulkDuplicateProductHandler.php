@@ -43,16 +43,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\ValueObject\ProductId;
 class BulkDuplicateProductHandler extends AbstractBulkHandler implements BulkDuplicateProductHandlerInterface
 {
     /**
-     * @var ProductDuplicator
-     */
-    private $productDuplicator;
-
-    /**
      * @param ProductDuplicator $productDuplicator
      */
-    public function __construct(ProductDuplicator $productDuplicator)
+    public function __construct(private readonly ProductDuplicator $productDuplicator)
     {
-        $this->productDuplicator = $productDuplicator;
     }
 
     /**

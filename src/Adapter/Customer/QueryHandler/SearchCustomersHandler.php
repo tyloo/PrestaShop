@@ -42,25 +42,11 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\QueryHandler\SearchCustomersHandl
 final class SearchCustomersHandler implements SearchCustomersHandlerInterface
 {
     /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var int
-     */
-    private $contextLangId;
-
-    /**
      * @param Configuration $configuration
      * @param int $contextLangId
      */
-    public function __construct(
-        Configuration $configuration,
-        int $contextLangId
-    ) {
-        $this->configuration = $configuration;
-        $this->contextLangId = $contextLangId;
+    public function __construct(private readonly Configuration $configuration, private readonly int $contextLangId)
+    {
     }
 
     /**
@@ -114,7 +100,7 @@ final class SearchCustomersHandler implements SearchCustomersHandlerInterface
                 // Assign group names and default group information
                 $customerArray['groups'] = [];
                 if ($assignGroups) {
-                    $group_ids = explode(',', $customerArray['group_ids']);
+                    $group_ids = explode(',', (string) $customerArray['group_ids']);
                     foreach ($group_ids as $id_group) {
                         $customerArray['groups'][$id_group] = [
                             'id_group' => $id_group,

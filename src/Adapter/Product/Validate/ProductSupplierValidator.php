@@ -45,33 +45,12 @@ use ProductSupplier;
 class ProductSupplierValidator extends AbstractObjectModelValidator
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var SupplierRepository
-     */
-    private $supplierRepository;
-
-    /**
-     * @var CurrencyRepository
-     */
-    private $currencyRepository;
-
-    /**
      * @param ProductRepository $productRepository
-     * @param SupplierRepository $supplierProvider
+     * @param SupplierRepository $supplierRepository
      * @param CurrencyRepository $currencyRepository
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        SupplierRepository $supplierProvider,
-        CurrencyRepository $currencyRepository
-    ) {
-        $this->productRepository = $productRepository;
-        $this->supplierRepository = $supplierProvider;
-        $this->currencyRepository = $currencyRepository;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly SupplierRepository $supplierRepository, private readonly CurrencyRepository $currencyRepository)
+    {
     }
 
     /**

@@ -39,15 +39,8 @@ use PrestaShop\PrestaShop\Core\Domain\Attachment\QueryResult\AttachmentInformati
 #[AsQueryHandler]
 class GetAttachmentInformationHandler implements GetAttachmentInformationHandlerInterface
 {
-    /**
-     * @var AttachmentRepository
-     */
-    private $attachmentRepository;
-
-    public function __construct(
-        AttachmentRepository $attachmentRepository
-    ) {
-        $this->attachmentRepository = $attachmentRepository;
+    public function __construct(private readonly AttachmentRepository $attachmentRepository)
+    {
     }
 
     /**

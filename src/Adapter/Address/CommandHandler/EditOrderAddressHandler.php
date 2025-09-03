@@ -53,33 +53,12 @@ use PrestaShopException;
 class EditOrderAddressHandler implements EditOrderAddressHandlerInterface
 {
     /**
-     * @var EditCustomerAddressHandlerInterface
-     */
-    private $addressHandler;
-
-    /**
-     * @var ChangeOrderDeliveryAddressHandlerInterface
-     */
-    private $deliveryAddressHandler;
-
-    /**
-     * @var ChangeOrderInvoiceAddressHandlerInterface
-     */
-    private $invoiceAddressHandler;
-
-    /**
      * @param EditCustomerAddressHandlerInterface $addressHandler
      * @param ChangeOrderDeliveryAddressHandlerInterface $deliveryAddressHandler
      * @param ChangeOrderInvoiceAddressHandlerInterface $invoiceAddressHandler
      */
-    public function __construct(
-        EditCustomerAddressHandlerInterface $addressHandler,
-        ChangeOrderDeliveryAddressHandlerInterface $deliveryAddressHandler,
-        ChangeOrderInvoiceAddressHandlerInterface $invoiceAddressHandler
-    ) {
-        $this->addressHandler = $addressHandler;
-        $this->deliveryAddressHandler = $deliveryAddressHandler;
-        $this->invoiceAddressHandler = $invoiceAddressHandler;
+    public function __construct(private readonly EditCustomerAddressHandlerInterface $addressHandler, private readonly ChangeOrderDeliveryAddressHandlerInterface $deliveryAddressHandler, private readonly ChangeOrderInvoiceAddressHandlerInterface $invoiceAddressHandler)
+    {
     }
 
     /**

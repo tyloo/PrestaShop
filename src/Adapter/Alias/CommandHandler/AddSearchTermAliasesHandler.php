@@ -37,17 +37,10 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\CommandHandler\AddSearchTermAliasesH
 class AddSearchTermAliasesHandler implements AddSearchTermAliasesHandlerInterface
 {
     /**
-     * @var AliasRepository
-     */
-    private $aliasRepository;
-
-    /**
      * @param AliasRepository $aliasRepository
      */
-    public function __construct(
-        AliasRepository $aliasRepository
-    ) {
-        $this->aliasRepository = $aliasRepository;
+    public function __construct(private readonly AliasRepository $aliasRepository)
+    {
     }
 
     /**

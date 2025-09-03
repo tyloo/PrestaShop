@@ -40,15 +40,8 @@ use PrestaShop\PrestaShop\Core\Domain\Alias\QueryResult\AliasForEditing;
 #[AsQueryHandler]
 class GetAliasForEditingHandler implements GetAliasForEditingHandlerInterface
 {
-    /**
-     * @var AliasRepository
-     */
-    private $aliasRepository;
-
-    public function __construct(
-        AliasRepository $aliasRepository
-    ) {
-        $this->aliasRepository = $aliasRepository;
+    public function __construct(private readonly AliasRepository $aliasRepository)
+    {
     }
 
     public function handle(GetAliasForEditing $query): AliasForEditing

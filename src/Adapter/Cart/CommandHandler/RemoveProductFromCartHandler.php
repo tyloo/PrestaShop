@@ -45,17 +45,10 @@ use Shop;
 final class RemoveProductFromCartHandler extends AbstractCartHandler implements RemoveProductFromCartHandlerInterface
 {
     /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
      * @param ContextStateManager $contextStateManager
      */
-    public function __construct(
-        ContextStateManager $contextStateManager
-    ) {
-        $this->contextStateManager = $contextStateManager;
+    public function __construct(private readonly ContextStateManager $contextStateManager)
+    {
     }
 
     /**

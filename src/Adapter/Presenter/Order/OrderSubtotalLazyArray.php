@@ -39,9 +39,6 @@ use TaxConfiguration;
 
 class OrderSubtotalLazyArray extends AbstractLazyArray
 {
-    /** @var Order */
-    private $order;
-
     /** @var TaxConfiguration */
     private $taxConfiguration;
 
@@ -59,13 +56,12 @@ class OrderSubtotalLazyArray extends AbstractLazyArray
      *
      * @param Order $order
      */
-    public function __construct(Order $order)
+    public function __construct(private readonly Order $order)
     {
         $this->taxConfiguration = new TaxConfiguration();
         $this->includeTaxes = $this->includeTaxes();
         $this->priceFormatter = new PriceFormatter();
         $this->translator = Context::getContext()->getTranslator();
-        $this->order = $order;
         parent::__construct();
     }
 

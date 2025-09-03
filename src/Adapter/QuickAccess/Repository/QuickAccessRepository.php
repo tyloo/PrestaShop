@@ -36,8 +36,8 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 class QuickAccessRepository extends AbstractObjectModelRepository implements QuickAccessRepositoryInterface
 {
     public function __construct(
-        private Connection $connection,
-        private string $dbPrefix
+        private readonly Connection $connection,
+        private readonly string $dbPrefix
     ) {
     }
 

@@ -38,14 +38,8 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\Group\QueryResult\EditableCustome
 #[AsQueryHandler]
 class GetCustomerGroupForEditingHandler implements GetCustomerGroupForEditingHandlerInterface
 {
-    /**
-     * @var GroupRepository
-     */
-    private $customerGroupRepository;
-
-    public function __construct(GroupRepository $customerGroupRepository)
+    public function __construct(private readonly GroupRepository $customerGroupRepository)
     {
-        $this->customerGroupRepository = $customerGroupRepository;
     }
 
     /**

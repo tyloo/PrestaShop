@@ -65,61 +65,6 @@ use Product;
 class GetCombinationForEditingHandler implements GetCombinationForEditingHandlerInterface
 {
     /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var CombinationNameBuilderInterface
-     */
-    private $combinationNameBuilder;
-
-    /**
-     * @var StockAvailableRepository
-     */
-    private $stockAvailableRepository;
-
-    /**
-     * @var AttributeRepository
-     */
-    private $attributeRepository;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
-     * @var NumberExtractor
-     */
-    private $numberExtractor;
-
-    /**
-     * @var TaxComputer
-     */
-    private $taxComputer;
-
-    /**
-     * @var ShopConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var ProductImagePathFactory
-     */
-    private $productImageUrlFactory;
-
-    /**
      * @param CombinationRepository $combinationRepository
      * @param CombinationNameBuilderInterface $combinationNameBuilder
      * @param StockAvailableRepository $stockAvailableRepository
@@ -132,30 +77,8 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
      * @param ShopConfigurationInterface $configuration
      * @param ProductImagePathFactory $productImageUrlFactory
      */
-    public function __construct(
-        CombinationRepository $combinationRepository,
-        CombinationNameBuilderInterface $combinationNameBuilder,
-        StockAvailableRepository $stockAvailableRepository,
-        AttributeRepository $attributeRepository,
-        ProductRepository $productRepository,
-        ProductImageRepository $productImageRepository,
-        NumberExtractor $numberExtractor,
-        TaxComputer $taxComputer,
-        int $contextLanguageId,
-        ShopConfigurationInterface $configuration,
-        ProductImagePathFactory $productImageUrlFactory
-    ) {
-        $this->combinationRepository = $combinationRepository;
-        $this->combinationNameBuilder = $combinationNameBuilder;
-        $this->stockAvailableRepository = $stockAvailableRepository;
-        $this->attributeRepository = $attributeRepository;
-        $this->productRepository = $productRepository;
-        $this->productImageRepository = $productImageRepository;
-        $this->numberExtractor = $numberExtractor;
-        $this->taxComputer = $taxComputer;
-        $this->contextLanguageId = $contextLanguageId;
-        $this->configuration = $configuration;
-        $this->productImageUrlFactory = $productImageUrlFactory;
+    public function __construct(private readonly CombinationRepository $combinationRepository, private readonly CombinationNameBuilderInterface $combinationNameBuilder, private readonly StockAvailableRepository $stockAvailableRepository, private readonly AttributeRepository $attributeRepository, private readonly ProductRepository $productRepository, private readonly ProductImageRepository $productImageRepository, private readonly NumberExtractor $numberExtractor, private readonly TaxComputer $taxComputer, private readonly int $contextLanguageId, private readonly ShopConfigurationInterface $configuration, private readonly ProductImagePathFactory $productImageUrlFactory)
+    {
     }
 
     /**
@@ -312,9 +235,7 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
             return [];
         }
 
-        return array_map(function (ImageId $imageId) {
-            return $imageId->getValue();
-        }, $combinationImageIds[$combinationIdValue]);
+        return array_map(fn(ImageId $imageId) => $imageId->getValue(), $combinationImageIds[$combinationIdValue]);
     }
 
     /**

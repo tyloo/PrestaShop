@@ -34,46 +34,6 @@ use OrderDetail;
 class OrderRefundSummary
 {
     /**
-     * @var OrderDetail[]
-     */
-    private $orderDetails;
-
-    /**
-     * @var array
-     */
-    private $productRefunds;
-
-    /**
-     * @var float
-     */
-    private $refundedAmount;
-
-    /**
-     * @var float
-     */
-    private $refundedShipping;
-
-    /**
-     * @var float
-     */
-    private $voucherAmount;
-
-    /**
-     * @var bool
-     */
-    private $voucherChosen;
-
-    /**
-     * @var bool
-     */
-    private $isTaxIncluded;
-
-    /**
-     * @var int
-     */
-    private $precision;
-
-    /**
      * @param array $orderDetails
      * @param array $productRefunds
      * @param float $refundedAmount
@@ -83,24 +43,8 @@ class OrderRefundSummary
      * @param bool $isTaxIncluded
      * @param int $precision
      */
-    public function __construct(
-        array $orderDetails,
-        array $productRefunds,
-        float $refundedAmount,
-        float $refundedShipping,
-        float $voucherAmount,
-        bool $voucherChosen,
-        bool $isTaxIncluded,
-        int $precision
-    ) {
-        $this->orderDetails = $orderDetails;
-        $this->productRefunds = $productRefunds;
-        $this->refundedAmount = $refundedAmount;
-        $this->refundedShipping = $refundedShipping;
-        $this->voucherAmount = $voucherAmount;
-        $this->voucherChosen = $voucherChosen;
-        $this->isTaxIncluded = $isTaxIncluded;
-        $this->precision = $precision;
+    public function __construct(private array $orderDetails, private readonly array $productRefunds, private readonly float $refundedAmount, private readonly float $refundedShipping, private readonly float $voucherAmount, private readonly bool $voucherChosen, private readonly bool $isTaxIncluded, private readonly int $precision)
+    {
     }
 
     /**
@@ -174,6 +118,6 @@ class OrderRefundSummary
      */
     public function getOrderDetailById(int $orderDetailId): ?OrderDetail
     {
-        return isset($this->orderDetails[$orderDetailId]) ? $this->orderDetails[$orderDetailId] : null;
+        return $this->orderDetails[$orderDetailId] ?? null;
     }
 }

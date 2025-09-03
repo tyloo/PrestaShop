@@ -72,7 +72,7 @@ class DeleteSupplierLogoImageHandler implements DeleteSupplierLogoImageHandlerIn
                     '%s%s-%s.' . $imageFormat,
                     $this->imageDir,
                     $command->getSupplierId()->getValue(),
-                    stripslashes($imageType['name'])
+                    stripslashes((string) $imageType['name'])
                 );
                 if ($fs->exists($path)) {
                     $fs->remove($path);

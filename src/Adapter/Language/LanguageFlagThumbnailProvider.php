@@ -37,25 +37,11 @@ use PrestaShop\PrestaShop\Core\Image\Parser\ImageTagSourceParserInterface;
 final class LanguageFlagThumbnailProvider implements ImageProviderInterface
 {
     /**
-     * @var ImageTagSourceParserInterface
-     */
-    private $imageTagSourceParser;
-
-    /**
-     * @var int
-     */
-    private $contextShopId;
-
-    /**
      * @param ImageTagSourceParserInterface $imageTagSourceParser
      * @param int $contextShopId
      */
-    public function __construct(
-        ImageTagSourceParserInterface $imageTagSourceParser,
-        $contextShopId
-    ) {
-        $this->imageTagSourceParser = $imageTagSourceParser;
-        $this->contextShopId = $contextShopId;
+    public function __construct(private readonly ImageTagSourceParserInterface $imageTagSourceParser, private $contextShopId)
+    {
     }
 
     /**

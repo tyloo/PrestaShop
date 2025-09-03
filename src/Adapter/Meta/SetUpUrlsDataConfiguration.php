@@ -53,16 +53,6 @@ final class SetUpUrlsDataConfiguration extends AbstractMultistoreConfiguration
     ];
 
     /**
-     * @var HtaccessFileGenerator
-     */
-    private $htaccessFileGenerator;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * SetUpUrlsDataConfiguration constructor.
      *
      * @param Configuration $configuration
@@ -71,12 +61,9 @@ final class SetUpUrlsDataConfiguration extends AbstractMultistoreConfiguration
      * @param HtaccessFileGenerator $htaccessFileGenerator
      * @param TranslatorInterface $translator
      */
-    public function __construct(Configuration $configuration, Context $shopContext, FeatureInterface $multistoreFeature, HtaccessFileGenerator $htaccessFileGenerator, TranslatorInterface $translator)
+    public function __construct(Configuration $configuration, Context $shopContext, FeatureInterface $multistoreFeature, private readonly HtaccessFileGenerator $htaccessFileGenerator, private readonly TranslatorInterface $translator)
     {
         parent::__construct($configuration, $shopContext, $multistoreFeature);
-
-        $this->htaccessFileGenerator = $htaccessFileGenerator;
-        $this->translator = $translator;
     }
 
     /**

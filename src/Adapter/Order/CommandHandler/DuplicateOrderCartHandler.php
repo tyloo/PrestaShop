@@ -44,16 +44,10 @@ use Shop;
 final class DuplicateOrderCartHandler implements DuplicateOrderCartHandlerInterface
 {
     /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
      * @param ContextStateManager $contextStateManager
      */
-    public function __construct(ContextStateManager $contextStateManager)
+    public function __construct(private readonly ContextStateManager $contextStateManager)
     {
-        $this->contextStateManager = $contextStateManager;
     }
 
     /**

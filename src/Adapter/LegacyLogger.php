@@ -137,26 +137,13 @@ class LegacyLogger implements LoggerInterface
      */
     public function log($level, $message, array $context = []): void
     {
-        switch ($level) {
-            case Logger::EMERGENCY:
-            case Logger::ALERT:
-            case Logger::CRITICAL:
-                $pslevel = 4;
-                break;
-            case Logger::ERROR:
-                $pslevel = 3;
-                break;
-            case Logger::WARNING:
-                $pslevel = 2;
-                break;
-            case Logger::NOTICE:
-            case Logger::INFO:
-            case Logger::DEBUG:
-                $pslevel = 1;
-                break;
-            default:
-                $pslevel = 0;
-        }
+        $pslevel = match ($level) {
+            Logger::EMERGENCY, Logger::ALERT, Logger::CRITICAL => 4,
+            Logger::ERROR => 3,
+            Logger::WARNING => 2,
+            Logger::NOTICE, Logger::INFO, Logger::DEBUG => 1,
+            default => 0,
+        };
 
         $error_code = !empty($context['error_code']) ? $context['error_code'] : null;
         $object_type = !empty($context['object_type']) ? $context['object_type'] : null;

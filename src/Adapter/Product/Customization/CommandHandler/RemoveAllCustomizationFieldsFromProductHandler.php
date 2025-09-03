@@ -43,33 +43,12 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Customization\ValueObject\Customiz
 final class RemoveAllCustomizationFieldsFromProductHandler implements RemoveAllCustomizationFieldsFromProductHandlerInterface
 {
     /**
-     * @var CustomizationFieldDeleter
-     */
-    private $customizationFieldDeleter;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductCustomizationFieldUpdater
-     */
-    private $productCustomizationFieldUpdater;
-
-    /**
      * @param CustomizationFieldDeleter $customizationFieldDeleter
      * @param ProductRepository $productRepository
      * @param ProductCustomizationFieldUpdater $productCustomizationFieldUpdater
      */
-    public function __construct(
-        CustomizationFieldDeleter $customizationFieldDeleter,
-        ProductRepository $productRepository,
-        ProductCustomizationFieldUpdater $productCustomizationFieldUpdater
-    ) {
-        $this->customizationFieldDeleter = $customizationFieldDeleter;
-        $this->productRepository = $productRepository;
-        $this->productCustomizationFieldUpdater = $productCustomizationFieldUpdater;
+    public function __construct(private readonly CustomizationFieldDeleter $customizationFieldDeleter, private readonly ProductRepository $productRepository, private readonly ProductCustomizationFieldUpdater $productCustomizationFieldUpdater)
+    {
     }
 
     /**
@@ -79,9 +58,7 @@ final class RemoveAllCustomizationFieldsFromProductHandler implements RemoveAllC
     {
         $product = $this->productRepository->getProductByDefaultShop($command->getProductId());
 
-        $customizationFieldIds = array_map(function (array $field): CustomizationFieldId {
-            return new CustomizationFieldId((int) $field['id_customization_field']);
-        }, $product->getCustomizationFieldIds());
+        $customizationFieldIds = array_map(fn(array $field): CustomizationFieldId => new CustomizationFieldId((int) $field['id_customization_field']), $product->getCustomizationFieldIds());
 
         $this->customizationFieldDeleter->bulkDelete($customizationFieldIds);
         $this->productCustomizationFieldUpdater->refreshProductCustomizability($command->getProductId());

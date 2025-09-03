@@ -35,19 +35,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ModuleTabManagementSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ModuleTabRegister
-     */
-    private $moduleTabRegister;
-    /**
-     * @var ModuleTabUnregister
-     */
-    private $moduleTabUnregister;
-
-    public function __construct(ModuleTabRegister $moduleTabRegister, ModuleTabUnregister $moduleTabUnregister)
+    public function __construct(private readonly ModuleTabRegister $moduleTabRegister, private readonly ModuleTabUnregister $moduleTabUnregister)
     {
-        $this->moduleTabRegister = $moduleTabRegister;
-        $this->moduleTabUnregister = $moduleTabUnregister;
     }
 
     /**

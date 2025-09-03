@@ -67,11 +67,6 @@ class ContextStateManager
     ];
 
     /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    /**
      * @var array|null
      */
     private $contextFieldsStack = null;
@@ -79,9 +74,8 @@ class ContextStateManager
     /**
      * @param LegacyContext $legacyContext
      */
-    public function __construct(LegacyContext $legacyContext)
+    public function __construct(private readonly LegacyContext $legacyContext)
     {
-        $this->legacyContext = $legacyContext;
     }
 
     /**

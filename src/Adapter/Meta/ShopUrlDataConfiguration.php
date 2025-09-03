@@ -38,34 +38,13 @@ use ShopUrl;
 final class ShopUrlDataConfiguration implements DataConfigurationInterface
 {
     /**
-     * @var ShopUrl
-     */
-    private $mainShopUrl;
-
-    /**
-     * @var HtaccessFileGenerator
-     */
-    private $htaccessFileGenerator;
-
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * ShopUrlDataConfiguration constructor.
      *
      * @param ShopUrl $mainShopUrl
      * @param ConfigurationInterface $configuration
      */
-    public function __construct(
-        ShopUrl $mainShopUrl,
-        ConfigurationInterface $configuration,
-        HtaccessFileGenerator $htaccessFileGenerator
-    ) {
-        $this->mainShopUrl = $mainShopUrl;
-        $this->configuration = $configuration;
-        $this->htaccessFileGenerator = $htaccessFileGenerator;
+    public function __construct(private readonly ShopUrl $mainShopUrl, private readonly ConfigurationInterface $configuration, private readonly HtaccessFileGenerator $htaccessFileGenerator)
+    {
     }
 
     /**

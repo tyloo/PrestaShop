@@ -42,29 +42,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\Exception\CannotUpdate
 #[AsCommandHandler]
 class UpdateCombinationHandler implements UpdateCombinationHandlerInterface
 {
-    /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var CombinationFillerInterface
-     */
-    private $combinationFiller;
-
-    /**
-     * @var DefaultCombinationUpdater
-     */
-    private $defaultCombinationUpdater;
-
-    public function __construct(
-        CombinationRepository $combinationRepository,
-        CombinationFillerInterface $combinationFiller,
-        DefaultCombinationUpdater $defaultCombinationUpdater
-    ) {
-        $this->combinationRepository = $combinationRepository;
-        $this->combinationFiller = $combinationFiller;
-        $this->defaultCombinationUpdater = $defaultCombinationUpdater;
+    public function __construct(private readonly CombinationRepository $combinationRepository, private readonly CombinationFillerInterface $combinationFiller, private readonly DefaultCombinationUpdater $defaultCombinationUpdater)
+    {
     }
 
     /**

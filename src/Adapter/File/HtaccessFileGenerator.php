@@ -35,32 +35,14 @@ use PrestaShop\PrestaShop\Core\Cache\Clearer\CacheClearerInterface;
 class HtaccessFileGenerator
 {
     /**
-     * @var CacheClearerInterface
-     */
-    private $cacheClearer;
-
-    /**
-     * @var Tools
-     */
-    private $tools;
-
-    /**
-     * @var bool
-     */
-    private $multipleViewsConfiguration;
-
-    /**
      * HtaccessFileGenerator constructor.
      *
      * @param CacheClearerInterface $cacheClearer
      * @param Tools $tools
      * @param bool $multipleViewsConfiguration
      */
-    public function __construct(CacheClearerInterface $cacheClearer, Tools $tools, $multipleViewsConfiguration)
+    public function __construct(private readonly CacheClearerInterface $cacheClearer, private readonly Tools $tools, private $multipleViewsConfiguration)
     {
-        $this->cacheClearer = $cacheClearer;
-        $this->tools = $tools;
-        $this->multipleViewsConfiguration = $multipleViewsConfiguration;
     }
 
     /**

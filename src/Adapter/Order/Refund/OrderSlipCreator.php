@@ -53,16 +53,6 @@ use Tools;
 class OrderSlipCreator
 {
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
      * @var OrderSlip
      */
     private $orderSlipCreated;
@@ -71,12 +61,8 @@ class OrderSlipCreator
      * @param ConfigurationInterface $configuration
      * @param TranslatorInterface $translator
      */
-    public function __construct(
-        ConfigurationInterface $configuration,
-        TranslatorInterface $translator
-    ) {
-        $this->configuration = $configuration;
-        $this->translator = $translator;
+    public function __construct(private readonly ConfigurationInterface $configuration, private readonly TranslatorInterface $translator)
+    {
     }
 
     /**
@@ -107,7 +93,7 @@ class OrderSlipCreator
                 throw new OrderException('You cannot generate a partial credit slip.');
             }
 
-            $fullQuantityList = array_map(function ($orderDetail) { return $orderDetail['quantity']; }, $orderRefundSummary->getProductRefunds());
+            $fullQuantityList = array_map(fn($orderDetail) => $orderDetail['quantity'], $orderRefundSummary->getProductRefunds());
 
             // Hook called only for the shop concerned
             Hook::exec('actionOrderSlipAdd', [

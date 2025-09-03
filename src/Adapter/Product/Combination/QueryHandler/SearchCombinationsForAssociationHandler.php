@@ -45,16 +45,6 @@ use PrestaShop\PrestaShop\Core\Product\Combination\NameBuilder\CombinationNameBu
 class SearchCombinationsForAssociationHandler implements SearchCombinationsForAssociationHandlerInterface
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductImagePathFactory
-     */
-    private $productImagePathFactory;
-
-    /**
      * @var AttributeRepository
      */
     protected $attributeRepository;
@@ -71,13 +61,11 @@ class SearchCombinationsForAssociationHandler implements SearchCombinationsForAs
      * @param CombinationNameBuilderInterface $combinationNameBuilder
      */
     public function __construct(
-        ProductRepository $productRepository,
+        private readonly ProductRepository $productRepository,
         AttributeRepository $attributeRepository,
-        ProductImagePathFactory $productImagePathFactory,
+        private readonly ProductImagePathFactory $productImagePathFactory,
         CombinationNameBuilderInterface $combinationNameBuilder
     ) {
-        $this->productRepository = $productRepository;
-        $this->productImagePathFactory = $productImagePathFactory;
         $this->attributeRepository = $attributeRepository;
         $this->combinationNameBuilder = $combinationNameBuilder;
     }

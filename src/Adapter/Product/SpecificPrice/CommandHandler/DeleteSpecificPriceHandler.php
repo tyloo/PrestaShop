@@ -40,16 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\CommandHandler\Delet
 class DeleteSpecificPriceHandler implements DeleteSpecificPriceHandlerInterface
 {
     /**
-     * @var SpecificPriceRepository
-     */
-    private $specificPriceRepository;
-
-    /**
      * @param SpecificPriceRepository $specificPriceRepository
      */
-    public function __construct(SpecificPriceRepository $specificPriceRepository)
+    public function __construct(private readonly SpecificPriceRepository $specificPriceRepository)
     {
-        $this->specificPriceRepository = $specificPriceRepository;
     }
 
     public function handle(DeleteSpecificPriceCommand $command): void

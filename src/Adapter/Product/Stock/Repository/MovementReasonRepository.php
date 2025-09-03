@@ -34,14 +34,8 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Stock\ValueObject\MovementReasonId
 
 class MovementReasonRepository
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(ConfigurationInterface $configuration)
+    public function __construct(private readonly ConfigurationInterface $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

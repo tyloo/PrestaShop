@@ -36,11 +36,6 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceFormatter;
 class FeatureValuesChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
     /**
-     * @var FeatureValueRepository
-     */
-    private $featureValueRepository;
-
-    /**
      * @var int
      */
     private $contextLanguageId;
@@ -53,10 +48,9 @@ class FeatureValuesChoiceProvider implements ConfigurableFormChoiceProviderInter
     private $cacheFeatureValueChoices;
 
     public function __construct(
-        FeatureValueRepository $featureValueRepository,
+        private readonly FeatureValueRepository $featureValueRepository,
         LegacyContext $legacyContext
     ) {
-        $this->featureValueRepository = $featureValueRepository;
         $this->contextLanguageId = (int) $legacyContext->getLanguage()->getId();
     }
 

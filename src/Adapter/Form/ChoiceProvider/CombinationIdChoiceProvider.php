@@ -39,21 +39,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CombinationIdChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
     /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
-     * @var AttributeRepository
-     */
-    private $attributeRepository;
-
-    /**
-     * @var CombinationNameBuilderInterface
-     */
-    private $combinationNameBuilder;
-
-    /**
      * @var LanguageId
      */
     private $languageId;
@@ -65,15 +50,12 @@ class CombinationIdChoiceProvider implements ConfigurableFormChoiceProviderInter
      * @param int $languageId
      */
     public function __construct(
-        CombinationRepository $combinationRepository,
-        AttributeRepository $attributeRepository,
-        CombinationNameBuilderInterface $combinationNameBuilder,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly AttributeRepository $attributeRepository,
+        private readonly CombinationNameBuilderInterface $combinationNameBuilder,
         int $languageId
     ) {
-        $this->combinationRepository = $combinationRepository;
-        $this->attributeRepository = $attributeRepository;
         $this->languageId = new LanguageId($languageId);
-        $this->combinationNameBuilder = $combinationNameBuilder;
     }
 
     /**

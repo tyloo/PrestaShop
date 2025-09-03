@@ -48,33 +48,12 @@ use PrestaShop\PrestaShop\Core\Repository\AbstractObjectModelRepository;
 class FeatureValueRepository extends AbstractObjectModelRepository
 {
     /**
-     * @var FeatureValueValidator
-     */
-    private $featureValueValidator;
-
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param FeatureValueValidator $featureValueValidator
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        FeatureValueValidator $featureValueValidator
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->featureValueValidator = $featureValueValidator;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly FeatureValueValidator $featureValueValidator)
+    {
     }
 
     /**

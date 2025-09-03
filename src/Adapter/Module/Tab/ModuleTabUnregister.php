@@ -49,22 +49,10 @@ class ModuleTabUnregister
      */
     protected $tabRepository;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(TabRepository $tabRepository, LangRepository $langRepository, LoggerInterface $logger, TranslatorInterface $translator)
+    public function __construct(TabRepository $tabRepository, LangRepository $langRepository, private readonly LoggerInterface $logger, private readonly TranslatorInterface $translator)
     {
         $this->langRepository = $langRepository;
         $this->tabRepository = $tabRepository;
-        $this->logger = $logger;
-        $this->translator = $translator;
     }
 
     /**

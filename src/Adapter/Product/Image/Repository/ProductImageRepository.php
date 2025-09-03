@@ -59,36 +59,8 @@ use PrestaShopException;
  */
 class ProductImageRepository extends AbstractMultiShopObjectModelRepository
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var ProductImageValidator
-     */
-    private $productImageValidator;
-
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        ProductRepository $productRepository,
-        ProductImageValidator $productImageValidator
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->productRepository = $productRepository;
-        $this->productImageValidator = $productImageValidator;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ProductRepository $productRepository, private readonly ProductImageValidator $productImageValidator)
+    {
     }
 
     /**
@@ -102,9 +74,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             ->addOrderBy('i.id_image', 'ASC')
         ;
 
-        return array_map(static function (string $id): Image {
-            return new Image((int) $id);
-        }, $qb->executeQuery()->fetchFirstColumn());
+        return array_map(static fn(string $id): Image => new Image((int) $id), $qb->executeQuery()->fetchFirstColumn());
     }
 
     /**
@@ -129,9 +99,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         }
 
         return array_map(
-            function (ImageId $imageId) use ($shopConstraint): Image {
-                return $this->getByShopConstraint($imageId, $shopConstraint);
-            },
+            fn(ImageId $imageId): Image => $this->getByShopConstraint($imageId, $shopConstraint),
             $this->getImageIds($productId, $shopConstraint)
         );
     }
@@ -193,9 +161,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             }
         }
 
-        return array_map(static function (string $id): ImageId {
-            return new ImageId((int) $id);
-        }, $qb->executeQuery()->fetchFirstColumn());
+        return array_map(static fn(string $id): ImageId => new ImageId((int) $id), $qb->executeQuery()->fetchFirstColumn());
     }
 
     /**
@@ -254,9 +220,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             return [];
         }
 
-        $combinationIds = array_map(function (CombinationId $id): int {
-            return $id->getValue();
-        }, $combinationIds);
+        $combinationIds = array_map(fn(CombinationId $id): int => $id->getValue(), $combinationIds);
 
         $qb = $this->connection->createQueryBuilder();
         $qb->select('pai.id_product_attribute, pai.id_image')
@@ -337,9 +301,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     public function getAssociatedShopIds(ImageId $imageId): array
     {
         return array_map(
-            static function (array $shop): ShopId {
-                return new ShopId((int) $shop['id_shop']);
-            },
+            static fn(array $shop): ShopId => new ShopId((int) $shop['id_shop']),
             $this->connection->createQueryBuilder()
                 ->select('id_shop')
                 ->from($this->dbPrefix . 'image_shop')
@@ -391,9 +353,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
             ;
         }
 
-        return array_map(static function (array $shop): ShopId {
-            return new ShopId((int) $shop['id_shop']);
-        }, $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn(array $shop): ShopId => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     public function create(ProductId $productId, ShopConstraint $shopConstraint): Image
@@ -501,9 +461,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         ;
 
         return array_map(
-            static function (array $shop): ShopId {
-                return new ShopId((int) $shop['id_shop']);
-            },
+            static fn(array $shop): ShopId => new ShopId((int) $shop['id_shop']),
             $results
         );
     }
@@ -540,9 +498,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
         }
 
         $shopProductImagesArray = array_map(
-            function (int $shopId, array $productImages): ShopProductImages {
-                return new ShopProductImages($shopId, ShopImageAssociationCollection::from(...$productImages));
-            },
+            fn(int $shopId, array $productImages): ShopProductImages => new ShopProductImages($shopId, ShopImageAssociationCollection::from(...$productImages)),
             array_keys($productImagesByShop),
             $productImagesByShop
         );

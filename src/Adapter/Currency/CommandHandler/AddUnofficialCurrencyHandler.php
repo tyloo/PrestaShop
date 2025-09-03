@@ -51,11 +51,6 @@ use PrestaShopException;
 final class AddUnofficialCurrencyHandler extends AbstractCurrencyHandler implements AddUnofficialCurrencyHandlerInterface
 {
     /**
-     * @var CurrencyDataProviderInterface
-     */
-    private $currencyDataProvider;
-
-    /**
      * @param LocaleRepository $localeRepoCLDR
      * @param LanguageInterface[] $languages
      * @param CurrencyCommandValidator $validator
@@ -65,11 +60,10 @@ final class AddUnofficialCurrencyHandler extends AbstractCurrencyHandler impleme
         LocaleRepository $localeRepoCLDR,
         array $languages,
         CurrencyCommandValidator $validator,
-        CurrencyDataProviderInterface $currencyDataProvider,
+        private readonly CurrencyDataProviderInterface $currencyDataProvider,
         PatternTransformer $patternTransformer
     ) {
         parent::__construct($localeRepoCLDR, $languages, $validator, $patternTransformer);
-        $this->currencyDataProvider = $currencyDataProvider;
     }
 
     /**

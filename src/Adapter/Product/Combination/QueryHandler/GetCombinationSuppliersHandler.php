@@ -38,20 +38,14 @@ use PrestaShop\PrestaShop\Core\Domain\Product\Combination\QueryHandler\GetCombin
 class GetCombinationSuppliersHandler extends AbstractProductSupplierHandler implements GetCombinationSuppliersHandlerInterface
 {
     /**
-     * @var CombinationRepository
-     */
-    private $combinationRepository;
-
-    /**
      * @param ProductSupplierRepository $productSupplierRepository
      * @param CombinationRepository $combinationRepository
      */
     public function __construct(
         ProductSupplierRepository $productSupplierRepository,
-        CombinationRepository $combinationRepository
+        private readonly CombinationRepository $combinationRepository
     ) {
         parent::__construct($productSupplierRepository);
-        $this->combinationRepository = $combinationRepository;
     }
 
     /**

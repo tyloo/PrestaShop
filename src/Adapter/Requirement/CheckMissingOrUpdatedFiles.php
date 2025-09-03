@@ -61,7 +61,7 @@ class CheckMissingOrUpdatedFiles
 
         foreach ($dir->md5file as $file) {
             $filename = preg_replace('#^admin/#', $adminDir . '/', $path . $file['name']);
-            if (preg_match('#^' . $excludeRegexp . '#', $filename)) {
+            if (preg_match('#^' . $excludeRegexp . '#', (string) $filename)) {
                 continue;
             }
 

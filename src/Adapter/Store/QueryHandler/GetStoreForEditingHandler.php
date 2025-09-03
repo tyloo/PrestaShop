@@ -38,14 +38,8 @@ use PrestaShopException;
 #[AsQueryHandler]
 class GetStoreForEditingHandler implements GetStoreForEditingHandlerInterface
 {
-    /**
-     * @var StoreRepository
-     */
-    private $storeRepository;
-
-    public function __construct(StoreRepository $storeRepository)
+    public function __construct(private readonly StoreRepository $storeRepository)
     {
-        $this->storeRepository = $storeRepository;
     }
 
     /**

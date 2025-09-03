@@ -36,16 +36,10 @@ use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 class LocalUnitsConfiguration implements DataConfigurationInterface
 {
     /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
      * @param Configuration $configuration
      */
-    public function __construct(Configuration $configuration)
+    public function __construct(private readonly Configuration $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     /**

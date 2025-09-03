@@ -46,33 +46,12 @@ use ProductDownload as VirtualProductFile;
 class VirtualProductUpdater
 {
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var VirtualProductFileUploader
-     */
-    private $virtualProductFileUploader;
-
-    /**
-     * @var VirtualProductFileRepository
-     */
-    private $virtualProductFileRepository;
-
-    /**
      * @param ProductRepository $productRepository
      * @param VirtualProductFileUploader $virtualProductFileUploader
      * @param VirtualProductFileRepository $virtualProductFileRepository
      */
-    public function __construct(
-        ProductRepository $productRepository,
-        VirtualProductFileUploader $virtualProductFileUploader,
-        VirtualProductFileRepository $virtualProductFileRepository
-    ) {
-        $this->productRepository = $productRepository;
-        $this->virtualProductFileUploader = $virtualProductFileUploader;
-        $this->virtualProductFileRepository = $virtualProductFileRepository;
+    public function __construct(private readonly ProductRepository $productRepository, private readonly VirtualProductFileUploader $virtualProductFileUploader, private readonly VirtualProductFileRepository $virtualProductFileRepository)
+    {
     }
 
     /**

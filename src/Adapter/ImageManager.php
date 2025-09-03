@@ -35,16 +35,10 @@ use ImageManager as LegacyImageManager;
 class ImageManager
 {
     /**
-     * @var LegacyContext
-     */
-    private $legacyContext;
-
-    /**
      * @param LegacyContext $legacyContext
      */
-    public function __construct(LegacyContext $legacyContext)
+    public function __construct(private readonly LegacyContext $legacyContext)
     {
-        $this->legacyContext = $legacyContext;
     }
 
     /**

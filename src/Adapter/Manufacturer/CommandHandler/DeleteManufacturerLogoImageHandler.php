@@ -71,7 +71,7 @@ class DeleteManufacturerLogoImageHandler extends AbstractManufacturerCommandHand
                     '%s%s-%s.' . $imageFormat,
                     $this->imageDir,
                     $command->getManufacturerId()->getValue(),
-                    stripslashes($imageType['name'])
+                    stripslashes((string) $imageType['name'])
                 );
                 if ($fs->exists($path)) {
                     $fs->remove($path);
@@ -81,7 +81,7 @@ class DeleteManufacturerLogoImageHandler extends AbstractManufacturerCommandHand
                     '%s%s-%s2x.' . $imageFormat,
                     $this->imageDir,
                     $command->getManufacturerId()->getValue(),
-                    stripslashes($imageType['name'])
+                    stripslashes((string) $imageType['name'])
                 );
                 if ($fs->exists($path)) {
                     $fs->remove($path);

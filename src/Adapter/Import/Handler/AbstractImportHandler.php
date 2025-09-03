@@ -59,16 +59,6 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
     protected $contextShopIds;
 
     /**
-     * @var bool whether the multistore feature is enabled
-     */
-    protected $isMultistoreEnabled;
-
-    /**
-     * @var int
-     */
-    protected $currentContextShopId;
-
-    /**
      * @var TranslatorInterface
      */
     protected $translator;
@@ -160,26 +150,6 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
     private $notices = [];
 
     /**
-     * @var int
-     */
-    private $contextLanguageId;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var int employee ID, used for logs
-     */
-    private $employeeId;
-
-    /**
-     * @var CacheClearerInterface
-     */
-    private $cacheClearer;
-
-    /**
      * @param ImportDataFormatter $dataFormatter
      * @param array $allShopIds
      * @param array $contextShopIds
@@ -198,28 +168,22 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         ImportDataFormatter $dataFormatter,
         array $allShopIds,
         array $contextShopIds,
-        $currentContextShopId,
-        $isMultistoreEnabled,
-        $contextLanguageId,
+        protected $currentContextShopId,
+        protected $isMultistoreEnabled,
+        private $contextLanguageId,
         TranslatorInterface $translator,
-        LoggerInterface $logger,
-        $employeeId,
+        private readonly LoggerInterface $logger,
+        private $employeeId,
         Database $legacyDatabase,
-        CacheClearerInterface $cacheClearer,
+        private readonly CacheClearerInterface $cacheClearer,
         Configuration $configuration,
         Validate $validate
     ) {
         $this->dataFormatter = $dataFormatter;
         $this->contextShopIds = $contextShopIds;
-        $this->currentContextShopId = $currentContextShopId;
-        $this->isMultistoreEnabled = $isMultistoreEnabled;
         $this->translator = $translator;
         $this->allShopIds = $allShopIds;
-        $this->contextLanguageId = $contextLanguageId;
-        $this->logger = $logger;
-        $this->employeeId = $employeeId;
         $this->legacyDatabase = $legacyDatabase;
-        $this->cacheClearer = $cacheClearer;
         $this->configuration = $configuration;
         $this->validate = $validate;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
@@ -239,18 +203,10 @@ abstract class AbstractImportHandler implements ImportHandlerInterface
         $dataFormatter = $this->dataFormatter;
         $multipleValueSeparator = $importConfig->getMultipleValueSeparator();
 
-        $getBoolean = function ($value) use ($dataFormatter) {
-            return $dataFormatter->getBoolean($value);
-        };
-        $getPrice = function ($value) use ($dataFormatter) {
-            return $dataFormatter->getPrice($value);
-        };
-        $createMultilangField = function ($value) use ($dataFormatter) {
-            return $dataFormatter->createMultiLangField($value);
-        };
-        $split = function ($value) use ($dataFormatter, $multipleValueSeparator) {
-            return $dataFormatter->split($value, $multipleValueSeparator);
-        };
+        $getBoolean = (fn($value) => $dataFormatter->getBoolean($value));
+        $getPrice = (fn($value) => $dataFormatter->getPrice($value));
+        $createMultilangField = (fn($value) => $dataFormatter->createMultiLangField($value));
+        $split = (fn($value) => $dataFormatter->split($value, $multipleValueSeparator));
         $this->callbacks = [
             'active' => $getBoolean,
             'tax_rate' => $getPrice,

@@ -40,17 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\CommandHandler\RemoveAllRelatedPro
 final class RemoveAllRelatedProductsHandler implements RemoveAllRelatedProductsHandlerInterface
 {
     /**
-     * @var RelatedProductsUpdater
-     */
-    private $relatedProductsUpdater;
-
-    /**
      * @param RelatedProductsUpdater $relatedProductsUpdater
      */
-    public function __construct(
-        RelatedProductsUpdater $relatedProductsUpdater
-    ) {
-        $this->relatedProductsUpdater = $relatedProductsUpdater;
+    public function __construct(private readonly RelatedProductsUpdater $relatedProductsUpdater)
+    {
     }
 
     /**

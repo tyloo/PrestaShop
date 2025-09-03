@@ -36,17 +36,10 @@ use PrestaShop\PrestaShop\Core\Domain\Product\SpecificPrice\CommandHandler\Remov
 class RemoveSpecificPricePriorityForProductHandler implements RemoveSpecificPricePriorityForProductHandlerInterface
 {
     /**
-     * @var SpecificPricePriorityUpdater
-     */
-    private $specificPricePriorityUpdater;
-
-    /**
      * @param SpecificPricePriorityUpdater $specificPricePriorityUpdater
      */
-    public function __construct(
-        SpecificPricePriorityUpdater $specificPricePriorityUpdater
-    ) {
-        $this->specificPricePriorityUpdater = $specificPricePriorityUpdater;
+    public function __construct(private readonly SpecificPricePriorityUpdater $specificPricePriorityUpdater)
+    {
     }
 
     /**

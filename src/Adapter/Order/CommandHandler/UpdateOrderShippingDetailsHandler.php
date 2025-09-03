@@ -49,21 +49,10 @@ use Validate;
 final class UpdateOrderShippingDetailsHandler extends AbstractOrderHandler implements UpdateOrderShippingDetailsHandlerInterface
 {
     /**
-     * @var OrderAmountUpdater
-     */
-    private $orderAmountUpdater;
-    /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
      * @param OrderAmountUpdater $orderAmountUpdater
      */
-    public function __construct(OrderAmountUpdater $orderAmountUpdater, ContextStateManager $contextStateManager)
+    public function __construct(private readonly OrderAmountUpdater $orderAmountUpdater, private readonly ContextStateManager $contextStateManager)
     {
-        $this->orderAmountUpdater = $orderAmountUpdater;
-        $this->contextStateManager = $contextStateManager;
     }
 
     /**

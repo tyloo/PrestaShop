@@ -47,25 +47,11 @@ use Supplier;
 final class GetSupplierForViewingHandler implements GetSupplierForViewingHandlerInterface
 {
     /**
-     * @var Locale
-     */
-    private $locale;
-
-    /**
-     * @var int
-     */
-    private $defaultCurrencyId;
-
-    /**
      * @param Locale $locale
      * @param int $defaultCurrencyId
      */
-    public function __construct(
-        Locale $locale,
-        int $defaultCurrencyId
-    ) {
-        $this->locale = $locale;
-        $this->defaultCurrencyId = $defaultCurrencyId;
+    public function __construct(private readonly Locale $locale, private readonly int $defaultCurrencyId)
+    {
     }
 
     /**

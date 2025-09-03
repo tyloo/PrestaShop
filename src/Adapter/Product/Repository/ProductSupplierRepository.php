@@ -52,33 +52,12 @@ use ProductSupplier;
 class ProductSupplierRepository extends AbstractObjectModelRepository
 {
     /**
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @var string
-     */
-    private $dbPrefix;
-
-    /**
-     * @var ProductSupplierValidator
-     */
-    private $productSupplierValidator;
-
-    /**
      * @param Connection $connection
      * @param string $dbPrefix
      * @param ProductSupplierValidator $productSupplierValidator
      */
-    public function __construct(
-        Connection $connection,
-        string $dbPrefix,
-        ProductSupplierValidator $productSupplierValidator
-    ) {
-        $this->connection = $connection;
-        $this->dbPrefix = $dbPrefix;
-        $this->productSupplierValidator = $productSupplierValidator;
+    public function __construct(private readonly Connection $connection, private readonly string $dbPrefix, private readonly ProductSupplierValidator $productSupplierValidator)
+    {
     }
 
     /**
@@ -264,14 +243,12 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        return array_map(function (array $row) use ($productId, $supplierId) {
-            return new ProductSupplierAssociation(
-                $productId->getValue(),
-                (int) $row['id_product_attribute'],
-                $supplierId->getValue(),
-                !empty($row['id_product_supplier']) ? (int) $row['id_product_supplier'] : null
-            );
-        }, $results);
+        return array_map(fn(array $row) => new ProductSupplierAssociation(
+            $productId->getValue(),
+            (int) $row['id_product_attribute'],
+            $supplierId->getValue(),
+            !empty($row['id_product_supplier']) ? (int) $row['id_product_supplier'] : null
+        ), $results);
     }
 
     /**
@@ -295,9 +272,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        return array_map(static function (array $row): SupplierId {
-            return new SupplierId((int) $row['id_supplier']);
-        }, $results);
+        return array_map(static fn(array $row): SupplierId => new SupplierId((int) $row['id_supplier']), $results);
     }
 
     /**
@@ -431,9 +406,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
      */
     public function getUselessProductSupplierIds(ProductId $productId, array $expectedSuppliersId): array
     {
-        $supplierIds = array_map(function (SupplierId $supplierId) {
-            return (string) $supplierId->getValue();
-        }, $expectedSuppliersId);
+        $supplierIds = array_map(fn(SupplierId $supplierId) => (string) $supplierId->getValue(), $expectedSuppliersId);
 
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -450,8 +423,6 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        return array_map(static function (array $row): ProductSupplierId {
-            return new ProductSupplierId((int) $row['id_product_supplier']);
-        }, $uselessProductSupplierIds);
+        return array_map(static fn(array $row): ProductSupplierId => new ProductSupplierId((int) $row['id_product_supplier']), $uselessProductSupplierIds);
     }
 }

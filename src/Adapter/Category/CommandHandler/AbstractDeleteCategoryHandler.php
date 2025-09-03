@@ -47,28 +47,16 @@ abstract class AbstractDeleteCategoryHandler
     protected $homeCategoryId;
 
     /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
      * @param int $homeCategoryId
      * @param ProductRepository $productRepository
      * @param CategoryRepository $categoryRepository
      */
     public function __construct(
         int $homeCategoryId,
-        ProductRepository $productRepository,
-        CategoryRepository $categoryRepository
+        private readonly ProductRepository $productRepository,
+        private readonly CategoryRepository $categoryRepository
     ) {
         $this->homeCategoryId = $homeCategoryId;
-        $this->productRepository = $productRepository;
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -223,8 +211,6 @@ abstract class AbstractDeleteCategoryHandler
             return [];
         }
 
-        return array_map(static function (array $result): ProductId {
-            return new ProductId((int) $result['id_product']);
-        }, $results);
+        return array_map(static fn(array $result): ProductId => new ProductId((int) $result['id_product']), $results);
     }
 }

@@ -37,16 +37,6 @@ use PrestaShop\PrestaShop\Core\Currency\CurrencyDataProviderInterface;
  */
 class CurrencyDataProvider implements CurrencyDataProviderInterface
 {
-    /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
-     * @var int
-     */
-    private $shopId;
-
     /** @var Currency */
     private $defaultCurrency;
 
@@ -54,10 +44,8 @@ class CurrencyDataProvider implements CurrencyDataProviderInterface
      * @param ConfigurationInterface $configuration
      * @param int $shopId
      */
-    public function __construct(ConfigurationInterface $configuration, $shopId)
+    public function __construct(private readonly ConfigurationInterface $configuration, private $shopId)
     {
-        $this->configuration = $configuration;
-        $this->shopId = $shopId;
     }
 
     /**

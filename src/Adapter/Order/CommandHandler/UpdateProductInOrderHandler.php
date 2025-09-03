@@ -56,35 +56,14 @@ use Validate;
 final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler implements UpdateProductInOrderHandlerInterface
 {
     /**
-     * @var ContextStateManager
-     */
-    private $contextStateManager;
-
-    /**
-     * @var OrderProductQuantityUpdater
-     */
-    private $orderProductQuantityUpdater;
-
-    /**
-     * @var OrderDetailUpdater
-     */
-    private $orderDetailUpdater;
-
-    /**
      * UpdateProductInOrderHandler constructor.
      *
      * @param OrderProductQuantityUpdater $orderProductQuantityUpdater
      * @param OrderDetailUpdater $orderDetailUpdater
      * @param ContextStateManager $contextStateManager
      */
-    public function __construct(
-        OrderProductQuantityUpdater $orderProductQuantityUpdater,
-        OrderDetailUpdater $orderDetailUpdater,
-        ContextStateManager $contextStateManager
-    ) {
-        $this->orderProductQuantityUpdater = $orderProductQuantityUpdater;
-        $this->orderDetailUpdater = $orderDetailUpdater;
-        $this->contextStateManager = $contextStateManager;
+    public function __construct(private readonly OrderProductQuantityUpdater $orderProductQuantityUpdater, private readonly OrderDetailUpdater $orderDetailUpdater, private readonly ContextStateManager $contextStateManager)
+    {
     }
 
     /**

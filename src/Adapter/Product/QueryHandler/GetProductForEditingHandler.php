@@ -81,76 +81,6 @@ use Tag;
 class GetProductForEditingHandler implements GetProductForEditingHandlerInterface
 {
     /**
-     * @var NumberExtractor
-     */
-    private $numberExtractor;
-
-    /**
-     * @var ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    /**
-     * @var StockAvailableRepository
-     */
-    private $stockAvailableRepository;
-
-    /**
-     * @var VirtualProductFileRepository
-     */
-    private $virtualProductFileRepository;
-
-    /**
-     * @var ProductImageRepository
-     */
-    private $productImageRepository;
-
-    /**
-     * @var TaxComputer
-     */
-    private $taxComputer;
-
-    /**
-     * @var int
-     */
-    private $countryId;
-
-    /**
-     * @var RedirectTargetProvider
-     */
-    private $targetProvider;
-
-    /**
-     * @var ProductImagePathFactory
-     */
-    private $productImageUrlFactory;
-
-    /**
-     * @var AttachmentRepository
-     */
-    private $attachmentRepository;
-
-    /**
-     * @var SpecificPriceRepository
-     */
-    private $specificPriceRepository;
-
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var CategoryDisplayNameBuilder
-     */
-    private $categoryDisplayNameBuilder;
-
-    /**
      * @param NumberExtractor $numberExtractor
      * @param ProductRepository $productRepository
      * @param CategoryRepository $categoryRepository
@@ -166,36 +96,8 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
      * @param Configuration $configuration
      * @param CategoryDisplayNameBuilder $categoryDisplayNameBuilder
      */
-    public function __construct(
-        NumberExtractor $numberExtractor,
-        ProductRepository $productRepository,
-        CategoryRepository $categoryRepository,
-        StockAvailableRepository $stockAvailableRepository,
-        VirtualProductFileRepository $virtualProductFileRepository,
-        ProductImageRepository $productImageRepository,
-        AttachmentRepository $attachmentRepository,
-        TaxComputer $taxComputer,
-        int $countryId,
-        RedirectTargetProvider $targetProvider,
-        ProductImagePathFactory $productImageUrlFactory,
-        SpecificPriceRepository $specificPriceRepository,
-        Configuration $configuration,
-        CategoryDisplayNameBuilder $categoryDisplayNameBuilder
-    ) {
-        $this->numberExtractor = $numberExtractor;
-        $this->productRepository = $productRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->stockAvailableRepository = $stockAvailableRepository;
-        $this->virtualProductFileRepository = $virtualProductFileRepository;
-        $this->taxComputer = $taxComputer;
-        $this->countryId = $countryId;
-        $this->attachmentRepository = $attachmentRepository;
-        $this->targetProvider = $targetProvider;
-        $this->productImageRepository = $productImageRepository;
-        $this->productImageUrlFactory = $productImageUrlFactory;
-        $this->specificPriceRepository = $specificPriceRepository;
-        $this->configuration = $configuration;
-        $this->categoryDisplayNameBuilder = $categoryDisplayNameBuilder;
+    public function __construct(private readonly NumberExtractor $numberExtractor, private readonly ProductRepository $productRepository, private readonly CategoryRepository $categoryRepository, private readonly StockAvailableRepository $stockAvailableRepository, private readonly VirtualProductFileRepository $virtualProductFileRepository, private readonly ProductImageRepository $productImageRepository, private readonly AttachmentRepository $attachmentRepository, private readonly TaxComputer $taxComputer, private readonly int $countryId, private readonly RedirectTargetProvider $targetProvider, private readonly ProductImagePathFactory $productImageUrlFactory, private readonly SpecificPriceRepository $specificPriceRepository, private readonly Configuration $configuration, private readonly CategoryDisplayNameBuilder $categoryDisplayNameBuilder)
+    {
     }
 
     /**
@@ -407,9 +309,7 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
      */
     private function getShippingInformation(Product $product): ProductShippingInformation
     {
-        $carrierReferences = array_map(function ($carrier): int {
-            return (int) $carrier['id_reference'];
-        }, $product->getCarriers());
+        $carrierReferences = array_map(fn($carrier): int => (int) $carrier['id_reference'], $product->getCarriers());
 
         return new ProductShippingInformation(
             $this->numberExtractor->extract($product, 'width'),
@@ -460,16 +360,11 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
         $textFieldsCount = (int) $product->text_fields;
         $fileFieldsCount = (int) $product->uploadable_files;
 
-        switch ((int) $product->customizable) {
-            case ProductCustomizabilitySettings::ALLOWS_CUSTOMIZATION:
-                $options = ProductCustomizationOptions::createAllowsCustomization($textFieldsCount, $fileFieldsCount);
-                break;
-            case ProductCustomizabilitySettings::REQUIRES_CUSTOMIZATION:
-                $options = ProductCustomizationOptions::createRequiresCustomization($textFieldsCount, $fileFieldsCount);
-                break;
-            default:
-                $options = ProductCustomizationOptions::createNotCustomizable();
-        }
+        $options = match ((int) $product->customizable) {
+            ProductCustomizabilitySettings::ALLOWS_CUSTOMIZATION => ProductCustomizationOptions::createAllowsCustomization($textFieldsCount, $fileFieldsCount),
+            ProductCustomizabilitySettings::REQUIRES_CUSTOMIZATION => ProductCustomizationOptions::createRequiresCustomization($textFieldsCount, $fileFieldsCount),
+            default => ProductCustomizationOptions::createNotCustomizable(),
+        };
 
         return $options;
     }
