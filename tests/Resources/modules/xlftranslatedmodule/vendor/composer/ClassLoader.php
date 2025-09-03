@@ -322,13 +322,15 @@ class ClassLoader
      * @param  string    $class The name of the class
      * @return bool|null True if loaded, null otherwise
      */
-    public function loadClass($class)
+    public function loadClass($class): ?bool
     {
         if ($file = $this->findFile($class)) {
             includeFile($file);
 
             return true;
         }
+
+        return null;
     }
 
     /**

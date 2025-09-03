@@ -330,7 +330,7 @@ class PaymentOption implements HookContentClassInterface
     public static function convertLegacyOption(array $legacyOption)
     {
         if ($legacyOption === []) {
-            return;
+            return null;
         }
 
         if (\array_key_exists('cta_text', $legacyOption)) {

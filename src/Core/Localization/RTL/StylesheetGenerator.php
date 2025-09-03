@@ -123,7 +123,7 @@ class StylesheetGenerator
 
         $rendered = CSSJanus::transform($content);
 
-        if (\strlen($rendered) === 0 && \strlen($content) !== 0) {
+        if ((string) $rendered === '' && \strlen($content) !== 0) {
             throw new GenerationException(\sprintf('Failed to generate RTL CSS from file: %s', $filePath));
         }
 

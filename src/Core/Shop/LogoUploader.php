@@ -123,28 +123,26 @@ class LogoUploader
                 if (! @ImageManager::resize($tmpName, $this->imageDirection . $logoName, null, null, 'gif', true)) {
                     throw new PrestaShopException(\sprintf('An error occurred while attempting to copy shop icon %s.', $logoName));
                 }
+            } elseif (ImageManager::isSvgMimeType($files[$fieldName]['type'])) {
+                if (! copy($tmpName, $this->imageDirection . $logoName)) {
+                    throw new PrestaShopException(\sprintf('An error occurred while attempting to copy shop logo %s.', $logoName));
+                }
             } else {
-                if (ImageManager::isSvgMimeType($files[$fieldName]['type'])) {
-                    if (! copy($tmpName, $this->imageDirection . $logoName)) {
+                /*
+                * Let's resolve which formats we will use for image generation.
+                *
+                * In case of .jpg images, the actual format inside is decided by ImageManager.
+                */
+                $configuredImageFormats = $this->imageFormatConfiguration->getGenerationFormats();
+                foreach ($configuredImageFormats as $imageFormat) {
+                    if (! ImageManager::resize(
+                        $tmpName,
+                        $this->imageDirection . $this->getLogoName($logoPrefix, '.' . $imageFormat),
+                        null,
+                        null,
+                        $imageFormat
+                    )) {
                         throw new PrestaShopException(\sprintf('An error occurred while attempting to copy shop logo %s.', $logoName));
-                    }
-                } else {
-                    /*
-                    * Let's resolve which formats we will use for image generation.
-                    *
-                    * In case of .jpg images, the actual format inside is decided by ImageManager.
-                    */
-                    $configuredImageFormats = $this->imageFormatConfiguration->getGenerationFormats();
-                    foreach ($configuredImageFormats as $imageFormat) {
-                        if (! ImageManager::resize(
-                            $tmpName,
-                            $this->imageDirection . $this->getLogoName($logoPrefix, '.' . $imageFormat),
-                            null,
-                            null,
-                            $imageFormat
-                        )) {
-                            throw new PrestaShopException(\sprintf('An error occurred while attempting to copy shop logo %s.', $logoName));
-                        }
                     }
                 }
             }

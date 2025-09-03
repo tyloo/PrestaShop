@@ -161,5 +161,7 @@ class ThemeRepository implements AddonRepositoryInterface
         if (preg_match('/.\.json$/', (string) $file)) {
             return json_decode($content, true);
         }
+
+        return null;
     }
 }

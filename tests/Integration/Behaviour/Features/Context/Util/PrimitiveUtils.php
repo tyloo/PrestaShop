@@ -87,7 +87,7 @@ class PrimitiveUtils
 
             case self::TYPE_NULL:
                 if (($element === 'null') || ($element === 'Null') || ($element === 'NULL')) {
-                    return;
+                    return null;
                 }
 
                 return $element;

@@ -122,6 +122,8 @@ class CronJobs extends Module
 
             return $this->disableWebservice();
         }
+
+        return null;
     }
 
     public function uninstall()
@@ -452,6 +454,8 @@ class CronJobs extends Module
 
             return $this->enableWebservice();
         }
+
+        return null;
     }
 
     protected function postProcessNewJob()
@@ -550,6 +554,8 @@ class CronJobs extends Module
                 $this->registerModuleHook($id_module);
             }
         }
+
+        return null;
     }
 
     protected function postProcessUpdateJobOneShot()
@@ -568,6 +574,8 @@ class CronJobs extends Module
         Tools::redirectAdmin($this->context->link->getAdminLink('AdminModules', false)
             . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name
             . '&token=' . Tools::getAdminTokenLite('AdminModules'));
+
+        return null;
     }
 
     protected function postProcessUpdateJobStatus()
@@ -586,6 +594,8 @@ class CronJobs extends Module
         Tools::redirectAdmin($this->context->link->getAdminLink('AdminModules', false)
             . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name
             . '&token=' . Tools::getAdminTokenLite('AdminModules'));
+
+        return null;
     }
 
     protected function isNewJobValid()

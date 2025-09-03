@@ -31,7 +31,6 @@ namespace PrestaShop\PrestaShop\Core\Translation\Storage\Provider;
 use Exception;
 use PrestaShop\PrestaShop\Core\Addon\Theme\Theme;
 use PrestaShop\PrestaShop\Core\Addon\Theme\ThemeRepository;
-use PrestaShop\PrestaShop\Core\Translation\Exception\InvalidThemeException;
 use PrestaShop\PrestaShop\Core\Translation\Exception\TranslationFilesNotFoundException;
 use PrestaShop\PrestaShop\Core\Translation\Storage\Extractor\ThemeExtractor;
 use PrestaShop\PrestaShop\Core\Translation\Storage\Loader\DatabaseTranslationLoader;
@@ -136,9 +135,6 @@ class ThemeCatalogueLayersProvider implements CatalogueLayersProviderInterface
     {
         try {
             $theme = $this->themeRepository->getInstanceByName($this->themeName);
-            if (! $theme instanceof Theme) {
-                throw new InvalidThemeException();
-            }
 
             $this->theme = $theme;
         } catch (Exception $exception) {

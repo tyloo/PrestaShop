@@ -59,7 +59,7 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
         try {
             $this->getCommandBus()->handle(new SwitchShipmentCarrierCommand($shipmentId, $carrierId));
         } catch (Exception $exception) {
-            throw new RuntimeException(\sprintf('Error while switching shipment "%s" to carrier "%s" : %s', $shipmentReference, $carrierReference, $exception->getMessage()));
+            throw new RuntimeException(\sprintf('Error while switching shipment "%s" to carrier "%s" : %s', $shipmentReference, $carrierReference, $exception->getMessage()), $exception->getCode(), $exception);
         }
     }
 

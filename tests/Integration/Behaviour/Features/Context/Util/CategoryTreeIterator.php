@@ -51,7 +51,7 @@ class CategoryTreeIterator
     }
 
     /**
-     * @return int|void|null
+     * @return int|null
      */
     private function getCategoryNodeId(string $categoryName, array $nodes)
     {
@@ -73,5 +73,7 @@ class CategoryTreeIterator
                 return null;
             }
         }
+
+        return null;
     }
 }

@@ -73,7 +73,7 @@ final class HookableKpiRowFactory implements KpiRowFactoryInterface
     }
 
     /**
-     * @return KpiRow|void
+     * @return KpiRow|null
      *
      * @throws InvalidArgumentException
      */
@@ -92,6 +92,8 @@ final class HookableKpiRowFactory implements KpiRowFactoryInterface
 
             return $kpiRow;
         }
+
+        return null;
     }
 
     /**

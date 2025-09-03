@@ -83,7 +83,7 @@ class Email
      */
     public function assertEmailIsNotEmpty($email): void
     {
-        if (\strlen($email) === 0) {
+        if ((string) $email === '') {
             throw new DomainConstraintException('Email must not be empty', DomainConstraintException::INVALID_EMAIL);
         }
     }
