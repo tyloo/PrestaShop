@@ -61,7 +61,7 @@ class ListCommandsAndQueriesCommand extends Command
         $this->isFormatSimple = false;
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $this
             ->setName('prestashop:list:commands-and-queries')

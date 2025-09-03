@@ -53,7 +53,7 @@ class UpdateSchemaCommand extends Command
         parent::__construct();
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->dumpSql = $input->getOption('dump-sql') === true;
         $this->forceSql = $input->getOption('force') === true;

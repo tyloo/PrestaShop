@@ -126,7 +126,7 @@ final class SecurityAttributeLinterCommand extends Command
         return [self::ACTION_LIST_ALL, self::ACTION_FIND_MISSING];
     }
 
-    public function configure(): void
+    protected function configure(): void
     {
         $description = 'Checks if Back Office route controllers has configured Security annotations.';
         $actionDescription = \sprintf(

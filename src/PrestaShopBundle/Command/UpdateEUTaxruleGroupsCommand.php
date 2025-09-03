@@ -72,7 +72,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
         parent::__construct();
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /* Tweak */
         $this->output = $output;
