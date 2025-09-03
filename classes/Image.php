@@ -547,7 +547,7 @@ class ImageCore extends ObjectModel
      */
     public function updatePosition($way, $position)
     {
-        if (! isset($this->id) || ! $position) {
+        if ($this->id === null || ! $position) {
             return false;
         }
 

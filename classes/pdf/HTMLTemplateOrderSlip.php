@@ -135,7 +135,7 @@ class HTMLTemplateOrderSlipCore extends HTMLTemplateInvoice
         $tax = new Tax();
         $tax->rate = $this->order->carrier_tax_rate;
 
-        $tax_calculator = new TaxCalculator([$tax]);
+        new TaxCalculator([$tax]);
         $tax_excluded_display = Group::getPriceDisplayMethod((int) $customer->id_default_group);
 
         $this->order->total_shipping_tax_incl = $this->order_slip->total_shipping_tax_incl;

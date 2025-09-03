@@ -104,7 +104,7 @@ class LocalizationPackCore
             $res = $res && $this->installModules($xml);
             $res = $res && $this->updateDefaultGroupDisplayMethod($xml);
 
-            if (($res || $install_mode) && isset($this->iso_code_lang)) {
+            if (($res || $install_mode) && $this->iso_code_lang !== null) {
                 if (($id_lang = (int) Language::getIdByIso($this->iso_code_lang, true)) === 0) {
                     $id_lang = 1;
                 }
@@ -112,7 +112,7 @@ class LocalizationPackCore
                 if (! $install_mode) {
                     Configuration::updateValue('PS_LANG_DEFAULT', $id_lang);
                 }
-            } elseif (! isset($this->iso_code_lang) && $install_mode) {
+            } elseif ($this->iso_code_lang === null && $install_mode) {
                 $id_lang = 1;
             }
 
@@ -121,7 +121,7 @@ class LocalizationPackCore
                 $res = $res && $this->_installUnits($xml);
             }
 
-            if ($install_mode && $res && isset($this->iso_currency)) {
+            if ($install_mode && $res && $this->iso_currency !== null) {
                 Cache::clean('Currency::getIdByIsoCode_*');
                 $res = Configuration::updateValue('PS_CURRENCY_DEFAULT', (int) Currency::getIdByIsoCode($this->iso_currency));
                 Currency::refreshCurrencies();
@@ -144,7 +144,7 @@ class LocalizationPackCore
      */
     protected function _installStates($xml)
     {
-        if (isset($xml->states->state)) {
+        if (property_exists($xml->states, 'state') && $xml->states->state !== null) {
             foreach ($xml->states->state as $data) {
                 /** @var SimpleXMLElement $data */
                 $attributes = $data->attributes();
@@ -216,7 +216,7 @@ class LocalizationPackCore
      */
     protected function _installTaxes($xml)
     {
-        if (isset($xml->taxes->tax)) {
+        if (property_exists($xml->taxes, 'tax') && $xml->taxes->tax !== null) {
             $assoc_taxes = [];
             foreach ($xml->taxes->tax as $taxData) {
                 /** @var SimpleXMLElement $taxData */
@@ -327,7 +327,7 @@ class LocalizationPackCore
      */
     protected function _installCurrencies($xml, $install_mode = false)
     {
-        if (isset($xml->currencies->currency)) {
+        if (property_exists($xml->currencies, 'currency') && $xml->currencies->currency !== null) {
             foreach ($xml->currencies->currency as $data) {
                 /** @var SimpleXMLElement $data */
                 $attributes = $data->attributes();
@@ -404,7 +404,7 @@ class LocalizationPackCore
     protected function _installLanguages($xml, $install_mode = false)
     {
         $attributes = [];
-        if (isset($xml->languages->language)) {
+        if (property_exists($xml->languages, 'language') && $xml->languages->language !== null) {
             foreach ($xml->languages->language as $data) {
                 /** @var SimpleXMLElement $data */
                 $attributes = $data->attributes();
@@ -461,7 +461,7 @@ class LocalizationPackCore
     protected function _installUnits($xml)
     {
         $varNames = ['weight' => 'PS_WEIGHT_UNIT', 'volume' => 'PS_VOLUME_UNIT', 'short_distance' => 'PS_DIMENSION_UNIT', 'base_distance' => 'PS_BASE_DISTANCE_UNIT', 'long_distance' => 'PS_DISTANCE_UNIT'];
-        if (isset($xml->units->unit)) {
+        if (property_exists($xml->units, 'unit') && $xml->units->unit !== null) {
             foreach ($xml->units->unit as $data) {
                 /** @var SimpleXMLElement $data */
                 $attributes = $data->attributes();
@@ -493,7 +493,7 @@ class LocalizationPackCore
      */
     protected function installModules($xml)
     {
-        if (isset($xml->modules)) {
+        if (property_exists($xml, 'modules') && $xml->modules !== null) {
             foreach ($xml->modules->module as $data) {
                 /** @var SimpleXMLElement $data */
                 $attributes = $data->attributes();
@@ -534,7 +534,7 @@ class LocalizationPackCore
      */
     protected function installConfiguration($xml)
     {
-        if (isset($xml->configurations)) {
+        if (property_exists($xml, 'configurations') && $xml->configurations !== null) {
             foreach ($xml->configurations->configuration as $data) {
                 /** @var SimpleXMLElement $data */
                 $attributes = $data->attributes();
@@ -570,7 +570,7 @@ class LocalizationPackCore
      */
     protected function updateDefaultGroupDisplayMethod($xml)
     {
-        if (isset($xml->group_default)) {
+        if (property_exists($xml, 'group_default') && $xml->group_default !== null) {
             $attributes = $xml->group_default->attributes();
             if (isset($attributes['price_display_method']) && in_array((int) $attributes['price_display_method'], [0, 1], true)) {
                 Configuration::updateValue('PRICE_DISPLAY_METHOD', (int) $attributes['price_display_method']);

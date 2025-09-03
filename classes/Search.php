@@ -1072,9 +1072,6 @@ class SearchCore
             $context = Context::getContext();
         }
 
-        // Only use cookie if id_customer is not present
-        $id_customer = $useCookie ? (int) $context->customer->id : 0;
-
         if (! is_numeric($pageNumber) || ! is_numeric($pageSize) || ! Validate::isValidSearch($tag)
             || $orderBy && ! $orderWay || ($orderBy && ! Validate::isOrderBy($orderBy)) || ($orderWay && ! Validate::isOrderBy($orderWay))
         ) {
@@ -1190,7 +1187,7 @@ class SearchCore
      */
     public static function findClosestWeightestWord($context, $queryString)
     {
-        $distance = []; // cache levenshtein distance
+        // cache levenshtein distance
         $searchMinWordLength = (int) Configuration::get('PS_SEARCH_MINWORDLEN');
         $psSearchMaxWordLength = (int) Configuration::get('PS_SEARCH_MAX_WORD_LENGTH');
         $levenshteinMaxWordDifference = (int) Configuration::get('PS_SEARCH_FUZZY_MAX_DIFFERENCE');

@@ -90,7 +90,6 @@ class HelperFormCore extends Helper
         $date = true;
         $tinymce = true;
         $textarea_autosize = true;
-        $file = true;
         $translator = Context::getContext()->getTranslator();
 
         $default_switch_labels = [

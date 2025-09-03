@@ -230,7 +230,7 @@ abstract class ModuleGraphCore extends Module
             $total = 0;
 
             if ($datas['type'] === 'pie') {
-                foreach ($this->_legend as $key => $legend) {
+                foreach (array_keys($this->_legend) as $key) {
                     for ($i = 0, $total_main = (is_array($this->_titles['main']) ? count($this->_values) : 1); $i < $total_main; ++$i) {
                         $total += (is_array($this->_values[$i]) ? $this->_values[$i][$key] : $this->_values[$key]);
                     }

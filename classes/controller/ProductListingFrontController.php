@@ -68,33 +68,6 @@ abstract class ProductListingFrontControllerCore extends ProductPresentingFrontC
     }
 
     /**
-     * Takes an associative array with at least the "id_product" key
-     * and returns an array containing all information necessary for
-     * rendering the product in the template.
-     *
-     * @param array $rawProduct an associative array with at least the "id_product" key
-     *
-     * @return array a product ready for templating
-     */
-    // @phpstan-ignore-next-line
-    private function prepareProductForTemplate(array $rawProduct)
-    {
-        // Enrich data of product
-        $product = (new ProductAssembler($this->context))->assembleProduct($rawProduct);
-
-        // Prepare configuration
-        $presenter = $this->getProductPresenter();
-        $settings = $this->getProductPresentationSettings();
-
-        // Present and return product
-        return $presenter->present(
-            $settings,
-            $product,
-            $this->context->language
-        );
-    }
-
-    /**
      * Runs "prepareProductForTemplate" on the collection
      * of product ids passed in.
      *

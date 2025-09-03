@@ -95,7 +95,7 @@ class TreeCore implements Stringable
 
     public function setActions($value)
     {
-        if (! isset($this->_toolbar)) {
+        if ($this->_toolbar === null) {
             $this->setToolbar(new TreeToolbarCore());
         }
 
@@ -106,7 +106,7 @@ class TreeCore implements Stringable
 
     public function getActions()
     {
-        if (! isset($this->_toolbar)) {
+        if ($this->_toolbar === null) {
             $this->setToolbar(new TreeToolbarCore());
         }
 
@@ -115,7 +115,7 @@ class TreeCore implements Stringable
 
     public function setAttribute($name, $value)
     {
-        if (! isset($this->_attributes)) {
+        if ($this->_attributes === null) {
             $this->_attributes = [];
         }
 
@@ -154,7 +154,7 @@ class TreeCore implements Stringable
 
     public function getAttributes()
     {
-        if (! isset($this->_attributes)) {
+        if ($this->_attributes === null) {
             $this->_attributes = [];
         }
 
@@ -170,7 +170,7 @@ class TreeCore implements Stringable
 
     public function getContext()
     {
-        if (! isset($this->_context)) {
+        if ($this->_context === null) {
             $this->_context = Context::getContext();
         }
 
@@ -190,7 +190,7 @@ class TreeCore implements Stringable
 
     public function getDataSearch()
     {
-        if (! isset($this->_data_search)) {
+        if ($this->_data_search === null) {
             $this->_data_search = [];
         }
 
@@ -210,7 +210,7 @@ class TreeCore implements Stringable
 
     public function getData()
     {
-        if (! isset($this->_data)) {
+        if ($this->_data === null) {
             $this->_data = [];
         }
 
@@ -226,7 +226,7 @@ class TreeCore implements Stringable
 
     public function getHeaderTemplate()
     {
-        if (! isset($this->_headerTemplate)) {
+        if ($this->_headerTemplate === null) {
             $this->setHeaderTemplate(self::DEFAULT_HEADER_TEMPLATE);
         }
 
@@ -254,7 +254,7 @@ class TreeCore implements Stringable
 
     public function getNodeFolderTemplate()
     {
-        if (! isset($this->_node_folder_template)) {
+        if ($this->_node_folder_template === null) {
             $this->setNodeFolderTemplate(self::DEFAULT_NODE_FOLDER_TEMPLATE);
         }
 
@@ -270,7 +270,7 @@ class TreeCore implements Stringable
 
     public function getNodeItemTemplate()
     {
-        if (! isset($this->_node_item_template)) {
+        if ($this->_node_item_template === null) {
             $this->setNodeItemTemplate(self::DEFAULT_NODE_ITEM_TEMPLATE);
         }
 
@@ -286,7 +286,7 @@ class TreeCore implements Stringable
 
     public function getTemplate()
     {
-        if (! isset($this->_template)) {
+        if ($this->_template === null) {
             $this->setTemplate(self::DEFAULT_TEMPLATE);
         }
 
@@ -310,7 +310,7 @@ class TreeCore implements Stringable
      */
     public function getTemplateDirectory()
     {
-        if (! isset($this->_template_directory)) {
+        if ($this->_template_directory === null) {
             $this->_template_directory = $this->_normalizeDirectory(
                 self::DEFAULT_TEMPLATE_DIRECTORY
             );
@@ -399,7 +399,7 @@ class TreeCore implements Stringable
 
     public function getToolbar()
     {
-        if (isset($this->_toolbar)) {
+        if ($this->_toolbar !== null) {
             if ($this->getDataSearch()) {
                 $this->_toolbar->setData($this->getDataSearch());
             } else {
@@ -412,7 +412,7 @@ class TreeCore implements Stringable
 
     public function addAction($action)
     {
-        if (! isset($this->_toolbar)) {
+        if ($this->_toolbar === null) {
             $this->setToolbar(new TreeToolbarCore());
         }
 
@@ -423,7 +423,7 @@ class TreeCore implements Stringable
 
     public function removeActions()
     {
-        if (! isset($this->_toolbar)) {
+        if ($this->_toolbar === null) {
             $this->setToolbar(new TreeToolbarCore());
         }
 
@@ -543,7 +543,7 @@ class TreeCore implements Stringable
 
     public function useToolbar()
     {
-        return isset($this->_toolbar);
+        return $this->_toolbar !== null;
     }
 
     /**

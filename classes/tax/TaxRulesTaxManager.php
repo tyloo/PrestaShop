@@ -74,7 +74,7 @@ class TaxRulesTaxManagerCore implements TaxManagerInterface
     {
         static $tax_enabled = null;
 
-        if (isset($this->tax_calculator)) {
+        if ($this->tax_calculator !== null) {
             return $this->tax_calculator;
         }
 

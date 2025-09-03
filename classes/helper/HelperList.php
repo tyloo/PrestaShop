@@ -319,7 +319,7 @@ class HelperListCore extends Helper
     {
         if (isset($this->fields_list['position'])) {
             if ($this->position_identifier) {
-                if (isset($this->position_group_identifier)) {
+                if ($this->position_group_identifier !== null) {
                     $position_group_identifier = Tools::getIsset($this->position_group_identifier) ? (int) Tools::getValue($this->position_group_identifier) : $this->position_group_identifier;
                 } else {
                     $position_group_identifier = (int) Tools::getValue('id_' . ($this->is_cms ? 'cms_' : '') . 'category', $this->is_cms ? '1' : Category::getRootCategory()->id);
@@ -397,7 +397,7 @@ class HelperListCore extends Helper
                     // If method is defined in calling controller, use it instead of the Helper method
                     if (method_exists($this->context->controller, 'displayEnableLink')) {
                         $calling_obj = $this->context->controller;
-                    } elseif (isset($this->module) && method_exists($this->module, 'displayEnableLink')) {
+                    } elseif (property_exists($this, 'module') && $this->module !== null && method_exists($this->module, 'displayEnableLink')) {
                         $calling_obj = $this->module;
                     } else {
                         $calling_obj = $this;
@@ -695,7 +695,7 @@ class HelperListCore extends Helper
      */
     public function displayListHeader()
     {
-        if (! isset($this->list_id)) {
+        if ($this->list_id === null) {
             $this->list_id = $this->table;
         }
 
@@ -738,7 +738,7 @@ class HelperListCore extends Helper
             $this->context->cookie->{$this->list_id . '_pagination'} ?? $this->_default_pagination
         );
 
-        if (! isset($this->table_id) && $this->position_identifier && (int) Tools::getValue($this->position_identifier, 1)) {
+        if ($this->table_id === null && $this->position_identifier && (int) Tools::getValue($this->position_identifier, 1)) {
             $this->table_id = substr((string) $this->identifier, 3, strlen((string) $this->identifier));
         }
 
@@ -839,7 +839,7 @@ class HelperListCore extends Helper
             'selected_pagination' => $selected_pagination,
             'pagination' => $this->_pagination,
             'list_total' => $this->listTotal,
-            'sql' => isset($this->sql) && $this->sql ? str_replace('\n', ' ', str_replace('\r', '', $this->sql)) : false,
+            'sql' => $this->sql !== null && $this->sql ? str_replace('\n', ' ', str_replace('\r', '', $this->sql)) : false,
             'token' => $this->token,
             'table' => $this->table,
             'bulk_actions' => $this->bulk_actions,
@@ -898,8 +898,8 @@ class HelperListCore extends Helper
         }
 
         if (count($this->list_skip_actions)
-            && isset($this->bulk_actions) && is_array($this->bulk_actions) && count($this->bulk_actions)) {
-            foreach ($this->bulk_actions as $action => $data) {
+            && $this->bulk_actions !== null && is_array($this->bulk_actions) && count($this->bulk_actions)) {
+            foreach (array_keys($this->bulk_actions) as $action) {
                 if (array_key_exists($action, $this->list_skip_actions)) {
                     foreach ($this->_list as $row) {
                         if (! in_array($row[$this->identifier], $this->list_skip_actions[$action], true)) {
@@ -920,7 +920,7 @@ class HelperListCore extends Helper
      */
     public function displayListFooter()
     {
-        if (! isset($this->list_id)) {
+        if ($this->list_id === null) {
             $this->list_id = $this->table;
         }
 

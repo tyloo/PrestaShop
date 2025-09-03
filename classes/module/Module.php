@@ -1693,9 +1693,9 @@ abstract class ModuleCore implements ModuleInterface
                     $item->displayName = stripslashes(Translate::getModuleTranslation((string) $xml_module->name, Module::configXmlStringFormat($xml_module->displayName), (string) $xml_module->name));
                     $item->description = stripslashes(Translate::getModuleTranslation((string) $xml_module->name, Module::configXmlStringFormat($xml_module->description), (string) $xml_module->name));
                     $item->author = stripslashes(Translate::getModuleTranslation((string) $xml_module->name, Module::configXmlStringFormat($xml_module->author), (string) $xml_module->name));
-                    $item->author_uri = (isset($xml_module->author_uri) && $xml_module->author_uri) ? stripslashes($xml_module->author_uri) : false;
+                    $item->author_uri = (property_exists($xml_module, 'author_uri') && $xml_module->author_uri !== null && $xml_module->author_uri) ? stripslashes($xml_module->author_uri) : false;
 
-                    if (isset($xml_module->confirmUninstall)) {
+                    if (property_exists($xml_module, 'confirmUninstall') && $xml_module->confirmUninstall !== null) {
                         $item->confirmUninstall = Translate::getModuleTranslation((string) $xml_module->name, html_entity_decode(Module::configXmlStringFormat($xml_module->confirmUninstall)), (string) $xml_module->name);
                     }
 
@@ -1710,7 +1710,7 @@ abstract class ModuleCore implements ModuleInterface
             }
 
             // If use config flag is at false or config.xml does not exist OR need instance OR need a new config.xml file
-            if (! $use_config || ! $xml_exist || (isset($xml_module->need_instance) && (int) $xml_module->need_instance === 1) || $need_new_config_file) {
+            if (! $use_config || ! $xml_exist || (property_exists($xml_module, 'need_instance') && $xml_module->need_instance !== null && (int) $xml_module->need_instance === 1) || $need_new_config_file) {
                 // If class does not exists, we include the file
                 if (! class_exists($module, false)) {
                     // Get content from php file
@@ -3186,7 +3186,7 @@ abstract class ModuleCore implements ModuleInterface
             }
 
             // Check if none of the constants already exists in the override class
-            foreach ($module_class->getConstants() as $constant => $value) {
+            foreach (array_keys($module_class->getConstants()) as $constant) {
                 if ($override_class->hasConstant($constant)) {
                     throw new Exception(Context::getContext()->getTranslator()->trans('The constant %1$s in the class %2$s is already defined.', [$constant, $classname], 'Admin.Modules.Notification'));
                 }
@@ -3256,7 +3256,7 @@ abstract class ModuleCore implements ModuleInterface
                 }
 
                 // Same loop for constants
-                foreach ($module_class->getConstants() as $constant => $value) {
+                foreach (array_keys($module_class->getConstants()) as $constant) {
                     $module_file = preg_replace('/(const\s)\s*(\b' . $constant . '\b)/ism', "/*\n    * module: " . $this->name . "\n    * date: " . date('Y-m-d H:i:s') . "\n    * version: " . $this->version . "\n    */\n    $1$2", $module_file);
                     if ($module_file === null) {
                         throw new Exception(Context::getContext()->getTranslator()->trans('Failed to override constant %1$s in class %2$s.', [$constant, $classname], 'Admin.Modules.Notification'));
@@ -3427,7 +3427,7 @@ abstract class ModuleCore implements ModuleInterface
             }
 
             // Remove properties from override file
-            foreach ($module_class->getConstants() as $constant => $value) {
+            foreach (array_keys($module_class->getConstants()) as $constant) {
                 if (! $override_class->hasConstant($constant)) {
                     continue;
                 }

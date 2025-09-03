@@ -68,7 +68,7 @@ class HelperCalendarCore extends Helper
 
     public function getActions()
     {
-        if (! isset($this->_actions)) {
+        if ($this->_actions === null) {
             $this->_actions = [];
         }
 
@@ -88,7 +88,7 @@ class HelperCalendarCore extends Helper
 
     public function getCompareActions()
     {
-        if (! isset($this->_compare_actions)) {
+        if ($this->_compare_actions === null) {
             $this->_compare_actions = [];
         }
 
@@ -128,7 +128,7 @@ class HelperCalendarCore extends Helper
 
     public function getCompareOption()
     {
-        if (! isset($this->_compare_date_option)) {
+        if ($this->_compare_date_option === null) {
             $this->_compare_date_option = self::DEFAULT_COMPARE_OPTION;
         }
 
@@ -148,7 +148,7 @@ class HelperCalendarCore extends Helper
 
     public function getDateFormat()
     {
-        if (! isset($this->_date_format)) {
+        if ($this->_date_format === null) {
             $this->_date_format = self::DEFAULT_DATE_FORMAT;
         }
 
@@ -172,7 +172,7 @@ class HelperCalendarCore extends Helper
 
     public function getDateFrom()
     {
-        if (! isset($this->_date_from)) {
+        if ($this->_date_from === null) {
             $this->setDateFrom();
         }
 
@@ -196,7 +196,7 @@ class HelperCalendarCore extends Helper
 
     public function getDateTo()
     {
-        if (! isset($this->_date_to)) {
+        if ($this->_date_to === null) {
             $this->setDateTo();
         }
 
@@ -212,7 +212,7 @@ class HelperCalendarCore extends Helper
 
     public function addAction($action)
     {
-        if (! isset($this->_actions)) {
+        if ($this->_actions === null) {
             $this->_actions = [];
         }
 
@@ -223,7 +223,7 @@ class HelperCalendarCore extends Helper
 
     public function addCompareAction($action)
     {
-        if (! isset($this->_compare_actions)) {
+        if ($this->_compare_actions === null) {
             $this->_compare_actions = [];
         }
 
@@ -277,7 +277,7 @@ class HelperCalendarCore extends Helper
 
     public function isRTL()
     {
-        if (! isset($this->_rtl)) {
+        if ($this->_rtl === null) {
             $this->_rtl = Context::getContext()->language->is_rtl;
         }
 

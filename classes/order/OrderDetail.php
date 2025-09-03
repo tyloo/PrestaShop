@@ -994,7 +994,7 @@ class OrderDetailCore extends ObjectModel
                 $this->product_quantity_discount = Tools::ps_round($unit_price, Context::getContext()->getComputingPrecision());
             }
 
-            if (isset($this->tax_calculator)) {
+            if ($this->tax_calculator !== null) {
                 $this->product_quantity_discount -= $this->tax_calculator->addTaxes($quantity_discount['price']);
             }
         }

@@ -558,7 +558,7 @@ class ShopCore extends ObjectModel
      */
     public function getAddress()
     {
-        if (! isset($this->address)) {
+        if ($this->address === null) {
             $address = new Address();
             $address->company = Configuration::get('PS_SHOP_NAME');
             $address->id_country = Configuration::get('PS_SHOP_COUNTRY_ID') ? (int) Configuration::get('PS_SHOP_COUNTRY_ID') : (int) Configuration::get('PS_COUNTRY_DEFAULT');

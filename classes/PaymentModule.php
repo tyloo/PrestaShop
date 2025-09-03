@@ -442,7 +442,7 @@ abstract class PaymentModuleCore extends Module
         }
 
         // Next !
-        $products = $this->context->cart->getProducts();
+        $this->context->cart->getProducts();
 
         // Make sure CartRule caches are empty
         CartRule::cleanCache();

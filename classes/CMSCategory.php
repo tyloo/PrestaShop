@@ -283,16 +283,6 @@ class CMSCategoryCore extends ObjectModel
         }
     }
 
-    /**
-     * Directly call the parent of delete, in order to avoid recursion.
-     *
-     * @return bool Deletion result
-     */
-    private function deleteLite()
-    {
-        return parent::delete();
-    }
-
     public function delete()
     {
         if ((int) $this->id === 1) {
@@ -311,23 +301,6 @@ class CMSCategoryCore extends ObjectModel
         }
 
         return true;
-    }
-
-    /**
-     * Delete pages which are in CMSCategories to delete.
-     *
-     * @return bool Deletion result
-     */
-    private function deleteCMS()
-    {
-        $result = true;
-        $cms = new PrestaShopCollection('CMS');
-        $cms->where('id_cms_category', '=', $this->id);
-        foreach ($cms as $c) {
-            $result &= $c->delete();
-        }
-
-        return $result;
     }
 
     /**

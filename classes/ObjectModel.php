@@ -301,7 +301,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         }
 
         // Ensure that we get something to insert
-        if (! $fields && isset($this->id) && Validate::isUnsignedId($this->id)) {
+        if (! $fields && $this->id !== null && Validate::isUnsignedId($this->id)) {
             $fields[$this->def['primary']] = $this->id;
         }
 
@@ -318,7 +318,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
     public function getFieldsShop()
     {
         $fields = $this->formatFields(self::FORMAT_SHOP);
-        if (! $fields && isset($this->id) && Validate::isUnsignedId($this->id)) {
+        if (! $fields && $this->id !== null && Validate::isUnsignedId($this->id)) {
             $fields[$this->def['primary']] = $this->id;
         }
 
@@ -390,7 +390,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         $fields = [];
 
         // Set primary key in fields
-        if (isset($this->id)) {
+        if ($this->id !== null) {
             $fields[$this->def['primary']] = $this->id;
         }
 
@@ -550,7 +550,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
      */
     public function add($auto_date = true, $null_values = false)
     {
-        if (isset($this->id) && ! $this->force_id) {
+        if ($this->id !== null && ! $this->force_id) {
             $this->id = null;
         }
 
@@ -745,7 +745,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         // Automatically fill dates
         if (property_exists($this, 'date_upd')) {
             $this->date_upd = date('Y-m-d H:i:s');
-            if (isset($this->update_fields) && is_array($this->update_fields) && count($this->update_fields)) {
+            if ($this->update_fields !== null && is_array($this->update_fields) && count($this->update_fields)) {
                 $this->update_fields['date_upd'] = true;
             }
         }
@@ -753,7 +753,7 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
         // Automatically fill dates
         if (property_exists($this, 'date_add') && $this->date_add === null) {
             $this->date_add = date('Y-m-d H:i:s');
-            if (isset($this->update_fields) && is_array($this->update_fields) && count($this->update_fields)) {
+            if ($this->update_fields !== null && is_array($this->update_fields) && count($this->update_fields)) {
                 $this->update_fields['date_add'] = true;
             }
         }
@@ -1397,11 +1397,11 @@ abstract class ObjectModelCore implements PrestaShop\PrestaShop\Core\Foundation\
             }
         }
 
-        if (isset($this->date_add)) {
+        if ($this->date_add !== null) {
             $resource_parameters['fields']['date_add']['setter'] = false;
         }
 
-        if (isset($this->date_upd)) {
+        if ($this->date_upd !== null) {
             $resource_parameters['fields']['date_upd']['setter'] = false;
         }
 

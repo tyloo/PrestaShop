@@ -240,7 +240,7 @@ abstract class HTMLTemplateCore
 
     protected function setShopId()
     {
-        if (isset($this->order) && Validate::isLoadedObject($this->order)) {
+        if ($this->order !== null && Validate::isLoadedObject($this->order)) {
             $id_shop = (int) $this->order->id_shop;
         } else {
             $id_shop = (int) Context::getContext()->shop->id;

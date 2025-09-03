@@ -290,7 +290,7 @@ class WebserviceOutputBuilderCore
     {
         $str_output = '';
         if (! empty($errors)) {
-            if (isset($this->objectRender)) {
+            if ($this->objectRender !== null) {
                 $str_output = $this->objectRender->renderErrorsHeader();
                 foreach ($errors as $error) {
                     if (is_array($error)) {

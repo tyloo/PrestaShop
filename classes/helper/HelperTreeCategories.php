@@ -119,7 +119,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getData()
     {
-        if (! isset($this->_data)) {
+        if ($this->_data === null) {
             $shop = $this->getShop();
             $lang = $this->getLang();
             $root_category = (int) $this->getRootCategory();
@@ -215,7 +215,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getInputName()
     {
-        if (! isset($this->_input_name)) {
+        if ($this->_input_name === null) {
             $this->setInputName('categoryBox');
         }
 
@@ -231,7 +231,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getLang()
     {
-        if (! isset($this->_lang)) {
+        if ($this->_lang === null) {
             $this->setLang($this->getContext()->employee->id_lang);
         }
 
@@ -240,7 +240,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getNodeFolderTemplate()
     {
-        if (! isset($this->_node_folder_template)) {
+        if ($this->_node_folder_template === null) {
             $this->setNodeFolderTemplate(self::DEFAULT_NODE_FOLDER_TEMPLATE);
         }
 
@@ -249,7 +249,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getNodeItemTemplate()
     {
-        if (! isset($this->_node_item_template)) {
+        if ($this->_node_item_template === null) {
             $this->setNodeItemTemplate(self::DEFAULT_NODE_ITEM_TEMPLATE);
         }
 
@@ -292,7 +292,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getSelectedCategories()
     {
-        if (! isset($this->_selected_categories)) {
+        if ($this->_selected_categories === null) {
             $this->_selected_categories = [];
         }
 
@@ -308,7 +308,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getShop()
     {
-        if (! isset($this->_shop)) {
+        if ($this->_shop === null) {
             if (Tools::isSubmit('id_shop')) {
                 $this->setShop(new Shop(Tools::getValue('id_shop')));
             } elseif ($this->getContext()->shop->id) {
@@ -325,7 +325,7 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function getTemplate()
     {
-        if (! isset($this->_template)) {
+        if ($this->_template === null) {
             $this->setTemplate(self::DEFAULT_TEMPLATE);
         }
 
@@ -355,17 +355,17 @@ class HelperTreeCategoriesCore extends TreeCore
 
     public function useCheckBox()
     {
-        return isset($this->_use_checkbox) && $this->_use_checkbox;
+        return $this->_use_checkbox !== null && $this->_use_checkbox;
     }
 
     public function useSearch()
     {
-        return isset($this->_use_search) && $this->_use_search;
+        return $this->_use_search !== null && $this->_use_search;
     }
 
     public function useShopRestriction()
     {
-        return isset($this->_use_shop_restriction) && $this->_use_shop_restriction;
+        return $this->_use_shop_restriction !== null && $this->_use_shop_restriction;
     }
 
     public function render($data = null)
@@ -374,12 +374,12 @@ class HelperTreeCategoriesCore extends TreeCore
             $data = $this->getData();
         }
 
-        if (isset($this->_disabled_categories)
+        if ($this->_disabled_categories !== null
             && ! empty($this->_disabled_categories)) {
             $this->_disableCategories($data, $this->getDisabledCategories());
         }
 
-        if (isset($this->_selected_categories)
+        if ($this->_selected_categories !== null
             && ! empty($this->_selected_categories)) {
             $this->_getSelectedChildNumbers($data, $this->getSelectedCategories());
         }

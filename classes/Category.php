@@ -248,7 +248,7 @@ class CategoryCore extends ObjectModel
      */
     public function add($autoDate = true, $nullValues = false)
     {
-        if (! isset($this->level_depth)) {
+        if ($this->level_depth === null) {
             $this->level_depth = $this->calcLevelDepth();
         }
 

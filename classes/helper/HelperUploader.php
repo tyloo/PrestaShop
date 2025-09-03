@@ -74,7 +74,7 @@ class HelperUploaderCore extends Uploader
 
     public function getContext()
     {
-        if (! isset($this->_context)) {
+        if ($this->_context === null) {
             $this->_context = Context::getContext();
         }
 
@@ -90,7 +90,7 @@ class HelperUploaderCore extends Uploader
 
     public function getDropZone()
     {
-        if (! isset($this->_drop_zone)) {
+        if ($this->_drop_zone === null) {
             $this->setDropZone("$('#" . $this->getId() . "-add-button')");
         }
 
@@ -106,7 +106,7 @@ class HelperUploaderCore extends Uploader
 
     public function getId()
     {
-        if (! isset($this->_id) || trim($this->_id) === '') {
+        if ($this->_id === null || trim($this->_id) === '') {
             $this->_id = $this->getName();
         }
 
@@ -122,7 +122,7 @@ class HelperUploaderCore extends Uploader
 
     public function getFiles()
     {
-        if (! isset($this->_files)) {
+        if ($this->_files === null) {
             $this->_files = [];
         }
 
@@ -173,7 +173,7 @@ class HelperUploaderCore extends Uploader
 
     public function getPostMaxSize()
     {
-        if (! isset($this->_post_max_size)) {
+        if ($this->_post_max_size === null) {
             $this->_post_max_size = parent::getPostMaxSizeBytes();
         }
 
@@ -189,7 +189,7 @@ class HelperUploaderCore extends Uploader
 
     public function getTemplate()
     {
-        if (! isset($this->_template)) {
+        if ($this->_template === null) {
             $this->setTemplate(self::DEFAULT_TEMPLATE);
         }
 
@@ -205,7 +205,7 @@ class HelperUploaderCore extends Uploader
 
     public function getTemplateDirectory()
     {
-        if (! isset($this->_template_directory)) {
+        if ($this->_template_directory === null) {
             $this->_template_directory = self::DEFAULT_TEMPLATE_DIRECTORY;
         }
 
@@ -280,7 +280,7 @@ class HelperUploaderCore extends Uploader
 
     public function isMultiple()
     {
-        return isset($this->_multiple) && $this->_multiple;
+        return $this->_multiple !== null && $this->_multiple;
     }
 
     public function render()
@@ -307,7 +307,7 @@ class HelperUploaderCore extends Uploader
         $this->getContext()->controller->addJs(__PS_BASE_URI__ . 'js/vendor/spin.js');
         $this->getContext()->controller->addJs(__PS_BASE_URI__ . 'js/vendor/ladda.js');
 
-        if ($this->useAjax() && ! isset($this->_template)) {
+        if ($this->useAjax() && $this->_template === null) {
             $this->setTemplate(self::DEFAULT_AJAX_TEMPLATE);
         }
 
@@ -333,6 +333,6 @@ class HelperUploaderCore extends Uploader
 
     public function useAjax()
     {
-        return isset($this->_use_ajax) && $this->_use_ajax;
+        return $this->_use_ajax !== null && $this->_use_ajax;
     }
 }

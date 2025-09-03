@@ -114,7 +114,7 @@ class GenderCore extends ObjectModel
      */
     public function getImage()
     {
-        if (! isset($this->id) || empty($this->id) || ! file_exists(_PS_GENDERS_DIR_ . $this->id . '.jpg')) {
+        if ($this->id === null || empty($this->id) || ! file_exists(_PS_GENDERS_DIR_ . $this->id . '.jpg')) {
             return _THEME_GENDERS_DIR_ . 'Unknown.jpg';
         }
 

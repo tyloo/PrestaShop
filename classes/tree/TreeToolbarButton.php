@@ -51,7 +51,7 @@ abstract class TreeToolbarButtonCore implements Stringable
 
     public function setAttribute($name, $value)
     {
-        if (! isset($this->_attributes)) {
+        if ($this->_attributes === null) {
             $this->_attributes = [];
         }
 
@@ -78,7 +78,7 @@ abstract class TreeToolbarButtonCore implements Stringable
 
     public function getAttributes()
     {
-        if (! isset($this->_attributes)) {
+        if ($this->_attributes === null) {
             $this->_attributes = [];
         }
 
@@ -104,7 +104,7 @@ abstract class TreeToolbarButtonCore implements Stringable
 
     public function getContext()
     {
-        if (! isset($this->_context)) {
+        if ($this->_context === null) {
             $this->_context = Context::getContext();
         }
 
@@ -162,7 +162,7 @@ abstract class TreeToolbarButtonCore implements Stringable
 
     public function getTemplateDirectory()
     {
-        if (! isset($this->_template_directory)) {
+        if ($this->_template_directory === null) {
             $this->_template_directory = $this->_normalizeDirectory(self::DEFAULT_TEMPLATE_DIRECTORY);
         }
 
@@ -206,7 +206,7 @@ abstract class TreeToolbarButtonCore implements Stringable
 
     public function hasAttribute($name)
     {
-        return isset($this->_attributes)
+        return $this->_attributes !== null
             && array_key_exists($name, $this->_attributes);
     }
 

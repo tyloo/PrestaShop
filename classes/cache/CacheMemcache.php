@@ -207,7 +207,7 @@ class CacheMemcacheCore extends Cache
             if (isset($all_slabs) && is_array($all_slabs)) {
                 foreach ($all_slabs as $slabs) {
                     if (is_array($slabs)) {
-                        foreach (array_keys($slabs) as $i => $slab_id) {
+                        foreach (array_keys(array_keys($slabs)) as $i) {
                             // $slab_id is not an int but a string, using the key instead ?
 
                             if (is_int($i)) {

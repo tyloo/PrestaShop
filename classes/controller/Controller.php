@@ -317,7 +317,7 @@ abstract class ControllerCore
         $this->init();
         if ($this->checkAccess()) {
             // setMedia MUST be called before postProcess
-            if (! $this->content_only && ($this->display_header || (isset($this->className) && $this->className))) {
+            if (! $this->content_only && ($this->display_header || ($this->className !== null && $this->className))) {
                 $this->setMedia();
             }
 
@@ -328,7 +328,7 @@ abstract class ControllerCore
                 $this->redirect();
             }
 
-            if (! $this->content_only && ($this->display_header || (isset($this->className) && $this->className))) {
+            if (! $this->content_only && ($this->display_header || ($this->className !== null && $this->className))) {
                 $this->initHeader();
             }
 
@@ -338,7 +338,7 @@ abstract class ControllerCore
                 $this->errors[] = $this->trans('Access denied.', [], 'Admin.Notifications.Error');
             }
 
-            if (! $this->content_only && ($this->display_footer || (isset($this->className) && $this->className))) {
+            if (! $this->content_only && ($this->display_footer || ($this->className !== null && $this->className))) {
                 $this->initFooter();
             }
 

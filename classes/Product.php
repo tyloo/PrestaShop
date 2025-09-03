@@ -2189,13 +2189,13 @@ class ProductCore extends ObjectModel
             // Labels can be passed into this function both as array and string, as does the object model itself.
             // If these values are passed as strings, they will be updated in all languages of the object.
             if (is_array($available_now)) {
-                foreach ($available_now as $id_lang => $value) {
+                foreach (array_keys($available_now) as $id_lang) {
                     $fieldsToUpdate['available_now'][$id_lang] = true;
                 }
             }
 
             if (is_array($available_later)) {
-                foreach ($available_later as $id_lang => $value) {
+                foreach (array_keys($available_later) as $id_lang) {
                     $fieldsToUpdate['available_later'][$id_lang] = true;
                 }
             }
@@ -7624,8 +7624,6 @@ class ProductCore extends ObjectModel
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
         ), \E_USER_DEPRECATED);
-
-        return;
     }
 
     /**

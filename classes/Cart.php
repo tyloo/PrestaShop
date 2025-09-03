@@ -2588,7 +2588,7 @@ class CartCore extends ObjectModel
 
         foreach ($grouped_by_carriers as $key => $products_grouped_by_carriers) {
             foreach ($products_grouped_by_carriers as $data) {
-                foreach ($carrier_count as $id_carrier => $rate) {
+                foreach (array_keys($carrier_count) as $id_carrier) {
                     if (array_key_exists($id_carrier, $data['carrier_list'])) {
                         if (! isset($package_list[$key][$id_carrier])) {
                             $package_list[$key][$id_carrier] = [
@@ -3204,7 +3204,7 @@ class CartCore extends ObjectModel
         $delivery_option_list = $this->getDeliveryOptionList($default_country);
 
         // The delivery option was selected
-        if (isset($this->delivery_option) && $this->delivery_option !== '') {
+        if ($this->delivery_option !== null && $this->delivery_option !== '') {
             $delivery_option = json_decode((string) $this->delivery_option, true);
             $validated = true;
 
@@ -3467,7 +3467,7 @@ class CartCore extends ObjectModel
         // If no specific zone ID was passed, use the zone from delivery address
         if (! isset($id_zone)) {
             // Get id zone
-            if (isset($this->id_address_delivery)
+            if ($this->id_address_delivery !== null
                 && $this->id_address_delivery
                 && Customer::customerHasAddress($this->id_customer, $this->id_address_delivery)
             ) {
@@ -3871,7 +3871,7 @@ class CartCore extends ObjectModel
 
         $summary = $this->getRawSummaryDetails($id_lang, (bool) $refresh);
 
-        return $this->alterSummaryForDisplay($summary, (bool) $refresh);
+        return $this->alterSummaryForDisplay($summary);
     }
 
     /**
@@ -4552,8 +4552,6 @@ class CartCore extends ObjectModel
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
         ), \E_USER_DEPRECATED);
-
-        return;
     }
 
     /**
@@ -4567,8 +4565,6 @@ class CartCore extends ObjectModel
             '%s is deprecated since 9.0 and will be removed in 10.0.',
             __METHOD__
         ), \E_USER_DEPRECATED);
-
-        return;
     }
 
     public function deleteAssociations()
@@ -4664,9 +4660,6 @@ class CartCore extends ObjectModel
      */
     public function isAllProductsInStock($ignoreVirtual = false)
     {
-        $productOutOfStock = 0;
-        $productInStock = 0;
-
         foreach ($this->getProducts(false, false, null, false) as $product) {
             if ($ignoreVirtual && $product['is_virtual']) {
                 continue;
@@ -4793,7 +4786,7 @@ class CartCore extends ObjectModel
     /**
      * Alter raw cart details to adapt to display use case.
      */
-    private function alterSummaryForDisplay(array $summary, bool $refresh = false): array
+    private function alterSummaryForDisplay(array $summary): array
     {
         $context = Context::getContext();
         $currency = new Currency($this->id_currency);

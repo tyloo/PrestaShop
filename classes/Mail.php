@@ -709,7 +709,7 @@ class MailCore extends ObjectModel
                     $recipientsBcc = [];
                 }
 
-                foreach (array_merge($recipientsTo, $recipientsCc, $recipientsBcc) as $emailAlias => $recipient_name) {
+                foreach (array_keys(array_merge($recipientsTo, $recipientsCc, $recipientsBcc)) as $emailAlias) {
                     $mail->id = null;
                     $mail->recipient = Tools::substr($emailAlias, 0, 255);
                     $mail->add();

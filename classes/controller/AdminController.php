@@ -1111,13 +1111,13 @@ class AdminControllerCore extends Controller
             'fields' => &$this->fields_list,
         ]);
 
-        if (! isset($this->list_id)) {
+        if ($this->list_id === null) {
             $this->list_id = $this->table;
         }
 
         $prefix = $this->getCookieFilterPrefix();
 
-        if (isset($this->list_id)) {
+        if ($this->list_id !== null) {
             foreach ($_POST as $key => $value) {
                 if ($value === '') {
                     unset($this->context->cookie->{$prefix . $key});
@@ -1153,7 +1153,7 @@ class AdminControllerCore extends Controller
 
         $filters = $this->context->cookie->getFamily($prefix . $this->list_id . 'Filter_');
         $definition = false;
-        if (isset($this->className) && $this->className) {
+        if ($this->className !== null && $this->className) {
             $definition = ObjectModel::getDefinition($this->className);
         }
 
@@ -1456,7 +1456,7 @@ class AdminControllerCore extends Controller
      */
     public function processAdd()
     {
-        if (! isset($this->className) || empty($this->className)) {
+        if ($this->className === null || empty($this->className)) {
             return false;
         }
 
@@ -2024,7 +2024,7 @@ class AdminControllerCore extends Controller
      */
     protected function loadObject($opt = false)
     {
-        if (! isset($this->className) || empty($this->className)) {
+        if ($this->className === null || empty($this->className)) {
             return true;
         }
 
@@ -2093,7 +2093,7 @@ class AdminControllerCore extends Controller
      */
     protected function filterToField($key, $filter)
     {
-        if (! isset($this->fields_list)) {
+        if ($this->fields_list === null) {
             return false;
         }
 
@@ -2836,7 +2836,7 @@ class AdminControllerCore extends Controller
         ]);
 
         if ($this->fields_options && is_array($this->fields_options)) {
-            if (isset($this->display) && $this->display !== 'options' && $this->display !== 'list') {
+            if ($this->display !== null && $this->display !== 'options' && $this->display !== 'list') {
                 $this->show_toolbar = false;
             } else {
                 $this->display = 'options';
@@ -3176,7 +3176,7 @@ class AdminControllerCore extends Controller
      */
     public function initProcess()
     {
-        if (! isset($this->list_id)) {
+        if ($this->list_id === null) {
             $this->list_id = $this->table;
         }
 
@@ -3293,7 +3293,7 @@ class AdminControllerCore extends Controller
                     'icon' => 'icon-power-off text-danger',
                 ],
             ], $this->bulk_actions);
-            foreach ($submit_bulk_actions as $bulk_action => $params) {
+            foreach (array_keys($submit_bulk_actions) as $bulk_action) {
                 if (Tools::isSubmit('submitBulk' . $bulk_action . $this->table) || Tools::isSubmit('submitBulk' . $bulk_action)) {
                     if ($bulk_action === 'delete') {
                         if ($this->access('delete')) {
@@ -3377,7 +3377,7 @@ class AdminControllerCore extends Controller
             'fields' => &$this->fields_list,
         ]);
 
-        if (! isset($this->list_id)) {
+        if ($this->list_id === null) {
             $this->list_id = $this->table;
         }
 
@@ -3445,7 +3445,7 @@ class AdminControllerCore extends Controller
             if ($this->explicitSelect) {
                 foreach ($this->fields_list as $key => $array_value) {
                     // Add it only if it is not already in $this->_select
-                    if (isset($this->_select) && preg_match('/[\s]`?' . preg_quote($key, '/') . '`?\s*,/', $this->_select)) {
+                    if ($this->_select !== null && preg_match('/[\s]`?' . preg_quote($key, '/') . '`?\s*,/', $this->_select)) {
                         continue;
                     }
 
@@ -3463,11 +3463,11 @@ class AdminControllerCore extends Controller
                 $this->_listsql .= ($this->lang ? 'b.*,' : '') . ' a.*';
             }
 
-            $this->_listsql .= "\n" . (isset($this->_select) ? ', ' . rtrim($this->_select, ', ') : '') . $select_shop;
+            $this->_listsql .= "\n" . ($this->_select !== null ? ', ' . rtrim($this->_select, ', ') : '') . $select_shop;
 
             $limitClause = ' ' . (($shouldLimitSqlResults) ? ' LIMIT ' . (int) $start . ', ' . (int) $limit : '');
 
-            if ($this->_use_found_rows || isset($this->_filterHaving) || isset($this->_having)) {
+            if ($this->_use_found_rows || $this->_filterHaving !== null || $this->_having !== null) {
                 $this->_listsql = 'SELECT SQL_CALC_FOUND_ROWS ' . ($this->_tmpTableFilter ? ' * FROM (SELECT ' : '') .
                     $this->_listsql .
                     $fromClause .
@@ -3543,7 +3543,7 @@ class AdminControllerCore extends Controller
         }
 
         return "\n" . $this->getLanguageJoinClause($id_lang, $id_lang_shop) .
-            "\n" . (isset($this->_join) ? $this->_join . ' ' : '') .
+            "\n" . ($this->_join !== null ? $this->_join . ' ' : '') .
             "\n" . $shopJoinClause;
     }
 
@@ -3586,10 +3586,10 @@ class AdminControllerCore extends Controller
             $whereShop = Shop::addSqlRestriction($this->shopShareDatas, 'a');
         }
 
-        return ' WHERE 1 ' . (isset($this->_where) ? $this->_where . ' ' : '') .
+        return ' WHERE 1 ' . ($this->_where !== null ? $this->_where . ' ' : '') .
             ($this->deleted ? 'AND a.`deleted` = 0 ' : '') .
             ($this->_filter ?? '') . $whereShop . "\n" .
-            (isset($this->_group) ? $this->_group . ' ' : '') . "\n" .
+            ($this->_group !== null ? $this->_group . ' ' : '') . "\n" .
             $this->getHavingClause();
     }
 
@@ -3690,13 +3690,13 @@ class AdminControllerCore extends Controller
     protected function getHavingClause()
     {
         $havingClause = '';
-        if (isset($this->_filterHaving) || isset($this->_having)) {
+        if ($this->_filterHaving !== null || $this->_having !== null) {
             $havingClause = ' HAVING ';
-            if (isset($this->_filterHaving)) {
+            if ($this->_filterHaving !== null) {
                 $havingClause .= ltrim($this->_filterHaving, ' AND ');
             }
 
-            if (isset($this->_having)) {
+            if ($this->_having !== null) {
                 $havingClause .= $this->_having . ' ';
             }
         }

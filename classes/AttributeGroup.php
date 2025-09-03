@@ -434,7 +434,6 @@ class AttributeGroupCore extends ObjectModel
      */
     public static function cleanPositions()
     {
-        $return = true;
         Db::getInstance()->execute('SET @i = -1', false);
 
         return Db::getInstance()->execute(

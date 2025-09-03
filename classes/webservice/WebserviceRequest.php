@@ -651,7 +651,7 @@ class WebserviceRequestCore
             $display_errors = strtolower(ini_get('display_errors')) !== 'off';
         }
 
-        if (isset($this->objOutput)) {
+        if ($this->objOutput !== null) {
             $this->objOutput->setStatus($status);
         }
 
@@ -1613,7 +1613,7 @@ class WebserviceRequestCore
 
                 if (isset($fieldProperties['i18n']) && $fieldProperties['i18n']) {
                     $i18n = true;
-                    if (isset($attributes->{$fieldName}, $attributes->{$fieldName}->language)) {
+                    if (property_exists($attributes->{$fieldName}, 'language') && $attributes->{$fieldName}->language !== null) {
                         foreach ($attributes->{$fieldName}->language as $lang) {
                             /** @var SimpleXMLElement $lang */
                             $object->{$fieldName}[(int) $lang->attributes()->id] = (string) $lang;
@@ -1652,7 +1652,7 @@ class WebserviceRequestCore
 
                 $result = $object->{$objectMethod}();
                 if ($result) {
-                    if (isset($attributes->associations)) {
+                    if (property_exists($attributes, 'associations') && $attributes->associations !== null) {
                         foreach ($attributes->associations->children() as $association) {
                             /** @var SimpleXMLElement $association */
                             // associations
@@ -1899,7 +1899,7 @@ class WebserviceRequestCore
             $headers = apache_request_headers();
         } else {
             $headers = array_merge($_ENV, $_SERVER);
-            foreach ($headers as $key => $val) {
+            foreach (array_keys($headers) as $key) {
                 // we need this header
                 if (str_contains(strtolower($key), 'content-type')) {
                     continue;

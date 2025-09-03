@@ -212,7 +212,7 @@ class UploaderCore
      */
     public function getSavePath()
     {
-        if (! isset($this->_save_path)) {
+        if ($this->_save_path === null) {
             $this->setSavePath(_PS_UPLOAD_DIR_);
         }
 
@@ -234,7 +234,7 @@ class UploaderCore
      */
     public function checkFileSize()
     {
-        return isset($this->_check_file_size) && $this->_check_file_size;
+        return $this->_check_file_size !== null && $this->_check_file_size;
     }
 
     /**
@@ -246,7 +246,7 @@ class UploaderCore
 
         if ($upload && is_array($upload['tmp_name'])) {
             $tmp = [];
-            foreach ($upload['tmp_name'] as $index => $value) {
+            foreach (array_keys($upload['tmp_name']) as $index) {
                 $tmp[$index] = [
                     'tmp_name' => $upload['tmp_name'][$index],
                     'name' => $upload['name'][$index],

@@ -41,7 +41,7 @@ abstract class StockManagerModuleCore extends Module
     {
         $class_file = _PS_MODULE_DIR_ . '/' . $this->name . '/' . $this->stock_manager_class . '.php';
 
-        if (! isset($this->stock_manager_class) || ! file_exists($class_file)) {
+        if ($this->stock_manager_class === null || ! file_exists($class_file)) {
             exit($this->trans('Incorrect Stock Manager class [%s]', [htmlspecialchars((string) $this->stock_manager_class)], 'Admin.Catalog.Notification'));
         }
 

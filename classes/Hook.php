@@ -1212,7 +1212,7 @@ class HookCore extends ObjectModel
 
     public static function coreRenderWidget($module, $hook_name, $params)
     {
-        $context = Context::getContext();
+        Context::getContext();
         if (! Module::isEnabled($module->name)) {
             return null;
         }

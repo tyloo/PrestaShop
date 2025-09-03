@@ -384,7 +384,7 @@ class EmployeeCore extends ObjectModel
             $this->stats_date_to = date('Y-m-d');
         }
 
-        $currentEmployee = new Employee((int) $this->id);
+        new Employee((int) $this->id);
 
         $this->updateTextDirection();
 

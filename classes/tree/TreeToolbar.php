@@ -58,7 +58,7 @@ class TreeToolbarCore implements ITreeToolbarCore
 
     public function getActions()
     {
-        if (! isset($this->_actions)) {
+        if ($this->_actions === null) {
             $this->_actions = [];
         }
 
@@ -74,7 +74,7 @@ class TreeToolbarCore implements ITreeToolbarCore
 
     public function getContext()
     {
-        if (! isset($this->_context)) {
+        if ($this->_context === null) {
             $this->_context = Context::getContext();
         }
 
@@ -106,7 +106,7 @@ class TreeToolbarCore implements ITreeToolbarCore
 
     public function getTemplate()
     {
-        if (! isset($this->_template)) {
+        if ($this->_template === null) {
             $this->setTemplate(self::DEFAULT_TEMPLATE);
         }
 
@@ -122,7 +122,7 @@ class TreeToolbarCore implements ITreeToolbarCore
 
     public function getTemplateDirectory()
     {
-        if (! isset($this->_template_directory)) {
+        if ($this->_template_directory === null) {
             $this->_template_directory = $this->_normalizeDirectory(
                 self::DEFAULT_TEMPLATE_DIRECTORY
             );
@@ -185,11 +185,11 @@ class TreeToolbarCore implements ITreeToolbarCore
             throw new PrestaShopException('Action class must implements ITreeToolbarButtonCore interface');
         }
 
-        if (! isset($this->_actions)) {
+        if ($this->_actions === null) {
             $this->_actions = [];
         }
 
-        if (isset($this->_template_directory)) {
+        if ($this->_template_directory !== null) {
             $action->setTemplateDirectory($this->getTemplateDirectory());
         }
 

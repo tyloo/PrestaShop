@@ -49,7 +49,7 @@ class HelperTreeShopsCore extends TreeCore
 
     public function getData()
     {
-        if (! isset($this->_data)) {
+        if ($this->_data === null) {
             $this->setData(Shop::getTree());
         }
 
@@ -65,7 +65,7 @@ class HelperTreeShopsCore extends TreeCore
 
     public function getLang()
     {
-        if (! isset($this->_lang)) {
+        if ($this->_lang === null) {
             $this->setLang($this->getContext()->employee->id_lang);
         }
 
@@ -74,7 +74,7 @@ class HelperTreeShopsCore extends TreeCore
 
     public function getNodeFolderTemplate()
     {
-        if (! isset($this->_node_folder_template)) {
+        if ($this->_node_folder_template === null) {
             $this->setNodeFolderTemplate(self::DEFAULT_NODE_FOLDER_TEMPLATE);
         }
 
@@ -83,7 +83,7 @@ class HelperTreeShopsCore extends TreeCore
 
     public function getNodeItemTemplate()
     {
-        if (! isset($this->_node_item_template)) {
+        if ($this->_node_item_template === null) {
             $this->setNodeItemTemplate(self::DEFAULT_NODE_ITEM_TEMPLATE);
         }
 
@@ -103,7 +103,7 @@ class HelperTreeShopsCore extends TreeCore
 
     public function getSelectedShops()
     {
-        if (! isset($this->_selected_shops)) {
+        if ($this->_selected_shops === null) {
             $this->_selected_shops = [];
         }
 
@@ -112,7 +112,7 @@ class HelperTreeShopsCore extends TreeCore
 
     public function getTemplate()
     {
-        if (! isset($this->_template)) {
+        if ($this->_template === null) {
             $this->setTemplate(self::DEFAULT_TEMPLATE);
         }
 
