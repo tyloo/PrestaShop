@@ -83,7 +83,7 @@ class Router extends BaseRouter
         }
 
         // Keep absolute urls absolute
-        if (! empty($components['scheme']) && ! empty($components['host'])) {
+        if (isset($components['scheme']) && ($components['scheme'] !== '' && $components['scheme'] !== '0') && ! empty($components['host'])) {
             $baseHost = $components['scheme'] . '://' . $components['host'];
             if (! empty($components['port'])) {
                 $baseHost .= ':' . $components['port'];

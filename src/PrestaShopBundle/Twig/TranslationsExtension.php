@@ -294,7 +294,7 @@ class TranslationsExtension extends AbstractExtension
      */
     protected function getTranslationValue($translation)
     {
-        return ! empty($translation['db']) ? $translation['db'] : $translation['xlf'];
+        return empty($translation['db']) ? $translation['xlf'] : $translation['db'];
     }
 
     /**

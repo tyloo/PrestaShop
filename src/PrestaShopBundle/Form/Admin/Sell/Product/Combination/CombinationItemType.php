@@ -235,11 +235,7 @@ class CombinationItemType extends TranslatorAwareType
     {
         $data = [];
         foreach ($children as $child) {
-            if ($child->count()) {
-                $data[$child->getName()] = $this->getPlaceholderData($child->all());
-            } else {
-                $data[$child->getName()] = '__' . $child->getName() . '__';
-            }
+            $data[$child->getName()] = $child->count() ? $this->getPlaceholderData($child->all()) : '__' . $child->getName() . '__';
         }
 
         return $data;

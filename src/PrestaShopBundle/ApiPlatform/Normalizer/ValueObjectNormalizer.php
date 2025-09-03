@@ -29,6 +29,7 @@ namespace PrestaShopBundle\ApiPlatform\Normalizer;
 
 use Doctrine\Inflector\Inflector;
 use Doctrine\Inflector\InflectorFactory;
+use ReflectionMethod;
 use ReflectionNamedType;
 use ReflectionParameter;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
@@ -242,7 +243,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
         $objectType = \is_object($type) ? $type::class : $type;
         if (! \array_key_exists($objectType, $this->constructorParameter)) {
             $metadata = $this->classMetadataFactory->getMetadataFor($type);
-            if ($metadata->getReflectionClass()->getConstructor() === null) {
+            if (! $metadata->getReflectionClass()->getConstructor() instanceof ReflectionMethod) {
                 $this->constructorParameter[$objectType] = null;
             } elseif ($metadata->getReflectionClass()->getConstructor()->getNumberOfRequiredParameters() !== 1) {
                 // ValueObject are supposed to have only one required parameter (if the convention evolves, this normalizer should evolve too)

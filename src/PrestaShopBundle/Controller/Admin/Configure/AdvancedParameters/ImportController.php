@@ -261,7 +261,7 @@ class ImportController extends PrestaShopAdminController
             $errors[] = $this->trans('To proceed, please upload a file first.', [], 'Admin.Advparameters.Notification');
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $this->json([
                 'errors' => $errors,
                 'isFinished' => true,

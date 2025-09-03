@@ -44,7 +44,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ListCommandsAndQueriesCommand extends Command
 {
-    private bool $isFormatSimple;
+    private bool $isFormatSimple = false;
 
     /**
      * @var ResourceMetadataCollection[]
@@ -58,7 +58,6 @@ class ListCommandsAndQueriesCommand extends Command
         private readonly ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory,
     ) {
         parent::__construct();
-        $this->isFormatSimple = false;
     }
 
     protected function configure(): void
@@ -102,14 +101,12 @@ class ListCommandsAndQueriesCommand extends Command
             $commandDefinition = $this->commandDefinitionParser->parseDefinition($commandName);
             $cqrsEndpointURI = $this->getCQRSEndpointURI($commandDefinition);
 
-            if ($optionHasApiEndpoint !== null) {
-                if (($optionHasApiEndpoint && empty($cqrsEndpointURI)) || (! $optionHasApiEndpoint && ! empty($cqrsEndpointURI))) {
-                    continue;
-                }
+            if ($optionHasApiEndpoint !== null && ($optionHasApiEndpoint && ($cqrsEndpointURI === '' || $cqrsEndpointURI === '0') || ! $optionHasApiEndpoint && ($cqrsEndpointURI !== '' && $cqrsEndpointURI !== '0'))) {
+                continue;
             }
 
             if ($this->isFormatSimple) {
-                $output->writeln('<info>' . $commandDefinition->getClassName() . (! empty($cqrsEndpointURI) ? ' OK' : ' NOT OK') . '</info>');
+                $output->writeln('<info>' . $commandDefinition->getClassName() . ($cqrsEndpointURI === '' || $cqrsEndpointURI === '0' ? ' NOT OK' : ' OK') . '</info>');
             } else {
                 $output->writeln(++$key . '.');
                 $output->writeln('<blue>Class: </blue><info>' . $commandDefinition->getClassName() . '</info>');
@@ -142,7 +139,7 @@ class ListCommandsAndQueriesCommand extends Command
         $this->commandAndQueries = array_filter($this->commandAndQueries, function (string $currentCQRS) use ($filters): bool {
             foreach ($filters as $filter) {
                 // We append a backslash behind the filter to find only exact matches
-                if (str_contains($currentCQRS, $filter . '\\') !== false) {
+                if (str_contains($currentCQRS, $filter . '\\')) {
                     return true;
                 }
             }

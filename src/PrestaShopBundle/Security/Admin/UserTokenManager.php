@@ -55,14 +55,14 @@ class UserTokenManager implements CacheClearerInterface
     public function getSymfonyToken(): string
     {
         // When user is logged we can get it from Security service
-        if ($this->security->getUser() !== null) {
+        if ($this->security->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             $userIdentifier = $this->security->getUser()->getUserIdentifier();
         } else {
             // When user is not initialized yet (like in LegacyRouterChecker) we fetch the employee based on saved session data
             $userIdentifier = $this->sessionEmployeeProvider->getEmployeeFromSession()?->getUserIdentifier();
         }
 
-        if (empty($userIdentifier)) {
+        if ($userIdentifier === null || $userIdentifier === '' || $userIdentifier === '0') {
             return '';
         }
 
@@ -85,11 +85,8 @@ class UserTokenManager implements CacheClearerInterface
         // Legacy urls use token instead of _token as the URL parameter, so it's a valid alternative
         // Token can be posted via GET or POST parameters
         $legacyRequestToken = $request->get('token');
-        if (! empty($legacyRequestToken) && $this->isCsrfTokenValid($legacyRequestToken)) {
-            return true;
-        }
 
-        return false;
+        return ! empty($legacyRequestToken) && $this->isCsrfTokenValid($legacyRequestToken);
     }
 
     public function clear(): void
@@ -99,7 +96,7 @@ class UserTokenManager implements CacheClearerInterface
 
     private function isCsrfTokenValid(string $tokenValue): bool
     {
-        if ($this->security->getUser() === null) {
+        if (! $this->security->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return false;
         }
 

@@ -51,7 +51,7 @@ class EmptyBodyDeserializerProvider implements ProviderInterface
     {
         if ($context['request'] instanceof Request) {
             $request = $context['request'];
-            if (($operation->getExtraProperties()['allowEmptyBody'] ?? false) && empty((string) $request->getContent())) {
+            if (($operation->getExtraProperties()['allowEmptyBody'] ?? false) && ((string) $request->getContent() === '' || (string) $request->getContent() === '0')) {
                 $requestFormat = $request->getRequestFormat() ?: 'json';
                 $mimeType = $request->getMimeType($requestFormat) ?: 'application/json';
                 $request->headers->set('Content-Type', $mimeType);

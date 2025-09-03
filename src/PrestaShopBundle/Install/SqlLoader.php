@@ -46,7 +46,7 @@ class SqlLoader
 
     public function __construct(?Db $db = null)
     {
-        if ($db === null) {
+        if (! $db instanceof Db) {
             $db = Db::getInstance();
         }
 
@@ -105,7 +105,7 @@ class SqlLoader
         $queries = preg_split('#;\s*[\r\n]+#', $content);
         foreach ($queries as $query) {
             $query = mb_trim($query);
-            if (! $query) {
+            if ($query === '' || $query === '0') {
                 continue;
             }
 
@@ -122,7 +122,7 @@ class SqlLoader
             }
         }
 
-        return \count($this->errors) ? false : true;
+        return ! (bool) \count($this->errors);
     }
 
     /**

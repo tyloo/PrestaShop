@@ -56,7 +56,7 @@ final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInt
     {
         $errors = $this->validateData($data);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $errors;
         }
 
@@ -106,7 +106,7 @@ final class MetaSettingsUrlSchemaFormDataProvider implements FormDataProviderInt
             }
         }
 
-        if (! empty($patternErrors)) {
+        if ($patternErrors !== []) {
             return $patternErrors;
         }
 

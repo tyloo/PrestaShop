@@ -85,7 +85,7 @@ class LanguageContextSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($this->employeeContext->getEmployee() !== null) {
+        if ($this->employeeContext->getEmployee() instanceof \PrestaShop\PrestaShop\Core\Context\Employee) {
             // Use the employee language if available
             $this->languageContextBuilder->setLanguageId($this->employeeContext->getEmployee()->getLanguageId());
         }

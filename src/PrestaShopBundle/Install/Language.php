@@ -63,7 +63,7 @@ class Language
         $this->iso_code = mb_strtolower((string) $iso);
         $xmlPath = _PS_INSTALL_LANGS_PATH_ . $iso . '/';
         $this->setPropertiesFromXml($xmlPath);
-        $this->is_rtl = ($this->is_rtl === 'true') ? true : false;
+        $this->is_rtl = $this->is_rtl === 'true';
     }
 
     public function setPropertiesFromXml(string $xmlPath): void

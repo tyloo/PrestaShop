@@ -242,11 +242,7 @@ class Install extends AbstractInstall
             $parameters
         );
 
-        if (! $this->processParameters($parameters)) {
-            return false;
-        }
-
-        return true;
+        return (bool) $this->processParameters($parameters);
     }
 
     /**
@@ -354,16 +350,12 @@ class Install extends AbstractInstall
             $context->language = new Language('en');
         }
 
-        if (! isset($context->country) || ! Validate::isLoadedObject($context->country)) {
-            if ($id_country = (int) Configuration::get('PS_COUNTRY_DEFAULT')) {
-                $context->country = new Country((int) $id_country);
-            }
+        if ((! isset($context->country) || ! Validate::isLoadedObject($context->country)) && $id_country = (int) Configuration::get('PS_COUNTRY_DEFAULT')) {
+            $context->country = new Country((int) $id_country);
         }
 
-        if (! isset($context->currency) || ! Validate::isLoadedObject($context->currency)) {
-            if ($id_currency = Currency::getDefaultCurrencyId()) {
-                $context->currency = new Currency((int) $id_currency);
-            }
+        if ((! isset($context->currency) || ! Validate::isLoadedObject($context->currency)) && $id_currency = Currency::getDefaultCurrencyId()) {
+            $context->currency = new Currency((int) $id_currency);
         }
 
         /* Instantiate cookie */
@@ -440,7 +432,7 @@ class Install extends AbstractInstall
         }
 
         $flip_languages = array_flip($languages);
-        $id_lang = (! empty($flip_languages[$this->language->getLanguageIso()])) ? $flip_languages[$this->language->getLanguageIso()] : 1;
+        $id_lang = (empty($flip_languages[$this->language->getLanguageIso()])) ? 1 : $flip_languages[$this->language->getLanguageIso()];
 
         Configuration::resetStaticCache();
         Configuration::loadConfiguration();
@@ -631,7 +623,7 @@ class Install extends AbstractInstall
             if (! EntityLanguage::translationPackIsInCache($locale)) {
                 EntityLanguage::downloadXLFLanguagePack($locale, $errors);
 
-                if (! empty($errors)) {
+                if ($errors !== []) {
                     throw new PrestashopInstallerException($this->translator->trans('Cannot download language pack "%iso%"', ['%iso%' => $iso], 'Install'));
                 }
             }
@@ -647,10 +639,8 @@ class Install extends AbstractInstall
             $languages[$id_lang] = $iso;
 
             // Copy language flag
-            if (is_writable(_PS_IMG_DIR_ . 'l/')) {
-                if (! copy(_PS_INSTALL_LANGS_PATH_ . $iso . '/flag.jpg', _PS_IMG_DIR_ . 'l/' . $id_lang . '.jpg')) {
-                    throw new PrestashopInstallerException($this->translator->trans('Cannot copy flag language "%flag%"', ['%flag%' => _PS_INSTALL_LANGS_PATH_ . $iso . '/flag.jpg => ' . _PS_IMG_DIR_ . 'l/' . $id_lang . '.jpg'], 'Install'));
-                }
+            if (is_writable(_PS_IMG_DIR_ . 'l/') && ! copy(_PS_INSTALL_LANGS_PATH_ . $iso . '/flag.jpg', _PS_IMG_DIR_ . 'l/' . $id_lang . '.jpg')) {
+                throw new PrestashopInstallerException($this->translator->trans('Cannot copy flag language "%flag%"', ['%flag%' => _PS_INSTALL_LANGS_PATH_ . $iso . '/flag.jpg => ' . _PS_IMG_DIR_ . 'l/' . $id_lang . '.jpg'], 'Install'));
             }
         }
 
@@ -784,7 +774,7 @@ class Install extends AbstractInstall
         unset($group_default);
 
         if (\is_array($groups) && \count($groups)) {
-            foreach ($groups as $key => $group) {
+            foreach (array_keys($groups) as $key) {
                 if (Configuration::get($groups_default[$key]) !== $groups[$key]['id_group']) {
                     Configuration::updateGlobalValue($groups_default[$key], (int) $groups[$key]['id_group']);
                 }
@@ -803,7 +793,7 @@ class Install extends AbstractInstall
         unset($state_default);
 
         if (\is_array($states) && \count($states)) {
-            foreach ($states as $key => $state) {
+            foreach (array_keys($states) as $key) {
                 if (Configuration::get($states_default[$key]) !== $states[$key]['id_order_state']) {
                     Configuration::updateGlobalValue($states_default[$key], (int) $states[$key]['id_order_state']);
                 }
@@ -905,7 +895,7 @@ class Install extends AbstractInstall
                 $isoCode
             );
 
-            if ($moduleData !== null) {
+            if ($moduleData instanceof \PrestaShop\PrestaShop\Core\Util\ArrayFinder) {
                 if ($moduleData->get('name') !== $module->getFilename()) {
                     continue;
                 }
@@ -930,7 +920,7 @@ class Install extends AbstractInstall
                 $theme->getFileName()
             );
 
-            if ($themeConfig !== null) {
+            if ($themeConfig instanceof \PrestaShop\PrestaShop\Core\Util\ArrayFinder) {
                 $themes[] = $themeConfig;
             }
         }
@@ -1236,11 +1226,7 @@ class Install extends AbstractInstall
                 ),
                 ];
 
-                if (! empty($moduleException)) {
-                    $moduleErrors[] = $moduleException;
-                } else {
-                    $moduleErrors[] = $moduleManager->getError($module_name);
-                }
+                $moduleErrors[] = $moduleException === null || $moduleException === '' || $moduleException === '0' ? $moduleManager->getError($module_name) : $moduleException;
 
                 $errors[$module_name] = $moduleErrors;
             }
@@ -1265,8 +1251,8 @@ class Install extends AbstractInstall
         uasort(
             $themes,
             function ($a, $b): int {
-                $a = ! isset($a['display_name']) ? 0 : $a['display_name'];
-                $b = ! isset($b['display_name']) ? 0 : $b['display_name'];
+                $a = $a['display_name'] ?? 0;
+                $b = $b['display_name'] ?? 0;
 
                 return $a <=> $b;
             }

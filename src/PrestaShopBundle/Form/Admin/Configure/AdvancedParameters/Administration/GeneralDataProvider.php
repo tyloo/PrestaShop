@@ -98,10 +98,8 @@ final class GeneralDataProvider implements FormDataProviderInterface
             }
         }
 
-        if (isset($data[GeneralType::FIELD_COOKIE_SAMESITE])) {
-            if (! $this->validateSameSite($data[GeneralType::FIELD_COOKIE_SAMESITE])) {
-                $errors->add(new InvalidConfigurationDataError(FormDataProvider::ERROR_COOKIE_SAMESITE_NONE, GeneralType::FIELD_COOKIE_SAMESITE));
-            }
+        if (isset($data[GeneralType::FIELD_COOKIE_SAMESITE]) && ! $this->validateSameSite($data[GeneralType::FIELD_COOKIE_SAMESITE])) {
+            $errors->add(new InvalidConfigurationDataError(FormDataProvider::ERROR_COOKIE_SAMESITE_NONE, GeneralType::FIELD_COOKIE_SAMESITE));
         }
 
         if (! $errors->isEmpty()) {

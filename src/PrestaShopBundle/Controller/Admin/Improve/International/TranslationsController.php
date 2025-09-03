@@ -157,7 +157,7 @@ class TranslationsController extends PrestaShopAdminController
         }
 
         // If route parameters are empty we are redirecting to a legacy route
-        return empty($routeParameters) ? $this->redirect($route) : $this->redirectToRoute($route, $routeParameters);
+        return $routeParameters === [] ? $this->redirect($route) : $this->redirectToRoute($route, $routeParameters);
     }
 
     /**
@@ -271,7 +271,7 @@ class TranslationsController extends PrestaShopAdminController
                 ];
             }
 
-            if (empty($selections)) {
+            if ($selections === []) {
                 $this->addFlash(
                     'error',
                     $this->trans('You must select at least one translation type to export translations.', [], 'Admin.International.Notification')

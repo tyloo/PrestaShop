@@ -111,7 +111,7 @@ class FeatureFlagController extends PrestaShopAdminController
                 [],
                 'Admin.Notifications.Info'
             ),
-            'multistoreIsUsed' => $this->getShopContext()->isMultiShopUsed() && $this->getShopContext()->getShopConstraint()->getShopId() !== null,
+            'multistoreIsUsed' => $this->getShopContext()->isMultiShopUsed() && $this->getShopContext()->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId,
         ]);
     }
 

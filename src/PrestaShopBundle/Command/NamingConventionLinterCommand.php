@@ -78,7 +78,7 @@ final class NamingConventionLinterCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        if (! empty($invalidRouteNameRows) || ! empty($invalidControllerRows)) {
+        if ($invalidRouteNameRows !== [] || $invalidControllerRows !== []) {
             $this->displayInvalidRoutes($invalidRouteNameRows, $io);
             $this->displayInvalidControllers($invalidControllerRows, $io);
             $this->displayNotFoundControllers($controllerNotFoundRows, $io);
@@ -126,7 +126,7 @@ final class NamingConventionLinterCommand extends Command
 
     private function displayInvalidRows(array $invalidRows, string $title, string $warning, array $header, SymfonyStyle $io): void
     {
-        if (empty($invalidRows)) {
+        if ($invalidRows === []) {
             return;
         }
 

@@ -164,7 +164,7 @@ class APIClientCommand extends Command
                     ['Name', $clientName],
                     ['Description', $clientDescription],
                     ['Timeout', $clientTimeout],
-                    ['Scopes', empty($clientScopes) ? 'None' : implode(', ', $clientScopes)],
+                    ['Scopes', $clientScopes === [] ? 'None' : implode(', ', $clientScopes)],
                 ],
             );
         }

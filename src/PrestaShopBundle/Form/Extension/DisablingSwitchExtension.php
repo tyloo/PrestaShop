@@ -86,7 +86,7 @@ class DisablingSwitchExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $switchableParent = $this->getSwitchableParent($form);
-        if ($switchableParent !== null) {
+        if ($switchableParent instanceof FormInterface) {
             // When rendering a prototype we must not force the disabled attribute in any way, because it will be hard-coded
             // in all the future elements rendered dynamically thanks to the prototype template
             if ($this->isRenderingPrototype($form)) {
@@ -151,7 +151,7 @@ class DisablingSwitchExtension extends AbstractTypeExtension
     private function isRenderingPrototype(FormInterface $form): bool
     {
         $checkedForm = $form;
-        while ($checkedForm !== null && $checkedForm->getParent() !== null) {
+        while ($checkedForm instanceof FormInterface && $checkedForm->getParent() instanceof FormInterface) {
             $prototypeName = $checkedForm->getParent()->getConfig()->getOption('prototype_name');
             if ($checkedForm->getName() === $prototypeName) {
                 return true;
@@ -170,7 +170,7 @@ class DisablingSwitchExtension extends AbstractTypeExtension
      */
     private function getSwitchableParent(FormInterface $form): ?FormInterface
     {
-        if ($form->getParent() === null) {
+        if (! $form->getParent() instanceof FormInterface) {
             return null;
         }
 

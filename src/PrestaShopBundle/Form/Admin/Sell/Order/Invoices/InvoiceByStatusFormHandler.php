@@ -71,7 +71,7 @@ final class InvoiceByStatusFormHandler extends Handler
             );
         }
 
-        if (empty($invoiceCollection)) {
+        if ($invoiceCollection === []) {
             $errors[] = [
                 'key' => 'No invoice has been found for this status.',
                 'domain' => 'Admin.Orderscustomers.Notification',

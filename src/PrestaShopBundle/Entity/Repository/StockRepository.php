@@ -254,11 +254,7 @@ class StockRepository extends StockManagementRepository
     {
         $rows = parent::addCombinationsAndFeatures($rows);
         foreach ($rows as &$row) {
-            if ($row['combination_id'] !== 0) {
-                $row['total_combinations'] = $this->getTotalCombinations($row);
-            } else {
-                $row['total_combinations'] = 'N/A';
-            }
+            $row['total_combinations'] = $row['combination_id'] !== 0 ? $this->getTotalCombinations($row) : 'N/A';
         }
 
         return $rows;

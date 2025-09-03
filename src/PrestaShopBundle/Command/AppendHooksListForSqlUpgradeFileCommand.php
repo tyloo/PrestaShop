@@ -104,7 +104,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
         $newHooks = array_diff($currentHooks, $previousHooks);
         $removedHooks = array_diff($previousHooks, $currentHooks);
 
-        if (empty($newHooks) && empty($removedHooks)) {
+        if ($newHooks === [] && $removedHooks === []) {
             $io->note('No hooks modification found.');
 
             return 0;
@@ -122,12 +122,12 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
             return 1;
         }
 
-        if (empty($sqlUpgradeFile)) {
+        if ($sqlUpgradeFile === '' || $sqlUpgradeFile === '0') {
             return 1;
         }
 
         // First add new hooks to SQL file
-        if (! empty($newHooks)) {
+        if ($newHooks !== []) {
             $hookDescriptions = $this->extractHookDescriptions($newHooks);
 
             $sqlInsertStatement = $this->getSqlInsertStatement($hookDescriptions, Version::VERSION);
@@ -142,7 +142,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
         }
 
         // Now delete removed hooks
-        if (! empty($removedHooks)) {
+        if ($removedHooks !== []) {
             $sqlDeleteStatement = $this->getSqlDeleteStatement($removedHooks, Version::VERSION);
             $this->appendSqlToFile($sqlUpgradeFile, $sqlDeleteStatement);
             $io->success(
@@ -201,7 +201,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
             );
         }
 
-        if (empty($valuesToInsert)) {
+        if ($valuesToInsert === []) {
             return '';
         }
 
@@ -215,7 +215,7 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
 
     private function getSqlDeleteStatement(array $removedHooks, string $prestashopVersion): string
     {
-        if (empty($removedHooks)) {
+        if ($removedHooks === []) {
             return '';
         }
 
@@ -262,13 +262,13 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
     {
         $xmlFileContent = new SimpleXMLElement($xmlContent);
 
-        if (! isset($xmlFileContent->entities, $xmlFileContent->entities->hook)) {
+        if ((! property_exists($xmlFileContent, 'entities') || $xmlFileContent->entities === null) && (! property_exists($xmlFileContent->entities, 'hook') || $xmlFileContent->entities->hook === null)) {
             throw new RuntimeException('Invalid hook fixtures files could not find hooks node');
         }
 
         $hookNames = [];
         foreach ($xmlFileContent->entities->hook as $hook) {
-            if (! isset($hook->name)) {
+            if (! property_exists($hook, 'name') || $hook->name === null) {
                 continue;
             }
 
@@ -283,13 +283,13 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
         $currentHookXml = file_get_contents($this->projectDir . '/install-dev/data/xml/hook.xml');
         $xmlFileContent = new SimpleXMLElement($currentHookXml);
 
-        if (! isset($xmlFileContent->entities, $xmlFileContent->entities->hook)) {
+        if ((! property_exists($xmlFileContent, 'entities') || $xmlFileContent->entities === null) && (! property_exists($xmlFileContent->entities, 'hook') || $xmlFileContent->entities->hook === null)) {
             throw new RuntimeException('Invalid hook fixtures files could not find hooks node');
         }
 
         $hookNames = [];
         foreach ($xmlFileContent->entities->hook as $hook) {
-            if (! isset($hook->name)) {
+            if (! property_exists($hook, 'name') || $hook->name === null) {
                 continue;
             }
 

@@ -264,7 +264,7 @@ class ProductController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.grid.factory.product.shops')]
         GridFactoryInterface $gridFactory,
     ): Response {
-        $shopConstraint = ! empty($shopGroupId) ? ShopConstraint::shopGroup($shopGroupId) : ShopConstraint::allShops();
+        $shopConstraint = $shopGroupId === null || $shopGroupId === 0 ? ShopConstraint::allShops() : ShopConstraint::shopGroup($shopGroupId);
         $filters = new ProductFilters(
             $shopConstraint,
             [
@@ -311,7 +311,7 @@ class ProductController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.adapter.shop.url.product_preview_provider')]
         ProductPreviewProvider $previewUrlProvider,
     ): RedirectResponse {
-        $shopConstraint = ! empty($shopId) ? ShopConstraint::shop($shopId) : ShopConstraint::allShops();
+        $shopConstraint = $shopId === null || $shopId === 0 ? ShopConstraint::allShops() : ShopConstraint::shop($shopId);
         /** @var ProductForEditing $productForEditing */
         $productForEditing = $this->dispatchQuery(new GetProductForEditing(
             $productId,
@@ -374,11 +374,7 @@ class ProductController extends PrestaShopAdminController
         #[Autowire(service: 'prestashop.core.form.identifiable_object.product_form_handler')]
         FormHandlerInterface $productFormHandler,
     ): Response {
-        if ($request->query->has('shopId')) {
-            $data['shop_id'] = $request->query->get('shopId');
-        } else {
-            $data['shop_id'] = $this->getShopContext()->getId();
-        }
+        $data['shop_id'] = $request->query->has('shopId') ? $request->query->get('shopId') : $this->getShopContext()->getId();
 
         $productForm = $productFormBuilder->getForm($data);
 
@@ -965,7 +961,7 @@ class ProductController extends PrestaShopAdminController
         }
 
         $shopId = $this->getShopContext()->getId();
-        if (empty($shopId)) {
+        if ($shopId === 0) {
             $shopId = (int) $this->getConfiguration()->get('PS_SHOP_DEFAULT');
         }
 
@@ -1603,7 +1599,7 @@ class ProductController extends PrestaShopAdminController
 
     private function getGridAdminFilter(): ?AdminFilter
     {
-        if ($this->getEmployeeContext()->getEmployee() === null) {
+        if (! $this->getEmployeeContext()->getEmployee() instanceof \PrestaShop\PrestaShop\Core\Context\Employee) {
             return null;
         }
 
@@ -1618,6 +1614,6 @@ class ProductController extends PrestaShopAdminController
     {
         $shopId = $this->getShopContext()->getId();
 
-        return ! empty($shopId) ? (int) $shopId : null;
+        return $shopId === 0 ? null : (int) $shopId;
     }
 }

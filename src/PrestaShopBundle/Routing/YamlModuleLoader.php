@@ -52,7 +52,7 @@ class YamlModuleLoader extends Loader
 
     public function load($resource, $type = null)
     {
-        if ($this->isLoaded === true) {
+        if ($this->isLoaded) {
             throw new RuntimeException('Do not add the "module" loader twice.');
         }
 

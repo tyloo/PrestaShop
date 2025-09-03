@@ -60,7 +60,7 @@ class UserProvider
         // Since this service is used in legacy context it may be called early in the process when the FirewallListener has not been
         // executed yet, therefore the Security::getUser still returns null, so we use this fallback to unserialize an Employee
         // entity from the session token for backward compatibility
-        if ($this->requestStack->getCurrentRequest() !== null) {
+        if ($this->requestStack->getCurrentRequest() instanceof \Symfony\Component\HttpFoundation\Request) {
             $sessionEmployee = $this->sessionEmployeeProvider->getEmployeeFromSession($this->requestStack->getCurrentRequest());
             if ($sessionEmployee instanceof Employee) {
                 return $sessionEmployee;

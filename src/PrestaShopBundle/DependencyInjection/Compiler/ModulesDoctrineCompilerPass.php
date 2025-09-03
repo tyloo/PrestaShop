@@ -70,7 +70,7 @@ class ModulesDoctrineCompilerPass implements CompilerPassInterface
                 && is_dir($moduleFolder . '/src/Entity')
             ) {
                 $moduleNamespace = $this->getModuleNamespace($moduleFolder);
-                if (empty($moduleNamespace)) {
+                if ($moduleNamespace === '' || $moduleNamespace === '0') {
                     continue;
                 }
 

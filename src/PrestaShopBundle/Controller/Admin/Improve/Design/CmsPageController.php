@@ -794,7 +794,7 @@ class CmsPageController extends PrestaShopAdminController
      */
     private function redirectToParentIndexPageByCategoryBulkIds(array $cmsPageCategoryIds): RedirectResponse
     {
-        if (empty($cmsPageCategoryIds)) {
+        if ($cmsPageCategoryIds === []) {
             return $this->redirectToRoute('admin_cms_pages_index');
         }
 
@@ -806,7 +806,7 @@ class CmsPageController extends PrestaShopAdminController
      */
     private function redirectToParentIndexPageByBulkIds(array $cmsPageIds): RedirectResponse
     {
-        if (empty($cmsPageIds)) {
+        if ($cmsPageIds === []) {
             return $this->redirectToRoute('admin_cms_pages_index');
         }
 

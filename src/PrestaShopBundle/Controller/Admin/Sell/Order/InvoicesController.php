@@ -138,12 +138,10 @@ class InvoicesController extends PrestaShopAdminController
         $form = $formHandler->getForm();
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($errors = $formHandler->save($form->getData())) {
-                $this->addFlashErrors($errors);
+        if ($form->isSubmitted() && $errors = $formHandler->save($form->getData())) {
+            $this->addFlashErrors($errors);
 
-                return false;
-            }
+            return false;
         }
 
         return true;

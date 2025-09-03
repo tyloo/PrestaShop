@@ -141,15 +141,10 @@ class MultistoreConfigurationDropdownRenderer
     private function shouldIncludeGroupShop(ShopGroup $group): bool
     {
         // group shop is only included if we are in all shop context or in group context when this group is the current context
-        if (\count($group->getShops()) > 0
+        return \count($group->getShops()) > 0
             && (
                 $this->shopContext->getShopConstraint()->forAllShops()
                 || $group->getId() === $this->shopContext->getShopConstraint()->getShopGroupId()?->getValue()
-            )
-        ) {
-            return true;
-        }
-
-        return false;
+            );
     }
 }

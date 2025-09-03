@@ -137,7 +137,7 @@ class CombinationController extends PrestaShopAdminController
         }
 
         $shopId = $this->getShopContext()->getId();
-        if (empty($shopId)) {
+        if ($shopId === 0) {
             $shopId = (int) $this->getConfiguration()->get('PS_SHOP_DEFAULT');
         }
 
@@ -261,7 +261,7 @@ class CombinationController extends PrestaShopAdminController
             }
         }
 
-        if (empty($errors)) {
+        if ($errors === []) {
             return $this->json(['success' => true]);
         }
 

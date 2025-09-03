@@ -67,7 +67,7 @@ class DoctrineNamingStrategy extends UnderscoreNamingStrategy
     public function joinTableName($sourceEntity, $targetEntity, $propertyName = null)
     {
         $prestashopTable = $this->getPrestashopTable($sourceEntity, $propertyName);
-        if (! empty($prestashopTable)) {
+        if ($prestashopTable !== null && $prestashopTable !== '' && $prestashopTable !== '0') {
             return $prestashopTable;
         }
 

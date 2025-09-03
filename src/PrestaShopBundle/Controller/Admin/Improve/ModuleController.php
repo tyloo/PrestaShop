@@ -383,7 +383,7 @@ class ModuleController extends ModuleAbstractController
                 'module_name' => $moduleName,
             ];
 
-            if ($installationResponse['status'] === true) {
+            if ($installationResponse['status']) {
                 $installationResponse['msg'] = $this->trans(
                     'Installation of module %module% was successful.',
                     ['%module%' => $moduleName],
@@ -485,7 +485,7 @@ class ModuleController extends ModuleAbstractController
                 'modal_target' => '#moduleTradLangSelect',
             ];
 
-            if ($module !== null) {
+            if ($module instanceof ModuleAdapter) {
                 $toolbarButtons['module-hook'] = [
                     'href' => $this->generateUrl('admin_modules_positions', ['show_modules' => (int) $module->database->get('id')]),
                     'desc' => $this->trans('Manage hooks', [], 'Admin.Modules.Feature'),

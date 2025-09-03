@@ -47,7 +47,7 @@ class PopulateTranslationProvidersPass implements CompilerPassInterface
         $definition = $container->findDefinition(self::DEFINITION);
         $taggedServices = $container->findTaggedServiceIds('ps.translation_provider');
 
-        foreach ($taggedServices as $id => $tags) {
+        foreach (array_keys($taggedServices) as $id) {
             $definition->addMethodCall('addProvider', [new Reference($id)]);
         }
     }

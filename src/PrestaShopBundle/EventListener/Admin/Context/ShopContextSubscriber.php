@@ -98,7 +98,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
         if ($this->employeeContext->hasAuthorizationForAllShops()) {
             $authenticationSuccessEvent->getAuthenticationToken()->setAttribute(TokenAttributes::SHOP_CONSTRAINT, ShopConstraint::allShops());
             $this->legacyContext->getContext()->cookie->shopContext = '';
-        } elseif ($this->employeeContext->getDefaultShopId()) {
+        } elseif ($this->employeeContext->getDefaultShopId() !== 0) {
             $authenticationSuccessEvent->getAuthenticationToken()->setAttribute(TokenAttributes::SHOP_CONSTRAINT, ShopConstraint::shop($this->employeeContext->getDefaultShopId()));
             $this->legacyContext->getContext()->cookie->shopContext = 's-' . $this->employeeContext->getDefaultShopId();
         }
@@ -130,7 +130,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
         $this->shopContextBuilder->setSecureMode($psSslEnabled && $request->isSecure());
 
         $redirectResponse = $this->redirectShopContext($event);
-        if ($redirectResponse !== null) {
+        if ($redirectResponse instanceof RedirectResponse) {
             $event->setResponse($redirectResponse);
 
             return;
@@ -140,7 +140,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
         // If not shop constraint was definable it means the employee may not be logged in In any case we have no info to setup the
         // shop context more accurately so we do nothing
-        if ($shopConstraint === null) {
+        if (! $shopConstraint instanceof ShopConstraint) {
             return;
         }
 
@@ -165,7 +165,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
         $this->shopContextBuilder->setShopConstraint($shopConstraint);
 
         // Always set a shop ID for the context
-        $shopId = $shopConstraint->getShopId() ? $shopConstraint->getShopId()->getValue() : $this->getConfiguredDefaultShopId();
+        $shopId = $shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId ? $shopConstraint->getShopId()->getValue() : $this->getConfiguredDefaultShopId();
         $this->shopContextBuilder->setShopId($shopId);
 
         // Set shop constraint as request attribute
@@ -181,7 +181,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
     {
         // Firstly check if the displayed legacy controller forces All shops mode
         $legacyConstraint = $this->getLegacyMultiShopConstraint($request);
-        if ($legacyConstraint !== null) {
+        if ($legacyConstraint instanceof ShopConstraint) {
             return $legacyConstraint;
         }
 
@@ -210,7 +210,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
     private function getMultiShopConstraint(Request $request): ?ShopConstraint
     {
         $shopConstraint = $this->getShopConstraintFromRouteAttribute($request);
-        if ($shopConstraint !== null) {
+        if ($shopConstraint instanceof ShopConstraint) {
             return $shopConstraint;
         }
 
@@ -252,7 +252,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
         // If the requested shop constraint is the current one nothing to change
         $tokenShopConstraint = $this->getShopConstraintFromTokenAttribute();
-        if ($tokenShopConstraint !== null && $parameterShopConstraint->isEqual($tokenShopConstraint)) {
+        if ($tokenShopConstraint instanceof ShopConstraint && $parameterShopConstraint->isEqual($tokenShopConstraint)) {
             return null;
         }
 
@@ -275,13 +275,13 @@ class ShopContextSubscriber implements EventSubscriberInterface
                     [],
                     'Admin.Notifications.Error',
                 );
-            } elseif ($invalidShopConstraint->getShopId()) {
+            } elseif ($invalidShopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
                 $errorMessage = $this->translator->trans(
                     'Authorization not allowed for this store.',
                     [],
                     'Admin.Notifications.Error',
                 );
-            } elseif ($invalidShopConstraint->getShopGroupId()) {
+            } elseif ($invalidShopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
                 $errorMessage = $this->translator->trans(
                     'Authorization not allowed for this group of stores.',
                     [],
@@ -309,9 +309,9 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
         // Update legacy cookie shop context to make sure it is synced with the token attribute
         $legacyCookie = $this->legacyContext->getContext()->cookie;
-        if ($updatedShopConstraint->getShopId() !== null) {
+        if ($updatedShopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $legacyCookie->shopContext = 's-' . $updatedShopConstraint->getShopId()->getValue();
-        } elseif ($updatedShopConstraint->getShopGroupId()) {
+        } elseif ($updatedShopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             $legacyCookie->shopContext = 'g-' . $updatedShopConstraint->getShopGroupId()->getValue();
         } else {
             $legacyCookie->shopContext = '';
@@ -334,7 +334,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
      */
     private function getShopConstraintFromParameter(string $parameter): ShopConstraint
     {
-        if (empty($parameter)) {
+        if ($parameter === '' || $parameter === '0') {
             return ShopConstraint::allShops();
         }
 
@@ -342,7 +342,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
         if (\count($splitShopContext) === 2) {
             $splitShopType = $splitShopContext[0];
             $splitShopValue = (int) $splitShopContext[1];
-            if (! empty($splitShopValue) && ! empty($splitShopType)) {
+            if ($splitShopValue !== 0 && ($splitShopType !== '' && $splitShopType !== '0')) {
                 if ($splitShopType === 'g') {
                     return ShopConstraint::shopGroup($splitShopValue);
                 }
@@ -368,7 +368,7 @@ class ShopContextSubscriber implements EventSubscriberInterface
             $methodAttributes = $reflectionClass->getMethod($methodName)->getAttributes(AllShopContext::class);
 
             $attributes = array_merge($classAttributes, $methodAttributes);
-            if (! empty($attributes)) {
+            if ($attributes !== []) {
                 return ShopConstraint::allShops();
             }
 
@@ -380,11 +380,11 @@ class ShopContextSubscriber implements EventSubscriberInterface
 
     private function isAuthorizedByShopConstraint(ShopConstraint $shopConstraint): bool
     {
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             return $this->employeeContext->hasAuthorizationOnShopGroup($shopConstraint->getShopGroupId()->getValue());
         }
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             return $this->employeeContext->hasAuthorizationOnShop($shopConstraint->getShopId()->getValue());
         }
 

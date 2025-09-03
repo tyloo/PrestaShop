@@ -53,8 +53,8 @@ class CQRSApiValidator
 
         $resourceMetadata = $this->validatorMetadataFactory->getMetadataFor($resourceClass);
 
-        return ! empty($resourceMetadata->getConstraints())
-            || ($resourceMetadata instanceof ClassMetadataInterface && ! empty($resourceMetadata->getConstrainedProperties()))
+        return $resourceMetadata->getConstraints() !== []
+            || ($resourceMetadata instanceof ClassMetadataInterface && $resourceMetadata->getConstrainedProperties() !== [])
         ;
     }
 

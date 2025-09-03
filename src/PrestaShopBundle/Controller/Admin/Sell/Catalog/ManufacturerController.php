@@ -756,33 +756,23 @@ class ManufacturerController extends PrestaShopAdminController
 
     private function getManufacturerIndexToolbarButtons(): array
     {
-        $toolbarButtons = [];
-
-        $toolbarButtons['add_manufacturer'] = [
+        return ['add_manufacturer' => [
             'href' => $this->generateUrl('admin_manufacturers_create'),
             'desc' => $this->trans('Add new brand', [], 'Admin.Catalog.Feature'),
             'icon' => 'add_circle_outline',
-        ];
-
-        $toolbarButtons['add_manufacturer_address'] = [
+        ], 'add_manufacturer_address' => [
             'href' => $this->generateUrl('admin_manufacturer_addresses_create'),
             'desc' => $this->trans('Add new brand address', [], 'Admin.Catalog.Feature'),
             'icon' => 'add_circle_outline',
-        ];
-
-        return $toolbarButtons;
+        ]];
     }
 
     private function getManufacturerViewToolbarButtons(int $manufacturerId): array
     {
-        $toolbarButtons = [];
-
-        $toolbarButtons['edit'] = [
+        return ['edit' => [
             'href' => $this->generateUrl('admin_manufacturers_edit', ['manufacturerId' => $manufacturerId]),
             'desc' => $this->trans('Edit brand', [], 'Admin.Catalog.Feature'),
             'icon' => 'mode_edit',
-        ];
-
-        return $toolbarButtons;
+        ]];
     }
 }

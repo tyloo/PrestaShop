@@ -264,16 +264,12 @@ class AdminAPIController extends PrestaShopAdminController
 
     private function getApiClientsToolbarButtons(): array
     {
-        $toolbarButtons = [];
-
-        $toolbarButtons['addApiClient'] = [
+        return ['addApiClient' => [
             'href' => $this->generateUrl('admin_api_clients_create'),
             'desc' => $this->trans('Add new API Client', [], 'Admin.Actions'),
             'icon' => 'add_circle_outline',
             'class' => 'btn-primary',
-        ];
-
-        return $toolbarButtons;
+        ]];
     }
 
     /**

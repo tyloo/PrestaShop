@@ -91,7 +91,7 @@ class FeatureFlagsFormDataProvider implements FormDataProviderInterface
         foreach ($featureFlags as $flagName => $flagData) {
             $featureFlag = $this->getOneFeatureFlagByName($flagName);
 
-            if ($featureFlag === null) {
+            if (! $featureFlag instanceof FeatureFlag) {
                 throw new InvalidArgumentException(\sprintf('Invalid feature flag configuration submitted, flag %s does not exist', $flagName));
             }
 
@@ -141,10 +141,8 @@ class FeatureFlagsFormDataProvider implements FormDataProviderInterface
         $adminAPIMultistoreKey = FeatureFlagSettings::FEATURE_FLAG_ADMIN_API_MULTISTORE;
         $isMultistoreActive = $this->multiStoreFeature->isActive();
 
-        if (\array_key_exists($adminAPIMultistoreKey, $featureFlagsData)) {
-            if (! $isMultistoreActive || ! $adminApiEnabled) {
-                unset($featureFlagsData[$adminAPIMultistoreKey]);
-            }
+        if (\array_key_exists($adminAPIMultistoreKey, $featureFlagsData) && (! $isMultistoreActive || ! $adminApiEnabled)) {
+            unset($featureFlagsData[$adminAPIMultistoreKey]);
         }
 
         return $featureFlagsData;

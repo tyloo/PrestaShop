@@ -70,7 +70,7 @@ class ScopeCheckerListener
 
         $request = $event->getRequest();
         $operation = $this->initializeOperation($request);
-        if ($operation === null) {
+        if (! $operation instanceof \ApiPlatform\Metadata\HttpOperation) {
             return;
         }
 

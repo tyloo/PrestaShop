@@ -218,7 +218,7 @@ final class SecurityAttributeLinterCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        if (! empty($notConfiguredRoutes)) {
+        if ($notConfiguredRoutes !== []) {
             $io->warning(\sprintf(
                 '%s routes are not configured with #[AdminSecurity] attribute:',
                 \count($notConfiguredRoutes)

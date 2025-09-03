@@ -97,7 +97,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
             $localizationPack = @simplexml_load_file($localizationPackFile);
 
             // Some packs do not have taxes
-            if (! ($localizationPack instanceof SimpleXMLElement) || ! isset($localizationPack->taxes->tax)) {
+            if (! ($localizationPack instanceof SimpleXMLElement) || (! property_exists($localizationPack->taxes, 'tax') || $localizationPack->taxes->tax === null)) {
                 continue;
             }
 
@@ -162,7 +162,7 @@ class UpdateEUTaxruleGroupsCommand extends Command
                     'from-eu-tax-group' => 'virtual',
                 ], ['eu-tax-group']);
 
-                if ($tax === null) {
+                if (! $tax instanceof SimpleXMLElement) {
                     return 1;
                 }
 

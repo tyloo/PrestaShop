@@ -136,17 +136,17 @@ class PaginatedList extends AbstractCQRSOperation implements CollectionOperation
         $passedArguments['provider'] = $provider ?? QueryListProvider::class;
         $passedArguments['filtersClass'] = $filtersClass ?? Filters::class;
 
-        if (! empty($gridDataFactory)) {
+        if ($gridDataFactory !== null && $gridDataFactory !== '' && $gridDataFactory !== '0') {
             $this->checkArgumentAndExtraParameterValidity('gridDataFactory', $gridDataFactory, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['gridDataFactory'] = $gridDataFactory;
         }
 
-        if (! empty($filtersClass)) {
+        if ($filtersClass !== null && $filtersClass !== '' && $filtersClass !== '0') {
             $this->checkArgumentAndExtraParameterValidity('filtersClass', $filtersClass, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['filtersClass'] = $filtersClass;
         }
 
-        if (! empty($filtersMapping)) {
+        if ($filtersMapping !== null && $filtersMapping !== []) {
             $this->checkArgumentAndExtraParameterValidity('filtersMapping', $filtersMapping, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['filtersMapping'] = $filtersMapping;
         }

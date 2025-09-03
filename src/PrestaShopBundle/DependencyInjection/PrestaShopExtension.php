@@ -107,7 +107,7 @@ class PrestaShopExtension extends Extension implements PrependExtensionInterface
             /** @var ConfigurationInterface $configuration */
             $configuration = new Configuration();
             $cookieLifetimeBo = (int) $configuration->get('PS_COOKIE_LIFETIME_BO');
-            if (empty($cookieLifetimeBo) || $cookieLifetimeBo <= 0) {
+            if ($cookieLifetimeBo === 0 || $cookieLifetimeBo <= 0) {
                 $cookieLifetimeBo = CookieOptions::MAX_COOKIE_VALUE;
             }
         } catch (Throwable) {
@@ -153,7 +153,7 @@ class PrestaShopExtension extends Extension implements PrependExtensionInterface
             }
         }
 
-        if (! empty($paths)) {
+        if ($paths !== []) {
             $container->prependExtensionConfig('api_platform', ['mapping' => ['paths' => $paths]]);
         }
     }

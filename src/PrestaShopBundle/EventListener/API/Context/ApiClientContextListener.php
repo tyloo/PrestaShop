@@ -52,7 +52,7 @@ class ApiClientContextListener
         }
 
         $token = $this->security->getToken();
-        if ($token !== null) {
+        if ($token instanceof \Symfony\Component\Security\Core\Authentication\Token\TokenInterface) {
             $this->accessContextBuilder->setClientId($token->getUserIdentifier());
             if ($token->getUser() instanceof JwtTokenUser) {
                 $this->accessContextBuilder->setExternalIssuer($token->getUser()->getExternalIssuer());

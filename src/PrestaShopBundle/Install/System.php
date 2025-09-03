@@ -61,14 +61,9 @@ class System extends AbstractInstall
 
         $failedRecommendations = $symfonyRequirements->getFailedRecommendations();
 
-        return array_filter($failedRecommendations, function (Requirement $requirement): bool {
-            if ($requirement->getTestMessage() === 'Requirements file should be up-to-date') {
-                // this warning is not relevant
-                return false;
-            }
-
-            return true;
-        });
+        return array_filter($failedRecommendations, fn (Requirement $requirement): bool =>
+            // this warning is not relevant
+            $requirement->getTestMessage() !== 'Requirements file should be up-to-date');
     }
 
     public function checkTests($list, $type): array
@@ -77,7 +72,7 @@ class System extends AbstractInstall
 
         $success = true;
         foreach ($tests as $result) {
-            $success &= ($result === 'ok') ? true : false;
+            $success &= $result === 'ok';
         }
 
         return [

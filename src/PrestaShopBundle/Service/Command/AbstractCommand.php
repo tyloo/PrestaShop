@@ -51,7 +51,7 @@ abstract class AbstractCommand
     {
         set_time_limit(0);
 
-        if ($kernel === null) {
+        if (! $kernel instanceof AppKernel) {
             global $kernel;
 
             if ($kernel === null) {

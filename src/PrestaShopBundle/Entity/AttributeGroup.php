@@ -58,7 +58,7 @@ class AttributeGroup
     /**
      * @ORM\Column(name="group_type", type="string", length=255)
      */
-    private string $groupType;
+    private string $groupType = 'select';
 
     /**
      * @ORM\Column(name="position", type="integer")
@@ -95,7 +95,6 @@ class AttributeGroup
 
     public function __construct()
     {
-        $this->groupType = 'select';
         $this->shops = new ArrayCollection();
         $this->attributes = new ArrayCollection();
         $this->attributeGroupLangs = new ArrayCollection();

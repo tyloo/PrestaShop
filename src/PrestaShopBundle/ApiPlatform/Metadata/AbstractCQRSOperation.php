@@ -124,22 +124,22 @@ abstract class AbstractCQRSOperation extends HttpOperation
     ) {
         $passedArguments = get_defined_vars();
 
-        if (! empty($scopes)) {
+        if ($scopes !== []) {
             $extraScopes = $passedArguments['extraProperties']['scopes'] ?? [];
             $passedArguments['extraProperties']['scopes'] = array_values(array_unique(array_merge($extraScopes, $scopes)));
         }
 
-        if (! empty($CQRSQuery)) {
+        if ($CQRSQuery !== null && $CQRSQuery !== '' && $CQRSQuery !== '0') {
             $this->checkArgumentAndExtraParameterValidity('CQRSQuery', $CQRSQuery, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['CQRSQuery'] = $CQRSQuery;
         }
 
-        if (! empty($CQRSQueryMapping)) {
+        if ($CQRSQueryMapping !== null && $CQRSQueryMapping !== []) {
             $this->checkArgumentAndExtraParameterValidity('CQRSQueryMapping', $CQRSQueryMapping, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['CQRSQueryMapping'] = $CQRSQueryMapping;
         }
 
-        if (! empty($ApiResourceMapping)) {
+        if ($ApiResourceMapping !== null && $ApiResourceMapping !== []) {
             $this->checkArgumentAndExtraParameterValidity('ApiResourceMapping', $ApiResourceMapping, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['ApiResourceMapping'] = $ApiResourceMapping;
         }

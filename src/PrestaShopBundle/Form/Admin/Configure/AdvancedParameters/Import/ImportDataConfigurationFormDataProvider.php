@@ -109,7 +109,7 @@ final class ImportDataConfigurationFormDataProvider implements ImportFormDataPro
             ];
         }
 
-        if (empty($errors)) {
+        if ($errors === []) {
             $this->dataMatchSaver->save(
                 $data['match_name'],
                 $data['type_value'],

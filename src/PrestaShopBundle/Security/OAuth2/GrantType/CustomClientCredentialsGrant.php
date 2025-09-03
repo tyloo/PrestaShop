@@ -101,19 +101,14 @@ class CustomClientCredentialsGrant extends ClientCredentialsGrant
 
     private function convertScopeParameterIntoLeagueExpectedScope(array|string|null $scope): ?string
     {
-        if (empty($scope)) {
+        if ($scope === [] || ($scope === '' || $scope === '0') || $scope === null) {
             return null;
         }
 
         $scopes = [];
         if (\is_string($scope)) {
             // Prioritize separation by comma, else use space
-            if (str_contains($scope, ',')) {
-                $scopes = explode(',', $scope);
-            } else {
-                $scopes = explode(' ', $scope);
-            }
-
+            $scopes = str_contains($scope, ',') ? explode(',', $scope) : explode(' ', $scope);
             $scopes = array_map(fn (string $scope): string => mb_trim($scope), $scopes);
         } elseif (\is_array($scope)) {
             $scopes = array_map(fn (string $scope): string => mb_trim($scope), $scope);

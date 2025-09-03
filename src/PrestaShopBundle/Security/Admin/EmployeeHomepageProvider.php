@@ -53,7 +53,7 @@ class EmployeeHomepageProvider
         $loggedUser = $this->security->getUser();
         if ($loggedUser instanceof Employee) {
             $homeUrl = null;
-            if (! empty($loggedUser->getDefaultTabId())) {
+            if ($loggedUser->getDefaultTabId() !== 0) {
                 /** @var Tab|null $defaultTab */
                 $defaultTab = $this->tabRepository->findOneBy(['id' => $loggedUser->getDefaultTabId()]);
                 if (! empty($defaultTab)) {

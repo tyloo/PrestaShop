@@ -40,7 +40,7 @@ class ModuleTemplateLoader extends FilesystemLoader
      */
     public function __construct(array $namespaces, array $modulePaths = [])
     {
-        if (! empty($modulePaths)) {
+        if ($modulePaths !== []) {
             $this->registerNamespacesFromConfig($modulePaths, $namespaces);
         }
     }

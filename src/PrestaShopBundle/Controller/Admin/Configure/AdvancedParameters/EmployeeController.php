@@ -278,19 +278,17 @@ class EmployeeController extends PrestaShopAdminController
         EmployeeFormAccessCheckerInterface $formAccessChecker,
     ): Response {
         // If employee is editing his own profile - he doesn't need to have access to the edit form.
-        if ($this->getEmployeeContext()->getEmployee()->getId() !== $employeeId) {
-            if (! $this->isGranted(Permission::UPDATE, $request->get('_legacy_controller'))) {
-                $this->addFlash(
-                    'error',
-                    $this->trans(
-                        'You do not have permission to update this.',
-                        [],
-                        'Admin.Notifications.Error'
-                    )
-                );
+        if ($this->getEmployeeContext()->getEmployee()->getId() !== $employeeId && ! $this->isGranted(Permission::UPDATE, $request->get('_legacy_controller'))) {
+            $this->addFlash(
+                'error',
+                $this->trans(
+                    'You do not have permission to update this.',
+                    [],
+                    'Admin.Notifications.Error'
+                )
+            );
 
-                return $this->redirectToRoute('admin_employees_index');
-            }
+            return $this->redirectToRoute('admin_employees_index');
         }
 
         if (! $formAccessChecker->canAccessEditFormFor($employeeId)) {

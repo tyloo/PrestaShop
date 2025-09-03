@@ -168,7 +168,7 @@ class ConfigCommand extends Command
             }
         } catch (Exception $exception) {
             $msg = \sprintf('Failed initializing ShopConstraint: %s', $exception->getMessage());
-            throw new Exception($msg, self::STATUS_FAILED_SHOPCONSTRAINT);
+            throw new Exception($msg, self::STATUS_FAILED_SHOPCONSTRAINT, $exception);
         }
     }
 
@@ -185,7 +185,7 @@ class ConfigCommand extends Command
         // all languages
         $onlyActive = true;
         $onlyShopId = null;
-        if ($this->shopConstraint->getShopId() !== null) {
+        if ($this->shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $onlyShopId = $this->shopConstraint->getShopId()->getValue();
         }
 
@@ -261,7 +261,7 @@ class ConfigCommand extends Command
             $this->configuration->set($key, $newvalue, $this->shopConstraint);
         } catch (Exception $exception) {
             $msg = \sprintf('Failed setting value: %s', $exception->getMessage());
-            throw new Exception($msg, self::STATUS_FAILED_SET);
+            throw new Exception($msg, self::STATUS_FAILED_SET, $exception);
         }
 
         // and show a result by getting the value which prints it out
@@ -287,7 +287,7 @@ class ConfigCommand extends Command
             $this->configuration->remove($key);
         } catch (Exception $exception) {
             $msg = \sprintf('Failed removing: %s. Original message: %s', $key, $exception->getMessage());
-            throw new Exception($msg, self::STATUS_FAILED_REMOVE);
+            throw new Exception($msg, self::STATUS_FAILED_REMOVE, $exception);
         }
 
         $this->io->success(\sprintf('%s removed', $key));

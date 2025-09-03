@@ -65,7 +65,7 @@ class ProductTypeListener implements EventSubscriberInterface
         $initialProductType = $data['header']['initial_type'] ?? $productType;
 
         $registeredExtraModules = $this->hookInformationProvider->getRegisteredModulesByHookName(ExtraModulesType::HOOK_NAME);
-        if (empty($registeredExtraModules)) {
+        if ($registeredExtraModules === []) {
             $form->remove('extra_modules');
         }
 

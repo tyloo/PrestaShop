@@ -90,7 +90,7 @@ class DiscountController extends PrestaShopAdminController
     ): RedirectResponse|Response {
         // The first call to the create page doesn't contain the discountType in the url, but the POST data does
         // So we can redirect to the proper page, accessed via a GET method and a proper CSRF token
-        if (empty($discountType) && $request->request->has('discount_type_selector')) {
+        if (($discountType === null || $discountType === '' || $discountType === '0') && $request->request->has('discount_type_selector')) {
             $submittedData = $request->request->all('discount_type_selector');
             if (! empty($submittedData['discount_type_selector'])) {
                 return $this->redirectToRoute('admin_discounts_create', ['discountType' => $submittedData['discount_type_selector']]);

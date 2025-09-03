@@ -56,7 +56,7 @@ final class MetaSettingsShopUrlsFormDataProvider implements FormDataProviderInte
     {
         $errors = $this->validateData($data);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $errors;
         }
 

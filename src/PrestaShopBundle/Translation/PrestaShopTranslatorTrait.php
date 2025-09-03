@@ -33,7 +33,7 @@ use Symfony\Component\Translation\Exception\InvalidArgumentException;
 
 trait PrestaShopTranslatorTrait
 {
-    public static $regexSprintfParams = '#(?:%%|%(?:[0-9]+\$)?[+-]?(?:[ 0]|\'.)?-?[0-9]*(?:\.[0-9]+)?[bcdeufFosxX])#';
+    public static $regexSprintfParams = '#(?:%%|%(?:\d+\$)?[+-]?(?:[ 0]|\'.)?-?\d*(?:\.\d+)?[bcdeufFosxX])#';
 
     public static $regexClassicParams = '/%\w+%/';
 
@@ -51,7 +51,7 @@ trait PrestaShopTranslatorTrait
      */
     public function trans($id, array $parameters = [], $domain = null, $locale = null): string
     {
-        $isSprintf = ! empty($parameters) && $this->isSprintfString($id);
+        $isSprintf = $parameters !== [] && $this->isSprintfString($id);
 
         if (empty($locale)) {
             $locale = null;
@@ -153,7 +153,7 @@ trait PrestaShopTranslatorTrait
         }
 
         $moduleName = mb_strtolower($domainParts[1]);
-        $sourceFile = (! empty($domainParts[2])) ? mb_strtolower($domainParts[2]) : $moduleName;
+        $sourceFile = (empty($domainParts[2])) ? $moduleName : mb_strtolower($domainParts[2]);
 
         // translate using the legacy system WITHOUT fallback and escape to the new system (to avoid infinite loop)
         return (new LegacyTranslator())->translate($moduleName, $message, $sourceFile, $parameters, false, $locale, false, false);
@@ -187,9 +187,9 @@ trait PrestaShopTranslatorTrait
     {
         // remove up to two dots from the domain name
         // (because legacy domain translations CAN have dots in the third part)
-        $normalizedDomain = (! empty($domain)) ?
-            (new DomainNormalizer())->normalize($domain)
-            : null;
+        $normalizedDomain = (empty($domain)) ?
+            null
+            : (new DomainNormalizer())->normalize($domain);
 
         return $normalizedDomain;
     }

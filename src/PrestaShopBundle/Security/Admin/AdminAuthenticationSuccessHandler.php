@@ -56,11 +56,11 @@ class AdminAuthenticationSuccessHandler implements AuthenticationSuccessHandlerI
             $redirectUrl = $this->getTargetPath($request->getSession(), 'main');
         }
 
-        if (empty($redirectUrl)) {
+        if ($redirectUrl === null || $redirectUrl === '' || $redirectUrl === '0') {
             $redirectUrl = $this->employeeHomepageProvider->getHomepageUrl();
         }
 
-        if (empty($redirectUrl)) {
+        if ($redirectUrl === null || $redirectUrl === '' || $redirectUrl === '0') {
             $redirectUrl = $this->router->generate('admin_homepage');
         }
 

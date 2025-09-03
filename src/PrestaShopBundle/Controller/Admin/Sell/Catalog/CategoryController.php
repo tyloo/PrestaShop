@@ -692,7 +692,7 @@ class CategoryController extends PrestaShopAdminController
      */
     private function formatCategoriesTreeForPresentation(array $categoriesTree, int $langId): array
     {
-        if (empty($categoriesTree)) {
+        if ($categoriesTree === []) {
             return [];
         }
 

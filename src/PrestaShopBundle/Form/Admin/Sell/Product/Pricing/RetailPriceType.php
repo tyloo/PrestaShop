@@ -135,9 +135,9 @@ class RetailPriceType extends TranslatorAwareType
                     'class' => 'retail-price-tax-rules-group-id',
                 ],
                 'label' => $this->trans('Tax rule', 'Admin.Catalog.Feature'),
-                'help' => ! $this->isTaxEnabled ?
-                    $this->trans('Tax feature is disabled, it will not affect price tax included.', 'Admin.Catalog.Feature')
-                    : '', // we replace help text in js on load when tax is enabled
+                'help' => $this->isTaxEnabled ?
+                    ''
+                    : $this->trans('Tax feature is disabled, it will not affect price tax included.', 'Admin.Catalog.Feature'), // we replace help text in js on load when tax is enabled
                 'help_attr' => [
                     'class' => 'js-tax-rule-help',
                     'data-place-holder-without-state' => $taxRateHelpPlaceholderWithoutState,

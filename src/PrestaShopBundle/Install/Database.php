@@ -74,7 +74,7 @@ class Database extends AbstractInstall
             $errors[] = $this->translator->trans('Tables prefix is invalid', [], 'Install');
         }
 
-        if (! $errors) {
+        if ($errors === []) {
             $dbtype = ' (' . Db::getClass() . ')';
             // Try to connect to database
             switch (Db::checkConnection($server, $login, $password, $database, true)) {

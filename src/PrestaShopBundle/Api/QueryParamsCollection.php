@@ -122,7 +122,7 @@ abstract class QueryParamsCollection
         $queryParams = $this->parsePaginationParams($queryParams);
         $queryParams = $this->parseOrderParams($queryParams);
 
-        if (empty($allParams)) {
+        if ($allParams === []) {
             $allParams = $queryParams;
         }
 

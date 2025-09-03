@@ -111,7 +111,7 @@ class FeatureValueType extends TranslatorAwareType
             'validation_groups' => function (FormInterface $form): array {
                 $formData = $form->getData();
 
-                return ! empty($formData['is_custom']) ? ['Default', 'custom_value'] : ['Default'];
+                return empty($formData['is_custom']) ? ['Default'] : ['Default', 'custom_value'];
             },
         ]);
     }

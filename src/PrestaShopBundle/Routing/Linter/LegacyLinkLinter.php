@@ -48,10 +48,6 @@ final class LegacyLinkLinter implements RouteLinterInterface
         }
 
         // Route is not related to a legacy controller so legacy link is not relevant
-        if (! $route->hasDefault('_legacy_controller')) {
-            return true;
-        }
-
-        return false;
+        return ! $route->hasDefault('_legacy_controller');
     }
 }

@@ -60,7 +60,7 @@ final class GeolocationByIpAddressFormDataProvider implements FormDataProviderIn
             ];
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $errors;
         }
 

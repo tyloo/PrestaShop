@@ -60,7 +60,7 @@ class IntegerTypeExtension extends AbstractTypeExtension
                     ->addViewTransformer(new IntegerToLocalizedStringTransformer(
                         $options['grouping'],
                         $options['rounding_mode'],
-                        ! $options['grouping'] ? 'en' : $this->localeNumberTransformer->getLocaleForNumberInputs()
+                        $options['grouping'] ? $this->localeNumberTransformer->getLocaleForNumberInputs() : 'en'
                     ))
                 ;
             } else {

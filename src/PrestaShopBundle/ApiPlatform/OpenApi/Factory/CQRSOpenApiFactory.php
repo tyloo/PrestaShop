@@ -107,9 +107,9 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                 /** @var Operation $operation */
                 foreach ($resourceMetadata->getOperations() as $operation) {
                     // For each URI define the expected domain (we want to avoid splitting domains because they are based on multiple API resource classes)
-                    if ($operation instanceof HttpOperation && ! empty($operation->getUriTemplate())) {
+                    if ($operation instanceof HttpOperation && ! \in_array($operation->getUriTemplate(), [null, '', '0'], true)) {
                         $operationDomain = $this->getOperationDomain($operation);
-                        if (! empty($operationDomain) && empty($domainsByUri[$operation->getUriTemplate()])) {
+                        if ($operationDomain !== null && $operationDomain !== '' && $operationDomain !== '0' && empty($domainsByUri[$operation->getUriTemplate()])) {
                             $domainsByUri[$operation->getUriTemplate()] = $this->getOperationDomain($operation);
                         }
                     }
@@ -119,7 +119,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                     }
 
                     $definition = $this->getSchemaDefinition($parentOpenApi, $operation);
-                    if ($definition === null) {
+                    if (! $definition instanceof ArrayObject) {
                         continue;
                     }
 
@@ -145,16 +145,16 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
                 'put' => $pathItem->getPut(),
                 'patch' => $pathItem->getPatch(),
                 'delete' => $pathItem->getDelete(),
-            ], fn (?OpenApiOperation $operation): bool => $operation !== null);
+            ], fn (?OpenApiOperation $operation): bool => $operation instanceof OpenApiOperation);
 
             $updatedPathItem = $pathItem;
-            if (! empty($operations)) {
+            if ($operations !== []) {
                 /** @var OpenApiOperation $operation */
                 foreach ($operations as $httpMethod => $operation) {
                     $updatedOperation = $operation;
 
                     // Update tag to group by domain
-                    if (! empty($domainsByUri[$path])) {
+                    if (isset($domainsByUri[$path]) && ($domainsByUri[$path] !== '' && $domainsByUri[$path] !== '0')) {
                         $updatedOperation = $operation->withTags([$domainsByUri[$path]]);
                     }
 
@@ -230,7 +230,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
 
         // Get the last part of the FQCN after ApiPlatform\Resources
         $domainEnd = mb_substr((string) $operation->getClass(), mb_strrpos((string) $operation->getClass(), 'ApiPlatform\Resources\\') + mb_strlen('ApiPlatform\Resources\\'));
-        if (empty($domainEnd)) {
+        if ($domainEnd === '' || $domainEnd === '0') {
             return null;
         }
 
@@ -328,7 +328,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
         $operationClassMetadata = $this->classMetadataFactory->getMetadataFor($operationClass);
         $operationReflectionClass = $operationClassMetadata->getReflectionClass();
         $methodsWithMultipleArguments = $this->findMethodsWithMultipleArguments($operationReflectionClass);
-        if (empty($methodsWithMultipleArguments)) {
+        if ($methodsWithMultipleArguments === []) {
             return;
         }
 
@@ -389,7 +389,7 @@ class CQRSOpenApiFactory implements OpenApiFactoryInterface
         }
 
         $implements = class_implements($methodParameter->getName());
-        if (empty($implements)) {
+        if ($implements === [] || $implements === false) {
             return false;
         }
 

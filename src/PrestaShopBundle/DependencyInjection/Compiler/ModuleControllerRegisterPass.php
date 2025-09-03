@@ -101,7 +101,7 @@ class ModuleControllerRegisterPass implements CompilerPassInterface
             $className = $matches[1];
         }
 
-        if (! empty($namespace) && ! empty($className)) {
+        if ($namespace !== '' && $namespace !== '0' && ($className !== '' && $className !== '0')) {
             $className = $namespace . '\\' . $className;
 
             if (class_exists($className)) {

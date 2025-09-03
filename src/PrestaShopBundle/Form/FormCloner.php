@@ -92,7 +92,7 @@ class FormCloner
 
         $formOptions = $form->getConfig()->getOptions();
         $formOptions = array_merge($formOptions, $options);
-        if ($form->getParent() !== null) {
+        if ($form->getParent() instanceof FormInterface) {
             // Never initialize child forms automatically
             $formOptions['auto_initialize'] = false;
         }

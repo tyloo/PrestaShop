@@ -61,12 +61,12 @@ class SessionEmployeeProvider
     public function getEmployeeFromSession(?Request $request = null): ?SessionEmployeeInterface
     {
         $request ??= $this->requestStack->getCurrentRequest();
-        if ($request === null) {
+        if (! $request instanceof Request) {
             return null;
         }
 
         $session = $request->hasPreviousSession() ? $request->getSession() : null;
-        if ($session !== null) {
+        if ($session instanceof \Symfony\Component\HttpFoundation\Session\SessionInterface) {
             $token = $session->get($this->sessionKey);
             if ($token !== null) {
                 $token = $this->safelyUnserialize($token);

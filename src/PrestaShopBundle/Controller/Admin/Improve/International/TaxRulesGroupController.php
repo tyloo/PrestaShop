@@ -276,15 +276,11 @@ class TaxRulesGroupController extends PrestaShopAdminController
 
     private function getTaxRulesGroupToolbarButtons(): array
     {
-        $toolbarButtons = [];
-
-        $toolbarButtons['add'] = [
+        return ['add' => [
             'href' => $this->generateUrl('admin_tax_rules_groups_create'),
             'desc' => $this->trans('Add new tax rule', [], 'Admin.International.Feature'),
             'icon' => 'add_circle_outline',
-        ];
-
-        return $toolbarButtons;
+        ]];
     }
 
     /**

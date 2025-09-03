@@ -54,7 +54,7 @@ class PassVsprintfValidator extends ConstraintValidator
 
     private function countArgumentsOfTranslation(string $property): int
     {
-        if (empty($property)) {
+        if ($property === '' || $property === '0') {
             return 0;
         }
 

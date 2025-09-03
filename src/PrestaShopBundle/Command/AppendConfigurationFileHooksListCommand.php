@@ -121,7 +121,7 @@ class AppendConfigurationFileHooksListCommand extends Command
             $io->error($exception->getMessage());
         }
 
-        if (! empty($addedHooks)) {
+        if ($addedHooks !== []) {
             $io->title('Hooks added to configuration file');
             $io->note(\sprintf('Total hooks added: %s', \count($addedHooks)));
 
@@ -179,7 +179,7 @@ class AppendConfigurationFileHooksListCommand extends Command
 
         $xmlFileContent = new SimpleXMLElement($hookFileContent);
 
-        if (! isset($xmlFileContent->entities, $xmlFileContent->entities->hook)) {
+        if ((! property_exists($xmlFileContent, 'entities') || $xmlFileContent->entities === null) && (! property_exists($xmlFileContent->entities, 'hook') || $xmlFileContent->entities->hook === null)) {
             return [];
         }
 
@@ -224,7 +224,7 @@ class AppendConfigurationFileHooksListCommand extends Command
     {
         $hookNames = [];
         foreach ($hooksFromXmlFile as $hook) {
-            if (! isset($hook->name)) {
+            if (! property_exists($hook, 'name') || $hook->name === null) {
                 continue;
             }
 

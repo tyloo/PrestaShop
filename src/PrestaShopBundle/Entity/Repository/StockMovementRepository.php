@@ -126,11 +126,7 @@ class StockMovementRepository extends StockManagementRepository
         $rows = $result->fetchAllAssociative();
         $result->free();
 
-        if ($grouped) {
-            $types = $this->castIdsToArray($rows);
-        } else {
-            $types = $this->castNumericToInt($rows);
-        }
+        $types = $grouped ? $this->castIdsToArray($rows) : $this->castNumericToInt($rows);
 
         return $types;
     }

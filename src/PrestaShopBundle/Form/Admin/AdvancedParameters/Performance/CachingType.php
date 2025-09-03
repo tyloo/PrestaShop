@@ -70,7 +70,7 @@ class CachingType extends TranslatorAwareType
                         $disabled = true;
                     }
 
-                    return $disabled === true ? $this->getErrorsMessages()[$index] : $value;
+                    return $disabled ? $this->getErrorsMessages()[$index] : $value;
                 },
                 'choice_attr' => function ($value, $key, $index): array {
                     $disabled = false;
@@ -84,7 +84,7 @@ class CachingType extends TranslatorAwareType
                         $disabled = true;
                     }
 
-                    return $disabled === true ? ['disabled' => $disabled] : [];
+                    return $disabled ? ['disabled' => $disabled] : [];
                 },
                 'expanded' => true,
                 'required' => false,

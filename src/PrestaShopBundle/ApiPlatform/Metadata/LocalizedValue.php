@@ -60,7 +60,7 @@ class LocalizedValue extends Context
             // Indicate if normalized value should use locale or ID
             self::NORMALIZED_KEY => $normalizedKey,
             // Default behaviour is to add the attribute on a property so this context option is true
-            self::IS_LOCALIZED_VALUE => empty($localizedParameters),
+            self::IS_LOCALIZED_VALUE => $localizedParameters === [],
             // You can set the attribute on a class and define a list of localized parameters
             // (also used to dynamically change the context without using this Attribute)
             // The array is an array where key is the attribute name and value is either true or an array with extra context

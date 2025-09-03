@@ -52,7 +52,7 @@ class SecurityController extends PrestaShopAdminController
     public function compromisedAccessAction(Request $request): Response
     {
         $requestUri = urldecode($request->query->get('uri'));
-        if (empty($requestUri)) {
+        if ($requestUri === '' || $requestUri === '0') {
             $requestUri = $this->router->generate('admin_homepage');
         }
 

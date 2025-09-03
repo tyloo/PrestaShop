@@ -40,6 +40,8 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
  */
 class LocalizedValueUpdater
 {
+    public $defaultContext;
+
     /**
      * @var array<int, string>
      */
@@ -98,7 +100,7 @@ class LocalizedValueUpdater
             }
         }
 
-        if (! empty($localizedAttributesContext)) {
+        if ($localizedAttributesContext !== []) {
             $normalizationMapping = [];
             if (! empty($context[NormalizationMapper::NORMALIZATION_MAPPING])) {
                 $normalizationMapping = $context[NormalizationMapper::NORMALIZATION_MAPPING];
@@ -145,12 +147,10 @@ class LocalizedValueUpdater
             } else {
                 $localizedValueKey = ($context[LocalizedValue::DENORMALIZED_KEY] ?? LocalizedValue::LOCALE_KEY);
             }
+        } elseif (! empty($context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::NORMALIZED_KEY])) {
+            $localizedValueKey = $context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::NORMALIZED_KEY];
         } else {
-            if (! empty($context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::NORMALIZED_KEY])) {
-                $localizedValueKey = $context[LocalizedValue::LOCALIZED_VALUE_PARAMETERS][$propertyName][LocalizedValue::NORMALIZED_KEY];
-            } else {
-                $localizedValueKey = ($context[LocalizedValue::NORMALIZED_KEY] ?? LocalizedValue::LOCALE_KEY);
-            }
+            $localizedValueKey = ($context[LocalizedValue::NORMALIZED_KEY] ?? LocalizedValue::LOCALE_KEY);
         }
 
         // Update the array so that it's based on locale or on ID
@@ -226,7 +226,7 @@ class LocalizedValueUpdater
     {
         $context['deserialization_path'] = ($context['deserialization_path'] ?? false) ? $context['deserialization_path'] . '.' . $attribute : $attribute;
 
-        if (null === $metadata = $this->getAttributeMetadata($class, $attribute)) {
+        if (! ($metadata = $this->getAttributeMetadata($class, $attribute)) instanceof AttributeMetadataInterface) {
             return $context;
         }
 

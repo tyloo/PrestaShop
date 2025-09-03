@@ -67,7 +67,7 @@ class PathWithBackUrlExtension extends AbstractExtension
 
         $request = $this->requestStack->getCurrentRequest();
 
-        if ($request === null) {
+        if (! $request instanceof \Symfony\Component\HttpFoundation\Request) {
             return $fallbackPath;
         }
 

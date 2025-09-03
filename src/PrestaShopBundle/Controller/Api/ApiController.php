@@ -116,7 +116,7 @@ abstract class ApiController
         $router = $this->container->get('router');
 
         $queryParamsArray = [];
-        if ($queryParams !== null) {
+        if ($queryParams instanceof QueryParamsCollection) {
             $queryParamsArray = $queryParams->getQueryParams();
         }
 
@@ -160,7 +160,7 @@ abstract class ApiController
             $info['total_page'] = $headers['Total-Pages'];
         }
 
-        if ($queryParams !== null) {
+        if ($queryParams instanceof QueryParamsCollection) {
             $info['page_index'] = $queryParamsArray['page_index'];
             $info['page_size'] = $queryParamsArray['page_size'];
         }

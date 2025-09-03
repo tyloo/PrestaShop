@@ -183,7 +183,7 @@ class UpdateLicensesCommand extends Command
                 case 'php':
                     try {
                         $nodes = $parser->parse($file->getContents());
-                        if (\count($nodes)) {
+                        if (\count($nodes) > 0) {
                             $this->addLicenseToNode($nodes[0], $file);
                         }
                     } catch (\PhpParser\Error) {

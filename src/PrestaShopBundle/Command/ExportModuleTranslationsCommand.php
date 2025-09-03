@@ -136,7 +136,7 @@ class ExportModuleTranslationsCommand extends Command
         }
 
         // Summary
-        if (! empty($exportedFiles)) {
+        if ($exportedFiles !== []) {
             $successMsg = \sprintf(
                 'Successfully exported %d out of %d locales for module "%s"',
                 \count($exportedFiles),
@@ -146,7 +146,7 @@ class ExportModuleTranslationsCommand extends Command
             $formattedBlock = $formatter->formatBlock($successMsg, 'info', true);
             $output->writeln($formattedBlock);
 
-            if (! empty($failedLocales)) {
+            if ($failedLocales !== []) {
                 $output->writeln('<comment>Failed locales:</comment>');
                 foreach ($failedLocales as $failed) {
                     $output->writeln(\sprintf('  - %s', $failed));
@@ -154,7 +154,7 @@ class ExportModuleTranslationsCommand extends Command
             }
         }
 
-        return empty($exportedFiles) ? Command::FAILURE : Command::SUCCESS;
+        return $exportedFiles === [] ? Command::FAILURE : Command::SUCCESS;
     }
 
     private function exportSingleLocale(string $moduleName, string $localeOrIso, bool $autoInstall, OutputInterface $output, FormatterHelper $formatter): int
@@ -279,7 +279,7 @@ class ExportModuleTranslationsCommand extends Command
                 throw new Exception(\sprintf('Module "%s" does not use the new translation system (XLF files). Only modules using the new translation system can be exported with this command.', $moduleName));
             }
         } catch (Throwable $throwable) {
-            throw new Exception(\sprintf('Could not validate module "%s": %s', $moduleName, $throwable->getMessage()));
+            throw new Exception(\sprintf('Could not validate module "%s": %s', $moduleName, $throwable->getMessage()), $throwable->getCode(), $throwable);
         }
     }
 

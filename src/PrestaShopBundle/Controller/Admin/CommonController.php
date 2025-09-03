@@ -105,8 +105,8 @@ class CommonController extends PrestaShopAdminController
      */
     public function paginationAction(Request $request, ?int $limit = 10, ?int $offset = 0, ?int $total = 0, string $view = 'full', string $prefix = ''): Response
     {
-        $offsetParam = empty($prefix) ? 'offset' : \sprintf('%s[offset]', $prefix);
-        $limitParam = empty($prefix) ? 'limit' : \sprintf('%s[limit]', $prefix);
+        $offsetParam = $prefix === '' || $prefix === '0' ? 'offset' : \sprintf('%s[offset]', $prefix);
+        $limitParam = $prefix === '' || $prefix === '0' ? 'limit' : \sprintf('%s[limit]', $prefix);
 
         $limit = max($limit, 10);
 
@@ -154,20 +154,20 @@ class CommonController extends PrestaShopAdminController
                 $limitParam => $limit,
             ]
         ));
-        $changeLimitUrl = (! $routeName) ? false : $this->generateUrl($routeName, array_merge(
+        $changeLimitUrl = ($routeName) ? $this->generateUrl($routeName, array_merge(
             $callerParameters,
             [
                 $offsetParam => 0,
                 $limitParam => '_limit',
             ]
-        ));
-        $jumpPageUrl = (! $routeName) ? false : $this->generateUrl($routeName, array_merge(
+        )) : false;
+        $jumpPageUrl = ($routeName) ? $this->generateUrl($routeName, array_merge(
             $callerParameters,
             [
                 $offsetParam => 999999,
                 $limitParam => $limit,
             ]
-        ));
+        )) : false;
         $limitChoices = $request->attributes->get('limit_choices', [10, 20, 50, 100, 300, 1000]);
 
         // Template vars injection
@@ -234,7 +234,7 @@ class CommonController extends PrestaShopAdminController
         $shopId = $this->getShopContext()->getId();
 
         // for compatibility when $controller and $action are used
-        if (! empty($controller) && ! empty($action)) {
+        if ($controller !== '' && $controller !== '0' && ($action !== '' && $action !== '0')) {
             $adminFilter = $adminFiltersRepository->findByEmployeeAndRouteParams(
                 $employeeId,
                 $shopId,
@@ -243,7 +243,7 @@ class CommonController extends PrestaShopAdminController
             );
         }
 
-        if (! empty($filterId)) {
+        if ($filterId !== '' && $filterId !== '0') {
             $adminFilter = $adminFiltersRepository->findByEmployeeAndFilterId($employeeId, $shopId, $filterId);
         }
 

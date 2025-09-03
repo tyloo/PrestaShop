@@ -965,14 +965,10 @@ class CustomerController extends PrestaShopAdminController
 
     private function getCustomerViewToolbarButtons(int $customerId): array
     {
-        $toolbarButtons = [];
-
-        $toolbarButtons['edit'] = [
+        return ['edit' => [
             'href' => $this->generateUrl('admin_customers_edit', ['customerId' => $customerId]),
             'desc' => $this->trans('Edit customer', [], 'Admin.Orderscustomers.Feature'),
             'icon' => 'mode_edit',
-        ];
-
-        return $toolbarButtons;
+        ]];
     }
 }

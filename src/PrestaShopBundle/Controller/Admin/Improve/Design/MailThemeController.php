@@ -282,11 +282,7 @@ class MailThemeController extends PrestaShopAdminController
             throw new InvalidArgumentException(\sprintf('Cannot find Language with locale or isoCode %s', $locale));
         }
 
-        if (empty($module)) {
-            $templatePath = _PS_MAIL_DIR_;
-        } else {
-            $templatePath = _PS_MODULE_DIR_ . $module . '/mails/';
-        }
+        $templatePath = $module === '' || $module === '0' ? _PS_MAIL_DIR_ : _PS_MODULE_DIR_ . $module . '/mails/';
 
         $mailLayout = $this->getMailLayout($theme, $layout, $module);
         $mailVariables = $this->container->get(MailPreviewVariablesBuilder::class)->buildTemplateVariables($mailLayout);
@@ -409,7 +405,7 @@ class MailThemeController extends PrestaShopAdminController
     {
         $layout = $this->getMailLayout($themeName, $layoutName, $module);
 
-        if (empty($locale)) {
+        if ($locale === '' || $locale === '0') {
             $locale = $this->getLanguageContext()->getLocale();
         }
 
@@ -457,7 +453,7 @@ class MailThemeController extends PrestaShopAdminController
         }
 
         if ($layout === null) {
-            throw new FileNotFoundException(\sprintf('Cannot find layout %s%s in theme %s', empty($module) ? '' : $module . ':', $layoutName, $themeName));
+            throw new FileNotFoundException(\sprintf('Cannot find layout %s%s in theme %s', $module === '' || $module === '0' ? '' : $module . ':', $layoutName, $themeName));
         }
 
         return $layout;

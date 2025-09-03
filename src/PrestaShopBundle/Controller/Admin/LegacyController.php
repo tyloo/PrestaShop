@@ -134,7 +134,7 @@ class LegacyController extends PrestaShopAdminController
         // Execute hook dispatcher after
         $this->dispatchHookWithParameters('actionDispatcherAfter', $dispatcherHookParameters);
 
-        if (! empty($postProcessResult)) {
+        if (! ($postProcessResult === '' || $postProcessResult === '0' || $postProcessResult === false)) {
             $response->setContent($postProcessResult . $response->getContent());
         }
 
@@ -199,7 +199,7 @@ class LegacyController extends PrestaShopAdminController
         ob_start();
         // In this case, initContent must be executed after ob_start because it can already echo some output
         $adminController->initContent();
-        if (! empty($action) && method_exists($adminController, 'displayAjax' . $action)) {
+        if ($action !== '' && $action !== '0' && method_exists($adminController, 'displayAjax' . $action)) {
             $adminController->{'displayAjax' . $action}();
         } elseif (method_exists($adminController, 'displayAjax')) {
             $adminController->displayAjax();

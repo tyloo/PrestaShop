@@ -219,7 +219,7 @@ class Lang implements LanguageInterface
 
     public function getLocale(): string
     {
-        return ! empty($this->locale) ? $this->locale : $this->getLanguageCode();
+        return ! isset($this->locale) || ($this->locale === '' || $this->locale === '0') ? $this->getLanguageCode() : $this->locale;
     }
 
     public function setLocale(string $locale): static

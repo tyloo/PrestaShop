@@ -71,16 +71,12 @@ class ApiPlatformCompilerPass implements CompilerPassInterface
     private function humanizeScope(string $scope): string
     {
         $matches = [];
-        if (preg_match('/(.*)_read/', $scope, $matches)) {
-            if (! empty($matches[1])) {
-                return 'Read ' . $this->inflector->capitalize($this->inflector->camelize($matches[1]));
-            }
+        if (preg_match('/(.*)_read/', $scope, $matches) && (isset($matches[1]) && ($matches[1] !== '' && $matches[1] !== '0'))) {
+            return 'Read ' . $this->inflector->capitalize($this->inflector->camelize($matches[1]));
         }
 
-        if (preg_match('/(.*)_write/', $scope, $matches)) {
-            if (! empty($matches[1])) {
-                return 'Write ' . $this->inflector->capitalize($this->inflector->camelize($matches[1]));
-            }
+        if (preg_match('/(.*)_write/', $scope, $matches) && (isset($matches[1]) && ($matches[1] !== '' && $matches[1] !== '0'))) {
+            return 'Write ' . $this->inflector->capitalize($this->inflector->camelize($matches[1]));
         }
 
         return $scope;

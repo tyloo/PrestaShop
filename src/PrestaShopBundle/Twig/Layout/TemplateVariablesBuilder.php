@@ -111,7 +111,7 @@ class TemplateVariablesBuilder
 
     private function getDefaultTabLink(): ?string
     {
-        if ($this->employeeContext->getEmployee() && ! empty($this->employeeContext->getEmployee()->getDefaultTabId())) {
+        if ($this->employeeContext->getEmployee() && $this->employeeContext->getEmployee()->getDefaultTabId() !== 0) {
             /** @var Tab|null $tab */
             $tab = $this->tabRepository->findOneBy(['id' => $this->employeeContext->getEmployee()->getDefaultTabId()]);
 

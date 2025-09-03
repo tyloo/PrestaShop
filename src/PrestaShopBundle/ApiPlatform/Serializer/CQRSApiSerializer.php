@@ -156,7 +156,7 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
     protected function updateLocalizedValues(array $data, string $type, bool $denormalize, array $context = []): array
     {
         $localizedAttributesContext = $this->localizedValueUpdater->getLocalizedAttributesContext($type);
-        if (! empty($localizedAttributesContext)) {
+        if ($localizedAttributesContext !== []) {
             foreach ($localizedAttributesContext as $parameterName => $attributeContext) {
                 if (! empty($data[$parameterName])) {
                     if ($denormalize) {
@@ -219,7 +219,7 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
      */
     protected function isEmptyBodyAllowed(string $data, array $context): bool
     {
-        if (! empty($data)) {
+        if ($data !== '' && $data !== '0') {
             return false;
         }
 

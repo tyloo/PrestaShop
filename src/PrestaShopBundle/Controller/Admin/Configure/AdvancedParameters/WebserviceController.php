@@ -386,10 +386,6 @@ class WebserviceController extends PrestaShopAdminController
             return true;
         }
 
-        if ($statusCode === Response::HTTP_UNAUTHORIZED) {
-            return true;
-        }
-
-        return false;
+        return $statusCode === Response::HTTP_UNAUTHORIZED;
     }
 }

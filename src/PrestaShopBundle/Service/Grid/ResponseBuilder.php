@@ -101,7 +101,7 @@ class ResponseBuilder
 
     private function resetPersistedFilter(string $filterId): void
     {
-        if (empty($filterId)) {
+        if ($filterId === '' || $filterId === '0') {
             return;
         }
 

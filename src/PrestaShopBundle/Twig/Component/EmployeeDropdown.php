@@ -53,7 +53,7 @@ class EmployeeDropdown
 
     public function getDisplayBackOfficeEmployeeMenu(): ActionsBarButtonsCollection
     {
-        if ($this->displayBackOfficeEmployeeMenu === null) {
+        if (! $this->displayBackOfficeEmployeeMenu instanceof ActionsBarButtonsCollection) {
             $menuLinksCollections = new ActionsBarButtonsCollection();
 
             $this->hookDispatcher->dispatchWithParameters(

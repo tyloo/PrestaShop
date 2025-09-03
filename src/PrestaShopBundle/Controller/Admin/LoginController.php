@@ -74,11 +74,11 @@ class LoginController extends PrestaShopAdminController
         FormHandlerInterface $requestResetPasswordFormHandler,
     ): Response {
         $securityResponse = $this->checkRequiredActions($request);
-        if ($securityResponse !== null) {
+        if ($securityResponse instanceof Response) {
             return $securityResponse;
         }
 
-        if ($security->getUser() !== null) {
+        if ($security->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('admin_homepage');
         }
 
@@ -102,7 +102,7 @@ class LoginController extends PrestaShopAdminController
      */
     public function logoutAction(Security $security): RedirectResponse
     {
-        if ($security->getUser() !== null) {
+        if ($security->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             $security->logout();
         }
 
@@ -156,9 +156,9 @@ class LoginController extends PrestaShopAdminController
                     $errorMessage = $this->trans('An error occurred while attempting to reset your password.', [], 'Admin.Login.Notification');
                 }
 
-                if (! empty($infoMessage)) {
+                if ($infoMessage !== null && $infoMessage !== '' && $infoMessage !== '0') {
                     $this->addFlash('info', $infoMessage);
-                } elseif (! empty($errorMessage)) {
+                } elseif ($errorMessage !== null && $errorMessage !== '' && $errorMessage !== '0') {
                     $this->addFlash('error', $errorMessage);
                 }
 
@@ -239,11 +239,7 @@ class LoginController extends PrestaShopAdminController
         $sslEnabled = (bool) $this->getConfiguration()->get('PS_SSL_ENABLED');
         if ($sslEnabled && ! $request->isSecure()) {
             $maintenanceIpConfiguration = $this->getConfiguration()->get('PS_MAINTENANCE_IP');
-            if (empty($maintenanceIpConfiguration)) {
-                $maintenanceIps = [];
-            } else {
-                $maintenanceIps = explode(',', (string) $maintenanceIpConfiguration);
-            }
+            $maintenanceIps = empty($maintenanceIpConfiguration) ? [] : explode(',', (string) $maintenanceIpConfiguration);
 
             $maintenanceIps = array_merge(['127.0.0.1', '::1'], $maintenanceIps);
             $isMaintainer = false;
@@ -266,7 +262,7 @@ class LoginController extends PrestaShopAdminController
             }
         }
 
-        if (! empty($requiredActions)) {
+        if ($requiredActions !== []) {
             return $this->render('@PrestaShop/Admin/Login/required_actions.html.twig', [
                 'requiredActions' => $requiredActions,
                 'imgDir' => $this->shopContext->getBaseURI() . 'img/',

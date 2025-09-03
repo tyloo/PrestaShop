@@ -62,7 +62,7 @@ class FilterCmsPageCategorySearchCriteriaListener
 
         $request = $this->requestStack->getCurrentRequest();
 
-        if ($request !== null) {
+        if ($request instanceof \Symfony\Component\HttpFoundation\Request) {
             $cmsCategoryId = $this->requestStack->getCurrentRequest()->query->getInt('id_cms_category');
 
             if (! $cmsCategoryId) {

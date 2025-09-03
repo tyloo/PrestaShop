@@ -262,7 +262,7 @@ final class GenerateHooksDocumentationCommand extends Command
     {
         $matchingHooks = array_filter(array_keys($this->dynamicHookDetails), fn (int|string $str): bool => mb_stripos($hookName, (string) $str) !== false);
 
-        return ! empty($matchingHooks) ? reset($matchingHooks) : null;
+        return $matchingHooks === [] ? null : reset($matchingHooks);
     }
 
     private function escapeHookDetail(string $hookDetail): string

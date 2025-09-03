@@ -143,7 +143,7 @@ class LegacyHeadTag extends HeadTag
 
         if (empty($legacyMetaTitle)) {
             $breadcrumbs = $this->menuBuilder->getBreadcrumbLinks();
-            if (empty($breadcrumbs)) {
+            if ($breadcrumbs === []) {
                 return '';
             }
 

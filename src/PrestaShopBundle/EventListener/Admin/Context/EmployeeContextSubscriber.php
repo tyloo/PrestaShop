@@ -76,11 +76,11 @@ class EmployeeContextSubscriber implements EventSubscriberInterface
         }
 
         // Then fetch the employee ID from the session
-        if (empty($employeeId)) {
+        if ($employeeId === null || $employeeId === 0) {
             $employeeId = $this->sessionEmployeeProvider->getEmployeeFromSession($event->getRequest())?->getId();
         }
 
-        if (! empty($employeeId)) {
+        if ($employeeId !== null && $employeeId !== 0) {
             $this->employeeContextBuilder->setEmployeeId($employeeId);
         }
     }

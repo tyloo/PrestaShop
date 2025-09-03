@@ -86,7 +86,7 @@ final class InvoicesByDateDataProvider implements FormDataProviderInterface
             ];
         }
 
-        if (empty($errors) && ! $this->orderInvoiceDataProvider->getByDateInterval($dateFrom, $dateTo)) {
+        if ($errors === [] && ! $this->orderInvoiceDataProvider->getByDateInterval($dateFrom, $dateTo)) {
             $errors[] = [
                 'key' => 'No invoice has been found for this period.',
                 'domain' => 'Admin.Orderscustomers.Notification',

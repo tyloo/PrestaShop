@@ -117,11 +117,7 @@ class FeatureFlagCommand extends Command
         $out = [];
 
         foreach ($featureFlag->getOrderedTypes() as $type) {
-            if ($this->featureFlagManager->getUsedType($featureFlag->getName()) === $type) {
-                $out[] = \sprintf('[%s]', $type);
-            } else {
-                $out[] = $type;
-            }
+            $out[] = $this->featureFlagManager->getUsedType($featureFlag->getName()) === $type ? \sprintf('[%s]', $type) : $type;
         }
 
         return implode(',', $out);
@@ -137,7 +133,7 @@ class FeatureFlagCommand extends Command
         }
 
         $featureFlag = $this->featureFlagRepository->getByName($featureFlagArgument);
-        if ($featureFlag === null) {
+        if (! $featureFlag instanceof FeatureFlag) {
             $output->writeln(\sprintf(
                 '<error>Feature flag %s does not exist</error>',
                 $featureFlagArgument

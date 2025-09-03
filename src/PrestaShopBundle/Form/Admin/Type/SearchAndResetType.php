@@ -48,12 +48,12 @@ class SearchAndResetType extends AbstractType
     {
         $showResetButton = false;
 
-        if ($form->getParent() !== null) {
+        if ($form->getParent() instanceof FormInterface) {
             $configuredTypeNames = array_keys($form->getParent()->all());
             $availableValueNames = array_keys($form->getParent()->getData());
 
             $configuredData = array_intersect($configuredTypeNames, $availableValueNames);
-            if (! empty($configuredData)) {
+            if ($configuredData !== []) {
                 $showResetButton = true;
             }
         }

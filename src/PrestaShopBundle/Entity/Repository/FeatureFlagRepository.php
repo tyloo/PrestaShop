@@ -51,7 +51,7 @@ class FeatureFlagRepository extends EntityRepository
     {
         $featureFlag = $this->getByName($featureFlagName);
 
-        return $featureFlag !== null && $featureFlag->isEnabled();
+        return $featureFlag instanceof FeatureFlag && $featureFlag->isEnabled();
     }
 
     /**
@@ -61,7 +61,7 @@ class FeatureFlagRepository extends EntityRepository
     {
         $featureFlag = $this->getByName($featureFlagName);
 
-        return $featureFlag === null || ! $featureFlag->isEnabled();
+        return ! $featureFlag instanceof FeatureFlag || ! $featureFlag->isEnabled();
     }
 
     /**
@@ -70,7 +70,7 @@ class FeatureFlagRepository extends EntityRepository
     public function enable(string $featureFlagName): void
     {
         $featureFlag = $this->getByName($featureFlagName);
-        if ($featureFlag !== null) {
+        if ($featureFlag instanceof FeatureFlag) {
             $featureFlag->enable();
             $this->getEntityManager()->persist($featureFlag);
             $this->getEntityManager()->flush();
@@ -83,7 +83,7 @@ class FeatureFlagRepository extends EntityRepository
     public function disable(string $featureFlagName): void
     {
         $featureFlag = $this->getByName($featureFlagName);
-        if ($featureFlag !== null) {
+        if ($featureFlag instanceof FeatureFlag) {
             $featureFlag->disable();
             $this->getEntityManager()->persist($featureFlag);
             $this->getEntityManager()->flush();

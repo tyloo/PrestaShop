@@ -66,7 +66,7 @@ final class GeolocationOptionsFormDataProvider implements FormDataProviderInterf
             ];
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $errors;
         }
 

@@ -48,7 +48,7 @@ class MultipartDecoder implements DecoderInterface
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if ($request === null) {
+        if (! $request instanceof \Symfony\Component\HttpFoundation\Request) {
             return null;
         }
 

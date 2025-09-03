@@ -104,7 +104,7 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
         }
 
         $coreScopes = $this->extractScopes(new AttributesResourceNameCollectionFactory($coreMappingPaths));
-        if (! empty($coreScopes)) {
+        if ($coreScopes !== []) {
             $resourceScopes[] = ApiResourceScopes::createCoreScopes($coreScopes);
         }
 
@@ -112,7 +112,7 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
             $moduleScopes = $this->extractScopes(new AttributesResourceNameCollectionFactory(
                 $this->getModulePaths($moduleName)
             ));
-            if (! empty($moduleScopes)) {
+            if ($moduleScopes !== []) {
                 $resourceScopes[] = ApiResourceScopes::createModuleScopes($moduleScopes, $moduleName);
             }
         }
@@ -202,11 +202,7 @@ class ApiResourceScopesExtractor implements ApiResourceScopesExtractorInterface
             return true;
         }
 
-        if (! empty($extraProperties['gridDataFactory']) && ! $this->container->has($extraProperties['gridDataFactory'])) {
-            return true;
-        }
-
-        return false;
+        return ! empty($extraProperties['gridDataFactory']) && ! $this->container->has($extraProperties['gridDataFactory']);
     }
 
     /**

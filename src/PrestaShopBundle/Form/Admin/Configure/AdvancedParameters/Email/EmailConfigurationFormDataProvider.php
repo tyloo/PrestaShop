@@ -49,7 +49,7 @@ final class EmailConfigurationFormDataProvider implements FormDataProviderInterf
     public function setData(array $data)
     {
         $errors = $this->checkSmtpConfiguration($data);
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $errors;
         }
 

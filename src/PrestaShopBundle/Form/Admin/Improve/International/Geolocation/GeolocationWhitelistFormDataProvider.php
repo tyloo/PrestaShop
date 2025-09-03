@@ -59,7 +59,7 @@ final class GeolocationWhitelistFormDataProvider implements FormDataProviderInte
             ];
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $errors;
         }
 

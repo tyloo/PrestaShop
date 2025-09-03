@@ -132,7 +132,7 @@ class QueryListProvider implements ProviderInterface
 
     protected function mapOrderByFieldForGrid(?string $apiOrderBy, array $filtersMapping): ?string
     {
-        if (empty($apiOrderBy) || empty($filtersMapping)) {
+        if ($apiOrderBy === null || $apiOrderBy === '' || $apiOrderBy === '0' || $filtersMapping === []) {
             return $apiOrderBy;
         }
 
@@ -148,7 +148,7 @@ class QueryListProvider implements ProviderInterface
 
     protected function mapOrderByFieldForAPI(?string $gridOrderBy, array $filtersMapping): ?string
     {
-        if (empty($gridOrderBy)) {
+        if ($gridOrderBy === null || $gridOrderBy === '' || $gridOrderBy === '0') {
             return $gridOrderBy;
         }
 

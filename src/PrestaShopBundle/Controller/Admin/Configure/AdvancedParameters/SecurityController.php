@@ -91,7 +91,7 @@ class SecurityController extends PrestaShopAdminController
                     'Admin.Notifications.Info'
                 ),
                 'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
-                'multistoreIsUsed' => $this->getShopContext()->isMultiShopUsed() && $this->getShopContext()->getShopConstraint()->getShopId() !== null,
+                'multistoreIsUsed' => $this->getShopContext()->isMultiShopUsed() && $this->getShopContext()->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId,
             ]
         );
     }
@@ -150,7 +150,7 @@ class SecurityController extends PrestaShopAdminController
                     [],
                     'Admin.Notifications.Info'
                 ),
-                'multistoreIsUsed' => $this->getShopContext()->isMultiShopUsed() && $this->getShopContext()->getShopConstraint()->getShopId() !== null,
+                'multistoreIsUsed' => $this->getShopContext()->isMultiShopUsed() && $this->getShopContext()->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId,
             ]
         );
     }
@@ -177,7 +177,7 @@ class SecurityController extends PrestaShopAdminController
                     [],
                     'Admin.Notifications.Info'
                 ),
-                'multistoreIsUsed' => $this->getShopContext()->isMultiShopUsed() && $this->getShopContext()->getShopConstraint()->getShopId() !== null,
+                'multistoreIsUsed' => $this->getShopContext()->isMultiShopUsed() && $this->getShopContext()->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId,
             ]
         );
     }

@@ -55,12 +55,12 @@ class LegacyAdminTokenValidator
     public function isTokenValid(?int $employeeId = null, ?string $adminToken = null): bool
     {
         $adminToken = $this->getAdminToken($adminToken);
-        if (empty($adminToken)) {
+        if ($adminToken === null || $adminToken === '' || $adminToken === '0') {
             return false;
         }
 
         $employeeId = $this->getEmployeeId($employeeId);
-        if (empty($employeeId)) {
+        if ($employeeId === null || $employeeId === 0) {
             return false;
         }
 
@@ -98,7 +98,7 @@ class LegacyAdminTokenValidator
 
     private function getEmployeeId(?int $employeeId): ?int
     {
-        if (! empty($employeeId)) {
+        if ($employeeId !== null && $employeeId !== 0) {
             return $employeeId;
         }
 
@@ -107,7 +107,7 @@ class LegacyAdminTokenValidator
 
     private function getAdminToken(?string $adminToken): ?string
     {
-        if (! empty($adminToken)) {
+        if ($adminToken !== null && $adminToken !== '' && $adminToken !== '0') {
             return $adminToken;
         }
 

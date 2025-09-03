@@ -283,11 +283,7 @@ final class EmployeeType extends AbstractType
     {
         $tabChoices = [];
         foreach ($tabs as $tab) {
-            if (empty($tab['children'])) {
-                $tabChoices[$tab['name']] = $tab['id_tab'];
-            } else {
-                $tabChoices[$tab['name']] = $this->formatTabs($tab['children']);
-            }
+            $tabChoices[$tab['name']] = empty($tab['children']) ? $tab['id_tab'] : $this->formatTabs($tab['children']);
         }
 
         return $tabChoices;

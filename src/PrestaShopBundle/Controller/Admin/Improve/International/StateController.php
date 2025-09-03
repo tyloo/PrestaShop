@@ -356,15 +356,11 @@ class StateController extends PrestaShopAdminController
 
     private function getToolbarButtons(): array
     {
-        $toolbarButtons = [];
-
-        $toolbarButtons['add'] = [
+        return ['add' => [
             'href' => $this->generateUrl('admin_states_create'),
             'desc' => $this->trans('Add new state', [], 'Admin.International.Feature'),
             'icon' => 'add_circle_outline',
-        ];
-
-        return $toolbarButtons;
+        ]];
     }
 
     private function getBulkStatesFromRequest(Request $request): array

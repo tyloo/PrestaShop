@@ -135,12 +135,12 @@ class CQRSCommand extends AbstractCQRSOperation
 
         $passedArguments['processor'] = $processor ?? CommandProcessor::class;
 
-        if (! empty($CQRSCommand)) {
+        if ($CQRSCommand !== null && $CQRSCommand !== '' && $CQRSCommand !== '0') {
             $this->checkArgumentAndExtraParameterValidity('CQRSCommand', $CQRSCommand, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['CQRSCommand'] = $CQRSCommand;
         }
 
-        if (! empty($CQRSCommandMapping)) {
+        if ($CQRSCommandMapping !== null && $CQRSCommandMapping !== []) {
             $this->checkArgumentAndExtraParameterValidity('CQRSCommandMapping', $CQRSCommandMapping, $passedArguments['extraProperties']);
             $passedArguments['extraProperties']['CQRSCommandMapping'] = $CQRSCommandMapping;
         }

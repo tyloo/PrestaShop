@@ -126,7 +126,7 @@ class EmailController extends PrestaShopAdminController
 
         $errors = $emailLogEraser->erase($mailLogsToDelete);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(
@@ -158,7 +158,7 @@ class EmailController extends PrestaShopAdminController
     ): RedirectResponse {
         $errors = $emailLogEraser->erase([$mailId]);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             $this->addFlashErrors($errors);
         } else {
             $this->addFlash(

@@ -40,7 +40,7 @@ class ProductSearchAndResetType extends SearchAndResetType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
-        if ($form->getParent() !== null) {
+        if ($form->getParent() instanceof FormInterface) {
             $selectedFilters = array_keys($form->getParent()->getData());
 
             if (\count($selectedFilters) === 1 && $selectedFilters[0] === 'id_category') {

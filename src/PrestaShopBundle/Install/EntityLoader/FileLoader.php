@@ -89,7 +89,7 @@ class FileLoader
      */
     public function flushCache(string $entity, ?string $iso = null): void
     {
-        if (! empty($iso)) {
+        if ($iso !== null && $iso !== '' && $iso !== '0') {
             unset($this->cache[$entity][$iso]);
         } else {
             unset($this->cache[$entity]);
@@ -133,7 +133,7 @@ class FileLoader
         $fileName = $entity . '.xml';
 
         // default path
-        if (empty($iso)) {
+        if ($iso === null || $iso === '' || $iso === '0') {
             return [
                 $this->dataPath . $fileName,
             ];

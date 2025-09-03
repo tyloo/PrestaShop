@@ -596,7 +596,7 @@ class CartController extends PrestaShopAdminController
      */
     private function assertAllUploadedFilesReachedRequest(string $fileSizeHeaders, array $fileCustomizations): void
     {
-        if (! empty($fileSizeHeaders)) {
+        if ($fileSizeHeaders !== '' && $fileSizeHeaders !== '0') {
             $fileSizesByInputName = json_decode($fileSizeHeaders, true);
             foreach ($fileSizesByInputName as $name => $size) {
                 if (! isset($fileCustomizations[$name])) {

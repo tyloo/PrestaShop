@@ -183,7 +183,7 @@ class PrestaShopAdminController extends AbstractController
 
     protected function generateSidebarLink(string $section, ?string $title = null): string
     {
-        if (empty($title)) {
+        if ($title === null || $title === '' || $title === '0') {
             $title = $this->trans('Help', [], 'Admin.Global');
         }
 
@@ -232,7 +232,7 @@ class PrestaShopAdminController extends AbstractController
                 );
             }
 
-            if ($e->getShopConstraint()->getShopId() !== null) {
+            if ($e->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
                 return $this->trans(
                     'Authorization not allowed for this store.',
                     [],
@@ -240,7 +240,7 @@ class PrestaShopAdminController extends AbstractController
                 );
             }
 
-            if ($e->getShopConstraint()->getShopGroupId() !== null) {
+            if ($e->getShopConstraint()->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
                 return $this->trans(
                     'Authorization not allowed for this group of stores.',
                     [],
@@ -257,7 +257,7 @@ class PrestaShopAdminController extends AbstractController
 
         // Fallback error message
         $isDebug = $this->getParameter('kernel.debug');
-        if ($isDebug && ! empty($e->getMessage())) {
+        if ($isDebug && ! \in_array($e->getMessage(), ['', '0'], true)) {
             return $this->trans(
                 'An unexpected error occurred. [%type% code %code%]: %message%',
                 [
@@ -420,11 +420,11 @@ class PrestaShopAdminController extends AbstractController
             return true;
         }
 
-        if ($shopConstraint->getShopId() !== null) {
+        if ($shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             return $this->getEmployeeContext()->hasAuthorizationOnShop($shopConstraint->getShopId()->getValue());
         }
 
-        if ($shopConstraint->getShopGroupId() !== null) {
+        if ($shopConstraint->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             return $this->getEmployeeContext()->hasAuthorizationOnShopGroup($shopConstraint->getShopGroupId()->getValue());
         }
 

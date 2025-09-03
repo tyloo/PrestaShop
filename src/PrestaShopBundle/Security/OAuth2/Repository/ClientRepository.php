@@ -56,7 +56,7 @@ class ClientRepository implements ClientRepositoryInterface
     {
         $user = $this->getUser($clientIdentifier);
 
-        if ($user === null) {
+        if (! $user instanceof UserInterface) {
             return null;
         }
 
@@ -77,7 +77,7 @@ class ClientRepository implements ClientRepositoryInterface
 
         $client = $this->getUser($clientIdentifier);
 
-        if ($client === null) {
+        if (! $client instanceof UserInterface) {
             return false;
         }
 

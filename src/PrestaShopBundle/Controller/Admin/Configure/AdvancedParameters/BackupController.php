@@ -227,7 +227,7 @@ class BackupController extends PrestaShopAdminController
             }
         }
 
-        if (! empty($failedBackups)) {
+        if ($failedBackups !== []) {
             $this->addFlash(
                 'error',
                 $this->trans('An error occurred while deleting this selection.', [], 'Admin.Notifications.Error')

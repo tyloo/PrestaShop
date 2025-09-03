@@ -166,7 +166,7 @@ final class LegacyUrlConverter
         if ($legacyAction === null) {
             // We prioritize the actions defined in the migrated routes
             $controllerActions = $this->legacyRouteProvider->getActionsByController($parameters['controller']);
-            foreach ($parameters as $parameter => $value) {
+            foreach (array_keys($parameters) as $parameter) {
                 if (\in_array($parameter, $controllerActions, true)) {
                     $legacyAction = $parameter;
 
@@ -179,17 +179,13 @@ final class LegacyUrlConverter
         // interpreted as an action.. but some old link need this feature, ?controller=AdminModulesPositions&addToHook)
         if ($legacyAction === null) {
             foreach ($parameters as $parameter => $value) {
-                if ($value === '' || $value === '1' || $value === 1) {
-                    // Avoid confusing an entity/row id with an action
-                    // e.g.
-                    //  create=1 is an action
-                    //  id_product=1 is NOT an action
-                    if (! str_contains($parameter, 'id_')
-                        && ! str_contains($parameter, '_id')) {
-                        $legacyAction = $parameter;
-
-                        break;
-                    }
+                // Avoid confusing an entity/row id with an action
+                // e.g.
+                //  create=1 is an action
+                //  id_product=1 is NOT an action
+                if (($value === '' || $value === '1' || $value === 1) && (! str_contains($parameter, 'id_') && ! str_contains($parameter, '_id'))) {
+                    $legacyAction = $parameter;
+                    break;
                 }
             }
         }

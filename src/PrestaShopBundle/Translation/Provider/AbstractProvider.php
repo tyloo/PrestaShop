@@ -41,7 +41,7 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
     /**
      * @var string the Catalogue locale
      */
-    protected string $locale;
+    protected string $locale = self::DEFAULT_LOCALE;
 
     /**
      * @var string the Catalogue domain
@@ -55,12 +55,12 @@ abstract class AbstractProvider implements ProviderInterface, XliffCatalogueInte
         /**
          * @var LoaderInterface the loader interface
          */
-        private readonly LoaderInterface $databaseLoader, /**
-     * @var string the resource directory
-     */
+        private readonly LoaderInterface $databaseLoader,
+        /**
+         * @var string the resource directory
+         */
         protected $resourceDirectory,
     ) {
-        $this->locale = self::DEFAULT_LOCALE;
     }
 
     public function getDirectories()

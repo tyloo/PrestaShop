@@ -59,19 +59,19 @@ class MenuBuilder
 
     public function getCurrentTab(): ?Tab
     {
-        if ($this->currentTab !== null) {
+        if ($this->currentTab instanceof Tab) {
             return $this->currentTab;
         }
 
         $tab = null;
         $routeName = $this->getRouteName();
-        if (! empty($routeName)) {
+        if ($routeName !== null && $routeName !== '' && $routeName !== '0') {
             $tab = $this->tabRepository->findOneByRouteName($routeName);
         }
 
-        if ($tab === null) {
+        if (! $tab instanceof Tab) {
             $className = $this->getLegacyControllerClassName();
-            if (! empty($className)) {
+            if ($className !== null && $className !== '' && $className !== '0') {
                 $tab = $this->tabRepository->findOneByClassName($className);
             }
         }
@@ -84,9 +84,9 @@ class MenuBuilder
     public function getCurrentTabLevel(): int
     {
         $currentTab = $this->getCurrentTab();
-        if ($currentTab !== null) {
+        if ($currentTab instanceof Tab) {
             $ancestorsTab = $this->getAncestorsTab($currentTab->getId());
-            if (! empty($ancestorsTab)) {
+            if ($ancestorsTab !== []) {
                 return \count($ancestorsTab);
             }
         }
@@ -112,7 +112,7 @@ class MenuBuilder
     public function getBreadcrumbLinks(): array
     {
         $currentTab = $this->getCurrentTab();
-        if ($currentTab === null) {
+        if (! $currentTab instanceof Tab) {
             return [];
         }
 
@@ -130,12 +130,12 @@ class MenuBuilder
             'tab' => $this->convertTabToMenuLink($currentTab),
         ];
 
-        if (! empty($tabAncestors)) {
+        if ($tabAncestors !== []) {
             $breadcrumbLinks['container'] = $this->convertTabToMenuLink(reset($tabAncestors));
         }
 
         $actionLink = $this->getActionLink();
-        if ($actionLink !== null) {
+        if ($actionLink instanceof MenuLink) {
             $breadcrumbLinks['action'] = $actionLink;
         }
 
@@ -203,7 +203,7 @@ class MenuBuilder
         }
 
         $tabLang = $tab->getTabLangByLanguageId($this->getContextLanguageId());
-        if ($tabLang !== null) {
+        if ($tabLang instanceof \PrestaShopBundle\Entity\TabLang) {
             return $tabLang->getName();
         }
 
@@ -325,7 +325,7 @@ class MenuBuilder
 
     private function getLinkFromTab(Tab $tab): string
     {
-        if (! empty($tab->getRouteName())) {
+        if (! \in_array($tab->getRouteName(), [null, '', '0'], true)) {
             $href = $this->urlGenerator->generate($tab->getRouteName());
         } else {
             $href = $this->context->getAdminLink($tab->getClassName());

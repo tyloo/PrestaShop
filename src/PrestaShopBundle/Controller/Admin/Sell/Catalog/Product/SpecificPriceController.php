@@ -235,7 +235,7 @@ class SpecificPriceController extends PrestaShopAdminController
         $reductionValue = $reductionValue->toNegative();
 
         if ($reductionType === Reduction::TYPE_AMOUNT) {
-            return \sprintf('%s', $this->getLanguageContext()->formatPrice((string) $reductionValue, $currencyIsoCode));
+            return $this->getLanguageContext()->formatPrice((string) $reductionValue, $currencyIsoCode);
         }
 
         return \sprintf('%s %%', (string) $reductionValue);

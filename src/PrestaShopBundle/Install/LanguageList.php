@@ -192,10 +192,8 @@ class LanguageList
             $pattern = '/^(?P<primarytag>[a-zA-Z]{2,8})' .
                 '(?:-(?P<subtag>[a-zA-Z]{2,8}))?(?:(?:;q=)' .
                 '(?P<quantifier>\d\.\d))?$/';
-            if (preg_match($pattern, $lang, $m)) {
-                if (\in_array($m['primarytag'], $this->getIsoList(), true)) {
-                    return $m;
-                }
+            if (preg_match($pattern, $lang, $m) && \in_array($m['primarytag'], $this->getIsoList(), true)) {
+                return $m;
             }
         }
 

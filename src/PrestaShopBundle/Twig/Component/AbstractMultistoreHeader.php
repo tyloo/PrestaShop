@@ -89,14 +89,14 @@ abstract class AbstractMultistoreHeader
 
     public function isTitleDark(): bool
     {
-        return empty($this->contextColor) || $this->colorBrightnessCalculator->isBright($this->contextColor);
+        return $this->contextColor === '' || $this->contextColor === '0' || $this->colorBrightnessCalculator->isBright($this->contextColor);
     }
 
     public function getColorConfigLink(): string
     {
-        if ($this->shopContext->getShopConstraint()->getShopId() !== null) {
+        if ($this->shopContext->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $this->legacyContext->getAdminLink('AdminShop', extraParams: ['shop_id' => $this->shopContext->getShopConstraint()->getShopId()->getValue(), 'updateshop' => true]);
-        } elseif ($this->shopContext->getShopConstraint()->getShopGroupId()) {
+        } elseif ($this->shopContext->getShopConstraint()->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             return $this->legacyContext->getAdminLink('AdminShopGroup', extraParams: ['id_shop_group' => $this->shopContext->getShopConstraint()->getShopGroupId()->getValue(), 'updateshop_group' => true]);
         }
 
@@ -120,11 +120,11 @@ abstract class AbstractMultistoreHeader
 
     protected function doMount(): void
     {
-        if ($this->shopContext->getShopConstraint()->getShopId() !== null) {
+        if ($this->shopContext->getShopConstraint()->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
             $shop = $this->entityManager->getRepository(Shop::class)->findOneBy(['id' => $this->shopContext->getShopConstraint()->getShopId()->getValue()]);
             $this->contextColor = $shop->getColor();
             $this->contextName = $shop->getName();
-        } elseif ($this->shopContext->getShopConstraint()->getShopGroupId()) {
+        } elseif ($this->shopContext->getShopConstraint()->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
             $shopGroup = $this->entityManager->getRepository(ShopGroup::class)->findOneBy(['id' => $this->shopContext->getShopConstraint()->getShopGroupId()->getValue()]);
             $this->contextColor = $shopGroup->getColor();
             $this->contextName = $shopGroup->getName();

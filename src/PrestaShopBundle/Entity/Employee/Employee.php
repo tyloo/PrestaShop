@@ -495,7 +495,7 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface, Equ
 
     public function hasValidResetPasswordToken(): bool
     {
-        return ! empty($this->resetPasswordToken)
+        return $this->resetPasswordToken !== null && $this->resetPasswordToken !== '' && $this->resetPasswordToken !== '0'
             && $this->resetPasswordValidity instanceof DateTime
             && $this->resetPasswordValidity->getTimestamp() > time()
         ;

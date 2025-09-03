@@ -39,7 +39,7 @@ class SimplexmlElement extends \SimpleXMLElement
      * @param string|SimplexmlElement|null $value
      * @param string|null                  $namespace
      *
-     * @return \SimpleXMLElement|void
+     * @return \SimpleXMLElement|null
      */
     public function addChild($name, $value = null, $namespace = null)
     {
@@ -60,6 +60,8 @@ class SimplexmlElement extends \SimpleXMLElement
         } else {
             return parent::addChild($name, str_replace('&', '&amp;', $value), $namespace);
         }
+
+        return null;
     }
 
     /**

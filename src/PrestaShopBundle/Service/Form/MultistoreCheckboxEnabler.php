@@ -65,11 +65,7 @@ class MultistoreCheckboxEnabler
 
     public function shouldAddMultistoreElements(): bool
     {
-        if (! $this->shopContext->isMultiShopUsed()) {
-            return false;
-        }
-
-        return true;
+        return $this->shopContext->isMultiShopUsed();
     }
 
     /**

@@ -54,11 +54,11 @@ class LegacyToolbar extends Toolbar
 
     public function mount(string $layoutTitle = '', string $helpLink = '', bool $enableSidebar = false, string $layoutSubTitle = '', array $layoutHeaderToolbarBtn = [], array $breadcrumbLinks = []): void
     {
-        if (empty($helpLink) && $this->hasLegacyController()) {
+        if (($helpLink === '' || $helpLink === '0') && $this->hasLegacyController()) {
             $helpLink = urldecode($this->helpDocumentation->generateLink($this->getLegacyController()->controller_name, $this->languageContext->getIsoCode()));
         }
 
-        if (empty($layoutHeaderToolbarBtn) && $this->hasLegacyController()) {
+        if ($layoutHeaderToolbarBtn === [] && $this->hasLegacyController()) {
             $layoutHeaderToolbarBtn = $this->getLegacyController()->page_header_toolbar_btn;
         }
 

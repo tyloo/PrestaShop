@@ -74,10 +74,10 @@ class Toolbar
         $currentTab = $this->menuBuilder->getCurrentTab();
         $tabs = [];
         $ancestorsTab = [];
-        if ($currentTab !== null) {
+        if ($currentTab instanceof Tab) {
             $tabs[] = $currentTab;
             $ancestorsTab = $this->menuBuilder->getAncestorsTab($currentTab->getId());
-            if (! empty($ancestorsTab)) {
+            if ($ancestorsTab !== []) {
                 $tabs[] = $ancestorsTab;
                 $this->currentTabLevel = \count($ancestorsTab);
 
@@ -87,9 +87,9 @@ class Toolbar
             }
         }
 
-        if (! empty($breadcrumbLinks)) {
+        if ($breadcrumbLinks !== []) {
             $this->setBreadcrumbs($breadcrumbLinks, $tabs);
-        } elseif ($currentTab !== null) {
+        } elseif ($currentTab instanceof Tab) {
             $this->setBreadcrumbs($this->menuBuilder->convertTabsToBreadcrumbLinks($currentTab, $ancestorsTab), $tabs);
         }
 
@@ -139,11 +139,7 @@ class Toolbar
 
     protected function setTitle(string $layoutTitle): void
     {
-        if (empty($layoutTitle) && isset($this->breadcrumbs['tab'])) {
-            $this->title = $this->breadcrumbs['tab']->name;
-        } else {
-            $this->title = $layoutTitle;
-        }
+        $this->title = ($layoutTitle === '' || $layoutTitle === '0') && isset($this->breadcrumbs['tab']) ? $this->breadcrumbs['tab']->name : $layoutTitle;
     }
 
     /**

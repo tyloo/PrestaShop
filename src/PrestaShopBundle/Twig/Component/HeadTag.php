@@ -70,13 +70,9 @@ class HeadTag
 
     public function mount(string $metaTitle): void
     {
-        if (empty($metaTitle)) {
+        if ($metaTitle === '' || $metaTitle === '0') {
             $breadcrumbs = $this->menuBuilder->getBreadcrumbLinks();
-            if (empty($breadcrumbs)) {
-                $this->metaTitle = '';
-            } else {
-                $this->metaTitle = $breadcrumbs['tab']->name;
-            }
+            $this->metaTitle = $breadcrumbs === [] ? '' : $breadcrumbs['tab']->name;
         } else {
             $this->metaTitle = $metaTitle;
         }

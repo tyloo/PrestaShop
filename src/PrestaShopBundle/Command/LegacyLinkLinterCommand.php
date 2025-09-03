@@ -192,7 +192,7 @@ class LegacyLinkLinterCommand extends Command
         $unconfiguredRoutes = $this->getUnconfiguredRoutes();
         $io = new SymfonyStyle($input, $output);
 
-        if (! empty($unconfiguredRoutes)) {
+        if ($unconfiguredRoutes !== []) {
             $io->warning(\sprintf(
                 '%s routes are not configured with _legacy_link:',
                 \count($unconfiguredRoutes)
@@ -216,7 +216,7 @@ class LegacyLinkLinterCommand extends Command
         $unconfiguredRoutes = [];
 
         foreach ($routes as $routeName => $route) {
-            if (\in_array($routeName, self::ROUTE_WHITE_LIST, true) || $this->legacyLinkLinter->lint($routeName, $route) === true) {
+            if (\in_array($routeName, self::ROUTE_WHITE_LIST, true) || $this->legacyLinkLinter->lint($routeName, $route)) {
                 continue;
             }
 

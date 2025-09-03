@@ -66,14 +66,14 @@ class ShopContextListener
         } else {
             // When multishop is used the context must be specified via request parameters
             $shopConstraint = $this->getShopConstraintFromRequest($event->getRequest());
-            if ($shopConstraint === null) {
+            if (! $shopConstraint instanceof ShopConstraint) {
                 $event->setResponse(new JsonResponse('Multi shop is enabled, you must specify a shop context', JsonResponse::HTTP_BAD_REQUEST));
 
                 return;
             }
 
             $this->shopContextBuilder->setShopConstraint($shopConstraint);
-            if ($shopConstraint->getShopId() !== null) {
+            if ($shopConstraint->getShopId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId) {
                 $this->shopContextBuilder->setShopId($shopConstraint->getShopId()->getValue());
             } elseif ($shopConstraint instanceof ShopCollection && $shopConstraint->hasShopIds()) {
                 $this->shopContextBuilder->setShopId($shopConstraint->getShopIds()[0]->getValue());

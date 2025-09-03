@@ -96,9 +96,9 @@ class CQRSApiNormalizer extends ObjectNormalizer
             // Prepare the list of localized values since the LocalizedValue attribute is set on the API Resource class
             // but not on the CQRS input class, we need to pass this information via the context
             $localizedValueParameters = $this->localizedValueUpdater->getLocalizedAttributesContext($type, $context);
-            if (! empty($localizedValueParameters)) {
+            if ($localizedValueParameters !== []) {
                 // CQRS commands are base on Language IDs, so we force the conversion
-                foreach ($localizedValueParameters as $parameterName => $localizedValueParameter) {
+                foreach (array_keys($localizedValueParameters) as $parameterName) {
                     $localizedValueParameters[$parameterName][LocalizedValue::DENORMALIZED_KEY] = LocalizedValue::ID_KEY;
                     $localizedValueParameters[$parameterName][LocalizedValue::NORMALIZED_KEY] = LocalizedValue::ID_KEY;
                 }

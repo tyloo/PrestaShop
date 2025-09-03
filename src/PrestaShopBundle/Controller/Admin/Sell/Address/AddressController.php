@@ -194,7 +194,7 @@ class AddressController extends PrestaShopAdminController
             $formData['id_customer'] = (int) $request->query->get('id_customer');
         }
 
-        if (! empty($formData['id_customer'])) {
+        if (isset($formData['id_customer']) && $formData['id_customer'] !== 0) {
             /** @todo To Remove when PHPStan is fixed https://github.com/phpstan/phpstan/issues/3700 */
             /** @phpstan-ignore-next-line */
             $customerId = $formData['id_customer'];
@@ -490,15 +490,11 @@ class AddressController extends PrestaShopAdminController
 
     private function getAddressToolbarButtons(): array
     {
-        $toolbarButtons = [];
-
-        $toolbarButtons['add'] = [
+        return ['add' => [
             'href' => $this->generateUrl('admin_addresses_create'),
             'desc' => $this->trans('Add new address', [], 'Admin.Orderscustomers.Feature'),
             'icon' => 'add_circle_outline',
-        ];
-
-        return $toolbarButtons;
+        ]];
     }
 
     private function getRequiredFieldsForm(): FormInterface

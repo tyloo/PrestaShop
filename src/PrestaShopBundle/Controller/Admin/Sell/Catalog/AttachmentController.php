@@ -380,14 +380,10 @@ class AttachmentController extends PrestaShopAdminController
 
     private function getAttachmentToolbarButtons(): array
     {
-        $toolbarButtons = [];
-
-        $toolbarButtons['add'] = [
+        return ['add' => [
             'href' => $this->generateUrl('admin_attachments_create'),
             'desc' => $this->trans('Add new file', [], 'Admin.Catalog.Feature'),
             'icon' => 'add_circle_outline',
-        ];
-
-        return $toolbarButtons;
+        ]];
     }
 }

@@ -69,7 +69,7 @@ class AccessDeniedListener
 
         [$controller, $method] = explode('::', (string) $controllerName, 2);
 
-        if (empty($controller) || ! class_exists($controller) || ! method_exists($controller, $method)) {
+        if ($controller === '' || $controller === '0' || ! class_exists($controller) || ! method_exists($controller, $method)) {
             return;
         }
 
@@ -77,7 +77,7 @@ class AccessDeniedListener
 
         $attributes = $reflectionMethod->getAttributes(AdminSecurityAttribute::class);
 
-        if (! empty($attributes)) {
+        if ($attributes !== []) {
             $this->handleAttributes($attributes, $event);
 
             return;
@@ -87,7 +87,7 @@ class AccessDeniedListener
 
         $attributes = $reflectionClass->getAttributes(AdminSecurityAttribute::class);
 
-        if (! empty($attributes)) {
+        if ($attributes !== []) {
             $this->handleAttributes($attributes, $event);
 
             return;

@@ -78,7 +78,7 @@ class MultistoreProductHeader extends AbstractMultistoreHeader
         // Filter shops that are not associated to product
         $productShops = $this->productRepository->getAssociatedShopIds(new ProductId($productId));
 
-        if (! empty($productShops)) {
+        if ($productShops !== []) {
             $productShopIds = array_map(fn (ShopId $shopId): int => $shopId->getValue(), $productShops);
 
             /** @var ShopGroup $shopGroup */
