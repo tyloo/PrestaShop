@@ -223,7 +223,7 @@ class CartPresenter implements PresenterInterface
      *
      * @return array Converted attributes in an array
      */
-    public function getAttributesArrayFromString($attributes)
+    public function getAttributesArrayFromString($attributes): array
     {
         $separator = Configuration::get('PS_ATTRIBUTE_ANCHOR_SEPARATOR');
         $pattern = '/(?>(?P<attribute>[^:]+:[^:]+)' . $separator . '+(?!' . $separator . '([^:' . $separator . '])+:))/';

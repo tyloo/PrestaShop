@@ -78,10 +78,8 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
     /**
      * @param string $action
      * @param string $entity
-     *
-     * @return array
      */
-    private function buildActionParameters($action, $entity, array $parameters)
+    private function buildActionParameters($action, $entity, array $parameters): array
     {
         unset($parameters['current_index']);
         $actionParameter = $action . $entity;
@@ -99,7 +97,7 @@ class LegacyHelperLinkBuilder implements EntityLinkBuilderInterface
         return $parameters;
     }
 
-    public function canBuild($entity)
+    public function canBuild($entity): bool
     {
         return true;
     }

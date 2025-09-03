@@ -122,7 +122,7 @@ class GetProductForEditingHandler implements GetProductForEditingHandlerInterfac
             $this->getProductStockInformation($product),
             $this->getVirtualProductFile($product),
             $this->getCover($query->getProductId(), $product->getShopId()),
-            array_map(fn (ShopId $shopId) => $shopId->getValue(), $this->productRepository->getAssociatedShopIds($query->getProductId()))
+            array_map(fn (ShopId $shopId): int => $shopId->getValue(), $this->productRepository->getAssociatedShopIds($query->getProductId()))
         );
     }
 

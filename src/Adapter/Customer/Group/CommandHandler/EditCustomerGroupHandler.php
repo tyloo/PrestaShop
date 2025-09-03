@@ -71,7 +71,7 @@ class EditCustomerGroupHandler implements EditCustomerGroupHandlerInterface
         }
 
         if ($command->getShopIds() !== null) {
-            $customerGroup->id_shop_list = array_map(fn (ShopId $shopId) => $shopId->getValue(), $command->getShopIds());
+            $customerGroup->id_shop_list = array_map(fn (ShopId $shopId): int => $shopId->getValue(), $command->getShopIds());
         } else {
             // We force the id_shop_list with the currently associated values or the associations will be messed with whatever is in the legacy context
             $customerGroup->id_shop_list = $this->customerGroupRepository->getAssociatedShopIds((int) $customerGroup->id);

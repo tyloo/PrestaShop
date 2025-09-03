@@ -197,7 +197,7 @@ class GetPermissionsForConfigurationHandler implements GetPermissionsForConfigur
             // Allow only whitelisted elements
             $permissions[$profile['id']] = array_filter(
                 Profile::getProfileAccesses($profile['id']),
-                fn ($item) => \in_array($item['id_tab'], $this->whitelist, true)
+                fn ($item): bool => \in_array($item['id_tab'], $this->whitelist, true)
             );
         }
 

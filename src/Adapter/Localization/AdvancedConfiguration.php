@@ -49,7 +49,7 @@ class AdvancedConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $config)
+    public function updateConfiguration(array $config): array
     {
         $errors = [];
 

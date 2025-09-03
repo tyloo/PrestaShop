@@ -78,7 +78,7 @@ class GroupRepository extends AbstractMultiShopObjectModelRepository
     {
         $groupId = $this->addObjectModelToShops(
             $customerGroup,
-            array_map(fn (int $shopId) => new ShopId($shopId), $customerGroup->id_shop_list),
+            array_map(fn (int $shopId): ShopId => new ShopId($shopId), $customerGroup->id_shop_list),
             CannotAddGroupException::class
         );
 
@@ -103,6 +103,6 @@ class GroupRepository extends AbstractMultiShopObjectModelRepository
     {
         $customerGroup = $this->get($customerGroupId);
         $shopIds = $this->getAssociatedShopIds($customerGroupId->getValue());
-        $this->deleteObjectModelFromShops($customerGroup, array_map(fn (int $shopId) => new ShopId($shopId), $shopIds), CannotDeleteGroupException::class);
+        $this->deleteObjectModelFromShops($customerGroup, array_map(fn (int $shopId): ShopId => new ShopId($shopId), $shopIds), CannotDeleteGroupException::class);
     }
 }

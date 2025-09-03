@@ -64,6 +64,6 @@ class ShopInformation
 
     public function getOverridesList(): array
     {
-        return array_filter(Tools::scandir(_PS_OVERRIDE_DIR_, 'php', '', true), fn ($file) => basename((string) $file) !== 'index.php');
+        return array_filter(Tools::scandir(_PS_OVERRIDE_DIR_, 'php', '', true), fn ($file): bool => basename((string) $file) !== 'index.php');
     }
 }

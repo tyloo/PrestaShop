@@ -35,7 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class EmployeeNameByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    public function getChoices()
+    /**
+     * @return int[]
+     */
+    public function getChoices(): array
     {
         $employees = Employee::getEmployees();
 

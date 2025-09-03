@@ -57,7 +57,7 @@ class SmartyCacheConfiguration implements DataConfigurationInterface
      *
      * Note: 'smarty_console' and 'smarty_console_key' keys are not allowed for update.
      */
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
         if ($this->validateConfiguration($configuration)) {

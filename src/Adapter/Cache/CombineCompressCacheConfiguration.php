@@ -67,7 +67,10 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return list<non-empty-array>
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 
@@ -87,7 +90,7 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
             // Manage Apache optimization
             $apacheError = $this->manageApacheOptimization((bool) $configuration['apache_optimization']);
 
-            if (\count($apacheError) > 0) {
+            if ($apacheError !== []) {
                 $errors[] = $apacheError;
             }
         }
@@ -114,10 +117,8 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
 
     /**
      * Creates Cache folder for the active theme.
-     *
-     * @return bool
      */
-    private function createThemeCacheFolder()
+    private function createThemeCacheFolder(): bool
     {
         try {
             $folder = $this->getThemeCacheFolder();
@@ -160,7 +161,7 @@ class CombineCompressCacheConfiguration implements DataConfigurationInterface
      *
      * @return array not empty in case of error
      */
-    private function manageApacheOptimization($enabled)
+    private function manageApacheOptimization($enabled): array
     {
         $errors = [];
         $isCurrentlyEnabled = (bool) $this->configuration->get('PS_HTACCESS_CACHE_CONTROL');

@@ -248,7 +248,7 @@ class ModuleRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        $modules = array_filter($content['packages'], fn (array $package) => $package['type'] === self::COMPOSER_PACKAGE_TYPE && ! empty($package['name']));
+        $modules = array_filter($content['packages'], fn (array $package): bool => $package['type'] === self::COMPOSER_PACKAGE_TYPE && ! empty($package['name']));
         $modules = array_map(function (array $package) {
             $vendorName = explode('/', (string) $package['name']);
 

@@ -69,7 +69,7 @@ class CarrierDataProvider
      *
      * @return array carrier choices
      */
-    public function getActiveCarriersChoices($languageId = null)
+    public function getActiveCarriersChoices($languageId = null): array
     {
         if ($languageId === null) {
             $languageId = $this->configuration->getInt('PS_LANG_DEFAULT');

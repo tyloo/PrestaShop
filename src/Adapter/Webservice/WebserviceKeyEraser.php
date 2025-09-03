@@ -45,7 +45,7 @@ final class WebserviceKeyEraser
      *
      * @throws PrestaShopException
      */
-    public function erase(array $webServiceKeyIds)
+    public function erase(array $webServiceKeyIds): array
     {
         $errors = [];
 

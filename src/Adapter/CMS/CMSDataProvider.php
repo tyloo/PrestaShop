@@ -62,10 +62,8 @@ class CMSDataProvider
      * Gets CMS choices for choice type.
      *
      * @param int $languageId
-     *
-     * @return array
      */
-    public function getCMSChoices($languageId = null)
+    public function getCMSChoices($languageId = null): array
     {
         $choices = [];
 

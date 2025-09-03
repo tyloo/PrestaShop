@@ -54,7 +54,7 @@ class PageConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $config)
+    public function updateConfiguration(array $config): array
     {
         $errors = [];
 
@@ -71,7 +71,7 @@ class PageConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $config)
+    public function validateConfiguration(array $config): bool
     {
         $resolver = new OptionsResolver();
         $resolver->setRequired([

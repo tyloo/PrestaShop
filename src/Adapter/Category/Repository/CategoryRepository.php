@@ -83,7 +83,7 @@ class CategoryRepository extends AbstractObjectModelRepository
      */
     public function getLocalizedNames(array $categoryIds): array
     {
-        $categoryIds = array_map(fn ($categoryId) => $categoryId->getValue(), $categoryIds
+        $categoryIds = array_map(fn ($categoryId): int => $categoryId->getValue(), $categoryIds
         );
 
         $qb = $this->connection->createQueryBuilder();
@@ -254,7 +254,7 @@ class CategoryRepository extends AbstractObjectModelRepository
                 ->andWhere('cs.id_shop IN (:shopIds)')
                 ->setParameter(
                     'shopIds',
-                    array_map(fn (ShopId $shopId) => $shopId->getValue(), $shopConstraint->getShopIds()),
+                    array_map(fn (ShopId $shopId): int => $shopId->getValue(), $shopConstraint->getShopIds()),
                     ArrayParameterType::INTEGER
                 )
             ;

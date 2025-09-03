@@ -50,8 +50,8 @@ class UpdateDiscountConditionsHandler implements UpdateDiscountConditionsHandler
             $command->getProductConditions(),
             $command->getMinimumAmount(),
             $command->getMinimumAmountShippingIncluded(),
-            $command->getCarrierIds() ? array_map(fn (CarrierId $carrierId) => $carrierId->getValue(), $command->getCarrierIds()) : null,
-            $command->getCountryIds() ? array_map(fn (CountryId $countryId) => $countryId->getValue(), $command->getCountryIds()) : null,
+            $command->getCarrierIds() ? array_map(fn (CarrierId $carrierId): int => $carrierId->getValue(), $command->getCarrierIds()) : null,
+            $command->getCountryIds() ? array_map(fn (CountryId $countryId): int => $countryId->getValue(), $command->getCountryIds()) : null,
         );
     }
 }

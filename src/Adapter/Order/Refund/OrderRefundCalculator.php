@@ -133,7 +133,7 @@ class OrderRefundCalculator
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
-    private function getOrderDetailList(array $orderDetailRefunds)
+    private function getOrderDetailList(array $orderDetailRefunds): array
     {
         $orderDetailList = [];
         /** @var OrderDetailRefund $orderDetailRefund */
@@ -145,8 +145,6 @@ class OrderRefundCalculator
     }
 
     /**
-     * @return array
-     *
      * @throws InvalidCancelProductException
      */
     private function flattenCheckedProductRefunds(
@@ -154,7 +152,7 @@ class OrderRefundCalculator
         bool $isTaxIncluded,
         array $orderDetails,
         int $precision,
-    ) {
+    ): array {
         $productRefunds = [];
         /** @var OrderDetailRefund $orderDetailRefund */
         foreach ($orderDetailRefunds as $orderDetailRefund) {

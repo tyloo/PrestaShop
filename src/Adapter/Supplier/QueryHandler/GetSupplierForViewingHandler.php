@@ -84,12 +84,10 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
     }
 
     /**
-     * @return array
-     *
      * @throws LocalizationException
      * @throws SupplierException
      */
-    private function getSupplierProducts(Supplier $supplier, LanguageId $languageId)
+    private function getSupplierProducts(Supplier $supplier, LanguageId $languageId): array
     {
         $products = [];
         $supplierProducts = $supplier->getProductsLite($languageId->getValue());

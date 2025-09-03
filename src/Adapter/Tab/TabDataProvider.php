@@ -67,10 +67,8 @@ class TabDataProvider
      *
      * @param int $profileId
      * @param int $languageId
-     *
-     * @return array
      */
-    public function getViewableTabs($profileId, $languageId)
+    public function getViewableTabs($profileId, $languageId): array
     {
         $viewableTabs = [];
 

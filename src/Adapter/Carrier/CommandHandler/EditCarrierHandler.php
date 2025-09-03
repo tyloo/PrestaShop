@@ -153,7 +153,7 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
         );
 
         if ($command->getAssociatedShopIds() !== null) {
-            $this->carrierRepository->updateAssociatedShops($newCarrierId, array_map(fn (ShopId $shopId) => $shopId->getValue(), $command->getAssociatedShopIds()));
+            $this->carrierRepository->updateAssociatedShops($newCarrierId, array_map(fn (ShopId $shopId): int => $shopId->getValue(), $command->getAssociatedShopIds()));
         }
 
         if ($command->getLogoPathName() !== null) {

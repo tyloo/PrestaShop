@@ -43,7 +43,7 @@ class DefaultRouteProvider
      *
      * @throws PrestaShopException
      */
-    public function getKeywords()
+    public function getKeywords(): array
     {
         $routes = $this->getDefaultRoutes();
 
@@ -62,7 +62,7 @@ class DefaultRouteProvider
      *
      * @throws PrestaShopException
      */
-    public function getRules()
+    public function getRules(): array
     {
         $routes = $this->getDefaultRoutes();
 

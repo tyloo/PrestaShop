@@ -54,7 +54,10 @@ class GeneralConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return list<array{key: 'The SameSite=None attribute is only available in secure mode.', domain: 'Admin.Advparameters.Notification', parameters: array{}}>
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 

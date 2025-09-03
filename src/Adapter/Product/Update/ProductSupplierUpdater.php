@@ -109,7 +109,7 @@ class ProductSupplierUpdater
             // Loop through all combinations to check if they have a matching association if not it will need to be created
             foreach ($combinationIds as $combinationId) {
                 // Search matching association by combination, if none is found the association is missing
-                $matchingAssociations = array_filter($supplierAssociations, fn (ProductSupplierAssociation $association) => $association->getCombinationId()->getValue() === $combinationId->getValue());
+                $matchingAssociations = array_filter($supplierAssociations, fn (ProductSupplierAssociation $association): bool => $association->getCombinationId()->getValue() === $combinationId->getValue());
 
                 if ($matchingAssociations === []) {
                     $productSupplier = new ProductSupplier();

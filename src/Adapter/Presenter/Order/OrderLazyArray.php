@@ -277,11 +277,8 @@ class OrderLazyArray extends AbstractLazyArray
         return new OrderDetailLazyArray($this->order);
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getHistory()
+    public function getHistory(): array
     {
         $order = $this->order;
 
@@ -308,11 +305,8 @@ class OrderLazyArray extends AbstractLazyArray
         return $orderHistory;
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getMessages()
+    public function getMessages(): array
     {
         $order = $this->order;
 
@@ -350,11 +344,8 @@ class OrderLazyArray extends AbstractLazyArray
         return $orderCarrier;
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getAddresses()
+    public function getAddresses(): array
     {
         $order = $this->order;
 

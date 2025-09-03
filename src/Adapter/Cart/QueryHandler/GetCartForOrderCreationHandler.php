@@ -307,10 +307,8 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
 
     /**
      * Fetch CartDeliveryOption[] DTO's from legacy array
-     *
-     * @return array
      */
-    private function fetchCartDeliveryOptions(array $deliveryOptionsByAddress, int $deliveryAddressId)
+    private function fetchCartDeliveryOptions(array $deliveryOptionsByAddress, int $deliveryAddressId): array
     {
         $deliveryOptions = [];
         if ($deliveryOptionsByAddress === []) {
@@ -397,7 +395,7 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
             $productCustomizedFieldsData = $this->getProductCustomizedFieldsData($customizations, $product);
         }
 
-        if (empty($productCustomizedFieldsData)) {
+        if ($productCustomizedFieldsData === []) {
             return null;
         }
 
@@ -406,10 +404,8 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
 
     /**
      * Provides customized fields data for product
-     *
-     * @return array
      */
-    private function getProductCustomizedFieldsData(array $customizations, array $product)
+    private function getProductCustomizedFieldsData(array $customizations, array $product): array
     {
         $customizationFieldsData = [];
 

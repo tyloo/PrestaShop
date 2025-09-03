@@ -232,7 +232,7 @@ class CartLazyArray extends AbstractLazyArray
     {
         // If product list is already available, no need to execute a new sql query
         if (isset($this->products)) {
-            $this->productsCount = array_reduce($this->products, fn ($count, $product) => $count + $product['quantity'], 0);
+            $this->productsCount = array_reduce($this->products, fn ($count, $product): float|int|array => $count + $product['quantity'], 0);
 
             return $this->productsCount;
         }

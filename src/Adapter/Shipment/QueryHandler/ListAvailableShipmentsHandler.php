@@ -51,7 +51,7 @@ class ListAvailableShipmentsHandler implements ListAvailableShipmentsHandlerInte
     /**
      * @return ShipmentsForMerge[]
      */
-    public function handle(ListAvailableShipments $query)
+    public function handle(ListAvailableShipments $query): array
     {
         $shipments = [];
         $orderId = $query->getOrderId()->getValue();

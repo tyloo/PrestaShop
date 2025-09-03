@@ -118,7 +118,7 @@ final class InvoiceOptionsConfiguration extends AbstractMultistoreConfiguration
             ->setAllowedTypes('year_position', ['integer'])
             ->setAllowedValues('year_position', [0, 1])
             ->setAllowedTypes('invoice_number', ['integer'])
-            ->setAllowedValues('invoice_number', fn (int $value) => $value >= 0)
+            ->setAllowedValues('invoice_number', fn (int $value): bool => $value >= 0)
             ->setAllowedTypes('legal_free_text', ['array'])
             ->setAllowedTypes('footer_text', ['array'])
             ->setAllowedTypes('invoice_model', ['string'])

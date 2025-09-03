@@ -58,10 +58,8 @@ final class ImageCopier
      * @param string $url        path or url to use
      * @param string $entity     'products' or 'categories'
      * @param bool   $regenerate
-     *
-     * @return bool
      */
-    public function copyImg($entityId, $imageId = null, $url = '', $entity = 'products', $regenerate = true)
+    public function copyImg($entityId, $imageId = null, $url = '', $entity = 'products', $regenerate = true): bool
     {
         $tmpDir = $this->configuration->get('_PS_TMP_IMG_DIR_');
         $tmpFile = tempnam($tmpDir, 'ps_import');

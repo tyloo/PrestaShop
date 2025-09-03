@@ -65,9 +65,11 @@ final class GetCustomerOrdersHandler extends AbstractCustomerHandler implements 
     }
 
     /**
+     * @return list<OrderSummary>
+     *
      * @throws LocalizationException
      */
-    private function getOrders(int $customerId)
+    private function getOrders(int $customerId): array
     {
         $summarizedOrders = [];
 

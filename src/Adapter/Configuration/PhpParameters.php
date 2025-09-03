@@ -80,10 +80,8 @@ class PhpParameters
 
     /**
      * Persist the modifications done on the original configuration file.
-     *
-     * @return bool
      */
-    public function saveConfiguration()
+    public function saveConfiguration(): bool
     {
         try {
             $filesystem = new Filesystem();

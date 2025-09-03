@@ -40,7 +40,10 @@ use PrestaShop\PrestaShop\Core\Domain\Customer\QueryHandler\GetRequiredFieldsFor
 #[AsQueryHandler]
 final class GetRequiredFieldsForCustomerHandler implements GetRequiredFieldsForCustomerHandlerInterface
 {
-    public function handle(GetRequiredFieldsForCustomer $query)
+    /**
+     * @return mixed[]
+     */
+    public function handle(GetRequiredFieldsForCustomer $query): array
     {
         $requiredFields = (new Customer())->getFieldsRequiredDatabase();
 

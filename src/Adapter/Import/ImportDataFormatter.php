@@ -72,10 +72,8 @@ final class ImportDataFormatter
      * Create a multilang field.
      *
      * @param string $field
-     *
-     * @return array
      */
-    public function createMultiLangField($field)
+    public function createMultiLangField($field): array
     {
         $result = [];
 

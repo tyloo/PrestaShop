@@ -37,7 +37,10 @@ use WebserviceRequest;
  */
 final class ResourcesChoiceProvider implements FormChoiceProviderInterface
 {
-    public function getChoices()
+    /**
+     * @return int[]|string[]
+     */
+    public function getChoices(): array
     {
         $legacyResources = WebserviceRequest::getResources();
         $choices = [];

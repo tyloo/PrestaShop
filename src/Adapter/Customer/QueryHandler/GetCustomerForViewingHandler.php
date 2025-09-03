@@ -234,7 +234,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     /**
      * @return MessageInformation[]
      */
-    private function getCustomerMessages(Customer $customer)
+    private function getCustomerMessages(Customer $customer): array
     {
         $customerMessages = [];
         $messages = CustomerThread::getCustomerMessages((int) $customer->id);
@@ -263,7 +263,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     /**
      * @return SentEmailInformation[]
      */
-    private function getLastEmailsSentToCustomer(Customer $customer)
+    private function getLastEmailsSentToCustomer(Customer $customer): array
     {
         $emails = $customer->getLastEmails();
         $customerEmails = [];
@@ -283,7 +283,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     /**
      * @return LastConnectionInformation[]
      */
-    private function getLastCustomerConnections(Customer $customer)
+    private function getLastCustomerConnections(Customer $customer): array
     {
         $connections = $customer->getLastConnections();
         $lastConnections = [];
@@ -313,7 +313,7 @@ final class GetCustomerForViewingHandler implements GetCustomerForViewingHandler
     /**
      * @return GroupInformation[]
      */
-    private function getCustomerGroups(Customer $customer)
+    private function getCustomerGroups(Customer $customer): array
     {
         $groups = $customer->getGroups();
         $customerGroups = [];

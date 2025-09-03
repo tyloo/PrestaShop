@@ -43,7 +43,10 @@ final class PaymentModuleListProvider implements PaymentModuleListProviderInterf
     ) {
     }
 
-    public function getPaymentModuleList()
+    /**
+     * @return mixed[]
+     */
+    public function getPaymentModuleList(): array
     {
         $modules = $this->moduleRepository->getInstalledModules();
         $paymentModules = [];

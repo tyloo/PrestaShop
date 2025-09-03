@@ -58,7 +58,7 @@ class GetShipmentProductsHandler implements GetShipmentProductsHandlerInterface
     /**
      * @return OrderShipmentProduct[]
      */
-    public function handle(GetShipmentProducts $query)
+    public function handle(GetShipmentProducts $query): array
     {
         $shipmentProducts = [];
         $shipmentId = $query->getShipmentId()->getValue();

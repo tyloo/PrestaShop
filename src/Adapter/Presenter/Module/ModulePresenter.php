@@ -46,10 +46,8 @@ class ModulePresenter implements PresenterInterface
 
     /**
      * @param ModuleInterface $module
-     *
-     * @return array
      */
-    public function present($module)
+    public function present($module): array
     {
         if (! ($module instanceof ModuleInterface)) {
             throw new Exception('ModulePresenter can only present instance of Module');
@@ -98,10 +96,8 @@ class ModulePresenter implements PresenterInterface
      * Transform a collection of addons as a simple array of data.
      *
      * @param ModuleCollection|array $modules
-     *
-     * @return array
      */
-    public function presentCollection($modules)
+    public function presentCollection($modules): array
     {
         $presentedModules = [];
 

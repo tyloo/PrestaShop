@@ -115,7 +115,7 @@ class ShopRepository extends AbstractObjectModelRepository
 
         $result = $qb->executeQuery()->fetchAllAssociative();
 
-        return array_map(fn (array $shopRow) => (int) $shopRow['id_shop'], $result);
+        return array_map(fn (array $shopRow): int => (int) $shopRow['id_shop'], $result);
     }
 
     public function getAllShopIds(): array
@@ -129,6 +129,6 @@ class ShopRepository extends AbstractObjectModelRepository
 
         $result = $qb->executeQuery()->fetchAllAssociative();
 
-        return array_map(fn (array $shopRow) => (int) $shopRow['id_shop'], $result);
+        return array_map(fn (array $shopRow): int => (int) $shopRow['id_shop'], $result);
     }
 }

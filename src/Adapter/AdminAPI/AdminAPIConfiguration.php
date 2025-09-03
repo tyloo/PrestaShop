@@ -51,7 +51,10 @@ class AdminAPIConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return mixed[]
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = $this->getConfigurationErrors($configuration);
         if ($errors !== []) {

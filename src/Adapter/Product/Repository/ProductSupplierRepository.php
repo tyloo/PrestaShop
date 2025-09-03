@@ -211,7 +211,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
             return [];
         }
 
-        return array_map(fn (array $row) => new ProductSupplierAssociation(
+        return array_map(fn (array $row): ProductSupplierAssociation => new ProductSupplierAssociation(
             $productId->getValue(),
             (int) $row['id_product_attribute'],
             $supplierId->getValue(),
@@ -347,7 +347,7 @@ class ProductSupplierRepository extends AbstractObjectModelRepository
      */
     public function getUselessProductSupplierIds(ProductId $productId, array $expectedSuppliersId): array
     {
-        $supplierIds = array_map(fn (SupplierId $supplierId) => (string) $supplierId->getValue(), $expectedSuppliersId);
+        $supplierIds = array_map(fn (SupplierId $supplierId): string => (string) $supplierId->getValue(), $expectedSuppliersId);
 
         $qb = $this->connection->createQueryBuilder();
         $qb

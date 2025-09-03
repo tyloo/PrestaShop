@@ -38,7 +38,10 @@ use ShopGroup;
  */
 final class ShopTreeChoiceProvider implements FormChoiceProviderInterface
 {
-    public function getChoices()
+    /**
+     * @return list<array{name: mixed, id_shop: null, children: list<array{name: mixed, id_shop: mixed}>}>
+     */
+    public function getChoices(): array
     {
         $shopGroups = ShopGroup::getShopGroups();
         $choices = [];

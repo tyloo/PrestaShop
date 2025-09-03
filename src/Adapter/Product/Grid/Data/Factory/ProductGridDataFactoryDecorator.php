@@ -188,7 +188,7 @@ class ProductGridDataFactoryDecorator implements GridDataFactoryInterface
             // Transform list of IDs into list of names
             if ($searchCriteria->getShopConstraint()->forAllShops() || $searchCriteria->getShopConstraint()->getShopGroupId() instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId) {
                 $shopIds = $this->productRepository->getAssociatedShopIds(new ProductId((int) $product['id_product']));
-                $products[$i]['associated_shops_ids'] = array_map(static fn (ShopId $shopId) => $shopId->getValue(), $shopIds);
+                $products[$i]['associated_shops_ids'] = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $shopIds);
                 $products[$i]['associated_shops'] = $this->getShopsNames(
                     $shopIds,
                     $searchCriteria

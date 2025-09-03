@@ -147,7 +147,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
                     ->andWhere('img_shop.id_shop IN (:shopIds)')
                     ->setParameter(
                         'shopIds',
-                        array_map(fn (ShopId $shopId) => $shopId->getValue(), $shopConstraint->getShopIds()),
+                        array_map(fn (ShopId $shopId): int => $shopId->getValue(), $shopConstraint->getShopIds()),
                         ArrayParameterType::INTEGER
                     )
                 ;
@@ -328,7 +328,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
                 ->andWhere('is.id_shop IN (:shopIds)')
                 ->setParameter(
                     'shopIds',
-                    array_map(fn (ShopId $shopId) => $shopId->getValue(), $shopConstraint->getShopIds()),
+                    array_map(fn (ShopId $shopId): int => $shopId->getValue(), $shopConstraint->getShopIds()),
                     ArrayParameterType::INTEGER
                 )
             ;

@@ -68,10 +68,7 @@ final class GetManufacturerForViewingHandler implements GetManufacturerForViewin
         return $manufacturer;
     }
 
-    /**
-     * @return array
-     */
-    private function getManufacturerProducts(Manufacturer $manufacturer, LanguageId $languageId)
+    private function getManufacturerProducts(Manufacturer $manufacturer, LanguageId $languageId): array
     {
         $products = [];
         $manufacturerProducts = $manufacturer->getProductsLite($languageId->getValue());
@@ -125,10 +122,7 @@ final class GetManufacturerForViewingHandler implements GetManufacturerForViewin
         return $products;
     }
 
-    /**
-     * @return array
-     */
-    private function getManufacturerAddresses(Manufacturer $manufacturer, LanguageId $languageId)
+    private function getManufacturerAddresses(Manufacturer $manufacturer, LanguageId $languageId): array
     {
         $addresses = [];
         $manufacturerAddresses = $manufacturer->getAddresses($languageId->getValue());

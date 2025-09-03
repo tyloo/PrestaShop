@@ -50,7 +50,7 @@ class PaginationConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $config)
+    public function updateConfiguration(array $config): array
     {
         $errors = [];
 
@@ -63,7 +63,7 @@ class PaginationConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         $resolver = new OptionsResolver();
         $resolver->setRequired([

@@ -46,11 +46,14 @@ final class LanguageCopier implements LanguageCopierInterface
     ) {
     }
 
-    public function copy(LanguageCopierConfigInterface $config)
+    /**
+     * @return mixed[]
+     */
+    public function copy(LanguageCopierConfigInterface $config): array
     {
         $errors = $this->validateConfig($config);
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $errors;
         }
 
@@ -110,7 +113,7 @@ final class LanguageCopier implements LanguageCopierInterface
             }
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             $errors[] = [
                 'key' => 'A part of the data has been copied but some of the language files could not be found.',
                 'domain' => 'Admin.International.Notification',
@@ -126,7 +129,7 @@ final class LanguageCopier implements LanguageCopierInterface
      *
      * @return array of errors
      */
-    private function validateConfig(LanguageCopierConfigInterface $config)
+    private function validateConfig(LanguageCopierConfigInterface $config): array
     {
         $errors = [];
 

@@ -48,7 +48,10 @@ final class SearchCustomersHandler implements SearchCustomersHandlerInterface
     ) {
     }
 
-    public function handle(SearchCustomers $query)
+    /**
+     * @return mixed[]
+     */
+    public function handle(SearchCustomers $query): array
     {
         $limit = 50;
         $phrases = array_unique($query->getPhrases());

@@ -50,7 +50,10 @@ class UploadQuotaConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return mixed[]
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 
@@ -68,7 +71,7 @@ class UploadQuotaConfiguration implements DataConfigurationInterface
      *
      * @throws Exception
      */
-    private function updateFileUploadConfiguration(array $configuration)
+    private function updateFileUploadConfiguration(array $configuration): array
     {
         $uploadMaxSize = (int) str_replace('M', '', \ini_get('upload_max_filesize'));
         $sizes = [

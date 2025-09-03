@@ -61,7 +61,10 @@ class GeneralConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $config)
+    /**
+     * @return list<array{key: 'The selected condition must be different in each field to set an order of priority.', domain: 'Admin.Notifications.Error', parameters: array{}}>
+     */
+    public function updateConfiguration(array $config): array
     {
         $errors = [];
 
@@ -94,7 +97,7 @@ class GeneralConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         $resolver = new OptionsResolver();
         $resolver->setRequired([

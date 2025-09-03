@@ -139,7 +139,7 @@ class CategoryDataProvider
      *
      * @return array Categories
      */
-    public function getCategoriesByProduct(ObjectModel $product)
+    public function getCategoriesByProduct(ObjectModel $product): array
     {
         $productCategories = $product->getCategories();
 
@@ -164,7 +164,7 @@ class CategoryDataProvider
      *
      * @return array Categories
      */
-    public function getCategoriesWithBreadCrumb()
+    public function getCategoriesWithBreadCrumb(): array
     {
         $results = [];
         foreach ($this->categoryList as $category) {
@@ -196,10 +196,8 @@ class CategoryDataProvider
 
     /**
      * @param int $categoryId
-     *
-     * @return array
      */
-    public function getParentNamesFromList($categoryId)
+    public function getParentNamesFromList($categoryId): array
     {
         $categories = [];
 
@@ -218,10 +216,8 @@ class CategoryDataProvider
      * @param string $query
      * @param int    $limit
      * @param bool   $nameAsBreadCrumb
-     *
-     * @return array
      */
-    public function getAjaxCategories($query, $limit, $nameAsBreadCrumb = false)
+    public function getAjaxCategories($query, $limit, $nameAsBreadCrumb = false): array
     {
         $query = empty($query) ? '' : "AND cl.name LIKE '%" . pSQL($query) . "%'";
 

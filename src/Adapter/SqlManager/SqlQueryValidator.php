@@ -45,7 +45,7 @@ class SqlQueryValidator
      *
      * @return array Array of errors if any
      */
-    public function validate($sql)
+    public function validate($sql): array
     {
         $errors = [];
 
@@ -72,10 +72,8 @@ class SqlQueryValidator
      * Get request sql errors.
      *
      * @param array<string, string|array<string>> $sqlErrors
-     *
-     * @return array
      */
-    private function getErrors(array $sqlErrors)
+    private function getErrors(array $sqlErrors): array
     {
         $errors = [];
 

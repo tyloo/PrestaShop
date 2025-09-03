@@ -298,7 +298,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        return array_map(static fn (array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $shop): ShopId => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**
@@ -322,7 +322,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('productId', $productId->getValue())
         ;
 
-        return array_map(static fn (array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $shop): ShopId => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**

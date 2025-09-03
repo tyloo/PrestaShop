@@ -35,7 +35,10 @@ use PrestaShop\PrestaShop\Core\Form\FormChoiceProviderInterface;
  */
 final class GenderByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    public function getChoices()
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(): array
     {
         $genders = Gender::getGenders();
         $choices = [];

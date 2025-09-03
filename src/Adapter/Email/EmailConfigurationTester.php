@@ -50,7 +50,7 @@ final class EmailConfigurationTester implements EmailConfigurationTesterInterfac
     /**
      * @return array<int, string>
      */
-    public function testConfiguration(array $config)
+    public function testConfiguration(array $config): array
     {
         $content = $this->translator->trans(
             'This is a test message. Your server is now configured to send email.',

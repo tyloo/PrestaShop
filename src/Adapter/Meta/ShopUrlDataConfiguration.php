@@ -54,7 +54,10 @@ final class ShopUrlDataConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return array{key: 'The Base URI is not valid.', domain: 'Admin.Shopparameters.Notification', parameters: array{}}[]|string[]
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 

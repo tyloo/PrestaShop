@@ -51,7 +51,7 @@ class GetOrderShipmentsHandler implements GetOrderShipmentsHandlerInterface
     /**
      * @return OrderShipment[]
      */
-    public function handle(GetOrderShipments $query)
+    public function handle(GetOrderShipments $query): array
     {
         $shipments = [];
         $orderId = $query->getOrderId()->getValue();

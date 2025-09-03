@@ -181,11 +181,8 @@ class OrderDetailLazyArray extends AbstractLazyArray
         return $cart->isVirtualCart();
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getShipping()
+    public function getShipping(): array
     {
         $order = $this->order;
 

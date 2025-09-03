@@ -295,11 +295,8 @@ class ProductLazyArray extends AbstractLazyArray
         return null;
     }
 
-    /**
-     * @return array
-     */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getEmbeddedAttributes()
+    public function getEmbeddedAttributes(): array
     {
         $whitelist = $this->getProductAttributeWhitelist();
         $embeddedProductAttributes = [];
@@ -441,11 +438,9 @@ class ProductLazyArray extends AbstractLazyArray
      * See following resources for up-to-date information
      * https://support.google.com/merchants/answer/6324448
      * https://schema.org/ItemAvailability
-     *
-     * @return string
      */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getSeoAvailability()
+    public function getSeoAvailability(): string
     {
         // Availability for displaying discontinued products, if enabled
         if ($this->product['active'] !== 1) {
@@ -619,12 +614,10 @@ class ProductLazyArray extends AbstractLazyArray
     }
 
     /**
-     * @return array
-     *
      * @throws InvalidArgumentException
      */
     #[LazyArrayAttribute(arrayAccess: true)]
-    public function getFlags()
+    public function getFlags(): array
     {
         $flags = [];
 
@@ -1539,10 +1532,8 @@ class ProductLazyArray extends AbstractLazyArray
 
     /**
      * Assemble the same features in one array.
-     *
-     * @return array
      */
-    protected function buildGroupedFeatures(array $productFeatures)
+    protected function buildGroupedFeatures(array $productFeatures): array
     {
         $valuesByFeatureName = [];
         $groupedFeatures = [];

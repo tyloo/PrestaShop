@@ -57,7 +57,7 @@ class OrderShipmentCreator
             $shipment->setShippedAt(null);
             $shipment->setCancelledAt(null);
 
-            $productWeight = array_map(fn ($product) => $product['weight'] * $product['quantity'], $products['product_list']);
+            $productWeight = array_map(fn ($product): int|float => $product['weight'] * $product['quantity'], $products['product_list']);
 
             // add OrderCarrier here for keep the compatibility for legacy
             $orderCarrier = new OrderCarrier();

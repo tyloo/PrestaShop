@@ -62,7 +62,7 @@ class GetProductSupplierOptionsHandler extends AbstractProductSupplierHandler im
             $productSuppliers = $this->getProductSuppliersInfo($query->getProductId());
         }
 
-        $supplierIntIds = array_map(fn (SupplierId $supplierId) => $supplierId->getValue(), $supplierIds);
+        $supplierIntIds = array_map(fn (SupplierId $supplierId): int => $supplierId->getValue(), $supplierIds);
 
         return new ProductSupplierOptions(
             $defaultSupplier !== null ? $defaultSupplier->getValue() : 0,

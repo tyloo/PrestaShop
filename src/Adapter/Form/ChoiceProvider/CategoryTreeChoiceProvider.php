@@ -46,7 +46,10 @@ final class CategoryTreeChoiceProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    /**
+     * @return list
+     */
+    public function getChoices(): array
     {
         $categories = $this->categoryDataProvider->getNestedCategories($this->contextShopRootCategoryId, false, $this->enabledCategoriesOnly);
         $choices = [];
@@ -58,10 +61,7 @@ final class CategoryTreeChoiceProvider implements FormChoiceProviderInterface
         return $choices;
     }
 
-    /**
-     * @return array
-     */
-    private function buildChoiceTree(array $category)
+    private function buildChoiceTree(array $category): array
     {
         $tree = [
             'id_category' => $category['id_category'],

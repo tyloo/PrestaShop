@@ -58,7 +58,10 @@ class CachingConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return mixed[]
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 
@@ -83,7 +86,7 @@ class CachingConfiguration implements DataConfigurationInterface
      *
      * @return array the errors list during the update operation
      */
-    private function updatePhpCacheConfiguration(array $configuration)
+    private function updatePhpCacheConfiguration(array $configuration): array
     {
         $errors = [];
 

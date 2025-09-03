@@ -208,7 +208,7 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
             return [];
         }
 
-        return array_map(fn (ImageId $imageId) => $imageId->getValue(), $combinationImageIds[$combinationIdValue]);
+        return array_map(fn (ImageId $imageId): int => $imageId->getValue(), $combinationImageIds[$combinationIdValue]);
     }
 
     private function getCoverUrl(array $imageIds, ProductId $productId, ShopConstraint $shopConstraint): string

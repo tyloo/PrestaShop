@@ -40,7 +40,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProviderInterface
 {
-    public function getChoices(array $options)
+    /**
+     * @return mixed[]
+     */
+    public function getChoices(array $options): array
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
@@ -81,6 +84,6 @@ final class CountryStateByIdChoiceProvider implements ConfigurableFormChoiceProv
 
     private function allowIdCountryGreaterThanZero(OptionsResolver $resolver)
     {
-        $resolver->setAllowedValues('id_country', fn ($value) => $value > 0);
+        $resolver->setAllowedValues('id_country', fn ($value): bool => $value > 0);
     }
 }

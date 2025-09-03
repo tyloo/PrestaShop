@@ -35,7 +35,10 @@ use Risk;
  */
 final class RiskByIdChoiceProvider implements FormChoiceProviderInterface
 {
-    public function getChoices()
+    /**
+     * @return int[]
+     */
+    public function getChoices(): array
     {
         $risks = Risk::getRisks();
         $choices = [];

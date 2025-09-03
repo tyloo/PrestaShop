@@ -303,11 +303,9 @@ final class MailPreviewVariablesBuilder
     }
 
     /**
-     * @return array
-     *
      * @throws \PrestaShop\PrestaShop\Core\Localization\Exception\LocalizationException
      */
-    private function getProductList(Order $order)
+    private function getProductList(Order $order): array
     {
         $cart = new Cart($order->id_cart);
         $packageList = $cart->getPackageList();
@@ -370,10 +368,7 @@ final class MailPreviewVariablesBuilder
         return $productTemplateList;
     }
 
-    /**
-     * @return array
-     */
-    private function getFakeVirtualProductList()
+    private function getFakeVirtualProductList(): array
     {
         $products = Product::getProducts($this->context->language->getId(), 0, 2, 'id_product', 'ASC');
         $results = [];

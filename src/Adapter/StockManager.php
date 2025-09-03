@@ -87,7 +87,7 @@ class StockManager
      *
      * @deprecated Since 9.0 and will be removed in 10.0
      */
-    public function isAsmGloballyActivated()
+    public function isAsmGloballyActivated(): bool
     {
         @trigger_error(\sprintf(
             '%s is deprecated since 9.0 and will be removed in 10.0.',

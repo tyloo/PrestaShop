@@ -40,7 +40,7 @@ final class ContactDeleter
      *
      * @return array of errors
      */
-    public function delete(array $contactIds)
+    public function delete(array $contactIds): array
     {
         $errors = [];
 

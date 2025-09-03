@@ -95,7 +95,7 @@ class LogsConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         $resolver = new OptionsResolver();
         $resolver

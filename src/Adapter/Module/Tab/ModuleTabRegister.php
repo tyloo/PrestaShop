@@ -163,7 +163,7 @@ class ModuleTabRegister
      *
      * @throws Exception in case of invalid data
      */
-    protected function checkIsValid($moduleName, ParameterBag $data)
+    protected function checkIsValid($moduleName, ParameterBag $data): bool
     {
         $className = $data->get('class_name', null);
         if ($className === null) {
@@ -261,7 +261,7 @@ class ModuleTabRegister
      *
      * @return array Name to use for each installed language
      */
-    protected function getTabNames($names)
+    protected function getTabNames($names): array
     {
         $translatedNames = [];
 

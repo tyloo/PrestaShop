@@ -49,7 +49,10 @@ class SEOOptionsDataConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return list<string>
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
         try {

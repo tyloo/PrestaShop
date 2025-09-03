@@ -53,7 +53,7 @@ class AddCustomerGroupHandler implements AddCustomerGroupHandlerInterface
         $customerGroup->reduction = (string) $command->getReductionPercent();
         $customerGroup->price_display_method = (int) $command->displayPriceTaxExcluded();
         $customerGroup->show_prices = $command->showPrice();
-        $customerGroup->id_shop_list = array_map(fn (ShopId $shopId) => $shopId->getValue(), $command->getShopIds());
+        $customerGroup->id_shop_list = array_map(fn (ShopId $shopId): int => $shopId->getValue(), $command->getShopIds());
 
         $this->customerGroupValidator->validate($customerGroup);
 

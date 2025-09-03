@@ -38,10 +38,8 @@ class SupplierOrderValidator
      * Checks if the given supplier has pending orders.
      *
      * @param int $supplierId
-     *
-     * @return bool
      */
-    public function hasPendingOrders($supplierId)
+    public function hasPendingOrders($supplierId): bool
     {
         @trigger_error(\sprintf(
             '%s is deprecated since 9.0 and will be removed in 10.0.',

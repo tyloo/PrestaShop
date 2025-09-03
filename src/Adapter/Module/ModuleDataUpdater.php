@@ -41,10 +41,8 @@ class ModuleDataUpdater
 {
     /**
      * @param string $name
-     *
-     * @return bool
      */
-    public function removeModuleFromDisk($name)
+    public function removeModuleFromDisk($name): bool
     {
         $fs = new Filesystem();
 

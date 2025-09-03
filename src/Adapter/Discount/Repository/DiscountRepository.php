@@ -150,7 +150,7 @@ class DiscountRepository extends AbstractObjectModelRepository
             ->setparameter('discountId', $discountId->getValue())
         ;
 
-        return array_map(fn (array $row) => (int) $row['id_carrier'], $qb->executeQuery()->fetchAllAssociative());
+        return array_map(fn (array $row): int => (int) $row['id_carrier'], $qb->executeQuery()->fetchAllAssociative());
     }
 
     public function getCountries(DiscountId $discountId)
@@ -163,7 +163,7 @@ class DiscountRepository extends AbstractObjectModelRepository
             ->setparameter('discountId', $discountId->getValue())
         ;
 
-        return array_map(fn (array $row) => (int) $row['id_country'], $qb->executeQuery()->fetchAllAssociative());
+        return array_map(fn (array $row): int => (int) $row['id_country'], $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**

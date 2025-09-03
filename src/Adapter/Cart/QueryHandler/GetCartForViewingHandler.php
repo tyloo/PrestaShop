@@ -198,10 +198,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
         return new CartView($cart->id, $cart->id_currency, $customerInformation, $orderInformation, $cartSummary);
     }
 
-    /**
-     * @return array
-     */
-    private function prepareProductForView(array $products, Currency $currency, int $languageId)
+    private function prepareProductForView(array $products, Currency $currency, int $languageId): array
     {
         $formattedProducts = [];
 
@@ -276,10 +273,7 @@ final class GetCartForViewingHandler implements GetCartForViewingHandlerInterfac
         return $formattedProducts;
     }
 
-    /**
-     * @return array
-     */
-    private function getCartRulesForView(Cart $cart)
+    private function getCartRulesForView(Cart $cart): array
     {
         $cartRules = $cart->getCartRules();
         $cartRulesView = [];

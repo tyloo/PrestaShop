@@ -68,7 +68,10 @@ class DebugModeConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return list<(array{key: ('Error: Could not find whether debug mode is enabled. Make sure that the correct permissions are set on the file %s' | 'Error: Could not find whether debug profiling is enabled. Make sure that the correct permissions are set on the file %s' | 'Error: Could not write to file. Make sure that the correct permissions are set on the file %s'), domain: 'Admin.Advparameters.Notification', parameters: array{string}} | array{key: 'Error: The cookie name is required when the cookie value is set.', domain: 'Admin.Advparameters.Notification', parameters: array{}})>
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 

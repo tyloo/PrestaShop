@@ -165,7 +165,7 @@ class DebugMode
      *
      * @return int the debug mode
      */
-    private function updateDebugModeValueInMainFile($value)
+    private function updateDebugModeValueInMainFile($value): int
     {
         $filename = _PS_ROOT_DIR_ . '/config/defines.inc.php';
         $cleanedFileContent = php_strip_whitespace($filename);
@@ -194,7 +194,7 @@ class DebugMode
      *
      * @return int Debug mode
      */
-    private function updateDebugModeValueInCustomFile($value)
+    private function updateDebugModeValueInCustomFile($value): int
     {
         $customFileName = _PS_ROOT_DIR_ . '/config/defines_custom.inc.php';
         $cleanedFileContent = php_strip_whitespace($customFileName);

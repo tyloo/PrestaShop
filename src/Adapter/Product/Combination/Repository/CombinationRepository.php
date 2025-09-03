@@ -226,7 +226,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
                 if ($shopConstraint instanceof ShopCollection) {
                     $defaultShopId = null;
                     // Find first shop IDs that is both in the specified list and the valid associated shops
-                    $validShopIds = array_map(fn (ShopId $shopId) => $shopId->getValue(), $associatedShopIds);
+                    $validShopIds = array_map(fn (ShopId $shopId): int => $shopId->getValue(), $associatedShopIds);
                     foreach ($shopConstraint->getShopIds() as $shopId) {
                         if (\in_array($shopId->getValue(), $validShopIds, true)) {
                             $defaultShopId = $shopId;
@@ -354,7 +354,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
     public function getCombinationIds(ProductId $productId, ShopConstraint $shopConstraint): array
     {
         $shopIds = $this->productRepository->getShopIdsByConstraint($productId, $shopConstraint);
-        $shopIds = array_map(fn (ShopId $shopId) => $shopId->getValue(), $shopIds);
+        $shopIds = array_map(fn (ShopId $shopId): int => $shopId->getValue(), $shopIds);
 
         $qb = $this->connection->createQueryBuilder();
         $qb
@@ -371,7 +371,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
         $combinationIds = $qb->executeQuery()->fetchAllAssociative();
 
         return array_map(
-            fn (array $combination) => new CombinationId((int) $combination['id_product_attribute']),
+            fn (array $combination): CombinationId => new CombinationId((int) $combination['id_product_attribute']),
             $combinationIds
         );
     }
@@ -496,7 +496,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
             ->addGroupBy('id_shop')
         ;
 
-        return array_map(static fn (array $shop) => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $shop): ShopId => new ShopId((int) $shop['id_shop']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**
@@ -694,7 +694,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
                 )
                 ->setParameter(
                     'shopIds',
-                    array_map(fn (ShopId $shopId) => $shopId->getValue(), $shopConstraint->getShopIds()),
+                    array_map(fn (ShopId $shopId): int => $shopId->getValue(), $shopConstraint->getShopIds()),
                     ArrayParameterType::INTEGER
                 )
             ;
@@ -795,7 +795,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
                 )
                 ->setParameter(
                     'shopIds',
-                    array_map(fn (ShopId $shopId) => $shopId->getValue(), $shopConstraint->getShopIds()),
+                    array_map(fn (ShopId $shopId): int => $shopId->getValue(), $shopConstraint->getShopIds()),
                     ArrayParameterType::INTEGER
                 )
             ;

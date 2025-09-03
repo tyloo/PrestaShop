@@ -77,7 +77,10 @@ final class SetUpUrlsDataConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    /**
+     * @return array{}|array{non-falsy-string}
+     */
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 

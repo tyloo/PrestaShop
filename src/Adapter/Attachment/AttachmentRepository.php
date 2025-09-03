@@ -139,7 +139,7 @@ class AttachmentRepository extends AbstractObjectModelRepository
 
     private function addLocalizedValues(array $results): array
     {
-        $attachmentIds = array_map(fn (array $result) => (int) $result['id_attachment'], $results);
+        $attachmentIds = array_map(fn (array $result): int => (int) $result['id_attachment'], $results);
 
         $localizedValuesByAttachmentIds = $this->getAttachmentsLocalizedValues($attachmentIds);
 

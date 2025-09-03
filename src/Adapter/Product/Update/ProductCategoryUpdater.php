@@ -179,12 +179,12 @@ class ProductCategoryUpdater
      */
     private function formatCategoryIdsList(array $categoryIds, CategoryId $defaultCategoryId): array
     {
-        $categoryIds = array_map(fn (CategoryId $categoryId) => $categoryId->getValue(), $categoryIds);
+        $categoryIds = array_map(fn (CategoryId $categoryId): int => $categoryId->getValue(), $categoryIds);
 
         $categoryIds[] = $defaultCategoryId->getValue();
         $categoryIds = array_unique($categoryIds, \SORT_REGULAR);
 
-        return array_map(static fn (int $categoryId) => new CategoryId($categoryId), $categoryIds);
+        return array_map(static fn (int $categoryId): CategoryId => new CategoryId($categoryId), $categoryIds);
     }
 
     /**

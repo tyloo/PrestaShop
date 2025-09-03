@@ -55,7 +55,7 @@ class CategoriesProvider
         array $contextShopIds,
     ) {
         $this->contextLanguageId = (int) $contextLanguageId;
-        $this->contextShopIds = array_map(fn ($item) => (int) $item, $contextShopIds);
+        $this->contextShopIds = array_map(fn ($item): int => (int) $item, $contextShopIds);
     }
 
     /**
@@ -83,7 +83,7 @@ class CategoriesProvider
      *
      * @throws PrestaShopDatabaseException
      */
-    private function collectNestedCategoriesIdsAndNames($cmsPageCategoryId)
+    private function collectNestedCategoriesIdsAndNames($cmsPageCategoryId): array
     {
         $mainCategoryQuery = new DbQuery();
         $mainCategoryQuery

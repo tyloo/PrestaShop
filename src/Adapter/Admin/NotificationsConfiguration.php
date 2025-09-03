@@ -49,7 +49,7 @@ class NotificationsConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         $errors = [];
 

@@ -48,7 +48,10 @@ final class UrlSchemaDataConfiguration extends AbstractMultistoreConfiguration
         parent::__construct($configuration, $shopContext, $multistoreFeature);
     }
 
-    public function getConfiguration()
+    /**
+     * @return mixed[]
+     */
+    public function getConfiguration(): array
     {
         $configResult = [];
         $shopConstraint = $this->getShopConstraint();

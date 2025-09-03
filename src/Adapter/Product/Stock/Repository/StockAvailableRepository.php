@@ -245,7 +245,7 @@ class StockAvailableRepository extends AbstractMultiShopObjectModelRepository
             ->setParameter('combinationId', $combinationId->getValue())
         ;
 
-        return array_map(static fn (array $stock) => new StockId((int) $stock['id_stock_available']), $qb->executeQuery()->fetchAllAssociative());
+        return array_map(static fn (array $stock): StockId => new StockId((int) $stock['id_stock_available']), $qb->executeQuery()->fetchAllAssociative());
     }
 
     /**

@@ -88,7 +88,10 @@ class MetaDataProvider implements MetaDataProviderInterface
         return \is_string($result) ? $result : null;
     }
 
-    public function getDefaultMetaPageNamesExcludingFilled()
+    /**
+     * @return mixed[]
+     */
+    public function getDefaultMetaPageNamesExcludingFilled(): array
     {
         $pages = Meta::getPages(true);
 
@@ -102,7 +105,10 @@ class MetaDataProvider implements MetaDataProviderInterface
         return $result;
     }
 
-    public function getNotConfiguredModuleMetaPageNames()
+    /**
+     * @return mixed[]
+     */
+    public function getNotConfiguredModuleMetaPageNames(): array
     {
         $pages = Meta::getPages(true);
 

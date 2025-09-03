@@ -201,10 +201,8 @@ class ModuleSelfConfigurator
     /**
      * In order to prevent some failure, we can check all pre-requesites are respected.
      * Any error will be reported in the array.
-     *
-     * @return array
      */
-    public function validate()
+    public function validate(): array
     {
         $errors = [];
         if ($this->module === null) {
@@ -243,12 +241,10 @@ class ModuleSelfConfigurator
 
     /**
      * Launch the self configuration with all the context previously set!
-     *
-     * @return bool
      */
-    public function configure()
+    public function configure(): bool
     {
-        if (\count($this->validate())) {
+        if ($this->validate() !== []) {
             return false;
         }
 

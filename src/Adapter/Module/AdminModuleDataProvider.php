@@ -130,7 +130,7 @@ class AdminModuleDataProvider implements ModuleInterface
      *
      * @return array of allowed actions
      */
-    protected function filterAllowedActions(array $actions, $name = '')
+    protected function filterAllowedActions(array $actions, $name = ''): array
     {
         $allowedActions = [];
         foreach (array_keys($actions) as $actionName) {
@@ -320,7 +320,7 @@ class AdminModuleDataProvider implements ModuleInterface
      *
      * @return array with labels
      */
-    protected function getUrlsLabels(array $actions)
+    protected function getUrlsLabels(array $actions): array
     {
         $urlsLabels = [];
         foreach (array_keys($actions) as $actionName) {

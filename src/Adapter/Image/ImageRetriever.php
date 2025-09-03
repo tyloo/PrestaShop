@@ -54,10 +54,7 @@ class ImageRetriever
     ) {
     }
 
-    /**
-     * @return array
-     */
-    public function getAllProductImages(array $product, Language $language)
+    public function getAllProductImages(array $product, Language $language): array
     {
         $productInstance = new Product(
             $product['id_product'],
@@ -248,7 +245,7 @@ class ImageRetriever
         }
 
         // Sort thumbnails by size
-        uasort($urls, fn (array $a, array $b) => $a['width'] * $a['height'] > $b['width'] * $b['height'] ? 1 : -1);
+        uasort($urls, fn (array $a, array $b): int => $a['width'] * $a['height'] > $b['width'] * $b['height'] ? 1 : -1);
 
         // Resolve some basic sizes - the smallest, middle and largest
         $keys = array_keys($urls);
@@ -401,7 +398,7 @@ class ImageRetriever
             }
         }
 
-        uasort($urls, fn (array $a, array $b) => $a['width'] * $a['height'] > $b['width'] * $b['height'] ? 1 : -1);
+        uasort($urls, fn (array $a, array $b): int => $a['width'] * $a['height'] > $b['width'] * $b['height'] ? 1 : -1);
 
         $keys = array_keys($urls);
 

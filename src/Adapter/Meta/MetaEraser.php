@@ -39,11 +39,9 @@ final class MetaEraser
     /**
      * Erases data from meta entity.
      *
-     * @return array
-     *
      * @throws PrestaShopException
      */
-    public function erase(array $metaIds)
+    public function erase(array $metaIds): array
     {
         $errors = [];
 

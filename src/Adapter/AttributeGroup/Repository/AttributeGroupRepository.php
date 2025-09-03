@@ -56,7 +56,7 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
     {
         $attributeGroupId = $this->addObjectModelToShops(
             $attributeGroup,
-            array_map(fn (int $shopId) => new ShopId($shopId), $attributeGroup->id_shop_list),
+            array_map(fn (int $shopId): ShopId => new ShopId($shopId), $attributeGroup->id_shop_list),
             CannotAddAttributeGroupException::class
         );
 

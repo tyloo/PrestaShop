@@ -57,7 +57,7 @@ final class GetLanguageForEditingHandler implements GetLanguageForEditingHandler
             $language->date_format_full,
             (bool) $language->is_rtl,
             (bool) $language->active,
-            array_map(fn ($shopId) => (int) $shopId, $language->getAssociatedShops())
+            array_map(fn ($shopId): int => (int) $shopId, $language->getAssociatedShops())
         );
     }
 
