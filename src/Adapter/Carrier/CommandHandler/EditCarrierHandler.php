@@ -103,20 +103,16 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
         // Shipping information
         if ($command->hasAdditionalHandlingFee() !== null) {
             $newCarrier->shipping_handling = $command->hasAdditionalHandlingFee();
-        } else {
+        } elseif ($command->isFree()) {
             // If carrier is free, we should not have shipping handling
-            if ($command->isFree()) {
-                $newCarrier->shipping_handling = false;
-            }
+            $newCarrier->shipping_handling = false;
         }
 
         if ($command->isFree() !== null) {
             $newCarrier->is_free = $command->isFree();
-        } else {
+        } elseif ($command->hasAdditionalHandlingFee()) {
             // If carrier has additional handling fee, we should not have free shipping enabled
-            if ($command->hasAdditionalHandlingFee()) {
-                $newCarrier->is_free = false;
-            }
+            $newCarrier->is_free = false;
         }
 
         if ($command->getShippingMethod() !== null) {

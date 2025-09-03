@@ -151,16 +151,14 @@ class ImageThumbnailsRegenerator
                                 // Check if original image exists
                                 if (! file_exists($dir . $originalImageName) || ! filesize($dir . $originalImageName)) {
                                     $errors[] = $this->translator->trans('Source file does not exist or is empty (%filepath%)', ['%filepath%' => $dir . $originalImageName], 'Admin.Design.Notification');
-                                } else {
-                                    if (! LegacyImageManager::resize(
-                                        $dir . $originalImageName,
-                                        $newDir . $thumbnailName,
-                                        (int) $imageType->getWidth(),
-                                        (int) $imageType->getHeight(),
-                                        $imageFormat
-                                    )) {
-                                        $errors[] = $this->translator->trans('Failed to resize image file (%filepath%)', ['%filepath%' => $dir . $originalImageName], 'Admin.Design.Notification');
-                                    }
+                                } elseif (! LegacyImageManager::resize(
+                                    $dir . $originalImageName,
+                                    $newDir . $thumbnailName,
+                                    (int) $imageType->getWidth(),
+                                    (int) $imageType->getHeight(),
+                                    $imageFormat
+                                )) {
+                                    $errors[] = $this->translator->trans('Failed to resize image file (%filepath%)', ['%filepath%' => $dir . $originalImageName], 'Admin.Design.Notification');
                                 }
                             }
                         }
@@ -305,12 +303,8 @@ class ImageThumbnailsRegenerator
         foreach (glob($path . '*', \GLOB_BRACE) as $file) {
             if (is_dir($file)) {
                 $this->deleteImagesFromType($imageTypeName, $file . '/');
-            } else {
-                if (
-                    preg_match('/\/(\d+|\w{2}-default)-' . $imageTypeName . '\.(jpg|png|webp|avif)$/', $file) && ! unlink($file)
-                ) {
-                    throw new ImageNotDeletedException(\sprintf('Unable to delete image "%s"', $file));
-                }
+            } elseif (preg_match('/\/(\d+|\w{2}-default)-' . $imageTypeName . '\.(jpg|png|webp|avif)$/', $file) && ! unlink($file)) {
+                throw new ImageNotDeletedException(\sprintf('Unable to delete image "%s"', $file));
             }
         }
     }

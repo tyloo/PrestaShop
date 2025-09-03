@@ -188,10 +188,8 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
                     throw new InvalidCartRuleDiscountValueException('Discount amount specified is too high', InvalidCartRuleDiscountValueException::INVALID_MAX_AMOUNT);
                 }
             }
-        } else {
-            if ($discountValue > $order->total_paid_tax_incl) {
-                throw new InvalidCartRuleDiscountValueException('Discount amount specified is too high', InvalidCartRuleDiscountValueException::INVALID_MAX_AMOUNT);
-            }
+        } elseif ($discountValue > $order->total_paid_tax_incl) {
+            throw new InvalidCartRuleDiscountValueException('Discount amount specified is too high', InvalidCartRuleDiscountValueException::INVALID_MAX_AMOUNT);
         }
     }
 
@@ -216,10 +214,8 @@ final class AddCartRuleToOrderHandler extends AbstractOrderHandler implements Ad
                     throw new InvalidCartRuleDiscountValueException('Discount amount specified is too high', InvalidCartRuleDiscountValueException::INVALID_FREE_SHIPPING);
                 }
             }
-        } else {
-            if ($order->total_paid_tax_incl < $order->total_shipping_tax_incl) {
-                throw new InvalidCartRuleDiscountValueException('Discount amount specified is too high', InvalidCartRuleDiscountValueException::INVALID_FREE_SHIPPING);
-            }
+        } elseif ($order->total_paid_tax_incl < $order->total_shipping_tax_incl) {
+            throw new InvalidCartRuleDiscountValueException('Discount amount specified is too high', InvalidCartRuleDiscountValueException::INVALID_FREE_SHIPPING);
         }
     }
 }

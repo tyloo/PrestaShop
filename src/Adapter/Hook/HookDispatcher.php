@@ -93,7 +93,8 @@ class HookDispatcher extends EventDispatcher implements HookDispatcherInterface
 
             // Try to find the initial backtrace that was not called from the dispatcher services
             $initialBackTrace = [];
-            for ($i = 0; $i < \count($backtrace); ++$i) {
+            $counter = \count($backtrace);
+            for ($i = 0; $i < $counter; ++$i) {
                 $initialBackTrace = $backtrace[$i];
                 $isCodeFromDispatcher = (bool) strpos($initialBackTrace['file'], 'HookDispatcher');
                 if (! $isCodeFromDispatcher) {

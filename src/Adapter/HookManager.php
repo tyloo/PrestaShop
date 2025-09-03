@@ -48,7 +48,7 @@ class HookManager
      * @param bool   $use_push         Force change to be refreshed on Dashboard widgets
      * @param int    $id_shop          If specified, hook will be execute the shop with this ID
      *
-     * @return string|array|void|null modules output
+     * @return mixed[]|string|null modules output
      *
      * @throws CoreException
      */
@@ -101,6 +101,8 @@ class HookManager
                 throw new CoreException($exception->getMessage(), $exception->getCode(), $exception);
             }
         }
+
+        return null;
     }
 
     public function disableHooksForModule(int $moduleId): void

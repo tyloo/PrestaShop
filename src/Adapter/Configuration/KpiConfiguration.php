@@ -51,5 +51,7 @@ class KpiConfiguration extends Configuration
 
             return $result;
         }
+
+        return null;
     }
 }

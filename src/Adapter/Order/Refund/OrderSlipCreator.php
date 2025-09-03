@@ -223,10 +223,8 @@ class OrderSlipCreator
                 if (! isset($total_products[$id_tax_rules_group])) {
                     $total_products[$id_tax_rules_group] = 0;
                 }
-            } else {
-                if (! isset($total_products[$id_tax_rules_group . '_' . $id_address])) {
-                    $total_products[$id_tax_rules_group . '_' . $id_address] = 0;
-                }
+            } elseif (! isset($total_products[$id_tax_rules_group . '_' . $id_address])) {
+                $total_products[$id_tax_rules_group . '_' . $id_address] = 0;
             }
 
             if ($add_tax) {
@@ -277,18 +275,15 @@ class OrderSlipCreator
                 $tmp = explode('_', $key);
                 $address = Address::initialize((int) $tmp[1], true);
                 $tax_calculator = TaxManagerFactory::getManager($address, (int) $tmp[0])->getTaxCalculator();
-
                 if ($add_tax) {
                     $orderSlip->total_products_tax_incl += Tools::ps_round($tax_calculator->addTaxes($price), $precision);
                 } else {
                     $orderSlip->total_products_tax_excl += Tools::ps_round($tax_calculator->removeTaxes($price), $precision);
                 }
+            } elseif ($add_tax) {
+                $orderSlip->total_products_tax_incl += $price;
             } else {
-                if ($add_tax) {
-                    $orderSlip->total_products_tax_incl += $price;
-                } else {
-                    $orderSlip->total_products_tax_excl += $price;
-                }
+                $orderSlip->total_products_tax_excl += $price;
             }
         }
 

@@ -80,15 +80,13 @@ class BulkToggleModuleStatusHandler implements BulkToggleModuleStatusHandlerInte
                         )
                     );
                 }
-            } else {
-                if ($this->moduleManager->disable($moduleName)) {
-                    $this->logger->warning(
-                        \sprintf(
-                            'The module %s has been disabled',
-                            $moduleName
-                        )
-                    );
-                }
+            } elseif ($this->moduleManager->disable($moduleName)) {
+                $this->logger->warning(
+                    \sprintf(
+                        'The module %s has been disabled',
+                        $moduleName
+                    )
+                );
             }
         }
     }

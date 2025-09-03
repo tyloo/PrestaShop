@@ -464,39 +464,34 @@ final class CategoryImportHandler extends AbstractImportHandler
             $error = $fieldsError !== true ? $fieldsError : '';
             $error .= $langFieldsError !== true ? $langFieldsError : '';
             $error .= $this->legacyDatabase->getErrorMessage();
-
             if ($error !== '' && $error !== '0') {
                 $this->error($error);
             }
-        } else {
+        } elseif ($this->isMultistoreEnabled) {
             // Associate category to shop
-            if ($this->isMultistoreEnabled) {
-                $this->connection->delete(
-                    $this->dbPrefix . 'category_shop',
-                    [
-                        'id_category' => (int) $category->id,
-                    ]
-                );
+            $this->connection->delete(
+                $this->dbPrefix . 'category_shop',
+                [
+                    'id_category' => (int) $category->id,
+                ]
+            );
+            if (empty($shopData)) {
+                $shopData = implode($importConfig->getMultipleValueSeparator(), $this->contextShopIds);
+            }
 
-                if (empty($shopData)) {
-                    $shopData = implode($importConfig->getMultipleValueSeparator(), $this->contextShopIds);
-                }
+            // Get shops for each attributes
+            $multipleValueSeparator = $importConfig->getMultipleValueSeparator();
+            if (empty($multipleValueSeparator)) {
+                return;
+            }
 
-                // Get shops for each attributes
-                $multipleValueSeparator = $importConfig->getMultipleValueSeparator();
-                if (empty($multipleValueSeparator)) {
-                    return;
-                }
-
-                $shopData = explode($multipleValueSeparator, $shopData);
-
-                foreach ($shopData as $shop) {
-                    if (! empty($shop)) {
-                        if (! is_numeric($shop)) {
-                            $category->addShop(Shop::getIdByName($shop));
-                        } else {
-                            $category->addShop((int) $shop);
-                        }
+            $shopData = explode($multipleValueSeparator, $shopData);
+            foreach ($shopData as $shop) {
+                if (! empty($shop)) {
+                    if (! is_numeric($shop)) {
+                        $category->addShop(Shop::getIdByName($shop));
+                    } else {
+                        $category->addShop((int) $shop);
                     }
                 }
             }
