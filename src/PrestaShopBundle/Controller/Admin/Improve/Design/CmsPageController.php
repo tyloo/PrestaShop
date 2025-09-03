@@ -209,7 +209,7 @@ class CmsPageController extends PrestaShopAdminController
         return $this->render(
             '@PrestaShop/Admin/Improve/Design/Cms/add.html.twig',
             [
-                'cmsPageForm' => $form->createView(),
+                'cmsPageForm' => $form,
                 'cmsCategoryParentId' => $categoryParentId,
                 'enableSidebar' => true,
                 'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
@@ -279,7 +279,7 @@ class CmsPageController extends PrestaShopAdminController
             '@PrestaShop/Admin/Improve/Design/Cms/edit.html.twig',
             [
                 'cmsPageId' => $cmsPageId,
-                'cmsPageForm' => $form->createView(),
+                'cmsPageForm' => $form,
                 'cmsCategoryParentId' => $request->get('id_cms_category'),
                 'enableSidebar' => true,
                 'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
@@ -331,7 +331,7 @@ class CmsPageController extends PrestaShopAdminController
         return $this->render(
             '@PrestaShop/Admin/Improve/Design/Cms/create_category.html.twig',
             [
-                'cmsPageCategoryForm' => $cmsPageCategoryForm->createView(),
+                'cmsPageCategoryForm' => $cmsPageCategoryForm,
                 'enableSidebar' => true,
                 'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
                 'layoutTitle' => $this->trans('New category', [], 'Admin.Navigation.Menu'),
@@ -389,7 +389,7 @@ class CmsPageController extends PrestaShopAdminController
         return $this->render(
             '@PrestaShop/Admin/Improve/Design/Cms/edit_category.html.twig',
             [
-                'cmsPageCategoryForm' => $cmsPageCategoryForm->createView(),
+                'cmsPageCategoryForm' => $cmsPageCategoryForm,
                 'cmsCategoryParentId' => $cmsCategoryParentId,
                 'enableSidebar' => true,
                 'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),

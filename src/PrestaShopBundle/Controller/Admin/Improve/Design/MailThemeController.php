@@ -93,9 +93,9 @@ class MailThemeController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('Email theme', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
-            'mailThemeConfigurationForm' => $formHandler->getForm()->createView(),
-            'generateMailsForm' => $generateThemeMailsForm->createView(),
-            'translateMailsBodyForm' => $translateMailsBodyForm->createView(),
+            'mailThemeConfigurationForm' => $formHandler->getForm(),
+            'generateMailsForm' => $generateThemeMailsForm,
+            'translateMailsBodyForm' => $translateMailsBodyForm,
             'mailThemes' => $mailThemes,
         ]);
     }

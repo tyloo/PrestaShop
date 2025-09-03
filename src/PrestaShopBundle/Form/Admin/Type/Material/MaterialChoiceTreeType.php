@@ -73,7 +73,7 @@ class MaterialChoiceTreeType extends AbstractType
             ->addAllowedValues('compound', false);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'material_choice_tree';
     }

@@ -114,7 +114,7 @@ class ResourceScopesType extends TranslatorAwareType implements DataMapperInterf
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return AccordionType::class;
     }

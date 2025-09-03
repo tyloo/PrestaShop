@@ -79,7 +79,7 @@ class SmartyType extends TranslatorAwareType
             ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'performance_smarty_block';
     }

@@ -73,10 +73,10 @@ class LocalizationController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('Localization', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
-            'configurationForm' => $configurationForm->createView(),
-            'localUnitsForm' => $localUnitsForm->createView(),
-            'advancedForm' => $advancedForm->createView(),
-            'localizationPackImportForm' => $localizationPackImportForm->createView(),
+            'configurationForm' => $configurationForm,
+            'localUnitsForm' => $localUnitsForm,
+            'advancedForm' => $advancedForm,
+            'localizationPackImportForm' => $localizationPackImportForm,
         ]);
     }
 

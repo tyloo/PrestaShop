@@ -104,7 +104,7 @@ class CurrencyController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Improve/International/Currency/index.html.twig', [
             'currencyGrid' => $this->presentGrid($currencyGrid),
-            'currencySettingsForm' => $settingsForm->createView(),
+            'currencySettingsForm' => $settingsForm,
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
         ]);
@@ -137,7 +137,7 @@ class CurrencyController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Improve/International/Currency/create.html.twig', [
             'isShopFeatureEnabled' => $this->getShopContext()->isMultiShopUsed(),
-            'currencyForm' => $currencyForm->createView(),
+            'currencyForm' => $currencyForm,
             'layoutTitle' => $this->trans('New currency', [], 'Admin.Navigation.Menu'),
         ]);
     }

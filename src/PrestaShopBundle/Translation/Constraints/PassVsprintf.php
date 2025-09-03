@@ -37,7 +37,7 @@ class PassVsprintf extends Constraint
 {
     public $message = 'You must specify as many arguments (%d, %s ...) as the original string.';
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return static::CLASS_CONSTRAINT;
     }

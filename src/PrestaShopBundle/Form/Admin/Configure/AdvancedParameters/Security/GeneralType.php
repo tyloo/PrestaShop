@@ -56,7 +56,7 @@ class GeneralType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'security_general_block';
     }

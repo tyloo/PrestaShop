@@ -104,7 +104,7 @@ class SpecificPriceController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/SpecificPrice/create.html.twig', [
-            'specificPriceForm' => $form->createView(),
+            'specificPriceForm' => $form,
             'liteDisplaying' => $request->query->has('liteDisplaying'),
         ]);
     }
@@ -137,7 +137,7 @@ class SpecificPriceController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/SpecificPrice/edit.html.twig', [
-            'specificPriceForm' => $form->createView(),
+            'specificPriceForm' => $form,
             'liteDisplaying' => $request->query->has('liteDisplaying'),
         ]);
     }

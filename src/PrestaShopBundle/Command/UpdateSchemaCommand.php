@@ -37,6 +37,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:schema:update-without-foreign', description: 'Update the database')]
 class UpdateSchemaCommand extends Command
 {
     private array $executedQueries = [];
@@ -338,10 +339,8 @@ class UpdateSchemaCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('prestashop:schema:update-without-foreign')
             ->addOption('dump-sql', null, InputOption::VALUE_NONE, 'Dumps the generated SQL statements to the screen (does not execute them).')
-            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Causes the generated SQL statements to be physically executed against your database.')
-            ->setDescription('Update the database');
+            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Causes the generated SQL statements to be physically executed against your database.');
     }
 
     private function executeUpdateQuery(Connection $connection, string $query): int

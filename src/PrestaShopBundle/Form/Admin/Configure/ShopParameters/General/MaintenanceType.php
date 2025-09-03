@@ -130,7 +130,7 @@ class MaintenanceType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'maintenance_general_block';
     }

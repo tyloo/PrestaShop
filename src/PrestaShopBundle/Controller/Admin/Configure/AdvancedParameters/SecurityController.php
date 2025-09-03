@@ -83,8 +83,8 @@ class SecurityController extends PrestaShopAdminController
                 'enableSidebar' => true,
                 'layoutHeaderToolbarBtn' => [],
                 'layoutTitle' => $this->trans('Security', [], 'Admin.Navigation.Menu'),
-                'passwordPolicyForm' => $passwordPolicyForm->createView(),
-                'generalForm' => $generalForm->createView(),
+                'passwordPolicyForm' => $passwordPolicyForm,
+                'generalForm' => $generalForm,
                 'multistoreInfoTip' => $this->trans(
                     'Note that this page is available in all shops context only, this is why your context has just switched.',
                     [],

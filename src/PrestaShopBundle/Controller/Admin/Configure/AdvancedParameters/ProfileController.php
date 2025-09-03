@@ -143,7 +143,7 @@ class ProfileController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Configure/AdvancedParameters/Profiles/create.html.twig', [
-            'profileForm' => $form->createView(),
+            'profileForm' => $form,
             'layoutTitle' => $this->trans('New role', [], 'Admin.Navigation.Menu'),
             'help_link' => $this->generateSidebarLink('AdminProfiles'),
             'enableSidebar' => true,
@@ -201,7 +201,7 @@ class ProfileController extends PrestaShopAdminController
         $editableProfile = $this->dispatchQuery(new GetProfileForEditing($profileId));
 
         return $this->render('@PrestaShop/Admin/Configure/AdvancedParameters/Profiles/edit.html.twig', [
-            'profileForm' => $form->createView(),
+            'profileForm' => $form,
             'layoutTitle' => $this->trans(
                 'Editing %role_name% role',
                 [

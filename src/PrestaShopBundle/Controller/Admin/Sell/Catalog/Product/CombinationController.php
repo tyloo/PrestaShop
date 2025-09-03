@@ -116,7 +116,7 @@ class CombinationController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/Combination/edit.html.twig', [
             'lightDisplay' => $liteDisplaying,
-            'combinationForm' => $combinationForm->createView(),
+            'combinationForm' => $combinationForm,
         ]);
     }
 
@@ -201,7 +201,7 @@ class CombinationController extends PrestaShopAdminController
         $bulkCombinationForm->handleRequest($request);
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/Combination/bulk.html.twig', [
-            'bulkCombinationForm' => $bulkCombinationForm->createView(),
+            'bulkCombinationForm' => $bulkCombinationForm,
             'lightDisplay' => true,
         ]);
     }
@@ -288,7 +288,7 @@ class CombinationController extends PrestaShopAdminController
             'productId' => $productId,
             'combinationLimitChoices' => self::COMBINATIONS_PAGINATION_OPTIONS,
             'combinationsLimit' => ProductCombinationFilters::LIST_LIMIT,
-            'combinationsForm' => $combinationsForm->createView(),
+            'combinationsForm' => $combinationsForm,
             'isMultistoreActive' => $this->getShopContext()->isMultiShopEnabled(),
             'shopName' => $this->getShopContext()->getName(),
             'shopId' => $this->getShopContext()->getId(),

@@ -67,9 +67,9 @@ class GeolocationController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('Geolocation', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
-            'geolocationByIpAddressForm' => $geolocationByIpAddressForm->createView(),
-            'geolocationIpAddressWhitelistForm' => $geolocationIpAddressWhitelistForm->createView(),
-            'geolocationOptionsForm' => $geolocationOptionsForm->createView(),
+            'geolocationByIpAddressForm' => $geolocationByIpAddressForm,
+            'geolocationIpAddressWhitelistForm' => $geolocationIpAddressWhitelistForm,
+            'geolocationOptionsForm' => $geolocationOptionsForm,
             'geolocationDatabaseAvailable' => $geoLiteCityChecker->isAvailable(),
         ]);
     }

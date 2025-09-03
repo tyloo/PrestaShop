@@ -74,7 +74,7 @@ class DiscountController extends PrestaShopAdminController
                     'modal_target' => '#createDiscountModal',
                 ],
             ],
-            'discountTypeForm' => $discountTypeForm->createView(),
+            'discountTypeForm' => $discountTypeForm,
         ]);
     }
 
@@ -115,7 +115,7 @@ class DiscountController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Discount/create.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'layoutTitle' => $this->trans('Discounts', [], 'Admin.Navigation.Menu'),
@@ -166,7 +166,7 @@ class DiscountController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Discount/edit.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'layoutTitle' => $this->trans('Discounts', [], 'Admin.Navigation.Menu'),

@@ -150,7 +150,7 @@ class ProductController extends PrestaShopAdminController
         ]);
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/index.html.twig', [
-            'categoryFilterForm' => $categoriesForm->createView(),
+            'categoryFilterForm' => $categoriesForm,
             'productGrid' => $this->presentGrid($productGrid),
             'enableSidebar' => true,
             'layoutHeaderToolbarBtn' => $this->getProductToolbarButtons($request->get('_legacy_controller')),
@@ -1027,7 +1027,7 @@ class ProductController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/create.html.twig', [
             'lightDisplay' => $lightDisplay,
             'showContentHeader' => false,
-            'productForm' => $productForm->createView(),
+            'productForm' => $productForm,
             'helpLink' => $this->generateSidebarLink('AdminProducts'),
             'editable' => $this->isGranted(Permission::UPDATE, self::PRODUCT_CONTROLLER_PERMISSION),
         ]);
@@ -1045,9 +1045,9 @@ class ProductController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Product/edit.html.twig', [
-            'categoryTreeSelectorForm' => $categoryTreeFormBuilder->getForm()->createView(),
+            'categoryTreeSelectorForm' => $categoryTreeFormBuilder->getForm(),
             'showContentHeader' => false,
-            'productForm' => $productForm->createView(),
+            'productForm' => $productForm,
             'statsLink' => $statsLink,
             'helpLink' => $this->generateSidebarLink('AdminProducts'),
             'editable' => $this->isGranted(Permission::UPDATE, self::PRODUCT_CONTROLLER_PERMISSION),
@@ -1064,7 +1064,7 @@ class ProductController extends PrestaShopAdminController
             'productId' => $productId,
             'lightDisplay' => $lightDisplay,
             'showContentHeader' => false,
-            'productShopsForm' => $productShopsForm->createView(),
+            'productShopsForm' => $productShopsForm,
             'helpLink' => $this->generateSidebarLink('AdminProducts'),
         ]);
     }
@@ -1591,7 +1591,7 @@ class ProductController extends PrestaShopAdminController
             'warningMessage' => $warningMessage,
             'showContentHeader' => false,
             'modalTitle' => $this->trans('Select a store', [], 'Admin.Catalog.Feature'),
-            'shopSelectorForm' => $this->createForm(ShopSelectorType::class)->createView(),
+            'shopSelectorForm' => $this->createForm(ShopSelectorType::class),
             'productId' => $productId,
             'productShopIds' => array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $productRepository->getAssociatedShopIds(new ProductId($productId))),
         ]);

@@ -163,7 +163,7 @@ class UploadQuotaType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'administration_upload_quota_block';
     }

@@ -70,7 +70,7 @@ class OptionalFeaturesType extends TranslatorAwareType
             ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'performance_optional_features_block';
     }

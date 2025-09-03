@@ -47,7 +47,7 @@ class MaterialChoiceTableType extends AbstractType
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }
@@ -58,7 +58,7 @@ class MaterialChoiceTableType extends AbstractType
         $view->vars['displayTotalItems'] = (bool) $options['display_total_items'];
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'material_choice_table';
     }

@@ -79,7 +79,7 @@ class CarrierRangesType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'carrier_ranges';
     }

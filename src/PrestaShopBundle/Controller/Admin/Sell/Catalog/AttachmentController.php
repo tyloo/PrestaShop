@@ -122,7 +122,7 @@ class AttachmentController extends PrestaShopAdminController
             'lightDisplay' => $request->query->has('liteDisplaying'),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('New file', [], 'Admin.Navigation.Menu'),
-            'attachmentForm' => $attachmentForm->createView(),
+            'attachmentForm' => $attachmentForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
         ]);
     }
@@ -178,7 +178,7 @@ class AttachmentController extends PrestaShopAdminController
                 ['%value%' => reset($names)],
                 'Admin.Navigation.Menu'
             ),
-            'attachmentForm' => $attachmentForm->createView(),
+            'attachmentForm' => $attachmentForm,
             'attachmentId' => $attachmentId,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
         ]);

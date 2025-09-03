@@ -55,7 +55,7 @@ class MultipartDecoder implements DecoderInterface
         return $request->request->all() + $request->files->all();
     }
 
-    public function supportsDecoding(string $format)
+    public function supportsDecoding(string $format): bool
     {
         return $format === self::FORMAT;
     }

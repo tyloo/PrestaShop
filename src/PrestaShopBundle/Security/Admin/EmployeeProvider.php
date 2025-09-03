@@ -74,10 +74,8 @@ class EmployeeProvider implements UserProviderInterface
 
     /**
      * Reload an Employee based on the serialized one and returns a fresh instance.
-     *
-     * @return UserInterface
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         if (! $user instanceof DoctrineEmployee) {
             throw new UnsupportedUserException(\sprintf('Instances of "%s" are not supported.', $user::class));
@@ -95,10 +93,8 @@ class EmployeeProvider implements UserProviderInterface
      * Tests if the given class supports the security layer. Here, only Employee class is allowed to be used to authenticate.
      *
      * @param string $class
-     *
-     * @return bool
      */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return $class === DoctrineEmployee::class;
     }

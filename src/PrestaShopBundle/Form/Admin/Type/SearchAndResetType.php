@@ -100,7 +100,7 @@ class SearchAndResetType extends AbstractType
             ->setAllowedTypes('redirect_route_params', 'array');
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'search_and_reset';
     }

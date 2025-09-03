@@ -77,7 +77,7 @@ class SlipPdfType extends TranslatorAwareType
             );
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'order_delivery_slip_options';
     }

@@ -110,7 +110,7 @@ class MaterialMultipleChoiceTableType extends AbstractType
         $resolver->setAllowedTypes('table_label', ['bool', 'string']);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'material_multiple_choice_table';
     }

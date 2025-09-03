@@ -99,7 +99,7 @@ class SqlManagerController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('SQL manager', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
-            'requestSqlSettingsForm' => $settingsForm->createView(),
+            'requestSqlSettingsForm' => $settingsForm,
             'requestSqlGrid' => $this->presentGrid($grid),
         ]);
     }
@@ -160,7 +160,7 @@ class SqlManagerController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('New SQL query', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
-            'requestSqlForm' => $sqlRequestForm->createView(),
+            'requestSqlForm' => $sqlRequestForm,
             'dbTableNames' => $this->getDatabaseTables(),
             'multistoreInfoTip' => $this->trans(
                 'Note that this feature is only available in the "all stores" context. It will be added to all your stores.',
@@ -210,7 +210,7 @@ class SqlManagerController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('Editing SQL query %query%', ['%query%' => $sqlRequestForm->getData()['name']], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
-            'requestSqlForm' => $sqlRequestForm->createView(),
+            'requestSqlForm' => $sqlRequestForm,
             'dbTableNames' => $this->getDatabaseTables(),
         ]);
     }

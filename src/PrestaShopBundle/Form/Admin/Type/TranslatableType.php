@@ -154,7 +154,7 @@ class TranslatableType extends TranslatorAwareType
         $resolver->setAllowedTypes('use_dropdown', ['null', 'bool']);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'translatable';
     }

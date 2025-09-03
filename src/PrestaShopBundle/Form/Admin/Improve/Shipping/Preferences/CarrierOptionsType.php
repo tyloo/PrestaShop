@@ -107,7 +107,7 @@ class CarrierOptionsType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'shipping_preferences_carrier_options_block';
     }

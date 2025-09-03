@@ -102,7 +102,7 @@ final class HookDataCollector extends DataCollector
         $this->data = [];
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'ps.hooks_collector';
     }

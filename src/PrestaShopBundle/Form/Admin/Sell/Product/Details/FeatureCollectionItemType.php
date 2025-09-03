@@ -69,10 +69,8 @@ class FeatureCollectionItemType extends TranslatorAwareType
 
     /**
      * Change block prefix for theme override.
-     *
-     * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'feature_collection_item';
     }

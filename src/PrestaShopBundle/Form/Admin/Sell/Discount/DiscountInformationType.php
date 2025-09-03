@@ -89,7 +89,7 @@ class DiscountInformationType extends TranslatorAwareType
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return CardType::class;
     }

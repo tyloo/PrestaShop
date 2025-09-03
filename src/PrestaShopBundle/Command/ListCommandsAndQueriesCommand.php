@@ -42,6 +42,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Lists all commands and queries definitions
  */
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:list:commands-and-queries', description: 'Lists available CQRS commands and queries')]
 class ListCommandsAndQueriesCommand extends Command
 {
     private bool $isFormatSimple = false;
@@ -63,8 +64,6 @@ class ListCommandsAndQueriesCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('prestashop:list:commands-and-queries')
-            ->setDescription('Lists available CQRS commands and queries')
             ->addOption(
                 'domain',
                 'd',

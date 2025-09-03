@@ -45,6 +45,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * This command is used for appending the hook names in the configuration file.
  */
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:update:configuration-file-hooks-listing', description: 'Appends configuration file hooks list')]
 class AppendConfigurationFileHooksListCommand extends Command
 {
     public function __construct(
@@ -64,10 +65,6 @@ class AppendConfigurationFileHooksListCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('prestashop:update:configuration-file-hooks-listing')
-            ->setDescription('Appends configuration file hooks list')
-        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

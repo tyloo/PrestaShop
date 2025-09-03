@@ -39,6 +39,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 Smarty_Autoloader::register();
 
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:theme:export', description: 'Create zip to distribute theme with its dependencies')]
 class ExportThemeCommand extends Command
 {
     public function __construct(
@@ -52,8 +53,6 @@ class ExportThemeCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('prestashop:theme:export')
-            ->setDescription('Create zip to distribute theme with its dependencies')
             ->addArgument('theme', InputArgument::REQUIRED, 'Theme to export directory name.');
     }
 

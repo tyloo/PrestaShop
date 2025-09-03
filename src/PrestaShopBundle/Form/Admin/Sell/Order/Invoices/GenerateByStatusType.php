@@ -82,7 +82,7 @@ class GenerateByStatusType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'orders_invoices_by_status_block';
     }

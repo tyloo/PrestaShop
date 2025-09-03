@@ -44,7 +44,7 @@ class DiscountUsabilityType extends TranslatorAwareType
         ;
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return CardType::class;
     }

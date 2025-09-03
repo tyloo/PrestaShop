@@ -93,7 +93,7 @@ class ThemeController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Improve/Design/Theme/index.html.twig', [
             'baseShopUrl' => $this->getShopContext()->getBaseURL(),
-            'shopLogosForm' => $logosUploadFormHandler->getForm()->createView(),
+            'shopLogosForm' => $logosUploadFormHandler->getForm(),
             'headerLogoPath' => $logoProvider->getHeaderLogoPath(),
             'mailLogoPath' => $logoProvider->getMailLogoPath(),
             'invoiceLogoPath' => $logoProvider->getInvoiceLogoPath(),
@@ -103,7 +103,7 @@ class ThemeController extends PrestaShopAdminController
             'isDevModeOn' => $this->getConfiguration()->get('_PS_MODE_DEV_'),
             'isSingleShopContext' => $this->getShopContext()->getShopConstraint()->isSingleShopContext(),
             'isMultiShopFeatureUsed' => $this->getShopContext()->isMultiShopUsed(),
-            'adaptThemeToRtlLanguagesForm' => $this->getAdaptThemeToRtlLanguageForm()->createView(),
+            'adaptThemeToRtlLanguagesForm' => $this->getAdaptThemeToRtlLanguageForm(),
             'isInstalledRtlLanguage' => $installedRtlLanguageChecker->isInstalledRtlLanguage(),
             'shopName' => $this->getShopContext()->getName(),
             'enableSidebar' => true,
@@ -219,7 +219,7 @@ class ThemeController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Improve/Design/Theme/import.html.twig', [
-            'importThemeForm' => $importThemeForm->createView(),
+            'importThemeForm' => $importThemeForm,
             'layoutTitle' => $this->trans('Theme import', [], 'Admin.Navigation.Menu'),
         ]);
     }
@@ -366,7 +366,7 @@ class ThemeController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Improve/Design/Theme/customize_page_layouts.html.twig', [
-            'pageLayoutCustomizationForm' => $pageLayoutCustomizationForm->createView(),
+            'pageLayoutCustomizationForm' => $pageLayoutCustomizationForm,
             'pages' => $pages,
             'layoutTitle' => $this->trans('Choose layouts', [], 'Admin.Navigation.Menu'),
         ]);

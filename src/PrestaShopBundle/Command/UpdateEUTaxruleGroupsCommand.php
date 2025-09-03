@@ -62,6 +62,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * Clean things up by removing all the previous taxes that had the attributes eu-tax-group="virtual" and auto-generated="1"
  */
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:taxes:update-eu-tax-rule-groups', description: 'Update EU Tax rule groups')]
 class UpdateEUTaxruleGroupsCommand extends Command
 {
     private ?OutputInterface $output = null;
@@ -191,9 +192,6 @@ class UpdateEUTaxruleGroupsCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('prestashop:taxes:update-eu-tax-rule-groups')
-            ->setDescription('Update EU Tax rule groups');
     }
 
     protected function addTax(SimpleXMLElement $taxes, SimpleXMLElement $tax, array $attributesToUpdate = [], array $attributesToRemove = []): ?SimpleXMLElement

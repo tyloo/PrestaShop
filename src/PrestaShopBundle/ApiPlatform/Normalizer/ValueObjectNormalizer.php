@@ -27,6 +27,7 @@
 
 namespace PrestaShopBundle\ApiPlatform\Normalizer;
 
+use ArrayObject;
 use Doctrine\Inflector\Inflector;
 use Doctrine\Inflector\InflectorFactory;
 use ReflectionMethod;
@@ -124,7 +125,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
         return new $type($parameterValue);
     }
 
-    public function supportsDenormalization(mixed $data, string $type, ?string $format = null)
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null): bool
     {
         if (! $this->isValueObjectType($type)) {
             return false;
@@ -148,7 +149,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
         return false;
     }
 
-    public function normalize(mixed $object, ?string $format = null, array $context = [])
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array|bool|string|int|float|ArrayObject|null
     {
         if (! $this->isValueObject($object)) {
             throw new InvalidArgumentException('Expected object to be a ValueObject');
@@ -165,7 +166,7 @@ class ValueObjectNormalizer implements NormalizerInterface, DenormalizerInterfac
         ];
     }
 
-    public function supportsNormalization(mixed $data, ?string $format = null)
+    public function supportsNormalization(mixed $data, ?string $format = null): bool
     {
         return $this->isValueObject($data);
     }

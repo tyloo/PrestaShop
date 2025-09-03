@@ -199,7 +199,7 @@ class LoginController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Login/reset_password.html.twig', [
-            'resetPasswordForm' => $resetPasswordForm->createView(),
+            'resetPasswordForm' => $resetPasswordForm,
             'imgDir' => $this->shopContext->getBaseURI() . 'img/',
             'shopName' => $this->getConfiguration()->get('PS_SHOP_NAME'),
         ]);
@@ -208,8 +208,8 @@ class LoginController extends PrestaShopAdminController
     protected function renderLoginPage(FormInterface $loginForm, FormInterface $requestPasswordResetForm, bool $showRequestPasswordResetForm): Response
     {
         return $this->render('@PrestaShop/Admin/Login/login.html.twig', [
-            'loginForm' => $loginForm->createView(),
-            'requestPasswordResetForm' => $requestPasswordResetForm->createView(),
+            'loginForm' => $loginForm,
+            'requestPasswordResetForm' => $requestPasswordResetForm,
             'showRequestPasswordResetForm' => $showRequestPasswordResetForm,
             'imgDir' => $this->shopContext->getBaseURI() . 'img/',
             'shopName' => $this->getConfiguration()->get('PS_SHOP_NAME'),

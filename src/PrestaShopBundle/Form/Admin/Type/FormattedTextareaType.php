@@ -126,7 +126,7 @@ class FormattedTextareaType extends TranslatorAwareType
         $view->vars['attr']['counter'] = $options['limit'];
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextareaType::class;
     }

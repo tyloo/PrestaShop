@@ -130,10 +130,10 @@ class TranslationsController extends PrestaShopAdminController
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
             'kpiRow' => $kpiRowFactory->build(),
-            'copyLanguageForm' => $copyLanguageForm->createView(),
-            'exportCataloguesForm' => $exportCataloguesForm->createView(),
-            'addUpdateLanguageForm' => $addUpdateLanguageForm->createView(),
-            'modifyTranslationsForm' => $modifyTranslationsForm->createView(),
+            'copyLanguageForm' => $copyLanguageForm,
+            'exportCataloguesForm' => $exportCataloguesForm,
+            'addUpdateLanguageForm' => $addUpdateLanguageForm,
+            'modifyTranslationsForm' => $modifyTranslationsForm,
             'addLanguageUrl' => $legacyContext->getAdminLink('AdminLanguages', true, ['addlang' => '']),
         ]);
     }

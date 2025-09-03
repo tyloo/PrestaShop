@@ -55,6 +55,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  *
  * No check of previous request in the file is done you must check manually that there are no duplicates.
  */
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:update:sql-upgrade-file-hooks-listing', description: 'Adds sql to sql upgrade file which contains hook insert operation')]
 class AppendHooksListForSqlUpgradeFileCommand extends Command
 {
     public function __construct(
@@ -69,10 +70,6 @@ class AppendHooksListForSqlUpgradeFileCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('prestashop:update:sql-upgrade-file-hooks-listing')
-            ->setDescription(
-                'Adds sql to sql upgrade file which contains hook insert operation'
-            )
             ->addArgument(
                 'previous-ps-version',
                 InputArgument::REQUIRED,

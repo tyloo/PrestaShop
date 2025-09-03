@@ -102,7 +102,7 @@ class CountryController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Country/create.html.twig', [
-            'countryForm' => $countryForm->createView(),
+            'countryForm' => $countryForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('New country', [], 'Admin.Navigation.Menu'),
@@ -142,7 +142,7 @@ class CountryController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Improve/International/Country/edit.html.twig', [
             'enableSidebar' => true,
-            'countryForm' => $countryForm->createView(),
+            'countryForm' => $countryForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'countryName' => $editableCountry->getLocalizedNames()[$this->getLanguageContext()->getId()],
         ]);

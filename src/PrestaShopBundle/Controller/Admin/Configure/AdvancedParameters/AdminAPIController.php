@@ -135,7 +135,7 @@ class AdminAPIController extends PrestaShopAdminController
             '@PrestaShop/Admin/Configure/AdvancedParameters/AdminAPI/ApiClient/create.html.twig',
             [
                 'layoutTitle' => $this->trans('New API Client', [], 'Admin.Navigation.Menu'),
-                'apiClientForm' => $apiClientForm->createView(),
+                'apiClientForm' => $apiClientForm,
             ]
         );
     }
@@ -172,7 +172,7 @@ class AdminAPIController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Configure/AdvancedParameters/AdminAPI/ApiClient/edit.html.twig', [
             'layoutTitle' => $this->trans('Editing API Client "%name%"', ['%name%' => $formData['client_name']], 'Admin.Navigation.Menu'),
-            'apiClientForm' => $apiClientForm->createView(),
+            'apiClientForm' => $apiClientForm,
         ]);
     }
 

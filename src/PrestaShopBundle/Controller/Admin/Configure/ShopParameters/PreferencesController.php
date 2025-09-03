@@ -103,7 +103,7 @@ class PreferencesController extends PrestaShopAdminController
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink('AdminPreferences'),
             'requireFilterStatus' => false,
-            'generalForm' => $form->createView(),
+            'generalForm' => $form,
             'isSslEnabled' => $this->getConfiguration()->get('PS_SSL_ENABLED'),
             'sslUri' => $sslUri,
         ]);

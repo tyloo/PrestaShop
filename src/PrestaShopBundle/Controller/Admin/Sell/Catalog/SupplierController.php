@@ -124,7 +124,7 @@ class SupplierController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Suppliers/add.html.twig', [
-            'supplierForm' => $supplierForm->createView(),
+            'supplierForm' => $supplierForm,
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('New supplier', [], 'Admin.Navigation.Menu'),
         ]);
@@ -275,7 +275,7 @@ class SupplierController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Suppliers/edit.html.twig', [
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
-            'supplierForm' => $supplierForm->createView(),
+            'supplierForm' => $supplierForm,
             'supplierName' => $editableSupplier->getName(),
             'logoImage' => $editableSupplier->getLogoImage(),
             'layoutTitle' => $this->trans(

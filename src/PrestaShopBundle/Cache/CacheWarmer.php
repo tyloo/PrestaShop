@@ -37,7 +37,7 @@ class CacheWarmer implements CacheWarmerInterface
     ) {
     }
 
-    public function warmUp($cacheDir)
+    public function warmUp($cacheDir): array
     {
         $legacyDirs = [
             $cacheDir . \DIRECTORY_SEPARATOR . 'cachefs',
@@ -52,7 +52,7 @@ class CacheWarmer implements CacheWarmerInterface
         return [];
     }
 
-    public function isOptional()
+    public function isOptional(): bool
     {
         return false;
     }

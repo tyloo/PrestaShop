@@ -32,7 +32,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CurrencyExchangeRateType extends CommonAbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
     }
 }

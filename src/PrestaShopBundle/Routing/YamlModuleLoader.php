@@ -50,7 +50,7 @@ class YamlModuleLoader extends Loader
     ) {
     }
 
-    public function load($resource, $type = null)
+    public function load(mixed $resource, $type = null)
     {
         if ($this->isLoaded) {
             throw new RuntimeException('Do not add the "module" loader twice.');
@@ -71,7 +71,7 @@ class YamlModuleLoader extends Loader
         return $routes;
     }
 
-    public function supports($resource, $type = null)
+    public function supports(mixed $resource, $type = null): bool
     {
         return $type === 'module';
     }

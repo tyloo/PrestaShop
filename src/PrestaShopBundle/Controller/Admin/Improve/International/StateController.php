@@ -214,7 +214,7 @@ class StateController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Improve/International/Locations/State/edit.html.twig', [
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('Editing state %value%', ['%value%' => $editableState->getName()], 'Admin.Navigation.Menu'),
-            'stateForm' => $stateForm->createView(),
+            'stateForm' => $stateForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
         ]);
     }
@@ -246,7 +246,7 @@ class StateController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Improve/International/Locations/State/add.html.twig', [
             'enableSidebar' => true,
-            'stateForm' => $stateForm->createView(),
+            'stateForm' => $stateForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'multistoreInfoTip' => $this->trans(
                 'Note that this feature is only available in the "all stores" context. It will be added to all your stores.',

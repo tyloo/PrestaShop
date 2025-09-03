@@ -54,7 +54,7 @@ class CustomerPreferencesController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('Customer settings', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
-            'generalForm' => $form->createView(),
+            'generalForm' => $form,
         ]);
     }
 
@@ -88,7 +88,7 @@ class CustomerPreferencesController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('Customers', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
-            'generalForm' => $form->createView(),
+            'generalForm' => $form,
         ]);
     }
 }

@@ -178,7 +178,7 @@ class OrderController extends PrestaShopAdminController
                 'orderGrid' => $this->presentGrid($orderGrid),
                 'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
                 'enableSidebar' => true,
-                'changeOrderStatusesForm' => $changeOrderStatusesForm->createView(),
+                'changeOrderStatusesForm' => $changeOrderStatusesForm,
                 'orderKpi' => $orderKpiFactory->build(),
                 'layoutHeaderToolbarBtn' => $this->getOrderToolbarButtons(),
             ]
@@ -249,7 +249,7 @@ class OrderController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Sell/Order/Order/create.html.twig', [
             'currencies' => $currencyChoiceProvider->getChoices(),
             'languages' => $languages,
-            'summaryForm' => $summaryForm->createView(),
+            'summaryForm' => $summaryForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'recycledPackagingEnabled' => (bool) $configuration->get('PS_RECYCLABLE_PACK'),
@@ -547,19 +547,19 @@ class OrderController extends PrestaShopAdminController
             'meta_title' => $metatitle,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'orderForViewing' => $orderForViewing,
-            'addOrderCartRuleForm' => $addOrderCartRuleForm->createView(),
-            'updateOrderStatusForm' => $updateOrderStatusForm->createView(),
-            'updateOrderStatusActionBarForm' => $updateOrderStatusActionBarForm->createView(),
-            'addOrderPaymentForm' => $addOrderPaymentForm->createView(),
-            'changeOrderCurrencyForm' => $changeOrderCurrencyForm->createView(),
+            'addOrderCartRuleForm' => $addOrderCartRuleForm,
+            'updateOrderStatusForm' => $updateOrderStatusForm,
+            'updateOrderStatusActionBarForm' => $updateOrderStatusActionBarForm,
+            'addOrderPaymentForm' => $addOrderPaymentForm,
+            'changeOrderCurrencyForm' => $changeOrderCurrencyForm,
             'privateNoteForm' => $privateNoteForm?->createView(),
-            'updateOrderShippingForm' => $updateOrderShippingForm->createView(),
-            'cancelProductForm' => $cancelProductForm->createView(),
+            'updateOrderShippingForm' => $updateOrderShippingForm,
+            'cancelProductForm' => $cancelProductForm,
             'invoiceManagementIsEnabled' => $orderForViewing->isInvoiceManagementIsEnabled(),
             'changeOrderAddressForm' => $changeOrderAddressForm?->createView(),
-            'orderMessageForm' => $orderMessageForm->createView(),
-            'addProductRowForm' => $addProductRowForm->createView(),
-            'editProductRowForm' => $editProductRowForm->createView(),
+            'orderMessageForm' => $orderMessageForm,
+            'addProductRowForm' => $addProductRowForm,
+            'editProductRowForm' => $editProductRowForm,
             'backOfficeOrderButtons' => $backOfficeOrderButtons,
             'merchandiseReturnEnabled' => $merchandiseReturnEnabled,
             'priceSpecification' => $this->getLanguageContext()->getPriceSpecification($orderCurrency->iso_code)->toArray(),
@@ -568,7 +568,7 @@ class OrderController extends PrestaShopAdminController
             'paginationNum' => $paginationNum,
             'paginationNumOptions' => $paginationNumOptions,
             'isAvailableQuantityDisplayed' => (bool) $this->getConfiguration()->get('PS_STOCK_MANAGEMENT'),
-            'internalNoteForm' => $internalNoteForm->createView(),
+            'internalNoteForm' => $internalNoteForm,
             'isImprovedShipmentFeatureFlagEnabled' => $featureFlagStateChecker->isEnabled(FeatureFlagSettings::FEATURE_FLAG_IMPROVED_SHIPMENT),
             'shipmentsGrid' => $this->presentGrid($shipmentsGrid),
             'shipmentsLabel' => $tools->purifyHTML($shipmentsLabel),
@@ -585,7 +585,7 @@ class OrderController extends PrestaShopAdminController
         $form = $this->createForm(MergeShipmentType::class, null, $formData);
 
         return $this->render('@PrestaShop/Admin/Sell/Order/Order/Blocks/View/merge_shipment_form.html.twig', [
-            'mergeShipmentForm' => $form->createView(),
+            'mergeShipmentForm' => $form,
             'orderId' => $orderId,
             'shipmentId' => $shipmentId,
             'products' => $formData['products'],
@@ -1009,7 +1009,7 @@ class OrderController extends PrestaShopAdminController
         $orderCurrency = $currencyDataProvider->getCurrencyById($orderForViewing->getCurrencyId());
 
         return $this->render('@PrestaShop/Admin/Sell/Order/Order/Blocks/View/product.html.twig', [
-            'cancelProductForm' => $cancelProductForm->createView(),
+            'cancelProductForm' => $cancelProductForm,
             'isColumnLocationDisplayed' => $product->getLocation() !== '',
             'isColumnRefundedDisplayed' => $product->getQuantityRefunded() > 0,
             'isAvailableQuantityDisplayed' => (bool) $this->getConfiguration()->get('PS_STOCK_MANAGEMENT'),
@@ -1442,7 +1442,7 @@ class OrderController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Sell/Order/Order/Blocks/View/product_list.html.twig', [
             'orderForViewing' => $orderForViewing,
-            'cancelProductForm' => $cancelProductForm->createView(),
+            'cancelProductForm' => $cancelProductForm,
             'orderCurrency' => $orderCurrency,
             'paginationNum' => $paginationNum,
             'isColumnLocationDisplayed' => $isColumnLocationDisplayed,

@@ -45,7 +45,7 @@ class DatePickerType extends AbstractType
     ) {
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }
@@ -75,7 +75,7 @@ class DatePickerType extends AbstractType
      *
      * @return string The prefix name
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'date_picker';
     }

@@ -63,7 +63,7 @@ class AliasType extends TranslatorAwareType
         ;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'alias_type';
     }

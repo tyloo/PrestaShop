@@ -56,7 +56,7 @@ class PrestaShopExtension extends Extension implements PrependExtensionInterface
         ;
     }
 
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    public function getConfiguration(array $config, ContainerBuilder $container): ?\Symfony\Component\Config\Definition\ConfigurationInterface
     {
         return new AddOnsConfiguration();
     }

@@ -95,7 +95,7 @@ class PaginationType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'product_preferences_pagination_block';
     }

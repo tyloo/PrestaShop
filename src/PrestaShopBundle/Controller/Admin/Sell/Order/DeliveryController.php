@@ -76,8 +76,8 @@ class DeliveryController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Order/Delivery/slip.html.twig', [
-            'optionsForm' => $form->createView(),
-            'pdfForm' => $pdfFormHandler->getForm()->createView(),
+            'optionsForm' => $form,
+            'pdfForm' => $pdfFormHandler->getForm(),
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'layoutTitle' => $this->trans('Delivery slips', [], 'Admin.Navigation.Menu'),
             'requireBulkActions' => false,

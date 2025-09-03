@@ -134,7 +134,7 @@ class FeatureController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Features/create.html.twig', [
-            'featureForm' => $featureForm->createView(),
+            'featureForm' => $featureForm,
             'layoutTitle' => $this->trans('New feature', [], 'Admin.Navigation.Menu'),
         ]);
     }

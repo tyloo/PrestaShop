@@ -124,7 +124,7 @@ class CategoryController extends PrestaShopAdminController
             'categoriesKpi' => $categoriesKpiFactory->build(),
             'layoutHeaderToolbarBtn' => $this->getCategoryIndexToolbarButtons($request, $currentCategoryId),
             'currentCategoryView' => $categoryViewData,
-            'deleteCategoriesForm' => $deleteCategoriesForm->createView(),
+            'deleteCategoriesForm' => $deleteCategoriesForm,
             'isSingleShopContext' => $this->getShopContext()->getShopConstraint()->isSingleShopContext(),
             'showcaseCardName' => ShowcaseCard::CATEGORIES_CARD,
             'isShowcaseCardClosed' => $showcaseCardIsClosed,
@@ -181,7 +181,7 @@ class CategoryController extends PrestaShopAdminController
             [
                 'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
                 'enableSidebar' => true,
-                'categoryForm' => $categoryForm->createView(),
+                'categoryForm' => $categoryForm,
                 'defaultGroups' => $defaultGroups,
                 'layoutTitle' => $this->trans('New category', [], 'Admin.Navigation.Menu'),
                 'categoryUrl' => null,
@@ -226,7 +226,7 @@ class CategoryController extends PrestaShopAdminController
             [
                 'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
                 'enableSidebar' => true,
-                'rootCategoryForm' => $rootCategoryForm->createView(),
+                'rootCategoryForm' => $rootCategoryForm,
                 'defaultGroups' => $defaultGroups,
                 'layoutTitle' => $this->trans('New category', [], 'Admin.Navigation.Menu'),
             ]
@@ -302,7 +302,7 @@ class CategoryController extends PrestaShopAdminController
                 'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
                 'enableSidebar' => true,
                 'contextLangId' => $this->getLanguageContext()->getId(),
-                'editCategoryForm' => $categoryForm->createView(),
+                'editCategoryForm' => $categoryForm,
                 'editableCategory' => $editableCategory,
                 'defaultGroups' => $defaultGroups,
                 'layoutTitle' => $this->trans(
@@ -375,7 +375,7 @@ class CategoryController extends PrestaShopAdminController
                 'enableSidebar' => true,
                 'categoryId' => $categoryId,
                 'contextLangId' => $this->getLanguageContext()->getId(),
-                'editRootCategoryForm' => $rootCategoryForm->createView(),
+                'editRootCategoryForm' => $rootCategoryForm,
                 'editableCategory' => $editableCategory,
                 'defaultGroups' => $defaultGroups,
                 'layoutTitle' => $this->trans(

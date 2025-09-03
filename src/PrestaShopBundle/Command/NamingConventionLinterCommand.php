@@ -41,6 +41,7 @@ use Symfony\Component\Routing\Route;
 /**
  * Runs naming conventions linter in the CLI
  */
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:linter:naming-convention', description: 'Checks if Back Office routes and controllers follow naming convention.')]
 final class NamingConventionLinterCommand extends Command
 {
     public function __construct(
@@ -52,10 +53,6 @@ final class NamingConventionLinterCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('prestashop:linter:naming-convention')
-            ->setDescription('Checks if Back Office routes and controllers follow naming convention.')
-        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

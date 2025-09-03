@@ -90,7 +90,7 @@ class DiscountConditionsType extends TranslatorAwareType
         $resolver->setAllowedTypes('discount_type', ['string']);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ToggleChildrenChoiceType::class;
     }

@@ -88,8 +88,8 @@ class CreditSlipController extends PrestaShopAdminController
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'creditSlipGrid' => $this->presentGrid($creditSlipGrid),
-            'pdfByDateForm' => $pdfByDateForm->createView(),
-            'creditSlipOptionsForm' => $creditSlipOptionsForm->createView(),
+            'pdfByDateForm' => $pdfByDateForm,
+            'creditSlipOptionsForm' => $creditSlipOptionsForm,
             'layoutTitle' => $this->trans('Credit slips', [], 'Admin.Navigation.Menu'),
         ]);
     }

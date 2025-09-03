@@ -41,6 +41,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * CLI command for getting and setting debug mode setting
  */
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:debug', description: 'Get or set debug mode')]
 class DebugCommand extends Command
 {
     public const STATUS_OK = 0;
@@ -62,8 +63,6 @@ class DebugCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('prestashop:debug')
-            ->setDescription('Get or set debug mode')
             ->addArgument('value', InputArgument::OPTIONAL, 'Value for debug mode, on/off, true/false, 1/0. If left out will just print the current state')
         ;
     }

@@ -34,6 +34,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:translation:find-duplicates', description: 'Find duplicates of your translations')]
 class CheckTranslationDuplicatesCommand extends Command
 {
     public function __construct(
@@ -44,9 +45,6 @@ class CheckTranslationDuplicatesCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('prestashop:translation:find-duplicates')
-            ->setDescription('Find duplicates of your translations');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -185,7 +185,7 @@ class PreferencesType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'preferences';
     }

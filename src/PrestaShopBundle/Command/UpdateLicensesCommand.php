@@ -36,6 +36,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:licenses:update', description: 'Rewrite your licenses to be up-to-date')]
 class UpdateLicensesCommand extends Command
 {
     private $text = '/**
@@ -76,9 +77,6 @@ class UpdateLicensesCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('prestashop:licenses:update')
-            ->setDescription('Rewrite your licenses to be up-to-date');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -91,7 +91,7 @@ class AddressController extends PrestaShopAdminController
             'addressGrid' => $this->presentGrid($addressGrid),
             'enableSidebar' => true,
             'layoutHeaderToolbarBtn' => $this->getAddressToolbarButtons(),
-            'requiredFieldsForm' => $requiredFieldsForm->createView(),
+            'requiredFieldsForm' => $requiredFieldsForm,
         ]);
     }
 
@@ -236,7 +236,7 @@ class AddressController extends PrestaShopAdminController
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('New address', [], 'Admin.Navigation.Menu'),
             'displayInIframe' => $request->query->has('submitFormAjax'),
-            'addressForm' => $addressForm->createView(),
+            'addressForm' => $addressForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'cancelPath' => $request->query->has('back') ? $request->query->get('back') : $this->generateUrl('admin_addresses_index'),
         ]);
@@ -302,7 +302,7 @@ class AddressController extends PrestaShopAdminController
             'customerInformation' => $customerInfo,
             'layoutTitle' => $this->trans('Editing address %alias%', ['%alias%' => $editableAddress->getAddressAlias()], 'Admin.Navigation.Menu'),
             'displayInIframe' => $request->query->has('submitFormAjax'),
-            'addressForm' => $addressForm->createView(),
+            'addressForm' => $addressForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'cancelPath' => $request->query->has('back') ? $request->query->get('back') : $this->generateUrl('admin_addresses_index'),
         ]);
@@ -391,7 +391,7 @@ class AddressController extends PrestaShopAdminController
             'customerId' => $editableAddress->getCustomerId()->getValue(),
             'customerInformation' => $customerInfo,
             'layoutTitle' => $this->trans('Editing address %alias%', ['%alias%' => $editableAddress->getAddressAlias()], 'Admin.Navigation.Menu'),
-            'addressForm' => $addressForm->createView(),
+            'addressForm' => $addressForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'cancelPath' => $this->generateUrl('admin_orders_view', ['orderId' => $orderId]),
             'displayInIframe' => $request->query->has('submitFormAjax'),
@@ -481,7 +481,7 @@ class AddressController extends PrestaShopAdminController
             'customerId' => $editableAddress->getCustomerId()->getValue(),
             'customerInformation' => $customerInfo,
             'layoutTitle' => $this->trans('Editing address %alias%', ['%alias%' => $editableAddress->getAddressAlias()], 'Admin.Navigation.Menu'),
-            'addressForm' => $addressForm->createView(),
+            'addressForm' => $addressForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'cancelPath' => $this->generateUrl('admin_carts_view', ['cartId' => $cartId]),
             'displayInIframe' => $request->query->has('submitFormAjax'),

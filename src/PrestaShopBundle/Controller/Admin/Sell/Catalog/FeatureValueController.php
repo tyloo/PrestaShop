@@ -148,7 +148,7 @@ class FeatureValueController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Features/FeatureValue/create.html.twig', [
             'featureId' => $featureId,
-            'featureValueForm' => $featureValueForm->createView(),
+            'featureValueForm' => $featureValueForm,
             'layoutTitle' => $this->trans('New Feature Value', [], 'Admin.Navigation.Menu'),
             'cancelLink' => $cancelLink,
         ]);
@@ -190,7 +190,7 @@ class FeatureValueController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Features/FeatureValue/edit.html.twig', [
             'featureId' => $featureId,
-            'featureValueForm' => $featureValueForm->createView(),
+            'featureValueForm' => $featureValueForm,
             'layoutTitle' => $this->trans(
                 'Feature value',
                 [],

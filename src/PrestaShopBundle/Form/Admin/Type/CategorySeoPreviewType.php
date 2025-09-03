@@ -40,7 +40,7 @@ class CategorySeoPreviewType extends AbstractType
      *
      * @return string The prefix name
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'category_seo_preview';
     }

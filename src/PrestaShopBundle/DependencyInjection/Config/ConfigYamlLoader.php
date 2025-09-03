@@ -39,7 +39,7 @@ class ConfigYamlLoader extends FileLoader
 {
     private array $configValues = [];
 
-    public function load($resource, $type = null): void
+    public function load(mixed $resource, $type = null): void
     {
         $path = $this->locator->locate($resource);
         $configValues = Yaml::parse(file_get_contents($path), Yaml::PARSE_CONSTANT);
@@ -50,7 +50,7 @@ class ConfigYamlLoader extends FileLoader
         $this->configValues = array_merge_recursive($this->configValues, $configValues);
     }
 
-    public function supports($resource, $type = null)
+    public function supports(mixed $resource, $type = null): bool
     {
         return \is_string($resource) && pathinfo(
             $resource,

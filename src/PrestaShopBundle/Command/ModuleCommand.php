@@ -41,6 +41,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:module', description: 'Manage your modules via command line')]
 class ModuleCommand extends Command
 {
     /**
@@ -78,8 +79,6 @@ class ModuleCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('prestashop:module')
-            ->setDescription('Manage your modules via command line')
             ->addArgument('action', InputArgument::REQUIRED, \sprintf('Action to execute (Allowed actions: %s).', implode(' / ', $this->allowedActions)))
             ->addArgument('module name', InputArgument::REQUIRED, 'Module on which the action will be executed')
             ->addArgument('file path', InputArgument::OPTIONAL, 'YML file path for configuration');

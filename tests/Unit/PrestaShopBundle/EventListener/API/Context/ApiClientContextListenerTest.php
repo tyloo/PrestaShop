@@ -37,7 +37,7 @@ use PrestaShopBundle\Entity\Repository\ApiClientRepository;
 use PrestaShopBundle\EventListener\API\Context\ApiClientContextListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Tests\Unit\PrestaShopBundle\EventListener\ContextEventListenerTestCase;
 
 class ApiClientContextListenerTest extends ContextEventListenerTestCase

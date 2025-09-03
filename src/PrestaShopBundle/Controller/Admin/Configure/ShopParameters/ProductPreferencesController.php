@@ -67,10 +67,10 @@ class ProductPreferencesController extends PrestaShopAdminController
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
             'requireFilterStatus' => false,
-            'generalForm' => $generalForm->createView(),
-            'pageForm' => $pageForm->createView(),
-            'paginationForm' => $paginationForm->createView(),
-            'stockForm' => $stockForm->createView(),
+            'generalForm' => $generalForm,
+            'pageForm' => $pageForm,
+            'paginationForm' => $paginationForm,
+            'stockForm' => $stockForm,
         ]);
     }
 

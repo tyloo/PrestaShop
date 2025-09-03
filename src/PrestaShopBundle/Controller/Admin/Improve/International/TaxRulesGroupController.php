@@ -104,7 +104,7 @@ class TaxRulesGroupController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Improve/International/TaxRulesGroup/create.html.twig', [
             'enableSidebar' => true,
-            'taxRulesGroupForm' => $taxRulesGroupForm->createView(),
+            'taxRulesGroupForm' => $taxRulesGroupForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'layoutTitle' => $this->trans('New tax rule', [], 'Admin.Navigation.Menu'),
         ]);
@@ -152,7 +152,7 @@ class TaxRulesGroupController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Improve/International/TaxRulesGroup/edit.html.twig', [
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('Editing tax rule %value%', ['%value%' => $taxRulesGroupForm->getData()['name']], 'Admin.Navigation.Menu'),
-            'taxRulesGroupForm' => $taxRulesGroupForm->createView(),
+            'taxRulesGroupForm' => $taxRulesGroupForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'taxRuleGrid' => $this->presentGrid($taxRuleGrid),
         ]);

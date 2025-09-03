@@ -40,6 +40,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Validate;
 
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:config', description: 'Manage your configuration via command line')]
 class ConfigCommand extends Command
 {
     // return values
@@ -101,8 +102,6 @@ class ConfigCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('prestashop:config')
-            ->setDescription('Manage your configuration via command line')
             ->addArgument('action', InputArgument::REQUIRED, \sprintf('Action to execute (Allowed actions: %s).', implode(' / ', $this->allowedActions)))
             ->addArgument('key', InputArgument::REQUIRED, 'Configuration key. like PS_LANG_DEFAULT')
             ->addOption('value', 'val', InputArgument::OPTIONAL, 'value to set', null)

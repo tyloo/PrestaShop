@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace PrestaShopBundle\ApiPlatform\Normalizer;
 
+use ArrayObject;
 use PrestaShop\Decimal\DecimalNumber;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
@@ -46,12 +47,12 @@ class DecimalNumberNormalizer implements DenormalizerInterface, NormalizerInterf
         return new DecimalNumber((string) $data);
     }
 
-    public function supportsDenormalization($data, string $type, ?string $format = null)
+    public function supportsDenormalization($data, string $type, ?string $format = null): bool
     {
         return $type === DecimalNumber::class;
     }
 
-    public function normalize($object, ?string $format = null, array $context = [])
+    public function normalize($object, ?string $format = null, array $context = []): array|bool|string|int|float|ArrayObject|null
     {
         if (! ($object instanceof DecimalNumber)) {
             throw new InvalidArgumentException('Expected object to be a ' . DecimalNumber::class);
@@ -60,7 +61,7 @@ class DecimalNumberNormalizer implements DenormalizerInterface, NormalizerInterf
         return (float) (string) $object;
     }
 
-    public function supportsNormalization($data, ?string $format = null)
+    public function supportsNormalization($data, ?string $format = null): bool
     {
         return $data instanceof DecimalNumber;
     }

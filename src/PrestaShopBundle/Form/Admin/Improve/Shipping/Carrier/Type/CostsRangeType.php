@@ -73,7 +73,7 @@ class CostsRangeType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'carrier_ranges_costs_zone_range';
     }

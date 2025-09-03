@@ -119,7 +119,7 @@ class MonitoringController extends PrestaShopAdminController
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'emptyCategoryGrid' => $this->presentGrid($emptyCategoryGrid),
-            'deleteCategoryForm' => $deleteCategoryForm->createView(),
+            'deleteCategoryForm' => $deleteCategoryForm,
             'noQtyProductWithCombinationGrid' => $this->presentGrid($noQtyProductWithCombinationGrid),
             'noQtyProductWithoutCombinationGrid' => $this->presentGrid($noQtyProductWithoutCombinationGrid),
             'disabledProductGrid' => $this->presentGrid($disabledProductGrid),

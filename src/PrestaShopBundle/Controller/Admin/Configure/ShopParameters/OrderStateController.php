@@ -145,7 +145,7 @@ class OrderStateController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/OrderStates/create.html.twig', [
-            'orderStateForm' => $orderStateForm->createView(),
+            'orderStateForm' => $orderStateForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'contextLangId' => $this->getLanguageContext()->getId(),
             'templatesPreviewUrl' => _MAIL_DIR_,
@@ -198,7 +198,7 @@ class OrderStateController extends PrestaShopAdminController
         $editableOrderState = $this->dispatchQuery(new GetOrderStateForEditing($orderStateId));
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/OrderStates/edit.html.twig', [
-            'orderStateForm' => $orderStateForm->createView(),
+            'orderStateForm' => $orderStateForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'editableOrderState' => $editableOrderState,
             'contextLangId' => $this->getLanguageContext()->getId(),
@@ -244,7 +244,7 @@ class OrderStateController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/OrderReturnStates/create.html.twig', [
-            'orderReturnStateForm' => $orderReturnStateForm->createView(),
+            'orderReturnStateForm' => $orderReturnStateForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'multistoreInfoTip' => $this->trans(
                 'Note that this feature is only available in the "all stores" context. It will be added to all your stores.',
@@ -288,7 +288,7 @@ class OrderStateController extends PrestaShopAdminController
         $editableOrderReturnState = $this->dispatchQuery(new GetOrderReturnStateForEditing($orderReturnStateId));
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/OrderReturnStates/edit.html.twig', [
-            'orderReturnStateForm' => $orderReturnStateForm->createView(),
+            'orderReturnStateForm' => $orderReturnStateForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'editableOrderReturnState' => $editableOrderReturnState,
             'contextLangId' => $this->getLanguageContext()->getId(),

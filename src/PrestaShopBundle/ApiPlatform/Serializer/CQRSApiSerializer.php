@@ -28,6 +28,7 @@
 namespace PrestaShopBundle\ApiPlatform\Serializer;
 
 use ApiPlatform\Metadata\HttpOperation;
+use ArrayObject;
 use PrestaShopBundle\ApiPlatform\ContextParametersProvider;
 use PrestaShopBundle\ApiPlatform\LocalizedValueUpdater;
 use PrestaShopBundle\ApiPlatform\Metadata\LocalizedValue;
@@ -38,8 +39,6 @@ use Symfony\Component\Serializer\Encoder\ContextAwareEncoderInterface;
 use Symfony\Component\Serializer\Exception\UnsupportedFormatException;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -47,7 +46,7 @@ use Symfony\Component\Serializer\SerializerInterface;
  * This serializer decorates the API Platform one, it handles PrestaShop custom modifications like updating the localized values indexes,
  * or apply the mapping between CQRS object and API resources.
  */
-class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerInterface, ContextAwareDenormalizerInterface, ContextAwareEncoderInterface, ContextAwareDecoderInterface
+class CQRSApiSerializer implements SerializerInterface, \Symfony\Component\Serializer\Normalizer\NormalizerInterface, \Symfony\Component\Serializer\Normalizer\DenormalizerInterface, ContextAwareEncoderInterface, ContextAwareDecoderInterface
 {
     public const CAST_BOOL = 'cast_bool';
 
@@ -118,7 +117,7 @@ class CQRSApiSerializer implements SerializerInterface, ContextAwareNormalizerIn
         return $this->decorated->encode($data, $format, $context);
     }
 
-    public function normalize(mixed $object, ?string $format = null, array $context = [])
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array|bool|string|int|float|ArrayObject|null
     {
         // First let the usual serializer and normalizers do their job
         $normalizedData = $this->decorated->normalize($object, $format, $context);

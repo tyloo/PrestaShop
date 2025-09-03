@@ -74,7 +74,7 @@ class GeneralType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'administration_general_block';
     }

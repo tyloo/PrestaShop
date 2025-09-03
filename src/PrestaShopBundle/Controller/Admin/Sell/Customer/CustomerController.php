@@ -116,9 +116,9 @@ class CustomerController extends PrestaShopAdminController
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'customerGrid' => $this->presentGrid($customerGrid),
             'customersKpi' => $customersKpiFactory->build(),
-            'customerRequiredFieldsForm' => $this->getRequiredFieldsForm()->createView(),
+            'customerRequiredFieldsForm' => $this->getRequiredFieldsForm(),
             'isSingleShopContext' => $this->getShopContext()->getShopConstraint()->isSingleShopContext(),
-            'deleteCustomersForm' => $deleteCustomerForm->createView(),
+            'deleteCustomersForm' => $deleteCustomerForm,
             'showcaseCardName' => ShowcaseCard::CUSTOMERS_CARD,
             'isShowcaseCardClosed' => $showcaseCardIsClosed,
             'layoutHeaderToolbarBtn' => $this->getCustomerIndexToolbarButtons(),
@@ -179,7 +179,7 @@ class CustomerController extends PrestaShopAdminController
         $defaultGroups = $defaultGroupsProvider->getGroups();
 
         return $this->render('@PrestaShop/Admin/Sell/Customer/create.html.twig', [
-            'customerForm' => $customerForm->createView(),
+            'customerForm' => $customerForm,
             'isB2bFeatureActive' => $b2bFeature->isActive(),
             'minPasswordLength' => Password::MIN_LENGTH,
             'displayInIframe' => $request->query->has('submitFormAjax'),
@@ -244,7 +244,7 @@ class CustomerController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Sell/Customer/edit.html.twig', [
-            'customerForm' => $customerForm->createView(),
+            'customerForm' => $customerForm,
             'customerInformation' => $customerInformation,
             'isB2bFeatureActive' => $b2bFeature->isActive(),
             'minPasswordLength' => Password::MIN_LENGTH,
@@ -350,7 +350,7 @@ class CustomerController extends PrestaShopAdminController
             'customerViewedProductGrid' => $this->presentGrid($customerViewedProductGrid),
             'isMultistoreEnabled' => $this->getShopContext()->isMultiShopEnabled(),
             'transferGuestAccountForm' => $transferGuestAccountForm,
-            'privateNoteForm' => $privateNoteForm->createView(),
+            'privateNoteForm' => $privateNoteForm,
             'layoutHeaderToolbarBtn' => $this->getCustomerViewToolbarButtons($customerId),
             'layoutTitle' => $this->trans(
                 'Customer %name%',

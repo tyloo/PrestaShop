@@ -59,7 +59,7 @@ class MediaServersType extends TranslatorAwareType
             ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'performance_media_servers_block';
     }

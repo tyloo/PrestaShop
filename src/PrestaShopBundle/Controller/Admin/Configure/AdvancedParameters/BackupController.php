@@ -77,7 +77,7 @@ class BackupController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Configure/AdvancedParameters/Backup/index.html.twig', [
             'backupGrid' => $this->presentGrid($backupGrid),
-            'backupForm' => $backupForm->createView(),
+            'backupForm' => $backupForm,
             'dbPrefix' => $configuration->get('_DB_PREFIX_'),
             'hasDownloadFile' => $hasDownloadFile,
             'downloadFile' => $downloadFile,

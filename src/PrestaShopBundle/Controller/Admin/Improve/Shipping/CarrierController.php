@@ -135,7 +135,7 @@ class CarrierController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Improve/Shipping/Carriers/form.html.twig', [
             'layoutTitle' => $this->trans('New Carrier', [], 'Admin.Navigation.Menu'),
-            'carrierForm' => $form->createView(),
+            'carrierForm' => $form,
         ]);
     }
 
@@ -176,7 +176,7 @@ class CarrierController extends PrestaShopAdminController
                 ['%name%' => $editableCarrier->getName()],
                 'Admin.Navigation.Menu',
             ),
-            'carrierForm' => $form->createView(),
+            'carrierForm' => $form,
         ]);
     }
 

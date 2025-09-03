@@ -125,7 +125,7 @@ class ZoneController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Zone/create.html.twig', [
-            'zoneForm' => $zoneForm->createView(),
+            'zoneForm' => $zoneForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('New zone', [], 'Admin.Navigation.Menu'),
@@ -168,7 +168,7 @@ class ZoneController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Improve/International/Zone/edit.html.twig', [
             'zoneName' => $editableZone->getName(),
-            'zoneForm' => $zoneForm->createView(),
+            'zoneForm' => $zoneForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans(

@@ -94,7 +94,7 @@ class EmployeeController extends PrestaShopAdminController
         );
 
         return $this->render('@PrestaShop/Admin/Configure/AdvancedParameters/Employee/index.html.twig', [
-            'employeeOptionsForm' => $employeeOptionsForm->createView(),
+            'employeeOptionsForm' => $employeeOptionsForm,
             'canOptionsBeChanged' => $employeeOptionsChecker->canBeChanged(),
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'employeeGrid' => $this->presentGrid($employeeGrid),

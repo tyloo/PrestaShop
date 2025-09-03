@@ -37,6 +37,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Checks if all admin routes are configured with _legacy_link
  */
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:linter:legacy-link', description: 'Checks if _legacy_link is configured in BackOffice routes')]
 class LegacyLinkLinterCommand extends Command
 {
     /**
@@ -182,9 +183,6 @@ class LegacyLinkLinterCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('prestashop:linter:legacy-link')
-            ->setDescription('Checks if _legacy_link is configured in BackOffice routes');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

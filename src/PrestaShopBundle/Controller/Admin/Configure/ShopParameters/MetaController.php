@@ -141,7 +141,7 @@ class MetaController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/TrafficSeo/Meta/create.html.twig', [
-            'meta_form' => $metaForm->createView(),
+            'meta_form' => $metaForm,
             'multistoreInfoTip' => $this->trans(
                 'Note that this feature is only available in the "all stores" context. It will be added to all your stores.',
                 [],
@@ -179,7 +179,7 @@ class MetaController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/TrafficSeo/Meta/edit.html.twig', [
-            'meta_form' => $metaForm->createView(),
+            'meta_form' => $metaForm,
             'layoutTitle' => $this->trans(
                 'Editing configuration for %name%',
                 [
@@ -433,11 +433,11 @@ class MetaController extends PrestaShopAdminController
                     ],
                 ],
                 'grid' => $presentedGrid,
-                'setUpUrlsForm' => $setUpUrlsForm->createView(),
-                'shopUrlsForm' => $shopUrlsForm->createView(),
+                'setUpUrlsForm' => $setUpUrlsForm,
+                'shopUrlsForm' => $shopUrlsForm,
                 'urlSchemaForm' => $urlSchemaForm?->createView(),
-                'seoOptionsForm' => $seoOptionsForm->createView(),
-                'robotsForm' => $this->createFormBuilder()->getForm()->createView(),
+                'seoOptionsForm' => $seoOptionsForm,
+                'robotsForm' => $this->createFormBuilder()->getForm(),
                 'routeKeywords' => $defaultRoutesProvider->getKeywords(),
                 'isGridDisplayed' => $isGridDisplayed,
                 'isModRewriteActive' => $tools->isModRewriteActive(),

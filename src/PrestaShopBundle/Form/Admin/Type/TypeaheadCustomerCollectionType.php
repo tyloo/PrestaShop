@@ -121,7 +121,7 @@ class TypeaheadCustomerCollectionType extends CommonAbstractType
      *
      * @return string The prefix name
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'typeahead_customer_collection';
     }

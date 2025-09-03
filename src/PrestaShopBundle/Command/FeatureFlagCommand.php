@@ -41,13 +41,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * This CLI command allows to enable/disable a feature flag or to list all of them.
  */
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:feature-flag', description: 'Manage feature flags via command line')]
 class FeatureFlagCommand extends Command
 {
     private const SUCCESS_RETURN_CODE = 0;
 
     private const INVALID_ARGUMENTS_RETURN_CODE = 1;
-
-    protected static $defaultName = 'prestashop:feature-flag';
 
     /**
      * @var string[]
@@ -68,7 +67,6 @@ class FeatureFlagCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Manage feature flags via command line')
             ->addArgument('action', InputArgument::REQUIRED, \sprintf('Action to execute (Allowed actions: %s).', implode(' / ', $this->allowedActions)))
             ->addArgument('feature_flag', InputArgument::OPTIONAL, 'Feature flag you want to enable/disable')
         ;

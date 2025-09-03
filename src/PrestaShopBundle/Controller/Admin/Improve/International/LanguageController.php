@@ -117,7 +117,7 @@ class LanguageController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Language/create.html.twig', [
-            'languageForm' => $languageForm->createView(),
+            'languageForm' => $languageForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('New language', [], 'Admin.Navigation.Menu'),
@@ -170,7 +170,7 @@ class LanguageController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Language/edit.html.twig', [
-            'languageForm' => $languageForm->createView(),
+            'languageForm' => $languageForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans(

@@ -141,8 +141,8 @@ class PreferencesController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('Preferences', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
-            'handlingForm' => $handlingForm->createView(),
-            'carrierOptionsForm' => $carrierOptionsForm->createView(),
+            'handlingForm' => $handlingForm,
+            'carrierOptionsForm' => $carrierOptionsForm,
         ]);
     }
 }

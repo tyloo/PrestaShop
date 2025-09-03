@@ -107,7 +107,7 @@ class WebserviceController extends PrestaShopAdminController
         return $this->render(
             '@PrestaShop/Admin/Configure/AdvancedParameters/Webservice/create.html.twig',
             [
-                'webserviceKeyForm' => $form->createView(),
+                'webserviceKeyForm' => $form,
                 'layoutTitle' => $this->trans('New webservice key', [], 'Admin.Navigation.Menu'),
                 'enableSidebar' => true,
                 'help_link' => $this->generateSidebarLink('AdminWebservice'),
@@ -145,7 +145,7 @@ class WebserviceController extends PrestaShopAdminController
         return $this->render(
             '@PrestaShop/Admin/Configure/AdvancedParameters/Webservice/edit.html.twig',
             [
-                'webserviceKeyForm' => $form->createView(),
+                'webserviceKeyForm' => $form,
                 'layoutTitle' => $this->trans(
                     'Editing webservice key %key%',
                     [
@@ -318,7 +318,7 @@ class WebserviceController extends PrestaShopAdminController
             '@PrestaShop/Admin/Configure/AdvancedParameters/Webservice/index.html.twig',
             [
                 'help_link' => $this->generateSidebarLink($request->get('_legacy_controller')),
-                'webserviceConfigurationForm' => $form->createView(),
+                'webserviceConfigurationForm' => $form,
                 'grid' => $this->presentGrid($grid),
                 'configurationWarnings' => $serverRequirementsChecker->checkForErrors(),
                 'webserviceStatus' => $this->getWebServiceStatus($request, $webserviceFormDataProvider),

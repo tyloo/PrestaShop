@@ -161,7 +161,7 @@ class ManufacturerController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Manufacturer/add.html.twig', [
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
-            'manufacturerForm' => $manufacturerForm->createView(),
+            'manufacturerForm' => $manufacturerForm,
             'layoutTitle' => $this->trans('New brand', [], 'Admin.Navigation.Menu'),
         ]);
     }
@@ -244,7 +244,7 @@ class ManufacturerController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Manufacturer/edit.html.twig', [
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
-            'manufacturerForm' => $manufacturerForm->createView(),
+            'manufacturerForm' => $manufacturerForm,
             'manufacturerName' => $editableManufacturer->getName(),
             'logoImage' => $editableManufacturer->getLogoImage(),
             'layoutTitle' => $this->trans(
@@ -562,7 +562,7 @@ class ManufacturerController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Manufacturer/Address/create.html.twig', [
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('New brand address', [], 'Admin.Navigation.Menu'),
-            'addressForm' => $addressForm->createView(),
+            'addressForm' => $addressForm,
         ]);
     }
 
@@ -612,7 +612,7 @@ class ManufacturerController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Sell/Catalog/Manufacturer/Address/edit.html.twig', [
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('Editing brand address', [], 'Admin.Navigation.Menu'),
-            'addressForm' => $addressForm->createView(),
+            'addressForm' => $addressForm,
             'address' => $editableAddress->getAddress(),
         ]);
     }

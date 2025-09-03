@@ -51,7 +51,7 @@ class CombineCompressCacheType extends TranslatorAwareType
             ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'performance_ccc_block';
     }

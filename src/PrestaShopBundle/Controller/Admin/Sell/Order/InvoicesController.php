@@ -62,9 +62,9 @@ class InvoicesController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('Invoices', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
-            'generateByDateForm' => $byDateForm->getForm()->createView(),
-            'generateByStatusForm' => $byStatusForm->getForm()->createView(),
-            'invoiceOptionsForm' => $optionsForm->getForm()->createView(),
+            'generateByDateForm' => $byDateForm->getForm(),
+            'generateByStatusForm' => $byStatusForm->getForm(),
+            'invoiceOptionsForm' => $optionsForm->getForm(),
         ]);
     }
 

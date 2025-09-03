@@ -39,7 +39,7 @@ class LocalizationWarmer implements CacheWarmerInterface
     ) {
     }
 
-    public function warmUp($cacheDir)
+    public function warmUp($cacheDir): array
     {
         $fs = new Filesystem();
 
@@ -74,7 +74,7 @@ class LocalizationWarmer implements CacheWarmerInterface
         return [$localization_file_content];
     }
 
-    public function isOptional()
+    public function isOptional(): bool
     {
         return false;
     }

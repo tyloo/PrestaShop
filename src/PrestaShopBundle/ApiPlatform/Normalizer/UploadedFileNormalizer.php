@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace PrestaShopBundle\ApiPlatform\Normalizer;
 
+use ArrayObject;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -48,12 +49,12 @@ class UploadedFileNormalizer implements DenormalizerInterface, NormalizerInterfa
         return $data;
     }
 
-    public function supportsDenormalization(mixed $data, string $type, ?string $format = null)
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null): bool
     {
         return $data instanceof File;
     }
 
-    public function normalize(mixed $object, ?string $format = null, array $context = [])
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array|bool|string|int|float|ArrayObject|null
     {
         if (! ($object instanceof File)) {
             throw new InvalidArgumentException('Expected object to be a ' . File::class);
@@ -69,7 +70,7 @@ class UploadedFileNormalizer implements DenormalizerInterface, NormalizerInterfa
         ];
     }
 
-    public function supportsNormalization(mixed $data, ?string $format = null)
+    public function supportsNormalization(mixed $data, ?string $format = null): bool
     {
         return $data instanceof File;
     }

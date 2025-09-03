@@ -130,7 +130,7 @@ class CartConditionsType extends TranslatorAwareType
         ;
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ToggleChildrenChoiceType::class;
     }

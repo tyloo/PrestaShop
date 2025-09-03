@@ -32,7 +32,6 @@ namespace PrestaShopBundle\EventListener\API\Context;
 use PrestaShop\PrestaShop\Core\Context\ApiClientContextBuilder;
 use PrestaShop\PrestaShop\Core\Security\OAuth2\JwtTokenUser;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\Security\Core\Security;
 
 /**
  * Listener dedicated to set up ApiClient context for the Back-Office/Admin application.
@@ -41,7 +40,7 @@ class ApiClientContextListener
 {
     public function __construct(
         private readonly ApiClientContextBuilder $accessContextBuilder,
-        private readonly Security $security,
+        private readonly \Symfony\Bundle\SecurityBundle\Security $security,
     ) {
     }
 

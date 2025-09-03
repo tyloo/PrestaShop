@@ -67,7 +67,7 @@ class LogsController extends PrestaShopAdminController
             'showContentHeader' => true,
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink('AdminLogs'),
-            'logsByEmailForm' => $logsByEmailForm->createView(),
+            'logsByEmailForm' => $logsByEmailForm,
             'grid' => $this->presentGrid($grid),
         ]);
     }

@@ -37,6 +37,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:mail:generate', description: 'Generate mail templates for a specified theme')]
 class GenerateMailTemplatesCommand extends Command
 {
     public function __construct(
@@ -49,8 +50,6 @@ class GenerateMailTemplatesCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('prestashop:mail:generate')
-            ->setDescription('Generate mail templates for a specified theme')
             ->addArgument('theme', InputArgument::REQUIRED, 'Theme to use for mail templates.')
             ->addArgument('locale', InputArgument::REQUIRED, 'Which locale to use for the templates.')
             ->addArgument('coreOutputFolder', InputArgument::OPTIONAL, 'Output folder to export core templates.')

@@ -93,7 +93,7 @@ class SearchEnginesController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/TrafficSeo/SearchEngines/create.html.twig', [
-            'searchEngineForm' => $searchEngineForm->createView(),
+            'searchEngineForm' => $searchEngineForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'multistoreInfoTip' => $this->trans(
@@ -143,7 +143,7 @@ class SearchEnginesController extends PrestaShopAdminController
         $editableSearchEngine = $this->dispatchQuery(new GetSearchEngineForEditing($searchEngineId));
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/TrafficSeo/SearchEngines/edit.html.twig', [
-            'searchEngineForm' => $searchEngineForm->createView(),
+            'searchEngineForm' => $searchEngineForm,
             'searchEngineServer' => $editableSearchEngine->getServer(),
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,

@@ -31,14 +31,13 @@ use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 use PrestaShop\PrestaShop\Core\Search\Builder\FiltersBuilderInterface;
 use PrestaShop\PrestaShop\Core\Search\Filters;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 /**
  * This argument resolver uses the FiltersBuilderInterface service to automatically
  * instantiate and inject parameters in controllers.
  */
-class FiltersBuilderResolver implements ArgumentValueResolverInterface
+class FiltersBuilderResolver implements \Symfony\Component\HttpKernel\Controller\ValueResolverInterface
 {
     public function __construct(
         private readonly FiltersBuilderInterface $builder,

@@ -75,10 +75,10 @@ class EmailController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Configure/AdvancedParameters/Email/index.html.twig', [
-            'emailConfigurationForm' => $emailConfigurationForm->createView(),
+            'emailConfigurationForm' => $emailConfigurationForm,
             'isOpenSslExtensionLoaded' => $phpExtensionChecker->loaded('openssl'),
             'smtpMailMethod' => MailOption::METHOD_SMTP,
-            'testEmailSendingForm' => $testEmailSendingForm->createView(),
+            'testEmailSendingForm' => $testEmailSendingForm,
             'emailLogsGrid' => $presentedEmailLogsGrid ?? null,
             'isEmailLogsEnabled' => $isEmailLogsEnabled,
             'enableSidebar' => true,

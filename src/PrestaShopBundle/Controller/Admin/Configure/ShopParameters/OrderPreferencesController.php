@@ -56,8 +56,8 @@ class OrderPreferencesController extends PrestaShopAdminController
             'layoutTitle' => $this->trans('Order settings', [], 'Admin.Navigation.Menu'),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
-            'generalForm' => $generalForm->createView(),
-            'giftOptionsForm' => $giftOptionsForm->createView(),
+            'generalForm' => $generalForm,
+            'giftOptionsForm' => $giftOptionsForm,
             'isAtcpShipWrapEnabled' => (bool) $this->getConfiguration()->get('PS_ATCP_SHIPWRAP'),
         ]);
     }

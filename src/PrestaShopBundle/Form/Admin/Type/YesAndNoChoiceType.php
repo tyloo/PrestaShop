@@ -48,7 +48,7 @@ class YesAndNoChoiceType extends TranslatorAwareType
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }

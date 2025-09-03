@@ -56,7 +56,7 @@ class MemcacheServerType extends TranslatorAwareType
             ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'performance_memcache_server_block';
     }

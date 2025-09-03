@@ -76,9 +76,9 @@ class AdministrationController extends PrestaShopAdminController
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink('AdminAdminPreferences'),
             'requireFilterStatus' => false,
-            'generalForm' => $generalForm->createView(),
-            'uploadQuotaForm' => $uploadQuotaForm->createView(),
-            'notificationsForm' => $notificationsForm->createView(),
+            'generalForm' => $generalForm,
+            'uploadQuotaForm' => $uploadQuotaForm,
+            'notificationsForm' => $notificationsForm,
             'isDebug' => $this->getEnvironment()->isDebug(),
         ]);
     }

@@ -96,7 +96,7 @@ class CachingType extends TranslatorAwareType
             ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'performance_caching_block';
     }

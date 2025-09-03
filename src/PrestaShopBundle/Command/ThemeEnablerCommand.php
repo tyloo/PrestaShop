@@ -34,6 +34,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:theme:enable', description: 'Manage your themes via command line')]
 final class ThemeEnablerCommand extends Command
 {
     /**
@@ -55,8 +56,6 @@ final class ThemeEnablerCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('prestashop:theme:enable')
-            ->setDescription('Manage your themes via command line')
             ->addArgument('theme', InputArgument::REQUIRED, 'Theme on which the action will be executed')
         ;
     }

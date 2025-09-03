@@ -75,7 +75,7 @@ class DebugModeType extends TranslatorAwareType
             ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'performance_debug_mode_block';
     }

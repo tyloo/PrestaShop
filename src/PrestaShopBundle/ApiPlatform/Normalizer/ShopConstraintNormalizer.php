@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace PrestaShopBundle\ApiPlatform\Normalizer;
 
+use ArrayObject;
 use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopCollection;
 use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopConstraint;
 use PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId;
@@ -60,12 +61,12 @@ class ShopConstraintNormalizer implements DenormalizerInterface, NormalizerInter
         return ShopConstraint::allShops($data['isStrict'] ?? false);
     }
 
-    public function supportsDenormalization($data, string $type, ?string $format = null)
+    public function supportsDenormalization($data, string $type, ?string $format = null): bool
     {
         return $type === ShopConstraint::class || is_subclass_of($type, ShopConstraint::class);
     }
 
-    public function normalize($object, ?string $format = null, array $context = [])
+    public function normalize($object, ?string $format = null, array $context = []): array|bool|string|int|float|ArrayObject|null
     {
         if (! ($object instanceof ShopConstraint)) {
             throw new InvalidArgumentException('Expected object to be a ' . ShopConstraint::class);
@@ -79,7 +80,7 @@ class ShopConstraintNormalizer implements DenormalizerInterface, NormalizerInter
         ];
     }
 
-    public function supportsNormalization($data, ?string $format = null)
+    public function supportsNormalization($data, ?string $format = null): bool
     {
         return $data instanceof ShopConstraint;
     }

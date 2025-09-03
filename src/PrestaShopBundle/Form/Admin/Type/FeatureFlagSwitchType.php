@@ -62,7 +62,7 @@ class FeatureFlagSwitchType extends AbstractType
         $view->vars['forced_by_env'] = $options['forced_by_env'];
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return SwitchType::class;
     }

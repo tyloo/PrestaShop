@@ -112,7 +112,7 @@ class OrderMessageController extends PrestaShopAdminController
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('New order message', [], 'Admin.Navigation.Menu'),
-            'orderMessageForm' => $form->createView(),
+            'orderMessageForm' => $form,
             'multistoreInfoTip' => $this->trans(
                 'Note that this feature is only available in the "all stores" context. It will be added to all your stores.',
                 [],
@@ -161,7 +161,7 @@ class OrderMessageController extends PrestaShopAdminController
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('Editing message %s', [$orderMessageName], 'Admin.Navigation.Menu'),
-            'orderMessageForm' => $form->createView(),
+            'orderMessageForm' => $form,
         ]);
     }
 

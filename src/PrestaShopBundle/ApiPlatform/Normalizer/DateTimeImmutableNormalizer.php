@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace PrestaShopBundle\ApiPlatform\Normalizer;
 
+use ArrayObject;
 use DateTimeImmutable;
 use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime as DateTimeUtil;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
@@ -47,12 +48,12 @@ class DateTimeImmutableNormalizer implements DenormalizerInterface, NormalizerIn
         return new DateTimeImmutable($data);
     }
 
-    public function supportsDenormalization($data, string $type, ?string $format = null)
+    public function supportsDenormalization($data, string $type, ?string $format = null): bool
     {
         return $type === DateTimeImmutable::class;
     }
 
-    public function normalize(mixed $object, ?string $format = null, array $context = [])
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array|bool|string|int|float|ArrayObject|null
     {
         if (! ($object instanceof DateTimeImmutable)) {
             throw new InvalidArgumentException('Expected object to be a ' . DateTimeImmutable::class);
@@ -61,7 +62,7 @@ class DateTimeImmutableNormalizer implements DenormalizerInterface, NormalizerIn
         return $object->format(DateTimeUtil::DEFAULT_DATETIME_FORMAT);
     }
 
-    public function supportsNormalization(mixed $data, ?string $format = null)
+    public function supportsNormalization(mixed $data, ?string $format = null): bool
     {
         return $data instanceof DateTimeImmutable;
     }

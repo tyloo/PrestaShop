@@ -77,7 +77,7 @@ class TaxController extends PrestaShopAdminController
             'taxGrid' => $this->presentGrid($taxGrid),
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink($legacyController),
-            'taxOptionsForm' => $taxOptionsForm->createView(),
+            'taxOptionsForm' => $taxOptionsForm,
         ]);
     }
 
@@ -144,7 +144,7 @@ class TaxController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Improve/International/Tax/create.html.twig', [
-            'taxForm' => $taxForm->createView(),
+            'taxForm' => $taxForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'multistoreInfoTip' => $this->trans(
@@ -201,7 +201,7 @@ class TaxController extends PrestaShopAdminController
         $editableTax = $this->dispatchQuery(new GetTaxForEditing($taxId));
 
         return $this->render('@PrestaShop/Admin/Improve/International/Tax/edit.html.twig', [
-            'taxForm' => $taxForm->createView(),
+            'taxForm' => $taxForm,
             'taxName' => $editableTax->getLocalizedNames()[$this->getLanguageContext()->getId()],
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,

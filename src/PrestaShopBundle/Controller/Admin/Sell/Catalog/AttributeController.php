@@ -160,7 +160,7 @@ class AttributeController extends PrestaShopAdminController
             '@PrestaShop/Admin/Sell/Catalog/Attribute/create.html.twig',
             [
                 'layoutTitle' => $this->trans('New attribute value', [], 'Admin.Navigation.Menu'),
-                'attributeForm' => $attributeForm->createView(),
+                'attributeForm' => $attributeForm,
                 'attributeGroupId' => $attributeGroupId,
             ]
         );
@@ -207,7 +207,7 @@ class AttributeController extends PrestaShopAdminController
                     ['%name%' => $attributeName],
                     'Admin.Navigation.Menu'
                 ),
-                'attributeForm' => $attributeForm->createView(),
+                'attributeForm' => $attributeForm,
                 'attributeGroupId' => $attributeGroupId,
             ]
         );

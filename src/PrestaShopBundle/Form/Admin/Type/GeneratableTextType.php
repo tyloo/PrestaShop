@@ -55,7 +55,7 @@ class GeneratableTextType extends AbstractType
         $view->vars['generated_value_length'] = $options['generated_value_length'];
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }

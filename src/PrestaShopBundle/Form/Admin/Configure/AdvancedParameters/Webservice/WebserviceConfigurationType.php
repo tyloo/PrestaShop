@@ -87,7 +87,7 @@ class WebserviceConfigurationType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'webservice_configuration';
     }

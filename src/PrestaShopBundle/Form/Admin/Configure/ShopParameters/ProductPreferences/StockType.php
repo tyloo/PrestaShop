@@ -217,7 +217,7 @@ class StockType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'product_preferences_stock_block';
     }

@@ -92,7 +92,7 @@ class TitleController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Configure/ShopParameters/CustomerSettings/Title/create.html.twig', [
             'enableSidebar' => true,
-            'titleForm' => $titleForm->createView(),
+            'titleForm' => $titleForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
         ]);
     }
@@ -135,7 +135,7 @@ class TitleController extends PrestaShopAdminController
                 ],
                 'Admin.Actions',
             ),
-            'titleForm' => $titleForm->createView(),
+            'titleForm' => $titleForm,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
         ]);
     }

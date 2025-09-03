@@ -120,12 +120,12 @@ class CQRSApiNormalizer extends ObjectNormalizer
         return parent::denormalize($data, $type, $format, $context);
     }
 
-    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = [])
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         return parent::supportsDenormalization($data, $type, $format) && $this->isDomainObject($type, $context);
     }
 
-    public function supportsNormalization(mixed $data, ?string $format = null, array $context = [])
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return parent::supportsNormalization($data, $format) && $this->isDomainObject($data, $context);
     }
@@ -153,7 +153,7 @@ class CQRSApiNormalizer extends ObjectNormalizer
      * be defined all together, so they can be validated as a whole. The ObjectNormalizer only deserialize object properties one at a time, so we have to handle this special
      * use case and the best moment to do so is right after the object is instantiated and right before the properties are deserialized.
      */
-    protected function instantiateObject(array &$data, string $class, array &$context, ReflectionClass $reflectionClass, bool|array $allowedAttributes, ?string $format = null)
+    protected function instantiateObject(array &$data, string $class, array &$context, ReflectionClass $reflectionClass, bool|array $allowedAttributes, ?string $format = null): object
     {
         $object = parent::instantiateObject($data, $class, $context, $reflectionClass, $allowedAttributes, $format);
         $methodsWithMultipleArguments = $this->findMethodsWithMultipleArguments($reflectionClass, $data);

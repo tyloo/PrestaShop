@@ -58,7 +58,7 @@ class MaintenanceController extends PrestaShopAdminController
             'enableSidebar' => true,
             'help_link' => $this->generateSidebarLink('AdminMaintenance'),
             'requireFilterStatus' => false,
-            'generalForm' => $form->createView(),
+            'generalForm' => $form,
         ]);
     }
 

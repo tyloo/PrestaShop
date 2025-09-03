@@ -208,7 +208,7 @@ class CartRuleController extends PrestaShopAdminController
 
         return $this->render('@PrestaShop/Admin/Sell/Catalog/CartRule/create.html.twig', [
             'enableSidebar' => true,
-            'cartRuleForm' => $form->createView(),
+            'cartRuleForm' => $form,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
         ]);
     }

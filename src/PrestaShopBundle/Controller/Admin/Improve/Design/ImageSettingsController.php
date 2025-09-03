@@ -84,7 +84,7 @@ class ImageSettingsController extends PrestaShopAdminController
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'imageTypeGrid' => $this->presentGrid($imageTypeGrid),
             'enableSidebar' => true,
-            'deleteImageTypeForm' => $deleteForm->createView(),
+            'deleteImageTypeForm' => $deleteForm,
             'layoutHeaderToolbarBtn' => [
                 'add' => [
                     'href' => $this->generateUrl('admin_image_settings_create'),
@@ -92,8 +92,8 @@ class ImageSettingsController extends PrestaShopAdminController
                     'icon' => 'add_circle_outline',
                 ],
             ],
-            'configForm' => $configForm->createView(),
-            'regenThumbnailsForm' => $regenThumbnailsForm->createView(),
+            'configForm' => $configForm,
+            'regenThumbnailsForm' => $regenThumbnailsForm,
         ]);
     }
 
@@ -150,7 +150,7 @@ class ImageSettingsController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Improve/Design/ImageSettings/ImageType/create.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('Add new', [], 'Admin.Actions'),
@@ -192,7 +192,7 @@ class ImageSettingsController extends PrestaShopAdminController
         }
 
         return $this->render('@PrestaShop/Admin/Improve/Design/ImageSettings/ImageType/edit.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
             'layoutTitle' => $this->trans('Edit: %value%', ['%value%' => $editableImageType->getName()], 'Admin.Actions'),

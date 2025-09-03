@@ -58,7 +58,7 @@ class GenerateByDateType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'orders_invoices_by_date_block';
     }

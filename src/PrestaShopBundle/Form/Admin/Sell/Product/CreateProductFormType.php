@@ -78,7 +78,7 @@ class CreateProductFormType extends TranslatorAwareType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'create_product';
     }

@@ -44,6 +44,7 @@ use Symfony\Component\Routing\Route;
  *
  * @see \PrestaShopBundle\Security\Attribute\AdminSecurity
  */
+#[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop:linter:security-attribute', description: 'Checks if Back Office route controllers has configured Security annotations.')]
 final class SecurityAttributeLinterCommand extends Command
 {
     public const ACTION_LIST_ALL = 'list';
@@ -128,15 +129,12 @@ final class SecurityAttributeLinterCommand extends Command
 
     protected function configure(): void
     {
-        $description = 'Checks if Back Office route controllers has configured Security annotations.';
         $actionDescription = \sprintf(
             'Action to perform, must be one of: %s',
             implode(', ', self::getAvailableActions())
         );
 
         $this
-            ->setName('prestashop:linter:security-attribute')
-            ->setDescription($description)
             ->addArgument('action', InputArgument::REQUIRED, $actionDescription);
     }
 

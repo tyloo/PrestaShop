@@ -196,7 +196,7 @@ class CatalogPriceRuleController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Sell/Catalog/CatalogPriceRule/create.html.twig', [
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
-            'catalogPriceRuleForm' => $catalogPriceRuleForm->createView(),
+            'catalogPriceRuleForm' => $catalogPriceRuleForm,
             'layoutTitle' => $this->trans('New catalog rule', [], 'Admin.Navigation.Menu'),
         ]);
     }
@@ -236,7 +236,7 @@ class CatalogPriceRuleController extends PrestaShopAdminController
         return $this->render('@PrestaShop/Admin/Sell/Catalog/CatalogPriceRule/edit.html.twig', [
             'help_link' => $this->generateSidebarLink($request->attributes->get('_legacy_controller')),
             'enableSidebar' => true,
-            'catalogPriceRuleForm' => $catalogPriceRuleForm->createView(),
+            'catalogPriceRuleForm' => $catalogPriceRuleForm,
             'catalogPriceRuleName' => $editableCatalogPriceRule->getName(),
             'layoutTitle' => $this->trans(
                 'Editing price rule %name%',

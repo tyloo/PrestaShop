@@ -59,7 +59,7 @@ class ApeType extends AbstractType implements DataTransformerInterface
         ]);
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }

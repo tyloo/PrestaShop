@@ -36,7 +36,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  */
 class ColorPickerType extends AbstractType
 {
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }
@@ -46,7 +46,7 @@ class ColorPickerType extends AbstractType
      *
      * @return string The prefix name
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'color_picker';
     }
