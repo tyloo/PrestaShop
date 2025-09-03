@@ -41,7 +41,7 @@ final class SubmitBulkAction extends AbstractBulkAction
         return 'submit';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

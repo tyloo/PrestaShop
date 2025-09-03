@@ -56,7 +56,7 @@ final class RootCategoryFormDataHandler implements FormDataHandlerInterface
         return $categoryId->getValue();
     }
 
-    public function update($categoryId, array $data)
+    public function update($categoryId, array $data): void
     {
         $command = $this->createEditRootCategoryCommand((int) $categoryId, $data);
 

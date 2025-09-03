@@ -93,10 +93,7 @@ class ServerRequirementsCheckerTest extends TestCase
         $this->assertContains('It is preferable to use SSL (https:) for webservice calls, as it avoids the "man in the middle" type security issues.', $errors);
     }
 
-    /**
-     * @return ServerRequirementsChecker
-     */
-    private function createNewServerRequirementsChecker()
+    private function createNewServerRequirementsChecker(): ServerRequirementsChecker
     {
         return new ServerRequirementsChecker(
             $this->mockedTranslator,

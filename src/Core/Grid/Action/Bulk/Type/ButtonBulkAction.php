@@ -42,7 +42,7 @@ final class ButtonBulkAction extends AbstractBulkAction
         return 'button';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

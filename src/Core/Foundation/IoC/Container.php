@@ -119,7 +119,7 @@ class Container
             }
         }
 
-        if (\count($args) > 0) {
+        if ($args !== []) {
             return $refl->newInstanceArgs($args);
         }
 

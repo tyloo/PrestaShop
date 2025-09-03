@@ -103,7 +103,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @BeforeScenario
      */
-    public function before()
+    public function before(): void
     {
         // needed because if no controller defined then CONTEXT_ALL is selected and exception is thrown
         /** @var AdminController|FrontController $adminControllerTestDouble */
@@ -144,7 +144,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         string $cartReference,
         string $paymentModuleName,
         string $orderStatus,
-    ) {
+    ): void {
         $orderStates = OrderState::getOrderStates(Context::getContext()->language->id);
         $orderStatusId = null;
 
@@ -172,7 +172,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      * @When I add products to order :orderReference with new invoice and the following products details:
      * @When I add products to order :orderReference without invoice and the following products details:
      */
-    public function addProductsToOrderWithNewInvoiceAndTheFollowingDetails(string $orderReference, TableNode $table)
+    public function addProductsToOrderWithNewInvoiceAndTheFollowingDetails(string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $data = $table->getRowsHash();
@@ -213,7 +213,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I remove product :productReference from order :orderReference
      */
-    public function removeProductsFromOrder(string $productReference, string $orderReference)
+    public function removeProductsFromOrder(string $productReference, string $orderReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $productId = $this->getProductIdByName($productReference);
@@ -246,7 +246,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I add products to order "(.+)" to the (.+) invoice and the following products details:$/
      */
-    public function addProductsToOrderWithExistingInvoiceAndTheFollowingDetails(string $orderReference, string $invoicePosition, TableNode $table)
+    public function addProductsToOrderWithExistingInvoiceAndTheFollowingDetails(string $orderReference, string $invoicePosition, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $order = new Order($orderId);
@@ -256,11 +256,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         $productName = $data['name'];
         $product = $this->getProductByName($productName);
 
-        if (isset($data['combination'])) {
-            $combinationId = $this->getProductCombinationId($product, $data['combination']);
-        } else {
-            $combinationId = 0;
-        }
+        $combinationId = isset($data['combination']) ? $this->getProductCombinationId($product, $data['combination']) : 0;
 
         if (empty($data['price_tax_incl'])) {
             $data['price_tax_incl'] = (string) $this->getProductTaxCalculator((int) $orderId, $product->getProductId())
@@ -287,7 +283,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then the :invoicePosition invoice from order :orderReference should have following details:
      */
-    public function checkInvoiceDetails(string $invoicePosition, string $orderReference, TableNode $table)
+    public function checkInvoiceDetails(string $invoicePosition, string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $invoiceData = $table->getRowsHash();
@@ -312,7 +308,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then the :invoicePosition invoice from order :orderReference should have following shipping tax details:
      */
-    public function checkInvoiceShippingTaxDetails(string $invoicePosition, string $orderReference, TableNode $table)
+    public function checkInvoiceShippingTaxDetails(string $invoicePosition, string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $invoiceShippingData = $table->getColumnsHash();
@@ -351,7 +347,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then the :invoicePosition invoice from order :orderReference should have following product tax details:
      */
-    public function checkInvoiceProductTaxDetails(string $invoicePosition, string $orderReference, TableNode $table)
+    public function checkInvoiceProductTaxDetails(string $invoicePosition, string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $invoiceProductData = $table->getColumnsHash();
@@ -390,7 +386,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference should have :expectedCount cart rule(s)
      */
-    public function checkOrderCartRulesCount(string $orderReference, int $expectedCount)
+    public function checkOrderCartRulesCount(string $orderReference, int $expectedCount): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -406,7 +402,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I remove cart rule :cartRuleName from order :reference
      */
-    public function deleteCartRuleFromOrder(string $cartRuleName, string $orderReference)
+    public function deleteCartRuleFromOrder(string $cartRuleName, string $orderReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $discount = $this->getOrderDiscountByName($orderId, $cartRuleName);
@@ -422,7 +418,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :reference should have cart rule :cartRuleName with amount :cartRuleAmount
      */
-    public function createdOrderShouldHaveCartRule(string $orderReference, string $cartRuleName, string $cartRuleAmount)
+    public function createdOrderShouldHaveCartRule(string $orderReference, string $cartRuleName, string $cartRuleAmount): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -439,7 +435,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :reference should not have cart rule :cartRuleName
      */
-    public function createdOrderShouldNotHaveCartRule(string $orderReference, string $cartRuleName)
+    public function createdOrderShouldNotHaveCartRule(string $orderReference, string $cartRuleName): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -453,7 +449,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference should have :expectedCount invoice(s)
      */
-    public function checkOrderInvoicesCount(string $orderReference, int $expectedCount)
+    public function checkOrderInvoicesCount(string $orderReference, int $expectedCount): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $order = new Order($orderId);
@@ -467,7 +463,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit product :productName to order :orderReference with following products details:
      */
-    public function editProductsToOrderWithFollowingDetails(string $productName, string $orderReference, TableNode $table)
+    public function editProductsToOrderWithFollowingDetails(string $productName, string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $productOrderDetail = $this->getOrderDetailFromOrder($productName, $orderReference);
@@ -479,7 +475,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit product :productName in :invoicePosition invoice from order :orderReference with following products details:
      */
-    public function editProductsFromInvoiceWithFollowingDetails(string $productName, string $orderReference, string $invoicePosition, TableNode $table)
+    public function editProductsFromInvoiceWithFollowingDetails(string $productName, string $orderReference, string $invoicePosition, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $order = new Order($orderId);
@@ -493,7 +489,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit combination :combinationName of product :productName to order :orderReference with following products details:
      */
-    public function editCombinationToOrderWithFollowingDetails(string $combinationName, string $productName, string $orderReference, TableNode $table)
+    public function editCombinationToOrderWithFollowingDetails(string $combinationName, string $productName, string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $productOrderDetail = $this->getOrderDetailFromOrder($productName, $orderReference, $combinationName);
@@ -530,7 +526,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @throws \PrestaShop\PrestaShop\Core\Domain\Order\Exception\InvalidAmountException
      */
-    private function updateProductInOrder(int $orderId, array $productOrderDetail, array $data)
+    private function updateProductInOrder(int $orderId, array $productOrderDetail, array $data): void
     {
         $invoiceId = null;
         if (isset($data['invoice'])) {
@@ -564,7 +560,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that product quantity is invalid for order
      */
-    public function assertLastErrorIsNegativeProductQuantity()
+    public function assertLastErrorIsNegativeProductQuantity(): void
     {
         $this->assertLastErrorIs(InvalidProductQuantityException::class);
     }
@@ -572,7 +568,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that adding duplicate product is forbidden
      */
-    public function assertDuplicateProductIsForbidden()
+    public function assertDuplicateProductIsForbidden(): void
     {
         $this->assertLastErrorIs(DuplicateProductInOrderException::class);
     }
@@ -580,7 +576,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that product is out of stock
      */
-    public function assertLastErrorIsProductOutOfStock()
+    public function assertLastErrorIsProductOutOfStock(): void
     {
         $this->assertLastErrorIs(ProductOutOfStockException::class);
     }
@@ -588,7 +584,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I generate invoice for :invoiceReference order
      */
-    public function generateOrderInvoice(string $orderReference)
+    public function generateOrderInvoice(string $orderReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $this->getCommandBus()->handle(
@@ -599,7 +595,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I update orders :orderIdsString statuses to :status
      */
-    public function updateOrdersToStatuses(string $orderReferencesString, string $status)
+    public function updateOrdersToStatuses(string $orderReferencesString, string $status): void
     {
         $orderReferences = explode(',', $orderReferencesString);
         $ordersIds = [];
@@ -624,7 +620,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws RuntimeException
      */
-    public function orderHasStatus(string $orderReference, string $status)
+    public function orderHasStatus(string $orderReference, string $status): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -647,7 +643,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws RuntimeException
      */
-    public function orderHasHistoryStatus(string $orderReference, TableNode $tableNode)
+    public function orderHasHistoryStatus(string $orderReference, TableNode $tableNode): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         /** @var OrderForViewing $orderForViewing */
@@ -684,7 +680,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws RuntimeException
      */
-    public function countOrderStatus(string $orderReference, int $statusNb)
+    public function countOrderStatus(string $orderReference, int $statusNb): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -699,7 +695,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I update order :orderReference status to :status
      */
-    public function updateOrderStatusTo(string $orderReference, string $status)
+    public function updateOrderStatusTo(string $orderReference, string $status): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -719,7 +715,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :reference should have :quantity products in total
      */
-    public function assertOrderProductsQuantity(string $reference, int $quantity)
+    public function assertOrderProductsQuantity(string $reference, int $quantity): void
     {
         $orderId = SharedStorage::getStorage()->get($reference);
 
@@ -741,7 +737,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :reference should have free shipping
      */
-    public function createdOrderShouldHaveFreeShipping(string $reference)
+    public function createdOrderShouldHaveFreeShipping(string $reference): void
     {
         $orderId = SharedStorage::getStorage()->get($reference);
 
@@ -769,7 +765,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :reference should be a gift with message :message
      */
-    public function createdOrderShouldBeAGift(string $reference, string $message)
+    public function createdOrderShouldBeAGift(string $reference, string $message): void
     {
         $orderId = SharedStorage::getStorage()->get($reference);
 
@@ -782,7 +778,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference should have invoice
      */
-    public function orderShouldHaveInvoice(string $orderReference)
+    public function orderShouldHaveInvoice(string $orderReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         /** @var OrderForViewing $orderForViewing */
@@ -794,7 +790,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given order :orderReference does not have any invoices
      */
-    public function orderDoesNotHaveAnyInvoices(string $orderReference)
+    public function orderDoesNotHaveAnyInvoices(string $orderReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         /** @var OrderForViewing $orderForViewing */
@@ -807,7 +803,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given order with reference :orderReference does not contain product :productName
      */
-    public function orderDoesNotContainProduct(string $orderReference, string $productName)
+    public function orderDoesNotContainProduct(string $orderReference, string $productName): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $productId = $this->getProductIdByName($productName);
@@ -828,7 +824,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I duplicate :orderReference to create cart :duplicatedCartReference
      */
-    public function duplicateOrder($orderReference, $duplicatedCartReference)
+    public function duplicateOrder($orderReference, $duplicatedCartReference): void
     {
         $orderId = (int) SharedStorage::getStorage()->get($orderReference);
 
@@ -844,7 +840,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      * @Then order :orderReference should contain :quantity product(s) :productName
      * @Then order :orderReference should contain :quantity combination(s) :combinationName of product :productName
      */
-    public function orderContainsProductWithReference(string $orderReference, int $quantity, string $productName, ?string $combinationName = null)
+    public function orderContainsProductWithReference(string $orderReference, int $quantity, string $productName, ?string $combinationName = null): void
     {
         $this->assertProductCounts($orderReference, $quantity, $productName, $combinationName);
     }
@@ -853,12 +849,12 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      * @Then the :invoicePosition invoice from order :orderReference should contain :quantity product(s) :productName
      * @Then the :invoicePosition invoice from order :orderReference should contain :quantity combination(s) :combinationName of product :productName
      */
-    public function orderInvoiceContainsProductWithReference(string $invoicePosition, string $orderReference, int $quantity, string $productName, ?string $combinationName = null)
+    public function orderInvoiceContainsProductWithReference(string $invoicePosition, string $orderReference, int $quantity, string $productName, ?string $combinationName = null): void
     {
         $this->assertProductCounts($orderReference, $quantity, $productName, $combinationName, $invoicePosition);
     }
 
-    private function assertProductCounts(string $orderReference, int $quantity, string $productName, ?string $combinationName = null, ?string $invoicePosition = null)
+    private function assertProductCounts(string $orderReference, int $quantity, string $productName, ?string $combinationName = null, ?string $invoicePosition = null): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -896,7 +892,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then cart of order :orderReference should contain :quantity product(s) :productName
      */
-    public function cartOrderContainsProductWithReference(string $orderReference, int $quantity, string $productName, ?string $combinationName = null)
+    public function cartOrderContainsProductWithReference(string $orderReference, int $quantity, string $productName, ?string $combinationName = null): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $order = new Order($orderId);
@@ -918,7 +914,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference should contain :quantity refunded products :productName
      */
-    public function orderContainsRefundedProductWithReference(string $orderReference, int $quantity, string $productName)
+    public function orderContainsRefundedProductWithReference(string $orderReference, int $quantity, string $productName): void
     {
         $productQuantities = $this->getProductQuantitiesByReference($orderReference, $productName);
 
@@ -935,7 +931,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      *
      * @param string|null $productReference saves product reference to shared storage if provided
      */
-    public function checkProductDetailsWithReference(string $orderReference, string $productName, TableNode $table, ?string $productReference = null)
+    public function checkProductDetailsWithReference(string $orderReference, string $productName, TableNode $table, ?string $productReference = null): void
     {
         $productOrderDetail = $this->getOrderDetailFromOrder($productName, $orderReference);
         $expectedDetails = $table->getRowsHash();
@@ -961,7 +957,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then the product :productName in the :invoicePosition invoice from the order :orderReference should have the following details:
      */
-    public function checkProductDetailsInInvoiceWithReference(string $productName, string $invoicePosition, string $orderReference, TableNode $table)
+    public function checkProductDetailsInInvoiceWithReference(string $productName, string $invoicePosition, string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $order = new Order($orderId);
@@ -990,7 +986,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      * This statement must be called to store an initial stock for a product which then
      * allows you to simply check the expected differences in stock (1 less, 2 more, ...).
      */
-    public function storeProductInStock(string $productName)
+    public function storeProductInStock(string $productName): void
     {
         $productId = $this->getProductIdByName($productName);
         $nbProduct = Product::getQuantity($productId);
@@ -1001,7 +997,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      * @Then /^there are ([\-\d]+) (less|more) "(.+)" in stock$/
      * @Then /^there is ([\-\d]+) (less|more) "(.+)" in stock$/
      */
-    public function checkProductStockDifference(int $productDifference, string $factor, string $productName)
+    public function checkProductStockDifference(int $productDifference, string $factor, string $productName): void
     {
         if (! isset($this->productStock[$productName])) {
             throw new RuntimeException('Cannot compare a stock that has not been checked initially');
@@ -1026,7 +1022,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      *
      * @Then Order :orderReference should have following prices:
      */
-    public function assertOrderPrices(string $orderReference, TableNode $table)
+    public function assertOrderPrices(string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $data = $table->getRowsHash();
@@ -1050,7 +1046,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference should have the following details:
      */
-    public function queryOrderToGetTheFollowingProperties(string $orderReference, TableNode $table)
+    public function queryOrderToGetTheFollowingProperties(string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $this->assertOrderPropertiesEquals(new Order($orderId), $table->getRowsHash());
@@ -1082,7 +1078,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
-    public function addCartRuleAndUpdateSingleInvoice(string $orderReference, string $invoicePosition, TableNode $table)
+    public function addCartRuleAndUpdateSingleInvoice(string $orderReference, string $invoicePosition, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $data = $table->getRowsHash();
@@ -1102,7 +1098,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that adding duplicate product in invoice is forbidden
      */
-    public function assertDuplicateProductInInvoiceIsForbidden()
+    public function assertDuplicateProductInInvoiceIsForbidden(): void
     {
         $this->assertLastErrorIs(DuplicateProductInOrderInvoiceException::class);
     }
@@ -1154,7 +1150,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then the last invoice for order :orderReference should have following prices:
      */
-    public function assertLastInvoicePrices(string $orderReference, TableNode $table)
+    public function assertLastInvoicePrices(string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $data = $table->getRowsHash();
@@ -1175,7 +1171,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I change order "(.*)" note to "(.*)"$/
      */
-    public function changeOrderInternalNoteTo(string $orderReference, string $internalNote)
+    public function changeOrderInternalNoteTo(string $orderReference, string $internalNote): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $this->getCommandBus()->handle(new SetInternalOrderNoteCommand($orderId, $internalNote));
@@ -1184,7 +1180,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^order "(.*)" note should be "(.*)"$/
      */
-    public function internalNoteShouldBe(string $orderReference, string $internalNote)
+    public function internalNoteShouldBe(string $orderReference, string $internalNote): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         /** @var OrderForViewing $orderForViewing */
@@ -1198,7 +1194,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      *
      * @Given tax :taxName is applied to order :ordeReference
      */
-    public function assertTaxIsAppliedToOrder(string $taxName, string $orderReference)
+    public function assertTaxIsAppliedToOrder(string $taxName, string $orderReference): void
     {
         $orderId = $this->getSharedStorage()->get($orderReference);
         $order = new Order($orderId);
@@ -1222,7 +1218,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then product :productName in order :orderReference should have no specific price
      */
-    public function assertNoSpecificPrice(string $productName, string $orderReference)
+    public function assertNoSpecificPrice(string $productName, string $orderReference): void
     {
         $productId = $this->getProductIdByName($productName);
         // @todo: maybe manage combination as well
@@ -1243,7 +1239,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^product "(.*)" in order "(.*)" should have specific price (\d+\.\d+)$/
      */
-    public function assertSpecificPrice(string $productName, string $orderReference, float $expectedPrice)
+    public function assertSpecificPrice(string $productName, string $orderReference, float $expectedPrice): void
     {
         $productId = $this->getProductIdByName($productName);
         // @todo: maybe manage combination as well
@@ -1516,7 +1512,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete product :productReference from catalogue
      */
-    public function removeProductFromCatalogue(string $productReference)
+    public function removeProductFromCatalogue(string $productReference): void
     {
         $foundProduct = $this->getProductByName($productReference);
         $product = new Product($foundProduct->getProductId());
@@ -1526,7 +1522,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I update deleted product :productReference in order :orderReference
      */
-    public function tryUpdatingProductDeletedFromCatalogue(string $productReference, string $orderReference)
+    public function tryUpdatingProductDeletedFromCatalogue(string $productReference, string $orderReference): void
     {
         // get order detail
         $orderId = SharedStorage::getStorage()->get($orderReference);
@@ -1551,7 +1547,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that the product being edited was not found
      */
-    public function assertLastErrorIsRefundQuantityTooHigh()
+    public function assertLastErrorIsRefundQuantityTooHigh(): void
     {
         $this->assertLastErrorIs(
             CannotFindProductInOrderException::class
@@ -1607,7 +1603,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get no order error
      */
-    public function assertNoOrderError()
+    public function assertNoOrderError(): void
     {
         $this->assertLastErrorIsNull();
     }
@@ -1615,7 +1611,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^the order "(.+)" has following (shipping|invoice) address$/
      */
-    public function orderCheckAddress(string $orderReference, string $addressType, TableNode $table)
+    public function orderCheckAddress(string $orderReference, string $addressType, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         /** @var OrderForViewing $orderForViewing */
@@ -1696,7 +1692,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
      * @Then /^the preview order "(.+)" has following (shipping|invoice) address$/
      * @Then /^the preview order "(.+)" has following (shipping) details$/
      */
-    public function previewOrderCheckAddress(string $orderReference, string $addressType, TableNode $table)
+    public function previewOrderCheckAddress(string $orderReference, string $addressType, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         /** @var OrderPreview $orderPreview */

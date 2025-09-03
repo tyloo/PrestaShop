@@ -113,7 +113,7 @@ final class CustomerOrderQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters to order query builder.
      */
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFiltersMap = [
             'id_customer' => 'o.id_customer',

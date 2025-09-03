@@ -59,7 +59,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I add new CMS page :cmsPageReference with following properties:
      */
-    public function createCmsPage($cmsPageReference, TableNode $node)
+    public function createCmsPage($cmsPageReference, TableNode $node): void
     {
         $data = $node->getRowsHash();
         $this->createCmsPageUsingCommand($cmsPageReference, $data);
@@ -68,7 +68,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I create CMS page :cmsPageReference with cms category id :id
      */
-    public function createCmsPageWithProvidedCategoryId($cmsPageReference, $id)
+    public function createCmsPageWithProvidedCategoryId($cmsPageReference, $id): void
     {
         $data = $this->getValidDataForCmsPageCreation();
         $data['id_cms_category'] = (int) $id;
@@ -83,7 +83,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit CMS page :cmsPageReference with following properties:
      */
-    public function editCmsPage($cmsPageReference, TableNode $node)
+    public function editCmsPage($cmsPageReference, TableNode $node): void
     {
         $cmsId = (int) SharedStorage::getStorage()->get($cmsPageReference)->id;
         $command = new EditCmsPageCommand($cmsId);
@@ -132,7 +132,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I (enable|disable) CMS pages: "(.*)" in bulk action?$/
      */
-    public function bulkToggleDisplayStatus($action, $cmsPageReferences)
+    public function bulkToggleDisplayStatus($action, $cmsPageReferences): void
     {
         $idsByReferences = [];
 
@@ -155,7 +155,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I toggle CMS page :cmsPageReference display status
      */
-    public function toggleDisplayStatus($cmsPageReference)
+    public function toggleDisplayStatus($cmsPageReference): void
     {
         /** @var CMS $cms */
         $cms = SharedStorage::getStorage()->get($cmsPageReference);
@@ -168,7 +168,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given CMS pages: :cmsPageReferences exists
      */
-    public function createMultipleCmsPages($cmsPageReferences)
+    public function createMultipleCmsPages($cmsPageReferences): void
     {
         $cmsPageReferences = explode(',', (string) $cmsPageReferences);
 
@@ -182,7 +182,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete CMS page :cmsPageReference
      */
-    public function deleteCmsPage($cmsPageReference)
+    public function deleteCmsPage($cmsPageReference): void
     {
         $cmsPageId = (int) SharedStorage::getStorage()->get($cmsPageReference)->id;
 
@@ -192,7 +192,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete CMS pages: :cmsPageReferences using bulk action
      */
-    public function bulkDeleteCmsPages($cmsPageReferences)
+    public function bulkDeleteCmsPages($cmsPageReferences): void
     {
         $idsByReferences = [];
 
@@ -207,7 +207,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then CMS pages: :cmsPageReferences should be deleted
      */
-    public function assertCmsPagesAreDeleted($cmsPageReferences)
+    public function assertCmsPagesAreDeleted($cmsPageReferences): void
     {
         foreach (PrimitiveUtils::castStringArrayIntoArray($cmsPageReferences) as $cmsPageReference) {
             $this->assertCmsPageIsDeleted($cmsPageReference);
@@ -217,7 +217,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then CMS page :cmsPageReference should be deleted
      */
-    public function assertCmsPageIsDeleted($cmsPageReference)
+    public function assertCmsPageIsDeleted($cmsPageReference): void
     {
         $cmsPageId = (int) SharedStorage::getStorage()->get($cmsPageReference)->id;
 
@@ -232,7 +232,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^CMS page "(.*)" indexation for search engines should be (enabled|disabled)?$/
      */
-    public function assertIndexationStatus($cmsPageReference, $status)
+    public function assertIndexationStatus($cmsPageReference, $status): void
     {
         /** @var CMS $cmsPage */
         $cmsPage = SharedStorage::getStorage()->get($cmsPageReference);
@@ -245,7 +245,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^CMS pages: "(.*)" should be (displayed|not displayed)?$/
      */
-    public function assertMultipleCmsPagesDisplayStatus($cmsPageReferences, $status)
+    public function assertMultipleCmsPagesDisplayStatus($cmsPageReferences, $status): void
     {
         foreach (PrimitiveUtils::castStringArrayIntoArray($cmsPageReferences) as $cmsPageReference) {
             $this->assertDisplayStatus($cmsPageReference, $status);
@@ -255,7 +255,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^CMS page "(.*)" should be (displayed|not displayed)?$/
      */
-    public function assertDisplayStatus($cmsPageReference, $status)
+    public function assertDisplayStatus($cmsPageReference, $status): void
     {
         /** @var CMS $cmsPage */
         $cmsPage = SharedStorage::getStorage()->get($cmsPageReference);
@@ -268,7 +268,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^CMS page "(.+)" "(.+)" in default language should be '([^']+)'$/
      */
-    public function assertFieldValue($cmsPageReference, $field, $value)
+    public function assertFieldValue($cmsPageReference, $field, $value): void
     {
         /** @var CMS $cmsPage */
         $cmsPage = SharedStorage::getStorage()->get($cmsPageReference);
@@ -280,7 +280,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then CMS page :cmsPageReference :field field in default language should be empty
      */
-    public function assertFieldIsEmpty($cmsPageReference, $field)
+    public function assertFieldIsEmpty($cmsPageReference, $field): void
     {
         /** @var CMS $cmsPage */
         $cmsPage = SharedStorage::getStorage()->get($cmsPageReference);
@@ -308,7 +308,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given cms category with id :id does not exist
      */
-    public function assertCmsCategoryWithIdDoesNotExist($id)
+    public function assertCmsCategoryWithIdDoesNotExist($id): void
     {
         try {
             $query = new GetCmsPageCategoryForEditing((int) $id);
@@ -322,7 +322,7 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
     /**
      * @param string $cmsPageReference
      */
-    private function createCmsPageUsingCommand($cmsPageReference, array $data)
+    private function createCmsPageUsingCommand($cmsPageReference, array $data): void
     {
         $command = new AddCmsPageCommand(
             (int) $data['id_cms_category'],

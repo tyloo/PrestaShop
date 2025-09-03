@@ -67,7 +67,7 @@ class BulkEnableSupplierCommand extends AbstractBulkSupplierCommand
     /**
      * @throws SupplierException
      */
-    private function setSupplierIds(array $supplierIds)
+    private function setSupplierIds(array $supplierIds): void
     {
         foreach ($supplierIds as $id) {
             $this->supplierIds[] = new SupplierId($id);

@@ -76,7 +76,7 @@ final class ManufacturerFormDataHandler implements FormDataHandlerInterface
         return $manufacturerId->getValue();
     }
 
-    public function update($manufacturerId, array $data)
+    public function update($manufacturerId, array $data): void
     {
         /** @var UploadedFile $uploadedLogo */
         $uploadedLogo = $data['logo'];

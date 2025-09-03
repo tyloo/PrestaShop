@@ -73,7 +73,7 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
 
         $application = new Application(static::$kernel);
         $application->add(new #[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop-tests:load-legacy-classes')] class extends Command {
-            protected function configure()
+            protected function configure(): void
             {
             }
 
@@ -98,7 +98,7 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
     {
         $application = new Application(static::$kernel);
         $application->add(new #[\Symfony\Component\Console\Attribute\AsCommand(name: 'prestashop-tests:load-legacy-classes')] class extends Command {
-            protected function configure()
+            protected function configure(): void
             {
             }
 

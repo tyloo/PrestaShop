@@ -40,7 +40,7 @@ class ImageTypeFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): void
     {
         $this->commandBus->handle(new AddImageTypeCommand(
             $data['name'],
@@ -54,7 +54,7 @@ class ImageTypeFormDataHandler implements FormDataHandlerInterface
         ));
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $command = new EditImageTypeCommand((int) $id);
         $command

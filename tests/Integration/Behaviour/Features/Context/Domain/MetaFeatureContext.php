@@ -48,7 +48,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I add meta "([^"]*)" with specified properties$/
      */
-    public function addMetaWithSpecifiedProperties($reference, TableNode $node)
+    public function addMetaWithSpecifiedProperties($reference, TableNode $node): void
     {
         $data = $node->getRowsHash();
         $data = $this->getWithDefaultLanguage($data);
@@ -69,7 +69,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I get meta "([^"]*)" with specified properties$/
      */
-    public function getMetaWithSpecifiedProperties($reference, TableNode $node)
+    public function getMetaWithSpecifiedProperties($reference, TableNode $node): void
     {
         $data = $node->getRowsHash();
         $queryCommand = new GetMetaForEditing((int) $data['metaId']);
@@ -87,7 +87,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I update meta "([^"]*)" with specified properties$/
      */
-    public function updateMetaWithSpecifiedProperties($reference, TableNode $node)
+    public function updateMetaWithSpecifiedProperties($reference, TableNode $node): void
     {
         $data = $node->getRowsHash();
         $data = $this->getWithDefaultLanguage($data);
@@ -107,7 +107,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I add meta "([^"]*)" with specified properties without default language$/
      */
-    public function addMetaWithSpecifiedPropertiesWithoutDefaultLanguage($reference, TableNode $node)
+    public function addMetaWithSpecifiedPropertiesWithoutDefaultLanguage($reference, TableNode $node): void
     {
         $data = $node->getRowsHash();
         $data = $this->getWithDefaultLanguage($data);
@@ -126,7 +126,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I update meta "([^"]*)" with specified properties without default language$/
      */
-    public function updateMetaWithSpecifiedPropertiesWithoutDefaultLanguage($reference, TableNode $node)
+    public function updateMetaWithSpecifiedPropertiesWithoutDefaultLanguage($reference, TableNode $node): void
     {
         $data = $node->getRowsHash();
         $data = $this->getWithDefaultLanguage($data);
@@ -173,7 +173,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^I get pages for customization layout$/
      */
-    public function getPagesForCustomizationLayout()
+    public function getPagesForCustomizationLayout(): void
     {
         /** @var LayoutCustomizationPage[] $layoutCustomizationPages */
         $layoutCustomizationPages = $this->getQueryBus()->handle(
@@ -186,7 +186,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^meta "([^"]*)" editable form field "([^"]*)" should be equal to "([^"]*)"$/
      */
-    public function assertMetaEditableFormFieldShouldBeEqualTo($reference, $field, $value)
+    public function assertMetaEditableFormFieldShouldBeEqualTo($reference, $field, $value): void
     {
         /** @var EditableMeta $editableMeta */
         $editableMeta = SharedStorage::getStorage()->get('editable_' . $reference);
@@ -220,7 +220,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^I should get error that url rewrite value is incorrect$/
      */
-    public function assertItShouldGetErrorThatDefaultLanguageIsMissingForUrlRewrite()
+    public function assertItShouldGetErrorThatDefaultLanguageIsMissingForUrlRewrite(): void
     {
         $this->assertLastErrorIs(MetaConstraintException::class, MetaConstraintException::INVALID_URL_REWRITE);
     }
@@ -228,7 +228,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^I should get error that page name value is incorrect$/
      */
-    public function assertItShouldGetErrorThatPageNameValueIsIncorrect()
+    public function assertItShouldGetErrorThatPageNameValueIsIncorrect(): void
     {
         $this->assertLastErrorIs(MetaConstraintException::class, MetaConstraintException::INVALID_PAGE_NAME);
     }
@@ -236,7 +236,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^I should get error that meta entity is not found$/
      */
-    public function assertItShouldGetErrorThatMetaEntityIsNotFound()
+    public function assertItShouldGetErrorThatMetaEntityIsNotFound(): void
     {
         $this->assertLastErrorIs(MetaNotFoundException::class);
     }
@@ -244,7 +244,7 @@ class MetaFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^page "([^"]*)" should exist in customization layout pages$/
      */
-    public function assertPageShouldExistInCustomizationLayoutPages($pageName)
+    public function assertPageShouldExistInCustomizationLayoutPages($pageName): void
     {
         /** @var LayoutCustomizationPage[] $layoutCustomizationPages */
         $layoutCustomizationPages = SharedStorage::getStorage()->get('meta_customization_pages');

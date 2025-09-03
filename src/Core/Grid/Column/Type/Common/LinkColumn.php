@@ -50,7 +50,7 @@ final class LinkColumn extends AbstractColumn
         return 'link';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver

@@ -115,7 +115,7 @@ class FeatureFlagFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @AfterStep
      */
-    public function clearEntityManager()
+    public function clearEntityManager(): void
     {
         $this->getDoctrineEntityManager()->clear();
     }
@@ -123,7 +123,7 @@ class FeatureFlagFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^I should be returned an error$/
      */
-    public function assertGotErrorMessage()
+    public function assertGotErrorMessage(): void
     {
         if (! $this->latestResult instanceof Exception) {
             throw new Exception('Latest action did not return an error');

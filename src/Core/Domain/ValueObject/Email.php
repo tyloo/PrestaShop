@@ -81,7 +81,7 @@ class Email
      *
      * @throws DomainConstraintException
      */
-    public function assertEmailIsNotEmpty($email)
+    public function assertEmailIsNotEmpty($email): void
     {
         if (\strlen($email) === 0) {
             throw new DomainConstraintException('Email must not be empty', DomainConstraintException::INVALID_EMAIL);
@@ -95,7 +95,7 @@ class Email
      *
      * @throws DomainConstraintException
      */
-    private function assertEmailDoesNotExceedAllowedLength($email)
+    private function assertEmailDoesNotExceedAllowedLength($email): void
     {
         $email = html_entity_decode($email, \ENT_COMPAT, 'UTF-8');
 
@@ -111,7 +111,7 @@ class Email
      *
      * @throws DomainConstraintException
      */
-    private function assertEmailIsString($email)
+    private function assertEmailIsString($email): void
     {
         if (! \is_string($email)) {
             throw new DomainConstraintException('Email must be of type string', DomainConstraintException::INVALID_EMAIL);

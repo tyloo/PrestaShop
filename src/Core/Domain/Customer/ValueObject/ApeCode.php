@@ -60,7 +60,7 @@ class ApeCode
         return $this->code;
     }
 
-    private function assertIsApeCode($code)
+    private function assertIsApeCode($code): void
     {
         if (! \is_string($code)
             || (! empty($code) && ! ((bool) preg_match(self::PATTERN, $code)))

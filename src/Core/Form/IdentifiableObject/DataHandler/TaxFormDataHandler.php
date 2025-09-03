@@ -63,7 +63,7 @@ final class TaxFormDataHandler implements FormDataHandlerInterface
     /**
      * @throws TaxException
      */
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $command = (new EditTaxCommand($id))
             ->setLocalizedNames($data['name'])

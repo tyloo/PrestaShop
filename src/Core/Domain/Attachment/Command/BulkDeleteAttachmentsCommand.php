@@ -55,7 +55,7 @@ class BulkDeleteAttachmentsCommand
         return $this->attachmentIds;
     }
 
-    private function setAttachmentIds(array $attachmentIds)
+    private function setAttachmentIds(array $attachmentIds): void
     {
         foreach ($attachmentIds as $attachmentId) {
             $this->attachmentIds[] = new AttachmentId($attachmentId);

@@ -63,7 +63,7 @@ final class MetaFormDataHandler implements FormDataHandlerInterface
     /**
      * @throws MetaException
      */
-    public function update($metaId, array $data)
+    public function update($metaId, array $data): void
     {
         $editMetaCommand = (new EditMetaCommand((int) $metaId))
             ->setPageName($data['page_name'])

@@ -80,7 +80,7 @@ final class SupplierFormDataHandler implements FormDataHandlerInterface
         return $supplierId->getValue();
     }
 
-    public function update($supplierId, array $data)
+    public function update($supplierId, array $data): void
     {
         /** @var UploadedFile $uploadedLogo */
         $uploadedLogo = $data['logo'];
@@ -99,7 +99,7 @@ final class SupplierFormDataHandler implements FormDataHandlerInterface
     /**
      * Fills command with provided data
      */
-    private function fillCommandWithData(EditSupplierCommand $command, array $data)
+    private function fillCommandWithData(EditSupplierCommand $command, array $data): void
     {
         if ($data['name'] !== null) {
             $command->setName($data['name']);

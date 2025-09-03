@@ -89,7 +89,7 @@ class AddCarrierCommand
      */
     private function assertCarrierHasAtLeastOneZone(array $zones): void
     {
-        if (\count($zones) === 0) {
+        if ($zones === []) {
             throw new CarrierConstraintException('Carrier need to have at least one zone', CarrierConstraintException::INVALID_ZONE_MISSING);
         }
     }

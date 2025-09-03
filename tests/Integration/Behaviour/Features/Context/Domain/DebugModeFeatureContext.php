@@ -36,7 +36,7 @@ class DebugModeFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I enable debug mode
      */
-    public function enableDebugMode()
+    public function enableDebugMode(): void
     {
         $this->getCommandBus()->handle(new SwitchDebugModeCommand(true));
     }
@@ -44,7 +44,7 @@ class DebugModeFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I disable debug mode
      */
-    public function disableDebugMode()
+    public function disableDebugMode(): void
     {
         $this->getCommandBus()->handle(new SwitchDebugModeCommand(false));
     }
@@ -52,7 +52,7 @@ class DebugModeFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then debug mode should be enabled in the configuration
      */
-    public function debugModeShouldBeEnabledInTheConfiguration()
+    public function debugModeShouldBeEnabledInTheConfiguration(): void
     {
         /** @var DebugMode $configuration */
         $configuration = $this->getContainer()->get('prestashop.adapter.debug_mode');
@@ -63,7 +63,7 @@ class DebugModeFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then debug mode should be disabled in the configuration
      */
-    public function debugModeShouldBeDisabledInTheConfiguration()
+    public function debugModeShouldBeDisabledInTheConfiguration(): void
     {
         /** @var DebugMode $configuration */
         $configuration = $this->getContainer()->get('prestashop.adapter.debug_mode');

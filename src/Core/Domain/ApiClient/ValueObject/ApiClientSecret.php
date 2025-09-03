@@ -46,7 +46,7 @@ class ApiClientSecret
         return $this->value;
     }
 
-    private function assertSecretValue(string $value)
+    private function assertSecretValue(string $value): void
     {
         if (\strlen($value) < self::MIN_SIZE || \strlen($value) > self::MAX_SIZE) {
             throw new ApiClientConstraintException(\sprintf('Invalid api client secret "%s".', var_export($value, true)), ApiClientConstraintException::INVALID_SECRET);

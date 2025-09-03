@@ -40,7 +40,7 @@ final class SubmitGridAction extends AbstractGridAction
         return 'submit';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

@@ -73,7 +73,7 @@ final class LogGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     protected function getColumns()
     {
-        $columns = (new ColumnCollection())
+        return (new ColumnCollection())
             ->add(
                 (new DataColumn('id_log'))
                     ->setName($this->trans('ID', [], 'Admin.Global'))
@@ -150,8 +150,6 @@ final class LogGridDefinitionFactory extends AbstractGridDefinitionFactory
                 (new ActionColumn('actions'))
                     ->setName($this->trans('Actions', [], 'Admin.Global'))
             );
-
-        return $columns;
     }
 
     protected function getFilters()

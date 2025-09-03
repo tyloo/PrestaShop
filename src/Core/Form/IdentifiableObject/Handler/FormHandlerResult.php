@@ -48,10 +48,8 @@ class FormHandlerResult implements FormHandlerResultInterface
      * Creates successful form handler result with identifiable object id.
      *
      * @param int $identifiableObjectId
-     *
-     * @return FormHandlerResult
      */
-    public static function createWithId($identifiableObjectId)
+    public static function createWithId($identifiableObjectId): self
     {
         return new self(
             $identifiableObjectId,
@@ -62,10 +60,8 @@ class FormHandlerResult implements FormHandlerResultInterface
 
     /**
      * Creates form handler result when form which was provided form handling was not submitted
-     *
-     * @return FormHandlerResult
      */
-    public static function createNotSubmitted()
+    public static function createNotSubmitted(): self
     {
         return new self(
             null,
@@ -76,10 +72,8 @@ class FormHandlerResult implements FormHandlerResultInterface
 
     /**
      * Creates result for submitted but not valid form
-     *
-     * @return FormHandlerResult
      */
-    public static function createSubmittedButNotValid()
+    public static function createSubmittedButNotValid(): self
     {
         return new self(
             null,

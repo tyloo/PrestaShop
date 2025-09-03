@@ -50,7 +50,7 @@ final class OrderMessageFormDataHandler implements FormDataHandlerInterface
         return $orderMessageId->getValue();
     }
 
-    public function update($orderMessageId, array $data)
+    public function update($orderMessageId, array $data): void
     {
         $this->commandBus->handle(new EditOrderMessageCommand($orderMessageId, $data['name'], $data['message']));
     }

@@ -59,7 +59,7 @@ class BulkDeleteLanguagesCommand
     /**
      * @param int[] $languageIds
      */
-    private function setLanguageIds(array $languageIds)
+    private function setLanguageIds(array $languageIds): void
     {
         if (empty($languageIds)) {
             throw new LanguageConstraintException('At least one language must be provided for deleting', LanguageConstraintException::EMPTY_BULK_DELETE);

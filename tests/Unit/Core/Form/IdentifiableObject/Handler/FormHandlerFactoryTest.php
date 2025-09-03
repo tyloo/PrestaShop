@@ -37,7 +37,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FormHandlerFactoryTest extends TestCase
 {
-    public function testCanBeConstructed()
+    public function testCanBeConstructed(): FormHandlerFactory
     {
         $factory = new FormHandlerFactory(
             $this->createMock(HookDispatcherInterface::class),

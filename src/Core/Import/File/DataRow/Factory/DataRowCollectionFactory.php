@@ -41,7 +41,7 @@ final class DataRowCollectionFactory implements DataRowCollectionFactoryInterfac
     ) {
     }
 
-    public function buildFromFile(SplFileInfo $file, $maxRowsInCollection = null)
+    public function buildFromFile(SplFileInfo $file, $maxRowsInCollection = null): DataRowCollection
     {
         $dataRowCollection = new DataRowCollection();
         $rowIndex = 0;

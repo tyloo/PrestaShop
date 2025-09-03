@@ -73,11 +73,9 @@ class SortOrder
     /**
      * Will returns a new Sort Order with random direction.
      *
-     * @return SortOrder
-     *
      * @throws InvalidSortOrderDirectionException
      */
-    public static function random()
+    public static function random(): static
     {
         return new static('', '', 'random');
     }
@@ -117,11 +115,9 @@ class SortOrder
      *
      * @param string $sortOrderConfiguration the Sort Order configuration string
      *
-     * @return SortOrder
-     *
      * @throws InvalidSortOrderDirectionException
      */
-    public static function newFromString($sortOrderConfiguration)
+    public static function newFromString($sortOrderConfiguration): static
     {
         $sortParams = explode('.', $sortOrderConfiguration);
 

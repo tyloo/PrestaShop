@@ -62,7 +62,7 @@ class HookId
     /**
      * @param int $hookId
      */
-    private function assertIntegerIsGreaterThanZero($hookId)
+    private function assertIntegerIsGreaterThanZero($hookId): void
     {
         if (! \is_int($hookId) || $hookId < 0) {
             throw new HookConstraintException(\sprintf('Hook id %d is invalid. Hook id must be number that is greater than zero.', var_export($hookId, true)));

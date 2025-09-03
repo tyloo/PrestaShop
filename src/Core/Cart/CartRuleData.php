@@ -74,7 +74,7 @@ class CartRuleData
         return $cartRuleData['obj'];
     }
 
-    public function addDiscountApplied(AmountImmutable $amount)
+    public function addDiscountApplied(AmountImmutable $amount): void
     {
         $this->discountApplied = $this->discountApplied->add($amount);
     }

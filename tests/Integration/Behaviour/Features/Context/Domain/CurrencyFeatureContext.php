@@ -100,7 +100,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I add new currency :reference with following properties:
      */
-    public function addCurrency($reference, TableNode $node)
+    public function addCurrency($reference, TableNode $node): void
     {
         $defaultLangId = Configuration::get('PS_LANG_DEFAULT');
 
@@ -152,7 +152,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit currency :reference with following properties:
      */
-    public function editCurrency($reference, TableNode $node)
+    public function editCurrency($reference, TableNode $node): void
     {
         $defaultLangId = Configuration::get('PS_LANG_DEFAULT');
 
@@ -208,7 +208,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I disable currency ":currencyReference"
      */
-    public function disableCurrency($reference)
+    public function disableCurrency($reference): void
     {
         $currency = $this->getCurrency($reference);
 
@@ -222,7 +222,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete currency ":currencyReference"
      */
-    public function deleteCurrency($reference)
+    public function deleteCurrency($reference): void
     {
         $currency = $this->getCurrency($reference);
 
@@ -248,7 +248,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I request reference data for :currencyIsoCode
      */
-    public function getCurrencyReferenceData($currencyIsoCode)
+    public function getCurrencyReferenceData($currencyIsoCode): void
     {
         try {
             $this->currencyData = $this->getCommandBus()->handle(new GetReferenceCurrency($currencyIsoCode));
@@ -260,7 +260,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get currency data:
      */
-    public function checkCurrencyData(TableNode $node)
+    public function checkCurrencyData(TableNode $node): void
     {
         $apiData = [
             'iso_code' => $this->currencyData->getIsoCode(),
@@ -286,7 +286,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that default currency cannot be disabled
      */
-    public function assertLastErrorIsDefaultCurrencyCannotBeDisabled()
+    public function assertLastErrorIsDefaultCurrencyCannotBeDisabled(): void
     {
         $this->assertLastErrorIs(CannotDisableDefaultCurrencyException::class);
     }
@@ -294,7 +294,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that default currency cannot be deleted
      */
-    public function assertLastErrorIsDefaultCurrencyCannotBeDeleted()
+    public function assertLastErrorIsDefaultCurrencyCannotBeDeleted(): void
     {
         $this->assertLastErrorIs(CannotDeleteDefaultCurrencyException::class);
     }
@@ -302,7 +302,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^I should get error that unofficial currency is invalid$/
      */
-    public function assertLastErrorIsInvalidUnofficialCurrency()
+    public function assertLastErrorIsInvalidUnofficialCurrency(): void
     {
         $this->assertLastErrorIs(InvalidUnofficialCurrencyException::class);
     }
@@ -310,7 +310,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^I should get error that currency name is invalid$/
      */
-    public function assertLastErrorIsInvalidCurrencyName()
+    public function assertLastErrorIsInvalidCurrencyName(): void
     {
         $this->assertLastErrorIs(CurrencyConstraintException::class, CurrencyConstraintException::INVALID_NAME);
     }
@@ -318,7 +318,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that currency already exists
      */
-    public function assertLastErrorIsCurrencyAlreadyExists()
+    public function assertLastErrorIsCurrencyAlreadyExists(): void
     {
         $this->assertLastErrorIs(CurrencyConstraintException::class, CurrencyConstraintException::CURRENCY_ALREADY_EXISTS);
     }
@@ -326,7 +326,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that currency was not found
      */
-    public function assertLastErrorIsNotFound()
+    public function assertLastErrorIsNotFound(): void
     {
         $this->assertLastErrorIs(CurrencyNotFoundException::class);
     }

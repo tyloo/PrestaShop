@@ -40,7 +40,7 @@ final class HookDispatcher implements HookDispatcherInterface
     ) {
     }
 
-    public function dispatchHook(HookInterface $hook)
+    public function dispatchHook(HookInterface $hook): void
     {
         $this->hookDispatcherAdapter->dispatchForParameters(
             $hook->getName(),
@@ -48,12 +48,12 @@ final class HookDispatcher implements HookDispatcherInterface
         );
     }
 
-    public function dispatchWithParameters($hookName, array $hookParameters = [])
+    public function dispatchWithParameters($hookName, array $hookParameters = []): void
     {
         $this->dispatchHook(new Hook($hookName, $hookParameters));
     }
 
-    public function dispatchRendering(HookInterface $hook)
+    public function dispatchRendering(HookInterface $hook): RenderedHook
     {
         $event = $this->hookDispatcherAdapter->renderForParameters(
             $hook->getName(),
@@ -78,22 +78,22 @@ final class HookDispatcher implements HookDispatcherInterface
         return $this->hookDispatcherAdapter->dispatch($event, $eventName);
     }
 
-    public function addListener($eventName, $listener, $priority = 0)
+    public function addListener($eventName, $listener, $priority = 0): void
     {
         $this->hookDispatcherAdapter->addListener($eventName, $listener, $priority);
     }
 
-    public function addSubscriber(EventSubscriberInterface $subscriber)
+    public function addSubscriber(EventSubscriberInterface $subscriber): void
     {
         $this->hookDispatcherAdapter->addSubscriber($subscriber);
     }
 
-    public function removeListener($eventName, $listener)
+    public function removeListener($eventName, $listener): void
     {
         $this->hookDispatcherAdapter->removeListener($eventName, $listener);
     }
 
-    public function removeSubscriber(EventSubscriberInterface $subscriber)
+    public function removeSubscriber(EventSubscriberInterface $subscriber): void
     {
         $this->hookDispatcherAdapter->removeSubscriber($subscriber);
     }

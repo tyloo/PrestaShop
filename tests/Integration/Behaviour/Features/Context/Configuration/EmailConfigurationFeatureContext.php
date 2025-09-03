@@ -34,7 +34,7 @@ class EmailConfigurationFeatureContext extends AbstractConfigurationFeatureConte
     /**
      * @Given /^email sending is disabled$/
      */
-    public function disableEmail()
+    public function disableEmail(): void
     {
         $this->setConfiguration('PS_MAIL_METHOD', Mail::METHOD_DISABLE);
     }

@@ -43,7 +43,7 @@ final class CurrencyGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $gridData = $this->gridDataFactory->getData($searchCriteria);
 
@@ -58,10 +58,8 @@ final class CurrencyGridDataFactory implements GridDataFactoryInterface
 
     /**
      * Gets record collection with extra and modified rows.
-     *
-     * @return RecordCollection
      */
-    private function getModifiedRecords(RecordCollectionInterface $records)
+    private function getModifiedRecords(RecordCollectionInterface $records): RecordCollection
     {
         $result = [];
         foreach ($records as $key => $record) {

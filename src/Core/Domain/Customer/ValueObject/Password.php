@@ -73,7 +73,7 @@ class Password
     /**
      * @param string $password
      */
-    private function assertPasswordIsWithinAllowedLength($password)
+    private function assertPasswordIsWithinAllowedLength($password): void
     {
         $length = mb_strlen($password, 'UTF-8');
 

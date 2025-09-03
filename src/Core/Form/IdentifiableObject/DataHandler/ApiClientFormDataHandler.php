@@ -56,7 +56,7 @@ class ApiClientFormDataHandler implements FormDataHandlerInterface
         return $createdApiClient;
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $command = new EditApiClientCommand((int) $id);
         $command

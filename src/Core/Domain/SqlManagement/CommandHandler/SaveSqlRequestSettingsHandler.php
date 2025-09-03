@@ -44,7 +44,7 @@ final class SaveSqlRequestSettingsHandler implements SaveSqlRequestSettingsHandl
     ) {
     }
 
-    public function handle(SaveSqlRequestSettingsCommand $command)
+    public function handle(SaveSqlRequestSettingsCommand $command): void
     {
         $this->configuration->set(SqlRequestSettings::FILE_ENCODING, $this->getEncodingFileValue($command));
         $this->configuration->set(SqlRequestSettings::FILE_SEPARATOR, $command->getFileSeparator());

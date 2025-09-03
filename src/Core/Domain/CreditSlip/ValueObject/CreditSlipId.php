@@ -65,7 +65,7 @@ final class CreditSlipId
      *
      * @throws CreditSlipConstraintException
      */
-    private function assertIsIntegerGreaterThanZero($value)
+    private function assertIsIntegerGreaterThanZero($value): void
     {
         if (! \is_int($value) || $value <= 0) {
             throw new CreditSlipConstraintException(\sprintf('Invalid credit slip id "%s".', var_export($value, true)));

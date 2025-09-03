@@ -423,7 +423,7 @@ class FakePackItemsManager4759 extends PackItemsManager
 
     private $stockAvailables = [];
 
-    public function addProduct(FakeProduct4759 $pack, FakeProduct4759 $product, $product_attribute_id, $quantity)
+    public function addProduct(FakeProduct4759 $pack, FakeProduct4759 $product, $product_attribute_id, $quantity): void
     {
         $entry = [
             'productObj' => $product,

@@ -59,7 +59,7 @@ class CartSummaryFormDataHandler implements FormDataHandlerInterface
         ));
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         // not used for edition, only creation
     }

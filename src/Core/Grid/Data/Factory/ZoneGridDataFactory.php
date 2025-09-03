@@ -40,7 +40,7 @@ final class ZoneGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $zoneData = $this->zoneDataFactory->getData($searchCriteria);
 

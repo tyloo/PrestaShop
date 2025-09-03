@@ -40,7 +40,7 @@ final class DeleteCategoriesBulkAction extends AbstractBulkAction
         return 'delete_categories';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

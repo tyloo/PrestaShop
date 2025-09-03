@@ -70,11 +70,8 @@ final class CurrencyQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        $qb = $this->getQueryBuilder($searchCriteria->getFilters())
-            ->select('COUNT(DISTINCT c.`id_currency`)')
-        ;
-
-        return $qb;
+        return $this->getQueryBuilder($searchCriteria->getFilters())
+            ->select('COUNT(DISTINCT c.`id_currency`)');
     }
 
     /**

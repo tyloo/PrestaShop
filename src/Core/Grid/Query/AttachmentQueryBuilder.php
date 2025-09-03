@@ -64,11 +64,8 @@ final class AttachmentQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        $qb = $this->getQueryBuilder($searchCriteria->getFilters())
-            ->select('COUNT(DISTINCT a.`id_attachment`)')
-        ;
-
-        return $qb;
+        return $this->getQueryBuilder($searchCriteria->getFilters())
+            ->select('COUNT(DISTINCT a.`id_attachment`)');
     }
 
     /**
@@ -107,7 +104,7 @@ final class AttachmentQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters to attachments query builder.
      */
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFiltersMap = [
             'id_attachment' => 'a.id_attachment',

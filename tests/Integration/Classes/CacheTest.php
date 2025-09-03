@@ -57,30 +57,25 @@ class CacheTest extends TestCase
         Cache::deleteTestingInstance();
     }
 
-    public function getFromArray()
+    public function getFromArray(...$args)
     {
-        $args = \func_get_args();
-
         return $this->cacheArray[$args[0]] ?? null;
     }
 
-    public function deleteMultiFromArray(): void
+    public function deleteMultiFromArray(...$args): void
     {
-        $args = \func_get_args();
         foreach ($args[0] as $arg) {
             unset($this->cacheArray[$arg]);
         }
     }
 
-    public function deleteFromArray(): void
+    public function deleteFromArray(...$args): void
     {
-        $args = \func_get_args();
         unset($this->cacheArray[$args[0]]);
     }
 
-    public function setIntoArray(): void
+    public function setIntoArray(...$args): void
     {
-        $args = \func_get_args();
         $this->cacheArray[$args[0]] = $args[1];
     }
 

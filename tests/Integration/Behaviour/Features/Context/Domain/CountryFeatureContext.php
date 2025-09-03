@@ -162,7 +162,7 @@ class CountryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^the country "(.+)" should have the following properties:$/
      */
-    public function assertQueryCustomerProperties($countryReference, TableNode $table)
+    public function assertQueryCustomerProperties($countryReference, TableNode $table): void
     {
         $countryId = SharedStorage::getStorage()->get($countryReference);
         $expectedData = $this->localizeByRows($table);

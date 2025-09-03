@@ -35,7 +35,7 @@ class MetaFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^meta "([^"]*)" page should be "([^"]*)"$/
      */
-    public function assertMetaPageShouldBe($reference, $expectedPageName)
+    public function assertMetaPageShouldBe($reference, $expectedPageName): void
     {
         /** @var Meta $meta */
         $meta = SharedStorage::getStorage()->get($reference);
@@ -48,7 +48,7 @@ class MetaFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^meta "([^"]*)" page title for default language should be "([^"]*)"$/
      */
-    public function AssertMetaPageTitleForDefaultLanguageShouldBe($reference, $expectedTitle)
+    public function AssertMetaPageTitleForDefaultLanguageShouldBe($reference, $expectedTitle): void
     {
         $defaultLanguageId = SharedStorage::getStorage()->get('default_language_id');
         /** @var Meta $meta */
@@ -62,7 +62,7 @@ class MetaFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^meta "([^"]*)" field "([^"]*)" for default language should be "([^"]*)"$/
      */
-    public function metaFieldForDefaultLanguageShouldBe($reference, $field, $expectedValue)
+    public function metaFieldForDefaultLanguageShouldBe($reference, $field, $expectedValue): void
     {
         $defaultLanguageId = SharedStorage::getStorage()->get('default_language_id');
         /** @var Meta $meta */

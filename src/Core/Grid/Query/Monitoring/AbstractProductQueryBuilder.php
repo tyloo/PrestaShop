@@ -110,7 +110,7 @@ abstract class AbstractProductQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFilters = ['id_product', 'reference', 'name', 'active'];
 

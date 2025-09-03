@@ -37,7 +37,7 @@ class EmployeeFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given I am logged in as :employeeEmail employee
      */
-    public function logsInBackOffice($employeeEmail)
+    public function logsInBackOffice($employeeEmail): void
     {
         $employee = new LegacyEmployee();
         $legacyEmployee = $employee->getByEmail($employeeEmail);
@@ -65,7 +65,7 @@ class EmployeeFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given I am not logged in as an employee
      */
-    public function logsOutBackOffice()
+    public function logsOutBackOffice(): void
     {
         Context::getContext()->employee = null;
         /** @var EmployeeContextDecorator $employeeContext */

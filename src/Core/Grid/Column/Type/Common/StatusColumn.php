@@ -40,7 +40,7 @@ final class StatusColumn extends AbstractColumn
         return 'status';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

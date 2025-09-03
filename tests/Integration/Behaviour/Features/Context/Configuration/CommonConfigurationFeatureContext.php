@@ -70,7 +70,7 @@ class CommonConfigurationFeatureContext extends AbstractConfigurationFeatureCont
     /**
      * @Given /^groups feature is activated$/
      */
-    public function activateGroupFeature()
+    public function activateGroupFeature(): void
     {
         Configuration::updateGlobalValue('PS_GROUP_FEATURE_ACTIVE', '1');
     }
@@ -80,7 +80,7 @@ class CommonConfigurationFeatureContext extends AbstractConfigurationFeatureCont
      *
      * @Transform(enabled|disabled)
      */
-    public function toggleCustomizationFeature(string $status)
+    public function toggleCustomizationFeature(string $status): void
     {
         $status = PrimitiveUtils::castStringBooleanIntoBoolean($status);
         Configuration::set(

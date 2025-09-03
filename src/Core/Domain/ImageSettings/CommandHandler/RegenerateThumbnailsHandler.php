@@ -89,7 +89,7 @@ final class RegenerateThumbnailsHandler extends AbstractObjectModelHandler imple
 
             // Regenerate images
             $errors = $this->imageThumbnailsRegenerator->regenerateNewImages($proc['dir'], $formats, $proc['type'] === 'products');
-            if (\is_array($errors) && \count($errors) > 0) {
+            if (\is_array($errors) && $errors !== []) {
                 if (\in_array('timeout', $errors, true)) {
                     throw new RegenerateThumbnailsTimeoutException($this->translator->trans('Only part of the images have been regenerated. The server timed out before finishing.', [], 'Admin.Design.Notification'));
                 }

@@ -135,7 +135,7 @@ final class AttributeGroupQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    private function applyFilters(array $filters, QueryBuilder $qb)
+    private function applyFilters(array $filters, QueryBuilder $qb): void
     {
         $allowedFiltersMap = [
             'id_attribute_group' => 'ag.id_attribute_group',

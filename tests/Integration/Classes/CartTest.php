@@ -412,7 +412,7 @@ class CartTest extends TestCase
         $cart->updateQty(1, $highProduct->id);
         $cart->updateQty(3, $lowProduct->id);
 
-        $preTax = round(5 / (1 + (3 * 10 + 1 * 20) / (4 * 100)), 2);
+        $preTax = round(5 / (1 + (3 * 10 + 20) / (4 * 100)), 2);
 
         $this->assertEquals($preTax, $cart->getOrderTotal(false, Cart::ONLY_SHIPPING, null, $id_carrier));
         $this->assertEquals(5, $cart->getOrderTotal(true, Cart::ONLY_SHIPPING, null, $id_carrier));

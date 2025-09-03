@@ -37,7 +37,7 @@ final class EmployeeNameWithAvatarColumn extends AbstractColumn
         return 'employee_name_with_avatar';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

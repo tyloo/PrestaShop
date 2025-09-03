@@ -51,7 +51,7 @@ class IsUrlRewriteValidator extends ConstraintValidator
     ) {
     }
 
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (! $constraint instanceof IsUrlRewrite) {
             throw new UnexpectedTypeException($constraint, IsUrlRewrite::class);

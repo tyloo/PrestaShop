@@ -47,7 +47,7 @@ abstract class AbstractConfigurationFeatureContext implements BehatContext
      *
      * @AfterScenario
      */
-    public function restoreConfigurationValues()
+    public function restoreConfigurationValues(): void
     {
         if ($this->configurationModified) {
             DatabaseDump::restoreTables(['configuration', 'configuration_lang']);

@@ -40,7 +40,7 @@ final class DeleteCategoryRowAction extends AbstractRowAction
         return 'delete_category';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

@@ -83,7 +83,7 @@ class CarrierRangeZone
     /**
      * @throws CarrierConstraintException
      */
-    private function assertZoneId(int $zoneId)
+    private function assertZoneId(int $zoneId): void
     {
         if ($zoneId <= 0) {
             throw new CarrierConstraintException(\sprintf('Invalid zone id %d supplied. Zone id must be a positive integer.', $zoneId), CarrierConstraintException::INVALID_ZONE_ID);
@@ -93,7 +93,7 @@ class CarrierRangeZone
     /**
      * @throws CarrierConstraintException
      */
-    private function assertRanges(array $ranges)
+    private function assertRanges(array $ranges): void
     {
         // Initialize min value
         $min = 0;

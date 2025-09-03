@@ -69,4 +69,5 @@ return ECSConfig::configure()
         PhpdocSummaryFixer::class,
         PhpUnitTestClassRequiresCoversFixer::class,
     ])
+    ->withParallel()
 ;

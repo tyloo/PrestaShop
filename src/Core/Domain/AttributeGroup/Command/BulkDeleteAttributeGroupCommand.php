@@ -61,7 +61,7 @@ final class BulkDeleteAttributeGroupCommand
     /**
      * @throws AttributeGroupConstraintException
      */
-    private function setAttributeGroupIds(array $attributeGroupIds)
+    private function setAttributeGroupIds(array $attributeGroupIds): void
     {
         foreach ($attributeGroupIds as $attributeGroupId) {
             $this->attributeGroupIds[] = new AttributeGroupId($attributeGroupId);

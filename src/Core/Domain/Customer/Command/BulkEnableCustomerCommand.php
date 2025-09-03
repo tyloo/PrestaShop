@@ -58,7 +58,7 @@ class BulkEnableCustomerCommand
     /**
      * @param int[] $customerIds
      */
-    private function setCustomerIds(array $customerIds)
+    private function setCustomerIds(array $customerIds): void
     {
         foreach ($customerIds as $customerId) {
             $this->customerIds[] = new CustomerId($customerId);

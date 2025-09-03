@@ -87,7 +87,7 @@ class RoutingCacheKeyGeneratorTest extends KernelTestCase
 
         $this->assertEquals('/modules/demo/demo', $route->getPath());
         $this->assertEquals([
-            '_controller' => 'PsTest\Controller\Admin\DemoController::demoAction',
+            '_controller' => \PsTest\Controller\Admin\DemoController::class . '::demoAction',
         ], $route->getDefaults());
     }
 }

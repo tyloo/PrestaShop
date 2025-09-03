@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class ImportRuntimeConfigFactory implements ImportRuntimeConfigFactoryInterface
 {
-    public function buildFromRequest(Request $request)
+    public function buildFromRequest(Request $request): ImportRuntimeConfig
     {
         $sharedData = $request->request->get('crossStepsVars', '');
 

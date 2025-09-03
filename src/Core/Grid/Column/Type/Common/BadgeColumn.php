@@ -40,7 +40,7 @@ final class BadgeColumn extends AbstractColumn
         return 'badge';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

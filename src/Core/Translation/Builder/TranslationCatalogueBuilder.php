@@ -154,11 +154,7 @@ class TranslationCatalogueBuilder
         $provider = $this->catalogueProviderFactory->getProvider($providerDefinition);
 
         $defaultCatalogue = $provider->getDefaultCatalogue($locale);
-        if ($domain === null) {
-            $defaultCatalogueMessages = $defaultCatalogue->all();
-        } else {
-            $defaultCatalogueMessages = [$domain => $defaultCatalogue->all($domain)];
-        }
+        $defaultCatalogueMessages = $domain === null ? $defaultCatalogue->all() : [$domain => $defaultCatalogue->all($domain)];
 
         if (empty($defaultCatalogueMessages)) {
             return new Catalogue();

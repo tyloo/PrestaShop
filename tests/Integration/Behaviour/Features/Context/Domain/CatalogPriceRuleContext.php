@@ -243,7 +243,8 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
     private function createAddCatalogPriceRuleCommand(TableNode $tableNode): AddCatalogPriceRuleCommand
     {
         $dataRows = $tableNode->getRowsHash();
-        $addCommand = new AddCatalogPriceRuleCommand(
+
+        return new AddCatalogPriceRuleCommand(
             $dataRows['name'],
             $this->getStoredId($dataRows, 'currency'),
             $this->getStoredId($dataRows, 'country'),
@@ -255,8 +256,6 @@ class CatalogPriceRuleContext extends AbstractDomainFeatureContext
             PrimitiveUtils::castStringBooleanIntoBoolean($dataRows['includes tax']),
             (float) $dataRows['price']
         );
-
-        return $addCommand;
     }
 
     private function getStoredId(array $dataRows, string $fieldId): ?int

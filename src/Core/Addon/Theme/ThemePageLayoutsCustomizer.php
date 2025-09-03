@@ -41,7 +41,7 @@ class ThemePageLayoutsCustomizer implements ThemePageLayoutsCustomizerInterface
     ) {
     }
 
-    public function customize(array $pageLayouts)
+    public function customize(array $pageLayouts): void
     {
         $this->theme->setPageLayouts($pageLayouts);
         $this->themeManager->saveTheme($this->theme);

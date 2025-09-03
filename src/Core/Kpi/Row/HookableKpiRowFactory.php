@@ -97,7 +97,7 @@ final class HookableKpiRowFactory implements KpiRowFactoryInterface
     /**
      * Set options for kpi row
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }

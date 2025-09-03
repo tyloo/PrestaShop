@@ -42,7 +42,7 @@ class PhpErrorsCounter
      * in our test suite. Once we will have fixed all we will
      * enable the error handler of PHPUnit that convert errors to exceptions.
      */
-    public function registerErrorHandler()
+    public function registerErrorHandler(): void
     {
         set_error_handler($this->errorHandler(...), \E_ALL);
     }
@@ -70,7 +70,7 @@ class PhpErrorsCounter
         return false;
     }
 
-    public function restoreErrorHandler()
+    public function restoreErrorHandler(): void
     {
         restore_error_handler();
     }
@@ -124,7 +124,7 @@ class PhpErrorsCounter
     /**
      * Reset all counters to 0.
      */
-    public function reset()
+    public function reset(): void
     {
         $this->deprecations = 0;
         $this->errors = 0;

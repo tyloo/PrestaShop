@@ -42,7 +42,7 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I set tax rule group :taxRulesGroupReference to product :productReference
      */
-    public function setProductTaxRulesGroup(string $taxRulesGroupReference, string $productName)
+    public function setProductTaxRulesGroup(string $taxRulesGroupReference, string $productName): void
     {
         $taxRulesGroupId = SharedStorage::getStorage()->get($taxRulesGroupReference);
         $productId = $this->getProductIdByName($productName);
@@ -58,7 +58,7 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given The default category of product :productName has a group reduction of :reductionPercent% for the customer :customerReference
      */
-    public function addGroupReductionOnProductDefaultCategoryForCustomerGroup(string $productName, float $reductionPercent, string $customerReference)
+    public function addGroupReductionOnProductDefaultCategoryForCustomerGroup(string $productName, float $reductionPercent, string $customerReference): void
     {
         $productId = $this->getProductIdByName($productName);
 
@@ -89,7 +89,7 @@ class ProductFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given The default category of product :productName has no group reduction
      */
-    public function deleteGroupReductionOnProductDefaultCategory(string $productName)
+    public function deleteGroupReductionOnProductDefaultCategory(string $productName): void
     {
         $productId = $this->getProductIdByName($productName);
 

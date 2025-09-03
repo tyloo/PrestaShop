@@ -107,7 +107,7 @@ class OrderDetailRefund
     /**
      * @throws OrderException
      */
-    private function assertOrderDetailIdIsGreaterThanZero(int $orderDetailId)
+    private function assertOrderDetailIdIsGreaterThanZero(int $orderDetailId): void
     {
         if ($orderDetailId < 0) {
             throw new OrderException(\sprintf('Order detail id %s is invalid. Order detail id must be number that is greater than zero.', var_export($orderDetailId, true)));

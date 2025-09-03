@@ -51,7 +51,7 @@ final class AddressFormDataProvider implements FormDataProviderInterface
         /** @var EditableCustomerAddress $editableAddress */
         $editableAddress = $this->queryBus->handle(new GetCustomerAddressForEditing((int) $addressId));
 
-        $data = [
+        return [
             'id_customer' => $editableAddress->getCustomerId()->getValue(),
             'customer_email' => $editableAddress->getCustomerEmail(),
             'dni' => $editableAddress->getDni(),
@@ -70,8 +70,6 @@ final class AddressFormDataProvider implements FormDataProviderInterface
             'phone_mobile' => $editableAddress->getMobilePhone(),
             'other' => $editableAddress->getOther(),
         ];
-
-        return $data;
     }
 
     public function getDefaultData(): array

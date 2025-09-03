@@ -53,7 +53,7 @@ final class BackupGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $backups = $this->backupRepository->retrieveBackups()->all();
         usort($backups, $this->backupByDateComparator->compare(...));

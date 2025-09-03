@@ -58,7 +58,7 @@ final class CatalogPriceRuleFormDataProvider implements FormDataProviderInterfac
             $leaveInitialPrice = true;
         }
 
-        $data = [
+        return [
             'name' => $editableCatalogPriceRule->getName(),
             'id_shop' => $editableCatalogPriceRule->getShopId(),
             'id_currency' => $editableCatalogPriceRule->getCurrencyId(),
@@ -77,8 +77,6 @@ final class CatalogPriceRuleFormDataProvider implements FormDataProviderInterfac
                 'include_tax' => $editableCatalogPriceRule->isTaxIncluded(),
             ],
         ];
-
-        return $data;
     }
 
     public function getDefaultData(): array

@@ -256,8 +256,6 @@ class LanguageContextBuilderTest extends TestCase
 
     private function mockObjectModelLanguage(): Language|MockObject
     {
-        $language = $this->createMock(Language::class);
-
-        return $language;
+        return $this->createMock(Language::class);
     }
 }

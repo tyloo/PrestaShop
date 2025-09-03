@@ -67,11 +67,8 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        $qb = $this->getQueryBuilder($searchCriteria->getFilters())
-            ->select('COUNT(DISTINCT slip.`id_order_slip`)')
-        ;
-
-        return $qb;
+        return $this->getQueryBuilder($searchCriteria->getFilters())
+            ->select('COUNT(DISTINCT slip.`id_order_slip`)');
     }
 
     /**
@@ -98,7 +95,7 @@ final class CreditSlipQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $availableFiltersMap = [
             'id_credit_slip' => 'slip.id_order_slip',

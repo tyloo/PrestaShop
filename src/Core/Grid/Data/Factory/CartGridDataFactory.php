@@ -54,7 +54,7 @@ class CartGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $cartData = $this->cartDataFactory->getData($searchCriteria);
         $modifiedRecords = $this->applyModifications($cartData->getRecords());

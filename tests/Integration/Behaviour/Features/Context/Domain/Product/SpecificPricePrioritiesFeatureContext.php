@@ -183,7 +183,7 @@ class SpecificPricePrioritiesFeatureContext extends AbstractProductFeatureContex
         return new PriorityList($priorities);
     }
 
-    private function assertPriorities(PriorityList $expectedPriorities, PriorityList $actualPriorities)
+    private function assertPriorities(PriorityList $expectedPriorities, PriorityList $actualPriorities): void
     {
         Assert::assertEquals(
             $expectedPriorities,

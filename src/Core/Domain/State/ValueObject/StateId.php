@@ -56,7 +56,7 @@ class StateId implements StateIdInterface
     /**
      * @throws StateConstraintException
      */
-    private function assertPositiveInt(int $value)
+    private function assertPositiveInt(int $value): void
     {
         if ($value <= 0) {
             throw new StateConstraintException(\sprintf('Invalid state id "%s".', var_export($value, true)), StateConstraintException::INVALID_ID);

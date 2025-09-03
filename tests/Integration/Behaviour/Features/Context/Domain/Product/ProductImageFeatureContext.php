@@ -261,7 +261,7 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
     /**
      * @Given /^the shop "([^"]*)" should have empty image details$/
      */
-    public function theShopShouldNotHaveAnyImageDetails(string $shopReference)
+    public function theShopShouldNotHaveAnyImageDetails(string $shopReference): void
     {
         $shopId = (int) $this->getSharedStorage()->get(trim($shopReference));
         Assert::assertTrue($this->shopProductImagesCollection
@@ -423,7 +423,7 @@ class ProductImageFeatureContext extends AbstractProductFeatureContext
     /**
      * @Then /^I should have the followings image details:/
      */
-    public function iShouldHaveTheFollowingsImageDetailsForShop(ShopProductImagesCollection $expectedShopProductImagesCollection)
+    public function iShouldHaveTheFollowingsImageDetailsForShop(ShopProductImagesCollection $expectedShopProductImagesCollection): void
     {
         foreach ($expectedShopProductImagesCollection as $expectedShopProductImage) {
             $actualShopProductImages = $this->shopProductImagesCollection

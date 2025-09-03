@@ -41,7 +41,7 @@ final class AdaptThemeToRTLLanguagesHandler implements AdaptThemeToRTLLanguagesH
     ) {
     }
 
-    public function handle(AdaptThemeToRTLLanguagesCommand $command)
+    public function handle(AdaptThemeToRTLLanguagesCommand $command): void
     {
         $plainThemeName = $command->getThemeName()->getValue();
 

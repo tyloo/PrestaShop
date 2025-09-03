@@ -77,7 +77,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
         $this->locale = $locale;
     }
 
-    public function handle(GetCustomerThreadForViewing $query)
+    public function handle(GetCustomerThreadForViewing $query): CustomerThreadView
     {
         $customerThread = $this->getCustomerThread($query->getCustomerThreadId());
 
@@ -149,10 +149,7 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
         return $threadMessages;
     }
 
-    /**
-     * @return CustomerThread
-     */
-    private function getCustomerThread(CustomerThreadId $customerThreadId)
+    private function getCustomerThread(CustomerThreadId $customerThreadId): CustomerThread
     {
         $customerThread = new CustomerThread($customerThreadId->getValue());
 
@@ -165,10 +162,8 @@ class GetCustomerThreadForViewingHandler implements GetCustomerThreadForViewingH
 
     /**
      * Get customer thread messages in timeline
-     *
-     * @return CustomerThreadTimeline
      */
-    private function getTimeline(array $messages, CustomerThread $customerThread)
+    private function getTimeline(array $messages, CustomerThread $customerThread): CustomerThreadTimeline
     {
         $timeline = [];
 

@@ -73,7 +73,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I create a customer "(.+)" with following properties:$/
      */
-    public function createACustomerUsingCommand($customerReference, TableNode $table)
+    public function createACustomerUsingCommand($customerReference, TableNode $table): void
     {
         $data = $table->getRowsHash();
         $data = $this->formatCustomerDataIfNeeded($data);
@@ -138,7 +138,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
      *
      * @When /^I attempt to create a customer "(.+)" with following properties:$/
      */
-    public function attemptToCreateACustomerUsingCommand($customerReference, TableNode $table)
+    public function attemptToCreateACustomerUsingCommand($customerReference, TableNode $table): void
     {
         try {
             $this->createACustomerUsingCommand($customerReference, $table);
@@ -157,7 +157,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
      *
      * @When I create not existing customer :customerReference with following properties:
      */
-    public function iCreateNotExistingCustomerWithFollowingProperties(string $customerReference, TableNode $table)
+    public function iCreateNotExistingCustomerWithFollowingProperties(string $customerReference, TableNode $table): void
     {
         try {
             /** @var CustomerId $customerIdObject */
@@ -170,7 +170,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I edit customer "(.+)" and I change the following properties:$/
      */
-    public function editCustomerUsingCommand($customerReference, TableNode $table)
+    public function editCustomerUsingCommand($customerReference, TableNode $table): void
     {
         $this->assertCustomerReferenceExistsInRegistry($customerReference);
 
@@ -208,7 +208,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I transform guest "(.+)" into a customer$/
      */
-    public function transformGuestIntoACustomer($customerReference)
+    public function transformGuestIntoACustomer($customerReference): void
     {
         $this->assertCustomerReferenceExistsInRegistry($customerReference);
 
@@ -254,7 +254,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I query customer "(.+)" I should get a Customer with properties:$/
      */
-    public function assertQueryCustomerProperties($customerReference, TableNode $table)
+    public function assertQueryCustomerProperties($customerReference, TableNode $table): void
     {
         $expectedData = $table->getRowsHash();
         $expectedData = $this->formatCustomerDataIfNeeded($expectedData);
@@ -285,7 +285,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then the customer ":customerReference" should not be found
      */
-    public function assertCustomerWasNotFound($customerReference)
+    public function assertCustomerWasNotFound($customerReference): void
     {
         $this->assertCustomerReferenceExistsInRegistry($customerReference);
 
@@ -304,7 +304,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^if I query customer "(.+)" I should get an error '(.+)'$/
      */
-    public function assertQueryReturnsErrormessage($customerReference, $errorMessage)
+    public function assertQueryReturnsErrormessage($customerReference, $errorMessage): void
     {
         $this->assertCustomerReferenceExistsInRegistry($customerReference);
 
@@ -328,7 +328,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^I should be returned an error message '(.+)'$/
      */
-    public function assertGotErrorMessage($message)
+    public function assertGotErrorMessage($message): void
     {
         if (! $this->latestResult instanceof Exception) {
             throw new Exception('Latest Command did not return an error');
@@ -344,7 +344,7 @@ class CustomerManagerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @AfterScenario
      */
-    public function assertAllErrorMessagesHaveBeenChecked()
+    public function assertAllErrorMessagesHaveBeenChecked(): void
     {
         if ($this->latestResult instanceof Exception) {
             throw $this->latestResult;

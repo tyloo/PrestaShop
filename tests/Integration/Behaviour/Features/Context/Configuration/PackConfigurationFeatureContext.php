@@ -36,7 +36,7 @@ class PackConfigurationFeatureContext extends AbstractConfigurationFeatureContex
     /**
      * @Given /^specific shop configuration for "pack stock type" is set to decrement (packs only|products only|both packs and products)$/
      */
-    public function specificShopConfigurationPackStockTypeOfIsSetTo($value)
+    public function specificShopConfigurationPackStockTypeOfIsSetTo($value): void
     {
         match ($value) {
             'packs only' => $this->setConfiguration('PS_PACK_STOCK_TYPE', Pack::STOCK_TYPE_PACK_ONLY),

@@ -47,7 +47,7 @@ class UpdateCustomerThreadStatusHandler implements UpdateCustomerThreadStatusHan
     ) {
     }
 
-    public function handle(UpdateCustomerThreadStatusCommand $command)
+    public function handle(UpdateCustomerThreadStatusCommand $command): void
     {
         $statement = $this->connection->prepare('
             UPDATE ' . $this->dbPrefix . 'customer_thread

@@ -67,9 +67,7 @@ class xlftranslatedmodule extends Module
      */
     public function getContent()
     {
-        $content = $this->trans('This wording belongs to the module file', [], 'Modules.Xlftranslatedmodule.Xlftranslatedmodule');
-
-        return $content;
+        return $this->trans('This wording belongs to the module file', [], 'Modules.Xlftranslatedmodule.Xlftranslatedmodule');
     }
 
     public function install()

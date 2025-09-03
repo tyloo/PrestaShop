@@ -36,7 +36,7 @@ class RoundingTypeConfigurationFeatureContext extends AbstractConfigurationFeatu
     /**
      * @Given /^specific shop configuration for "rounding type" is set to round (each article|each line|cart total)$/
      */
-    public function setRoundingMode($value)
+    public function setRoundingMode($value): void
     {
         match ($value) {
             'each article' => $this->setConfiguration('PS_ROUND_TYPE', Order::ROUND_ITEM),

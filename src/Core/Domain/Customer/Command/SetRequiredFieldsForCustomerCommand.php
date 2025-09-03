@@ -63,7 +63,7 @@ class SetRequiredFieldsForCustomerCommand
      *
      * @param string[] $requiredFields
      */
-    private function assertContainsOnlyAllowedFields(array $requiredFields)
+    private function assertContainsOnlyAllowedFields(array $requiredFields): void
     {
         if (empty($requiredFields)) {
             return;

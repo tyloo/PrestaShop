@@ -54,17 +54,14 @@ final class OrderStateFormDataHandler implements FormDataHandlerInterface
         return $orderStateId->getValue();
     }
 
-    public function update($orderStateId, array $data)
+    public function update($orderStateId, array $data): void
     {
         $command = $this->buildOrderStateEditCommand($orderStateId, $data);
 
         $this->bus->handle($command);
     }
 
-    /**
-     * @return AddOrderStateCommand
-     */
-    private function buildOrderStateAddCommandFromFormData(array $data)
+    private function buildOrderStateAddCommandFromFormData(array $data): AddOrderStateCommand
     {
         $command = new AddOrderStateCommand(
             $data['name'],

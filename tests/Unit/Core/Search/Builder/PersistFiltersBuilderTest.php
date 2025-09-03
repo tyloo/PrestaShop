@@ -93,7 +93,7 @@ class PersistFiltersBuilderTest extends TestCase
             self::SHOP_ID
         );
         $builder->setConfig([
-            'request' => $this->buildRequestMock('PrestaShopBundle\Controller\Admin\Improve\International\LanguageController::indexAction'),
+            'request' => $this->buildRequestMock(\PrestaShopBundle\Controller\Admin\Improve\International\LanguageController::class . '::indexAction'),
         ]);
 
         $filters = $builder->buildFilters($inputFilters);

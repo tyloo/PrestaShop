@@ -47,10 +47,7 @@ class Birthday
      */
     private $birthday;
 
-    /**
-     * @return Birthday
-     */
-    public static function createEmpty()
+    public static function createEmpty(): self
     {
         return new self(self::EMPTY_BIRTHDAY);
     }
@@ -84,7 +81,7 @@ class Birthday
      *
      * @param string $birthday
      */
-    private function assertBirthdayIsNotAFutureDate($birthday)
+    private function assertBirthdayIsNotAFutureDate($birthday): void
     {
         if ($birthday === self::EMPTY_BIRTHDAY) {
             return;
@@ -103,7 +100,7 @@ class Birthday
      *
      * @param string $birthday
      */
-    private function assertBirthdayIsInValidFormat($birthday)
+    private function assertBirthdayIsInValidFormat($birthday): void
     {
         if ($birthday === self::EMPTY_BIRTHDAY) {
             return;

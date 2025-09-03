@@ -88,7 +88,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @BeforeScenario
      */
-    public function before(BeforeScenarioScope $scope)
+    public function before(BeforeScenarioScope $scope): void
     {
         /** @var InitializedContextEnvironment $environment */
         $environment = $scope->getEnvironment();
@@ -101,7 +101,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a country named "(.+)" and iso code "(.+)" in zone "(.+)"$/
      */
-    public function createCountry($countryName, $isoCode, $zoneName)
+    public function createCountry($countryName, $isoCode, $zoneName): void
     {
         $countryId = Country::getByIso($isoCode, false);
         if (! $countryId) {
@@ -135,7 +135,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a state named "(.+)" with iso code "(.+)" in country "(.+)" and zone "(.+)"$/
      */
-    public function createState($stateName, $stateIsoCode, $countryName, $zoneName)
+    public function createState($stateName, $stateIsoCode, $countryName, $zoneName): void
     {
         $state = new State();
         $state->name = $stateName;
@@ -161,7 +161,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is an address named "(.+)" with postcode "(.+)" in state "(.+)"$/
      */
-    public function createAddress($addressName, $postCode, $stateName)
+    public function createAddress($addressName, $postCode, $stateName): void
     {
         $this->checkStateWithNameExists($stateName);
         $address = new Address();
@@ -182,7 +182,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^address "(.+)" is associated to customer "(.+)"$/
      */
-    public function setAddressCustomer($addressName, $customerName)
+    public function setAddressCustomer($addressName, $customerName): void
     {
         $this->checkAddressWithNameExists($addressName);
         $this->customerFeatureContext->checkCustomerWithNameExists($customerName);
@@ -198,7 +198,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @AfterScenario
      */
-    public function cleanFixtures()
+    public function cleanFixtures(): void
     {
         foreach ($this->priceRanges as $priceRange) {
             $priceRange->delete();
@@ -238,7 +238,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I select carrier "(.+)" in my cart$/
      */
-    public function setCartCarrier(string $carrierReference)
+    public function setCartCarrier(string $carrierReference): void
     {
         $this->getCurrentCart()->id_carrier = $this->getSharedStorage()->get($carrierReference);
 
@@ -251,7 +251,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I select address "(.+)" in my cart$/
      */
-    public function setCartAddress($addresssName)
+    public function setCartAddress($addresssName): void
     {
         $this->checkAddressWithNameExists($addresssName);
         $this->getCurrentCart()->id_address_delivery = $this->addresses[$addresssName]->id;
@@ -261,7 +261,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given a carrier :carrierReference with name :carrierName exists
      */
-    public function checkExistingCarrier(string $carrierReference, string $carrierName)
+    public function checkExistingCarrier(string $carrierReference, string $carrierName): void
     {
         $carriers = Carrier::getCarriers((int) Configuration::get('PS_LANG_DEFAULT'));
         foreach ($carriers as $carrier) {

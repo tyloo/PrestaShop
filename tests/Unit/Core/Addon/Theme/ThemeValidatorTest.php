@@ -106,8 +106,6 @@ class ThemeValidatorTest extends TestCase
         $config['directory'] = $themeDir;
         $config['physical_uri'] = '/';
 
-        $theme = new Theme($config);
-
-        return $theme;
+        return new Theme($config);
     }
 }

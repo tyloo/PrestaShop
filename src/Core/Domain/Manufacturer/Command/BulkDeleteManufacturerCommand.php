@@ -61,7 +61,7 @@ class BulkDeleteManufacturerCommand
     /**
      * @throws ManufacturerConstraintException
      */
-    private function setManufacturerIds(array $manufacturerIds)
+    private function setManufacturerIds(array $manufacturerIds): void
     {
         foreach ($manufacturerIds as $manufacturerId) {
             $this->manufacturerIds[] = new ManufacturerId($manufacturerId);

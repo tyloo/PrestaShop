@@ -39,7 +39,7 @@ final class DeleteCustomerDiscountRowAction extends AbstractRowAction
         return 'delete_customer_discount';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

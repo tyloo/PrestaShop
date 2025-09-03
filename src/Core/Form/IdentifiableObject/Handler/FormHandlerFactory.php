@@ -46,7 +46,7 @@ final class FormHandlerFactory implements FormHandlerFactoryInterface
     ) {
     }
 
-    public function create(FormDataHandlerInterface $dataHandler)
+    public function create(FormDataHandlerInterface $dataHandler): FormHandler
     {
         return new FormHandler(
             $dataHandler,

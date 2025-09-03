@@ -44,7 +44,7 @@ class CurrencyTransformContext implements Context
      *
      * @Transform /^currency "([^"]+)"$/
      */
-    public function transformIsoToCurrency(string $currencyIso)
+    public function transformIsoToCurrency(string $currencyIso): Currency
     {
         $currency = new Currency(Currency::getIdByIsoCode($currencyIso, (int) Configuration::get('PS_SHOP_DEFAULT')));
 

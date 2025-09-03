@@ -56,7 +56,7 @@ class GenerateThemeMailTemplatesHandler implements GenerateThemeMailTemplatesHan
     ) {
     }
 
-    public function handle(GenerateThemeMailTemplatesCommand $command)
+    public function handle(GenerateThemeMailTemplatesCommand $command): void
     {
         $language = $this->languageRepository->getOneByLocaleOrIsoCode($command->getLanguage());
         if ($language === null) {

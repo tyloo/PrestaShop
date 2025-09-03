@@ -59,7 +59,7 @@ class ProfileId
     /**
      * @throws ProfileConstraintException
      */
-    private function assertProfileIdIsGreaterThanZero(int $profileId)
+    private function assertProfileIdIsGreaterThanZero(int $profileId): void
     {
         if ($profileId <= 0) {
             throw new ProfileConstraintException(\sprintf('Invalid profile id %s provided', var_export($profileId, true)));

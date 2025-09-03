@@ -53,24 +53,19 @@ final class OrderReturnStateFormDataHandler implements FormDataHandlerInterface
         return $orderReturnStateId->getValue();
     }
 
-    public function update($orderReturnStateId, array $data)
+    public function update($orderReturnStateId, array $data): void
     {
         $command = $this->buildOrderReturnStateEditCommand($orderReturnStateId, $data);
 
         $this->bus->handle($command);
     }
 
-    /**
-     * @return AddOrderReturnStateCommand
-     */
-    private function buildOrderReturnStateAddCommandFromFormData(array $data)
+    private function buildOrderReturnStateAddCommandFromFormData(array $data): AddOrderReturnStateCommand
     {
-        $command = new AddOrderReturnStateCommand(
+        return new AddOrderReturnStateCommand(
             $data['name'],
             $data['color']
         );
-
-        return $command;
     }
 
     /**
@@ -80,11 +75,8 @@ final class OrderReturnStateFormDataHandler implements FormDataHandlerInterface
      */
     private function buildOrderReturnStateEditCommand($orderReturnStateId, array $data)
     {
-        $command = (new EditOrderReturnStateCommand($orderReturnStateId))
+        return (new EditOrderReturnStateCommand($orderReturnStateId))
             ->setName($data['name'])
-            ->setColor($data['color'])
-        ;
-
-        return $command;
+            ->setColor($data['color']);
     }
 }

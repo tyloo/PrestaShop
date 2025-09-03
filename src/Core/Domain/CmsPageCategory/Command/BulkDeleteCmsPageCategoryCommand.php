@@ -68,7 +68,7 @@ class BulkDeleteCmsPageCategoryCommand extends AbstractBulkCmsPageCategoryComman
      *
      * @throws CmsPageCategoryException
      */
-    private function setCmsPageCategoryIds(array $cmsPageCategoryIds)
+    private function setCmsPageCategoryIds(array $cmsPageCategoryIds): void
     {
         foreach ($cmsPageCategoryIds as $id) {
             $this->cmsPageCategoryIds[] = new CmsPageCategoryId($id);

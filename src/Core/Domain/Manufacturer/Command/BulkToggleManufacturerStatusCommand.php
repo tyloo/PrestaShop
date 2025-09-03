@@ -80,7 +80,7 @@ class BulkToggleManufacturerStatusCommand
      *
      * @throws ManufacturerConstraintException
      */
-    private function setManufacturerIds(array $manufacturerIds)
+    private function setManufacturerIds(array $manufacturerIds): void
     {
         foreach ($manufacturerIds as $manufacturerId) {
             $this->manufacturerIds[] = new ManufacturerId($manufacturerId);
@@ -92,7 +92,7 @@ class BulkToggleManufacturerStatusCommand
      *
      * @throws ManufacturerConstraintException
      */
-    private function assertIsBool($value)
+    private function assertIsBool($value): void
     {
         if (! \is_bool($value)) {
             throw new ManufacturerConstraintException(\sprintf('Status must be of type bool, but given %s', var_export($value, true)), ManufacturerConstraintException::INVALID_STATUS);

@@ -49,7 +49,7 @@ final class KpiRow implements KpiRowInterface
     ) {
     }
 
-    public function addKpi(KpiInterface $kpi)
+    public function addKpi(KpiInterface $kpi): void
     {
         // setOptions() is optional & not part of interface to avoid BC break
         if (method_exists($kpi, 'setOptions')) {
@@ -70,7 +70,7 @@ final class KpiRow implements KpiRowInterface
     /**
      * @param bool $allowRefresh
      */
-    public function setAllowRefresh($allowRefresh)
+    public function setAllowRefresh($allowRefresh): void
     {
         $this->allowRefresh = $allowRefresh;
     }

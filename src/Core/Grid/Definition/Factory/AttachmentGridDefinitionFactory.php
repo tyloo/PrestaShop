@@ -70,7 +70,7 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
 
     protected function getColumns()
     {
-        $columns = (new ColumnCollection())
+        return (new ColumnCollection())
             ->add(
                 (new BulkActionColumn('files_bulk'))
                     ->setOptions([
@@ -145,13 +145,11 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
                         ),
                 ])
             );
-
-        return $columns;
     }
 
     protected function getFilters()
     {
-        $filters = (new FilterCollection())
+        return (new FilterCollection())
             ->add(
                 (new Filter('id_attachment', NumberType::class))
                     ->setTypeOptions([
@@ -203,8 +201,6 @@ final class AttachmentGridDefinitionFactory extends AbstractFilterableGridDefini
                         'redirect_route' => 'admin_attachments_index',
                     ])
             );
-
-        return $filters;
     }
 
     protected function getGridActions()

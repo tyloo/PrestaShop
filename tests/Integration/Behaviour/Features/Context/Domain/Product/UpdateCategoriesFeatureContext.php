@@ -44,7 +44,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I assign product :productReference to following categories:
      */
-    public function assignToCategoriesForDefaultShop(string $productReference, TableNode $table)
+    public function assignToCategoriesForDefaultShop(string $productReference, TableNode $table): void
     {
         $this->assignToCategories($productReference, $table, ShopConstraint::shop($this->getDefaultShopId()));
     }
@@ -52,7 +52,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I assign product :productReference to following categories for shop :shopReference:
      */
-    public function assignToCategoriesForSpecificShop(string $productReference, TableNode $table, string $shopReference)
+    public function assignToCategoriesForSpecificShop(string $productReference, TableNode $table, string $shopReference): void
     {
         $this->assignToCategories($productReference, $table, ShopConstraint::shop($this->referenceToId($shopReference)));
     }
@@ -60,7 +60,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I assign product :productReference to following categories for shops :shopReferences:
      */
-    public function assignToCategoriesForSpecificShopCollection(string $productReference, TableNode $table, string $shopReferences)
+    public function assignToCategoriesForSpecificShopCollection(string $productReference, TableNode $table, string $shopReferences): void
     {
         $this->assignToCategories($productReference, $table, ShopCollection::shops($this->referencesToIds($shopReferences)));
     }
@@ -68,7 +68,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I assign product :productReference to following categories for all shops:
      */
-    public function assignToCategoriesForAllShops(string $productReference, TableNode $table)
+    public function assignToCategoriesForAllShops(string $productReference, TableNode $table): void
     {
         $this->assignToCategories($productReference, $table, ShopConstraint::allShops());
     }
@@ -76,7 +76,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @Then product :productReference should be assigned to following categories:
      */
-    public function assertProductCategoriesForDefaultShop(string $productReference, TableNode $table)
+    public function assertProductCategoriesForDefaultShop(string $productReference, TableNode $table): void
     {
         $this->assertProductCategories($productReference, $table, $this->getDefaultShopId());
     }
@@ -84,7 +84,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @Then product :productReference should be assigned to following categories for shop(s) :shopReferences:
      */
-    public function assertProductCategoriesForShops(string $productReference, TableNode $table, string $shopReferences)
+    public function assertProductCategoriesForShops(string $productReference, TableNode $table, string $shopReferences): void
     {
         foreach ($this->referencesToIds($shopReferences) as $shopId) {
             $this->assertProductCategories($productReference, $table, $shopId);
@@ -94,7 +94,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I delete all categories from product :productReference
      */
-    public function deleteAllProductCategoriesForDefaultShop(string $productReference)
+    public function deleteAllProductCategoriesForDefaultShop(string $productReference): void
     {
         $this->deleteAllProductCategories($productReference, ShopConstraint::shop($this->getDefaultShopId()));
     }
@@ -102,7 +102,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I delete all categories from product :productReference for shop :shopReference
      */
-    public function deleteAllProductCategoriesForShop(string $productReference, string $shopReference)
+    public function deleteAllProductCategoriesForShop(string $productReference, string $shopReference): void
     {
         $this->deleteAllProductCategories($productReference, ShopConstraint::shop($this->referenceToId($shopReference)));
     }
@@ -110,7 +110,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I delete all categories from product :productReference for all shops
      */
-    public function deleteAllProductCategoriesForAllShops(string $productReference)
+    public function deleteAllProductCategoriesForAllShops(string $productReference): void
     {
         $this->deleteAllProductCategories($productReference, ShopConstraint::allShops());
     }
@@ -118,7 +118,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
     /**
      * @Then I should get error that assigning product to categories failed
      */
-    public function assertFailedUpdateCategoriesError()
+    public function assertFailedUpdateCategoriesError(): void
     {
         $this->assertLastErrorIs(
             CannotUpdateProductException::class,
@@ -126,7 +126,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
         );
     }
 
-    private function deleteAllProductCategories(string $productReference, ShopConstraint $shopConstraint)
+    private function deleteAllProductCategories(string $productReference, ShopConstraint $shopConstraint): void
     {
         try {
             $this->getCommandBus()->handle(new RemoveAllAssociatedProductCategoriesCommand(
@@ -138,7 +138,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
         }
     }
 
-    private function assignToCategories(string $productReference, TableNode $table, ShopConstraint $shopConstraint)
+    private function assignToCategories(string $productReference, TableNode $table, ShopConstraint $shopConstraint): void
     {
         $data = $table->getRowsHash();
         $categoryReferences = PrimitiveUtils::castStringArrayIntoArray($data['categories']);
@@ -169,7 +169,7 @@ class UpdateCategoriesFeatureContext extends AbstractProductFeatureContext
         );
     }
 
-    private function assertProductCategories(string $productReference, TableNode $table, int $shopId)
+    private function assertProductCategories(string $productReference, TableNode $table, int $shopId): void
     {
         $productForEditing = $this->getProductForEditing($productReference, $shopId);
         $expectedCategories = $table->getColumnsHash();

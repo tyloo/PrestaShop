@@ -65,7 +65,7 @@ class Key
     /**
      * @param string $key
      */
-    private function assertKeyIsStringAndRequiredLength($key)
+    private function assertKeyIsStringAndRequiredLength($key): void
     {
         if (! \is_string($key) || \strlen($key) !== self::LENGTH) {
             throw new WebserviceConstraintException(\sprintf('Webservice key must be string of %d characters length but %s given', self::LENGTH, var_export($key, true)), WebserviceConstraintException::INVALID_KEY);

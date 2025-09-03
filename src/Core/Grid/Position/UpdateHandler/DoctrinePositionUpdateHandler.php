@@ -75,7 +75,7 @@ final class DoctrinePositionUpdateHandler implements PositionUpdateHandlerInterf
         return $currentPositions;
     }
 
-    public function updatePositions(PositionDefinitionInterface $positionDefinition, array $newPositions, $parentId = null)
+    public function updatePositions(PositionDefinitionInterface $positionDefinition, array $newPositions, $parentId = null): void
     {
         try {
             $this->connection->beginTransaction();

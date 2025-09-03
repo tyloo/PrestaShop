@@ -106,7 +106,7 @@ final class MerchandiseReturnQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters to merchandise returns query builder.
      */
-    private function applyFilters(array $filters, QueryBuilder $qb)
+    private function applyFilters(array $filters, QueryBuilder $qb): void
     {
         $allowedFilters = [
             'id_order_return',

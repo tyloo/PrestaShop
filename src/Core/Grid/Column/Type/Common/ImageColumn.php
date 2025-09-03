@@ -40,7 +40,7 @@ final class ImageColumn extends AbstractColumn
         return 'image';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

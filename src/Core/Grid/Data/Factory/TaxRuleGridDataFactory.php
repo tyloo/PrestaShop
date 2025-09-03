@@ -46,7 +46,7 @@ class TaxRuleGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $taxRuleData = $this->doctrineTaxRuleDataFactory->getData($searchCriteria);
 

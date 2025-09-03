@@ -52,7 +52,7 @@ class BulkDeleteProfileCommand
         return $this->profileIds;
     }
 
-    private function setProfileIds(array $profileIds)
+    private function setProfileIds(array $profileIds): void
     {
         foreach ($profileIds as $profileId) {
             $this->profileIds[] = new ProfileId((int) $profileId);

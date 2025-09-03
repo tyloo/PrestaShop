@@ -53,7 +53,7 @@ class LogoUploader
     ) {
     }
 
-    public function updateHeader()
+    public function updateHeader(): void
     {
         if ($this->update('PS_LOGO', 'logo')) {
             [$width, $height] = getimagesize($this->imageDirection . Configuration::get('PS_LOGO'));
@@ -62,17 +62,17 @@ class LogoUploader
         }
     }
 
-    public function updateMail()
+    public function updateMail(): void
     {
         $this->update('PS_LOGO_MAIL', 'logo_mail');
     }
 
-    public function updateInvoice()
+    public function updateInvoice(): void
     {
         $this->update('PS_LOGO_INVOICE', 'logo_invoice');
     }
 
-    public function updateFavicon()
+    public function updateFavicon(): void
     {
         $shopId = (int) $this->shop->id;
         if ($shopId === Configuration::get('PS_SHOP_DEFAULT')) {
@@ -189,7 +189,7 @@ class LogoUploader
         return false;
     }
 
-    private function updateInMultiShopContext(&$idShop, &$idShopGroup, $fieldName)
+    private function updateInMultiShopContext(&$idShop, &$idShopGroup, $fieldName): void
     {
         if (Shop::getContext() === Shop::CONTEXT_SHOP) {
             $idShop = Shop::getContextShopID();

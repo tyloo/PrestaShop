@@ -40,7 +40,7 @@ final class DeleteThemeHandler implements DeleteThemeHandlerInterface
     ) {
     }
 
-    public function handle(DeleteThemeCommand $command)
+    public function handle(DeleteThemeCommand $command): void
     {
         $plainThemeName = $command->getThemeName()->getValue();
 

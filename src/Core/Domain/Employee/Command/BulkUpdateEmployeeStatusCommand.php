@@ -69,7 +69,7 @@ class BulkUpdateEmployeeStatusCommand
     /**
      * @param int[] $employeeIds
      */
-    private function setEmployeeIds(array $employeeIds)
+    private function setEmployeeIds(array $employeeIds): void
     {
         foreach ($employeeIds as $employeeId) {
             $this->employeeIds[] = new EmployeeId((int) $employeeId);

@@ -78,7 +78,7 @@ class CategoryDeleteMode
      *
      * @throws CategoryConstraintException
      */
-    private function setMode($mode)
+    private function setMode($mode): void
     {
         if (! \in_array($mode, self::AVAILABLE_MODES, true)) {
             throw new CategoryConstraintException(\sprintf('Invalid Category delete mode %s supplied. Available delete modes are: "%s"', var_export($mode, true), implode(',', self::AVAILABLE_MODES)), CategoryConstraintException::INVALID_DELETE_MODE);

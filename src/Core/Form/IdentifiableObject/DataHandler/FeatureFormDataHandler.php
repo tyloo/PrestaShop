@@ -53,7 +53,7 @@ final class FeatureFormDataHandler implements FormDataHandlerInterface
         return $featureId->getValue();
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $command = (new EditFeatureCommand($id))
             ->setLocalizedNames($data['name'])

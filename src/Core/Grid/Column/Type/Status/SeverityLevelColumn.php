@@ -37,7 +37,7 @@ final class SeverityLevelColumn extends AbstractColumn
         return 'severity_level';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

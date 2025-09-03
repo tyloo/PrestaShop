@@ -47,7 +47,7 @@ final class ProfileGridDataFactoryDecorator implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $profileData = $this->profileGridDataFactory->getData($searchCriteria);
 
@@ -60,10 +60,7 @@ final class ProfileGridDataFactoryDecorator implements GridDataFactoryInterface
         );
     }
 
-    /**
-     * @return RecordCollection
-     */
-    private function applyModifications(RecordCollectionInterface $profiles)
+    private function applyModifications(RecordCollectionInterface $profiles): RecordCollection
     {
         $modifiedProfiles = [];
 

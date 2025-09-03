@@ -66,7 +66,7 @@ class CartRuleCalculator
     /**
      * process cartrules calculation
      */
-    public function applyCartRules()
+    public function applyCartRules(): void
     {
         foreach ($this->cartRules as $cartRule) {
             $this->applyCartRule($cartRule);
@@ -76,7 +76,7 @@ class CartRuleCalculator
     /**
      * process cartrules calculation, excluding free-shipping processing
      */
-    public function applyCartRulesWithoutFreeShipping()
+    public function applyCartRulesWithoutFreeShipping(): void
     {
         foreach ($this->cartRules as $cartRule) {
             $this->applyCartRule($cartRule, false);

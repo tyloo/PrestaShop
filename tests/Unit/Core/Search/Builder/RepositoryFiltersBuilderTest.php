@@ -154,7 +154,7 @@ class RepositoryFiltersBuilderTest extends TestCase
             1
         );
         $builder->setConfig([
-            'request' => $this->buildRequestMock('PrestaShopBundle\Controller\Admin\Improve\International\LanguageController::indexAction'),
+            'request' => $this->buildRequestMock(\PrestaShopBundle\Controller\Admin\Improve\International\LanguageController::class . '::indexAction'),
         ]);
         $filters = $builder->buildFilters();
         $this->assertNotNull($filters);

@@ -39,7 +39,7 @@ final class EditCustomerDiscountRowAction extends AbstractRowAction
         return 'edit_customer_discount';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

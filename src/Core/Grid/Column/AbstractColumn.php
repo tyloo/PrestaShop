@@ -119,7 +119,7 @@ abstract class AbstractColumn implements ColumnInterface
     /**
      * Resolve column options.
      */
-    private function resolveOptions(array $options = [])
+    private function resolveOptions(array $options = []): void
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);

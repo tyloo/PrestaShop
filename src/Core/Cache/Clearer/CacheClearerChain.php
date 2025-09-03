@@ -42,7 +42,7 @@ final class CacheClearerChain implements CacheClearerInterface
         $this->cacheClearers = $cacheClearers;
     }
 
-    public function clear()
+    public function clear(): void
     {
         foreach ($this->cacheClearers as $cacheClearer) {
             $cacheClearer->clear();

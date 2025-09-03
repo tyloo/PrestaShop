@@ -175,7 +175,7 @@ class Repository implements RepositoryInterface
      *
      * @throws LocalizationException
      */
-    protected function getPriceSpecifications($localeCode)
+    protected function getPriceSpecifications($localeCode): PriceSpecificationMap
     {
         $cldrLocale = $this->cldrLocaleRepository->getLocale($localeCode);
         if ($cldrLocale === null) {

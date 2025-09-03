@@ -52,11 +52,9 @@ class Factory
      * @param bool                $numberGroupingUsed
      *                                                Should we group digits in a number's integer part ?
      *
-     * @return NumberSpecification
-     *
      * @throws LocalizationException
      */
-    public function buildNumberSpecification(CldrLocaleInterface $cldrLocale, $maxFractionDigits, $numberGroupingUsed)
+    public function buildNumberSpecification(CldrLocaleInterface $cldrLocale, $maxFractionDigits, $numberGroupingUsed): NumberSpecification
     {
         $decimalPattern = $cldrLocale->getDecimalPattern();
         $numbersSymbols = $cldrLocale->getAllNumberSymbols();
@@ -86,8 +84,6 @@ class Factory
      * @param string              $currencyDisplayType Type of display for currency symbol (symbol or ISO code)
      * @param int|null            $maxFractionDigits   The decimal precision of the price
      *
-     * @return PriceSpecification
-     *
      * @throws LocalizationException
      */
     public function buildPriceSpecification(
@@ -97,7 +93,7 @@ class Factory
         $numberGroupingUsed,
         $currencyDisplayType,
         ?int $maxFractionDigits = null,
-    ) {
+    ): PriceSpecification {
         $currencyPattern = $currency->getPattern($localeCode) ?: $cldrLocale->getCurrencyPattern();
         $numbersSymbols = $cldrLocale->getAllNumberSymbols();
         // Use positive pattern to retrieve information
@@ -182,7 +178,7 @@ class Factory
      *
      * @throws LocalizationException If passed data is invalid
      */
-    protected function getNumberSymbolList(NumberSymbolsData $symbolsData)
+    protected function getNumberSymbolList(NumberSymbolsData $symbolsData): NumberSymbolList
     {
         return new NumberSymbolList(
             $symbolsData->getDecimal(),

@@ -56,7 +56,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I request the database fields from table :tableName
      */
-    public function getDatabaseTableFieldsList($tableName)
+    public function getDatabaseTableFieldsList($tableName): void
     {
         $commandBus = CommonFeatureContext::getContainer()->get('prestashop.core.command_bus');
 
@@ -70,7 +70,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get a set of database fields that contain values:
      */
-    public function assertSetOfDatabaseFieldsContain(TableNode $table)
+    public function assertSetOfDatabaseFieldsContain(TableNode $table): void
     {
         $result = $this->latestResult;
 
@@ -84,7 +84,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given there is :count stored SQL requests
      */
-    public function resetStoredSqlRequest($count)
+    public function resetStoredSqlRequest($count): void
     {
         $legacyDatabaseSingleton = Db::getInstance(_PS_USE_SQL_SLAVE_);
         $legacyDatabaseSingleton->delete('request_sql');
@@ -93,7 +93,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then there should be :arg1 stored SQL request
      */
-    public function assertStoredSqlRequestCount($count)
+    public function assertStoredSqlRequestCount($count): void
     {
         $legacyDatabaseSingleton = Db::getInstance(_PS_USE_SQL_SLAVE_);
         $realCountResults = $legacyDatabaseSingleton->executeS('SELECT COUNT(*) AS result FROM ' . _DB_PREFIX_ . 'request_sql');
@@ -108,7 +108,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I add the SQL request :sqlRequest named :name
      */
-    public function addSqlRequest($sqlRequest, $name)
+    public function addSqlRequest($sqlRequest, $name): void
     {
         $commandBus = CommonFeatureContext::getContainer()->get('prestashop.core.command_bus');
 
@@ -124,7 +124,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
      *
      * @todo: import phpunit asserts instead of re-writing them
      */
-    private function assertInstanceOf($expected, $subject)
+    private function assertInstanceOf($expected, $subject): void
     {
         if ($subject::class !== $expected) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expected, $subject::class));
@@ -134,7 +134,7 @@ class SqlManagerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @param string $expected
      */
-    private function assertDatabaseFieldsContain(DatabaseTableFields $fields, $expected)
+    private function assertDatabaseFieldsContain(DatabaseTableFields $fields, $expected): void
     {
         foreach ($fields->getFields() as $field) {
             $this->assertInstanceOf(DatabaseTableField::class, $field);

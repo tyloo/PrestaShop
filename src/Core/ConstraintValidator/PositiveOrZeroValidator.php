@@ -40,7 +40,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  */
 class PositiveOrZeroValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (! $constraint instanceof PositiveOrZero) {
             throw new UnexpectedTypeException($constraint, PositiveOrZero::class);

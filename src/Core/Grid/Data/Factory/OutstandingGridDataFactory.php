@@ -45,7 +45,7 @@ final class OutstandingGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $data = $this->outstandingDataFactory->getData($searchCriteria);
         $records = $data->getRecords()->all();

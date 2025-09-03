@@ -32,7 +32,7 @@ class Cart extends CartCore
      * @param int $id_address     Current address id to change
      * @param int $id_address_new New address id
      */
-    public function updateAddressId($id_address, $id_address_new)
+    public function updateAddressId($id_address, $id_address_new): void
     {
         $to_update = false;
         if (! isset($this->id_address_invoice) || $this->id_address_invoice === $id_address) {

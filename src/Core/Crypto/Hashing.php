@@ -104,7 +104,7 @@ class Hashing
     /**
      * Init $hash_methods.
      */
-    private function initHashMethods()
+    private function initHashMethods(): void
     {
         $this->hashMethods = [
             'bcrypt' => [

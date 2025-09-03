@@ -69,11 +69,8 @@ final class CmsPageQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        $qb = $this->getQueryBuilder($searchCriteria->getFilters())
-            ->select('COUNT(DISTINCT c.`id_cms`)')
-        ;
-
-        return $qb;
+        return $this->getQueryBuilder($searchCriteria->getFilters())
+            ->select('COUNT(DISTINCT c.`id_cms`)');
     }
 
     /**

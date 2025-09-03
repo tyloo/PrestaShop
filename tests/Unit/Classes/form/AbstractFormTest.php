@@ -137,16 +137,16 @@ class AbstractFormTest extends TestCase
             ->getMock();
 
         $class = new class($mockSmarty, $mockTranslatorInterface, $mockFormFormatterInterface) extends AbstractForm {
-            public function fillWith(array $params = [])
+            public function fillWith(array $params = []): void
             {
                 $this->formFields = $params;
             }
 
-            public function getTemplateVariables()
+            public function getTemplateVariables(): void
             {
             }
 
-            public function submit()
+            public function submit(): void
             {
             }
         };

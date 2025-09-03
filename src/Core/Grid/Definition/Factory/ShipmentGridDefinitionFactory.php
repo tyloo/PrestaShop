@@ -61,7 +61,7 @@ final class ShipmentGridDefinitionFactory extends AbstractFilterableGridDefiniti
 
     protected function getColumns()
     {
-        $columns = (new ColumnCollection())
+        return (new ColumnCollection())
             ->add((new DateTimeColumn('date'))
                 ->setName($this->trans('Date', [], 'Admin.Global'))
                 ->setOptions([
@@ -134,8 +134,6 @@ final class ShipmentGridDefinitionFactory extends AbstractFilterableGridDefiniti
                         'actions' => $this->getRowActions(),
                     ])
             );
-
-        return $columns;
     }
 
     /**

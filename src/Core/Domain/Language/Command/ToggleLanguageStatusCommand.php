@@ -80,7 +80,7 @@ class ToggleLanguageStatusCommand implements ToggleLanguageStatusCommandInterfac
      *
      * @throws LanguageConstraintException
      */
-    private function assertStatusIsBool($status)
+    private function assertStatusIsBool($status): void
     {
         if (! \is_bool($status)) {
             throw new LanguageConstraintException('Invalid status provided, language status must be type of "bool"');

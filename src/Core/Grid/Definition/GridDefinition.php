@@ -103,7 +103,7 @@ final class GridDefinition implements GridDefinitionInterface
         return $this->filters;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         if (! \is_string($name)) {
             throw new InvalidDataException('Definition name should be a string.');
@@ -115,22 +115,22 @@ final class GridDefinition implements GridDefinitionInterface
     /**
      * @param ColumnCollectionInterface $columns
      */
-    public function setColumns($columns)
+    public function setColumns($columns): void
     {
         $this->columns = $columns;
     }
 
-    public function setGridActions(GridActionCollectionInterface $gridActions)
+    public function setGridActions(GridActionCollectionInterface $gridActions): void
     {
         $this->gridActions = $gridActions;
     }
 
-    public function setBulkActions(BulkActionCollectionInterface $bulkActions)
+    public function setBulkActions(BulkActionCollectionInterface $bulkActions): void
     {
         $this->bulkActions = $bulkActions;
     }
 
-    public function setFilters(FilterCollectionInterface $filters)
+    public function setFilters(FilterCollectionInterface $filters): void
     {
         $this->filters = $filters;
     }

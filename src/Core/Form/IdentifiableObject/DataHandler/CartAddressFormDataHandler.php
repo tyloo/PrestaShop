@@ -42,7 +42,7 @@ class CartAddressFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): void
     {
         // Not used for creation, only edition
     }
@@ -53,7 +53,7 @@ class CartAddressFormDataHandler implements FormDataHandlerInterface
      * @throws StateConstraintException
      * @throws InvalidAddressTypeException
      */
-    public function update($cartId, array $data)
+    public function update($cartId, array $data): void
     {
         $editAddressCommand = new EditCartAddressCommand($cartId, $data['address_type']);
 

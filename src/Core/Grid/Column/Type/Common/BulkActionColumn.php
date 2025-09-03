@@ -37,7 +37,7 @@ final class BulkActionColumn extends AbstractColumn
         return 'bulk_action';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

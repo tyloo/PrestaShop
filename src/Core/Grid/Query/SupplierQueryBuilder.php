@@ -159,7 +159,7 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Adds select and group by statements.
      */
-    private function applyListQuerySelection(QueryBuilder $qb)
+    private function applyListQuerySelection(QueryBuilder $qb): void
     {
         $qb
             ->select('s.`id_supplier`, s.`name`, s.`active`')
@@ -171,7 +171,7 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Sets the parameters which are used in the queries.
      */
-    private function applyListQueryParameters(QueryBuilder $qb)
+    private function applyListQueryParameters(QueryBuilder $qb): void
     {
         $qb
             ->setParameter('contextLangId', $this->contextLangId)
@@ -184,7 +184,7 @@ final class SupplierQueryBuilder extends AbstractDoctrineQueryBuilder
      *
      * @param string $alias
      */
-    private function applyFilters(QueryBuilder $qb, array $filters, $alias)
+    private function applyFilters(QueryBuilder $qb, array $filters, $alias): void
     {
         $availableFilters = [
             'id_supplier',

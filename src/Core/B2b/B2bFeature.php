@@ -50,17 +50,17 @@ final class B2bFeature implements FeatureInterface
         return (bool) $this->configuration->get('PS_B2B_ENABLE');
     }
 
-    public function enable()
+    public function enable(): void
     {
         $this->configuration->set('PS_B2B_ENABLE', 1);
     }
 
-    public function disable()
+    public function disable(): void
     {
         $this->configuration->set('PS_B2B_ENABLE', 0);
     }
 
-    public function update($status)
+    public function update($status): void
     {
         $status ? $this->enable() : $this->disable();
     }

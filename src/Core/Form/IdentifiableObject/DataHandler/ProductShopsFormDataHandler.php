@@ -39,12 +39,12 @@ class ProductShopsFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): void
     {
         // The form is only used for update not creation
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $this->bus->handle(new SetProductShopsCommand(
             (int) $id,

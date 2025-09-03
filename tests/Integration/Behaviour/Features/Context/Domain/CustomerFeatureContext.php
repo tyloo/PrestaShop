@@ -64,7 +64,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
      *
      * @Then /^"(Partner offers)" should be "(required|not required)"$/
      */
-    public function validateRequiredFieldStatus($requiredField, $status)
+    public function validateRequiredFieldStatus($requiredField, $status): void
     {
         $requiredFieldName = $this->getRequiredFieldName($requiredField);
         $isRequired = $status === 'required';
@@ -83,7 +83,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given /^I specify "(Partner offers)" to be "(required|not required)"$/
      */
-    public function specifyRequiredField($requiredField, $status)
+    public function specifyRequiredField($requiredField, $status): void
     {
         $requiredFieldName = $this->getRequiredFieldName($requiredField);
         $isRequired = $status === 'required';
@@ -96,7 +96,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I save required fields for customer
      */
-    public function saveSpecifiedRequiredFields()
+    public function saveSpecifiedRequiredFields(): void
     {
         $requiredFields = $this->getSharedStorage()->get('customer_required_fields');
 
@@ -106,7 +106,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I set :privateNote private note about customer :reference
      */
-    public function setPrivateNoteAboutCustomer($privateNote, $reference)
+    public function setPrivateNoteAboutCustomer($privateNote, $reference): void
     {
         $customerId = $this->getSharedStorage()->get($reference);
 
@@ -130,7 +130,7 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws Exception
      */
-    public function createCustomerUsingCommand(string $customerReference, TableNode $table)
+    public function createCustomerUsingCommand(string $customerReference, TableNode $table): void
     {
         $data = $table->getRowsHash();
 

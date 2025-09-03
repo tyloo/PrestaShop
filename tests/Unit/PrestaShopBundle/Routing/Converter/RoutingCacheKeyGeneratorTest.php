@@ -321,7 +321,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
     /**
      * @param int|null $originalTime
      */
-    private function generateFiles(array $fileOffsets, $originalTime = null)
+    private function generateFiles(array $fileOffsets, $originalTime = null): void
     {
         if ($originalTime === null) {
             // By default original time one hour ago
@@ -343,7 +343,7 @@ class RoutingCacheKeyGeneratorTest extends TestCase
         }
     }
 
-    private function cleanTestDir()
+    private function cleanTestDir(): void
     {
         $this->fs->remove($this->filesTestDir);
     }

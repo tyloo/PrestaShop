@@ -68,9 +68,7 @@ class translationtest extends Module
      */
     public function getContent()
     {
-        $content = $this->trans('This wording belongs to the module file', [], 'Modules.Translationtest.Translationtest');
-
-        return $content;
+        return $this->trans('This wording belongs to the module file', [], 'Modules.Translationtest.Translationtest');
     }
 
     public function install()

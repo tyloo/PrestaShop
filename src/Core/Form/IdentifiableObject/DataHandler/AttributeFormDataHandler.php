@@ -69,7 +69,7 @@ final class AttributeFormDataHandler implements FormDataHandlerInterface
         return $attributeId->getValue();
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $updateCommand = new EditAttributeCommand($id);
         $updateCommand->setAttributeGroupId($data['attribute_group'])

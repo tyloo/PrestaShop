@@ -59,7 +59,7 @@ class ThemeManagerBuilder
         $this->apiClientContext = $apiClientContext ?: new ApiClientContext(null);
     }
 
-    public function build()
+    public function build(): ThemeManager
     {
         $configuration = new Configuration();
         $configuration->restrictUpdatesTo($this->context->shop);
@@ -93,7 +93,7 @@ class ThemeManagerBuilder
         );
     }
 
-    public function buildRepository(?Shop $shop = null)
+    public function buildRepository(?Shop $shop = null): ThemeRepository
     {
         if (! $shop instanceof Shop) {
             $shop = $this->context->shop;

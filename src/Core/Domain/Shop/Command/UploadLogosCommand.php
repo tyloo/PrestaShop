@@ -71,7 +71,7 @@ class UploadLogosCommand
      * @throws NotSupportedLogoImageExtensionException
      * @throws FileUploadException
      */
-    public function setUploadedHeaderLogo(UploadedFile $uploadedHeaderLogo)
+    public function setUploadedHeaderLogo(UploadedFile $uploadedHeaderLogo): void
     {
         $this->assertIsValidLogoImageExtension($uploadedHeaderLogo);
         $this->assertNativeFileValidationDoesNotFail($uploadedHeaderLogo);
@@ -91,7 +91,7 @@ class UploadLogosCommand
      * @throws NotSupportedMailAndInvoiceImageExtensionException
      * @throws FileUploadException
      */
-    public function setUploadedInvoiceLogo(UploadedFile $uploadedInvoiceLogo)
+    public function setUploadedInvoiceLogo(UploadedFile $uploadedInvoiceLogo): void
     {
         $this->assertIsValidMailAndInvoiceImageExtension($uploadedInvoiceLogo);
         $this->assertNativeFileValidationDoesNotFail($uploadedInvoiceLogo);
@@ -111,7 +111,7 @@ class UploadLogosCommand
      * @throws NotSupportedMailAndInvoiceImageExtensionException
      * @throws FileUploadException
      */
-    public function setUploadedMailLogo(UploadedFile $uploadedMailLogo)
+    public function setUploadedMailLogo(UploadedFile $uploadedMailLogo): void
     {
         $this->assertIsValidMailAndInvoiceImageExtension($uploadedMailLogo);
         $this->assertNativeFileValidationDoesNotFail($uploadedMailLogo);
@@ -131,7 +131,7 @@ class UploadLogosCommand
      * @throws NotSupportedFaviconExtensionException
      * @throws FileUploadException
      */
-    public function setUploadedFavicon(UploadedFile $uploadedFavicon)
+    public function setUploadedFavicon(UploadedFile $uploadedFavicon): void
     {
         if ($uploadedFavicon->getClientOriginalExtension() !== ShopLogoSettings::AVAILABLE_ICON_IMAGE_EXTENSION) {
             throw new NotSupportedFaviconExtensionException(\sprintf('Not supported "%s" favicon extension. Supported extension is "ico".', $uploadedFavicon->getClientOriginalExtension()));

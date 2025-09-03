@@ -64,10 +64,8 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        $countQueryBuilder = $this->getEmployeeQueryBuilder($searchCriteria)
+        return $this->getEmployeeQueryBuilder($searchCriteria)
             ->select('COUNT(e.id_profile)');
-
-        return $countQueryBuilder;
     }
 
     /**
@@ -100,7 +98,7 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters for Query builder.
      */
-    private function applyFilters(QueryBuilder $queryBuilder, array $filters)
+    private function applyFilters(QueryBuilder $queryBuilder, array $filters): void
     {
         $allowedFilters = [
             'id_employee',
@@ -142,7 +140,7 @@ final class EmployeeQueryBuilder extends AbstractDoctrineQueryBuilder
         }
     }
 
-    private function applySorting(SearchCriteriaInterface $searchCriteria, QueryBuilder $queryBuilder)
+    private function applySorting(SearchCriteriaInterface $searchCriteria, QueryBuilder $queryBuilder): void
     {
         if ($searchCriteria->getOrderBy() && $searchCriteria->getOrderWay()) {
             $orderBy = $searchCriteria->getOrderBy();

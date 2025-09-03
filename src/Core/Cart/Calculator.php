@@ -190,11 +190,9 @@ class Calculator
     }
 
     /**
-     * @return AmountImmutable
-     *
      * @throws Exception
      */
-    public function getRowTotal()
+    public function getRowTotal(): AmountImmutable
     {
         $amount = new AmountImmutable();
         foreach ($this->cartRows as $cartRow) {
@@ -205,11 +203,9 @@ class Calculator
     }
 
     /**
-     * @return AmountImmutable
-     *
      * @throws Exception
      */
-    public function getRowTotalWithoutDiscount()
+    public function getRowTotalWithoutDiscount(): AmountImmutable
     {
         $amount = new AmountImmutable();
         foreach ($this->cartRows as $cartRow) {
@@ -220,11 +216,9 @@ class Calculator
     }
 
     /**
-     * @return AmountImmutable
-     *
      * @throws Exception
      */
-    public function getDiscountTotal()
+    public function getDiscountTotal(): AmountImmutable
     {
         $amount = new AmountImmutable();
         $isFreeShippingAppliedToAmount = false;
@@ -314,7 +308,7 @@ class Calculator
     /**
      * calculate only product rows.
      */
-    public function calculateRows()
+    public function calculateRows(): void
     {
         foreach ($this->cartRows as $cartRow) {
             $this->calculateRowTotal($cartRow);
@@ -324,7 +318,7 @@ class Calculator
     /**
      * calculate only cart rules (rows and fees have to be calculated first).
      */
-    public function calculateCartRules()
+    public function calculateCartRules(): void
     {
         $this->cartRuleCalculator->setCartRules($this->cartRules)
             ->setCartRows($this->cartRows)
@@ -336,7 +330,7 @@ class Calculator
      * calculate only cart rules (rows and fees have to be calculated first), but don't process free-shipping discount
      * (avoid loop on shipping calculation)
      */
-    public function calculateCartRulesWithoutFreeShipping()
+    public function calculateCartRulesWithoutFreeShipping(): void
     {
         $this->cartRuleCalculator->setCartRules($this->cartRules)
             ->setCartRows($this->cartRows)
@@ -349,7 +343,7 @@ class Calculator
      *
      * @param int|null $computePrecision Not used since 1.7.7.0, kept for backward compatibility
      */
-    public function calculateFees($computePrecision = null)
+    public function calculateFees($computePrecision = null): void
     {
         $this->fees->processCalculation($this->cart, $this->cartRows, $this->computePrecision, $this->id_carrier);
     }
@@ -362,10 +356,7 @@ class Calculator
         return $this->cartRuleCalculator->getCartRulesData();
     }
 
-    /**
-     * @return AmountImmutable
-     */
-    private function rounded(AmountImmutable $amount, int $computePrecision)
+    private function rounded(AmountImmutable $amount, int $computePrecision): AmountImmutable
     {
         return new AmountImmutable(
             Tools::ps_round($amount->getTaxIncluded(), $computePrecision),

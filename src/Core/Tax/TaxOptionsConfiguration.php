@@ -104,7 +104,7 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
      * @param bool  $isEnabled
      * @param array $configuration
      */
-    private function updateEcotax($isEnabled, $configuration)
+    private function updateEcotax($isEnabled, $configuration): void
     {
         $shopConstraint = $this->getShopConstraint();
 

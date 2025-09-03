@@ -41,7 +41,7 @@ class CustomerNameValidator extends ConstraintValidator
 
     public const PATTERN_DOT_SPACED = '/[\.。](\s{1}[^\ ]|$)/';
 
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (! $constraint instanceof CustomerName) {
             throw new UnexpectedTypeException($constraint, CustomerName::class);

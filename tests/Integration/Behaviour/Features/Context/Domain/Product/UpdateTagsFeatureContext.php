@@ -63,7 +63,7 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I remove all product :productReference tags
      */
-    public function removeAllTags(string $productReference)
+    public function removeAllTags(string $productReference): void
     {
         $productId = $this->getSharedStorage()->get($productReference);
 
@@ -79,7 +79,7 @@ class UpdateTagsFeatureContext extends AbstractProductFeatureContext
      *                                                    e.g. [1 => 'hello,goodbye', 2 => 'bonjour,Au revoir']
      * @param LocalizedTagsDto[] $actualLocalizedTagsList
      */
-    public static function assertLocalizedTags(array $localizedTagStrings, array $actualLocalizedTagsList)
+    public static function assertLocalizedTags(array $localizedTagStrings, array $actualLocalizedTagsList): void
     {
         foreach ($localizedTagStrings as $langId => $tagsString) {
             $langIso = Language::getIsoById($langId);

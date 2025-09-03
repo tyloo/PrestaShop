@@ -60,7 +60,7 @@ class ThemeName
      *
      * @throws InvalidThemeNameException
      */
-    private function assertThemeNameIsNotEmptyString($themeName)
+    private function assertThemeNameIsNotEmptyString($themeName): void
     {
         if (! \is_string($themeName) || empty($themeName)) {
             throw new InvalidThemeNameException('Theme name cannot be empty.');
@@ -72,7 +72,7 @@ class ThemeName
      *
      * @throws InvalidThemeNameException
      */
-    private function assertThemeNameMatchesPattern($themeName)
+    private function assertThemeNameMatchesPattern($themeName): void
     {
         if (! preg_match('/^[a-zA-Z0-9_.-]+$/', $themeName)) {
             throw new InvalidThemeNameException(\sprintf('Invalid theme name %s provided.', var_export($themeName, true)));

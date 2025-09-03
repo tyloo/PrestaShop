@@ -129,7 +129,7 @@ class Pagination
         $links[] = $this->buildPageLink(max(1, $this->getPage() - 1), 'previous');
 
         for ($i = 0; $i < $boundaryContextLength; ++$i) {
-            $addPageLink(1 + $i);
+            $addPageLink(1);
         }
 
         $start = max(1, $this->getPage() - (int) floor(($pageContextLength - 1) / 2));

@@ -52,7 +52,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I validate my cart using payment module (fake)$/
      */
-    public function validateCartWithPaymentModule($paymentModuleName)
+    public function validateCartWithPaymentModule($paymentModuleName): void
     {
         $paymentModule = match ($paymentModuleName) {
             'fake' => new PaymentModuleFake(),
@@ -91,7 +91,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^current cart order total for products should be (\d+\.\d+)( tax included| tax excluded)?$/
      */
-    public function checkOrderProductTotal($expectedTotal, $taxes = null)
+    public function checkOrderProductTotal($expectedTotal, $taxes = null): void
     {
         $order = $this->getCurrentCartOrder();
         $withTaxes = $taxes !== ' tax excluded';
@@ -104,7 +104,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^current cart order total discount should be (\d+\.\d+)( tax included| tax excluded)?$/
      */
-    public function checkOrderTotalDiscount($expectedTotal, $taxes = null)
+    public function checkOrderTotalDiscount($expectedTotal, $taxes = null): void
     {
         $order = $this->getCurrentCartOrder();
         $withTaxes = $taxes !== ' tax excluded';
@@ -117,7 +117,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^current cart order shipping fees should be (\d+\.\d+)( tax included| tax excluded)?$/
      */
-    public function checkOrderShippingFees($expectedTotal, $taxes = null)
+    public function checkOrderShippingFees($expectedTotal, $taxes = null): void
     {
         $order = $this->getCurrentCartOrder();
         $withTaxes = $taxes !== ' tax excluded';
@@ -130,7 +130,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^current cart order cart rules count should be (\d+)$/
      */
-    public function checkOrderCartRulesCount($expectedCount)
+    public function checkOrderCartRulesCount($expectedCount): void
     {
         $order = $this->getCurrentCartOrder();
         $count = \count($order->getCartRules());
@@ -142,7 +142,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^current cart order should have a discount in position (\d+) with an amount of (.+) tax included and (.+) tax excluded$/
      */
-    public function checkOrderDiscount($position, $discountTaxIncluded, $discountTaxExcluded)
+    public function checkOrderDiscount($position, $discountTaxIncluded, $discountTaxExcluded): void
     {
         $order = $this->getCurrentCartOrder();
         $orderCartRulesData = $order->getCartRules();
@@ -163,7 +163,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then order :reference should have following details:
      */
-    public function checkOrderDetails(string $orderReference, TableNode $table)
+    public function checkOrderDetails(string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $orderData = $table->getRowsHash();
@@ -186,7 +186,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then order :reference should have following tax details:
      */
-    public function checkOrderTaxDetails(string $orderReference, TableNode $table)
+    public function checkOrderTaxDetails(string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $taxDetailsData = $table->getColumnsHash();
@@ -224,7 +224,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then order :reference should have no tax details
      */
-    public function checkOrderHasNoTaxDetails(string $orderReference)
+    public function checkOrderHasNoTaxDetails(string $orderReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -236,7 +236,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then order :reference carrier should have following details:
      */
-    public function checkOrderCarrierDetails(string $orderReference, TableNode $table)
+    public function checkOrderCarrierDetails(string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $orderCarrierData = $table->getRowsHash();
@@ -260,7 +260,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then order :reference should have :carrierReference as a carrier
      */
-    public function checkOrderCarrier(string $orderReference, string $carrierReference)
+    public function checkOrderCarrier(string $orderReference, string $carrierReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $carrierId = (int) SharedStorage::getStorage()->get($carrierReference);
@@ -282,15 +282,13 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
             throw new Exception('Current cart was not initialized');
         }
 
-        $order = Order::getByCartId($cart->id);
-
-        return $order;
+        return Order::getByCartId($cart->id);
     }
 
     /**
      * @AfterScenario
      */
-    public function cleanOrderFixtures()
+    public function cleanOrderFixtures(): void
     {
         foreach ($this->orders as $order) {
             $order->delete();
@@ -302,7 +300,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then I reference order :orderReference delivery address as :addressReference
      */
-    public function saveAddressIdFromOrder(string $orderReference, string $addressReference)
+    public function saveAddressIdFromOrder(string $orderReference, string $addressReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $order = new Order($orderId);
@@ -313,7 +311,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then order :reference should have :paymentModuleName payment method
      */
-    public function createdOrderShouldHavePaymentMethod(string $reference, string $paymentModuleName)
+    public function createdOrderShouldHavePaymentMethod(string $reference, string $paymentModuleName): void
     {
         $orderId = SharedStorage::getStorage()->get($reference);
 

@@ -77,7 +77,7 @@ final class LanguageQueryBuilder extends AbstractDoctrineQueryBuilder
         return $builder;
     }
 
-    private function applyFilters(QueryBuilder $builder, SearchCriteriaInterface $searchCriteria)
+    private function applyFilters(QueryBuilder $builder, SearchCriteriaInterface $searchCriteria): void
     {
         $allowedFilters = [
             'id_lang',

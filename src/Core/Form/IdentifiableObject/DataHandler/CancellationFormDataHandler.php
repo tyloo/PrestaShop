@@ -37,12 +37,12 @@ final class CancellationFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): void
     {
         return;
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $cancelledProducts = [];
         foreach ($data['products'] as $product) {

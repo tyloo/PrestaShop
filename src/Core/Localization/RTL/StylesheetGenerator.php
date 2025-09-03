@@ -77,7 +77,7 @@ class StylesheetGenerator
      *
      * @throws GenerationException
      */
-    public function generateInDirectory($directory, $regenerate = false)
+    public function generateInDirectory($directory, $regenerate = false): void
     {
         $allFiles = $this->getFilesInDirectory($directory);
 
@@ -113,7 +113,7 @@ class StylesheetGenerator
      *
      * @throws GenerationException
      */
-    private function processFile($filePath)
+    private function processFile($filePath): void
     {
         $content = file_get_contents($filePath);
 
@@ -208,7 +208,7 @@ class StylesheetGenerator
      *
      * @throws GenerationException If unable to write to file
      */
-    private function saveFile($content, $baseFile)
+    private function saveFile($content, $baseFile): void
     {
         $rtlFilePath = $this->getRtlFileName($baseFile);
 

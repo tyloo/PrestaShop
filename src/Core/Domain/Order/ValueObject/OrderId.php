@@ -62,7 +62,7 @@ class OrderId
     /**
      * @param int $orderId
      */
-    private function assertIntegerIsGreaterThanZero($orderId)
+    private function assertIntegerIsGreaterThanZero($orderId): void
     {
         if (! \is_int($orderId) || $orderId < 0) {
             throw new OrderException(\sprintf('Order id %s is invalid. Order id must be number that is greater than zero.', var_export($orderId, true)));

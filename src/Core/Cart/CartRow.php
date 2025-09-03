@@ -242,7 +242,7 @@ class CartRow
      *
      * @throws CoreException
      */
-    public function processCalculation(CartCore $cart)
+    public function processCalculation(CartCore $cart): void
     {
         $rowData = $this->getRowData();
         $quantity = (int) $rowData['cart_quantity'];
@@ -268,7 +268,7 @@ class CartRow
         $this->isProcessed = true;
     }
 
-    protected function getProductPrice(CartCore $cart, $rowData)
+    protected function getProductPrice(CartCore $cart, $rowData): AmountImmutable
     {
         $productId = (int) $rowData['id_product'];
         $quantity = (int) $rowData['cart_quantity'];
@@ -420,7 +420,7 @@ class CartRow
      * substract discount from the row
      * if discount exceeds amount, we keep 0 (no use of negative amounts).
      */
-    public function applyFlatDiscount(AmountImmutable $amount)
+    public function applyFlatDiscount(AmountImmutable $amount): void
     {
         $taxIncluded = $this->finalTotalPrice->getTaxIncluded() - $amount->getTaxIncluded();
         $taxExcluded = $this->finalTotalPrice->getTaxExcluded() - $amount->getTaxExcluded();
@@ -442,10 +442,8 @@ class CartRow
 
     /**
      * @param float $percent 0-100
-     *
-     * @return AmountImmutable
      */
-    public function applyPercentageDiscount($percent)
+    public function applyPercentageDiscount($percent): AmountImmutable
     {
         $percent = (float) $percent;
         if ($percent < 0 || $percent > 100) {

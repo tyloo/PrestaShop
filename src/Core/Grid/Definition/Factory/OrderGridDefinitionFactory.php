@@ -220,7 +220,7 @@ final class OrderGridDefinitionFactory extends AbstractFilterableGridDefinitionF
         return $columns;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         $filters = new FilterCollection();
 

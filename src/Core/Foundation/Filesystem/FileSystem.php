@@ -61,7 +61,7 @@ class FileSystem
     /**
      * Joins an arbitrary number of paths, normalizing them along the way.
      */
-    public function joinPaths()
+    public function joinPaths(...$func_args)
     {
         if (\func_num_args() < 2) {
             throw new Exception('joinPaths requires at least 2 arguments.');
@@ -74,7 +74,6 @@ class FileSystem
             return $this->joinTwoPaths($arg_O, $arg_1);
         }
 
-        $func_args = \func_get_args();
         $arg_0 = func_get_arg(0);
 
         return $this->joinPaths(

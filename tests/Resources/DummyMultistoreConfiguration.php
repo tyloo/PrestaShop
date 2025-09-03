@@ -67,7 +67,7 @@ class DummyMultistoreConfiguration extends AbstractMultistoreConfiguration
     }
 
     // wrapper public method to test the protected "updateConfigurationValue" method in unit tests
-    public function dummyUpdateConfigurationValue($fieldName, $inputValues, $shopConstraint)
+    public function dummyUpdateConfigurationValue($fieldName, $inputValues, $shopConstraint): void
     {
         $this->updateConfigurationValue('PS_CONF_KEY', $fieldName, $inputValues, $shopConstraint);
     }

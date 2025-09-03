@@ -341,11 +341,9 @@ class MailTemplateTwigRendererTest extends TestCase
      */
     private function createLanguageMock(): MockObject
     {
-        $languageMock = $this->getMockBuilder(LanguageInterface::class)
+        return $this->getMockBuilder(LanguageInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        return $languageMock;
     }
 
     /**

@@ -65,7 +65,7 @@ final class ManufacturerAddressFormDataHandler implements FormDataHandlerInterfa
         return $addressId->getValue();
     }
 
-    public function update($addressId, array $data)
+    public function update($addressId, array $data): void
     {
         $command = new EditManufacturerAddressCommand((int) $addressId);
         $this->fillCommandWithData($command, $data);
@@ -78,7 +78,7 @@ final class ManufacturerAddressFormDataHandler implements FormDataHandlerInterfa
      *
      * @throws AddressConstraintException
      */
-    private function fillCommandWithData(EditManufacturerAddressCommand $command, array $data)
+    private function fillCommandWithData(EditManufacturerAddressCommand $command, array $data): void
     {
         if ($data['id_manufacturer'] !== null) {
             $command->setManufacturerId($data['id_manufacturer']);

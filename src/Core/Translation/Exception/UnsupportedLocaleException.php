@@ -53,10 +53,8 @@ final class UnsupportedLocaleException extends NotFoundResourceException
 
     /**
      * @param string $locale the translation locale
-     *
-     * @return self
      */
-    public static function invalidLocale($locale)
+    public static function invalidLocale($locale): self
     {
         $exceptionMessage = \sprintf(
             'The provided locale `%s` is invalid.',

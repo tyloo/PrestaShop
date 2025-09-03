@@ -94,7 +94,7 @@ class Reader implements ReaderInterface
      *
      * @throws LocalizationException When the locale code is unknown or invalid
      */
-    public function readLocaleData($localeCode)
+    public function readLocaleData($localeCode): LocaleData
     {
         // CLDR filenames use a different notation from IETF.
         $localeCode = str_replace('-', '_', $localeCode);
@@ -286,7 +286,7 @@ class Reader implements ReaderInterface
      *
      * @see  http://cldr.unicode.org/development/development-process/design-proposals/resolution-of-cldr-files
      */
-    protected function mapLocaleData(SimpleXMLElement $xmlLocaleData, $supplementalData)
+    protected function mapLocaleData(SimpleXMLElement $xmlLocaleData, $supplementalData): LocaleData
     {
         $localeData = new LocaleData();
 

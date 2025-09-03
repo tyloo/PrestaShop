@@ -57,7 +57,7 @@ class AliasId
     /**
      * @throws AliasConstraintException
      */
-    private function assertIntegerIsGreaterThanZero(int $aliasId)
+    private function assertIntegerIsGreaterThanZero(int $aliasId): void
     {
         if ($aliasId <= 0) {
             throw new AliasConstraintException(\sprintf('Invalid alias id %d supplied. Alias id must be a positive integer.', $aliasId), AliasConstraintException::INVALID_ID);

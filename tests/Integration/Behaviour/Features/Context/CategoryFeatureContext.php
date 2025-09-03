@@ -43,7 +43,7 @@ class CategoryFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a category named "(.+)"$/
      */
-    public function createCategory($categoryName)
+    public function createCategory($categoryName): void
     {
         $idLang = (int) Context::getContext()->language->id;
         $category = new Category();
@@ -69,7 +69,7 @@ class CategoryFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @AfterScenario
      */
-    public function cleanCategoryFixtures()
+    public function cleanCategoryFixtures(): void
     {
         foreach ($this->categories as $category) {
             $category->delete();

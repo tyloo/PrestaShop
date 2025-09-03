@@ -80,7 +80,7 @@ class SetInternalOrderNoteCommand
      *
      * @throws OrderConstraintException
      */
-    private function assertInternalNoteIsString($internalNote)
+    private function assertInternalNoteIsString($internalNote): void
     {
         if (! \is_string($internalNote)) {
             throw new OrderConstraintException('Invalid internal note provided. Internal note must be a string.', OrderConstraintException::INVALID_INTERNAL_NOTE);

@@ -63,7 +63,7 @@ class BulkDeleteTaxCommand
      *
      * @throws TaxException
      */
-    private function setTaxIds(array $taxIds)
+    private function setTaxIds(array $taxIds): void
     {
         foreach ($taxIds as $taxId) {
             $this->taxIds[] = new TaxId((int) $taxId);

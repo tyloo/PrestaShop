@@ -56,7 +56,7 @@ class CountryId implements CountryIdInterface
     /**
      * @throws CountryConstraintException
      */
-    private function assertPositiveInt(int $value)
+    private function assertPositiveInt(int $value): void
     {
         if ($value <= 0) {
             throw new CountryConstraintException(\sprintf('Invalid country id "%s".', var_export($value, true)), CountryConstraintException::INVALID_ID);

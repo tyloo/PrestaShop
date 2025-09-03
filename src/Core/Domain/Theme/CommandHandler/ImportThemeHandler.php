@@ -47,7 +47,7 @@ final class ImportThemeHandler implements ImportThemeHandlerInterface
     ) {
     }
 
-    public function handle(ImportThemeCommand $command)
+    public function handle(ImportThemeCommand $command): void
     {
         $type = $command->getImportSource()->getSourceType();
         $source = $command->getImportSource()->getSource();

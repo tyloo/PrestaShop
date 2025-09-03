@@ -96,7 +96,7 @@ class TermsAndConditions
     {
         $index = 0;
 
-        $formattedText = preg_replace_callback('/\[(.*?)\]/', function (array $match) use (&$index) {
+        return preg_replace_callback('/\[(.*?)\]/', function (array $match) use (&$index) {
             $textToReplace = $match[1];
 
             $thereIsAMatchingLink = isset($this->links[$index]);
@@ -115,8 +115,6 @@ class TermsAndConditions
 
             return $replacement;
         }, $this->rawText);
-
-        return $formattedText;
     }
 
     /**

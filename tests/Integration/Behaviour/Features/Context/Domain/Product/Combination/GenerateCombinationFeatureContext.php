@@ -131,7 +131,7 @@ class GenerateCombinationFeatureContext extends AbstractCombinationFeatureContex
         string $productReference,
         string $combinationReference,
         int $shopId,
-    ) {
+    ): void {
         $combinationId = $this->getSharedStorage()->get($combinationReference);
 
         $this->assertCachedDefaultCombinationId(

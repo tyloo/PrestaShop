@@ -30,7 +30,7 @@
  */
 class AdminTranslationtestFooController extends ModuleAdminController
 {
-    public function initContent()
+    public function initContent(): void
     {
         parent::initContent();
 
@@ -40,7 +40,7 @@ class AdminTranslationtestFooController extends ModuleAdminController
     /**
      * This is used by tests only, not actually needed for the controller
      */
-    public function someMethod()
+    public function someMethod(): void
     {
         $this->l('An error occured, please check your zip file');
     }

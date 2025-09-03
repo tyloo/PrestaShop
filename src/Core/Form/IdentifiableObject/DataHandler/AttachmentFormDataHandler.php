@@ -57,7 +57,7 @@ final class AttachmentFormDataHandler implements FormDataHandlerInterface
     /**
      * @throws AttachmentConstraintException
      */
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $attachmentIdObject = new AttachmentId((int) $id);
 
@@ -92,10 +92,7 @@ final class AttachmentFormDataHandler implements FormDataHandlerInterface
         return $command;
     }
 
-    /**
-     * @return AddAttachmentCommand
-     */
-    private function createAddAttachmentCommand(array $data)
+    private function createAddAttachmentCommand(array $data): AddAttachmentCommand
     {
         $addAttachmentCommand = new AddAttachmentCommand(
             $data['name'],

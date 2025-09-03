@@ -50,7 +50,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a customer named "(.+)" whose email is "(.+)"$/
      */
-    public function createCustomer($customerName, $customerEmail)
+    public function createCustomer($customerName, $customerEmail): void
     {
         /** @var Hashing $crypto */
         $crypto = ServiceLocator::get(Hashing::class);
@@ -69,7 +69,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given there is customer :reference with email :customerEmail
      */
-    public function customerExists($reference, $customerEmail)
+    public function customerExists($reference, $customerEmail): void
     {
         $data = Customer::getCustomersByEmail($customerEmail);
         if (isset($data[0]['id_customer'])) {
@@ -86,7 +86,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given customer :reference has address in :isoCode country
      */
-    public function customerHasAddressInCountry($reference, $isoCode)
+    public function customerHasAddressInCountry($reference, $isoCode): void
     {
         $customer = $this->getCustomerByReference($reference);
         $customerAddresses = $customer->getAddresses((int) Configuration::get('PS_LANG_DEFAULT'));
@@ -125,7 +125,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I am logged in as "(.+)"$/
      */
-    public function setCurrentCustomer($customerName)
+    public function setCurrentCustomer($customerName): void
     {
         $this->checkCustomerWithNameExists($customerName);
         Context::getContext()->updateCustomer($this->customers[$customerName]);
@@ -134,7 +134,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given private note is not set about customer :reference
      */
-    public function assertPrivateNoteIsNotSetAboutCustomer($reference)
+    public function assertPrivateNoteIsNotSetAboutCustomer($reference): void
     {
         $customer = $this->getCustomerByReference($reference);
 
@@ -146,7 +146,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then customer :reference private note should be :privateNote
      */
-    public function assertPrivateNoteAboutCustomer($reference, $privateNote)
+    public function assertPrivateNoteAboutCustomer($reference, $privateNote): void
     {
         $customer = $this->getCustomerByReference($reference);
 
@@ -158,7 +158,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then customer :reference last voucher is :voucherAmount
      */
-    public function checkCustomerHasVoucher(string $reference, float $voucherAmount)
+    public function checkCustomerHasVoucher(string $reference, float $voucherAmount): void
     {
         $customer = $this->getCustomerByReference($reference);
         $cartRules = CartRule::getCustomerCartRules((int) Configuration::get('PS_LANG_DEFAULT'), $customer->id, true, false);
@@ -185,7 +185,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @AfterScenario
      */
-    public function cleanCustomerFixtures()
+    public function cleanCustomerFixtures(): void
     {
         foreach ($this->customers as $customer) {
             $customer->delete();

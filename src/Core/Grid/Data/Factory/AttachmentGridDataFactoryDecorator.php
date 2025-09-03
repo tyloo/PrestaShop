@@ -51,7 +51,7 @@ final class AttachmentGridDataFactoryDecorator implements GridDataFactoryInterfa
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $attachmentData = $this->attachmentDoctrineGridDataFactory->getData($searchCriteria);
 

@@ -137,11 +137,7 @@ class LangRepositoryTest extends TestCase
         ;
 
         for ($i = 0; $i < $consecutiveCalls; ++$i) {
-            if ($i % 2 === 0) {
-                $locale = $partialMock->getOneByIsoCode('en');
-            } else {
-                $locale = $partialMock->getOneByLocale('en');
-            }
+            $locale = $i % 2 === 0 ? $partialMock->getOneByIsoCode('en') : $partialMock->getOneByLocale('en');
 
             $this->assertNull($locale);
         }

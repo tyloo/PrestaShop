@@ -38,12 +38,12 @@ final class PartialRefundFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): void
     {
         return;
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $refunds = [];
         foreach ($data['products'] as $product) {

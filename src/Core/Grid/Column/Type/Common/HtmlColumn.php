@@ -42,7 +42,7 @@ final class HtmlColumn extends AbstractColumn
         return 'html';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

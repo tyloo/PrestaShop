@@ -34,7 +34,7 @@ class DataComparator
     /**
      * @throws Exception
      */
-    public static function assertDataSetsAreIdentical(array $expectedData, array $realData)
+    public static function assertDataSetsAreIdentical(array $expectedData, array $realData): void
     {
         foreach ($expectedData as $key => $expectedElement) {
             if (\array_key_exists($key, $realData) === false) {

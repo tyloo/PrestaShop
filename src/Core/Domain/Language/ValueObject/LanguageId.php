@@ -60,7 +60,7 @@ class LanguageId
     /**
      * @param int $id
      */
-    private function assertIsIntegerGreaterThanZero($id)
+    private function assertIsIntegerGreaterThanZero($id): void
     {
         if (! \is_int($id) || $id <= 0) {
             throw new LanguageException(\sprintf('Invalid language id %s provided', var_export($id, true)));

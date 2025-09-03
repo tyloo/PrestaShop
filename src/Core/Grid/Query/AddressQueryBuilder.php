@@ -68,11 +68,8 @@ final class AddressQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria): QueryBuilder
     {
-        $qb = $this->getQueryBuilder($searchCriteria->getFilters())
-            ->select('COUNT(DISTINCT a.`id_address`)')
-        ;
-
-        return $qb;
+        return $this->getQueryBuilder($searchCriteria->getFilters())
+            ->select('COUNT(DISTINCT a.`id_address`)');
     }
 
     /**
@@ -119,7 +116,7 @@ final class AddressQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters to address query builder.
      */
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFiltersMap = [
             'id_address' => 'a.id_address',

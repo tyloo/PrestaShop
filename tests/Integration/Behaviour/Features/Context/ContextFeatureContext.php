@@ -43,7 +43,7 @@ class ContextFeatureContext extends AbstractPrestaShopFeatureContext
      *
      * @BeforeScenario
      */
-    public function mockContext()
+    public function mockContext(): void
     {
         /** @var LegacyContext $legacyContext */
         $legacyContext = CommonFeatureContext::getContainer()->get('prestashop.adapter.legacy.context');
@@ -62,7 +62,7 @@ class ContextFeatureContext extends AbstractPrestaShopFeatureContext
      *
      * @AfterScenario
      */
-    public function resetContext()
+    public function resetContext(): void
     {
         if (empty($this->contextMocker)) {
             throw new Exception('Context was not mocked');

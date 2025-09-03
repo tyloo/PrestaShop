@@ -42,7 +42,7 @@ class SpecificPriceRuleFeatureContext extends AbstractPrestaShopFeatureContext
      *
      * @AfterScenario
      */
-    public function cleanCartRuleFixtures()
+    public function cleanCartRuleFixtures(): void
     {
         foreach ($this->specificPriceRules as $specificPriceRule) {
             $specificPriceRule->delete();
@@ -54,7 +54,7 @@ class SpecificPriceRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a specific price rule named "(.+)" with a percent discount of (\d+)% and minimum quantity of (\d+)$/
      */
-    public function insertSpecificPriceRulePercent($priceRuleName, $value, $minimalQuantity)
+    public function insertSpecificPriceRulePercent($priceRuleName, $value, $minimalQuantity): void
     {
         $this->createSpecificPriceRule($priceRuleName, 'percentage', $value, $minimalQuantity);
     }
@@ -62,7 +62,7 @@ class SpecificPriceRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a specific price rule named "(.+)" with an amount discount of (\d+) and minimum quantity of (\d+)$/
      */
-    public function insertSpecificPriceRuleAmount($priceRuleName, $value, $minimalQuantity)
+    public function insertSpecificPriceRuleAmount($priceRuleName, $value, $minimalQuantity): void
     {
         $this->createSpecificPriceRule($priceRuleName, 'amount', $value, $minimalQuantity);
     }
@@ -89,7 +89,7 @@ class SpecificPriceRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^specific price rule "(.+)" changes product price to (\d+\.\d+)$/
      */
-    public function setPriceModifier($priceRuleName, $price)
+    public function setPriceModifier($priceRuleName, $price): void
     {
         $this->specificPriceRules[$priceRuleName]->price = $price;
         $this->specificPriceRules[$priceRuleName]->save();

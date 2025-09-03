@@ -58,19 +58,15 @@ class DebugCommandTest extends TestCase
 
     protected function mockDebugMode(): DebugMode
     {
-        $debugModeMock = $this->getMockBuilder(DebugMode::class)
+        return $this->getMockBuilder(DebugMode::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        return $debugModeMock;
     }
 
     protected function mockCommandBus(): CommandBusInterface
     {
-        $commandBusMock = $this->getMockBuilder(CommandBusInterface::class)
+        return $this->getMockBuilder(CommandBusInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        return $commandBusMock;
     }
 }

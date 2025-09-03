@@ -47,7 +47,7 @@ class CarrierGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $carrierData = $this->carrierDataFactory->getData($searchCriteria);
         $modifiedRecords = $this->applyModifications($carrierData->getRecords()->all());

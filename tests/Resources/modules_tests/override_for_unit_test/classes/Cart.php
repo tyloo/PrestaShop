@@ -33,7 +33,7 @@ class Cart extends CartCore
     * date: 2018-12-26 14:14:05
     * version: 1
     */
-    public function updateAddressId($id_address, $id_address_new)
+    public function updateAddressId($id_address, $id_address_new): void
     {
         $to_update = false;
         if (! isset($this->id_address_invoice) || $this->id_address_invoice === $id_address) {
@@ -189,7 +189,7 @@ class Cart extends CartCore
     * date: 2018-12-26 14:14:06
     * version: 1
     */
-    public function deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0)
+    public function deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0): void
     {
         $result = Hook::exec(
             'ppbsDeleteCartProduct',

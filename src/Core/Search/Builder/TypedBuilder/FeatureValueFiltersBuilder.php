@@ -51,7 +51,7 @@ class FeatureValueFiltersBuilder extends AbstractFiltersBuilder implements Typed
         return parent::setConfig($config);
     }
 
-    public function buildFilters(?Filters $filters = null)
+    public function buildFilters(?Filters $filters = null): FeatureValueFilters
     {
         $filterParameters = FeatureValueFilters::getDefaults();
         if ($filters !== null) {

@@ -89,7 +89,7 @@ final class CustomerBoughtProductQueryBuilder extends AbstractDoctrineQueryBuild
     /**
      * Apply filters to bought products query builder.
      */
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFiltersMap = [
             'id_customer' => 'o.id_customer',

@@ -53,7 +53,7 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
     ) {
     }
 
-    public function buildPositionUpdate(array $data, PositionDefinition $positionDefinition)
+    public function buildPositionUpdate(array $data, PositionDefinition $positionDefinition): PositionUpdate
     {
         $this->validateData($data, $positionDefinition);
 
@@ -68,19 +68,17 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
             ));
         }
 
-        $positionUpdate = new PositionUpdate(
+        return new PositionUpdate(
             $updates,
             $positionDefinition,
             $data[$this->parentIdField] ?? null
         );
-
-        return $positionUpdate;
     }
 
     /**
      * @throws PositionDataException
      */
-    private function validateData(array $data, PositionDefinition $positionDefinition)
+    private function validateData(array $data, PositionDefinition $positionDefinition): void
     {
         if (empty($data[$this->positionsField])) {
             throw new PositionDataException('Missing ' . $this->positionsField . ' in your data.', 'Admin.Notifications.Failure');
@@ -98,7 +96,7 @@ final class PositionUpdateFactory implements PositionUpdateFactoryInterface
      *
      * @throws PositionDataException
      */
-    private function validatePositionData(array $position, $index)
+    private function validatePositionData(array $position, $index): void
     {
         if (! isset($position[$this->rowIdField])) {
             throw new PositionDataException(self::POSITION_KEY, 'Admin.Notifications.Failure', [$index, $this->rowIdField]);

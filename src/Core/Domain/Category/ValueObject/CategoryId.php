@@ -63,7 +63,7 @@ class CategoryId
     /**
      * @param int $categoryId
      */
-    private function setCategoryId($categoryId)
+    private function setCategoryId($categoryId): void
     {
         if (! \is_int($categoryId) || $categoryId <= 0) {
             throw new CategoryException(\sprintf('Invalid Category id %s supplied', var_export($categoryId, true)));

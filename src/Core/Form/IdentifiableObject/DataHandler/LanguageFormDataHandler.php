@@ -71,7 +71,7 @@ final class LanguageFormDataHandler implements FormDataHandlerInterface
         return $languageId->getValue();
     }
 
-    public function update($languageId, array $data)
+    public function update($languageId, array $data): void
     {
         $command = (new EditLanguageCommand($languageId))
             ->setName((string) $data['name'])

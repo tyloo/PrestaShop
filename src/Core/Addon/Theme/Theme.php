@@ -175,7 +175,7 @@ class Theme implements AddonInterface
         return true;
     }
 
-    public function setPageLayouts(array $layouts)
+    public function setPageLayouts(array $layouts): void
     {
         $this->attributes->set('theme_settings.layouts', $layouts);
     }

@@ -208,7 +208,7 @@ class CombinationAssertionFeatureContext extends AbstractCombinationFeatureConte
     /**
      * @Then /^all combinations of product "([^"]*)" should have the stock policy to "([^"]*)"$/
      */
-    public function assertCombinationStockPolicyForDefaultShop(string $productReference, string $outOfStock)
+    public function assertCombinationStockPolicyForDefaultShop(string $productReference, string $outOfStock): void
     {
         $this->assertStockPolicyForShops($productReference, $outOfStock, [$this->getDefaultShopId()]);
     }
@@ -216,7 +216,7 @@ class CombinationAssertionFeatureContext extends AbstractCombinationFeatureConte
     /**
      * @Then /^all combinations of product "([^"]*)" for shops "([^"]*)" should have the stock policy to "([^"]*)"$/
      */
-    public function assertCombinationStockPolicyForShops(string $productReference, string $shopReferences, string $outOfStock)
+    public function assertCombinationStockPolicyForShops(string $productReference, string $shopReferences, string $outOfStock): void
     {
         $this->assertStockPolicyForShops($productReference, $outOfStock, $this->referencesToIds($shopReferences));
     }

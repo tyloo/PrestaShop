@@ -53,7 +53,7 @@ class SupplierId implements SupplierIdInterface
     /**
      * @throws SupplierException
      */
-    private function assertIsIntegerGreaterThanZero(int $supplierId)
+    private function assertIsIntegerGreaterThanZero(int $supplierId): void
     {
         if ($supplierId <= 0) {
             throw new SupplierException(\sprintf('Invalid Supplier id: %s', var_export($supplierId, true)));

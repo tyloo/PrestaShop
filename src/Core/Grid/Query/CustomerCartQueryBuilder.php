@@ -97,7 +97,7 @@ final class CustomerCartQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters to cart query builder.
      */
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFiltersMap = [
             'id_customer' => 'c.id_customer',

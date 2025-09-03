@@ -67,11 +67,8 @@ final class TaxQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        $qb = $this->getQueryBuilder($searchCriteria->getFilters())
-            ->select('COUNT(DISTINCT t.`id_tax`)')
-        ;
-
-        return $qb;
+        return $this->getQueryBuilder($searchCriteria->getFilters())
+            ->select('COUNT(DISTINCT t.`id_tax`)');
     }
 
     /**
@@ -99,7 +96,7 @@ final class TaxQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFiltersMap = [
             'id_tax' => 't.id_tax',

@@ -97,16 +97,14 @@ final class LogDataFactory implements GridDataFactoryInterface
 
         if (! empty($record['id_shop']) && empty($record['id_shop_group'])) {
             $shop_name = $this->translator->trans('Store', [], 'Admin.Global');
-            $shop_name .= ' ' . $record['shop_name'] . ' (id : ' . $record['id_shop'] . ')';
 
-            return $shop_name;
+            return $shop_name . (' ' . $record['shop_name'] . ' (id : ' . $record['id_shop'] . ')');
         }
 
         if (empty($record['id_shop']) && ! empty($record['id_shop_group'])) {
             $shop_name = $this->translator->trans('Shop group', [], 'Admin.Global');
-            $shop_name .= ' ' . $record['shop_group_name'] . ' (id : ' . $record['id_shop_group'] . ')';
 
-            return $shop_name;
+            return $shop_name . (' ' . $record['shop_group_name'] . ' (id : ' . $record['id_shop_group'] . ')');
         }
 
         return self::DEFAULT_EMPTY_DATA;

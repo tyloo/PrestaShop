@@ -65,7 +65,7 @@ class BulkDeleteOrderStateCommand
      *
      * @throws OrderStateException
      */
-    private function setOrderStateIds(array $orderStateIds)
+    private function setOrderStateIds(array $orderStateIds): void
     {
         foreach ($orderStateIds as $orderStateId) {
             $this->orderStateIds[] = new OrderStateId($orderStateId);

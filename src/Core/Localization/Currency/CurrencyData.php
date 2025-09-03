@@ -160,7 +160,7 @@ class CurrencyData
     /**
      * @param bool $isActive
      */
-    public function setIsActive($isActive)
+    public function setIsActive($isActive): void
     {
         $this->isActive = $isActive;
     }
@@ -176,7 +176,7 @@ class CurrencyData
     /**
      * @param float $conversionRate
      */
-    public function setConversionRate($conversionRate)
+    public function setConversionRate($conversionRate): void
     {
         $this->conversionRate = $conversionRate;
     }
@@ -192,7 +192,7 @@ class CurrencyData
     /**
      * @param string $isoCode
      */
-    public function setIsoCode($isoCode)
+    public function setIsoCode($isoCode): void
     {
         $this->isoCode = $isoCode;
     }
@@ -208,7 +208,7 @@ class CurrencyData
     /**
      * @param string $numericIsoCode
      */
-    public function setNumericIsoCode($numericIsoCode)
+    public function setNumericIsoCode($numericIsoCode): void
     {
         $this->numericIsoCode = $numericIsoCode;
     }
@@ -224,7 +224,7 @@ class CurrencyData
     /**
      * @param string[] $symbols
      */
-    public function setSymbols($symbols)
+    public function setSymbols($symbols): void
     {
         $this->symbols = $symbols;
     }
@@ -240,7 +240,7 @@ class CurrencyData
     /**
      * @param int $precision
      */
-    public function setPrecision($precision)
+    public function setPrecision($precision): void
     {
         $this->precision = (int) $precision;
     }
@@ -256,7 +256,7 @@ class CurrencyData
     /**
      * @param string[] $names
      */
-    public function setNames($names)
+    public function setNames($names): void
     {
         $this->names = $names;
     }
@@ -276,7 +276,7 @@ class CurrencyData
      *
      * @param string[] $patterns
      */
-    public function setPatterns(array $patterns)
+    public function setPatterns(array $patterns): void
     {
         $this->patterns = $patterns;
     }

@@ -131,7 +131,7 @@ final class ColumnCollection extends AbstractCollection implements ColumnCollect
      *
      * @throws ColumnNotFoundException When column with given $id does not exist
      */
-    private function insertByPosition($id, ColumnInterface $newColumn, $position)
+    private function insertByPosition($id, ColumnInterface $newColumn, $position): void
     {
         if (! isset($this->items[$id])) {
             throw new ColumnNotFoundException(\sprintf('Cannot insert new column into collection. Column with id "%s" was not found.', $id));

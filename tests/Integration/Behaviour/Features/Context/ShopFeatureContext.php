@@ -377,7 +377,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I search for the term :searchTerm I should not get any results
      */
-    public function assertNoShopWasFound(string $searchTerm)
+    public function assertNoShopWasFound(string $searchTerm): void
     {
         $foundShops = $this->getQueryBus()->handle(new SearchShops($searchTerm));
         Assert::assertEmpty($foundShops);

@@ -58,7 +58,7 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
      *
      * @BeforeScenario
      */
-    public function before()
+    public function before(): void
     {
         // needed because if no controller defined then CONTEXT_ALL is selected and exception is thrown
         /** @var AdminController|FrontController $adminControllerTestDouble */
@@ -252,7 +252,7 @@ class ManufacturerFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that manufacturer does not exist
      */
-    public function assertManufacturerDoesNotExistError()
+    public function assertManufacturerDoesNotExistError(): void
     {
         $this->assertLastErrorIs(ManufacturerNotFoundException::class);
     }

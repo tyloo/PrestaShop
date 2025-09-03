@@ -101,7 +101,7 @@ class ThemeExporter
     /**
      * @param string $cacheDir
      */
-    private function copyModuleDependencies(array $moduleList, $cacheDir)
+    private function copyModuleDependencies(array $moduleList, $cacheDir): void
     {
         if (empty($moduleList)) {
             return;

@@ -70,7 +70,7 @@ final class AddressGridDefinitionFactory extends AbstractFilterableGridDefinitio
 
     protected function getColumns(): ColumnCollectionInterface
     {
-        $columns = (new ColumnCollection())
+        return (new ColumnCollection())
             ->add(
                 (new BulkActionColumn('addresses_bulk'))
                     ->setOptions([
@@ -149,15 +149,12 @@ final class AddressGridDefinitionFactory extends AbstractFilterableGridDefinitio
                             )
                         ),
                 ])
-            )
-        ;
-
-        return $columns;
+            );
     }
 
     protected function getFilters(): FilterCollectionInterface
     {
-        $filters = (new FilterCollection())
+        return (new FilterCollection())
             ->add(
                 (new Filter('id_address', NumberType::class))
                     ->setTypeOptions([
@@ -236,8 +233,6 @@ final class AddressGridDefinitionFactory extends AbstractFilterableGridDefinitio
                         'redirect_route' => 'admin_addresses_index',
                     ])
             );
-
-        return $filters;
     }
 
     protected function getGridActions(): GridActionCollectionInterface

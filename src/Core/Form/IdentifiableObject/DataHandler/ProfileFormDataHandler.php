@@ -59,7 +59,7 @@ final class ProfileFormDataHandler implements FormDataHandlerInterface
         return $profileId->getValue();
     }
 
-    public function update($profileId, array $data)
+    public function update($profileId, array $data): void
     {
         /** @var UploadedFile $uploadedAvatar */
         $uploadedAvatar = $data['avatarUrl'];

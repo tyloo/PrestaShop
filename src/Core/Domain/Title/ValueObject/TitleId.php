@@ -56,7 +56,7 @@ class TitleId
     /**
      * @throws TitleConstraintException
      */
-    private function assertPositiveInt(int $value)
+    private function assertPositiveInt(int $value): void
     {
         if ($value <= 0) {
             throw new TitleConstraintException(\sprintf('Invalid title id "%s".', var_export($value, true)), TitleConstraintException::INVALID_ID);

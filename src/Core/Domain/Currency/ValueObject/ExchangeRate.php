@@ -69,7 +69,7 @@ class ExchangeRate
     /**
      * @throws CurrencyConstraintException
      */
-    private function assertIsNumberAndMoreThanZero($exchangeRate)
+    private function assertIsNumberAndMoreThanZero($exchangeRate): void
     {
         $isIntegerOrFloat = \is_int($exchangeRate) || \is_float($exchangeRate);
 

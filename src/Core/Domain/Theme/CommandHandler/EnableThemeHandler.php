@@ -51,7 +51,7 @@ final class EnableThemeHandler implements EnableThemeHandlerInterface
      * @throws CannotEnableThemeException
      * @throws ThemeConstraintException
      */
-    public function handle(EnableThemeCommand $command)
+    public function handle(EnableThemeCommand $command): void
     {
         if (! $this->isSingleShopContext) {
             throw new ThemeConstraintException('Themes can be changed only in single shop context', ThemeConstraintException::RESTRICTED_ONLY_FOR_SINGLE_SHOP);

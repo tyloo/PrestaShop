@@ -63,7 +63,7 @@ class Type
     /**
      * @throws NotificationException
      */
-    private function assertIsValidType(string $type)
+    private function assertIsValidType(string $type): void
     {
         $allowedTypes = [self::ORDER, self::CUSTOMER, self::CUSTOMER_MESSAGE];
         if (! \in_array($type, $allowedTypes, true)) {

@@ -42,7 +42,7 @@ final class CustomerDiscountGridDataFactoryDecorator implements GridDataFactoryI
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $customerData = $this->customerDiscountDoctrineGridDataFactory->getData($searchCriteria);
 

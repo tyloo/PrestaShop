@@ -64,7 +64,7 @@ class ProductImageFormDataHandler implements FormDataHandlerInterface
         return $imageId->getValue();
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         if (! empty($data['shop_id'])) {
             $shopConstraint = ShopConstraint::shop((int) $data['shop_id']);

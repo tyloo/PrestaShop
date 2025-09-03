@@ -75,7 +75,7 @@ class SearchCustomers
     /**
      * @param string[] $phrases
      */
-    private function assertPhrasesAreNotEmpty(array $phrases)
+    private function assertPhrasesAreNotEmpty(array $phrases): void
     {
         if (empty($phrases)) {
             throw new CustomerException('Phrases cannot be empty when searching customers.');

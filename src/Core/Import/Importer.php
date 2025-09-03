@@ -56,7 +56,7 @@ final class Importer implements ImporterInterface
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
         ImportHandlerInterface $importHandler,
-    ) {
+    ): void {
         $this->setUp($importHandler, $importConfig, $runtimeConfig);
 
         $importFile = new SplFileInfo($this->importDir . $importConfig->getFileName());
@@ -151,7 +151,7 @@ final class Importer implements ImporterInterface
         ImportHandlerInterface $importHandler,
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
-    ) {
+    ): void {
         if ($this->shouldTruncateData($importConfig, $runtimeConfig) && $this->accessChecker->canTruncateData()) {
             $this->entityDeleter->deleteAll($importConfig->getEntityType());
         }
@@ -166,7 +166,7 @@ final class Importer implements ImporterInterface
         ImportHandlerInterface $importHandler,
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
-    ) {
+    ): void {
         $importHandler->tearDown($importConfig, $runtimeConfig);
 
         // Calculating shared data size and adding some extra bytes for other values.

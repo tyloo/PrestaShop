@@ -40,7 +40,7 @@ final class ModalFormSubmitBulkAction extends AbstractBulkAction
         return 'modal_form_submit';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

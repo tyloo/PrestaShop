@@ -35,7 +35,7 @@ class OrderMessageContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then order message :reference :propertyName in default language should be :propertyValue
      */
-    public function assertPropertyInDefaultLanguage(string $reference, string $propertyName, string $propertyValue)
+    public function assertPropertyInDefaultLanguage(string $reference, string $propertyName, string $propertyValue): void
     {
         /** @var OrderMessage $orderMessage */
         $orderMessage = SharedStorage::getStorage()->get($reference);

@@ -45,7 +45,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
     /**
      * @When I create an image type :imageTypeName with following properties:
      */
-    public function createImageTypeUsingCommand(string $imageTypeName, TableNode $table)
+    public function createImageTypeUsingCommand(string $imageTypeName, TableNode $table): void
     {
         $data = $this->fixDataType($table->getRowsHash());
 
@@ -69,7 +69,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
     /**
      * @When I edit image type :imageTypeName with following properties:
      */
-    public function editImageTypeUsingCommand(string $imageTypeName, TableNode $table)
+    public function editImageTypeUsingCommand(string $imageTypeName, TableNode $table): void
     {
         $data = $this->fixDataType($table->getRowsHash());
 
@@ -110,7 +110,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
     /**
      * @When I delete image type :imageTypeName.
      */
-    public function deleteImageTypeUsingCommand(string $imageTypeName)
+    public function deleteImageTypeUsingCommand(string $imageTypeName): void
     {
         $command = new DeleteImageTypeCommand($this->getSharedStorage()->get($imageTypeName));
         $this->getCommandBus()->handle($command);
@@ -119,7 +119,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
     /**
      * @Then I bulk delete image types :imageTypesName.
      */
-    public function bulkDeleteImageTypeUsingCommand(string $imageTypesName)
+    public function bulkDeleteImageTypeUsingCommand(string $imageTypesName): void
     {
         $imageTypesName = explode(',', $imageTypesName);
         $imageTypesIds = [];
@@ -134,7 +134,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
     /**
      * @Then image type :imageTypeName should have the following properties:
      */
-    public function assertQueryImageTypeProperties(string $imageTypeName, TableNode $table)
+    public function assertQueryImageTypeProperties(string $imageTypeName, TableNode $table): void
     {
         $errors = [];
         $expectedData = $table->getRowsHash();
@@ -190,7 +190,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (\count($errors) > 0) {
+        if ($errors !== []) {
             throw new RuntimeException(\sprintf('Fields %s are not identical', implode(', ', $errors)));
         }
     }
@@ -198,7 +198,7 @@ class ImageTypeContext extends AbstractDomainFeatureContext
     /**
      * @When image type :imageTypeName should not exist.
      */
-    public function assertImageTypeDoesNotExist(string $imageTypeName)
+    public function assertImageTypeDoesNotExist(string $imageTypeName): void
     {
         try {
             $this->getQueryBus()->handle(new GetImageTypeForEditing($this->getSharedStorage()->get($imageTypeName)));

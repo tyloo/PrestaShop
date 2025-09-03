@@ -89,7 +89,7 @@ final class AddressFormDataHandler implements FormDataHandlerInterface
      * @throws CountryConstraintException
      * @throws StateConstraintException
      */
-    public function update($addressId, array $data)
+    public function update($addressId, array $data): void
     {
         $editAddressCommand = new EditCustomerAddressCommand($addressId);
 

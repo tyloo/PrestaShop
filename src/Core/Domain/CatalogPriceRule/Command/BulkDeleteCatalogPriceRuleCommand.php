@@ -63,7 +63,7 @@ class BulkDeleteCatalogPriceRuleCommand
      *
      * @throws CatalogPriceRuleConstraintException
      */
-    private function setCatalogPriceRuleIds(array $catalogPriceRuleIds)
+    private function setCatalogPriceRuleIds(array $catalogPriceRuleIds): void
     {
         foreach ($catalogPriceRuleIds as $catalogPriceRuleId) {
             $this->catalogPriceRuleIds[] = new CatalogPriceRuleId($catalogPriceRuleId);

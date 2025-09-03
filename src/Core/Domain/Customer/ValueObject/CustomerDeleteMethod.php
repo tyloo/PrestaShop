@@ -82,7 +82,7 @@ class CustomerDeleteMethod
      *
      * @throws CustomerException
      */
-    private function assertMethodIsDefined($method)
+    private function assertMethodIsDefined($method): void
     {
         $definedMethods = [self::ALLOW_CUSTOMER_REGISTRATION, self::DENY_CUSTOMER_REGISTRATION];
 

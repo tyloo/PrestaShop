@@ -74,7 +74,7 @@ class TaxRulesGroupFormDataHandler implements FormDataHandlerInterface
     /**
      * @throws TaxRulesGroupConstraintException
      */
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $command = (new EditTaxRulesGroupCommand($id))
             ->setName($data['name'])

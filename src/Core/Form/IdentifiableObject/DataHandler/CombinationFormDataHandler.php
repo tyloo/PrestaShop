@@ -53,7 +53,7 @@ class CombinationFormDataHandler implements FormDataHandlerInterface
         return null;
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $singleShopConstraint = $this->contextShopId ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
 

@@ -69,7 +69,7 @@ class Name
      *
      * @throws OrderStateConstraintException
      */
-    private function assertNameIsValid($name)
+    private function assertNameIsValid($name): void
     {
         $matchesFirstNamePattern = preg_match('/^[^0-9!<>,;?=+()@#"°{}_$%:¤|]*$/u', stripslashes($name));
 
@@ -83,7 +83,7 @@ class Name
      *
      * @throws OrderStateConstraintException
      */
-    private function assertNameDoesNotExceedAllowedLength($name)
+    private function assertNameDoesNotExceedAllowedLength($name): void
     {
         $name = html_entity_decode($name, \ENT_COMPAT, 'UTF-8');
 

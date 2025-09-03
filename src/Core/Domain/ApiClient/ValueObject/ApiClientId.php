@@ -53,7 +53,7 @@ class ApiClientId
      *
      * @throws ApiClientConstraintException
      */
-    private function assertIsIntegerGreaterThanZero($value)
+    private function assertIsIntegerGreaterThanZero($value): void
     {
         if (! \is_int($value) || $value <= 0) {
             throw new ApiClientConstraintException(\sprintf('Invalid api client id "%s".', var_export($value, true)), ApiClientConstraintException::INVALID_ID);

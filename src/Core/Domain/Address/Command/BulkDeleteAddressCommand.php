@@ -63,7 +63,7 @@ class BulkDeleteAddressCommand
      *
      * @throws AddressConstraintException
      */
-    private function setAddressIds(array $addressIds)
+    private function setAddressIds(array $addressIds): void
     {
         foreach ($addressIds as $addressId) {
             $this->addressIds[] = new AddressId($addressId);

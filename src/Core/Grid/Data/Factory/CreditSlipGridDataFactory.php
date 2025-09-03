@@ -43,7 +43,7 @@ final class CreditSlipGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $creditSlipData = $this->creditSlipDataFactory->getData($searchCriteria);
 

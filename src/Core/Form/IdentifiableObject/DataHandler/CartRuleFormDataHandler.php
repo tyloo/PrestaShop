@@ -42,7 +42,7 @@ class CartRuleFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): void
     {
         $informationData = $data['information'];
         $conditionsData = $data['conditions'];

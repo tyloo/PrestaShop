@@ -94,11 +94,9 @@ class Version implements Stringable
      *
      * @param string $version
      *
-     * @return self
-     *
      * @throws InvalidVersionException If the version is invalid
      */
-    public static function buildFromString($version)
+    public static function buildFromString($version): self
     {
         $matches = [];
         $regex = '/^([\d]+)(?:\.([\d]+))?(?:\.([\d]+))?(?:\.(?<legacy>[\d]+))?(?:-(?<prerelease>[0-9A-Za-z-.]+))?(?:\+(?<build>[0-9A-Za-z-.]+))?$/';
@@ -330,9 +328,7 @@ class Version implements Stringable
         $first = $this->getSemVersion();
         $other = $otherVersion->getSemVersion();
 
-        $result = version_compare($first, $other, $operator);
-
-        return $result;
+        return version_compare($first, $other, $operator);
     }
 
     /**

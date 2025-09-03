@@ -38,7 +38,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  */
 final class ReductionValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (! $constraint instanceof ReductionConstraint) {
             throw new UnexpectedTypeException($constraint, ReductionConstraint::class);
@@ -117,7 +117,7 @@ final class ReductionValidator extends ConstraintValidator
     /**
      * Builds violation dependent from exception code
      */
-    private function buildViolation(string $message, array $params, string $errorPath)
+    private function buildViolation(string $message, array $params, string $errorPath): void
     {
         $this->context->buildViolation($message, $params)
             ->setTranslationDomain('Admin.Notifications.Error')

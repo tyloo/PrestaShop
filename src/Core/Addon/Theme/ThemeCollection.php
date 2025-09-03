@@ -58,10 +58,8 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      * instance should be created when constructor semantics have changed.
      *
      * @param array $addons elements
-     *
-     * @return static
      */
-    public static function createFrom(array $addons)
+    public static function createFrom(array $addons): static
     {
         return new static($addons);
     }
@@ -76,9 +74,6 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
         return $this->addons;
     }
 
-    /**
-     * @return ArrayIterator|Traversable
-     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->addons);
@@ -167,7 +162,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      * @param mixed      $key   the key
      * @param AddonTheme $addon the specified addon
      */
-    public function set($key, AddonTheme $addon)
+    public function set($key, AddonTheme $addon): void
     {
         $this->addons[$key] = $addon;
     }

@@ -147,7 +147,7 @@ class Processor
      * @throws GenerationException
      * @throws Exception
      */
-    public function process()
+    public function process(): void
     {
         if ($this->languageCode) {
             $lang_pack = Language::getLangDetails($this->languageCode);

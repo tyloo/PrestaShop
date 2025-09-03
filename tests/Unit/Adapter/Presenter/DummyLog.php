@@ -31,7 +31,7 @@ class DummyLog
 {
     private $pingCounter = 0;
 
-    public function ping()
+    public function ping(): void
     {
         ++$this->pingCounter;
     }

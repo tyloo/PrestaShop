@@ -42,7 +42,7 @@ final class CustomerAddressGridDataFactoryDecorator implements GridDataFactoryIn
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $customerData = $this->customerAddressDoctrineGridDataFactory->getData($searchCriteria);
 

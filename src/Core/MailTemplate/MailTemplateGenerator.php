@@ -71,7 +71,7 @@ class MailTemplateGenerator
         $coreOutputFolder,
         $modulesOutputFolder,
         $overwriteTemplates = false,
-    ) {
+    ): void {
         if (! is_dir($coreOutputFolder)) {
             throw new FileNotFoundException(\sprintf('Invalid core output folder "%s"', $coreOutputFolder));
         }

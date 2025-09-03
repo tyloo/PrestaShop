@@ -157,7 +157,7 @@ class TaxRuleGridDefinitionFactory extends AbstractFilterableGridDefinitionFacto
             );
     }
 
-    protected function getBulkActions()
+    protected function getBulkActions(): BulkActionCollection
     {
         return new BulkActionCollection()
             /*

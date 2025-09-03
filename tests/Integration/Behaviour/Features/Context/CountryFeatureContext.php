@@ -49,7 +49,7 @@ class CountryFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given country :countryIsoCode is enabled
      */
-    public function enableCountry($countryIsoCode)
+    public function enableCountry($countryIsoCode): void
     {
         $this->checkCountryWithIsoCodeExists($countryIsoCode);
         $countryId = Country::getByIso($countryIsoCode);
@@ -64,7 +64,7 @@ class CountryFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given country :countryIsoCode is disabled
      */
-    public function disableCountry($countryIsoCode)
+    public function disableCountry($countryIsoCode): void
     {
         $this->checkCountryWithIsoCodeExists($countryIsoCode);
         $countryId = Country::getByIso($countryIsoCode);
@@ -77,7 +77,7 @@ class CountryFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @throws RuntimeException
      */
-    public function checkCountryWithIsoCodeExists(string $countryIsoCode)
+    public function checkCountryWithIsoCodeExists(string $countryIsoCode): void
     {
         $country = Country::getByIso($countryIsoCode);
 

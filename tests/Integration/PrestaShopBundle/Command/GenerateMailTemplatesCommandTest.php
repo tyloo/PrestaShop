@@ -149,7 +149,7 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
         $this->assertFilesExist($expectedFiles);
     }
 
-    private function assertFilesExist(array $files)
+    private function assertFilesExist(array $files): void
     {
         foreach ($files as $file) {
             $this->assertTrue(file_exists($file), \sprintf('%s file not found', $file));

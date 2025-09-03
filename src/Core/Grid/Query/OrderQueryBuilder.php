@@ -229,7 +229,7 @@ final class OrderQueryBuilder implements DoctrineQueryBuilderInterface
         return $builder;
     }
 
-    private function applySorting(QueryBuilder $qb, SearchCriteriaInterface $criteria)
+    private function applySorting(QueryBuilder $qb, SearchCriteriaInterface $criteria): void
     {
         $sortableFields = [
             'id_order' => 'o.id_order',

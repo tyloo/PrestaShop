@@ -85,8 +85,6 @@ final class DateTime
 
     /**
      * Returns NullDateTime if input value is nullable (including 0000-00-00 value), return a DateTimeImmutable object otherwise.
-     *
-     * @return DateTimeImmutable|NullDateTime
      */
     public static function buildNullableDateTime(?string $value): DateTimeImmutable
     {
@@ -95,8 +93,6 @@ final class DateTime
 
     /**
      * Returns null if input value is nullable (including 0000-00-00 value), return a DateTimeImmutable object otherwise.
-     *
-     * @return DateTimeImmutable|NullDateTime|null
      */
     public static function buildDateTimeOrNull(?string $value): ?DateTimeImmutable
     {

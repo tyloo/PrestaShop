@@ -247,7 +247,7 @@ class MailTemplateGeneratorTest extends TestCase
         $this->checkExpectedFiles($expectedFiles);
     }
 
-    private function checkExpectedFiles(array $expectedFiles)
+    private function checkExpectedFiles(array $expectedFiles): void
     {
         $finder = new Finder();
         $finder->files()->in($this->outputTempDir);

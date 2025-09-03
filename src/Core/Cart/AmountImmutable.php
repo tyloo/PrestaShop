@@ -93,10 +93,8 @@ class AmountImmutable
 
     /**
      * Sums another amount object.
-     *
-     * @return AmountImmutable
      */
-    public function add(self $amount)
+    public function add(self $amount): static
     {
         return new static(
             $this->getTaxIncluded() + $amount->getTaxIncluded(),
@@ -106,10 +104,8 @@ class AmountImmutable
 
     /**
      * Substract another amount object.
-     *
-     * @return AmountImmutable
      */
-    public function sub(self $amount)
+    public function sub(self $amount): static
     {
         return new static(
             $this->getTaxIncluded() - $amount->getTaxIncluded(),

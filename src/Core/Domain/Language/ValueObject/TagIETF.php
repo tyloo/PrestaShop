@@ -70,7 +70,7 @@ class TagIETF
      *
      * @throws LanguageConstraintException
      */
-    private function assertIsTagIETF($tagIETF)
+    private function assertIsTagIETF($tagIETF): void
     {
         if (! \is_string($tagIETF) || ! preg_match(\sprintf('/%s/', static::IETF_TAG_REGEXP), $tagIETF)) {
             throw new LanguageConstraintException(\sprintf('Invalid IETF tag %s provided', var_export($tagIETF, true)), LanguageConstraintException::INVALID_IETF_TAG);

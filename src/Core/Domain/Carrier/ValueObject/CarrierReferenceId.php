@@ -56,7 +56,7 @@ class CarrierReferenceId
         return $this->carrierReferenceId;
     }
 
-    private function assertIntegerIsGreaterThanZero(int $carrierReferenceId)
+    private function assertIntegerIsGreaterThanZero(int $carrierReferenceId): void
     {
         if ($carrierReferenceId <= 0) {
             throw new CarrierConstraintException(\sprintf('CarrierReferenceId "%s" is invalid. It must greater than 0.', $carrierReferenceId), CarrierConstraintException::INVALID_REFERENCE_ID);

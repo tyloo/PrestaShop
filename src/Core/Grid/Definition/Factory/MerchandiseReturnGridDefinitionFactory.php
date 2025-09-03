@@ -59,7 +59,7 @@ final class MerchandiseReturnGridDefinitionFactory extends AbstractFilterableGri
 
     protected function getColumns()
     {
-        $columns = (new ColumnCollection())
+        return (new ColumnCollection())
             ->add(
                 (new DataColumn('id_order_return'))
                     ->setName($this->trans('ID', [], 'Admin.Global'))
@@ -105,10 +105,7 @@ final class MerchandiseReturnGridDefinitionFactory extends AbstractFilterableGri
                                     ])
                             ),
                     ])
-            )
-        ;
-
-        return $columns;
+            );
     }
 
     protected function getFilters()

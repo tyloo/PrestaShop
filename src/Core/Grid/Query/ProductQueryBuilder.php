@@ -72,11 +72,7 @@ class ProductQueryBuilder extends AbstractDoctrineQueryBuilder
         ;
 
         // When ecotax is enabled the real final price is the sum of price and ecotax so we fetch an extra alias column that is used for sorting
-        if ($this->configuration->getBoolean('PS_USE_ECOTAX')) {
-            $qb->addSelect('(ps.`price` + ps.`ecotax`) AS `final_price_tax_excluded`');
-        } else {
-            $qb->addSelect('(ps.`price` + ps.`ecotax`) AS `final_price_tax_excluded`');
-        }
+        $qb->addSelect('(ps.`price` + ps.`ecotax`) AS `final_price_tax_excluded`');
 
         if ($this->configuration->getBoolean('PS_STOCK_MANAGEMENT')) {
             $qb->addSelect("IF(sa.`quantity` IS NULL OR sa.`quantity` = '', 0, sa.`quantity`) AS quantity");

@@ -141,11 +141,7 @@ class ShopContext
 
     public function getBaseURL(): string
     {
-        if ($this->secured) {
-            $url = 'https://' . $this->domainSSL;
-        } else {
-            $url = 'http://' . $this->domain;
-        }
+        $url = $this->secured ? 'https://' . $this->domainSSL : 'http://' . $this->domain;
 
         return $url . $this->getBaseURI();
     }

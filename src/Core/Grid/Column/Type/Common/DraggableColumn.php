@@ -41,7 +41,7 @@ final class DraggableColumn extends AbstractColumn
         return 'draggable';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
     }
 }

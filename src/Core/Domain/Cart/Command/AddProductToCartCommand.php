@@ -105,14 +105,14 @@ class AddProductToCartCommand
     /**
      * @throws CartConstraintException
      */
-    private function assertQtyIsPositive(int $qty)
+    private function assertQtyIsPositive(int $qty): void
     {
         if ($qty <= 0) {
             throw new CartConstraintException(\sprintf('Quantity must be positive integer. "%s" given.', $qty), CartConstraintException::INVALID_QUANTITY);
         }
     }
 
-    private function setCombinationId(?int $combinationId)
+    private function setCombinationId(?int $combinationId): void
     {
         if ($combinationId !== null) {
             $combinationId = new CombinationId($combinationId);

@@ -47,7 +47,7 @@ class ContactFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I add new contact :reference with the following details:
      */
-    public function addNewContactWithTheFollowingDetails(TableNode $table, string $reference)
+    public function addNewContactWithTheFollowingDetails(TableNode $table, string $reference): void
     {
         $data = $table->getRowsHash();
         /** @var EditableContact $editableContact */
@@ -69,7 +69,7 @@ class ContactFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When contact :reference should have the following details:
      */
-    public function contactShouldHaveTheFollowingDetails(string $reference, TableNode $table)
+    public function contactShouldHaveTheFollowingDetails(string $reference, TableNode $table): void
     {
         $data = $table->getRowsHash();
 
@@ -87,7 +87,7 @@ class ContactFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I update contact :contactId with the following details:
      */
-    public function updateContactWithTheFollowingDetails(string $reference, TableNode $table)
+    public function updateContactWithTheFollowingDetails(string $reference, TableNode $table): void
     {
         $data = $table->getRowsHash();
 

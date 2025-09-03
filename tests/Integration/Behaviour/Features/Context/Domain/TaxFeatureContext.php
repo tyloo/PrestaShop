@@ -78,7 +78,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit tax :taxReference with following properties:
      */
-    public function editTaxUsingCommand($taxReference, TableNode $table)
+    public function editTaxUsingCommand($taxReference, TableNode $table): void
     {
         $data = $table->getRowsHash();
 
@@ -106,7 +106,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I (enable|disable)? tax "(.*)"$/
      */
-    public function toggleStatus($action, $taxReference)
+    public function toggleStatus($action, $taxReference): void
     {
         $expectedStatus = $action === 'enable';
 
@@ -121,7 +121,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I (enable|disable)? taxes: "([^"]*)"$/
      */
-    public function bulkToggleStatus($action, $taxReferences)
+    public function bulkToggleStatus($action, $taxReferences): void
     {
         $taxReferences = PrimitiveUtils::castStringArrayIntoArray($taxReferences);
         $expectedStatus = $action === 'enable';
@@ -145,7 +145,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete tax :taxReference
      */
-    public function deleteTax($taxReference)
+    public function deleteTax($taxReference): void
     {
         $tax = SharedStorage::getStorage()->get($taxReference);
         $taxId = (int) $tax->id;
@@ -156,7 +156,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete taxes: :taxReferences in bulk action
      */
-    public function bulkDeleteTax($taxReferences)
+    public function bulkDeleteTax($taxReferences): void
     {
         $taxIds = [];
         foreach (PrimitiveUtils::castStringArrayIntoArray($taxReferences) as $taxReference) {
@@ -170,7 +170,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then taxes: :taxReferences should be deleted
      */
-    public function assertTaxesAreDeleted($taxReferences)
+    public function assertTaxesAreDeleted($taxReferences): void
     {
         foreach (PrimitiveUtils::castStringArrayIntoArray($taxReferences) as $taxReference) {
             $this->assertTaxIsDeleted($taxReference);
@@ -180,7 +180,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then tax :taxReference should be deleted
      */
-    public function assertTaxIsDeleted($taxReference)
+    public function assertTaxIsDeleted($taxReference): void
     {
         $tax = SharedStorage::getStorage()->get($taxReference);
         $taxId = (int) $tax->id;
@@ -196,7 +196,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then tax :taxReference name in default language should be :name
      */
-    public function assertTaxNameInDefaultLang($taxReference, $name)
+    public function assertTaxNameInDefaultLang($taxReference, $name): void
     {
         /** @var Tax $tax */
         $tax = SharedStorage::getStorage()->get($taxReference);
@@ -209,7 +209,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then tax :taxReference rate should be :rate
      */
-    public function assertTaxRate($taxReference, $rate)
+    public function assertTaxRate($taxReference, $rate): void
     {
         /** @var Tax $tax */
         $tax = SharedStorage::getStorage()->get($taxReference);
@@ -222,7 +222,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^taxes: "(.*)" should be (enabled|disabled)?$/
      */
-    public function assertTaxesStatus($taxReferences, $status)
+    public function assertTaxesStatus($taxReferences, $status): void
     {
         $taxReferences = PrimitiveUtils::castStringArrayIntoArray($taxReferences);
 
@@ -236,7 +236,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
      *
      * @Given /^tax "(.*)" is (enabled|disabled)?$/
      */
-    public function assertTaxStatus($taxReference, $status)
+    public function assertTaxStatus($taxReference, $status): void
     {
         /** @var Tax $tax */
         $tax = SharedStorage::getStorage()->get($taxReference);
@@ -265,7 +265,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I add the tax rule group :taxGroupReference for the tax :taxReference with the following conditions:
      */
-    public function addTaxRuleGroupToTax(string $taxGroupReference, string $taxReference, TableNode $table)
+    public function addTaxRuleGroupToTax(string $taxGroupReference, string $taxReference, TableNode $table): void
     {
         $data = $table->getRowsHash();
 
@@ -289,7 +289,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I add the tax rule :taxReference for tax rule group :taxGroupReference:
      */
-    public function addTaxRuleToTaxRulesGroup(string $taxGroupReference, string $taxReference, TableNode $table)
+    public function addTaxRuleToTaxRulesGroup(string $taxGroupReference, string $taxReference, TableNode $table): void
     {
         $data = $table->getRowsHash();
         $taxGroupId = SharedStorage::getStorage()->get($taxGroupReference);
@@ -307,7 +307,7 @@ class TaxFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I delete tax rules that has tax :taxReference:
      */
-    public function deleteTaxRuleFromTaxRulesGroup(string $taxReference)
+    public function deleteTaxRuleFromTaxRulesGroup(string $taxReference): void
     {
         $tax = SharedStorage::getStorage()->get($taxReference);
         TaxRule::deleteTaxRuleByIdTax($tax->id);

@@ -45,7 +45,7 @@ final class CleanHtmlValidator extends ConstraintValidator
     ) {
     }
 
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (! $constraint instanceof CleanHtml) {
             throw new UnexpectedTypeException($constraint, CleanHtml::class);
@@ -94,8 +94,7 @@ final class CleanHtmlValidator extends ConstraintValidator
         $events .= '|onpointerover|onpointerenter|onpointerdown|onpointermove|onpointerup|onpointerout|onpointerleave|onpointercancel|ongotpointercapture|onlostpointercapture';
         $events .= '|onpagehide|onpageshow|onautocomplete|onautocompleteerror|oncanplay|oncanplaythrough|onclose|oncuechange|ondurationchange|onemptied|onended|oninvalid|onloadeddata';
         $events .= '|onloadedmetadata|onloadstart|onpause|onplay|onplaying|onpopstate|onprogress|onratechange|onreset|onseeked|onseeking|onshow|onsort|onstalled|onstorage|onsuspend|ontimeupdate';
-        $events .= '|ontoggle|onvolumechange|onwaiting';
 
-        return $events;
+        return $events . '|ontoggle|onvolumechange|onwaiting';
     }
 }

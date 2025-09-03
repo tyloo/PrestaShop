@@ -60,7 +60,7 @@ class TestCookie extends Cookie
     /**
      * Do nothing to make sure
      */
-    public function write()
+    public function write(): void
     {
         return;
     }

@@ -40,7 +40,7 @@ final class LinkGridAction extends AbstractGridAction
         return 'link';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

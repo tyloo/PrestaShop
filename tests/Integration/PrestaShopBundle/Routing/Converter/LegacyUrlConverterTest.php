@@ -463,7 +463,7 @@ class LegacyUrlConverterTest extends SymfonyIntegrationTestCase
         $this->assertSameUrl('/improve/design/modules/positions/unhook?extra_get_param=test', $locationUrl);
     }
 
-    private function assertSameUrl(string $expectedUrl, string $url)
+    private function assertSameUrl(string $expectedUrl, string $url): void
     {
         $cleanUrl = $this->getCleanUrl($url);
         $this->assertTrue($expectedUrl === $cleanUrl, \sprintf(

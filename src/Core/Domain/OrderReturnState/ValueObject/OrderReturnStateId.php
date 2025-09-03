@@ -61,7 +61,7 @@ class OrderReturnStateId
     /**
      * @param int $orderReturnStateId
      */
-    private function assertIntegerIsGreaterThanZero($orderReturnStateId)
+    private function assertIntegerIsGreaterThanZero($orderReturnStateId): void
     {
         if (! \is_int($orderReturnStateId) || $orderReturnStateId < 0) {
             throw new OrderReturnStateException(\sprintf('OrderReturnState id %s is invalid. OrderReturnState id must be number that is greater than zero.', var_export($orderReturnStateId, true)));

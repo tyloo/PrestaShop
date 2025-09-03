@@ -130,7 +130,7 @@ class PositionUpdateFactoryTest extends TestCase
      * @param array|null              $expectedErrorParameters
      * @param PositionDefinition|null $definition
      */
-    private function checkDataValidation(array $data, $expectedErrorKey = null, $expectedErrorParameters = null, $definition = null)
+    private function checkDataValidation(array $data, $expectedErrorKey = null, $expectedErrorParameters = null, $definition = null): void
     {
         if ($definition === null) {
             $definition = $this->getDefinition();
@@ -160,10 +160,7 @@ class PositionUpdateFactoryTest extends TestCase
         }
     }
 
-    /**
-     * @return PositionDefinition
-     */
-    private function getDefinition()
+    private function getDefinition(): PositionDefinition
     {
         return new PositionDefinition(
             'product',
@@ -172,10 +169,7 @@ class PositionUpdateFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @return PositionDefinition
-     */
-    private function getDefinitionWithParent()
+    private function getDefinitionWithParent(): PositionDefinition
     {
         return new PositionDefinition(
             'product',
@@ -185,10 +179,7 @@ class PositionUpdateFactoryTest extends TestCase
         );
     }
 
-    /**
-     * @return PositionUpdateFactory
-     */
-    private function getPositionUpdateFactory()
+    private function getPositionUpdateFactory(): PositionUpdateFactory
     {
         return new PositionUpdateFactory(
             'positions',

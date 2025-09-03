@@ -40,7 +40,7 @@ final class CategoryPositionColumn extends AbstractColumn
         return 'category_position';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

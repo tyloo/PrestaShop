@@ -48,9 +48,7 @@ class UrlGeneratorTest extends TestCase
 
     private function getMockLegacyContext(): LegacyContext
     {
-        $mock = $this->createMock(LegacyContext::class);
-
-        return $mock;
+        return $this->createMock(LegacyContext::class);
     }
 
     private function getMockRouter(): Router

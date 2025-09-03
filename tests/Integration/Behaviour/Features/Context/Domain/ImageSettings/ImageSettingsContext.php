@@ -39,7 +39,7 @@ class ImageSettingsContext extends AbstractDomainFeatureContext
     /**
      * @When I edit images settings with following properties:
      */
-    public function editImageSettingsUsingCommand(TableNode $table)
+    public function editImageSettingsUsingCommand(TableNode $table): void
     {
         $data = $this->fixDataType($table->getRowsHash());
 
@@ -61,7 +61,7 @@ class ImageSettingsContext extends AbstractDomainFeatureContext
     /**
      * @When images settings should have the following properties:
      */
-    public function assertImageSettingsProperties(TableNode $table)
+    public function assertImageSettingsProperties(TableNode $table): void
     {
         $errors = [];
         $expectedData = $this->fixDataType($table->getRowsHash());
@@ -129,7 +129,7 @@ class ImageSettingsContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (\count($errors) > 0) {
+        if ($errors !== []) {
             throw new RuntimeException(\sprintf('Fields %s are not identical', implode(', ', $errors)));
         }
     }

@@ -42,7 +42,7 @@ class OrderCartFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given order :orderReference has customer :customerReference
      */
-    public function orderHasCustomer(string $orderReference, string $customerReference)
+    public function orderHasCustomer(string $orderReference, string $customerReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $customerId = SharedStorage::getStorage()->get($customerReference);
@@ -61,7 +61,7 @@ class OrderCartFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I duplicate order :orderReference cart :cartReference with reference :duplicatedCartReference
      */
-    public function duplicateOrderCart(string $orderReference, string $cartReference, string $duplicatedCartReference)
+    public function duplicateOrderCart(string $orderReference, string $cartReference, string $duplicatedCartReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         /** @var CartId $cartIdObject */
@@ -72,7 +72,7 @@ class OrderCartFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then there is duplicated cart :duplicatedCartReference for cart :cartReference
      */
-    public function thereIsDuplicatedCartForCart(string $duplicatedCartReference, string $cartReference)
+    public function thereIsDuplicatedCartForCart(string $duplicatedCartReference, string $cartReference): void
     {
         $duplicatedCartId = SharedStorage::getStorage()->get($duplicatedCartReference);
         $cartId = SharedStorage::getStorage()->get($cartReference);

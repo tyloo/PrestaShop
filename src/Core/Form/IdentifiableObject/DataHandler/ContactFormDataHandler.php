@@ -66,7 +66,7 @@ final class ContactFormDataHandler implements FormDataHandlerInterface
     /**
      * @throws DomainException
      */
-    public function update($contactId, array $data)
+    public function update($contactId, array $data): void
     {
         $editContactCommand = (new EditContactCommand((int) $contactId))
             ->setLocalisedTitles($data['title'])

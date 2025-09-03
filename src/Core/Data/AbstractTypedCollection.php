@@ -102,7 +102,7 @@ abstract class AbstractTypedCollection extends ArrayCollection
     /**
      * @throws TypeException
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         $this->checkElementType($value);
 
@@ -124,7 +124,7 @@ abstract class AbstractTypedCollection extends ArrayCollection
     /**
      * @throws TypeException
      */
-    private function checkElementsType(array $elements)
+    private function checkElementsType(array $elements): void
     {
         foreach ($elements as $element) {
             $this->checkElementType($element);
@@ -134,7 +134,7 @@ abstract class AbstractTypedCollection extends ArrayCollection
     /**
      * @throws TypeException
      */
-    private function checkElementType($element)
+    private function checkElementType($element): void
     {
         $expectedType = $this->getType();
         if (! ($element instanceof $expectedType)) {

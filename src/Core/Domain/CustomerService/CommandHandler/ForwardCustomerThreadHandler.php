@@ -61,7 +61,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
         $this->translator = $this->context->getTranslator();
     }
 
-    public function handle(ForwardCustomerThreadCommand $command)
+    public function handle(ForwardCustomerThreadCommand $command): void
     {
         if ($command->forwardToEmployee()) {
             $this->forwardToEmployee($command);
@@ -73,7 +73,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
     /**
      * Forward customer thread to another employee
      */
-    private function forwardToEmployee(ForwardCustomerThreadCommand $command)
+    private function forwardToEmployee(ForwardCustomerThreadCommand $command): void
     {
         $customerThreadMessage = $this->getCustomerThreadMessage($command->getCustomerThreadId());
 
@@ -132,7 +132,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
     /**
      * Forward customer thread to someone else
      */
-    private function forwardToSomeoneElse(ForwardCustomerThreadCommand $command)
+    private function forwardToSomeoneElse(ForwardCustomerThreadCommand $command): void
     {
         $customerThreadMessage = $this->getCustomerThreadMessage($command->getCustomerThreadId());
 
@@ -274,10 +274,7 @@ class ForwardCustomerThreadHandler implements ForwardCustomerThreadHandlerInterf
 		');
     }
 
-    /**
-     * @return CustomerMessage
-     */
-    private function createCustomerMessage(ForwardCustomerThreadCommand $command)
+    private function createCustomerMessage(ForwardCustomerThreadCommand $command): CustomerMessage
     {
         $customerMessage = new CustomerMessage();
         $customerMessage->id_employee = (int) $this->context->employee->id;

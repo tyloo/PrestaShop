@@ -65,13 +65,11 @@ class EntityManager
             $repositoryClass = EntityRepository::class;
         }
 
-        $repository = new $repositoryClass(
+        return new $repositoryClass(
             $this,
             $this->configuration->get('_DB_PREFIX_'),
             $this->getEntityMetaData($className)
         );
-
-        return $repository;
     }
 
     /**

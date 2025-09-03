@@ -41,7 +41,7 @@ final class AttributeGroupGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $records = $this->attributeDataFactory->getData($searchCriteria);
         $modifiedRecords = $this->modifyRecords($records->getRecords()->all());

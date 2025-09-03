@@ -102,7 +102,7 @@ final class CurrencyCache extends AbstractDataLayer implements CurrencyDataLayer
      * @throws DataLayerException
      *                            When write fails
      */
-    protected function doWrite($currencyDataId, $data)
+    protected function doWrite($currencyDataId, $data): void
     {
         $cacheItem = $this->cache->getItem((string) $currencyDataId);
         $cacheItem->set($data);

@@ -61,7 +61,7 @@ class EmployeeId implements EmployeeIdInterface
      *
      * @throws InvalidEmployeeIdException
      */
-    private function assertIntegerIsGreaterThanZero($employeeId)
+    private function assertIntegerIsGreaterThanZero($employeeId): void
     {
         if (! \is_int($employeeId) || $employeeId < 0) {
             throw new InvalidEmployeeIdException(\sprintf('Invalid employee id %s supplied. Employee id must be positive integer.', var_export($employeeId, true)));

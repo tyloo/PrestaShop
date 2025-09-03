@@ -36,7 +36,7 @@ use PrestaShop\PrestaShop\Core\Data\ImmutableCollection;
  */
 class ShopImageAssociationCollection extends ImmutableCollection
 {
-    public static function from(ShopImageAssociation ...$productImages)
+    public static function from(ShopImageAssociation ...$productImages): static
     {
         return new static($productImages);
     }

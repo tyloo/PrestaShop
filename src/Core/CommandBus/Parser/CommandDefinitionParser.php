@@ -38,11 +38,9 @@ final class CommandDefinitionParser
     /**
      * @param string $commandName
      *
-     * @return CommandDefinition
-     *
      * @throws ReflectionException
      */
-    public function parseDefinition($commandName)
+    public function parseDefinition($commandName): CommandDefinition
     {
         return new CommandDefinition(
             $commandName,

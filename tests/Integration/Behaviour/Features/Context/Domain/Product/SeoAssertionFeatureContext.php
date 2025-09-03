@@ -70,7 +70,7 @@ class SeoAssertionFeatureContext extends AbstractProductFeatureContext
     /**
      * @Then product :productReference should not have a redirect target
      */
-    public function assertHasNoRedirectTargetId(string $productReference)
+    public function assertHasNoRedirectTargetId(string $productReference): void
     {
         $productForEditing = $this->getProductForEditing($productReference);
 

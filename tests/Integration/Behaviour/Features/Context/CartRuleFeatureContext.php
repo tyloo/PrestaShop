@@ -80,7 +80,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @BeforeScenario
      */
-    public function before(BeforeScenarioScope $scope)
+    public function before(BeforeScenarioScope $scope): void
     {
         /** @var InitializedContextEnvironment $environment */
         $environment = $scope->getEnvironment();
@@ -105,7 +105,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^cart rule "(.+?)" is restricted to the category "(.+?)" with a quantity of (\d+)$/
      */
-    public function cartRuleWithProductRuleRestriction(string $cartRuleName, string $categoryName, int $quantity)
+    public function cartRuleWithProductRuleRestriction(string $cartRuleName, string $categoryName, int $quantity): void
     {
         $cartRuleId = $this->getCartRuleId($cartRuleName);
         $this->categoryFeatureContext->checkCategoryWithNameExists($categoryName);
@@ -167,7 +167,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I enable cart rule "(.+)"$/
      */
-    public function enableCartRule($cartRuleName)
+    public function enableCartRule($cartRuleName): void
     {
         $cartRule = $this->loadCartRule($cartRuleName);
         $cartRule->active = true;
@@ -177,7 +177,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^cart rule "(.+)" can be applied to my cart$/
      */
-    public function cartRuleNamedCanBeAppliedToMyCart($cartRuleName)
+    public function cartRuleNamedCanBeAppliedToMyCart($cartRuleName): void
     {
         $cartRule = $this->loadCartRule($cartRuleName);
         $result = $cartRule->checkValidity(Context::getContext(), false, false);
@@ -277,7 +277,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^cart rule count in my cart should be (\d+)$/
      */
-    public function cartRuleInCartCount($cartRuleCount)
+    public function cartRuleInCartCount($cartRuleCount): void
     {
         $result = \count($this->getCurrentCart()->getCartRules());
         if ($result !== $cartRuleCount) {
@@ -293,7 +293,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^customer "(.+)" should have (\d+) cart rule(?:s)? that apply to (?:him|her)$/
      */
-    public function checkCartRuleCountForCustomer(string $customerName, int $expectedCount)
+    public function checkCartRuleCountForCustomer(string $customerName, int $expectedCount): void
     {
         $this->customerFeatureContext->checkCustomerWithNameExists($customerName);
         $customer = $this->customerFeatureContext->getCustomerWithName($customerName);
@@ -306,7 +306,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^cart rule for customer "(.+)" in position (\d+) should apply a discount of (\d+.\d+)$/
      */
-    public function checkCartRuleValueForCustomer($customerName, $position, $expectedValue)
+    public function checkCartRuleValueForCustomer($customerName, $position, $expectedValue): void
     {
         $this->customerFeatureContext->checkCustomerWithNameExists($customerName);
         $customer = $this->customerFeatureContext->getCustomerWithName($customerName);
@@ -324,7 +324,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then the current cart should have the following contextual reductions:
      */
-    public function checkCartRuleContextualValue(TableNode $table)
+    public function checkCartRuleContextualValue(TableNode $table): void
     {
         $expectedCartRules = $table->getColumnsHash();
         $cartRuleRows = $this->getCurrentCart()->getCartRules();
@@ -358,7 +358,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then usage limit per user for cart rule :cartRuleReference is detected
      */
-    public function checkCartRuleUsageLimitIsDetected(string $cartRuleReference)
+    public function checkCartRuleUsageLimitIsDetected(string $cartRuleReference): void
     {
         // Using the string error message as a check value is far from ideal, but the legacy `checkValidity` method
         // only returns an error string or a boolean, which would keep us from detecting the error returned

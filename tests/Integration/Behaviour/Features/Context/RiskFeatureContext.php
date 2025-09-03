@@ -38,7 +38,7 @@ class RiskFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given risk :reference in default language named :name exists
      */
-    public function checkRiskWithNameExists($reference, $name)
+    public function checkRiskWithNameExists($reference, $name): void
     {
         $risks = Risk::getRisks((int) Configuration::get('PS_LANG_DEFAULT'));
 

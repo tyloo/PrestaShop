@@ -291,7 +291,7 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
     /**
      * Sets cms page category parent id directly from request attribute. On not found case, it assigns the default one.
      */
-    private function setCmsPageCategoryParentId(RequestStack $requestStack)
+    private function setCmsPageCategoryParentId(RequestStack $requestStack): void
     {
         $request = $requestStack->getCurrentRequest();
 

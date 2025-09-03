@@ -70,7 +70,7 @@ class CmsPageCategoryId
      *
      * @throws CmsPageCategoryException
      */
-    private function assertIsIntegerGreaterThanZero($cmsPageCategoryId)
+    private function assertIsIntegerGreaterThanZero($cmsPageCategoryId): void
     {
         if (! \is_int($cmsPageCategoryId) || $cmsPageCategoryId <= 0) {
             throw new CmsPageCategoryException(\sprintf('Invalid cms page category id %s', var_export($cmsPageCategoryId, true)));

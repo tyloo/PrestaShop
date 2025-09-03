@@ -126,9 +126,7 @@ class Formatter
         $formattedNumber = $this->addPlaceholders($formattedNumber, $pattern);
         $formattedNumber = $this->localizeNumber($formattedNumber);
 
-        $formattedNumber = $this->performSpecificReplacements($formattedNumber);
-
-        return $formattedNumber;
+        return $this->performSpecificReplacements($formattedNumber);
     }
 
     /**
@@ -358,9 +356,7 @@ class Formatter
      */
     public function performSpecificReplacements($formattedNumber)
     {
-        $formattedNumber = $this->tryCurrencyReplacement($formattedNumber);
-
-        return $formattedNumber;
+        return $this->tryCurrencyReplacement($formattedNumber);
     }
 
     /**

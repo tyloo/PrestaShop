@@ -47,11 +47,7 @@ class CarrierFormDataHandler implements FormDataHandlerInterface
     {
         /** @var UploadedFile|null $logo */
         $logo = $data['general_settings']['logo'];
-        if ($logo instanceof UploadedFile) {
-            $logoPath = $logo->getPathname();
-        } else {
-            $logoPath = null;
-        }
+        $logoPath = $logo instanceof UploadedFile ? $logo->getPathname() : null;
 
         /** @var CarrierId $carrierId */
         $carrierId = $this->commandBus->handle(new AddCarrierCommand(

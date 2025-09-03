@@ -35,7 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class ImportRequestValidator implements ImportRequestValidatorInterface
 {
-    public function validate(Request $request)
+    public function validate(Request $request): void
     {
         if (! $request->request->has('csv')) {
             throw new UnavailableImportFileException();

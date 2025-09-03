@@ -50,7 +50,7 @@ class CatalogueVerifier
      * @param MessageCatalogueInterface $messageCatalogue The catalogue to test
      * @param array[]                   $expected         An array of domainName => messages
      */
-    public function assertCataloguesMatch(MessageCatalogueInterface $messageCatalogue, $expected)
+    public function assertCataloguesMatch(MessageCatalogueInterface $messageCatalogue, $expected): void
     {
         $domains = $messageCatalogue->getDomains();
 

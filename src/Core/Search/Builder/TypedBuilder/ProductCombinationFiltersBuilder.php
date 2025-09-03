@@ -55,7 +55,7 @@ class ProductCombinationFiltersBuilder extends AbstractFiltersBuilder implements
         return parent::setConfig($config);
     }
 
-    public function buildFilters(?Filters $filters = null)
+    public function buildFilters(?Filters $filters = null): ProductCombinationFilters
     {
         $filterParameters = ProductCombinationFilters::getDefaults();
         if ($filters !== null) {

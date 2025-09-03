@@ -157,7 +157,7 @@ class ProductShopsGridDefinitionFactory extends ProductGridDefinitionFactory
      *
      * {@inheritDoc}
      */
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         // No filters for shop details
         return new FilterCollection();

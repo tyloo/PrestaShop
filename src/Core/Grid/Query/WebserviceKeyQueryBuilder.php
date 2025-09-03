@@ -73,10 +73,8 @@ final class WebserviceKeyQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        $qb = $this->getQueryBuilder($searchCriteria->getFilters())
+        return $this->getQueryBuilder($searchCriteria->getFilters())
             ->select('COUNT(DISTINCT wa.`id_webservice_account`)');
-
-        return $qb;
     }
 
     /**

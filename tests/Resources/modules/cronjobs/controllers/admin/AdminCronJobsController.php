@@ -39,7 +39,7 @@ class AdminCronJobsController extends ModuleAdminController
         exit;
     }
 
-    public function postProcess()
+    public function postProcess(): void
     {
         $this->module->sendCallback();
 
@@ -56,7 +56,7 @@ class AdminCronJobsController extends ModuleAdminController
         $query = 'SELECT * FROM ' . _DB_PREFIX_ . bqSQL($this->module->name) . ' WHERE `active` = 1 AND `id_module` IS NOT NULL';
         $crons = Db::getInstance()->executeS($query);
 
-        if (is_array($crons) && (count($crons) > 0)) {
+        if (is_array($crons) && ($crons !== [])) {
             foreach ($crons as $cron) {
                 $module = Module::getInstanceById((int) $cron['id_module']);
 
@@ -80,7 +80,7 @@ class AdminCronJobsController extends ModuleAdminController
         $query = 'SELECT * FROM ' . _DB_PREFIX_ . bqSQL($this->module->name) . ' WHERE `active` = 1 AND `id_module` IS NULL';
         $crons = Db::getInstance()->executeS($query);
 
-        if (is_array($crons) && (count($crons) > 0)) {
+        if (is_array($crons) && ($crons !== [])) {
             foreach ($crons as $cron) {
                 if ($this->shouldBeExecuted($cron) === true) {
                     Tools::file_get_contents(urldecode((string) $cron['task']), false);

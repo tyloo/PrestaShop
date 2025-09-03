@@ -90,7 +90,7 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
     private function removePositionDragColumnIfEligible(
         SearchCriteriaInterface $searchCriteria,
         $categoryGrid,
-    ) {
+    ): void {
         if ($searchCriteria->getOrderBy() !== 'position'
             || $searchCriteria->getOrderWay() !== 'asc') {
             $categoryGrid->getDefinition()
@@ -102,7 +102,7 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
     /**
      * @param GridInterface $categoryGrid
      */
-    private function injectCategoryIdIntoSearchTypeOptions($categoryGrid, array $filters)
+    private function injectCategoryIdIntoSearchTypeOptions($categoryGrid, array $filters): void
     {
         /** @var FilterCollection $filtersCollection */
         $filtersCollection = $categoryGrid->getDefinition()->getFilters();

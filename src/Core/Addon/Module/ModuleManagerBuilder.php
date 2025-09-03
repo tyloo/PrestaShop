@@ -205,10 +205,8 @@ class ModuleManagerBuilder
 
     /**
      * Returns an instance of \Symfony\Component\Routing\Router from Symfony scope into Legacy.
-     *
-     * @return Router
      */
-    private function getSymfonyRouter()
+    private function getSymfonyRouter(): Router
     {
         // get the environment to load the good routing file
         $routeFileName = $this->isDebug === true ? 'routing_dev.yml' : 'routing.yml';

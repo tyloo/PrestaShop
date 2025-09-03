@@ -302,7 +302,7 @@ class FolderThemeCatalogTest extends TestCase
         return $dispatcherMock;
     }
 
-    private function createThemesFiles()
+    private function createThemesFiles(): void
     {
         $this->expectedThemes = new ThemeCollection([
             new Theme('classic'),

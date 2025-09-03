@@ -48,7 +48,7 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws Exception
      */
-    public function createCustomerGroupUsingCommand(string $customerGroupReference, TableNode $tableNode)
+    public function createCustomerGroupUsingCommand(string $customerGroupReference, TableNode $tableNode): void
     {
         $data = $this->localizeByRows($tableNode);
 
@@ -70,7 +70,7 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws Exception
      */
-    public function updateCustomerGroupUsingCommand(string $customerGroupReference, TableNode $tableNode)
+    public function updateCustomerGroupUsingCommand(string $customerGroupReference, TableNode $tableNode): void
     {
         $data = $this->localizeByRows($tableNode);
 
@@ -101,7 +101,7 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete customer group :customerGroupReference
      */
-    public function deleteCustomerGroupUsingCommand(string $customerGroupReference)
+    public function deleteCustomerGroupUsingCommand(string $customerGroupReference): void
     {
         $this->getCommandBus()->handle(new DeleteCustomerGroupCommand($this->referenceToId($customerGroupReference)));
     }
@@ -109,7 +109,7 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then customer group :customerGroupReference have the following values:
      */
-    public function assertQueryCustomerGroupProperties($customerGroupReference, EditableCustomerGroup $expectedGroup)
+    public function assertQueryCustomerGroupProperties($customerGroupReference, EditableCustomerGroup $expectedGroup): void
     {
         Assert::assertEquals($expectedGroup, $this->getCustomerGroupForEditing($customerGroupReference));
     }

@@ -64,7 +64,7 @@ final class WebserviceKeyFormDataHandler implements FormDataHandlerInterface
         return $webserviceKeyId->getValue();
     }
 
-    public function update($weserviceKeyId, array $data)
+    public function update($weserviceKeyId, array $data): void
     {
         $editCommand = new EditWebserviceKeyCommand($weserviceKeyId);
         $editCommand

@@ -61,7 +61,7 @@ class BulkDeleteCurrenciesCommand
     /**
      * @param int[] $currencyIds
      */
-    private function setCurrencyIds(array $currencyIds)
+    private function setCurrencyIds(array $currencyIds): void
     {
         if (empty($currencyIds)) {
             throw new CurrencyConstraintException('At least one currency must be provided for deleting', CurrencyConstraintException::EMPTY_BULK_DELETE);

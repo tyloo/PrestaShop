@@ -133,7 +133,7 @@ class HookDescriptionGeneratorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    private function setIsFoundBySuffixAndPrefixCondition()
+    private function setIsFoundBySuffixAndPrefixCondition(): void
     {
         $this->stringValidatorMock
             ->method('startsWithAndEndsWith')

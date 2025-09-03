@@ -127,7 +127,7 @@ final class AttributeQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    private function applyFilters(array $filters, QueryBuilder $qb)
+    private function applyFilters(array $filters, QueryBuilder $qb): void
     {
         $allowedFiltersMap = [
             'id_attribute' => 'a.id_attribute',

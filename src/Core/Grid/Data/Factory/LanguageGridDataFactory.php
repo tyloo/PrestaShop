@@ -43,7 +43,7 @@ final class LanguageGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $languageData = $this->doctrineLanguageDataFactory->getData($searchCriteria);
 

@@ -43,7 +43,7 @@ final class HookDescriptionGenerator implements HookDescriptionGeneratorInterfac
     ) {
     }
 
-    public function generate($hookName)
+    public function generate($hookName): HookDescription
     {
         foreach ($this->hookDescriptions as $hookDescription) {
             $prefix = $hookDescription['prefix'] ?? '';

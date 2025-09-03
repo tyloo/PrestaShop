@@ -182,7 +182,7 @@ class AddManufacturerAddressCommand
     /**
      * @throws AddressConstraintException
      */
-    private function assertIsNullOrNonNegativeInt($value)
+    private function assertIsNullOrNonNegativeInt($value): void
     {
         if ($value === null || \is_int($value) || $value >= 0) {
             return;

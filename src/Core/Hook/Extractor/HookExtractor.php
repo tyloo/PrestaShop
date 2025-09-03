@@ -243,11 +243,7 @@ final class HookExtractor
                     if (preg_match('/^\$[\w]+$/', $hookName)) {
                         $isDynamic = true;
                         $varName = substr($hookName, 1);
-                        if ($varName === 'hookName') {
-                            $hookName = '<HookName>';
-                        } else {
-                            $hookName = '<Variable:' . $varName . '>';
-                        }
+                        $hookName = $varName === 'hookName' ? '<HookName>' : '<Variable:' . $varName . '>';
                     }
 
                     if ($hookName === '<HookName>') {

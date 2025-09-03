@@ -37,7 +37,7 @@ class ShowcaseCardFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When employee :employee closes showcase card :cardName
      */
-    public function employeeClosesShowcaseCard(string $cardName, string $employeeReference)
+    public function employeeClosesShowcaseCard(string $cardName, string $employeeReference): void
     {
         $employeeId = SharedStorage::getStorage()->get($employeeReference);
         $this->getCommandBus()->handle(new CloseShowcaseCardCommand($employeeId, $cardName));
@@ -46,7 +46,7 @@ class ShowcaseCardFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then employee :employeeReference should not see showcase card :cardName
      */
-    public function employeeShouldNotSeeShowcaseCard(string $employeeReference, string $cardName)
+    public function employeeShouldNotSeeShowcaseCard(string $employeeReference, string $cardName): void
     {
         $employeeId = SharedStorage::getStorage()->get($employeeReference);
 

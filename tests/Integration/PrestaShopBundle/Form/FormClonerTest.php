@@ -236,9 +236,7 @@ class FormClonerTest extends AbstractFormTester
     {
         $reflectionProperty = new ReflectionProperty(ChoiceToValueTransformer::class, 'choiceList');
 
-        $choiceList = $reflectionProperty->getValue($transformer);
-
-        return $choiceList;
+        return $reflectionProperty->getValue($transformer);
     }
 
     private function assertTotalNumberOfListeners(FormInterface $form, int $expectedCount): void
@@ -297,11 +295,7 @@ class FormClonerTest extends AbstractFormTester
                 $this->assertInstanceOf(Closure::class, $clonedOption);
             } else {
                 // This allows us to check if option overriding works correctly
-                if (isset($newOptions[$optionName])) {
-                    $expectedOption = $newOptions[$optionName];
-                } else {
-                    $expectedOption = $originalOption;
-                }
+                $expectedOption = $newOptions[$optionName] ?? $originalOption;
 
                 $this->assertSame($expectedOption, $clonedOption, \sprintf(
                     'Option "%s", expected %s but got %s instead',

@@ -64,7 +64,7 @@ final class ThemeZipUploader implements ThemeUploaderInterface
     /**
      * @throws ThemeUploadException
      */
-    private function assertThemeWasUploadedWithoutErrors(UploadedFile $uploadedTheme)
+    private function assertThemeWasUploadedWithoutErrors(UploadedFile $uploadedTheme): void
     {
         if ($uploadedTheme->getError() === \UPLOAD_ERR_OK) {
             return;
@@ -80,7 +80,7 @@ final class ThemeZipUploader implements ThemeUploaderInterface
     /**
      * @throws ThemeUploadException
      */
-    private function assertUploadedFileIsZip(UploadedFile $uploadedTheme)
+    private function assertUploadedFileIsZip(UploadedFile $uploadedTheme): void
     {
         preg_match('#application/zip#', (string) $uploadedTheme->getMimeType(), $matches);
 

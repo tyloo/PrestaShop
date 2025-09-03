@@ -39,7 +39,7 @@ final class AdditionalShipmentRowAction extends AbstractRowAction
         return 'additional_shipment_row_action';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

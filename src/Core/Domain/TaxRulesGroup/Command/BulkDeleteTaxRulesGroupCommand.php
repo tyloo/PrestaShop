@@ -63,7 +63,7 @@ class BulkDeleteTaxRulesGroupCommand
      *
      * @throws TaxRulesGroupConstraintException
      */
-    private function setTaxRulesGroupIds(array $taxRulesGroupIds)
+    private function setTaxRulesGroupIds(array $taxRulesGroupIds): void
     {
         foreach ($taxRulesGroupIds as $taxRulesGroupId) {
             $this->taxRulesGroupIds[] = new TaxRulesGroupId($taxRulesGroupId);

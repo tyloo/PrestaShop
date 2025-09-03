@@ -69,7 +69,7 @@ class EmployeeFeatureContext extends AbstractDomainFeatureContext
         string $employeeReference,
         string $shopReference,
         TableNode $table,
-    ) {
+    ): void {
         $testCaseData = $table->getRowsHash();
 
         $data = $this->mapDataWithSelectedValues($testCaseData, $shopReference);

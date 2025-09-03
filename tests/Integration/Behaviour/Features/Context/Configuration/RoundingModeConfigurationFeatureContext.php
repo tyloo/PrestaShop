@@ -35,7 +35,7 @@ class RoundingModeConfigurationFeatureContext extends AbstractConfigurationFeatu
     /**
      * @Given /^specific shop configuration for "rounding mode" is set to round (up|down|half up|half down|half even|half even|half odd)$/
      */
-    public function setRoundingMode($value)
+    public function setRoundingMode($value): void
     {
         match ($value) {
             'up' => $this->setConfiguration('PS_PRICE_ROUND_MODE', PS_ROUND_UP),

@@ -59,7 +59,7 @@ final class FolderThemeCatalog implements ThemeCatalogInterface
      * @throws FileNotFoundException
      * @throws TypeException
      */
-    public function listThemes()
+    public function listThemes(): ThemeCollection
     {
         $this->checkThemesFolder();
 
@@ -113,7 +113,7 @@ final class FolderThemeCatalog implements ThemeCatalogInterface
     /**
      * @throws FileNotFoundException
      */
-    private function checkThemesFolder()
+    private function checkThemesFolder(): void
     {
         if (! is_dir($this->mailThemesFolder)) {
             throw new FileNotFoundException(\sprintf('Invalid mail themes folder "%s": no such directory', $this->mailThemesFolder));

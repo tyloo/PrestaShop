@@ -116,7 +116,7 @@ abstract class AbstractProductGridDefinitionFactory extends AbstractGridDefiniti
 
     protected function getFilters()
     {
-        $filters = (new FilterCollection())
+        return (new FilterCollection())
             ->add(
                 (new Filter('id_product', TextType::class))
                     ->setAssociatedColumn('id_product')
@@ -163,8 +163,6 @@ abstract class AbstractProductGridDefinitionFactory extends AbstractGridDefiniti
                     ])
                     ->setAssociatedColumn('actions')
             );
-
-        return $filters;
     }
 
     protected function getGridActions()

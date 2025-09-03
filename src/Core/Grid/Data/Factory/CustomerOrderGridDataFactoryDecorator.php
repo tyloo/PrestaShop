@@ -50,7 +50,7 @@ final class CustomerOrderGridDataFactoryDecorator implements GridDataFactoryInte
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $customerData = $this->customerOrderDoctrineGridDataFactory->getData($searchCriteria);
 
@@ -63,10 +63,7 @@ final class CustomerOrderGridDataFactoryDecorator implements GridDataFactoryInte
         );
     }
 
-    /**
-     * @return RecordCollection
-     */
-    private function applyModifications(RecordCollectionInterface $records)
+    private function applyModifications(RecordCollectionInterface $records): RecordCollection
     {
         $modifiedRecords = [];
         foreach ($records as $r) {

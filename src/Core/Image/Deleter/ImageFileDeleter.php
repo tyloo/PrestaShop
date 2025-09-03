@@ -78,7 +78,7 @@ final class ImageFileDeleter implements ImageFileDeleterInterface
         return true;
     }
 
-    public function deleteAllImages($path, $format = 'jpg')
+    public function deleteAllImages($path, $format = 'jpg'): void
     {
         foreach (scandir($path, \SCANDIR_SORT_NONE) as $file) {
             $this->deleteByPattern(
@@ -96,7 +96,7 @@ final class ImageFileDeleter implements ImageFileDeleterInterface
      * @param string $path     file directory path
      * @param string $filename
      */
-    private function deleteByPattern($pattern, $path, $filename)
+    private function deleteByPattern($pattern, $path, $filename): void
     {
         if (preg_match($pattern, $filename)) {
             unlink($path . $filename);

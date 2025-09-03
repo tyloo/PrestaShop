@@ -62,7 +62,7 @@ class ThemeMailTemplatesFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then mails folder with sub folder :subFolder exists
      */
-    public function mailsFolderWithSubFolderExists(string $subFolder)
+    public function mailsFolderWithSubFolderExists(string $subFolder): void
     {
         $mailsSubFolder = _PS_MAIL_DIR_ . $subFolder;
         Assert::assertTrue(is_dir($mailsSubFolder));

@@ -86,7 +86,7 @@ class Fees
         CartRowCollection $cartRowCollection,
         $computePrecision,
         $id_carrier = null,
-    ) {
+    ): void {
         if ($id_carrier === null) {
             $this->shippingFees = new AmountImmutable(
                 $cart->getTotalShippingCost(null, true),
@@ -186,7 +186,7 @@ class Fees
         return $this->wrappingFees;
     }
 
-    public function subDiscountValueShipping(AmountImmutable $amount)
+    public function subDiscountValueShipping(AmountImmutable $amount): void
     {
         $taxIncluded = $this->finalShippingFees->getTaxIncluded() - $amount->getTaxIncluded();
         $taxExcluded = $this->finalShippingFees->getTaxExcluded() - $amount->getTaxExcluded();

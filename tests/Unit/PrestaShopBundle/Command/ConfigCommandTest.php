@@ -206,11 +206,9 @@ class ConfigCommandTest extends TestCase
 
     protected function mockConfiguration(): Configuration
     {
-        $configurationMock = $this->getMockBuilder(Configuration::class)
+        return $this->getMockBuilder(Configuration::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        return $configurationMock;
     }
 
     protected function mockLanguageDataProvider(): LanguageDataProvider

@@ -353,7 +353,7 @@ class ThemeManager implements AddonManagerInterface
      * @throws ThemeAlreadyExistsException
      * @throws ThemeConstraintException
      */
-    private function installFromZip($source)
+    private function installFromZip($source): void
     {
         /** @var Finder $finderClass */
         $finderClass = $this->finder::class;
@@ -438,7 +438,7 @@ class ThemeManager implements AddonManagerInterface
     /**
      * @param Theme $theme
      */
-    public function saveTheme($theme)
+    public function saveTheme($theme): void
     {
         $jsonConfigFolder = $this->configuration->get('_PS_CONFIG_DIR_') . 'themes/' . $theme->getName();
         if (! $this->filesystem->exists($jsonConfigFolder) && ! is_dir($jsonConfigFolder)) {
@@ -454,7 +454,7 @@ class ThemeManager implements AddonManagerInterface
     /**
      * Import translation from Theme to Database.
      */
-    private function importTranslationToDatabase(Theme $theme)
+    private function importTranslationToDatabase(Theme $theme): void
     {
         global $kernel; // sf kernel
 
@@ -545,7 +545,7 @@ class ThemeManager implements AddonManagerInterface
      * @param string                        $locale
      * @param string                        $themeName
      */
-    private function handleImport(TranslationService $translationService, MessageCatalogue $messageCatalog, $allDomains, $lang, $locale, $themeName)
+    private function handleImport(TranslationService $translationService, MessageCatalogue $messageCatalog, $allDomains, $lang, $locale, $themeName): void
     {
         foreach ($messageCatalog->all() as $domain => $messages) {
             $domain = str_replace('.' . $locale, '', $domain);

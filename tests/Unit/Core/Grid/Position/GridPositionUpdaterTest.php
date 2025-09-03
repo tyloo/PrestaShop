@@ -74,23 +74,18 @@ class GridPositionUpdaterTest extends TestCase
         $this->assertSame([5], $caughtException->getParameters());
     }
 
-    /**
-     * @return PositionUpdate
-     */
-    private function createPositionUpdate()
+    private function createPositionUpdate(): PositionUpdate
     {
         $collection = new PositionModificationCollection();
         $collection->add(new PositionModification(1, 0, 0));
         $collection->add(new PositionModification(5, 1, 2));
         $collection->add(new PositionModification(42, 2, 1));
 
-        $positionUpdate = new PositionUpdate(
+        return new PositionUpdate(
             $collection,
             $this->getDefinition(),
             '42'
         );
-
-        return $positionUpdate;
     }
 
     /**
@@ -159,10 +154,7 @@ class GridPositionUpdaterTest extends TestCase
         return $updaterMock;
     }
 
-    /**
-     * @return PositionDefinition
-     */
-    private function getDefinition()
+    private function getDefinition(): PositionDefinition
     {
         return new PositionDefinition(
             'product',

@@ -77,7 +77,7 @@ final class CurrencyFormDataHandler implements FormDataHandlerInterface
         return $currencyId->getValue();
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         if ($data['unofficial']) {
             $command = new EditUnofficialCurrencyCommand((int) $id);
@@ -105,7 +105,7 @@ final class CurrencyFormDataHandler implements FormDataHandlerInterface
     /**
      * Clear the cache provided
      */
-    private function clearCache()
+    private function clearCache(): void
     {
         foreach ($this->cacheClearerCollection as $cacheClearer) {
             $cacheClearer->clear();

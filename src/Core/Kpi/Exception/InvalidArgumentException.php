@@ -34,10 +34,7 @@ use PrestaShop\PrestaShop\Core\Exception\CoreException;
  */
 final class InvalidArgumentException extends CoreException
 {
-    /**
-     * @return InvalidArgumentException
-     */
-    public static function invalidKpi($kpi)
+    public static function invalidKpi($kpi): self
     {
         $exceptionMessage = \sprintf(
             'Kpi must be an instance of KpiInterface, got `%s`.',
@@ -47,10 +44,7 @@ final class InvalidArgumentException extends CoreException
         return new self($exceptionMessage);
     }
 
-    /**
-     * @return InvalidArgumentException
-     */
-    public static function invalidIdentifier($identifier)
+    public static function invalidIdentifier($identifier): self
     {
         $exceptionMessage = \sprintf(
             'Identifier must be a string, got `%s`.',

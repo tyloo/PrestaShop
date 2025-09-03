@@ -36,7 +36,7 @@ class LayoutCollection extends AbstractTypedCollection implements LayoutCollecti
         return LayoutInterface::class;
     }
 
-    public function merge(LayoutCollectionInterface $collection)
+    public function merge(LayoutCollectionInterface $collection): void
     {
         /** @var LayoutInterface $newLayout */
         foreach ($collection as $newLayout) {

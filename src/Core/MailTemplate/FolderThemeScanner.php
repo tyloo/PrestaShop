@@ -61,7 +61,7 @@ final class FolderThemeScanner
      * @throws FileNotFoundException
      * @throws TypeException
      */
-    public function scan($mailThemeFolder)
+    public function scan($mailThemeFolder): Theme
     {
         $this->checkThemeFolder($mailThemeFolder);
 
@@ -92,7 +92,7 @@ final class FolderThemeScanner
      *
      * @throws TypeException
      */
-    private function findThemeLayouts($mailThemeFolder)
+    private function findThemeLayouts($mailThemeFolder): LayoutCollection
     {
         $mailThemeLayouts = new LayoutCollection();
         $this->addCoreLayouts($mailThemeLayouts, $mailThemeFolder);
@@ -104,7 +104,7 @@ final class FolderThemeScanner
     /**
      * @param string $mailThemeFolder
      */
-    private function addCoreLayouts(LayoutCollectionInterface $collection, $mailThemeFolder)
+    private function addCoreLayouts(LayoutCollectionInterface $collection, $mailThemeFolder): void
     {
         $coreLayoutsFolder = implode(\DIRECTORY_SEPARATOR, [
             $mailThemeFolder,
@@ -120,7 +120,7 @@ final class FolderThemeScanner
     /**
      * @param string $mailThemeFolder
      */
-    private function addModulesLayouts(LayoutCollectionInterface $collection, $mailThemeFolder)
+    private function addModulesLayouts(LayoutCollectionInterface $collection, $mailThemeFolder): void
     {
         $moduleLayoutsFolder = implode(\DIRECTORY_SEPARATOR, [
             $mailThemeFolder,
@@ -147,7 +147,7 @@ final class FolderThemeScanner
         LayoutCollectionInterface $collection,
         $folder,
         $moduleName = '',
-    ) {
+    ): void {
         $layoutFiles = [];
         $finder = new Finder();
         $finder->files()->in($folder)->sortByName();
@@ -190,7 +190,7 @@ final class FolderThemeScanner
     /**
      * @throws FileNotFoundException
      */
-    private function checkThemeFolder($mailThemeFolder)
+    private function checkThemeFolder($mailThemeFolder): void
     {
         if (! is_dir($mailThemeFolder)) {
             throw new FileNotFoundException(\sprintf('Invalid mail theme folder "%s": no such directory', $mailThemeFolder));

@@ -46,7 +46,7 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
      */
     public function updateOrderTrackingNumberToAndCarrierTo(
         string $orderReference, string $trackingNumber, string $carrierReference,
-    ) {
+    ): void {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $order = new Order($orderId);
 
@@ -67,7 +67,7 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws RuntimeException
      */
-    public function orderHasCarrier(string $orderReference, string $carrier)
+    public function orderHasCarrier(string $orderReference, string $carrier): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $carrierId = $this->getCarrierId($carrier);
@@ -121,7 +121,7 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws RuntimeException
      */
-    public function orderHasTrackingNumber(string $orderReference, string $trackingNumber)
+    public function orderHasTrackingNumber(string $orderReference, string $trackingNumber): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -138,7 +138,7 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I change order :orderReference shipping address to :orderShippingAddress
      */
-    public function changeOrderShippingAddressTo(string $orderReference, string $orderShippingAddress)
+    public function changeOrderShippingAddressTo(string $orderReference, string $orderShippingAddress): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $newDeliveryAddressId = (int) SharedStorage::getStorage()->get($orderShippingAddress);
@@ -148,7 +148,7 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I change order :orderReference invoice address to :orderInvoiceAddress
      */
-    public function changeOrderInvoiceAddressTo(string $orderReference, string $orderInvoiceAddress)
+    public function changeOrderInvoiceAddressTo(string $orderReference, string $orderInvoiceAddress): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $newInvoiceAddressId = (int) SharedStorage::getStorage()->get($orderInvoiceAddress);
@@ -158,7 +158,7 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference shipping address should be :orderShippingAddress
      */
-    public function orderShippingAddressShouldBe(string $orderReference, string $orderShippingAddress)
+    public function orderShippingAddressShouldBe(string $orderReference, string $orderShippingAddress): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $expectedShippingAddressId = (int) SharedStorage::getStorage()->get($orderShippingAddress);
@@ -172,7 +172,7 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference invoice address should be :orderInvoiceAddress
      */
-    public function orderInvoiceAddressShouldBe(string $orderReference, string $orderInvoiceAddress)
+    public function orderInvoiceAddressShouldBe(string $orderReference, string $orderInvoiceAddress): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $expectedInvoiceAddressId = (int) SharedStorage::getStorage()->get($orderInvoiceAddress);

@@ -37,7 +37,7 @@ class DummyTranslator implements TranslatorInterface
         return 'not implemented yet';
     }
 
-    public function setLocale($locale)
+    public function setLocale($locale): void
     {
         // not implemented yet
     }

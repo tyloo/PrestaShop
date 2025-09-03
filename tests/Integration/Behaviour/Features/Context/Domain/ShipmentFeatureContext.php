@@ -68,7 +68,7 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws RuntimeException
      */
-    public function verifyOrderShipment(string $orderReference, TableNode $table)
+    public function verifyOrderShipment(string $orderReference, TableNode $table): void
     {
         $data = $table->getColumnsHash();
         $orderId = $this->referenceToId($orderReference);
@@ -104,7 +104,7 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then the shipment :shipmentReference should have the following products:
      */
-    public function verifyShipmentProducts(string $shipmentReference, TableNode $table)
+    public function verifyShipmentProducts(string $shipmentReference, TableNode $table): void
     {
         $data = $table->getColumnsHash();
         $shipmentId = SharedStorage::getStorage()->get($shipmentReference);
@@ -122,7 +122,7 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then the shipment :shipmentReference should be deleted
      */
-    public function verifyIfShipmentIsDeleted(string $shipmentReference)
+    public function verifyIfShipmentIsDeleted(string $shipmentReference): void
     {
         $shipmentId = SharedStorage::getStorage()->get($shipmentReference);
 
@@ -263,7 +263,7 @@ class ShipmentFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I remove product from the shipment :shipmentReference with following properties:
      */
-    public function deleteProductFromShipment(string $shipmentReference, TableNode $table)
+    public function deleteProductFromShipment(string $shipmentReference, TableNode $table): void
     {
         $shipmentId = SharedStorage::getStorage()->get($shipmentReference);
         $data = $table->getColumnsHash();

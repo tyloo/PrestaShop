@@ -77,10 +77,8 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        $qb = $this->getQueryBuilder($searchCriteria->getFilters())
+        return $this->getQueryBuilder($searchCriteria->getFilters())
             ->select('COUNT(DISTINCT pr.`id_specific_price_rule`)');
-
-        return $qb;
     }
 
     /**
@@ -125,7 +123,7 @@ final class CatalogPriceRuleQueryBuilder extends AbstractDoctrineQueryBuilder
         return $qb;
     }
 
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFiltersAliasMap = [
             'id_specific_price_rule' => 'pr.id_specific_price_rule',

@@ -47,34 +47,22 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     ) {
     }
 
-    /**
-     * @return bool|void
-     */
-    public function configureCurrencyRestrictions(array $currencyRestrictions)
+    public function configureCurrencyRestrictions(array $currencyRestrictions): void
     {
         $this->configureRestrictions('currency', $currencyRestrictions);
     }
 
-    /**
-     * @return bool|void
-     */
-    public function configureCountryRestrictions(array $countryRestrictions)
+    public function configureCountryRestrictions(array $countryRestrictions): void
     {
         $this->configureRestrictions('country', $countryRestrictions);
     }
 
-    /**
-     * @return bool|void
-     */
-    public function configureGroupRestrictions(array $groupRestrictions)
+    public function configureGroupRestrictions(array $groupRestrictions): void
     {
         $this->configureRestrictions('group', $groupRestrictions);
     }
 
-    /**
-     * @return bool|void
-     */
-    public function configureCarrierRestrictions(array $carrierRestrictions)
+    public function configureCarrierRestrictions(array $carrierRestrictions): void
     {
         $this->configureRestrictions('carrier', $carrierRestrictions);
     }
@@ -82,7 +70,7 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
     /**
      * @param string $restrictionType
      */
-    private function configureRestrictions($restrictionType, array $restrictions)
+    private function configureRestrictions($restrictionType, array $restrictions): void
     {
         [$moduleIds, $newConfiguration] = $this->parseRestrictionData($restrictions);
 
@@ -112,7 +100,7 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
      * @param string $restrictionType
      * @param array  $newConfiguration
      */
-    private function insertNewConfiguration($restrictionType, $newConfiguration)
+    private function insertNewConfiguration($restrictionType, $newConfiguration): void
     {
         if (! empty($newConfiguration)) {
             $fieldName = $restrictionType === 'carrier' ? 'reference' : $restrictionType;

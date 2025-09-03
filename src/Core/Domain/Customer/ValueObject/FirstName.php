@@ -68,7 +68,7 @@ class FirstName
      *
      * @throws CustomerConstraintException
      */
-    private function assertFirstNameIsValid($firstName)
+    private function assertFirstNameIsValid($firstName): void
     {
         $matchesFirstNamePattern = preg_match('/^[^0-9!<>,;?=+()@#"°{}_$%:¤|]*$/u', stripslashes($firstName));
 
@@ -82,7 +82,7 @@ class FirstName
      *
      * @throws CustomerConstraintException
      */
-    private function assertFirstNameDoesNotExceedAllowedLength($firstName)
+    private function assertFirstNameDoesNotExceedAllowedLength($firstName): void
     {
         $firstName = html_entity_decode($firstName, \ENT_COMPAT, 'UTF-8');
 

@@ -40,7 +40,7 @@ final class AjaxBulkAction extends AbstractBulkAction
         return 'ajax';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([

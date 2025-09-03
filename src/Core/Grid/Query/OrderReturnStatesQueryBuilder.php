@@ -68,10 +68,8 @@ final class OrderReturnStatesQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        $countQueryBuilder = $this->getOrderReturnStatesQueryBuilder($searchCriteria)
+        return $this->getOrderReturnStatesQueryBuilder($searchCriteria)
             ->select('COUNT(*)');
-
-        return $countQueryBuilder;
     }
 
     /**
@@ -97,7 +95,7 @@ final class OrderReturnStatesQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters to order_states query builder.
      */
-    private function applyFilters(array $filters, QueryBuilder $qb)
+    private function applyFilters(array $filters, QueryBuilder $qb): void
     {
         $allowedFilters = [
             'id_order_return_state',
@@ -128,7 +126,7 @@ final class OrderReturnStatesQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply sorting so search query builder for order_states.
      */
-    private function applySorting(QueryBuilder $searchQueryBuilder, SearchCriteriaInterface $searchCriteria)
+    private function applySorting(QueryBuilder $searchQueryBuilder, SearchCriteriaInterface $searchCriteria): void
     {
         switch ($searchCriteria->getOrderBy()) {
             case 'id_order_return_state':

@@ -55,7 +55,7 @@ class HtaccessFolderGuard implements FolderGuardInterface
         $this->htaccessContent = file_get_contents($htaccessTemplatePath);
     }
 
-    public function protectFolder($folderPath)
+    public function protectFolder($folderPath): void
     {
         if (! is_dir($folderPath)) {
             throw new FileNotFoundException(\sprintf('Cannot protect nonexistent folder %s', $folderPath));

@@ -61,7 +61,7 @@ class OrderStateId
     /**
      * @param int $orderStateId
      */
-    private function assertIntegerIsGreaterThanZero($orderStateId)
+    private function assertIntegerIsGreaterThanZero($orderStateId): void
     {
         if (! \is_int($orderStateId) || $orderStateId < 0) {
             throw new OrderStateException(\sprintf('OrderState id %s is invalid. OrderState id must be number that is greater than zero.', var_export($orderStateId, true)));

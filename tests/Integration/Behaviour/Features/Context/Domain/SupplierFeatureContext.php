@@ -85,7 +85,7 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I add new supplier :supplierReference with the following properties:
      */
-    public function createSupplier(string $supplierReference, TableNode $table)
+    public function createSupplier(string $supplierReference, TableNode $table): void
     {
         $data = $this->localizeByRows($table);
 
@@ -131,7 +131,7 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit supplier :supplierReference with the following properties:
      */
-    public function editSupplier(string $supplierReference, TableNode $table)
+    public function editSupplier(string $supplierReference, TableNode $table): void
     {
         $supplierId = (int) $this->getSharedStorage()->get($supplierReference);
         $data = $this->localizeByRows($table);
@@ -261,7 +261,7 @@ class SupplierFeatureContext extends AbstractDomainFeatureContext
      *
      * @throws SupplierException
      */
-    public function assertSupplierProperties(string $supplierReference, TableNode $table)
+    public function assertSupplierProperties(string $supplierReference, TableNode $table): void
     {
         $editableSupplier = $this->getEditableSupplier($supplierReference);
         $data = $this->localizeByRows($table);

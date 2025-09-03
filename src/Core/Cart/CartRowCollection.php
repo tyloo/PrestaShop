@@ -40,7 +40,7 @@ class CartRowCollection implements Iterator, Countable
 
     protected $iteratorPosition = 0;
 
-    public function addCartRow(CartRow $cartRow)
+    public function addCartRow(CartRow $cartRow): void
     {
         $this->cartRows[] = $cartRow;
     }

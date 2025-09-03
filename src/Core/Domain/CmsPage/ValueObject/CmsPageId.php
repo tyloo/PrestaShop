@@ -65,7 +65,7 @@ class CmsPageId
      *
      * @throws CmsPageException
      */
-    private function assertIsIntegerGreaterThanZero($cmsPageId)
+    private function assertIsIntegerGreaterThanZero($cmsPageId): void
     {
         if (! \is_int($cmsPageId) || $cmsPageId <= 0) {
             throw new CmsPageException(\sprintf('Invalid cms page id %s supplied', var_export($cmsPageId, true)));

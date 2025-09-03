@@ -132,7 +132,7 @@ final class CustomerAddressQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters to address query builder.
      */
-    private function applyFilters(QueryBuilder $qb, array $filters)
+    private function applyFilters(QueryBuilder $qb, array $filters): void
     {
         $allowedFiltersMap = [
             'id_customer' => 'a.id_customer',

@@ -75,9 +75,8 @@ class CurrencyInstalled
     public function getAvailableCurrencyCodes(): array
     {
         $currencies = $this->dataProvider->findAll();
-        $currencyIsoCodes = array_column($currencies, 'iso_code');
 
-        return $currencyIsoCodes;
+        return array_column($currencies, 'iso_code');
     }
 
     /**
@@ -88,8 +87,7 @@ class CurrencyInstalled
     public function getAllInstalledCurrencyIsoCodes(): array
     {
         $currencies = $this->dataProvider->findAllInstalled();
-        $currencyIsoCodes = array_column($currencies, 'iso_code');
 
-        return $currencyIsoCodes;
+        return array_column($currencies, 'iso_code');
     }
 }

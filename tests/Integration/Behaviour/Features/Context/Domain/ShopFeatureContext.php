@@ -124,7 +124,7 @@ class ShopFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given I set up shop context to single shop :shopReference
      */
-    public function setupShopContext(string $shopReference)
+    public function setupShopContext(string $shopReference): void
     {
         // We only need to update the builder settings, ShopContext service was defined as NOT shared
         // so each time it is accessed a new instance is created and the builder is called again

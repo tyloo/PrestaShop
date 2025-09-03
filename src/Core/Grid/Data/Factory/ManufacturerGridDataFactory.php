@@ -43,7 +43,7 @@ final class ManufacturerGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $manufacturerData = $this->manufacturerDataFactory->getData($searchCriteria);
 

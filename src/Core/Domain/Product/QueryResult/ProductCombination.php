@@ -86,7 +86,7 @@ class ProductCombination
         return $this->reference;
     }
 
-    public function appendAttributeName(string $name)
+    public function appendAttributeName(string $name): void
     {
         $this->attribute .= ' - ' . $name;
     }

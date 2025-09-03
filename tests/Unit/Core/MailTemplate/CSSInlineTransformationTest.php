@@ -159,7 +159,7 @@ HTML;
         $this->assertNotEquals($html, $transformedHtml);
     }
 
-    private function assertStyle(DOMNode $node, array $expectedStyle)
+    private function assertStyle(DOMNode $node, array $expectedStyle): void
     {
         $nodeStyle = $this->getNodeStyle($node);
         $this->assertEquals($expectedStyle, $nodeStyle);

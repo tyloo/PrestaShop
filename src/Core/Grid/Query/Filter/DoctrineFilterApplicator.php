@@ -38,7 +38,7 @@ final class DoctrineFilterApplicator implements DoctrineFilterApplicatorInterfac
 
     private const CASE_ONLY_MAX_FIELD_EXISTS = 3;
 
-    public function apply(QueryBuilder $qb, SqlFilters $filters, array $filterValues)
+    public function apply(QueryBuilder $qb, SqlFilters $filters, array $filterValues): void
     {
         if (empty($filterValues)) {
             return;

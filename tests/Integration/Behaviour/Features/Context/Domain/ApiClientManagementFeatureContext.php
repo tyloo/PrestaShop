@@ -56,7 +56,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I create an api client :apiClientReference with following properties:
      */
-    public function createApiClientUsingCommand(string $apiClientReference, TableNode $table)
+    public function createApiClientUsingCommand(string $apiClientReference, TableNode $table): void
     {
         $this->createApiClient($apiClientReference, $table);
     }
@@ -64,7 +64,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I create an api client :apiClientReference with generated secret :secretReference using following properties:
      */
-    public function createApiClientUsingCommandAndStoreSecret(string $apiClientReference, string $secretReference, TableNode $table)
+    public function createApiClientUsingCommandAndStoreSecret(string $apiClientReference, string $secretReference, TableNode $table): void
     {
         $this->createApiClient($apiClientReference, $table, $secretReference);
     }
@@ -72,7 +72,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I generate new secret :secretReference for api client :apiClientReference
      */
-    public function generateSecretApiClientUsingCommand(string $secretReference, string $apiClientReference)
+    public function generateSecretApiClientUsingCommand(string $secretReference, string $apiClientReference): void
     {
         $this->getSharedStorage()->exists($apiClientReference);
 
@@ -85,7 +85,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I force secret :newSecret for api client :apiClientReference
      */
-    public function forceSecretApiClientUsingCommand(string $newSecret, string $apiClientReference)
+    public function forceSecretApiClientUsingCommand(string $newSecret, string $apiClientReference): void
     {
         $this->getSharedStorage()->exists($apiClientReference);
 
@@ -104,7 +104,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^api client "(.+)" should have the following properties:$/
      */
-    public function assertQueryApiClientProperties(string $apiClientReference, TableNode $table)
+    public function assertQueryApiClientProperties(string $apiClientReference, TableNode $table): void
     {
         $errors = [];
         $expectedData = $table->getRowsHash();
@@ -150,7 +150,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
             }
         }
 
-        if (\count($errors) > 0) {
+        if ($errors !== []) {
             throw new RuntimeException(\sprintf('Fields %s are not identical', implode(', ', $errors)));
         }
     }
@@ -158,7 +158,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I edit api client "(.+)" with the following values:$/
      */
-    public function editCustomerUsingCommand(string $apiClientReference, TableNode $table)
+    public function editCustomerUsingCommand(string $apiClientReference, TableNode $table): void
     {
         $this->getSharedStorage()->exists($apiClientReference);
         $data = $this->fixDataType($table->getRowsHash());
@@ -201,7 +201,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I create an api client "(.+)" with a large value in (.+):$/
      */
-    public function iCreateAnApiClientWithALargeValueInFieldName(string $apiClientReference, string $fieldName, TableNode $table)
+    public function iCreateAnApiClientWithALargeValueInFieldName(string $apiClientReference, string $fieldName, TableNode $table): void
     {
         $data = $this->generateMaxLengthValue($this->fixDataType($table->getRowsHash()), $fieldName);
 
@@ -226,7 +226,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I edit api client "(.+)" with a large value in (.+):$/
      */
-    public function iEditApiClientWithALargeValueInApiClientId(string $apiClientReference, string $fieldName)
+    public function iEditApiClientWithALargeValueInApiClientId(string $apiClientReference, string $fieldName): void
     {
         $this->getSharedStorage()->exists($apiClientReference);
         $data = $this->generateMaxLengthValue([], $fieldName);
@@ -261,7 +261,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I delete api client "(.+)"$/
      */
-    public function iDeleteApiClient(string $apiClientReference)
+    public function iDeleteApiClient(string $apiClientReference): void
     {
         $this->getCommandBus()->handle(new DeleteApiClientCommand($this->getSharedStorage()->get($apiClientReference)));
     }
@@ -269,7 +269,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then /^api client "(.+)" should not exist$/
      */
-    public function checkApiClientNotFound(string $apiClientReference)
+    public function checkApiClientNotFound(string $apiClientReference): void
     {
         try {
             $this->getCommandBus()->handle(new GetApiClientForEditing($this->getSharedStorage()->get($apiClientReference)));
@@ -388,7 +388,7 @@ class ApiClientManagementFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given I am not logged in as an api client
      */
-    public function logsOutApiClient()
+    public function logsOutApiClient(): void
     {
         /** @var ApiClientContextDecorator $apiClientContext */
         $apiClientContext = CommonFeatureContext::getContainer()->get(ApiClientContextDecorator::class);

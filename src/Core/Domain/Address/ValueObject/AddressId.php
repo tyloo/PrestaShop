@@ -65,7 +65,7 @@ class AddressId
      *
      * @throws AddressConstraintException
      */
-    private function assertIsIntegerGreaterThanZero($value)
+    private function assertIsIntegerGreaterThanZero($value): void
     {
         if (! \is_int($value) || $value <= 0) {
             throw new AddressConstraintException(\sprintf('Invalid address id "%s".', var_export($value, true)), AddressConstraintException::INVALID_ID);

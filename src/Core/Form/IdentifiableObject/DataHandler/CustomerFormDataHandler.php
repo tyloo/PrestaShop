@@ -63,17 +63,14 @@ final class CustomerFormDataHandler implements FormDataHandlerInterface
         return $customerId->getValue();
     }
 
-    public function update($customerId, array $data)
+    public function update($customerId, array $data): void
     {
         $command = $this->buildCustomerEditCommand($customerId, $data);
 
         $this->bus->handle($command);
     }
 
-    /**
-     * @return AddCustomerCommand
-     */
-    private function buildCustomerAddCommandFromFormData(array $data)
+    private function buildCustomerAddCommandFromFormData(array $data): AddCustomerCommand
     {
         // Default data from the form
         $password = $data['password'];

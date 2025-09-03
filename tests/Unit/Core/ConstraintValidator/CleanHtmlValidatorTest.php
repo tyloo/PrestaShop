@@ -186,7 +186,7 @@ randomattribute="blabla"   attributewithoutvalue
         $this->assertNoViolation();
     }
 
-    public function itFailsToHaveOnAttributeWithRandomSpacesAndLines()
+    public function itFailsToHaveOnAttributeWithRandomSpacesAndLines(): void
     {
         $htmlTag = '<div
 randomattribute="blabla"
@@ -205,7 +205,7 @@ randomattribute="blabla"
         $this->context->getViolations();
     }
 
-    public function itFailsWithRLOInjection()
+    public function itFailsWithRLOInjection(): void
     {
         $htmlTag = '‮<img src=x onerror="alert(\'img\')">';
 

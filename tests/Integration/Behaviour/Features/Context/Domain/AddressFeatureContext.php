@@ -66,7 +66,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I add new brand address :manufacturerAddressReference with following details:
      */
-    public function addNewBrandAddressWithFollowingDetails(string $manufacturerAddressReference, TableNode $table)
+    public function addNewBrandAddressWithFollowingDetails(string $manufacturerAddressReference, TableNode $table): void
     {
         $testCaseData = $table->getRowsHash();
         $editableManufacturerAddress = $this->mapEditableManufacturerAddress(
@@ -91,7 +91,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then brand address :manufacturerAddressReference should have following details:
      */
-    public function manufacturerAddressShouldHaveFollowingDetails(string $manufacturerAddressReference, TableNode $table)
+    public function manufacturerAddressShouldHaveFollowingDetails(string $manufacturerAddressReference, TableNode $table): void
     {
         $manufacturerAddressId = SharedStorage::getStorage()->get($manufacturerAddressReference);
         /** @var EditableManufacturerAddress $editableManufacturerAddress */
@@ -109,7 +109,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I add new address to customer :customerReference with following details:
      */
-    public function addNewAddressToCustomerWithFollowingDetails(string $customerReference, TableNode $table)
+    public function addNewAddressToCustomerWithFollowingDetails(string $customerReference, TableNode $table): void
     {
         $testCaseData = $table->getRowsHash();
         $customerId = SharedStorage::getStorage()->get($customerReference);
@@ -143,7 +143,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit address :addressReference with following details:
      */
-    public function editAddressToCustomerWithFollowingDetails(string $addressReference, TableNode $table)
+    public function editAddressToCustomerWithFollowingDetails(string $addressReference, TableNode $table): void
     {
         $testCaseData = $table->getRowsHash();
         $customerAddressId = (int) SharedStorage::getStorage()->get($addressReference);
@@ -163,7 +163,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit :addressType address for order :orderReference with following details:
      */
-    public function editOrderAddressWithFollowingDetails(string $addressType, string $orderReference, TableNode $table)
+    public function editOrderAddressWithFollowingDetails(string $addressType, string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $testCaseData = $table->getRowsHash();
@@ -188,7 +188,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit :addressType address for cart :cartReference with following details:
      */
-    public function editCartAddressWithFollowingDetails(string $addressType, string $cartReference, TableNode $table)
+    public function editCartAddressWithFollowingDetails(string $addressType, string $cartReference, TableNode $table): void
     {
         $cartId = SharedStorage::getStorage()->get($cartReference);
         $testCaseData = $table->getRowsHash();
@@ -210,7 +210,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
         }
     }
 
-    private function updateEditCommandFields(AbstractEditAddressCommand $editAddressCommand, array $testCaseData)
+    private function updateEditCommandFields(AbstractEditAddressCommand $editAddressCommand, array $testCaseData): void
     {
         if (! empty($testCaseData['Address alias'])) {
             $editAddressCommand->setAddressAlias($testCaseData['Address alias']);
@@ -252,7 +252,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then address :addressReference is assigned to an order :orderReference for :customerReference
      */
-    public function assignAddressToOrder(string $addressReference, string $orderReference, string $customerReference)
+    public function assignAddressToOrder(string $addressReference, string $orderReference, string $customerReference): void
     {
         $customerAddressId = (int) SharedStorage::getStorage()->get($addressReference);
         $customerId = (int) SharedStorage::getStorage()->get($customerReference);
@@ -293,7 +293,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference should have :addressReference as a :addressType address
      */
-    public function checkOrderAddress(string $orderReference, string $addressReference, string $addressType)
+    public function checkOrderAddress(string $orderReference, string $addressReference, string $addressType): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
         $order = new Order($orderId);
@@ -328,7 +328,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then address :addressReference is assigned to a cart :cartReference for :customerReference
      */
-    public function assignAddressToCart(string $addressReference, string $cartReference, string $customerReference)
+    public function assignAddressToCart(string $addressReference, string $cartReference, string $customerReference): void
     {
         $customerAddressId = (int) SharedStorage::getStorage()->get($addressReference);
         $customerId = (int) SharedStorage::getStorage()->get($customerReference);
@@ -349,7 +349,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then cart :cartReference should have :addressReference as a :addressType address
      */
-    public function checkCartAddress(string $cartReference, string $addressReference, string $addressType)
+    public function checkCartAddress(string $cartReference, string $addressReference, string $addressType): void
     {
         $cartId = SharedStorage::getStorage()->get($cartReference);
         $cart = new Cart($cartId);
@@ -378,7 +378,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     public function customerShouldHaveAddressWithFollowingDetails(
         string $customerReference,
         string $addressReference,
-        TableNode $table)
+        TableNode $table): void
     {
         $testCaseData = $table->getRowsHash();
         $customerId = SharedStorage::getStorage()->get($customerReference);
@@ -418,7 +418,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then customer :customerReference should have :addressCount addresses
      */
-    public function checkCustomerAddressCount(string $customerReference, int $expectedCount)
+    public function checkCustomerAddressCount(string $customerReference, int $expectedCount): void
     {
         $customerId = SharedStorage::getStorage()->get($customerReference);
 
@@ -440,7 +440,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then customer :customerReference should have :addressCount deleted addresses
      */
-    public function checkCustomerDeletedAddressCount(string $customerReference, int $expectedCount)
+    public function checkCustomerDeletedAddressCount(string $customerReference, int $expectedCount): void
     {
         $customerId = SharedStorage::getStorage()->get($customerReference);
 
@@ -490,7 +490,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete address :addressReference
      */
-    public function deleteAddress(string $addressReference)
+    public function deleteAddress(string $addressReference): void
     {
         $addressId = SharedStorage::getStorage()->get($addressReference);
         $this->getCommandBus()->handle(new DeleteAddressCommand($addressId));
@@ -499,7 +499,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then brand address :addressReference does not exist
      */
-    public function brandAddressDoesNotExist(string $addressReference)
+    public function brandAddressDoesNotExist(string $addressReference): void
     {
         $addressId = SharedStorage::getStorage()->get($addressReference);
         try {
@@ -513,7 +513,7 @@ class AddressFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I bulk delete addresses :addressesReferences
      */
-    public function BulkDeleteAddresses(string $addressesReferences)
+    public function BulkDeleteAddresses(string $addressesReferences): void
     {
         $addressesReferencesArray = explode(',', $addressesReferences);
         $addressesIds = [];

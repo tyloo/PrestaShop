@@ -62,7 +62,7 @@ class NumericIsoCode
      *
      * @throws CurrencyConstraintException
      */
-    private function assertIsValidNumericIsoCode($numericIsoCode)
+    private function assertIsValidNumericIsoCode($numericIsoCode): void
     {
         if (! \is_string($numericIsoCode) || ! preg_match(self::PATTERN, $numericIsoCode)) {
             throw new CurrencyConstraintException(\sprintf('Given numeric iso code "%s" is not valid. It must be a string composed of three digits', var_export($numericIsoCode, true)), CurrencyConstraintException::INVALID_NUMERIC_ISO_CODE);

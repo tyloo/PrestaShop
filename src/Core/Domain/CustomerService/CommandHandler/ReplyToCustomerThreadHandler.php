@@ -60,7 +60,7 @@ class ReplyToCustomerThreadHandler implements ReplyToCustomerThreadHandlerInterf
         $this->translator = $this->context->getTranslator();
     }
 
-    public function handle(ReplyToCustomerThreadCommand $command)
+    public function handle(ReplyToCustomerThreadCommand $command): void
     {
         $customerThread = new CustomerThread(
             $command->getCustomerThreadId()->getValue()
@@ -83,10 +83,8 @@ class ReplyToCustomerThreadHandler implements ReplyToCustomerThreadHandlerInterf
 
     /**
      * @param string $replyMessage
-     *
-     * @return CustomerMessage
      */
-    private function createCustomerMessage(CustomerThread $customerThread, $replyMessage)
+    private function createCustomerMessage(CustomerThread $customerThread, $replyMessage): CustomerMessage
     {
         $customerMessage = new CustomerMessage();
         $customerMessage->id_employee = (int) $this->context->employee->id;

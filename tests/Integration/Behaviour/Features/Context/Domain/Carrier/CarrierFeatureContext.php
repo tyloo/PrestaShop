@@ -79,11 +79,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
                 $associatedShops = [$this->getDefaultShopId()];
             }
 
-            if (! empty($properties['delay'])) {
-                $delay = $properties['delay'];
-            } else {
-                $delay = [$this->getDefaultLangId() => 'Shipping delay'];
-            }
+            $delay = ! empty($properties['delay']) ? $properties['delay'] : [$this->getDefaultLangId() => 'Shipping delay'];
 
             if (isset($properties['zones'])) {
                 $zones = $this->referencesToIds($properties['zones']);
@@ -402,7 +398,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then carrier :reference should have a logo
      */
-    public function carrierShouldHaveALogo(string $reference)
+    public function carrierShouldHaveALogo(string $reference): void
     {
         $carrier = $this->getCarrier($reference);
         Assert::assertEquals($carrier->getLogoPath(), _THEME_SHIP_DIR_ . $carrier->getCarrierId() . '.jpg');
@@ -411,7 +407,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then carrier :reference shouldn't have a logo
      */
-    public function carrierShouldntHaveALogo(string $reference)
+    public function carrierShouldntHaveALogo(string $reference): void
     {
         $carrier = $this->getCarrier($reference);
         Assert::assertNull($carrier->getLogoPath());
@@ -420,7 +416,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then carrier should throw an error with error code :errorCode
      */
-    public function saveCarrierShouldThrowAnError(string $errorCode)
+    public function saveCarrierShouldThrowAnError(string $errorCode): void
     {
         $this->assertLastErrorIs(
             CarrierConstraintException::class,
@@ -431,7 +427,7 @@ class CarrierFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then the products :products should have the following carriers:
      */
-    public function assertCarriersWithState(string $products, TableNode $table)
+    public function assertCarriersWithState(string $products, TableNode $table): void
     {
         $expectedRows = $table->getColumnsHash();
 

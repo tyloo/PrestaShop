@@ -35,7 +35,7 @@ use PrestaShop\PrestaShop\Core\Grid\Filter\FilterInterface;
 
 class FilterCollectionTest extends TestCase
 {
-    public function testFilterCollectionIsEmptyByDefault()
+    public function testFilterCollectionIsEmptyByDefault(): FilterCollection
     {
         $filters = new FilterCollection();
 

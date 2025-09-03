@@ -40,7 +40,7 @@ final class ResetThemeLayoutsHandler implements ResetThemeLayoutsHandlerInterfac
     ) {
     }
 
-    public function handle(ResetThemeLayoutsCommand $command)
+    public function handle(ResetThemeLayoutsCommand $command): void
     {
         if (! $this->themeManager->reset($command->getThemeName()->getValue())) {
             throw new CannotResetThemeLayoutsException(\sprintf('Cannot reset "%s" theme page layouts.', $command->getThemeName()->getValue()));

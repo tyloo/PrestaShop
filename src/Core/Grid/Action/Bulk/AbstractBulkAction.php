@@ -112,7 +112,7 @@ abstract class AbstractBulkAction implements BulkActionInterface
     /**
      * Resolve bulk action options.
      */
-    private function resolveOptions(array $options = [])
+    private function resolveOptions(array $options = []): void
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);

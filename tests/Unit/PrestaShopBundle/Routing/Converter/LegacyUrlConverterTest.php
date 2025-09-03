@@ -538,10 +538,7 @@ class LegacyUrlConverterTest extends TestCase
         return $mockRouter;
     }
 
-    /**
-     * @return RouteCollection
-     */
-    private function buildRouteCollection(array $routes)
+    private function buildRouteCollection(array $routes): RouteCollection
     {
         $routeCollection = new RouteCollection();
         foreach ($routes as $route) {

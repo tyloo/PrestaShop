@@ -41,7 +41,7 @@ final class NameColumn extends AbstractColumn
         return 'currency_name';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

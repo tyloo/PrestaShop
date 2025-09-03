@@ -62,7 +62,7 @@ class ManufacturerId implements ManufacturerIdInterface
      *
      * @throws ManufacturerConstraintException
      */
-    private function assertIsIntegerGreaterThanZero($value)
+    private function assertIsIntegerGreaterThanZero($value): void
     {
         if (! \is_int($value) || $value <= 0) {
             throw new ManufacturerConstraintException(\sprintf('Invalid manufacturer id "%s".', var_export($value, true)), ManufacturerConstraintException::INVALID_ID);

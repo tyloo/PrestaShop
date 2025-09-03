@@ -29,7 +29,7 @@ class Cart extends CartCore
     /**
      * An override already exists for this method, so install should fail and return false
      */
-    public function deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0)
+    public function deleteProduct($id_product, $id_product_attribute = null, $id_customization = null, $id_address_delivery = 0): void
     {
         $result = Hook::exec(
             'ppbsDeleteCartProduct',

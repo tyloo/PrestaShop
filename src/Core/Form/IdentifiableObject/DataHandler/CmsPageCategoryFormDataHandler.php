@@ -71,7 +71,7 @@ final class CmsPageCategoryFormDataHandler implements FormDataHandlerInterface
     /**
      * @throws CmsPageCategoryException
      */
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $editCmsPageCategoryCommand = new EditCmsPageCategoryCommand((int) $id);
 

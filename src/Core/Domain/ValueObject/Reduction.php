@@ -96,7 +96,7 @@ class Reduction
     /**
      * @throws DomainConstraintException
      */
-    private function assertIsAllowedType(string $type)
+    private function assertIsAllowedType(string $type): void
     {
         if (! \in_array($type, self::ALLOWED_TYPES, true)) {
             throw new DomainConstraintException(\sprintf('The reduction type "%s" is invalid. Valid types are: "%s", "%s".', $type, self::TYPE_AMOUNT, self::TYPE_PERCENTAGE), DomainConstraintException::INVALID_REDUCTION_TYPE);
@@ -106,7 +106,7 @@ class Reduction
     /**
      * @throws DomainConstraintException
      */
-    private function assertIsValidValue(string $type, DecimalNumber $value)
+    private function assertIsValidValue(string $type, DecimalNumber $value): void
     {
         if ($type === self::TYPE_PERCENTAGE) {
             if ($value->isLowerThanZero() || $value->isGreaterThan(new DecimalNumber((string) self::MAX_ALLOWED_PERCENTAGE))) {

@@ -108,13 +108,12 @@ abstract class AbstractProductFeatureContext extends AbstractDomainFeatureContex
 
         // Now rebuild the image folder with image id appended
         $categoryId = $this->getSharedStorage()->get($categoryReference);
-        $realImageUrl = str_replace(
+
+        return str_replace(
             '{' . $categoryReference . '}',
             (string) $categoryId,
             $imageUrl
         );
-
-        return $realImageUrl;
     }
 
     protected function getProductForEditing(string $reference, ?int $shopId = null): ProductForEditing

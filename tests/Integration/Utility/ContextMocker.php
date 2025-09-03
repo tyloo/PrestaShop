@@ -152,7 +152,7 @@ class ContextMocker
     /**
      * Restore previous context to avoid modifying global properties through tests
      */
-    public function resetContext()
+    public function resetContext(): void
     {
         Context::setInstanceForTesting($this->backupContext);
         LegacyContext::setInstanceForTesting($this->backupContext);

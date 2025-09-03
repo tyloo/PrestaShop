@@ -45,7 +45,7 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I pay order :orderReference with the following details:
      */
-    public function addPaymentToOrderWithTheFollowingDetails(string $orderReference, TableNode $table)
+    public function addPaymentToOrderWithTheFollowingDetails(string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -68,7 +68,7 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference has :numberOfPayments payments
      */
-    public function getOrderPayments(string $orderReference, int $numberOfPayments)
+    public function getOrderPayments(string $orderReference, int $numberOfPayments): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -88,7 +88,7 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then order :orderReference payments should have invoice
      */
-    public function queryOrderPaymentsToGetInvoice(string $orderReference)
+    public function queryOrderPaymentsToGetInvoice(string $orderReference): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 
@@ -143,7 +143,7 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I pay order :orderReference with the invalid following details:
      */
-    public function addPaymentToOrderWithTheInvalidFollowingProperties(string $orderReference, TableNode $table)
+    public function addPaymentToOrderWithTheInvalidFollowingProperties(string $orderReference, TableNode $table): void
     {
         $orderId = SharedStorage::getStorage()->get($orderReference);
 

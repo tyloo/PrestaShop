@@ -38,7 +38,7 @@ final class LinkRowAction extends AbstractRowAction
         return 'link';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

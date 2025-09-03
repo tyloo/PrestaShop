@@ -34,10 +34,8 @@ class CustomerInformation
 {
     /**
      * @param string $email
-     *
-     * @return self
      */
-    public static function withEmailOnly($email)
+    public static function withEmailOnly($email): self
     {
         return new self(null, null, null, $email, null, null, null);
     }

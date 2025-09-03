@@ -136,7 +136,7 @@ class AddCatalogPriceRuleCommand
     /**
      * @throws CatalogPriceRuleConstraintException
      */
-    public function setDateTimeFrom(string $dateTimeFrom)
+    public function setDateTimeFrom(string $dateTimeFrom): void
     {
         $this->dateTimeFrom = $this->createDateTime($dateTimeFrom);
     }
@@ -144,7 +144,7 @@ class AddCatalogPriceRuleCommand
     /**
      * @throws CatalogPriceRuleConstraintException
      */
-    public function setDateTimeTo(string $dateTimeTo)
+    public function setDateTimeTo(string $dateTimeTo): void
     {
         $this->dateTimeTo = $this->createDateTime($dateTimeTo);
     }

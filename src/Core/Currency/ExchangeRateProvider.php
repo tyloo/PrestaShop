@@ -138,7 +138,7 @@ class ExchangeRateProvider
      *
      * @throws CurrencyFeedException
      */
-    private function fetchCurrencyFeed()
+    private function fetchCurrencyFeed(): void
     {
         if (! empty($this->currencies)) {
             return;
@@ -186,7 +186,7 @@ class ExchangeRateProvider
     /**
      * @param SimpleXMLElement $xmlFeed
      */
-    private function parseXmlFeed($xmlFeed)
+    private function parseXmlFeed($xmlFeed): void
     {
         $xmlCurrencies = $xmlFeed->list->currency;
 

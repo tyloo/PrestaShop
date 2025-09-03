@@ -57,7 +57,7 @@ class StockManager
      * @param int            $delta_quantity  The movement of the stock (negative for a decrease)
      * @param int|null       $id_shop         Optional shop ID
      */
-    public function updatePackQuantity($product, $stock_available, $delta_quantity, $id_shop = null)
+    public function updatePackQuantity($product, $stock_available, $delta_quantity, $id_shop = null): void
     {
         /** @TODO We should call the needed classes with the Symfony dependency injection instead of the Homemade Service Locator */
         $serviceLocator = new ServiceLocator();
@@ -105,7 +105,7 @@ class StockManager
      * @param StockAvailable $stock_available      the stock of the product to fix with correct quantity
      * @param int|null       $id_shop              Optional shop ID
      */
-    public function updatePacksQuantityContainingProduct($product, $id_product_attribute, $stock_available, $id_shop = null)
+    public function updatePacksQuantityContainingProduct($product, $id_product_attribute, $stock_available, $id_shop = null): void
     {
         /** @TODO We should call the needed classes with the Symfony dependency injection instead of the Homemade Service Locator */
         $serviceLocator = new ServiceLocator();
@@ -152,7 +152,7 @@ class StockManager
      * @param bool     $add_movement         Optional
      * @param array    $params               Optional
      */
-    public function updateQuantity($product, $id_product_attribute, $delta_quantity, $id_shop = null, $add_movement = false, $params = [])
+    public function updateQuantity($product, $id_product_attribute, $delta_quantity, $id_shop = null, $add_movement = false, $params = []): void
     {
         /** @TODO We should call the needed classes with the Symfony dependency injection instead of the Homemade Service Locator */
         $serviceLocator = new ServiceLocator();

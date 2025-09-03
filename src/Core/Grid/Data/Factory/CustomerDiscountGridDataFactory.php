@@ -39,7 +39,7 @@ use PrestaShop\PrestaShop\Core\Grid\Search\SearchCriteriaInterface;
  */
 final class CustomerDiscountGridDataFactory implements GridDataFactoryInterface
 {
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $customerFilters = $searchCriteria->getFilters();
         $allDiscounts = CartRule::getAllCustomerCartRules(

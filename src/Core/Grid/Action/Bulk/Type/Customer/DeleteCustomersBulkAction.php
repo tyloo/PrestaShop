@@ -40,7 +40,7 @@ final class DeleteCustomersBulkAction extends AbstractBulkAction
         return 'delete_customers';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

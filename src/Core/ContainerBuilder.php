@@ -34,11 +34,9 @@ class ContainerBuilder
     /**
      * Construct PrestaShop Core Service container.
      *
-     * @return Container
-     *
      * @throws Foundation\IoC\Exception
      */
-    public function build()
+    public function build(): Container
     {
         $container = new Container();
 

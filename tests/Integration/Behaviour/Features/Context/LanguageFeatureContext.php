@@ -67,7 +67,7 @@ class LanguageFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      *  @Given /^language with iso code "([^"]*)" is the default one$/
      */
-    public function languageWithIsoCodeIsTheDefaultOne($isoCode)
+    public function languageWithIsoCodeIsTheDefaultOne($isoCode): void
     {
         $languageId = Language::getIdByIso($isoCode);
 
@@ -83,7 +83,7 @@ class LanguageFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given language :reference with locale :locale exists
      */
-    public function createLanguageWithLocale($reference, $locale)
+    public function createLanguageWithLocale($reference, $locale): void
     {
         $languageId = Language::getIdByLocale($locale, true);
 
@@ -118,7 +118,7 @@ class LanguageFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then language :reference should be :locale
      */
-    public function assertLanguageLocale($reference, $locale)
+    public function assertLanguageLocale($reference, $locale): void
     {
         /** @var Language $language */
         $language = SharedStorage::getStorage()->get($reference);

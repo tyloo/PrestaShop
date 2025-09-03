@@ -71,7 +71,7 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
     /**
      * @Then product :productReference should have following related products:
      */
-    public function assertRelatedProducts(string $productReference, TableNode $tableNode)
+    public function assertRelatedProducts(string $productReference, TableNode $tableNode): void
     {
         $productId = $this->getSharedStorage()->get($productReference);
 
@@ -134,7 +134,7 @@ class RelatedProductsFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I remove all related products from product :productReference
      */
-    public function removeAllRelatedProducts(string $productReference)
+    public function removeAllRelatedProducts(string $productReference): void
     {
         $productId = $this->getSharedStorage()->get($productReference);
         $this->getCommandBus()->handle(new RemoveAllRelatedProductsCommand($productId));

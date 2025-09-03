@@ -44,7 +44,7 @@ final class ToggleColumn extends AbstractColumn
         return 'toggle';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([

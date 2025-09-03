@@ -90,7 +90,7 @@ class SharedStorage
     /**
      * @param string $key
      */
-    public function set($key, $resource)
+    public function set($key, $resource): void
     {
         $this->storage[$key] = $resource;
         $this->latestKey = $key;

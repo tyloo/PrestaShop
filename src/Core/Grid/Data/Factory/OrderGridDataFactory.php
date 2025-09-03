@@ -49,7 +49,7 @@ final class OrderGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $data = $this->dataFactory->getData($searchCriteria);
         $records = $data->getRecords()->all();

@@ -160,7 +160,7 @@ class EntityRepository
      */
     protected function hydrateOne(array $rows)
     {
-        if (\count($rows) === 0) {
+        if ($rows === []) {
             return null;
         }
 

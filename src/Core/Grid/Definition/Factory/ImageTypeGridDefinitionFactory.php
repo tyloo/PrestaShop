@@ -68,7 +68,7 @@ final class ImageTypeGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     protected function getColumns()
     {
-        $columns = (new ColumnCollection())
+        return (new ColumnCollection())
             ->add(
                 (new BulkActionColumn('bulk'))
                     ->setOptions([
@@ -156,10 +156,7 @@ final class ImageTypeGridDefinitionFactory extends AbstractGridDefinitionFactory
                     ->setOptions([
                         'actions' => $this->getRowActions(),
                     ])
-            )
-        ;
-
-        return $columns;
+            );
     }
 
     private function getRowActions(): RowActionCollection
@@ -192,7 +189,7 @@ final class ImageTypeGridDefinitionFactory extends AbstractGridDefinitionFactory
 
     protected function getFilters()
     {
-        $filters = (new FilterCollection())
+        return (new FilterCollection())
             ->add(
                 (new Filter('id_image_type', NumberType::class))
                     ->setTypeOptions([
@@ -268,8 +265,6 @@ final class ImageTypeGridDefinitionFactory extends AbstractGridDefinitionFactory
                     ])
                     ->setAssociatedColumn('actions')
             );
-
-        return $filters;
     }
 
     protected function getGridActions()

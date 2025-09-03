@@ -61,7 +61,7 @@ final class BulkDeleteAttributeCommand
     /**
      * @throws AttributeConstraintException
      */
-    private function setAttributeIds(array $attributeIds)
+    private function setAttributeIds(array $attributeIds): void
     {
         foreach ($attributeIds as $attributeId) {
             $this->attributeIds[] = new AttributeId($attributeId);

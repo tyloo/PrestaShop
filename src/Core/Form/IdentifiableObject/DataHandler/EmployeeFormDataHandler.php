@@ -107,7 +107,7 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
         return $employeeId->getValue();
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $command = (new EditEmployeeCommand($id))
             ->setFirstName($data['firstname'])
@@ -198,7 +198,7 @@ final class EmployeeFormDataHandler implements FormDataHandlerInterface
      *
      * @throws EmployeeConstraintException
      */
-    private function assertPasswordIsSameAsOldPassword($plainPassword, $employeeId)
+    private function assertPasswordIsSameAsOldPassword($plainPassword, $employeeId): void
     {
         $oldPassword = $this->employeeDataProvider->getEmployeeHashedPassword($employeeId);
 

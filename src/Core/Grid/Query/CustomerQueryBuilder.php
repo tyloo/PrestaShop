@@ -71,10 +71,8 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
 
     public function getCountQueryBuilder(SearchCriteriaInterface $searchCriteria)
     {
-        $countQueryBuilder = $this->getCustomerQueryBuilder($searchCriteria)
+        return $this->getCustomerQueryBuilder($searchCriteria)
             ->select('COUNT(*)');
-
-        return $countQueryBuilder;
     }
 
     /**
@@ -112,7 +110,7 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
         return $queryBuilder;
     }
 
-    private function appendTotalSpentQuery(QueryBuilder $queryBuilder)
+    private function appendTotalSpentQuery(QueryBuilder $queryBuilder): void
     {
         $totalSpentQueryBuilder = $this->connection->createQueryBuilder()
             ->select('SUM(total_paid_tax_incl / conversion_rate)')
@@ -128,7 +126,7 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Append "last visit" column to customers query builder.
      */
-    private function appendLastVisitQuery(QueryBuilder $queryBuilder)
+    private function appendLastVisitQuery(QueryBuilder $queryBuilder): void
     {
         $lastVisitQueryBuilder = $this->connection->createQueryBuilder()
             ->select('con.date_add')
@@ -144,7 +142,7 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply filters to customers query builder.
      */
-    private function applyFilters(array $filters, QueryBuilder $qb)
+    private function applyFilters(array $filters, QueryBuilder $qb): void
     {
         $allowedFilters = [
             'id_customer',
@@ -208,7 +206,7 @@ final class CustomerQueryBuilder extends AbstractDoctrineQueryBuilder
     /**
      * Apply sorting so search query builder for customers.
      */
-    private function applySorting(QueryBuilder $searchQueryBuilder, SearchCriteriaInterface $searchCriteria)
+    private function applySorting(QueryBuilder $searchQueryBuilder, SearchCriteriaInterface $searchCriteria): void
     {
         switch ($searchCriteria->getOrderBy()) {
             case 'id_customer':

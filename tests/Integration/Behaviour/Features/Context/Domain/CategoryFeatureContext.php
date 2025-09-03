@@ -125,7 +125,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit category :categoryReference with following details:
      */
-    public function editCategory(string $categoryReference, TableNode $table)
+    public function editCategory(string $categoryReference, TableNode $table): void
     {
         $command = new EditCategoryCommand(SharedStorage::getStorage()->get($categoryReference));
         $this->fillEditCommandWithData($command, $table);
@@ -167,7 +167,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete category :categoryReference choosing mode :deleteMode
      */
-    public function deleteCategory(string $categoryReference, string $deleteMode)
+    public function deleteCategory(string $categoryReference, string $deleteMode): void
     {
         $categoryId = SharedStorage::getStorage()->get($categoryReference);
         $this->getCommandBus()->handle(new DeleteCategoryCommand($categoryId, $deleteMode));
@@ -176,7 +176,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I bulk delete categories :categoriesReferenceList choosing mode :deleteMode
      */
-    public function bulkDeleteCategories(string $categoriesReferenceList, string $deleteMode)
+    public function bulkDeleteCategories(string $categoriesReferenceList, string $deleteMode): void
     {
         $categoryIds = [];
         $categoriesReferenceList = explode(',', $categoriesReferenceList);
@@ -190,7 +190,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then category :categoryReference does not exist
      */
-    public function categoryDoesNotExist(string $categoryReference)
+    public function categoryDoesNotExist(string $categoryReference): void
     {
         $categoryId = SharedStorage::getStorage()->get($categoryReference);
         try {
@@ -205,7 +205,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I move category "(.*)" (up|down) to a position "(.*)"$/
      */
-    public function updatePosition(string $categoryReference, string $way, int $newPosition)
+    public function updatePosition(string $categoryReference, string $way, int $newPosition): void
     {
         $categoryId = SharedStorage::getStorage()->get($categoryReference);
         $parentCategoryId = $this->getEditableCategory($categoryReference)->getParentId();
@@ -265,7 +265,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I edit home category :categoryReference with following details:
      */
-    public function editHomeCategory(string $categoryReference, TableNode $table)
+    public function editHomeCategory(string $categoryReference, TableNode $table): void
     {
         $command = new EditRootCategoryCommand($this->getSharedStorage()->get($categoryReference));
         $this->fillEditCommandWithData($command, $table);
@@ -425,7 +425,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete cover image for category ":categoryReference"
      */
-    public function deleteCategoryCoverImage(string $categoryReference)
+    public function deleteCategoryCoverImage(string $categoryReference): void
     {
         $categoryId = SharedStorage::getStorage()->get($categoryReference);
         $this->getCommandBus()->handle(new DeleteCategoryCoverImageCommand($categoryId));
@@ -434,7 +434,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then category ":categoryReference" should have a cover image
      */
-    public function categoryHasCoverImage(string $categoryReference)
+    public function categoryHasCoverImage(string $categoryReference): void
     {
         $editableCategory = $this->getEditableCategory($categoryReference);
         $coverImage = $editableCategory->getCoverImage();
@@ -453,7 +453,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then category :categoryReference should not have a thumbnail image
      */
-    public function assertCategoryHasNoThumbnailImage(string $categoryReference)
+    public function assertCategoryHasNoThumbnailImage(string $categoryReference): void
     {
         $editableCategory = $this->getEditableCategory($categoryReference);
         Assert::assertNull($editableCategory->getThumbnailImage());
@@ -462,7 +462,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then category :categoryReference should have a thumbnail image
      */
-    public function assertCategoryHasThumbnailImage(string $categoryReference)
+    public function assertCategoryHasThumbnailImage(string $categoryReference): void
     {
         $editableCategory = $this->getEditableCategory($categoryReference);
         Assert::assertNotNull($editableCategory->getThumbnailImage());
@@ -483,7 +483,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I enable category :categoryReference
      */
-    public function enableCategory(string $categoryReference)
+    public function enableCategory(string $categoryReference): void
     {
         $editableCategory = $this->getEditableCategory($categoryReference);
         $this->getCommandBus()->handle(new SetCategoryIsEnabledCommand(
@@ -495,7 +495,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I disable category :categoryReference
      */
-    public function disableCategory(string $categoryReference)
+    public function disableCategory(string $categoryReference): void
     {
         $editableCategory = $this->getEditableCategory($categoryReference);
         $this->getCommandBus()->handle(new SetCategoryIsEnabledCommand(
@@ -507,7 +507,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When /^I bulk (enable|disable) categories "(.*)"$/
      */
-    public function bulkUpdateCategoriesStatus(bool $enable, string $categoryReferences)
+    public function bulkUpdateCategoriesStatus(bool $enable, string $categoryReferences): void
     {
         $this->getCommandBus()->handle(
             new BulkUpdateCategoriesStatusCommand($this->referencesToIds($categoryReferences), $enable)
@@ -517,7 +517,7 @@ class CategoryFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Given category :categoryReference in default language named :categoryName exists
      */
-    public function assertCategoryExistsByName(string $categoryReference, string $categoryName)
+    public function assertCategoryExistsByName(string $categoryReference, string $categoryName): void
     {
         $foundCategory = Category::searchByName($this->getDefaultLangId(), $categoryName, true);
 

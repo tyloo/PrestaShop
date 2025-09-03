@@ -52,7 +52,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @BeforeScenario
      */
-    public function before()
+    public function before(): void
     {
         // Merchandise return is disabled by default, use enabledReturnProduct() to enable it
         Configuration::set('PS_ORDER_RETURN', 0);
@@ -67,7 +67,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         string $generateCreditSlip,
         string $generateVoucher,
         TableNode $table,
-    ) {
+    ): void {
         $restockProducts = $restockProducts === 'with';
         $generateCreditSlip = $generateCreditSlip === 'with';
         $generateVoucher = $generateVoucher === 'with';
@@ -97,7 +97,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         string $generateCreditSlip,
         string $generateVoucher,
         TableNode $table,
-    ) {
+    ): void {
         $generateCreditSlip = $generateCreditSlip === 'with';
         $generateVoucher = $generateVoucher === 'with';
         $orderId = SharedStorage::getStorage()->get($orderReference);
@@ -126,7 +126,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
         string $generateCreditSlip,
         string $generateVoucher,
         TableNode $table,
-    ) {
+    ): void {
         $restockProducts = $restockProducts === 'with';
         $generateCreditSlip = $generateCreditSlip === 'with';
         $generateVoucher = $generateVoucher === 'with';
@@ -201,7 +201,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
      * @Then I should get error that refund quantity is invalid
      * @Then I should get error that cancel quantity is invalid
      */
-    public function assertLastErrorIsInvalidRefundQuantity()
+    public function assertLastErrorIsInvalidRefundQuantity(): void
     {
         $this->assertLastErrorIs(InvalidCancelProductException::class, InvalidCancelProductException::INVALID_QUANTITY);
     }
@@ -210,7 +210,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
      * @Then I should get error that refund quantity is too high and max is :maxRefund
      * @Then I should get error that cancel quantity is too high and max is :maxRefund
      */
-    public function assertLastErrorIsRefundQuantityTooHigh(int $maxRefund)
+    public function assertLastErrorIsRefundQuantityTooHigh(int $maxRefund): void
     {
         /** @var InvalidCancelProductException $lastError */
         $lastError = $this->assertLastErrorIs(
@@ -225,7 +225,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that refund amount is invalid
      */
-    public function assertLastErrorIsInvalidRefundAmount()
+    public function assertLastErrorIsInvalidRefundAmount(): void
     {
         $this->assertLastErrorIs(InvalidCancelProductException::class, InvalidCancelProductException::INVALID_AMOUNT);
     }
@@ -233,7 +233,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that no generation is invalid
      */
-    public function assertLastErrorIsInvalidNoGeneration()
+    public function assertLastErrorIsInvalidNoGeneration(): void
     {
         $this->assertLastErrorIs(InvalidCancelProductException::class, InvalidCancelProductException::NO_GENERATION);
     }
@@ -241,7 +241,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that no refunds is invalid
      */
-    public function assertLastErrorIsInvalidNoRefunds()
+    public function assertLastErrorIsInvalidNoRefunds(): void
     {
         $this->assertLastErrorIs(InvalidCancelProductException::class, InvalidCancelProductException::NO_REFUNDS);
     }
@@ -249,7 +249,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that return product is disabled
      */
-    public function assertLastErrorIsReturnProductDisabled()
+    public function assertLastErrorIsReturnProductDisabled(): void
     {
         $this->assertLastErrorIs(ReturnProductDisabledException::class);
     }
@@ -257,7 +257,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that order is already paid
      */
-    public function assertLastErrorIsOrderIsAlreadyPaid()
+    public function assertLastErrorIsOrderIsAlreadyPaid(): void
     {
         $this->assertLastErrorIs(
             InvalidOrderStateException::class,
@@ -268,7 +268,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that order is not paid
      */
-    public function assertLastErrorIsOrderIsNotPaid()
+    public function assertLastErrorIsOrderIsNotPaid(): void
     {
         $this->assertLastErrorIs(
             InvalidOrderStateException::class,
@@ -279,7 +279,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that order is delivered
      */
-    public function assertLastErrorIsOrderIsDelivered()
+    public function assertLastErrorIsOrderIsDelivered(): void
     {
         $this->assertLastErrorIs(
             InvalidOrderStateException::class,
@@ -290,7 +290,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then I should get error that order is not delivered
      */
-    public function assertLastErrorIsOrderIsNotDelivered()
+    public function assertLastErrorIsOrderIsNotDelivered(): void
     {
         $this->assertLastErrorIs(
             InvalidOrderStateException::class,
@@ -440,7 +440,7 @@ class OrderRefundFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I cancel the following products from order :orderReference:
      */
-    public function cancelOrderProduct(string $orderReference, TableNode $table)
+    public function cancelOrderProduct(string $orderReference, TableNode $table): void
     {
         $cancelProductInfos = $table->getColumnsHash();
         $orderId = SharedStorage::getStorage()->get($orderReference);

@@ -158,7 +158,7 @@ class AddContactCommand extends AbstractContactCommand
     /**
      * @throws ContactConstraintException
      */
-    private function assertIsLocalisedTitleValid(array $localisedTitles)
+    private function assertIsLocalisedTitleValid(array $localisedTitles): void
     {
         if (! $this->assertIsNotEmptyAndContainsAllNonEmptyStringValues($localisedTitles)) {
             throw new ContactConstraintException(\sprintf('Expected to have not empty titles array but received %s', var_export($localisedTitles, true)), ContactConstraintException::INVALID_TITLE);

@@ -31,7 +31,7 @@ use PHPUnit\Framework\Assert;
 
 trait ExtendedTestCaseMethodsTrait
 {
-    private function compareWithEpsilon($expected, $actual, $message)
+    private function compareWithEpsilon($expected, $actual, $message): void
     {
         $success = false;
 
@@ -43,7 +43,7 @@ trait ExtendedTestCaseMethodsTrait
         Assert::assertTrue($success, $message);
     }
 
-    public function assertEqualsWithEpsilon($expected, $actual, $message = '')
+    public function assertEqualsWithEpsilon($expected, $actual, $message = ''): void
     {
         if (! \is_array($expected)) {
             $expectedArray[]['a'] = $expected; // we recreate the structure of the array as in Tools::spreadAmount()

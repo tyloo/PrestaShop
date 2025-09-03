@@ -41,7 +41,7 @@ class ManufacturerAddressGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $addresses = $this->manufacturerAddressDataFactory->getData($searchCriteria);
 

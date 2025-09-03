@@ -91,7 +91,7 @@ class UpdateAttachmentFeatureContext extends AbstractProductFeatureContext
     /**
      * @Then product :productReference should have no attachments associated
      */
-    public function assertProductHasNoAttachmentsAssociated(string $productReference)
+    public function assertProductHasNoAttachmentsAssociated(string $productReference): void
     {
         Assert::assertEmpty(
             $this->getProductForEditing($productReference)->getAssociatedAttachments(),
@@ -123,7 +123,7 @@ class UpdateAttachmentFeatureContext extends AbstractProductFeatureContext
     /**
      * @When I remove product :productReference attachments association
      */
-    public function removeProductAttachmentsAssociation(string $productReference)
+    public function removeProductAttachmentsAssociation(string $productReference): void
     {
         $this->getCommandBus()->handle(new RemoveAllAssociatedProductAttachmentsCommand(
             $this->getSharedStorage()->get($productReference)

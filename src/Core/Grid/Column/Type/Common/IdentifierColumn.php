@@ -40,7 +40,7 @@ final class IdentifierColumn extends AbstractColumn
         return 'identifier';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired([

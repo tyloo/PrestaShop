@@ -61,7 +61,7 @@ class Name
      *
      * @throws MetaConstraintException
      */
-    private function assertIsValidPageName($pageName)
+    private function assertIsValidPageName($pageName): void
     {
         if (! \is_string($pageName) || ! $pageName || ! preg_match('/^[a-zA-Z0-9_.-]+$/', $pageName)) {
             throw new MetaConstraintException(\sprintf('Invalid Meta page name %s', var_export($pageName, true)), MetaConstraintException::INVALID_PAGE_NAME);

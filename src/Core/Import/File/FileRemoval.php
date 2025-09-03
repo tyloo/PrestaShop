@@ -45,7 +45,7 @@ final class FileRemoval
      *
      * @param string $filename
      */
-    public function remove($filename)
+    public function remove($filename): void
     {
         $fs = new Filesystem();
         $filename = basename($filename);

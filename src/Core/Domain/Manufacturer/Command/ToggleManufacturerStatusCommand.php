@@ -81,7 +81,7 @@ class ToggleManufacturerStatusCommand
      *
      * @throws ManufacturerConstraintException
      */
-    private function assertIsBool($value)
+    private function assertIsBool($value): void
     {
         if (! \is_bool($value)) {
             throw new ManufacturerConstraintException(\sprintf('Status must be of type bool, but given %s', var_export($value, true)), ManufacturerConstraintException::INVALID_STATUS);

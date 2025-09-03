@@ -279,7 +279,7 @@ class AliasFeatureContext extends AbstractDomainFeatureContext
      * @param object[] $expectedData
      * @param array[]  $aliases
      */
-    private function assertAliasProperties(array $expectedData, array $aliases, bool $exist = false)
+    private function assertAliasProperties(array $expectedData, array $aliases, bool $exist = false): void
     {
         foreach ($expectedData as $expectedAlias) {
             $filter = array_filter($aliases, fn ($alias): bool => $alias['alias'] === $expectedAlias['alias']

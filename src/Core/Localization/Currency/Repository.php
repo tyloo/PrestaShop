@@ -79,10 +79,7 @@ class Repository implements CurrencyRepositoryInterface
         return $this->createCurrenciesFromData($this->dataSource->getAllInstalledCurrenciesData($localeCode));
     }
 
-    /**
-     * @return CurrencyCollection
-     */
-    private function createCurrenciesFromData(array $currenciesData)
+    private function createCurrenciesFromData(array $currenciesData): CurrencyCollection
     {
         $currencies = new CurrencyCollection();
         /** @var CurrencyData $currencyDatum */
@@ -93,10 +90,7 @@ class Repository implements CurrencyRepositoryInterface
         return $currencies;
     }
 
-    /**
-     * @return Currency
-     */
-    private function createCurrencyFromData(CurrencyData $currencyData)
+    private function createCurrencyFromData(CurrencyData $currencyData): Currency
     {
         $numericIsoCode = $currencyData->getNumericIsoCode() ? (int) $currencyData->getNumericIsoCode() : null;
 

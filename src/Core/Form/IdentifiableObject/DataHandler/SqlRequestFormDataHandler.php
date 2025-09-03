@@ -50,7 +50,7 @@ final class SqlRequestFormDataHandler implements FormDataHandlerInterface
         return $sqlRequestId->getValue();
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $sqlRequestId = new SqlRequestId($id);
 

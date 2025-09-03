@@ -56,7 +56,7 @@ class CombinationId implements CombinationIdInterface
     /**
      * @throws CombinationConstraintException
      */
-    private function assertValueIsPositive(int $value)
+    private function assertValueIsPositive(int $value): void
     {
         if ($value <= 0) {
             throw new CombinationConstraintException(\sprintf('Combination id must be positive integer. "%s" given', $value), CombinationConstraintException::INVALID_ID);

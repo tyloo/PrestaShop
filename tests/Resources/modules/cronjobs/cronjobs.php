@@ -193,7 +193,7 @@ class CronJobs extends Module
         return false;
     }
 
-    public function hookActionModuleRegisterHookAfter($params)
+    public function hookActionModuleRegisterHookAfter($params): void
     {
         $hook_name = $params['hook_name'];
 
@@ -204,7 +204,7 @@ class CronJobs extends Module
         }
     }
 
-    public function hookActionModuleUnRegisterHookAfter($params)
+    public function hookActionModuleUnRegisterHookAfter($params): void
     {
         $hook_name = $params['hook_name'];
 
@@ -215,7 +215,7 @@ class CronJobs extends Module
         }
     }
 
-    public function hookBackOfficeHeader()
+    public function hookBackOfficeHeader(): void
     {
         if (Tools::getValue('configure') === $this->name) {
             if (version_compare(_PS_VERSION_, '1.6', '<') === true) {
@@ -278,7 +278,7 @@ class CronJobs extends Module
         return $output . $this->renderTasksList();
     }
 
-    public function sendCallback()
+    public function sendCallback(): void
     {
         ignore_user_abort(true);
         set_time_limit(0);

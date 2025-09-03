@@ -62,7 +62,7 @@ class ProductFormDataHandler implements FormDataHandlerInterface
         return $productId->getValue();
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): void
     {
         $shopConstraint = $this->contextShopId !== null ? ShopConstraint::shop($this->contextShopId) : ShopConstraint::shop($this->defaultShopId);
         $commands = $this->commandsBuilder->buildCommands(

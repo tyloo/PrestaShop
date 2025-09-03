@@ -61,7 +61,7 @@ final class DataRowCollectionPresenter implements DataRowCollectionPresenterInte
      *
      * @param int $expectedRowSize number of columns this row will reach
      */
-    private function normalizeDataRow(DataRowInterface $dataRow, $expectedRowSize)
+    private function normalizeDataRow(DataRowInterface $dataRow, $expectedRowSize): void
     {
         while (\count($dataRow) < $expectedRowSize) {
             $dataRow->addCell(new EmptyDataCell());

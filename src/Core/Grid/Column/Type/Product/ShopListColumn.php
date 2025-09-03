@@ -43,7 +43,7 @@ final class ShopListColumn extends AbstractColumn
         return 'shop_list';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

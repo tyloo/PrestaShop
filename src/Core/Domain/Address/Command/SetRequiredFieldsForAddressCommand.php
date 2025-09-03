@@ -63,7 +63,7 @@ class SetRequiredFieldsForAddressCommand
      *
      * @param string[] $requiredFields
      */
-    private function assertContainsOnlyAllowedFields(array $requiredFields)
+    private function assertContainsOnlyAllowedFields(array $requiredFields): void
     {
         foreach ($requiredFields as $requiredField) {
             if (! \in_array($requiredField, RequiredFields::ALLOWED_REQUIRED_FIELDS, true)) {

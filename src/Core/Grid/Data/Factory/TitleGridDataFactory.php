@@ -48,7 +48,7 @@ class TitleGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $titleData = $this->doctrineTitleDataFactory->getData($searchCriteria);
 

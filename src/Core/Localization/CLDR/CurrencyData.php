@@ -241,7 +241,7 @@ class CurrencyData
     /**
      * @param bool $active
      */
-    public function setActive($active)
+    public function setActive($active): void
     {
         $this->active = (bool) $active;
     }

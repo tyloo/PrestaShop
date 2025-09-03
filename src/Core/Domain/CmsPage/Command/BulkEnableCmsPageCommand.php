@@ -59,7 +59,7 @@ class BulkEnableCmsPageCommand
     /**
      * @throws CmsPageException
      */
-    private function setCmsPages(array $cmsPageIds)
+    private function setCmsPages(array $cmsPageIds): void
     {
         foreach ($cmsPageIds as $cmsPageId) {
             $this->cmsPages[] = new CmsPageId($cmsPageId);

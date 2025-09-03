@@ -138,7 +138,7 @@ class StreamWrapperPHP
         return file_put_contents($this->buffer_filename(), $data);
     }
 
-    public function unlink()
+    public function unlink(): void
     {
         if (file_exists($this->buffer_filename())) {
             unlink($this->buffer_filename());

@@ -96,7 +96,7 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $this->trans('Carriers', [], 'Admin.Shipping.Feature');
     }
 
-    protected function getColumns()
+    protected function getColumns(): ColumnCollection
     {
         $columns = new ColumnCollection();
 
@@ -192,7 +192,7 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
         return $columns;
     }
 
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         $filters = new FilterCollection();
 

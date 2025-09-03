@@ -47,14 +47,12 @@ final class FormBuilderFactory implements FormBuilderFactoryInterface
 
     /**
      * @param string $formType
-     *
-     * @return FormBuilder
      */
     public function create(
         $formType,
         FormDataProviderInterface $dataProvider,
         ?FormOptionsProviderInterface $optionProvider = null,
-    ) {
+    ): FormBuilder {
         return new FormBuilder(
             $this->formFactory,
             $this->hookDispatcher,

@@ -42,7 +42,7 @@ class OrderAddressFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): void
     {
         // Not used for creation, only edition
     }
@@ -53,7 +53,7 @@ class OrderAddressFormDataHandler implements FormDataHandlerInterface
      * @throws InvalidAddressTypeException
      * @throws OrderException
      */
-    public function update($orderId, array $data)
+    public function update($orderId, array $data): void
     {
         $editAddressCommand = new EditOrderAddressCommand($orderId, $data['address_type']);
 

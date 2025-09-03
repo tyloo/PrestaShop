@@ -127,7 +127,7 @@ class AddOrderFromBackOfficeCommand
      *
      * @throws InvalidModuleException
      */
-    private function assertIsModuleName($moduleName)
+    private function assertIsModuleName($moduleName): void
     {
         if (! \is_string($moduleName) || ! preg_match('/^[a-zA-Z0-9_-]+$/', $moduleName)) {
             throw new InvalidModuleException();
@@ -139,7 +139,7 @@ class AddOrderFromBackOfficeCommand
      *
      * @throws InvalidOrderStateException
      */
-    private function assertOrderStateIsPositiveInt($orderStateId)
+    private function assertOrderStateIsPositiveInt($orderStateId): void
     {
         if (! \is_int($orderStateId) || $orderStateId <= 0) {
             throw new InvalidOrderStateException(InvalidOrderStateException::INVALID_ID, 'Invalid order state id');

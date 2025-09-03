@@ -477,10 +477,7 @@ AND EXISTS(SELECT 1
         return $queryMock;
     }
 
-    /**
-     * @return InputBag
-     */
-    private function mockAttributes(array $attributes)
+    private function mockAttributes(array $attributes): InputBag
     {
         $attributesMock = new InputBag();
         $attributesMock->replace($attributes);

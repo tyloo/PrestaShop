@@ -70,7 +70,7 @@ final class CmsPageFormDataHandler implements FormDataHandlerInterface
      * @throws CmsPageException
      * @throws CmsPageCategoryException
      */
-    public function update($cmsPageId, array $data)
+    public function update($cmsPageId, array $data): void
     {
         $editCmsPageCommand = new EditCmsPageCommand((int) $cmsPageId);
         $this->fillCommandWithData($editCmsPageCommand, $data);
@@ -81,7 +81,7 @@ final class CmsPageFormDataHandler implements FormDataHandlerInterface
     /**
      * @throws CmsPageCategoryException
      */
-    private function fillCommandWithData(EditCmsPageCommand $command, array $data)
+    private function fillCommandWithData(EditCmsPageCommand $command, array $data): void
     {
         $command->setCmsPageCategoryId((int) $data['page_category_id']);
         $command->setLocalizedTitle($data['title']);

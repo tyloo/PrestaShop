@@ -329,7 +329,7 @@ class EditCarrierCommand
 
     public function setZones(array $zones): self
     {
-        if (\count($zones) === 0) {
+        if ($zones === []) {
             throw new CarrierConstraintException('Carrier need to have at least one zone', CarrierConstraintException::INVALID_ZONE_MISSING);
         }
 

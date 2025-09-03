@@ -57,10 +57,7 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
         $this->filterId = ! empty($filterId) ? $filterId : $this->filterId;
     }
 
-    /**
-     * @return Filters
-     */
-    public static function buildDefaults()
+    public static function buildDefaults(): static
     {
         return new static(static::getDefaults());
     }
@@ -106,7 +103,7 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
         return $this->getInt('limit') ?: null;
     }
 
-    public function addFilter(array $parameters = [])
+    public function addFilter(array $parameters = []): void
     {
         $filters = array_replace($this->getFilters(), $parameters);
         $this->set('filters', $filters);

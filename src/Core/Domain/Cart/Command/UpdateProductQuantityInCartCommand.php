@@ -125,7 +125,7 @@ class UpdateProductQuantityInCartCommand
         return $this->customizationId;
     }
 
-    private function setCombinationId(?int $combinationId)
+    private function setCombinationId(?int $combinationId): void
     {
         if ($combinationId !== null) {
             $combinationId = new CombinationId($combinationId);
@@ -134,7 +134,7 @@ class UpdateProductQuantityInCartCommand
         $this->combinationId = $combinationId;
     }
 
-    private function setCustomizationId(?int $customizationId)
+    private function setCustomizationId(?int $customizationId): void
     {
         if ($customizationId !== null) {
             $customizationId = new CustomizationId($customizationId);
@@ -146,7 +146,7 @@ class UpdateProductQuantityInCartCommand
     /**
      * @throws CartConstraintException
      */
-    private function assertQuantityIsPositive(int $qty)
+    private function assertQuantityIsPositive(int $qty): void
     {
         if ($qty <= 0) {
             throw new CartConstraintException(\sprintf('Quantity must be positive integer. "%s" given.', $qty), CartConstraintException::INVALID_QUANTITY);

@@ -85,7 +85,7 @@ final class CatalogPriceRuleFormDataHandler implements FormDataHandlerInterface
     /**
      * @throws CatalogPriceRuleException
      */
-    public function update($catalogPriceRuleId, array $data)
+    public function update($catalogPriceRuleId, array $data): void
     {
         $editCatalogPriceRuleCommand = new EditCatalogPriceRuleCommand((int) $catalogPriceRuleId);
         $this->fillCommandWithData($editCatalogPriceRuleCommand, $data);
@@ -96,7 +96,7 @@ final class CatalogPriceRuleFormDataHandler implements FormDataHandlerInterface
     /**
      * @throws CatalogPriceRuleException
      */
-    private function fillCommandWithData(EditCatalogPriceRuleCommand $command, array $data)
+    private function fillCommandWithData(EditCatalogPriceRuleCommand $command, array $data): void
     {
         if ($data['leave_initial_price']) {
             $data['price'] = -1;

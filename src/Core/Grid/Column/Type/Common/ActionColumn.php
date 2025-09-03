@@ -38,7 +38,7 @@ final class ActionColumn extends AbstractColumn
         return 'action';
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([

@@ -59,7 +59,7 @@ class FeatureValueId
     /**
      * @throws InvalidFeatureValueIdException
      */
-    private function assertIsGreaterThanZero(int $featureValueId)
+    private function assertIsGreaterThanZero(int $featureValueId): void
     {
         if ($featureValueId <= 0) {
             throw new InvalidFeatureValueIdException(\sprintf('Invalid feature id %d supplied. Feature id must be positive integer.', $featureValueId));

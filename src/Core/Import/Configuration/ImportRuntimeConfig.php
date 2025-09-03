@@ -109,7 +109,7 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
         return $this->sharedData;
     }
 
-    public function addSharedDataItem($key, $value)
+    public function addSharedDataItem($key, $value): void
     {
         $this->sharedData[$key] = $value;
     }
@@ -119,7 +119,7 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
         return $this->processedRows < $this->limit;
     }
 
-    public function setNumberOfProcessedRows($number)
+    public function setNumberOfProcessedRows($number): void
     {
         $this->processedRows = $number;
     }
@@ -129,41 +129,32 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
         return $this->processedRows;
     }
 
-    public function setRequestSizeInBytes($size)
+    public function setRequestSizeInBytes($size): void
     {
         $this->requestSize = $size;
     }
 
-    public function setPostSizeLimitInBytes($size)
+    public function setPostSizeLimitInBytes($size): void
     {
         $this->postSizeLimit = $size;
     }
 
-    public function setTotalNumberOfRows($number)
+    public function setTotalNumberOfRows($number): void
     {
         $this->totalNumberOfRows = $number;
     }
 
-    /**
-     * @return array|void
-     */
-    public function setNotices(array $notices)
+    public function setNotices(array $notices): void
     {
         $this->notices = $notices;
     }
 
-    /**
-     * @return array|void
-     */
-    public function setWarnings(array $warnings)
+    public function setWarnings(array $warnings): void
     {
         $this->warnings = $warnings;
     }
 
-    /**
-     * @return array|void
-     */
-    public function setErrors(array $errors)
+    public function setErrors(array $errors): void
     {
         $this->errors = $errors;
     }

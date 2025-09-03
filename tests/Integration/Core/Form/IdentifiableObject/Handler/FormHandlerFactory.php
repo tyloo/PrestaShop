@@ -45,7 +45,7 @@ class FormHandlerFactory implements FormHandlerFactoryInterface
     ) {
     }
 
-    public function create(FormDataHandlerInterface $dataHandler)
+    public function create(FormDataHandlerInterface $dataHandler): FormHandlerChecker
     {
         $formHandler = new FormHandler(
             $dataHandler,

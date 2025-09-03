@@ -67,7 +67,7 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @BeforeScenario
      */
-    public function before(BeforeScenarioScope $scope)
+    public function before(BeforeScenarioScope $scope): void
     {
         /** @var InitializedContextEnvironment $environment */
         $environment = $scope->getEnvironment();
@@ -96,7 +96,7 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a tax rule named "(.+)" in country "([^\"]+)" and state "(.+)" where tax "(.+)" is applied$/
      */
-    public function createTaxRule($taxRuleName, $countryName, $stateName, $taxName)
+    public function createTaxRule($taxRuleName, $countryName, $stateName, $taxName): void
     {
         $this->carrierFeatureContext->checkCountryWithNameExists($countryName);
         $this->carrierFeatureContext->checkStateWithNameExists($stateName);
@@ -159,7 +159,7 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @AfterScenario
      */
-    public function cleanFixtures()
+    public function cleanFixtures(): void
     {
         foreach ($this->taxRules as $taxRule) {
             $taxRule->delete();
@@ -181,7 +181,7 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^product "(.+)" belongs to tax group "(.+)"$/
      */
-    public function setProductTaxRuleGroup($productName, $taxName)
+    public function setProductTaxRuleGroup($productName, $taxName): void
     {
         $this->productFeatureContext->checkProductWithNameExists($productName);
         $this->checkTaxRuleWithNameExists($taxName);
@@ -196,7 +196,7 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^Ecotax belongs to tax group "(.+)"$/
      */
-    public function setEcotaxTaxRuleGroup($taxName)
+    public function setEcotaxTaxRuleGroup($taxName): void
     {
         $this->checkTaxRuleWithNameExists($taxName);
         $configuration = CommonFeatureContext::getContainer()->get('prestashop.adapter.legacy.configuration');

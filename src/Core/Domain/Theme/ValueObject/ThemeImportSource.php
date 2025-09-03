@@ -46,30 +46,23 @@ class ThemeImportSource
      */
     private $sourceType;
 
-    /**
-     * @return ThemeImportSource
-     */
-    public static function fromArchive(UploadedFile $uploadedTheme)
+    public static function fromArchive(UploadedFile $uploadedTheme): self
     {
         return new self(self::FROM_ARCHIVE, $uploadedTheme);
     }
 
     /**
      * @param string $themeUrl
-     *
-     * @return ThemeImportSource
      */
-    public static function fromWeb($themeUrl)
+    public static function fromWeb($themeUrl): self
     {
         return new self(self::FROM_WEB, $themeUrl);
     }
 
     /**
      * @param string $themeFtp
-     *
-     * @return ThemeImportSource
      */
-    public static function fromFtp($themeFtp)
+    public static function fromFtp($themeFtp): self
     {
         return new self(self::FROM_FTP, $themeFtp);
     }
@@ -110,7 +103,7 @@ class ThemeImportSource
      *
      * @throws NotSupportedThemeImportSourceException
      */
-    private function assertSupportedThemeImportSourceTypeSupplied($sourceType)
+    private function assertSupportedThemeImportSourceTypeSupplied($sourceType): void
     {
         $supportedSources = [self::FROM_ARCHIVE, self::FROM_WEB, self::FROM_FTP];
 

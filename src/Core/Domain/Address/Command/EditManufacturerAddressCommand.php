@@ -126,7 +126,7 @@ class EditManufacturerAddressCommand
     /**
      * @param AddressId $addressId
      */
-    public function setAddressId($addressId)
+    public function setAddressId($addressId): void
     {
         $this->addressId = $addressId;
     }
@@ -144,7 +144,7 @@ class EditManufacturerAddressCommand
      *
      * @throws AddressConstraintException
      */
-    public function setManufacturerId($manufacturerId)
+    public function setManufacturerId($manufacturerId): void
     {
         $this->assertIsNullOrNonNegativeInt($manufacturerId);
         $this->manufacturerId = $manufacturerId;
@@ -161,7 +161,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $lastName
      */
-    public function setLastName($lastName)
+    public function setLastName($lastName): void
     {
         $this->lastName = $lastName;
     }
@@ -177,7 +177,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $firstName
      */
-    public function setFirstName($firstName)
+    public function setFirstName($firstName): void
     {
         $this->firstName = $firstName;
     }
@@ -193,7 +193,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $address
      */
-    public function setAddress($address)
+    public function setAddress($address): void
     {
         $this->address = $address;
     }
@@ -209,7 +209,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $city
      */
-    public function setCity($city)
+    public function setCity($city): void
     {
         $this->city = $city;
     }
@@ -225,7 +225,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $address2
      */
-    public function setAddress2($address2)
+    public function setAddress2($address2): void
     {
         $this->address2 = $address2;
     }
@@ -241,7 +241,7 @@ class EditManufacturerAddressCommand
     /**
      * @param int|null $countryId
      */
-    public function setCountryId($countryId)
+    public function setCountryId($countryId): void
     {
         $this->countryId = $countryId;
     }
@@ -257,7 +257,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $postCode
      */
-    public function setPostCode($postCode)
+    public function setPostCode($postCode): void
     {
         $this->postCode = $postCode;
     }
@@ -273,7 +273,7 @@ class EditManufacturerAddressCommand
     /**
      * @param int|null $stateId
      */
-    public function setStateId($stateId)
+    public function setStateId($stateId): void
     {
         $this->stateId = $stateId;
     }
@@ -289,7 +289,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $homePhone
      */
-    public function setHomePhone($homePhone)
+    public function setHomePhone($homePhone): void
     {
         $this->homePhone = $homePhone;
     }
@@ -305,7 +305,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $mobilePhone
      */
-    public function setMobilePhone($mobilePhone)
+    public function setMobilePhone($mobilePhone): void
     {
         $this->mobilePhone = $mobilePhone;
     }
@@ -321,7 +321,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $other
      */
-    public function setOther($other)
+    public function setOther($other): void
     {
         $this->other = $other;
     }
@@ -337,7 +337,7 @@ class EditManufacturerAddressCommand
     /**
      * @param string|null $dni
      */
-    public function setDni($dni)
+    public function setDni($dni): void
     {
         $this->dni = $dni;
     }
@@ -345,7 +345,7 @@ class EditManufacturerAddressCommand
     /**
      * @throws AddressConstraintException
      */
-    private function assertIsNullOrNonNegativeInt($value)
+    private function assertIsNullOrNonNegativeInt($value): void
     {
         if ($value === null || \is_int($value) || $value >= 0) {
             return;

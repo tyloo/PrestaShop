@@ -169,7 +169,7 @@ class OrderForViewing
 
     public function hasPayments(): bool
     {
-        return \count($this->payments->getPayments()) > 0;
+        return $this->payments->getPayments() !== [];
     }
 
     public function getMessages(): OrderMessagesForViewing

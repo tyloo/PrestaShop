@@ -44,7 +44,7 @@ final class CatalogPriceRuleGridDataFactory implements GridDataFactoryInterface
     ) {
     }
 
-    public function getData(SearchCriteriaInterface $searchCriteria)
+    public function getData(SearchCriteriaInterface $searchCriteria): GridData
     {
         $priceRuleData = $this->priceRuleDataFactory->getData($searchCriteria);
 
