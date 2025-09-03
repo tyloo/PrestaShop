@@ -167,25 +167,18 @@ class ExportModuleTranslationsCommand extends Command
             $moduleName,
             $locale
         ));
-
-        try {
-            $customZipFilePath = $this->performExport($moduleName, $locale, $autoInstall);
-
-            $successMsg = \sprintf(
-                'Module translations have been exported successfully: %s',
-                $customZipFilePath
-            );
-            $formattedBlock = $formatter->formatBlock($successMsg, 'info', true);
-            $output->writeln($formattedBlock);
-
-            if ($autoInstall) {
-                $output->writeln('<info>Translations have been installed to the module directory.</info>');
-            }
-
-            return Command::SUCCESS;
-        } catch (Exception $exception) {
-            throw $exception;
+        $customZipFilePath = $this->performExport($moduleName, $locale, $autoInstall);
+        $successMsg = \sprintf(
+            'Module translations have been exported successfully: %s',
+            $customZipFilePath
+        );
+        $formattedBlock = $formatter->formatBlock($successMsg, 'info', true);
+        $output->writeln($formattedBlock);
+        if ($autoInstall) {
+            $output->writeln('<info>Translations have been installed to the module directory.</info>');
         }
+
+        return Command::SUCCESS;
     }
 
     /**
