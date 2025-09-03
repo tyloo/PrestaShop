@@ -136,7 +136,8 @@ class LoginController extends PrestaShopAdminController
 
         if ($requestPasswordResetForm->isSubmitted()) {
             if ($requestPasswordResetForm->isValid()) {
-                $infoMessage = $errorMessage = null;
+                $infoMessage = null;
+                $errorMessage = null;
                 try {
                     $requestResetPasswordFormHandler->save($requestPasswordResetForm->getData());
                     $infoMessage = $this->trans('Please, check your mailbox.', [], 'Admin.Login.Notification') . '<br/>' .

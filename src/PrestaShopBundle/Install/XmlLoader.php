@@ -278,7 +278,8 @@ class XmlLoader
         }
 
         $is_multi_lang_entity = $this->isMultilang($entity);
-        $xml_langs = $multilang_columns = [];
+        $xml_langs = [];
+        $multilang_columns = [];
         $default_lang = null;
 
         if ($is_multi_lang_entity) {
@@ -1245,7 +1246,8 @@ class XmlLoader
         }
 
         // Get multilang columns
-        $alias_multilang = $multilang_columns = [];
+        $alias_multilang = [];
+        $multilang_columns = [];
         if ($is_multilang) {
             $columns = $this->getColumns($entity);
             $multilang_columns = $this->getColumns($entity, true);
@@ -1261,7 +1263,8 @@ class XmlLoader
         }
 
         // Get all results
-        $nodes = $nodes_lang = [];
+        $nodes = [];
+        $nodes_lang = [];
         $results = Db::getInstance()->executeS($sql);
         if (Db::getInstance()->getNumberError()) {
             $this->setError($this->translator->trans('SQL error on query <i>%query%</i>', ['%sql%' => $sql], 'Install'));

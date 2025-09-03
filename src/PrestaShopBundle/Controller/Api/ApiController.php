@@ -120,11 +120,12 @@ abstract class ApiController
             $queryParamsArray = $queryParams->getQueryParams();
         }
 
-        $allParams = $allParamsWithoutPagination = array_merge(
+        $allParams = array_merge(
             $request->attributes->get('_route_params'),
             $queryParamsArray,
             $request->query->all()
         );
+        $allParamsWithoutPagination = $allParams;
         unset($allParamsWithoutPagination['page_index'], $allParamsWithoutPagination['page_size']);
 
         $info = [

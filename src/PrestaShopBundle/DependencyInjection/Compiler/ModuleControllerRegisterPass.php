@@ -90,7 +90,8 @@ class ModuleControllerRegisterPass implements CompilerPassInterface
     private function getFrameworkAdminControllerClassNameFromFile(string $filePath): ?string
     {
         $contents = file_get_contents($filePath);
-        $namespace = $className = '';
+        $namespace = '';
+        $className = '';
 
         if (preg_match('/namespace\s+(.+?);/s', $contents, $matches)) {
             $namespace = $matches[1];
