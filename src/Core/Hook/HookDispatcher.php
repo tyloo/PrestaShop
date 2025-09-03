@@ -78,7 +78,7 @@ final class HookDispatcher implements HookDispatcherInterface
         return $this->hookDispatcherAdapter->dispatch($event, $eventName);
     }
 
-    public function addListener($eventName, $listener, $priority = 0): void
+    public function addListener(string $eventName, callable|array $listener, int $priority = 0): void
     {
         $this->hookDispatcherAdapter->addListener($eventName, $listener, $priority);
     }
@@ -88,7 +88,7 @@ final class HookDispatcher implements HookDispatcherInterface
         $this->hookDispatcherAdapter->addSubscriber($subscriber);
     }
 
-    public function removeListener($eventName, $listener): void
+    public function removeListener(string $eventName, callable|array $listener): void
     {
         $this->hookDispatcherAdapter->removeListener($eventName, $listener);
     }
@@ -98,17 +98,17 @@ final class HookDispatcher implements HookDispatcherInterface
         $this->hookDispatcherAdapter->removeSubscriber($subscriber);
     }
 
-    public function getListeners($eventName = null): array
+    public function getListeners(?string $eventName = null): array
     {
         return $this->hookDispatcherAdapter->getListeners($eventName);
     }
 
-    public function getListenerPriority($eventName, $listener): ?int
+    public function getListenerPriority(string $eventName, callable|array $listener): ?int
     {
         return $this->hookDispatcherAdapter->getListenerPriority($eventName, $listener);
     }
 
-    public function hasListeners($eventName = null): bool
+    public function hasListeners(?string $eventName = null): bool
     {
         return $this->hookDispatcherAdapter->hasListeners($eventName);
     }

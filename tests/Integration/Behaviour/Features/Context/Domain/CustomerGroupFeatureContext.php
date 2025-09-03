@@ -109,7 +109,7 @@ class CustomerGroupFeatureContext extends AbstractDomainFeatureContext
     /**
      * @Then customer group :customerGroupReference have the following values:
      */
-    public function assertQueryCustomerGroupProperties($customerGroupReference, EditableCustomerGroup $expectedGroup): void
+    public function assertQueryCustomerGroupProperties(string $customerGroupReference, EditableCustomerGroup $expectedGroup): void
     {
         Assert::assertEquals($expectedGroup, $this->getCustomerGroupForEditing($customerGroupReference));
     }

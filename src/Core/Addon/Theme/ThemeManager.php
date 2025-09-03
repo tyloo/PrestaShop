@@ -540,11 +540,10 @@ class ThemeManager implements AddonManagerInterface
     }
 
     /**
-     * @param \PrestaShopBundle\Entity\Lang $lang
-     * @param string                        $locale
-     * @param string                        $themeName
+     * @param string $locale
+     * @param string $themeName
      */
-    private function handleImport(TranslationService $translationService, MessageCatalogue $messageCatalog, array $allDomains, $lang, $locale, $themeName): void
+    private function handleImport(TranslationService $translationService, MessageCatalogue $messageCatalog, array $allDomains, \PrestaShopBundle\Entity\Lang $lang, $locale, $themeName): void
     {
         foreach ($messageCatalog->all() as $domain => $messages) {
             $domain = str_replace('.' . $locale, '', $domain);

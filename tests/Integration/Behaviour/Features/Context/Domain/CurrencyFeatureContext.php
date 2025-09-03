@@ -208,7 +208,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I disable currency ":currencyReference"
      */
-    public function disableCurrency($reference): void
+    public function disableCurrency(string $reference): void
     {
         $currency = $this->getCurrency($reference);
 
@@ -222,7 +222,7 @@ class CurrencyFeatureContext extends AbstractDomainFeatureContext
     /**
      * @When I delete currency ":currencyReference"
      */
-    public function deleteCurrency($reference): void
+    public function deleteCurrency(string $reference): void
     {
         $currency = $this->getCurrency($reference);
 

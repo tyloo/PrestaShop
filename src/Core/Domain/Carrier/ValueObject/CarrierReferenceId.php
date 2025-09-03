@@ -35,17 +35,12 @@ use PrestaShop\PrestaShop\Core\Domain\Carrier\Exception\CarrierConstraintExcepti
  */
 class CarrierReferenceId
 {
-    /**
-     * @var int
-     */
-    private $carrierReferenceId;
+    private readonly int $carrierReferenceId;
 
     /**
-     * @param int $carrierReferenceId
-     *
      * @throws CarrierConstraintException
      */
-    public function __construct($carrierReferenceId)
+    public function __construct(int $carrierReferenceId)
     {
         $this->assertIntegerIsGreaterThanZero($carrierReferenceId);
         $this->carrierReferenceId = $carrierReferenceId;

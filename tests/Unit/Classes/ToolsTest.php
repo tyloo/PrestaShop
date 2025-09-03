@@ -507,7 +507,7 @@ class ToolsTest extends TestCase
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('passwordGenProvider')]
-    public function testPasswdGen(string $expectedPassword, $passwordGenerated): void
+    public function testPasswdGen(string $expectedPassword, mixed $passwordGenerated): void
     {
         $message = 'The password generated ' . $passwordGenerated . ' no match with ' . $expectedPassword;
 

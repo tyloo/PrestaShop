@@ -167,7 +167,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I enable cart rule "(.+)"$/
      */
-    public function enableCartRule($cartRuleName): void
+    public function enableCartRule(string $cartRuleName): void
     {
         $cartRule = $this->loadCartRule($cartRuleName);
         $cartRule->active = true;
@@ -177,7 +177,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^cart rule "(.+)" can be applied to my cart$/
      */
-    public function cartRuleNamedCanBeAppliedToMyCart($cartRuleName): void
+    public function cartRuleNamedCanBeAppliedToMyCart(string $cartRuleName): void
     {
         $cartRule = $this->loadCartRule($cartRuleName);
         $result = $cartRule->checkValidity(Context::getContext(), false, false);
@@ -306,7 +306,7 @@ class CartRuleFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^cart rule for customer "(.+)" in position (\d+) should apply a discount of (\d+.\d+)$/
      */
-    public function checkCartRuleValueForCustomer($customerName, $position, $expectedValue): void
+    public function checkCartRuleValueForCustomer(string $customerName, $position, $expectedValue): void
     {
         $this->customerFeatureContext->checkCustomerWithNameExists($customerName);
         $customer = $this->customerFeatureContext->getCustomerWithName($customerName);

@@ -44,10 +44,7 @@ class UpdateProductQuantityInCartCommand
 
     private readonly ProductId $productId;
 
-    /**
-     * @var int
-     */
-    private $newQuantity;
+    private readonly int $newQuantity;
 
     /**
      * @var CombinationId|null
@@ -60,11 +57,8 @@ class UpdateProductQuantityInCartCommand
     private $customizationId;
 
     /**
-     * @param int      $cartId
-     * @param int      $productId
-     * @param int      $quantity
-     * @param int|null $combinationId
-     * @param int|null $customizationId
+     * @param int $cartId
+     * @param int $productId
      *
      * @throws CartConstraintException
      * @throws CartException
@@ -72,9 +66,9 @@ class UpdateProductQuantityInCartCommand
     public function __construct(
         $cartId,
         $productId,
-        $quantity,
-        $combinationId = null,
-        $customizationId = null,
+        int $quantity,
+        ?int $combinationId = null,
+        ?int $customizationId = null,
     ) {
         $this->setCombinationId($combinationId);
         $this->setCustomizationId($customizationId);
@@ -95,10 +89,7 @@ class UpdateProductQuantityInCartCommand
         return $this->productId;
     }
 
-    /**
-     * @return int
-     */
-    public function getNewQuantity()
+    public function getNewQuantity(): int
     {
         return $this->newQuantity;
     }

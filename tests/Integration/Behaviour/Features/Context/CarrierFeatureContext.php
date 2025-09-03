@@ -161,7 +161,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is an address named "(.+)" with postcode "(.+)" in state "(.+)"$/
      */
-    public function createAddress($addressName, $postCode, $stateName): void
+    public function createAddress($addressName, $postCode, string $stateName): void
     {
         $this->checkStateWithNameExists($stateName);
         $address = new Address();
@@ -182,7 +182,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^address "(.+)" is associated to customer "(.+)"$/
      */
-    public function setAddressCustomer($addressName, $customerName): void
+    public function setAddressCustomer(string $addressName, string $customerName): void
     {
         $this->checkAddressWithNameExists($addressName);
         $this->customerFeatureContext->checkCustomerWithNameExists($customerName);
@@ -251,7 +251,7 @@ class CarrierFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I select address "(.+)" in my cart$/
      */
-    public function setCartAddress($addresssName): void
+    public function setCartAddress(string $addresssName): void
     {
         $this->checkAddressWithNameExists($addresssName);
         $this->getCurrentCart()->id_address_delivery = $this->addresses[$addresssName]->id;

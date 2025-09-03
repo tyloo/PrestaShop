@@ -96,7 +96,7 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^there is a tax rule named "(.+)" in country "([^\"]+)" and state "(.+)" where tax "(.+)" is applied$/
      */
-    public function createTaxRule($taxRuleName, $countryName, $stateName, $taxName): void
+    public function createTaxRule($taxRuleName, $countryName, string $stateName, string $taxName): void
     {
         $this->carrierFeatureContext->checkCountryWithNameExists($countryName);
         $this->carrierFeatureContext->checkStateWithNameExists($stateName);
@@ -181,7 +181,7 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^product "(.+)" belongs to tax group "(.+)"$/
      */
-    public function setProductTaxRuleGroup($productName, $taxName): void
+    public function setProductTaxRuleGroup(string $productName, string $taxName): void
     {
         $this->productFeatureContext->checkProductWithNameExists($productName);
         $this->checkTaxRuleWithNameExists($taxName);
@@ -196,7 +196,7 @@ class TaxFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^Ecotax belongs to tax group "(.+)"$/
      */
-    public function setEcotaxTaxRuleGroup($taxName): void
+    public function setEcotaxTaxRuleGroup(string $taxName): void
     {
         $this->checkTaxRuleWithNameExists($taxName);
         $configuration = CommonFeatureContext::getContainer()->get('prestashop.adapter.legacy.configuration');

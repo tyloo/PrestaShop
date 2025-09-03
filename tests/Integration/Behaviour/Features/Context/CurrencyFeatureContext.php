@@ -111,7 +111,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^currency "(.+)" is the default one$/
      */
-    public function setDefaultCurrency($currencyName): void
+    public function setDefaultCurrency(string $currencyName): void
     {
         $this->checkCurrencyWithNameExists($currencyName);
         Configuration::set('PS_CURRENCY_DEFAULT', $this->currencies[$currencyName]->id);
@@ -128,7 +128,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^currency "(.+)" is the current one$/
      */
-    public function setCurrentCurrency($currencyName): void
+    public function setCurrentCurrency(string $currencyName): void
     {
         $this->checkCurrencyWithNameExists($currencyName);
         if ($this->getCurrentCart() !== null) {
@@ -141,7 +141,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When I set the pattern :pattern for currency :reference in locale :localeIsoCode
      */
-    public function setCurrencyPattern($pattern, $reference, $localeIsoCode): void
+    public function setCurrencyPattern($pattern, string $reference, $localeIsoCode): void
     {
         $languageId = Language::getIdByLocale($localeIsoCode, true);
         $currency = $this->getCurrency($reference);
@@ -184,7 +184,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then currency :reference should be :isoCode
      */
-    public function assertCurrencyIsoCode($reference, $isoCode): void
+    public function assertCurrencyIsoCode(string $reference, $isoCode): void
     {
         $currency = $this->getCurrency($reference);
 
@@ -196,7 +196,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^currency "(.*)" should have status (enabled|disabled)$/
      */
-    public function assertCurrencyStatus($reference, $status): void
+    public function assertCurrencyStatus(string $reference, $status): void
     {
         $currency = $this->getCurrency($reference);
         $expectedStatus = $status === 'enabled';
@@ -209,7 +209,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then currency :reference exchange rate should be :exchangeRate
      */
-    public function assertCurrencyExchangeRate($reference, $exchangeRate): void
+    public function assertCurrencyExchangeRate(string $reference, $exchangeRate): void
     {
         $currency = $this->getCurrency($reference);
 
@@ -221,7 +221,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then currency :reference precision should be :precision
      */
-    public function assertCurrencyPrecision($reference, $precision): void
+    public function assertCurrencyPrecision(string $reference, $precision): void
     {
         $currency = $this->getCurrency($reference);
 
@@ -331,7 +331,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then currency :reference numeric iso code should be :numericIsoCode
      */
-    public function assertCurrencyNumericIsoCode($reference, $numericIsoCode): void
+    public function assertCurrencyNumericIsoCode(string $reference, $numericIsoCode): void
     {
         $currency = $this->getCurrency($reference);
 
@@ -347,7 +347,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then currency :reference name should be :name
      */
-    public function assertCurrencyName($reference, $name): void
+    public function assertCurrencyName(string $reference, $name): void
     {
         $currency = $this->getCurrency($reference);
 
@@ -359,7 +359,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then currency :reference symbol should be :symbol
      */
-    public function assertCurrencySymbol($reference, $symbol): void
+    public function assertCurrencySymbol(string $reference, $symbol): void
     {
         $currency = $this->getCurrency($reference);
 
@@ -371,7 +371,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^currency "(.*)" should have unofficial (true|false)$/
      */
-    public function assertCurrencyUnofficial($reference, $unofficial): void
+    public function assertCurrencyUnofficial(string $reference, $unofficial): void
     {
         $currency = $this->getCurrency($reference);
         $expectedUnofficial = $unofficial === 'true';
@@ -384,7 +384,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^currency "(.*)" should have modified (true|false)$/
      */
-    public function assertCurrencyModified($reference, $modified): void
+    public function assertCurrencyModified(string $reference, $modified): void
     {
         $currency = $this->getCurrency($reference);
         $expectedModified = $modified === 'true';
@@ -397,7 +397,7 @@ class CurrencyFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then currency :reference should have pattern :pattern for language :localeCode
      */
-    public function assertCurrencyPattern($reference, $pattern, $localeCode): void
+    public function assertCurrencyPattern(string $reference, $pattern, $localeCode): void
     {
         $currency = $this->getCurrency($reference);
         $langId = Language::getIdByLocale($localeCode, true);

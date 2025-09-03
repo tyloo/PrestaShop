@@ -38,7 +38,7 @@ class CLDRFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given currency :reference with ISO code :isoCode exists
      */
-    public function createOfficialCurrencyWithIsoCode($reference, $isoCode): void
+    public function createOfficialCurrencyWithIsoCode(string $reference, string $isoCode): void
     {
         $this->createCurrencyWithIsoCode($reference, $isoCode, false);
     }
@@ -46,7 +46,7 @@ class CLDRFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given currency :reference with unofficial ISO code :isoCode exists
      */
-    public function createUnofficialCurrencyWithIsoCode($reference, $isoCode): void
+    public function createUnofficialCurrencyWithIsoCode(string $reference, string $isoCode): void
     {
         $this->createCurrencyWithIsoCode($reference, $isoCode, true);
     }
@@ -91,7 +91,7 @@ class CLDRFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then a price of :price using :currencyIsoCode in locale :locale should look like :expectedPrice
      */
-    public function assertDisplayPrice($price, $currencyIsoCode, $locale, $expectedPrice): void
+    public function assertDisplayPrice(int|float|string $price, string $currencyIsoCode, $locale, $expectedPrice): void
     {
         /** @var RepositoryInterface $localeRepository */
         $localeRepository = CommonFeatureContext::getContainer()->get('prestashop.core.localization.locale.repository');

@@ -29,6 +29,7 @@ declare(strict_types=1);
 
 namespace PrestaShop\PrestaShop\Core\Form\IdentifiableObject\CommandBuilder;
 
+use DateTimeImmutable;
 use InvalidArgumentException;
 use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime;
 use Symfony\Component\PropertyAccess\Exception\NoSuchIndexException;
@@ -264,7 +265,7 @@ class CommandBuilder
     /**
      * Casts the provided value
      */
-    private function castValue($value, string $type)
+    private function castValue(mixed $value, string $type): bool|int|DateTimeImmutable|string|array|null
     {
         return match ($type) {
             DataField::TYPE_STRING => (string) $value,

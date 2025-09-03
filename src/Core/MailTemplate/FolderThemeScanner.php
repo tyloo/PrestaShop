@@ -145,7 +145,7 @@ final class FolderThemeScanner
      */
     private function addLayoutsFromFolder(
         LayoutCollectionInterface $collection,
-        $folder,
+        string|array $folder,
         $moduleName = '',
     ): void {
         $layoutFiles = [];

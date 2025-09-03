@@ -45,7 +45,7 @@ class BulkDeleteAddressCommand
      *
      * @throws AddressConstraintException
      */
-    public function __construct($addressIds)
+    public function __construct(array $addressIds)
     {
         $this->setAddressIds($addressIds);
     }

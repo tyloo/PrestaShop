@@ -59,10 +59,8 @@ class DateRangeValidator extends ConstraintValidator
 
     /**
      * Validate that date range is not inverted. (the 'from' value is not higher than 'to')
-     *
-     * @param string $message
      */
-    private function validateRange(DateTime $from, DateTime $to, $message): void
+    private function validateRange(DateTime $from, DateTime $to, string $message): void
     {
         if ($from->diff($to)->invert) {
             $this->context->buildViolation($message)

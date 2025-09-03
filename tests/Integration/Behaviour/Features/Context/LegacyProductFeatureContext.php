@@ -166,7 +166,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I add (\d+) items? of product "(.+)" in my cart$/
      */
-    public function iAddProductNamedInMyCartWithQuantity($productQuantity, $productName): void
+    public function iAddProductNamedInMyCartWithQuantity($productQuantity, string $productName): void
     {
         $this->checkProductWithNameExists($productName);
         $result = $this->getCurrentCart()->updateQty($productQuantity, $this->getProductWithName($productName)->id);
@@ -178,7 +178,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I change quantity of product "(.+)" in my cart with quantity (\d+) and operator (up|down|nothing), result of change is (OK|KO)$/
      */
-    public function iChangeProductQuantityInMyCart($productName, $productQuantity, $operator, $expectedStr): void
+    public function iChangeProductQuantityInMyCart(string $productName, $productQuantity, $operator, $expectedStr): void
     {
         $this->checkProductWithNameExists($productName);
         $expected = $expectedStr === 'OK';
@@ -191,7 +191,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^my cart should contain (\d+) units of product "(.+)", (excluding|including) items in pack$/
      */
-    public function quantityOfProductNamedInMyCartShouldBe($productQuantity, $productName, $packItemsIncluded = null): void
+    public function quantityOfProductNamedInMyCartShouldBe($productQuantity, string $productName, $packItemsIncluded = null): void
     {
         if ($packItemsIncluded !== 'including') {
             $nbProduct = $this->getCurrentCart()->getProductQuantity($this->getProductWithName($productName)->id, 0, 0);
@@ -240,7 +240,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^the available stock for combination "(.+)" of product "(.+)" should be ([\-\d]+)$/
      */
-    public function actualQuantityOfCombinationNamedShouldBe($combinationName, $productName, $combinationQuantity): void
+    public function actualQuantityOfCombinationNamedShouldBe(string $combinationName, string $productName, $combinationQuantity): void
     {
         $this->checkProductWithNameExists($productName);
         $this->checkCombinationWithNameExists($productName, $combinationName);
@@ -253,7 +253,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^I am not allowed to add (\d+) items of product "(.+)" in my cart$/
      */
-    public function iAmNotAbleToAddProductNamedInMyCartWithQuantity($productQuantity, $productName): void
+    public function iAmNotAbleToAddProductNamedInMyCartWithQuantity($productQuantity, string $productName): void
     {
         $result = $this->getCurrentCart()->updateQty($productQuantity, $this->getProductWithName($productName)->id);
         if ($result) {
@@ -644,7 +644,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
      *
      * @Given /^product "(.+)" has combinations with following details:$/
      */
-    public function productWithNameHasCombinationsWithFollowingDetails($productName, TableNode $table): void
+    public function productWithNameHasCombinationsWithFollowingDetails(string $productName, TableNode $table): void
     {
         $this->checkProductWithNameExists($productName);
         Product::resetStaticCache();
@@ -671,7 +671,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^the remaining available stock for combination "(.+)" of product "(.+)" should be ([\-\d]+)$/
      */
-    public function remainingQuantityOfCombinationNamedForProductNamedShouldBe($combinationName, $productName, $combinationQuantity): void
+    public function remainingQuantityOfCombinationNamedForProductNamedShouldBe(string $combinationName, string $productName, $combinationQuantity): void
     {
         $this->checkProductWithNameExists($productName);
         $this->checkCombinationWithNameExists($productName, $combinationName);
@@ -684,7 +684,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I add (\d+) items of combination "(.+)" of product "(.+)"$/
      */
-    public function iAddCombinationNamedOfProductNamedInMyCartWithQuantity($combinationQuantity, $combinationName, $productName): void
+    public function iAddCombinationNamedOfProductNamedInMyCartWithQuantity($combinationQuantity, string $combinationName, string $productName): void
     {
         $this->checkProductWithNameExists($productName);
         $this->checkCombinationWithNameExists($productName, $combinationName);
@@ -697,7 +697,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^I am not able to add (\d+) items of combination "(.+)" of product "(.+)" in my cart$/
      */
-    public function iAmNotAbleToAddPCombinationNamedOfroductNamedInMyCartWithQuantity($combinationQuantity, $combinationName, $productName): void
+    public function iAmNotAbleToAddPCombinationNamedOfroductNamedInMyCartWithQuantity($combinationQuantity, string $combinationName, string $productName): void
     {
         $this->checkProductWithNameExists($productName);
         $this->checkCombinationWithNameExists($productName, $combinationName);
@@ -710,7 +710,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^I should have (\d+) items of combination "(.+)" of product "(.+)" in my cart$/
      */
-    public function quantityOfCombinationNamedOfProductNamedInMyCartShouldBe($combinationQuantity, $combinationName, $productName): void
+    public function quantityOfCombinationNamedOfProductNamedInMyCartShouldBe($combinationQuantity, string $combinationName, string $productName): void
     {
         $this->checkProductWithNameExists($productName);
         $this->checkCombinationWithNameExists($productName, $combinationName);
@@ -874,7 +874,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^product "(.+)" is a pack containing (\d+) items of product "(.+)"$/
      */
-    public function productWithNameIsAPackContainingQuantityOfProductNamed($packName, $containedQuantity, $containedProductName): void
+    public function productWithNameIsAPackContainingQuantityOfProductNamed(string $packName, $containedQuantity, string $containedProductName): void
     {
         $this->checkProductWithNameExists($packName);
         $this->checkProductWithNameExists($containedProductName);
@@ -891,7 +891,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then /^pack "(.+)" has (enough stock|not enough stock) for an order of (\d+) items$/
      */
-    public function packWithNameIsInStockForQuantity($packName, $enoughStock, $packQuantity): void
+    public function packWithNameIsInStockForQuantity(string $packName, $enoughStock, $packQuantity): void
     {
         $this->checkProductWithNameExists($packName);
         $result = Pack::isInStock($this->products[$packName]->id, $packQuantity);
@@ -919,7 +919,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^product "(.+)" is virtual$/
      */
-    public function productWithNameProductIsVirtual($productName): void
+    public function productWithNameProductIsVirtual(string $productName): void
     {
         $this->checkProductWithNameExists($productName);
         $this->updateCachedProduct($productName);
@@ -930,7 +930,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given /^product "(.+?)" is in category "(.+?)"$/
      */
-    public function productWithNameProductInInCategory($productName, $categoryName): void
+    public function productWithNameProductInInCategory(string $productName, $categoryName): void
     {
         $this->checkProductWithNameExists($productName);
         $this->updateCachedProduct($productName);

@@ -64,7 +64,7 @@ class CountryFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given country :countryIsoCode is disabled
      */
-    public function disableCountry($countryIsoCode): void
+    public function disableCountry(string $countryIsoCode): void
     {
         $this->checkCountryWithIsoCodeExists($countryIsoCode);
         $countryId = Country::getByIso($countryIsoCode);

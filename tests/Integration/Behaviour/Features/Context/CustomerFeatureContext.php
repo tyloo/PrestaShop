@@ -86,7 +86,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given customer :reference has address in :isoCode country
      */
-    public function customerHasAddressInCountry($reference, $isoCode): void
+    public function customerHasAddressInCountry(string $reference, $isoCode): void
     {
         $customer = $this->getCustomerByReference($reference);
         $customerAddresses = $customer->getAddresses((int) Configuration::get('PS_LANG_DEFAULT'));
@@ -125,7 +125,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @When /^I am logged in as "(.+)"$/
      */
-    public function setCurrentCustomer($customerName): void
+    public function setCurrentCustomer(string $customerName): void
     {
         $this->checkCustomerWithNameExists($customerName);
         Context::getContext()->updateCustomer($this->customers[$customerName]);
@@ -134,7 +134,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Given private note is not set about customer :reference
      */
-    public function assertPrivateNoteIsNotSetAboutCustomer($reference): void
+    public function assertPrivateNoteIsNotSetAboutCustomer(string $reference): void
     {
         $customer = $this->getCustomerByReference($reference);
 
@@ -146,7 +146,7 @@ class CustomerFeatureContext extends AbstractPrestaShopFeatureContext
     /**
      * @Then customer :reference private note should be :privateNote
      */
-    public function assertPrivateNoteAboutCustomer($reference, $privateNote): void
+    public function assertPrivateNoteAboutCustomer(string $reference, $privateNote): void
     {
         $customer = $this->getCustomerByReference($reference);
 
