@@ -35,4 +35,9 @@ class ClassWithDep
         private readonly Dummy $dummy,
     ) {
     }
+
+    public function getDummy(): Dummy
+    {
+        return $this->dummy;
+    }
 }

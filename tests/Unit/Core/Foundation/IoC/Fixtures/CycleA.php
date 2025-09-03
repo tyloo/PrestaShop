@@ -31,7 +31,13 @@ namespace Tests\Unit\Core\Foundation\IoC\Fixtures;
 
 class CycleA
 {
-    public function __construct(CycleB $b)
+    public function __construct(
+        private readonly CycleB $b,
+    ) {
+    }
+
+    public function getB(): CycleB
     {
+        return $this->b;
     }
 }

@@ -129,7 +129,7 @@ class Catalogue
      */
     private function updateCounters(array &$subtree): array
     {
-        foreach ($subtree as $key => $values) {
+        foreach (array_keys($subtree) as $key) {
             if ($key === self::METADATA_KEY_NAME) {
                 continue;
             }

@@ -222,7 +222,7 @@ class MailTemplateGeneratorTest extends TestCase
 
         $previousFiles = [];
         $fileIndex = 0;
-        foreach ($expectedFiles as $expectedFile => $fileContent) {
+        foreach (array_keys($expectedFiles) as $expectedFile) {
             if ($fileIndex % 2 === 0) {
                 $previousFiles[$expectedFile] = $expectedFile;
                 $filePath = implode(\DIRECTORY_SEPARATOR, [$this->outputTempDir, $expectedFile]);

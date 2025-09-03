@@ -187,22 +187,6 @@ class OrderPaymentFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @return array
-     *
-     * @throws RuntimeException
-     */
-    private function extractFirstRowFromHorizontalTableDetails(TableNode $table)
-    {
-        /** @var array $hash */
-        $hash = $table->getHash();
-        if (\count($hash) === 0) {
-            throw new RuntimeException('Payment details are invalid');
-        }
-
-        return $hash[0];
-    }
-
-    /**
      * @throws RuntimeException
      */
     private function getPaymentForViewing(int $orderId, OrderForViewing $orderForViewing, string $position): OrderPaymentForViewing

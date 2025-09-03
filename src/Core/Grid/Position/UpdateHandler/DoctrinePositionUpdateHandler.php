@@ -80,7 +80,7 @@ final class DoctrinePositionUpdateHandler implements PositionUpdateHandlerInterf
         try {
             $this->connection->beginTransaction();
             $positionIndex = $positionDefinition->getFirstPosition();
-            foreach ($newPositions as $rowId => $newPosition) {
+            foreach (array_keys($newPositions) as $rowId) {
                 $qb = $this->connection->createQueryBuilder();
                 $qb
                     ->update($this->dbPrefix . $positionDefinition->getTable())

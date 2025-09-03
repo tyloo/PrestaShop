@@ -247,10 +247,6 @@ final class CartQueryBuilder extends AbstractDoctrineQueryBuilder
             } else {
                 $qb->andWhere('co.id_guest is null');
             }
-
-            continue;
-            $qb->andWhere('c.' . $filterName . ' = :' . $filterName);
-            $qb->setParameter($filterName, $filterValue);
         }
     }
 }

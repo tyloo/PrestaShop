@@ -36,4 +36,14 @@ class ClassWithDepAndDefault
         private $something = 4,
     ) {
     }
+
+    public function getDummy(): Dummy
+    {
+        return $this->dummy;
+    }
+
+    public function getSomething(): int
+    {
+        return $this->something;
+    }
 }
