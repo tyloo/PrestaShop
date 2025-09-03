@@ -103,7 +103,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
      */
     public function assertAllAttributesExist(array $attributeIds): void
     {
-        if (empty($attributeIds)) {
+        if ($attributeIds === []) {
             throw new RuntimeException('Empty list of attribute ids provided');
         }
 
@@ -129,7 +129,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getGroupedAttributes(ShopConstraint $shopConstraint, array $attributeGroupIds, array $attributeIds = []): array
     {
-        if (empty($attributeGroupIds)) {
+        if ($attributeGroupIds === []) {
             return [];
         }
 
@@ -150,7 +150,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
             ->addOrderBy('a.position', 'ASC')
         ;
 
-        if (! empty($attributeIds)) {
+        if ($attributeIds !== []) {
             $attributeIdValues = array_map(static fn (AttributeId $attributeId): int => $attributeId->getValue(), $attributeIds);
 
             $qb->andWhere($qb->expr()->in('a.id_attribute', ':attributeIds'))
@@ -272,7 +272,7 @@ class AttributeRepository extends AbstractMultiShopObjectModelRepository
      */
     private function getAttributeCombinationAssociations(array $combinationIds): array
     {
-        if (empty($combinationIds)) {
+        if ($combinationIds === []) {
             return [];
         }
 

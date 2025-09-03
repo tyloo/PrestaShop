@@ -113,7 +113,7 @@ class AttributeGroupRepository extends AbstractMultiShopObjectModelRepository
             ->orderBy('ag.position', 'ASC')
         ;
 
-        if (! empty($attributeGroupIds)) {
+        if ($attributeGroupIds !== []) {
             $attributeGroupIdValues = array_map(static fn (AttributeGroupId $attributeGroupId): int => $attributeGroupId->getValue(), $attributeGroupIds);
 
             $qb->andWhere($qb->expr()->in('ag.id_attribute_group', ':attributeGroupIds'))

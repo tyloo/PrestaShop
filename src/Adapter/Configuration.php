@@ -54,7 +54,7 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
     public function __construct(array $parameters = [])
     {
         // Do nothing
-        if (! empty($parameters)) {
+        if ($parameters !== []) {
             throw new LogicException('No parameter can be handled in constructor. Use method set() instead.');
         }
     }
@@ -364,8 +364,8 @@ class Configuration extends ParameterBag implements ShopConfigurationInterface
 
         ConfigurationLegacy::deleteFromGivenContext(
             $key,
-            empty($shopGroupId) ? null : $shopGroupId->getValue(),
-            empty($shopId) ? null : $shopId->getValue()
+            $shopGroupId instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopGroupId ? $shopGroupId->getValue() : null,
+            $shopId instanceof \PrestaShop\PrestaShop\Core\Domain\Shop\ValueObject\ShopId ? $shopId->getValue() : null
         );
     }
 

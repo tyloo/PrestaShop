@@ -72,7 +72,7 @@ final class UpdateOrderShippingDetailsHandler extends AbstractOrderHandler imple
                 throw new OrderException('The order carrier ID is invalid.');
             }
 
-            if (! empty($trackingNumber) && ! Validate::isTrackingNumber($trackingNumber)) {
+            if ($trackingNumber !== null && $trackingNumber !== '' && $trackingNumber !== '0' && ! Validate::isTrackingNumber($trackingNumber)) {
                 throw new OrderException('The tracking number is incorrect.');
             }
 
@@ -102,7 +102,7 @@ final class UpdateOrderShippingDetailsHandler extends AbstractOrderHandler imple
             }
 
             // send mail only if tracking number is different AND not empty
-            if (! empty($trackingNumber) && $oldTrackingNumber !== $trackingNumber) {
+            if ($trackingNumber !== null && $trackingNumber !== '' && $trackingNumber !== '0' && $oldTrackingNumber !== $trackingNumber) {
                 if (! $orderCarrier->sendInTransitEmail($order)) {
                     throw new TransistEmailSendingException('An error occurred while sending an email to the customer.');
                 }

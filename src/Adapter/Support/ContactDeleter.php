@@ -44,7 +44,7 @@ final class ContactDeleter
     {
         $errors = [];
 
-        if (empty($contactIds)) {
+        if ($contactIds === []) {
             $errors[] = [
                 'key' => 'You must select at least one element to delete.',
                 'parameters' => [],

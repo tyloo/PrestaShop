@@ -258,7 +258,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             }
         }
 
-        if (empty($insertValues)) {
+        if ($insertValues === []) {
             return;
         }
 
@@ -333,7 +333,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     public function deleteFromShops(ProductId $productId, array $shopIds): void
     {
-        if (empty($shopIds)) {
+        if ($shopIds === []) {
             return;
         }
 
@@ -750,7 +750,7 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
             }
         }
 
-        if (! empty($limit)) {
+        if ($limit !== null && $limit !== 0) {
             $qb->setMaxResults($limit);
         }
 
@@ -831,9 +831,9 @@ class ProductRepository extends AbstractMultiShopObjectModelRepository
      */
     private function validateProduct(Product $product, array $propertiesToUpdate = []): void
     {
-        $taxRulesGroupIdIsBeingUpdated = empty($propertiesToUpdate) || \in_array('id_tax_rules_group', $propertiesToUpdate, true);
+        $taxRulesGroupIdIsBeingUpdated = $propertiesToUpdate === [] || \in_array('id_tax_rules_group', $propertiesToUpdate, true);
         $taxRulesGroupId = (int) $product->id_tax_rules_group;
-        $manufacturerIdIsBeingUpdated = empty($propertiesToUpdate) || \in_array('id_manufacturer', $propertiesToUpdate, true);
+        $manufacturerIdIsBeingUpdated = $propertiesToUpdate === [] || \in_array('id_manufacturer', $propertiesToUpdate, true);
         $manufacturerId = (int) $product->id_manufacturer;
 
         if ($taxRulesGroupIdIsBeingUpdated && $taxRulesGroupId !== ProductTaxRulesGroupSettings::NONE_APPLIED) {

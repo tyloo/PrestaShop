@@ -99,7 +99,7 @@ final class GetSupplierForViewingHandler implements GetSupplierForViewingHandler
             $product->loadStockData();
             $combinations = $this->findProductSupplierCombinations($product, $supplier, $languageId);
 
-            if (empty($combinations)) {
+            if ($combinations === []) {
                 $products[] = $this->buildNonCombinationSupplierProduct($product, $supplier);
                 continue;
             }

@@ -203,7 +203,7 @@ class ProductShopUpdater
             $productId,
             ShopConstraint::shop($sourceShopId->getValue())
         );
-        if (empty($shopCombinationIds)) {
+        if ($shopCombinationIds === []) {
             return;
         }
 

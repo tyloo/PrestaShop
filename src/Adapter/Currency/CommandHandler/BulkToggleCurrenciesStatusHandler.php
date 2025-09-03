@@ -96,7 +96,7 @@ final class BulkToggleCurrenciesStatusHandler extends AbstractCurrencyHandler im
             }
         }
 
-        if (! empty($faileds)) {
+        if ($faileds !== []) {
             throw new BulkToggleCurrenciesException($faileds, 'Failed to delete all of selected currencies');
         }
     }

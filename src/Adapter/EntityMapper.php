@@ -61,7 +61,7 @@ class EntityMapper
             // Get lang informations
             if ($id_lang && isset($entity_defs['multilang']) && $entity_defs['multilang']) {
                 $sql->leftJoin($entity_defs['table'] . '_lang', 'b', 'a.`' . bqSQL($entity_defs['primary']) . '` = b.`' . bqSQL($entity_defs['primary']) . '` AND b.`id_lang` = ' . (int) $id_lang);
-                if ($id_shop && ! empty($entity_defs['multilang_shop'])) {
+                if ($id_shop && (isset($entity_defs['multilang_shop']) && ($entity_defs['multilang_shop'] !== '' && $entity_defs['multilang_shop'] !== '0' && $entity_defs['multilang_shop'] !== []))) {
                     $sql->where('b.`id_shop` = ' . (int) $id_shop);
                 }
             }

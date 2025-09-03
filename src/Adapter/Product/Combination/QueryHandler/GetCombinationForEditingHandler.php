@@ -213,12 +213,12 @@ class GetCombinationForEditingHandler implements GetCombinationForEditingHandler
 
     private function getCoverUrl(array $imageIds, ProductId $productId, ShopConstraint $shopConstraint): string
     {
-        if (! empty($imageIds)) {
+        if ($imageIds !== []) {
             return $this->productImageUrlFactory->getPathByType(new ImageId((int) $imageIds[0]), ProductImagePathFactory::IMAGE_TYPE_CART_DEFAULT);
         }
 
         $productImageIds = $this->productImageRepository->getImageIds($productId, $shopConstraint);
-        if (! empty($productImageIds)) {
+        if ($productImageIds !== []) {
             return $this->productImageUrlFactory->getPathByType($productImageIds[0], ProductImagePathFactory::IMAGE_TYPE_CART_DEFAULT);
         }
 

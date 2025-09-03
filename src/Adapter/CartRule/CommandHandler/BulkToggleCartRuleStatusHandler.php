@@ -58,7 +58,7 @@ final class BulkToggleCartRuleStatusHandler extends AbstractCartRuleHandler impl
             }
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             throw new BulkToggleCartRuleException($errors, 'Failed to toggle all of selected cart rules');
         }
     }

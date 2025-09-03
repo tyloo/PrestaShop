@@ -99,7 +99,7 @@ final class CancelOrderProductHandler extends AbstractOrderCommandHandler implem
 
     private function checkInput(CancelOrderProductCommand $command)
     {
-        if (empty($command->getCancelledProducts())) {
+        if ($command->getCancelledProducts() === []) {
             throw new InvalidCancelProductException(InvalidCancelProductException::NO_REFUNDS);
         }
 

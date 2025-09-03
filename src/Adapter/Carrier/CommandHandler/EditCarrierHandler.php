@@ -132,7 +132,7 @@ class EditCarrierHandler implements EditCarrierHandlerInterface
             $this->carrierValidator->validateLogoUpload($command->getLogoPathName());
         }
 
-        if (! empty($command->getAssociatedShopIds())) {
+        if (! \in_array($command->getAssociatedShopIds(), [null, []], true)) {
             foreach ($command->getAssociatedShopIds() as $shopId) {
                 $this->shopRepository->assertShopExists($shopId);
             }

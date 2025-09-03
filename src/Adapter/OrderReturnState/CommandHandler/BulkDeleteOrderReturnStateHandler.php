@@ -60,7 +60,7 @@ class BulkDeleteOrderReturnStateHandler extends AbstractOrderReturnStateHandler 
             }
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             throw new BulkDeleteOrderReturnStateException($errors, 'Failed to delete all of selected order return statuses');
         }
     }

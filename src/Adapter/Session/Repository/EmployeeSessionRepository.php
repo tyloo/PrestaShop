@@ -84,7 +84,7 @@ class EmployeeSessionRepository extends AbstractObjectModelRepository
             }
         }
 
-        if (empty($failedIds)) {
+        if ($failedIds === []) {
             return;
         }
 

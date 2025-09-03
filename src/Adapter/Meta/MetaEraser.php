@@ -47,7 +47,7 @@ final class MetaEraser
     {
         $errors = [];
 
-        if (empty($metaIds)) {
+        if ($metaIds === []) {
             $errors[] = [
                 'key' => 'You must select at least one element to delete.',
                 'parameters' => [],

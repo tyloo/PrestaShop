@@ -50,7 +50,7 @@ class HelpProvider implements UrlProviderInterface
 
     public function getUrl(string $section = '', string $title = '')
     {
-        if (empty($title)) {
+        if ($title === '' || $title === '0') {
             $title = $this->translator->trans('Help', [], 'Admin.Global');
         }
 

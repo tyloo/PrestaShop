@@ -67,7 +67,7 @@ class ProductTagUpdater
         }
 
         // delete all tags for product if array is empty
-        if (empty($localizedTagsList)) {
+        if ($localizedTagsList === []) {
             $this->tagRepository->deleteAllTags($productId);
         } else {
             foreach ($localizedTagsList as $localizedTags) {

@@ -58,7 +58,7 @@ final class BulkDeleteCartRuleHandler extends AbstractCartRuleHandler implements
             }
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             throw new BulkDeleteCartRuleException($errors, 'Failed to delete all of selected cart rules');
         }
     }

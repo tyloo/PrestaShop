@@ -82,7 +82,7 @@ final class BulkDeleteCurrenciesHandler extends AbstractCurrencyHandler implemen
             }
         }
 
-        if (! empty($faileds)) {
+        if ($faileds !== []) {
             throw new BulkDeleteCurrenciesException($faileds, 'Failed to delete all of selected currencies');
         }
     }

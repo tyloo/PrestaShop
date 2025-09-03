@@ -405,7 +405,7 @@ final class ProductImportHandler extends AbstractImportHandler
 
         if (\is_array($productShops)) {
             foreach ($productShops as $shop) {
-                if (! empty($shop)) {
+                if ($shop !== '' && $shop !== '0') {
                     $shop = is_numeric($shop) ? $shop : Shop::getIdByName($shop);
 
                     if (! \in_array($shop, $this->allShopIds, true)) {
@@ -463,7 +463,7 @@ final class ProductImportHandler extends AbstractImportHandler
 
         if (is_numeric($product->manufacturer) && Manufacturer::manufacturerExists($product->manufacturer)) {
             $product->id_manufacturer = (int) $product->manufacturer;
-        } elseif (\is_string($product->manufacturer) && ! empty($product->manufacturer)) {
+        } elseif (\is_string($product->manufacturer) && ($product->manufacturer !== '' && $product->manufacturer !== '0')) {
             if ($manufacturer = Manufacturer::getIdByName($product->manufacturer)) {
                 $product->id_manufacturer = (int) $manufacturer;
             } else {
@@ -518,7 +518,7 @@ final class ProductImportHandler extends AbstractImportHandler
 
         if (is_numeric($product->supplier) && Supplier::supplierExists($product->supplier)) {
             $product->id_supplier = (int) $product->supplier;
-        } elseif (\is_string($product->supplier) && ! empty($product->supplier)) {
+        } elseif (\is_string($product->supplier) && ($product->supplier !== '' && $product->supplier !== '0')) {
             if ($supplier = Supplier::getIdByName($product->supplier)) {
                 $product->id_supplier = (int) $supplier;
             } else {
@@ -620,7 +620,7 @@ final class ProductImportHandler extends AbstractImportHandler
                                         'Admin.Advparameters.Notification'
                                     ),
                                     $category->name[$defaultLanguageId],
-                                    empty($category->id) ? 'null' : $category->id
+                                    $category->id === 0 ? 'null' : $category->id
                                 ));
                             }
 
@@ -632,7 +632,7 @@ final class ProductImportHandler extends AbstractImportHandler
                             }
                         }
                     }
-                } elseif (! $validateOnly && \is_string($value) && ! empty($value)) {
+                } elseif (! $validateOnly && \is_string($value) && ($value !== '' && $value !== '0')) {
                     $category = Category::searchByPath(
                         $defaultLanguageId,
                         trim($value),
@@ -1001,7 +1001,7 @@ final class ProductImportHandler extends AbstractImportHandler
             foreach ($product->image as $key => $url) {
                 $url = trim((string) $url);
                 $error = false;
-                if (! empty($url)) {
+                if ($url !== '' && $url !== '0') {
                     $url = str_replace(' ', '%20', $url);
 
                     $image = new Image();
@@ -1094,7 +1094,7 @@ final class ProductImportHandler extends AbstractImportHandler
         }
 
         foreach (explode($multipleValueSeparator, (string) $features['features']) as $singleFeature) {
-            if (empty($singleFeature)) {
+            if ($singleFeature === '' || $singleFeature === '0') {
                 continue;
             }
 
@@ -1104,7 +1104,7 @@ final class ProductImportHandler extends AbstractImportHandler
             $position = isset($feature[2]) ? (int) $feature[2] - 1 : false;
             $custom = isset($feature[3]) ? (int) $feature[3] : false;
 
-            if (! empty($featureName) && ! empty($featureValue)) {
+            if ($featureName !== '' && $featureName !== '0' && ($featureValue !== '' && $featureValue !== '0')) {
                 $featureId = (int) Feature::addFeatureImport($featureName, $position);
                 $productId = null;
                 if ($importConfig->forceIds() || $importConfig->matchReferences()) {

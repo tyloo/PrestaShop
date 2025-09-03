@@ -487,7 +487,7 @@ final class CategoryImportHandler extends AbstractImportHandler
 
             $shopData = explode($multipleValueSeparator, $shopData);
             foreach ($shopData as $shop) {
-                if (! empty($shop)) {
+                if ($shop !== '' && $shop !== '0') {
                     if (! is_numeric($shop)) {
                         $category->addShop(Shop::getIdByName($shop));
                     } else {

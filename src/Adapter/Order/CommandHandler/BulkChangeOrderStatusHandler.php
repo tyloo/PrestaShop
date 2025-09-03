@@ -96,9 +96,9 @@ final class BulkChangeOrderStatusHandler implements BulkChangeOrderStatusHandler
             }
         }
 
-        if (! empty($ordersWithFailedToUpdateStatus)
-            || ! empty($ordersWithFailedToSendEmail)
-            || ! empty($ordersWithAssignedStatus)
+        if ($ordersWithFailedToUpdateStatus !== []
+            || $ordersWithFailedToSendEmail !== []
+            || $ordersWithAssignedStatus !== []
         ) {
             throw new ChangeOrderStatusException($ordersWithFailedToUpdateStatus, $ordersWithFailedToSendEmail, $ordersWithAssignedStatus, 'Failed to update status or sent email when changing order status.');
         }

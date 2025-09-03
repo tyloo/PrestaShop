@@ -56,7 +56,7 @@ final class AddProductToCartHandler extends AbstractCartHandler implements AddPr
         $combinationId = $command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId ? $command->getCombinationId()->getValue() : null;
         $customizationId = null;
 
-        if (! empty($command->getCustomizationsByFieldIds())) {
+        if ($command->getCustomizationsByFieldIds() !== []) {
             $customizationIdVO = $this->addCustomizationHandler->handle(new AddCustomizationCommand(
                 $cartIdValue,
                 $command->getProductId()->getValue(),

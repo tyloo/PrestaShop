@@ -75,7 +75,7 @@ class ProductSupplierUpdater
      */
     public function associateSuppliers(ProductId $productId, array $supplierIds): array
     {
-        if (empty($supplierIds)) {
+        if ($supplierIds === []) {
             throw new InvalidArgumentException('Provided empty list of suppliers to associate');
         }
 
@@ -111,7 +111,7 @@ class ProductSupplierUpdater
                 // Search matching association by combination, if none is found the association is missing
                 $matchingAssociations = array_filter($supplierAssociations, fn (ProductSupplierAssociation $association) => $association->getCombinationId()->getValue() === $combinationId->getValue());
 
-                if (empty($matchingAssociations)) {
+                if ($matchingAssociations === []) {
                     $productSupplier = new ProductSupplier();
                     $productSupplier->id_product = $productId->getValue();
                     $productSupplier->id_product_attribute = $combinationId->getValue();
@@ -154,7 +154,7 @@ class ProductSupplierUpdater
     public function updateMissingProductSuppliers(ProductId $productId): array
     {
         $supplierIds = $this->productSupplierRepository->getAssociatedSupplierIds($productId);
-        if (empty($supplierIds)) {
+        if ($supplierIds === []) {
             return [];
         }
 
@@ -242,7 +242,7 @@ class ProductSupplierUpdater
     {
         foreach ($productIds as $productId) {
             $suppliers = $this->productSupplierRepository->getAssociatedSupplierIds($productId);
-            if (! empty($suppliers)) {
+            if ($suppliers !== []) {
                 $this->associateSuppliers($productId, $suppliers);
             } else {
                 $this->resetDefaultSupplier($this->productRepository->getProductByDefaultShop($productId));

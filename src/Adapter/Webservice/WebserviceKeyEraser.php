@@ -49,7 +49,7 @@ final class WebserviceKeyEraser
     {
         $errors = [];
 
-        if (empty($webServiceKeyIds)) {
+        if ($webServiceKeyIds === []) {
             $errors[] = [
                 'key' => 'You must select at least one element to delete.',
                 'parameters' => [],

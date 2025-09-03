@@ -66,7 +66,7 @@ class LogsConfiguration implements DataConfigurationInterface
                 }
             }
 
-            if (! empty($invalidEmails)) {
+            if ($invalidEmails !== []) {
                 $nbInvalidEmails = \count($invalidEmails);
 
                 if ($nbInvalidEmails > 1) {

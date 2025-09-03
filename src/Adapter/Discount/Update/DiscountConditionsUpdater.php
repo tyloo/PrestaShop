@@ -81,7 +81,7 @@ class DiscountConditionsUpdater
         }
 
         $updatableProperties = array_unique($updatableProperties);
-        if (! empty($updatableProperties)) {
+        if ($updatableProperties !== []) {
             $this->discountRepository->partialUpdate($discount, $updatableProperties, CannotUpdateDiscountException::FAILED_UPDATE_CONDITIONS);
         }
     }
@@ -165,14 +165,14 @@ class DiscountConditionsUpdater
             }
         }
 
-        $discount->product_restriction = ! empty($productRuleGroups);
+        $discount->product_restriction = $productRuleGroups !== [];
 
         return ['product_restriction'];
     }
 
     private function applyCarrierConditions(CartRule $discount, array $carrierIds): array
     {
-        if (empty($carrierIds)) {
+        if ($carrierIds === []) {
             return [];
         }
 
@@ -193,7 +193,7 @@ class DiscountConditionsUpdater
 
     private function applyCountryConditions(CartRule $discount, array $countryIds): array
     {
-        if (empty($countryIds)) {
+        if ($countryIds === []) {
             return [];
         }
 

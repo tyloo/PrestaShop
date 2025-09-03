@@ -51,7 +51,7 @@ class EditCartRuleHandler implements EditCartRuleHandlerInterface
         $cartRule = $this->cartRuleRepository->get($command->getCartRuleId());
         $updatableProperties = $this->fillUpdatableProperties($cartRule, $command);
 
-        if (empty($updatableProperties)) {
+        if ($updatableProperties === []) {
             return;
         }
 

@@ -297,7 +297,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
     {
         $this->removeRestrictedCartRules($cartRuleId);
 
-        if (empty($restrictedCartRuleIds)) {
+        if ($restrictedCartRuleIds === []) {
             return;
         }
 
@@ -462,7 +462,7 @@ class CartRuleRepository extends AbstractObjectModelRepository
 
         $this->removeRestrictionsByName($cartRuleId, $entityName);
 
-        if (empty($entityIds)) {
+        if ($entityIds === []) {
             return;
         }
 

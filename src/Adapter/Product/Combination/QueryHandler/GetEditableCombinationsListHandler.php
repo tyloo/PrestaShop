@@ -123,7 +123,7 @@ final class GetEditableCombinationsListHandler implements GetEditableCombination
             $imageId = null;
             if (! empty($imageIdsByCombinationIds[$combinationId])) {
                 $imageId = reset($imageIdsByCombinationIds[$combinationId]);
-            } elseif (! empty($defaultImageIds)) {
+            } elseif ($defaultImageIds !== []) {
                 $imageId = reset($defaultImageIds);
             }
 

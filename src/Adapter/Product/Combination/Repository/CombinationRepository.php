@@ -219,7 +219,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
                 // but in case it is not associated to default shop,
                 // then we load first found associated combination
                 $associatedShopIds = $this->getAssociatedShopIds($combinationId);
-                if (empty($associatedShopIds)) {
+                if ($associatedShopIds === []) {
                     throw $e;
                 }
 
@@ -304,7 +304,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
     public function delete(CombinationId $combinationId, ShopConstraint $shopConstraint, int $errorCode = 0): void
     {
         $removedShops = $this->getShopIdsByConstraint($combinationId, $shopConstraint);
-        if (empty($removedShops)) {
+        if ($removedShops === []) {
             return;
         }
 
@@ -605,7 +605,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
         CombinationId $newDefaultCombinationId,
         array $shopIds,
     ): void {
-        if (empty($shopIds)) {
+        if ($shopIds === []) {
             return;
         }
 
@@ -668,7 +668,7 @@ class CombinationRepository extends AbstractMultiShopObjectModelRepository
 
         $attributeIds = $this->searchAttributes($languageId, $shopConstraint, $searchPhrase);
 
-        if (empty($attributeIds)) {
+        if ($attributeIds === []) {
             return [];
         }
 

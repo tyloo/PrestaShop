@@ -287,7 +287,7 @@ class CategoryRepository extends AbstractObjectModelRepository
             return true;
         });
 
-        if (empty($newCategories)) {
+        if ($newCategories === []) {
             return;
         }
 

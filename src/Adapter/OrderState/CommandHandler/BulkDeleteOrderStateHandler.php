@@ -60,7 +60,7 @@ class BulkDeleteOrderStateHandler extends AbstractOrderStateHandler implements B
             }
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             throw new BulkDeleteOrderStateException($errors, 'Failed to delete all of selected order statuses');
         }
     }

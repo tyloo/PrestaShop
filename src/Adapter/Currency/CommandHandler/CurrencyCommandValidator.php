@@ -102,7 +102,7 @@ final class CurrencyCommandValidator
      */
     public function assertDefaultCurrencyIsNotBeingRemovedOrDisabledFromShop(Currency $currency, EditCurrencyCommand|EditUnofficialCurrencyCommand $command)
     {
-        if (empty($command->getShopIds())) {
+        if ($command->getShopIds() === []) {
             return;
         }
 

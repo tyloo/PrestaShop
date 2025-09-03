@@ -67,7 +67,7 @@ final class BulkDeleteCategoriesHandler extends AbstractDeleteCategoryHandler im
             $deletedCategoryIdsByParent[(int) $category->id_parent][] = $categoryId->getValue();
         }
 
-        if (empty($deletedCategoryIdsByParent)) {
+        if ($deletedCategoryIdsByParent === []) {
             return;
         }
 

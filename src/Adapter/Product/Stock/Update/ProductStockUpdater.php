@@ -73,7 +73,7 @@ class ProductStockUpdater
         $stockAvailable = $this->stockAvailableRepository->getForProduct($productId, new ShopId($product->getShopId()));
 
         $productUpdates = $this->fillUpdatableProperties($product, $stockAvailable, $properties);
-        if (! empty($productUpdates)) {
+        if ($productUpdates !== []) {
             $this->productRepository->partialUpdate(
                 $product,
                 $productUpdates,

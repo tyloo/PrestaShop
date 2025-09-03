@@ -196,7 +196,7 @@ abstract class AbstractDeleteCategoryHandler
      */
     private function buildProductIdsFromResults(array $results): array
     {
-        if (empty($results)) {
+        if ($results === []) {
             return [];
         }
 

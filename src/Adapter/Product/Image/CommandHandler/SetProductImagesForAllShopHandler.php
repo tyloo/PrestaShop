@@ -61,7 +61,7 @@ class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHan
             $shopsToRemoveImageFrom = $this->getShopsToRemoveImageFrom($shopIdsAssociatedToProduct, $shopsToAddImageTo, $image);
             $image->associateTo($shopsToAddImageTo, $productId->getValue());
 
-            if (! empty($shopsToRemoveImageFrom)) {
+            if ($shopsToRemoveImageFrom !== []) {
                 $this->productImageRepository->deleteFromShops(
                     new ImageId((int) $image->id),
                     array_map(
@@ -117,7 +117,7 @@ class SetProductImagesForAllShopHandler implements SetProductImagesForAllShopHan
 
         $shopIdsCovered = $this->shopIdsToInt($this->productImageRepository->getShopIdsByCoverId(new ImageId($image->id)));
         $coverToRemove = array_intersect($shopIdsCovered, $shopsToRemoveImageFrom);
-        if (! empty($coverToRemove)) {
+        if ($coverToRemove !== []) {
             throw new CannotRemoveCoverException();
         }
 

@@ -28,7 +28,6 @@
 namespace PrestaShop\PrestaShop\Adapter\Order\Delivery;
 
 use PrestaShop\PrestaShop\Adapter\Configuration;
-use PrestaShop\PrestaShop\Adapter\Order\Invoice;
 use PrestaShop\PrestaShop\Adapter\Validate;
 use PrestaShop\PrestaShop\Core\Configuration\DataConfigurationInterface;
 
@@ -66,20 +65,10 @@ final class SlipPdfConfiguration implements DataConfigurationInterface
                 ];
             }
 
-            if (! empty($errors)) {
-                return $errors;
-            }
-
-            if (empty(Invoice::getByDeliveryDateInterval($configuration['date_from'], $configuration['date_to']))) {
-                $errors[] = [
-                    'key' => 'No delivery slip was found for this period.',
-                    'domain' => 'Admin.Orderscustomers.Notification',
-                    'parameters' => [],
-                ];
-            }
+            return $errors;
         }
 
-        return empty($errors) ? [] : $errors;
+        return $errors;
     }
 
     public function validateConfiguration(array $configuration)

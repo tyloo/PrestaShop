@@ -61,7 +61,7 @@ class RedirectTargetProvider
         string $redirectType,
         int $redirectTargetId,
     ): ?RedirectTargetInformation {
-        if (empty($redirectTargetId)) {
+        if ($redirectTargetId === 0) {
             return null;
         }
 

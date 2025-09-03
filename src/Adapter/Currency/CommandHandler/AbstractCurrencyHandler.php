@@ -192,15 +192,15 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
 
         $entity->active = $command->isEnabled();
 
-        if (! empty($command->getLocalizedNames())) {
+        if ($command->getLocalizedNames() !== []) {
             $entity->setLocalizedNames($command->getLocalizedNames());
         }
 
-        if (! empty($command->getLocalizedSymbols())) {
+        if ($command->getLocalizedSymbols() !== []) {
             $entity->setLocalizedSymbols($command->getLocalizedSymbols());
         }
 
-        if (! empty($command->getLocalizedTransformations())) {
+        if ($command->getLocalizedTransformations() !== []) {
             $this->applyPatternTransformations($entity, $command->getLocalizedTransformations());
         }
 
@@ -212,7 +212,7 @@ abstract class AbstractCurrencyHandler extends AbstractObjectModelHandler
             throw new CannotUpdateCurrencyException(\sprintf('An error occurred when updating currency object with id "%s"', $command->getCurrencyId()->getValue()));
         }
 
-        if (! empty($command->getShopIds())) {
+        if ($command->getShopIds() !== []) {
             $this->associateWithShops($entity, $command->getShopIds());
             $this->associateConversionRateToShops($entity, $command->getShopIds());
         }

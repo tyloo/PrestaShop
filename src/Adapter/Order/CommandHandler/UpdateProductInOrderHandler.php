@@ -72,7 +72,7 @@ final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler impl
 
             $orderDetail = new OrderDetail($command->getOrderDetailId());
             $orderInvoice = null;
-            if (! empty($command->getOrderInvoiceId())) {
+            if (! \in_array($command->getOrderInvoiceId(), [null, 0], true)) {
                 $orderInvoice = new OrderInvoice($command->getOrderInvoiceId());
             }
 
@@ -205,7 +205,7 @@ final class UpdateProductInOrderHandler extends AbstractOrderCommandHandler impl
         }
 
         // No invoices contain the product it's fine
-        if (empty($invoicesContainingProduct)) {
+        if ($invoicesContainingProduct === []) {
             return;
         }
 

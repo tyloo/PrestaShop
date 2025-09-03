@@ -54,7 +54,7 @@ class AdminAPIConfiguration implements DataConfigurationInterface
     public function updateConfiguration(array $configuration)
     {
         $errors = $this->getConfigurationErrors($configuration);
-        if (! empty($errors)) {
+        if ($errors !== []) {
             return $errors;
         }
 
@@ -69,7 +69,7 @@ class AdminAPIConfiguration implements DataConfigurationInterface
 
     public function validateConfiguration(array $configuration)
     {
-        return empty($this->getConfigurationErrors($configuration));
+        return $this->getConfigurationErrors($configuration) === [];
     }
 
     private function getConfigurationErrors(array $configuration): array

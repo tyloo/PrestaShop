@@ -276,7 +276,7 @@ class OrderDetailUpdater
         int $customizationId = 0,
     ): void {
         $identicalOrderDetails = $this->getOrderDetailsForProduct($order, $productId, $combinationId, $customizationId);
-        if (empty($identicalOrderDetails)) {
+        if ($identicalOrderDetails === []) {
             return;
         }
 

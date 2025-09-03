@@ -96,7 +96,7 @@ class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerIn
         $this->cartRuleRepository->assertAllCartRulesExists($restrictedCartRuleIds);
         $this->cartRuleRepository->restrictCartRules($cartRuleId, $restrictedCartRuleIds);
 
-        $hasRestrictions = ! empty($restrictedCartRuleIds);
+        $hasRestrictions = $restrictedCartRuleIds !== [];
 
         $cartRule->cart_rule_restriction = $hasRestrictions;
         $this->cartRuleRepository->partialUpdate($cartRule, ['cart_rule_restriction']);
@@ -113,7 +113,7 @@ class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerIn
     {
         $this->cartRuleRepository->setProductRestrictions(new CartRuleId((int) $cartRule->id), $restrictionRuleGroups);
 
-        $cartRule->product_restriction = ! empty($restrictionRuleGroups);
+        $cartRule->product_restriction = $restrictionRuleGroups !== [];
         $this->cartRuleRepository->partialUpdate($cartRule, ['product_restriction']);
     }
 
@@ -124,7 +124,7 @@ class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerIn
     {
         $this->cartRuleRepository->setCarrierRestrictions(new CartRuleId((int) $cartRule->id), $restrictedCarrierIds);
 
-        $cartRule->carrier_restriction = ! empty($restrictedCarrierIds);
+        $cartRule->carrier_restriction = $restrictedCarrierIds !== [];
         $this->cartRuleRepository->partialUpdate($cartRule, ['carrier_restriction']);
     }
 
@@ -135,7 +135,7 @@ class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerIn
     {
         $this->cartRuleRepository->setCountryRestrictions(new CartRuleId((int) $cartRule->id), $restrictedCountryIds);
 
-        $cartRule->country_restriction = ! empty($restrictedCountryIds);
+        $cartRule->country_restriction = $restrictedCountryIds !== [];
         $this->cartRuleRepository->partialUpdate($cartRule, ['country_restriction']);
     }
 
@@ -146,7 +146,7 @@ class SetCartRuleRestrictionsHandler implements SetCartRuleRestrictionsHandlerIn
     {
         $this->cartRuleRepository->setGroupRestrictions(new CartRuleId((int) $cartRule->id), $restrictedGroupIds);
 
-        $cartRule->group_restriction = ! empty($restrictedGroupIds);
+        $cartRule->group_restriction = $restrictedGroupIds !== [];
         $this->cartRuleRepository->partialUpdate($cartRule, ['group_restriction']);
     }
 }

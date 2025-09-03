@@ -49,7 +49,7 @@ class ProductDeleter
      */
     public function deleteFromShops(ProductId $productId, array $shopIds): void
     {
-        if (empty($shopIds)) {
+        if ($shopIds === []) {
             return;
         }
 

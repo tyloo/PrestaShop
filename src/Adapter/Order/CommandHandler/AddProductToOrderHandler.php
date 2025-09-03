@@ -522,25 +522,25 @@ final class AddProductToOrderHandler extends AbstractOrderHandler implements Add
                 continue;
             }
 
-            if (! empty($command->getCombinationId()) && $command->getCombinationId()->getValue() !== (int) $orderDetail['product_attribute_id']) {
+            if ($command->getCombinationId() instanceof \PrestaShop\PrestaShop\Core\Domain\Product\Combination\ValueObject\CombinationId && $command->getCombinationId()->getValue() !== (int) $orderDetail['product_attribute_id']) {
                 continue;
             }
 
             $invoicesContainingProduct[] = (int) $orderDetail['id_order_invoice'];
         }
 
-        if (empty($invoicesContainingProduct)) {
+        if ($invoicesContainingProduct === []) {
             return;
         }
 
         // If it's a new invoice (or no invoice), the ID is null, so we check if the Order has invoice (in which case
         // a new one is going to be created) If it doesn't have invoices we don't allow adding duplicate OrderDetail
-        if (empty($command->getOrderInvoiceId()) && ! $order->hasInvoice()) {
+        if (\in_array($command->getOrderInvoiceId(), [null, 0], true) && ! $order->hasInvoice()) {
             throw new DuplicateProductInOrderException('You cannot add this product in the order as it is already present');
         }
 
         // If we are targeting a specific invoice check that the ID has not been found in the OrderDetail list
-        if (! empty($command->getOrderInvoiceId()) && \in_array((int) $command->getOrderInvoiceId(), $invoicesContainingProduct, true)) {
+        if (! \in_array($command->getOrderInvoiceId(), [null, 0], true) && \in_array((int) $command->getOrderInvoiceId(), $invoicesContainingProduct, true)) {
             $orderInvoice = new OrderInvoice($command->getOrderInvoiceId());
             $invoiceNumber = $orderInvoice->getInvoiceNumberFormatted((int) Configuration::get('PS_LANG_DEFAULT'), $order->id_shop);
             throw new DuplicateProductInOrderInvoiceException($invoiceNumber, 'You cannot add this product in this invoice as it is already present');

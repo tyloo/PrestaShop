@@ -173,7 +173,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
 
         $imagesIds = $this->getImageIds($productId, ShopConstraint::shop($shopId->getValue()));
 
-        return empty($imagesIds) ? null : reset($imagesIds);
+        return $imagesIds === [] ? null : reset($imagesIds);
     }
 
     public function findCoverId(ProductId $productId, ShopId $shopId): ?ImageId
@@ -205,7 +205,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
      */
     public function getImageIdsForCombinations(array $combinationIds): array
     {
-        if (empty($combinationIds)) {
+        if ($combinationIds === []) {
             return [];
         }
 
@@ -362,7 +362,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     public function duplicate(ImageId $sourceImageId, ProductId $newProductId, ShopConstraint $shopConstraint): ?Image
     {
         $associatedShopIds = $this->getAssociatedShopIdsByShopConstraint($sourceImageId, $shopConstraint);
-        if (empty($associatedShopIds)) {
+        if ($associatedShopIds === []) {
             return null;
         }
 
@@ -397,7 +397,7 @@ class ProductImageRepository extends AbstractMultiShopObjectModelRepository
     public function deleteByShopConstraint(ImageId $imageId, ShopConstraint $shopConstraint): void
     {
         $shopIds = $this->getAssociatedShopIdsByShopConstraint($imageId, $shopConstraint);
-        if (empty($shopIds)) {
+        if ($shopIds === []) {
             return;
         }
 

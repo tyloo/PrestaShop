@@ -586,7 +586,7 @@ class ProductLazyArray extends AbstractLazyArray
                     ' AND id_category = ' .
                     (int) $this->product['id_category_default']
             );
-            $this->product['category_name'] = empty($categoryName)
+            $this->product['category_name'] = $categoryName === '' || $categoryName === '0'
                 ? null
                 : $categoryName;
         }
@@ -600,9 +600,7 @@ class ProductLazyArray extends AbstractLazyArray
     #[LazyArrayAttribute(arrayAccess: true)]
     public function getVirtual()
     {
-        return ! empty(
-            $this->product['is_virtual'] || ! empty($this->product['virtual'])
-        );
+        return $this->product['is_virtual'] || ! empty($this->product['virtual']);
     }
 
     /**
@@ -1553,7 +1551,7 @@ class ProductLazyArray extends AbstractLazyArray
         // or "full" (id_feature, name, value)
         // grouping can only be performed if they are "full"
         if (
-            empty($productFeatures)
+            $productFeatures === []
             || ! \array_key_exists('name', reset($productFeatures))
         ) {
             return [];

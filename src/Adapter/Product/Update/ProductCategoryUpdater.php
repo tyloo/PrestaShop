@@ -113,7 +113,7 @@ class ProductCategoryUpdater
             return true;
         });
 
-        if (! empty($deletedCategories)) {
+        if ($deletedCategories !== []) {
             $this->categoryRepository->removeProductAssociations($productId, $deletedCategories);
         }
     }
@@ -143,7 +143,7 @@ class ProductCategoryUpdater
             if (! $defaultCategoryId instanceof CategoryId) {
                 $shopConstraint = ShopConstraint::shop($shopId->getValue());
                 $productCategories = $this->categoryRepository->getProductCategoryIds($productId, $shopConstraint);
-                if (empty($productCategories)) {
+                if ($productCategories === []) {
                     // If product has no more categories it needs at least the default category from shop
                     $fallbackDefaultCategory = $this->categoryRepository->getShopDefaultCategory($shopId)->getValue();
                 } else {

@@ -56,7 +56,7 @@ class CustomerGroupValidator extends AbstractObjectModelValidator
      */
     private function validateThereIsAtLeastOneShop(array $shopIds): void
     {
-        if (empty($shopIds)) {
+        if ($shopIds === []) {
             throw new GroupConstraintException('Customer group must be associated with at least one shop', GroupConstraintException::EMPTY_SHOP_LIST);
         }
     }
@@ -89,7 +89,7 @@ class CustomerGroupValidator extends AbstractObjectModelValidator
      */
     private function validateGroupNames(array $names): void
     {
-        if (empty($names)) {
+        if ($names === []) {
             throw new GroupConstraintException('Customer group name cannot be empty', GroupConstraintException::EMPTY_NAME);
         }
 

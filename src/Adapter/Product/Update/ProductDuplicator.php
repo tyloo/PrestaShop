@@ -141,7 +141,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
         $sourceDefaultShopId = $this->productRepository->getProductDefaultShopId($sourceProductId);
         $shopIds = $this->productRepository->getShopIdsByConstraint($sourceProductId, $shopConstraint);
 
-        if (empty($shopIds)) {
+        if ($shopIds === []) {
             throw new ShopAssociationNotFound(\sprintf('No shops associated with product %d by shop constraint %s', $sourceProductId->getValue(), var_export($shopConstraint, true)));
         }
 
@@ -456,7 +456,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
                     'id_product_attribute' => null,
                 ]);
                 $newCombinationId = $this->insertRow('product_attribute', $newCombination, CannotDuplicateProductException::FAILED_DUPLICATE_COMBINATIONS);
-                if (empty($newCombinationId)) {
+                if ($newCombinationId === 0) {
                     throw new CannotDuplicateProductException('Could not duplicate combination', CannotDuplicateProductException::FAILED_DUPLICATE_COMBINATIONS);
                 }
 
@@ -525,7 +525,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
             CannotDuplicateProductException::FAILED_DUPLICATE_RELATED_PRODUCTS
         );
 
-        if (empty($oldRows)) {
+        if ($oldRows === []) {
             return;
         }
 
@@ -549,7 +549,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
         $featureValuesIds = array_map(static fn (array $oldProductFeature) => (int) $oldProductFeature['id_feature_value'], $oldProductFeatures);
         $customFeatureValues = $this->getRows('feature_value', ['id_feature_value' => $featureValuesIds, 'custom' => 1], CannotDuplicateProductException::FAILED_DUPLICATE_FEATURES);
         $customValuesMapping = [];
-        if (! empty($customFeatureValues)) {
+        if ($customFeatureValues !== []) {
             $lastFeatureValueId = (int) $this->connection->createQueryBuilder()
                 ->from($this->dbPrefix . 'feature_value')
                 ->select('id_feature_value')
@@ -801,7 +801,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
     private function duplicateProductTable(string $table, int $oldProductId, int $newProductId, int $errorCode): void
     {
         $oldRows = $this->getRows($table, ['id_product' => $oldProductId], $errorCode);
-        if (empty($oldRows)) {
+        if ($oldRows === []) {
             return;
         }
 
@@ -823,7 +823,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
             'id_product' => $oldProductId,
             'id_shop' => $shopIds,
         ], $errorCode);
-        if (empty($oldRows)) {
+        if ($oldRows === []) {
             return;
         }
 
@@ -847,7 +847,7 @@ class ProductDuplicator extends AbstractMultiShopObjectModelRepository
      */
     private function bulkInsert(string $table, array $multipleRowValues, int $errorCode): void
     {
-        if (empty($multipleRowValues)) {
+        if ($multipleRowValues === []) {
             return;
         }
 

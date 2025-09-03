@@ -283,7 +283,7 @@ class AdminModuleDataProvider implements ModuleInterface
                     // We could remove directly the non-matching modules, but we will give that for the final loop of this function
 
                     foreach (explode(' ', (string) $value) as $keyword) {
-                        if (empty($keyword)) {
+                        if ($keyword === '' || $keyword === '0') {
                             continue;
                         }
 

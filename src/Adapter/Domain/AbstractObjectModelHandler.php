@@ -48,7 +48,7 @@ abstract class AbstractObjectModelHandler
      */
     protected function associateWithShops(ObjectModel $objectModel, array $shopAssociation)
     {
-        if (empty($shopAssociation) || ! Shop::isFeatureActive()) {
+        if ($shopAssociation === [] || ! Shop::isFeatureActive()) {
             return;
         }
 

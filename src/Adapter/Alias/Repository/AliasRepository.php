@@ -198,7 +198,7 @@ class AliasRepository extends AbstractObjectModelRepository
             }
         }
 
-        if (! empty($exceptions)) {
+        if ($exceptions !== []) {
             throw new BulkAliasException($exceptions, 'Errors occurred during Alias bulk delete action', BulkFeatureException::FAILED_BULK_DELETE);
         }
     }

@@ -66,7 +66,7 @@ class UpdateProductHandler implements UpdateProductHandlerInterface
             $updatableProperties[] = 'active';
         }
 
-        if (empty($updatableProperties)) {
+        if ($updatableProperties === []) {
             return;
         }
 

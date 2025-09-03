@@ -78,7 +78,7 @@ abstract class AbstractEmployeeHandler extends AbstractObjectModelHandler
      */
     protected function assertHomepageIsAccessible(int $tabId, int $profileId): void
     {
-        if (empty($tabId) || empty($profileId) || $profileId === EmployeeContext::SUPER_ADMIN_PROFILE_ID) {
+        if ($tabId === 0 || $profileId === 0 || $profileId === EmployeeContext::SUPER_ADMIN_PROFILE_ID) {
             return;
         }
 

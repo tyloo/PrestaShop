@@ -103,7 +103,7 @@ final class GetManufacturerForViewingHandler implements GetManufacturerForViewin
                     $combination['attribute_name']
                 );
 
-                if (! empty($combinations[$attributeId]['attributes'])) {
+                if (isset($combinations[$attributeId]['attributes']) && ($combinations[$attributeId]['attributes'] !== '' && $combinations[$attributeId]['attributes'] !== '0')) {
                     $attribute = \sprintf(', %s', $attribute);
                 }
 

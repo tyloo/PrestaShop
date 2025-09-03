@@ -59,7 +59,7 @@ final class BulkDeleteAddressHandler extends AbstractAddressHandler implements B
             }
         }
 
-        if (! empty($errors)) {
+        if ($errors !== []) {
             throw new BulkDeleteAddressException($errors, 'Failed to delete all of selected addresses');
         }
     }

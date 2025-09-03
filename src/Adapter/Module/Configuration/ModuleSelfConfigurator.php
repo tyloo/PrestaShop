@@ -452,7 +452,7 @@ class ModuleSelfConfigurator
 
         foreach (explode(';', $content) as $sql) {
             $sql = trim($sql);
-            if (empty($sql)) {
+            if ($sql === '' || $sql === '0') {
                 continue;
             }
 

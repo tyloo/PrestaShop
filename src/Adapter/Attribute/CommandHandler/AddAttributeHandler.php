@@ -58,7 +58,7 @@ class AddAttributeHandler implements AddAttributeHandlerInterface
         $attribute->name = $command->getLocalizedNames();
         $attribute->id_shop_list = $command->getAssociatedShopIds();
 
-        if (! empty($command->getColor())) {
+        if (! \in_array($command->getColor(), ['', '0'], true)) {
             $attribute->color = $command->getColor();
         }
 

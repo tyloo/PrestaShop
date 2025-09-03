@@ -57,13 +57,13 @@ class GetProductAttributeGroupsHandler extends AbstractAttributeGroupQueryHandle
         $productId = $query->getProductId();
         $attributeGroupIds = $this->productRepository->getProductAttributesGroupIds($productId, $shopConstraint);
 
-        if (empty($attributeGroupIds)) {
+        if ($attributeGroupIds === []) {
             return [];
         }
 
         $attributeIds = $this->productRepository->getProductAttributesIds($productId, $shopConstraint);
 
-        if (empty($attributeIds)) {
+        if ($attributeIds === []) {
             return [];
         }
 

@@ -53,7 +53,7 @@ class RelatedProductsUpdater
     {
         $product = $this->productRepository->getProductByDefaultShop($productId);
 
-        if (empty($relatedProductIds)) {
+        if ($relatedProductIds === []) {
             $this->deleteRelatedProducts($product);
 
             return;

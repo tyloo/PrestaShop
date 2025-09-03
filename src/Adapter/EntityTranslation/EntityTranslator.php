@@ -132,13 +132,13 @@ class EntityTranslator implements EntityTranslatorInterface
 
                 $translatedField = $this->doTranslate($data, $fieldName);
 
-                if (! empty($translatedField) && $translatedField !== $data[$fieldName]) {
+                if ($translatedField !== '' && $translatedField !== '0' && $translatedField !== $data[$fieldName]) {
                     $updateFields[] = '`' . bqSQL($fieldName) . '` = "' . pSQL($translatedField) . '"';
                 }
             }
 
             // Update table
-            if (! empty($updateWhere) && ! empty($updateFields)) {
+            if ($updateWhere !== [] && $updateFields !== []) {
                 $updateWhere = implode(' AND ', $updateWhere);
                 $updateFields = implode(', ', $updateFields);
 

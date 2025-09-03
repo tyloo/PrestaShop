@@ -105,7 +105,7 @@ final class GetOrderProductsForViewingHandler extends AbstractOrderHandler imple
                 }
             }
 
-            $product['customizations'] = empty($customizations) ? null : new OrderProductCustomizationsForViewing($customizations);
+            $product['customizations'] = $customizations === [] ? null : new OrderProductCustomizationsForViewing($customizations);
             $product['customized_product_quantity'] = $customized_product_quantity;
             $product['current_stock'] = StockAvailable::getQuantityAvailableByProduct($product['product_id'], $product['product_attribute_id'], $product['id_shop']);
             $product['quantity_refundable'] = $product['product_quantity'] - $product['product_quantity_return'] - $product['product_quantity_refunded'];

@@ -78,7 +78,7 @@ class CustomizationFieldDeleter
             }
         }
 
-        if (empty($failedIds)) {
+        if ($failedIds === []) {
             return;
         }
 

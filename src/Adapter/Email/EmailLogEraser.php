@@ -42,7 +42,7 @@ final class EmailLogEraser implements EmailLogEraserInterface
     {
         $errors = [];
 
-        if (empty($mailLogIds)) {
+        if ($mailLogIds === []) {
             $errors[] = [
                 'key' => 'You must select at least one element to delete.',
                 'parameters' => [],

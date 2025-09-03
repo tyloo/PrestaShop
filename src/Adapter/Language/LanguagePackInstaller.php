@@ -58,7 +58,7 @@ final class LanguagePackInstaller implements LanguagePackInstallerInterface
             ];
         }
 
-        if (\is_array($result) && ! empty($result)) {
+        if (\is_array($result) && $result !== []) {
             return $result;
         }
 

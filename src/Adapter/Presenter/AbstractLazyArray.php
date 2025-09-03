@@ -426,7 +426,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         $classAttributeInstance = null;
         $classAttributes = $reflexionClass->getAttributes();
 
-        if (! empty($classAttributes)) {
+        if ($classAttributes !== []) {
             $classAttributeInstance = $classAttributes[0]->newInstance();
             if (isset($classAttributeInstance->isRewritable)) {
                 return $classAttributeInstance->isRewritable;
@@ -441,7 +441,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
         $attributeInstance = null;
         $methodAttributes = $method->getAttributes(LazyArrayAttribute::class);
 
-        if (! empty($methodAttributes)) {
+        if ($methodAttributes !== []) {
             $attributeInstance = $methodAttributes[0]->newInstance();
         }
 
@@ -450,7 +450,7 @@ abstract class AbstractLazyArray implements Iterator, ArrayAccess, Countable, Js
 
     private function getIndexNameFromMethod(?LazyArrayAttribute $attributeInstance, ReflectionMethod $method): string
     {
-        if ($attributeInstance instanceof LazyArrayAttribute && ! empty($attributeInstance->indexName)) {
+        if ($attributeInstance instanceof LazyArrayAttribute && ($attributeInstance->indexName !== null && $attributeInstance->indexName !== '' && $attributeInstance->indexName !== '0')) {
             return $attributeInstance->indexName;
         }
 

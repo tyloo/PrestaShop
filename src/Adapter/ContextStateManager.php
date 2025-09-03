@@ -368,7 +368,7 @@ class ContextStateManager
         array_pop($this->contextFieldsStack);
 
         // When all layers have been popped we restore the initial null value
-        if (empty($this->contextFieldsStack)) {
+        if ($this->contextFieldsStack === null || $this->contextFieldsStack === []) {
             $this->contextFieldsStack = null;
         }
     }

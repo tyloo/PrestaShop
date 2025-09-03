@@ -129,7 +129,7 @@ class ProductTypeUpdater
         }
 
         $packsAssociatedToProduct = $this->productPackRepository->getPacksContaining($productId);
-        if (! empty($packsAssociatedToProduct)) {
+        if ($packsAssociatedToProduct !== []) {
             throw new InvalidProductTypeException(InvalidProductTypeException::EXPECTED_NO_EXISTING_PACK_ASSOCIATIONS, 'You cannot change this product into a pack because it is already associated as a pack content');
         }
     }

@@ -313,7 +313,7 @@ final class GetCartForOrderCreationHandler extends AbstractCartHandler implement
     private function fetchCartDeliveryOptions(array $deliveryOptionsByAddress, int $deliveryAddressId)
     {
         $deliveryOptions = [];
-        if (empty($deliveryOptionsByAddress)) {
+        if ($deliveryOptionsByAddress === []) {
             return $deliveryOptions;
         }
 
