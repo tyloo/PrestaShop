@@ -37,7 +37,7 @@ final class MerchandiseReturnFilters extends Filters
 {
     protected $filterId = MerchandiseReturnGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

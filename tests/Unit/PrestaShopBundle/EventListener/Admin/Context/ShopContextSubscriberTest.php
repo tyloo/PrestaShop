@@ -126,6 +126,7 @@ class ShopContextSubscriberTest extends ContextEventListenerTestCase
     {
         $request = new Request();
         $request->attributes->set(LegacyControllerConstants::MULTISHOP_CONTEXT_ATTRIBUTE, Shop::CONTEXT_ALL);
+
         $event = $this->createRequestEvent($request);
 
         $shopContextBuilder = new ShopContextBuilder(

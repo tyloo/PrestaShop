@@ -51,7 +51,7 @@ class LegacyTranslationKeyTest extends TestCase
         $this->assertSame($expectedHash, $parsed->getHash());
     }
 
-    public function provideTestCases()
+    public function provideTestCases(): array
     {
         return [
             [

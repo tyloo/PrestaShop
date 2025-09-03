@@ -155,7 +155,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isIp2LongDataProvider()
+    public function isIp2LongDataProvider(): array
     {
         return [
             [false, 'toto'],
@@ -163,7 +163,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isMd5DataProvider()
+    public function isMd5DataProvider(): array
     {
         return [
             [1, md5('SomeRandomString')],
@@ -175,7 +175,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isSha1DataProvider()
+    public function isSha1DataProvider(): array
     {
         return [
             [1, sha1('SomeRandomString')],
@@ -187,7 +187,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isNameDataProvider()
+    public function isNameDataProvider(): array
     {
         return [
             [1, 'Mathieu'],
@@ -220,7 +220,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isCustomerNameDataProvider()
+    public function isCustomerNameDataProvider(): array
     {
         return [
             [true, 'Mathieu'],
@@ -253,7 +253,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isEmailDataProvider()
+    public function isEmailDataProvider(): array
     {
         return [
             [true, 'john.doe@prestashop.com'],
@@ -274,7 +274,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isBirthDateProvider()
+    public function isBirthDateProvider(): array
     {
         return [
             [true, '1991-04-19'],
@@ -316,7 +316,7 @@ class ValidateCoreTest extends TestCase
         ];
     }
 
-    public function isDateOrNullProvider()
+    public function isDateOrNullProvider(): array
     {
         return [
             [true, '1991-04-19'],
@@ -361,7 +361,7 @@ class ValidateCoreTest extends TestCase
         );
     }
 
-    public function trueFloatDataProvider()
+    public function trueFloatDataProvider(): array
     {
         return [
             [true, 12],

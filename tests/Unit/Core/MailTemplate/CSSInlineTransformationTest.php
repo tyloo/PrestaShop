@@ -187,10 +187,8 @@ HTML;
 
     /**
      * @param string $cssPath
-     *
-     * @return string
      */
-    private function createSimpleHtml($cssPath)
+    private function createSimpleHtml($cssPath): string
     {
         $simpleHtml = <<<'HTML'
             <!DOCTYPE html>

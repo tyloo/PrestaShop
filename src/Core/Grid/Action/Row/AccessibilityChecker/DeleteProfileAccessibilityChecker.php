@@ -42,7 +42,7 @@ final class DeleteProfileAccessibilityChecker implements AccessibilityCheckerInt
     ) {
     }
 
-    public function isGranted(array $profile)
+    public function isGranted(array $profile): bool
     {
         return $profile['id_profile'] !== $this->superAdminProfileId;
     }

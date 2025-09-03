@@ -45,7 +45,7 @@ class FileSystem
      * Replaces directory separators with the system's native one
      * and trims the trailing separator.
      */
-    public function normalizePath($path)
+    public function normalizePath($path): string
     {
         return rtrim(
             str_replace(['/', '\\'], \DIRECTORY_SEPARATOR, $path),
@@ -53,7 +53,7 @@ class FileSystem
         );
     }
 
-    private function joinTwoPaths($a, $b)
+    private function joinTwoPaths($a, $b): string
     {
         return $this->normalizePath($a) . \DIRECTORY_SEPARATOR . $this->normalizePath($b);
     }

@@ -48,6 +48,7 @@ class ChainedFiltersBuilderTest extends TestCase
         $builder = new ChainedFiltersBuilder([$limitBuilder, $offsetBuilder]);
 
         $builder->setConfig(['limit' => 10, 'offset' => 20]);
+
         $filters = $builder->buildFilters();
         $this->assertNotNull($filters);
         $this->assertEquals(['limit' => 10, 'offset' => 20], $filters->all());
@@ -60,11 +61,13 @@ class ChainedFiltersBuilderTest extends TestCase
 
         $builder = new ChainedFiltersBuilder([$limitABuilder, $limitBBuilder]);
         $builder->setConfig(['limit_a' => 10, 'limit_b' => 20]);
+
         $filters = $builder->buildFilters();
         $this->assertEquals(['limit' => 20], $filters->all());
 
         $builder = new ChainedFiltersBuilder([$limitBBuilder, $limitABuilder]);
         $builder->setConfig(['limit_a' => 10, 'limit_b' => 20]);
+
         $filters = $builder->buildFilters();
         $this->assertEquals(['limit' => 10], $filters->all());
     }

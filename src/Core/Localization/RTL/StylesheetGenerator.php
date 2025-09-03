@@ -93,10 +93,8 @@ class StylesheetGenerator
      *
      * @param string $file       File path
      * @param bool   $regenerate Indicates if RTL files should be re-generated even if they exist
-     *
-     * @return bool
      */
-    private function shouldProcessFile($file, $regenerate)
+    private function shouldProcessFile($file, $regenerate): bool
     {
         return
             ! str_contains($file, '/node_modules/')
@@ -153,10 +151,8 @@ class StylesheetGenerator
      * Removes the file extension from path.
      *
      * @param string $filePath Path to a file
-     *
-     * @return string
      */
-    private function getFilePathWithoutExtension($filePath)
+    private function getFilePathWithoutExtension($filePath): string
     {
         $path = pathinfo($filePath);
 
@@ -170,7 +166,7 @@ class StylesheetGenerator
      *
      * @return string RTL filename
      */
-    private function getRtlFileName($baseFileName)
+    private function getRtlFileName($baseFileName): string
     {
         return $this->getFilePathWithoutExtension($baseFileName) . $this->rtlSuffix . '.' . $this->fileType;
     }

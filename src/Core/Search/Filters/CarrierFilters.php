@@ -42,7 +42,7 @@ final class CarrierFilters extends Filters
      */
     protected $filterId = CarrierGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

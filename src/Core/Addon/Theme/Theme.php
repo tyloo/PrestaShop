@@ -118,7 +118,7 @@ class Theme implements AddonInterface
         return $this->get('dependencies.modules', []);
     }
 
-    public function getPageSpecificAssets($pageId)
+    public function getPageSpecificAssets($pageId): array
     {
         return [
             'css' => $this->getPageSpecificCss($pageId),
@@ -226,7 +226,7 @@ class Theme implements AddonInterface
      *
      * @return string layout relative path
      */
-    public function getLayoutRelativePathForPage($page)
+    public function getLayoutRelativePathForPage($page): string
     {
         return $this->getLayoutPath($this->getLayoutNameForPage($page));
     }
@@ -238,7 +238,7 @@ class Theme implements AddonInterface
      *
      * @return string layout relative path
      */
-    public function getLayoutPath($layoutName)
+    public function getLayoutPath($layoutName): string
     {
         return 'layouts/' . $layoutName . '.tpl';
     }

@@ -44,7 +44,7 @@ class CurrencyNumericIsoCodeTest extends TestCase
         $currencyNumericIsoCode = new NumericIsoCode($incorrectNumericIsoCode);
     }
 
-    public function getIncorrectNumericIsoCodes()
+    public function getIncorrectNumericIsoCodes(): array
     {
         return [
             [
@@ -99,7 +99,7 @@ class CurrencyNumericIsoCodeTest extends TestCase
         $this->assertEquals($correctNumericIsoCode, $currencyNumericIsoCode->getValue());
     }
 
-    public function getCorrectNumericIsoCodes()
+    public function getCorrectNumericIsoCodes(): array
     {
         return [
             [

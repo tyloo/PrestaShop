@@ -40,7 +40,7 @@ final class ProfileFilters extends Filters
      */
     protected $filterId = ProfileGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 10,

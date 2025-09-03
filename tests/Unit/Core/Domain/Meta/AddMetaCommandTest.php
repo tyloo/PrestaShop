@@ -70,7 +70,7 @@ class AddMetaCommandTest extends TestCase
         $command->setLocalisedMetaDescription($incorrectNames);
     }
 
-    public function getIncorrectPageNames()
+    public function getIncorrectPageNames(): array
     {
         return [
             [
@@ -85,7 +85,7 @@ class AddMetaCommandTest extends TestCase
         ];
     }
 
-    public function getIncorrectMultiLanguageNames()
+    public function getIncorrectMultiLanguageNames(): array
     {
         return [
             [

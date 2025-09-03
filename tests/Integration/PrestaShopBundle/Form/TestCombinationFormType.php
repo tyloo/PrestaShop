@@ -50,6 +50,7 @@ class TestCombinationFormType extends CommonAbstractType
 
         $stock = $builder->get('stock');
         $stock->add('quantities', FormType::class);
+
         $quantities = $stock->get('quantities');
         $quantities->add('stock_movements', FormType::class);
     }

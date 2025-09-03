@@ -284,7 +284,7 @@ class ModuleManagerBuilder
         return self::$languageContext;
     }
 
-    protected function getConfigDir()
+    protected function getConfigDir(): string
     {
         return _PS_ROOT_DIR_ . '/app/config';
     }

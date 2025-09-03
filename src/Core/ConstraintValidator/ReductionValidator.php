@@ -100,20 +100,16 @@ final class ReductionValidator extends ConstraintValidator
 
     /**
      * Returns true is percentage is considered valid
-     *
-     * @return bool
      */
-    private function assertIsValidPercentage(float $value)
+    private function assertIsValidPercentage(float $value): bool
     {
         return $value > 0 && $value <= Reduction::MAX_ALLOWED_PERCENTAGE;
     }
 
     /**
      * Returns true if amount value is considered valid
-     *
-     * @return bool
      */
-    private function assertIsValidAmount(float $value)
+    private function assertIsValidAmount(float $value): bool
     {
         return $value > 0;
     }

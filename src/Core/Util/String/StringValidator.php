@@ -32,7 +32,7 @@ namespace PrestaShop\PrestaShop\Core\Util\String;
  */
 final class StringValidator implements StringValidatorInterface
 {
-    public function startsWith($string, $prefix)
+    public function startsWith($string, $prefix): bool
     {
         return str_starts_with($string, $prefix);
     }
@@ -48,7 +48,7 @@ final class StringValidator implements StringValidatorInterface
         return substr($string, -$length) === $suffix;
     }
 
-    public function startsWithAndEndsWith($string, $prefix, $suffix)
+    public function startsWithAndEndsWith($string, $prefix, $suffix): bool
     {
         return $this->startsWith($string, $prefix) && $this->endsWith($string, $suffix);
     }

@@ -124,13 +124,11 @@ final class Importer implements ImporterInterface
      * Checks if data should be truncated.
      * Data should be truncated only when it's not validation step
      * and it's the first batch of the first process of the import.
-     *
-     * @return bool
      */
     public function shouldTruncateData(
         ImportConfigInterface $importConfig,
         ImportRuntimeConfigInterface $runtimeConfig,
-    ) {
+    ): bool {
         return
             $importConfig->truncate()
             && ! $runtimeConfig->shouldValidateData()
@@ -140,10 +138,8 @@ final class Importer implements ImporterInterface
 
     /**
      * Checks if current import iteration is the first.
-     *
-     * @return bool
      */
-    private function isFirstIteration(ImportRuntimeConfigInterface $runtimeConfig)
+    private function isFirstIteration(ImportRuntimeConfigInterface $runtimeConfig): bool
     {
         return $runtimeConfig->getOffset() === 0;
     }

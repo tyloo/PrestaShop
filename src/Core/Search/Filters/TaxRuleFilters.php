@@ -42,7 +42,7 @@ class TaxRuleFilters extends Filters
      */
     protected $filterId = TaxRuleGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

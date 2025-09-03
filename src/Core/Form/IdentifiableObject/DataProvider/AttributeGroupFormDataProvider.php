@@ -43,7 +43,7 @@ class AttributeGroupFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var EditableAttributeGroup $editableAttributeGroup */
         $editableAttributeGroup = $this->queryBus->handle(new GetAttributeGroupForEditing((int) $id));
@@ -56,7 +56,7 @@ class AttributeGroupFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'group_type' => AttributeGroupType::ATTRIBUTE_GROUP_TYPE_SELECT,

@@ -128,7 +128,7 @@ class Factory
      * @return string
      *                The extracted positive pattern
      */
-    protected function getPositivePattern($pattern)
+    protected function getPositivePattern($pattern): string
     {
         $patterns = explode(';', $pattern);
 
@@ -145,7 +145,7 @@ class Factory
      * @return string
      *                The extracted negative pattern
      */
-    protected function getNegativePattern($pattern)
+    protected function getNegativePattern($pattern): string
     {
         $patterns = explode(';', $pattern);
 
@@ -208,7 +208,7 @@ class Factory
      * @return int
      *             The min number of fraction digits to display in the final number
      */
-    protected function getMinFractionDigits($pattern)
+    protected function getMinFractionDigits($pattern): int
     {
         $dotPos = (int) strpos($pattern, '.');
 
@@ -222,7 +222,7 @@ class Factory
      *
      * @return int The max number of fraction digits to display in the final number
      */
-    protected function getMaxFractionDigits($pattern)
+    protected function getMaxFractionDigits($pattern): int
     {
         $dotPos = (int) strpos($pattern, '.');
 
@@ -238,7 +238,7 @@ class Factory
      * @return int
      *             The primary group size of the passed pattern
      */
-    protected function getPrimaryGroupSize($pattern)
+    protected function getPrimaryGroupSize($pattern): int
     {
         $groups = $this->getPatternGroups($pattern);
         $nbGroups = \count($groups);
@@ -255,7 +255,7 @@ class Factory
      *
      * @return int The secondary group size of the passed pattern
      */
-    protected function getSecondaryGroupSize($pattern)
+    protected function getSecondaryGroupSize($pattern): int
     {
         $groups = $this->getPatternGroups($pattern);
         $nbGroups = \count($groups);

@@ -67,7 +67,7 @@ class ModuleGraphTest extends TestCase
         );
     }
 
-    public function getEscapeCellValues()
+    public function getEscapeCellValues(): array
     {
         return [
             ['=CMD', '"\'=CMD"'],

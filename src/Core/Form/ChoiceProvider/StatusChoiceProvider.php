@@ -40,7 +40,7 @@ final class StatusChoiceProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return [
             $this->translator->trans('Yes', [], 'Admin.Global') => 1,

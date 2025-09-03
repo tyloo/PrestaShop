@@ -74,10 +74,8 @@ class RenderedHookTest extends TestCase
 
     /**
      * This will return the expected content for the rendered Hook.
-     *
-     * @return array
      */
-    private function content()
+    private function content(): array
     {
         return [
             'module_1' => '<h1>Hello World</h1>',

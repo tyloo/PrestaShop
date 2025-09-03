@@ -40,7 +40,7 @@ final class TaxInclusionChoiceProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return [
             $this->translator->trans('Tax included', [], 'Admin.Global') => 1,

@@ -226,7 +226,7 @@ class ThemeManager implements AddonManagerInterface
      *
      * @return bool True for success
      */
-    public function reset($themeName)
+    public function reset($themeName): bool
     {
         return $this->disable($themeName) && $this->enable($themeName);
     }
@@ -425,7 +425,7 @@ class ThemeManager implements AddonManagerInterface
         $this->filesystem->remove($sandboxPath);
     }
 
-    private function getSandboxPath()
+    private function getSandboxPath(): string
     {
         if (! isset($this->sandbox)) {
             $this->sandbox = $this->configuration->get('_PS_CACHE_DIR_') . 'sandbox/' . uniqid() . '/';

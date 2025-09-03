@@ -44,7 +44,7 @@ final class MailThemeConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'defaultTheme' => $this->configuration->get('PS_MAIL_THEME'),
@@ -68,7 +68,7 @@ final class MailThemeConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         if (empty($configuration['defaultTheme'])) {
             throw new InvalidArgumentException('Default theme can not be empty');

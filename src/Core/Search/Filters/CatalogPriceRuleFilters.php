@@ -40,7 +40,7 @@ final class CatalogPriceRuleFilters extends Filters
      */
     protected $filterId = CatalogPriceRuleGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

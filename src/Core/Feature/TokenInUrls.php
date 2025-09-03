@@ -38,10 +38,7 @@ final class TokenInUrls
 
     public const ENV_VAR = '_TOKEN_';
 
-    /**
-     * @return bool
-     */
-    public static function isDisabled()
+    public static function isDisabled(): bool
     {
         return (bool) Configuration::get('PS_SECURITY_TOKEN') === false || getenv(self::ENV_VAR) === self::DISABLED;
     }

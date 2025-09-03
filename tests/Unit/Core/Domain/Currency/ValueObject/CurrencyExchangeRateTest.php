@@ -44,7 +44,7 @@ class CurrencyExchangeRateTest extends TestCase
         $exchangeRate = new ExchangeRate($incorrectExchangeRate);
     }
 
-    public function getIncorrectExchangeRates()
+    public function getIncorrectExchangeRates(): array
     {
         return [
             [

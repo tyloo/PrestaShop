@@ -44,7 +44,7 @@ final class CancelProductFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($orderId)
+    public function getData($orderId): array
     {
         /** @var OrderForViewing $orderForViewing */
         $orderForViewing = $this->queryBus->handle(new GetOrderForViewing((int) $orderId));
@@ -58,7 +58,7 @@ final class CancelProductFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [];
     }

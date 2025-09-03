@@ -344,10 +344,8 @@ class CmsPageFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * Provides reusable valid data for cms creation.
-     *
-     * @return array
      */
-    private function getValidDataForCmsPageCreation()
+    private function getValidDataForCmsPageCreation(): array
     {
         return [
             'id_cms_category' => CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID,

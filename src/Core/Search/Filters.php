@@ -65,7 +65,7 @@ class Filters extends ParameterBag implements SearchCriteriaInterface
         return new static(static::getDefaults());
     }
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => static::LIST_LIMIT,

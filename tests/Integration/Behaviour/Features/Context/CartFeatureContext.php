@@ -200,7 +200,7 @@ class CartFeatureContext extends AbstractPrestaShopFeatureContext
      */
     public function calculateCartShippingFees($expectedShippingFees, $taxes = null)
     {
-        $withTaxes = $taxes === ' tax excluded' ? false : true;
+        $withTaxes = $taxes !== ' tax excluded';
         $expectedTotal = round($expectedShippingFees, 1);
         $shippingFees = round($this->getCurrentCart()->getPackageShippingCost($this->getCurrentCart()->id_carrier, $withTaxes), 1);
         if ($expectedTotal !== $shippingFees) {

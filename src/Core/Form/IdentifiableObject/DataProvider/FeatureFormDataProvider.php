@@ -46,7 +46,7 @@ class FeatureFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var EditableFeature $editableFeature */
         $editableFeature = $this->queryBus->handle(new GetFeatureForEditing((int) $id));

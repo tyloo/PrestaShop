@@ -43,7 +43,7 @@ final class OrderReturnStatesFilters extends Filters
      */
     protected $filterId = OrderReturnStatesGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => self::LIST_LIMIT,

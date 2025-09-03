@@ -135,10 +135,8 @@ class RepositoryTest extends TestCase
      *      [<Expected names to receive>],
      *      [<Expected symbols to receive>]
      *  ]
-     *
-     * @return array
      */
-    public function provideValidCurrencyCodes()
+    public function provideValidCurrencyCodes(): array
     {
         return [
             'French euro' => [

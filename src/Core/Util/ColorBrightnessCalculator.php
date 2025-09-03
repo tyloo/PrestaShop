@@ -39,10 +39,8 @@ final class ColorBrightnessCalculator
 
     /**
      * @param string $hexColor
-     *
-     * @return bool
      */
-    public function isBright($hexColor)
+    public function isBright($hexColor): bool
     {
         return $this->calculate($hexColor) >= self::BRIGHT_COLOR_MIN;
     }

@@ -128,7 +128,7 @@ class StreamWrapperPHP
         return $data;
     }
 
-    public function stream_eof()
+    public function stream_eof(): bool
     {
         return $this->index >= $this->length;
     }

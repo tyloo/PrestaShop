@@ -68,10 +68,8 @@ final class Entity
      * Get import entity type from name.
      *
      * @param string $importType
-     *
-     * @return int
      */
-    public static function getFromName($importType)
+    public static function getFromName($importType): int
     {
         if (\array_key_exists($importType, self::AVAILABLE_TYPES)) {
             return self::AVAILABLE_TYPES[$importType];

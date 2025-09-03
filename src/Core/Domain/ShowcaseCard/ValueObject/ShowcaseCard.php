@@ -125,10 +125,8 @@ class ShowcaseCard
      * Indicates if the provided name matches an existing showcase card
      *
      * @param string $name
-     *
-     * @return bool
      */
-    private function isSupported($name)
+    private function isSupported($name): bool
     {
         return \array_key_exists($name, self::SUPPORTED_NAMES);
     }

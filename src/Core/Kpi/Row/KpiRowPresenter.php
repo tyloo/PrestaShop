@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Kpi\KpiInterface;
  */
 final class KpiRowPresenter implements KpiRowPresenterInterface
 {
-    public function present(KpiRowInterface $kpiRow)
+    public function present(KpiRowInterface $kpiRow): array
     {
         $renderedKpis = [];
 

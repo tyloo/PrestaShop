@@ -42,10 +42,8 @@ final class ExportDirectory implements Stringable
 
     /**
      * Get path to import directory.
-     *
-     * @return string
      */
-    public function getDir()
+    public function getDir(): string
     {
         return $this->configuration->get('_PS_ADMIN_DIR_') . \DIRECTORY_SEPARATOR . 'export' . \DIRECTORY_SEPARATOR;
     }

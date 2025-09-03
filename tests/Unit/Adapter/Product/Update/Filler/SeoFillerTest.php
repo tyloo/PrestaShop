@@ -117,6 +117,7 @@ class SeoFillerTest extends ProductFillerTestCase
         ];
         $product = $this->mockDefaultProduct();
         $product->name = $localizedNames;
+
         $command = $this->getEmptyCommand()
             ->setLocalizedLinkRewrites([
                 1 => '',

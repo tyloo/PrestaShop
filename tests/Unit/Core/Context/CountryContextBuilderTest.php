@@ -58,6 +58,7 @@ class CountryContextBuilderTest extends ContextBuilderTestCase
             $this->mockLanguageContext($languageId)
         );
         $builder->setCountryId(42);
+
         $countryContext = $builder->build();
         $this->assertEquals($country->id, $countryContext->getId());
         $this->assertEquals($country->id_zone, $countryContext->getZoneId());

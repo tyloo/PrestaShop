@@ -239,7 +239,7 @@ class ModuleManagerTest extends TestCase
         $isInstalledCallback = new class {
             private $count = 0;
 
-            public function isInstalled($name)
+            public function isInstalled($name): bool
             {
                 return $name === ModuleManagerTest::INSTALLED_MODULE_NAME
                     || ($name === ModuleManagerTest::INSTALLED_THEN_UNINSTALLED_MODULE_NAME

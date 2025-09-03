@@ -73,14 +73,8 @@ class CartRuleActionBuilder
             return true;
         }
 
-        if (
-            $propertyAccessor->isReadable($data, '[discount][reduction][value]')
-            && $propertyAccessor->isReadable($data, '[discount][reduction][type]')
-        ) {
-            return true;
-        }
-
-        return false;
+        return $propertyAccessor->isReadable($data, '[discount][reduction][value]')
+        && $propertyAccessor->isReadable($data, '[discount][reduction][type]');
     }
 
     private function buildFreeShipping(array $data): bool

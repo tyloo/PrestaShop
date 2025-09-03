@@ -57,6 +57,7 @@ class ClassFiltersBuilderTest extends TestCase
     {
         $builder = new ClassFiltersBuilder();
         $builder->setConfig(['filters_class' => SampleFilters::class]);
+
         $filters = $builder->buildFilters();
         $this->assertNotNull($filters);
         $this->assertEquals(SampleFilters::getDefaults(), $filters->all());
@@ -68,6 +69,7 @@ class ClassFiltersBuilderTest extends TestCase
     {
         $builder = new ClassFiltersBuilder();
         $builder->setConfig(['filters_class' => SampleFilters::class, 'filter_id' => 'language']);
+
         $filters = $builder->buildFilters();
         $this->assertNotNull($filters);
         $this->assertEquals(SampleFilters::getDefaults(), $filters->all());
@@ -79,6 +81,7 @@ class ClassFiltersBuilderTest extends TestCase
     {
         $builder = new ClassFiltersBuilder();
         $builder->setConfig(['filters_class' => SampleFilters::class]);
+
         $filters = new Filters(['limit' => 10]);
         $builtFilters = $builder->buildFilters($filters);
         $this->assertNotNull($builtFilters);

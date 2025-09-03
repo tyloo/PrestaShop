@@ -43,7 +43,7 @@ class ProfileIdTest extends TestCase
         $this->assertEquals((int) $idValue, $profileId->getValue());
     }
 
-    public function createsProfileWithValidValuesData()
+    public function createsProfileWithValidValuesData(): array
     {
         return [
             [1],
@@ -60,7 +60,7 @@ class ProfileIdTest extends TestCase
         new ProfileId($profileId);
     }
 
-    public function exceptionThrownWithInvalidValuesData()
+    public function exceptionThrownWithInvalidValuesData(): array
     {
         return [
             [-1],

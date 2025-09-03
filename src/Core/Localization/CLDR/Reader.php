@@ -244,7 +244,7 @@ class Reader implements ReaderInterface
      *
      * @throws LocalizationFileNotFoundException
      */
-    protected function mainPath($filename = '')
+    protected function mainPath($filename = ''): string
     {
         $path = realpath(_PS_ROOT_DIR_ . '/' . self::CLDR_MAIN . ($filename ?: ''));
         if ($path === false) {

@@ -304,10 +304,8 @@ final class CmsPageCategoryDefinitionFactory extends AbstractFilterableGridDefin
      * This function is required due to in cms_category contains position column - on ideal case cms_category_shop
      * should have this column configured instead.
      * In such case the condition would be $this->multistoreContextChecker->isSingleShopContext()
-     *
-     * @return bool
      */
-    private function isAllShopContextOrShopFeatureIsNotUsed()
+    private function isAllShopContextOrShopFeatureIsNotUsed(): bool
     {
         return $this->multistoreContextChecker->isAllShopContext() || ! $this->isMultiStoreFeatureUsed;
     }

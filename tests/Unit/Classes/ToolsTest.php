@@ -847,7 +847,7 @@ class ToolsTest extends TestCase
         }
     }
 
-    public function provideHtaccessRules()
+    public function provideHtaccessRules(): array
     {
         return [
             'legacy product images 1' => [

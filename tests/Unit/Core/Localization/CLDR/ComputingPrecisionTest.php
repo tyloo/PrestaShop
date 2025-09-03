@@ -54,7 +54,7 @@ class ComputingPrecisionTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function provider()
+    public function provider(): array
     {
         return [
             [1, 1],

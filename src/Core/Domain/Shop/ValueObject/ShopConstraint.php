@@ -143,11 +143,7 @@ class ShopConstraint
             return true;
         }
 
-        if ($this->forAllShops() && $constraint->forAllShops()) {
-            return true;
-        }
-
-        return false;
+        return $this->forAllShops() && $constraint->forAllShops();
     }
 
     public function isSingleShopContext(): bool

@@ -46,7 +46,7 @@ final class CmsPageViewDataProvider implements CmsPageViewDataProviderInterface
     /**
      * @throws CmsPageCategoryException
      */
-    public function getView($cmsCategoryParentId)
+    public function getView($cmsCategoryParentId): array
     {
         return [
             'root_category_id' => CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID,

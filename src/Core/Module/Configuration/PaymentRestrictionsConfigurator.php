@@ -95,10 +95,8 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
      *
      * @param string $restrictionType
      * @param int[]  $moduleIds
-     *
-     * @return int
      */
-    private function clearCurrentConfiguration($restrictionType, array $moduleIds)
+    private function clearCurrentConfiguration($restrictionType, array $moduleIds): int
     {
         $clearSql = '
             DELETE FROM ' . $this->getTableNameForRestriction($restrictionType) . '
@@ -130,20 +128,16 @@ final class PaymentRestrictionsConfigurator implements PaymentRestrictionsConfig
      * Get table name for module restrictions.
      *
      * @param string $restrictionType
-     *
-     * @return string
      */
-    private function getTableNameForRestriction($restrictionType)
+    private function getTableNameForRestriction($restrictionType): string
     {
         return $this->databasePrefix . 'module_' . $restrictionType;
     }
 
     /**
      * Parse data from restrictions.
-     *
-     * @return array
      */
-    private function parseRestrictionData(array $restrictions)
+    private function parseRestrictionData(array $restrictions): array
     {
         $moduleIds = [];
         $insertValues = [];

@@ -118,7 +118,7 @@ class HtaccessFolderGuardTest extends TestCase
         rmdir($testFolder);
     }
 
-    public function getInvalidFolders()
+    public function getInvalidFolders(): array
     {
         return [
             [__DIR__ . '/../../Resources/security/not_found_folder'],

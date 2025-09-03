@@ -52,7 +52,7 @@ class ImageTagSourceParserTest extends TestCase
         $this->assertSame($expectedSource, $parsedSource);
     }
 
-    public function getTestCases()
+    public function getTestCases(): array
     {
         return [
             [

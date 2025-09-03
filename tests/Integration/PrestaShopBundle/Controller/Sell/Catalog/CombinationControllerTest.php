@@ -85,6 +85,7 @@ class CombinationControllerTest extends FormGridControllerTestCase
         $this->client->disableReboot();
 
         $this->client->xmlHttpRequest('GET', $this->router->generate('admin_all_attribute_groups'));
+
         $attributeGroups = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertNotFalse($attributeGroups);
         $this->assertNotEmpty($attributeGroups);

@@ -460,12 +460,12 @@ class FakePackItemsManager4759 extends PackItemsManager
         return $this->stockAvailables[$product->id][$id_product_attribute];
     }
 
-    public function isPack($product)
+    public function isPack($product): bool
     {
         return isset($this->packs[$product->id]);
     }
 
-    public function isPacked($product, $id_product_attribute = false)
+    public function isPacked($product, $id_product_attribute = false): bool
     {
         return isset($this->items[$product->id][$id_product_attribute]);
     }

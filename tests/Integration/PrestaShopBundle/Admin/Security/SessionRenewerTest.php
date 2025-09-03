@@ -57,8 +57,10 @@ class SessionRenewerTest extends KernelTestCase
         $request = new Request([], [], [], [], [], [], null);
 
         $request->setSession($this->session);
+
         $requestStack = new RequestStack();
         $requestStack->push($request);
+
         $clearableTokenStorage = $this->getContainer()->get('security.csrf.token_storage');
         $this->sessionRenewer = new SessionRenewer($clearableTokenStorage, $requestStack);
 

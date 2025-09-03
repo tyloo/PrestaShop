@@ -140,7 +140,7 @@ final class RequestSqlGridDefinitionFactory extends AbstractGridDefinitionFactor
             );
     }
 
-    public function getFilters()
+    protected function getFilters()
     {
         return (new FilterCollection())
             ->add(

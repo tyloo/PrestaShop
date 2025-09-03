@@ -66,6 +66,7 @@ class ShopContextListenerTest extends ContextEventListenerTestCase
             $this->mockConfiguration(['PS_SHOP_DEFAULT' => self::DEFAULT_SHOP_ID])
         );
         $listener->onKernelRequest($event);
+
         $expectedShopConstraint = ShopConstraint::shop(self::DEFAULT_SHOP_ID);
         $this->assertEquals(self::DEFAULT_SHOP_ID, $this->getPrivateField($shopContextBuilder, 'shopId'));
         $this->assertEquals($expectedShopConstraint, $this->getPrivateField($shopContextBuilder, 'shopConstraint'));

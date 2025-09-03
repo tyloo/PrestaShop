@@ -38,7 +38,7 @@ final class OrderDiscountTypeChoiceProvider implements FormChoiceProviderInterfa
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return [
             $this->translator->trans('Percent', [], 'Admin.Global') => OrderDiscountType::DISCOUNT_PERCENT,

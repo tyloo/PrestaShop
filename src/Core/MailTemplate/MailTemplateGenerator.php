@@ -115,10 +115,8 @@ class MailTemplateGenerator
     /**
      * @param string $templateType
      * @param string $outputFolder
-     *
-     * @return string
      */
-    private function generateTemplatePath(LayoutInterface $layout, $templateType, $outputFolder)
+    private function generateTemplatePath(LayoutInterface $layout, $templateType, $outputFolder): string
     {
         return implode(\DIRECTORY_SEPARATOR, [$outputFolder, $layout->getName()]) . '.' . $templateType;
     }

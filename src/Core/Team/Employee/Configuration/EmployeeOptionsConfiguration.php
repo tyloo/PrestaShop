@@ -41,7 +41,7 @@ final class EmployeeOptionsConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'password_change_time' => (int) $this->configuration->get('PS_PASSWD_TIME_BACK'),
@@ -77,7 +77,7 @@ final class EmployeeOptionsConfiguration implements DataConfigurationInterface
         return $errors;
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset(
             $configuration['password_change_time'],

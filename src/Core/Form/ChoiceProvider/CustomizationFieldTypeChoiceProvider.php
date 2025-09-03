@@ -39,7 +39,7 @@ final class CustomizationFieldTypeChoiceProvider implements FormChoiceProviderIn
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return [
             $this->translator->trans('Text', [], 'Admin.Global') => CustomizationFieldType::TYPE_TEXT,

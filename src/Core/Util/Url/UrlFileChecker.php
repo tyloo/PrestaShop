@@ -55,10 +55,8 @@ final class UrlFileChecker implements UrlFileCheckerInterface
 
     /**
      * @param string $fileName
-     *
-     * @return bool
      */
-    private function isFileWritable($fileName)
+    private function isFileWritable($fileName): bool
     {
         $filePath = $this->fileDir . \DIRECTORY_SEPARATOR . $fileName;
 

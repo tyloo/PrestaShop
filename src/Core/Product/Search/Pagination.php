@@ -78,10 +78,8 @@ class Pagination
     /**
      * @param int    $page
      * @param string $type
-     *
-     * @return array
      */
-    private function buildPageLink($page, $type = 'page')
+    private function buildPageLink($page, $type = 'page'): array
     {
         $current = $page === $this->getPage();
 
@@ -89,14 +87,11 @@ class Pagination
             'type' => $type,
             'page' => $page,
             'clickable' => ! $current,
-            'current' => $type === 'page' ? $current : false,
+            'current' => $type === 'page' && $current,
         ];
     }
 
-    /**
-     * @return array
-     */
-    private function buildSpacer()
+    private function buildSpacer(): array
     {
         return [
             'type' => 'spacer',

@@ -125,10 +125,8 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      * Returns true if the key is found in the collection.
      *
      * @param mixed $key the key, can be integer or string
-     *
-     * @return bool
      */
-    public function containsKey($key)
+    public function containsKey($key): bool
     {
         return isset($this->addons[$key]) || \array_key_exists($key, $this->addons);
     }
@@ -137,10 +135,8 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
      * Returns true if the addon is found in the collection.
      *
      * @param AddonTheme $addon the addon
-     *
-     * @return bool
      */
-    public function contains(AddonTheme $addon)
+    public function contains(AddonTheme $addon): bool
     {
         return \in_array($addon, $this->addons, true);
     }
@@ -227,7 +223,7 @@ class ThemeCollection implements ArrayAccess, Countable, IteratorAggregate
         return true;
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->addons);
     }

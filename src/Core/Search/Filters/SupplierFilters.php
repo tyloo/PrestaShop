@@ -40,7 +40,7 @@ final class SupplierFilters extends Filters
      */
     protected $filterId = SupplierGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

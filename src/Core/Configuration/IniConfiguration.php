@@ -34,20 +34,16 @@ class IniConfiguration
 {
     /**
      * Get max post max size from ini configuration in bytes.
-     *
-     * @return int
      */
-    public function getPostMaxSizeInBytes()
+    public function getPostMaxSizeInBytes(): int
     {
         return $this->convertToBytes(\ini_get('post_max_size'));
     }
 
     /**
      * Get maximum upload size allowed by the server in bytes.
-     *
-     * @return int
      */
-    public function getUploadMaxSizeInBytes()
+    public function getUploadMaxSizeInBytes(): int
     {
         return min(
             $this->convertToBytes(\ini_get('upload_max_filesize')),
@@ -59,10 +55,8 @@ class IniConfiguration
      * Convert a numeric value to bytes.
      *
      * @param string $value
-     *
-     * @return int
      */
-    private function convertToBytes($value)
+    private function convertToBytes($value): int
     {
         $bytes = (int) trim($value);
         $last = strtolower($value[\strlen($value) - 1]);

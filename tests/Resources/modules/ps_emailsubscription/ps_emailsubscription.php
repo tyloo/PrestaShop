@@ -76,11 +76,7 @@ class Ps_Emailsubscription extends Module
 
     public function install()
     {
-        if (! parent::install() || ! Configuration::updateValue('PS_NEWSLETTER_RAND', mt_rand(0, mt_getrandmax()) . mt_rand(0, mt_getrandmax())) || ! $this->registerHook(['displayFooterBefore', 'actionCustomerAccountAdd'])) {
-            return false;
-        }
-
-        return true;
+        return ! (! parent::install() || ! Configuration::updateValue('PS_NEWSLETTER_RAND', mt_rand(0, mt_getrandmax()) . mt_rand(0, mt_getrandmax())) || ! $this->registerHook(['displayFooterBefore', 'actionCustomerAccountAdd']));
     }
 
     public function hookDisplayFooterBefore()

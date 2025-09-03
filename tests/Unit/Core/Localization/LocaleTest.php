@@ -145,7 +145,7 @@ class LocaleTest extends TestCase
      *               [...],
      *               ]
      */
-    public function provideValidNumbers()
+    public function provideValidNumbers(): array
     {
         return [
             [123456.789, '123 456,789'],
@@ -190,7 +190,7 @@ class LocaleTest extends TestCase
      *               [...],
      *               ]
      */
-    public function provideValidPriceData()
+    public function provideValidPriceData(): array
     {
         return [
             [123456.789, 'EUR', '123 456,79 €'],
@@ -217,7 +217,7 @@ class LocaleTest extends TestCase
         $this->cldrLocale->formatPrice($number, $currency);
     }
 
-    public function provideInvalidPriceData()
+    public function provideInvalidPriceData(): array
     {
         return [
             'Invalid number' => ['foobar', 'EUR'],

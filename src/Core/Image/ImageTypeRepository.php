@@ -63,7 +63,7 @@ class ImageTypeRepository
         return $this;
     }
 
-    public function createType($name, $width, $height, array $scope, ?string $theme_name = null)
+    public function createType($name, $width, $height, array $scope, ?string $theme_name = null): int
     {
         $data = [
             'name' => $this->db->escape($name),
@@ -85,12 +85,12 @@ class ImageTypeRepository
         return $this->getIdByName($name);
     }
 
-    public function getScopeList()
+    public function getScopeList(): array
     {
         return ['products', 'categories', 'manufacturers', 'suppliers', 'stores'];
     }
 
-    public function getIdByName($name, ?string $theme_name = null)
+    public function getIdByName($name, ?string $theme_name = null): int
     {
         $escaped_name = $this->db->escape($name);
 

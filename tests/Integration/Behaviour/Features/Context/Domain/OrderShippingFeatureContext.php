@@ -84,11 +84,9 @@ class OrderShippingFeatureContext extends AbstractDomainFeatureContext
     }
 
     /**
-     * @return int
-     *
      * @throws RuntimeException
      */
-    private function getCarrierId(string $carrier)
+    private function getCarrierId(string $carrier): int
     {
         /** @var CarrierByReferenceChoiceProvider $carrierChoiceProvider */
         $carrierChoiceProvider = $this->getContainer()

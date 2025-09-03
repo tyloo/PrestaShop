@@ -254,11 +254,7 @@ class OrderProductForViewing implements JsonSerializable
      */
     public function isRefundable(): bool
     {
-        if ($this->quantity <= $this->quantityRefunded) {
-            return false;
-        }
-
-        return true;
+        return $this->quantity > $this->quantityRefunded;
     }
 
     /**

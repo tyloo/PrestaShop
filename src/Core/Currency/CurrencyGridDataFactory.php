@@ -72,10 +72,7 @@ final class CurrencyGridDataFactory implements GridDataFactoryInterface
         return new RecordCollection($result);
     }
 
-    /**
-     * @return string
-     */
-    private function buildCurrencyName(array $currency)
+    private function buildCurrencyName(array $currency): string
     {
         return mb_ucfirst($currency['name']);
     }

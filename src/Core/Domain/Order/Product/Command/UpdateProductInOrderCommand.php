@@ -85,10 +85,7 @@ class UpdateProductInOrderCommand
         return $this->orderId;
     }
 
-    /**
-     * @return int
-     */
-    public function getOrderDetailId()
+    public function getOrderDetailId(): int
     {
         return $this->orderDetailId;
     }

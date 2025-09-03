@@ -1364,10 +1364,7 @@ class OrderFeatureContext extends AbstractDomainFeatureContext
         return $product;
     }
 
-    /**
-     * @return int
-     */
-    private function getProductIdByName(string $productName)
+    private function getProductIdByName(string $productName): int
     {
         $product = $this->getProductByName($productName);
 

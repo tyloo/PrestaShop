@@ -152,7 +152,7 @@ class ValidateTest extends TestCase
         ];
     }
 
-    public function isCleanHtmlDataProvider()
+    public function isCleanHtmlDataProvider(): array
     {
         return [
             [

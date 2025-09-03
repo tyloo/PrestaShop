@@ -44,7 +44,7 @@ class CurrencyIsoCodeTest extends TestCase
         $currencyIsoCode = new AlphaIsoCode($incorrectIsoCode);
     }
 
-    public function getIncorrectIsoCodes()
+    public function getIncorrectIsoCodes(): array
     {
         return [
             [

@@ -89,20 +89,16 @@ class CategoryDeleteMode
 
     /**
      * Whether products associated with category should be removed.
-     *
-     * @return bool
      */
-    public function shouldRemoveProducts()
+    public function shouldRemoveProducts(): bool
     {
         return $this->mode === self::REMOVE_ASSOCIATED_PRODUCTS;
     }
 
     /**
      * Whether products should be disabled when category is deleted.
-     *
-     * @return bool
      */
-    public function shouldDisableProducts()
+    public function shouldDisableProducts(): bool
     {
         return $this->mode === self::ASSOCIATE_PRODUCTS_WITH_PARENT_AND_DISABLE;
     }

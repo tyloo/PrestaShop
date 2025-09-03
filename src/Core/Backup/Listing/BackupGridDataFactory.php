@@ -86,10 +86,8 @@ final class BackupGridDataFactory implements GridDataFactoryInterface
 
     /**
      * Get formatted age.
-     *
-     * @return string
      */
-    private function getFormattedAge(BackupInterface $backup)
+    private function getFormattedAge(BackupInterface $backup): string
     {
         if ($backup->getAge() < TimeDefinition::HOUR_IN_SECONDS) {
             return \sprintf('< 1 %s', $this->translator->trans('Hour', [], 'Admin.Global'));
@@ -114,10 +112,8 @@ final class BackupGridDataFactory implements GridDataFactoryInterface
 
     /**
      * Get formatted backup size.
-     *
-     * @return string
      */
-    private function getFormattedSize(BackupInterface $backup)
+    private function getFormattedSize(BackupInterface $backup): string
     {
         return \sprintf('%s Kb', number_format($backup->getSize() / 1000, 2));
     }

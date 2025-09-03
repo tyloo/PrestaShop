@@ -198,7 +198,7 @@ class TypedFiltersBuilderTest extends TestCase
 
 class SampleWithoutConstraintFilters extends Filters
 {
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 42,
@@ -221,7 +221,7 @@ class SampleWithConstraintFilters extends Filters
         parent::__construct($filters, $filterId);
     }
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 42,

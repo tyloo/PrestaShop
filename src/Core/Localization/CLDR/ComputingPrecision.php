@@ -33,7 +33,7 @@ final class ComputingPrecision implements ComputingPrecisionInterface
 
     public const MINIMAL_VALUE = 0;
 
-    public function getPrecision(int $displayPrecision)
+    public function getPrecision(int $displayPrecision): int
     {
         // the MULTIPLIER attribute is set to 1 for now, so that it matches display precision
         $computingPrecision = $displayPrecision * self::MULTIPLIER;

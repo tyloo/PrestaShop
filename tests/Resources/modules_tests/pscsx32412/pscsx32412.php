@@ -44,10 +44,6 @@ class pscsx32412 extends Module
 
     public function install()
     {
-        if (parent::install() === false) {
-            return false;
-        }
-
-        return true;
+        return parent::install() !== false;
     }
 }

@@ -43,7 +43,7 @@ class HTMLToTextTransformation extends AbstractTransformation
         parent::__construct(MailTemplateInterface::TXT_TYPE);
     }
 
-    public function apply($templateContent, array $templateVariables)
+    public function apply($templateContent, array $templateVariables): string
     {
         $templateContent = Html2Text::convert($templateContent, ['ignore_errors' => true]);
         if ($templateContent[\strlen($templateContent) - 1] !== \PHP_EOL) {

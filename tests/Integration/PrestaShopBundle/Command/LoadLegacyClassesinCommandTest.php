@@ -106,6 +106,7 @@ class LoadLegacyClassesinCommandTest extends KernelTestCase
             {
                 $contextLoader = new LegacyContextLoader(Context::getContext());
                 $contextLoader->loadGenericContext();
+
                 $products = Product::getNewProducts(1);
 
                 return 0;

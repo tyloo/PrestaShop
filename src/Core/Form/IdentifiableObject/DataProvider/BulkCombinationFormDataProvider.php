@@ -32,10 +32,8 @@ class BulkCombinationFormDataProvider implements FormDataProviderInterface
 {
     /**
      * We return values matching the empty state of each field, this way they will be disabled by default.
-     *
-     * @return array
      */
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'stock' => [
@@ -74,7 +72,7 @@ class BulkCombinationFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         return [];
     }

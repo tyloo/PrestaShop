@@ -75,10 +75,7 @@ final class CategoryGridFactoryDecorator implements GridFactoryInterface
         );
     }
 
-    /**
-     * @return bool
-     */
-    private function isHomeCategory(array $filters)
+    private function isHomeCategory(array $filters): bool
     {
         return isset($filters['is_home_category'])
             && $filters['is_home_category'] === true;

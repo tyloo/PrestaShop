@@ -42,7 +42,7 @@ final class TitleFilters extends Filters
      */
     protected $filterId = TitleGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

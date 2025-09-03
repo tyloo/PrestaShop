@@ -40,14 +40,14 @@ final class CreditSlipOptionsConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'slip_prefix' => $this->configuration->get('PS_CREDIT_SLIP_PREFIX'),
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $this->configuration->set('PS_CREDIT_SLIP_PREFIX', $configuration['slip_prefix']);
@@ -56,7 +56,7 @@ final class CreditSlipOptionsConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset($configuration['slip_prefix']);
     }

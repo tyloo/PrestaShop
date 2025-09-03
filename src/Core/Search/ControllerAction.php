@@ -37,10 +37,8 @@ final class ControllerAction
      * This function expects a string like MyNamespace\Foo\FooController::bazAction.
      *
      * @param string $controller
-     *
-     * @return array
      */
-    public static function fromString($controller)
+    public static function fromString($controller): array
     {
         return [
             self::getControllerName($controller),
@@ -52,10 +50,8 @@ final class ControllerAction
      * Get current controller name.
      *
      * @param string $controller the full controller name
-     *
-     * @return string
      */
-    private static function getControllerName($controller)
+    private static function getControllerName($controller): string
     {
         preg_match('~(\w+)Controller(?:::(?:\w+)Action)?$~', $controller, $matches);
 
@@ -66,10 +62,8 @@ final class ControllerAction
      * Get current action name.
      *
      * @param string $controller the full controller name
-     *
-     * @return string
      */
-    private static function getActionName($controller)
+    private static function getActionName($controller): string
     {
         preg_match('~::(\w+)Action$~', $controller, $matches);
 

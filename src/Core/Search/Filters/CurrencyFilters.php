@@ -40,7 +40,7 @@ final class CurrencyFilters extends Filters
      */
     protected $filterId = CurrencyGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

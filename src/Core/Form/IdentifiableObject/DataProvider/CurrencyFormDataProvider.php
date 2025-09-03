@@ -40,7 +40,7 @@ final class CurrencyFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var \PrestaShop\PrestaShop\Core\Domain\Currency\QueryResult\EditableCurrency $result */
         $result = $this->queryBus->handle(new GetCurrencyForEditing((int) $id));
@@ -59,7 +59,7 @@ final class CurrencyFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'precision' => Precision::DEFAULT_PRECISION,

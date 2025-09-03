@@ -40,7 +40,7 @@ final class CustomerFilters extends Filters
      */
     protected $filterId = CustomerGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

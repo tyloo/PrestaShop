@@ -310,10 +310,8 @@ class NumberSymbolList
 
     /**
      * To array function
-     *
-     * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             $this->getDecimal(),

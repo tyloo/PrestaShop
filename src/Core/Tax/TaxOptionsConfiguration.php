@@ -50,7 +50,7 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
         parent::__construct($configuration, $shopContext, $multistoreFeature);
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
 
@@ -63,7 +63,7 @@ final class TaxOptionsConfiguration extends AbstractMultistoreConfiguration
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $shopConstraint = $this->getShopConstraint();

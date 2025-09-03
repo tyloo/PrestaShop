@@ -40,7 +40,7 @@ final class AttributeGroupFilters extends Filters
      */
     protected $filterId = AttributeGroupGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

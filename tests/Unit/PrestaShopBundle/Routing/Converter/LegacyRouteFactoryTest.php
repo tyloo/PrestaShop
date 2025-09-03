@@ -55,6 +55,7 @@ class LegacyRouteFactoryTest extends TestCase
             'route_name' => 'test',
         ]));
         $collection->add('feature_flag_route_name', $route);
+
         $routes = $factory->buildFromCollection($collection);
 
         self::assertIsArray($routes);
@@ -88,6 +89,7 @@ class LegacyRouteFactoryTest extends TestCase
 
         $collection = new RouteCollection();
         $collection->add('test', $route);
+
         $routes = $factory->buildFromCollection($collection);
         self::assertIsArray($routes);
         self::assertContainsOnlyInstancesOf(LegacyRoute::class, $routes);

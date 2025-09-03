@@ -40,7 +40,7 @@ final class ProductConditionChoiceProvider implements FormChoiceProviderInterfac
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return [
             $this->translator->trans('New', [], 'Admin.Catalog.Feature') => ProductCondition::NEW,

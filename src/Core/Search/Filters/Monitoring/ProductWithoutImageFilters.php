@@ -40,7 +40,7 @@ final class ProductWithoutImageFilters extends Filters
      */
     protected $filterId = ProductWithoutImageGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 20,

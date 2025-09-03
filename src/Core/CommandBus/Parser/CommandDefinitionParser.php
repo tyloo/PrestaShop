@@ -68,11 +68,9 @@ final class CommandDefinitionParser
     /**
      * @param string $commandName
      *
-     * @return string
-     *
      * @throws ReflectionException
      */
-    private function parseDescription($commandName)
+    private function parseDescription($commandName): string
     {
         /**
          * Removes comment symbols, annotations, and line breaks.

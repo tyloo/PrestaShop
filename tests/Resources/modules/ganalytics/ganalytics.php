@@ -55,10 +55,6 @@ class ganalytics extends Module
 
     public function uninstall()
     {
-        if (! parent::uninstall()) {
-            return false;
-        }
-
-        return true;
+        return (bool) parent::uninstall();
     }
 }

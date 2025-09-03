@@ -41,7 +41,7 @@ final class PermissionsChoiceProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return [
             $this->translator->trans('All', [], 'Admin.Global') => 'all',

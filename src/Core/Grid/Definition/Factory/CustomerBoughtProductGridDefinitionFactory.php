@@ -104,7 +104,7 @@ final class CustomerBoughtProductGridDefinitionFactory extends AbstractGridDefin
             );
     }
 
-    public function getViewOptions()
+    protected function getViewOptions()
     {
         return (new ViewOptionsCollection())
             ->add('display_name', false);

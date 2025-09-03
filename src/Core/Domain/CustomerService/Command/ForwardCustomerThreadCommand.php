@@ -133,10 +133,7 @@ class ForwardCustomerThreadCommand
         return $this->comment;
     }
 
-    /**
-     * @return bool
-     */
-    public function forwardToEmployee()
+    public function forwardToEmployee(): bool
     {
         return $this->employeeId !== null;
     }

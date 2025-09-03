@@ -54,7 +54,7 @@ class DispatcherTest extends TestCase
         $this->assertEquals($expectedErrors, $errors);
     }
 
-    public function validateRouteProvider()
+    public function validateRouteProvider(): array
     {
         return [
             // Valid route: all keywords present, none unknown

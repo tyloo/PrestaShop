@@ -42,7 +42,7 @@ final class OutstandingFilters extends Filters
      */
     protected $filterId = OutstandingGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

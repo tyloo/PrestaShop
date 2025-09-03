@@ -46,7 +46,7 @@ class DataLangFactoryTest extends TestCase
         $this->assertSame($expected, $factory->getClassNameFromTable($tableName));
     }
 
-    public function provideTableNames()
+    public function provideTableNames(): array
     {
         return [
             ['ps_', 'ps_tab_lang', 'TabLang'],

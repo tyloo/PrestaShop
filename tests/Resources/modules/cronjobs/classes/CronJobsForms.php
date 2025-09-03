@@ -160,7 +160,7 @@ class CronJobsForms
         return $form;
     }
 
-    public static function getForm()
+    public static function getForm(): array
     {
         $form = [
             'form' => [
@@ -192,7 +192,7 @@ class CronJobsForms
         return [$form];
     }
 
-    public static function getFormValues()
+    public static function getFormValues(): array
     {
         $token = Configuration::get('CRONJOBS_EXECUTION_TOKEN', null, 0, 0);
         $admin_folder = str_replace(_PS_ROOT_DIR_ . '/', null, basename(_PS_ADMIN_DIR_));
@@ -221,7 +221,7 @@ class CronJobsForms
         ];
     }
 
-    public static function getTasksList()
+    public static function getTasksList(): array
     {
         return [
             'description' => ['title' => self::$module->l('Task description', 'CronJobsForms'), 'type' => 'text', 'orderby' => false],
@@ -236,7 +236,7 @@ class CronJobsForms
         ];
     }
 
-    public static function getNewJobFormValues()
+    public static function getNewJobFormValues(): array
     {
         return [
             'description' => Tools::safeOutput(Tools::getValue('description', null)),
@@ -248,7 +248,7 @@ class CronJobsForms
         ];
     }
 
-    public static function getUpdateJobFormValues()
+    public static function getUpdateJobFormValues(): array
     {
         $id_shop = (int) Context::getContext()->shop->id;
         $id_shop_group = (int) Context::getContext()->shop->id_shop_group;

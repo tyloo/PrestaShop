@@ -40,7 +40,7 @@ class CustomerThreadStatusesChoiceProvider implements ConfigurableFormChoiceProv
     ) {
     }
 
-    public function getChoices(array $options = [])
+    public function getChoices(array $options = []): array
     {
         return [
             $this->translator->trans('Opened', [], 'Admin.Catalog.Feature') => CustomerThreadStatus::OPEN,

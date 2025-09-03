@@ -127,7 +127,7 @@ class ImageFormatConfigurationTest extends TestCase
     /**
      * @return array[]
      */
-    public function isGenerationFormatSetProvider()
+    public function isGenerationFormatSetProvider(): array
     {
         return [
             ['jpg', 'png,avif,webp', true], // JPG is always added as a base format

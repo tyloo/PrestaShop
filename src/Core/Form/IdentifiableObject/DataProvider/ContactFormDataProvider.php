@@ -52,7 +52,7 @@ final class ContactFormDataProvider implements FormDataProviderInterface
     /**
      * @throws ContactException
      */
-    public function getData($contactId)
+    public function getData($contactId): array
     {
         /** @var EditableContact $editableContact */
         $editableContact = $this->queryBus->handle(new GetContactForEditing($contactId));
@@ -66,7 +66,7 @@ final class ContactFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         $shopIds = $this->stringArrayToIntegerArrayDataTransformer->reverseTransform($this->contextShopIds);
 

@@ -40,7 +40,7 @@ final class BackupOptionsConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'backup_all' => (bool) $this->configuration->get('PS_BACKUP_ALL'),
@@ -48,7 +48,7 @@ final class BackupOptionsConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $config)
+    public function updateConfiguration(array $config): array
     {
         if ($this->validateConfiguration($config)) {
             $this->configuration->set('PS_BACKUP_ALL', $config['backup_all']);
@@ -58,7 +58,7 @@ final class BackupOptionsConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    public function validateConfiguration(array $config)
+    public function validateConfiguration(array $config): bool
     {
         return isset(
             $config['backup_all'],

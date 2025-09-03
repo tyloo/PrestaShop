@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
 
 class SampleFilters extends Filters
 {
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 51,

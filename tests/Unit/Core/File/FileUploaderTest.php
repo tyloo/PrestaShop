@@ -27,12 +27,12 @@
 
 namespace PrestaShop\PrestaShop\Core\File;
 
-function is_uploaded_file($tmpName)
+function is_uploaded_file($tmpName): bool
 {
     return $tmpName !== 'wrong-upload';
 }
 
-function move_uploaded_file($tmpName, $directory)
+function move_uploaded_file($tmpName, $directory): bool
 {
     return $tmpName !== 'wrong-move';
 }
@@ -67,6 +67,7 @@ class FileUploaderTest extends TestCase
         $this->downloadDirectory = sys_get_temp_dir() . '/' . uniqid();
         $this->filesystem = new Filesystem();
         $this->filesystem->mkdir($this->downloadDirectory);
+
         $this->object = new FileUploader(
             $this->downloadDirectory,
             5

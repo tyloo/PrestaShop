@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Search\ShopFilters;
 
 class SampleShopFilters extends ShopFilters
 {
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 13,

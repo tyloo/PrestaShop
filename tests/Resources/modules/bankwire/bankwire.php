@@ -70,27 +70,12 @@ class bankwire extends PaymentModule
 
     public function install()
     {
-        if (! parent::install()
-            || ! $this->registerHook('paymentReturn')
-            || ! $this->registerHook('paymentOptions')
-            || ! $this->registerHook('displayHome')
-        ) {
-            return false;
-        }
-
-        return true;
+        return ! (! parent::install() || ! $this->registerHook('paymentReturn') || ! $this->registerHook('paymentOptions') || ! $this->registerHook('displayHome'));
     }
 
     public function uninstall()
     {
-        if (! Configuration::deleteByName('BANK_WIRE_DETAILS')
-                || ! Configuration::deleteByName('BANK_WIRE_OWNER')
-                || ! Configuration::deleteByName('BANK_WIRE_ADDRESS')
-                || ! parent::uninstall()) {
-            return false;
-        }
-
-        return true;
+        return ! (! Configuration::deleteByName('BANK_WIRE_DETAILS') || ! Configuration::deleteByName('BANK_WIRE_OWNER') || ! Configuration::deleteByName('BANK_WIRE_ADDRESS') || ! parent::uninstall());
     }
 
     /**

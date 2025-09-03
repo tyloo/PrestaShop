@@ -45,7 +45,7 @@ class ProductImageFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var ProductImage $productImage */
         $productImage = $this->queryBus->handle(new GetProductImage(
@@ -60,7 +60,7 @@ class ProductImageFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [];
     }

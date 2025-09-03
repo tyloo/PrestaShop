@@ -89,6 +89,7 @@ final class OrderStateByIdChoiceProvider implements FormChoiceProviderInterface,
     {
         $orderStates = $this->orderStateDataProvider->getOrderStates($this->langId);
         $orderStates = $this->updateOrderStatesNames($orderStates);
+
         $attrs = [];
 
         foreach ($orderStates as $orderState) {

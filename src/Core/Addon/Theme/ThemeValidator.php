@@ -48,13 +48,13 @@ class ThemeValidator
         return \array_key_exists($themeName, $this->errors) ? $this->errors[$themeName] : false;
     }
 
-    public function isValid(Theme $theme)
+    public function isValid(Theme $theme): bool
     {
         return $this->hasRequiredFiles($theme)
             && $this->hasRequiredProperties($theme);
     }
 
-    private function hasRequiredProperties(Theme $theme)
+    private function hasRequiredProperties(Theme $theme): bool
     {
         $themeName = $theme->getName();
 
@@ -75,7 +75,7 @@ class ThemeValidator
         return ! \array_key_exists($themeName, $this->errors);
     }
 
-    public function getRequiredProperties()
+    public function getRequiredProperties(): array
     {
         return [
             'name',
@@ -94,7 +94,7 @@ class ThemeValidator
         ];
     }
 
-    private function hasRequiredFiles(Theme $theme)
+    private function hasRequiredFiles(Theme $theme): bool
     {
         $themeName = $theme->getName();
         $parentDir = realpath($this->appConfiguration->get('_PS_ALL_THEMES_DIR_') . $theme->get('parent')) . '/';
@@ -118,7 +118,7 @@ class ThemeValidator
         return ! \array_key_exists($themeName, $this->errors);
     }
 
-    public function getRequiredFiles()
+    public function getRequiredFiles(): array
     {
         return [
             'preview.png',

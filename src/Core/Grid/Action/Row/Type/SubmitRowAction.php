@@ -46,7 +46,7 @@ final class SubmitRowAction extends AbstractRowAction
         return 'submit';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 

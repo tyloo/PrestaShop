@@ -85,7 +85,7 @@ class SortOrder
     /**
      * @return bool if true, the Sort Order direction is random
      */
-    public function isRandom()
+    public function isRandom(): bool
     {
         return $this->getDirection() === 'random';
     }
@@ -93,7 +93,7 @@ class SortOrder
     /**
      * @return array the array representation of a Sort Order
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'entity' => $this->entity,
@@ -197,11 +197,9 @@ class SortOrder
     /**
      * @param string $direction
      *
-     * @return string
-     *
      * @throws InvalidSortOrderDirectionException
      */
-    public function setDirection($direction)
+    public function setDirection($direction): string
     {
         $formattedDirection = strtolower($direction);
         if (! \in_array($formattedDirection, ['asc', 'desc', 'random'], true)) {

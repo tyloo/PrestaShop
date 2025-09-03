@@ -41,7 +41,7 @@ final class OrderMessageFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($orderMessageId)
+    public function getData($orderMessageId): array
     {
         /** @var EditableOrderMessage $editableOrderMessage */
         $editableOrderMessage = $this->queryBus->handle(new GetOrderMessageForEditing((int) $orderMessageId));
@@ -52,7 +52,7 @@ final class OrderMessageFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [];
     }

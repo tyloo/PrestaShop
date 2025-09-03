@@ -42,7 +42,7 @@ final class OrderStateFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($orderStateId)
+    public function getData($orderStateId): array
     {
         /** @var EditableOrderState $editableOrderState */
         $editableOrderState = $this->queryBus->handle(new GetOrderStateForEditing((int) $orderStateId));
@@ -63,7 +63,7 @@ final class OrderStateFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'color' => '#ffffff',

@@ -81,7 +81,7 @@ final class CatalogPriceRuleFormDataProvider implements FormDataProviderInterfac
         return $data;
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'from_quantity' => 1,

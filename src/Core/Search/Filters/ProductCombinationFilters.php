@@ -82,7 +82,7 @@ class ProductCombinationFilters extends ShopFilters
         return $this->getShopConstraint()->getShopId()->getValue();
     }
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => self::LIST_LIMIT,

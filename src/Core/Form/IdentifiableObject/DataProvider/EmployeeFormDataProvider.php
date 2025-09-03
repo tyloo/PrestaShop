@@ -47,7 +47,7 @@ final class EmployeeFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($employeeId)
+    public function getData($employeeId): array
     {
         /** @var EditableEmployee $editableEmployee */
         $editableEmployee = $this->queryBus->handle(new GetEmployeeForEditing((int) $employeeId));

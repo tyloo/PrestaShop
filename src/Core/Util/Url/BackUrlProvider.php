@@ -34,10 +34,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BackUrlProvider
 {
-    /**
-     * @return string
-     */
-    public function getBackUrl(Request $request)
+    public function getBackUrl(Request $request): string
     {
         $backUrl = $request->query->get('back', '');
 

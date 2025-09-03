@@ -40,7 +40,7 @@ final class ManufacturerFilters extends Filters
      */
     protected $filterId = ManufacturerGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 10,

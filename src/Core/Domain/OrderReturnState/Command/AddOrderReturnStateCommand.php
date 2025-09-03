@@ -73,10 +73,7 @@ class AddOrderReturnStateCommand
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getColor()
+    public function getColor(): string
     {
         return $this->color;
     }

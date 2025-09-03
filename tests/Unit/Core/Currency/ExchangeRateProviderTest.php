@@ -178,6 +178,7 @@ class ExchangeRateProviderTest extends TestCase
         $unknownFilePath = 'file:://unknown.file.path.to.simulate.circuit.breaker.fail';
         $cacheItem = $this->cache->getItem(ExchangeRateProvider::CACHE_KEY_XML);
         $cacheItem->set($this->feedContent);
+
         $this->cache->save($cacheItem);
 
         $circuitBreaker = $this->buildCircuitBreakerMock('', $unknownFilePath);
@@ -202,6 +203,7 @@ class ExchangeRateProviderTest extends TestCase
     {
         $cacheItem = $this->cache->getItem(ExchangeRateProvider::CACHE_KEY_XML);
         $cacheItem->set($this->feedContent);
+
         $this->cache->save($cacheItem);
 
         $circuitBreaker = $this->buildCircuitBreakerMock('invalid xml', $this->feedFilePath);
@@ -246,6 +248,7 @@ class ExchangeRateProviderTest extends TestCase
 
         $cacheItem = $this->cache->getItem(ExchangeRateProvider::CACHE_KEY_XML);
         $cacheItem->set('invalid xml');
+
         $this->cache->save($cacheItem);
 
         $circuitBreaker = $this->buildCircuitBreakerMock('invalid xml', $this->feedFilePath);

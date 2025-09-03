@@ -87,15 +87,12 @@ class LegacyModuleExtractorTest extends KernelTestCase
         $this->catalogueVerifier->assertCataloguesMatch($catalogue, $expected);
     }
 
-    /**
-     * @return string
-     */
-    private function getModuleFolder()
+    private function getModuleFolder(): string
     {
         return __DIR__ . '/../../../../Resources/modules';
     }
 
-    public function provideTestCases()
+    public function provideTestCases(): array
     {
         return [
             'French' => [

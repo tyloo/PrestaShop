@@ -66,10 +66,8 @@ final class MailMethodChoiceProvider implements FormChoiceProviderInterface
     /**
      * @param string $key
      * @param string $domain
-     *
-     * @return string
      */
-    private function trans($key, array $params, $domain)
+    private function trans($key, array $params, $domain): string
     {
         return $this->translator->trans($key, $params, $domain);
     }

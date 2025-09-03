@@ -175,6 +175,7 @@ class Calculator
 
         $amount = $this->rounded($this->getRowTotalWithoutDiscount(), $this->computePrecision);
         $amount = $amount->sub($this->rounded($this->getDiscountTotal(), $this->computePrecision));
+
         $shippingFees = $this->fees->getInitialShippingFees();
         if ($shippingFees !== null) {
             $amount = $amount->add($this->rounded($shippingFees, $this->computePrecision));

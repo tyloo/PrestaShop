@@ -198,10 +198,7 @@ class GenerateMailTemplatesCommandTest extends KernelTestCase
         return $themeInfos;
     }
 
-    /**
-     * @return string
-     */
-    private function buildOutputFolder()
+    private function buildOutputFolder(): string
     {
         $outputFolder = implode(\DIRECTORY_SEPARATOR, [sys_get_temp_dir(), 'mail_templates']);
 

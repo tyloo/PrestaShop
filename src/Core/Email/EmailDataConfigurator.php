@@ -40,7 +40,7 @@ final class EmailDataConfigurator implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'send_emails_to' => $this->configuration->get('PS_MAIL_EMAIL_MESSAGE'),
@@ -65,7 +65,7 @@ final class EmailDataConfigurator implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $config)
+    public function updateConfiguration(array $config): array
     {
         if ($this->validateConfiguration($config)) {
             $this->configuration->set('PS_MAIL_EMAIL_MESSAGE', $config['send_emails_to']);
@@ -92,7 +92,7 @@ final class EmailDataConfigurator implements DataConfigurationInterface
         return [];
     }
 
-    public function validateConfiguration(array $config)
+    public function validateConfiguration(array $config): bool
     {
         return isset(
             $config['send_emails_to'],

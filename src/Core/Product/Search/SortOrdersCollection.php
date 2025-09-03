@@ -46,11 +46,9 @@ final class SortOrdersCollection
     /**
      * Returns a set of default sort orders used by core search providers on all pages.
      *
-     * @return array
-     *
      * @throws Exception
      */
-    public function getDefaults()
+    public function getDefaults(): array
     {
         return [
             (new SortOrder('product', 'name', 'asc'))->setLabel(

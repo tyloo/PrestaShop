@@ -97,10 +97,8 @@ class EntityRepository
      * e.g.: findAllByIdCMS => id_cms.
      *
      * @param string $camel_case_field_name
-     *
-     * @return string
      */
-    private function convertToDbFieldName($camel_case_field_name)
+    private function convertToDbFieldName($camel_case_field_name): string
     {
         return strtolower((string) preg_replace('/([a-z])([A-Z])/', '$1_$2', $camel_case_field_name));
     }

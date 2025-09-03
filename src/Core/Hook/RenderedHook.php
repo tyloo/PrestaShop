@@ -51,7 +51,7 @@ final class RenderedHook implements RenderedHookInterface
         return $this->content;
     }
 
-    public function outputContent()
+    public function outputContent(): string
     {
         return implode('', $this->content);
     }

@@ -74,10 +74,7 @@ class Birthday
         return $this->birthday;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->birthday === self::EMPTY_BIRTHDAY;
     }

@@ -119,7 +119,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function getIncorrectTypeRewriteUrls()
+    public function getIncorrectTypeRewriteUrls(): array
     {
         return [
             [
@@ -131,7 +131,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function getIncorrectRewriteUrls()
+    public function getIncorrectRewriteUrls(): array
     {
         return [
             [
@@ -149,7 +149,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function getCorrectRewriteUrls()
+    public function getCorrectRewriteUrls(): array
     {
         return [
             [
@@ -164,7 +164,7 @@ class IsUrlRewriteValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    public function getCorrectRewriteUlrUsingAscendingChars()
+    public function getCorrectRewriteUlrUsingAscendingChars(): array
     {
         return [
             [

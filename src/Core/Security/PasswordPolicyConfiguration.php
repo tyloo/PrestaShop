@@ -70,7 +70,7 @@ class PasswordPolicyConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'minimum_length' => $this->configuration->get(static::CONFIGURATION_MINIMUM_LENGTH),
@@ -79,7 +79,7 @@ class PasswordPolicyConfiguration implements DataConfigurationInterface
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $this->configuration->set(static::CONFIGURATION_MINIMUM_SCORE, $configuration['minimum_score']);
@@ -93,7 +93,7 @@ class PasswordPolicyConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset($configuration['minimum_score'])
             && \in_array($configuration['minimum_score'], static::AVAILABLE_PASSWORD_TYPE, true)

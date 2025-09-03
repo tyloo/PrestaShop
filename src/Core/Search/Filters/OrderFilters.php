@@ -40,7 +40,7 @@ final class OrderFilters extends Filters
      */
     protected $filterId = OrderGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

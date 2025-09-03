@@ -81,7 +81,7 @@ class EditMetaCommandTest extends TestCase
         $command->setLocalisedMetaDescriptions($incorrectNames);
     }
 
-    public function getIncorrectPageNames()
+    public function getIncorrectPageNames(): array
     {
         return [
             [
@@ -96,7 +96,7 @@ class EditMetaCommandTest extends TestCase
         ];
     }
 
-    public function getIncorrectMultiLanguageNames()
+    public function getIncorrectMultiLanguageNames(): array
     {
         return [
             [
@@ -107,7 +107,7 @@ class EditMetaCommandTest extends TestCase
         ];
     }
 
-    public function getIncorrectIds()
+    public function getIncorrectIds(): array
     {
         return [
             [

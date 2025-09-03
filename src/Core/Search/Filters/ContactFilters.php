@@ -40,7 +40,7 @@ final class ContactFilters extends Filters
      */
     protected $filterId = ContactGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 10,

@@ -68,6 +68,7 @@ class TestProductFormType extends CommonAbstractType
         $optionsForm = $builder->get('options');
 
         $optionsForm->add('suppliers', FormType::class);
+
         $suppliersForm = $optionsForm->get('suppliers');
         $suppliersForm->add('supplier_ids', ChoiceType::class, [
             'choices' => $options['suppliers'],

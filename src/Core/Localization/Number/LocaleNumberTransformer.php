@@ -46,10 +46,8 @@ class LocaleNumberTransformer
     /**
      * Retrieve locale for numbers.
      * (to avoid use of persian/arabic numbers)
-     *
-     * @return string
      */
-    public function getLocaleForNumberInputs()
+    public function getLocaleForNumberInputs(): string
     {
         $locale = substr($this->locale->getCode(), 0, 2);
 

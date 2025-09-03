@@ -72,7 +72,7 @@ class Filter
     /**
      * @return array an array representation of the filter
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'label' => $this->label,

@@ -81,10 +81,8 @@ final class CleanHtmlValidator extends ConstraintValidator
     /**
      * Gets javascript events separated by pipeline which are used in preg match pattern to determine if string
      * contains a javascript event. E.g onchange= is valid call for js event.
-     *
-     * @return string
      */
-    private function getJavascriptEvents()
+    private function getJavascriptEvents(): string
     {
         $events = 'onmousedown|onmousemove|onmmouseup|onmouseover|onmouseout|onload|onunload|onfocus|onblur|onchange';
         $events .= '|onsubmit|ondblclick|onclick|onkeydown|onkeyup|onkeypress|onmouseenter|onmouseleave|onerror|onselect|onreset|onabort|ondragdrop|onresize|onactivate|onafterprint|onmoveend';

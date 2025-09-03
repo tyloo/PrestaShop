@@ -748,6 +748,7 @@ class FactoryTest extends TestCase
         $symbolData->setInfinity('∞');
         $symbolData->setNan('NaN');
         $symbolData->setTimeSeparator(':');
+
         $localeData->setNumberSymbols(['latn' => $symbolData]);
 
         return new Locale($localeData);

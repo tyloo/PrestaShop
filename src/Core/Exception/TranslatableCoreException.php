@@ -117,10 +117,7 @@ class TranslatableCoreException extends CoreException
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'key' => $this->key,

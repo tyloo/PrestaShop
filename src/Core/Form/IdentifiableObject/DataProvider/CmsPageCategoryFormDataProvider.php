@@ -44,7 +44,7 @@ final class CmsPageCategoryFormDataProvider implements FormDataProviderInterface
     /**
      * @throws CmsPageCategoryException
      */
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var EditableCmsPageCategory $editableCmsPageCategory */
         $editableCmsPageCategory = $this->queryBus->handle(new GetCmsPageCategoryForEditing($id));
@@ -61,7 +61,7 @@ final class CmsPageCategoryFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'parent_category' => CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID,

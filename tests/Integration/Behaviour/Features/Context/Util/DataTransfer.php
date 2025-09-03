@@ -109,7 +109,7 @@ class DataTransfer
     /**
      * Code inspired by \Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer::isGetMethod()
      */
-    private static function isGetMethod(ReflectionMethod $method)
+    private static function isGetMethod(ReflectionMethod $method): bool
     {
         return
             str_starts_with($method->name, 'get')

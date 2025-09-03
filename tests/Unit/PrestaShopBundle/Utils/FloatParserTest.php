@@ -66,7 +66,7 @@ class FloatParserTest extends TestCase
         (new FloatParser(new ArabicToLatinDigitConverter()))->fromString($value);
     }
 
-    public function provideValidStrings()
+    public function provideValidStrings(): array
     {
         $expected = 1234567.89;
 
@@ -100,7 +100,7 @@ class FloatParserTest extends TestCase
         ];
     }
 
-    public function provideInvalidValues()
+    public function provideInvalidValues(): array
     {
         return [
             ['1,'],

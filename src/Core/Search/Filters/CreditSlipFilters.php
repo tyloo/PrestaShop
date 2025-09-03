@@ -40,7 +40,7 @@ final class CreditSlipFilters extends Filters
      */
     protected $filterId = CreditSlipGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

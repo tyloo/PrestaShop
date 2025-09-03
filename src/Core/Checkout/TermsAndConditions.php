@@ -129,10 +129,8 @@ class TermsAndConditions
 
     /**
      * @param int $index
-     *
-     * @return string
      */
-    protected function createLinkId($index)
+    protected function createLinkId($index): string
     {
         return 'cta-' . $this->getIdentifier() . '-' . $index;
     }

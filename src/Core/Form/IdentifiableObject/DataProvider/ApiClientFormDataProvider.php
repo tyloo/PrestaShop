@@ -40,7 +40,7 @@ class ApiClientFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var EditableApiClient $apiAccess */
         $apiAccess = $this->queryBus->handle(new GetApiClientForEditing((int) $id));
@@ -56,7 +56,7 @@ class ApiClientFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'lifetime' => 3600,

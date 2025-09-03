@@ -40,6 +40,7 @@ class TaxCalculatorCoreTest extends TestCase
     {
         $tax = new Tax();
         $tax->rate = 20.6;
+
         $tax2 = new Tax();
         $tax2->rate = 5.5;
 
@@ -56,6 +57,7 @@ class TaxCalculatorCoreTest extends TestCase
     {
         $tax = new Tax();
         $tax->rate = 20.6;
+
         $tax2 = new Tax();
         $tax2->rate = 5.5;
 

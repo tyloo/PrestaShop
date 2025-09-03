@@ -56,7 +56,7 @@ class DummyMultistoreConfiguration extends AbstractMultistoreConfiguration
         return [];
     }
 
-    public function buildResolver(): OptionsResolver
+    protected function buildResolver(): OptionsResolver
     {
         $resolver = new OptionsResolver();
         $resolver->setDefined(['test_conf_1', 'test_conf_2']);

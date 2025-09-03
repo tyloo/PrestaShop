@@ -70,14 +70,14 @@ class Facet
     /**
      * @return array an array representation of the facet
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'label' => $this->label,
             'displayed' => $this->displayed,
             'type' => $this->type,
             'properties' => $this->properties,
-            'filters' => array_map(fn (Filter $filter) => $filter->toArray(), $this->filters),
+            'filters' => array_map(fn (Filter $filter): array => $filter->toArray(), $this->filters),
             'multipleSelectionAllowed' => $this->multipleSelectionAllowed,
             'widgetType' => $this->widgetType,
         ];

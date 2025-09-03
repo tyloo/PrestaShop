@@ -44,7 +44,7 @@ class CurrencyPrecisionTest extends TestCase
         new Precision($incorrectPrecision);
     }
 
-    public function getIncorrectPrecision()
+    public function getIncorrectPrecision(): array
     {
         return [
             [
@@ -66,7 +66,7 @@ class CurrencyPrecisionTest extends TestCase
         $this->assertEquals($expectedValue, $precision->getValue());
     }
 
-    public function getCorrectPrecisions()
+    public function getCorrectPrecisions(): array
     {
         return [
             [

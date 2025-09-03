@@ -74,7 +74,7 @@ final class PaymentModulePreferencesConfiguration implements DataConfigurationIn
         return $errors;
     }
 
-    public function validateConfiguration(array $config)
+    public function validateConfiguration(array $config): bool
     {
         return isset(
             $config['currency_restrictions'],

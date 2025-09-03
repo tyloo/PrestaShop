@@ -114,10 +114,8 @@ final class WebserviceKeyQueryBuilder extends AbstractDoctrineQueryBuilder
      * Gets modified order by which includes an alias for reserved keyword.
      *
      * @param string $orderBy - original order by value
-     *
-     * @return string
      */
-    private function getModifiedOrderBy($orderBy)
+    private function getModifiedOrderBy($orderBy): string
     {
         return 'wa.' . $orderBy;
     }

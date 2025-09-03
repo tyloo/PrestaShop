@@ -87,30 +87,24 @@ class AddonListFilter
 
     /**
      * @param int $origin
-     *
-     * @return bool
      */
-    public function hasOrigin($origin)
+    public function hasOrigin($origin): bool
     {
         return (bool) ($this->origin & $origin);
     }
 
     /**
      * @param int $status
-     *
-     * @return bool
      */
-    public function hasStatus($status)
+    public function hasStatus($status): bool
     {
         return (bool) ($this->status & $status);
     }
 
     /**
      * @param int $type
-     *
-     * @return bool
      */
-    public function hasType($type)
+    public function hasType($type): bool
     {
         return (bool) ($this->type & $type);
     }

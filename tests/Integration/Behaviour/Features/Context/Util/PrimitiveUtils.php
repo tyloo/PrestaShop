@@ -146,11 +146,7 @@ class PrimitiveUtils
             case self::TYPE_OBJECT:
             case self::TYPE_RESOURCE:
             case self::TYPE_NULL:
-                if (($element1 === null) && ($element2 === null)) {
-                    return true;
-                }
-
-                return false;
+                return ($element1 === null) && ($element2 === null);
 
             case self::TYPE_UNKNOWN:
                 throw new Exception('Cannot compare elements of type ' . $type);
@@ -206,11 +202,9 @@ class PrimitiveUtils
     /**
      * @param string $element
      *
-     * @return int
-     *
      * @throws RuntimeException
      */
-    public static function castStringIntegerIntoInteger($element)
+    public static function castStringIntegerIntoInteger($element): int
     {
         if (\intval($element) !== 0) {
             return \intval($element);

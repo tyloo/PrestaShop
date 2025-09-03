@@ -74,7 +74,7 @@ final class AddressFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'id_country' => $this->defaultCountryId,

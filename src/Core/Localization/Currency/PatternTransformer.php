@@ -90,10 +90,7 @@ class PatternTransformer
         return implode(';', $transformedPatterns);
     }
 
-    /**
-     * @return string
-     */
-    public function getTransformationType(string $currencyPattern)
+    public function getTransformationType(string $currencyPattern): string
     {
         $patterns = explode(';', $currencyPattern);
         $pattern = str_replace(self::RTL_CHARACTER, '', $patterns[0]);
@@ -113,10 +110,7 @@ class PatternTransformer
         return '';
     }
 
-    /**
-     * @return string
-     */
-    private function transformPattern(string $basePattern, string $transformationType)
+    private function transformPattern(string $basePattern, string $transformationType): string
     {
         $rtlCharacter = $this->getRtlCharacter($basePattern);
         $trimmedPattern = trim($basePattern, self::CHARACTERS_TO_TRIM);

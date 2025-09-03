@@ -32,7 +32,7 @@ namespace PrestaShop\PrestaShop\Core\Configuration;
  */
 final class PhpExtensionChecker implements PhpExtensionCheckerInterface
 {
-    public function loaded($extension)
+    public function loaded($extension): bool
     {
         return \extension_loaded($extension);
     }

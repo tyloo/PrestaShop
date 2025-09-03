@@ -83,6 +83,7 @@ class ModuleManager implements ModuleManagerInterface
 
         $handler = $this->sourceFactory->getHandler($source);
         $handler->handle($source);
+
         $moduleName = $handler->getModuleName($source);
         $module = $this->moduleRepository->getModule($moduleName);
         $this->dispatch(ModuleManagementEvent::UPLOAD, $module);

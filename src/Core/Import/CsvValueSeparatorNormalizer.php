@@ -32,7 +32,7 @@ namespace PrestaShop\PrestaShop\Core\Import;
  */
 final class CsvValueSeparatorNormalizer implements StringNormalizerInterface
 {
-    public function normalize($value)
+    public function normalize($value): string
     {
         $value = trim($value);
         $value = substr($value, 0, 1);

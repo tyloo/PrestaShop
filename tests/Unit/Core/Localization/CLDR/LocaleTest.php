@@ -84,6 +84,7 @@ class LocaleTest extends TestCase
         $this->stubSymbolsData->setInfinity('∞');
         $this->stubSymbolsData->setNan('NaN');
         $this->stubSymbolsData->setTimeSeparator(':');
+
         $localeData->setNumberSymbols(['latn' => $this->stubSymbolsData]);
 
         $localeData->setDecimalPatterns(['latn' => '#,##0.###']);
@@ -100,6 +101,7 @@ class LocaleTest extends TestCase
             'other' => 'peaces',
         ]);
         $this->stubCurrencyData->setSymbols([CurrencyInterface::SYMBOL_TYPE_DEFAULT => 'PS☮', CurrencyInterface::SYMBOL_TYPE_NARROW => '☮']);
+
         $localeData->setCurrencies(['PCE' => $this->stubCurrencyData]);
 
         $this->cldrLocale = new Locale($localeData);

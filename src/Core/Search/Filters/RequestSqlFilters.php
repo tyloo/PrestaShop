@@ -37,7 +37,7 @@ class RequestSqlFilters extends Filters
      */
     protected $filterId = RequestSqlGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 10,

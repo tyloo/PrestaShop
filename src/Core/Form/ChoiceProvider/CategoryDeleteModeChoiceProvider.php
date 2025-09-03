@@ -41,7 +41,7 @@ final class CategoryDeleteModeChoiceProvider implements FormChoiceProviderInterf
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         $associateOnlyLabel = $this->translator->trans(
             'If they have no other category, I want to associate them with the parent category.',

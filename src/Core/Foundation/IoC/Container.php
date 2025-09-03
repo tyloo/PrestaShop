@@ -39,12 +39,12 @@ class Container
 
     private $namespaceAliases = [];
 
-    public function knows($serviceName)
+    public function knows($serviceName): bool
     {
         return \array_key_exists($serviceName, $this->bindings);
     }
 
-    private function knowsNamespaceAlias($alias)
+    private function knowsNamespaceAlias($alias): bool
     {
         return \array_key_exists($alias, $this->namespaceAliases);
     }

@@ -41,7 +41,7 @@ final class ThemeZipUploader implements ThemeUploaderInterface
     ) {
     }
 
-    public function upload(UploadedFile $uploadedTheme)
+    public function upload(UploadedFile $uploadedTheme): string
     {
         $this->assertThemeWasUploadedWithoutErrors($uploadedTheme);
         $this->assertUploadedFileIsZip($uploadedTheme);

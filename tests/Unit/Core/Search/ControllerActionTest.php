@@ -48,7 +48,7 @@ class ControllerActionTest extends TestCase
     /**
      * @return array the list of controller names and expected results
      */
-    public function getControllers()
+    public function getControllers(): array
     {
         return [
             ['MyNamespace\Foo\Bar\BarController::fooAction', ['bar', 'foo']],

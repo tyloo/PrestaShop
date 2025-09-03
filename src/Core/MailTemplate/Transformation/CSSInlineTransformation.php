@@ -73,10 +73,8 @@ class CSSInlineTransformation extends AbstractTransformation
 
     /**
      * @param string $templateContent
-     *
-     * @return string
      */
-    private function getCssContent($templateContent)
+    private function getCssContent($templateContent): string
     {
         $crawler = new Crawler($templateContent);
         $cssTags = $crawler->filter('link[type="text/css"]');

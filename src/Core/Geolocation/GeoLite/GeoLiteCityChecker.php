@@ -39,7 +39,7 @@ final class GeoLiteCityChecker implements GeoLiteCityCheckerInterface
     ) {
     }
 
-    public function isAvailable()
+    public function isAvailable(): bool
     {
         $geoIpDir = $this->configuration->get('_PS_GEOIP_DIR_');
         $geoLiteCityFile = $this->configuration->get('_PS_GEOIP_CITY_FILE_');

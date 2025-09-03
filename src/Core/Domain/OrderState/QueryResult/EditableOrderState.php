@@ -77,10 +77,7 @@ class EditableOrderState
         return $this->localizedNames;
     }
 
-    /**
-     * @return string
-     */
-    public function getColor()
+    public function getColor(): string
     {
         return $this->color;
     }

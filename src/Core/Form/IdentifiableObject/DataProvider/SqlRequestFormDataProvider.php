@@ -41,7 +41,7 @@ final class SqlRequestFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         $getRequestSqlForEditingQuery = new GetSqlRequestForEditing($id);
 

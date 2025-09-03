@@ -52,7 +52,7 @@ class CarrierFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var EditableCarrier $carrier */
         $carrier = $this->queryBus->handle(new GetCarrierForEditing((int) $id, ShopConstraint::allShops()));
@@ -88,7 +88,7 @@ class CarrierFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'general_settings' => [

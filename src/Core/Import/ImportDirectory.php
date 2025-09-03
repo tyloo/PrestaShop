@@ -43,10 +43,8 @@ final class ImportDirectory implements Stringable
 
     /**
      * Get path to import directory.
-     *
-     * @return string
      */
-    public function getDir()
+    public function getDir(): string
     {
         return $this->configuration->get('_PS_ADMIN_DIR_') . \DIRECTORY_SEPARATOR . 'import' . \DIRECTORY_SEPARATOR;
     }
@@ -63,20 +61,16 @@ final class ImportDirectory implements Stringable
 
     /**
      * Check if import directory is writable.
-     *
-     * @return bool
      */
-    public function isWritable()
+    public function isWritable(): bool
     {
         return is_writable($this->getDir());
     }
 
     /**
      * Check if import directory is readable.
-     *
-     * @return bool
      */
-    public function isReadable()
+    public function isReadable(): bool
     {
         return is_readable($this->getDir());
     }

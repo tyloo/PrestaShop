@@ -75,10 +75,8 @@ final class HookDescriptionGenerator implements HookDescriptionGeneratorInterfac
      * @param string $hookName
      * @param string $prefix
      * @param string $suffix
-     *
-     * @return string
      */
-    private function extractHookId($hookName, $prefix, $suffix)
+    private function extractHookId($hookName, $prefix, $suffix): string
     {
         return str_replace([$prefix, $suffix], '', $hookName);
     }
@@ -114,10 +112,8 @@ final class HookDescriptionGenerator implements HookDescriptionGeneratorInterfac
      * Checks if hook description contains placeholder value.
      *
      * @param string $description
-     *
-     * @return bool
      */
-    private function doesHookDescriptionContainsPlaceholder($description)
+    private function doesHookDescriptionContainsPlaceholder($description): bool
     {
         return str_contains($description, '%s');
     }
@@ -126,10 +122,8 @@ final class HookDescriptionGenerator implements HookDescriptionGeneratorInterfac
      * Checks if placeholder is the first element of the string.
      *
      * @param string $description
-     *
-     * @return bool
      */
-    private function doesPlaceholderIsTheFirstElementOfTheDescription($description)
+    private function doesPlaceholderIsTheFirstElementOfTheDescription($description): bool
     {
         return str_starts_with($description, '%s');
     }

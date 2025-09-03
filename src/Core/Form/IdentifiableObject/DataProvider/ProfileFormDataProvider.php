@@ -42,7 +42,7 @@ final class ProfileFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($profileId)
+    public function getData($profileId): array
     {
         /** @var EditableProfile $editableProfile */
         $editableProfile = $this->queryBus->handle(new GetProfileForEditing($profileId));
@@ -53,7 +53,7 @@ final class ProfileFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'avatar_url' => $this->defaultAvatarUrl,

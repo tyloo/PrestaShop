@@ -41,7 +41,7 @@ final class CustomerDeleteMethodChoiceProvider implements FormChoiceProviderInte
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         $allowRegistrationLabel = $this->translator->trans(
             'I want my customers to be able to register again with the same email address. All data will be removed from the database.',

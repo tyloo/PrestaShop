@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Grid\Exception\UnsupportedParameterException;
  */
 final class DoctrineQueryParser implements QueryParserInterface
 {
-    public function parse($query, array $queryParameters)
+    public function parse($query, array $queryParameters): string
     {
         $values = [];
         foreach ($queryParameters as $key => $value) {
@@ -82,10 +82,8 @@ final class DoctrineQueryParser implements QueryParserInterface
 
     /**
      * @param string $value
-     *
-     * @return string
      */
-    private function parseStringParameter($value)
+    private function parseStringParameter($value): string
     {
         return "'" . addslashes($value) . "'";
     }
@@ -100,20 +98,15 @@ final class DoctrineQueryParser implements QueryParserInterface
         return $value;
     }
 
-    /**
-     * @return string
-     */
-    private function parseArrayParameter(array $value)
+    private function parseArrayParameter(array $value): string
     {
         return "'" . implode("', '", array_map('addslashes', $value)) . "'";
     }
 
     /**
      * @param bool $value
-     *
-     * @return string
      */
-    private function parseBooleanParameter($value)
+    private function parseBooleanParameter($value): string
     {
         return $value ? 'TRUE' : 'FALSE';
     }

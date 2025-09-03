@@ -42,14 +42,14 @@ class GeneralConfiguration implements DataConfigurationInterface
     ) {
     }
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'token' => $this->configuration->get('PS_SECURITY_TOKEN'),
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if ($this->validateConfiguration($configuration)) {
             $this->configuration->set('PS_SECURITY_TOKEN', $configuration['token']);
@@ -58,7 +58,7 @@ class GeneralConfiguration implements DataConfigurationInterface
         return [];
     }
 
-    public function validateConfiguration(array $configuration)
+    public function validateConfiguration(array $configuration): bool
     {
         return isset($configuration['token']);
     }

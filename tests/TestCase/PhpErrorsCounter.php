@@ -110,7 +110,7 @@ class PhpErrorsCounter
     /**
      * @return string a summary report of errors
      */
-    public function displaySummary()
+    public function displaySummary(): string
     {
         return \sprintf(
             'Errors: %d / Warnings: %d / Notices: %d / Deprecations: %d',

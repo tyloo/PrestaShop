@@ -43,7 +43,7 @@ class CarrierFormDataHandler implements FormDataHandlerInterface
     ) {
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         /** @var UploadedFile|null $logo */
         $logo = $data['general_settings']['logo'];
@@ -83,7 +83,7 @@ class CarrierFormDataHandler implements FormDataHandlerInterface
         return $carrierId->getValue();
     }
 
-    public function update($id, array $data)
+    public function update($id, array $data): int
     {
         // If the courier has no costs, 'has_additional_handling_fee' must be false.
         if ((bool) $data['shipping_settings']['is_free'] === true) {

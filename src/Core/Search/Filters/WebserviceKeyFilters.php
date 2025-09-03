@@ -40,7 +40,7 @@ final class WebserviceKeyFilters extends Filters
      */
     protected $filterId = WebserviceKeyDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

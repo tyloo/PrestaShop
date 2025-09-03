@@ -119,7 +119,7 @@ final class ServerRequirementsChecker implements ServerRequirementsCheckerInterf
     /**
      * @return string[]
      */
-    private function getWarningMessages()
+    private function getWarningMessages(): array
     {
         return [
             self::ISSUE_APACHE_MOD_AUTH_BASIC_NOT_AVAILABLE => $this->translator->trans(

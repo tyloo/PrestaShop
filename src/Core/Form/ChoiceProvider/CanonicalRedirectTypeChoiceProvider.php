@@ -41,7 +41,7 @@ final class CanonicalRedirectTypeChoiceProvider implements FormChoiceProviderInt
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         $noRedirectionMessage = $this->translator->trans(
             'No redirection (you may have duplicate content issues)',

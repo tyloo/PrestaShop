@@ -48,7 +48,7 @@ final class DeliveryTimeNoteTypesProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         $linkOpeningTag = \sprintf(
             '&nbsp;<a target="_blank" href="%s"><i class="material-icons">open_in_new</i>',

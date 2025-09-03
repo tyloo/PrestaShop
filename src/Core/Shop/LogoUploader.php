@@ -214,7 +214,7 @@ class LogoUploader
         }
     }
 
-    public function uploadIco($name, $destination, $files = [])
+    public function uploadIco($name, $destination, $files = []): bool
     {
         $files = empty($files) ? $_FILES : $files;
 
@@ -234,10 +234,8 @@ class LogoUploader
     /**
      * @param string $logoPrefix
      * @param string $fileExtension
-     *
-     * @return string
      */
-    private function getLogoName($logoPrefix, $fileExtension)
+    private function getLogoName($logoPrefix, $fileExtension): string
     {
         $shopId = $this->shop->id;
 

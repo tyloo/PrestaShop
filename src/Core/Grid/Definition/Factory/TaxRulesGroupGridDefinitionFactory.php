@@ -124,7 +124,7 @@ final class TaxRulesGroupGridDefinitionFactory extends AbstractFilterableGridDef
             );
     }
 
-    public function getFilters()
+    protected function getFilters()
     {
         return (new FilterCollection())
             ->add(

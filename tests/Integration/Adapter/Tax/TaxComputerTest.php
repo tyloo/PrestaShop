@@ -134,10 +134,8 @@ class TaxComputerTest extends KernelTestCase
 
     /**
      * @param int[] $stateIds
-     *
-     * @return int
      */
-    private function addTaxRuleGroup(float $taxRate, int $countryId, array $stateIds, int $behavior)
+    private function addTaxRuleGroup(float $taxRate, int $countryId, array $stateIds, int $behavior): int
     {
         $tax = new Tax();
         $tax->name = [1 => 'testTax'];

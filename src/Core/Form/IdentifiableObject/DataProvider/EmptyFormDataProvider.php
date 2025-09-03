@@ -33,12 +33,12 @@ namespace PrestaShop\PrestaShop\Core\Form\IdentifiableObject\DataProvider;
  */
 class EmptyFormDataProvider implements FormDataProviderInterface
 {
-    public function getData($id)
+    public function getData($id): array
     {
         return [];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [];
     }

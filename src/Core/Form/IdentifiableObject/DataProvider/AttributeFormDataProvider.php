@@ -42,7 +42,7 @@ class AttributeFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var EditableAttribute $editableAttribute */
         $editableAttribute = $this->queryBus->handle(new GetAttributeForEditing((int) $id));
@@ -55,7 +55,7 @@ class AttributeFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'shop_association' => $this->shopContext->getAssociatedShopIds(),

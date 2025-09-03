@@ -115,10 +115,8 @@ class CustomerFeatureContext extends AbstractDomainFeatureContext
 
     /**
      * @param string $requiredField
-     *
-     * @return string
      */
-    private function getRequiredFieldName($requiredField)
+    private function getRequiredFieldName($requiredField): string
     {
         $requiredCustomerFields = [
             'Partner offers' => 'optin',

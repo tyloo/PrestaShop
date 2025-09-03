@@ -274,6 +274,7 @@ class LegacyProductFeatureContext extends AbstractPrestaShopFeatureContext
         // Use same default tax rules group as products from fixtures to have the same tax rate
         $product->id_tax_rules_group = TaxRulesGroup::getIdByName('US-FL Rate (6%)');
         $product->id_shop_default = (int) Context::getContext()->shop->id;
+
         $productAdded = $product->add();
         if (! $productAdded) {
             throw new RuntimeException('Could not add product in database');

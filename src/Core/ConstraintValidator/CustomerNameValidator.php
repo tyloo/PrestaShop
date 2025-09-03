@@ -62,10 +62,8 @@ class CustomerNameValidator extends ConstraintValidator
      * Validates url rewrite according a specific pattern.
      *
      * @param string $name
-     *
-     * @return bool
      */
-    private function isNameValid($name)
+    private function isNameValid($name): bool
     {
         return (bool) preg_match(static::PATTERN_NAME, $name);
     }

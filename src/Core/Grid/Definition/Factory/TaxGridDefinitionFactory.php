@@ -131,7 +131,7 @@ final class TaxGridDefinitionFactory extends AbstractGridDefinitionFactory
         ;
     }
 
-    public function getFilters()
+    protected function getFilters()
     {
         return (new FilterCollection())
             ->add(

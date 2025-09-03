@@ -55,10 +55,7 @@ class CategoryId
         return $this->categoryId;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEqual(self $categoryId)
+    public function isEqual(self $categoryId): bool
     {
         return $this->getValue() === $categoryId->getValue();
     }

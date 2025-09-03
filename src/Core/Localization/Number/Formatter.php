@@ -161,7 +161,7 @@ class Formatter
      *
      * @return string[]
      */
-    protected function extractMajorMinorDigits(DecimalNumber $number)
+    protected function extractMajorMinorDigits(DecimalNumber $number): array
     {
         // Get the number's major and minor digits.
         $majorDigits = $number->getIntegerPart();
@@ -267,7 +267,7 @@ class Formatter
      * @return string
      *                The number after digits and symbols replacement
      */
-    protected function localizeNumber($number)
+    protected function localizeNumber($number): string
     {
         // If locale uses non-latin digits
         $number = $this->replaceDigits($number);
@@ -302,7 +302,7 @@ class Formatter
      * @return string
      *                The number with replaced symbols
      */
-    protected function replaceSymbols($number)
+    protected function replaceSymbols($number): string
     {
         $symbols = $this->numberSpecification->getSymbolsByNumberingSystem($this->numberingSystem);
         $replacements = [

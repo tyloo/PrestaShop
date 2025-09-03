@@ -72,7 +72,7 @@ class DefaultGroups
      *
      * @return DefaultGroup[]
      */
-    public function getGroups()
+    public function getGroups(): array
     {
         return [
             $this->getVisitorsGroup(),

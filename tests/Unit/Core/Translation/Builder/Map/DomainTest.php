@@ -78,10 +78,12 @@ class DomainTest extends TestCase
         $messageTranslationFirst = new Message('theKey');
         $messageTranslationFirst->setFileTranslation('fileTranslation');
         $messageTranslationFirst->setUserTranslation('userTranslation');
+
         $domainTranslation->addMessage($messageTranslationFirst);
 
         $messageTranslationSecond = new Message('aKey');
         $messageTranslationSecond->setFileTranslation('fileTranslation');
+
         $domainTranslation->addMessage($messageTranslationSecond);
 
         $messageTranslationThird = new Message('theSecondKey');
@@ -108,6 +110,7 @@ class DomainTest extends TestCase
         $messageTranslationFirst = new Message('theKey');
         $messageTranslationFirst->setFileTranslation('fileTranslation');
         $messageTranslationFirst->setUserTranslation('userTranslation');
+
         $domainTranslation->addMessage($messageTranslationFirst);
 
         $this->assertSame([
@@ -128,6 +131,7 @@ class DomainTest extends TestCase
 
         $messageTranslationSecond = new Message('aKey');
         $messageTranslationSecond->setFileTranslation('aFileTranslation');
+
         $domainTranslation->addMessage($messageTranslationSecond);
 
         $this->assertSame([
@@ -202,6 +206,7 @@ class DomainTest extends TestCase
         $messageTranslationFirst = new Message('theKey');
         $messageTranslationFirst->setFileTranslation('fileTranslation');
         $messageTranslationFirst->setUserTranslation('userTranslation');
+
         $domainTranslation->addMessage($messageTranslationFirst);
 
         $this->assertSame([
@@ -218,6 +223,7 @@ class DomainTest extends TestCase
 
         $messageTranslationSecond = new Message('aKey');
         $messageTranslationSecond->setFileTranslation('aFileTranslation');
+
         $domainTranslation->addMessage($messageTranslationSecond);
 
         $this->assertSame([
@@ -302,6 +308,7 @@ class DomainTest extends TestCase
         $messageTranslationFirst = new Message('theKey');
         $messageTranslationFirst->setFileTranslation('fileTranslation');
         $messageTranslationFirst->setUserTranslation('userTranslation');
+
         $domainTranslation->addMessage($messageTranslationFirst);
 
         $tree = [];
@@ -326,6 +333,7 @@ class DomainTest extends TestCase
 
         $messageTranslationSecond = new Message('aKey');
         $messageTranslationSecond->setFileTranslation('aFileTranslation');
+
         $domainTranslation->addMessage($messageTranslationSecond);
 
         $tree = [];
@@ -405,6 +413,7 @@ class DomainTest extends TestCase
         $messageTranslationFirst = new Message('theKey');
         $messageTranslationFirst->setFileTranslation('fileTranslation');
         $messageTranslationFirst->setUserTranslation('userTranslation');
+
         $domainTranslation->addMessage($messageTranslationFirst);
 
         // If domain already exists in the parameter tree it won't be modified

@@ -70,7 +70,7 @@ class DiscountFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'usability' => [
@@ -88,7 +88,7 @@ class DiscountFormDataProvider implements FormDataProviderInterface
      * @throws ProductConstraintException
      * @throws CombinationConstraintException
      */
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var DiscountForEditing $discountForEditing */
         $discountForEditing = $this->queryBus->handle(new GetDiscountForEditing($id));
@@ -109,7 +109,7 @@ class DiscountFormDataProvider implements FormDataProviderInterface
         } elseif (! empty($specificProducts)) {
             $selectedCondition = DiscountConditionsType::CART_CONDITIONS;
             $selectedCartCondition = 'specific_products';
-        } elseif (! empty($productSegment['manufacturer']) || ! (empty($productSegment['supplier']) || ! empty($productSegment['category']))) {
+        } elseif (! empty($productSegment['manufacturer']) || ! empty($productSegment['supplier']) && empty($productSegment['category'])) {
             $selectedCondition = DiscountConditionsType::CART_CONDITIONS;
             $selectedCartCondition = 'product_segment';
         } elseif (! empty($discountForEditing->getCarrierIds())) {

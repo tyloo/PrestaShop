@@ -45,7 +45,7 @@ class EmployeeSessionIdTest extends TestCase
         $this->assertEquals((int) $idValue, $sessionId->getValue());
     }
 
-    public function createsSessionIdWithValidValuesData()
+    public function createsSessionIdWithValidValuesData(): array
     {
         return [
             [1],
@@ -62,7 +62,7 @@ class EmployeeSessionIdTest extends TestCase
         new EmployeeSessionId($sessionId);
     }
 
-    public function exceptionThrownWithInvalidValuesData()
+    public function exceptionThrownWithInvalidValuesData(): array
     {
         return [
             [0],

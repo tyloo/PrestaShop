@@ -49,7 +49,7 @@ final class CategoryFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($categoryId)
+    public function getData($categoryId): array
     {
         /** @var EditableCategory $editableCategory */
         $editableCategory = $this->queryBus->handle(new GetCategoryForEditing($categoryId));
@@ -104,7 +104,7 @@ final class CategoryFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         $allGroupIds = $this->groupDataProvider->getAllGroupIds();
 

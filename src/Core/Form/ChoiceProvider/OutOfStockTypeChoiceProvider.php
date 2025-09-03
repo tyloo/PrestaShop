@@ -44,7 +44,7 @@ final class OutOfStockTypeChoiceProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         $allowOrdersLabel = $this->translator->trans('Allow orders', [], 'Admin.Catalog.Feature');
         $denyOrdersLabel = $this->translator->trans('Deny orders', [], 'Admin.Catalog.Feature');

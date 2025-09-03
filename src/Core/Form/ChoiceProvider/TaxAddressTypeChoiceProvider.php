@@ -42,10 +42,8 @@ final class TaxAddressTypeChoiceProvider implements FormChoiceProviderInterface
 
     /**
      * Get choices.
-     *
-     * @return array
      */
-    public function getChoices()
+    public function getChoices(): array
     {
         return [
             $this->translator->trans('Invoice address', [], 'Admin.International.Feature') => 'id_address_invoice',

@@ -44,7 +44,7 @@ class StateFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($stateId)
+    public function getData($stateId): array
     {
         /** @var EditableState $editableState */
         $editableState = $this->queryBus->handle(new GetStateForEditing((int) $stateId));
@@ -59,7 +59,7 @@ class StateFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'id_country' => $this->defaultCountryId,

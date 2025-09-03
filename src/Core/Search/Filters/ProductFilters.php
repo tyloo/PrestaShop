@@ -39,7 +39,7 @@ final class ProductFilters extends ShopFilters
 {
     protected $filterId = ProductGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 20,

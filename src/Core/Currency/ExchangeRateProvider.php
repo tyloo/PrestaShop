@@ -177,6 +177,7 @@ class ExchangeRateProvider
         // Cache the feed
         $cacheItem = $this->cache->getItem(self::CACHE_KEY_XML);
         $cacheItem->set($feedContent);
+
         $this->cache->save($cacheItem);
 
         return $xmlFeed;

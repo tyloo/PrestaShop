@@ -40,7 +40,7 @@ final class CategoryFilters extends Filters
      */
     protected $filterId = CategoryGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

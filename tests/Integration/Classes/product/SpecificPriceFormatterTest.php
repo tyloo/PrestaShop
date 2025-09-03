@@ -91,11 +91,13 @@ class SpecificPriceFormatterTest extends KernelTestCase
         $currency->conversion_rate = $currencyData['conversion_rate'];
         $currency->sign = $currencyData['sign'];
         $currency->iso_code = $currencyData['code'];
+
         $context->currency = $currency;
 
         $language = new Language();
         $language->iso_code = 'EN';
         $language->locale = 'en-US';
+
         $context->language = $language;
 
         $specificPriceFormatter = new SpecificPriceFormatter(

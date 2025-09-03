@@ -40,7 +40,7 @@ final class EmailLogsFilter extends Filters
      */
     protected $filterId = EmailLogsDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

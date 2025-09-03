@@ -924,9 +924,11 @@ class CartFeatureContext extends AbstractDomainFeatureContext
         $cartRule->priority = 1;
         $cartRule->quantity = 1;
         $cartRule->quantity_per_user = 1;
+
         $now = new DateTime();
         // sub 1s to avoid bad comparisons with strictly greater than
         $now->sub(new DateInterval('P2D'));
+
         $cartRule->date_from = $now->format('Y-m-d H:i:s');
         $now->add(new DateInterval('P1Y'));
         $cartRule->date_to = $now->format('Y-m-d H:i:s');

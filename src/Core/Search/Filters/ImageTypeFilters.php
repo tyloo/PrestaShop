@@ -42,7 +42,7 @@ final class ImageTypeFilters extends Filters
      */
     protected $filterId = ImageTypeGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

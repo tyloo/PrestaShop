@@ -124,7 +124,7 @@ class ModuleCollectionTest extends TestCase
         $halfCallback = new class {
             private static $i = 0;
 
-            public function __invoke()
+            public function __invoke(): bool
             {
                 return ++self::$i % 2 === 0;
             }

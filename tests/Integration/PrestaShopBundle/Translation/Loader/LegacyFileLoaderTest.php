@@ -81,7 +81,7 @@ class LegacyFileLoaderTest extends KernelTestCase
         return $this->translationsFolder;
     }
 
-    public function provideTestCases()
+    public function provideTestCases(): array
     {
         return [
             'French' => [

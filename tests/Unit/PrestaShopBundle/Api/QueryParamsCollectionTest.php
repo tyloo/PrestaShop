@@ -161,10 +161,7 @@ class QueryParamsCollectionTest extends TestCase
         $this->assertEquals($expectedSqlClauses, $sqlParts);
     }
 
-    /**
-     * @return array
-     */
-    public function getQueryParams()
+    public function getQueryParams(): array
     {
         return [
             ['product', null, '1', [
@@ -232,10 +229,7 @@ class QueryParamsCollectionTest extends TestCase
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getFilterParams()
+    public function getFilterParams(): array
     {
         $supplierFilterMessage = 'It should provide with a SQL condition clause on supplier';
         $categoryFilterMessage = 'It should provide with a SQL condition clause on category';

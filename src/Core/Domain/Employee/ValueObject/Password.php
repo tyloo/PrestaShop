@@ -50,10 +50,7 @@ class Password
         $this->assertPasswordScoreIsAllowed($this->password);
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->password;
     }

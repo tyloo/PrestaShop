@@ -40,10 +40,7 @@ class SwitchDebugModeCommand
     ) {
     }
 
-    /**
-     * @return bool
-     */
-    public function enableDebugMode()
+    public function enableDebugMode(): bool
     {
         return $this->enableDebugMode === true;
     }

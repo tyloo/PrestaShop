@@ -44,7 +44,7 @@ class LegacyParametersConverterTest extends TestCase
         $this->assertEquals($expectedLegacyParameters, $legacyParameters);
     }
 
-    public function getExpectedLegacyParameters()
+    public function getExpectedLegacyParameters(): array
     {
         return [
             [

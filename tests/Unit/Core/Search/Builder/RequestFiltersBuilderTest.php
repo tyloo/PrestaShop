@@ -64,6 +64,7 @@ class RequestFiltersBuilderTest extends TestCase
 
         $builder = new RequestFiltersBuilder();
         $builder->setConfig(['request' => $requestMock]);
+
         $filters = $builder->buildFilters();
         $this->assertNotNull($filters);
         unset($expectedParameters['unknownParameter']);
@@ -83,6 +84,7 @@ class RequestFiltersBuilderTest extends TestCase
         $filters = new Filters(['limit' => 20, 'orderBy' => 'language_id']);
         $builder = new RequestFiltersBuilder();
         $builder->setConfig(['request' => $requestMock]);
+
         $builtFilters = $builder->buildFilters($filters);
         $this->assertNotNull($builtFilters);
         $expectedParameters = [
@@ -105,6 +107,7 @@ class RequestFiltersBuilderTest extends TestCase
 
         $builder = new RequestFiltersBuilder();
         $builder->setConfig(['request' => $requestMock, 'filter_id' => 'language']);
+
         $filters = $builder->buildFilters();
         $this->assertNotNull($filters);
         unset($expectedParameters['unknownParameter']);
@@ -124,6 +127,7 @@ class RequestFiltersBuilderTest extends TestCase
         $filters = new Filters(['limit' => 20, 'sortOrder' => 'ASC'], 'alternate_language');
         $builder = new RequestFiltersBuilder();
         $builder->setConfig(['request' => $requestMock, 'filter_id' => 'language']);
+
         $builtFilters = $builder->buildFilters($filters);
         $this->assertNotNull($builtFilters);
 
@@ -147,6 +151,7 @@ class RequestFiltersBuilderTest extends TestCase
 
         $builder = new RequestFiltersBuilder();
         $builder->setConfig(['request' => $requestMock]);
+
         $filters = $builder->buildFilters();
         $this->assertNotNull($filters);
         unset($expectedParameters['unknownParameter']);
@@ -166,6 +171,7 @@ class RequestFiltersBuilderTest extends TestCase
         $filters = new Filters(['limit' => 20, 'sortOrder' => 'ASC'], 'alternate_language');
         $builder = new RequestFiltersBuilder();
         $builder->setConfig(['request' => $requestMock, 'filter_id' => 'language']);
+
         $filters = $builder->buildFilters($filters);
         $this->assertNotNull($filters);
 

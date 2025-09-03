@@ -41,7 +41,7 @@ final class TaxFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($taxId)
+    public function getData($taxId): array
     {
         /** @var EditableTax $editableTax */
         $editableTax = $this->queryBus->handle(new GetTaxForEditing($taxId));
@@ -53,7 +53,7 @@ final class TaxFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'is_enabled' => false,

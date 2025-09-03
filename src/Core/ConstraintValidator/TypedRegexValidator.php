@@ -100,10 +100,8 @@ class TypedRegexValidator extends ConstraintValidator
      * Returns regex pattern that depends on type
      *
      * @param string $type
-     *
-     * @return string
      */
-    private function getPattern($type)
+    private function getPattern($type): string
     {
         switch ($type) {
             case TypedRegex::TYPE_NAME:
@@ -235,10 +233,6 @@ class TypedRegexValidator extends ConstraintValidator
             return false;
         }
 
-        if (! $allowIframe && preg_match('/<[\s]*(i?frame|form|input|embed|object)/ims', $value)) {
-            return false;
-        }
-
-        return true;
+        return ! (! $allowIframe && preg_match('/<[\s]*(i?frame|form|input|embed|object)/ims', $value));
     }
 }

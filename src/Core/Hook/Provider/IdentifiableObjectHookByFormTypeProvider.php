@@ -156,10 +156,8 @@ final class IdentifiableObjectHookByFormTypeProvider implements HookByFormTypePr
      * @param string $hookStartsWith
      * @param string $hookId
      * @param string $hookEndsWidth
-     *
-     * @return string
      */
-    private function formatHookName($hookStartsWith, $hookId, $hookEndsWidth)
+    private function formatHookName($hookStartsWith, $hookId, $hookEndsWidth): string
     {
         return $hookStartsWith . Container::camelize($hookId) . $hookEndsWidth;
     }

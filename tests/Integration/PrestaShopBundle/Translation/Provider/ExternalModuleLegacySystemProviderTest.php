@@ -105,7 +105,7 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
         $this->catalogueVerifier->assertCataloguesMatch($legacyCatalogue, $expected);
     }
 
-    public function provideTestCases()
+    public function provideTestCases(): array
     {
         return [
             'French' => [
@@ -141,10 +141,7 @@ class ExternalModuleLegacySystemProviderTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @return string
-     */
-    private function getModuleDirectory()
+    private function getModuleDirectory(): string
     {
         return __DIR__ . '/../../../../Resources/modules';
     }

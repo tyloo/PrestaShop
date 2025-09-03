@@ -45,7 +45,7 @@ class ProductShopsFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         $associatedShopIds = $this->productRepository->getAssociatedShopIds(new ProductId($id));
         $selectedShops = array_map(static fn (ShopId $shopId): int => $shopId->getValue(), $associatedShopIds);
@@ -57,7 +57,7 @@ class ProductShopsFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         // This form is not used for creation only update anyway
         return [];

@@ -44,7 +44,7 @@ class CartRuleFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($id)
+    public function getData($id): array
     {
         /** @var CartRuleForEditing $editableCartRule */
         $editableCartRule = $this->queryBus->handle(new GetCartRuleForEditing($id));
@@ -57,7 +57,7 @@ class CartRuleFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         $now = new DateTimeImmutable();
 

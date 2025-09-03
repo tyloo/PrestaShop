@@ -73,7 +73,7 @@ class HiddenFilter implements FilterInterface
         return $this->typeOptions;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

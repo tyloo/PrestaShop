@@ -531,7 +531,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareGreater()
+    public function getCompareGreater(): array
     {
         return [
             ['1.2.3.4', false],
@@ -549,7 +549,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareGreaterEqual()
+    public function getCompareGreaterEqual(): array
     {
         return [
             ['1.2.3.4', true],
@@ -567,7 +567,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareLess()
+    public function getCompareLess(): array
     {
         return [
             ['1.2.3.4', false],
@@ -585,14 +585,14 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getAnotherCompareGreater()
+    public function getAnotherCompareGreater(): array
     {
         return [
             ['1.2.0', true],
         ];
     }
 
-    public function getCompareLessEqual()
+    public function getCompareLessEqual(): array
     {
         return [
             ['1.2.3.4', true],
@@ -610,7 +610,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareEqual()
+    public function getCompareEqual(): array
     {
         return [
             ['1.2.3.4', true],
@@ -628,7 +628,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getCompareNotEqual()
+    public function getCompareNotEqual(): array
     {
         return [
             ['1.2.3.4', false],
@@ -646,7 +646,7 @@ class VersionTest extends TestCase
         ];
     }
 
-    public function getInvalidVersions()
+    public function getInvalidVersions(): array
     {
         return [
             ['1.2.3.1.x'],

@@ -116,7 +116,7 @@ final class CustomerCartGridDefinitionFactory extends AbstractGridDefinitionFact
             );
     }
 
-    public function getViewOptions()
+    protected function getViewOptions()
     {
         return (new ViewOptionsCollection())
             ->add('display_name', false);

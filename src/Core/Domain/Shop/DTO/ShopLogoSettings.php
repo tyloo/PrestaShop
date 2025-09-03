@@ -76,10 +76,8 @@ class ShopLogoSettings
 
     /**
      * Gets icon image extension with dot attached to the front.
-     *
-     * @return string
      */
-    public function getIconImageExtensionWithDot()
+    public function getIconImageExtensionWithDot(): string
     {
         return '.' . self::AVAILABLE_ICON_IMAGE_EXTENSION;
     }

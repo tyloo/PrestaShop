@@ -47,7 +47,7 @@ class QueryBuilder
         return $escaped;
     }
 
-    public function buildWhereConditions($andOrOr, array $conditions)
+    public function buildWhereConditions($andOrOr, array $conditions): string
     {
         $operator = strtoupper((string) $andOrOr);
 

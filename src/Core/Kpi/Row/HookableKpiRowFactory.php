@@ -134,10 +134,8 @@ final class HookableKpiRowFactory implements KpiRowFactoryInterface
 
     /**
      * @param string $identifier
-     *
-     * @return string
      */
-    private function getHookName($identifier)
+    private function getHookName($identifier): string
     {
         return 'action' . ucfirst($identifier) . 'KpiRowModifier';
     }

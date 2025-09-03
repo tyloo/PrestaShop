@@ -109,6 +109,7 @@ class RemoteZipSourceHandler implements SourceHandlerInterface
         $path = $this->getDownloadDir($this->getModuleName($source));
         $filesystem->mkdir(\dirname($path));
         $filesystem->dumpFile($path, $this->httpClient->request('GET', $source)->getContent());
+
         $this->zipSourceHandler->handle($path);
     }
 

@@ -113,7 +113,7 @@ class TranslationsTreeBuilder
                 $current['children'] = [];
             }
 
-            $current['children'][] = $this->recursivelyBuildApiTree($routeParams, $value, $name, (string) $fullSubtreeName . $name);
+            $current['children'][] = $this->recursivelyBuildApiTree($routeParams, $value, $name, $fullSubtreeName . $name);
         }
 
         if (isset($current['children'])) {

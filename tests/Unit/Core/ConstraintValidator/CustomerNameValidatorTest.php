@@ -33,10 +33,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class CustomerNameValidatorTest extends ConstraintValidatorTestCase
 {
-    /**
-     * @return array
-     */
-    public function getInvalidCharacters()
+    public function getInvalidCharacters(): array
     {
         return [
             ['0'], ['1'], ['2'], ['3'], ['4'],
@@ -51,20 +48,14 @@ class CustomerNameValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getValidCharactersWithSpaces()
+    public function getValidCharactersWithSpaces(): array
     {
         return [
             ['. '], ['。 '],
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getValidCharacters()
+    public function getValidCharacters(): array
     {
         return [
             ['.'], ['。'],

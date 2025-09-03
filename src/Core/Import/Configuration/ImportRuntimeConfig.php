@@ -114,7 +114,7 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
         $this->sharedData[$key] = $value;
     }
 
-    public function isFinished()
+    public function isFinished(): bool
     {
         return $this->processedRows < $this->limit;
     }
@@ -168,7 +168,7 @@ final class ImportRuntimeConfig implements ImportRuntimeConfigInterface
         $this->errors = $errors;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'crossStepsVariables' => $this->sharedData,

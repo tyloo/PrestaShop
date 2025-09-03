@@ -85,10 +85,8 @@ final class YamlParser
 
     /**
      * @param string $sourceFile
-     *
-     * @return string
      */
-    public function getCacheFile($sourceFile)
+    public function getCacheFile($sourceFile): string
     {
         return \sprintf(
             '%syaml/%s.php',

@@ -69,6 +69,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
         $cart = $this->getCurrentCart();
         $cart->secure_key = md5('xxx');
         $cart->update();
+
         $paymentModule->validateOrder(
             $cart->id,
             (int) Configuration::get('PS_OS_CHEQUE'), // PS_OS_PAYMENT for payment-validated order
@@ -93,7 +94,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     public function checkOrderProductTotal($expectedTotal, $taxes = null)
     {
         $order = $this->getCurrentCartOrder();
-        $withTaxes = $taxes === ' tax excluded' ? false : true;
+        $withTaxes = $taxes !== ' tax excluded';
         $total = $withTaxes ? $order->total_products_wt : $order->total_products;
         if ((float) $expectedTotal !== (float) $total) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expectedTotal, $total));
@@ -106,7 +107,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     public function checkOrderTotalDiscount($expectedTotal, $taxes = null)
     {
         $order = $this->getCurrentCartOrder();
-        $withTaxes = $taxes === ' tax excluded' ? false : true;
+        $withTaxes = $taxes !== ' tax excluded';
         $total = $withTaxes ? $order->total_discounts_tax_incl : $order->total_discounts_tax_excl;
         if ((float) $expectedTotal !== (float) $total) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expectedTotal, $total));
@@ -119,7 +120,7 @@ class OrderFeatureContext extends AbstractPrestaShopFeatureContext
     public function checkOrderShippingFees($expectedTotal, $taxes = null)
     {
         $order = $this->getCurrentCartOrder();
-        $withTaxes = $taxes === ' tax excluded' ? false : true;
+        $withTaxes = $taxes !== ' tax excluded';
         $total = $withTaxes ? $order->total_shipping_tax_incl : $order->total_shipping_tax_excl;
         if ((float) $expectedTotal !== (float) $total) {
             throw new RuntimeException(\sprintf('Expects %s, got %s instead', $expectedTotal, $total));

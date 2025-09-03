@@ -131,7 +131,7 @@ final class CustomerDiscountGridDefinitionFactory extends AbstractGridDefinition
             );
     }
 
-    public function getViewOptions()
+    protected function getViewOptions()
     {
         return (new ViewOptionsCollection())
             ->add('display_name', false);

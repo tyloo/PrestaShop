@@ -39,7 +39,7 @@ final class ZoneFilters extends Filters
      */
     protected $filterId = ZoneGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

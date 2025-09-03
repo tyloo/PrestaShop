@@ -50,7 +50,7 @@ class ProductPresentationSettings
      */
     public $showLabelOOSListingPages;
 
-    public function shouldShowPrice()
+    public function shouldShowPrice(): bool
     {
         return $this->showPrices && (! $this->catalog_mode || $this->catalog_mode_with_prices);
     }

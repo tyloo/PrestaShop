@@ -44,7 +44,7 @@ class CmsPageFormDataProvider implements FormDataProviderInterface
     /**
      * @throws CmsPageException
      */
-    public function getData($cmsPageId)
+    public function getData($cmsPageId): array
     {
         /** @var EditableCmsPage $editableCmsPage */
         $editableCmsPage = $this->queryBus->handle(new GetCmsPageForEditing($cmsPageId));
@@ -65,7 +65,7 @@ class CmsPageFormDataProvider implements FormDataProviderInterface
     /**
      * Get default form data.
      */
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'page_category_id' => CmsPageCategoryId::ROOT_CMS_PAGE_CATEGORY_ID,

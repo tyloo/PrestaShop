@@ -41,7 +41,7 @@ class MerchandiseReturnOptionsConfiguration extends AbstractMultistoreConfigurat
         'order_return_prefix',
     ];
 
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         $shopConstraint = $this->getShopConstraint();
 
@@ -52,7 +52,7 @@ class MerchandiseReturnOptionsConfiguration extends AbstractMultistoreConfigurat
         ];
     }
 
-    public function updateConfiguration(array $configuration)
+    public function updateConfiguration(array $configuration): array
     {
         if (! $this->validateConfiguration($configuration)) {
             return [

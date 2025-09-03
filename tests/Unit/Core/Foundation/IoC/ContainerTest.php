@@ -160,7 +160,7 @@ class ContainerTest extends TestCase
     /**
      * data provider for test_container_can_bind_values_directly
      */
-    public function valuesToBind()
+    public function valuesToBind(): array
     {
         return [
             [new Dummy()],

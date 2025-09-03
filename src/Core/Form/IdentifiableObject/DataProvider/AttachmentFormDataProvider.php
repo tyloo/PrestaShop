@@ -56,7 +56,7 @@ final class AttachmentFormDataProvider implements FormDataProviderInterface
         return $data;
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [];
     }

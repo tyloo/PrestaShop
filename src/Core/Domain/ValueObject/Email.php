@@ -68,10 +68,8 @@ class Email
 
     /**
      * Check if given email is the same as current
-     *
-     * @return bool
      */
-    public function isEqualTo(self $email)
+    public function isEqualTo(self $email): bool
     {
         return strtolower($email->getValue()) === strtolower($this->getValue());
     }

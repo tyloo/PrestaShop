@@ -50,7 +50,7 @@ class SaveSqlRequestSettingsHandlerTest extends TestCase
         $this->assertNull($handler->handle(new SaveSqlRequestSettingsCommand($configuredValue, $separator)));
     }
 
-    public function getSettings()
+    public function getSettings(): array
     {
         return [
             [

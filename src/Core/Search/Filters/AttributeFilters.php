@@ -42,7 +42,7 @@ final class AttributeFilters extends Filters
 
     protected $needsToBePersisted = false;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

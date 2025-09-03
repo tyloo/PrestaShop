@@ -64,7 +64,7 @@ class RouteValidatorTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function routeValidationProvider()
+    public function routeValidationProvider(): array
     {
         return [
             // Valid route

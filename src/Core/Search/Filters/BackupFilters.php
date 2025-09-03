@@ -34,7 +34,7 @@ use PrestaShop\PrestaShop\Core\Search\Filters;
  */
 final class BackupFilters extends Filters
 {
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 20,

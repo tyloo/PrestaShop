@@ -89,6 +89,7 @@ class PhpParametersTest extends TestCase
 
         $parameterReader->setProperty('a.b.c', 'OSS');
         $parameterReader->setProperty('parameters.b', 'PrestaShop');
+
         $modifiedParams = $this->sampleParams;
         $modifiedParams['a'] = [
             'b' => [

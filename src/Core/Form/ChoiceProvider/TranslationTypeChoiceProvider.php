@@ -41,7 +41,7 @@ final class TranslationTypeChoiceProvider implements FormChoiceProviderInterface
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return [
             $this->translator->trans('Back office translations', [], 'Admin.International.Feature') => 'back',

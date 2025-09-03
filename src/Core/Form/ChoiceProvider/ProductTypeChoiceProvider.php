@@ -43,7 +43,7 @@ class ProductTypeChoiceProvider implements FormChoiceProviderInterface, FormChoi
     ) {
     }
 
-    public function getChoicesAttributes()
+    public function getChoicesAttributes(): array
     {
         return [
             $this->trans('Standard product', 'Admin.Catalog.Feature') => [

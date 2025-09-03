@@ -40,7 +40,7 @@ final class CmsPageCategoryFilters extends Filters
      */
     protected $filterId = CmsPageCategoryDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 50,

@@ -104,7 +104,7 @@ class FormatterTest extends TestCase
         );
     }
 
-    public function provideValidNumberFormatSpecs()
+    public function provideValidNumberFormatSpecs(): array
     {
         return [
             'French positive number' => [

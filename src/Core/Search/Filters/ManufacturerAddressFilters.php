@@ -40,7 +40,7 @@ final class ManufacturerAddressFilters extends Filters
      */
     protected $filterId = ManufacturerAddressGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 10,

@@ -41,7 +41,7 @@ final class LogsFilters extends Filters
      */
     protected $filterId = LogGridDefinitionFactory::GRID_ID;
 
-    public static function getDefaults()
+    public static function getDefaults(): array
     {
         return [
             'limit' => 10,

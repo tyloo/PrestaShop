@@ -45,7 +45,7 @@ final class B2bFeature implements FeatureInterface
         return $this->isActive();
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         return (bool) $this->configuration->get('PS_B2B_ENABLE');
     }

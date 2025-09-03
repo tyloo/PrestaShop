@@ -304,7 +304,7 @@ class PaymentOption implements HookContentClassInterface
         return $this;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'module_name' => $this->moduleName,

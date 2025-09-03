@@ -58,6 +58,7 @@ class ApiClientContextBuilderTest extends TestCase
 
         $builder->setClientId('client_id');
         $builder->setExternalIssuer($externalIssuer);
+
         $apiClientContext = $builder->build();
         $this->assertNotNull($apiClientContext->getApiClient());
         $this->assertEquals(self::API_CLIENT_ID, $apiClientContext->getApiClient()->getId());
@@ -76,6 +77,7 @@ class ApiClientContextBuilderTest extends TestCase
         );
 
         $builder->setClientId('client_id');
+
         $apiClientContext = $builder->build();
         $this->assertNotNull($apiClientContext->getApiClient());
         $this->assertEquals($apiClient->getClientId(), $apiClientContext->getApiClient()->getClientId());

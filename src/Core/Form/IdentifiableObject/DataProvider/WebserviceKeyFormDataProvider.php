@@ -45,7 +45,7 @@ final class WebserviceKeyFormDataProvider implements FormDataProviderInterface
     ) {
     }
 
-    public function getData($webserviceKeyId)
+    public function getData($webserviceKeyId): array
     {
         /** @var EditableWebserviceKey $editableWebserviceKey */
         $editableWebserviceKey = $this->queryBus->handle(new GetWebserviceKeyForEditing($webserviceKeyId));
@@ -61,7 +61,7 @@ final class WebserviceKeyFormDataProvider implements FormDataProviderInterface
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'status' => true,

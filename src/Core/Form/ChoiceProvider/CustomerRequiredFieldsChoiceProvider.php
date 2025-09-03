@@ -41,7 +41,7 @@ final class CustomerRequiredFieldsChoiceProvider implements FormChoiceProviderIn
     ) {
     }
 
-    public function getChoices()
+    public function getChoices(): array
     {
         return [
             $this->translator->trans('Partner offers', [], 'Admin.Orderscustomers.Feature') => RequiredField::PARTNER_OFFERS,

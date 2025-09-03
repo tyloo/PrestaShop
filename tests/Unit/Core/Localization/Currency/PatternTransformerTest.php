@@ -142,7 +142,7 @@ class PatternTransformerTest extends TestCase
     /**
      * @return array[]
      */
-    public function getDataForTestGetTransformationType()
+    public function getDataForTestGetTransformationType(): array
     {
         return [
             PatternTransformer::TYPE_LEFT_SYMBOL_WITH_SPACE => [

@@ -44,7 +44,7 @@ class HookRepository
         $this->db_prefix = $this->db->getPrefix();
     }
 
-    public function getIdByName($hook_name)
+    public function getIdByName($hook_name): int
     {
         $escaped_hook_name = $this->db->escape($hook_name);
 
@@ -82,7 +82,7 @@ class HookRepository
         return $this->db->Insert_ID();
     }
 
-    private function getIdModule($module_name)
+    private function getIdModule($module_name): int
     {
         $escaped_module_name = $this->db->escape($module_name);
 

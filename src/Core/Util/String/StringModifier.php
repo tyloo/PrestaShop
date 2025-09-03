@@ -39,7 +39,7 @@ final class StringModifier implements StringModifierInterface
      */
     private $transliterator;
 
-    public function splitByCamelCase($string)
+    public function splitByCamelCase($string): string
     {
         $regex = '/(?)(?<=[a-z])(?=[A-Z]) | (?<=[A-Z])(?=[A-Z][a-z])/x';
 

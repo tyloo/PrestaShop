@@ -64,7 +64,7 @@ class CustomerDeleteMethod
     /**
      * Check if customer can register after it's deletion.
      */
-    public function isAllowedToRegisterAfterDelete()
+    public function isAllowedToRegisterAfterDelete(): bool
     {
         return $this->method === self::ALLOW_CUSTOMER_REGISTRATION;
     }
@@ -72,7 +72,7 @@ class CustomerDeleteMethod
     /**
      * @return string[]
      */
-    public static function getAvailableMethods()
+    public static function getAvailableMethods(): array
     {
         return [self::ALLOW_CUSTOMER_REGISTRATION, self::DENY_CUSTOMER_REGISTRATION];
     }

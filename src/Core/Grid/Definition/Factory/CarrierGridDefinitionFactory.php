@@ -335,7 +335,7 @@ class CarrierGridDefinitionFactory extends AbstractGridDefinitionFactory
             );
     }
 
-    protected function hasActiveExternalModuleCarriers()
+    protected function hasActiveExternalModuleCarriers(): bool
     {
         $sql = 'SELECT count(external_module_name)
                 FROM ' . $this->dbPrefix . 'carrier

@@ -68,6 +68,7 @@ class OrderReturnFeatureContext extends AbstractPrestaShopFeatureContext
         $orderReturn->question = 'Why?';
         $orderReturn->state = 1;
         $orderReturn->add();
+
         $orderDetailIds = [];
         $quantities = [];
         foreach ($order->getProducts() as $product) {

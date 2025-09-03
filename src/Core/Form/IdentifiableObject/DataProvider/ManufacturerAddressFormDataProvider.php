@@ -49,7 +49,7 @@ final class ManufacturerAddressFormDataProvider implements FormDataProviderInter
     /**
      * @throws AddressConstraintException
      */
-    public function getData($addressId)
+    public function getData($addressId): array
     {
         /** @var EditableManufacturerAddress $editableAddress */
         $editableAddress = $this->queryBus->handle(new GetManufacturerAddressForEditing((int) $addressId));
@@ -72,7 +72,7 @@ final class ManufacturerAddressFormDataProvider implements FormDataProviderInter
         ];
     }
 
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'id_country' => $this->defaultCountryId,
