@@ -234,14 +234,12 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Gets requested cart information
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('read', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function getInfoAction(
         int $cartId,
         IniConfiguration $iniConfiguration,
-    ) {
+    ): JsonResponse {
         try {
             $cartInfo = $this->dispatchQuery(
                 (new GetCartForOrderCreation($cartId))
@@ -512,8 +510,6 @@ class CartController extends PrestaShopAdminController
 
     /**
      * Changes product in cart quantity
-     *
-     * @return JsonResponse
      */
     #[AdminSecurity("is_granted('update', request.get('_legacy_controller')) || is_granted('create', 'AdminOrders')")]
     public function editProductQuantityAction(
@@ -521,7 +517,7 @@ class CartController extends PrestaShopAdminController
         int $cartId,
         int $productId,
         IniConfiguration $iniConfiguration,
-    ) {
+    ): JsonResponse {
         try {
             $newQty = $request->request->getInt('newQty');
             $attributeId = $request->request->getInt('attributeId');
