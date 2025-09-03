@@ -33,7 +33,7 @@ use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
 class Ps_Banner extends Module implements WidgetInterface
 {
-    private $templateFile;
+    private $templateFile = 'module:ps_banner/ps_banner.tpl';
 
     public function __construct()
     {
@@ -49,8 +49,6 @@ class Ps_Banner extends Module implements WidgetInterface
         $this->description = $this->trans('Displays a banner on your shop.', [], 'Modules.Banner.Admin');
 
         $this->ps_versions_compliancy = ['min' => '1.7.1.0', 'max' => _PS_VERSION_];
-
-        $this->templateFile = 'module:ps_banner/ps_banner.tpl';
     }
 
     public function install()

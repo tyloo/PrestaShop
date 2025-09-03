@@ -56,7 +56,7 @@ return RectorConfig::configure()
     )
     ->withTypeCoverageLevel(20) // max = 53
     ->withDeadCodeLevel(51) // max = 51
-    ->withCodeQualityLevel(55) // max = 74
+    ->withCodeQualityLevel(60) // max = 74
     ->withCodingStyleLevel(25) // max = 25
     ->withSkip([
         UnwrapFutureCompatibleIfPhpVersionRector::class,

@@ -68,12 +68,11 @@ class CommandBuilderTestCommand
     /**
      * @var array<string, mixed>
      */
-    private $options;
+    private $options = [];
 
     public function __construct(
         private readonly ShopConstraint $shopConstraint,
     ) {
-        $this->options = [];
     }
 
     public function getName(): string

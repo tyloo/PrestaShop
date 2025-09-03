@@ -42,12 +42,11 @@ class Domain
     /**
      * @var Message[]
      */
-    private $messages;
+    private $messages = [];
 
     public function __construct(
         private readonly string $domainName,
     ) {
-        $this->messages = [];
     }
 
     public function getDomainName(): string

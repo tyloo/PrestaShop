@@ -47,7 +47,7 @@ class CronJobs extends Module
     /**
      * @var string
      */
-    public $display;
+    public $display = 'view';
 
     public function __construct()
     {
@@ -62,7 +62,6 @@ class CronJobs extends Module
         $this->need_instance = true;
 
         $this->bootstrap = true;
-        $this->display = 'view';
 
         parent::__construct();
 

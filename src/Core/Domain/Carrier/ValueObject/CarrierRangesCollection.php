@@ -32,7 +32,7 @@ class CarrierRangesCollection
     /**
      * @var CarrierRangeZone[]
      */
-    private array $zones;
+    private array $zones = [];
 
     public function __construct(
         /** @var array{
@@ -64,9 +64,7 @@ class CarrierRangesCollection
 
             $rangesByZones[$zoneId][] = $carrierRange;
         }
-
         // Finally, we create CarrierRangeZone objects for each zone with its ranges.
-        $this->zones = [];
         foreach ($rangesByZones as $zoneId => $ranges) {
             $this->zones[] = new CarrierRangeZone($zoneId, $ranges);
         }

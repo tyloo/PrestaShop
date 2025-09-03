@@ -33,17 +33,23 @@ class Ps_Emailsubscription extends Module
     /**
      * @var bool|string
      */
-    public $error;
+    public $error = false;
 
     /**
      * @var bool|string
      */
-    public $valid;
+    public $valid = false;
 
     /**
      * @var array|array[]|string[][]
      */
-    public $_files;
+    public $_files = [
+        'name' => ['newsletter_conf', 'newsletter_voucher'],
+        'ext' => [
+            0 => 'html',
+            1 => 'txt',
+        ],
+    ];
 
     public function __construct()
     {
@@ -61,15 +67,6 @@ class Ps_Emailsubscription extends Module
 
         $this->version = '1.0.0';
         $this->author = 'PrestaShop';
-        $this->error = false;
-        $this->valid = false;
-        $this->_files = [
-            'name' => ['newsletter_conf', 'newsletter_voucher'],
-            'ext' => [
-                0 => 'html',
-                1 => 'txt',
-            ],
-        ];
 
         parent::__construct();
     }

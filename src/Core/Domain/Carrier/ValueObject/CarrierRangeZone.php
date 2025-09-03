@@ -39,7 +39,7 @@ class CarrierRangeZone
     /**
      * @var CarrierRangePrice[]
      */
-    private array $ranges;
+    private array $ranges = [];
 
     public function __construct(
         private readonly int $zoneId,
@@ -55,9 +55,7 @@ class CarrierRangeZone
         // Validate zone id to avoid overlapping ranges
         $this->assertZoneId($zoneId);
         $this->assertRanges($ranges);
-
         // Create CarrierRangePrice objects
-        $this->ranges = [];
         foreach ($ranges as $range) {
             $this->ranges[] = new CarrierRangePrice(
                 (string) $range['range_from'],

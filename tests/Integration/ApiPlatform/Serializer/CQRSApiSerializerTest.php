@@ -128,11 +128,11 @@ class CQRSApiSerializerTest extends KernelTestCase
     {
         // Test that CQRSApiSerializer correctly decorates the API Platform serializer
         $apiPlatformSerializer = self::getContainer()->get('api_platform.serializer');
-        $this->assertTrue(is_a($apiPlatformSerializer, CQRSApiSerializer::class));
+        $this->assertTrue($apiPlatformSerializer instanceof CQRSApiSerializer);
 
         // But we don't want to impact the global serializer
         $globalSerializer = self::getContainer()->get('serializer');
-        $this->assertFalse(is_a($globalSerializer, CQRSApiSerializer::class));
+        $this->assertFalse($globalSerializer instanceof CQRSApiSerializer);
     }
 
     public function testDenormalize(): void

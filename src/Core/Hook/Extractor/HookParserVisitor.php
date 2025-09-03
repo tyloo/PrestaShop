@@ -37,13 +37,12 @@ use PhpParser\PrettyPrinter\Standard;
 
 class HookParserVisitor extends NodeVisitorAbstract
 {
-    private array $hooks;
+    private array $hooks = [];
 
     public function __construct(
         private readonly string $filePath,
         private readonly string $code,
     ) {
-        $this->hooks = [];
     }
 
     public function enterNode(Node $node): int|Node|null

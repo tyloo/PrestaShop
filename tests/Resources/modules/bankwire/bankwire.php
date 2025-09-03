@@ -45,7 +45,7 @@ class bankwire extends PaymentModule
     /**
      * @var int
      */
-    public $is_eu_compatible;
+    public $is_eu_compatible = 1;
 
     public function __construct()
     {
@@ -55,7 +55,6 @@ class bankwire extends PaymentModule
         $this->ps_versions_compliancy = ['min' => '1.7', 'max' => _PS_VERSION_];
         $this->author = 'PrestaShop';
         $this->controllers = ['payment', 'validation'];
-        $this->is_eu_compatible = 1;
 
         $this->currencies = true;
         $this->currencies_mode = 'checkbox';

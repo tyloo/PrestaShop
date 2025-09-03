@@ -38,7 +38,7 @@ abstract class AbstractColumn implements ColumnInterface
     /**
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var array
@@ -51,7 +51,6 @@ abstract class AbstractColumn implements ColumnInterface
     public function __construct(
         private $id,
     ) {
-        $this->name = '';
     }
 
     public function getId()

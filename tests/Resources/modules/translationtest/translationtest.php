@@ -35,7 +35,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 class translationtest extends Module
 {
-    private $adminControllerName;
+    private $adminControllerName = 'AdminTranslationtestFoo';
 
     public function __construct()
     {
@@ -54,8 +54,6 @@ class translationtest extends Module
             'min' => '1.7.5.0',
             'max' => _PS_VERSION_,
         ];
-
-        $this->adminControllerName = 'AdminTranslationtestFoo';
         $this->controllers = ['bar']; // this is a front controller
     }
 
