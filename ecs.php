@@ -28,9 +28,9 @@ return ECSConfig::configure()
         // __DIR__ . '/controllers',
         // __DIR__ . '/install-dev',
         __DIR__ . '/src/Adapter',
-        //__DIR__ . '/src/Core',
-        //__DIR__ . '/src/PrestaShopBundle',
-        //__DIR__ . '/tests',
+        __DIR__ . '/src/Core',
+        __DIR__ . '/src/PrestaShopBundle',
+        __DIR__ . '/tests',
         // __DIR__ . '/tools',
         // __DIR__ . '/webservice',
     ])

@@ -27,6 +27,7 @@
 
 namespace PrestaShop\PrestaShop\Core\Localization\Currency\DataLayer;
 
+use Currency;
 use Language;
 use PrestaShop\PrestaShop\Adapter\Currency\CurrencyDataProvider;
 use PrestaShop\PrestaShop\Core\Data\Layer\AbstractDataLayer;
@@ -90,7 +91,7 @@ class CurrencyDatabase extends AbstractDataLayer implements CurrencyDataLayerInt
         $currencyCode = $currencyDataId->getCurrencyCode();
         $currencyEntity = $this->dataProvider->getCurrencyByIsoCodeAndLocale($currencyCode, $localeCode);
 
-        if (!$currencyEntity instanceof \Currency) {
+        if (! $currencyEntity instanceof Currency) {
             return null;
         }
 
